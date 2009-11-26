@@ -43,6 +43,9 @@ public abstract class DataPacket extends I2PBotePacket implements FolderElement 
     public DataPacket() {
     }
     
+    /**
+     * Writes the packet to an <code>OutputStream</code> in binary representation.
+     */
     @Override
     public void writeTo(OutputStream outputStream) throws IOException {
         outputStream.write(toByteArray());
