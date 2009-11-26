@@ -236,10 +236,10 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
                        | TYPE  | 1 byte     | Value = 'I'
                        | DH    | 32 bytes   | SHA-256 hash of the recipient's email destination
                        | NP    | 1 byte     | Number of keys in the packet
-                       | KEY1  | 256 bytes  | DHT key of the first Email Packet
-                       | KEY1  | 256 bytes  | DHT key of the second Email Packet
+                       | KEY1  | 32 bytes   | DHT key of the first Email Packet
+                       | KEY1  | 32 bytes   | DHT key of the second Email Packet
                        | ...   | ...        | ...
-                       | KEYn  | 256 bytes  | DHT key of the n-th Email Packet
+                       | KEYn  | 32 bytes   | DHT key of the n-th Email Packet
   ---------------------+-------+------------+----------------------------------------------------
    Relay Packet        |       |            | The payload of a Relay Request
                        | TYPE  | 1 byte     | Value = 'R'
@@ -433,6 +433,7 @@ secure as manually adding keypairs to the local address book, although it is mor
 
 10. To Do
 
+  * Packet ID field isn't really a packet id, rename to Conversation ID or maybe Session ID
   * Replication per the Kademlia spec
   * Have an option to disable automatic lookups in the distributed address directory for your own address
   * Automatically create a different sender address for each recipient
