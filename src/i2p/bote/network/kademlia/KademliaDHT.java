@@ -134,11 +134,11 @@ public class KademliaDHT implements DHT, PacketListener {
     
     private Collection<DhtStorablePacket> find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {
         final Collection<Destination> closeNodes = getClosestNodes(key);
-        log.debug("Querying " + closeNodes.size() + " nodes with Kademlia key " + key);
+        log.debug("Querying " + closeNodes.size() + " nodes for data type " + dataType + ", Kademlia key " + key);
         
         final Collection<I2PBotePacket> receivedPackets = new ConcurrentHashSet<I2PBotePacket>();   // avoid adding duplicate packets
         
-        PacketListener packetListener = new PacketListener() {
+/*        PacketListener packetListener = new PacketListener() {
             @Override
             public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
                 // add packet to list of received packets if the packet is in response to a RetrieveRequest
@@ -146,7 +146,7 @@ public class KademliaDHT implements DHT, PacketListener {
                     receivedPackets.add(packet);
             }
         };
-        i2pReceiver.addPacketListener(packetListener);
+        i2pReceiver.addPacketListener(packetListener);*/
         
         // Send the retrieve requests
         PacketBatch batch = new PacketBatch();
@@ -163,9 +163,9 @@ public class KademliaDHT implements DHT, PacketListener {
         // wait for replies
         try {
             if (exhaustive)
-                TimeUnit.SECONDS.sleep(60);
+                TimeUnit.SECONDS.sleep(60);   // TODO make a static field
             else
-                batch.awaitFirstReply(30, TimeUnit.SECONDS);
+                batch.awaitFirstReply(30, TimeUnit.SECONDS);   // TODO make a static field
         }
         catch (InterruptedException e) {
             log.warn("Interrupted while waiting for responses to Retrieve Requests.", e);
@@ -173,12 +173,14 @@ public class KademliaDHT implements DHT, PacketListener {
         log.debug(batch.getResponsePackets().size() + " response packets received for hash " + key + " and data type " + dataType);
         
         sendQueue.remove(batch);
-        i2pReceiver.removePacketListener(packetListener);
+//        i2pReceiver.removePacketListener(packetListener);
         
         ConcurrentHashSet<DhtStorablePacket> storablePackets = getStorablePackets(batch);
         DhtStorablePacket localResult = findLocally(key, dataType);
-        if (localResult != null)
+        if (localResult != null) {
+            log.debug("Locally stored packet found for hash " + key + " and data type " + dataType);
             storablePackets.add(localResult);
+        }
         return storablePackets;
     }
 
@@ -211,14 +213,15 @@ public class KademliaDHT implements DHT, PacketListener {
         log.debug("Storing a " + packet.getClass().getSimpleName() + " with key " + key + " on " + closeNodes.size() + " nodes");
         
         HashCash hashCash = HashCash.mintCash("", 1);   // TODO
-        StoreRequest storageRequest = new StoreRequest(hashCash, packet);
+        StoreRequest storeRequest = new StoreRequest(hashCash, packet);
         PacketBatch batch = new PacketBatch();
         for (Destination node: closeNodes)
-            batch.putPacket(storageRequest, node);
+            batch.putPacket(storeRequest, node);
         sendQueue.send(batch);
         
         try {
             batch.awaitSendCompletion();
+            // TODO awaitAllResponses, repeat if necessary
         }
         catch (InterruptedException e) {
             log.warn("Interrupted while waiting for responses to Storage Requests to be sent.", e);
