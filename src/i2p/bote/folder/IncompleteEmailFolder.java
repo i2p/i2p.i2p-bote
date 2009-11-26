@@ -39,7 +39,7 @@ import java.util.Comparator;
 import net.i2p.util.Log;
 
 /**
- * File name format: <message id>.pkt
+ * File name format: <message id>_<fragment index>.pkt
  */
 public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> {
     private Log log = new Log(IncompleteEmailFolder.class);
@@ -62,7 +62,8 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
     }
     
     private String getFilename(UnencryptedEmailPacket packet) {
-        return packet.getMessageId() + PacketFolder.PACKET_FILE_EXTENSION;
+        String fragIndex = String.format("%03d", packet.getFragmentIndex());
+        return packet.getMessageId() + "_" + fragIndex + PacketFolder.PACKET_FILE_EXTENSION;
     }
 
     private void assemble(File[] packetFiles) {
@@ -82,7 +83,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
         return storageDir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.equals(base64Id + PacketFolder.PACKET_FILE_EXTENSION);
+                return name.startsWith(base64Id);
             }
         });
     }
@@ -113,7 +114,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             try {
                 for (UnencryptedEmailPacket packet: packets)
-                    packet.writeTo(outputStream);
+                    outputStream.write(packet.getContent());
                 Email email = new Email(outputStream.toByteArray());
                 inbox.add(email);
                 
