@@ -37,8 +37,8 @@ import org.junit.Test;
 
 import com.nettgryppa.security.HashCash;
 
-public class StorageRequestTest {
-    StoreRequest storageRequest;
+public class StoreRequestTest {
+    private StoreRequest storeRequest;
 
     @Before
     public void setUp() throws Exception {
@@ -53,7 +53,7 @@ public class StorageRequestTest {
         EncryptedEmailPacket encryptedPacket = new EncryptedEmailPacket(emailPacket, destination);
         HashCash hashCash = HashCash.mintCash("1234", 1);
         
-        storageRequest = new StoreRequest(hashCash, encryptedPacket);
+        storeRequest = new StoreRequest(hashCash, encryptedPacket);
     }
 
     @After
@@ -62,7 +62,7 @@ public class StorageRequestTest {
 
     @Test
     public void toByteArrayAndBack() throws Exception {
-        byte[] arrayA = storageRequest.toByteArray();
+        byte[] arrayA = storeRequest.toByteArray();
         byte[] arrayB = new StoreRequest(arrayA).toByteArray();
         assertTrue(Arrays.equals(arrayA, arrayB));
     }

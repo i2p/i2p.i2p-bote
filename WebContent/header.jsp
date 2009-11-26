@@ -30,7 +30,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="i2pbote.css" />
-    <link rel="icon" type="image/png" href="images/favicon.gif" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
     <title>${param.title} - I2P-Bote</title>
 </head>
 
