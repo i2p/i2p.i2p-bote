@@ -49,13 +49,13 @@ import com.nettgryppa.security.HashCash;
 // TODO move one package up
 public class Email implements FolderElement {
     private static final int MAX_BYTES_PER_PACKET = 30 * 1024;
-    private static final byte[] NEW_LINE = new byte[] {13, 10};   // separates header section from mail body; same for all platforms per RFC 5322
+    private static final char[] NEW_LINE = new char[] {13, 10};   // separates header section from mail body; same for all platforms per RFC 5322
     private static final Set<String> HEADER_WHITELIST = createHeaderWhitelist();
     
     private static Log log = new Log(Email.class);
     private File file;
     private List<Header> headers;
-    private byte[] content;
+    private byte[] content;   // save memory by using bytes rather than chars
     private UniqueId messageId;
 
     public Email() {
@@ -80,32 +80,42 @@ public class Email implements FolderElement {
     * @param bytes
     */
     public Email(byte[] bytes) {
-        InputStream inputStream = new ByteArrayInputStream(bytes);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(bytes)));
         
         headers = Collections.synchronizedList(new ArrayList<Header>());
+        ByteArrayOutputStream contentStream = new ByteArrayOutputStream();
+        boolean allHeadersRead = false;
         try {
             // read mail headers
             while (true) {
                 String line = reader.readLine();
                 if (line == null)   // EOF
                     break;
-                if ("".equals(line))   // empty line separates header from mail body
-                    break;
+                if ("".equals(line)) {   // empty line separates header from mail body
+                    allHeadersRead = true;
+                    continue;
+                }
                 
-                String[] splitString = line.split(":\\s", 1);
-                String name = splitString[0];
-                String value = splitString.length>=2 ? splitString[1] : "";
-                if (HEADER_WHITELIST.contains(name))
-                    headers.add(new Header(name, value));
+                if (!allHeadersRead) {
+                    String[] splitString = line.split(":\\s*", 2);
+                    if (splitString.length > 1) {
+                        String name = splitString[0];
+                        String value = splitString[1];
+                        if (HEADER_WHITELIST.contains(name))
+                            headers.add(new Header(name, value));
+                    }
+                    else
+                        allHeadersRead = true;
+                }
+                
+                if (allHeadersRead)
+                    contentStream.write(line.getBytes());
             }
-        
-            // read body
-            content = Util.readInputStream(inputStream);
         }
         catch (IOException e) {
             log.error("Can't read from ByteArrayInputStream.", e);
         }
+        content = contentStream.toByteArray();
         
         messageId = new UniqueId();
     }
@@ -178,7 +188,7 @@ public class Email implements FolderElement {
     /**
      * Converts the email into one or more email packets.
      * 
-     * @param bccToKeep All BCC fields in the header section of the email are removed, except this field 
+     * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
      * @return
      * @throws IOException
      */
@@ -253,30 +263,36 @@ public class Email implements FolderElement {
     	this.file = file;
     }
 
+    /**
+     * Writes the email as an RFC 5322 stream.
+     * @see <a href="http://tools.ietf.org/html/rfc5322">http://tools.ietf.org/html/rfc5322</a>
+     */
     @Override
     public void writeTo(OutputStream outputStream) throws IOException {
-        writeHeaders(outputStream);
-        outputStream.write(NEW_LINE);
-        outputStream.write(content);
+        writeTo(outputStream, null);
     }
-    
+
+    /**
+     * Writes the email as an RFC 5322 stream.
+     * @see <a href="http://tools.ietf.org/html/rfc5322">http://tools.ietf.org/html/rfc5322</a>
+     * @param outputStream
+     * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
+     * @throws IOException
+     */
     public void writeTo(OutputStream outputStream, String bccToKeep) throws IOException {
-        writeHeaders(outputStream, bccToKeep);
-        outputStream.write(NEW_LINE);
-        outputStream.write(content);
+        PrintWriter writer = new PrintWriter(outputStream);
+        
+        writeHeaders(writer, bccToKeep);
+        writer.write(NEW_LINE);
+        writer.write(new String(content));
+        
+        writer.close();
     }
     
-    private void writeHeaders(OutputStream outputStream) throws IOException {
-        PrintWriter writer = new PrintWriter(outputStream);
+    private void writeHeaders(PrintWriter writer, String bccToKeep) throws IOException {
         for (Header header: headers)
-            writer.write(header.toString());
-    }
-    
-    private void writeHeaders(OutputStream outputStream, String bccToKeep) throws IOException {
-        PrintWriter writer = new PrintWriter(outputStream);
-        for (Header header: headers)
-            if (!"BCC".equals(header.name) || bccToKeep.equals(header.value))
-                writer.write(header.toString());
+            if (bccToKeep==null || !"BCC".equals(header.name) || bccToKeep.equals(header.value))
+                writer.println(header.toString());
     }
     
     private class Header {
