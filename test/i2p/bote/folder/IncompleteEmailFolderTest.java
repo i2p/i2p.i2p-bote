@@ -21,7 +21,7 @@
 
 package i2p.bote.folder;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.RecipientType;
 import i2p.bote.packet.Email;
@@ -61,44 +61,35 @@ public class IncompleteEmailFolderTest {
     }
 	
 	@Test
-	public void testAddSinglePacketEmail() throws Exception{
-		Email email = new Email();
-		String recipient = "test@bote.i2p";
-		email.addRecipient(RecipientType.TO, recipient);
-		email.setContent("Test message");
-
-		Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(recipient);
-		assertTrue("Expected one email packet, got " + packets.size(), packets.size() == 1);
-		UnencryptedEmailPacket emailPacket = packets.iterator().next();
-		
-		assertTrue("The inbox should be empty at this point!", inbox.getElements().size() == 0);
-		incompleteFolder.add(emailPacket);
-		assertTrue("The incomplete emails folder is not empty!", incompleteFolder.getElements().size() == 0);
-		assertTrue("Expected: one email in the inbox, actual number = " + inbox.getElements().size(), inbox.getElements().size() == 1);
-		assertEquals("Content of stored email differs from content of original email!", email.getContent(), inbox.getElements().iterator().next().getContent());
+	public void testAddSinglePacketEmail() throws Exception {
+		testAddEmail("Test message", 1);
 	}
 	
 	@Test
-	public void testAddThreePacketEmail() throws Exception{
-		Email email = new Email();
-        String recipient = "test@bote.i2p";
-		email.addRecipient(RecipientType.TO, recipient);
-		
+	public void testAddThreePacketEmail() throws Exception {
 		StringBuilder stringBuilder = new StringBuilder();
 		// create a 90,000-char string
 		for (int i=0; i<9000; i++)
 			stringBuilder.append("0123456789");
-		email.setContent(stringBuilder.toString());
 
-		Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(recipient);
-		assertTrue("Expected 3 email packets, got " + packets.size(), packets.size() == 3);
-		
-		for (UnencryptedEmailPacket emailPacket: packets)
-			incompleteFolder.add(emailPacket);
-		assertTrue("The inbox should be empty at this point!", inbox.getElements().size() == 0);
-		
-		assertTrue("The incomplete emails folder is not empty!", incompleteFolder.getElements().size() == 0);
-		assertTrue("Expected: one email in the inbox, actual number = " + inbox.getElements().size(), inbox.getElements().size() == 1);
-		assertEquals("Content of stored email differs from content of original email!", email.getContent(), inbox.getElements().iterator().next().getContent());
+        testAddEmail(stringBuilder.toString(), 3);
 	}
+
+    private void testAddEmail(String mailContent, int expectedNumPackets) throws Exception {
+        Email email = new Email();
+        String recipient = "test@bote.i2p";
+        email.addRecipient(RecipientType.TO, recipient);
+        email.setContent(mailContent);
+        
+        Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(recipient);
+        assertTrue("Expected " + expectedNumPackets + " email packets, got " + packets.size(), packets.size() == expectedNumPackets);
+        
+        assertTrue("The inbox should be empty at this point!", inbox.getElements().size() == 0);
+        for (UnencryptedEmailPacket emailPacket: packets)
+            incompleteFolder.add(emailPacket);
+        
+        assertTrue("The incomplete emails folder is not empty!", incompleteFolder.getElements().size() == 0);
+        assertTrue("Expected: one email in the inbox, actual number = " + inbox.getElements().size(), inbox.getElements().size() == 1);
+        assertArrayEquals("Content of stored email differs from content of original email!", email.getContent(), inbox.getElements().iterator().next().getContent());
+    }
 }
