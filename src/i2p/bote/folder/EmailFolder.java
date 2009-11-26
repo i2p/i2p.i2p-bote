@@ -48,7 +48,7 @@ public class EmailFolder extends Folder<Email> {
     public void add(Email email) throws IOException {
         // write out the email file
         File emailFile = getEmailFile(email);
-        log.info("Storing email in outbox: '"+ emailFile.getAbsolutePath() + "'");
+        log.info("Storing email in outbox: '" + emailFile.getAbsolutePath() + "'");
         OutputStream emailOutputStream = new FileOutputStream(emailFile);
         email.writeTo(emailOutputStream);
         emailOutputStream.close();
