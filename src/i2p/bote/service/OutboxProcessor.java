@@ -60,7 +60,7 @@ public class OutboxProcessor extends I2PAppThread {
 	private CountDownLatch checkForEmailSignal;
 	
 	public OutboxProcessor(DHT dht, Outbox outbox, Configuration configuration, PeerManager peerManager) {
-		super("OutboxProcessor");
+		super("OutboxProcsr");
 		this.dht = dht;
 		this.outbox = outbox;
 		this.configuration = configuration;
