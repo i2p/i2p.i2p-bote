@@ -34,11 +34,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -56,11 +55,14 @@ import com.nettgryppa.security.HashCash;
  * Packets are sent at a rate no greater than specified by the
  * <CODE>maxBandwidth</CODE> property.
  *
+ * The packet queue is FIFO with the exception of delayed packets.
+ * The packet with the highest index in the queue is always the next
+ * to be sent.
  */
 public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     private Log log = new Log(I2PSendQueue.class);
     private I2PSession i2pSession;
-    private SortedSet<ScheduledPacket> packetQueue;
+    private PacketQueue packetQueue;
     private Map<UniqueId, ScheduledPacket> outstandingRequests;   // sent packets that haven't been responded to
     private Set<PacketBatch> runningBatches;
     private int maxBandwidth;
@@ -76,7 +78,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         
         this.i2pSession = i2pSession;
         i2pReceiver.addPacketListener(this);
-        packetQueue = new ConcurrentSkipListSet<ScheduledPacket>();
+        packetQueue = new PacketQueue();
         outstandingRequests = new ConcurrentHashMap<UniqueId, ScheduledPacket>();
         runningBatches = new ConcurrentHashSet<PacketBatch>();
         sendQueueListeners = Collections.synchronizedCollection(new ArrayList<SendQueuePacketListener>());
@@ -84,7 +86,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     }
 
     /**
-     * Queues a packet for sending ASAP.
+     * Queues a packet behind the last undelayed packet.
      * @param packet
      * @param destination
      */
@@ -93,7 +95,8 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     }
     
     /**
-     * Queues a packet for sending ASAP and waits for up to <code>timeoutSeconds</code> for a response.
+     * Queues a packet behind the last undelayed packet and waits for up to
+     * <code>timeoutSeconds</code> for a response.
      * @param packet
      * @param destination
      * @param timeoutMilliSeconds
@@ -161,6 +164,9 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
      * @param batch
      */
     public void send(PacketBatch batch) {
+        log.debug("Adding a batch containing " + batch.getPacketCount() + " packets.");
+        runningBatches.add(batch);
+        batch.initializeSentSignal();
         for (PacketBatchItem batchItem: batch) {
             ScheduledPacket scheduledPacket = new ScheduledPacket(batchItem.getPacket(), batchItem.getDestination(), 0, batch);
             packetQueue.add(scheduledPacket);
@@ -250,49 +256,92 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         I2PDatagramMaker datagramMaker = new I2PDatagramMaker(i2pSession);
         
         while (true) {
-            if (packetQueue.isEmpty())
+            ScheduledPacket scheduledPacket;
+            try {
+                scheduledPacket = packetQueue.take();
+            }
+            catch (InterruptedException e) {
+                log.warn("Interrupted while waiting for new packets.", e);
+                break;
+            }
+            CommunicationPacket i2pBotePacket = scheduledPacket.data;
+            
+            // wait long enough so rate <= maxBandwidth;
+            if (maxBandwidth > 0) {
+                int packetSizeBits = i2pBotePacket.getSize() * 8;
+                int maxBWBitsPerSecond = maxBandwidth * 1024;
+                long waitTimeMsecs = 1000L * packetSizeBits / maxBWBitsPerSecond;
+                if (System.currentTimeMillis()+waitTimeMsecs < scheduledPacket.earliestSendTime)
+                    waitTimeMsecs = scheduledPacket.earliestSendTime;
+                try {
+                    TimeUnit.MILLISECONDS.sleep(waitTimeMsecs);
+                }
+                catch (InterruptedException e) {
+                    log.warn("Interrupted while waiting to send packet.", e);
+                }
+            }
+            
+            PacketBatch batch = scheduledPacket.batch;
+            boolean isBatchPacket = batch != null;
+            log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to peer: " + scheduledPacket.destination.toBase64());
+                
+            byte[] replyableDatagram = datagramMaker.makeI2PDatagram(i2pBotePacket.toByteArray());
+            try {
+                i2pSession.sendMessage(scheduledPacket.destination, replyableDatagram);
+                
+                // set sentTime; update queue+cache, update countdown latch, fire packet listeners
+                    scheduledPacket.data.setSentTime(System.currentTimeMillis());
+                    packetQueue.remove(scheduledPacket);
+                if (isBatchPacket)
+                    batch.decrementSentLatch();
+                scheduledPacket.decrementSentLatch();
+                firePacketListeners(scheduledPacket.data);
+                
+                log.debug("Packet sent. Send queue length is now " + packetQueue.size());
+                if (isBatchPacket)
+                    log.debug("  Batch has " + batch.getPacketCount() + " packets total, " + batch.getUnsentPacketCount() + " waiting to be sent.");
+            }
+            catch (I2PSessionException sessExc) {
+                log.error("Can't send packet.", sessExc);
+                // pause to avoid CPU hogging if the error doesn't go away
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 }
-                catch (InterruptedException e) {
-                    log.warn("Interrupted while waiting for new packets.", e);
-                }
-            else {
-                ScheduledPacket scheduledPacket = packetQueue.last();
-                CommunicationPacket i2pBotePacket = scheduledPacket.data;
-                
-                // wait long enough so rate <= maxBandwidth;
-                if (maxBandwidth > 0) {
-                    int packetSizeBits = i2pBotePacket.getSize() * 8;
-                    int maxBWBitsPerSecond = maxBandwidth * 1024;
-                    long waitTimeMsecs = 1000L * packetSizeBits / maxBWBitsPerSecond;
-                    if (System.currentTimeMillis()+waitTimeMsecs < scheduledPacket.earliestSendTime)
-                        waitTimeMsecs = scheduledPacket.earliestSendTime;
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(waitTimeMsecs);
-                    }
-                    catch (InterruptedException e) {
-                        log.warn("Interrupted while waiting to send packet.", e);
-                    }
-                }
-                
-                log.debug("Sending packet: [" + i2pBotePacket + "] to peer: " + scheduledPacket.destination.toBase64());
-                byte[] replyableDatagram = datagramMaker.makeI2PDatagram(i2pBotePacket.toByteArray());
-                try {
-                    i2pSession.sendMessage(scheduledPacket.destination, replyableDatagram);
-                    
-                    // set sentTime; update queue+cache, update countdown latch, fire packet listeners
-                    scheduledPacket.data.setSentTime(System.currentTimeMillis());
-                    packetQueue.remove(scheduledPacket);
-                    if (scheduledPacket.batch != null)
-                        scheduledPacket.batch.decrementSentLatch();
-                    scheduledPacket.decrementSentLatch();
-                    firePacketListeners(scheduledPacket.data);
-                }
-                catch (I2PSessionException e) {
-                    log.error("Can't send packet.", e);
+                catch (InterruptedException intrExc) {
+                    log.error("Interrupted while sleeping after a send error.", intrExc);
                 }
             }
+        }
+    }
+    
+    private class PacketQueue extends LinkedList<ScheduledPacket> {
+        public void add(ScheduledPacket packet, long earliestSendTime) {
+            int index = getInsertionIndex(packet, earliestSendTime);
+            add(index, packet);
+        }
+
+        private int getInsertionIndex(ScheduledPacket packet, long earliestSendTime) {
+            if (isEmpty())
+                return 0;
+
+            // do a linear search (binary search isn't a good fit for LinkedList)
+            // TODO using foreach would be more efficient
+            for (int i=0; i<size(); i++)
+                if (get(i).earliestSendTime <= earliestSendTime)
+                    return i;
+
+            return size();
+        }
+
+        /**
+         * Not synchronized because there should only be one {@link I2PSendQueue}.
+         * @throws InterruptedException
+         * @return
+         */
+        public ScheduledPacket take() throws InterruptedException {
+            while (isEmpty())
+                TimeUnit.SECONDS.sleep(1);
+            return pollLast();
         }
     }
     
