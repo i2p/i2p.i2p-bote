@@ -32,8 +32,10 @@ import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
@@ -71,7 +73,11 @@ public class CheckEmailTask implements Runnable {
         
         executor = Executors.newFixedThreadPool(MAX_THREADS, EMAIL_PACKET_TASK_THREAD_FACTORY);
         for (Hash dhtKey: emailPacketKeys)
-            executor.submit(new EmailPacketTask(dhtKey));
+            try {
+                executor.submit(new EmailPacketTask(dhtKey)).get();
+            } catch (Exception e) {
+                log.error("Can't retrieve email packet.", e);
+            }
         executor.shutdown();
         try {
             executor.awaitTermination(1, TimeUnit.DAYS);
@@ -133,7 +139,8 @@ public class CheckEmailTask implements Runnable {
                 }
             }
             else
-                log.error("DHT returned packet of class " + packet.getClass().getSimpleName() + ", expected EmailPacket.");
+                if (packet != null)
+                    log.error("DHT returned packet of class " + packet.getClass().getSimpleName() + ", expected EmailPacket.");
         }
         
         /**
