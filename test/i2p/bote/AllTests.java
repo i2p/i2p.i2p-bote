@@ -27,7 +27,7 @@ import i2p.bote.packet.I2PBotePacketTest;
 import i2p.bote.packet.ResponsePacketTest;
 import i2p.bote.packet.UnencryptedEmailPacketTest;
 import i2p.bote.packet.kademlia.FindCloseNodesPacketTest;
-import i2p.bote.packet.kademlia.StorageRequestTest;
+import i2p.bote.packet.kademlia.StoreRequestTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { I2PBotePacketTest.class, StorageRequestTest.class, EncryptedEmailPacketTest.class, UnencryptedEmailPacketTest.class,
+@Suite.SuiteClasses( { I2PBotePacketTest.class, StoreRequestTest.class, EncryptedEmailPacketTest.class, UnencryptedEmailPacketTest.class,
 	FindCloseNodesPacketTest.class, ResponsePacketTest.class, IncompleteEmailFolderTest.class })
 public class AllTests {
 
