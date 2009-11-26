@@ -93,9 +93,8 @@ public class IndexPacket extends DhtStorablePacket {
     @Override
     public byte[] toByteArray() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        outputStream.write(getPacketTypeCode());
+        outputStream.write((byte)getPacketTypeCode());
         try {
-            outputStream.write((byte)getPacketTypeCode());
             destinationHash.writeBytes(outputStream);
             outputStream.write((byte)dhtKeys.size());
             for (Hash dhtKey: dhtKeys)
