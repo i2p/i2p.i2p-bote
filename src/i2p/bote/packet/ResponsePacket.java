@@ -26,6 +26,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import javax.xml.crypto.Data;
+
 import net.i2p.util.Log;
 
 @TypeCode('N')
@@ -79,5 +81,10 @@ public class ResponsePacket extends CommunicationPacket {
         }
         
         return byteStream.toByteArray();
+    }
+    
+    @Override
+    public String toString() {
+        return super.toString() + ", status=" + statusCode + ", ploadType=" + payload.getClass().getSimpleName();
     }
 }
