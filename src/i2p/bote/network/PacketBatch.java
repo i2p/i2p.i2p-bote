@@ -34,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.Destination;
 import net.i2p.util.ConcurrentHashSet;
+import net.i2p.util.Log;
 
 /**
  * This class is used for sending a number of packets to other nodes,
@@ -41,19 +42,22 @@ import net.i2p.util.ConcurrentHashSet;
  */
 // TODO use I2PSendQueue.sendAndWait(), get rid of PacketBatch.sentSignal, etc?
 public class PacketBatch implements Iterable<PacketBatchItem> {
+    private final Log log = new Log(PacketBatch.class);
     private Map<UniqueId, PacketBatchItem> outgoingPackets;
     private Set<I2PBotePacket> incomingPackets;
-    private CountDownLatch sentSignal;   // this field is lazy-initialized
+    private CountDownLatch sentSignal;   // this field is initialized by I2PSendQueue when the batch is submitted for sending
     private CountDownLatch firstReplyReceivedSignal;
 
     public PacketBatch() {
         outgoingPackets = new ConcurrentHashMap<UniqueId, PacketBatchItem>();
         incomingPackets = new ConcurrentHashSet<I2PBotePacket>();
+        sentSignal = new CountDownLatch(0);
         firstReplyReceivedSignal = new CountDownLatch(1);
     }
     
-    public void putPacket(CommunicationPacket packet, Destination destination) {
+    public synchronized void putPacket(CommunicationPacket packet, Destination destination) {
         outgoingPackets.put(packet.getPacketId(), new PacketBatchItem(packet, destination));
+        sentSignal = new CountDownLatch((int)sentSignal.getCount() + 1);
     }
 
     /**
@@ -106,18 +110,25 @@ public class PacketBatch implements Iterable<PacketBatchItem> {
         return incomingPackets;
     }
     
+    synchronized void initializeSentSignal() {
+        sentSignal = new CountDownLatch(getPacketCount());
+    }
+    
     void decrementSentLatch() {
-        getSentSignal().countDown();
+        sentSignal.countDown();
     }
     
-    private synchronized CountDownLatch getSentSignal() {
-        if (sentSignal == null)
-            sentSignal = new CountDownLatch(getPacketCount());
-        return sentSignal;
-    }
-    
+    /**
+     * Only to be called after batch has been submitted to {@link I2PSendQueue}.
+     */
     public void awaitSendCompletion() throws InterruptedException {
-        getSentSignal().await(5, TimeUnit.MINUTES);
+      boolean timedOut = !sentSignal.await(5, TimeUnit.MINUTES);
+        if (timedOut)
+            log.warn("Batch not sent within 5 minutes!");
+    }
+    
+    public int getUnsentPacketCount() {
+        return (int)sentSignal.getCount();
     }
     
     public void awaitFirstReply(long timeout, TimeUnit timeoutUnit) throws InterruptedException {
