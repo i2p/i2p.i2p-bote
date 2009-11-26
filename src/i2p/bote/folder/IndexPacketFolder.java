@@ -31,7 +31,7 @@ import net.i2p.util.Log;
 
 /**
  * This class differs from {@link DhtPacketFolder} in that it doesn't overwrite an existing
- * packet when a new packet is stored under the same key, but 
+ * packet when a new packet is stored under the same key, but merges the packets.
  */
 public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> {
     private final Log log = new Log(I2PBotePacket.class);
