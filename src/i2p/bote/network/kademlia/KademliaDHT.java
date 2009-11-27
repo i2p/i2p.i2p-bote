@@ -165,12 +165,12 @@ public class KademliaDHT implements DHT, PacketListener {
             if (exhaustive)
                 TimeUnit.SECONDS.sleep(60);   // TODO make a static field
             else
-                batch.awaitFirstReply(30, TimeUnit.SECONDS);   // TODO make a static field
+                batch.awaitFirstReply(60, TimeUnit.SECONDS);   // TODO make a static field
         }
         catch (InterruptedException e) {
             log.warn("Interrupted while waiting for responses to Retrieve Requests.", e);
         }
-        log.debug(batch.getResponsePackets().size() + " response packets received for hash " + key + " and data type " + dataType);
+        log.debug(batch.getResponses().size() + " response packets received for hash " + key + " and data type " + dataType);
         
         sendQueue.remove(batch);
 //        i2pReceiver.removePacketListener(packetListener);
@@ -199,7 +199,7 @@ public class KademliaDHT implements DHT, PacketListener {
      */
     private ConcurrentHashSet<DhtStorablePacket> getStorablePackets(PacketBatch batch) {
         ConcurrentHashSet<DhtStorablePacket> storablePackets = new ConcurrentHashSet<DhtStorablePacket>();
-        for (I2PBotePacket packet: batch.getResponsePackets())
+        for (I2PBotePacket packet: batch.getResponses())
             if (packet instanceof DhtStorablePacket)
                 storablePackets.add((DhtStorablePacket)packet);
         return storablePackets;
