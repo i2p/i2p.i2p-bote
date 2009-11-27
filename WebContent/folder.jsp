@@ -33,17 +33,37 @@
 This is the <b>${param.path}</b> folder.
 
 <div class="main">
+<div class="folder">
 	<table>
 	    <tr>
-	        <th>Sender</th><th>Subject</th><th>Sent Date</th>
+	        <th>Sender</th><th>Subject</th><th>Date</th>
 	    </tr>
 	    <c:set var="folderName" value="Inbox"/>
 	    <c:forEach items="${ib:getMailFolder(folderName).elements}" var="email">
 	        <tr>
-	            <td>${email.sender}</td><td>${email.subject}</td><td>${email.sentDate}</td>
+                <c:set var="sender" value="${email.subject}"/>
+                <c:if test="${empty subject}">
+                    <c:set var="sender" value="Anonymous"/>
+                </c:if>
+                
+                <c:set var="date" value="${email.date}"/>
+                <c:if test="${empty date}">
+                    <c:set var="date" value="${email.dateString}"/>
+                </c:if>
+                <c:if test="${empty date}">
+                    <c:set var="date" value="Unknown"/>
+                </c:if>
+                
+                <c:set var="subject" value="${email.subject}"/>
+                <c:if test="${empty subject}">
+                    <c:set var="subject" value="(No subject)"/>
+                </c:if>
+                
+	            <td>${sender}</td><td>${subject}</td><td>${date}</td>
 	        </tr>
 	    </c:forEach>
 	</table>
+</div>
 </div>
 
 <jsp:include page="footer.jsp"/>

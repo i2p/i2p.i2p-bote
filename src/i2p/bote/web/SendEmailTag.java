@@ -37,6 +37,7 @@ public class SendEmailTag extends SimpleTagSupport {
     // TODO make all Log instances final
     private Log log = new Log(SendEmailTag.class);
 	private String recipientAddress;
+	private String subject;
 	private String message;
 
 	public void doTag() {
@@ -44,10 +45,11 @@ public class SendEmailTag extends SimpleTagSupport {
 		JspWriter out = pageContext.getOut();
 		
 		Email email = new Email();
+        email.addRecipient(RecipientType.TO, recipientAddress);
+        email.setContent(message);
+        email.updateDate();
 		String statusMessage;
 		try {
-			email.addRecipient(RecipientType.TO, recipientAddress);
-			email.setContent(message);
 			I2PBote.getInstance().sendEmail(email);
 			statusMessage = "Email has been queued for sending.";
 		}
@@ -71,7 +73,15 @@ public class SendEmailTag extends SimpleTagSupport {
 		return recipientAddress;
 	}
 
-	public void setMessage(String message) {
+	public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setMessage(String message) {
 		this.message = message;
 	}
 

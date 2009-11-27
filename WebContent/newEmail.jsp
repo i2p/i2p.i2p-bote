@@ -63,6 +63,10 @@
                 </td>
             </tr>
             <tr>
+                <td valign="top"><br/>Subject:</td>
+                <td><input type="text" size="80" name="subject"/></td>
+            </tr>
+            <tr>
                 <td valign="top"><br/>Message:</td>
                 <td><textarea rows="30" cols="80" name="message"></textarea></td>
             </tr>

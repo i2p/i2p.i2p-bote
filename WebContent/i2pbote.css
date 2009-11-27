@@ -273,6 +273,11 @@ select {
     text-align: left !important;
 }
 
+.folder table {
+    table-layout: fixed;
+    width: 800px;
+}
+
 .identities table {
     table-layout: fixed;
     width: 800px;

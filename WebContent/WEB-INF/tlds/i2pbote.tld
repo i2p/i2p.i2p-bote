@@ -15,6 +15,11 @@
         <required>true</required>
     </attribute>
     <attribute>
+        <name>subject</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
         <name>message</name>
         <rtexprvalue>true</rtexprvalue>
         <required>true</required>

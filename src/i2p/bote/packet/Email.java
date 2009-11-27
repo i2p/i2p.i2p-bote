@@ -34,12 +34,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
+import java.util.TimeZone;
 
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
@@ -122,8 +130,8 @@ public class Email implements FolderElement {
 
     private static Set<String> createHeaderWhitelist() {
         String[] headerArray = new String[] {
-            "From", "Sender", "To", "CC", "BCC", "Reply-To", "Subject", "MIME-Version", "Content-Type", "Content-Transfer-Encoding",
-            "Message-Id", "In-Reply-To", "X-HashCash"
+            "From", "Sender", "To", "CC", "BCC", "Reply-To", "Subject", "Date", "MIME-Version", "Content-Type",
+            "Content-Transfer-Encoding", "Message-Id", "In-Reply-To", "X-HashCash"
         };
         
         ConcurrentHashSet<String> headerSet = new ConcurrentHashSet<String>();
@@ -149,6 +157,28 @@ public class Email implements FolderElement {
             log.debug("Ignoring non-whitelisted header: " + name);
     }
     
+    /**
+     * Returns the value of the RFC 5322 "From" header field. If the "From" header
+     * field is absent, the value of the "Sender" field is returned. If both
+     * fields are absent, <code>null</code> is returned.
+     * @return
+     */
+    public String getSender() {
+        String sender = getHeader("From");
+        if (sender != null)
+            return sender;
+        sender = getHeader("Sender");
+        return sender;
+    }
+    
+    public void setSubject(String subject) {
+        setHeader("Subject", subject);
+    }
+    
+    public String getSubject() {
+        return getHeader("Subject");
+    }
+    
     public Collection<String> getAllRecipients() {
         List<String> recipients = new ArrayList<String>();
         for (Header header: headers)
@@ -163,6 +193,53 @@ public class Email implements FolderElement {
     
     public void addRecipient(RecipientType type, String address) {
         addHeader(type.toString(), address);
+    }
+    
+    /**
+     * Sets the "Date" header field to the current UTC time, using {@link Locale.ENGLISH} for the locale.
+     */
+    public void updateDate() {
+        Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("GMT+0"));
+        DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss +0000", Locale.ENGLISH);   // always use UTC for outgoing mail
+        setHeader("Date", formatter.format(calendar.getTime()));
+    }
+
+    /**
+     * Returns the value of the "Date" header field.
+     * @return
+     */
+    public String getDateString() {
+        return getHeader("Date");
+    }
+    
+    /**
+     * Parses the value of the "Date" header field into a {@link Date}.
+     * If the field cannot be parsed, <code>null</code> is returned.
+     * @return
+     */
+    public Date getDate() {
+        try {
+            return parseDate(getDateString());
+        }
+        catch (ParseException e) {
+            return null;
+        }
+    }
+    
+    /**
+     * Example for a valid date string: Sat, 19 Aug 2006 20:05:41 +0100
+     * @param dateString
+     * @return
+     * @throws ParseException
+     */
+    private Date parseDate(String dateString) throws ParseException {
+        // remove day of week if present
+        String[] tokens = dateString.split(",\\s+", 2);
+        if (tokens.length > 1)
+            dateString = tokens[1];
+
+        DateFormat parser = new SimpleDateFormat("dd MMM yyyy kk:mm:ss Z", Locale.ENGLISH);
+        return parser.parse(dateString);
     }
     
     public void setContent(String content) {
@@ -251,6 +328,19 @@ public class Email implements FolderElement {
         return newEmail;
     }
 
+    /**
+     * Returns the value of the first header field for a header field name,
+     * or <code>null</code> if no field by that name exists.
+     * @param name
+     * @return
+     */
+    private String getHeader(String name) {
+        for (Header header: headers)
+            if (name.equals(header.name))
+                return header.value;
+        return null;
+    }
+    
     // FolderElement implementation
     @Override
     public File getFile() {

@@ -29,6 +29,6 @@
     <jsp:param name="title" value="New Email"/>
 </jsp:include>
 
-<ib:sendEmail recipient="${param.recipient0}" message="${param.message}" />
+<ib:sendEmail recipient="${param.recipient0}" subject="${param.subject}" message="${param.message}" />
 
 <jsp:include page="footer.jsp"/>
