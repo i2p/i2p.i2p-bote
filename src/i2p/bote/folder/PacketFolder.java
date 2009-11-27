@@ -33,9 +33,9 @@ import net.i2p.util.Log;
 /**
  * This class stores new files under a random file name with the .pkt extension.
  *
- * @param <T> The type of data stored in this folder
+ * @param <PacketType> The type of data stored in this folder
  */
-public class PacketFolder<T extends DataPacket> extends Folder<T> {
+public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketType> {
     protected static final String PACKET_FILE_EXTENSION = ".pkt";
     
     private Log log = new Log(PacketFolder.class);
@@ -44,7 +44,7 @@ public class PacketFolder<T extends DataPacket> extends Folder<T> {
         super(storageDir, PACKET_FILE_EXTENSION);
     }
     
-    public void add(DataPacket packetToStore) {
+    public <T extends PacketType> void add(T packetToStore) {
         String filename = new UniqueId().toBase64() + PACKET_FILE_EXTENSION;
         add(packetToStore, filename);
     }
@@ -80,7 +80,7 @@ public class PacketFolder<T extends DataPacket> extends Folder<T> {
 
     @Override
     @SuppressWarnings("unchecked")
-    protected T createFolderElement(File file) throws Exception {
-        return (T)DataPacket.createPacket(file);
+    protected PacketType createFolderElement(File file) throws Exception {
+        return (PacketType)DataPacket.createPacket(file);
     }
 }
