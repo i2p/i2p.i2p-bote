@@ -130,7 +130,7 @@ public class CheckEmailTask implements Runnable {
                 EncryptedEmailPacket emailPacket = (EncryptedEmailPacket)packet;
                 try {
                     UnencryptedEmailPacket decryptedPacket = emailPacket.decrypt(identity);
-                    incompleteEmailFolder.add(emailPacket);
+                    incompleteEmailFolder.add(decryptedPacket);
                     sendDeleteRequest(dhtKey, decryptedPacket.getVerificationDeletionKey());
                 }
                 catch (DataFormatException e) {
