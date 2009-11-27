@@ -232,7 +232,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
 
             for (PacketBatch batch: runningBatches)
                 if (batch.contains(packetId))
-                    batch.addResponsePacket(packet);
+                    batch.addResponse(((ResponsePacket)packet).getPayload());
 
             // Remove the original request if it is on the list, and notify objects waiting on a response
             ScheduledPacket requestPacket = outstandingRequests.remove(packetId);
