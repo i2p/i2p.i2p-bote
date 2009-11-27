@@ -22,7 +22,7 @@
 package i2p.bote.network;
 
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.I2PBotePacket;
+import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.UniqueId;
 
 import java.util.Iterator;
@@ -44,13 +44,13 @@ import net.i2p.util.Log;
 public class PacketBatch implements Iterable<PacketBatchItem> {
     private final Log log = new Log(PacketBatch.class);
     private Map<UniqueId, PacketBatchItem> outgoingPackets;
-    private Set<I2PBotePacket> incomingPackets;
+    private Set<DataPacket> incomingPackets;
     private CountDownLatch sentSignal;   // this field is initialized by I2PSendQueue when the batch is submitted for sending
     private CountDownLatch firstReplyReceivedSignal;
 
     public PacketBatch() {
         outgoingPackets = new ConcurrentHashMap<UniqueId, PacketBatchItem>();
-        incomingPackets = new ConcurrentHashSet<I2PBotePacket>();
+        incomingPackets = new ConcurrentHashSet<DataPacket>();
         sentSignal = new CountDownLatch(0);
         firstReplyReceivedSignal = new CountDownLatch(1);
     }
@@ -101,12 +101,12 @@ public class PacketBatch implements Iterable<PacketBatchItem> {
             outgoingPackets.get(packetId).confirmDelivery();
     }*/
     
-    void addResponsePacket(I2PBotePacket packet) {
+    void addResponse(DataPacket packet) {
         incomingPackets.add(packet);
         firstReplyReceivedSignal.countDown();
     }
     
-    public Set<I2PBotePacket> getResponsePackets() {
+    public Set<DataPacket> getResponses() {
         return incomingPackets;
     }
     
