@@ -50,6 +50,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
         this.inbox = inbox;
     }
     
+    @Override
     public void add(UnencryptedEmailPacket packetToStore) {
         add(packetToStore, getFilename(packetToStore));
         
