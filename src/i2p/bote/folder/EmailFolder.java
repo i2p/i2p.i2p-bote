@@ -22,6 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.packet.Email;
+import i2p.bote.packet.MessageId;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,10 +55,36 @@ public class EmailFolder extends Folder<Email> {
         emailOutputStream.close();
     }
     
+    /**
+     * Finds an <code>Email</code> by message id. If the <code>Email</code> is
+     * not found, <code>null</code> is returned.
+     * The <code>messageId</code> parameter must be a 44-character base64-encoded
+     * message id. If the message id contains an ampersand, the ampersand and
+     * everything after it is ignored. 
+     * @param messageId
+     * @return
+     */
+    public Email getEmail(String messageIdString) {
+        MessageId messageId = new MessageId(messageIdString);
+        
+        File file = getEmailFile(messageId);
+        try {
+            return createFolderElement(file);
+        }
+        catch (Exception e) {
+            log.error("Can't read email from file: <" + file.getAbsolutePath() + ">", e);
+            return null;
+        }
+    }
+    
     private File getEmailFile(Email email) {
-        return new File(storageDir, email.getMessageID() + EMAIL_FILE_EXTENSION);
+        return getEmailFile(email.getMessageID());
     }
 
+    private File getEmailFile(MessageId messageId) {
+        return new File(storageDir, messageId.toBase64() + EMAIL_FILE_EXTENSION);
+    }
+    
     public void delete(Email email) {
         if (!getEmailFile(email).delete())
             log.error("Cannot delete file: '" + getEmailFile(email) + "'");
