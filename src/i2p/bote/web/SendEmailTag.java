@@ -36,6 +36,7 @@ import net.i2p.util.Log;
 public class SendEmailTag extends SimpleTagSupport {
     // TODO make all Log instances final
     private Log log = new Log(SendEmailTag.class);
+    private String senderAddress;
 	private String recipientAddress;
 	private String subject;
 	private String message;
@@ -46,8 +47,8 @@ public class SendEmailTag extends SimpleTagSupport {
 		
 		Email email = new Email();
         email.addRecipient(RecipientType.TO, recipientAddress);
+        email.setSubject(subject);
         email.setContent(message);
-        email.updateDate();
 		String statusMessage;
 		try {
 			I2PBote.getInstance().sendEmail(email);
@@ -64,6 +65,14 @@ public class SendEmailTag extends SimpleTagSupport {
 			log.error("Can't write output to HTML page", e);
 		}
 	}
+
+    public void setSender(String sender) {
+        this.senderAddress = sender;
+    }
+
+    public String getSender() {
+        return senderAddress;
+    }
 
 	public void setRecipient(String recipient) {
 		this.recipientAddress = recipient;
