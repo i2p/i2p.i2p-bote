@@ -10,6 +10,11 @@
     <tag-class>i2p.bote.web.SendEmailTag</tag-class>
     <body-content>empty</body-content>
     <attribute>
+        <name>sender</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
         <name>recipient</name>
         <rtexprvalue>true</rtexprvalue>
         <required>true</required>
@@ -81,6 +86,14 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         i2p.bote.EmailFolder getMailFolder(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>getEmail</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        i2p.bote.packet.Email getEmail(java.lang.String, java.lang.String)
     </function-signature>
 </function>
 
