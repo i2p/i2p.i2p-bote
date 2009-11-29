@@ -29,14 +29,12 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import net.i2p.data.Base64;
-import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 
 public class UniqueId implements Comparable<UniqueId> {
     public static final byte LENGTH = 32;
     
-    private Log log = new Log(UniqueId.class);
-    private byte[] bytes;
+    protected byte[] bytes;
 
     /**
      * Create a random <code>UniqueId</code>.
@@ -54,14 +52,6 @@ public class UniqueId implements Comparable<UniqueId> {
     public UniqueId(byte[] bytes, int offset) {
         this.bytes = new byte[LENGTH];
         System.arraycopy(bytes, offset, this.bytes, 0, LENGTH);
-    }
-    
-    /**
-     * A copy constructor.
-     * @param uniqueId
-     */
-    public UniqueId(UniqueId uniqueId) {
-        this.bytes = uniqueId.bytes.clone();
     }
     
     /**
@@ -117,5 +107,12 @@ public class UniqueId implements Comparable<UniqueId> {
     @Override
     public int hashCode() {
         return Arrays.hashCode(bytes);
+    }
+    
+    @Override
+    public UniqueId clone() {
+        UniqueId newUniqueId = new UniqueId();
+        newUniqueId.bytes = bytes.clone();
+        return newUniqueId;
     }
 }
