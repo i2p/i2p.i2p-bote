@@ -64,12 +64,12 @@ public class Email implements FolderElement {
     private File file;
     private List<Header> headers;
     private byte[] content;   // save memory by using bytes rather than chars
-    private UniqueId messageId;
+    private MessageId messageId;
 
     public Email() {
         headers = Collections.synchronizedList(new ArrayList<Header>());
         content = new byte[0];
-        messageId = new UniqueId();
+        messageId = new MessageId();
     }
 
     /**
@@ -125,7 +125,9 @@ public class Email implements FolderElement {
         }
         content = contentStream.toByteArray();
         
-        messageId = new UniqueId();
+        String messageIdString = getHeader("Message-Id");
+        if (messageIdString != null)
+        messageId = new MessageId(messageIdString);
     }
 
     private static Set<String> createHeaderWhitelist() {
@@ -194,16 +196,21 @@ public class Email implements FolderElement {
     public void addRecipient(RecipientType type, String address) {
         addHeader(type.toString(), address);
     }
-    
+
     /**
-     * Sets the "Date" header field to the current UTC time, using {@link Locale.ENGLISH} for the locale.
+     * Initializes some basic header fields.
      */
-    public void updateDate() {
+    public void updateHeaders() {
+        setHeader("Content-Type", "text/plain");
+        setHeader("Content-Transfer-Encoding", "7bit");
+        setHeader("Message-Id", messageId.getEmailMessageId());
+        
+        // Set the "Date" field, using english for the locale.
         Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("GMT+0"));
         DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss +0000", Locale.ENGLISH);   // always use UTC for outgoing mail
         setHeader("Date", formatter.format(calendar.getTime()));
     }
-
+    
     /**
      * Returns the value of the "Date" header field.
      * @return
@@ -254,12 +261,12 @@ public class Email implements FolderElement {
         return content;
     }
     
-    /**
-     * Returns a message ID that conforms to RFC5322
-     * @return
-     */
-    public String getMessageID() {
-        return messageId.toBase64() + "@i2p";
+    public String getBodyText() {
+        return new String(content);
+    }
+    
+    public MessageId getMessageID() {
+        return messageId;
     }
 
     /**
@@ -283,8 +290,6 @@ public class Email implements FolderElement {
         
         // calculate fragment count
         int numFragments = (emailArray.length+MAX_BYTES_PER_PACKET-1) / MAX_BYTES_PER_PACKET;
-        for (UnencryptedEmailPacket packet: packets)
-            packet.setNumFragments(numFragments);
         
         int fragmentIndex = 0;
         int blockStart = 0;   // the array index where the next block of data starts
@@ -297,7 +302,7 @@ public class Email implements FolderElement {
                 byte[] block = new byte[blockSize];
                 System.arraycopy(emailArray, blockStart, block, 0, blockSize);
                 UniqueId deletionKeyPlain = new UniqueId();
-                UniqueId deletionKeyEncrypted = new UniqueId(deletionKeyPlain);   // encryption happens in the constructor call below
+                UniqueId deletionKeyEncrypted = deletionKeyPlain.clone();   // encryption happens in the constructor call below
                 UnencryptedEmailPacket packet = new UnencryptedEmailPacket(deletionKeyPlain, deletionKeyEncrypted, messageId, fragmentIndex, numFragments, block);
                 packets.add(packet);
                 fragmentIndex++;
