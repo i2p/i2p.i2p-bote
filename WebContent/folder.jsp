@@ -58,6 +58,7 @@ This is the <b>${param.path}</b> folder.
                 <c:if test="${empty subject}">
                     <c:set var="subject" value="(No subject)"/>
                 </c:if>
+                <c:set var="subject" value="<a href=showEmail.jsp?folder=${folderName}&messageID=${email.messageID}>${subject}</a>"/>
                 
 	            <td>${sender}</td><td>${subject}</td><td>${date}</td>
 	        </tr>
