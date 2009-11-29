@@ -26,6 +26,7 @@ import i2p.bote.I2PBote;
 import i2p.bote.Identities;
 import i2p.bote.Util;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.packet.Email;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -36,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 import net.i2p.util.Log;
 
 /**
- * Implements JSP functions.
+ * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
  */
 public class JSPHelper {
     private static final Log log = new Log(JSPHelper.class);
@@ -133,5 +134,9 @@ public class JSPHelper {
             return I2PBote.getInstance().getInbox();
         else
             return null;
+    }
+    
+    public static Email getEmail(String folderName, String messageId) {
+        return getMailFolder(folderName).getEmail(messageId);
     }
 }
