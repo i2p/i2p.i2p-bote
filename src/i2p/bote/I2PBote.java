@@ -227,6 +227,7 @@ public class I2PBote {
 	
 	public void sendEmail(Email email) throws Exception {
 /*XXX*/
+email.updateHeaders();
 String recipient = email.getAllRecipients().iterator().next();
 if (recipient.indexOf('@')>=0)
     recipient = recipient.substring(0, recipient.indexOf('@'));
