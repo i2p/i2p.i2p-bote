@@ -55,6 +55,13 @@
                     <button type="submit" value="Check Mail">Check Mail</button>
                 </form>
             </div>
+            <c:if test="${ib:newMailReceived()}">
+                <script language="Javascript">
+                // If inbox is being displayed, reload so the new email(s) show
+                if (document.getElementById("inboxFlag"))
+                    window.location.reload();
+                </script>
+            </c:if>
         </c:if>
     </td>
     <td>
