@@ -159,6 +159,10 @@ public class Email implements FolderElement {
             log.debug("Ignoring non-whitelisted header: " + name);
     }
     
+    public void setSender(String sender) {
+        setHeader("Sender", sender);
+    }
+    
     /**
      * Returns the value of the RFC 5322 "From" header field. If the "From" header
      * field is absent, the value of the "Sender" field is returned. If both
@@ -280,12 +284,7 @@ public class Email implements FolderElement {
         ArrayList<UnencryptedEmailPacket> packets = new ArrayList<UnencryptedEmailPacket>();
         
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-        	writeTo(outputStream, bccToKeep);
-        }
-        catch (IOException e) {
-        	log.error("Can't write to ByteArrayOutputStream.", e);
-        }
+        writeTo(outputStream, bccToKeep);
         byte[] emailArray = outputStream.toByteArray();
         
         // calculate fragment count
@@ -374,17 +373,18 @@ public class Email implements FolderElement {
      * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
      * @throws IOException
      */
-    public void writeTo(OutputStream outputStream, String bccToKeep) throws IOException {
+    public void writeTo(OutputStream outputStream, String bccToKeep) {
         PrintWriter writer = new PrintWriter(outputStream);
         
         writeHeaders(writer, bccToKeep);
-        writer.write(NEW_LINE);
-        writer.write(new String(content));
+        writer.print(NEW_LINE);
+        writer.print(new String(content));
+        writer.print(NEW_LINE);
         
         writer.close();
     }
     
-    private void writeHeaders(PrintWriter writer, String bccToKeep) throws IOException {
+    private void writeHeaders(PrintWriter writer, String bccToKeep) {
         for (Header header: headers)
             if (bccToKeep==null || !"BCC".equals(header.name) || bccToKeep.equals(header.value))
                 writer.println(header.toString());
