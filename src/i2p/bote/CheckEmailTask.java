@@ -22,22 +22,22 @@
 package i2p.bote;
 
 import i2p.bote.folder.IncompleteEmailFolder;
-import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.network.DHT;
 import i2p.bote.network.PeerManager;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
+import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.packet.UniqueId;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Hash;
@@ -48,43 +48,51 @@ import net.i2p.util.Log;
  * each packet in order to speed things up, and because the packets are in different places
  * on the network.
  */
-public class CheckEmailTask implements Runnable {
+public class CheckEmailTask implements Callable<Boolean> {
+    public static final int THREAD_STACK_SIZE = 64 * 1024;   // TODO find a safe low value (default in 64-bit Java 1.6 = 1MByte)
     private static final int MAX_THREADS = 50;
-    private static final int THREAD_STACK_SIZE = 64 * 1024;   // TODO find a safe low value (default in 64-bit Java 1.6 = 1MByte)
     private static final ThreadFactory EMAIL_PACKET_TASK_THREAD_FACTORY = Util.createThreadFactory("EmailPktTask", THREAD_STACK_SIZE);
-    private ExecutorService executor;
     
     private Log log = new Log(CheckEmailTask.class);
     private EmailIdentity identity;
     private DHT dht;
     private PeerManager peerManager;
     private IncompleteEmailFolder incompleteEmailFolder;
+    private ExecutorService executor;
 
     public CheckEmailTask(EmailIdentity identity, DHT dht, PeerManager peerManager, IncompleteEmailFolder incompleteEmailFolder) {
         this.identity = identity;
         this.dht = dht;
         this.peerManager = peerManager;
         this.incompleteEmailFolder = incompleteEmailFolder;
+        executor = Executors.newFixedThreadPool(MAX_THREADS, EMAIL_PACKET_TASK_THREAD_FACTORY);
     }
     
+    /**
+     * Returns <code>true</code> if a new email was created in the inbox as a result
+     * of receiving an email packet.
+     */
     @Override
-    public void run() {
+    public Boolean call() {
         Collection<Hash> emailPacketKeys = findEmailPacketKeys();
-        
-        executor = Executors.newFixedThreadPool(MAX_THREADS, EMAIL_PACKET_TASK_THREAD_FACTORY);
-        for (Hash dhtKey: emailPacketKeys)
-            try {
-                executor.submit(new EmailPacketTask(dhtKey)).get();
-            } catch (Exception e) {
-                log.error("Can't retrieve email packet.", e);
-            }
-        executor.shutdown();
-        try {
-            executor.awaitTermination(1, TimeUnit.DAYS);
-        } catch (InterruptedException e) {
-            log.error("Interrupted while checking for mail.", e);
-            executor.shutdownNow();
+
+        Collection<Future<Boolean>> results = new ArrayList<Future<Boolean>>();
+        for (Hash dhtKey: emailPacketKeys) {
+            Future<Boolean> result = executor.submit(new EmailPacketTask(dhtKey));
+            results.add(result);
         }
+        
+        boolean newEmail = false;
+        for (Future<Boolean> result: results)
+            try {
+                if (result.get())
+                    newEmail = true;
+            } catch (ExecutionException e) {
+                log.error("Can't retrieve email packet.", e);
+            } catch (InterruptedException e) {
+                log.error("Interrupted while checking for mail.", e);
+            }
+        return newEmail;
     }
     
     /**
@@ -112,7 +120,7 @@ public class CheckEmailTask implements Runnable {
      * Queries the DHT for an email packet, adds the packet to the {@link IncompleteEmailFolder},
      * and deletes the packet from the DHT.
      */
-    private class EmailPacketTask implements Runnable {
+    private class EmailPacketTask implements Callable<Boolean> {
         private Hash dhtKey;
         
         /**
@@ -123,14 +131,19 @@ public class CheckEmailTask implements Runnable {
             this.dhtKey = dhtKey;
         }
         
+        /**
+         * Returns <code>true</code> if a new email was created in the inbox as a result
+         * of receiving an email packet.
+         */
         @Override
-        public void run() {
+        public Boolean call() {
+            boolean emailCompleted = false;
             DhtStorablePacket packet = dht.findOne(dhtKey, EncryptedEmailPacket.class);
             if (packet instanceof EncryptedEmailPacket) {
                 EncryptedEmailPacket emailPacket = (EncryptedEmailPacket)packet;
                 try {
                     UnencryptedEmailPacket decryptedPacket = emailPacket.decrypt(identity);
-                    incompleteEmailFolder.add(decryptedPacket);
+                    emailCompleted = incompleteEmailFolder.addEmailPacket(decryptedPacket);
                     sendDeleteRequest(dhtKey, decryptedPacket.getVerificationDeletionKey());
                 }
                 catch (DataFormatException e) {
@@ -141,6 +154,7 @@ public class CheckEmailTask implements Runnable {
             else
                 if (packet != null)
                     log.error("DHT returned packet of class " + packet.getClass().getSimpleName() + ", expected EmailPacket.");
+            return emailCompleted;
         }
         
         /**
