@@ -82,6 +82,14 @@
 </function>
 
 <function>
+    <name>newMailReceived</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        boolean newMailReceived()
+    </function-signature>
+</function>
+
+<function>
     <name>getMailFolder</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
