@@ -46,6 +46,7 @@ public class SendEmailTag extends SimpleTagSupport {
 		JspWriter out = pageContext.getOut();
 		
 		Email email = new Email();
+        email.setSender(senderAddress);
         email.addRecipient(RecipientType.TO, recipientAddress);
         email.setSubject(subject);
         email.setContent(message);
