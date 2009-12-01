@@ -72,3 +72,8 @@
     <h2>Configuration</h2>
     <a href=.>Settings</a><br/>
 </div>
+
+<div class="menubox">
+    <h2>Network Status</h2>
+    <iframe src="statusFrame.jsp" width="100%" height="40px" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+</div>
