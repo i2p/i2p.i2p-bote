@@ -79,6 +79,19 @@ body {
     wordwrap: none;
 }
 
+.statusbox table {
+    width: 100%;
+}
+
+.statusbox td {
+    text-align: left;
+    color: #000;
+    font-size: 8pt;
+    vertical-align: top;
+    padding: 0px 30px 0px 0px;
+    width: 100%;
+}
+
 .main {
     width: 800px;
     margin: 0px 20px 20px 240px;
