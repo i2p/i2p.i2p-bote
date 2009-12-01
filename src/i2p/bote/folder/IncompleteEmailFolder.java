@@ -52,14 +52,27 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
     
     @Override
     public void add(UnencryptedEmailPacket packetToStore) {
+        addEmailPacket(packetToStore);
+    }
+    
+    /**
+     * Same as {@link add(UnencryptedEmailPacket)}, but returns <code>true</code>
+     * if an email was completed as a result of adding the packet.
+     * @param packetToStore
+     * @return
+     */
+    public synchronized boolean addEmailPacket(UnencryptedEmailPacket packetToStore) {
         add(packetToStore, getFilename(packetToStore));
         
         // TODO possible optimization: if getNumFragments == 1, no need to check for other packet files
         File[] finishedPacketFiles = getAllMatchingFiles(packetToStore.getMessageId());
         
         // if all packets of the email are available, assemble them into an email
-        if (finishedPacketFiles.length == packetToStore.getNumFragments())
+        if (finishedPacketFiles.length == packetToStore.getNumFragments()) {
             assemble(finishedPacketFiles);
+            return true;
+        }
+        return false;
     }
     
     private String getFilename(UnencryptedEmailPacket packet) {
