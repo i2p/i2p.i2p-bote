@@ -33,9 +33,20 @@
 </jsp:include>
 
 <div class="main">
-    folder = <c:out value="${param.folder}"/><br/>
-    message ID = <c:out value="${param.messageID}"/><br/>
-    <c:out value="${email.bodyText}"/>
+    <table>
+        <tr>
+            <td><strong>From:</strong></td>
+            <td>${email.sender}</td>
+        </tr>
+        <tr>
+            <td><strong>Subject:</strong></td>
+            <td>${email.subject}</td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>Message:</strong></td>
+            <td>${email.bodyText}</td>
+        </tr>
+    </table>
 </div>
 
 <jsp:include page="footer.jsp"/>
