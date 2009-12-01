@@ -49,7 +49,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 import net.i2p.I2PException;
 import net.i2p.client.I2PClient;
@@ -86,15 +94,21 @@ public class I2PBote {
 	private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
 	private DHT dht;
 	private PeerManager peerManager;
+    private ThreadFactory mailCheckThreadFactory;
+    private ExecutorService mailCheckExecutor;
+    private Collection<Future<Boolean>> mailCheckResults;
 
 	private I2PBote() {
 	    Thread.currentThread().setName("I2PBoteMain");
-	
+	    
         initializeLogging();
         
 		i2pClient = I2PClientFactory.createClient();
 		configuration = new Configuration();
 		
+        mailCheckThreadFactory = Util.createThreadFactory("ChkMailTask", CheckEmailTask.THREAD_STACK_SIZE);
+        mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
+    
 		identities = new Identities(configuration.getIdentitiesFile());
 		initializeSession();
 		initializeFolderAccess();
@@ -181,9 +195,9 @@ public class I2PBote {
         dht.setStorageHandler(IndexPacket.class, indexPacketDhtStorageFolder);
 //TODO        dht.setStorageHandler(AddressPacket.class, );
         
-        outboxProcessor = new OutboxProcessor(dht, outbox, configuration, peerManager);
-        
         peerManager = new PeerManager();
+        
+        outboxProcessor = new OutboxProcessor(dht, outbox, configuration, peerManager);
     }
 
     /**
@@ -242,10 +256,55 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 		outboxProcessor.checkForEmail();*/
 	}
 
-	public Runnable createCheckMailTask(EmailIdentity identity) {
-	    return new CheckEmailTask(identity, dht, peerManager, incompleteEmailFolder);
-	}
-	
+    public synchronized void checkForMail() {
+        if (!isCheckingForMail())
+            mailCheckResults = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
+            for (EmailIdentity identity: getIdentities()) {
+                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, incompleteEmailFolder);
+                Future<Boolean> result = mailCheckExecutor.submit(checkMailTask);
+                mailCheckResults.add(result);
+            }
+    }
+
+    public synchronized boolean isCheckingForMail() {
+        if (mailCheckResults == null)
+            return false;
+        
+        for (Future<Boolean> result: mailCheckResults)
+            if (!result.isDone())
+                return true;
+        
+        return false;
+    }
+    
+    /**
+     * Returns <code>true</code> if the last call to {@link checkForMail} has completed
+     * and added new mail to the inbox.
+     * If this method returns <code>true</code>, subsequent calls will always return
+     * <code>false</code> until {@link checkForMail} is executed again.
+     * @return
+     */
+    public synchronized boolean newMailReceived() {
+        if (mailCheckResults == null)
+            return false;
+        if (isCheckingForMail())
+            return false;
+        
+        try {
+            for (Future<Boolean> result: mailCheckResults)
+                if (result.get(1, TimeUnit.MILLISECONDS)) {
+                    mailCheckResults = null;
+                    return true;
+                }
+        }
+        catch (Exception e) {
+            log.error("Error while checking whether new mail has arrived.", e);
+        }
+        
+        mailCheckResults = null;
+        return false;
+    }
+    
     public EmailFolder getInbox() {
         return inbox;
     }
@@ -274,5 +333,6 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 		smtpService.shutDown();
 		pop3Service.shutDown();
         sendQueue.requestShutdown();
+        mailCheckExecutor.shutdownNow();
 	}
 }

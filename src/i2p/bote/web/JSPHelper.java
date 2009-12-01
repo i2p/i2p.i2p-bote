@@ -24,27 +24,15 @@ package i2p.bote.web;
 import i2p.bote.EmailIdentity;
 import i2p.bote.I2PBote;
 import i2p.bote.Identities;
-import i2p.bote.Util;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.packet.Email;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
-
-import net.i2p.util.Log;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
  */
 public class JSPHelper {
-    private static final Log log = new Log(JSPHelper.class);
-    private static final int MAX_THREADS = 10;
-    private static final int THREAD_STACK_SIZE = 64 * 1024;   // TODO find a safe low value (default in 64-bit Java 1.6 = 1MByte)
-    private static final ThreadFactory MAIL_CHECK_THREAD_FACTORY = Util.createThreadFactory("CheckMail", THREAD_STACK_SIZE);
-    private static ExecutorService EXECUTOR;
 
     private JSPHelper() {
         throw new UnsupportedOperationException();
@@ -107,26 +95,15 @@ public class JSPHelper {
     }
 
     public static void checkForMail() {
-        if (!isCheckingForMail()) {
-            EXECUTOR = Executors.newFixedThreadPool(MAX_THREADS, MAIL_CHECK_THREAD_FACTORY);
-            
-            I2PBote bote = I2PBote.getInstance();
-            for (EmailIdentity identity: bote.getIdentities())
-                EXECUTOR.submit(bote.createCheckMailTask(identity));
-            
-            EXECUTOR.shutdown();
-            try {
-                EXECUTOR.awaitTermination(1, TimeUnit.DAYS);
-            }
-            catch (InterruptedException e) {
-                log.error("Interrupted while checking for mail.", e);
-                EXECUTOR.shutdownNow();
-            }
-        }
+        I2PBote.getInstance().checkForMail();
     }
 
     public static boolean isCheckingForMail() {
-        return (EXECUTOR!=null && !EXECUTOR.isTerminated());
+        return I2PBote.getInstance().isCheckingForMail();
+    }
+ 
+    public static boolean newMailReceived() {
+        return I2PBote.getInstance().newMailReceived();
     }
     
     public static EmailFolder getMailFolder(String folderName) {
