@@ -30,13 +30,20 @@
     <jsp:param name="title" value="${param.path}"/>
 </jsp:include>
 
-This is the <b>${param.path}</b> folder.
+<c:if test="${folderName == 'Inbox'}">
+    <div id="inboxFlag"></div>
+</c:if>
+
+[DEBUG MSG: This is the <b>${param.path}</b> folder.]
 
 <div class="main">
 <div class="folder">
 	<table>
 	    <tr>
-	        <th>Sender</th><th>Subject</th><th>Date</th>
+	        <th style="width: 100px;">Sender</th>
+            <th style="width: 150px;">Subject</th>
+            <th style="width: 100px;">Date</th>
+            <th style="width: 20px;"></th>
 	    </tr>
 	    <c:set var="folderName" value="Inbox"/>
 	    <c:forEach items="${ib:getMailFolder(folderName).elements}" var="email">
@@ -58,9 +65,13 @@ This is the <b>${param.path}</b> folder.
                 <c:if test="${empty subject}">
                     <c:set var="subject" value="(No subject)"/>
                 </c:if>
-                <c:set var="subject" value="<a href=showEmail.jsp?folder=${folderName}&messageID=${email.messageID}>${subject}</a>"/>
                 
-	            <td>${sender}</td><td>${subject}</td><td>${date}</td>
+                <c:set var="mailUrl" value="showEmail.jsp?folder=${folderName}&messageID=${email.messageID}"/>
+                
+	            <td><a href="${mailUrl}">${sender}</a></td>
+                <td><a href="${mailUrl}">${subject}</a></td>
+                <td><a href="${mailUrl}">${date}</a></td>
+                <td><a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}"><img src="images/delete.png" alt="Delete" title="Delete this email"/></a></td>
 	        </tr>
 	    </c:forEach>
 	</table>
