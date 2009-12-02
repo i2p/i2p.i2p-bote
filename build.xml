@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="all" name="I2P-Bote">
+    <property name="i2p-jar-dir" value="WebContent/WEB-INF/lib"/>
+    <property name="jsp-jar-dir" value="WebContent/WEB-INF/lib"/>
+    <property name="jetty-jar-dir" value="/opt/i2p/lib"/>
+    <target name="all" depends="clean, war" />
+
+    <target name="war" depends="compile"> 
+        <mkdir dir="ant_build" />
+        <war destfile="i2pbote.war" webxml="WebContent/WEB-INF/web.xml">
+          <classes dir="ant_build/classes" includes="**/*.class" />
+          <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
+          <fileset dir="WebContent" includes="*.jsp"/>
+          <fileset dir="WebContent" includes="*.css"/>
+          <fileset dir="WebContent/" includes="*.xml"/>
+          <zipfileset dir="WebContent/images" prefix="images"/>
+        </war>
+    </target>
+    
+    <target name="compile">
+        <mkdir dir="./ant_build" />
+        <mkdir dir="./ant_build/classes" />
+        <javac
+            srcdir="./src"
+            debug="true" deprecation="on" source="1.5" target="1.5"
+            destdir="./ant_build/classes"
+            classpath="${i2p-jar-dir}/i2p.jar:${jetty-jar-dir}/org.mortbay.jetty.jar:${jetty-jar-dir}/javax.servlet.jar:${jsp-jar-dir}/standard.jar:${jsp-jar-dir}/jstl.jar" >
+            <compilerarg line="" />
+        </javac>
+    </target>
+
+    <target name="junit" depends="war">
+        <junit printsummary="yes">
+            <classpath>
+                <path refid="classpath"/>
+                <path refid="application"/>
+            </classpath>
+            
+            <batchtest fork="yes">
+                <fileset dir="${src.dir}" includes="*Test.java"/>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="clean">
+        <delete dir="ant_build" />
+        <delete file="i2pbote.war" />
+    </target>
+</project>
