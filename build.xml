@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="all" name="I2P-Bote">
-    <property name="i2p-jar-dir" value="WebContent/WEB-INF/lib"/>
-    <property name="jsp-jar-dir" value="WebContent/WEB-INF/lib"/>
-    <property name="jetty-jar-dir" value="/opt/i2p/lib"/>
+    <property name="i2plib" value="/opt/i2p/lib"/>
+    <property name="susidnslib" value="${i2plib}"/>
+    <property name="jettylib" value="${i2plib}"/>
+    <property name="antlib" value="/opt/ant/lib"/>
+    <path id="cp">
+        <pathelement path="${classpath}" />
+        <pathelement location="${i2plib}/i2p.jar" />
+        <pathelement location="${susidnslib}/jstl.jar" />
+        <pathelement location="${susidnslib}/standard.jar" />
+        <pathelement location="${jettylib}/org.mortbay.jetty.jar"/>
+        <pathelement location="${jettylib}/jasper-compiler.jar" />
+        <pathelement location="${jettylib}/jasper-runtime.jar" />
+        <pathelement location="${jettylib}/javax.servlet.jar" />
+        <pathelement location="${jettylib}/commons-logging.jar" />
+        <pathelement location="${jettylib}/commons-el.jar" />
+        <pathelement location="${antlib}/ant.jar" />
+    </path>
+
     <target name="all" depends="clean, war" />
 
-    <target name="war" depends="compile"> 
-        <mkdir dir="ant_build" />
-        <war destfile="i2pbote.war" webxml="WebContent/WEB-INF/web.xml">
-          <classes dir="ant_build/classes" includes="**/*.class" />
-          <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
-          <fileset dir="WebContent" includes="*.jsp"/>
-          <fileset dir="WebContent" includes="*.css"/>
-          <fileset dir="WebContent/" includes="*.xml"/>
-          <zipfileset dir="WebContent/images" prefix="images"/>
-        </war>
-    </target>
-    
     <target name="compile">
         <mkdir dir="./ant_build" />
         <mkdir dir="./ant_build/classes" />
@@ -24,12 +27,58 @@
             srcdir="./src"
             debug="true" deprecation="on" source="1.5" target="1.5"
             destdir="./ant_build/classes"
-            classpath="${i2p-jar-dir}/i2p.jar:${jetty-jar-dir}/org.mortbay.jetty.jar:${jetty-jar-dir}/javax.servlet.jar:${jsp-jar-dir}/standard.jar:${jsp-jar-dir}/jstl.jar" >
+            classpathref="cp" >
             <compilerarg line="" />
         </javac>
     </target>
 
-    <target name="junit" depends="war">
+    <target name="precompilejsp">
+        <mkdir dir="ant_build" />
+        <mkdir dir="ant_build/jspjava" />
+        <path id="jspcp">
+            <path refid="cp" />
+            <pathelement location="ant_build/classes" />
+        </path>
+        <java classname="org.apache.jasper.JspC" fork="true" classpathref="jspcp" failonerror="true">
+            <arg value="-d" />
+            <arg value="ant_build/jspjava" />
+            <arg value="-v" />
+            <arg value="-p" />
+            <arg value="i2p.bote.jsp" />
+            <arg value="-webinc" />
+            <arg value="ant_build/web-fragment.xml" />
+            <arg value="-webapp" />
+            <arg value="WebContent" />
+        </java>
+
+        <javac debug="true" deprecation="on" source="1.5" target="1.5" 
+               destdir="ant_build/classes" srcdir="./ant_build/jspjava"
+               includes="**/*.java" classpathref="jspcp">
+            <compilerarg line="" />
+        </javac>
+        <copy file="WebContent/WEB-INF/web-template.xml" tofile="ant_build/web.xml" />
+        <loadfile property="jspc.web.fragment" srcfile="ant_build/web-fragment.xml" />
+        <replace file="ant_build/web.xml">
+            <replacefilter token="&lt;!-- precompiled servlets --&gt;" value="${jspc.web.fragment}" />
+        </replace>
+    </target>
+
+    <target name="war" depends="compile,precompilejsp"> 
+        <mkdir dir="ant_build" />
+        <war destfile="i2pbote.war" webxml="ant_build/web.xml">
+            <classes dir="ant_build/classes" includes="**/*.class" />
+            <classes dir="src" includes="i2p/bote/network/kademlia/built-in-peers.txt" />
+            <fileset dir="WebContent" includes="*.jsp"/>
+            <fileset dir="WebContent" includes="*.css"/>
+            <fileset dir="WebContent/" includes="*.xml"/>
+            <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
+            <lib file="/opt/ant/lib/ant.jar"/>
+            <lib file="/opt/ant/lib/ant-launcher.jar"/>
+          <zipfileset dir="WebContent/images" prefix="images"/>
+        </war>
+    </target>
+    
+    <target name="junit" depends="compile">
         <junit printsummary="yes">
             <classpath>
                 <path refid="classpath"/>
