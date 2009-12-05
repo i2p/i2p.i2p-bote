@@ -21,13 +21,13 @@
 
 package i2p.bote.network;
 
+import i2p.bote.UniqueId;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.RelayPacket;
 import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
-import i2p.bote.packet.UniqueId;
 import i2p.bote.service.I2PBoteThread;
 
 import java.util.ArrayList;

@@ -22,11 +22,11 @@
 package i2p.bote.packet.kademlia;
 
 import static junit.framework.Assert.assertTrue;
-import i2p.bote.EmailDestination;
-import i2p.bote.EmailIdentity;
+import i2p.bote.UniqueId;
+import i2p.bote.email.EmailDestination;
+import i2p.bote.email.EmailIdentity;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
-import i2p.bote.packet.UniqueId;
 import i2p.bote.packet.dht.StoreRequest;
 
 import java.util.Arrays;

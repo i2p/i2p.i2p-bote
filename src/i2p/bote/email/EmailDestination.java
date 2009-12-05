@@ -19,7 +19,7 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote;
+package i2p.bote.email;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

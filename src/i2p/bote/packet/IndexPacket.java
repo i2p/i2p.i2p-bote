@@ -21,7 +21,7 @@
 
 package i2p.bote.packet;
 
-import i2p.bote.EmailDestination;
+import i2p.bote.email.EmailDestination;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.ByteArrayOutputStream;

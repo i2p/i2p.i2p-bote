@@ -1,4 +1,4 @@
-package i2p.bote;
+package i2p.bote.email;
 
 public enum RecipientType {
     TO("To"), CC("CC"), BCC("BCC");

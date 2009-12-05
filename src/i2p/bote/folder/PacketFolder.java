@@ -21,8 +21,8 @@
 
 package i2p.bote.folder;
 
+import i2p.bote.UniqueId;
 import i2p.bote.packet.DataPacket;
-import i2p.bote.packet.UniqueId;
 
 import java.io.File;
 import java.io.FileOutputStream;

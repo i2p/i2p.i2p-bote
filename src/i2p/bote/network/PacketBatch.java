@@ -21,9 +21,9 @@
 
 package i2p.bote.network;
 
+import i2p.bote.UniqueId;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
-import i2p.bote.packet.UniqueId;
 
 import java.util.Iterator;
 import java.util.Map;

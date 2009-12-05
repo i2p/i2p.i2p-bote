@@ -19,11 +19,12 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.packet;
+package i2p.bote.email;
 
-import i2p.bote.RecipientType;
+import i2p.bote.UniqueId;
 import i2p.bote.Util;
 import i2p.bote.folder.FolderElement;
+import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

@@ -21,11 +21,11 @@
 
 package i2p.bote.web;
 
-import i2p.bote.EmailIdentity;
 import i2p.bote.I2PBote;
-import i2p.bote.Identities;
+import i2p.bote.email.Email;
+import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
-import i2p.bote.packet.Email;
 
 import java.io.IOException;
 

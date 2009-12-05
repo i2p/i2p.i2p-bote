@@ -21,6 +21,8 @@
 
 package i2p.bote.packet;
 
+import i2p.bote.UniqueId;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.CountDownLatch;

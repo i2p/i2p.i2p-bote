@@ -20,8 +20,9 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.packet;
+package i2p.bote.email;
 
+import i2p.bote.UniqueId;
 import net.i2p.data.Base64;
 
 /**

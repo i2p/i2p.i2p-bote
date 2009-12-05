@@ -21,11 +21,11 @@
 
 package i2p.bote.folder;
 
+import i2p.bote.UniqueId;
+import i2p.bote.email.Email;
 import i2p.bote.packet.DataPacket;
-import i2p.bote.packet.Email;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
-import i2p.bote.packet.UniqueId;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

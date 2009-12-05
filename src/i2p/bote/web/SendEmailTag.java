@@ -22,8 +22,8 @@
 package i2p.bote.web;
 
 import i2p.bote.I2PBote;
-import i2p.bote.RecipientType;
-import i2p.bote.packet.Email;
+import i2p.bote.email.Email;
+import i2p.bote.email.RecipientType;
 
 import java.io.IOException;
 

@@ -19,7 +19,7 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.packet;
+package i2p.bote;
 
 import java.io.IOException;
 import java.io.InputStream;

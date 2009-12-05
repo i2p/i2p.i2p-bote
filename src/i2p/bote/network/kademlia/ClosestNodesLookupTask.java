@@ -21,6 +21,7 @@
 
 package i2p.bote.network.kademlia;
 
+import i2p.bote.UniqueId;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketListener;
@@ -28,7 +29,6 @@ import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.PeerList;
 import i2p.bote.packet.ResponsePacket;
-import i2p.bote.packet.UniqueId;
 import i2p.bote.packet.dht.FindClosePeersPacket;
 
 import java.math.BigInteger;

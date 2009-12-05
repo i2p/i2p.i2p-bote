@@ -21,6 +21,8 @@
 
 package i2p.bote.packet;
 
+import i2p.bote.UniqueId;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

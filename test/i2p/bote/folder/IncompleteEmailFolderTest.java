@@ -23,8 +23,8 @@ package i2p.bote.folder;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
-import i2p.bote.RecipientType;
-import i2p.bote.packet.Email;
+import i2p.bote.email.Email;
+import i2p.bote.email.RecipientType;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.File;

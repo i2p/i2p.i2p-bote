@@ -21,19 +21,23 @@
 
 package i2p.bote;
 
+import i2p.bote.email.Email;
+import i2p.bote.email.EmailDestination;
+import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.Identities;
 import i2p.bote.folder.DhtPacketFolder;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.PacketFolder;
+import i2p.bote.network.CheckEmailTask;
 import i2p.bote.network.DHT;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PeerManager;
 import i2p.bote.network.kademlia.KademliaDHT;
 import i2p.bote.packet.DataPacket;
-import i2p.bote.packet.Email;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.RelayPacket;

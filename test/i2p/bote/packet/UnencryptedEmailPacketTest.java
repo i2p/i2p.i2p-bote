@@ -23,6 +23,8 @@ package i2p.bote.packet;
 
 import static junit.framework.Assert.assertTrue;
 
+import i2p.bote.UniqueId;
+
 import java.util.Arrays;
 
 import org.junit.Before;

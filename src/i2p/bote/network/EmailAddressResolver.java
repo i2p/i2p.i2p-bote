@@ -21,7 +21,7 @@
 
 package i2p.bote.network;
 
-import i2p.bote.EmailDestination;
+import i2p.bote.email.EmailDestination;
 
 public class EmailAddressResolver {
 

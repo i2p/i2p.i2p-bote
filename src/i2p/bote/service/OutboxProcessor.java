@@ -22,12 +22,12 @@
 package i2p.bote.service;
 
 import i2p.bote.Configuration;
-import i2p.bote.EmailDestination;
+import i2p.bote.email.Email;
+import i2p.bote.email.EmailDestination;
 import i2p.bote.folder.Outbox;
 import i2p.bote.network.DHT;
 import i2p.bote.network.EmailAddressResolver;
 import i2p.bote.network.PeerManager;
-import i2p.bote.packet.Email;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;

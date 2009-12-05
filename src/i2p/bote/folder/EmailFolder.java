@@ -21,8 +21,8 @@
 
 package i2p.bote.folder;
 
-import i2p.bote.packet.Email;
-import i2p.bote.packet.MessageId;
+import i2p.bote.email.Email;
+import i2p.bote.email.MessageId;
 
 import java.io.File;
 import java.io.FileInputStream;

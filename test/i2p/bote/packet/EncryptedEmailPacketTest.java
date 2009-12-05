@@ -22,8 +22,9 @@
 package i2p.bote.packet;
 
 import static junit.framework.Assert.assertTrue;
-import i2p.bote.EmailIdentity;
-import i2p.bote.EmailDestination;
+import i2p.bote.UniqueId;
+import i2p.bote.email.EmailDestination;
+import i2p.bote.email.EmailIdentity;
 
 import java.util.Arrays;
 

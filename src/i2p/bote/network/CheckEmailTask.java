@@ -19,15 +19,15 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote;
+package i2p.bote.network;
 
+import i2p.bote.UniqueId;
+import i2p.bote.Util;
+import i2p.bote.email.EmailIdentity;
 import i2p.bote.folder.IncompleteEmailFolder;
-import i2p.bote.network.DHT;
-import i2p.bote.network.PeerManager;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
-import i2p.bote.packet.UniqueId;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.util.ArrayList;
