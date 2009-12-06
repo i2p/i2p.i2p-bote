@@ -28,7 +28,6 @@ import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 
 import net.i2p.I2PAppContext;
-import net.i2p.crypto.ElGamalAESEngine;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.PrivateKey;
 import net.i2p.util.Log;
@@ -38,7 +37,6 @@ import com.nettgryppa.security.HashCash;
 @TypeCode('Y')
 public class RelayRequest extends CommunicationPacket {
     private Log log = new Log(RelayPacket.class);
-    private ElGamalAESEngine encrypter = I2PAppContext.getGlobalContext().elGamalAESEngine();
     private HashCash hashCash;
     private byte[] storedData;
 
@@ -71,11 +69,12 @@ public class RelayRequest extends CommunicationPacket {
     /**
      * Returns the payload packet, i.e. the data that is being relayed.
      * @param localDecryptionKey
+     * @param appContext
      * @return
      * @throws DataFormatException
      */
-    public DataPacket getStoredPacket(PrivateKey localDecryptionKey) throws DataFormatException {
-        byte[] decryptedData = encrypter.decrypt(storedData, localDecryptionKey);
+    public DataPacket getStoredPacket(PrivateKey localDecryptionKey, I2PAppContext appContext) throws DataFormatException {
+        byte[] decryptedData = appContext.elGamalAESEngine().decrypt(storedData, localDecryptionKey, appContext.sessionKeyManager());
         return DataPacket.createPacket(decryptedData);
     }
 

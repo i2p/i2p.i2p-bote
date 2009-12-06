@@ -21,8 +21,9 @@
 
 package i2p.bote.packet;
 
-import i2p.bote.EmailDestination;
-import i2p.bote.EmailIdentity;
+import i2p.bote.UniqueId;
+import i2p.bote.email.EmailDestination;
+import i2p.bote.email.EmailIdentity;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.ByteArrayOutputStream;
@@ -33,8 +34,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.i2p.I2PAppContext;
-import net.i2p.crypto.ElGamalAESEngine;
-import net.i2p.crypto.SessionKeyManager;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Hash;
 import net.i2p.data.PrivateKey;
@@ -48,8 +47,6 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
     private static final int PADDED_SIZE = PrivateKey.KEYSIZE_BYTES;   // TODO is this a good choice?
     
     private Log log = new Log(EncryptedEmailPacket.class);
-    private ElGamalAESEngine cryptoEngine = I2PAppContext.getGlobalContext().elGamalAESEngine();
-    private SessionKeyManager sessionKeyManager = I2PAppContext.getGlobalContext().sessionKeyManager();
     private Hash dhtKey;
     private UniqueId deletionKeyPlain;
     private byte[] encryptedData;   // the encrypted fields of an I2PBote email packet: Encrypted Deletion Key, Message ID, Fragment Index, Number of Fragments, and Content.
@@ -77,8 +74,9 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
 	 * The public key of <code>emailDestination</code> is used for encryption.
 	 * @param unencryptedPacket
 	 * @param emailDestination
+	 * @param appContext
 	 */
-	public EncryptedEmailPacket(UnencryptedEmailPacket unencryptedPacket, EmailDestination emailDestination) {
+	public EncryptedEmailPacket(UnencryptedEmailPacket unencryptedPacket, EmailDestination emailDestination, I2PAppContext appContext) {
         dhtKey = generateRandomHash();
         deletionKeyPlain = unencryptedPacket.getPlaintextDeletionKey();
         
@@ -95,7 +93,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
             dataStream.writeShort(content.length);
             dataStream.write(content);
             
-            encryptedData = encrypt(byteStream.toByteArray(), emailDestination);
+            encryptedData = encrypt(byteStream.toByteArray(), emailDestination, appContext);
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream/DataOutputStream.", e);
@@ -115,10 +113,11 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
 	/**
 	 * Decrypts the encrypted part of the packet with the private key of <code>identity</code>.
 	 * @param identity
+	 * @param appContext
 	 * @throws DataFormatException 
 	 */
-	public UnencryptedEmailPacket decrypt(EmailIdentity identity) throws DataFormatException {
-	    byte[] decryptedData = decrypt(encryptedData, identity);
+	public UnencryptedEmailPacket decrypt(EmailIdentity identity, I2PAppContext appContext) throws DataFormatException {
+	    byte[] decryptedData = decrypt(encryptedData, identity, appContext);
 	    ByteBuffer buffer = ByteBuffer.wrap(decryptedData);
 	    
 	    UniqueId deletionKeyVerify = new UniqueId(buffer);
@@ -137,29 +136,32 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
      * Decrypts data with an email identity's private key.
      * @param data
      * @param identity
+     * @param appContext
      * @return The decrypted data
      */
-	private byte[] decrypt(byte[] data, EmailIdentity identity) throws DataFormatException {
+	private byte[] decrypt(byte[] data, EmailIdentity identity, I2PAppContext appContext) throws DataFormatException {
         PrivateKey privateKey = identity.getPrivateEncryptionKey();
-        return cryptoEngine.decrypt(data, privateKey);
+        return appContext.elGamalAESEngine().decrypt(data, privateKey, appContext.sessionKeyManager());
 	}
 	
     /**
      * Encrypts data with an email destination's public key.
      * @param data
      * @param emailDestination
+     * @param appContext
      * @return The encrypted data
      */
-    public byte[] encrypt(byte[] data, EmailDestination emailDestination) {
+	// TODO should this method be in this class?
+    public byte[] encrypt(byte[] data, EmailDestination emailDestination, I2PAppContext appContext) {
         PublicKey publicKey = emailDestination.getPublicEncryptionKey();
-        SessionKey sessionKey = sessionKeyManager.createSession(publicKey);
-        return cryptoEngine.encrypt(data, publicKey, sessionKey, PADDED_SIZE);
+        SessionKey sessionKey = appContext.sessionKeyManager().createSession(publicKey);
+        return appContext.elGamalAESEngine().encrypt(data, publicKey, sessionKey, PADDED_SIZE);
     }
     
-    public static Collection<EncryptedEmailPacket> encrypt(Collection<UnencryptedEmailPacket> packets, EmailDestination destination) throws DataFormatException {
+    public static Collection<EncryptedEmailPacket> encrypt(Collection<UnencryptedEmailPacket> packets, EmailDestination destination, I2PAppContext appContext) throws DataFormatException {
     	Collection<EncryptedEmailPacket> encryptedPackets = new ArrayList<EncryptedEmailPacket>();
     	for (UnencryptedEmailPacket unencryptedPacket: packets)
-    		encryptedPackets.add(new EncryptedEmailPacket(unencryptedPacket, destination));
+    		encryptedPackets.add(new EncryptedEmailPacket(unencryptedPacket, destination, appContext));
     	return encryptedPackets;
     }
     

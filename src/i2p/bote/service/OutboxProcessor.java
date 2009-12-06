@@ -40,6 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import net.i2p.I2PAppContext;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
@@ -55,15 +56,17 @@ public class OutboxProcessor extends I2PAppThread {
 	private DHT dht;
 	private Outbox outbox;
 	private Configuration configuration;
+	private I2PAppContext appContext;
 	private EmailAddressResolver emailAddressResolver;
 	private Map<EmailDestination, String> statusMap;
 	private CountDownLatch checkForEmailSignal;
 	
-	public OutboxProcessor(DHT dht, Outbox outbox, Configuration configuration, PeerManager peerManager) {
+	public OutboxProcessor(DHT dht, Outbox outbox, Configuration configuration, PeerManager peerManager, I2PAppContext appContext) {
 		super("OutboxProcsr");
 		this.dht = dht;
 		this.outbox = outbox;
 		this.configuration = configuration;
+		this.appContext = appContext;
 		statusMap = new ConcurrentHashMap<EmailDestination, String>();
 		emailAddressResolver = new EmailAddressResolver();
 	}
@@ -124,7 +127,7 @@ public class OutboxProcessor extends I2PAppThread {
 			EmailDestination emailDestination = emailAddressResolver.getDestination(address);
 			
 			Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(address);
-			Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, emailDestination);
+			Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, emailDestination, appContext);
 			for (EncryptedEmailPacket packet: encryptedPackets)
 			    dht.store(packet);
 			dht.store(new IndexPacket(encryptedPackets, emailDestination));

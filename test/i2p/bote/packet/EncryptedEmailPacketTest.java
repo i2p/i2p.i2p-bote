@@ -28,6 +28,8 @@ import i2p.bote.email.EmailIdentity;
 
 import java.util.Arrays;
 
+import net.i2p.I2PAppContext;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +38,7 @@ public class EncryptedEmailPacketTest {
 	EncryptedEmailPacket encryptedPacket;
     EmailIdentity identity;
     String message = "This is a test message. Test 1 2 3 Test";
+    I2PAppContext appContext = new I2PAppContext();
 
     @Before
     public void setUp() throws Exception {
@@ -54,7 +57,7 @@ public class EncryptedEmailPacketTest {
         EmailDestination destination = new EmailDestination(identity.getKey());   // corresponds to identity
 
         UnencryptedEmailPacket plaintextPacket = new UnencryptedEmailPacket(deletionKeyPlain, deletionKeyVerify, messageId, fragmentIndex, numFragments, content);
-        encryptedPacket = new EncryptedEmailPacket(plaintextPacket, destination);
+        encryptedPacket = new EncryptedEmailPacket(plaintextPacket, destination, appContext);
     }
 
     @After
@@ -70,7 +73,7 @@ public class EncryptedEmailPacketTest {
     
     @Test
     public void testEncryptionDecryption() throws Exception {
-        UnencryptedEmailPacket decryptedPacket = encryptedPacket.decrypt(identity);
+        UnencryptedEmailPacket decryptedPacket = encryptedPacket.decrypt(identity,appContext );
         byte[] arrayA = decryptedPacket.getContent();
         byte[] arrayB = message.getBytes();
         assertTrue("Email message differs after decryption!", Arrays.equals(arrayA, arrayB));

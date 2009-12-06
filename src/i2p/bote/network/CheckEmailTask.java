@@ -39,6 +39,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 
+import net.i2p.I2PAppContext;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -58,13 +59,15 @@ public class CheckEmailTask implements Callable<Boolean> {
     private DHT dht;
     private PeerManager peerManager;
     private IncompleteEmailFolder incompleteEmailFolder;
+    private I2PAppContext appContext;
     private ExecutorService executor;
 
-    public CheckEmailTask(EmailIdentity identity, DHT dht, PeerManager peerManager, IncompleteEmailFolder incompleteEmailFolder) {
+    public CheckEmailTask(EmailIdentity identity, DHT dht, PeerManager peerManager, IncompleteEmailFolder incompleteEmailFolder, I2PAppContext appContext) {
         this.identity = identity;
         this.dht = dht;
         this.peerManager = peerManager;
         this.incompleteEmailFolder = incompleteEmailFolder;
+        this.appContext = appContext;
         executor = Executors.newFixedThreadPool(MAX_THREADS, EMAIL_PACKET_TASK_THREAD_FACTORY);
     }
     
@@ -142,7 +145,7 @@ public class CheckEmailTask implements Callable<Boolean> {
             if (packet instanceof EncryptedEmailPacket) {
                 EncryptedEmailPacket emailPacket = (EncryptedEmailPacket)packet;
                 try {
-                    UnencryptedEmailPacket decryptedPacket = emailPacket.decrypt(identity);
+                    UnencryptedEmailPacket decryptedPacket = emailPacket.decrypt(identity, appContext);
                     emailCompleted = incompleteEmailFolder.addEmailPacket(decryptedPacket);
                     sendDeleteRequest(dhtKey, decryptedPacket.getVerificationDeletionKey());
                 }

@@ -63,6 +63,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
+import net.i2p.I2PAppContext;
 import net.i2p.I2PException;
 import net.i2p.client.I2PClient;
 import net.i2p.client.I2PClientFactory;
@@ -80,6 +81,7 @@ public class I2PBote {
 	private static I2PBote instance;
 	
     private Log log = new Log(I2PBote.class);
+    private I2PAppContext appContext;
 	private I2PClient i2pClient;
 	private I2PSession i2pSession;
 	private Configuration configuration;
@@ -107,6 +109,7 @@ public class I2PBote {
 	    
         initializeLogging();
         
+        appContext = new I2PAppContext();
 		i2pClient = I2PClientFactory.createClient();
 		configuration = new Configuration();
 		
@@ -190,7 +193,7 @@ public class I2PBote {
         
         smtpService = new SMTPService();
         pop3Service = new POP3Service();
-        relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder);
+        relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, appContext);
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
         
         dht = new KademliaDHT(i2pSession.getMyDestination(), sendQueue, dispatcher, configuration.getPeerFile());
@@ -201,7 +204,7 @@ public class I2PBote {
         
         peerManager = new PeerManager();
         
-        outboxProcessor = new OutboxProcessor(dht, outbox, configuration, peerManager);
+        outboxProcessor = new OutboxProcessor(dht, outbox, configuration, peerManager, appContext);
     }
 
     /**
@@ -251,7 +254,7 @@ if (recipient.indexOf('@')>=0)
     recipient = recipient.substring(0, recipient.indexOf('@'));
 EmailDestination emailDestination = new EmailDestination(recipient);
 Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(recipient);
-Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, emailDestination);
+Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, emailDestination, appContext);
 for (EncryptedEmailPacket packet: encryptedPackets)
     dht.store(packet);
 dht.store(new IndexPacket(encryptedPackets, emailDestination));
@@ -264,7 +267,7 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
         if (!isCheckingForMail())
             mailCheckResults = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             for (EmailIdentity identity: getIdentities()) {
-                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, incompleteEmailFolder);
+                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, incompleteEmailFolder, appContext);
                 Future<Boolean> result = mailCheckExecutor.submit(checkMailTask);
                 mailCheckResults.add(result);
             }

@@ -28,11 +28,14 @@ import i2p.bote.email.EmailDestination;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import net.i2p.I2PAppContext;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class ResponsePacketTest {
     private ResponsePacket responsePacket;
+    private I2PAppContext appContext = new I2PAppContext();
 
     @Before
     public void setUp() throws Exception {
@@ -52,7 +55,7 @@ public class ResponsePacketTest {
         
         UnencryptedEmailPacket unencryptedPacket = new UnencryptedEmailPacket(deletionKeyPlain, deletionKeyEncrypted, messageId, 0, 1, dataToStore);
         EmailDestination destination = new EmailDestination("0XuJjhgp58aOhvHHgpaxoQYsCUfDS6BECMEoVxFGEFPdk3y8lbzIsq9eUyeizFleMacYwoscCir8nQLlW34lxfRmirkNpD9vU1XnmjnZ5hGdnor1qIDqz3KJ040dVQ617MwyG97xxYLT0FsH907vBXgdc4RCHwKd1~9siagA5CSMaA~wM8ymKXLypiZGYexENLmim7nMzJTQYoOM~fVS99UaGJleDBN3pgZ2EvRYDQV2VqKH7Gee07R3y7b~c0tAKVHS0IbPQfTVJigrIHjTl~ZczxpaeTM04T8IgxKnO~lSmR1w7Ik8TpEkETwT9PDwUqQsjmlSY8E~WwwGMRJVyIRZUkHeRZ0aFq7us8W9EKzYtjjiU1z0QFpZrTfJE8oqCbnH5Lqv5Q86UdTPpriJC1N99E77TpCTnNzcBnpp6ko2JCy2IJUveaigKxS6EmS9KarkkkBRsckOKZZ6UNTOqPZsBCsx0Q9WvDF-Uc3dtouXWyenxRptaQsdkZyYlEQv");
-        return new EncryptedEmailPacket(unencryptedPacket, destination);
+        return new EncryptedEmailPacket(unencryptedPacket, destination, appContext);
     }
     
     @Test

@@ -31,6 +31,8 @@ import i2p.bote.packet.dht.StoreRequest;
 
 import java.util.Arrays;
 
+import net.i2p.I2PAppContext;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +41,7 @@ import com.nettgryppa.security.HashCash;
 
 public class StoreRequestTest {
     private StoreRequest storeRequest;
+    private I2PAppContext appContext = new I2PAppContext();
 
     @Before
     public void setUp() throws Exception {
@@ -50,7 +53,7 @@ public class StoreRequestTest {
         EmailIdentity identity = new EmailIdentity(base64Identity);
         EmailDestination destination = new EmailDestination(identity.getKey());
         UnencryptedEmailPacket emailPacket = new UnencryptedEmailPacket(deletionKeyPlain, deletionKeyEncrypted, messageId, 0, 1, emailContent);
-        EncryptedEmailPacket encryptedPacket = new EncryptedEmailPacket(emailPacket, destination);
+        EncryptedEmailPacket encryptedPacket = new EncryptedEmailPacket(emailPacket, destination, appContext);
         HashCash hashCash = HashCash.mintCash("1234", 1);
         
         storeRequest = new StoreRequest(hashCash, encryptedPacket);
