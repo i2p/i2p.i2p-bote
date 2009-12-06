@@ -355,8 +355,6 @@ public class KademliaDHT implements DHT, PacketListener {
                 break;
             
             if (!line.startsWith("#"))
-                // TODO read "up since" time if present, use a separate method for parsing lines
-                // TODO write "up since" time back to the peer file
                 try {
                 	Destination destination = new Destination(line);
                 	KademliaPeer peer = new KademliaPeer(destination, 0);
@@ -373,6 +371,7 @@ public class KademliaDHT implements DHT, PacketListener {
     }
     
     private void sendPeerList(FindClosePeersPacket packet, Destination destination) {
+        // TODO don't include the requesting peer
         Collection<KademliaPeer> closestPeers = bucketManager.getClosestPeers(packet.getKey(), KademliaConstants.K);
         PeerList peerList = new PeerList(closestPeers);
         sendQueue.sendResponse(peerList, destination, packet.getPacketId());
