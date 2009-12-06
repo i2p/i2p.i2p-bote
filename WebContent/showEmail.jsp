@@ -24,6 +24,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <c:set var="email" value="${ib:getEmail(param.folder, param.messageID)}"/>
@@ -35,11 +36,18 @@
 <div class="main">
     <table>
         <tr>
-            <td><strong>From:</strong></td>
-            <td>${email.sender}</td>
+            <td valign="top"><strong>From:</strong></td>
+            <td>
+                <c:forEach var="i" begin="0" end="${fn:length(email.sender)}" step="${width}">
+                    <c:if test="${i > 0}">
+                        <br/>
+                    </c:if>
+                    ${fn:substring(email.sender, i, i+64)}
+                </c:forEach>
+            </td>
         </tr>
         <tr>
-            <td><strong>Subject:</strong></td>
+            <td valign="top"><strong>Subject:</strong></td>
             <td>${email.subject}</td>
         </tr>
         <tr>
