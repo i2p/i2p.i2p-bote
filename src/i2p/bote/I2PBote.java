@@ -56,6 +56,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -78,6 +79,7 @@ import net.i2p.util.Log;
  * This is the core class of the application. Is is implemented as a singleton.
  */
 public class I2PBote {
+    private static final String VERSION = "0.1";
 	private static I2PBote instance;
 	
     private Log log = new Log(I2PBote.class);
@@ -143,6 +145,9 @@ public class I2PBote {
 	 * destination if no key file exists.
 	 */
 	private void initializeSession() {
+	    Properties sessionProperties = new Properties();
+	    sessionProperties.setProperty("i2cp.gzip", String.valueOf(false));   // most of the data we send is encrypted and therefore uncompressible
+	    
         // read the local destination key from the key file if it exists
         File destinationKeyFile = configuration.getDestinationKeyFile();
         try {
@@ -151,7 +156,7 @@ public class I2PBote {
             fileReader.read(destKeyBuffer);
             byte[] localDestinationKey = Base64.decode(new String(destKeyBuffer));
             ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
-       		i2pSession = i2pClient.createSession(inputStream, null);
+       		i2pSession = i2pClient.createSession(inputStream, sessionProperties);
         	i2pSession.connect();
         }
         catch (IOException e) {
@@ -168,7 +173,7 @@ public class I2PBote {
 				i2pClient.createDestination(arrayStream);
 			    byte[] localDestinationArray = arrayStream.toByteArray();
 				
-				i2pSession = i2pClient.createSession(new ByteArrayInputStream(localDestinationArray), null);
+				i2pSession = i2pClient.createSession(new ByteArrayInputStream(localDestinationArray), sessionProperties);
 	        	i2pSession.connect();
 	        	
 	        	saveLocalDestinationKeys(destinationKeyFile, localDestinationArray);
@@ -240,6 +245,10 @@ public class I2PBote {
 		if (instance == null)
 			instance = new I2PBote();
 		return instance;
+	}
+	
+	public String getVersion() {
+	    return VERSION;
 	}
 	
 	public Identities getIdentities() {
