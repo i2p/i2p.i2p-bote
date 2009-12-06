@@ -26,13 +26,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Properties;
 import java.util.concurrent.ThreadFactory;
 
-import net.i2p.client.I2PClient;
-import net.i2p.client.I2PClientFactory;
 import net.i2p.client.I2PSession;
-import net.i2p.client.I2PSessionException;
 import net.i2p.data.DataFormatException;
 
 public class Util {
@@ -63,10 +59,6 @@ public class Util {
 		return new ByteArrayInputStream(outputStream.toByteArray());
 	}	
 
-	public static I2PSession createNewSession(I2PClient i2pClient, I2PSession existingSession, Properties options) throws I2PSessionException, DataFormatException, IOException {
-	    return I2PClientFactory.createClient().createSession(createKeyStream(existingSession), options);
-	}
-	
     public static byte[] readInputStream(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[32*1024];
