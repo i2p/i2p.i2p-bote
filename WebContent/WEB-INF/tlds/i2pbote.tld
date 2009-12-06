@@ -49,6 +49,12 @@
     <body-content>empty</body-content>
 </tag>
 
+<tag>
+    <name>printVersion</name>
+    <tag-class>i2p.bote.web.PrintAppVersionTag</tag-class>
+    <body-content>empty</body-content>
+</tag>
+
 <function>
     <name>getIdentities</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
@@ -104,5 +110,10 @@
         i2p.bote.email.Email getEmail(java.lang.String, java.lang.String)
     </function-signature>
 </function>
+
+<tag-file>
+    <name>printWithLineBreaks</name>
+    <path>/WEB-INF/tags/printWithLineBreaks.tag</path>
+</tag-file> 
 
 </taglib>
