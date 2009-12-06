@@ -72,8 +72,6 @@
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
-            <lib file="/opt/ant/lib/ant.jar"/>
-            <lib file="/opt/ant/lib/ant-launcher.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
         </war>
     </target>
