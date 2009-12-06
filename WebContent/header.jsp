@@ -48,22 +48,22 @@
 
 <div class="menubox">
     <h2>Folders</h2>
-    <a href=folder.jsp?path=Inbox><img src="images/folder.png"/>Inbox</a><br/>
-    <a href=folder.jsp?path=Outbox><img src="images/folder.png"/>Outbox</a><br/>
-    <a href=folder.jsp?path=Sent><img src="images/folder.png"/>Sent</a><br/>
-    <a href=folder.jsp?path=Drafts><img src="images/folder.png"/>Drafts</a><br/>
-    <a href=folder.jsp?path=Trash><img src="images/folder.png"/>Trash</a><br/>
+    <a href="folder.jsp?path=Inbox"><img src="images/folder.png"/>Inbox</a><br/>
+    <a href="folder.jsp?path=Outbox"><img src="images/folder.png"/>Outbox</a><br/>
+    <a href="folder.jsp?path=Sent"><img src="images/folder.png"/>Sent</a><br/>
+    <a href="folder.jsp?path=Drafts"><img src="images/folder.png"/>Drafts</a><br/>
+    <a href="folder.jsp?path=Trash"><img src="images/folder.png"/>Trash</a><br/>
     <hr/>
-    <a href=folder.jsp?path=User_created_Folder_1><img src="images/folder.png"/>User_created_Folder_1</a><br/>
-    <a href=folder.jsp?path=User_created_Folder_2><img src="images/folder.png"/>User_created_Folder_2</a><br/>
-    <a href=folder.jsp?path=User_created_Folder_3><img src="images/folder.png"/>User_created_Folder_3</a><br/>
+    <a href="folder.jsp?path=User_created_Folder_1"><img src="images/folder.png"/>User_created_Folder_1</a><br/>
+    <a href="folder.jsp?path=User_created_Folder_2"><img src="images/folder.png"/>User_created_Folder_2</a><br/>
+    <a href="folder.jsp?path=User_created_Folder_3"><img src="images/folder.png"/>User_created_Folder_3</a><br/>
     <hr/>
     <a href=.>Manage Folders</a>
 </div>
 
 <div class="menubox">
     <h2>Addresses</h2>
-    <a href=identities.jsp>Identities</a><br/>
+    <a href="identities.jsp">Identities</a><br/>
     <a href=.>Private Address Book</a><br/>
     <a href=.>Public Address Directory</a><br/>
 </div>
@@ -76,4 +76,10 @@
 <div class="menubox">
     <h2>Network Status</h2>
     <iframe src="statusFrame.jsp" width="100%" height="40px" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+</div>
+
+<div class="menubox">
+    <h2>Help</h2>
+    <a href=.>User Guide</a><br/>
+    <a href="about.jsp">About</a><br/>
 </div>
