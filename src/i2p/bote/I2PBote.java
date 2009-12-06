@@ -79,7 +79,7 @@ import net.i2p.util.Log;
  * This is the core class of the application. Is is implemented as a singleton.
  */
 public class I2PBote {
-    private static final String VERSION = "0.1";
+    private static final String VERSION = "0.1.1";
 	private static I2PBote instance;
 	
     private Log log = new Log(I2PBote.class);
