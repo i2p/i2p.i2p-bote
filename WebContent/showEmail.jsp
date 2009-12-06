@@ -38,7 +38,7 @@
         <tr>
             <td valign="top"><strong>From:</strong></td>
             <td>
-                <c:forEach var="i" begin="0" end="${fn:length(email.sender)}" step="${width}">
+                <c:forEach var="i" begin="0" end="${fn:length(email.sender)}" step="64">
                     <c:if test="${i > 0}">
                         <br/>
                     </c:if>
