@@ -48,8 +48,8 @@
 	    <c:set var="folderName" value="Inbox"/>
 	    <c:forEach items="${ib:getMailFolder(folderName).elements}" var="email">
 	        <tr>
-                <c:set var="sender" value="${email.subject}"/>
-                <c:if test="${empty subject}">
+                <c:set var="sender" value="${email.sender}"/>
+                <c:if test="${empty sender}">
                     <c:set var="sender" value="Anonymous"/>
                 </c:if>
                 
@@ -68,8 +68,8 @@
                 
                 <c:set var="mailUrl" value="showEmail.jsp?folder=${folderName}&messageID=${email.messageID}"/>
                 
-	            <td><a href="${mailUrl}">${sender}</a></td>
-                <td><a href="${mailUrl}">${subject}</a></td>
+	            <td><div class="ellipsis"><a href="${mailUrl}">${sender}</a></div></td>
+                <td><div class="ellipsis"><a href="${mailUrl}">${subject}</a></div></td>
                 <td><a href="${mailUrl}">${date}</a></td>
                 <td><a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}"><img src="images/delete.png" alt="Delete" title="Delete this email"/></a></td>
 	        </tr>
