@@ -81,12 +81,8 @@
                 <td style="font-weight: bold; vertical-align: top;">
                     Email Destination:
                 </td>
-                <td style="font-family: monospace; padding-left: 5px">
-                    <c:set var="key" value="${param.key}"/>
-                    <c:forEach var="i" begin="0" end="${fn:length(key)}" step="64">
-                        ${fn:substring(key, i, i+64)}<br/>
-                    </c:forEach>
-                    <input type="hidden" name="key" value="${param.key}"/>
+                <td>
+                    <textarea cols="64" rows="8" readonly="yes" wrap="soft" style="background-color: transparent; border: none;">${param.key}</textarea>
                 </td>
             </tr>
             </c:if>
