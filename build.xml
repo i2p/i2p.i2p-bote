@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="all" name="I2P-Bote">
     <property name="i2plib" value="/opt/i2p/lib"/>
-    <property name="susidnslib" value="${i2plib}"/>
+    <property name="jstllib" value="WebContent/WEB-INF/lib"/>
     <property name="jettylib" value="${i2plib}"/>
     <property name="antlib" value="/opt/ant/lib"/>
     <path id="cp">
         <pathelement path="${classpath}" />
         <pathelement location="${i2plib}/i2p.jar" />
-        <pathelement location="${susidnslib}/jstl.jar" />
-        <pathelement location="${susidnslib}/standard.jar" />
+        <pathelement location="${jstllib}/jstl.jar" />
+        <pathelement location="${jstllib}/standard.jar" />
         <pathelement location="${jettylib}/org.mortbay.jetty.jar"/>
         <pathelement location="${jettylib}/jasper-compiler.jar" />
         <pathelement location="${jettylib}/jasper-runtime.jar" />
@@ -72,6 +72,8 @@
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
+            <lib file="${jstllib}/jstl.jar"/>
+            <lib file="${jstllib}/standard.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
         </war>
     </target>
