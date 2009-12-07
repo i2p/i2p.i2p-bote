@@ -64,6 +64,14 @@
 </function>
 
 <function>
+    <name>getLocalDestination</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getLocalDestination()
+    </function-signature>
+</function>
+
+<function>
     <name>saveIdentity</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
