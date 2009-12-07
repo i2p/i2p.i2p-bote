@@ -29,6 +29,8 @@ import i2p.bote.folder.EmailFolder;
 
 import java.io.IOException;
 
+import net.i2p.data.Destination;
+
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
  */
@@ -40,6 +42,10 @@ public class JSPHelper {
     
     public static Identities getIdentities() {
         return I2PBote.getInstance().getIdentities();
+    }
+    
+    public String getLocalDestination() {
+        return I2PBote.getInstance().getLocalDestination();
     }
     
     /**
