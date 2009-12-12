@@ -37,9 +37,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
@@ -56,9 +59,10 @@ public class ClosestNodesLookupTask implements Runnable {
     private BucketManager bucketManager;
     private Random randomNumberGenerator;
     private I2PSendQueue sendQueue;
-    private Set<Destination> responseReceived;
+    private Set<Destination> responses;
     private Set<KademliaPeer> notQueriedYet;
-    private Set<FindClosePeersPacket> pendingRequests;
+    private Map<KademliaPeer, FindClosePeersPacket> pendingRequests;
+    private long startTime;
     
     public ClosestNodesLookupTask(Hash key, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager) {
         this.key = key;
@@ -66,9 +70,9 @@ public class ClosestNodesLookupTask implements Runnable {
         this.i2pReceiver = i2pReceiver;
         this.bucketManager = bucketManager;
         randomNumberGenerator = new Random(getTime());
-        responseReceived = new TreeSet<Destination>(new HashDistanceComparator(key));   // nodes that have responded to a query; sorted by distance to the key
+        responses = new TreeSet<Destination>(new HashDistanceComparator(key));   // nodes that have responded to a query; sorted by distance to the key
         notQueriedYet = new ConcurrentHashSet<KademliaPeer>();   // peers we haven't contacted yet
-        pendingRequests = new ConcurrentHashSet<FindClosePeersPacket>();   // outstanding queries
+        pendingRequests = new ConcurrentHashMap<KademliaPeer, FindClosePeersPacket>();   // outstanding queries
     }
     
     @Override
@@ -81,38 +85,45 @@ public class ClosestNodesLookupTask implements Runnable {
         // prepare a list of close nodes (might need more than alpha if they don't all respond)
         notQueriedYet.addAll(bucketManager.getClosestPeers(key, KademliaConstants.S));
         
-        long startTime = getTime();
-        while (true) {
+        startTime = getTime();
+        do {
             // send new requests if less than alpha are pending
             while (pendingRequests.size()<KademliaConstants.ALPHA && !notQueriedYet.isEmpty()) {
                 KademliaPeer peer = selectRandom(notQueriedYet);
                 notQueriedYet.remove(peer);
                 FindClosePeersPacket packet = new FindClosePeersPacket(key);
-                pendingRequests.add(packet);
-                try {
-                    CommunicationPacket response = sendQueue.sendAndWait(packet, peer.getDestination(), REQUEST_TIMEOUT);
-                    if (response == null)   // timeout occurred
-                        peer.incrementStaleCounter();
-                    else
-                        peer.resetStaleCounter();
-                }
-                catch (InterruptedException e) {
-                    log.warn("Interrupted while waiting on a lookup request.", e);
-                }
+                pendingRequests.put(peer, packet);
+                sendQueue.send(packet, peer.getDestination());
             }
+
+            // handle timeouts
+            for (Map.Entry<KademliaPeer, FindClosePeersPacket> request: pendingRequests.entrySet())
+                if (hasTimedOut(request.getValue(), REQUEST_TIMEOUT))
+                    request.getKey().incrementStaleCounter();   // resetting is done in BucketManager
             
-            if (responseReceived.size() >= KademliaConstants.S)
-                break;
-            if (hasTimedOut(startTime, CLOSEST_NODES_LOOKUP_TIMEOUT)) {
-                log.error("Lookup for closest nodes timed out.");
-                break;
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                log.warn("Interrupted while doing a closest nodes lookup.", e);
             }
-        }
-        log.debug(responseReceived.size() + " nodes found.");
+        } while (!isDone());
+        log.debug(responses.size() + " nodes found.");
         
         i2pReceiver.removePacketListener(packetListener);
     }
 
+    private boolean isDone() {
+        if (pendingRequests.isEmpty() && notQueriedYet.isEmpty())   // if there are no more requests to send, and no more responses to wait for, we're finished
+            return true;
+        if (responses.size() >= KademliaConstants.S)   // if we have received enough responses, we're also finished
+            return true;
+        if (hasTimedOut(startTime, CLOSEST_NODES_LOOKUP_TIMEOUT)) {
+            log.error("Lookup for closest nodes timed out.");
+            return true;
+        }
+        return false;
+    }
+    
     private KademliaPeer selectRandom(Collection<KademliaPeer> collection) {
         KademliaPeer[] array = new KademliaPeer[collection.size()];
         int index = randomNumberGenerator.nextInt(array.length);
@@ -127,13 +138,17 @@ public class ClosestNodesLookupTask implements Runnable {
         return getTime() > startTime + timeout;
     }
     
+    private boolean hasTimedOut(CommunicationPacket request, long timeout) {
+        return hasTimedOut(request.getSentTime(), timeout);
+    }
+    
     /**
      * Return up to <code>s</code> peers.
      * @return
      */
     public List<Destination> getResults() {
         List<Destination> resultsList = new ArrayList<Destination>();
-        for (Destination destination: responseReceived)
+        for (Destination destination: responses)
             resultsList.add(destination);
         Collections.sort(resultsList, new HashDistanceComparator(key));
         
@@ -177,6 +192,7 @@ public class ClosestNodesLookupTask implements Runnable {
         public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
             if (packet instanceof ResponsePacket) {
                 ResponsePacket responsePacket = (ResponsePacket)packet;
+                responses.add(sender);
                 DataPacket payload = responsePacket.getPayload();
                 if (payload instanceof PeerList)
                     addPeers(responsePacket, (PeerList)payload, sender, receiveTime);
@@ -187,10 +203,10 @@ public class ClosestNodesLookupTask implements Runnable {
             log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender);
             
             // if the packet is in response to a pending request, update the three Sets
-            FindClosePeersPacket request = getPacketById(pendingRequests, responsePacket.getPacketId());   // find the request the node list is in response to
+            FindClosePeersPacket request = getPacketById(pendingRequests.values(), responsePacket.getPacketId());   // find the request the node list is in response to
             if (request != null) {
                 // TODO make responseReceived and pendingRequests a parameter in the constructor?
-                responseReceived.add(sender);
+                responses.add(sender);
                 Collection<KademliaPeer> peersReceived = peerListPacket.getPeers();
                 for (KademliaPeer peer: peersReceived)
                     if (contains(notQueriedYet, peer))
