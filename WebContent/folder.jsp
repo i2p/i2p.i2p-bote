@@ -30,6 +30,7 @@
     <jsp:param name="title" value="${param.path}"/>
 </jsp:include>
 
+<c:set var="folderName" value="Inbox"/>
 <c:if test="${folderName == 'Inbox'}">
     <div id="inboxFlag"></div>
 </c:if>
@@ -45,7 +46,6 @@
             <th style="width: 100px;">Date</th>
             <th style="width: 20px;"></th>
 	    </tr>
-	    <c:set var="folderName" value="Inbox"/>
 	    <c:forEach items="${ib:getMailFolder(folderName).elements}" var="email">
 	        <tr>
                 <c:set var="sender" value="${email.sender}"/>
