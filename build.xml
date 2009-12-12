@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="all" name="I2P-Bote">
-    <property name="i2plib" value="/opt/i2p/lib"/>
+    <property name="i2pbase" value="../i2p"/>
+    <property name="i2plib" value="${i2pbase}/core/java/build"/>
+    <property name="jettylib" value="${i2pbase}/apps/jetty/jettylib"/>
+    <property name="antlib" value="${jettylib}"/>
     <property name="jstllib" value="WebContent/WEB-INF/lib"/>
-    <property name="jettylib" value="${i2plib}"/>
-    <property name="antlib" value="/opt/ant/lib"/>
     <path id="cp">
         <pathelement path="${classpath}" />
         <pathelement location="${i2plib}/i2p.jar" />
-        <pathelement location="${jstllib}/jstl.jar" />
-        <pathelement location="${jstllib}/standard.jar" />
         <pathelement location="${jettylib}/org.mortbay.jetty.jar"/>
         <pathelement location="${jettylib}/jasper-compiler.jar" />
         <pathelement location="${jettylib}/jasper-runtime.jar" />
@@ -16,6 +15,8 @@
         <pathelement location="${jettylib}/commons-logging.jar" />
         <pathelement location="${jettylib}/commons-el.jar" />
         <pathelement location="${antlib}/ant.jar" />
+        <pathelement location="${jstllib}/jstl.jar" />
+        <pathelement location="${jstllib}/standard.jar" />
     </path>
 
     <target name="all" depends="clean, war" />
@@ -25,11 +26,11 @@
         <mkdir dir="./ant_build/classes" />
         <javac
             srcdir="./src"
-            debug="true" deprecation="on" source="1.5" target="1.5"
+            debug="true"
+            deprecation="on"
             destdir="./ant_build/classes"
-            classpathref="cp" >
-            <compilerarg line="" />
-        </javac>
+            classpathref="cp"
+            failonerror="true" />
     </target>
 
     <target name="precompilejsp">
@@ -51,11 +52,14 @@
             <arg value="WebContent" />
         </java>
 
-        <javac debug="true" deprecation="on" source="1.5" target="1.5" 
-               destdir="ant_build/classes" srcdir="./ant_build/jspjava"
-               includes="**/*.java" classpathref="jspcp">
-            <compilerarg line="" />
-        </javac>
+        <javac
+            debug="true"
+            deprecation="on"
+            destdir="ant_build/classes"
+            srcdir="./ant_build/jspjava"
+            includes="**/*.java"
+            classpathref="jspcp"
+            failonerror="true" />
         <copy file="WebContent/WEB-INF/web-template.xml" tofile="ant_build/web.xml" />
         <loadfile property="jspc.web.fragment" srcfile="ant_build/web-fragment.xml" />
         <replace file="ant_build/web.xml">
