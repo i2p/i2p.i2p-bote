@@ -79,7 +79,8 @@ import net.i2p.util.Log;
  * This is the core class of the application. Is is implemented as a singleton.
  */
 public class I2PBote {
-    private static final String VERSION = "0.1.2";
+    private static final String VERSION = "0.1.3";
+    private static final int STARTUP_DELAY = 3 * 60 * 1000;
 	private static I2PBote instance;
 	
     private Log log = new Log(I2PBote.class);
@@ -104,13 +105,11 @@ public class I2PBote {
 	private PeerManager peerManager;
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
-    private Collection<Future<Boolean>> mailCheckResults;
+    private Collection<Future<Boolean>> pendingMailCheckTasks;
 
 	private I2PBote() {
 	    Thread.currentThread().setName("I2PBoteMain");
 	    
-        initializeLogging();
-        
         appContext = new I2PAppContext();
 		i2pClient = I2PClientFactory.createClient();
 		configuration = new Configuration();
@@ -119,15 +118,14 @@ public class I2PBote {
         mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
     
 		identities = new Identities(configuration.getIdentitiesFile());
-		initializeSession();
 		initializeFolderAccess();
+		
+		waitForRouter();
+        initializeSession();
 		initializeServices();
 		startAllServices();
 	}
 
-    private void initializeLogging() {
-    }
-    
 	/**
 	 * Initializes objects for accessing emails and packet files on the filesystem.
 	 */
@@ -141,11 +139,24 @@ public class I2PBote {
 	}
 
 	/**
+	 * Waits <code>STARTUP_DELAY</code> milliseconds, after which the router hopefully accepts tunnels.
+	 */
+	private void waitForRouter() {
+	    try {
+            Thread.sleep(STARTUP_DELAY);
+        } catch (InterruptedException e) {
+            log.error("Interrupted while waiting for the router to initialize.", e);
+        }
+	}
+	
+	/**
 	 * Sets up a {@link I2PSession}, using the I2P destination stored on disk or creating a new I2P
 	 * destination if no key file exists.
 	 */
 	private void initializeSession() {
 	    Properties sessionProperties = new Properties();
+	    sessionProperties.setProperty("inbound.nickname", "I2P-Bote");
+        sessionProperties.setProperty("outbound.nickname", "I2P-Bote");
 	    sessionProperties.setProperty("i2cp.gzip", String.valueOf(false));   // most of the data we send is encrypted and therefore uncompressible
 	    
         // read the local destination key from the key file if it exists
@@ -277,21 +288,22 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 	}
 
     public synchronized void checkForMail() {
-        if (!isCheckingForMail())
-            mailCheckResults = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
+        if (!isCheckingForMail()) {
+            pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             for (EmailIdentity identity: getIdentities()) {
                 Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, incompleteEmailFolder, appContext);
-                Future<Boolean> result = mailCheckExecutor.submit(checkMailTask);
-                mailCheckResults.add(result);
+                Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
+                pendingMailCheckTasks.add(task);
             }
+        }
     }
 
     public synchronized boolean isCheckingForMail() {
-        if (mailCheckResults == null)
+        if (pendingMailCheckTasks == null)
             return false;
         
-        for (Future<Boolean> result: mailCheckResults)
-            if (!result.isDone())
+        for (Future<Boolean> task: pendingMailCheckTasks)
+            if (!task.isDone())
                 return true;
         
         return false;
@@ -305,15 +317,15 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
      * @return
      */
     public synchronized boolean newMailReceived() {
-        if (mailCheckResults == null)
+        if (pendingMailCheckTasks == null)
             return false;
         if (isCheckingForMail())
             return false;
         
         try {
-            for (Future<Boolean> result: mailCheckResults)
+            for (Future<Boolean> result: pendingMailCheckTasks)
                 if (result.get(1, TimeUnit.MILLISECONDS)) {
-                    mailCheckResults = null;
+                    pendingMailCheckTasks = null;
                     return true;
                 }
         }
@@ -321,7 +333,7 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
             log.error("Error while checking whether new mail has arrived.", e);
         }
         
-        mailCheckResults = null;
+        pendingMailCheckTasks = null;
         return false;
     }
     
