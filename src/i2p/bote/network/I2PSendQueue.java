@@ -30,14 +30,8 @@ import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
 import i2p.bote.service.I2PBoteThread;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -63,11 +57,8 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     private Log log = new Log(I2PSendQueue.class);
     private I2PSession i2pSession;
     private PacketQueue packetQueue;
-    private Map<UniqueId, ScheduledPacket> outstandingRequests;   // sent packets that haven't been responded to
     private Set<PacketBatch> runningBatches;
     private int maxBandwidth;
-    private Collection<SendQueuePacketListener> sendQueueListeners;
-    private Map<SendQueuePacketListener, Long> timeoutValues;
 
     /**
      * @param i2pSession
@@ -79,46 +70,17 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         this.i2pSession = i2pSession;
         i2pReceiver.addPacketListener(this);
         packetQueue = new PacketQueue();
-        outstandingRequests = new ConcurrentHashMap<UniqueId, ScheduledPacket>();
         runningBatches = new ConcurrentHashSet<PacketBatch>();
-        sendQueueListeners = Collections.synchronizedCollection(new ArrayList<SendQueuePacketListener>());
-        timeoutValues = new HashMap<SendQueuePacketListener, Long>();
     }
 
     /**
      * Queues a packet behind the last undelayed packet.
      * @param packet
      * @param destination
+     * @return 
      */
-    public void send(CommunicationPacket packet, Destination destination) {
-        send(packet, destination, 0);
-    }
-    
-    /**
-     * Queues a packet behind the last undelayed packet and waits for up to
-     * <code>timeoutSeconds</code> for a response.
-     * @param packet
-     * @param destination
-     * @param timeoutMilliSeconds
-     * @return The response packet, or <code>null</code> if a timeout occurred.
-     * @throws InterruptedException 
-     */
-    public CommunicationPacket sendAndWait(CommunicationPacket packet, Destination destination, long timeoutMilliSeconds) throws InterruptedException {
-        ScheduledPacket scheduledPacket = new ScheduledPacket(packet, destination, 0);
-        
-        long scheduleTime = System.currentTimeMillis();
-        packetQueue.add(scheduledPacket);
-        scheduledPacket.awaitSending();
-        outstandingRequests.put(packet.getPacketId(), scheduledPacket);
-        scheduledPacket.awaitResponse(timeoutMilliSeconds, TimeUnit.MILLISECONDS);
-        
-        if (log.shouldLog(Log.DEBUG)) {
-            long responseTime = scheduledPacket.getResponseTime();
-            String responseInfo = responseTime<0?"timed out":"took " + (responseTime-scheduledPacket.getSentTime()) + "ms.";
-            log.debug("Packet with id " + packet.getPacketId() + " was queued for " + (scheduledPacket.getSentTime()-scheduleTime) + " ms, response " + responseInfo);
-        }
-        
-        return scheduledPacket.getResponse();
+    public CountDownLatch send(CommunicationPacket packet, Destination destination) {
+        return send(packet, destination, 0);
     }
     
     /**
@@ -126,9 +88,12 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
      * @param packet
      * @param destination
      * @param earliestSendTime
+     * @return
      */
-    public void send(CommunicationPacket packet, Destination destination, long earliestSendTime) {
-        packetQueue.add(new ScheduledPacket(packet, destination, earliestSendTime));
+    public CountDownLatch send(CommunicationPacket packet, Destination destination, long earliestSendTime) {
+        ScheduledPacket scheduledPacket = new ScheduledPacket(packet, destination, earliestSendTime);
+        packetQueue.add(scheduledPacket);
+        return scheduledPacket.getSentLatch();
     }
 
     public void sendRelayRequest(RelayPacket relayPacket, HashCash hashCash, long earliestSendTime) {
@@ -197,31 +162,6 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         return maxBandwidth;
     }
     
-    public void addSendQueueListener(SendQueuePacketListener listener) {
-        addSendQueueListener(listener, null);
-    }
-    
-    /**
-     * Add a {@link SendQueuePacketListener} that is automatically removed after
-     * <code>timeout</code> milliseconds.
-     * @param listener
-     * @param timeout
-     */
-    public void addSendQueueListener(SendQueuePacketListener listener, Long timeout) {
-        sendQueueListeners.add(listener);
-        timeoutValues.put(listener, timeout);
-    }
-    
-    public void removeSendQueueListener(SendQueuePacketListener listener) {
-        sendQueueListeners.remove(listener);
-        timeoutValues.remove(listener);
-    }
-    
-    private void firePacketListeners(CommunicationPacket packet) {
-        for (SendQueuePacketListener listener: sendQueueListeners)
-            listener.packetSent(packet);
-    }
-
     // Implementation of PacketListener
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
@@ -229,25 +169,10 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             log.debug("Response Packet received: Packet Id = " + packet.getPacketId() + " Sender = " + sender);
             
             UniqueId packetId = packet.getPacketId();
-
+            
             for (PacketBatch batch: runningBatches)
                 if (batch.contains(packetId))
                     batch.addResponse(((ResponsePacket)packet).getPayload());
-
-            // Remove the original request if it is on the list, and notify objects waiting on a response
-            ScheduledPacket requestPacket = outstandingRequests.remove(packetId);
-            if (requestPacket != null) {
-                requestPacket.setResponse(packet);
-                requestPacket.decrementResponseLatch();
-            }
-            
-            // If there is a packet file for the original packet, it can be deleted now.
-            // Use the cached filename if the packet was in the cache; otherwise, find the file by packet Id
-/*            ScheduledPacket cachedPacket = recentlySentCache.remove(packetId);
-            if (cachedPacket != null)
-                fileManager.removePacketFile(cachedPacket);
-            else
-                fileManager.removePacketFile(packetId);*/
         }
     }
     
@@ -290,12 +215,11 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                 i2pSession.sendMessage(scheduledPacket.destination, replyableDatagram);
                 
                 // set sentTime; update queue+cache, update countdown latch, fire packet listeners
-                    scheduledPacket.data.setSentTime(System.currentTimeMillis());
-                    packetQueue.remove(scheduledPacket);
+                scheduledPacket.data.setSentTime(System.currentTimeMillis());
+                packetQueue.remove(scheduledPacket);
                 if (isBatchPacket)
                     batch.decrementSentLatch();
                 scheduledPacket.decrementSentLatch();
-                firePacketListeners(scheduledPacket.data);
                 
                 log.debug("Packet sent. Send queue length is now " + packetQueue.size());
                 if (isBatchPacket)
@@ -333,28 +257,19 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             return size();
         }
 
-        /**
-         * Not synchronized because there should only be one {@link I2PSendQueue}.
-         * @throws InterruptedException
-         * @return
-         */
-        public ScheduledPacket take() throws InterruptedException {
+        public synchronized ScheduledPacket take() throws InterruptedException {
             while (isEmpty())
                 TimeUnit.SECONDS.sleep(1);
             return pollLast();
         }
     }
-    
+
     private class ScheduledPacket implements Comparable<ScheduledPacket> {
         CommunicationPacket data;
         Destination destination;
         long earliestSendTime;
         PacketBatch batch;   // the batch this packet belongs to, or null if not part of a batch
-        long sentTime;
-        long responseTime;
         CountDownLatch sentSignal;
-        CountDownLatch responseSignal;
-        CommunicationPacket response;
         
         public ScheduledPacket(CommunicationPacket packet, Destination destination, long earliestSendTime) {
             this(packet, destination, earliestSendTime, null);
@@ -366,57 +281,19 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             this.earliestSendTime = earliestSendTime;
             this.batch = batch;
             this.sentSignal = new CountDownLatch(1);
-            this.responseSignal = new CountDownLatch(1);
-            this.responseTime = -1;
         }
 
         @Override
-        public int compareTo(ScheduledPacket anotherPacket) {
+        public synchronized int compareTo(ScheduledPacket anotherPacket) {
             return new Long(earliestSendTime).compareTo(anotherPacket.earliestSendTime);
         }
         
         public void decrementSentLatch() {
-            sentTime = System.currentTimeMillis();
             sentSignal.countDown();
         }
         
-        public void awaitSending() throws InterruptedException {
-            sentSignal.await();
-        }
-
-        public long getSentTime() {
-            return sentTime;
-        }
-        
-        /**
-         * Returns the time at which a response packet was received, or -1 if no response.
-         * @return
-         */
-        public long getResponseTime() {
-            return responseTime;
-        }
-        
-        public void decrementResponseLatch() {
-            responseTime = System.currentTimeMillis();
-            responseSignal.countDown();
-        }
-        
-        public void awaitResponse(long timeout, TimeUnit unit) throws InterruptedException {
-            responseSignal.await(timeout, unit);
-        }
-        
-        public void setResponse(CommunicationPacket response) {
-            this.response = response;
-        }
-
-        /**
-         * If this packet was sent via <code>sendAndWait</code>, and a response packet has been
-         * received (i.e., a packet with the same packet id), this method returns the response packet.
-         * Otherwise, <code>null</code> is returned.
-         * @return
-         */
-        public CommunicationPacket getResponse() {
-            return response;
+        public CountDownLatch getSentLatch() {
+            return sentSignal;
         }
     }
 }
