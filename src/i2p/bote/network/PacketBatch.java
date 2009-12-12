@@ -55,6 +55,7 @@ public class PacketBatch implements Iterable<PacketBatchItem> {
         firstReplyReceivedSignal = new CountDownLatch(1);
     }
     
+    // TODO throw an exception if this method is called after the batch has been submitted to the queue
     public synchronized void putPacket(CommunicationPacket packet, Destination destination) {
         outgoingPackets.put(packet.getPacketId(), new PacketBatchItem(packet, destination));
         sentSignal = new CountDownLatch((int)sentSignal.getCount() + 1);
