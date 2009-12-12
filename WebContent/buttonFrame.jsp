@@ -26,6 +26,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<c:if test="${param.checkMail == 1}">
+    <ib:checkForMail/>
+</c:if>
+
 <c:if test="${ib:isCheckingForMail()}">
     <c:set var="checkingForMail" value="true"/>
 </c:if>
@@ -35,7 +39,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="i2pbote.css" />
     <c:if test="${checkingForMail}">
-        <meta http-equiv="refresh" content="20" />
+        <meta http-equiv="refresh" content="20;url=buttonFrame.jsp" />
     </c:if>
 </head>
 
@@ -50,16 +54,16 @@
         </c:if>
         <c:if test="${!checkingForMail}">
             <div class="checkmail">
-                <form action="checkMail.jsp" target="_top" method="GET">
-                    <input type="hidden" name="path" value="Inbox"/>
+                <form action="buttonFrame.jsp" method="GET">
+                    <input type="hidden" name="checkMail" value="1"/>
                     <button type="submit" value="Check Mail">Check Mail</button>
                 </form>
             </div>
             <c:if test="${ib:newMailReceived()}">
                 <script language="Javascript">
                 // If inbox is being displayed, reload so the new email(s) show
-                if (document.getElementById("inboxFlag"))
-                    window.location.reload();
+                if (parent.document.getElementById('inboxFlag'))
+                    parent.location.reload();
                 </script>
             </c:if>
         </c:if>
