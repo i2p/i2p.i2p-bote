@@ -73,10 +73,15 @@ public class IndexPacket extends DhtStorablePacket {
     
     /**
      * Merges the DHT keys of multiple index packets into one big index packet.
-     * The DHT key of this packet is not initialized.
+     * The DHT key of this packet is set to the DHT key of the first input packet.
      * @param indexPackets
+     * @throws IllegalArgumentException If an empty <code>Collection</code> or <code>null</code> was passed in
      */
     public IndexPacket(Collection<IndexPacket> indexPackets) {
+        if (indexPackets==null || indexPackets.isEmpty())
+            throw new IllegalArgumentException("This method must be invoked with at least one index packet.");
+        
+        destinationHash = indexPackets.iterator().next().getDhtKey();
         dhtKeys = new HashSet<Hash>();
         for (IndexPacket packet: indexPackets)
             dhtKeys.addAll(packet.getDhtKeys());
