@@ -1,3 +1,8 @@
 0.1     First version. Lets a user create email identities and send/receive plain-text emails
 0.1.1   Fix: Clicking on an email in the inbox causes an error.
 0.1.2   Mostly a bug fix release. It adds two .jar files that were missing.
+0.1.3   After startup, wait 3 minutes before connecting;
+        Change the paths in the build file from /opt/... to ../i2p/...;
+        Fix: "Check Mail" button doesn't show new emails, user has to reload inbox;
+        Fix: high cpu usage when sending or receiving;
+        Set tunnel names to "I2P-Bote"
