@@ -26,6 +26,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<%
+    pageContext.setAttribute("NOT_STARTED", i2p.bote.network.NetworkStatus.NOT_STARTED);
+    pageContext.setAttribute("DELAY", i2p.bote.network.NetworkStatus.DELAY);
+    pageContext.setAttribute("CONNECTING", i2p.bote.network.NetworkStatus.CONNECTING);
+    pageContext.setAttribute("CONNECTED", i2p.bote.network.NetworkStatus.CONNECTED);
+    pageContext.setAttribute("ERROR", i2p.bote.network.NetworkStatus.ERROR);
+%> 
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -36,11 +44,20 @@
 <body style="background-color: transparent; margin: 0px;">
 
 <div class="statusbox">
-    <table><tr>
-        <td><strong>K-Peers:</strong></td><td style="text-align: right"><ib:numDhtPeers/></td>
-<%--    </tr><tr>
-        <td><strong>R-Peers:</strong></td><td style="text-align: right"><ib:numRelayPeers/></td> --%>
-    </tr></table>
+    <c:set var="connStatus" value="${ib:getNetworkStatus()}"/>
+    <c:choose>
+        <c:when test="${connStatus == NOT_STARTED}"><img src="images/redsquare.png"/> Not Started</c:when>
+        <c:when test="${connStatus == DELAY}"><img src="images/yellowsquare.png"/> Waiting 3 Minutes...<br/>
+            <div style="text-align: center">
+                <form action="connect.jsp" target="_top" method="GET">
+                    <button type="submit">Connect Now</button>
+                </form>
+            </div>
+        </c:when>
+        <c:when test="${connStatus == CONNECTING}"><img src="images/yellowsquare.png"/> Connecting...</c:when>
+        <c:when test="${connStatus == CONNECTED}"><img src="images/greensquare.png"/> Connected</c:when>
+        <c:when test="${connStatus == ERROR}"><img src="images/redsquare.png"/> Error</c:when>
+    </c:choose>
 </div>
 
 </body>
