@@ -26,10 +26,9 @@ import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
-
-import net.i2p.data.Destination;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
@@ -38,6 +37,10 @@ public class JSPHelper {
 
     private JSPHelper() {
         throw new UnsupportedOperationException();
+    }
+    
+    public static NetworkStatus getNetworkStatus() {
+        return I2PBote.getInstance().getNetworkStatus();
     }
     
     public static Identities getIdentities() {
