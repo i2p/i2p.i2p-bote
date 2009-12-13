@@ -44,6 +44,12 @@ public interface DHT {
     void setStorageHandler(Class<? extends DhtStorablePacket> packetType, DhtStorageHandler storageHandler);
 
     /**
+     * Returns <code>true</code> if a connection to the DHT has been established.
+     * @return
+     */
+    boolean isConnected();
+    
+    /**
      * Returns the current number of known active peers.
      * @return
      */

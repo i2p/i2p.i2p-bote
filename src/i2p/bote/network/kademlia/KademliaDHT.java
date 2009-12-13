@@ -135,6 +135,11 @@ public class KademliaDHT implements DHT, PacketListener {
     public void setStorageHandler(Class<? extends DhtStorablePacket> packetType, DhtStorageHandler storageHandler) {
         storageHandlers.put(packetType, storageHandler);
     }
+
+    @Override
+    public boolean isConnected() {
+        return getNumPeers() > 0;
+    }
     
     @Override
     public int getNumPeers() {
@@ -259,6 +264,7 @@ public class KademliaDHT implements DHT, PacketListener {
     
     private class BootstrapTask extends Thread {
         public BootstrapTask() {
+            super("Bootstrap");
             setDaemon(true);
         }
         
