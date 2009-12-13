@@ -1,12 +1,12 @@
 /* Based on the router console css */
 
 body {
-     margin: 15px 0 0 10px;
-     padding: 0em;
-     text-align: center;
-     background: #eef;
-     color: #000;
-     font: 9pt/130% "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
+    margin: 15px 0 0 10px;
+    padding: 0em;
+    text-align: center;
+    background: #eef;
+    color: #000;
+    font: 9pt/130% "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
 }
 
 .titlebar {
@@ -79,17 +79,10 @@ body {
     wordwrap: none;
 }
 
-.statusbox table {
-    width: 100%;
-}
-
-.statusbox td {
-    text-align: left;
-    color: #000;
+.statusbox {
     font-size: 8pt;
-    vertical-align: top;
-    padding: 0px 30px 0px 0px;
-    width: 100%;
+    font-weight: bold;
+    text-align: left;
 }
 
 .main {
