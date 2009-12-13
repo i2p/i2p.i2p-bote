@@ -55,6 +55,20 @@
     <body-content>empty</body-content>
 </tag>
 
+<tag>
+    <name>connect</name>
+    <tag-class>i2p.bote.web.ConnectTag</tag-class>
+    <body-content>empty</body-content>
+</tag>
+
+<function>
+    <name>getNetworkStatus</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        i2p.bote.network.NetworkStatus getNetworkStatus()
+    </function-signature>
+</function>
+
 <function>
     <name>getIdentities</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
