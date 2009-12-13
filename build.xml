@@ -4,7 +4,7 @@
     <property name="i2plib" value="${i2pbase}/core/java/build"/>
     <property name="jettylib" value="${i2pbase}/apps/jetty/jettylib"/>
     <property name="antlib" value="${jettylib}"/>
-    <property name="jstllib" value="WebContent/WEB-INF/lib"/>
+    <property name="jstllib" value="${i2pbase}/apps/susidns/src/WEB-INF/lib"/>
     <path id="cp">
         <pathelement path="${classpath}" />
         <pathelement location="${i2plib}/i2p.jar" />
@@ -72,7 +72,7 @@
         <war destfile="i2pbote.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="**/*.class" />
             <classes dir="src" includes="i2p/bote/network/kademlia/built-in-peers.txt" />
-            <fileset dir="WebContent" includes="*.jsp"/>
+            <fileset dir="WebContent" includes="index.html"/>
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
