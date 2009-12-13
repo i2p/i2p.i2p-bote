@@ -6,3 +6,6 @@
         Fix: "Check Mail" button doesn't show new emails, user has to reload inbox;
         Fix: high cpu usage when sending or receiving;
         Set tunnel names to "I2P-Bote"
+0.1.4   Do the 3-minute wait in the background;
+        Added a "Connect now" button to skip the wait;
+        Network Status panel now gives more useful information
