@@ -32,6 +32,7 @@ import i2p.bote.folder.IndexPacketFolder;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.PacketFolder;
 import i2p.bote.network.CheckEmailTask;
+import i2p.bote.network.NetworkStatus;
 import i2p.bote.network.DHT;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
@@ -58,6 +59,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -74,13 +76,14 @@ import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
+import net.i2p.util.SimpleTimer;
 
 /**
  * This is the core class of the application. Is is implemented as a singleton.
  */
 public class I2PBote {
-    private static final String VERSION = "0.1.3";
-    private static final int STARTUP_DELAY = 3 * 60 * 1000;
+    private static final String VERSION = "0.1.4";
+    private static final int STARTUP_DELAY = 3 * 60 * 1000;   // the number of milliseconds to wait before connecting to I2P (this gives the router time to get ready)
 	private static I2PBote instance;
 	
     private Log log = new Log(I2PBote.class);
@@ -106,24 +109,26 @@ public class I2PBote {
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
     private Collection<Future<Boolean>> pendingMailCheckTasks;
+    private ConnectTask connectTask;
+    private Future<?> connectTaskResult;
 
 	private I2PBote() {
 	    Thread.currentThread().setName("I2PBoteMain");
 	    
         appContext = new I2PAppContext();
-		i2pClient = I2PClientFactory.createClient();
-		configuration = new Configuration();
+        i2pClient = I2PClientFactory.createClient();
+        configuration = new Configuration();
 		
         mailCheckThreadFactory = Util.createThreadFactory("ChkMailTask", CheckEmailTask.THREAD_STACK_SIZE);
         mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
     
-		identities = new Identities(configuration.getIdentitiesFile());
-		initializeFolderAccess();
-		
-		waitForRouter();
-        initializeSession();
-		initializeServices();
-		startAllServices();
+        identities = new Identities(configuration.getIdentitiesFile());
+        initializeFolderAccess();
+
+        // The rest of the initialization happens in ConnectTask because it needs an I2PSession.
+        // It is done in the background so we don't block the webapp thread.
+        connectTask = new ConnectTask();
+        connectTaskResult = Executors.newSingleThreadExecutor().submit(connectTask);
 	}
 
 	/**
@@ -138,17 +143,6 @@ public class I2PBote {
         indexPacketDhtStorageFolder = new IndexPacketFolder(configuration.getIndexPacketDhtStorageDir());
 	}
 
-	/**
-	 * Waits <code>STARTUP_DELAY</code> milliseconds, after which the router hopefully accepts tunnels.
-	 */
-	private void waitForRouter() {
-	    try {
-            Thread.sleep(STARTUP_DELAY);
-        } catch (InterruptedException e) {
-            log.error("Interrupted while waiting for the router to initialize.", e);
-        }
-	}
-	
 	/**
 	 * Sets up a {@link I2PSession}, using the I2P destination stored on disk or creating a new I2P
 	 * destination if no key file exists.
@@ -366,5 +360,54 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 		pop3Service.shutDown();
         sendQueue.requestShutdown();
         mailCheckExecutor.shutdownNow();
+	}
+
+	/**
+	 * Connects to the network, skipping the connect delay.
+	 * If the delay time has already passed, calling this method has no effect.
+	 */
+	public void connectNow() {
+	    connectTask.startSignal.countDown();
+	}
+
+	public NetworkStatus getNetworkStatus() {
+	    if (!connectTaskResult.isDone())
+	        return connectTask.getNetworkStatus();
+	    else if (dht != null)
+	        return dht.isConnected()?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
+	    else
+	        return NetworkStatus.ERROR;
+	}
+	
+	/**
+	 * Waits <code>STARTUP_DELAY</code> milliseconds or until <code>startSignal</code>
+	 * is triggered from outside this class, then sets up an I2P session and everything
+	 * that depends on it.
+	 */
+	private class ConnectTask implements Runnable {
+	    NetworkStatus status = NetworkStatus.NOT_STARTED;
+	    CountDownLatch startSignal = new CountDownLatch(1);
+	    
+	    public synchronized NetworkStatus getNetworkStatus() {
+	        return status;
+	    }
+	    
+        @Override
+        public void run() {
+            status = NetworkStatus.DELAY;
+            try {
+                startSignal.await(STARTUP_DELAY, TimeUnit.MILLISECONDS);
+                status = NetworkStatus.CONNECTING;
+                initializeSession();
+                initializeServices();
+                startAllServices();
+            } catch (InterruptedException e) {
+                status = NetworkStatus.ERROR;
+                log.warn("Interrupted during connect delay.", e);
+            } catch (Exception e) {
+                status = NetworkStatus.ERROR;
+                log.error("Can't initialize the application.", e);
+            }
+        }
 	}
 }
