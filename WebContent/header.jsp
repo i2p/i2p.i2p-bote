@@ -74,7 +74,7 @@
 </div>
 
 <div class="menubox">
-    <h2>Network Status</h2>
+    <h2><a href="network.jsp">Network Status</a></h2>
     <iframe src="statusFrame.jsp" width="100%" height="40px" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
 </div>
 
