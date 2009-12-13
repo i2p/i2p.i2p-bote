@@ -33,6 +33,8 @@
         I2P-Bote Version <ib:printVersion/>
     </h2>
     <br/>
+<%--    <c:set var="localDest" value="${ib:getLocalDestination()}"/>
+    Local destination: ${localDest} --%>
     
     <table><tr>
         <td><strong>Author:</strong></td>
