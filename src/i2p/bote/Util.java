@@ -30,6 +30,8 @@ import java.util.concurrent.ThreadFactory;
 
 import net.i2p.client.I2PSession;
 import net.i2p.data.DataFormatException;
+import net.i2p.data.Hash;
+import net.i2p.util.RandomSource;
 
 public class Util {
 	private static final int BUFFER_SIZE = 32 * 1024;
@@ -47,6 +49,13 @@ public class Util {
 		}
 	}
 
+	public static Hash createRandomHash() {
+        byte[] randomHash = new byte[Hash.HASH_LENGTH];
+        for (int i=0; i<Hash.HASH_LENGTH; i++)
+            randomHash[i] = (byte)RandomSource.getInstance().nextInt(256);
+        return new Hash(randomHash);
+	}
+	
 	public static void writeKeyStream(I2PSession i2pSession, OutputStream outputStream) throws DataFormatException, IOException {
 		i2pSession.getMyDestination().writeBytes(outputStream);
 		i2pSession.getDecryptionKey().writeBytes(outputStream);
