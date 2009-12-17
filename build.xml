@@ -95,6 +95,29 @@
         </junit>
     </target>
 
+    <target name="src">
+        <fail unless="version">
+            You must specify the application version.
+            Example: ant -Dversion=0.1.5 src
+        </fail> 
+
+        <property name="subdir" value="i2pbote-${version}-src"/>
+        <zip destfile="src.zip">
+            <zipfileset dir="src" prefix="${subdir}/src"/>
+            <zipfileset dir="WebContent" prefix="${subdir}/WebContent"/>
+            <zipfileset dir="test" prefix="${subdir}/test"/>
+            <zipfileset dir="doc" prefix="${subdir}/doc"/>
+            <zipfileset file="build.xml" prefix="${subdir}"/>
+            <zipfileset file="history.txt" prefix="${subdir}"/>
+            <zipfileset file="license.txt" prefix="${subdir}"/>
+        </zip>
+
+        <echo message="SHA256 sum:"/>
+        <exec executable="sha256sum">
+            <arg value="src.zip"/>
+        </exec>
+    </target>
+
     <target name="clean">
         <delete dir="ant_build" />
         <delete file="i2pbote.war" />
