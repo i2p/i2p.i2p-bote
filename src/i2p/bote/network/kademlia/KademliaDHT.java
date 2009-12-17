@@ -21,6 +21,7 @@
 
 package i2p.bote.network.kademlia;
 
+import i2p.bote.Util;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtStorageHandler;
 import i2p.bote.network.I2PPacketDispatcher;
@@ -36,6 +37,7 @@ import i2p.bote.packet.dht.DhtStorablePacket;
 import i2p.bote.packet.dht.FindClosePeersPacket;
 import i2p.bote.packet.dht.RetrieveRequest;
 import i2p.bote.packet.dht.StoreRequest;
+import i2p.bote.service.I2PBoteThread;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,10 +47,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -57,6 +58,7 @@ import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
+import net.i2p.util.RandomSource;
 
 import com.nettgryppa.security.HashCash;
 
@@ -73,7 +75,9 @@ import com.nettgryppa.security.HashCash;
  *   [6] OverSim (http://www.oversim.org/), which includes a S/Kademlia implementation
  *   
  */
-public class KademliaDHT implements DHT, PacketListener {
+public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
+    private static final int INTERVAL = 5 * 60 * 1000;
+    private static final int PING_TIMEOUT = 20 * 1000;
     private static final URL BUILT_IN_PEER_FILE = KademliaDHT.class.getResource("built-in-peers.txt");
     
     private Log log = new Log(KademliaDHT.class);
@@ -81,35 +85,39 @@ public class KademliaDHT implements DHT, PacketListener {
     private I2PSendQueue sendQueue;
     private I2PPacketDispatcher i2pReceiver;
     private File peerFile;
-    private Collection<KademliaPeer> initialPeers;
+    private Set<KademliaPeer> initialPeers;
     private BucketManager bucketManager;
     private Map<Class<? extends DhtStorablePacket>, DhtStorageHandler> storageHandlers;
 
     public KademliaDHT(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile) {
+        super("Kademlia");
+        setDaemon(true);
+        
         localDestinationHash = localDestination.calculateHash();
         this.sendQueue = sendQueue;
         this.i2pReceiver = i2pReceiver;
         this.peerFile = peerFile;
         
-        initialPeers = Collections.synchronizedList(new ArrayList<KademliaPeer>());
+        initialPeers = new ConcurrentHashSet<KademliaPeer>();
         // Read the built-in peer file
         readPeers(BUILT_IN_PEER_FILE);
         // Read the updateable peer file
         readPeers(peerFile);
         
-        bucketManager = new BucketManager(sendQueue, initialPeers, localDestination.calculateHash());
+        bucketManager = new BucketManager(localDestination.calculateHash());
         storageHandlers = new ConcurrentHashMap<Class<? extends DhtStorablePacket>, DhtStorageHandler>();
     }
     
     /**
      * Returns the S nodes closest to a given key by querying peers.
-     * This method blocks. It returns after <code>CLOSEST_NODES_LOOKUP_TIMEOUT+1</code> seconds at
+     * This method blocks. It returns after <code>ClosestNodesLookupTask.CLOSEST_NODES_LOOKUP_TIMEOUT+1</code> seconds at
      * the longest.
      *
      * The number of pending requests never exceeds ALPHA. According to [4], this is the most efficient.
      * 
      * If there are less than <code>s</code> results after the kademlia lookup finishes, nodes from
      * the sibling list are used.
+     * @see ClosestNodesLookupTask
      */
     private Collection<Destination> getClosestNodes(Hash key) {
         ClosestNodesLookupTask lookupTask = new ClosestNodesLookupTask(key, sendQueue, i2pReceiver, bucketManager);
@@ -245,32 +253,30 @@ public class KademliaDHT implements DHT, PacketListener {
     }
 
     @Override
-    public void start() {
-        i2pReceiver.addPacketListener(this);
-        bucketManager.start();
-        bootstrap();
-    }
-    
-    @Override
     public void shutDown() {
         i2pReceiver.removePacketListener(this);
-        bucketManager.requestShutdown();
         writePeersToFile(peerFile);
     }
     
+    /**
+     * Connects to the Kademlia network; blocks until done.
+     */
     private void bootstrap() {
-        new BootstrapTask().start();
+        new BootstrapTask(i2pReceiver).run();
     }
     
-    private class BootstrapTask extends Thread {
-        public BootstrapTask() {
-            super("Bootstrap");
-            setDaemon(true);
+    private class BootstrapTask implements Runnable, PacketListener {
+        I2PPacketDispatcher i2pReceiver;
+        
+        public BootstrapTask(I2PPacketDispatcher i2pReceiver) {
+            this.i2pReceiver = i2pReceiver;
         }
         
         @Override
         public void run() {
             log.debug("Bootstrap start");
+            i2pReceiver.addPacketListener(this);
+        outerLoop:  
             while (true) {
                 for (KademliaPeer bootstrapNode: initialPeers) {
                     bootstrapNode.setLastReception(-1);
@@ -285,9 +291,12 @@ public class KademliaDHT implements DHT, PacketListener {
                         bucketManager.remove(bootstrapNode);
                     }
                     else {
-                        bucketManager.refreshAll();
+                        log.debug("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.getDestinationHash());
+                        refreshAll();
                         log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
-                        return;
+                        for (KademliaPeer peer: bucketManager.getAllPeers())
+                            log.debug("  Peer: " + peer.getDestinationHash());
+                        break outerLoop;
                     }
                 }
                 
@@ -298,9 +307,43 @@ public class KademliaDHT implements DHT, PacketListener {
                     log.error("Interrupted while pausing after unsuccessful bootstrap attempt.", e);
                 }
             }
+            i2pReceiver.removePacketListener(this);
+        }
+
+        /**
+         * When a previously unknown peer contacts us, this method adds it to <code>initialPeers</code>
+         * so it can be used as a bootstrap node.
+         * @param packet
+         * @param sender
+         * @param receiveTime
+         */
+        @Override
+        public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
+            initialPeers.add(new KademliaPeer(sender, receiveTime));
         }
     }
     
+    /**
+     * "refresh all k-buckets further away than the closest neighbor. This refresh is just a
+     * lookup of a random key that is within that k-bucket range."
+     */
+    public void refreshAll() {
+        for (KBucket bucket: bucketManager)
+            refresh(bucket);
+    }
+    
+    private void refresh(KBucket bucket) {
+        Hash key = Util.createRandomHash();
+        getClosestNodes(key);
+    }
+
+/*    private void updatePeerList() {
+        for (Destination peer: peers) {
+            if (ping(peer))
+                requestPeerList(peer);
+        }
+    }*/
+
     /**
      * Writes all peers to a file in descending order of "last seen" time.
      * @param peerFile
@@ -418,5 +461,22 @@ public class KademliaDHT implements DHT, PacketListener {
         
         // bucketManager is not registered as a PacketListener, so notify it here
         bucketManager.packetReceived(packet, sender, receiveTime);
+    }
+
+    @Override
+    public void run() {
+        i2pReceiver.addPacketListener(this);
+        bootstrap();
+        
+        while (!shutdownRequested()) {
+            try {
+                // TODO replicate();
+                // TODO updatePeerList(); refresh every bucket to which we haven't performed a node lookup in the past hour. Refreshing means picking a random ID in the bucket's range and performing a node search for that ID.
+                sleep(INTERVAL);
+            }
+            catch (InterruptedException e) {
+                log.debug("Thread '" + getName() + "' + interrupted", e);
+            }
+        }
     }
 }
