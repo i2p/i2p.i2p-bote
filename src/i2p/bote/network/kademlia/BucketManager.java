@@ -21,10 +21,8 @@
 
 package i2p.bote.network.kademlia;
 
-import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.service.I2PBoteThread;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -32,33 +30,26 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
-import net.i2p.util.RandomSource;
 
 // TODO if a sibling times out, refill the sibling table
-public class BucketManager extends I2PBoteThread implements PacketListener {
-    private static final int INTERVAL = 5 * 60 * 1000;
-    private static final int PING_TIMEOUT = 20 * 1000;
-
+public class BucketManager implements PacketListener, Iterable<KBucket> {
     private Log log = new Log(BucketManager.class);
-    private I2PSendQueue sendQueue;
     private List<KBucket> kBuckets;
     private KBucket siblingBucket;   // TODO [ordered furthest away to closest in terms of hash distance to local node]
     private Hash localDestinationHash;
 
-    public BucketManager(I2PSendQueue sendQueue, Collection<KademliaPeer> initialPeers, Hash localDestinationHash) {
-        super("BucketMgr");
-        this.sendQueue = sendQueue;
+    public BucketManager(Hash localDestinationHash) {
         this.localDestinationHash = localDestinationHash;
         kBuckets = Collections.synchronizedList(new ArrayList<KBucket>());
         kBuckets.add(new KBucket(KBucket.MIN_HASH_VALUE, KBucket.MAX_HASH_VALUE, 0, true));   // this is the root bucket, so depth=0
         siblingBucket = new KBucket(KBucket.MIN_HASH_VALUE, KBucket.MAX_HASH_VALUE, 0, false);
-        addAll(initialPeers);
     }
     
     public void addAll(Collection<KademliaPeer> nodes) {
@@ -71,6 +62,11 @@ public class BucketManager extends I2PBoteThread implements PacketListener {
      * @param peer
      */
     public void addOrUpdate(KademliaPeer peer) {
+        if (localDestinationHash.equals(peer.getDestinationHash())) {
+            log.debug("Ignoring request to add local destination to bucket.");
+            return;
+        }
+        
         Hash peerHash = peer.getDestinationHash();
         log.debug("Adding/updating peer: Hash = " + peerHash);
 
@@ -127,8 +123,9 @@ public class BucketManager extends I2PBoteThread implements PacketListener {
     private void logBucketStats() {
         int numBuckets = kBuckets.size();
         int numPeers = getAllPeers().size();
+        int numSiblings = siblingBucket.size();
         
-        log.debug("#buckets=" + numBuckets + "+sibBkt, #peers=" + numPeers);
+        log.debug("total #peers=" + numPeers + ", #siblings=" + numSiblings + ", #buckets=" + numBuckets + " (not counting the sibling bucket)");
     }
     
     /**
@@ -252,7 +249,7 @@ public class BucketManager extends I2PBoteThread implements PacketListener {
         return peerArray;
     }
     
-    private List<KademliaPeer> getAllPeers() {
+    public List<KademliaPeer> getAllPeers() {
         List<KademliaPeer> allPeers = new ArrayList<KademliaPeer>();
         for (KBucket bucket: kBuckets)
             allPeers.addAll(bucket.getNodes());
@@ -283,43 +280,6 @@ public class BucketManager extends I2PBoteThread implements PacketListener {
         return count;
     }
     
-    /**
-     * "refresh all k-buckets further away than the closest neighbor. This refresh is just a lookup of a random key that is within that k-bucket range."
-     */
-    public void refreshAll() {
-        for (KBucket bucket: kBuckets)
-            refresh(bucket);
-    }
-    
-    private void refresh(KBucket bucket) {
-        byte[] randomHash = new byte[Hash.HASH_LENGTH];
-        for (int i=0; i<Hash.HASH_LENGTH; i++)
-            randomHash[i] = (byte)RandomSource.getInstance().nextInt(256);
-        Hash key = new Hash(randomHash);
-        getClosestPeers(key, KademliaConstants.K);
-    }
-    
-/*    private void updatePeerList() {
-        for (Destination peer: peers) {
-            if (ping(peer))
-                requestPeerList(peer);
-        }
-    }*/
-    
-    @Override
-    public void run() {
-        while (!shutdownRequested()) {
-            try {
-                // TODO replicate();
-                // TODO updatePeerList(); refresh every bucket to which we haven't performed a node lookup in the past hour. Refreshing means picking a random ID in the bucket's range and performing a node search for that ID.
-                sleep(INTERVAL);
-            }
-            catch (InterruptedException e) {
-                log.debug("Thread '" + getName() + "' + interrupted", e);
-            }
-        }
-    }
-
     // PacketListener implementation
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
@@ -340,5 +300,14 @@ public class BucketManager extends I2PBoteThread implements PacketListener {
             BigInteger distance2 = KademliaUtil.getDistance(peer2.getDestinationHash(), reference);
             return distance1.compareTo(distance2);
         }
+    }
+
+    /**
+     * Iterates over the k-buckets. Does not include the sibling bucket.
+     * @return
+     */
+    @Override
+    public Iterator<KBucket> iterator() {
+        return kBuckets.iterator();
     }
 }
