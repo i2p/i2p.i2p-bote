@@ -433,7 +433,11 @@ secure as manually adding keypairs to the local address book, although it is mor
 
 10. To Do
 
-  * fix: new emails don't automatically show up when clicking "Check Mail", have to reload inbox
+  * disable all html links that do nothing
+  * put sender name in "From" header field, if available
+  * log dest hashes, not the full dest key
+  * auto-refresh network.jsp
+  * show remaining time for the 3-min delay at startup
   * Packet ID field isn't really a packet id, rename to Conversation ID or maybe Session ID
   * Replication per the Kademlia spec
   * Have an option to disable automatic lookups in the distributed address directory for your own address
