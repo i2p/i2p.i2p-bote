@@ -27,6 +27,7 @@ import i2p.bote.network.I2PSendQueue;
 import i2p.bote.packet.RelayPacket;
 
 import java.text.ParseException;
+import java.util.concurrent.TimeUnit;
 
 import net.i2p.I2PAppContext;
 import net.i2p.util.Log;
@@ -38,7 +39,8 @@ import com.nettgryppa.security.HashCash;
  * A background thread that sends packets in the relay outbox to the I2P network.
  */
 public class RelayPacketSender extends I2PBoteThread {
-    private static final int PAUSE = 10 * 60 * 1000;   // the wait time, in milliseconds,  before processing the folder again
+    private static final long PAUSE = 10 * 60 * 1000;   // the wait time, in milliseconds,  before processing the folder again
+    private static final long EXPIRED_CHECK_INTERVAL = TimeUnit.DAYS.toMillis(1);   // the interval for checking expired packets, in milliseconds
     private static final int PADDED_SIZE = 16 * 1024;
     private static final Log log = new Log(RelayPacketSender.class);
     
@@ -56,13 +58,17 @@ public class RelayPacketSender extends I2PBoteThread {
     
     @Override
     public void run() {
+        long lastExpiredCheck = 0;
+        
         while (true) {
-            if (log.shouldLog(Log.DEBUG))
-                log.debug("Deleting expired packets...");
-            try {
-                deleteExpiredPackets();
-            } catch (Exception e) {
-                log.error("Error deleting expired packets", e);
+            if (System.currentTimeMillis() - lastExpiredCheck > EXPIRED_CHECK_INTERVAL) {
+                lastExpiredCheck = System.currentTimeMillis();
+                log.debug("Checking for expired relay packets...");
+                try {
+                    deleteExpiredPackets();
+                } catch (Exception e) {
+                    log.error("Error deleting expired packets", e);
+                }
             }
             
             log.info("Processing outgoing packets in directory '" + packetStore.getStorageDirectory().getAbsolutePath() + "'");
