@@ -200,7 +200,7 @@ public class ClosestNodesLookupTask implements Runnable {
         }
     
         private void addPeers(ResponsePacket responsePacket, PeerList peerListPacket, Destination sender, long receiveTime) {
-            log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender);
+            log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.hashCode());
             
             // if the packet is in response to a pending request, update the three Sets
             FindClosePeersPacket request = getPacketById(pendingRequests.values(), responsePacket.getPacketId());   // find the request the node list is in response to
@@ -209,8 +209,7 @@ public class ClosestNodesLookupTask implements Runnable {
                 responses.add(sender);
                 Collection<KademliaPeer> peersReceived = peerListPacket.getPeers();
                 for (KademliaPeer peer: peersReceived)
-                    if (contains(notQueriedYet, peer))
-                        notQueriedYet.add(peer);
+                    notQueriedYet.add(peer);
                 pendingRequests.remove(request);
                 // TODO synchronize access to shortList and pendingRequests
             }
