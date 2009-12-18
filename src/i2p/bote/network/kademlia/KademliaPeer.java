@@ -89,7 +89,25 @@ public class KademliaPeer {
 /*    public BigInteger getDistance(KademliaPeer anotherPeer) {
         return KademliaUtil.getDistance(getDestinationHash(), anotherPeer.getDestinationHash());
     }*/
- 
+
+    /**
+     * Two <code>KademliaPeer</code>s are considered equal if their I2P destinations are equal.
+     */
+    @Override
+    public boolean equals(Object otherObj) {
+        if (otherObj instanceof KademliaPeer) {
+            KademliaPeer otherPeer = (KademliaPeer)otherObj;
+            return destination.equals(otherPeer.destination);
+        }
+        else
+            return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return destination.hashCode();
+    }
+    
     @Override
     public String toString() {
         return destination.toString();
