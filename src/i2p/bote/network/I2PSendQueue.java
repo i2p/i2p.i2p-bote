@@ -166,7 +166,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
         if (packet instanceof ResponsePacket) {
-            log.debug("Response Packet received: Packet Id = " + packet.getPacketId() + " Sender = " + sender);
+            log.debug("Response Packet received: Packet Id = " + packet.getPacketId() + " Sender = " + sender.calculateHash());
             
             UniqueId packetId = packet.getPacketId();
             
@@ -208,7 +208,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             
             PacketBatch batch = scheduledPacket.batch;
             boolean isBatchPacket = batch != null;
-            log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to peer: " + scheduledPacket.destination.toBase64());
+            log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to peer: " + scheduledPacket.destination.calculateHash());
                 
             byte[] replyableDatagram = datagramMaker.makeI2PDatagram(i2pBotePacket.toByteArray());
             try {
