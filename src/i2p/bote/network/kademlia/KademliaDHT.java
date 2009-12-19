@@ -81,6 +81,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private static final URL BUILT_IN_PEER_FILE = KademliaDHT.class.getResource("built-in-peers.txt");
     
     private Log log = new Log(KademliaDHT.class);
+    private Destination localDestination;
     private Hash localDestinationHash;
     private I2PSendQueue sendQueue;
     private I2PPacketDispatcher i2pReceiver;
@@ -93,6 +94,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         super("Kademlia");
         setDaemon(true);
         
+        this.localDestination = localDestination;
         localDestinationHash = localDestination.calculateHash();
         this.sendQueue = sendQueue;
         this.i2pReceiver = i2pReceiver;
@@ -104,7 +106,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // Read the updateable peer file
         readPeers(peerFile);
         
-        bucketManager = new BucketManager(localDestination.calculateHash());
+        bucketManager = new BucketManager(localDestinationHash);
         storageHandlers = new ConcurrentHashMap<Class<? extends DhtStorablePacket>, DhtStorageHandler>();
     }
     
@@ -409,7 +411,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 	KademliaPeer peer = new KademliaPeer(destination, 0);
                 	
                     // don't add the local destination as a peer
-                    if (!peer.getDestinationHash().equals(localDestinationHash))
+                    if (!peer.getDestination().equals(localDestination))
                         initialPeers.add(peer);
                 }
                 catch (DataFormatException e) {
