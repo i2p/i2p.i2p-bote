@@ -26,6 +26,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<jsp:include page="getStatus.jsp"/>
+
 <c:if test="${param.checkMail == 1}">
     <ib:checkForMail/>
 </c:if>
@@ -45,6 +47,11 @@
 
 <body style="background-color: transparent; margin: 0px;">
 
+<c:set var="disable" value=""/>
+<c:if test="${connStatus == DELAY}">
+    <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
+</c:if>
+
 <table><tr>
     <td>
         <c:if test="${checkingForMail}">
@@ -53,10 +60,10 @@
             </div>
         </c:if>
         <c:if test="${!checkingForMail}">
-            <div class="checkmail">
+           <div class="checkmail">
                 <form action="buttonFrame.jsp" method="GET">
                     <input type="hidden" name="checkMail" value="1"/>
-                    <button type="submit" value="Check Mail">Check Mail</button>
+                    <button type="submit" value="Check Mail" ${disable}>Check Mail</button>
                 </form>
             </div>
             <c:if test="${ib:newMailReceived()}">
@@ -70,7 +77,7 @@
     </td>
     <td>
         <form action="newEmail.jsp" target="_top" method="GET">
-            <button type="submit" value="New">New</button>
+            <button type="submit" value="New" ${disable}>New</button>
         </form>
     </td>
 </tr></table>
