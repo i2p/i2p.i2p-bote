@@ -433,9 +433,7 @@ secure as manually adding keypairs to the local address book, although it is mor
 
 10. To Do
 
-  * disable all html links that do nothing
   * put sender name in "From" header field, if available
-  * log dest hashes, not the full dest key
   * auto-refresh network.jsp
   * show remaining time for the 3-min delay at startup
   * Packet ID field isn't really a packet id, rename to Conversation ID or maybe Session ID
@@ -482,7 +480,6 @@ secure as manually adding keypairs to the local address book, although it is mor
     * OutboxProcessor
   * generate javadoc in ant build
   * are non-daemon threads preventing app from shutting down in eclipse?
-  * avoid using ConcurrentSkipListSet whenever possible for performance reasons
   * prioritize packets in I2PSendQueue? Should PeerListRequests get higher priority than relay packets etc.?
   * shorten thread names to 12 chars
   * use I2P time, not System.currentTimeMillis()
