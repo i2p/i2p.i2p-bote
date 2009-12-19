@@ -26,6 +26,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<jsp:include page="getStatus.jsp"/>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -74,7 +76,15 @@
 </div>
 
 <div class="menubox">
-    <h2><a href="network.jsp">Network Status</a></h2>
+    <h2>
+    <c:if test="${connStatus != DELAY}">
+        <a href="network.jsp">
+    </c:if>
+    Network Status
+    <c:if test="${connStatus != DELAY}">
+        </a>
+    </c:if>
+    </h2>
     <iframe src="statusFrame.jsp" width="100%" height="40px" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
 </div>
 
