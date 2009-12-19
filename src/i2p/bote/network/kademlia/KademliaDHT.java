@@ -47,6 +47,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -158,19 +159,16 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     
     private Collection<DhtStorablePacket> find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {
         final Collection<Destination> closeNodes = getClosestNodes(key);
-        log.debug("Querying " + closeNodes.size() + " nodes for data type " + dataType + ", Kademlia key " + key);
+        log.debug("Querying localhost + " + closeNodes.size() + " peers for data type " + dataType.getSimpleName() + ", Kademlia key " + key);
         
-        final Collection<I2PBotePacket> receivedPackets = new ConcurrentHashSet<I2PBotePacket>();   // avoid adding duplicate packets
-        
-/*        PacketListener packetListener = new PacketListener() {
-            @Override
-            public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
-                // add packet to list of received packets if the packet is in response to a RetrieveRequest
-                if (packet instanceof RetrieveRequest && closeNodes.contains(sender))
-                    receivedPackets.add(packet);
-            }
-        };
-        i2pReceiver.addPacketListener(packetListener);*/
+        DhtStorablePacket localResult = findLocally(key, dataType);
+        // if a local packet exists and one result is requested, return the local packet
+        if (!exhaustive && localResult!=null) {
+            log.debug("Locally stored packet found for hash " + key + " and data type " + dataType);
+            Collection<DhtStorablePacket> storablePackets = new ArrayList<DhtStorablePacket>();
+            storablePackets.add(localResult);
+            return storablePackets;
+        }
         
         // Send the retrieve requests
         PacketBatch batch = new PacketBatch();
@@ -197,14 +195,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         log.debug(batch.getResponses().size() + " response packets received for hash " + key + " and data type " + dataType);
         
         sendQueue.remove(batch);
-//        i2pReceiver.removePacketListener(packetListener);
         
-        ConcurrentHashSet<DhtStorablePacket> storablePackets = getStorablePackets(batch);
-        DhtStorablePacket localResult = findLocally(key, dataType);
-        if (localResult != null) {
-            log.debug("Locally stored packet found for hash " + key + " and data type " + dataType);
-            storablePackets.add(localResult);
-        }
+        ConcurrentHashSet<DhtStorablePacket> storablePackets = getStorablePackets(batch, localResult);
         return storablePackets;
     }
 
@@ -217,15 +209,21 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     /**
-     * Returns all <code>DhtStorablePacket</code> packets that have been received as a response to a send batch.
+     * Returns all <code>DhtStorablePacket</code> packets that have been received as a response to a send batch,
+     * plus <code>localResult</code> if it is non-<code>null</code>.
      * @param batch
+     * @param localResult
      * @return
      */
-    private ConcurrentHashSet<DhtStorablePacket> getStorablePackets(PacketBatch batch) {
+    private ConcurrentHashSet<DhtStorablePacket> getStorablePackets(PacketBatch batch, DhtStorablePacket localResult) {
         ConcurrentHashSet<DhtStorablePacket> storablePackets = new ConcurrentHashSet<DhtStorablePacket>();
         for (I2PBotePacket packet: batch.getResponses())
             if (packet instanceof DhtStorablePacket)
                 storablePackets.add((DhtStorablePacket)packet);
+        
+        if (localResult != null)
+            storablePackets.add(localResult);
+        
         return storablePackets;
     }
     
