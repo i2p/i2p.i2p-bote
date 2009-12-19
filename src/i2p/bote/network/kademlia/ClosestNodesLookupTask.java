@@ -70,7 +70,7 @@ public class ClosestNodesLookupTask implements Runnable {
         this.i2pReceiver = i2pReceiver;
         this.bucketManager = bucketManager;
         randomNumberGenerator = new Random(getTime());
-        responses = new TreeSet<Destination>(new HashDistanceComparator(key));   // nodes that have responded to a query; sorted by distance to the key
+        responses = Collections.synchronizedSet(new TreeSet<Destination>(new HashDistanceComparator(key)));   // nodes that have responded to a query; sorted by distance to the key
         notQueriedYet = new ConcurrentHashSet<KademliaPeer>();   // peers we haven't contacted yet
         pendingRequests = new ConcurrentHashMap<KademliaPeer, FindClosePeersPacket>();   // outstanding queries
     }
@@ -108,6 +108,8 @@ public class ClosestNodesLookupTask implements Runnable {
             }
         } while (!isDone());
         log.debug(responses.size() + " nodes found.");
+        for (Destination node: responses)
+            log.debug("  Node: " + node.calculateHash());
         
         i2pReceiver.removePacketListener(packetListener);
     }
@@ -200,7 +202,9 @@ public class ClosestNodesLookupTask implements Runnable {
         }
     
         private void addPeers(ResponsePacket responsePacket, PeerList peerListPacket, Destination sender, long receiveTime) {
-            log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.hashCode());
+            log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.calculateHash());
+            for (KademliaPeer peer: peerListPacket.getPeers())
+                log.debug("  Peer: " + peer.getDestinationHash());
             
             // if the packet is in response to a pending request, update the three Sets
             FindClosePeersPacket request = getPacketById(pendingRequests.values(), responsePacket.getPacketId());   // find the request the node list is in response to
@@ -208,10 +212,13 @@ public class ClosestNodesLookupTask implements Runnable {
                 // TODO make responseReceived and pendingRequests a parameter in the constructor?
                 responses.add(sender);
                 Collection<KademliaPeer> peersReceived = peerListPacket.getPeers();
+                
+                // add all peers from the PeerList, excluding those that we have already queried
                 for (KademliaPeer peer: peersReceived)
-                    notQueriedYet.add(peer);
-                pendingRequests.remove(request);
-                // TODO synchronize access to shortList and pendingRequests
+                    if (!pendingRequests.containsKey(peer) && !responses.contains(peer.getDestination()))
+                        notQueriedYet.add(peer);   // this won't create duplicates because notQueriedYet is a Set
+                
+                pendingRequests.remove(new KademliaPeer(sender, 0));   // wrap sender into a KademliaPeer because that is the type that needs to be passed to Map.remove
             }
             else
                 log.debug("No Find Close Nodes packet found for Peer List: " + peerListPacket);
