@@ -60,8 +60,19 @@
             </div>
         </c:if>
         <c:if test="${!checkingForMail}">
-           <div class="checkmail">
-                <form action="buttonFrame.jsp" method="GET">
+            <div class="checkmail">
+                <c:choose>
+                    <c:when test="${empty ib:getIdentities().all}">
+                        <c:set var="url" value="noIdentities.jsp"/>
+                        <c:set var="frame" value="target=&quot;_parent&quot;"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="link" value="buttonFrame.jsp"/>
+                        <c:set var="frame" value=""/>
+                    </c:otherwise>
+                </c:choose>
+                
+                <form action="${url}" ${frame} method="GET">
                     <input type="hidden" name="checkMail" value="1"/>
                     <button type="submit" value="Check Mail" ${disable}>Check Mail</button>
                 </form>
