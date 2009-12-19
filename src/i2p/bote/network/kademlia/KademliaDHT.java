@@ -59,7 +59,6 @@ import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
-import net.i2p.util.RandomSource;
 
 import com.nettgryppa.security.HashCash;
 
@@ -90,6 +89,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private Set<KademliaPeer> initialPeers;
     private BucketManager bucketManager;
     private Map<Class<? extends DhtStorablePacket>, DhtStorageHandler> storageHandlers;
+    private boolean connected;   // false until bootstrapping is done
 
     public KademliaDHT(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile) {
         super("Kademlia");
@@ -148,8 +148,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
 
     @Override
-    public boolean isConnected() {
-        return getNumPeers() > 0;
+    public synchronized boolean isConnected() {
+        return connected;
     }
     
     @Override
@@ -467,6 +467,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     public void run() {
         i2pReceiver.addPacketListener(this);
         bootstrap();
+        connected = true;
         
         while (!shutdownRequested()) {
             try {
