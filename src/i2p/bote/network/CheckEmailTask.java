@@ -100,23 +100,18 @@ public class CheckEmailTask implements Callable<Boolean> {
     
     /**
      * Queries the DHT for new index packets and returns the DHT keys contained in them.
-     * @return A <code>Collection</code> containing zero or more elements
+     * @return A <code>Collection</code> containing zero or more DHT keys
      */
     private Collection<Hash> findEmailPacketKeys() {
-        log.debug("Querying the DHT for index packets with key " + identity.getHash());
-        Collection<DhtStorablePacket> packets = dht.findAll(identity.getHash(), IndexPacket.class);
-        
-        // build an Collection of index packets
-        Collection<IndexPacket> indexPackets = new ArrayList<IndexPacket>();
-        for (DhtStorablePacket packet: packets)
-            if (packet instanceof IndexPacket)
-                indexPackets.add((IndexPacket)packet);
-            else
-                log.error("DHT returned packet of class " + packet.getClass().getSimpleName() + ", expected IndexPacket.");
-        
-        IndexPacket mergedPacket = new IndexPacket(indexPackets);
-        log.debug("Found " + mergedPacket.getDhtKeys().size() + " Email Packet keys.");
-        return mergedPacket.getDhtKeys();
+        log.debug("Querying the DHT for an index packet with key " + identity.getHash());
+        DhtStorablePacket packet = dht.findOne(identity.getHash(), IndexPacket.class);
+        if (packet instanceof IndexPacket)
+            return ((IndexPacket)packet).getDhtKeys();
+        else if (packet == null)
+            log.debug("No index packet found for key " + identity.getHash());
+        else
+            log.error("DHT returned packet of class " + packet.getClass().getSimpleName() + ", expected " + IndexPacket.class.getSimpleName());
+        return new ArrayList<Hash>();
     }
     
     /**
