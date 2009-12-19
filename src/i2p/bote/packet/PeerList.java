@@ -80,7 +80,8 @@ public class PeerList extends DataPacket {
             dataStream.write((byte)getPacketTypeCode());
             dataStream.writeShort(peers.size());
             for (KademliaPeer peer: peers)
-                dataStream.write(peer.getDestination().toByteArray());
+                // write the first 384 bytes (the two public keys)
+                dataStream.write(peer.getDestination().toByteArray(), 0, 384);
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);
