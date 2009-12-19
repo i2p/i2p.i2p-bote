@@ -133,6 +133,14 @@
     </function-signature>
 </function>
 
+<function>
+    <name>deleteEmail</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.boolean deleteEmail(java.lang.String, java.lang.String)
+    </function-signature>
+</function>
+
 <tag-file>
     <name>printWithLineBreaks</name>
     <path>/WEB-INF/tags/printWithLineBreaks.tag</path>
