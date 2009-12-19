@@ -48,8 +48,8 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
     public BucketManager(Hash localDestinationHash) {
         this.localDestinationHash = localDestinationHash;
         kBuckets = Collections.synchronizedList(new ArrayList<KBucket>());
-        kBuckets.add(new KBucket(KBucket.MIN_HASH_VALUE, KBucket.MAX_HASH_VALUE, 0, true));   // this is the root bucket, so depth=0
-        siblingBucket = new KBucket(KBucket.MIN_HASH_VALUE, KBucket.MAX_HASH_VALUE, 0, false);
+        kBuckets.add(new KBucket(KBucket.MIN_HASH_VALUE, KBucket.MAX_HASH_VALUE, KademliaConstants.K, 0, true));   // this is the root bucket, so depth=0
+        siblingBucket = new KBucket(KBucket.MIN_HASH_VALUE, KBucket.MAX_HASH_VALUE, KademliaConstants.S, 0, false);
     }
     
     public void addAll(Collection<KademliaPeer> nodes) {

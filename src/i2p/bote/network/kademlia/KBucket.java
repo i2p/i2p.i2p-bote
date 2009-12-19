@@ -41,19 +41,21 @@ import net.i2p.util.Log;
 class KBucket implements Iterable<KademliaPeer> {
     static final BigInteger MIN_HASH_VALUE = BigInteger.ONE.negate().shiftLeft(Hash.HASH_LENGTH*8);   // system-wide minimum hash value
     static final BigInteger MAX_HASH_VALUE = BigInteger.ONE.shiftLeft(Hash.HASH_LENGTH*8).subtract(BigInteger.ONE);   // system-wide maximum hash value
-    private static final int CAPACITY = KademliaConstants.K;   // The maximum number of peers the bucket can hold
     
     private Log log = new Log(KBucket.class);
     private BigInteger startId;
     private BigInteger endId;
     private List<KademliaPeer> peers;   // the list is always kept sorted by "last seen" time
     private Set<KademliaPeer> replacementCache;
+    private int capacity;
     private int depth;
     private boolean replacementCacheEnabled;
 
-    KBucket(BigInteger startId, BigInteger endId, int depth, boolean replacementCacheEnabled) {
+    // capacity - The maximum number of peers the bucket can hold
+    KBucket(BigInteger startId, BigInteger endId, int capacity, int depth, boolean replacementCacheEnabled) {
         this.startId = startId;
         this.endId = endId;
+        this.capacity = capacity;
         Comparator<KademliaPeer> peerComparator = createLastReceptionComparator();
         peers = new ArrayList<KademliaPeer>();
         replacementCache = new ConcurrentSkipListSet<KademliaPeer>(peerComparator);
@@ -76,7 +78,7 @@ class KBucket implements Iterable<KademliaPeer> {
     
     void add(KademliaPeer node) {
         if (isFull())
-            log.error("Error: adding a node to a full k-bucket. Bucket needs to be split first. Size=" + size() + ", capacity=" + CAPACITY);
+            log.error("Error: adding a node to a full k-bucket. Bucket needs to be split first. Size=" + size() + ", capacity=" + capacity);
         
         peers.add(node);
     }
@@ -233,7 +235,7 @@ class KBucket implements Iterable<KademliaPeer> {
     }
     
     boolean isFull() {
-        return size() >= CAPACITY;
+        return size() >= capacity;
     }
 
     /**
@@ -242,7 +244,7 @@ class KBucket implements Iterable<KademliaPeer> {
      */
     KBucket split() {
         depth++;
-        KBucket newBucket = new KBucket(startId, endId, depth, replacementCacheEnabled);
+        KBucket newBucket = new KBucket(startId, endId, capacity, depth, replacementCacheEnabled);
         for (int i=0; i<peers.size()/2; i++) {
             KademliaPeer peer = peers.get(i);
             newBucket.add(peer);
@@ -257,7 +259,7 @@ class KBucket implements Iterable<KademliaPeer> {
     
     KBucket split(BigInteger pivot) {
         depth++;
-        KBucket newBucket = new KBucket(startId, pivot.subtract(BigInteger.ONE), depth, replacementCacheEnabled);
+        KBucket newBucket = new KBucket(startId, pivot.subtract(BigInteger.ONE), capacity, depth, replacementCacheEnabled);
         startId = pivot;
         for (KademliaPeer peer: peers) {
             BigInteger nodeId = new BigInteger(peer.getDestination().calculateHash().getData());
