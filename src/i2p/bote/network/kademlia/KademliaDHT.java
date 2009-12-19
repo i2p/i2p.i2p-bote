@@ -235,10 +235,11 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         log.debug("Storing a " + packet.getClass().getSimpleName() + " with key " + key + " on " + closeNodes.size() + " nodes");
         
         HashCash hashCash = HashCash.mintCash("", 1);   // TODO
-        StoreRequest storeRequest = new StoreRequest(hashCash, packet);
         PacketBatch batch = new PacketBatch();
-        for (Destination node: closeNodes)
+        for (Destination node: closeNodes) {
+            StoreRequest storeRequest = new StoreRequest(hashCash, packet);   // use a separate packet id for each request
             batch.putPacket(storeRequest, node);
+        }
         sendQueue.send(batch);
         
         try {
