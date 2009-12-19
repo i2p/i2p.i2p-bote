@@ -28,13 +28,29 @@ import net.i2p.data.Hash;
 
 public class KademliaUtil {
 
+    /**
+     * Calculates the Kademlia distance (XOR distance) between a <code>KademliaPeer</code>
+     * and a hash value.
+     * @param node
+     * @param key
+     * @return
+     * @see getDistance(Hash, Hash)
+     */
     public static BigInteger getDistance(KademliaPeer node, Hash key) {
         return getDistance(node.getDestinationHash(), key);
     }
 
+    /**
+     * Calculates the Kademlia distance (XOR distance) between two hashes.
+     * If the hashes are equal, the distance is zero; otherwise, it is greater
+     * than zero.
+     * @param key1
+     * @param key2
+     * @return
+     */
     public static BigInteger getDistance(Hash key1, Hash key2) {
         // This shouldn't be a performance bottleneck, so save some mem by not using Hash.cachedXor
         byte[] xoredData = DataHelper.xor(key1.getData(), key2.getData());
-        return new BigInteger(xoredData);
+        return new BigInteger(xoredData).abs();
     }
 }
