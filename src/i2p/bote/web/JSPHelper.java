@@ -125,4 +125,8 @@ public class JSPHelper {
     public static Email getEmail(String folderName, String messageId) {
         return getMailFolder(folderName).getEmail(messageId);
     }
+
+    public static boolean deleteEmail(String folderName, String messageId) {
+        return JSPHelper.getMailFolder(folderName).delete(messageId);
+    }
 }

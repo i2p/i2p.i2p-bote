@@ -85,6 +85,11 @@ public class EmailFolder extends Folder<Email> {
         return new File(storageDir, messageId.toBase64() + EMAIL_FILE_EXTENSION);
     }
     
+    public boolean delete(String messageIdString) {
+        MessageId messageId = new MessageId(messageIdString);
+        return getEmailFile(messageId).delete();
+    }
+    
     public void delete(Email email) {
         if (!getEmailFile(email).delete())
             log.error("Cannot delete file: '" + getEmailFile(email) + "'");
