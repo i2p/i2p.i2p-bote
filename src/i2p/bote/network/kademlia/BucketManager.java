@@ -63,7 +63,7 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
      */
     public void addOrUpdate(KademliaPeer peer) {
         if (localDestinationHash.equals(peer.getDestinationHash())) {
-            log.debug("Ignoring request to add local destination to bucket.");
+            log.debug("Not adding local destination to bucket.");
             return;
         }
         
