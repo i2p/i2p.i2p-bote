@@ -176,6 +176,13 @@ button:active {
     -moz-box-shadow: inset 0px 0px 0px 1px #f60;
 }
 
+button[disabled] {
+    border: 1px outset #999;
+    background: #ddf !important;
+    color: #666;
+    -moz-box-shadow: inset 0px 0px 0px 1px #999;
+}
+
 .underline {
     border-bottom: 1px solid #000022;
     padding: 5px 0px 5px 0px;
