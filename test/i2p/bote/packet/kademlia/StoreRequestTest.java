@@ -67,6 +67,6 @@ public class StoreRequestTest {
     public void toByteArrayAndBack() throws Exception {
         byte[] arrayA = storeRequest.toByteArray();
         byte[] arrayB = new StoreRequest(arrayA).toByteArray();
-        assertTrue(Arrays.equals(arrayA, arrayB));
+        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
     }
 }
