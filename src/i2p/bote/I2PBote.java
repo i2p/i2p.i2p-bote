@@ -82,7 +82,7 @@ import net.i2p.util.SimpleTimer;
  * This is the core class of the application. Is is implemented as a singleton.
  */
 public class I2PBote {
-    private static final String VERSION = "0.1.4";
+    private static final String VERSION = "0.1.5";
     private static final int STARTUP_DELAY = 3 * 60 * 1000;   // the number of milliseconds to wait before connecting to I2P (this gives the router time to get ready)
 	private static I2PBote instance;
 	
