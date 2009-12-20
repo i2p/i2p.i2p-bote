@@ -145,7 +145,8 @@ public class ClosestNodesLookupTask implements Runnable {
     }
     
     /**
-     * Return up to <code>s</code> peers.
+     * Returns up to <code>s</code> peers. If no peers were found, an empty
+     * <code>List</code> is returned.
      * @return
      */
     public List<Destination> getResults() {
