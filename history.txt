@@ -9,3 +9,8 @@
 0.1.4   Do the 3-minute wait in the background;
         Added a "Connect now" button to skip the wait;
         Network Status panel now gives more useful information
+0.1.5   Fixes a number of bugs in the Kademlia code;
+        Removed unimplemented HTML links;
+        Network-related UI elements are now disabled until tunnel is ready;
+        Emails can now be deleted from a folder;
+        "No Identity Defined" page didn't come up, fixed
