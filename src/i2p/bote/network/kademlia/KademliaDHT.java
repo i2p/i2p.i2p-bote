@@ -228,10 +228,13 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     @Override
-    public void store(DhtStorablePacket packet) throws NoSuchAlgorithmException {
+    public void store(DhtStorablePacket packet) throws NoSuchAlgorithmException, KademliaException {
         Hash key = packet.getDhtKey();
         
         Collection<Destination> closeNodes = getClosestNodes(key);
+        if (closeNodes.isEmpty())
+            throw new KademliaException("Cannot store packet because no storage nodes found.");
+            
         log.debug("Storing a " + packet.getClass().getSimpleName() + " with key " + key + " on " + closeNodes.size() + " nodes");
         
         HashCash hashCash = HashCash.mintCash("", 1);   // TODO
