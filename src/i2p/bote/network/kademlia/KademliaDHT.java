@@ -65,6 +65,7 @@ import com.nettgryppa.security.HashCash;
 /**
  * The main class of the Kademlia implementation. All the high-level Kademlia logic
  * is in here.
+ * In addition to standard Kademlia, the sibling list feature of S-Kademlia is implemented.
  * 
  * Resources used:
  *   [1] http://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf
@@ -452,7 +453,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 DhtStorablePacket storedPacket = storageHandler.retrieve(retrieveRequest.getKey());
                 // if requested packet found, send it to the requester
                 if (storedPacket != null) {
-                    log.debug("Packet found for retrieve request: [" + retrieveRequest + "], replying to sender: [" + sender + "]");
+                    log.debug("Packet found for retrieve request: [" + retrieveRequest + "], replying to sender: [" + sender.calculateHash() + "]");
                     ResponsePacket response = new ResponsePacket(storedPacket, StatusCode.OK, retrieveRequest.getPacketId());
                     sendQueue.send(response, sender);
                 }
