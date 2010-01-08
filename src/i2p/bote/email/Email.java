@@ -134,7 +134,7 @@ public class Email implements FolderElement {
     private static Set<String> createHeaderWhitelist() {
         String[] headerArray = new String[] {
             "From", "Sender", "To", "CC", "BCC", "Reply-To", "Subject", "Date", "MIME-Version", "Content-Type",
-            "Content-Transfer-Encoding", "Message-Id", "In-Reply-To", "X-HashCash"
+            "Content-Transfer-Encoding", "Message-Id", "In-Reply-To", "X-HashCash", "X-Priority"
         };
         
         ConcurrentHashSet<String> headerSet = new ConcurrentHashSet<String>();
@@ -161,6 +161,7 @@ public class Email implements FolderElement {
     }
     
     public void setSender(String sender) {
+        setHeader("From", sender);
         setHeader("Sender", sender);
     }
     
