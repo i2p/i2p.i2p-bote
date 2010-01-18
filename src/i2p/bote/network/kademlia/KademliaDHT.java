@@ -23,13 +23,14 @@ package i2p.bote.network.kademlia;
 
 import i2p.bote.Util;
 import i2p.bote.network.DHT;
+import i2p.bote.network.DhtResults;
 import i2p.bote.network.DhtStorageHandler;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketBatch;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.I2PBotePacket;
+import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.PeerList;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
@@ -47,10 +48,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -130,16 +131,12 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
 
     @Override
-    public DhtStorablePacket findOne(Hash key, Class<? extends DhtStorablePacket> dataType) {
-        Collection<DhtStorablePacket> results = find(key, dataType, false);
-        if (results.isEmpty())
-            return null;
-        else
-            return results.iterator().next();
+    public DhtResults findOne(Hash key, Class<? extends DhtStorablePacket> dataType) {
+        return find(key, dataType, false);
     }
 
     @Override
-    public Collection<DhtStorablePacket> findAll(Hash key, Class<? extends DhtStorablePacket> dataType) {
+    public DhtResults findAll(Hash key, Class<? extends DhtStorablePacket> dataType) {
         return find(key, dataType, true);
     }
 
@@ -158,7 +155,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         return bucketManager.getPeerCount();
     }
     
-    private Collection<DhtStorablePacket> find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {
+    private DhtResults find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {
         final Collection<Destination> closeNodes = getClosestNodes(key);
         log.debug("Querying localhost + " + closeNodes.size() + " peers for data type " + dataType.getSimpleName() + ", Kademlia key " + key);
         
@@ -166,9 +163,9 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // if a local packet exists and one result is requested, return the local packet
         if (!exhaustive && localResult!=null) {
             log.debug("Locally stored packet found for hash " + key + " and data type " + dataType);
-            Collection<DhtStorablePacket> storablePackets = new ArrayList<DhtStorablePacket>();
-            storablePackets.add(localResult);
-            return storablePackets;
+            DhtResults results = new DhtResults();
+            results.put(localDestination, localResult);
+            return results;
         }
         
         // Send the retrieve requests
@@ -197,8 +194,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         
         sendQueue.remove(batch);
         
-        ConcurrentHashSet<DhtStorablePacket> storablePackets = getStorablePackets(batch, localResult);
-        return storablePackets;
+        return getDhtResults(batch, localResult);
     }
 
     private DhtStorablePacket findLocally(Hash key, Class<? extends DhtStorablePacket> dataType) {
@@ -216,16 +212,18 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * @param localResult
      * @return
      */
-    private ConcurrentHashSet<DhtStorablePacket> getStorablePackets(PacketBatch batch, DhtStorablePacket localResult) {
-        ConcurrentHashSet<DhtStorablePacket> storablePackets = new ConcurrentHashSet<DhtStorablePacket>();
-        for (I2PBotePacket packet: batch.getResponses())
+    private DhtResults getDhtResults(PacketBatch batch, DhtStorablePacket localResult) {
+        DhtResults results = new DhtResults();
+        for (Entry<Destination, DataPacket> result: batch.getResponses().entrySet()) {
+            DataPacket packet = result.getValue();
             if (packet instanceof DhtStorablePacket)
-                storablePackets.add((DhtStorablePacket)packet);
+                results.put(result.getKey(), (DhtStorablePacket)packet);
+        }
         
         if (localResult != null)
-            storablePackets.add(localResult);
+            results.put(localDestination, localResult);
         
-        return storablePackets;
+        return results;
     }
     
     @Override

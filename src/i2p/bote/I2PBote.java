@@ -25,20 +25,20 @@ import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
-import i2p.bote.folder.DhtPacketFolder;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.EmailPacketFolder;
 import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.PacketFolder;
+import i2p.bote.network.BanList;
 import i2p.bote.network.CheckEmailTask;
-import i2p.bote.network.NetworkStatus;
 import i2p.bote.network.DHT;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
+import i2p.bote.network.NetworkStatus;
 import i2p.bote.network.PeerManager;
 import i2p.bote.network.kademlia.KademliaDHT;
-import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.RelayPacket;
@@ -76,13 +76,13 @@ import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
-import net.i2p.util.SimpleTimer;
 
 /**
  * This is the core class of the application. Is is implemented as a singleton.
  */
 public class I2PBote {
-    private static final String VERSION = "0.1.5";
+    public static final int PROTOCOL_VERSION = 2;
+    private static final String APP_VERSION = "0.1.5";
     private static final int STARTUP_DELAY = 3 * 60 * 1000;   // the number of milliseconds to wait before connecting to I2P (this gives the router time to get ready)
 	private static I2PBote instance;
 	
@@ -97,7 +97,7 @@ public class I2PBote {
     private EmailFolder inbox;   // stores incoming emails for all local users
 	private PacketFolder<RelayPacket> relayPacketFolder;   // stores email packets we're forwarding for other machines
 	private IncompleteEmailFolder incompleteEmailFolder;   // stores email packets addressed to a local user
-    private DhtPacketFolder<? extends DataPacket> emailDhtStorageFolder;   // stores email packets and index packets for other peers
+    private EmailPacketFolder emailDhtStorageFolder;   // stores email packets for other peers
     private IndexPacketFolder indexPacketDhtStorageFolder;   // stores index packets
 //TODO    private PacketFolder<> addressDhtStorageFolder;   // stores email address-destination mappings
 	private SMTPService smtpService;
@@ -139,7 +139,7 @@ public class I2PBote {
 		outbox = new Outbox(configuration.getLocalOutboxDir());
 		relayPacketFolder = new PacketFolder<RelayPacket>(configuration.getRelayOutboxDir());
 		incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), inbox);
-		emailDhtStorageFolder = new DhtPacketFolder<EncryptedEmailPacket>(configuration.getEmailDhtStorageDir());
+		emailDhtStorageFolder = new EmailPacketFolder(configuration.getEmailDhtStorageDir());
         indexPacketDhtStorageFolder = new IndexPacketFolder(configuration.getIndexPacketDhtStorageDir());
 	}
 
@@ -212,6 +212,9 @@ public class I2PBote {
         dht.setStorageHandler(IndexPacket.class, indexPacketDhtStorageFolder);
 //TODO        dht.setStorageHandler(AddressPacket.class, );
         
+        dispatcher.addPacketListener(emailDhtStorageFolder);
+        dispatcher.addPacketListener(indexPacketDhtStorageFolder);
+        
         peerManager = new PeerManager();
         
         outboxProcessor = new OutboxProcessor(dht, outbox, configuration, peerManager, appContext);
@@ -252,8 +255,8 @@ public class I2PBote {
 		return instance;
 	}
 	
-	public String getVersion() {
-	    return VERSION;
+	public String getAppVersion() {
+	    return APP_VERSION;
 	}
 	
 	public Identities getIdentities() {
@@ -285,7 +288,7 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
         if (!isCheckingForMail()) {
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             for (EmailIdentity identity: getIdentities()) {
-                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, incompleteEmailFolder, appContext);
+                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, appContext);
                 Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
                 pendingMailCheckTasks.add(task);
             }

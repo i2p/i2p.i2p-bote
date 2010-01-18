@@ -43,10 +43,9 @@ public class EncryptedEmailPacketTest {
     @Before
     public void setUp() throws Exception {
         byte[] content = message.getBytes();
-        UniqueId deletionKeyPlain = new UniqueId(new byte[] {72, -18, -72, -39, 122, 40, -104, -66, -54, -61, -108, 72, 54, 30, 37, 76, 44, 86, 104, -124, -31, 32, -82, -27, 26, 76, 7, 106, -76, 72, 49, -44}, 0);
         UniqueId deletionKeyVerify = new UniqueId(new byte[] {-62, -112, 99, -65, 13, 44, -117, -111, 96, 45, -6, 64, 78, 57, 117, 103, -24, 101, 106, -116, -18, 62, 99, -49, 60, -81, 8, 64, 27, -41, -104, 58}, 0);
         
-        byte[] messageIdBytes = new byte[] {2, -69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
+        byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         
         int fragmentIndex = 0;
@@ -56,7 +55,7 @@ public class EncryptedEmailPacketTest {
         identity = new EmailIdentity(base64Identity);
         EmailDestination destination = new EmailDestination(identity.getKey());   // corresponds to identity
 
-        UnencryptedEmailPacket plaintextPacket = new UnencryptedEmailPacket(deletionKeyPlain, deletionKeyVerify, messageId, fragmentIndex, numFragments, content);
+        UnencryptedEmailPacket plaintextPacket = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content, deletionKeyVerify);
         encryptedPacket = new EncryptedEmailPacket(plaintextPacket, destination, appContext);
     }
 

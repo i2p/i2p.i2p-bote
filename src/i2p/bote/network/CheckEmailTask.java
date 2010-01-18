@@ -25,13 +25,16 @@ import i2p.bote.UniqueId;
 import i2p.bote.Util;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.folder.IncompleteEmailFolder;
+import i2p.bote.packet.EmailPacketDeleteRequest;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
+import i2p.bote.packet.IndexPacketDeleteRequest;
 import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -41,6 +44,7 @@ import java.util.concurrent.ThreadFactory;
 
 import net.i2p.I2PAppContext;
 import net.i2p.data.DataFormatException;
+import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
@@ -58,14 +62,17 @@ public class CheckEmailTask implements Callable<Boolean> {
     private EmailIdentity identity;
     private DHT dht;
     private PeerManager peerManager;
+    private I2PSendQueue sendQueue;
     private IncompleteEmailFolder incompleteEmailFolder;
     private I2PAppContext appContext;
     private ExecutorService executor;
 
-    public CheckEmailTask(EmailIdentity identity, DHT dht, PeerManager peerManager, IncompleteEmailFolder incompleteEmailFolder, I2PAppContext appContext) {
+    // TODO move appContext into EncryptedEmailPacket so there is one less parameter here
+    public CheckEmailTask(EmailIdentity identity, DHT dht, PeerManager peerManager, I2PSendQueue sendQueue, IncompleteEmailFolder incompleteEmailFolder, I2PAppContext appContext) {
         this.identity = identity;
         this.dht = dht;
         this.peerManager = peerManager;
+        this.sendQueue = sendQueue;
         this.incompleteEmailFolder = incompleteEmailFolder;
         this.appContext = appContext;
         executor = Executors.newFixedThreadPool(MAX_THREADS, EMAIL_PACKET_TASK_THREAD_FACTORY);
@@ -77,11 +84,15 @@ public class CheckEmailTask implements Callable<Boolean> {
      */
     @Override
     public Boolean call() {
-        Collection<Hash> emailPacketKeys = findEmailPacketKeys();
+        // Use findAll rather than findOne because some peers might have an incomplete set of
+        // Email Packet keys, and because we want to send IndexPacketDeleteRequests to all of them.
+        DhtResults indexPacketResults = dht.findAll(identity.getHash(), IndexPacket.class);
+        
+        Collection<Hash> emailPacketKeys = findEmailPacketKeys(indexPacketResults.getPackets());
 
         Collection<Future<Boolean>> results = new ArrayList<Future<Boolean>>();
-        for (Hash dhtKey: emailPacketKeys) {
-            Future<Boolean> result = executor.submit(new EmailPacketTask(dhtKey));
+        for (Hash emailPacketKey: emailPacketKeys) {
+            Future<Boolean> result = executor.submit(new EmailPacketTask(emailPacketKey, identity.getHash(), indexPacketResults.getPeers()));
             results.add(result);
         }
         
@@ -100,17 +111,15 @@ public class CheckEmailTask implements Callable<Boolean> {
     
     /**
      * Queries the DHT for new index packets and returns the DHT keys contained in them.
+     * @param indexPacketResults TODO comment
      * @return A <code>Collection</code> containing zero or more DHT keys
      */
-    private Collection<Hash> findEmailPacketKeys() {
+    private Collection<Hash> findEmailPacketKeys(Collection<DhtStorablePacket> indexPacketResults) {
         log.debug("Querying the DHT for index packets with key " + identity.getHash());
         
-        // Use findAll rather than findOne because some peers might not have all Email Packet keys.
-        Collection<DhtStorablePacket> packets = dht.findAll(identity.getHash(), IndexPacket.class);
-        
-        // build an Collection of index packets
+        // build a Collection of index packets
         Collection<IndexPacket> indexPackets = new ArrayList<IndexPacket>();
-        for (DhtStorablePacket packet: packets)
+        for (DhtStorablePacket packet: indexPacketResults)
             if (packet instanceof IndexPacket)
                 indexPackets.add((IndexPacket)packet);
             else
@@ -126,14 +135,21 @@ public class CheckEmailTask implements Callable<Boolean> {
      * and deletes the packet from the DHT.
      */
     private class EmailPacketTask implements Callable<Boolean> {
-        private Hash dhtKey;
+        private Hash emailPacketKey;
+        private Hash emailIdentityHash;
+        private Set<Destination> indexPacketPeers;
         
         /**
          * 
-         * @param dhtKey The DHT key of the email packet to retrieve
+         * @param emailPacketKey The DHT key of the email packet to retrieve
+         * @param emailIdentityHash The DHT key of the packet recipient's email identity
+         * @param indexPacketPeers All peers that are known to be storing an index packet
+         *                         for the email destination the email packet is being sent to.
          */
-        public EmailPacketTask(Hash dhtKey) {
-            this.dhtKey = dhtKey;
+        public EmailPacketTask(Hash emailPacketKey, Hash emailIdentityHash, Set<Destination> indexPacketPeers) {
+            this.emailPacketKey = emailPacketKey;
+            this.emailIdentityHash = emailIdentityHash;
+            this.indexPacketPeers = indexPacketPeers;
         }
         
         /**
@@ -143,32 +159,58 @@ public class CheckEmailTask implements Callable<Boolean> {
         @Override
         public Boolean call() {
             boolean emailCompleted = false;
-            DhtStorablePacket packet = dht.findOne(dhtKey, EncryptedEmailPacket.class);
-            if (packet instanceof EncryptedEmailPacket) {
-                EncryptedEmailPacket emailPacket = (EncryptedEmailPacket)packet;
-                try {
-                    UnencryptedEmailPacket decryptedPacket = emailPacket.decrypt(identity, appContext);
-                    emailCompleted = incompleteEmailFolder.addEmailPacket(decryptedPacket);
-                    sendDeleteRequest(dhtKey, decryptedPacket.getVerificationDeletionKey());
+            // Use findAll rather than findOne because after we receive an email packet, we want
+            // to send delete requests to as many of the storage nodes as possible.
+            DhtResults results = dht.findAll(emailPacketKey, EncryptedEmailPacket.class);
+            
+            EncryptedEmailPacket validPacket = null;   // stays null until a valid packet is found in the loop below
+            IndexPacketDeleteRequest indexDelRequest = new IndexPacketDeleteRequest(emailIdentityHash);
+            for (Destination peer: results.getPeers()) {
+                DhtStorablePacket packet = results.getPacket(peer);
+                if (packet instanceof EncryptedEmailPacket) {
+                    EncryptedEmailPacket emailPacket = (EncryptedEmailPacket)packet;
+                    try {
+                        UnencryptedEmailPacket decryptedPacket = emailPacket.decrypt(identity, appContext);
+                        if (validPacket == null) {
+                            emailCompleted = incompleteEmailFolder.addEmailPacket(decryptedPacket);
+                            validPacket = emailPacket;
+                        }
+                        UniqueId delKey = decryptedPacket.getVerificationDeletionKey();
+                        sendDeleteRequest(emailPacketKey, delKey, peer);
+                        indexDelRequest.put(emailPacketKey, delKey);
+                    }
+                    catch (DataFormatException e) {
+                        log.error("Can't decrypt email packet: " + emailPacket, e);
+                        // TODO propagate error message to UI
+                    }
                 }
-                catch (DataFormatException e) {
-                    log.error("Can't decrypt email packet: " + emailPacket, e);
-                    // TODO propagate error message to UI
-                }
+                else
+                    if (packet != null)
+                        log.error("DHT returned packet of class " + packet.getClass().getSimpleName() + ", expected EmailPacket.");
             }
-            else
-                if (packet != null)
-                    log.error("DHT returned packet of class " + packet.getClass().getSimpleName() + ", expected EmailPacket.");
+            
+            if (indexDelRequest.getNumEntries() > 0)
+                sendDeleteRequest(indexDelRequest, indexPacketPeers);
+            
             return emailCompleted;
         }
         
         /**
-         * Sends a delete request to the DHT.
+         * Sends an Email Packet Delete Request to a peer.
          * @param dhtKey The DHT key of the email packet that is to be deleted
          * @param deletionKey The deletion key for the email packet
+         * @param peer
          */
-        private void sendDeleteRequest(Hash dhtKey, UniqueId deletionKey) {
-            // TODO
+        private void sendDeleteRequest(Hash dhtKey, UniqueId deletionKey, Destination peer) {
+            EmailPacketDeleteRequest packet = new EmailPacketDeleteRequest(dhtKey, deletionKey);
+            log.debug("Sending an EmailPacketDeleteRequest for DHT key " + dhtKey + " to " + peer.calculateHash());
+            sendQueue.send(packet, peer);
+        }
+        
+        private void sendDeleteRequest(IndexPacketDeleteRequest indexDelRequest, Set<Destination> peers) {
+            log.debug("Sending an IndexPacketDeleteRequest to " + peers.size() + " peers: " + indexDelRequest);
+            for (Destination peer: peers)
+                sendQueue.send(indexDelRequest, peer);
         }
    }
 }

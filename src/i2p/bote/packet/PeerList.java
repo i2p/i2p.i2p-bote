@@ -45,12 +45,11 @@ public class PeerList extends DataPacket {
     }
 
     public PeerList(byte[] data) throws DataFormatException {
-        ByteBuffer buffer = ByteBuffer.wrap(data);
-        if (buffer.get() != getPacketTypeCode())
-            log.error("Wrong type code for PeerList. Expected <" + getPacketTypeCode() + ">, got <" + (char)data[0] + ">");
+        super(data);
+        
+        ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
         int numPeers = buffer.getShort();
-
         peers = new ArrayList<KademliaPeer>();
         for (int i=0; i<numPeers; i++) {
             Destination destination = new Destination();
@@ -77,7 +76,7 @@ public class PeerList extends DataPacket {
         DataOutputStream dataStream = new DataOutputStream(arrayOutputStream);
         
         try {
-            dataStream.write((byte)getPacketTypeCode());
+            writeHeader(dataStream);
             dataStream.writeShort(peers.size());
             for (KademliaPeer peer: peers)
                 // write the first 384 bytes (the two public keys)

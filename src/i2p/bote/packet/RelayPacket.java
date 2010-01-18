@@ -50,8 +50,18 @@ public class RelayPacket extends DataPacket {
         this.latestSendTime = latestSendTime;
     }
 
+    public RelayPacket(DataPacket dataPacket, Destination nextDestination, long earliestSendTime, long latestSendTime, byte[] xorKey) throws DataFormatException {
+        // TODO
+    }
+    
+    public RelayPacket(InputStream inputStream) throws IOException, DataFormatException {
+        this(Util.readInputStream(inputStream));
+    }
+    
     public RelayPacket(byte[] data) throws DataFormatException {
-        ByteBuffer buffer = ByteBuffer.wrap(data);
+        super(data);
+        
+        ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
         earliestSendTime = buffer.getInt();
         latestSendTime = buffer.getInt();
@@ -72,14 +82,6 @@ public class RelayPacket extends DataPacket {
             log.debug("Relay Packet has " + buffer.remaining() + " extra bytes.");
     }
     
-    public RelayPacket(DataPacket dataPacket, Destination nextDestination, long earliestSendTime, long latestSendTime, byte[] xorKey) throws DataFormatException {
-        // TODO
-    }
-    
-    public RelayPacket(InputStream inputStream) throws IOException, DataFormatException {
-        this(Util.readInputStream(inputStream));
-    }
-    
     public Destination getNextDestination() {
         return nextDestination;
     }
@@ -98,6 +100,7 @@ public class RelayPacket extends DataPacket {
         DataOutputStream dataStream = new DataOutputStream(arrayOutputStream);
  
         try {
+            writeHeader(dataStream);
             dataStream.writeInt((int)earliestSendTime);
             dataStream.writeInt((int)latestSendTime);
             dataStream.write(xorKey);

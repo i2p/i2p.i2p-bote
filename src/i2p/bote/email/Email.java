@@ -302,9 +302,8 @@ public class Email implements FolderElement {
                 // make a new array with the right length
                 byte[] block = new byte[blockSize];
                 System.arraycopy(emailArray, blockStart, block, 0, blockSize);
-                UniqueId deletionKeyPlain = new UniqueId();
-                UniqueId deletionKeyEncrypted = deletionKeyPlain.clone();   // encryption happens in the constructor call below
-                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(deletionKeyPlain, deletionKeyEncrypted, messageId, fragmentIndex, numFragments, block);
+                UniqueId deletionKey = new UniqueId();
+                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, block, deletionKey);
                 packets.add(packet);
                 fragmentIndex++;
                 blockStart += blockSize;

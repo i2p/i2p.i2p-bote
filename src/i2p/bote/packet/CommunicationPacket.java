@@ -21,6 +21,7 @@
 
 package i2p.bote.packet;
 
+import i2p.bote.I2PBote;
 import i2p.bote.UniqueId;
 
 import java.io.IOException;
@@ -31,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 import net.i2p.util.Log;
 
 public abstract class CommunicationPacket extends I2PBotePacket {
-    private static final byte PACKET_VERSION = 1;
     protected static final int HEADER_LENGTH = 6 + UniqueId.LENGTH;   // length of the common packet header in the byte array representation; this is where subclasses start reading
     private static final byte[] PACKET_PREFIX = new byte[] {(byte)0x6D, (byte)0x30, (byte)0x52, (byte)0xE9};
     private static Log static_log = new Log(CommunicationPacket.class);
@@ -46,16 +46,20 @@ public abstract class CommunicationPacket extends I2PBotePacket {
     }
     
     protected CommunicationPacket(UniqueId packetId) {
+        super(I2PBote.PROTOCOL_VERSION);
         this.packetId = packetId;
         sentSignal = new CountDownLatch(1);
         sentTime = -1;
     }
     
     /**
-     * Creates a packet and initializes the header fields shared by all Communication Packets: packet type and packet id.
+     * Creates a packet and initializes the header fields shared by all Communication Packets:
+     * packet type, protocol version, and packet id.
+     * Subclasses should start reading at byte <code>HEADER_LENGTH</code> after calling this constructor.
      * @param data
      */
     protected CommunicationPacket(byte[] data) {
+        super(data[5]);   // byte 5 is the protocol version in a communication packet
         verifyHeader(data);
         checkPacketType(data[4]);
         packetId = new UniqueId(data, 6);
@@ -86,13 +90,14 @@ public abstract class CommunicationPacket extends I2PBotePacket {
         }
     }
     
-    // check the packet prefix and version number of a packet
+    /**
+     * Checks that the packet has the correct packet prefix.
+     * @param packet
+     */
     private void verifyHeader(byte[] packet) {
         for (int i=0; i<PACKET_PREFIX.length; i++)
             if (packet[i] != PACKET_PREFIX[i])
                 log.error("Packet prefix invalid at byte " + i + ". Expected = " + PACKET_PREFIX[i] + ", actual = " + packet[i]);
-        if (packet[5] != 1)
-            log.error("Unsupported packet version: " + packet[5]);
     }
 
     public void setPacketId(UniqueId packetId) {
@@ -121,14 +126,14 @@ public abstract class CommunicationPacket extends I2PBotePacket {
     }
     
     /**
-     * Writes the Prefix, Version, Type, and Packet Id fields of a I2PBote packet to
+     * Writes the Prefix, Version, Type, and Packet Id fields of a Communication Packet to
      * an {@link OutputStream}.
      * @param outputStream
      */
     protected void writeHeader(OutputStream outputStream) throws IOException {
         outputStream.write(PACKET_PREFIX);
         outputStream.write((byte)getPacketTypeCode());
-        outputStream.write(PACKET_VERSION);
+        outputStream.write(getProtocolVersion());
         outputStream.write(packetId.toByteArray());
     }
     

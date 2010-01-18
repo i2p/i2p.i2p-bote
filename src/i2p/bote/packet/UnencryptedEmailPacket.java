@@ -35,20 +35,39 @@ import net.i2p.util.Log;
 @TypeCode('U')
 public class UnencryptedEmailPacket extends DataPacket {
     private Log log = new Log(UnencryptedEmailPacket.class);
-    private UniqueId deletionKeyPlain;
-    private UniqueId deletionKeyVerify;
     private UniqueId messageId;
 	private int fragmentIndex;
 	private int numFragments;
     private byte[] content;
+    private UniqueId deletionKeyVerify;   // the decrypted deletion key if this UnencryptedEmailPacket was created from an EncryptedEmailPacket; null otherwise
 
-	public UnencryptedEmailPacket(byte[] data) {
-        ByteBuffer buffer = ByteBuffer.wrap(data);
-        if (buffer.get() != getPacketTypeCode())
-            log.error("Wrong type code for UnencryptedEmailPacket. Expected <" + getPacketTypeCode() + ">, got <" + (char)data[0] + ">");
+	public UnencryptedEmailPacket(InputStream inputStream) throws IOException {
+        this(Util.readInputStream(inputStream));
+	}
+	
+    /**
+	 * Creates an <code>UnencryptedEmailPacket</code> from a <code>byte</code> array that contains MIME data.
+     * @param messageId
+     * @param fragmentIndex
+     * @param numFragments
+     * @param content
+     * @param deletionKeyVerify The decrypted deletion key from an encrypted email packet
+     */
+    public UnencryptedEmailPacket(UniqueId messageId, int fragmentIndex, int numFragments, byte[] content, UniqueId deletionKeyVerify) {
+    	this.messageId = messageId;
+    	this.fragmentIndex = fragmentIndex;
+    	this.numFragments = numFragments;
+    	this.content = content;
+    	this.deletionKeyVerify = deletionKeyVerify;
+    	
+    	verify();
+    }
+    
+    public UnencryptedEmailPacket(byte[] data) {
+        super(data);
         
-    	deletionKeyPlain = new UniqueId(buffer);
-    	deletionKeyVerify = new UniqueId(buffer);
+        ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
+
     	messageId = new UniqueId(buffer);
     	fragmentIndex = buffer.getShort();
     	numFragments = buffer.getShort();
@@ -56,36 +75,10 @@ public class UnencryptedEmailPacket extends DataPacket {
     	int contentLength = buffer.getShort();
     	content = new byte[contentLength];
     	buffer.get(content);
-	}
-	
-	public UnencryptedEmailPacket(InputStream inputStream) throws IOException {
-        this(Util.readInputStream(inputStream));
-	}
-	
-    /**
-	 * Creates an <code>UnencryptedEmailPacket</code> from a <code>byte</code> array that contains MIME data.
-     * @param deletionKeyPlain
-     * @param deletionKeyVerify
-     * @param messageId
-     * @param fragmentIndex
-     * @param numFragments
-     * @param content
-     */
-    public UnencryptedEmailPacket(UniqueId deletionKeyPlain, UniqueId deletionKeyVerify, UniqueId messageId, int fragmentIndex, int numFragments, byte[] content) {
-    	this.deletionKeyPlain = deletionKeyPlain;
-    	this.deletionKeyVerify = deletionKeyVerify;
-    	this.messageId = messageId;
-    	this.fragmentIndex = fragmentIndex;
-    	this.numFragments = numFragments;
-    	this.content = content;
     	
-    	verify();
-    }
-    
-    public UniqueId getPlaintextDeletionKey() {
-    	return deletionKeyPlain;
-    }
-    
+        verify();
+	}
+	
     public UniqueId getVerificationDeletionKey() {
     	return deletionKeyVerify;
     }
@@ -116,16 +109,14 @@ public class UnencryptedEmailPacket extends DataPacket {
         // TODO more sanity checks?
     }
     
-	@Override
-	public byte[] toByteArray() {
-	    ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-	    DataOutputStream dataStream = new DataOutputStream(byteArrayStream);
+    @Override
+    public byte[] toByteArray() {
+        ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+        DataOutputStream dataStream = new DataOutputStream(byteArrayStream);
 
         try {
-            dataStream.write((byte)getPacketTypeCode());
-        	deletionKeyPlain.writeTo(dataStream);
-        	deletionKeyVerify.writeTo(dataStream);
-        	messageId.writeTo(dataStream);
+            writeHeader(dataStream);
+            messageId.writeTo(dataStream);
             dataStream.writeShort(fragmentIndex);
             dataStream.writeShort(numFragments);
             dataStream.writeShort(content.length);
@@ -134,12 +125,12 @@ public class UnencryptedEmailPacket extends DataPacket {
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);
         }
-		return byteArrayStream.toByteArray();
-	}
-	
-	@Override
-	public String toString() {
-		return "Type=" + UnencryptedEmailPacket.class.getSimpleName() + ", delKeyPln=" + deletionKeyPlain + ", delKeyVfy=" + deletionKeyVerify +
-			", msgId=" + messageId + ", fragIdx=" + fragmentIndex + ", numFrags=" + numFragments + ", contLen=" + content.length;
-	}
+        return byteArrayStream.toByteArray();
+    }
+
+    @Override
+    public String toString() {
+        return "Type=" + UnencryptedEmailPacket.class.getSimpleName() + ", msgId=" + messageId +
+            ", fragIdx=" + fragmentIndex + ", numFrags=" + numFragments + ", contLen=" + content.length;
+    }
 }

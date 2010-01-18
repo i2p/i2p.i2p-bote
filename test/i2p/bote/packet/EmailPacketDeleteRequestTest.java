@@ -22,36 +22,32 @@
 package i2p.bote.packet;
 
 import static junit.framework.Assert.assertTrue;
-
 import i2p.bote.UniqueId;
 
 import java.util.Arrays;
 
+import net.i2p.data.Hash;
+
 import org.junit.Before;
 import org.junit.Test;
 
-public class UnencryptedEmailPacketTest {
-	private UnencryptedEmailPacket packet;
+// TODO add to AllTests
+public class EmailPacketDeleteRequestTest {
+    private EmailPacketDeleteRequest delRequest;
 
     @Before
     public void setUp() throws Exception {
-        String message = "This is a test message. Test 1 2 3 Test";
-        byte[] content = message.getBytes();
-        UniqueId deletionKeyVerify = new UniqueId(new byte[] {-62, -112, 99, -65, 13, 44, -117, -111, 96, 45, -6, 64, 78, 57, 117, 103, -24, 101, 106, -116, -18, 62, 99, -49, 60, -81, 8, 64, 27, -41, -104, 58}, 0);
-        
-        byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
-        UniqueId messageId = new UniqueId(messageIdBytes, 0);
-        
-        int fragmentIndex = 0;
-        int numFragments = 1;
-
-        packet = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content, deletionKeyVerify);
+        Hash dhtKey = new Hash(new byte[] {-48, 78, 66, 58, -79, 87, 38, -103, -60, -27, 108, 55, 117, 37, -99, 93, -23, -102, -83, 20, 44, -80, 65, 89, -68, -73, 69, 51, 115, 79, 24, 127});
+        byte[] packetIdBytes = new byte[] {120, 120, -8, -88, 21, 126, 46, -61, 18, -101, 15, 53, 20, -44, -112, 42, 86, -117, 30, -96, -66, 33, 71, -55, -102, -78, 78, -82, -105, 66, -116, 43};
+        UniqueId deletionKey = new UniqueId(packetIdBytes, 0);
+        delRequest = new EmailPacketDeleteRequest(dhtKey, deletionKey);
     }
-    
-	@Test
-	public void toByteArrayAndBack() {
-        byte[] arrayA = packet.toByteArray();
-        byte[] arrayB = new UnencryptedEmailPacket(arrayA).toByteArray();
+
+    @Test
+    public void toByteArrayAndBack() {
+        byte[] arrayA = delRequest.toByteArray();
+        byte[] arrayB;
+        arrayB = new EmailPacketDeleteRequest(arrayA).toByteArray();
         assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
-	}
+    }
 }

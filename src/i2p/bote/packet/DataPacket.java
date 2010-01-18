@@ -21,6 +21,7 @@
 
 package i2p.bote.packet;
 
+import i2p.bote.I2PBote;
 import i2p.bote.Util;
 import i2p.bote.folder.FolderElement;
 
@@ -36,13 +37,26 @@ import net.i2p.util.Log;
  * The superclass of all "payload" packet types.
  */
 public abstract class DataPacket extends I2PBotePacket implements FolderElement {
+    protected static final int HEADER_LENGTH = 2;   // length of the common packet header in the byte array representation; this is where subclasses start reading
     private static Log log = new Log(DataPacket.class);
 
     private File file;
-    
+
     public DataPacket() {
     }
-    
+
+    /**
+     * Creates a <code>DataPacket</code> from raw datagram data. The only thing that is initialized
+     * is the protocol version. The packet type code is verified.
+     * Subclasses should start reading at byte <code>HEADER_LENGTH</code> after calling this constructor.
+     * @param data
+     */
+    public DataPacket(byte[] data) {
+        super(data[1]);   // byte 1 is the protocol version in a data packet
+        if (data[0] != getPacketTypeCode())
+            log.error("Wrong type code for " + getClass().getSimpleName() + ". Expected <" + getPacketTypeCode() + ">, got <" + (char)data[0] + ">");
+    }
+
     /**
      * Writes the packet to an <code>OutputStream</code> in binary representation.
      */
@@ -51,7 +65,20 @@ public abstract class DataPacket extends I2PBotePacket implements FolderElement 
         outputStream.write(toByteArray());
     }
     
+    /**
+     * Writes the Type and Protocol Version fields of a Data Packet to
+     * an {@link OutputStream}.
+     * @param outputStream
+     */
+    protected void writeHeader(OutputStream outputStream) throws IOException {
+        outputStream.write((byte)getPacketTypeCode());
+        outputStream.write(getProtocolVersion());
+    }
+    
     public static DataPacket createPacket(File file) {
+        if (file==null || !file.exists())
+            return null;
+        
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -87,13 +114,21 @@ public abstract class DataPacket extends I2PBotePacket implements FolderElement 
         }
         
         Class<? extends DataPacket> dataPacketType = packetType.asSubclass(DataPacket.class);
+        DataPacket packet = null;
         try {
-            return dataPacketType.getConstructor(byte[].class).newInstance(data);
+            packet = dataPacketType.getConstructor(byte[].class).newInstance(data);
         }
         catch (Exception e) {
             log.warn("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
             return null;
         }
+        
+        if (packet.getProtocolVersion() != I2PBote.PROTOCOL_VERSION) {
+            log.warn("Ignoring " + packetType.getSimpleName() + " packet with protocol version " + packet.getProtocolVersion());
+            return null;
+        }
+        
+        return packet;
     }
 
     // FolderElement implementation

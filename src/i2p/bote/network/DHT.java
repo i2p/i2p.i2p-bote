@@ -22,18 +22,15 @@
 package i2p.bote.network;
 
 import i2p.bote.packet.dht.DhtStorablePacket;
-
-import java.util.Collection;
-
 import net.i2p.data.Hash;
 
 public interface DHT {
 
     void store(DhtStorablePacket packet) throws Exception;
     
-    DhtStorablePacket findOne(Hash key, Class<? extends DhtStorablePacket> dataType);
+    DhtResults findOne(Hash key, Class<? extends DhtStorablePacket> dataType);
 
-    Collection<DhtStorablePacket> findAll(Hash key, Class<? extends DhtStorablePacket> dataType);
+    DhtResults findAll(Hash key, Class<? extends DhtStorablePacket> dataType);
 
     /**
      * Registers a <code>DhtStorageHandler</code> that handles incoming storage requests of a certain

@@ -42,6 +42,17 @@ import net.i2p.data.SessionKey;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 
+/**
+ * An <code>EncryptedEmailPacket</code> basically contains an encrypted <code>UnencryptedEmailPacket</code>
+ * and an unencrypted copy of the deletion key. The unencrypted deletion key (<code>deletionKeyPlain</code>)
+ * is used for validation of delete requests (the sender of a delete request has to decrypt the deletion key
+ * using the decryption key for the Email Destination because it doesn't have the unencrypted copy).
+ * deletion key).
+ * An alternative to this scheme would have been to only use plain-text deletion keys in email packets and
+ * have the recipient sign deletion requests, but this would require a storage node to know the recipient's
+ * public signing key.
+ *
+ */
 @TypeCode('E')
 public class EncryptedEmailPacket extends DhtStorablePacket {
     private static final int PADDED_SIZE = PrivateKey.KEYSIZE_BYTES;   // TODO is this a good choice?
@@ -52,24 +63,6 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
     private byte[] encryptedData;   // the encrypted fields of an I2PBote email packet: Encrypted Deletion Key, Message ID, Fragment Index, Number of Fragments, and Content.
 
 	/**
-	 * Creates an <code>EncryptedEmailPacket</code> from raw datagram data.
-	 * To read the encrypted parts of the packet, <code>decrypt</code> must be called first.
-     * @param data
-	 */
-	public EncryptedEmailPacket(byte[] data) {
-        ByteBuffer buffer = ByteBuffer.wrap(data);
-        if (buffer.get() != getPacketTypeCode())
-            log.error("Wrong type code for EncryptedEmailPacket. Expected <" + getPacketTypeCode() + ">, got <" + (char)data[0] + ">");
-        
-        dhtKey = readHash(buffer);
-        deletionKeyPlain = new UniqueId(buffer);
-        
-        int encryptedLength = buffer.getShort();   // length of the encrypted part of the packet
-        encryptedData = new byte[encryptedLength];
-        buffer.get(encryptedData);
-	}
-	
-	/**
 	 * Creates an <code>EncryptedEmailPacket</code> from an <code>UnencryptedEmailPacket</code>.
 	 * The public key of <code>emailDestination</code> is used for encryption.
 	 * @param unencryptedPacket
@@ -78,13 +71,13 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
 	 */
 	public EncryptedEmailPacket(UnencryptedEmailPacket unencryptedPacket, EmailDestination emailDestination, I2PAppContext appContext) {
         dhtKey = generateRandomHash();
-        deletionKeyPlain = unencryptedPacket.getPlaintextDeletionKey();
+        deletionKeyPlain = unencryptedPacket.getVerificationDeletionKey();
         
         // put all the encrypted fields into an array
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         DataOutputStream dataStream = new DataOutputStream(byteStream);
         try {
-            unencryptedPacket.getVerificationDeletionKey().writeTo(dataStream);
+            deletionKeyPlain.writeTo(dataStream);
             unencryptedPacket.getMessageId().writeTo(dataStream);
             dataStream.writeShort(unencryptedPacket.getFragmentIndex());
             dataStream.writeShort(unencryptedPacket.getNumFragments());
@@ -100,14 +93,32 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         }
 	}
 	
-	private Hash generateRandomHash() {
-	    RandomSource randomSource = RandomSource.getInstance();
+	/**
+	 * Creates an <code>EncryptedEmailPacket</code> from raw datagram data.
+	 * To read the encrypted parts of the packet, <code>decrypt</code> must be called first.
+     * @param data
+	 */
+	public EncryptedEmailPacket(byte[] data) {
+	    super(data);
 	    
-	    byte[] bytes = new byte[Hash.HASH_LENGTH];
-	    for (int i=0; i<bytes.length; i++)
-	        bytes[i] = (byte)randomSource.nextInt(256);
-	    
-	    return new Hash(bytes);
+        ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
+        
+        dhtKey = readHash(buffer);
+        deletionKeyPlain = new UniqueId(buffer);
+        
+        int encryptedLength = buffer.getShort();   // length of the encrypted part of the packet
+        encryptedData = new byte[encryptedLength];
+        buffer.get(encryptedData);
+	}
+	
+    private Hash generateRandomHash() {
+        RandomSource randomSource = RandomSource.getInstance();
+
+        byte[] bytes = new byte[Hash.HASH_LENGTH];
+        for (int i=0; i<bytes.length; i++)
+            bytes[i] = (byte)randomSource.nextInt(256);
+
+        return new Hash(bytes);
 	}
     
 	/**
@@ -116,12 +127,12 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
 	 * @param appContext
 	 * @throws DataFormatException 
 	 */
-	public UnencryptedEmailPacket decrypt(EmailIdentity identity, I2PAppContext appContext) throws DataFormatException {
-	    byte[] decryptedData = decrypt(encryptedData, identity, appContext);
-	    ByteBuffer buffer = ByteBuffer.wrap(decryptedData);
-	    
-	    UniqueId deletionKeyVerify = new UniqueId(buffer);
-	    UniqueId messageId = new UniqueId(buffer);
+    public UnencryptedEmailPacket decrypt(EmailIdentity identity, I2PAppContext appContext) throws DataFormatException {
+        byte[] decryptedData = decrypt(encryptedData, identity, appContext);
+        ByteBuffer buffer = ByteBuffer.wrap(decryptedData);
+
+        UniqueId deletionKeyVerify = new UniqueId(buffer);
+        UniqueId messageId = new UniqueId(buffer);
         int fragmentIndex = buffer.getShort();
         int numFragments = buffer.getShort();
         
@@ -129,8 +140,8 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         byte[] content = new byte[contentLength];
         buffer.get(content);
         
-	    return new UnencryptedEmailPacket(deletionKeyPlain, deletionKeyVerify, messageId, fragmentIndex, numFragments, content);
-	}
+        return new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content, deletionKeyVerify);
+    }
 	
     /**
      * Decrypts data with an email identity's private key.
@@ -139,10 +150,10 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
      * @param appContext
      * @return The decrypted data
      */
-	private byte[] decrypt(byte[] data, EmailIdentity identity, I2PAppContext appContext) throws DataFormatException {
+    private byte[] decrypt(byte[] data, EmailIdentity identity, I2PAppContext appContext) throws DataFormatException {
         PrivateKey privateKey = identity.getPrivateEncryptionKey();
         return appContext.elGamalAESEngine().decrypt(data, privateKey, appContext.sessionKeyManager());
-	}
+    }
 	
     /**
      * Encrypts data with an email destination's public key.
@@ -151,7 +162,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
      * @param appContext
      * @return The encrypted data
      */
-	// TODO should this method be in this class?
+    // TODO should this method be in this class?
     public byte[] encrypt(byte[] data, EmailDestination emailDestination, I2PAppContext appContext) {
         PublicKey publicKey = emailDestination.getPublicEncryptionKey();
         SessionKey sessionKey = appContext.sessionKeyManager().createSession(publicKey);
@@ -169,7 +180,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
     public Hash getDhtKey() {
         return dhtKey;
     }
-	
+
     /**
      * Returns the value of the "plain-text deletion key" field.
      * Storage nodes set this to all zero bytes when the packet is retrieved.
@@ -179,13 +190,13 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         return deletionKeyPlain;
     }
     
-	@Override
-	public byte[] toByteArray() {
-	    ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
-	    DataOutputStream dataStream = new DataOutputStream(byteArrayStream);
+    @Override
+    public byte[] toByteArray() {
+        ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+        DataOutputStream dataStream = new DataOutputStream(byteArrayStream);
 
         try {
-            dataStream.write((byte)getPacketTypeCode());
+            writeHeader(dataStream);
             dataStream.write(dhtKey.toByteArray());
             dataStream.write(deletionKeyPlain.toByteArray());
             dataStream.writeShort(encryptedData.length);
@@ -194,14 +205,14 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);
         }
-		return byteArrayStream.toByteArray();
-	}
+        return byteArrayStream.toByteArray();
+    }
 
-	// Returns the number of bytes in the packet.
-	// TODO just return content.length+CONST so we don't call toByteArray every time
-	public int getSize() {
-	    return toByteArray().length;
-	}
+    // Returns the number of bytes in the packet.
+    // TODO just return content.length+CONST so we don't call toByteArray every time
+    public int getSize() {
+        return toByteArray().length;
+    }
 	
     @Override
     public String toString() {

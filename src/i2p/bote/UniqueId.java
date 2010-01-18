@@ -46,7 +46,7 @@ public class UniqueId implements Comparable<UniqueId> {
     }
 
     /**
-     * Create a packet id from a 32 bytes of an array, starting at <code>offset</code>.
+     * Create a packet id from 32 bytes of an array, starting at <code>offset</code>.
      * @param bytes
      */
     public UniqueId(byte[] bytes, int offset) {

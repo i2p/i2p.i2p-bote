@@ -76,12 +76,42 @@ Below is a diagram of how an email packet is routed from a sender to a recipient
                      `-------'          `-------'         `---------'
 
 
-The number of relays for sending or retrieving an email is user-configurable. For higher performance (but
-reduced anonymity), it is possible to use no relays, no storers/fetchers, i.e. sender and recipient
-talk to the storage nodes directly.
+The number of relays for sending or retrieving an email is user-configurable.
 
 TODO explain how an index packet is relayed back to the recipient, who then uses another chain to get the email packets
 referenced in the index packet.
+
+For higher performance (but reduced anonymity), it is possible to use no relays, no storers/fetchers,
+i.e. sender and recipient talk to the storage nodes directly. If both sender and recipient chose not to
+use relays, the diagram looks like this:
+
+ .--------.
+ | Sender |  ----------------------------.
+ `--------'                               `\
+                                            |
+                                            V
+
+               .--------------- Kademlia DHT -------------------------.
+               |                                .---------.           |
+               |   .---------.                  | Storage |           |
+               |   | Storage |     .---------.  |  Node   |           |
+               |   |  Node   |     | Storage |  `---------'           |
+               |   `---------'     |  Node   |                        |
+               |                   `---------'            .---------. |
+               |  .---------.   .---------.               | Storage | |
+               |  | Storage |   | Storage |  .---------.  |  Node   | |
+               |  |  Node   |   |  Node   |  | Storage |  `---------' |
+               |  `---------'   `---------'  |  Node   |              |
+               |                             `---------'              |
+               `------------------------------------------------------'
+
+                                            |
+                                            |
+ .-----------.                             _'
+ | Recipient |  <-------------------------'
+ `-----------'
+
+
 
 The code is licensed under the GPL. The author can be reached at HungryHobo@mail.i2p, either in
 German or English.
@@ -112,7 +142,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
    Relay Request       |       |            | Request to a node to forward a Relay Packet
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'Y'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
+                       | VER   | 1 byte     | Protocol version
                        | PID   | 32 bytes   | Packet ID, used for delivery confirmation
                        | HLEN  | 2 bytes    | HashCash length
                        | HK    | byte[]     | HashCash token (HLEN bytes)
@@ -122,7 +152,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
    Fetch Request       |       |            | Request to a chain end point to fetch emails
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'T'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
+                       | VER   | 1 byte     | Protocol version
                        | PID   | 32 bytes   | Packet ID, used for delivery confirmation
                        | DTYP  | 1 byte     | Type of data to retrieve:
                        | KEY   | 32 bytes   | DHT key to look up
@@ -134,7 +164,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
                        |       |            | Find Close Peers Request, or a Relay List Request
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'N'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
+                       | VER   | 1 byte     | Protocol version
                        | PID   | 32 bytes   | Packet Id of the request packet
                        | STA   | 1 byte     | Status code:
                        |       |            |   0 = OK
@@ -147,30 +177,46 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
                        | DLEN  | 2 bytes    | Length of DATA field; can be 0 if no payload
                        | DATA  | byte[]     | A Payload Packet
   ---------------------+-------+------------+----------------------------------------------------
-   Delete Request      |       |            | Request to delete all copies of a packet by DHT key
+   Email Packet        |       |            | Request to delete an Email Packet by DHT key
+   Delete Request      |       |            | 
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'D'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
-                       | KEY   | 32 bytes   | DHT key of the packet that is to be deleted
-                       | DEL   | 32 bytes   | Deletion key, encrypts to DEL value in the email pkt
+                       | VER   | 1 byte     | Protocol version
+                       | KEY   | 32 bytes   | DHT key of the Email Packet to delete
+                       | DEL   | 32 bytes   | Deletion key, must match DEL value in the email pkt
+  ---------------------+-------+------------+----------------------------------------------------
+   Index Packet        |       |            | Request to remove one or more entries (Email
+   Delete Request      |       |            | Packet key / del key pairs) from an Index Packet
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'X'
+                       | VER   | 1 byte     | Protocol version
+                       | DH    | 32 bytes   | The Email Destination hash of the Index Packet
+                       | N     | 1 byte     | Number of entries in the packet
+                       | DHT1  | 32 bytes   | First DHT key to remove
+                       | DEL1  | 32 bytes   | Deletion key for DHT1
+                       | DHT2  | 32 bytes   | Second DHT key to remove
+                       | DEL2  | 32 bytes   | Deletion key for DHT2
+                       | ...   | ...        | ...
+                       | DHTn  | 32 bytes   | n-th DHT key to remove
+                       | DELn  | 32 bytes   | Deletion key for DHTn
   ---------------------+-------+------------+-------------------------------------------------
    Ping                |       |            | Check to see if a host is still up.
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'P'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
+                       | VER   | 1 byte     | Protocol version
                        | PID   | 32 bytes   | Packet ID
   ---------------------+-------+------------+-------------------------------------------------
    Pong                |       |            | Let the the pinger know we're still there.
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'O'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
+                       | TYPE  | 1 byte     | Value = 'O' (the letter O)
+                       | VER   | 1 byte     | Protocol version
                        | PID   | 32 bytes   | Packet ID of the corresponding Ping packet
                        | HKS   | 1 byte     | Minimum HashCash strength this node will accept
   ---------------------+-------+------------+----------------------------------------------------
    Relay List Request  |       |            | "Send me your list of relay peers"
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'A'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
+                       | VER   | 1 byte     | Protocol version
                        | PID   | 32 bytes   | Packet ID
   ---------------------+-------+------------+----------------------------------------------------
 
@@ -181,7 +227,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
    Retrieve Request    |       |            | DHT Request for a value for a key
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'Q'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
+                       | VER   | 1 byte     | Protocol version
                        | PID   | 32 bytes   | Packet ID, used for delivery confirmation
                        | DTYP  | 1 byte     | Type of data to retrieve:
                        |       |            |   'I' = Index Packet
@@ -192,7 +238,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
    Store Request       |       |            | DHT Store Request
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'S'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
+                       | VER   | 1 byte     | Protocol version
                        | PID   | 32 bytes   | Packet ID, used for delivery confirmation
                        | HLEN  | 2 bytes    | HashCash length
                        | HK    | byte[]     | HashCash token (HLEN bytes)
@@ -203,7 +249,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
    Find Close Peers    |       |            | Request for k peers close to a key
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'F'
-                       | VER   | 1 byte     | Format version (only ver. 1 is supported)
+                       | VER   | 1 byte     | Protocol version
                        | PID   | 32 bytes   | Packet ID, used for delivery confirmation
                        | KEY   | 32 bytes   | DHT key
   ---------------------+-------+------------+----------------------------------------------------
@@ -217,6 +263,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
   ---------------------+-------+------------+----------------------------------------------------
    Email Packet        |       |            | An email or email fragment, 1 recipient.
    (encrypted)         | TYPE  | 1 byte     | Value = 'E'
+                       | VER   | 1 byte     | Protocol version
                        | KEY   | 32 bytes   | The DHT key of the packet (generated randomly)
                        | DELP  | 32 bytes   | Deletion key in plaintext, zeroed out for retrieving
                        | LEN   | 2 bytes    | Length of the encrypted part of the packet
@@ -224,8 +271,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
   ---------------------+-------+------------+----------------------------------------------------
    Email Packet        |       |            | Storage format for the Incomplete Email Folder.
    (unencrypted)       | TYPE  | 1 byte     | Value = 'U'
-                       | DELP  | 32 bytes   | Deletion key in plaintext, zeroed out for retrieving
-                       | DELV  | 32 bytes   | Deletion key for verification
+                       | VER   | 1 byte     | Protocol version
                        | MSID  | 32 bytes   | Message ID in binary format
                        | FRID  | 2 bytes    | Fragment Index of this packet (0..NFR-1)
                        | NFR   | 2 bytes    | Number of fragments in the email
@@ -234,15 +280,20 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
   ---------------------+-------+------------+----------------------------------------------------
    Index Packet        |       |            | Contains the DHT keys of one or more Email Packets.
                        | TYPE  | 1 byte     | Value = 'I'
+                       | VER   | 1 byte     | Protocol version
                        | DH    | 32 bytes   | SHA-256 hash of the recipient's email destination
                        | NP    | 1 byte     | Number of keys in the packet
-                       | KEY1  | 32 bytes   | DHT key of the first Email Packet
-                       | KEY1  | 32 bytes   | DHT key of the second Email Packet
+                       | DHT1  | 32 bytes   | DHT key of the first Email Packet
+                       | DEL1  | 32 bytes   | Deletion key of the first Email Packet
+                       | DHT2  | 32 bytes   | DHT key of the second Email Packet
+                       | DEL2  | 32 bytes   | Deletion key of the second Email Packet
                        | ...   | ...        | ...
-                       | KEYn  | 32 bytes   | DHT key of the n-th Email Packet
+                       | DHTn  | 32 bytes   | DHT key of the n-th Email Packet
+                       | DELn  | 32 bytes   | Deletion key of the n-th Email Packet
   ---------------------+-------+------------+----------------------------------------------------
    Relay Packet        |       |            | The payload of a Relay Request
                        | TYPE  | 1 byte     | Value = 'R'
+                       | VER   | 1 byte     | Protocol version
                        | TMIN  | 4 bytes    | Earliest send time
                        | TMAX  | 4 bytes    | Latest sent time (no guarantee!)
                        | XK    | 32 bytes   | Key to XOR the payload with
@@ -255,6 +306,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
    Peer List           |       |            | Response to a Find Close Peers Request or
                        |       |            | a Relay List Request
                        | TYPE  | 1 byte     | Value = 'L'
+                       | VER   | 1 byte     | Protocol version
                        | NUMP  | 2 bytes    | Number of peers in the list
                        | P1    | 384 bytes  | Destination key
                        | P2    | 384 bytes  | Destination key
@@ -315,15 +367,38 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
 
 4.7. Deleting an Email Packet
 
+  Every time a recipient receives an email packet (from one or more storage nodes), it asks the storage
+  node(s) to delete the packet.
+  
+  [TODO: This doesn't work for relayed email packets because the recipient doesn't know the storage nodes.
+        Maybe include the storage node in an email packet? Or relay the delete request and have the
+        relay endpoint do a findClosestNodes + delete? Or just delete the index packet entry and let
+        replication take care of deleting the email packets?]
+
+  It also sends a delete request to the nodes storing the index packet, asking them to delete the DHT key
+  of the email packet. Each index packet node then removes the DHT key from the stored index packet, and
+  adds the DHT key to a list of deleted keys it maintains for each index packet (DHT key + deletion key,
+  actually). The purpose of this is so a node that is about to replicate an email packet can find out if
+  it missed an earlier delete request for that packet, in which case the node "replicates" the delete
+  request rather than the packet itself. This helps reduce storage space by removing old Email Packets
+  from nodes that weren't online at the time the delete request was sent initially.
+  
   1) Recipient knows the deletion key after it decrypts the email packet (the packet also contains a
      "plaintext deletion key" field, which is all zeros after it leaves a storage node).
-  2) Recipient sends a Delete Request to all storage nodes close to the DHT key of the Email Packet
+  2) Recipient sends a Delete Request to all nodes that responded to the query for the Email Destination,
+     asking them to mark the Email Packet's DHT key "deleted".
+***** TODO deletion key for index packets? use signed del requests instead? *****
+  3) Recipient sends a Delete Request to all peers that responded to the query for the Email Packet
 
-4.8. Looking up an email address in the directory
+4.8. Replication of Email Packets
 
-4.9. Announcing a new email address to the directory
+4.9. Replication of Index Packets
 
-4.10. Updating or deleting an email address from the directory
+4.10. Looking up an email address in the directory
+
+4.11. Announcing a new email address to the directory
+
+4.12. Updating or deleting an email address from the directory
 
 
 5. Algorithms Used By Nodes Locally
@@ -470,6 +545,12 @@ I2P destination
 
 11. To Do
 
+  * don't send delete requests to self, just delete the file locally
+  * rename test/.../kademlia package to dht for consistency
+  * make blue background solid, lighter color so chinese chars are readable
+  * show # of new emails next to folder name, show new + total count on a tool tip
+  * don't print subject lines in bold unless the email is new (store msg ids of read emails in a file in the email folder)
+  * button to delete all packets with an invalid protocol version
   * show "to" address in inbox
   * put sender name in "From" header field, if available
   * auto-refresh network.jsp

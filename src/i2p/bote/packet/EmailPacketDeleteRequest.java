@@ -19,12 +19,9 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.packet.dht;
+package i2p.bote.packet;
 
-import i2p.bote.I2PBote;
-import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.I2PBotePacket;
-import i2p.bote.packet.TypeCode;
+import i2p.bote.UniqueId;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,59 +30,49 @@ import java.nio.ByteBuffer;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
-@TypeCode('Q')
-public class RetrieveRequest extends CommunicationPacket {
-    private Log log = new Log(I2PBote.class);
-    private Hash key;
-    private Class<? extends DhtStorablePacket> dataType;
+@TypeCode('D')
+public class EmailPacketDeleteRequest extends CommunicationPacket {
+    private Log log = new Log(EmailPacketDeleteRequest.class);
+    private Hash dhtKey;
+    private UniqueId deletionKey;
 
-    public RetrieveRequest(Hash key, Class<? extends DhtStorablePacket> dataType) {
-        this.key = key;
-        this.dataType = dataType;
+    public EmailPacketDeleteRequest(Hash dhtKey, UniqueId deletionKey) {
+        this.dhtKey = dhtKey;
+        this.deletionKey = deletionKey;
     }
     
-    public RetrieveRequest(byte[] data) {
+    public EmailPacketDeleteRequest(byte[] data) {
         super(data);
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
-        
-        char dataTypeCode = (char)buffer.get();
-        dataType = DhtStorablePacket.decodePacketTypeCode(dataTypeCode);
-        
-        byte[] keyBytes = new byte[Hash.HASH_LENGTH];
-        buffer.get(keyBytes);
-        key = new Hash(keyBytes);
+
+        dhtKey = readHash(buffer);
+        deletionKey = new UniqueId(buffer);
         
         if (buffer.hasRemaining())
-            log.debug("Retrieve Request Packet has " + buffer.remaining() + " extra bytes.");
+            log.debug("Email Packet Delete Request has " + buffer.remaining() + " extra bytes.");
     }
 
-    public Hash getKey() {
-        return key;
+    public Hash getDhtKey() {
+        return dhtKey;
     }
     
-    public Class<? extends I2PBotePacket> getDataType() {
-        return dataType;
+    public UniqueId getDeletionKey() {
+        return deletionKey;
     }
-
+    
     @Override
     public byte[] toByteArray() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         
         try {
             writeHeader(outputStream);
-            // TODO doesn't the type code already get written in writeHeader?
-            outputStream.write(getPacketTypeCode(dataType));
-            outputStream.write(key.toByteArray());
+            outputStream.write(dhtKey.toByteArray());
+            outputStream.write(deletionKey.toByteArray());
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);
         }
         
         return outputStream.toByteArray();
-    }
-    
-    @Override
-    public String toString() {
-        return super.toString() + ", DhtKey=" + key.toBase64();
     }
 }

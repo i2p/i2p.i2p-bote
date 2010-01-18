@@ -21,52 +21,46 @@
 
 package i2p.bote.packet;
 
+import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
+ * Stores DHT keys of Email Packets and their deletion keys.
+ * 
  * This class is not thread-safe.
  */
 @TypeCode('I')
 public class IndexPacket extends DhtStorablePacket {
     private Log log = new Log(IndexPacket.class);
-    private Collection<Hash> dhtKeys;   // DHT keys of email packets
+//    private Collection<Entry> entries; should probably use a Map and get rid of the Entry class
+    private Map<Hash, UniqueId> entries;
     private Hash destinationHash;   // The DHT key of this packet
-    
-    public IndexPacket(byte[] data) {
-        ByteBuffer dataBuffer = ByteBuffer.wrap(data);
-        if (dataBuffer.get() != getPacketTypeCode())
-            log.error("Wrong type code for IndexPacket. Expected <" + getPacketTypeCode() + ">, got <" + (char)data[0] + ">");
-        
-        destinationHash = readHash(dataBuffer);
 
-        int numKeys = dataBuffer.get();
-        
-        dhtKeys = new ArrayList<Hash>();
-        for (int i=0; i<numKeys; i++) {
-            Hash dhtKey = readHash(dataBuffer);
-            dhtKeys.add(dhtKey);
-        }
-        
-        // TODO catch BufferUnderflowException; warn if extra bytes in the array
-    }
-
+    /**
+     * 
+     * @param emailPackets One or more email packets
+     * @param emailDestination Determines the DHT key of this Index Packet
+     */
     public IndexPacket(Collection<EncryptedEmailPacket> emailPackets, EmailDestination emailDestination) {
-        dhtKeys = new ArrayList<Hash>();
+//        entries = new ArrayList<Entry>();
+        entries = new ConcurrentHashMap<Hash, UniqueId>();
         for (EncryptedEmailPacket emailPacket: emailPackets)
-            dhtKeys.add(emailPacket.getDhtKey());
+//            Entry entry = new Entry(emailPacket.getDhtKey(), emailPacket.getPlaintextDeletionKey());
+            entries.put(emailPacket.getDhtKey(), emailPacket.getPlaintextDeletionKey());
         
         destinationHash = emailDestination.getHash();
     }
@@ -82,9 +76,9 @@ public class IndexPacket extends DhtStorablePacket {
             throw new IllegalArgumentException("This method must be invoked with at least one index packet.");
         
         destinationHash = indexPackets.iterator().next().getDhtKey();
-        dhtKeys = new HashSet<Hash>();
+        entries = new ConcurrentHashMap<Hash, UniqueId>();
         for (IndexPacket packet: indexPackets)
-            dhtKeys.addAll(packet.getDhtKeys());
+            entries.putAll(packet.getEntries());
     }
     
     /**
@@ -95,15 +89,36 @@ public class IndexPacket extends DhtStorablePacket {
         this(Arrays.asList(indexPackets));
     }
     
+    public IndexPacket(byte[] data) {
+        super(data);
+        
+        ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
+        
+        destinationHash = readHash(buffer);
+
+        int numKeys = buffer.get();
+        
+        entries = new ConcurrentHashMap<Hash, UniqueId>();
+        for (int i=0; i<numKeys; i++) {
+            Hash dhtKey = readHash(buffer);
+            UniqueId delKey = new UniqueId(buffer);
+            entries.put(dhtKey, delKey);
+        }
+        
+        // TODO catch BufferUnderflowException; warn if extra bytes in the array
+    }
+
     @Override
     public byte[] toByteArray() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        outputStream.write((byte)getPacketTypeCode());
         try {
+            writeHeader(outputStream);
             destinationHash.writeBytes(outputStream);
-            outputStream.write((byte)dhtKeys.size());
-            for (Hash dhtKey: dhtKeys)
-                dhtKey.writeBytes(outputStream);
+            outputStream.write((byte)entries.size());
+            for (Entry<Hash, UniqueId> entry: entries.entrySet()) {
+                entry.getKey().writeBytes(outputStream);
+                entry.getValue().writeTo(outputStream);
+            }
             // TODO in the unit test, verify that toByteArray().length = Hash.NUM_BYTES + 1 + dhtKeys.size()*Hash.NUM_BYTES
         } catch (DataFormatException e) {
             log.error("Invalid format for email destination.", e);
@@ -114,18 +129,79 @@ public class IndexPacket extends DhtStorablePacket {
     }
 
     /**
-     * Returns the DHT keys of the {@link EncryptedEmailPacket}s referenced by this {@link IndexPacket}.
+     * Returns the deletion key for a given DHT key of an Email Packet, or <code>null</code> if
+     * the <code>IndexPacket</code> doesn't contain the DHT key.
+     * @param dhtKey
      * @return
      */
-    public Collection<Hash> getDhtKeys() {
-        return dhtKeys;
+    public UniqueId getDeletionKey(Hash dhtKey) {
+        return entries.get(dhtKey);
     }
     
     /**
-     * Returns the DHT key of this packet.
+     * Returns all DHT keys in this <code>IndexPacket</code>.
+     * @return
+     */
+    public Collection<Hash> getDhtKeys() {
+        return entries.keySet();
+    }
+    
+    /**
+     * Adds an entry to the <code>IndexPacket</code>. If the DHT key exists in the packet already,
+     * nothing happens.
+     * @param dhtKey
+     * @param deletionKey
+     */
+    public void put(Hash dhtKey, UniqueId deletionKey) {
+        entries.put(dhtKey, deletionKey);
+    }
+    
+    /**
+     * Removes an entry from the <code>IndexPacket</code>.
+     * @param dhtKey
+     */
+    public void remove(Hash dhtKey) {
+        entries.remove(dhtKey);
+    }
+    
+    /**
+     * Tests if the <code>IndexPacket</code> contains a given DHT key.
+     * @param dhtKey
+     * @return <code>true</code> if the packet containes the DHT key, <code>false</code> otherwise.
+     */
+    public boolean contains(Hash dhtKey) {
+        return entries.containsKey(dhtKey);
+    }
+    
+    /**
+     * Returns the DHT key / deletion key pairs for the {@link EncryptedEmailPacket}s referenced
+     * by this <code>IndexPacket</code>.
+     * @return
+     */
+//    public Collection<Entry> getEntries() {
+    public Map<Hash, UniqueId> getEntries() {
+        return entries;
+    }
+    
+    /**
+     * Returns the DHT key of this packet. The DHT key of an <code>IndexPacket</code> is the
+     * hash of the Email Destination whose entries this packet stores.
      */
     @Override
     public Hash getDhtKey() {
         return destinationHash;
     }
+
+    /**
+     * This class holds a DHT key and a deletion key for an email packet.
+     */
+/*    public class Entry {
+        public Hash dhtKey;   // The DHT key of an email packet
+        public UniqueId deletionKey;   // The deletion key of the email packet
+        
+        public Entry(Hash dhtKey, UniqueId deletionKey) {
+            this.dhtKey = dhtKey;
+            this.deletionKey = deletionKey;
+        }
+    }*/
 }

@@ -47,12 +47,20 @@ public class DhtPacketFolder<T extends DhtStorablePacket> extends PacketFolder<T
         add(packetToStore, getFilename(packetToStore));
     }
     
-    private String getFilename(DhtStorablePacket packet) {
+    protected String getFilename(DhtStorablePacket packet) {
         return packet.getDhtKey().toBase64() + PACKET_FILE_EXTENSION;
     }
     
     @Override
     public DhtStorablePacket retrieve(Hash dhtKey) {
+        File packetFile = findPacketFile(dhtKey);
+        if (packetFile != null)
+            return DhtStorablePacket.createPacket(packetFile);
+        else
+            return null;
+    }
+
+    protected File findPacketFile(Hash dhtKey) {
         final String base64Key = dhtKey.toBase64();
         
         File[] files = storageDir.listFiles(new FilenameFilter() {
@@ -66,12 +74,22 @@ public class DhtPacketFolder<T extends DhtStorablePacket> extends PacketFolder<T
             log.warn("More than one packet files found for DHT key " + dhtKey);
         if (files.length > 0) {
             File file = files[0];
-            return DhtStorablePacket.createPacket(file);
+            return file;
         }
         return null;
     }
 
     protected boolean filenameMatches(String filename, String base64DhtKey) {
         return filename.startsWith(base64DhtKey);
+    }
+    
+    public void delete(Hash dhtKey) {
+        File packetFile = findPacketFile(dhtKey);
+        if (packetFile != null) {
+            if (!packetFile.delete())
+                log.warn("File cannot be deleted: <" + packetFile.getAbsolutePath() + ">");
+        }
+        else
+            log.debug("No file found for DHT key: " + dhtKey);
     }
 }

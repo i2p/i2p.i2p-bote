@@ -32,6 +32,16 @@ import net.i2p.util.Log;
 public abstract class DhtStorablePacket extends DataPacket {
     private static Log log = new Log(DhtStorablePacket.class);
 
+    public DhtStorablePacket() {
+    }
+
+    /**
+     * @see DataPacket(byte[])
+     */
+    public DhtStorablePacket(byte[] data) {
+        super(data);
+    }
+
     public abstract Hash getDhtKey();
 
     /**
@@ -62,7 +72,15 @@ public abstract class DhtStorablePacket extends DataPacket {
         }
     }
     
+    /**
+     * Returns <code>null</code> if the file doesn't exist.
+     * @param file
+     * @return
+     */
     public static DhtStorablePacket createPacket(File file) {
+        if (file==null || !file.exists())
+            return null;
+        
         DataPacket dataPacket;
         dataPacket = DataPacket.createPacket(file);
         if (dataPacket instanceof DhtStorablePacket)

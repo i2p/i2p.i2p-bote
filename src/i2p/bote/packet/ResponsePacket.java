@@ -87,6 +87,7 @@ public class ResponsePacket extends CommunicationPacket {
     
     @Override
     public String toString() {
-        return super.toString() + ", status=" + statusCode + ", ploadType=" + payload.getClass().getSimpleName();
+        String payloadClassName = payload==null?"<null>":payload.getClass().getSimpleName();
+        return super.toString() + ", status=" + statusCode + ", ploadType=" + payloadClassName;
     }
 }

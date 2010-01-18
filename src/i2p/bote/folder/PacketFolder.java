@@ -44,16 +44,17 @@ public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketTy
         super(storageDir, PACKET_FILE_EXTENSION);
     }
     
+    // TODO rename to write because existing files are overwritten
     public <T extends PacketType> void add(T packetToStore) {
         String filename = new UniqueId().toBase64() + PACKET_FILE_EXTENSION;
         add(packetToStore, filename);
     }
 
     /**
-     * 
      * @param packetToStore
      * @param filename A filename relative to this folder's storage directory.
      */
+    // TODO rename to write because existing files are overwritten
     protected void add(DataPacket packetToStore, String filename) {
         FileOutputStream outputStream = null;
         try {
@@ -74,9 +75,9 @@ public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketTy
         }
     }
     
-    public void delete(UniqueId packetId) {
+/*    public void delete(UniqueId packetId) {
         // TODO
-    }
+    }*/
 
     @Override
     @SuppressWarnings("unchecked")

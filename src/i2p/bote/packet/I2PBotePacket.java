@@ -21,11 +21,13 @@
 
 package i2p.bote.packet;
 
-import java.nio.ByteBuffer;
-
+import i2p.bote.I2PBote;
 import i2p.bote.packet.dht.FindClosePeersPacket;
 import i2p.bote.packet.dht.RetrieveRequest;
 import i2p.bote.packet.dht.StoreRequest;
+
+import java.nio.ByteBuffer;
+
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
@@ -35,8 +37,22 @@ public abstract class I2PBotePacket {
     @SuppressWarnings("unchecked")
     private static Class<? extends I2PBotePacket>[] ALL_PACKET_TYPES = new Class[] {
         RelayPacket.class, ResponsePacket.class, RetrieveRequest.class, StoreRequest.class, FindClosePeersPacket.class,
-        PeerList.class, EncryptedEmailPacket.class, UnencryptedEmailPacket.class, IndexPacket.class
+        PeerList.class, EncryptedEmailPacket.class, UnencryptedEmailPacket.class, IndexPacket.class,
+        EmailPacketDeleteRequest.class, IndexPacketDeleteRequest.class
     };
+    
+    private int protocolVersion;
+    
+    /**
+     * Creates a new <code>I2PBotePacket</code> with the current protocol version.
+     */
+    protected I2PBotePacket() {
+        protocolVersion = I2PBote.PROTOCOL_VERSION;
+    }
+    
+    protected I2PBotePacket(int protocolVersion) {
+        this.protocolVersion = protocolVersion;
+    }
     
 	public abstract byte[] toByteArray();
 	
@@ -44,6 +60,7 @@ public abstract class I2PBotePacket {
 	 * Returns the size of the packet in bytes.
 	 * @return
 	 */
+	// TODO rename to getPacketSize
 	public int getSize() {
 	    return toByteArray().length;
 	}
@@ -77,9 +94,13 @@ public abstract class I2PBotePacket {
         checkPacketType((char)packetTypeCode);
     }
 
-/*	protected void checkPacketVersion(byte version, byte minVersion, byte maxVersion) {
-	    // TODO
-	}*/
+    /**
+     * Returns the version of the I2P-Bote network protocol used by this packet.
+     * @return
+     */
+    public int getProtocolVersion() {
+        return protocolVersion;
+    }
     
     /**
      * Creates a {@link Hash} from bytes read from a {@link ByteBuffer}.
