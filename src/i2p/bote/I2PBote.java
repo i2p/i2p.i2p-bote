@@ -205,6 +205,7 @@ public class I2PBote {
         pop3Service = new POP3Service();
         relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, appContext);
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
+        dispatcher.addPacketListener(BanList.getInstance());
         
         dht = new KademliaDHT(i2pSession.getMyDestination(), sendQueue, dispatcher, configuration.getPeerFile());
         
