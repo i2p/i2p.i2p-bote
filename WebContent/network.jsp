@@ -31,6 +31,7 @@
 
 <div class="main">
     <strong>K-Peers: </strong><ib:numDhtPeers/>
+    <ib:dhtPeerInfo/>
 <%--    <strong>R-Peers:</strong><ib:numRelayPeers/> --%>
 </div>
 

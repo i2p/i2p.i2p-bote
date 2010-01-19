@@ -61,6 +61,12 @@
     <body-content>empty</body-content>
 </tag>
 
+<tag>
+    <name>dhtPeerInfo</name>
+    <tag-class>i2p.bote.web.DhtPeerInfoTag</tag-class>
+    <body-content>empty</body-content>
+</tag>
+
 <function>
     <name>getNetworkStatus</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>

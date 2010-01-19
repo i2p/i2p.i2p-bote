@@ -62,6 +62,10 @@ public class KademliaPeer {
         return consecutiveTimeouts.get() >= STALE_THRESHOLD;
     }
     
+    public int getStaleCounter() {
+        return consecutiveTimeouts.get();
+    }
+    
     public void incrementStaleCounter() {
         consecutiveTimeouts.incrementAndGet();
     }

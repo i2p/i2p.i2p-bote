@@ -37,6 +37,7 @@ import i2p.bote.network.DHT;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.NetworkStatus;
+import i2p.bote.network.PeerInfo;
 import i2p.bote.network.PeerManager;
 import i2p.bote.network.kademlia.KademliaDHT;
 import i2p.bote.packet.EncryptedEmailPacket;
@@ -345,6 +346,10 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
     
     public int getNumRelayPeers() {
         return peerManager.getNumPeers();
+    }
+    
+    public Collection<PeerInfo> getPeerInfo() {
+        return dht.getPeerInfo();
     }
     
     private void startAllServices()  {
