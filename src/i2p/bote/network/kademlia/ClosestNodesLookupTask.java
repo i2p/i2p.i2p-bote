@@ -141,7 +141,8 @@ public class ClosestNodesLookupTask implements Runnable {
     }
     
     private boolean hasTimedOut(CommunicationPacket request, long timeout) {
-        return hasTimedOut(request.getSentTime(), timeout);
+        long sentTime = request.getSentTime();
+        return sentTime>0 && hasTimedOut(sentTime, timeout);
     }
     
     /**
