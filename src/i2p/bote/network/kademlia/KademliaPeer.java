@@ -21,13 +21,15 @@
 
 package i2p.bote.network.kademlia;
 
+import i2p.bote.network.DhtPeer;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
-public class KademliaPeer {
+public class KademliaPeer extends Destination implements DhtPeer {
     private static final int STALE_THRESHOLD = 5;
     
     private Log log = new Log(KademliaPeer.class);
@@ -37,8 +39,16 @@ public class KademliaPeer {
     private long lastReception;
     private long activeSince;
     private AtomicInteger consecutiveTimeouts;
+    private boolean banned;
+    private String banReason;
     
     public KademliaPeer(Destination destination, long lastReception) {
+        // initialize the Destination part of the KademliaPeer
+        setCertificate(destination.getCertificate());
+        setSigningPublicKey(destination.getSigningPublicKey());
+        setPublicKey(destination.getPublicKey());
+        
+        // initialize KademliaPeer-specific fields
         this.destination = destination;
         destinationHash = destination.calculateHash();
         if (destinationHash == null)
@@ -48,6 +58,10 @@ public class KademliaPeer {
         lastPingSent = 0;
         activeSince = lastReception;
         consecutiveTimeouts = new AtomicInteger(0);
+    }
+    
+    public KademliaPeer(Destination destination) {
+        this(destination, System.currentTimeMillis());
     }
     
     public Destination getDestination() {
@@ -89,31 +103,24 @@ public class KademliaPeer {
     public long getActiveSince() {
     	return activeSince;
     }
+
+    public void setBanned(boolean isBanned) {
+        this.banned = isBanned;
+    }
+
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanReason(String banReason) {
+        this.banReason = banReason;
+    }
+
+    public String getBanReason() {
+        return banReason;
+    }
     
 /*    public BigInteger getDistance(KademliaPeer anotherPeer) {
         return KademliaUtil.getDistance(getDestinationHash(), anotherPeer.getDestinationHash());
     }*/
-
-    /**
-     * Two <code>KademliaPeer</code>s are considered equal if their I2P destinations are equal.
-     */
-    @Override
-    public boolean equals(Object otherObj) {
-        if (otherObj instanceof KademliaPeer) {
-            KademliaPeer otherPeer = (KademliaPeer)otherObj;
-            return destination.equals(otherPeer.destination);
-        }
-        else
-            return false;
-    }
-    
-    @Override
-    public int hashCode() {
-        return destination.hashCode();
-    }
-    
-    @Override
-    public String toString() {
-        return destination.toString();
-    }
 }

@@ -22,15 +22,14 @@
 package i2p.bote.network.kademlia;
 
 import i2p.bote.Util;
-import i2p.bote.network.BanList;
 import i2p.bote.network.DHT;
+import i2p.bote.network.DhtPeer;
 import i2p.bote.network.DhtResults;
 import i2p.bote.network.DhtStorageHandler;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketBatch;
 import i2p.bote.network.PacketListener;
-import i2p.bote.network.PeerInfo;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.PeerList;
@@ -50,7 +49,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -159,15 +157,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     @Override
-    public Collection<PeerInfo> getPeerInfo() {
-        Collection<PeerInfo> peerInfoCollection = new ArrayList<PeerInfo>();
-        for (KademliaPeer peer: bucketManager.getAllPeers()) {
-            Destination dest = peer.getDestination();
-            BanList banList = BanList.getInstance();
-            PeerInfo peerInfo = new PeerInfo(dest, peer.getActiveSince(), peer.getStaleCounter(), banList.isBanned(dest), banList.getBanReason(dest));
-            peerInfoCollection.add(peerInfo);
-        }
-        return peerInfoCollection;
+    public Collection<? extends DhtPeer> getPeers() {
+        return bucketManager.getAllPeers();
     }
     
     private DhtResults find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {
@@ -312,8 +303,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                         log.debug("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.getDestinationHash());
                         refreshAll();
                         log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
-                        for (KademliaPeer peer: bucketManager.getAllPeers())
-                            log.debug("  Peer: " + peer.getDestinationHash());
+                        for (Destination peer: bucketManager.getAllPeers())
+                            log.debug("  Peer: " + peer.calculateHash());
                         break outerLoop;
                     }
                 }
@@ -439,7 +430,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     
     private void sendPeerList(FindClosePeersPacket packet, Destination destination) {
         // TODO don't include the requesting peer
-        Collection<KademliaPeer> closestPeers = bucketManager.getClosestPeers(packet.getKey(), KademliaConstants.K);
+        Collection<Destination> closestPeers = bucketManager.getClosestPeers(packet.getKey(), KademliaConstants.K);
         PeerList peerList = new PeerList(closestPeers);
         sendQueue.sendResponse(peerList, destination, packet.getPacketId());
     }

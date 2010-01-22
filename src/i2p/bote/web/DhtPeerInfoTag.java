@@ -1,7 +1,7 @@
 package i2p.bote.web;
 
 import i2p.bote.I2PBote;
-import i2p.bote.network.PeerInfo;
+import i2p.bote.network.DhtPeer;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -33,14 +33,14 @@ public class DhtPeerInfoTag extends SimpleTagSupport {
                 out.println("</tr>");
             }
             
-            Collection<PeerInfo> peerInfoCollection = I2PBote.getInstance().getPeerInfo();
+            Collection<? extends DhtPeer> peerInfoCollection = I2PBote.getInstance().getPeers();
             int peerIndex = 1;
-            for (PeerInfo peer: peerInfoCollection) {
+            for (DhtPeer peer: peerInfoCollection) {
                 out.println("<tr>");
                 out.println("<td>" + peerIndex++ + "</td>");
                 out.println("<td>" + peer.getDestination().calculateHash().toBase64() + "</td>");
                 out.println("<td>" + new Date(peer.getActiveSince()) + "</td>");
-                out.println("<td>" + peer.getConsecutiveTimeouts() + "</td>");
+                out.println("<td>" + peer.getStaleCounter() + "</td>");
                 out.println("<td>" + (peer.isBanned()?"Yes":"No") + "</td>");
                 out.println("<td>" + (peer.getBanReason()==null?"":peer.getBanReason()) + "</td>");
                 out.println("</tr>");

@@ -54,7 +54,7 @@ public interface DHT {
      */
     int getNumPeers();
     
-    Collection<PeerInfo> getPeerInfo();
+    Collection<? extends DhtPeer> getPeers();
     
     void start();
     

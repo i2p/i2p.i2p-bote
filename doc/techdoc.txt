@@ -545,6 +545,7 @@ I2P destination
 
 11. To Do
 
+  * make sure del key is zeroed out when responding to a retrieve request for an EncryptedEmailPacket
   * don't send delete requests to self, just delete the file locally
   * rename test/.../kademlia package to dht for consistency
   * make blue background solid, lighter color so chinese chars are readable

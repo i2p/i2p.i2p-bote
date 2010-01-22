@@ -42,23 +42,28 @@ import net.i2p.util.Log;
 public class BucketManager implements PacketListener, Iterable<KBucket> {
     private Log log = new Log(BucketManager.class);
     private List<KBucket> kBuckets;
-    private KBucket siblingBucket;   // TODO [ordered furthest away to closest in terms of hash distance to local node]
+    private SBucket sBucket;   // The sibling bucket [TODO ordered furthest away to closest in terms of hash distance to local node]
     private Hash localDestinationHash;
 
     public BucketManager(Hash localDestinationHash) {
         this.localDestinationHash = localDestinationHash;
         kBuckets = Collections.synchronizedList(new ArrayList<KBucket>());
-        kBuckets.add(new KBucket(KBucket.MIN_HASH_VALUE, KBucket.MAX_HASH_VALUE, KademliaConstants.K, 0, true));   // this is the root bucket, so depth=0
-        siblingBucket = new KBucket(KBucket.MIN_HASH_VALUE, KBucket.MAX_HASH_VALUE, KademliaConstants.S, 0, false);
+        kBuckets.add(new KBucket(AbstractBucket.MIN_HASH_VALUE, AbstractBucket.MAX_HASH_VALUE, KademliaConstants.K, 0));   // this is the root bucket, so depth=0
+        sBucket = new SBucket(KademliaConstants.S);
     }
     
-    public void addAll(Collection<KademliaPeer> nodes) {
-        for (KademliaPeer node: nodes)
+    /**
+     * Calls <code>addOrUpdate(KademliaPeer)</code> for one or more peers.
+     * @param peers
+     */
+    public void addAll(Collection<KademliaPeer> peers) {
+        for (KademliaPeer node: peers)
             addOrUpdate(node);
     }
     
     /**
-     * Add a <code>{@link KademliaPeer}</code> to the sibling list or a bucket.
+     * Adds a <code>{@link KademliaPeer}</code> to the s-bucket or a k-bucket,
+     * depending on its distance to the local node.
      * @param peer
      */
     public void addOrUpdate(KademliaPeer peer) {
@@ -73,73 +78,56 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
         peer.resetStaleCounter();
         
         synchronized(this) {
-            if (!siblingBucket.isFull() || siblingBucket.contains(peer)) {
-                siblingBucket.addOrUpdate(peer);
-                getBucket(peerHash).remove(peer);
+            if (!sBucket.isFull() || sBucket.contains(peer)) {
+                sBucket.addOrUpdate(peer);
+                getKBucket(peerHash).remove(peer);
             }
             else if (isCloserSibling(peer)) {
-                KademliaPeer ejectedPeer = siblingBucket.getMostDistantPeer(localDestinationHash);
+                Destination ejectedPeer = sBucket.getMostDistantPeer(localDestinationHash);
                 
-                addToBucket(ejectedPeer);
-                siblingBucket.remove(ejectedPeer);
+                addToKBucket(ejectedPeer);
+                sBucket.remove(ejectedPeer);
                 
-                siblingBucket.addOrUpdate(peer);
-                getBucket(peerHash).remove(peer);
+                sBucket.addOrUpdate(peer);
+                getKBucket(peerHash).remove(peer);
             }
             else
-                addToBucket(peer);
+                addToKBucket(peer);
         }
         logBucketStats();
-            
-/*        KademliaPeer ejectedPeer = addSibling(peer);
-        // if the peer was added as a sibling, it may need to be removed from a bucket
-        if (ejectedPeer != peer)
-            getBucket(peerHash).remove(peer);
-        // if the peer didn't get added as a sibling, try a bucket
-        else
-            addToBucket(peer);
-        // if adding the peer to the list of siblings replaced another sibling, add the old sibling to a bucket
-        if (ejectedPeer != null)
-            addToBucket(ejectedPeer);*/
-        
-/*TODO        synchronized(siblings) {
-            if (siblings.isFull()) {
-                KBucket bucket = getBucket(nodeHash);
-                KademliaPeer mostDistantSibling = getMostDistantSibling();
-                if (getDistance(node.getDestinationHash()) < getDistance(mostDistantSibling)) {
-                    bucket.addOrUpdate(mostDistantSibling);
-                    siblings.remove(mostDistantSibling);
-                    siblings.add(node);
-                }
-                else
-                    bucket.addOrUpdate(node);
-            }
-            else {
-                siblings.add(node);
-        }*/
-        
     }
 
+    private void addToKBucket(Destination destination) {
+        KBucket bucket = getKBucket(destination);
+        KBucket newBucket = bucket.addOrSplit(destination);
+        if (newBucket != null)
+            kBuckets.add(newBucket);
+    }
+
+    public void incrementStaleCounter(Destination destination) {
+        AbstractBucket bucket = getBucket(destination);
+        if (bucket != null) {
+            KademliaPeer peer = bucket.getPeer(destination);
+            if (peer != null) {
+                peer.incrementStaleCounter();
+                return;
+            }
+        }
+        log.debug("Can't increment stale counter because peer not found in buckets: " + destination.calculateHash());
+    }
+    
     private void logBucketStats() {
         int numBuckets = kBuckets.size();
         int numPeers = getAllPeers().size();
-        int numSiblings = siblingBucket.size();
+        int numSiblings = sBucket.size();
         
         log.debug("total #peers=" + numPeers + ", #siblings=" + numSiblings + ", #buckets=" + numBuckets + " (not counting the sibling bucket)");
     }
     
     /**
-     * Add a <code>{@link KademliaPeer}</code> to the appropriate bucket.
-     * @param peer
+     * Adds a <code>{@link Destination}</code> to the appropriate bucket.
+     * @param destination
      */
-    private void addToBucket(KademliaPeer peer) {
-        Hash nodeHash = peer.getDestinationHash();
-        KBucket bucket = getBucket(nodeHash);
-        KBucket newBucket = bucket.addOrSplit(peer);
-        if (newBucket != null)
-            kBuckets.add(newBucket);
-    }
-
     /**
      * Return <code>true</code> if a given peer is closer to the local node than at
      * least one sibling. In other words, test if <code>peer</code> should replace
@@ -149,7 +137,7 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
      */
     private boolean isCloserSibling(KademliaPeer peer) {
         BigInteger peerDistance = KademliaUtil.getDistance(peer, localDestinationHash);
-        for (KademliaPeer sibling: siblingBucket) {
+        for (KademliaPeer sibling: sBucket) {
             BigInteger siblingDistance = KademliaUtil.getDistance(sibling.getDestinationHash(), localDestinationHash);
             if (peerDistance.compareTo(siblingDistance) < 0)
                 return true;
@@ -157,39 +145,13 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
         return false;
     }
     
-    /**
-     * Add a peer to the sibling list if the list is not full, or if there is a node that can be
-     * replaced.
-     * 
-     * If <code>peer</code> replaced an existing sibling, that sibling is returned.
-     * If <code>peer</code> could not be added to the list, <code>peer</code> is returned.
-     * If the list was not full, <code>null</code> is returned.
-     * @param peer
-     * @return
-     */
-/*    private KademliaPeer addSibling(KademliaPeer peer) {
-        // no need to handle a replacement cache because the sibling bucket has none.
-        KademliaPeer mostDistantSibling = siblingBucket.getMostDistantPeer(localDestinationHash);
-        if (!siblingBucket.isFull()) {
-            siblingBucket.add(peer);
-            return null;
-        }
-        else if (new PeerDistanceComparator(localDestinationHash).compare(peer, mostDistantSibling) < 0) {
-            siblingBucket.remove(mostDistantSibling);
-            siblingBucket.add(peer);
-            return mostDistantSibling;
-        }
-        else
-            return peer;
-    }*/
-    
     public void remove(KademliaPeer peer) {
-        Hash nodeHash = peer.getDestinationHash();
-        getBucket(nodeHash).remove(peer);
+        getBucket(peer).remove(peer);
     }
     
     /**
-     * Do a binary search for the index of the bucket whose key range contains a given {@link Hash}.
+     * Does a binary search for the index of the k-bucket whose key range contains
+     * a given {@link Hash}.
      * @param key
      * @return
      */
@@ -214,27 +176,59 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
     }
     
     /**
-     * Do a binary search for the bucket whose key range contains a given {@link Hash}.
+     * Does a binary search for the k-bucket whose key range contains a given
+     * {@link Hash}.
+     * The bucket may or may not contain a peer with that hash.
      * @param key
      * @return
      */
-    private KBucket getBucket(Hash key) {
+    private KBucket getKBucket(Hash key) {
         return kBuckets.get(getBucketIndex(key));
+    }
+    
+    /**
+     * Does a binary search for the k-bucket whose key range contains a given
+     * {@link Destination}.
+     * The bucket may or may not contain the peer.
+     * @param key
+     * @return
+     */
+    private KBucket getKBucket(Destination destination) {
+        return getKBucket(destination.calculateHash());
+    }
+    
+    /**
+     * Returns the (s or k) bucket that contains a given {@link Destination}.
+     * The s-bucket is checked first, then the k-buckets.
+     * If no bucket contains the peer, <code>null</code> is returned.
+     * @param destination
+     * @return
+     */
+    private AbstractBucket getBucket(Destination destination) {
+        if (sBucket.contains(destination))
+            return sBucket;
+        else {
+            KBucket kBucket = getKBucket(destination.calculateHash());
+            if (kBucket.contains(destination))
+                return kBucket;
+            else
+                return null;
+        }
     }
     
     /**
      * Return the <code>count</code> peers that are closest to a given key.
      * Less than <code>count</code> peers may be returned if there aren't
-     * enough peers in the k-buckets.
+     * enough peers in the k-buckets and the s-bucket.
      * @param key
      * @param count
      * @return
      */
-    public Collection<KademliaPeer> getClosestPeers(Hash key, int count) {
-        Collection<KademliaPeer> closestPeers = new ConcurrentHashSet<KademliaPeer>();
+    public Collection<Destination> getClosestPeers(Hash key, int count) {
+        Collection<Destination> closestPeers = new ConcurrentHashSet<Destination>();
         
         // TODO don't put all peers in one huge list, only use two buckets at a time
-        KademliaPeer[] allPeers = getAllPeersSortedByDistance(key);
+        Destination[] allPeers = getAllPeersSortedByDistance(key);
         
         for (int i=0; i<count && i<allPeers.length; i++)
             closestPeers.add(allPeers[i]);
@@ -252,8 +246,8 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
     public List<KademliaPeer> getAllPeers() {
         List<KademliaPeer> allPeers = new ArrayList<KademliaPeer>();
         for (KBucket bucket: kBuckets)
-            allPeers.addAll(bucket.getNodes());
-        allPeers.addAll(siblingBucket.getNodes());
+            allPeers.addAll(bucket.getPeers());
+        allPeers.addAll(sBucket.getPeers());
         return allPeers;
     }
     
@@ -263,7 +257,7 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
      */
     public List<KademliaPeer> getSiblings() {
         List<KademliaPeer> siblingDestinations = new ArrayList<KademliaPeer>();
-        for (KademliaPeer sibling: siblingBucket)
+        for (KademliaPeer sibling: sBucket)
             siblingDestinations.add(sibling);
         return siblingDestinations;
     }
@@ -276,7 +270,7 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
         int count = 0;
         for (KBucket bucket: kBuckets)
             count += bucket.size();
-        count += siblingBucket.size();
+        count += sBucket.size();
         return count;
     }
     
@@ -287,7 +281,7 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
         addOrUpdate(new KademliaPeer(sender, receiveTime));
   }
 
-    private class PeerDistanceComparator implements Comparator<KademliaPeer> {
+    private class PeerDistanceComparator implements Comparator<Destination> {
         private Hash reference;
         
         PeerDistanceComparator(Hash reference) {
@@ -295,9 +289,9 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
         }
         
         @Override
-        public int compare(KademliaPeer peer1, KademliaPeer peer2) {
-            BigInteger distance1 = KademliaUtil.getDistance(peer1.getDestinationHash(), reference);
-            BigInteger distance2 = KademliaUtil.getDistance(peer2.getDestinationHash(), reference);
+        public int compare(Destination peer1, Destination peer2) {
+            BigInteger distance1 = KademliaUtil.getDistance(peer1.calculateHash(), reference);
+            BigInteger distance2 = KademliaUtil.getDistance(peer2.calculateHash(), reference);
             return distance1.compareTo(distance2);
         }
     }

@@ -31,13 +31,12 @@ import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.PacketFolder;
-import i2p.bote.network.BanList;
 import i2p.bote.network.CheckEmailTask;
 import i2p.bote.network.DHT;
+import i2p.bote.network.DhtPeer;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.NetworkStatus;
-import i2p.bote.network.PeerInfo;
 import i2p.bote.network.PeerManager;
 import i2p.bote.network.kademlia.KademliaDHT;
 import i2p.bote.packet.EncryptedEmailPacket;
@@ -206,7 +205,6 @@ public class I2PBote {
         pop3Service = new POP3Service();
         relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, appContext);
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
-        dispatcher.addPacketListener(BanList.getInstance());
         
         dht = new KademliaDHT(i2pSession.getMyDestination(), sendQueue, dispatcher, configuration.getPeerFile());
         
@@ -348,8 +346,8 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
         return peerManager.getNumPeers();
     }
     
-    public Collection<PeerInfo> getPeerInfo() {
-        return dht.getPeerInfo();
+    public Collection<? extends DhtPeer> getPeers() {
+        return dht.getPeers();
     }
     
     private void startAllServices()  {

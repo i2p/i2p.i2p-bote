@@ -21,8 +21,6 @@
 
 package i2p.bote.packet;
 
-import i2p.bote.network.kademlia.KademliaPeer;
-
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -38,9 +36,9 @@ import net.i2p.util.Log;
 public class PeerList extends DataPacket {
     private Log log = new Log(PeerList.class);
     // TODO should be a Collection<Destination> because this class will also be used for relay peer lists
-    private Collection<KademliaPeer> peers;
+    private Collection<Destination> peers;
 
-    public PeerList(Collection<KademliaPeer> peers) {
+    public PeerList(Collection<Destination> peers) {
         this.peers = peers;
     }
 
@@ -50,15 +48,14 @@ public class PeerList extends DataPacket {
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
         int numPeers = buffer.getShort();
-        peers = new ArrayList<KademliaPeer>();
+        peers = new ArrayList<Destination>();
         for (int i=0; i<numPeers; i++) {
-            Destination destination = new Destination();
             byte[] peerData = new byte[388];
             // read 384 bytes, leave the last 3 bytes zero
             buffer.get(peerData, 0, 384);
             
-            destination.readBytes(peerData, 0);
-            KademliaPeer peer = new KademliaPeer(destination, 0);
+            Destination peer = new Destination();
+            peer.readBytes(peerData, 0);
             peers.add(peer);
         }
         
@@ -66,7 +63,7 @@ public class PeerList extends DataPacket {
             log.debug("Peer List has " + buffer.remaining() + " extra bytes.");
     }
     
-    public Collection<KademliaPeer> getPeers() {
+    public Collection<Destination> getPeers() {
         return peers;
     }
     
@@ -78,9 +75,9 @@ public class PeerList extends DataPacket {
         try {
             writeHeader(dataStream);
             dataStream.writeShort(peers.size());
-            for (KademliaPeer peer: peers)
+            for (Destination peer: peers)
                 // write the first 384 bytes (the two public keys)
-                dataStream.write(peer.getDestination().toByteArray(), 0, 384);
+                dataStream.write(peer.toByteArray(), 0, 384);
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);

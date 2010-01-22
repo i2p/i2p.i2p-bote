@@ -46,6 +46,10 @@ public class DhtResults implements Iterable<DhtStorablePacket> {
         return map.size();
     }
 
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
+
     public Collection<DhtStorablePacket> getPackets() {
         return map.values();
     }

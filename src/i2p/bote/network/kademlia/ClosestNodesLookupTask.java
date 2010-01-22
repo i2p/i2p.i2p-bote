@@ -60,8 +60,8 @@ public class ClosestNodesLookupTask implements Runnable {
     private Random randomNumberGenerator;
     private I2PSendQueue sendQueue;
     private Set<Destination> responses;
-    private Set<KademliaPeer> notQueriedYet;
-    private Map<KademliaPeer, FindClosePeersPacket> pendingRequests;
+    private Set<Destination> notQueriedYet;
+    private Map<Destination, FindClosePeersPacket> pendingRequests;
     private long startTime;
     
     public ClosestNodesLookupTask(Hash key, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager) {
@@ -71,8 +71,8 @@ public class ClosestNodesLookupTask implements Runnable {
         this.bucketManager = bucketManager;
         randomNumberGenerator = new Random(getTime());
         responses = Collections.synchronizedSet(new TreeSet<Destination>(new HashDistanceComparator(key)));   // nodes that have responded to a query; sorted by distance to the key
-        notQueriedYet = new ConcurrentHashSet<KademliaPeer>();   // peers we haven't contacted yet
-        pendingRequests = new ConcurrentHashMap<KademliaPeer, FindClosePeersPacket>();   // outstanding queries
+        notQueriedYet = new ConcurrentHashSet<Destination>();   // peers we haven't contacted yet
+        pendingRequests = new ConcurrentHashMap<Destination, FindClosePeersPacket>();   // outstanding queries
     }
     
     @Override
@@ -89,17 +89,17 @@ public class ClosestNodesLookupTask implements Runnable {
         do {
             // send new requests if less than alpha are pending
             while (pendingRequests.size()<KademliaConstants.ALPHA && !notQueriedYet.isEmpty()) {
-                KademliaPeer peer = selectRandom(notQueriedYet);
+                Destination peer = selectRandom(notQueriedYet);
                 notQueriedYet.remove(peer);
                 FindClosePeersPacket packet = new FindClosePeersPacket(key);
                 pendingRequests.put(peer, packet);
-                sendQueue.send(packet, peer.getDestination());
+                sendQueue.send(packet, peer);
             }
 
             // handle timeouts
-            for (Map.Entry<KademliaPeer, FindClosePeersPacket> request: pendingRequests.entrySet())
+            for (Map.Entry<Destination, FindClosePeersPacket> request: pendingRequests.entrySet())
                 if (hasTimedOut(request.getValue(), REQUEST_TIMEOUT))
-                    request.getKey().incrementStaleCounter();   // resetting is done in BucketManager
+                    bucketManager.incrementStaleCounter(request.getKey());   // resetting is also done in BucketManager
             
             try {
                 TimeUnit.SECONDS.sleep(1);
@@ -107,7 +107,7 @@ public class ClosestNodesLookupTask implements Runnable {
                 log.warn("Interrupted while doing a closest nodes lookup.", e);
             }
         } while (!isDone());
-        log.debug(responses.size() + " nodes found.");
+        log.debug(responses.size() + " nodes found (may include local node).");
         for (Destination node: responses)
             log.debug("  Node: " + node.calculateHash());
         
@@ -126,8 +126,8 @@ public class ClosestNodesLookupTask implements Runnable {
         return false;
     }
     
-    private KademliaPeer selectRandom(Collection<KademliaPeer> collection) {
-        KademliaPeer[] array = new KademliaPeer[collection.size()];
+    private Destination selectRandom(Collection<Destination> collection) {
+        Destination[] array = new Destination[collection.size()];
         int index = randomNumberGenerator.nextInt(array.length);
         return collection.toArray(array)[index];
     }
@@ -161,20 +161,6 @@ public class ClosestNodesLookupTask implements Runnable {
         return resultsList;
     }
 
-    /**
-     * Return <code>true</code> if a set of peers contains a given peer.
-     * @param peerSet
-     * @param peerToFind
-     * @return
-     */
-    private boolean contains(Set<KademliaPeer> peerSet, KademliaPeer peerToFind) {
-        Hash peerHash = peerToFind.getDestinationHash();
-        for (KademliaPeer peer: peerSet)
-            if (peer.getDestinationHash().equals(peerHash))
-                return true;
-        return false;
-    }
-    
     // compares two Destinations in terms of closeness to <code>reference</code>
     private class HashDistanceComparator implements Comparator<Destination> {
         private Hash reference;
@@ -204,19 +190,20 @@ public class ClosestNodesLookupTask implements Runnable {
     
         private void addPeers(ResponsePacket responsePacket, PeerList peerListPacket, Destination sender, long receiveTime) {
             log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.calculateHash());
-            for (KademliaPeer peer: peerListPacket.getPeers())
-                log.debug("  Peer: " + peer.getDestinationHash());
+            for (Destination peer: peerListPacket.getPeers())
+                log.debug("  Peer: " + peer.calculateHash());
             
             // if the packet is in response to a pending request, update the three Sets
             FindClosePeersPacket request = getPacketById(pendingRequests.values(), responsePacket.getPacketId());   // find the request the node list is in response to
             if (request != null) {
                 // TODO make responseReceived and pendingRequests a parameter in the constructor?
                 responses.add(sender);
-                Collection<KademliaPeer> peersReceived = peerListPacket.getPeers();
+                Collection<Destination> peersReceived = peerListPacket.getPeers();
                 
                 // add all peers from the PeerList, excluding those that we have already queried
-                for (KademliaPeer peer: peersReceived)
-                    if (!pendingRequests.containsKey(peer) && !responses.contains(peer.getDestination()))
+                // TODO don't add local dest
+                for (Destination peer: peersReceived)
+                    if (!pendingRequests.containsKey(peer) && !responses.contains(peer))
                         notQueriedYet.add(peer);   // this won't create duplicates because notQueriedYet is a Set
                 
                 pendingRequests.remove(new KademliaPeer(sender, 0));   // wrap sender into a KademliaPeer because that is the type that needs to be passed to Map.remove

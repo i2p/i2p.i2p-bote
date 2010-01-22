@@ -87,6 +87,8 @@ public class CheckEmailTask implements Callable<Boolean> {
         // Use findAll rather than findOne because some peers might have an incomplete set of
         // Email Packet keys, and because we want to send IndexPacketDeleteRequests to all of them.
         DhtResults indexPacketResults = dht.findAll(identity.getHash(), IndexPacket.class);
+        if (indexPacketResults.isEmpty())
+            return false;
         
         Collection<Hash> emailPacketKeys = findEmailPacketKeys(indexPacketResults.getPackets());
 
