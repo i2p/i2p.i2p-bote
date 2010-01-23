@@ -456,13 +456,12 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             if (storageHandler != null) {
                 DhtStorablePacket storedPacket = storageHandler.retrieve(retrieveRequest.getKey());
                 // if requested packet found, send it to the requester
-                if (storedPacket != null) {
+                ResponsePacket response = new ResponsePacket(storedPacket, StatusCode.OK, retrieveRequest.getPacketId());
+                if (storedPacket != null)
                     log.debug("Packet found for retrieve request: [" + retrieveRequest + "], replying to sender: [" + sender.calculateHash() + "]");
-                    ResponsePacket response = new ResponsePacket(storedPacket, StatusCode.OK, retrieveRequest.getPacketId());
-                    sendQueue.send(response, sender);
-                }
                 else
                     log.debug("No matching packet found for retrieve request: [" + retrieveRequest + "]");
+                sendQueue.send(response, sender);
             }
             else
                 log.warn("No storage handler found for type " + packet.getClass().getSimpleName() + ".");

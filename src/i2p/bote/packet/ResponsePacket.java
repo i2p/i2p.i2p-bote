@@ -28,8 +28,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import javax.xml.crypto.Data;
-
 import net.i2p.util.Log;
 
 @TypeCode('N')
@@ -38,6 +36,12 @@ public class ResponsePacket extends CommunicationPacket {
     private StatusCode statusCode;
     private DataPacket payload;
 
+    /**
+     * 
+     * @param payload Can be <code>null</code>.
+     * @param statusCode
+     * @param packetId
+     */
     public ResponsePacket(DataPacket payload, StatusCode statusCode, UniqueId packetId) {
         super(packetId);
         this.payload = payload;
@@ -74,9 +78,13 @@ public class ResponsePacket extends CommunicationPacket {
             writeHeader(dataStream);
             dataStream.write(statusCode.ordinal());
             
-            byte[] payloadBytes = payload.toByteArray();
-            dataStream.writeShort(payloadBytes.length);
-            dataStream.write(payloadBytes);
+            if (payload == null)
+                dataStream.writeShort(0);
+            else {
+                byte[] payloadBytes = payload.toByteArray();
+                dataStream.writeShort(payloadBytes.length);
+                dataStream.write(payloadBytes);
+            }
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);

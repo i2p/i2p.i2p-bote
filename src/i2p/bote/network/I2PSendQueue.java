@@ -171,8 +171,11 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             UniqueId packetId = packet.getPacketId();
             
             for (PacketBatch batch: runningBatches)
-                if (batch.contains(packetId))
-                    batch.addResponse(sender, ((ResponsePacket)packet).getPayload());
+                if (batch.contains(packetId)) {
+                    DataPacket payload = ((ResponsePacket)packet).getPayload();
+                    if (payload != null)
+                        batch.addResponse(sender, payload);
+                }
         }
     }
     
