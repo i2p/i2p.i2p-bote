@@ -242,19 +242,30 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     }
     
     private class PacketQueue extends LinkedList<ScheduledPacket> {
-        public void add(ScheduledPacket packet, long earliestSendTime) {
-            int index = getInsertionIndex(packet, earliestSendTime);
-            add(index, packet);
+        private static final long serialVersionUID = -7294556384443251074L;
+
+        /**
+         * Always returns <code>true</code>.
+         */
+        @Override
+        public boolean add(ScheduledPacket packet) {
+            if (packet.earliestSendTime > 0) {
+                int index = getInsertionIndex(packet);
+                super.add(index, packet);
+            }
+            else
+                super.add(packet);
+            return true;
         }
 
-        private int getInsertionIndex(ScheduledPacket packet, long earliestSendTime) {
+        private int getInsertionIndex(ScheduledPacket packet) {
             if (isEmpty())
                 return 0;
 
             // do a linear search (binary search isn't a good fit for LinkedList)
             // TODO using foreach would be more efficient
             for (int i=0; i<size(); i++)
-                if (get(i).earliestSendTime <= earliestSendTime)
+                if (get(i).earliestSendTime <= packet.earliestSendTime)
                     return i;
 
             return size();
