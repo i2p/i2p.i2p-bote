@@ -24,6 +24,7 @@ package i2p.bote.network;
 import i2p.bote.UniqueId;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
+import i2p.bote.packet.EmptyResponse;
 import i2p.bote.packet.RelayPacket;
 import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.ResponsePacket;
@@ -175,6 +176,8 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                     DataPacket payload = ((ResponsePacket)packet).getPayload();
                     if (payload != null)
                         batch.addResponse(sender, payload);
+                    else
+                        batch.addResponse(sender, new EmptyResponse());
                 }
         }
     }

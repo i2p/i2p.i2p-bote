@@ -81,6 +81,7 @@ import com.nettgryppa.security.HashCash;
 public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private static final int INTERVAL = 5 * 60 * 1000;
     private static final int PING_TIMEOUT = 20 * 1000;
+    private static final int RESPONSE_TIMEOUT = 60;   // Max. number of seconds to wait for replies to retrieve requests
     private static final URL BUILT_IN_PEER_FILE = KademliaDHT.class.getResource("built-in-peers.txt");
     
     private Log log = new Log(KademliaDHT.class);
@@ -189,9 +190,9 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // wait for replies
         try {
             if (exhaustive)
-                TimeUnit.SECONDS.sleep(60);   // TODO make a static field
+                batch.awaitAllResponses(RESPONSE_TIMEOUT, TimeUnit.SECONDS);
             else
-                batch.awaitFirstReply(60, TimeUnit.SECONDS);   // TODO make a static field
+                batch.awaitFirstReply(RESPONSE_TIMEOUT, TimeUnit.SECONDS);
         }
         catch (InterruptedException e) {
             log.warn("Interrupted while waiting for responses to Retrieve Requests.", e);

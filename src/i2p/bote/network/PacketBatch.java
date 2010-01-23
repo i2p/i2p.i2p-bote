@@ -133,4 +133,16 @@ public class PacketBatch implements Iterable<PacketBatchItem> {
     public void awaitFirstReply(long timeout, TimeUnit timeoutUnit) throws InterruptedException {
         firstReplyReceivedSignal.await(timeout, timeoutUnit);
     }
+    
+    public void awaitAllResponses(long timeout, TimeUnit timeoutUnit) throws InterruptedException {
+        long startTime = System.currentTimeMillis();
+        long timeoutMillis = timeoutUnit.toMillis(timeout);
+        long endTime = startTime + timeoutMillis;
+        
+        log.debug("Waiting for responses to batch packets. Start time=" + startTime + ", end time=" + endTime);
+        
+        while (System.currentTimeMillis()<=endTime && incomingPackets.size()<outgoingPackets.size())
+            TimeUnit.SECONDS.sleep(1);
+        log.debug("Finished waiting. Time now: " + System.currentTimeMillis() + ", #incoming=" + incomingPackets.size() + ", #outgoing=" + outgoingPackets.size());
+    }
 }
