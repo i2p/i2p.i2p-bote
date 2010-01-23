@@ -31,7 +31,7 @@
 </jsp:include>
 
 <div class="main">
-    <form action="sendEmail.jsp">
+    <form action="sendEmail.jsp" method="post">
         <table>
             <tr>
                 <td>
