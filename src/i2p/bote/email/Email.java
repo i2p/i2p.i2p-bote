@@ -34,7 +34,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,10 +54,9 @@ import net.i2p.util.Log;
 
 import com.nettgryppa.security.HashCash;
 
-// TODO move one package up
 public class Email implements FolderElement {
     private static final int MAX_BYTES_PER_PACKET = 30 * 1024;
-    private static final char[] NEW_LINE = new char[] {13, 10};   // separates header section from mail body; same for all platforms per RFC 5322
+    private static final byte[] NEW_LINE = new byte[] {13, 10};   // separates header section from mail body; same for all platforms per RFC 5322
     private static final Set<String> HEADER_WHITELIST = createHeaderWhitelist();
     
     private static Log log = new Log(Email.class);
@@ -100,7 +98,7 @@ public class Email implements FolderElement {
                 String line = reader.readLine();
                 if (line == null)   // EOF
                     break;
-                if ("".equals(line)) {   // empty line separates header from mail body
+                if ("".equals(line) && !allHeadersRead) {   // empty line separates header from mail body
                     allHeadersRead = true;
                     continue;
                 }
@@ -117,8 +115,10 @@ public class Email implements FolderElement {
                         allHeadersRead = true;
                 }
                 
-                if (allHeadersRead)
+                if (allHeadersRead) {
                     contentStream.write(line.getBytes());
+                    contentStream.write(NEW_LINE);
+                }
             }
         }
         catch (IOException e) {
@@ -286,7 +286,11 @@ public class Email implements FolderElement {
         ArrayList<UnencryptedEmailPacket> packets = new ArrayList<UnencryptedEmailPacket>();
         
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        writeTo(outputStream, bccToKeep);
+        try {
+            writeTo(outputStream, bccToKeep);
+        } catch (IOException e) {
+            log.error("Can't write to ByteArrayOutputStream.", e);
+        }
         byte[] emailArray = outputStream.toByteArray();
         
         // calculate fragment count
@@ -374,21 +378,19 @@ public class Email implements FolderElement {
      * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
      * @throws IOException
      */
-    public void writeTo(OutputStream outputStream, String bccToKeep) {
-        PrintWriter writer = new PrintWriter(outputStream);
-        
-        writeHeaders(writer, bccToKeep);
-        writer.print(NEW_LINE);
-        writer.print(new String(content));
-        writer.print(NEW_LINE);
-        
-        writer.close();
+    private void writeTo(OutputStream outputStream, String bccToKeep) throws IOException {
+        writeHeaders(outputStream, bccToKeep);
+        outputStream.write(NEW_LINE);
+        outputStream.write(content);
+        outputStream.write(NEW_LINE);
     }
     
-    private void writeHeaders(PrintWriter writer, String bccToKeep) {
+    private void writeHeaders(OutputStream outputStream, String bccToKeep) throws IOException {
         for (Header header: headers)
-            if (bccToKeep==null || !"BCC".equals(header.name) || bccToKeep.equals(header.value))
-                writer.println(header.toString());
+            if (bccToKeep==null || !"BCC".equals(header.name) || bccToKeep.equals(header.value)) {
+                outputStream.write(header.toString().getBytes());
+                outputStream.write(NEW_LINE);
+            }
     }
     
     private class Header {

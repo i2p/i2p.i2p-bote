@@ -38,6 +38,17 @@
 </tag>
 
 <tag>
+    <name>formatPlainText</name>
+    <tag-class>i2p.bote.web.FormatPlainTextTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>text</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+</tag>
+
+<tag>
     <name>numDhtPeers</name>
     <tag-class>i2p.bote.web.PrintNumDhtPeersTag</tag-class>
     <body-content>empty</body-content>

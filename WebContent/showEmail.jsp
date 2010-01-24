@@ -52,7 +52,7 @@
         </tr>
         <tr>
             <td valign="top"><strong>Message:</strong></td>
-            <td>${email.bodyText}</td>
+            <td><ib:formatPlainText text="${email.bodyText}"/></td>
         </tr>
     </table>
 </div>
