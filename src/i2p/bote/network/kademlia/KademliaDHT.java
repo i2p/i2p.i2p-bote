@@ -108,8 +108,11 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         initialPeers = new ConcurrentHashSet<KademliaPeer>();
         // Read the built-in peer file
         readPeers(BUILT_IN_PEER_FILE);
-        // Read the updateable peer file
-        readPeers(peerFile);
+        // Read the updateable peer file if it exists
+        if (peerFile.exists())
+            readPeers(peerFile);
+        else
+            log.info("Peer file doesn't exist, using built-in peers only (File not found: <" + peerFile.getAbsolutePath() + ">)");
         
         bucketManager = new BucketManager(localDestinationHash);
         storageHandlers = new ConcurrentHashMap<Class<? extends DhtStorablePacket>, DhtStorageHandler>();
