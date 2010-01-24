@@ -36,7 +36,7 @@ import com.nettgryppa.security.HashCash;
 
 @TypeCode('Y')
 public class RelayRequest extends CommunicationPacket {
-    private Log log = new Log(RelayPacket.class);
+    private Log log = new Log(RelayRequest.class);
     private HashCash hashCash;
     private byte[] storedData;
 

@@ -38,7 +38,7 @@ import com.nettgryppa.security.HashCash;
 
 @TypeCode('S')
 public class StoreRequest extends CommunicationPacket {
-    private Log log = new Log(RelayPacket.class);
+    private Log log = new Log(StoreRequest.class);
     private HashCash hashCash;
     private DhtStorablePacket packetToStore;
 

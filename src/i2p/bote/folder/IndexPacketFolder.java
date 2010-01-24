@@ -24,7 +24,6 @@ package i2p.bote.folder;
 import i2p.bote.UniqueId;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.IndexPacketDeleteRequest;
 import i2p.bote.packet.dht.DhtStorablePacket;
@@ -48,7 +47,7 @@ import net.i2p.util.Log;
 public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements PacketListener {
     private static final String DEL_FILE_PREFIX = "DEL_";
     
-    private final Log log = new Log(I2PBotePacket.class);
+    private final Log log = new Log(IndexPacketFolder.class);
 
     public IndexPacketFolder(File storageDir) {
         super(storageDir);

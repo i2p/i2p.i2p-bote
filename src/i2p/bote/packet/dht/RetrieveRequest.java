@@ -35,7 +35,7 @@ import net.i2p.util.Log;
 
 @TypeCode('Q')
 public class RetrieveRequest extends CommunicationPacket {
-    private Log log = new Log(I2PBote.class);
+    private Log log = new Log(RetrieveRequest.class);
     private Hash key;
     private Class<? extends DhtStorablePacket> dataType;
 
