@@ -46,8 +46,8 @@
     <div class="identities">
     <table>
     <tr>
-        <th>Description</th>
         <th>Public Name</th>
+        <th>Description</th>
         <th>Email Address</th>
         <th>Key</th>
         <th style="width: 20px; padding: 0px"></th>
