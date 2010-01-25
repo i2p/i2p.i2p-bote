@@ -39,10 +39,11 @@
         <tr>
             <td valign="top"><strong>From:</strong></td>
             <td>
-                <%-- put a line break between the sender's name if it is followed by an email destination --%>
+                <%-- put a line break between the sender's name if it is followed by an email destination in angle brackets --%>
                 <c:set var="gtHtml" value="${fn:escapeXml('<')}"/>
+                <c:set var="newlinePlusGt" value="${newline}${gtHtml}"/>
                 <c:set var="sender" value="${fn:escapeXml(email.sender)}"/>
-                <c:set var="sender" value="${fn:replace(sender, gtHtml, newline)}"/>
+                <c:set var="sender" value="${fn:replace(sender, gtHtml, newlinePlusGt)}"/>
                 
                 <%-- if the "sender" field contains an email destination, use a textarea; otherwise just print it --%>
                 <c:if test="${fn:length(sender) ge 512}">
