@@ -27,6 +27,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<% pageContext.setAttribute("newline", "\n"); %>
 <c:set var="email" value="${ib:getEmail(param.folder, param.messageID)}"/>
 
 <jsp:include page="header.jsp">
@@ -38,12 +39,18 @@
         <tr>
             <td valign="top"><strong>From:</strong></td>
             <td>
-                <c:forEach var="i" begin="0" end="${fn:length(email.sender)}" step="64">
-                    <c:if test="${i > 0}">
-                        <br/>
-                    </c:if>
-                    ${fn:substring(email.sender, i, i+64)}
-                </c:forEach>
+                <%-- put a line break between the sender's name if it is followed by an email destination --%>
+                <c:set var="gtHtml" value="${fn:escapeXml('<')}"/>
+                <c:set var="sender" value="${fn:escapeXml(email.sender)}"/>
+                <c:set var="sender" value="${fn:replace(sender, gtHtml, newline)}"/>
+                
+                <%-- if the "sender" field contains an email destination, use a textarea; otherwise just print it --%>
+                <c:if test="${fn:length(sender) ge 512}">
+                    <textarea cols="64" rows="9" readonly="yes" wrap="soft" class="nobordertextarea">${sender}</textarea>
+                </c:if>
+                <c:if test="${fn:length(sender) lt 512}">
+                    ${sender}
+                </c:if>
             </td>
         </tr>
         <tr>

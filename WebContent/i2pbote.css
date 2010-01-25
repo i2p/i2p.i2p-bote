@@ -257,9 +257,31 @@ textarea {
     border-radius: 4px;
     -moz-border-radius: 4px;
     -khtml-border-radius: 4px;
-    font: 8pt "Lucida Console", "DejaVu Sans Mono", Courier, mono;
+    font: 9pt/130% "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
     min-height: 100px;
     border: 1px solid #001;
+}
+
+.nobordertextarea {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    background: #eef;
+    background-color: transparent;
+    color: #003;
+    font: 9pt/130% "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
+    min-height: 100px;
+    border: none;
+}
+
+.destinationtextarea {
+    width: 100%;
+    background: #eef;
+    background-color: transparent;
+    color: #003;
+    border: none;
+    font: 8pt "Lucida Console", "DejaVu Sans Mono", Courier, mono;
+    min-height: 100px;
 }
 
 submit {

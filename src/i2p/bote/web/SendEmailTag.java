@@ -67,6 +67,11 @@ public class SendEmailTag extends SimpleTagSupport {
 		}
 	}
 
+	/**
+	 * 
+	 * @param sender Can be a (Base64-encoded) email identity key or a public name plus
+	 * an email identity key.
+	 */
     public void setSender(String sender) {
         this.senderAddress = sender;
     }

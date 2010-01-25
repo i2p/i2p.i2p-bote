@@ -41,7 +41,7 @@
                     <select name="sender">
                         <option value="anonymous">Anonymous</option>
                         <c:forEach items="${ib:getIdentities().all}" var="identity">
-                            <option value="${identity.key}">
+                            <option value="${identity.publicName} &lt;${identity.key}&gt;">
                                 ${identity.publicName}
                                 <c:if test="${!empty identity.description}"> - ${identity.description}</c:if>
                             </option>
