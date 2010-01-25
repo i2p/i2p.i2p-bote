@@ -82,7 +82,7 @@
                     Email Destination:
                 </td>
                 <td>
-                    <textarea cols="64" rows="8" readonly="yes" wrap="soft" class="destinationtextarea">${param.key}</textarea>
+                    <textarea cols="64" rows="9" readonly="yes" wrap="soft" class="destinationtextarea">${param.key}</textarea>
                 </td>
             </tr>
             </c:if>
