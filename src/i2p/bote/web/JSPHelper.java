@@ -23,12 +23,14 @@ package i2p.bote.web;
 
 import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
+import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
@@ -126,6 +128,30 @@ public class JSPHelper {
         return getMailFolder(folderName).getEmail(messageId);
     }
 
+    /**
+     * Returns the recipient address for an email that has been received by
+     * the local node.
+     * If the email was sent to more than one local Email Destination, one
+     * of them is returned.
+     * If the email does not contain a local Email Destination, <code>null</code>
+     * is returned.
+     * TODO also check the local address book when it is implemented
+     * @param email
+     * @return
+     */
+    public static String getOneLocalRecipient(Email email) {
+        Identities identities = JSPHelper.getIdentities();
+        Collection<String> recipients = email.getAllRecipients();
+        for (EmailDestination localDestination: identities) {
+            String base64Dest = localDestination.toBase64();
+            for (String recipient: recipients)
+                if (recipient.contains(base64Dest))
+                    return recipient;
+        }
+        
+        return null;
+    }
+    
     public static boolean deleteEmail(String folderName, String messageId) {
         return JSPHelper.getMailFolder(folderName).delete(messageId);
     }

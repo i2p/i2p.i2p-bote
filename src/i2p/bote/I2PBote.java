@@ -271,8 +271,6 @@ public class I2PBote {
 /*XXX*/
 email.updateHeaders();
 String recipient = email.getAllRecipients().iterator().next();
-if (recipient.indexOf('@')>=0)
-    recipient = recipient.substring(0, recipient.indexOf('@'));
 EmailDestination emailDestination = new EmailDestination(recipient);
 Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(recipient);
 Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, emailDestination, appContext);

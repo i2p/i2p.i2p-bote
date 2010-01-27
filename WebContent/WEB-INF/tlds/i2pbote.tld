@@ -49,6 +49,28 @@
 </tag>
 
 <tag>
+    <name>quote</name>
+    <tag-class>i2p.bote.web.QuoteTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>text</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+</tag>
+
+<tag>
+    <name>shortSenderName</name>
+    <tag-class>i2p.bote.web.PrintShortSenderNameTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>sender</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+</tag>
+
+<tag>
     <name>numDhtPeers</name>
     <tag-class>i2p.bote.web.PrintNumDhtPeersTag</tag-class>
     <body-content>empty</body-content>
@@ -147,6 +169,14 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         i2p.bote.email.Email getEmail(java.lang.String, java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>getOneLocalRecipient</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getOneLocalRecipient(i2p.bote.email.Email)
     </function-signature>
 </function>
 

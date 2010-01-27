@@ -62,6 +62,28 @@
             <td valign="top"><strong>Message:</strong></td>
             <td><ib:formatPlainText text="${email.bodyText}"/></td>
         </tr>
+        <tr>
+            <td colspan="2">
+                <table><tr>
+                    <td>
+                    <form action="newEmail.jsp" method="post">
+                        <button type="submit">Reply</button>
+                        <input type="hidden" name="sender" value="${ib:getOneLocalRecipient(email)}"/>
+                        <input type="hidden" name="recipient0" value="${email.sender}"/>
+                        <input type="hidden" name="subject" value="Re: ${email.subject}"/>
+                        <input type="hidden" name="quoteMsgFolder" value="${param.folder}"/>
+                        <input type="hidden" name="quoteMsgId" value="${param.messageID}"/>
+                    </form>
+                    </td><td>
+                    <form action="deleteEmail.jsp" method="post">
+                        <button type="submit" disabled="disabled">Delete</button>
+                        <input type="hidden" name="folder" value="${folderName}"/>
+                        <input type="hidden" name="messageID" value="${email.messageID}"/>
+                    </form>
+                    </td>
+                </tr></table>
+            </td>
+        </tr>
     </table>
 </div>
 

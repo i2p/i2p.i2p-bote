@@ -79,42 +79,50 @@ public class EmailDestination {
         publicSigningKey = new SigningPublicKey(signingKeyArray);
     }
     
-    public EmailDestination(String base64Data) {
-        try {
-            base64Data += "AAAA";   // add a null certificate
-            Destination i2pDestination = new Destination(base64Data);
-            publicEncryptionKey = i2pDestination.getPublicKey();
-            publicSigningKey = i2pDestination.getSigningPublicKey();
-        } catch (DataFormatException e) {
-            log.error("Can't generate EmailDestination.", e);
+    /**
+     * @param address A string containing a valid base64-encoded Email Destination
+     * @throws DataFormatException If <code>address</code> doesn't contain a valid Email Destination
+     */
+    public EmailDestination(String address) throws DataFormatException {
+        String base64Data = extractBase64Dest(address);
+        if (base64Data == null) {
+            String msg = "No Email Destination found in string: <" + address + ">";
+            log.debug(msg);
+            throw new DataFormatException(msg);
         }
+        
+        base64Data += "AAAA";   // add a null certificate
+        Destination i2pDestination = new Destination(base64Data);
+        publicEncryptionKey = i2pDestination.getPublicKey();
+        publicSigningKey = i2pDestination.getSigningPublicKey();
     }
     
-/*    public EmailDestination(byte[] data) {
-        try {
-            byte[] destinationPlusCert = addNullCertificate(data);
-            ByteArrayInputStream byteStream = new ByteArrayInputStream(destinationPlusCert);
-            I2PSession i2pSession = I2PClientFactory.createClient().createSession(byteStream, null);
-            initKeys(i2pSession);
-        }
-        catch (I2PSessionException e) {
-            log.error("Can't generate EmailDestination.", e);
-        }
-    }*/
-
-/*    private byte[] addNullCertificate(byte[] data) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            outputStream.write(data);
-            outputStream.write(new Certificate().toByteArray());
-            // Add an extra zero byte so I2PSessionImpl.readDestination doesn't fall on its face. I believe this is a bug.
-            outputStream.write(0);
-        }
-        catch (IOException e) {
-            log.error("Can't write to ByteArrayOutputStream.", e);
-        }
-        return outputStream.toByteArray();
-    }*/
+    /**
+     * Looks for a Base64-encoded Email Destination in a string. Returns
+     * the 512-byte Base64 string, or <code>null</code> if nothing is found.
+     * Even if the return value is non-<code>null</code>, it is not
+     * guaranteed to be a valid Email Destination.
+     * @param address
+     * @return
+     */
+    private String extractBase64Dest(String address) {
+        if (address==null || address.length()<512)
+            return null;
+        
+        if (address.length() == 512)
+            return address;
+        
+        // Check if the string contains 512 chars in angle brackets
+        int bracketIndex = address.indexOf('<');
+        if (bracketIndex>=0 && address.length()>bracketIndex+512)
+            return address.substring(bracketIndex+1, bracketIndex+1+512);
+        
+        // Check if the string is of the form EmailDest@foo
+        if (address.indexOf('@') == 512)
+            return address.substring(0, 513);
+        
+        return null;
+    }
     
     protected void initKeys(I2PSession i2pSession) {
         publicEncryptionKey = i2pSession.getMyDestination().getPublicKey();

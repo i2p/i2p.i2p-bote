@@ -41,7 +41,10 @@
                     <select name="sender">
                         <option value="anonymous">Anonymous</option>
                         <c:forEach items="${ib:getIdentities().all}" var="identity">
-                            <option value="${identity.publicName} &lt;${identity.key}&gt;">
+                            <c:if test="${identity.key eq param.sender}">
+                                <c:set var="selected" value=" selected"/>
+                            </c:if>
+                            <option value="${identity.publicName} &lt;${identity.key}&gt;"${selected}>
                                 ${identity.publicName}
                                 <c:if test="${!empty identity.description}"> - ${identity.description}</c:if>
                             </option>
@@ -59,16 +62,22 @@
                     </select>
                 </td>
                 <td>
-                    <input type="text" size="80" name="recipient0"/>
+                    <input type="text" size="80" name="recipient0" value="${param.recipient0}"/>
                 </td>
             </tr>
             <tr>
                 <td valign="top"><br/>Subject:</td>
-                <td><input type="text" size="80" name="subject"/></td>
+                <td><input type="text" size="80" name="subject" value="${param.subject}"/></td>
             </tr>
             <tr>
                 <td valign="top"><br/>Message:</td>
-                <td><textarea rows="30" cols="80" name="message"></textarea></td>
+                <td>
+                    <textarea rows="30" cols="80" name="message"><c:if test="${!empty param.quoteMsgId}">
+<%-- The following lines are not indented because the indentation would show up as blank chars on the textarea --%>
+<c:set var="origEmail" value="${ib:getEmail(param.quoteMsgFolder, param.quoteMsgId)}"/>
+<ib:shortSenderName sender="${origEmail.sender}"/> wrote:
+<ib:quote text="${origEmail.bodyText}"/></c:if></textarea>
+                </td>
             </tr>
             <tr>
                 <td colspan=2 align="center">
