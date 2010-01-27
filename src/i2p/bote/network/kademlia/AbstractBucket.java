@@ -68,6 +68,7 @@ public class AbstractBucket implements Iterable<KademliaPeer> {
             return true;
         }
         else {
+            peer.resetStaleCounter();
             peer.setLastReception(System.currentTimeMillis());
             // TODO move to end of list if lastReception is highest value, which it should be most of the time
             return false;
@@ -87,8 +88,8 @@ public class AbstractBucket implements Iterable<KademliaPeer> {
     }
     
     /**
-     * Looks up a <code>KademliaPeer</code> by I2P destination. If the bucket contains no
-     * Kademlia peer with that destination, <code>null</code> is returned.
+     * Looks up a <code>KademliaPeer</code> by I2P destination. If the bucket
+     * doesn't contain the peer, <code>null</code> is returned.
      * @param destination
      * @return
      */

@@ -98,8 +98,11 @@ public class ClosestNodesLookupTask implements Runnable {
 
             // handle timeouts
             for (Map.Entry<Destination, FindClosePeersPacket> request: pendingRequests.entrySet())
-                if (hasTimedOut(request.getValue(), REQUEST_TIMEOUT))
-                    bucketManager.incrementStaleCounter(request.getKey());   // resetting is also done in BucketManager
+                if (hasTimedOut(request.getValue(), REQUEST_TIMEOUT)) {
+                    Destination peer = request.getKey();
+                    bucketManager.incrementStaleCounter(peer);   // resetting is also done in BucketManager
+                    pendingRequests.remove(peer);
+                }
             
             try {
                 TimeUnit.SECONDS.sleep(1);

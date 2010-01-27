@@ -24,20 +24,21 @@ package i2p.bote.network.kademlia;
 import java.math.BigInteger;
 
 import net.i2p.data.DataHelper;
+import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 
 public class KademliaUtil {
 
     /**
-     * Calculates the Kademlia distance (XOR distance) between a <code>KademliaPeer</code>
+     * Calculates the Kademlia distance (XOR distance) between a <code>Destination</code>
      * and a hash value.
-     * @param node
+     * @param dest
      * @param key
      * @return
      * @see getDistance(Hash, Hash)
      */
-    public static BigInteger getDistance(KademliaPeer node, Hash key) {
-        return getDistance(node.getDestinationHash(), key);
+    public static BigInteger getDistance(Destination dest, Hash key) {
+        return getDistance(dest.calculateHash(), key);
     }
 
     /**

@@ -62,37 +62,35 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
     }
     
     /**
-     * Adds a <code>{@link KademliaPeer}</code> to the s-bucket or a k-bucket,
-     * depending on its distance to the local node.
-     * @param peer
+     * Adds a <code>{@link Destination}</code> to the s-bucket or a k-bucket,
+     * depending on its distance to the local node and how full the buckets are.
+     * @param destination
      */
-    public void addOrUpdate(KademliaPeer peer) {
-        if (localDestinationHash.equals(peer.getDestinationHash())) {
+    public void addOrUpdate(Destination destination) {
+        Hash destHash = destination.calculateHash();
+        if (localDestinationHash.equals(destHash)) {
             log.debug("Not adding local destination to bucket.");
             return;
         }
         
-        Hash peerHash = peer.getDestinationHash();
-        log.debug("Adding/updating peer: Hash = " + peerHash);
+        log.debug("Adding/updating peer: Hash = " + destHash);
 
-        peer.resetStaleCounter();
-        
         synchronized(this) {
-            if (!sBucket.isFull() || sBucket.contains(peer)) {
-                sBucket.addOrUpdate(peer);
-                getKBucket(peerHash).remove(peer);
+            if (!sBucket.isFull() || sBucket.contains(destination)) {
+                sBucket.addOrUpdate(destination);
+                getKBucket(destHash).remove(destination);   // has no effect if dest not in k-bucket
             }
-            else if (isCloserSibling(peer)) {
+            else if (isCloserSibling(destination)) {
                 Destination ejectedPeer = sBucket.getMostDistantPeer(localDestinationHash);
                 
                 addToKBucket(ejectedPeer);
                 sBucket.remove(ejectedPeer);
                 
-                sBucket.addOrUpdate(peer);
-                getKBucket(peerHash).remove(peer);
+                sBucket.addOrUpdate(destination);
+                getKBucket(destHash).remove(destination);
             }
             else
-                addToKBucket(peer);
+                addToKBucket(destination);
         }
         logBucketStats();
     }
@@ -105,13 +103,10 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
     }
 
     public void incrementStaleCounter(Destination destination) {
-        AbstractBucket bucket = getBucket(destination);
-        if (bucket != null) {
-            KademliaPeer peer = bucket.getPeer(destination);
-            if (peer != null) {
-                peer.incrementStaleCounter();
-                return;
-            }
+        KademliaPeer peer = getPeer(destination);
+        if (peer != null) {
+            peer.incrementStaleCounter();
+            return;
         }
         log.debug("Can't increment stale counter because peer not found in buckets: " + destination.calculateHash());
     }
@@ -125,18 +120,14 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
     }
     
     /**
-     * Adds a <code>{@link Destination}</code> to the appropriate bucket.
-     * @param destination
-     */
-    /**
      * Return <code>true</code> if a given peer is closer to the local node than at
      * least one sibling. In other words, test if <code>peer</code> should replace
      * an existing sibling.
-     * @param peer
+     * @param dest
      * @return
      */
-    private boolean isCloserSibling(KademliaPeer peer) {
-        BigInteger peerDistance = KademliaUtil.getDistance(peer, localDestinationHash);
+    private boolean isCloserSibling(Destination dest) {
+        BigInteger peerDistance = KademliaUtil.getDistance(dest, localDestinationHash);
         for (KademliaPeer sibling: sBucket) {
             BigInteger siblingDistance = KademliaUtil.getDistance(sibling.getDestinationHash(), localDestinationHash);
             if (peerDistance.compareTo(siblingDistance) < 0)
@@ -195,6 +186,20 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
      */
     private KBucket getKBucket(Destination destination) {
         return getKBucket(destination.calculateHash());
+    }
+
+    /**
+     * Looks up a <code>KademliaPeer</code> by I2P destination. If no bucket
+     * (k or s-bucket) contains the peer, <code>null</code> is returned.
+     * @param destination
+     * @return
+     */
+    private KademliaPeer getPeer(Destination destination) {
+        AbstractBucket bucket = getBucket(destination);
+        if (bucket != null)
+            return bucket.getPeer(destination);
+        else
+            return null;
     }
     
     /**
