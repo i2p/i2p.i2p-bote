@@ -545,6 +545,9 @@ I2P destination
 
 11. To Do
 
+  * Bug? checking emails after deleting an email causes an error. something about not being able to delete an email.
+  * wenn ich eine mail von dest xyz erhalte, und diese in meinem addressbuch ist, sollte als absender nicht der vom Sender gewählte username sein (da kann er ja behaupten, was er will), sondern der beim empfänger loval im Addbuch gespeicherte pet name.
+    Ist der user local nicht bekannt, dann kann der public name verwendet werden, allerdings sollte ersichtlich sein dass es nur der public name ist, z.B. durch andere Farbe oder ein Feld mit nem Sternchen für authenticated wenn er in local addy book steht (eine spalte wie datum oder so, ganz schmal mit nur nem sternchen drin, ähnlich sollten auch ungelesene mails markiert werden - ist aber nicht high priority, ich sag's nur für deine todo list, falls du d'accord bist.) 
   * make sure del key is zeroed out when responding to a retrieve request for an EncryptedEmailPacket
   * don't send delete requests to self, just delete the file locally
   * rename test/.../kademlia package to dht for consistency
