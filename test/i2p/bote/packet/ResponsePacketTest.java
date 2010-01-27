@@ -29,6 +29,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import net.i2p.I2PAppContext;
+import net.i2p.data.DataFormatException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +46,7 @@ public class ResponsePacketTest {
         responsePacket = new ResponsePacket(createDataPacket(), StatusCode.OK, packetId);
     }
 
-    private DataPacket createDataPacket() throws NoSuchAlgorithmException {
+    private DataPacket createDataPacket() throws NoSuchAlgorithmException, DataFormatException {
         byte[] dataToStore = new byte[] {2, 109, -80, -37, -106, 83, -33, -39, -94, -76, -112, -98, 99, 25, -61, 44, -92, -85, 1, 10, -128, -2, -27, -86, -126, -33, -11, 42, 56, 3, -97, -101, 111, 7, -96, 25, 121, 74, 89, -40, -33, 82, -50, -18, 49, 106, 13, -121, 53, -83, -2, 35, -7, 71, -71, 26, 90, 1};
         
         UniqueId deletionKeyVerify = new UniqueId(new byte[] {-62, -112, 99, -65, 13, 44, -117, -111, 96, 45, -6, 64, 78, 57, 117, 103, -24, 101, 106, -116, -18, 62, 99, -49, 60, -81, 8, 64, 27, -41, -104, 58}, 0);
