@@ -35,8 +35,6 @@
     <div id="inboxFlag"></div>
 </c:if>
 
-[DEBUG MSG: This is the <b>${param.path}</b> folder.]
-
 <div class="main">
 <div class="folder">
 	<table>
