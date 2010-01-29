@@ -103,12 +103,17 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
     }
 
     public void incrementStaleCounter(Destination destination) {
-        KademliaPeer peer = getPeer(destination);
-        if (peer != null) {
-            peer.incrementStaleCounter();
-            return;
+        AbstractBucket bucket = getBucket(destination);
+        if (bucket != null) {
+            KademliaPeer peer = bucket.getPeer(destination);
+            if (peer != null) {
+                peer.incrementStaleCounter();
+                if (peer.isDead())
+                    bucket.remove(peer);
+            }
         }
-        log.debug("Can't increment stale counter because peer not found in buckets: " + destination.calculateHash());
+        else
+            log.debug("Can't increment stale counter because peer not found in buckets: " + destination.calculateHash());
     }
     
     private void logBucketStats() {
@@ -137,7 +142,11 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
     }
     
     public void remove(KademliaPeer peer) {
-        getBucket(peer).remove(peer);
+        AbstractBucket bucket = getBucket(peer);
+        if (bucket != null)
+            bucket.remove(peer);
+        else
+            log.debug("Can't remove peer because no bucket contains it: " + peer.getDestinationHash().toBase64());
     }
     
     /**

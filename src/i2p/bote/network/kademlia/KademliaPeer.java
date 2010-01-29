@@ -30,8 +30,6 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 public class KademliaPeer extends Destination implements DhtPeer {
-    private static final int STALE_THRESHOLD = 5;
-    
     private Log log = new Log(KademliaPeer.class);
     private Destination destination;
     private Hash destinationHash;
@@ -72,8 +70,8 @@ public class KademliaPeer extends Destination implements DhtPeer {
     	return destinationHash;
     }
     
-    public boolean isStale() {
-        return consecutiveTimeouts.get() >= STALE_THRESHOLD;
+    public boolean isDead() {
+        return consecutiveTimeouts.get() >= KademliaConstants.STALE_THRESHOLD;
     }
     
     public int getStaleCounter() {

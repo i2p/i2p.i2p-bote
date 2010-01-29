@@ -22,11 +22,12 @@
 package i2p.bote.network.kademlia;
 
 import java.math.BigInteger;
-import java.util.NavigableSet;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.Collection;
+import java.util.Set;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
+import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 
 class KBucket extends AbstractBucket {
@@ -35,7 +36,7 @@ class KBucket extends AbstractBucket {
     private Log log = new Log(KBucket.class);
     private BigInteger startId;
     private BigInteger endId;
-    private NavigableSet<KademliaPeer> replacementCache;
+    private Set<KademliaPeer> replacementCache;
     private int depth;
 
     // capacity - The maximum number of peers the bucket can hold
@@ -43,7 +44,7 @@ class KBucket extends AbstractBucket {
         super(capacity);
         this.startId = startId;
         this.endId = endId;
-        replacementCache = new ConcurrentSkipListSet<KademliaPeer>(peerComparator);
+        replacementCache = new ConcurrentHashSet<KademliaPeer>();
         this.depth = depth;
     }
     
@@ -107,8 +108,15 @@ class KBucket extends AbstractBucket {
     
     private void addOrUpdateReplacement(KademliaPeer peer) {
         replacementCache.add(peer);
-        if (replacementCache.size() > REPLACEMENT_CACHE_MAX_SIZE)
-            replacementCache.pollFirst();   // remove oldest entry
+        while (replacementCache.size() > REPLACEMENT_CACHE_MAX_SIZE)
+            removeOldest(replacementCache);
+    }
+    
+    private void removeOldest(Collection<KademliaPeer> peers) {
+        KademliaPeer oldestPeer = null;
+        for (KademliaPeer peer: peers)
+            if (oldestPeer==null || peer.getLastReception()<oldestPeer.getLastReception())
+                oldestPeer = peer;
     }
     
     /**
@@ -144,8 +152,8 @@ class KBucket extends AbstractBucket {
         depth++;
         KBucket newBucket = new KBucket(startId, pivot.subtract(BigInteger.ONE), capacity, depth);
         startId = pivot;
-        for (Destination peer: peers) {
-            BigInteger nodeId = new BigInteger(peer.calculateHash().getData());
+        for (KademliaPeer peer: peers) {
+            BigInteger nodeId = new BigInteger(peer.getDestinationHash().getData());
             if (nodeId.compareTo(pivot) >= 0) {
                 newBucket.add(peer);
                 remove(peer);

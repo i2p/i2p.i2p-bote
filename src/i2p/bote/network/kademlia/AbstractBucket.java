@@ -22,32 +22,41 @@
 package i2p.bote.network.kademlia;
 
 import java.math.BigInteger;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
+import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 
 /**
- * Parent class for k-buckets and s-buckets.
- * Peers are sorted by the time of the most recent communication: Index 0 = least recent,
- * index n-1 = most recent.
+ * This is the parent class for k-buckets and s-buckets.
+ * 
+ * Peers used to be sorted by the time of most recent communication in
+ * a <code>ConcurrentSkipListSet</code>, but the problem was that
+ * a <code>ConcurrentSkipListSet</code> that is sorted by last seen time
+ * doesn't allow more than one peer with the same "last seen" time, even
+ * if <code>equals</code> says the two peers are not equal (see the
+ * <code>SortedSet</code> API doc).
+ *
+ * So now peers are kept in an unsorted <code>Set</code> and sorted when needed.
+ *
+ * An alternative would be to use an unsorted <code>Set</code> for efficient
+ * peer lookups by dest hash, and a <code>SortedSet</code> that is sorted by
+ * "last seen" time AND dest hash (so it will store more than one peer
+ * with the same last seen time).
  */
 public class AbstractBucket implements Iterable<KademliaPeer> {
     static final BigInteger MIN_HASH_VALUE = BigInteger.ONE.negate().shiftLeft(Hash.HASH_LENGTH*8);   // system-wide minimum hash value
     static final BigInteger MAX_HASH_VALUE = BigInteger.ONE.shiftLeft(Hash.HASH_LENGTH*8).subtract(BigInteger.ONE);   // system-wide maximum hash value
 
     private Log log = new Log(AbstractBucket.class);
-    protected Set<KademliaPeer> peers;   // the list is always kept sorted by "last seen" time
+    protected Set<KademliaPeer> peers;
     protected int capacity;
-    protected Comparator<KademliaPeer> peerComparator;
     
     public AbstractBucket(int capacity) {
-        peerComparator = createLastReceptionComparator();
-        peers = new ConcurrentSkipListSet<KademliaPeer>(peerComparator);
+        peers = new ConcurrentHashSet<KademliaPeer>();
         this.capacity = capacity;
     }
 
@@ -80,7 +89,18 @@ public class AbstractBucket implements Iterable<KademliaPeer> {
      * @param node
      */
     void remove(Destination destination) {
-        peers.remove(destination);
+        KademliaPeer peer = getPeer(destination);
+        if (peer != null)
+            remove(peer);
+    }
+
+    /**
+     * Removes a peer from the bucket. If the peer doesn't exist in the bucket, nothing happens.
+     * @param node
+     */
+    void remove(KademliaPeer peer) {
+        log.debug("Removing peer from bucket: " + peer.getDestinationHash());
+        peers.remove(peer);
     }
 
     Set<KademliaPeer> getPeers() {
@@ -117,17 +137,6 @@ public class AbstractBucket implements Iterable<KademliaPeer> {
 
     int size() {
         return peers.size();
-    }
-    
-    private Comparator<KademliaPeer> createLastReceptionComparator() {
-        return new Comparator<KademliaPeer>() {
-            @Override
-            public int compare(KademliaPeer peer1, KademliaPeer peer2) {
-                long lastReception1 = peer1.getLastReception();
-                long lastReception2 = peer2.getLastReception();
-                return Long.valueOf(lastReception1).compareTo(lastReception2);
-            }
-        };
     }
     
     @Override
