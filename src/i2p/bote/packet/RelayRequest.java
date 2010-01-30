@@ -72,8 +72,9 @@ public class RelayRequest extends CommunicationPacket {
      * @param appContext
      * @return
      * @throws DataFormatException
+     * @throws MalformedCommunicationPacketException 
      */
-    public DataPacket getStoredPacket(PrivateKey localDecryptionKey, I2PAppContext appContext) throws DataFormatException {
+    public DataPacket getStoredPacket(PrivateKey localDecryptionKey, I2PAppContext appContext) throws DataFormatException, MalformedDataPacketException {
         byte[] decryptedData = appContext.elGamalAESEngine().decrypt(storedData, localDecryptionKey, appContext.sessionKeyManager());
         return DataPacket.createPacket(decryptedData);
     }

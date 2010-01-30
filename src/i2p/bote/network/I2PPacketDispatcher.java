@@ -23,6 +23,8 @@ package i2p.bote.network;
 
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.I2PBotePacket;
+import i2p.bote.packet.MalformedCommunicationPacket;
+import i2p.bote.packet.MalformedCommunicationPacketException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -85,21 +87,21 @@ public class I2PPacketDispatcher implements I2PSessionListener {
             byte[] payload = datagramDissector.extractPayload();
             Destination sender = datagramDissector.getSender();
 
-            CommunicationPacket packet = CommunicationPacket.createPacket(payload);
-            if (packet == null)
-                log.debug("Ignoring unparseable packet.");
-            else {
+            CommunicationPacket packet;
+            try {
+                packet = CommunicationPacket.createPacket(payload);
                 logPacket(packet, sender);
                 firePacketReceivedEvent(packet, sender);
+            } catch (MalformedCommunicationPacketException e) {
+                log.debug("Ignoring unparseable packet.", e);
+                firePacketReceivedEvent(new MalformedCommunicationPacket(), sender);
             }
         }
         catch (DataFormatException e) {
             log.error("Invalid datagram received.", e);
-            e.printStackTrace();
         }
         catch (I2PInvalidDatagramException e) {
             log.error("Datagram failed verification.", e);
-            e.printStackTrace();
         }
     }
 

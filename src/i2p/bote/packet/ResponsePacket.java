@@ -58,7 +58,11 @@ public class ResponsePacket extends CommunicationPacket {
         if (payloadLength > 0) {
             byte[] payloadData = new byte[payloadLength];
             buffer.get(payloadData);
-            payload = DataPacket.createPacket(payloadData);
+            try {
+                payload = DataPacket.createPacket(payloadData);
+            } catch (MalformedDataPacketException e) {
+                payload = new MalformedDataPacket();
+            }
         }
         
         if (buffer.hasRemaining())

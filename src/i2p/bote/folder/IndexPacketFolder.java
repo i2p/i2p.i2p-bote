@@ -26,6 +26,7 @@ import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.IndexPacketDeleteRequest;
+import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
@@ -110,7 +111,12 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
         if (!delFile.exists())
             delListPacket = new IndexPacket(indexPacket);
         else {
-            delListPacket = DhtStorablePacket.createPacket(delFile);
+            try {
+                delListPacket = DhtStorablePacket.createPacket(delFile);
+            } catch (MalformedDataPacketException e) {
+                log.error("Cannot read Delete List Packet, creating a new one: <" + delFile.getAbsolutePath() + ">", e);
+                delListPacket = new IndexPacket(indexPacket);
+            }
             if (!(delListPacket instanceof IndexPacket)) {
                 log.error("Not an Index Packet file: <" + delFile + ">");
                 return;

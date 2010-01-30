@@ -22,7 +22,7 @@
 package i2p.bote.packet.dht;
 
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.RelayPacket;
+import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.TypeCode;
 
 import java.io.ByteArrayOutputStream;
@@ -47,7 +47,7 @@ public class StoreRequest extends CommunicationPacket {
         this.packetToStore = packetToStore;
     }
     
-    public StoreRequest(byte[] data) throws NoSuchAlgorithmException {
+    public StoreRequest(byte[] data) throws NoSuchAlgorithmException, MalformedDataPacketException {
         super(data);
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         

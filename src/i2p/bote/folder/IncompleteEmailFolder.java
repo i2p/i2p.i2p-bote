@@ -25,6 +25,7 @@ import i2p.bote.UniqueId;
 import i2p.bote.email.Email;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.I2PBotePacket;
+import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.ByteArrayOutputStream;
@@ -146,11 +147,15 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
         private Collection<UnencryptedEmailPacket> getEmailPackets(File[] files) {
             Collection<UnencryptedEmailPacket> packets = new ArrayList<UnencryptedEmailPacket>();
             for (File file: files) {
-                I2PBotePacket packet = DataPacket.createPacket(file);
-                if (packet instanceof UnencryptedEmailPacket)
-                    packets.add((UnencryptedEmailPacket)packet);
-                else
-                    log.error("Non-Email Packet found in the IncompleteEmailFolder, file: <" + file.getAbsolutePath() + ">");
+                try {
+                    I2PBotePacket packet = DataPacket.createPacket(file);
+                    if (packet instanceof UnencryptedEmailPacket)
+                        packets.add((UnencryptedEmailPacket)packet);
+                    else
+                        log.error("Non-Email Packet found in the IncompleteEmailFolder, file: <" + file.getAbsolutePath() + ">");
+                } catch (MalformedDataPacketException e) {
+                    log.error("Cannot create packet from file: <" + file.getAbsolutePath() + ">", e);
+                }
             }
             return packets;
         }

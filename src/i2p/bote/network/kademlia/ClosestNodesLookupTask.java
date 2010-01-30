@@ -27,6 +27,7 @@ import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
+import i2p.bote.packet.MalformedCommunicationPacket;
 import i2p.bote.packet.PeerList;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.dht.FindClosePeersPacket;
@@ -190,6 +191,8 @@ public class ClosestNodesLookupTask implements Runnable {
                 if (payload instanceof PeerList)
                     addPeers(responsePacket, (PeerList)payload, sender, receiveTime);
             }
+            else if (packet instanceof MalformedCommunicationPacket)
+                pendingRequests.remove(sender);   // since it is not generally possible to tell if an invalid comm packet is in response to a certain request, always remove invalid packets from the pending list
         }
     
         private void addPeers(ResponsePacket responsePacket, PeerList peerListPacket, Destination sender, long receiveTime) {
@@ -210,7 +213,7 @@ public class ClosestNodesLookupTask implements Runnable {
                     if (!pendingRequests.containsKey(peer) && !responses.contains(peer))
                         notQueriedYet.add(peer);   // this won't create duplicates because notQueriedYet is a Set
                 
-                pendingRequests.remove(new KademliaPeer(sender, 0));   // wrap sender into a KademliaPeer because that is the type that needs to be passed to Map.remove
+                pendingRequests.remove(sender);
             }
             else
                 log.debug("No Find Close Nodes packet found for Peer List: " + peerListPacket);

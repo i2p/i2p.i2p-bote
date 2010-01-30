@@ -71,8 +71,9 @@ public abstract class CommunicationPacket extends I2PBotePacket {
      * @param data
      * @param log
      * @return
+     * @throws MalformedCommunicationPacketException
      */
-    public static CommunicationPacket createPacket(byte[] data) {
+    public static CommunicationPacket createPacket(byte[] data) throws MalformedCommunicationPacketException {
         char packetTypeCode = (char)data[4];   // byte 4 of a communication packet is the packet type code
         Class<? extends I2PBotePacket> packetType = decodePacketTypeCode(packetTypeCode);
         if (packetType==null || !CommunicationPacket.class.isAssignableFrom(packetType)) {
@@ -85,8 +86,10 @@ public abstract class CommunicationPacket extends I2PBotePacket {
             return commPacketType.getConstructor(byte[].class).newInstance(data);
         }
         catch (Exception e) {
-            static_log.warn("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
-            return null;
+            if (e instanceof MalformedCommunicationPacketException)
+                throw (MalformedCommunicationPacketException)e;
+            else
+                throw new MalformedCommunicationPacketException("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
         }
     }
     

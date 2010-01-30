@@ -21,6 +21,8 @@
 
 package i2p.bote.network.kademlia;
 
+import i2p.bote.I2PBote;
+import i2p.bote.network.BanList;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
 
@@ -291,8 +293,22 @@ public class BucketManager implements PacketListener, Iterable<KBucket> {
     // PacketListener implementation
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
+        boolean banned = false;
+        
+        KademliaPeer peer = getPeer(sender);
+        if (peer != null) {
+            if (packet.getProtocolVersion() != I2PBote.PROTOCOL_VERSION) {
+                BanList.getInstance().ban(peer, "Wrong protocol version: " + packet.getProtocolVersion());
+                remove(peer);
+                banned = true;
+            }
+            else
+                BanList.getInstance().unban(peer);
+        }
+        
         // any type of incoming packet updates the peer's record in the bucket/sibling list, or adds the peer to the bucket/sibling list
-        addOrUpdate(new KademliaPeer(sender, receiveTime));
+        if (!banned)
+            addOrUpdate(sender);
   }
 
     private class PeerDistanceComparator implements Comparator<Destination> {

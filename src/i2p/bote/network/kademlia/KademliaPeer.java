@@ -37,8 +37,6 @@ public class KademliaPeer extends Destination implements DhtPeer {
     private long lastReception;
     private long activeSince;
     private AtomicInteger consecutiveTimeouts;
-    private boolean banned;
-    private String banReason;
     
     public KademliaPeer(Destination destination, long lastReception) {
         // initialize the Destination part of the KademliaPeer
@@ -101,24 +99,4 @@ public class KademliaPeer extends Destination implements DhtPeer {
     public long getActiveSince() {
     	return activeSince;
     }
-
-    public void setBanned(boolean isBanned) {
-        this.banned = isBanned;
-    }
-
-    public boolean isBanned() {
-        return banned;
-    }
-
-    public void setBanReason(String banReason) {
-        this.banReason = banReason;
-    }
-
-    public String getBanReason() {
-        return banReason;
-    }
-    
-/*    public BigInteger getDistance(KademliaPeer anotherPeer) {
-        return KademliaUtil.getDistance(getDestinationHash(), anotherPeer.getDestinationHash());
-    }*/
 }

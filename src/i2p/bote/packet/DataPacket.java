@@ -75,7 +75,14 @@ public abstract class DataPacket extends I2PBotePacket implements FolderElement 
         outputStream.write(getProtocolVersion());
     }
     
-    public static DataPacket createPacket(File file) {
+    /**
+     * Creates a {@link DataPacket} object from a file, using the same format as the
+     * {@link createPacket(byte[])} method.
+     * @param file
+     * @return
+     * @throws MalformedDataPacketException
+     */
+    public static DataPacket createPacket(File file) throws MalformedDataPacketException {
         if (file==null || !file.exists())
             return null;
         
@@ -86,8 +93,7 @@ public abstract class DataPacket extends I2PBotePacket implements FolderElement 
             return packet;
         }
         catch (IOException e) {
-            log.error("Can't read packet file: " + file.getAbsolutePath(), e);
-            return null;
+            throw new MalformedDataPacketException("Can't read packet file: " + file.getAbsolutePath(), e);
         }
         finally {
             try {
@@ -104,8 +110,9 @@ public abstract class DataPacket extends I2PBotePacket implements FolderElement 
      * If there is an error, <code>null</code> is returned.
      * @param data
      * @return
+     * @throws MalformedDataPacketException
      */
-    public static DataPacket createPacket(byte[] data) {
+    public static DataPacket createPacket(byte[] data) throws MalformedDataPacketException {
         char packetTypeCode = (char)data[0];   // first byte of a data packet is the packet type code
         Class<? extends I2PBotePacket> packetType = decodePacketTypeCode(packetTypeCode);
         if (packetType==null || !DataPacket.class.isAssignableFrom(packetType)) {
@@ -119,8 +126,7 @@ public abstract class DataPacket extends I2PBotePacket implements FolderElement 
             packet = dataPacketType.getConstructor(byte[].class).newInstance(data);
         }
         catch (Exception e) {
-            log.warn("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
-            return null;
+            throw new MalformedDataPacketException("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
         }
         
         if (packet.getProtocolVersion() != I2PBote.PROTOCOL_VERSION) {
