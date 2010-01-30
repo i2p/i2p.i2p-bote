@@ -30,8 +30,4 @@ public interface DhtPeer {
     long getActiveSince();
 
     int getStaleCounter();
-    
-    boolean isBanned();
-    
-    String getBanReason();
 }

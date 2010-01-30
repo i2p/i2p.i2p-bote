@@ -31,6 +31,8 @@ import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.PacketFolder;
+import i2p.bote.network.BanList;
+import i2p.bote.network.BannedPeer;
 import i2p.bote.network.CheckEmailTask;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtPeer;
@@ -263,8 +265,8 @@ public class I2PBote {
 	    return identities;
 	}
 	
-	public String getLocalDestination() {
-	    return i2pSession.getMyDestination().toBase64();
+	public Destination getLocalDestination() {
+	    return i2pSession.getMyDestination();
 	}
 	
 	public void sendEmail(Email email) throws Exception {
@@ -340,12 +342,12 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
         return dht.getNumPeers();
     }
     
-    public int getNumRelayPeers() {
-        return peerManager.getNumPeers();
+    public Collection<? extends DhtPeer> getDhtPeers() {
+        return dht.getPeers();
     }
     
-    public Collection<? extends DhtPeer> getPeers() {
-        return dht.getPeers();
+    public Collection<BannedPeer> getBannedPeers() {
+        return BanList.getInstance().getAll();
     }
     
     private void startAllServices()  {

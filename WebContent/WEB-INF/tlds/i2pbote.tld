@@ -71,18 +71,6 @@
 </tag>
 
 <tag>
-    <name>numDhtPeers</name>
-    <tag-class>i2p.bote.web.PrintNumDhtPeersTag</tag-class>
-    <body-content>empty</body-content>
-</tag>
-
-<tag>
-    <name>numRelayPeers</name>
-    <tag-class>i2p.bote.web.PrintNumRelayPeersTag</tag-class>
-    <body-content>empty</body-content>
-</tag>
-
-<tag>
     <name>printVersion</name>
     <tag-class>i2p.bote.web.PrintAppVersionTag</tag-class>
     <body-content>empty</body-content>
@@ -95,8 +83,14 @@
 </tag>
 
 <tag>
-    <name>dhtPeerInfo</name>
-    <tag-class>i2p.bote.web.DhtPeerInfoTag</tag-class>
+    <name>localDestination</name>
+    <tag-class>i2p.bote.web.LocalDestinationTag</tag-class>
+    <body-content>empty</body-content>
+</tag>
+
+<tag>
+    <name>peerInfo</name>
+    <tag-class>i2p.bote.web.PeerInfoTag</tag-class>
     <body-content>empty</body-content>
 </tag>
 
@@ -113,14 +107,6 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         i2p.bote.email.Identities getIdentities()
-    </function-signature>
-</function>
-
-<function>
-    <name>getLocalDestination</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
-    <function-signature>
-        java.lang.String getLocalDestination()
     </function-signature>
 </function>
 

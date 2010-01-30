@@ -30,9 +30,8 @@
 </jsp:include>
 
 <div class="main">
-    <strong>K-Peers: </strong><ib:numDhtPeers/>
-    <ib:dhtPeerInfo/>
-<%--    <strong>R-Peers:</strong><ib:numRelayPeers/> --%>
+    <strong>Local destination: </strong><ib:localDestination/><p/><br/>
+    <ib:peerInfo/>
 </div>
 
 <jsp:include page="footer.jsp"/>

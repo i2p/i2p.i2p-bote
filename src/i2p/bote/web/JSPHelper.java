@@ -49,8 +49,8 @@ public class JSPHelper {
         return I2PBote.getInstance().getIdentities();
     }
     
-    public String getLocalDestination() {
-        return I2PBote.getInstance().getLocalDestination();
+    public static String getLocalDestination() {
+        return I2PBote.getInstance().getLocalDestination().calculateHash().toBase64();
     }
     
     /**
