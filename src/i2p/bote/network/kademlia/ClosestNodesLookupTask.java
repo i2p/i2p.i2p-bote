@@ -186,37 +186,45 @@ public class ClosestNodesLookupTask implements Runnable {
         public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
             if (packet instanceof ResponsePacket) {
                 ResponsePacket responsePacket = (ResponsePacket)packet;
-                responses.add(sender);
-                DataPacket payload = responsePacket.getPayload();
-                if (payload instanceof PeerList)
-                    addPeers(responsePacket, (PeerList)payload, sender, receiveTime);
+                FindClosePeersPacket request = getPacketById(pendingRequests.values(), responsePacket.getPacketId());   // find the request the node list is in response to
+                
+                // if the packet is in response to a pending request, update the three Sets
+                if (request != null) {
+                    responses.add(sender);
+                    DataPacket payload = responsePacket.getPayload();
+                    if (payload instanceof PeerList)
+                        updatePeers((PeerList)payload, sender, receiveTime);
+                    
+                    pendingRequests.remove(sender);
+                }
+                else
+                    log.debug("No Find Close Nodes packet found for Response Packet: " + responsePacket);
             }
             else if (packet instanceof MalformedCommunicationPacket)
                 pendingRequests.remove(sender);   // since it is not generally possible to tell if an invalid comm packet is in response to a certain request, always remove invalid packets from the pending list
         }
-    
-        private void addPeers(ResponsePacket responsePacket, PeerList peerListPacket, Destination sender, long receiveTime) {
+        
+        /**
+         * Updates the <code>notQueriedYet</code> set with the peers from a <code>peerListPacket</code>,
+         * and adds the <code>sender</code> to <code>responses</code>.
+         * @param peerListPacket
+         * @param sender
+         * @param receiveTime
+         */
+        private void updatePeers(PeerList peerListPacket, Destination sender, long receiveTime) {
             log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.calculateHash());
             for (Destination peer: peerListPacket.getPeers())
                 log.debug("  Peer: " + peer.calculateHash());
+
+            // TODO make responseReceived and pendingRequests a parameter in the constructor?
+            responses.add(sender);
+            Collection<Destination> peersReceived = peerListPacket.getPeers();
             
-            // if the packet is in response to a pending request, update the three Sets
-            FindClosePeersPacket request = getPacketById(pendingRequests.values(), responsePacket.getPacketId());   // find the request the node list is in response to
-            if (request != null) {
-                // TODO make responseReceived and pendingRequests a parameter in the constructor?
-                responses.add(sender);
-                Collection<Destination> peersReceived = peerListPacket.getPeers();
-                
-                // add all peers from the PeerList, excluding those that we have already queried
-                // TODO don't add local dest
-                for (Destination peer: peersReceived)
-                    if (!pendingRequests.containsKey(peer) && !responses.contains(peer))
-                        notQueriedYet.add(peer);   // this won't create duplicates because notQueriedYet is a Set
-                
-                pendingRequests.remove(sender);
-            }
-            else
-                log.debug("No Find Close Nodes packet found for Peer List: " + peerListPacket);
+            // add all peers from the PeerList, excluding those that we have already queried
+            // TODO don't add local dest
+            for (Destination peer: peersReceived)
+                if (!pendingRequests.containsKey(peer) && !responses.contains(peer))
+                    notQueriedYet.add(peer);   // this won't create duplicates because notQueriedYet is a Set
         }
 
         /**
