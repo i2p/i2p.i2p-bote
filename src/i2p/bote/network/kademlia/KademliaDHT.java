@@ -292,12 +292,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         outerLoop:  
             while (true) {
                 for (KademliaPeer bootstrapNode: initialPeers) {
-                    bootstrapNode.setLastReception(-1);
                     bucketManager.addOrUpdate(bootstrapNode);
                     Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
-                    // if last reception time is not set, the node didn't respond, so remove it
-                    if (bootstrapNode.getLastReception() <= 0)
-                        bucketManager.remove(bootstrapNode);
                     
                     if (closestNodes.isEmpty()) {
                         log.debug("No response from bootstrap node " + bootstrapNode);
