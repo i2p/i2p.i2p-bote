@@ -92,7 +92,7 @@
     </form>
 
     <script type="text/javascript" language="JavaScript">
-        document.forms['form'].elements['name'].focus();
+        document.forms['form'].elements['publicName'].focus();
     </script>
 </div>
 
