@@ -49,6 +49,27 @@
 </tag>
 
 <tag>
+    <name>setEmailRead</name>
+    <tag-class>i2p.bote.web.SetEmailReadTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>folder</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>messageId</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>read</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+</tag>
+
+<tag>
     <name>quote</name>
     <tag-class>i2p.bote.web.QuoteTag</tag-class>
     <body-content>empty</body-content>
@@ -177,6 +198,11 @@
 <tag-file>
     <name>printWithLineBreaks</name>
     <path>/WEB-INF/tags/printWithLineBreaks.tag</path>
+</tag-file> 
+
+<tag-file>
+    <name>folderLink</name>
+    <path>/WEB-INF/tags/folderLink.tag</path>
 </tag-file> 
 
 </taglib>

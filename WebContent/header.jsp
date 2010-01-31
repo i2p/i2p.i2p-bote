@@ -50,7 +50,7 @@
 
 <div class="menubox">
     <h2>Folders</h2>
-    <a href="folder.jsp?path=Inbox"><img src="images/folder.png"/>Inbox</a><br/>
+    <ib:folderLink folderName="Inbox"/><br/>
     <img src="images/folder.png"/>Outbox<br/>
     <img src="images/folder.png"/>Sent<br/>
     <img src="images/folder.png"/>Drafts<br/>

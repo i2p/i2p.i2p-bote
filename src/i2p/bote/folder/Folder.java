@@ -69,9 +69,7 @@ public abstract class Folder<T extends FolderElement> implements Iterable<T> {
         });
         if (files == null)
             log.error("Cannot list files in directory <" + storageDir + ">");
-        else {
-            log.debug(files.length + " files with the extension '" + fileExtension + "' found in '" + storageDir + "'.");
-
+        else
             // sort files by date, newest first
             Arrays.sort(files, new Comparator<File>() {
                 @Override
@@ -79,7 +77,6 @@ public abstract class Folder<T extends FolderElement> implements Iterable<T> {
                     return (int)Math.signum(f1.lastModified() - f2.lastModified());
                 }
             });
-        }
         
         return files;
     }
@@ -96,6 +93,7 @@ public abstract class Folder<T extends FolderElement> implements Iterable<T> {
     @Override
     public final Iterator<T> iterator() {
         final File[] files = getFilenames();
+        log.debug(files.length + " files with the extension '" + fileExtension + "' found in '" + storageDir + "'.");
 
         return new Iterator<T>() {
             int nextIndex = 0;

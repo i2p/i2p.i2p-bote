@@ -30,6 +30,8 @@
 <% pageContext.setAttribute("newline", "\n"); %>
 <c:set var="email" value="${ib:getEmail(param.folder, param.messageID)}"/>
 
+<ib:setEmailRead folder="${ib:getMailFolder(param.folder)}" messageId="${param.messageID}" read="true"/>
+
 <jsp:include page="header.jsp">
     <jsp:param name="title" value="${email.subject}"/>
 </jsp:include>

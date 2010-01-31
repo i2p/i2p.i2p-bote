@@ -34,7 +34,8 @@ import net.i2p.util.Log;
 
 /**
  * Stores emails in a directory on the file system. Each email is stored in one file.
- * The filename is the message Id plus an extension.
+ * Filenames are in the format <code><N, O>_<message ID>.mail</code>, where
+ * N is for new (unread) and O is for old (read).
  */
 public class EmailFolder extends Folder<Email> {
     protected static final String EMAIL_FILE_EXTENSION = ".mail";
@@ -61,7 +62,7 @@ public class EmailFolder extends Folder<Email> {
      * The <code>messageId</code> parameter must be a 44-character base64-encoded
      * message id. If the message id contains an ampersand, the ampersand and
      * everything after it is ignored. 
-     * @param messageId
+     * @param messageIdString
      * @return
      */
     public Email getEmail(String messageIdString) {
@@ -78,16 +79,89 @@ public class EmailFolder extends Folder<Email> {
     }
     
     private File getEmailFile(Email email) {
-        return getEmailFile(email.getMessageID());
+        return getEmailFile(email.getMessageID(), email.isNew());
     }
 
+    /**
+     * Returns a file for a given message ID, or <code>null</code> if there is none.
+     * @param messageId
+     * @return
+     */
     private File getEmailFile(MessageId messageId) {
-        return new File(storageDir, messageId.toBase64() + EMAIL_FILE_EXTENSION);
+        // try new email
+        File newEmailFile = getEmailFile(messageId, true);
+        if (newEmailFile.exists())
+            return newEmailFile;
+        
+        // try old email
+        File oldEmailFile = getEmailFile(messageId, false);
+        if (oldEmailFile.exists())
+            return oldEmailFile;
+        
+        return null;
     }
     
+    private File getEmailFile(MessageId messageId, boolean newIndicator) {
+        return new File(storageDir, (newIndicator?'N':'O') + "_" + messageId.toBase64() + EMAIL_FILE_EXTENSION);
+    }
+    
+    /**
+     * @see Folder.getNumElements()
+     * @return
+     */
+    public int getNumNewEmails() {
+        int numNew = 0;
+        for (File file: getFilenames())
+            if (isNew(file))
+                numNew++;
+        
+        return numNew;
+    }
+    
+    private boolean isNew(File file) {
+        switch (file.getName().charAt(0)) {
+        case 'N':
+            return true;
+        case 'O':
+            return false;
+        default:
+            throw new IllegalArgumentException("Illegal email filename, doesn't start with N or O: <" + file.getAbsolutePath() + ">");
+        }
+    }
+    
+    /**
+     * Flags an email "new" (if <code>isNew</code> is <code>true</code>) or
+     * "old" (if <code>isNew</code> is <code>false</code>).
+     * @param messageIdString
+     * @param isNew
+     */
+    public void setNew(String messageIdString, boolean isNew) {
+        MessageId messageId = new MessageId(messageIdString);
+        File file = getEmailFile(messageId);
+        if (file != null) {
+            char newIndicator = isNew?'N':'O';   // the new start character
+            String newFilename = newIndicator + file.getName().substring(1);
+            File newFile = new File(file.getParentFile(), newFilename);
+            boolean success = file.renameTo(newFile);
+            if (!success)
+                log.error("Cannot rename <" + file.getAbsolutePath() + "> to <" + newFile.getAbsolutePath() + ">");
+        }
+        else
+            log.error("No email found for message Id: <" + messageId + ">");
+    }
+    
+    /**
+     * Deletes an email with a given message ID.
+     * @param messageIdString
+     * @return <code>true</code> if the email was deleted, <code>false</code> otherwise
+     */
     public boolean delete(String messageIdString) {
         MessageId messageId = new MessageId(messageIdString);
-        return getEmailFile(messageId).delete();
+        File emailFile = getEmailFile(messageId);
+        if (emailFile != null)
+            return emailFile.delete();
+        else
+            return false;
     }
     
     public void delete(Email email) {
@@ -98,6 +172,8 @@ public class EmailFolder extends Folder<Email> {
     @Override
     protected Email createFolderElement(File file) throws Exception {
         FileInputStream inputStream = new FileInputStream(file);
-        return new Email(inputStream);
+        Email email = new Email(inputStream);
+        email.setNew(isNew(file));
+        return email;
     }
 }

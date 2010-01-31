@@ -64,11 +64,13 @@ public class Email implements FolderElement {
     private List<Header> headers;
     private byte[] content;   // save memory by using bytes rather than chars
     private MessageId messageId;
+    private boolean isNew;
 
     public Email() {
         headers = Collections.synchronizedList(new ArrayList<Header>());
         content = new byte[0];
         messageId = new MessageId();
+        isNew = true;
     }
 
     /**
@@ -129,6 +131,7 @@ public class Email implements FolderElement {
         String messageIdString = getHeader("Message-Id");
         if (messageIdString != null)
         messageId = new MessageId(messageIdString);
+        isNew = true;
     }
 
     private static Set<String> createHeaderWhitelist() {
@@ -273,6 +276,19 @@ public class Email implements FolderElement {
     
     public MessageId getMessageID() {
         return messageId;
+    }
+
+    public void setNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    /**
+     * Returns <code>true</code> if the email is unread (incoming mail), or
+     * if it has not been sent yet (outgoing mail).
+     * @return
+     */
+    public boolean isNew() {
+        return isNew;
     }
 
     /**
