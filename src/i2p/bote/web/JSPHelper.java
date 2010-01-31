@@ -62,7 +62,7 @@ public class JSPHelper {
      * @return null if sucessful, or an error message if an error occured
      */
     public static String saveIdentity(String key, String publicName, String description, String emailAddress) {
-        Identities identities = JSPHelper.getIdentities();
+        Identities identities = getIdentities();
         EmailIdentity identity = identities.get(key);
         
         if (identity != null) {
@@ -93,7 +93,7 @@ public class JSPHelper {
      * @return null if sucessful, or an error message if an error occured
      */
     public static String deleteIdentity(String key) {
-        Identities identities = JSPHelper.getIdentities();
+        Identities identities = getIdentities();
         identities.remove(key);
 
         try {
@@ -140,7 +140,7 @@ public class JSPHelper {
      * @return
      */
     public static String getOneLocalRecipient(Email email) {
-        Identities identities = JSPHelper.getIdentities();
+        Identities identities = getIdentities();
         Collection<String> recipients = email.getAllRecipients();
         for (EmailDestination localDestination: identities) {
             String base64Dest = localDestination.toBase64();
@@ -153,6 +153,6 @@ public class JSPHelper {
     }
     
     public static boolean deleteEmail(String folderName, String messageId) {
-        return JSPHelper.getMailFolder(folderName).delete(messageId);
+        return getMailFolder(folderName).delete(messageId);
     }
 }
