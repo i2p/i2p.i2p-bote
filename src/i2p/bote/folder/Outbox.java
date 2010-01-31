@@ -38,7 +38,7 @@ import net.i2p.util.Log;
  * 
  * Status files contain a status for each recipient address.
  */
-public class Outbox extends EmailFolder implements Iterable<Email> {
+public class Outbox extends EmailFolder {
 	private static final String STATUS_FILE_EXTENSION = ".status";
 //	private static final String PARAM_QUEUE_DATE = "X-QueueDate";
 	private static final Log log = new Log(Outbox.class);
