@@ -52,6 +52,38 @@ public abstract class Folder<T extends FolderElement> implements Iterable<T> {
         return storageDir;
     }
 
+    public int getNumElements() {
+        return getFilenames().length;
+    }
+    
+    /**
+     * Returns the names of all files in the folder.
+     * @return
+     */
+    public File[] getFilenames() {
+        File[] files = storageDir.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.toUpperCase().endsWith(fileExtension.toUpperCase());
+            }
+        });
+        if (files == null)
+            log.error("Cannot list files in directory <" + storageDir + ">");
+        else {
+            log.debug(files.length + " files with the extension '" + fileExtension + "' found in '" + storageDir + "'.");
+
+            // sort files by date, newest first
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File f1, File f2) {
+                    return (int)Math.signum(f1.lastModified() - f2.lastModified());
+                }
+            });
+        }
+        
+        return files;
+    }
+    
     public Collection<T> getElements() {
         Collection<T> elements = new ArrayList<T>();
         Iterator<T> iterator = iterator();
@@ -63,24 +95,7 @@ public abstract class Folder<T extends FolderElement> implements Iterable<T> {
     // An {@link Iterator} implementation that loads one file into memory at a time.
     @Override
     public final Iterator<T> iterator() {
-        final File[] files = storageDir.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.toUpperCase().endsWith(fileExtension.toUpperCase());
-            }
-        });
-        if (files == null)
-        	log.error("Cannot list files in directory <" + storageDir + ">");
-        else
-        	log.debug(files.length + " files with the extension '" + fileExtension + "' found in '" + storageDir + "'.");
-
-        // sort files by date, newest first
-        Arrays.sort(files, new Comparator<File>() {
-            @Override
-            public int compare(File f1, File f2) {
-                return (int)Math.signum(f1.lastModified() - f2.lastModified());
-            }
-        });
+        final File[] files = getFilenames();
 
         return new Iterator<T>() {
             int nextIndex = 0;
