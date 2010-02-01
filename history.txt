@@ -1,16 +1,42 @@
-0.1     First version. Lets a user create email identities and send/receive plain-text emails
-0.1.1   Fix: Clicking on an email in the inbox causes an error.
-0.1.2   Mostly a bug fix release. It adds two .jar files that were missing.
-0.1.3   After startup, wait 3 minutes before connecting;
-        Change the paths in the build file from /opt/... to ../i2p/...;
-        Fix: "Check Mail" button doesn't show new emails, user has to reload inbox;
-        Fix: high cpu usage when sending or receiving;
-        Set tunnel names to "I2P-Bote"
-0.1.4   Do the 3-minute wait in the background;
-        Added a "Connect now" button to skip the wait;
-        Network Status panel now gives more useful information
-0.1.5   Fixes a number of bugs in the Kademlia code;
-        Removed unimplemented HTML links;
-        Network-related UI elements are now disabled until tunnel is ready;
-        Emails can now be deleted from a folder;
-        "No Identity Defined" page didn't come up, fixed
+I2P-Bote Version History
+------------------------
+
+0.2
+  * Sending and retrieving now much faster
+  * Email packets are now deleted from storage nodes after retrieval
+  * Reply button
+  * Drop dead peers
+  * Automatically check for new email
+  * Inbox shows new emails in bold, number of new emails is shown
+  * "To" addresses are shown in the inbox and when displaying an email
+  * Network protocol changed to version 2, peers that use the old protocol are ignored
+  * "Network" page now shows peer info
+  * Several bug fixes and minor enhancements
+        
+0.1.5
+  * Fixes a number of bugs in the Kademlia code
+  * Removed unimplemented HTML links
+  * Network-related UI elements are now disabled until tunnel is ready
+  * Emails can now be deleted from a folder
+  * "No Identity Defined" page didn't come up, fixed
+        
+0.1.4
+  * Do the 3-minute wait in the background
+  * Added a "Connect now" button to skip the wait
+  * Network Status panel now gives more useful information
+        
+0.1.3
+  * After startup, wait 3 minutes before connecting
+  * Change the paths in the build file from /opt/... to ../i2p/...
+  * Fix: "Check Mail" button doesn't show new emails, user has to reload inbox
+  * Fix: high cpu usage when sending or receiving
+  * Set tunnel names to "I2P-Bote"
+        
+0.1.2
+  Mostly a bug fix release. It adds two .jar files that were missing.
+  
+0.1.1
+  Fix: Clicking on an email in the inbox causes an error.
+  
+0.1
+  First version. Lets a user create email identities and send/receive plain-text emails

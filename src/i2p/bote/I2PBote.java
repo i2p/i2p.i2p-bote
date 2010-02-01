@@ -69,8 +69,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.internal.matchers.IsCollectionContaining;
-
 import net.i2p.I2PAppContext;
 import net.i2p.I2PException;
 import net.i2p.client.I2PClient;
@@ -87,7 +85,7 @@ import net.i2p.util.Log;
  */
 public class I2PBote {
     public static final int PROTOCOL_VERSION = 2;
-    private static final String APP_VERSION = "0.1.5";
+    private static final String APP_VERSION = "0.2";
     private static final int STARTUP_DELAY = 3 * 60 * 1000;   // the number of milliseconds to wait before connecting to I2P (this gives the router time to get ready)
 	private static I2PBote instance;
 	
