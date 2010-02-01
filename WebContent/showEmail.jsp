@@ -78,8 +78,8 @@
                     </form>
                     </td><td>
                     <form action="deleteEmail.jsp" method="post">
-                        <button type="submit" disabled="disabled">Delete</button>
-                        <input type="hidden" name="folder" value="${folderName}"/>
+                        <button type="submit">Delete</button>
+                        <input type="hidden" name="folder" value="${param.folder}"/>
                         <input type="hidden" name="messageID" value="${email.messageID}"/>
                     </form>
                     </td>
