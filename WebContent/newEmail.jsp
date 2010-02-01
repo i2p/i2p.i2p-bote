@@ -81,9 +81,8 @@
             </tr>
             <tr>
                 <td colspan=2 align="center">
-                    <input type="submit" value="Send"/>
-                    <input type="submit" value="Cancel"/>
-                    <input type="submit" value="Save"/>
+                    <button type="submit">Send</button>
+                    <button type="submit" disabled="disabled">Save</button>
                 </td>
             </tr>
         </table>
