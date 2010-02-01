@@ -39,6 +39,7 @@
         </c:when>
         <c:otherwise>
             <strong>Local destination: </strong><ib:localDestination/><p/><br/>
+            <ib:peerInfo/>
         </c:otherwise>
     </c:choose>
 </div>
