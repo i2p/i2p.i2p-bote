@@ -45,6 +45,7 @@ import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.RelayPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
+import i2p.bote.service.AutoMailCheckTask;
 import i2p.bote.service.OutboxProcessor;
 import i2p.bote.service.POP3Service;
 import i2p.bote.service.RelayPacketSender;
@@ -67,6 +68,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+
+import org.junit.internal.matchers.IsCollectionContaining;
 
 import net.i2p.I2PAppContext;
 import net.i2p.I2PException;
@@ -105,12 +108,14 @@ public class I2PBote {
 	private SMTPService smtpService;
 	private POP3Service pop3Service;
 	private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
+	private AutoMailCheckTask autoMailCheckTask;
 	private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
 	private DHT dht;
 	private PeerManager peerManager;
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
     private Collection<Future<Boolean>> pendingMailCheckTasks;
+    private long lastMailCheckTime;
     private ConnectTask connectTask;
     private Future<?> connectTaskResult;
 
@@ -220,6 +225,8 @@ public class I2PBote {
         peerManager = new PeerManager();
         
         outboxProcessor = new OutboxProcessor(dht, outbox, configuration, peerManager, appContext);
+        
+        autoMailCheckTask = new AutoMailCheckTask(configuration.getMailCheckInterval());
     }
 
     /**
@@ -286,6 +293,8 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 
     public synchronized void checkForMail() {
         if (!isCheckingForMail()) {
+            log.debug("Checking for mail...");
+            lastMailCheckTime = System.currentTimeMillis();
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             for (EmailIdentity identity: getIdentities()) {
                 Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, appContext);
@@ -293,8 +302,14 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
                 pendingMailCheckTasks.add(task);
             }
         }
+        else
+            log.debug("Not checking for mail because the last one hasn't finished.");
     }
 
+    public synchronized long getLastMailCheckTime() {
+        return lastMailCheckTime;
+    }
+    
     public synchronized boolean isCheckingForMail() {
         if (pendingMailCheckTasks == null)
             return false;
@@ -357,6 +372,7 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 		smtpService.start();
 		pop3Service.start();
 		sendQueue.start();
+		autoMailCheckTask.start();
 	}
 
 	private void stopAllServices()  {
@@ -367,6 +383,7 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 		pop3Service.shutDown();
         sendQueue.requestShutdown();
         mailCheckExecutor.shutdownNow();
+        autoMailCheckTask.shutDown();
 	}
 
 	/**

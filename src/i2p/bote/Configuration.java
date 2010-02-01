@@ -54,6 +54,7 @@ public class Configuration extends Properties {
 	private static final String PARAMETER_SMTP_PORT = "smtpPort";
     private static final String PARAMETER_POP3_PORT = "pop3Port";
     private static final String PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = "maxConcurIdCheckMail";
+    private static final String PARAMETER_MAIL_CHECK_INTERVAL = "mailCheckInterval";
     
 	// Defaults for each parameter
 	private static final int DEFAULT_REDUNDANCY = 2;
@@ -65,6 +66,7 @@ public class Configuration extends Properties {
     private static final int DEFAULT_SMTP_PORT = 7661;
     private static final int DEFAULT_POP3_PORT = 7662;
     private static final int DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = 10;
+    private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
 	
 	private Log log = new Log(Configuration.class);
 	private File i2pBoteDir;
@@ -205,6 +207,15 @@ public class Configuration extends Properties {
 	 */
 	public int getMaxConcurIdCheckMail() {
         return getIntParameter(PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL, DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL);
+	}
+	
+	/**
+	 * Returns the number of minutes the application should wait before automatically
+	 * checking for mail.
+	 * @return
+	 */
+	public int getMailCheckInterval() {
+        return getIntParameter(PARAMETER_MAIL_CHECK_INTERVAL, DEFAULT_MAIL_CHECK_INTERVAL);
 	}
 	
 	private int getIntParameter(String parameterName, int defaultValue) {
