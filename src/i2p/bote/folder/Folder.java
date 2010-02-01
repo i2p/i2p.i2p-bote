@@ -74,7 +74,7 @@ public abstract class Folder<T extends FolderElement> implements Iterable<T> {
             Arrays.sort(files, new Comparator<File>() {
                 @Override
                 public int compare(File f1, File f2) {
-                    return (int)Math.signum(f1.lastModified() - f2.lastModified());
+                    return (int)Math.signum(f2.lastModified() - f1.lastModified());
                 }
             });
         
