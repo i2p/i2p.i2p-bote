@@ -205,4 +205,9 @@
     <path>/WEB-INF/tags/folderLink.tag</path>
 </tag-file> 
 
+<tag-file>
+    <name>address</name>
+    <path>/WEB-INF/tags/address.tag</path>
+</tag-file> 
+
 </taglib>

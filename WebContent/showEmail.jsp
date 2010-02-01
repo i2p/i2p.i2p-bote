@@ -27,7 +27,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<% pageContext.setAttribute("newline", "\n"); %>
 <c:set var="email" value="${ib:getEmail(param.folder, param.messageID)}"/>
 
 <ib:setEmailRead folder="${ib:getMailFolder(param.folder)}" messageId="${param.messageID}" read="true"/>
@@ -40,20 +39,15 @@
     <table>
         <tr>
             <td valign="top"><strong>From:</strong></td>
+            <td><ib:address address="${email.sender}"/></td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>To:</strong></td>
             <td>
-                <%-- put a line break between the sender's name if it is followed by an email destination in angle brackets --%>
-                <c:set var="gtHtml" value="${fn:escapeXml('<')}"/>
-                <c:set var="newlinePlusGt" value="${newline}${gtHtml}"/>
-                <c:set var="sender" value="${fn:escapeXml(email.sender)}"/>
-                <c:set var="sender" value="${fn:replace(sender, gtHtml, newlinePlusGt)}"/>
-                
-                <%-- if the "sender" field contains an email destination, use a textarea; otherwise just print it --%>
-                <c:if test="${fn:length(sender) ge 512}">
-                    <textarea cols="64" rows="9" readonly="yes" wrap="soft" class="nobordertextarea">${sender}</textarea>
-                </c:if>
-                <c:if test="${fn:length(sender) lt 512}">
-                    ${sender}
-                </c:if>
+                <c:forEach var="recipient" varStatus="status" items="${email.allRecipients}">
+                    <ib:address address="${recipient}"/>
+                    <c:if test="${!status.last}">,<p/></c:if>
+                </c:forEach>
             </td>
         </tr>
         <tr>

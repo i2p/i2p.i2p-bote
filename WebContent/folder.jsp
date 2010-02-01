@@ -39,7 +39,8 @@
 <div class="folder">
 	<table>
 	    <tr>
-	        <th style="width: 100px;">Sender</th>
+	        <th style="width: 100px;">From</th>
+            <th style="width: 100px;">To</th>
             <th style="width: 150px;">Subject</th>
             <th style="width: 100px;">Date</th>
             <th style="width: 20px;"></th>
@@ -50,6 +51,8 @@
                 <c:if test="${empty sender}">
                     <c:set var="sender" value="Anonymous"/>
                 </c:if>
+                
+                <c:set var="recipient" value="${ib:getOneLocalRecipient(email)}"/>
                 
                 <c:set var="date" value="${email.date}"/>
                 <c:if test="${empty date}">
@@ -72,6 +75,7 @@
                 </c:choose>
                 
                 <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${sender}</a></div></td>
+                <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${recipient}</a></div></td>
                 <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${subject}</a></div></td>
                 <td><a href="${mailUrl}" style="font-weight: ${fontWeight}">${date}</a></td>
                 <td><a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}"><img src="images/delete.png" alt="Delete" title="Delete this email"/></a></td>
