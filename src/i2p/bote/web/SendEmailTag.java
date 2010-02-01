@@ -53,7 +53,7 @@ public class SendEmailTag extends SimpleTagSupport {
 		String statusMessage;
 		try {
 			I2PBote.getInstance().sendEmail(email);
-			statusMessage = "Email has been queued for sending.";
+			statusMessage = "The email has been sent.";
 		}
 		catch (Exception e) {
 			statusMessage = "Error sending email: " + e.getLocalizedMessage();
