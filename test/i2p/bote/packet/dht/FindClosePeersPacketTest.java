@@ -19,7 +19,7 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.packet.kademlia;
+package i2p.bote.packet.dht;
 
 import static junit.framework.Assert.assertTrue;
 
