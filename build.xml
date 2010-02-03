@@ -5,8 +5,9 @@
     <property name="jettylib" value="${i2pbase}/apps/jetty/jettylib"/>
     <property name="antlib" value="${jettylib}"/>
     <property name="jstllib" value="${i2pbase}/apps/susidns/src/WEB-INF/lib"/>
+    <property name="junitlib" value="WebContent/WEB-INF/lib"/>
     <path id="cp">
-        <pathelement path="${classpath}" />
+        <pathelement path="${java.class.path}" />
         <pathelement location="${i2plib}/i2p.jar" />
         <pathelement location="${jettylib}/org.mortbay.jetty.jar"/>
         <pathelement location="${jettylib}/jasper-compiler.jar" />
@@ -14,7 +15,6 @@
         <pathelement location="${jettylib}/javax.servlet.jar" />
         <pathelement location="${jettylib}/commons-logging.jar" />
         <pathelement location="${jettylib}/commons-el.jar" />
-        <pathelement location="${antlib}/ant.jar" />
         <pathelement location="${jstllib}/jstl.jar" />
         <pathelement location="${jstllib}/standard.jar" />
     </path>
@@ -80,17 +80,35 @@
             <lib file="${jstllib}/standard.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
         </war>
+
+        <echo message="SHA256 sum:"/>
+        <exec executable="sha256sum">
+            <arg value="i2pbote.war"/>
+        </exec>
     </target>
     
     <target name="junit" depends="compile">
+        <path id="junitcp">
+            <pathelement location="${junitlib}/junit.jar"/>
+            <pathelement location="./ant_build/classes"/>
+            <path refid="cp"/>
+        </path>
+
+        <javac
+            srcdir="./test"
+            debug="true"
+            deprecation="on"
+            destdir="./ant_build/classes"
+            classpathref="junitcp"
+            failonerror="true" />
+
         <junit printsummary="yes">
             <classpath>
-                <path refid="classpath"/>
-                <path refid="application"/>
+                <path refid="junitcp"/>
             </classpath>
-            
-            <batchtest fork="yes">
-                <fileset dir="${src.dir}" includes="*Test.java"/>
+            <batchtest fork="yes" todir="./ant_build">
+                <fileset dir="./ant_build" includes="**/*Test.class"/>
+                <formatter type="plain"/>
             </batchtest>
         </junit>
     </target>
@@ -121,5 +139,6 @@
     <target name="clean">
         <delete dir="ant_build" />
         <delete file="i2pbote.war" />
+        <delete file="src.zip" />
     </target>
 </project>
