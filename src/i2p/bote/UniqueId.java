@@ -73,6 +73,13 @@ public class UniqueId implements Comparable<UniqueId> {
         inputStream.read(bytes);
     }
     
+    /**
+     * @param base64 A 44-character base64-encoded string
+     */
+    public UniqueId(String base64) {
+        bytes = Base64.decode(base64);
+    }
+    
     public byte[] toByteArray() {
         return bytes;
     }

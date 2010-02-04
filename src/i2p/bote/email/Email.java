@@ -63,13 +63,13 @@ public class Email implements FolderElement {
     private File file;
     private List<Header> headers;
     private byte[] content;   // save memory by using bytes rather than chars
-    private MessageId messageId;
+    private UniqueId messageId;
     private boolean isNew;
 
     public Email() {
         headers = Collections.synchronizedList(new ArrayList<Header>());
         content = new byte[0];
-        messageId = new MessageId();
+        messageId = new UniqueId();
         isNew = true;
     }
 
@@ -118,8 +118,9 @@ public class Email implements FolderElement {
                 }
                 
                 if (allHeadersRead) {
+                    if (contentStream.size() > 0)
+                        contentStream.write(NEW_LINE);
                     contentStream.write(line.getBytes());
-                    contentStream.write(NEW_LINE);
                 }
             }
         }
@@ -128,16 +129,13 @@ public class Email implements FolderElement {
         }
         content = contentStream.toByteArray();
         
-        String messageIdString = getHeader("Message-Id");
-        if (messageIdString != null)
-        messageId = new MessageId(messageIdString);
         isNew = true;
     }
 
     private static Set<String> createHeaderWhitelist() {
         String[] headerArray = new String[] {
             "From", "Sender", "To", "CC", "BCC", "Reply-To", "Subject", "Date", "MIME-Version", "Content-Type",
-            "Content-Transfer-Encoding", "Message-Id", "In-Reply-To", "X-HashCash", "X-Priority"
+            "Content-Transfer-Encoding", "In-Reply-To", "X-HashCash", "X-Priority"
         };
         
         ConcurrentHashSet<String> headerSet = new ConcurrentHashSet<String>();
@@ -212,7 +210,6 @@ public class Email implements FolderElement {
     public void updateHeaders() {
         setHeader("Content-Type", "text/plain");
         setHeader("Content-Transfer-Encoding", "7bit");
-        setHeader("Message-Id", messageId.getEmailMessageId());
         
         // Set the "Date" field, using english for the locale.
         Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("GMT+0"));
@@ -274,7 +271,11 @@ public class Email implements FolderElement {
         return new String(content);
     }
     
-    public MessageId getMessageID() {
+    public void setMessageId(UniqueId messageId) {
+        this.messageId = messageId;
+    }
+    
+    public UniqueId getMessageID() {
         return messageId;
     }
 
@@ -398,7 +399,6 @@ public class Email implements FolderElement {
         writeHeaders(outputStream, bccToKeep);
         outputStream.write(NEW_LINE);
         outputStream.write(content);
-        outputStream.write(NEW_LINE);
     }
     
     private void writeHeaders(OutputStream outputStream, String bccToKeep) throws IOException {

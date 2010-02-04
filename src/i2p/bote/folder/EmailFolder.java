@@ -21,8 +21,8 @@
 
 package i2p.bote.folder;
 
+import i2p.bote.UniqueId;
 import i2p.bote.email.Email;
-import i2p.bote.email.MessageId;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,13 +60,12 @@ public class EmailFolder extends Folder<Email> {
      * Finds an <code>Email</code> by message id. If the <code>Email</code> is
      * not found, <code>null</code> is returned.
      * The <code>messageId</code> parameter must be a 44-character base64-encoded
-     * message id. If the message id contains an ampersand, the ampersand and
-     * everything after it is ignored. 
+     * {@link UniqueId}.
      * @param messageIdString
      * @return
      */
     public Email getEmail(String messageIdString) {
-        MessageId messageId = new MessageId(messageIdString);
+        UniqueId messageId = new UniqueId(messageIdString);
         
         File file = getEmailFile(messageId);
         try {
@@ -87,7 +86,7 @@ public class EmailFolder extends Folder<Email> {
      * @param messageId
      * @return
      */
-    private File getEmailFile(MessageId messageId) {
+    private File getEmailFile(UniqueId messageId) {
         // try new email
         File newEmailFile = getEmailFile(messageId, true);
         if (newEmailFile.exists())
@@ -101,7 +100,7 @@ public class EmailFolder extends Folder<Email> {
         return null;
     }
     
-    private File getEmailFile(MessageId messageId, boolean newIndicator) {
+    private File getEmailFile(UniqueId messageId, boolean newIndicator) {
         return new File(storageDir, (newIndicator?'N':'O') + "_" + messageId.toBase64() + EMAIL_FILE_EXTENSION);
     }
     
@@ -136,7 +135,7 @@ public class EmailFolder extends Folder<Email> {
      * @param isNew
      */
     public void setNew(String messageIdString, boolean isNew) {
-        MessageId messageId = new MessageId(messageIdString);
+        UniqueId messageId = new UniqueId(messageIdString);
         File file = getEmailFile(messageId);
         if (file != null) {
             char newIndicator = isNew?'N':'O';   // the new start character
@@ -156,7 +155,7 @@ public class EmailFolder extends Folder<Email> {
      * @return <code>true</code> if the email was deleted, <code>false</code> otherwise
      */
     public boolean delete(String messageIdString) {
-        MessageId messageId = new MessageId(messageIdString);
+        UniqueId messageId = new UniqueId(messageIdString);
         File emailFile = getEmailFile(messageId);
         if (emailFile != null)
             return emailFile.delete();
@@ -174,6 +173,10 @@ public class EmailFolder extends Folder<Email> {
         FileInputStream inputStream = new FileInputStream(file);
         Email email = new Email(inputStream);
         email.setNew(isNew(file));
+        
+        String messageIdString = file.getName().substring(2, 46);
+        email.setMessageId(new UniqueId(messageIdString));
+        
         return email;
     }
 }
