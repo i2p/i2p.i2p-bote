@@ -22,13 +22,16 @@
 package i2p.bote;
 
 import i2p.bote.folder.IncompleteEmailFolderTest;
+import i2p.bote.packet.EmailPacketDeleteRequestTest;
 import i2p.bote.packet.EncryptedEmailPacketTest;
 import i2p.bote.packet.I2PBotePacketTest;
+import i2p.bote.packet.IndexPacketDeleteRequestTest;
+import i2p.bote.packet.IndexPacketTest;
 import i2p.bote.packet.PeerListTest;
 import i2p.bote.packet.ResponsePacketTest;
 import i2p.bote.packet.UnencryptedEmailPacketTest;
-import i2p.bote.packet.kademlia.FindClosePeersPacketTest;
-import i2p.bote.packet.kademlia.StoreRequestTest;
+import i2p.bote.packet.dht.FindClosePeersPacketTest;
+import i2p.bote.packet.dht.StoreRequestTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -37,7 +40,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( { I2PBotePacketTest.class, StoreRequestTest.class, EncryptedEmailPacketTest.class, UnencryptedEmailPacketTest.class,
-	FindClosePeersPacketTest.class, PeerListTest.class, ResponsePacketTest.class, IncompleteEmailFolderTest.class })
+	FindClosePeersPacketTest.class, PeerListTest.class, ResponsePacketTest.class, IncompleteEmailFolderTest.class,
+	EmailPacketDeleteRequestTest.class, IndexPacketDeleteRequestTest.class, IndexPacketTest.class })
 public class AllTests {
 
     public static Test suite() {
