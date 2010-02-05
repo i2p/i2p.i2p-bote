@@ -21,20 +21,23 @@
 
 package i2p.bote.folder;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.email.Email;
-import i2p.bote.email.RecipientType;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.File;
 import java.util.Collection;
+
+import javax.mail.Message.RecipientType;
+import javax.mail.internet.InternetAddress;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class IncompleteEmailFolderTest {
+    private File inboxDir;
 	private EmailFolder inbox;
 	private IncompleteEmailFolder incompleteFolder;
 	private File testDir;
@@ -44,7 +47,7 @@ public class IncompleteEmailFolderTest {
 		File tempDir = new File(System.getProperty("java.io.tmpdir"));
 		testDir = new File(tempDir, "IncompleteEmailFolderTest-" + System.currentTimeMillis());
 		
-		File inboxDir = new File(testDir, "inbox");
+		inboxDir = new File(testDir, "inbox");
 		inbox = new EmailFolder(inboxDir);
 		
 		File incompleteDir = new File(testDir, "incomplete");
@@ -53,9 +56,9 @@ public class IncompleteEmailFolderTest {
 	
 	@After
     public void tearDown() throws Exception {
-		for (Email email: inbox.getElements())
-			email.getFile().delete();
-		inbox.getStorageDirectory().delete();
+	    for (File file: inboxDir.listFiles())
+	        file.delete();
+	    inboxDir.delete();
 		incompleteFolder.getStorageDirectory().delete();
 		testDir.delete();
     }
@@ -78,8 +81,8 @@ public class IncompleteEmailFolderTest {
     private void testAddEmail(String mailContent, int expectedNumPackets) throws Exception {
         Email email = new Email();
         String recipient = "test@bote.i2p";
-        email.addRecipient(RecipientType.TO, recipient);
-        email.setContent(mailContent);
+        email.addRecipient(RecipientType.TO, new InternetAddress(recipient));
+        email.setText(mailContent);
         
         Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(recipient);
         assertTrue("Expected " + expectedNumPackets + " email packets, got " + packets.size(), packets.size() == expectedNumPackets);
@@ -90,6 +93,6 @@ public class IncompleteEmailFolderTest {
         
         assertTrue("The incomplete emails folder is not empty!", incompleteFolder.getElements().size() == 0);
         assertTrue("Expected: one email in the inbox, actual number = " + inbox.getElements().size(), inbox.getElements().size() == 1);
-        assertArrayEquals("Content of stored email differs from content of original email!", email.getContent(), inbox.getElements().iterator().next().getContent());
+        assertEquals("Content of stored email differs from content of original email!", email.getContent(), inbox.getElements().iterator().next().getContent());
     }
 }

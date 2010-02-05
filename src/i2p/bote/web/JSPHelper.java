@@ -30,7 +30,9 @@ import i2p.bote.folder.EmailFolder;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
-import java.util.Collection;
+
+import javax.mail.Address;
+import javax.mail.MessagingException;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
@@ -140,13 +142,22 @@ public class JSPHelper {
      * @return
      */
     public static String getOneLocalRecipient(Email email) {
+        Address[] recipients;
+        try {
+            recipients = email.getAllRecipients();
+        }
+        catch (MessagingException e) {
+            return null;
+        }
+        
         Identities identities = getIdentities();
-        Collection<String> recipients = email.getAllRecipients();
         for (EmailDestination localDestination: identities) {
             String base64Dest = localDestination.toBase64();
-            for (String recipient: recipients)
-                if (recipient.contains(base64Dest))
-                    return recipient;
+            for (Address recipient: recipients) {
+                String recipientString = recipient.toString();
+                if (recipientString.contains(base64Dest))
+                    return recipientString;
+            }
         }
         
         return null;

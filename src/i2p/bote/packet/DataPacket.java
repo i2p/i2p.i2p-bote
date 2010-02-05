@@ -23,7 +23,6 @@ package i2p.bote.packet;
 
 import i2p.bote.I2PBote;
 import i2p.bote.Util;
-import i2p.bote.folder.FolderElement;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,7 +35,7 @@ import net.i2p.util.Log;
 /**
  * The superclass of all "payload" packet types.
  */
-public abstract class DataPacket extends I2PBotePacket implements FolderElement {
+public abstract class DataPacket extends I2PBotePacket {
     protected static final int HEADER_LENGTH = 2;   // length of the common packet header in the byte array representation; this is where subclasses start reading
     private static Log log = new Log(DataPacket.class);
 
@@ -60,7 +59,6 @@ public abstract class DataPacket extends I2PBotePacket implements FolderElement 
     /**
      * Writes the packet to an <code>OutputStream</code> in binary representation.
      */
-    @Override
     public void writeTo(OutputStream outputStream) throws IOException {
         outputStream.write(toByteArray());
     }
@@ -135,16 +133,5 @@ public abstract class DataPacket extends I2PBotePacket implements FolderElement 
         }
         
         return packet;
-    }
-
-    // FolderElement implementation
-    @Override
-    public File getFile() {
-        return file;
-    }
-
-    @Override
-    public void setFile(File file) {
-        this.file = file;
     }
 }

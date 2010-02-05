@@ -17,7 +17,7 @@ public class IndexPacketTest {
     }
 
     @Test
-    public void testToByteArray() {
+    public void testToByteArrayAndBack() {
         fail("Not yet implemented");
     }
 
@@ -25,5 +25,4 @@ public class IndexPacketTest {
     public void testGetDhtKeys() {
         fail("Not yet implemented");
     }
-
 }

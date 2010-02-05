@@ -73,7 +73,7 @@ public class RelayPacketSender extends I2PBoteThread {
             
             log.info("Processing outgoing packets in directory '" + packetStore.getStorageDirectory().getAbsolutePath() + "'");
             for (RelayPacket packet: packetStore) {
-                log.info("Processing packet file: <" + packet.getFile() + ">");
+                log.info("Processing packet file for destination <" + packet.getNextDestination().calculateHash() + ">");
                 try {
                     HashCash hashCash = null;   // TODO
                     long sendTime = getRandomSendTime(packet);

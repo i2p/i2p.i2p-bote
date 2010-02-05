@@ -23,10 +23,11 @@ package i2p.bote.web;
 
 import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
-import i2p.bote.email.RecipientType;
 
 import java.io.IOException;
 
+import javax.mail.Message.RecipientType;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -37,41 +38,42 @@ public class SendEmailTag extends SimpleTagSupport {
     // TODO make all Log instances final
     private Log log = new Log(SendEmailTag.class);
     private String senderAddress;
-	private String recipientAddress;
-	private String subject;
-	private String message;
+    private String recipientAddress;
+    private String subject;
+    private String message;
 
-	public void doTag() {
-		PageContext pageContext = (PageContext) getJspContext();
-		JspWriter out = pageContext.getOut();
-		
-		Email email = new Email();
-        email.setSender(senderAddress);
-        email.addRecipient(RecipientType.TO, recipientAddress);
-        email.setSubject(subject);
-        email.setContent(message);
-		String statusMessage;
-		try {
-			I2PBote.getInstance().sendEmail(email);
-			statusMessage = "The email has been sent.";
-		}
-		catch (Exception e) {
-			statusMessage = "Error sending email: " + e.getLocalizedMessage();
-			log.error("Error sending email", e);
-		}
+    public void doTag() {
+        PageContext pageContext = (PageContext) getJspContext();
+        JspWriter out = pageContext.getOut();
 
-		try {
-			out.println(statusMessage);
-		} catch (IOException e) {
-			log.error("Can't write output to HTML page", e);
-		}
-	}
+        Email email = new Email();
+        String statusMessage;
+        try {
+            email.setSender(new InternetAddress(senderAddress));
+            email.addRecipient(RecipientType.TO, new InternetAddress(recipientAddress));
+            email.setSubject(subject);
+            email.setText(message, "UTF-8");
 
-	/**
-	 * 
-	 * @param sender Can be a (Base64-encoded) email identity key or a public name plus
-	 * an email identity key.
-	 */
+            I2PBote.getInstance().sendEmail(email);
+            statusMessage = "The email has been sent.";
+        }
+        catch (Exception e) {
+            statusMessage = "Error sending email: " + e.getLocalizedMessage();
+            log.error("Error sending email", e);
+        }
+
+        try {
+            out.println(statusMessage);
+        } catch (IOException e) {
+            log.error("Can't write output to HTML page", e);
+        }
+    }
+
+    /**
+     * 
+     * @param sender Can be a (Base64-encoded) email identity key or a public name plus
+     * an email identity key.
+     */
     public void setSender(String sender) {
         this.senderAddress = sender;
     }
@@ -80,15 +82,15 @@ public class SendEmailTag extends SimpleTagSupport {
         return senderAddress;
     }
 
-	public void setRecipient(String recipient) {
-		this.recipientAddress = recipient;
-	}
+    public void setRecipient(String recipient) {
+        this.recipientAddress = recipient;
+    }
 
-	public String getRecipient() {
-		return recipientAddress;
-	}
+    public String getRecipient() {
+        return recipientAddress;
+    }
 
-	public void setSubject(String subject) {
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 
@@ -97,10 +99,10 @@ public class SendEmailTag extends SimpleTagSupport {
     }
 
     public void setMessage(String message) {
-		this.message = message;
-	}
+        this.message = message;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 }

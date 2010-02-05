@@ -27,6 +27,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.mail.MessagingException;
+
 import net.i2p.util.Log;
 
 /**
@@ -49,7 +51,7 @@ public class Outbox extends EmailFolder {
 	
 	// store one email file + one status file.
 	@Override
-	public void add(Email email) throws IOException {
+	public void add(Email email) throws IOException, MessagingException {
         // write out the email file
 	    super.add(email);
 		
@@ -64,7 +66,7 @@ public class Outbox extends EmailFolder {
 	}
 	
 	private File getStatusFile(Email email) {
-		return new File(storageDir, email.getMessageID() + STATUS_FILE_EXTENSION);
+		return new File(storageDir, email.getUniqueID().toBase64() + STATUS_FILE_EXTENSION);
 	}
 
 	// delete an email file + the status file

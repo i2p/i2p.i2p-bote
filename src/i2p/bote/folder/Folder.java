@@ -35,7 +35,7 @@ import net.i2p.util.Log;
  * 
  * @param <T> The type of objects the folder can store.
  */
-public abstract class Folder<T extends FolderElement> implements Iterable<T> {
+public abstract class Folder<T> implements Iterable<T> {
     private Log log = new Log(Folder.class);
     protected File storageDir;
     protected String fileExtension;
@@ -110,7 +110,6 @@ public abstract class Folder<T extends FolderElement> implements Iterable<T> {
                 log.info("Reading file: '" + filePath + "'");
                 try {
                     T nextElement = createFolderElement(file);
-                    nextElement.setFile(file);
                     nextIndex++;
                     return nextElement;
                 }

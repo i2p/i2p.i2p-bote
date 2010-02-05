@@ -40,6 +40,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import javax.mail.Address;
+import javax.mail.MessagingException;
+
 import net.i2p.I2PAppContext;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
@@ -80,7 +83,7 @@ public class OutboxProcessor extends I2PAppThread {
             
 			log.info("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
 			for (Email email: outbox) {
-			    log.info("Processing outbox file: '" + email.getFile() + "'.");
+			    log.info("Processing email with message Id: '" + email.getUniqueID() + "'.");
 				try {
 					sendEmail(email);
 				} catch (Exception e) {
@@ -107,10 +110,11 @@ public class OutboxProcessor extends I2PAppThread {
 	 * Sends an {@link Email} to all recipients specified in the header.
 	 * @param email
 	 * @throws IOException
+	 * @throws MessagingException 
 	 */
-	private void sendEmail(Email email) throws IOException {
-		for (String recipient: email.getAllRecipients())
-		    sendToOne(recipient, email);
+	private void sendEmail(Email email) throws IOException, MessagingException {
+		for (Address recipient: email.getAllRecipients())
+		    sendToOne(recipient.toString(), email);
 	}
 
 	/**
@@ -121,7 +125,6 @@ public class OutboxProcessor extends I2PAppThread {
 	private void sendToOne(String address, Email email) {
 		String logSuffix = null;   // only used for logging
 		try {
-            Email scrubbedEmail = email.removeBCCs(address);
 			addHashCash(email);
 			logSuffix = "Recipient = '" + address + "' Message ID = '" + email.getMessageID() + "'";
 			EmailDestination emailDestination = emailAddressResolver.getDestination(address);
@@ -140,7 +143,7 @@ public class OutboxProcessor extends I2PAppThread {
 		}
 	}
 
-	private void addHashCash(Email email) throws NoSuchAlgorithmException {
+	private void addHashCash(Email email) throws NoSuchAlgorithmException, MessagingException {
 		email.setHashCash(HashCash.mintCash("", configuration.getHashCashStrength()));
 	}
 	

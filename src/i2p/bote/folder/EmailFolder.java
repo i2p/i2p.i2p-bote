@@ -25,10 +25,11 @@ import i2p.bote.UniqueId;
 import i2p.bote.email.Email;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import javax.mail.MessagingException;
 
 import net.i2p.util.Log;
 
@@ -47,7 +48,7 @@ public class EmailFolder extends Folder<Email> {
     }
     
     // store an email file
-    public void add(Email email) throws IOException {
+    public void add(Email email) throws IOException, MessagingException {
         // write out the email file
         File emailFile = getEmailFile(email);
         log.info("Mail folder <" + storageDir + ">: storing email file: <" + emailFile.getAbsolutePath() + ">");
@@ -78,7 +79,7 @@ public class EmailFolder extends Folder<Email> {
     }
     
     private File getEmailFile(Email email) {
-        return getEmailFile(email.getMessageID(), email.isNew());
+        return getEmailFile(email.getUniqueID(), email.isNew());
     }
 
     /**
@@ -170,8 +171,7 @@ public class EmailFolder extends Folder<Email> {
 
     @Override
     protected Email createFolderElement(File file) throws Exception {
-        FileInputStream inputStream = new FileInputStream(file);
-        Email email = new Email(inputStream);
+        Email email = new Email(file);
         email.setNew(isNew(file));
         
         String messageIdString = file.getName().substring(2, 46);

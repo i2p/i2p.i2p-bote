@@ -276,8 +276,7 @@ public class I2PBote {
 	
 	public void sendEmail(Email email) throws Exception {
 /*XXX*/
-email.updateHeaders();
-String recipient = email.getAllRecipients().iterator().next();
+String recipient = email.getAllRecipients()[0].toString();
 EmailDestination emailDestination = new EmailDestination(recipient);
 Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(recipient);
 Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, emailDestination, appContext);

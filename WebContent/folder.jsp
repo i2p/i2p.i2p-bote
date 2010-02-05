@@ -54,10 +54,7 @@
                 
                 <c:set var="recipient" value="${ib:getOneLocalRecipient(email)}"/>
                 
-                <c:set var="date" value="${email.date}"/>
-                <c:if test="${empty date}">
-                    <c:set var="date" value="${email.dateString}"/>
-                </c:if>
+                <c:set var="date" value="${email.sentDate}"/>
                 <c:if test="${empty date}">
                     <c:set var="date" value="Unknown"/>
                 </c:if>

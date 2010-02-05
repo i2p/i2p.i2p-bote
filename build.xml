@@ -5,7 +5,7 @@
     <property name="jettylib" value="${i2pbase}/apps/jetty/jettylib"/>
     <property name="antlib" value="${jettylib}"/>
     <property name="jstllib" value="${i2pbase}/apps/susidns/src/WEB-INF/lib"/>
-    <property name="junitlib" value="WebContent/WEB-INF/lib"/>
+    <property name="lib" value="WebContent/WEB-INF/lib"/>
     <path id="cp">
         <pathelement path="${java.class.path}" />
         <pathelement location="${i2plib}/i2p.jar" />
@@ -17,6 +17,7 @@
         <pathelement location="${jettylib}/commons-el.jar" />
         <pathelement location="${jstllib}/jstl.jar" />
         <pathelement location="${jstllib}/standard.jar" />
+        <pathelement location="${lib}/mailapi.jar" />
     </path>
 
     <target name="all" depends="clean, war" />
@@ -78,6 +79,7 @@
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
             <lib file="${jstllib}/jstl.jar"/>
             <lib file="${jstllib}/standard.jar"/>
+            <lib file="${lib}/mailapi.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
         </war>
 
@@ -89,7 +91,7 @@
     
     <target name="junit" depends="compile">
         <path id="junitcp">
-            <pathelement location="${junitlib}/junit.jar"/>
+            <pathelement location="${lib}/junit.jar"/>
             <pathelement location="./ant_build/classes"/>
             <path refid="cp"/>
         </path>
