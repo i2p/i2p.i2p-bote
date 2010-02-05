@@ -545,20 +545,15 @@ I2P destination
 
 11. To Do
 
+  * run FindBugs
   * Is AbstractBucket.contains(Destination) still needed, or will peers.contains(Destination) work?
-  * show local dest hash on network.jsp
   * Bug? checking emails after deleting an email causes an error. something about not being able to delete an email.
   * wenn ich eine mail von dest xyz erhalte, und diese in meinem addressbuch ist, sollte als absender nicht der vom Sender gewählte username sein (da kann er ja behaupten, was er will), sondern der beim empfänger loval im Addbuch gespeicherte pet name.
     Ist der user local nicht bekannt, dann kann der public name verwendet werden, allerdings sollte ersichtlich sein dass es nur der public name ist, z.B. durch andere Farbe oder ein Feld mit nem Sternchen für authenticated wenn er in local addy book steht (eine spalte wie datum oder so, ganz schmal mit nur nem sternchen drin, ähnlich sollten auch ungelesene mails markiert werden - ist aber nicht high priority, ich sag's nur für deine todo list, falls du d'accord bist.) 
   * make sure del key is zeroed out when responding to a retrieve request for an EncryptedEmailPacket
   * don't send delete requests to self, just delete the file locally
-  * rename test/.../kademlia package to dht for consistency
   * make blue background solid, lighter color so chinese chars are readable
-  * show # of new emails next to folder name, show new + total count on a tool tip
-  * don't print subject lines in bold unless the email is new (store msg ids of read emails in a file in the email folder)
   * button to delete all packets with an invalid protocol version
-  * show "to" address in inbox
-  * put sender name in "From" header field, if available
   * auto-refresh network.jsp
   * show remaining time for the 3-min delay at startup
   * Packet ID field isn't really a packet id, rename to Conversation ID or maybe Session ID
@@ -579,7 +574,6 @@ I2P destination
   * Turnkey outproxy feature?
   * All nodes keep track of I2PBote peers through Peer List Requests and by pinging known peers
     periodically.
-  * optionally, packets are padded to a constant size
   * select different set of hops for each packet
   * instead of sending dummy messages for cover traffic, test gateways by routing packet to self
   * keep track of uptimes + reliability of paths (or gateways), have a "minimum 
@@ -588,14 +582,12 @@ I2P destination
   * Use more storage nodes if email destination is known to be heavily frequented (like Kademlia does for popular hashes)
   * mention that min/max delay = earliest/latest send time (explain that there is no guarantee for the send time being between min and max, it can be after max)
   * Consider replacing ElGamal with 256-bit ECC encryption (=86 base64 chars) which comes standard in Java 7
-  * If an email fits in one packet, don't bother with an index packet
   * Emails in the Outbox: Show addt'l "progress" progress column which is clickable and brings up detailed info.
   * On first run, offer to create a new email identity, and optionally assign an email address to it.
   * Folder structure on disk should reflect folders in app. All email folders visible to the user have the same root directory: [app dir]/folders.
   * ask user for confirmation before deleting an email identity
   * have a view of the incomplete folder, so users can look at incomplete emails
   * use a key store for email identities so they are not locally readable?
-  * log payload type for responses/retrieve requests/store requests
   * unit test candidates:
     * KBucket
     * BucketManager
@@ -606,16 +598,13 @@ I2P destination
   * generate javadoc in ant build
   * are non-daemon threads preventing app from shutting down in eclipse?
   * prioritize packets in I2PSendQueue? Should PeerListRequests get higher priority than relay packets etc.?
-  * shorten thread names to 12 chars
   * use I2P time, not System.currentTimeMillis()
   * make some public methods package private
   * AAAAA.... in local_dest.key file doesn't look right, fix
   * Don't use Kademlia for getRandomNodes(), implement a RelayPeerManager instead
   * comment code
-  * cache message IDs for received messages so we don't receive them more than once from different relays
   * don't use byte arrays for content at all, use InputStream instead so we don't have to load large attachments into memory
   * ByteArrayOutputStreams don't need to be closed
   * remove setFileName/getFileName from Email, move debug code that uses it into Outbox
   * use I2PSocketManager.ping() and rename PING/PONG packets to REQ/RESP?
   * use DataHelper to write an int to an OutputStream
-  * use SimpleTimer/SimpleScheduler?
