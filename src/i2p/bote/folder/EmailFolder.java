@@ -36,7 +36,7 @@ import net.i2p.util.Log;
 /**
  * Stores emails in a directory on the file system. Each email is stored in one file.
  * Filenames are in the format <code><N, O>_<message ID>.mail</code>, where
- * N is for new (unread) and O is for old (read).
+ * N is for new (unread or unsent) and O is for old (read or sent).
  */
 public class EmailFolder extends Folder<Email> {
     protected static final String EMAIL_FILE_EXTENSION = ".mail";
@@ -62,12 +62,10 @@ public class EmailFolder extends Folder<Email> {
      * not found, <code>null</code> is returned.
      * The <code>messageId</code> parameter must be a 44-character base64-encoded
      * {@link UniqueId}.
-     * @param messageIdString
+     * @param messageId
      * @return
      */
-    public Email getEmail(String messageIdString) {
-        UniqueId messageId = new UniqueId(messageIdString);
-        
+    public Email getEmail(String messageId) {
         File file = getEmailFile(messageId);
         try {
             return createFolderElement(file);
@@ -79,7 +77,7 @@ public class EmailFolder extends Folder<Email> {
     }
     
     private File getEmailFile(Email email) {
-        return getEmailFile(email.getUniqueID(), email.isNew());
+        return getEmailFile(email.getMessageID(), email.isNew());
     }
 
     /**
@@ -87,7 +85,7 @@ public class EmailFolder extends Folder<Email> {
      * @param messageId
      * @return
      */
-    private File getEmailFile(UniqueId messageId) {
+    private File getEmailFile(String messageId) {
         // try new email
         File newEmailFile = getEmailFile(messageId, true);
         if (newEmailFile.exists())
@@ -101,8 +99,8 @@ public class EmailFolder extends Folder<Email> {
         return null;
     }
     
-    private File getEmailFile(UniqueId messageId, boolean newIndicator) {
-        return new File(storageDir, (newIndicator?'N':'O') + "_" + messageId.toBase64() + EMAIL_FILE_EXTENSION);
+    private File getEmailFile(String messageId, boolean newIndicator) {
+        return new File(storageDir, (newIndicator?'N':'O') + "_" + messageId + EMAIL_FILE_EXTENSION);
     }
     
     /**
@@ -132,11 +130,10 @@ public class EmailFolder extends Folder<Email> {
     /**
      * Flags an email "new" (if <code>isNew</code> is <code>true</code>) or
      * "old" (if <code>isNew</code> is <code>false</code>).
-     * @param messageIdString
+     * @param messageId
      * @param isNew
      */
-    public void setNew(String messageIdString, boolean isNew) {
-        UniqueId messageId = new UniqueId(messageIdString);
+    public void setNew(String messageId, boolean isNew) {
         File file = getEmailFile(messageId);
         if (file != null) {
             char newIndicator = isNew?'N':'O';   // the new start character
@@ -152,11 +149,10 @@ public class EmailFolder extends Folder<Email> {
     
     /**
      * Deletes an email with a given message ID.
-     * @param messageIdString
+     * @param messageId
      * @return <code>true</code> if the email was deleted, <code>false</code> otherwise
      */
-    public boolean delete(String messageIdString) {
-        UniqueId messageId = new UniqueId(messageIdString);
+    public boolean delete(String messageId) {
         File emailFile = getEmailFile(messageId);
         if (emailFile != null)
             return emailFile.delete();
@@ -175,7 +171,7 @@ public class EmailFolder extends Folder<Email> {
         email.setNew(isNew(file));
         
         String messageIdString = file.getName().substring(2, 46);
-        email.setMessageId(new UniqueId(messageIdString));
+        email.setMessageID(messageIdString);
         
         return email;
     }

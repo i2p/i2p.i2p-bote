@@ -28,6 +28,7 @@ import java.io.IOException;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeUtility;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -51,7 +52,7 @@ public class SendEmailTag extends SimpleTagSupport {
         try {
             email.setSender(new InternetAddress(senderAddress));
             email.addRecipient(RecipientType.TO, new InternetAddress(recipientAddress));
-            email.setSubject(subject);
+            email.setSubject(MimeUtility.encodeText(subject, "UTF-8", "Q"));
             email.setText(message, "UTF-8");
 
             I2PBote.getInstance().sendEmail(email);

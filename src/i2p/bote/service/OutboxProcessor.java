@@ -83,7 +83,7 @@ public class OutboxProcessor extends I2PAppThread {
             
 			log.info("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
 			for (Email email: outbox) {
-			    log.info("Processing email with message Id: '" + email.getUniqueID() + "'.");
+			    log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
 				try {
 					sendEmail(email);
 				} catch (Exception e) {

@@ -61,12 +61,12 @@ public class Email extends MimeMessage {
     };
     
     private static Log log = new Log(Email.class);
-    private UniqueId uniqueId;
+    private UniqueId messageId;
     private boolean isNew = true;
 
     public Email() {
         super(Session.getDefaultInstance(new Properties()));
-        uniqueId = new UniqueId();
+        messageId = new UniqueId();
     }
 
     public Email(File file) throws FileNotFoundException, MessagingException {
@@ -81,7 +81,7 @@ public class Email extends MimeMessage {
      */
     private Email(InputStream inputStream) throws MessagingException {
         super(Session.getDefaultInstance(new Properties()), inputStream);
-        uniqueId = new UniqueId();
+        messageId = new UniqueId();
     }
 
    /**
@@ -92,7 +92,7 @@ public class Email extends MimeMessage {
     */
     public Email(byte[] bytes) throws MessagingException {
         super(Session.getDefaultInstance(new Properties()), new ByteArrayInputStream(bytes));
-        uniqueId = new UniqueId();
+        messageId = new UniqueId();
     }
 
     public void setHashCash(HashCash hashCash) throws MessagingException {
@@ -107,9 +107,8 @@ public class Email extends MimeMessage {
     @Override
     public void updateHeaders() {
         try {
+            super.updateHeaders();
             scrubHeaders();
-            setHeader("Content-Type", "text/plain");
-            setHeader("Content-Transfer-Encoding", "7bit");
             
             // Set the "Date" field, using english for the locale.
             Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("GMT+0"));
@@ -157,22 +156,21 @@ public class Email extends MimeMessage {
         }
     }
 
-    public void setUniqueId(UniqueId uniqueId) {
-        setMessageId(uniqueId);
+    /**
+     * 
+     * @param messageIdString Must be a 44-character Base64-encoded string.
+     */
+    public void setMessageID(String messageIdString) {
+        this.messageId = new UniqueId(messageIdString);
     }
     
-    public void setMessageId(UniqueId uniqueId) {
-        this.uniqueId = uniqueId;
-        try {
-            setHeader("Message-Id", uniqueId.toBase64() + "@i2p");
-        }
-        catch (MessagingException e) {
-            log.error("Can't set message ID on email.", e);
-        }
+    public void setMessageID(UniqueId messageId) {
+        this.messageId = messageId;
     }
     
-    public UniqueId getUniqueID() {
-        return uniqueId;
+    @Override
+    public String getMessageID() {
+        return messageId.toBase64();
     }
     
     public void setNew(boolean isNew) {
@@ -239,7 +237,7 @@ public class Email extends MimeMessage {
                 byte[] block = new byte[blockSize];
                 System.arraycopy(emailArray, blockStart, block, 0, blockSize);
                 UniqueId deletionKey = new UniqueId();
-                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(uniqueId, fragmentIndex, numFragments, block, deletionKey);
+                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, block, deletionKey);
                 packets.add(packet);
                 fragmentIndex++;
                 blockStart += blockSize;

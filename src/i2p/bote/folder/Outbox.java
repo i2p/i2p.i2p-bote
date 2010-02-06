@@ -66,7 +66,7 @@ public class Outbox extends EmailFolder {
 	}
 	
 	private File getStatusFile(Email email) {
-		return new File(storageDir, email.getUniqueID().toBase64() + STATUS_FILE_EXTENSION);
+		return new File(storageDir, email.getMessageID() + STATUS_FILE_EXTENSION);
 	}
 
 	// delete an email file + the status file
