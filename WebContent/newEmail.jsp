@@ -26,9 +26,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<jsp:include page="header.jsp">
-    <jsp:param name="title" value="New Email"/>
-</jsp:include>
+<c:set var="title" value="New Email" scope="request"/>
+<jsp:include page="header.jsp"/>
 
 <div class="main">
     <form action="sendEmail.jsp" method="post">

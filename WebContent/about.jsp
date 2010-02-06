@@ -22,11 +22,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<jsp:include page="header.jsp">
-    <jsp:param name="title" value="About I2P-Bote"/>
-</jsp:include>
+<c:set var="title" value="About I2P-Bote" scope="request"/>
+<jsp:include page="header.jsp"/>
 
 <div class="main">
     <h2>

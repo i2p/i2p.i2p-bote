@@ -29,18 +29,16 @@
 
 <c:choose>
     <c:when test="${param.new}">
-        <c:set var="title" value="New Email Identity"/>
+        <c:set var="title" value="New Email Identity" scope="request"/>
         <c:set var="commitAction" value="Create"/>
     </c:when>
     <c:otherwise>
-        <c:set var="title" value="Edit Email Identity"/>
+        <c:set var="title" value="Edit Email Identity" scope="request"/>
         <c:set var="commitAction" value="Save"/>
     </c:otherwise>
 </c:choose>
 
-<jsp:include page="header.jsp">
-    <jsp:param name="title" value="${title}"/>
-</jsp:include>
+<jsp:include page="header.jsp"/>
 
 <div class="errorMessage">
     ${param.errorMessage}

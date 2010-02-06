@@ -26,9 +26,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<jsp:include page="header.jsp">
-    <jsp:param name="title" value="Identities"/>
-</jsp:include>
+<c:set var="title" value="Identities" scope="request"/>
+<jsp:include page="header.jsp"/>
 
 <div class="infoMessage">
     ${param.infoMessage}

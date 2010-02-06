@@ -26,9 +26,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<jsp:include page="header.jsp">
-    <jsp:param name="title" value="${param.path}"/>
-</jsp:include>
+<c:set var="title" value="${param.path}" scope="request"/>
+<jsp:include page="header.jsp"/>
 
 <c:set var="folderName" value="Inbox"/>
 <c:if test="${folderName == 'Inbox'}">

@@ -31,9 +31,8 @@
 
 <ib:setEmailRead folder="${ib:getMailFolder(param.folder)}" messageId="${param.messageID}" read="true"/>
 
-<jsp:include page="header.jsp">
-    <jsp:param name="title" value="${email.subject}"/>
-</jsp:include>
+<c:set var="title" value="${email.subject}" scope="request"/>
+<jsp:include page="header.jsp"/>
 
 <div class="main">
     <table>

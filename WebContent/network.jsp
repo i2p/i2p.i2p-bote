@@ -28,9 +28,8 @@
 
 <jsp:include page="getStatus.jsp"/>
 
-<jsp:include page="header.jsp">
-    <jsp:param name="title" value="${param.path}"/>
-</jsp:include>
+<c:set var="title" value="Network" scope="request"/>
+<jsp:include page="header.jsp"/>
 
 <div class="main">
     <c:choose>

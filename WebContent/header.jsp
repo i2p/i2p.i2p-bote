@@ -24,14 +24,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
+
+<fmt:requestEncoding value="UTF-8"/>
 
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="i2pbote.css" />
     <link rel="icon" type="image/png" href="images/favicon.png" />
-    <title>${param.title} - I2P-Bote</title>
+    <c:if test="${!empty title}">
+        <title>${title} - I2P-Bote</title>
+    </c:if>
 </head>
 
 <body>
