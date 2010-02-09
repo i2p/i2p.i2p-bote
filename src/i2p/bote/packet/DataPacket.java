@@ -39,8 +39,6 @@ public abstract class DataPacket extends I2PBotePacket {
     protected static final int HEADER_LENGTH = 2;   // length of the common packet header in the byte array representation; this is where subclasses start reading
     private static Log log = new Log(DataPacket.class);
 
-    private File file;
-
     public DataPacket() {
     }
 
