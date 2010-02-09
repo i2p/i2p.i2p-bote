@@ -290,17 +290,18 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 
     public synchronized void checkForMail() {
         if (!isCheckingForMail()) {
-            log.debug("Checking for mail...");
+            log.debug("Checking mail for " + identities.size() + " Email Identities...");
             lastMailCheckTime = System.currentTimeMillis();
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
-            for (EmailIdentity identity: getIdentities()) {
+            for (EmailIdentity identity: identities) {
                 Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, appContext);
                 Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
                 pendingMailCheckTasks.add(task);
             }
+            log.debug("Finished checking for mail.");
         }
         else
-            log.debug("Not checking for mail because the last one hasn't finished.");
+            log.debug("Not checking for mail because the last mail check hasn't finished.");
     }
 
     public synchronized long getLastMailCheckTime() {
