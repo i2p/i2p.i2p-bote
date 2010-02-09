@@ -298,7 +298,6 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
                 Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
                 pendingMailCheckTasks.add(task);
             }
-            log.debug("Finished checking for mail.");
         }
         else
             log.debug("Not checking for mail because the last mail check hasn't finished.");
