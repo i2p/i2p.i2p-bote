@@ -121,7 +121,7 @@ public class ClosestNodesLookupTask implements Runnable {
     private boolean isDone() {
         if (pendingRequests.isEmpty() && notQueriedYet.isEmpty())   // if there are no more requests to send, and no more responses to wait for, we're finished
             return true;
-        if (responses.size() >= KademliaConstants.S)   // if we have received enough responses, we're also finished
+        if (responses.size() >= KademliaConstants.K)   // if we have received enough responses, we're also finished
             return true;
         if (hasTimedOut(startTime, CLOSEST_NODES_LOOKUP_TIMEOUT)) {
             log.error("Lookup for closest nodes timed out.");
@@ -150,7 +150,7 @@ public class ClosestNodesLookupTask implements Runnable {
     }
     
     /**
-     * Returns up to <code>s</code> peers. If no peers were found, an empty
+     * Returns up to <code>k</code> peers. If no peers were found, an empty
      * <code>List</code> is returned.
      * @return
      */
@@ -161,8 +161,8 @@ public class ClosestNodesLookupTask implements Runnable {
         Collections.sort(resultsList, new HashDistanceComparator(key));
         
         // trim the list to the k closest nodes
-        if (resultsList.size() > KademliaConstants.S)
-            resultsList = resultsList.subList(0, KademliaConstants.S);
+        if (resultsList.size() > KademliaConstants.K)
+            resultsList = resultsList.subList(0, KademliaConstants.K);
         return resultsList;
     }
 
