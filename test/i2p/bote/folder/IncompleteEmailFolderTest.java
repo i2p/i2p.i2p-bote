@@ -71,8 +71,8 @@ public class IncompleteEmailFolderTest {
 	@Test
 	public void testAddThreePacketEmail() throws Exception {
 		StringBuilder stringBuilder = new StringBuilder();
-		// create a 90,000-char string
-		for (int i=0; i<9000; i++)
+		// create a 80,000-char string
+		for (int i=0; i<8000; i++)
 			stringBuilder.append("0123456789");
 
         testAddEmail(stringBuilder.toString(), 3);
