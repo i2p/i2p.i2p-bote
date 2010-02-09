@@ -21,7 +21,6 @@
 
 package i2p.bote.packet.dht;
 
-import i2p.bote.I2PBote;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.TypeCode;
