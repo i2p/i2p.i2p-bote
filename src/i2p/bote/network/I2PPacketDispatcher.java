@@ -103,6 +103,9 @@ public class I2PPacketDispatcher implements I2PSessionListener {
         catch (I2PInvalidDatagramException e) {
             log.error("Datagram failed verification.", e);
         }
+        catch (Exception e) {
+            log.error("Error processing datagram.", e);
+        }
     }
 
     private void logPacket(I2PBotePacket packet, Destination sender) {
