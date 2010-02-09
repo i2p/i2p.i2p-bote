@@ -291,16 +291,16 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             i2pReceiver.addPacketListener(this);
         outerLoop:  
             while (true) {
-                for (KademliaPeer bootstrapNode: initialPeers) {
+                for (Destination bootstrapNode: initialPeers) {
                     bucketManager.addOrUpdate(bootstrapNode);
                     Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
                     
                     if (closestNodes.isEmpty()) {
-                        log.debug("No response from bootstrap node " + bootstrapNode);
+                        log.debug("No response from bootstrap node " + bootstrapNode.calculateHash());
                         bucketManager.remove(bootstrapNode);
                     }
                     else {
-                        log.debug("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.getDestinationHash());
+                        log.debug("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash());
                         refreshAll();
                         log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
                         for (Destination peer: bucketManager.getAllPeers())

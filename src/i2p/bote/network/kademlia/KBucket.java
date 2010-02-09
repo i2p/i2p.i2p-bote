@@ -22,21 +22,36 @@
 package i2p.bote.network.kademlia;
 
 import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
-import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 
+/**
+ * An {@link AbstractBucket} that:
+ *  * can be split in two, and
+ *  * maintains a replacement cache.
+ *  
+ * Peers are kept in an <code>ArrayList</code>. New peers are added at
+ * index 0. When a peer is updated, it is moved to index 0.
+ * When the bucket needs to make room for a new peer, the peer at the
+ * highest index (the least recently seen one) is dropped.
+ * This effectively sorts peers by the time of most recent communication.
+ * 
+ * The replacement cache is handled the same way.
+ * 
+ * TODO use peers from the replacement cache when the bucket is not full
+ */
 class KBucket extends AbstractBucket {
     private static final int REPLACEMENT_CACHE_MAX_SIZE = KademliaConstants.K;
     
     private Log log = new Log(KBucket.class);
     private BigInteger startId;
     private BigInteger endId;
-    private Set<KademliaPeer> replacementCache;
+    private List<KademliaPeer> replacementCache;
     private int depth;
 
     // capacity - The maximum number of peers the bucket can hold
@@ -44,45 +59,46 @@ class KBucket extends AbstractBucket {
         super(capacity);
         this.startId = startId;
         this.endId = endId;
-        replacementCache = new ConcurrentHashSet<KademliaPeer>();
+        replacementCache = Collections.synchronizedList(new ArrayList<KademliaPeer>());
         this.depth = depth;
     }
     
-    BigInteger getStartId() {
+    synchronized BigInteger getStartId() {
         return startId;
     }
     
-    BigInteger getEndId() {
+    synchronized BigInteger getEndId() {
         return endId;
     }
     
-    void add(Destination destination) {
+    synchronized void add(Destination destination) {
         if (isFull())
             log.error("Error: adding a node to a full k-bucket. Bucket needs to be split first. Size=" + size() + ", capacity=" + capacity);
         
         KademliaPeer peer = getPeer(destination);
         if (peer == null)
-            peers.add(peer);
+            peers.add(new KademliaPeer(destination));
     }
     
     /**
-     * Adds a node to the bucket, splitting the bucket if necessary. If the bucket is split,
-     * the newly created bucket is returned. Otherwise, <code>null</code> is returned.
+     * Adds a node to the bucket, splitting the bucket if necessary, or updates the node
+     * if it exists in the bucket. If the bucket is split, the newly created bucket is
+     * returned. Otherwise, <code>null</code> is returned.
      * 
      * If the bucket is full but cannot be split, the new node is added to the replacement
      * cache and <code>null</code> is returned.
      * @param destination
      * @return
      */
-    synchronized KBucket addOrSplit(Destination destination) {
+    synchronized KBucket addUpdateOrSplit(Destination destination) {
         if (!rangeContains(destination))
-            log.error("Attempt to add a node whose hash is outside the bucket's range! Bucket start=" + startId + " Bucket end=" + endId + " peer hash=" + new BigInteger(destination.calculateHash().getData()));
+            log.error("Attempt to add a node whose hash is outside the bucket's range! Bucket start=" + startId + " Bucket end=" + endId + " peer hash=" + new BigInteger(1, destination.calculateHash().getData()));
 
         KademliaPeer peer = getPeer(destination);
         
         if (isFull() && peer==null) {   // if bucket full and bucket doesn't contain peer, split the bucket if possible
             if (canSplit(destination)) {
-                KBucket newBucket = split(destination.calculateHash());
+                KBucket newBucket = split();
                 if (rangeContains(destination))
                     add(destination);
                 else if (newBucket.rangeContains(destination))
@@ -96,27 +112,41 @@ class KBucket extends AbstractBucket {
                 return null;
             }
         }
-        else {
-            // if the peer exists in the bucket already, update
-            if (peer == null)
-                peers.add(new KademliaPeer(destination, System.currentTimeMillis()));
-            else
-                peer.setLastReception(System.currentTimeMillis());
+        else {   // no splitting needed
+            addOrUpdate(destination);
             return null;
         }
     }
     
-    private void addOrUpdateReplacement(KademliaPeer peer) {
-        replacementCache.add(peer);
-        while (replacementCache.size() > REPLACEMENT_CACHE_MAX_SIZE)
-            removeOldest(replacementCache);
+    /**
+     * Updates a known peer, or adds the peer if it isn't known. If the bucket
+     * is full, the oldest peer is removed before adding the new peer.
+     * @param destination
+     * @return The peer that was removed from the bucket, or <code>null</code>
+     * if no peer was removed.
+     */
+    private Destination addOrUpdate(Destination destination) {
+        // TODO log an error if peer outside bucket's range
+        int index = getPeerIndex(destination);
+        if (index >= 0) {
+            KademliaPeer peer = peers.remove(index);
+            peers.add(0, peer);
+            peer.resetStaleCounter();
+            return null;
+        }
+        else {
+            KademliaPeer removedPeer = null;
+            if (isFull())
+                removedPeer = peers.remove(peers.size() - 1);
+            peers.add(0, new KademliaPeer(destination));
+            return removedPeer;
+        }
     }
-    
-    private void removeOldest(Collection<KademliaPeer> peers) {
-        KademliaPeer oldestPeer = null;
-        for (KademliaPeer peer: peers)
-            if (oldestPeer==null || peer.getLastReception()<oldestPeer.getLastReception())
-                oldestPeer = peer;
+
+    private void addOrUpdateReplacement(KademliaPeer peer) {
+        replacementCache.add(0, peer);
+        while (replacementCache.size() > REPLACEMENT_CACHE_MAX_SIZE)
+            replacementCache.remove(REPLACEMENT_CACHE_MAX_SIZE-1);
     }
     
     /**
@@ -135,25 +165,42 @@ class KBucket extends AbstractBucket {
      * @return
      */
     private boolean rangeContains(Destination peer) {
-        BigInteger peerHash = new BigInteger(peer.calculateHash().getData());
-        return (startId.compareTo(peerHash)<=0 || endId.compareTo(peerHash)>0);
+        BigInteger peerHash = new BigInteger(1, peer.calculateHash().getData());
+        return (startId.compareTo(peerHash)<=0 && endId.compareTo(peerHash)>=0);
     }
     
     /**
-     * Splits the bucket in two by moving all peers with a DHT key less than <code>hash</code> into one
-     * bucket, and the rest in the other.
+     * Splits the bucket in two by moving peers to a new bucket. The existing bucket
+     * retains all peers whose keys have a 0 at the <code>depth</code>-th bit; the
+     * new bucket will contain all peers for which the <code>depth</code>-th bit is 1.
+     * In other words, the bucket is split into two sub-branches in the Kademlia
+     * tree, with the old bucket representing the left branch and the new bucket
+     * representing the right branch.
      * @return The new bucket
+     * @see split(BigInteger)
      */
-    KBucket split(Hash hash) {
-        return split(new BigInteger(hash.toBase64()));
+    KBucket split() {
+        // pivot has the depth-th highest bit set to 1, all bit indices lower than depth set to 0
+        BigInteger pivot = startId.setBit(Hash.HASH_LENGTH*8-1-depth);
+        for (int i=0; i<depth; i++)
+            pivot = pivot.clearBit(i);
+        
+        return split(pivot);
     }
-    
-    KBucket split(BigInteger pivot) {
+
+    /**
+     * Splits the bucket in two by keeping all peers with a DHT key less than
+     * <code>pivot</code> in the existing bucket, and moving the rest into a new bucket.
+     * @param pivot
+     * @return The new bucket (which contains the higher IDs)
+     */
+    private KBucket split(BigInteger pivot) {
         depth++;
-        KBucket newBucket = new KBucket(startId, pivot.subtract(BigInteger.ONE), capacity, depth);
-        startId = pivot;
-        for (KademliaPeer peer: peers) {
-            BigInteger nodeId = new BigInteger(peer.getDestinationHash().getData());
+        KBucket newBucket = new KBucket(pivot, endId, capacity, depth);
+        endId = pivot.subtract(BigInteger.ONE);
+        for (int i=peers.size()-1; i>=0; i--) {
+            KademliaPeer peer = peers.get(i);
+            BigInteger nodeId = new BigInteger(1, peer.getDestinationHash().getData());
             if (nodeId.compareTo(pivot) >= 0) {
                 newBucket.add(peer);
                 remove(peer);

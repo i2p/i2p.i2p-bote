@@ -22,23 +22,22 @@
 package i2p.bote.network.kademlia;
 
 import java.math.BigInteger;
+import java.util.Comparator;
 
-import net.i2p.data.DataHelper;
+import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 
-public class KademliaUtil {
-
-    /**
-     * Calculates the Kademlia distance (XOR distance) between two hashes.
-     * If the hashes are equal, the distance is zero; otherwise, it is greater
-     * than zero.
-     * @param key1
-     * @param key2
-     * @return
-     */
-    public static BigInteger getDistance(Hash key1, Hash key2) {
-        // This shouldn't be a performance bottleneck, so save some mem by not using Hash.cachedXor
-        byte[] xoredData = DataHelper.xor(key1.getData(), key2.getData());
-        return new BigInteger(1, xoredData);
+public class PeerDistanceComparator implements Comparator<Destination> {
+    private Hash reference;
+    
+    PeerDistanceComparator(Hash reference) {
+        this.reference = reference;
+    }
+    
+    @Override
+    public int compare(Destination peer1, Destination peer2) {
+        BigInteger distance1 = KademliaUtil.getDistance(peer1.calculateHash(), reference);
+        BigInteger distance2 = KademliaUtil.getDistance(peer2.calculateHash(), reference);
+        return distance1.compareTo(distance2);
     }
 }

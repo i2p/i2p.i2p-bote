@@ -22,66 +22,38 @@
 package i2p.bote.network.kademlia;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
-import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 
 /**
  * This is the parent class for k-buckets and s-buckets.
  * 
- * Peers used to be sorted by the time of most recent communication in
- * a <code>ConcurrentSkipListSet</code>, but the problem was that
- * a <code>ConcurrentSkipListSet</code> that is sorted by last seen time
- * doesn't allow more than one peer with the same "last seen" time, even
- * if <code>equals</code> says the two peers are not equal (see the
- * <code>SortedSet</code> API doc).
- *
- * So now peers are kept in an unsorted <code>Set</code> and sorted when needed.
- *
- * An alternative would be to use an unsorted <code>Set</code> for efficient
- * peer lookups by dest hash, and a <code>SortedSet</code> that is sorted by
- * "last seen" time AND dest hash (so it will store more than one peer
- * with the same last seen time).
+ * <strong>Iterators returned by this class are not thread safe. This
+ * includes iterating over bucket entries via a <code>foreach</code> loop.
+ * </strong>
  */
-public class AbstractBucket implements Iterable<KademliaPeer> {
-    static final BigInteger MIN_HASH_VALUE = BigInteger.ONE.negate().shiftLeft(Hash.HASH_LENGTH*8);   // system-wide minimum hash value
+abstract class AbstractBucket implements Iterable<KademliaPeer> {
+    static final BigInteger MIN_HASH_VALUE = BigInteger.ZERO;   // system-wide minimum hash value
     static final BigInteger MAX_HASH_VALUE = BigInteger.ONE.shiftLeft(Hash.HASH_LENGTH*8).subtract(BigInteger.ONE);   // system-wide maximum hash value
 
     private Log log = new Log(AbstractBucket.class);
-    protected Set<KademliaPeer> peers;
+    protected List<KademliaPeer> peers;   // peers are sorted most recently seen to least recently seen
     protected int capacity;
     
     public AbstractBucket(int capacity) {
-        peers = new ConcurrentHashSet<KademliaPeer>();
+        peers = Collections.synchronizedList(new ArrayList<KademliaPeer>());
         this.capacity = capacity;
     }
 
-    /**
-     * Updates a known peer, or adds the peer if it isn't known.
-     * TODO If the bucket is full, the peer is added to the bucket's replacement cache.
-     * @param destination
-     * @return <code>true</code> if the peer was added (or replacement-cached),
-     * <code>false</code> if it was updated.
-     */
-    boolean addOrUpdate(Destination destination) {
-        // TODO log an error if peer outside bucket's range
-        // TODO handle stale peers
-        // TODO manage replacement cache
-        KademliaPeer peer = getPeer(destination);
-        if (peer == null) {
-            peers.add(new KademliaPeer(destination));
-            return true;
-        }
-        else {
-            peer.resetStaleCounter();
-            peer.setLastReception(System.currentTimeMillis());
-            // TODO move to end of list if lastReception is highest value, which it should be most of the time
-            return false;
-        }
+    protected void add(int index, Destination destination) {
+        peers.add(index, new KademliaPeer(destination));
     }
     
     /**
@@ -103,7 +75,7 @@ public class AbstractBucket implements Iterable<KademliaPeer> {
         peers.remove(peer);
     }
 
-    Set<KademliaPeer> getPeers() {
+    Collection<KademliaPeer> getPeers() {
         return peers;
     }
     
@@ -114,12 +86,22 @@ public class AbstractBucket implements Iterable<KademliaPeer> {
      * @return
      */
     protected KademliaPeer getPeer(Destination destination) {
-        // Use linear search for simplicity. An alternative would be to maintain a Map<Destination, KademliaPeer>.
-        for (KademliaPeer peer: peers)
-            if (peer.equals(destination))
-                return peer;
-        
-        return null;
+        int index = getPeerIndex(destination);
+        if (index >= 0)
+            return peers.get(index);
+        else
+            return null;
+    }
+    
+    /**
+     * Looks up the index of a <code>Destination</code> in the bucket.
+     * if nothing is found, -1 is returned.
+     * @param destination
+     * @return
+     */
+    protected int getPeerIndex(Destination destination) {
+        // An alternative to indexOf, which does a linear search, would be to maintain a Map<Destination, KademliaPeer>.
+        return peers.indexOf(destination);
     }
     
     /**
@@ -135,6 +117,10 @@ public class AbstractBucket implements Iterable<KademliaPeer> {
         return size() >= capacity;
     }
 
+    boolean isEmpty() {
+        return peers.isEmpty();
+    }
+    
     int size() {
         return peers.size();
     }

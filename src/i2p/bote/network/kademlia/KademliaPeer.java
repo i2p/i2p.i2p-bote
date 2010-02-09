@@ -34,7 +34,6 @@ public class KademliaPeer extends Destination implements DhtPeer {
     private Destination destination;
     private Hash destinationHash;
     private long lastPingSent;
-    private long lastReception;
     private long activeSince;
     private AtomicInteger consecutiveTimeouts;
     
@@ -50,7 +49,6 @@ public class KademliaPeer extends Destination implements DhtPeer {
         if (destinationHash == null)
             log.error("calculateHash() returned null!");
         
-        this.lastReception = lastReception;
         lastPingSent = 0;
         activeSince = lastReception;
         consecutiveTimeouts = new AtomicInteger(0);
@@ -86,14 +84,6 @@ public class KademliaPeer extends Destination implements DhtPeer {
     
     public long getLastPingSent() {
     	return lastPingSent;
-    }
-    
-    public void setLastReception(long time) {
-    	lastReception = time;
-    }
-    
-    public long getLastReception() {
-    	return lastReception;
     }
     
     public long getActiveSince() {

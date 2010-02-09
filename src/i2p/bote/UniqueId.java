@@ -94,7 +94,7 @@ public class UniqueId implements Comparable<UniqueId> {
     
     @Override
     public int compareTo(UniqueId otherPacketId) {
-        return new BigInteger(bytes).compareTo(new BigInteger(otherPacketId.bytes));
+        return new BigInteger(1, bytes).compareTo(new BigInteger(1, otherPacketId.bytes));
     }
     
     @Override
