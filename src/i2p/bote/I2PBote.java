@@ -87,7 +87,7 @@ public class I2PBote {
     public static final int PROTOCOL_VERSION = 2;
     private static final String APP_VERSION = "0.2";
     private static final int STARTUP_DELAY = 3 * 60 * 1000;   // the number of milliseconds to wait before connecting to I2P (this gives the router time to get ready)
-	private static I2PBote instance;
+	private static volatile I2PBote instance;
 	
     private Log log = new Log(I2PBote.class);
     private I2PAppContext appContext;
@@ -160,8 +160,9 @@ public class I2PBote {
 	    
         // read the local destination key from the key file if it exists
         File destinationKeyFile = configuration.getDestinationKeyFile();
+        FileReader fileReader = null;
         try {
-            FileReader fileReader = new FileReader(destinationKeyFile);
+            fileReader = new FileReader(destinationKeyFile);
             char[] destKeyBuffer = new char[(int)destinationKeyFile.length()];
             fileReader.read(destKeyBuffer);
             byte[] localDestinationKey = Base64.decode(new String(destKeyBuffer));
@@ -170,10 +171,19 @@ public class I2PBote {
         	i2pSession.connect();
         }
         catch (IOException e) {
-        	log.debug("Destination key file doesn't exist or isn't readable: " + e);
+        	log.debug("Destination key file doesn't exist or isn't readable." + e);
         } catch (I2PSessionException e) {
-        	log.warn("Error creating I2PSession", e);
+        	log.warn("Error creating I2PSession.", e);
 		}
+        finally {
+            if (fileReader != null)
+                try {
+                    fileReader.close();
+                }
+                catch (IOException e) {
+                    log.debug("Error closing file: <" + destinationKeyFile.getAbsolutePath() + ">" + e);
+                }
+        }
         
 		// if the local destination key can't be read or is invalid, create a new one
         if (i2pSession == null) {
@@ -237,10 +247,12 @@ public class I2PBote {
 	private void saveLocalDestinationKeys(File keyFile, byte[] localDestinationArray) throws DataFormatException, IOException {
 		if (keyFile.exists()) {
 			File oldKeyFile = new File(keyFile.getPath() + "_backup");
-			keyFile.renameTo(oldKeyFile);
+			if (!keyFile.renameTo(oldKeyFile))
+			    log.error("Cannot rename destination key file <" + keyFile.getAbsolutePath() + "> to <" + oldKeyFile.getAbsolutePath() + ">");
 		}
 		else
-		    keyFile.createNewFile();
+		    if (!keyFile.createNewFile())
+		        log.error("Cannot create destination key file: <" + keyFile.getAbsolutePath() + ">");
 		
         FileWriter fileWriter = new FileWriter(keyFile);
         fileWriter.write(Base64.encode(localDestinationArray));

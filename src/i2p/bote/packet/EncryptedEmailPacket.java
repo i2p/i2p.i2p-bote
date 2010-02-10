@@ -169,7 +169,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         return appContext.elGamalAESEngine().encrypt(data, publicKey, sessionKey, PADDED_SIZE);
     }
     
-    public static Collection<EncryptedEmailPacket> encrypt(Collection<UnencryptedEmailPacket> packets, EmailDestination destination, I2PAppContext appContext) throws DataFormatException {
+    public static Collection<EncryptedEmailPacket> encrypt(Collection<UnencryptedEmailPacket> packets, EmailDestination destination, I2PAppContext appContext) {
     	Collection<EncryptedEmailPacket> encryptedPackets = new ArrayList<EncryptedEmailPacket>();
     	for (UnencryptedEmailPacket unencryptedPacket: packets)
     		encryptedPackets.add(new EncryptedEmailPacket(unencryptedPacket, destination, appContext));

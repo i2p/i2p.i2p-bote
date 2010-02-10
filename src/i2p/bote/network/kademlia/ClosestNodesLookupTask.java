@@ -167,7 +167,7 @@ public class ClosestNodesLookupTask implements Runnable {
     }
 
     // compares two Destinations in terms of closeness to <code>reference</code>
-    private class HashDistanceComparator implements Comparator<Destination> {
+    private static class HashDistanceComparator implements Comparator<Destination> {
         private Hash reference;
         
         public HashDistanceComparator(Hash reference) {

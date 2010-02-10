@@ -23,6 +23,7 @@ package i2p.bote.network.kademlia;
 
 import i2p.bote.Util;
 import i2p.bote.network.DHT;
+import i2p.bote.network.DhtException;
 import i2p.bote.network.DhtPeer;
 import i2p.bote.network.DhtResults;
 import i2p.bote.network.DhtStorageHandler;
@@ -93,7 +94,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private Set<KademliaPeer> initialPeers;
     private BucketManager bucketManager;
     private Map<Class<? extends DhtStorablePacket>, DhtStorageHandler> storageHandlers;
-    private boolean connected;   // false until bootstrapping is done
+    private volatile boolean connected;   // false until bootstrapping is done
 
     public KademliaDHT(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile) {
         super("Kademlia");
@@ -151,7 +152,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
 
     @Override
-    public synchronized boolean isConnected() {
+    public boolean isConnected() {
         return connected;
     }
     
@@ -237,16 +238,22 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     @Override
-    public void store(DhtStorablePacket packet) throws NoSuchAlgorithmException, KademliaException {
+    public void store(DhtStorablePacket packet) throws DhtException {
         Hash key = packet.getDhtKey();
         
         Collection<Destination> closeNodes = getClosestNodes(key);
         if (closeNodes.isEmpty())
-            throw new KademliaException("Cannot store packet because no storage nodes found.");
+            throw new DhtException("Cannot store packet because no storage nodes found.");
             
         log.debug("Storing a " + packet.getClass().getSimpleName() + " with key " + key + " on " + closeNodes.size() + " nodes");
         
-        HashCash hashCash = HashCash.mintCash("", 1);   // TODO
+        HashCash hashCash;
+        try {
+            hashCash = HashCash.mintCash("", 1);   // TODO
+        } catch (NoSuchAlgorithmException e) {
+            throw new DhtException("Cannot mint HashCash.", e);
+        }
+        
         PacketBatch batch = new PacketBatch();
         for (Destination node: closeNodes) {
             StoreRequest storeRequest = new StoreRequest(hashCash, packet);   // use a separate packet id for each request

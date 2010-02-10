@@ -29,11 +29,13 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import net.i2p.data.Base64;
+import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 
 public class UniqueId implements Comparable<UniqueId> {
     public static final byte LENGTH = 32;
-    
+
+    private Log log = new Log(UniqueId.class);
     protected byte[] bytes;
 
     /**
@@ -70,7 +72,8 @@ public class UniqueId implements Comparable<UniqueId> {
      */
     public UniqueId(InputStream inputStream) throws IOException {
         bytes = new byte[LENGTH];
-        inputStream.read(bytes);
+        if (inputStream.read(bytes) < 0)
+            log.error("Cannot read " + LENGTH + " bytes: Unexpected end of stream.");
     }
     
     /**
@@ -114,12 +117,5 @@ public class UniqueId implements Comparable<UniqueId> {
     @Override
     public int hashCode() {
         return Arrays.hashCode(bytes);
-    }
-    
-    @Override
-    public UniqueId clone() {
-        UniqueId newUniqueId = new UniqueId();
-        newUniqueId.bytes = bytes.clone();
-        return newUniqueId;
     }
 }

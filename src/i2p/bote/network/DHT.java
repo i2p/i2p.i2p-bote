@@ -28,7 +28,7 @@ import net.i2p.data.Hash;
 
 public interface DHT {
 
-    void store(DhtStorablePacket packet) throws Exception;
+    void store(DhtStorablePacket packet) throws DhtException;
     
     DhtResults findOne(Hash key, Class<? extends DhtStorablePacket> dataType);
 

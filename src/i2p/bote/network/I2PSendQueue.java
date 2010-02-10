@@ -244,7 +244,8 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         }
     }
     
-    private class PacketQueue extends LinkedList<ScheduledPacket> {
+    // TODO use ArrayList, not LinkedList; consider making the ArrayList a member field rather than extending it
+    private static class PacketQueue extends LinkedList<ScheduledPacket> {
         private static final long serialVersionUID = -7294556384443251074L;
 
         /**
@@ -281,7 +282,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         }
     }
 
-    private class ScheduledPacket implements Comparable<ScheduledPacket> {
+    private static class ScheduledPacket {
         CommunicationPacket data;
         Destination destination;
         long earliestSendTime;
@@ -300,11 +301,6 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             this.sentSignal = new CountDownLatch(1);
         }
 
-        @Override
-        public synchronized int compareTo(ScheduledPacket anotherPacket) {
-            return new Long(earliestSendTime).compareTo(anotherPacket.earliestSendTime);
-        }
-        
         public void decrementSentLatch() {
             sentSignal.countDown();
         }

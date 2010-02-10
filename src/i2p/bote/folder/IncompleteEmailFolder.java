@@ -122,7 +122,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
             Arrays.sort(packets, new Comparator<UnencryptedEmailPacket>() {
                 @Override
                 public int compare(UnencryptedEmailPacket packet1, UnencryptedEmailPacket packet2) {
-                    return new Integer(packet1.getFragmentIndex()).compareTo(packet2.getFragmentIndex());
+                    return Integer.valueOf(packet1.getFragmentIndex()).compareTo(packet2.getFragmentIndex());
                 }
             });
 

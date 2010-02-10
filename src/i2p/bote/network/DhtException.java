@@ -19,12 +19,16 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.network.kademlia;
+package i2p.bote.network;
 
-public class KademliaException extends Exception {
+public class DhtException extends Exception {
     private static final long serialVersionUID = -1286128818859245017L;
 
-    public KademliaException(String message) {
+    public DhtException(String message) {
         super(message);
+    }
+
+    public DhtException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

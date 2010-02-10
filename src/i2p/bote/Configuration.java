@@ -84,8 +84,8 @@ public class Configuration extends Properties {
 	public Configuration() {
 		// get the I2PBote directory and make sure it exists
 		i2pBoteDir = getI2PBoteDirectory();
-		if (!i2pBoteDir.exists())
-		    i2pBoteDir.mkdirs();
+		if (!i2pBoteDir.exists() && !i2pBoteDir.mkdirs())
+		    log.error("Cannot create directory: <" + i2pBoteDir.getAbsolutePath() + ">");
 
 		// read the configuration file
         File configFile = new File(i2pBoteDir, CONFIG_FILE_NAME);

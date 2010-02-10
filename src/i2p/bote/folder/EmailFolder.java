@@ -52,9 +52,21 @@ public class EmailFolder extends Folder<Email> {
         // write out the email file
         File emailFile = getEmailFile(email);
         log.info("Mail folder <" + storageDir + ">: storing email file: <" + emailFile.getAbsolutePath() + ">");
-        OutputStream emailOutputStream = new FileOutputStream(emailFile);
-        email.writeTo(emailOutputStream);
-        emailOutputStream.close();
+        OutputStream emailOutputStream = null;
+        try {
+            emailOutputStream = new FileOutputStream(emailFile);
+            email.writeTo(emailOutputStream);
+            emailOutputStream.close();
+        }
+        finally {
+            if (emailOutputStream != null)
+                try {
+                    emailOutputStream.close();
+                }
+                catch (IOException e) {
+                    log.error("Can't close file: <" + emailFile + ">", e);
+                }
+        }
     }
     
     /**
