@@ -65,7 +65,13 @@
                         <button type="submit">Reply</button>
                         <input type="hidden" name="sender" value="${ib:getOneLocalRecipient(email)}"/>
                         <input type="hidden" name="recipient0" value="${email.sender}"/>
-                        <input type="hidden" name="subject" value="Re: ${email.subject}"/>
+                        
+                        <c:set var="responsePrefix" value="Re: "/>
+                        <c:if test="${fn:startsWith(email.subject, responsePrefix)}">
+                            <c:set var="responsePrefix" value=""/>
+                        </c:if>
+                        <input type="hidden" name="subject" value="${responsePrefix}${email.subject}"/>
+                        
                         <input type="hidden" name="quoteMsgFolder" value="${param.folder}"/>
                         <input type="hidden" name="quoteMsgId" value="${param.messageID}"/>
                     </form>
