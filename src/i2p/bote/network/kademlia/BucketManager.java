@@ -23,6 +23,7 @@ package i2p.bote.network.kademlia;
 
 import i2p.bote.I2PBote;
 import i2p.bote.network.BanList;
+import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
 
@@ -256,6 +257,13 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         count += sBucket.size();
         return count;
     }
+
+    /**
+     * @see KademliaDHT.getPeerStats()
+     */
+    DhtPeerStats getPeerStats() {
+        return new KademliaPeerStats(sBucket, kBuckets);
+    }
     
     // PacketListener implementation
     @Override
@@ -278,6 +286,10 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
             addOrUpdate(sender);
     }
 
+    SBucket getSBucket() {
+        return sBucket;
+    }
+    
     /**
      * Iterates over the k-buckets. Does not include the sibling bucket.
      * @return

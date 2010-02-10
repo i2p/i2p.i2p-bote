@@ -21,15 +21,13 @@
 
 package i2p.bote.network.kademlia;
 
-import i2p.bote.network.DhtPeer;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
-public class KademliaPeer extends Destination implements DhtPeer {
+public class KademliaPeer extends Destination {
     private Log log = new Log(KademliaPeer.class);
     private Destination destination;
     private Hash destinationHash;

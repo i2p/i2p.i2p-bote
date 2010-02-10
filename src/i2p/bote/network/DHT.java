@@ -21,8 +21,6 @@
 
 package i2p.bote.network;
 
-import java.util.Collection;
-
 import i2p.bote.packet.dht.DhtStorablePacket;
 import net.i2p.data.Hash;
 
@@ -54,7 +52,7 @@ public interface DHT {
      */
     int getNumPeers();
     
-    Collection<? extends DhtPeer> getPeers();
+    DhtPeerStats getPeerStats();
     
     void start();
     

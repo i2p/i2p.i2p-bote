@@ -1,0 +1,94 @@
+/**
+ * Copyright (C) 2009  HungryHobo@mail.i2p
+ * 
+ * The GPG fingerprint for HungryHobo@mail.i2p is:
+ * 6DD3 EAA2 9990 29BC 4AD2 7486 1E2C 7B61 76DC DC12
+ * 
+ * This file is part of I2P-Bote.
+ * I2P-Bote is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * I2P-Bote is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package i2p.bote.network.kademlia;
+
+import i2p.bote.network.DhtPeerStats;
+
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Stores information on Kademlia peers.
+ * @see DhtPeerStats
+ */
+public class KademliaPeerStats implements DhtPeerStats {
+    private List<String> header;
+    private List<List<String>> data;
+    
+    KademliaPeerStats(SBucket sBucket, List<KBucket> kBuckets) {
+        String[] headerArray = new String[] {"Peer", "I2P Destination", "Bucket Prefix", "Stale Counter", "Active Since"};
+        header = Arrays.asList(headerArray);
+        
+        data = new ArrayList<List<String>>();
+        addPeerData(sBucket);
+        for (KBucket kBucket: kBuckets)
+            addPeerData(kBucket);
+    }
+    
+    private void addPeerData(AbstractBucket bucket) {
+        DateFormat formatter = DateFormat.getDateTimeInstance();
+        
+        for (KademliaPeer peer: bucket) {
+            List<String> row = new ArrayList<String>();
+            row.add(String.valueOf(data.size() + 1));
+            row.add(peer.calculateHash().toBase64());
+            row.add(getBucketPrefix(bucket));
+            row.add(String.valueOf(peer.getStaleCounter()));
+            String activeSince = formatter.format(peer.getActiveSince());
+            row.add(String.valueOf(activeSince));
+            data.add(row);
+        }
+    }
+
+    /**
+     * Returns the common prefix shared by the binary representation of all peers in the bucket.
+     * @param bucket
+     * @return
+     */
+    private String getBucketPrefix(AbstractBucket bucket) {
+        if (bucket instanceof KBucket) {
+            KBucket kBucket = (KBucket)bucket;
+            int depth = kBucket.getDepth();
+            if (depth == 0)
+                return "(None)";
+            
+            String binary = kBucket.getStartId().toString(2);
+            while (binary.length() < depth)
+                binary = "0" + binary;
+            return binary.substring(0, depth);
+        }
+        else
+            return "(S)";
+    }
+    
+    @Override
+    public List<String> getHeader() {
+        return header;
+    }
+
+    @Override
+    public List<List<String>> getData() {
+        return data;
+    }
+}

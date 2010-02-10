@@ -24,8 +24,8 @@ package i2p.bote.network.kademlia;
 import i2p.bote.Util;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
-import i2p.bote.network.DhtPeer;
 import i2p.bote.network.DhtResults;
+import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.DhtStorageHandler;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
@@ -162,8 +162,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     @Override
-    public Collection<? extends DhtPeer> getPeers() {
-        return bucketManager.getAllPeers();
+    public DhtPeerStats getPeerStats() {
+        return bucketManager.getPeerStats();
     }
     
     private DhtResults find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {

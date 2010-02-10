@@ -323,7 +323,7 @@ public class BucketManagerTest {
         
         // all peers in a bucket at depth d should have the same value at the d-th highest bit
         for (KBucket bucket: bucketManager) {
-            int depth = getDepth(bucket);
+            int depth = bucket.getDepth();
             int bitIndex = Hash.HASH_LENGTH*8 - depth;
             Boolean previousBit = null;
             for (KademliaPeer peer: bucket) {
@@ -396,13 +396,7 @@ public class BucketManagerTest {
         return peers;
     }
     
-    // returns the value of the private field depth
-    private int getDepth(KBucket bucket) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        Field depthField = KBucket.class.getDeclaredField("depth");
-        depthField.setAccessible(true);
-        return depthField.getInt(bucket);
-    }
-    
+ // returns the value of the private field sBucket
     private SBucket getSiblingBucket() throws IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
         Field sBucketField = BucketManager.class.getDeclaredField("sBucket");
         sBucketField.setAccessible(true);

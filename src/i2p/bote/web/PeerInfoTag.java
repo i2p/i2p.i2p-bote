@@ -23,11 +23,11 @@ package i2p.bote.web;
 
 import i2p.bote.I2PBote;
 import i2p.bote.network.BannedPeer;
-import i2p.bote.network.DhtPeer;
+import i2p.bote.network.DhtPeerStats;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
@@ -43,25 +43,24 @@ public class PeerInfoTag extends SimpleTagSupport {
         JspWriter out = pageContext.getOut();
         
         try {
-            // List DHT peers
-            Collection<? extends DhtPeer> dhtPeers = I2PBote.getInstance().getDhtPeers();
-            out.println("<strong>K-Peers: " + dhtPeers.size() + "</strong>");
-            if (dhtPeers.size() > 0) {
+            // Print DHT peer info
+            DhtPeerStats dhtStats = I2PBote.getInstance().getDhtStats();
+            int numPeers = dhtStats.getData().size();
+            out.println("<strong>K-Peers: " + numPeers + "</strong>");
+            if (numPeers > 0) {
                 out.println("<table>");
+                
+                // header
                 out.println("<tr>");
-                out.println("<th>Peer</th>");
-                out.println("<th>Destination Hash</th>");
-                out.println("<th>Active Since</th>");
-                out.println("<th>Stale Ctr</th>");
+                for (String columnHeader: dhtStats.getHeader())
+                    out.println("<th>" + columnHeader + "</th>");
                 out.println("</tr>");
                 
-                int peerIndex = 1;
-                for (DhtPeer peer: dhtPeers) {
+                // data
+                for (List<String> row: dhtStats.getData()) {
                     out.println("<tr>");
-                    out.println("<td>" + peerIndex++ + "</td>");
-                    out.println("<td>" + peer.getDestination().calculateHash().toBase64() + "</td>");
-                    out.println("<td>" + new Date(peer.getActiveSince()) + "</td>");
-                    out.println("<td>" + peer.getStaleCounter() + "</td>");
+                    for (String cellData: row)
+                        out.println("<td>" + cellData + "</td>");
                     out.println("</tr>");
                 }
                 

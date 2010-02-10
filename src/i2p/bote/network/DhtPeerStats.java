@@ -21,13 +21,23 @@
 
 package i2p.bote.network;
 
-import net.i2p.data.Destination;
+import java.util.List;
 
-public interface DhtPeer {
-    
-    Destination getDestination();
-    
-    long getActiveSince();
+/**
+ * Holds information on currently known peers in table form,
+ * for displaying it on the UI.
+ */
+public interface DhtPeerStats {
 
-    int getStaleCounter();
+    /**
+     * Returns the header row for the table
+     * @return
+     */
+    public List<String> getHeader();
+
+    /**
+     * Returns the table data, one row per peer.
+     * @return
+     */
+    public List<List<String>> getData();
 }

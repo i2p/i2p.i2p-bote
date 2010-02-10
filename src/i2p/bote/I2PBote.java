@@ -35,7 +35,7 @@ import i2p.bote.network.BanList;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.CheckEmailTask;
 import i2p.bote.network.DHT;
-import i2p.bote.network.DhtPeer;
+import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.NetworkStatus;
@@ -366,8 +366,8 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
         return dht.getNumPeers();
     }
     
-    public Collection<? extends DhtPeer> getDhtPeers() {
-        return dht.getPeers();
+    public DhtPeerStats getDhtStats() {
+        return dht.getPeerStats();
     }
     
     public Collection<BannedPeer> getBannedPeers() {

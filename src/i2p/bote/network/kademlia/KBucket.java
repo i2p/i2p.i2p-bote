@@ -52,7 +52,7 @@ class KBucket extends AbstractBucket {
     private BigInteger startId;
     private BigInteger endId;
     private List<KademliaPeer> replacementCache;
-    private int depth;
+    private volatile int depth;
 
     // capacity - The maximum number of peers the bucket can hold
     KBucket(BigInteger startId, BigInteger endId, int capacity, int depth) {
@@ -69,6 +69,10 @@ class KBucket extends AbstractBucket {
     
     synchronized BigInteger getEndId() {
         return endId;
+    }
+    
+    int getDepth() {
+        return depth;
     }
     
     synchronized void add(Destination destination) {
