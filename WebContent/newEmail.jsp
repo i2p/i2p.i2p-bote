@@ -75,7 +75,7 @@
 <%-- The following lines are not indented because the indentation would show up as blank chars on the textarea --%>
 <c:set var="origEmail" value="${ib:getEmail(param.quoteMsgFolder, param.quoteMsgId)}"/>
 <ib:shortSenderName sender="${origEmail.sender}"/> wrote:
-<ib:quote text="${origEmail.bodyText}"/></c:if></textarea>
+<ib:quote text="${origEmail.text}"/></c:if></textarea>
                 </td>
             </tr>
             <tr>
