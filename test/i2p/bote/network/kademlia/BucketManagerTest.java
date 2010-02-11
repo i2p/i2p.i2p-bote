@@ -396,7 +396,7 @@ public class BucketManagerTest {
         return peers;
     }
     
- // returns the value of the private field sBucket
+    // returns the value of the private field sBucket
     private SBucket getSiblingBucket() throws IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
         Field sBucketField = BucketManager.class.getDeclaredField("sBucket");
         sBucketField.setAccessible(true);

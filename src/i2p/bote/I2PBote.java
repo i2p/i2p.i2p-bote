@@ -115,7 +115,7 @@ public class I2PBote {
     private Collection<Future<Boolean>> pendingMailCheckTasks;
     private long lastMailCheckTime;
     private ConnectTask connectTask;
-    private Future<?> connectTaskResult;
+    private volatile Future<?> connectTaskResult;
 
 	private I2PBote() {
 	    Thread.currentThread().setName("I2PBoteMain");
@@ -418,10 +418,10 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 	 * that depends on it.
 	 */
 	private class ConnectTask implements Runnable {
-	    NetworkStatus status = NetworkStatus.NOT_STARTED;
+	    volatile NetworkStatus status = NetworkStatus.NOT_STARTED;
 	    CountDownLatch startSignal = new CountDownLatch(1);
 	    
-	    public synchronized NetworkStatus getNetworkStatus() {
+	    public NetworkStatus getNetworkStatus() {
 	        return status;
 	    }
 	    
@@ -430,10 +430,10 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
             status = NetworkStatus.DELAY;
             try {
                 startSignal.await(STARTUP_DELAY, TimeUnit.MILLISECONDS);
-                status = NetworkStatus.CONNECTING;
                 initializeSession();
                 initializeServices();
                 startAllServices();
+                status = NetworkStatus.CONNECTING;
             } catch (InterruptedException e) {
                 status = NetworkStatus.ERROR;
                 log.warn("Interrupted during connect delay.", e);
