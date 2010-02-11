@@ -85,6 +85,7 @@
             </tr>
             </c:if>
         </table>
+        <input type="hidden" name="key" value="${param.key}"/>
         <input type="submit" name="action" value="${commitAction}"/>
         <input type="submit" name="action" value="Cancel"/>
     </form>
