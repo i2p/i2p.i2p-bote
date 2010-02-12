@@ -41,6 +41,7 @@ public class EmailIdentity extends EmailDestination {
     private String publicName;
     private String description;   // optional
     private String emailAddress;   // optional
+    private boolean isDefault;
 
     /**
      * Creates a random <code>EmailIdentity</code>.
@@ -100,6 +101,14 @@ public class EmailIdentity extends EmailDestination {
         return emailAddress;
     }
 
+    public void setDefault(boolean isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
     protected void initKeys(I2PSession i2pSession) {
         super.initKeys(i2pSession);
         privateEncryptionKey = i2pSession.getDecryptionKey();
@@ -132,13 +141,4 @@ public class EmailIdentity extends EmailDestination {
     public String toString() {
         return getKey() + " address=<" + getEmailAddress() + "> identity name=<" + getDescription() + "> visible name=<" + getPublicName() + ">";
     }
-    
-/*    @Override
-    public boolean equals(Object anotherObject) {
-        if (anotherObject instanceof EmailIdentity) {
-            EmailIdentity otherIdentity = (EmailIdentity)anotherObject;
-            return Arrays.equals(getKeysAsArray(), otherIdentity.getKeysAsArray());
-        }
-        return false;
-    }*/
 }

@@ -135,7 +135,7 @@
     <name>saveIdentity</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
-        boolean saveIdentity(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+        boolean saveIdentity(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
     </function-signature>
 </function>
     

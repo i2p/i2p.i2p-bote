@@ -46,9 +46,22 @@ public class Identities implements Iterable<EmailIdentity> {
     private File identitiesFile;
     private List<EmailIdentity> identities;
 
+    /**
+     * Constructs <code>Identities</code> from a text file. Each identity is defined
+     * by one line that contains two to four tab-separated fields:
+     * Email Destination key, Public Name, Description, and Email Address.
+     * The first two are mandatory, the last two are optional.
+     * 
+     * Additionally, the file can set a default Email Destination by including a
+     * line that starts with "Default ", followed by an Email Destination key.
+     * The destination key must match one of the Email Destinations defined in
+     * the file.
+     * @param identitiesFile
+     */
     public Identities(File identitiesFile) {
         this.identitiesFile = identitiesFile;
         identities = Collections.synchronizedList(new ArrayList<EmailIdentity>());
+        String defaultIdentityString = null;
         
         if (!identitiesFile.exists()) {
             log.debug("Identities file does not exist: <" + identitiesFile.getAbsolutePath() + ">");
@@ -65,10 +78,21 @@ public class Identities implements Iterable<EmailIdentity> {
                 if (line == null)   // EOF
                     break;
                 
-                EmailIdentity identity = parse(line);
-                if (identity != null)
-                    identities.add(identity);
+                if (line.toLowerCase().startsWith("default"))
+                    defaultIdentityString = line.substring("default ".length());
+                else {
+                    EmailIdentity identity = parse(line);
+                    if (identity != null)
+                        identities.add(identity);
+                }
             }
+            
+            // set the default identity; if none defined, make the first one the default
+            EmailIdentity defaultIdentity = get(defaultIdentityString);
+            if (defaultIdentity != null)
+                defaultIdentity.setDefault(true);
+            else if (!identities.isEmpty())
+                identities.get(0).setDefault(true);
         } catch (IOException e) {
             log.error("Can't read identities file.", e);
         }
@@ -127,26 +151,64 @@ public class Identities implements Iterable<EmailIdentity> {
     
     public void save() throws IOException {
         String newLine = System.getProperty("line.separator");
+        Writer writer = new BufferedWriter(new FileWriter(identitiesFile));
         try {
-            Writer writer = new BufferedWriter(new FileWriter(identitiesFile));
+            EmailIdentity defaultIdentity = getDefault();
+            if (defaultIdentity != null)
+                writer.write("Default " + defaultIdentity.getKey() + newLine);
+            
             for (EmailIdentity identity: identities)
                 writer.write(toFileFormat(identity) + newLine);
-            writer.close();
         }
         catch (IOException e) {
             log.error("Can't save email identities to file <" + identitiesFile.getAbsolutePath() + ">.", e);
             throw e;
         }
+        finally {
+            writer.close();
+        }
     }
     
     public void add(EmailIdentity identity) {
+        if (identities.isEmpty())
+            identity.setDefault(true);
         identities.add(identity);
     }
     
     public void remove(String key) {
         EmailIdentity identity = get(key);
-        if (identity != null)
+        if (identity != null) {
             identities.remove(identity);
+            
+            // if we deleted the default identity, set a new default
+            if (identity.isDefault() && !identities.isEmpty())
+                identities.get(0).setDefault(true);
+        }
+    }
+    
+    /**
+     * Sets the default identity. Assumes this <code>Identities</code> already
+     * contains <code>defaultIdentity</code>.
+     * @return
+     */
+    public void setDefault(EmailIdentity defaultIdentity) {
+        // clear the old default
+        for (EmailIdentity identity: identities)
+            identity.setDefault(false);
+        
+        defaultIdentity.setDefault(true);
+    }
+    
+    /**
+     * Returns the default identity, or <code>null</code> if no default is set.
+     * @return
+     */
+    public EmailIdentity getDefault() {
+        for (EmailIdentity identity: identities)
+            if (identity.isDefault())
+                return identity;
+        
+        return null;
     }
     
     public EmailIdentity get(int i) {

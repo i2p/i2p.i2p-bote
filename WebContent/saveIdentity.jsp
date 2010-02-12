@@ -36,7 +36,7 @@
         <c:set var="errorMessage" value="Please fill in the Public Name field."/>
     </c:when>
     <c:otherwise>
-        <c:set var="errorMessage" value="${ib:saveIdentity(param.key, param.publicName, param.description, param.emailAddress)}"/>
+        <c:set var="errorMessage" value="${ib:saveIdentity(param.key, param.publicName, param.description, param.emailAddress, param.isDefault=='on')}"/>
     </c:otherwise>
 </c:choose>
 

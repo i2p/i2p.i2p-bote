@@ -56,14 +56,15 @@ public class JSPHelper {
     }
     
     /**
-     * Updates an email identity if <code>key</code> exists, or adds a new identity.
-     * @param key A base64-encoded email identity key
+     * Updates an email identity if the Destination <code>key</code> exists, or adds a new identity.
+     * @param key A base64-encoded Email Destination key
      * @param description
      * @param publicName
      * @param emailAddress
+     * @param setDefault If this is <code>true</code>, the identity becomes the new default identity. Otherwise, the default stays the same.
      * @return null if sucessful, or an error message if an error occured
      */
-    public static String saveIdentity(String key, String publicName, String description, String emailAddress) {
+    public static String saveIdentity(String key, String publicName, String description, String emailAddress, boolean setDefault) {
         Identities identities = getIdentities();
         EmailIdentity identity = identities.get(key);
         
@@ -80,6 +81,10 @@ public class JSPHelper {
             identities.add(identity);
         }
 
+        // update the default identity
+        if (setDefault)
+            identities.setDefault(identity);
+        
         try {
             identities.save();
             return null;

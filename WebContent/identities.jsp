@@ -38,24 +38,33 @@
         Email Identities
     </h2>
 
-    <c:if test="${empty ib:getIdentities().all}">
+    <c:set var="identities" value="${ib:getIdentities().all}"/>
+    <c:if test="${empty identities}">
         No email identities are defined.
     </c:if>
     
     <div class="identities">
     <table>
-    <tr>
-        <th>Public Name</th>
-        <th>Description</th>
-        <th>Email Address</th>
-        <th>Key</th>
-        <th style="width: 20px; padding: 0px"></th>
-    </tr>
-    <c:forEach items="${ib:getIdentities().all}" var="identity">
+    <c:if test="${!empty identities}">
         <tr>
+            <th style="width: 20px;">Def.</th>
+            <th>Public Name</th>
+            <th>Description</th>
+            <th>Email Address</th>
+            <th>Key</th>
+            <th style="width: 20px; padding: 0px"></th>
+        </tr>
+    </c:if>
+    <c:forEach items="${identities}" var="identity">
+        <tr>
+        <td style="width: 20px; text-align: right;">
+            <c:if test="${identity.default}">
+                <img src="images/asterisk.png"/>
+            </c:if>
+        </td>
         <td style="width: 100px;">
             <div class="ellipsis">
-                <a href="editIdentity.jsp?new=false&key=${identity.key}&publicName=${identity.publicName}&description=${identity.description}&emailAddress=${identity.emailAddress}">
+                <a href="editIdentity.jsp?new=false&key=${identity.key}&publicName=${identity.publicName}&description=${identity.description}&emailAddress=${identity.emailAddress}&isDefault=${identity.default}">
                     ${identity.publicName}
                 </a>
             </div>

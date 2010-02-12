@@ -40,7 +40,11 @@
                     <select name="sender">
                         <option value="anonymous">Anonymous</option>
                         <c:forEach items="${ib:getIdentities().all}" var="identity">
+                            <c:set var="selected" value=""/>
                             <c:if test="${identity.key eq param.sender}">
+                                <c:set var="selected" value=" selected"/>
+                            </c:if>
+                            <c:if test="${empty param.sender && identity.default}">
                                 <c:set var="selected" value=" selected"/>
                             </c:if>
                             <option value="${identity.publicName} &lt;${identity.key}&gt;"${selected}>

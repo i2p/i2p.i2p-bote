@@ -83,6 +83,17 @@
                     <textarea cols="64" rows="9" readonly="yes" wrap="soft" class="destinationtextarea">${param.key}</textarea>
                 </td>
             </tr>
+            <tr>
+                <td style="font-weight: bold; vertical-align: top;">
+                    Default Identity:
+                </td>
+                <td>
+                    <c:if test="${param.isDefault}">
+                        <c:set var="checked" value="checked"/>
+                    </c:if>
+                    <input type="checkbox" name="isDefault" ${checked}/>
+                </td>
+            </tr>
             </c:if>
         </table>
         <input type="hidden" name="key" value="${param.key}"/>
