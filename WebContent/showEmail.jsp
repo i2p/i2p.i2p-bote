@@ -38,7 +38,16 @@
     <table>
         <tr>
             <td valign="top"><strong>From:</strong></td>
-            <td><ib:address address="${email.sender}"/></td>
+            <td>
+                <ib:address address="${email.sender}"/>
+                <c:set var="senderDestination" value="${ib:extractEmailDestination(email.sender)}"/>
+                <c:if test="${!empty senderDestination}">
+                    <form action="editContact.jsp?new=true&destination=${senderDestination}&name=${ib:extractName(email.sender)}" method="POST">
+                        <c:set var="disabled" value="${empty ib:getContact(senderDestination) ? '' : 'disabled=&quot; disabled&quot; title=&quot;The Email Destination already exists in the address book.&quot;'}"/>
+                        <button type="submit"${disabled}>Add to Address Book</button>
+                    </form>
+                </c:if>
+            </td>
         </tr>
         <tr>
             <td valign="top"><strong>To:</strong></td>

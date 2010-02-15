@@ -325,6 +325,18 @@ select {
     overflow-x: hidden;
 }
 
+.addressbook table {
+    table-layout: fixed;
+    width: 800px;
+}
+
+.addressbook td, .addressbook th {
+    vertical-align: middle;
+    padding: 0px 30px 0px 0px;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
 .ellipsis
 {
     line-height: 1.2em;

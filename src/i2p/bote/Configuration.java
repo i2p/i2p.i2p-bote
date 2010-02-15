@@ -36,6 +36,7 @@ public class Configuration extends Properties {
     private static final String DEST_KEY_FILE_NAME = "local_dest.key";
     private static final String PEER_FILE_NAME = "peers.txt";
     private static final String IDENTITIES_FILE_NAME = "identities.txt";
+    private static final String ADDRESS_BOOK_FILE_NAME = "addressBook.txt";
     private static final String OUTBOX_DIR = "outbox";              // relative to I2P_BOTE_SUBDIR
     private static final String OUTBOX_SUBDIR_LOCAL = "local";      // relative to OUTBOX_DIR
     private static final String OUTBOX_SUBDIR_RELAY = "relay";      // relative to OUTBOX_DIR
@@ -114,6 +115,10 @@ public class Configuration extends Properties {
 	
     public File getIdentitiesFile() {
         return new File(i2pBoteDir, IDENTITIES_FILE_NAME);
+    }
+    
+    public File getAddressBookFile() {
+        return new File(i2pBoteDir, ADDRESS_BOOK_FILE_NAME);
     }
     
 	public File getLocalOutboxDir() {

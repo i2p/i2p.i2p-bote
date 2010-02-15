@@ -69,7 +69,7 @@
 <div class="menubox">
     <h2>Addresses</h2>
     <a href="identities.jsp">Identities</a><br/>
-    Private Address Book<br/>
+    <a href="addressBook.jsp">Address Book</a><br/>
     Public Address Directory<br/>
 </div>
 

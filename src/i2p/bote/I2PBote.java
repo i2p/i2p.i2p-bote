@@ -21,6 +21,7 @@
 
 package i2p.bote;
 
+import i2p.bote.addressbook.AddressBook;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
@@ -95,6 +96,7 @@ public class I2PBote {
 	private I2PSession i2pSession;
 	private Configuration configuration;
 	private Identities identities;
+	private AddressBook addressBook;
 	private I2PSendQueue sendQueue;
 	private Outbox outbox;   // stores outgoing emails for all local users
     private EmailFolder inbox;   // stores incoming emails for all local users
@@ -128,6 +130,7 @@ public class I2PBote {
         mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
     
         identities = new Identities(configuration.getIdentitiesFile());
+        addressBook = new AddressBook(configuration.getAddressBookFile());
         initializeFolderAccess();
 
         // The rest of the initialization happens in ConnectTask because it needs an I2PSession.
@@ -282,6 +285,10 @@ public class I2PBote {
 	    return identities;
 	}
 	
+    public AddressBook getAddressBook() {
+        return addressBook;
+    }
+    
 	public Destination getLocalDestination() {
 	    return i2pSession.getMyDestination();
 	}

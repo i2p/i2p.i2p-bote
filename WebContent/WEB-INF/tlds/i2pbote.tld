@@ -138,12 +138,44 @@
         boolean saveIdentity(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
     </function-signature>
 </function>
-    
+
 <function>
     <name>deleteIdentity</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         boolean deleteIdentity(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>getAddressBook</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        i2p.bote.addressbook.AddressBook getAddressBook()
+    </function-signature>
+</function>
+
+<function>
+    <name>saveContact</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        boolean saveContact(java.lang.String, java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>deleteContact</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        boolean deleteContact(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>getContact</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        i2p.bote.addressbook.Contact getContact(java.lang.String)
     </function-signature>
 </function>
 
@@ -192,6 +224,30 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         java.lang.boolean deleteEmail(java.lang.String, java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>extractName</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String extractName(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>extractEmailDestination</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        i2p.bote.email.EmailDestination extractEmailDestination(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>getRecipients</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.util.Map getRecipients(java.util.Map)
     </function-signature>
 </function>
 
