@@ -41,7 +41,7 @@
 <jsp:include page="header.jsp"/>
 
 <div class="errorMessage">
-    ${param.errorMessage}
+    ${fn:escapeXml(param.errorMessage)}
 </div>
 
 <div class="main">
