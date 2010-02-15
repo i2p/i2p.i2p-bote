@@ -9,4 +9,18 @@
     <listener>
         <listener-class>i2p.bote.web.ServiceInitializer</listener-class>
     </listener>
+
+    <filter>
+        <filter-name>CharsetFilter</filter-name>
+    <filter-class>i2p.bote.web.CharsetFilter</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
