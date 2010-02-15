@@ -54,19 +54,15 @@ public class EmailIdentity extends EmailDestination {
      * Creates a <code>EmailIdentity</code> from a Base64-encoded string. The format is the same as
      * for Base64-encoded local I2P destinations, except there is no null certificate.
      * @param key
+     * @throws I2PSessionException
      */
-    public EmailIdentity(String key) {
-        try {
-            key = key.substring(0, 512) + "AAAA" + key.substring(512);   // insert a null certificate for I2PClient.createSession()
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.decode(key));
-            
-            I2PClient i2pClient = I2PClientFactory.createClient();
-            I2PSession i2pSession = i2pClient.createSession(inputStream, null);
-            initKeys(i2pSession);
-        }
-        catch (I2PSessionException e) {
-            log.error("Can't generate EmailIdentity.", e);
-        }
+    public EmailIdentity(String key) throws I2PSessionException {
+        key = key.substring(0, 512) + "AAAA" + key.substring(512);   // insert a null certificate for I2PClient.createSession()
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.decode(key));
+        
+        I2PClient i2pClient = I2PClientFactory.createClient();
+        I2PSession i2pSession = i2pClient.createSession(inputStream, null);
+        initKeys(i2pSession);
     }
     
     public PrivateKey getPrivateEncryptionKey() {

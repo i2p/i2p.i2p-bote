@@ -35,7 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
-import net.i2p.data.Hash;
+import net.i2p.client.I2PSessionException;
 import net.i2p.util.Log;
 
 /**
@@ -108,12 +108,12 @@ public class Identities implements Iterable<EmailIdentity> {
     }
  
     private EmailIdentity parse(String emailIdentityString) {
+        String[] fields = emailIdentityString.split("\\t", 4);
+        if (fields.length < 2) {
+            log.debug("Unparseable email identity: <" + emailIdentityString + ">");
+            return null;
+        }
         try {
-            String[] fields = emailIdentityString.split("\\t", 4);
-            if (fields.length < 2) {
-                log.debug("Unparseable email identity: <" + emailIdentityString + ">");
-                return null;
-            }
             EmailIdentity identity = new EmailIdentity(fields[0]);
             if (fields.length > 1)
                 identity.setPublicName(fields[1]);
@@ -125,6 +125,9 @@ public class Identities implements Iterable<EmailIdentity> {
         }
         catch (PatternSyntaxException e) {
             log.debug("Unparseable email identity: <" + emailIdentityString + ">");
+            return null;
+        } catch (I2PSessionException e) {
+            log.debug("Invalid email identity: <" + fields[0] + ">");
             return null;
         }
     }
@@ -235,17 +238,8 @@ public class Identities implements Iterable<EmailIdentity> {
         return identities;
     }
     
-    public EmailIdentity[] getArray() {
-        return identities.toArray(new EmailIdentity[0]);
-    }
-    
     public int size() {
         return identities.size();
-    }
-    
-    public boolean contains(Hash emailDestination) {
-        // TODO
-        return true;
     }
     
     @Override
