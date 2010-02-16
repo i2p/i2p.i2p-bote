@@ -61,7 +61,7 @@
             includes="**/*.java"
             classpathref="jspcp"
             failonerror="true" />
-        <copy file="WebContent/WEB-INF/web-template.xml" tofile="ant_build/web.xml" />
+        <copy file="WebContent/WEB-INF/web.xml" tofile="ant_build/web.xml" />
         <loadfile property="jspc.web.fragment" srcfile="ant_build/web-fragment.xml" />
         <replace file="ant_build/web.xml">
             <replacefilter token="&lt;!-- precompiled servlets --&gt;" value="${jspc.web.fragment}" />
