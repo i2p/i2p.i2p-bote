@@ -60,11 +60,11 @@
         </tr>
         <tr>
             <td valign="top"><strong>Subject:</strong></td>
-            <td>${email.subject}</td>
+            <td>${fn:escapeXml(email.subject)}</td>
         </tr>
         <tr>
             <td valign="top"><strong>Message:</strong></td>
-            <td><ib:formatPlainText text="${email.text}"/></td>
+            <td><ib:formatPlainText text="${fn:escapeXml(email.text)}"/></td>
         </tr>
         <tr>
             <td colspan="2">

@@ -24,6 +24,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <c:set var="title" value="${param.path}" scope="request"/>
@@ -70,10 +71,10 @@
                     <c:otherwise><c:set var="fontWeight" value="normal"/></c:otherwise>
                 </c:choose>
                 
-                <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${sender}</a></div></td>
-                <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${recipient}</a></div></td>
-                <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${subject}</a></div></td>
-                <td><a href="${mailUrl}" style="font-weight: ${fontWeight}">${date}</a></td>
+                <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
+                <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
+                <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
+                <td><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(date)}</a></td>
                 <td><a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}"><img src="images/delete.png" alt="Delete" title="Delete this email"/></a></td>
 	        </tr>
 	    </c:forEach>
