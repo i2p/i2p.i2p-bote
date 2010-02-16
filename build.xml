@@ -104,12 +104,12 @@
             classpathref="junitcp"
             failonerror="true" />
 
-        <junit printsummary="yes">
+        <junit printsummary="off">
             <classpath>
                 <path refid="junitcp"/>
             </classpath>
-            <batchtest fork="yes" todir="./ant_build">
-                <fileset dir="./ant_build" includes="**/*Test.class"/>
+            <batchtest fork="true" todir="./ant_build">
+                <fileset dir="./ant_build/classes" includes="**/*Test.class"/>
                 <formatter type="plain"/>
             </batchtest>
         </junit>
