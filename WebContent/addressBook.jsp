@@ -112,7 +112,7 @@
         </c:if>
         <c:if test="${param.search}">
             <tr><td>
-                <button type="submit" value="New">Select</button>
+                <button type="submit" value="New">Add Recipients</button>
             </td></tr>
         </c:if>
     </table>
