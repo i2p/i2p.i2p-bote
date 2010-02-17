@@ -21,11 +21,10 @@
 
 package i2p.bote.network.kademlia;
 
-import i2p.bote.Util;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
-import i2p.bote.network.DhtResults;
 import i2p.bote.network.DhtPeerStats;
+import i2p.bote.network.DhtResults;
 import i2p.bote.network.DhtStorageHandler;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
@@ -48,6 +47,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
@@ -62,6 +62,7 @@ import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
+import net.i2p.util.RandomSource;
 
 import com.nettgryppa.security.HashCash;
 
@@ -80,7 +81,6 @@ import com.nettgryppa.security.HashCash;
  *   
  */
 public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
-    private static final int INTERVAL = 5 * 60 * 1000;
     private static final int PING_TIMEOUT = 20 * 1000;
     private static final int RESPONSE_TIMEOUT = 60;   // Max. number of seconds to wait for replies to retrieve requests
     private static final URL BUILT_IN_PEER_FILE = KademliaDHT.class.getResource("built-in-peers.txt");
@@ -120,17 +120,16 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     /**
-     * Returns the S nodes closest to a given key by querying peers.
+     * Returns the k nodes closest to a given key by querying peers.
      * This method blocks. It returns after <code>ClosestNodesLookupTask.CLOSEST_NODES_LOOKUP_TIMEOUT+1</code> seconds at
      * the longest.
      *
      * The number of pending requests never exceeds ALPHA. According to [4], this is the most efficient.
-     * 
-     * If there are less than <code>s</code> results after the kademlia lookup finishes, nodes from
-     * the sibling list are used.
      * @see ClosestNodesLookupTask
      */
     private Collection<Destination> getClosestNodes(Hash key) {
+        bucketManager.getKBucket(key).setLastLookupTime(System.currentTimeMillis());
+        
         ClosestNodesLookupTask lookupTask = new ClosestNodesLookupTask(key, sendQueue, i2pReceiver, bucketManager);
         lookupTask.run();
         return lookupTask.getResults();
@@ -348,20 +347,45 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             refresh(bucket);
     }
     
+    /**
+     * Refreshes all buckets whose <code>lastLookupTime</code> is too old.
+     */
+    private void refreshOldBuckets() {
+        long now = System.currentTimeMillis();
+        for (KBucket bucket: bucketManager)
+            if (now > bucket.getLastLookupTime() + KademliaConstants.REFRESH_TIMEOUT*1000) {
+                log.debug("Refreshing bucket: " + bucket);
+                refresh(bucket);
+            }
+    }
+    
     private void refresh(KBucket bucket) {
-        Hash key = Util.createRandomHash();
+        Hash key = createRandomHash(bucket.getStartId(), bucket.getEndId());
         getClosestNodes(key);
     }
 
-/*    private void updatePeerList() {
-        for (Destination peer: peers) {
-            if (ping(peer))
-                requestPeerList(peer);
-        }
-    }*/
-
     /**
-     * Writes all peers to a file in descending order of "last seen" time.
+     * Returns a random value <code>r</code> such that <code>min &lt;= r &lt;= max</code>.
+     * @param min
+     * @param max
+     * @return
+     */
+    private Hash createRandomHash(BigInteger min, BigInteger max) {
+        BigInteger hashValue = new BigInteger(Hash.HASH_LENGTH*8, RandomSource.getInstance());   // a random number between 0 and 2^256-1
+        hashValue = min.add(hashValue.mod(max.subtract(min).add(BigInteger.ONE)));   // a random number between min and max
+        byte[] hashArray = hashValue.toByteArray();
+        if (hashArray.length>Hash.HASH_LENGTH+1 || (hashArray.length==Hash.HASH_LENGTH+1 && hashArray[0]!=0))   // it's okay for the array length to be Hash.HASH_LENGTH if the zeroth byte only contains the sign bit
+            log.error("Hash value too big to fit in " + Hash.HASH_LENGTH + " bytes: " + hashValue);
+        byte[] hashArrayPadded = new byte[Hash.HASH_LENGTH];
+        if (hashArray.length == Hash.HASH_LENGTH + 1)
+            System.arraycopy(hashArray, 1, hashArrayPadded, 0, Hash.HASH_LENGTH);
+        else
+            System.arraycopy(hashArray, 0, hashArrayPadded, Hash.HASH_LENGTH-hashArray.length, hashArray.length);
+        return new Hash(hashArrayPadded);
+    }
+    
+    /**
+     * Writes all peers to a file.
      * @param peerFile
      */
     private void writePeersToFile(File peerFile) {
@@ -486,9 +510,9 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         
         while (!shutdownRequested()) {
             try {
+                TimeUnit.MINUTES.sleep(1);
+                refreshOldBuckets();
                 // TODO replicate();
-                // TODO updatePeerList(); refresh every bucket to which we haven't performed a node lookup in the past hour. Refreshing means picking a random ID in the bucket's range and performing a node search for that ID.
-                sleep(INTERVAL);
             }
             catch (InterruptedException e) {
                 log.debug("Thread '" + getName() + "' + interrupted", e);

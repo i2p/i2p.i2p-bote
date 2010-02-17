@@ -24,6 +24,7 @@ package i2p.bote.network.kademlia;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import net.i2p.data.Destination;
@@ -32,9 +33,11 @@ import net.i2p.util.Log;
 
 /**
  * An {@link AbstractBucket} that:
- *  * can be split in two, and
+ *  * can be split in two,
+ *  * has a start and end Kademlia ID,
+ *  * knows its depth in the bucket tree, and
  *  * maintains a replacement cache.
- *  
+ * 
  * Peers are kept in an <code>ArrayList</code>. New peers are added at
  * index 0. When a peer is updated, it is moved to index 0.
  * When the bucket needs to make room for a new peer, the peer at the
@@ -53,6 +56,7 @@ class KBucket extends AbstractBucket {
     private BigInteger endId;
     private List<KademliaPeer> replacementCache;
     private volatile int depth;
+    private volatile long lastLookupTime;
 
     // capacity - The maximum number of peers the bucket can hold
     KBucket(BigInteger startId, BigInteger endId, int capacity, int depth) {
@@ -71,10 +75,23 @@ class KBucket extends AbstractBucket {
         return endId;
     }
     
-    int getDepth() {
-        return depth;
+    /**
+     * @param lastLookupTime
+     * @see getLastLookupTime
+     */
+    public void setLastLookupTime(long lastLookupTime) {
+        this.lastLookupTime = lastLookupTime;
     }
-    
+
+    /**
+     * Returns the time at which a closest nodes lookup for a key in this
+     * bucket's range was last performed.
+     * @return
+     */
+    public long getLastLookupTime() {
+        return lastLookupTime;
+    }
+
     synchronized void add(Destination destination) {
         if (isFull())
             log.error("Error: adding a node to a full k-bucket. Bucket needs to be split first. Size=" + size() + ", capacity=" + capacity);
@@ -211,5 +228,24 @@ class KBucket extends AbstractBucket {
             }
         }
         return newBucket;
+    }
+    
+    /**
+     * Returns the common prefix shared by the binary representation of all peers in the bucket.
+     * @return
+     */
+    String getBucketPrefix() {
+        if (depth == 0)
+            return "(None)";
+        
+        String binary = startId.toString(2);
+        while (binary.length() < Hash.HASH_LENGTH*8)
+            binary = "0" + binary;
+        return binary.substring(0, depth);
+    }
+    
+    @Override
+    public String toString() {
+        return "K-Bucket (depth=" + depth + ", prefix=" + getBucketPrefix() + ", lastLookup=" + new Date(lastLookupTime) + ", start=" + startId + ", end=" + endId + ")";
     }
 }

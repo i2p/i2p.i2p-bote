@@ -23,10 +23,13 @@ package i2p.bote.network.kademlia;
 
 import i2p.bote.network.DhtPeerStats;
 
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import net.i2p.data.Hash;
 
 /**
  * Stores information on Kademlia peers.
@@ -36,17 +39,17 @@ public class KademliaPeerStats implements DhtPeerStats {
     private List<String> header;
     private List<List<String>> data;
     
-    KademliaPeerStats(SBucket sBucket, List<KBucket> kBuckets) {
-        String[] headerArray = new String[] {"Peer", "I2P Destination", "Bucket Prefix", "Stale Counter", "Active Since"};
+    KademliaPeerStats(SBucket sBucket, List<KBucket> kBuckets, Hash localDestinationHash) {
+        String[] headerArray = new String[] {"Peer", "I2P Destination", "BktPfx", "Distance", "Stale", "Active Since"};
         header = Arrays.asList(headerArray);
         
         data = new ArrayList<List<String>>();
-        addPeerData(sBucket);
+        addPeerData(sBucket, localDestinationHash);
         for (KBucket kBucket: kBuckets)
-            addPeerData(kBucket);
+            addPeerData(kBucket, localDestinationHash);
     }
     
-    private void addPeerData(AbstractBucket bucket) {
+    private void addPeerData(AbstractBucket bucket, Hash localDestinationHash) {
         DateFormat formatter = DateFormat.getDateTimeInstance();
         
         for (KademliaPeer peer: bucket) {
@@ -54,6 +57,8 @@ public class KademliaPeerStats implements DhtPeerStats {
             row.add(String.valueOf(data.size() + 1));
             row.add(peer.calculateHash().toBase64());
             row.add(getBucketPrefix(bucket));
+            BigInteger distance = KademliaUtil.getDistance(localDestinationHash, peer.calculateHash());
+            row.add(distance.shiftRight((Hash.HASH_LENGTH-2)*8).toString());   // show the 2 most significant bytes
             row.add(String.valueOf(peer.getStaleCounter()));
             String activeSince = formatter.format(peer.getActiveSince());
             row.add(String.valueOf(activeSince));
@@ -69,14 +74,11 @@ public class KademliaPeerStats implements DhtPeerStats {
     private String getBucketPrefix(AbstractBucket bucket) {
         if (bucket instanceof KBucket) {
             KBucket kBucket = (KBucket)bucket;
-            int depth = kBucket.getDepth();
-            if (depth == 0)
+            String prefix = kBucket.getBucketPrefix();
+            if (prefix.isEmpty())
                 return "(None)";
-            
-            String binary = kBucket.getStartId().toString(2);
-            while (binary.length() < depth)
-                binary = "0" + binary;
-            return binary.substring(0, depth);
+            else
+                return prefix;
         }
         else
             return "(S)";

@@ -40,7 +40,10 @@ import net.i2p.data.Hash;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 
-// TODO if a sibling times out, refill the sibling table
+/**
+ * The k-bucket tree isn't actually implemented as a tree, but a {@link List}.
+ * TODO if a sibling times out, refill the sibling table
+ */
 class BucketManager implements PacketListener, Iterable<KBucket> {
     private Log log = new Log(BucketManager.class);
     private List<KBucket> kBuckets;
@@ -93,8 +96,8 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         if (newBucket != null)
             kBuckets.add(bucketIndex+1, newBucket);   // the new bucket is one higher than the old bucket
         
-        // if all peers ended up in one bucket (leaving the other bucket empty), split again
-        while (newBucket!=null && (newBucket.isEmpty() || bucket.isEmpty())) {
+        // if all peers ended up in one bucket (overfilling it and leaving the other bucket empty), split again
+        while (newBucket!=null && (newBucket.isEmpty() || bucket.isEmpty()))
             if (newBucket.isEmpty()) {
                 newBucket = bucket.split();
                 kBuckets.add(bucketIndex+1, newBucket);
@@ -105,7 +108,6 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
                 newBucket = newBucket.split();
                 kBuckets.add(bucketIndex+1, newBucket);
             }
-        }
     }
 
     public void incrementStaleCounter(Destination destination) {
@@ -174,7 +176,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      * @param key
      * @return
      */
-    private KBucket getKBucket(Hash key) {
+    public KBucket getKBucket(Hash key) {
         return kBuckets.get(getBucketIndex(key));
     }
     
@@ -262,7 +264,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      * @see KademliaDHT.getPeerStats()
      */
     DhtPeerStats getPeerStats() {
-        return new KademliaPeerStats(sBucket, kBuckets);
+        return new KademliaPeerStats(sBucket, kBuckets, localDestinationHash);
     }
     
     // PacketListener implementation

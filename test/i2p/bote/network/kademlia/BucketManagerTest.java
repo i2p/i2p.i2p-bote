@@ -23,6 +23,7 @@ package i2p.bote.network.kademlia;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
@@ -323,7 +324,7 @@ public class BucketManagerTest {
         
         // all peers in a bucket at depth d should have the same value at the d-th highest bit
         for (KBucket bucket: bucketManager) {
-            int depth = bucket.getDepth();
+            int depth = getDepth(bucket);
             int bitIndex = Hash.HASH_LENGTH*8 - depth;
             Boolean previousBit = null;
             for (KademliaPeer peer: bucket) {
@@ -344,6 +345,12 @@ public class BucketManagerTest {
         for (KademliaPeer sibling: getSiblingBucket())
             for (KademliaPeer peer: getKPeers())
                 assertTrue(comparator.compare(sibling, peer) <= 0);
+        
+        // check that every hash falls into a bucket's key range
+        for (Destination peer: peers) {
+            KBucket bucket = bucketManager.getKBucket(peer.calculateHash());
+            assertNotNull(bucket);
+        }
         
         // remove peers one at a time and check that it got removed from the right bucket
         List<Integer> bucketSizes = new ArrayList<Integer>();
@@ -394,6 +401,13 @@ public class BucketManagerTest {
             for (KademliaPeer peer: bucket)
                 peers.add(peer);
         return peers;
+    }
+    
+    // returns the value of the private field depth
+    private int getDepth(KBucket bucket) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        Field depthField = KBucket.class.getDeclaredField("depth");
+        depthField.setAccessible(true);
+        return depthField.getInt(bucket);
     }
     
     // returns the value of the private field sBucket
