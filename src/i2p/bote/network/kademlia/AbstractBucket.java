@@ -30,7 +30,6 @@ import java.util.List;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
-import net.i2p.util.Log;
 
 /**
  * This is the parent class for k-buckets and s-buckets.
@@ -43,7 +42,6 @@ abstract class AbstractBucket implements Iterable<KademliaPeer> {
     static final BigInteger MIN_HASH_VALUE = BigInteger.ZERO;   // system-wide minimum hash value
     static final BigInteger MAX_HASH_VALUE = BigInteger.ONE.shiftLeft(Hash.HASH_LENGTH*8).subtract(BigInteger.ONE);   // system-wide maximum hash value
 
-    private Log log = new Log(AbstractBucket.class);
     protected List<KademliaPeer> peers;   // peers are sorted most recently seen to least recently seen
     protected int capacity;
     
@@ -61,18 +59,7 @@ abstract class AbstractBucket implements Iterable<KademliaPeer> {
      * @param node
      */
     void remove(Destination destination) {
-        KademliaPeer peer = getPeer(destination);
-        if (peer != null)
-            remove(peer);
-    }
-
-    /**
-     * Removes a peer from the bucket. If the peer doesn't exist in the bucket, nothing happens.
-     * @param node
-     */
-    void remove(KademliaPeer peer) {
-        log.debug("Removing peer from bucket: " + peer.getDestinationHash());
-        peers.remove(peer);
+        peers.remove(destination);
     }
 
     Collection<KademliaPeer> getPeers() {

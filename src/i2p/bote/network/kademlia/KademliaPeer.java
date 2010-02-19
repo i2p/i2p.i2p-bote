@@ -31,9 +31,9 @@ public class KademliaPeer extends Destination {
     private Log log = new Log(KademliaPeer.class);
     private Destination destination;
     private Hash destinationHash;
-    private long lastPingSent;
     private long activeSince;
     private AtomicInteger consecutiveTimeouts;
+    private long lockedUntil;
     
     public KademliaPeer(Destination destination, long lastReception) {
         // initialize the Destination part of the KademliaPeer
@@ -47,7 +47,6 @@ public class KademliaPeer extends Destination {
         if (destinationHash == null)
             log.error("calculateHash() returned null!");
         
-        lastPingSent = 0;
         activeSince = lastReception;
         consecutiveTimeouts = new AtomicInteger(0);
     }
@@ -64,27 +63,32 @@ public class KademliaPeer extends Destination {
     	return destinationHash;
     }
     
-    public boolean isDead() {
-        return consecutiveTimeouts.get() >= KademliaConstants.STALE_THRESHOLD;
-    }
-    
-    public int getStaleCounter() {
-        return consecutiveTimeouts.get();
-    }
-    
-    public void incrementStaleCounter() {
-        consecutiveTimeouts.incrementAndGet();
-    }
-    
-    public void resetStaleCounter() {
-        consecutiveTimeouts.set(0);
-    }
-    
-    public long getLastPingSent() {
-    	return lastPingSent;
-    }
-    
     public long getActiveSince() {
     	return activeSince;
+    }
+
+    long getLockedUntil() {
+        return lockedUntil;
+    }
+    
+    boolean isLocked() {
+        return lockedUntil > System.currentTimeMillis();
+    }
+    
+    /**
+     * Locks the peer for 2 minutes after the first timeout, 4 minutes after
+     * two consecutive timeouts, 8 minutes after 3 consecutive timeouts, and
+     * 16 minutes for 4 and more consecutive timeouts.
+     */
+    void noResponse() {
+        consecutiveTimeouts.incrementAndGet();
+        
+        int lockDuration = 1 << Math.min(consecutiveTimeouts.get(), 5);   // in minutes
+        lockedUntil = System.currentTimeMillis() + 60*1000*lockDuration;
+    }
+    
+    void responseReceived() {
+        consecutiveTimeouts.set(0);
+        lockedUntil = 0;
     }
 }

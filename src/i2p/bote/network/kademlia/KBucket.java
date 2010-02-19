@@ -54,7 +54,7 @@ class KBucket extends AbstractBucket {
     private Log log = new Log(KBucket.class);
     private BigInteger startId;
     private BigInteger endId;
-    private List<KademliaPeer> replacementCache;
+    private List<KademliaPeer> replacementCache;   // Basically a FIFO. Peers are sorted most recently seen to least recently seen
     private volatile int depth;
     private volatile long lastLookupTime;
 
@@ -102,80 +102,67 @@ class KBucket extends AbstractBucket {
     }
     
     /**
-     * Adds a node to the bucket, splitting the bucket if necessary, or updates the node
-     * if it exists in the bucket. If the bucket is split, the newly created bucket is
-     * returned. Otherwise, <code>null</code> is returned.
-     * 
-     * If the bucket is full but cannot be split, the new node is added to the replacement
-     * cache and <code>null</code> is returned.
-     * @param destination
+     * Returns <code>true</code> if the bucket needs to, AND can be split
+     * so a given <code>Destination</code> can be added.
+     */
+    boolean shouldSplit(Destination destination) {
+        return isFull() && !contains(destination) && canSplit(destination);
+    }
+    
+    /**
+     * Returns <code>true</code> if the bucket can be split in order to make room for a new peer.
      * @return
      */
-    synchronized KBucket addUpdateOrSplit(Destination destination) {
-        if (!rangeContains(destination))
-            log.error("Attempt to add a node whose hash is outside the bucket's range! Bucket start=" + startId + " Bucket end=" + endId + " peer hash=" + new BigInteger(1, destination.calculateHash().getData()));
-
-        KademliaPeer peer = getPeer(destination);
-        
-        if (isFull() && peer==null) {   // if bucket full and bucket doesn't contain peer, split the bucket if possible
-            if (canSplit(destination)) {
-                KBucket newBucket = split();
-                if (rangeContains(destination))
-                    add(destination);
-                else if (newBucket.rangeContains(destination))
-                    newBucket.add(destination);
-                else
-                    log.error("After splitting a bucket, node is outside of both buckets' ranges.");
-                return newBucket;
-            }
-            else {
-                addOrUpdateReplacement(new KademliaPeer(destination));
-                return null;
-            }
-        }
-        else {   // no splitting needed
-            addOrUpdate(destination);
-            return null;
-        }
+    private boolean canSplit(Destination destination) {
+        return depth%KademliaConstants.B!=0 || rangeContains(destination);
     }
     
     /**
      * Updates a known peer, or adds the peer if it isn't known. If the bucket
-     * is full, the oldest peer is removed before adding the new peer.
+     * is full and the replacement cache is not empty, the oldest peer is removed
+     * before adding the new peer.
+     * If the bucket is full and the replacement cache is empty, the peer is
+     * added to the replacement cache.
      * @param destination
-     * @return The peer that was removed from the bucket, or <code>null</code>
-     * if no peer was removed.
      */
-    private Destination addOrUpdate(Destination destination) {
+    void addOrUpdate(Destination destination) {
         // TODO log an error if peer outside bucket's range
         int index = getPeerIndex(destination);
         if (index >= 0) {
             KademliaPeer peer = peers.remove(index);
+            peer.responseReceived();
             peers.add(0, peer);
-            peer.resetStaleCounter();
-            return null;
         }
         else {
-            KademliaPeer removedPeer = null;
-            if (isFull())
-                removedPeer = peers.remove(peers.size() - 1);
-            peers.add(0, new KademliaPeer(destination));
-            return removedPeer;
+            if (!isFull())
+                peers.add(0, new KademliaPeer(destination));
+            else
+                addOrUpdateReplacement(destination);
         }
     }
 
-    private void addOrUpdateReplacement(KademliaPeer peer) {
-        replacementCache.add(0, peer);
-        while (replacementCache.size() > REPLACEMENT_CACHE_MAX_SIZE)
-            replacementCache.remove(REPLACEMENT_CACHE_MAX_SIZE-1);
+    void noResponse(KademliaPeer peer) {
+        if (!replacementCache.isEmpty())
+            if (peers.remove(peer))
+                peers.add(replacementCache.remove(0));
+    }
+    
+    private void addOrUpdateReplacement(Destination destination) {
+        addOrUpdateReplacement(new KademliaPeer(destination));
     }
     
     /**
-     * Returns <code>true</code> if the bucket should be split in order to make room for a new peer.
-     * @return
+     * Adds a peer to the head of the replacement cache, or makes
+     * it the head if it exists in the replacement cache.
+     * @param peer
      */
-    private boolean canSplit(Destination peer) {
-        return depth%KademliaConstants.B!=0 || rangeContains(peer);
+    private void addOrUpdateReplacement(KademliaPeer peer) {
+        if (replacementCache.contains(peer))
+            replacementCache.remove(peer);
+        replacementCache.add(0, peer);
+        
+        while (replacementCache.size() > REPLACEMENT_CACHE_MAX_SIZE)
+            replacementCache.remove(REPLACEMENT_CACHE_MAX_SIZE-1);
     }
     
     /**
@@ -191,9 +178,10 @@ class KBucket extends AbstractBucket {
     }
     
     /**
-     * Splits the bucket in two by moving peers to a new bucket. The existing bucket
-     * retains all peers whose keys have a 0 at the <code>depth</code>-th bit; the
-     * new bucket will contain all peers for which the <code>depth</code>-th bit is 1.
+     * Splits the bucket in two equal halves (in terms of ID ranges) and moves peers
+     * to the new bucket if necessary.
+     * The existing bucket retains the lower IDs; the new bucket will contain the
+     * higher IDs.
      * In other words, the bucket is split into two sub-branches in the Kademlia
      * tree, with the old bucket representing the left branch and the new bucket
      * representing the right branch.
@@ -201,11 +189,7 @@ class KBucket extends AbstractBucket {
      * @see split(BigInteger)
      */
     KBucket split() {
-        // pivot has the depth-th highest bit set to 1, all bit indices lower than depth set to 0
-        BigInteger pivot = startId.setBit(Hash.HASH_LENGTH*8-1-depth);
-        for (int i=0; i<depth; i++)
-            pivot = pivot.clearBit(i);
-        
+        BigInteger pivot = startId.add(endId).divide(BigInteger.valueOf(2));
         return split(pivot);
     }
 

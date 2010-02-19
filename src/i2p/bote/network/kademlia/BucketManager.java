@@ -42,7 +42,6 @@ import net.i2p.util.Log;
 
 /**
  * The k-bucket tree isn't actually implemented as a tree, but a {@link List}.
- * TODO if a sibling times out, refill the sibling table
  */
 class BucketManager implements PacketListener, Iterable<KBucket> {
     private Log log = new Log(BucketManager.class);
@@ -89,39 +88,83 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         logBucketStats();
     }
 
+    /**
+     * Adds a peer to the appropriate bucket, splitting the bucket if necessary, or updates the
+     * peer if it exists in the bucket.
+     * @param destination
+     */
     private void addToKBucket(Destination destination) {
         int bucketIndex = getBucketIndex(destination.calculateHash());
         KBucket bucket = kBuckets.get(bucketIndex);
-        KBucket newBucket = bucket.addUpdateOrSplit(destination);
-        if (newBucket != null)
-            kBuckets.add(bucketIndex+1, newBucket);   // the new bucket is one higher than the old bucket
         
-        // if all peers ended up in one bucket (overfilling it and leaving the other bucket empty), split again
-        while (newBucket!=null && (newBucket.isEmpty() || bucket.isEmpty()))
-            if (newBucket.isEmpty()) {
-                newBucket = bucket.split();
-                kBuckets.add(bucketIndex+1, newBucket);
-            }
-            else {   // if bucket.isEmpty()
-                bucketIndex++;
-                bucket = newBucket;
-                newBucket = newBucket.split();
-                kBuckets.add(bucketIndex+1, newBucket);
-            }
+        if (bucket.shouldSplit(destination)) {
+            KBucket newBucket = bucket.split();
+            kBuckets.add(bucketIndex+1, newBucket);   // the new bucket is one higher than the old bucket
+            
+            // if all peers ended up in one bucket (overfilling it and leaving the other bucket empty), split again
+            while (newBucket.isEmpty() || bucket.isEmpty())
+                if (newBucket.isEmpty()) {
+                    newBucket = bucket.split();
+                    kBuckets.add(bucketIndex+1, newBucket);
+                }
+                else {   // if bucket.isEmpty()
+                    bucketIndex++;
+                    bucket = newBucket;
+                    newBucket = newBucket.split();
+                    kBuckets.add(bucketIndex+1, newBucket);
+                }
+            
+            bucket = getKBucket(destination.calculateHash());
+        }
+        
+        bucket.addOrUpdate(destination);
     }
 
-    public void incrementStaleCounter(Destination destination) {
+    /**
+     * Notifies the <code>BucketManager</code> that a peer didn't respond to
+     * a request.
+     * @param destination
+     */
+    public synchronized void noResponse(Destination destination) {
         AbstractBucket bucket = getBucket(destination);
         if (bucket != null) {
             KademliaPeer peer = bucket.getPeer(destination);
             if (peer != null) {
-                peer.incrementStaleCounter();
-                if (peer.isDead())
-                    bucket.remove(peer);
+                peer.noResponse();
+                
+                if (bucket instanceof KBucket)
+                    ((KBucket)bucket).noResponse(peer);
+                else if (bucket instanceof SBucket) {
+                    // move the unresponsive peer from the s-bucket to a k-bucket and refill the s-bucket with a good peer
+                    ((SBucket)bucket).remove(peer);
+                    addToKBucket(peer);
+                    refillSiblings();
+                }
+                else
+                    log.error("This shouldn't happen! Bucket class = " + bucket.getClass().getName());
             }
         }
         else
             log.debug("Can't increment stale counter because peer not found in buckets: " + destination.calculateHash());
+    }
+    
+    /**
+     * Moves peers from the k-buckets to the s-bucket until the s-bucket is full
+     * or all k-buckets are empty.
+     */
+    private void refillSiblings() {
+        for (KBucket kBucket: kBuckets)
+            for (KademliaPeer peer: kBucket) {
+                if (sBucket.isFull())
+                    return;
+                
+                if (!peer.isLocked()) {
+                    Destination removedOrNotAdded = sBucket.addOrUpdate(peer);
+                    // if the peer replaced another peer in the s-bucket, put the replaced peer into a k-bucket
+                    if (removedOrNotAdded!=peer && removedOrNotAdded!=null)
+                        addToKBucket(removedOrNotAdded);
+                }
+            }
     }
     
     private void logBucketStats() {
@@ -214,7 +257,8 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     }
     
     /**
-     * Return the <code>count</code> peers that are closest to a given key.
+     * Return the <code>count</code> peers that are closest to a given key,
+     * and which are not locked.
      * Less than <code>count</code> peers may be returned if there aren't
      * enough peers in the k-buckets and the s-bucket.
      * @param key
@@ -225,7 +269,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         Collection<Destination> closestPeers = new ConcurrentHashSet<Destination>();
         
         // TODO don't put all peers in one huge list, only use two buckets at a time
-        Destination[] allPeers = getAllPeersSortedByDistance(key);
+        Destination[] allPeers = getUnlockedPeersSortedByDistance(key);
         
         for (int i=0; i<count && i<allPeers.length; i++)
             closestPeers.add(allPeers[i]);
@@ -233,11 +277,25 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         return closestPeers;
     }
 
-    private KademliaPeer[] getAllPeersSortedByDistance(Hash key) {
-        List<KademliaPeer> allPeers = getAllPeers();
-        KademliaPeer[] peerArray = getAllPeers().toArray(new KademliaPeer[allPeers.size()]);
+    private KademliaPeer[] getUnlockedPeersSortedByDistance(Hash key) {
+        List<KademliaPeer> allPeers = getAllUnlockedPeers();
+        KademliaPeer[] peerArray = allPeers.toArray(new KademliaPeer[allPeers.size()]);
         Arrays.sort(peerArray, new PeerDistanceComparator(key));
         return peerArray;
+    }
+    
+    public synchronized List<KademliaPeer> getAllUnlockedPeers() {
+        List<KademliaPeer> allPeers = new ArrayList<KademliaPeer>();
+        
+        for (KBucket bucket: kBuckets)
+            for (KademliaPeer peer: bucket.getPeers())
+                if (!peer.isLocked())
+                    allPeers.add(peer);
+        for (KademliaPeer peer: sBucket.getPeers())
+            if (!peer.isLocked())
+                allPeers.add(peer);
+        
+        return allPeers;
     }
     
     public synchronized List<KademliaPeer> getAllPeers() {
@@ -288,10 +346,6 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
             addOrUpdate(sender);
     }
 
-    SBucket getSBucket() {
-        return sBucket;
-    }
-    
     /**
      * Iterates over the k-buckets. Does not include the sibling bucket.
      * @return

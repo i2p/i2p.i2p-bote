@@ -58,7 +58,7 @@ public class SBucket extends AbstractBucket {
             int index = Collections.binarySearch(peers, destination, distanceComparator);
             
             if (index >= 0) {   // destination is already in the bucket, so update it
-                peers.get(index).resetStaleCounter();
+                peers.get(index).responseReceived();
                 return null;
             }
             else {
