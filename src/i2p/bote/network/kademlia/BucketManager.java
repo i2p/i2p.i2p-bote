@@ -52,8 +52,8 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     public BucketManager(Hash localDestinationHash) {
         this.localDestinationHash = localDestinationHash;
         kBuckets = Collections.synchronizedList(new ArrayList<KBucket>());
-        kBuckets.add(new KBucket(AbstractBucket.MIN_HASH_VALUE, AbstractBucket.MAX_HASH_VALUE, KademliaConstants.K, 0));   // this is the root bucket, so depth=0
-        sBucket = new SBucket(KademliaConstants.S, localDestinationHash);
+        kBuckets.add(new KBucket(AbstractBucket.MIN_HASH_VALUE, AbstractBucket.MAX_HASH_VALUE, 0));   // this is the root bucket, so depth=0
+        sBucket = new SBucket(localDestinationHash);
     }
     
     /**
@@ -66,12 +66,12 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     }
     
     /**
-     * Adds a <code>{@link Destination}</code> to the s-bucket or a k-bucket,
+     * Adds a <code>{@link KademliaPeer}</code> to the s-bucket or a k-bucket,
      * depending on its distance to the local node and how full the buckets are.
      * @param destination
      */
-    public void addOrUpdate(Destination destination) {
-        Hash destHash = destination.calculateHash();
+    public void addOrUpdate(KademliaPeer peer) {
+        Hash destHash = peer.getDestinationHash();
         if (localDestinationHash.equals(destHash)) {
             log.debug("Not adding local destination to bucket.");
             return;
@@ -79,9 +79,9 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         
         log.debug("Adding/updating peer: Hash = " + destHash);
 
-        Destination removedOrNotAdded = sBucket.addOrUpdate(destination);
+        KademliaPeer removedOrNotAdded = sBucket.addOrUpdate(peer);
         if (removedOrNotAdded == null)
-            getKBucket(destHash).remove(destination);   // if the peer was in a k-bucket, remove it because it is now in the s-bucket
+            getKBucket(destHash).remove(peer);   // if the peer was in a k-bucket, remove it because it is now in the s-bucket
         else
             addToKBucket(removedOrNotAdded);   // if a peer was removed from the s-bucket or didn't qualify as a sibling, add it to a k-bucket
         
@@ -91,13 +91,13 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     /**
      * Adds a peer to the appropriate bucket, splitting the bucket if necessary, or updates the
      * peer if it exists in the bucket.
-     * @param destination
+     * @param peer
      */
-    private void addToKBucket(Destination destination) {
-        int bucketIndex = getBucketIndex(destination.calculateHash());
+    private void addToKBucket(KademliaPeer peer) {
+        int bucketIndex = getBucketIndex(peer.calculateHash());
         KBucket bucket = kBuckets.get(bucketIndex);
         
-        if (bucket.shouldSplit(destination)) {
+        if (bucket.shouldSplit(peer)) {
             KBucket newBucket = bucket.split();
             kBuckets.add(bucketIndex+1, newBucket);   // the new bucket is one higher than the old bucket
             
@@ -114,10 +114,10 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
                     kBuckets.add(bucketIndex+1, newBucket);
                 }
             
-            bucket = getKBucket(destination.calculateHash());
+            bucket = getKBucket(peer.calculateHash());
         }
         
-        bucket.addOrUpdate(destination);
+        bucket.addOrUpdate(peer);
     }
 
     /**
@@ -159,7 +159,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
                     return;
                 
                 if (!peer.isLocked()) {
-                    Destination removedOrNotAdded = sBucket.addOrUpdate(peer);
+                    KademliaPeer removedOrNotAdded = sBucket.addOrUpdate(peer);
                     // if the peer replaced another peer in the s-bucket, put the replaced peer into a k-bucket
                     if (removedOrNotAdded!=peer && removedOrNotAdded!=null)
                         addToKBucket(removedOrNotAdded);
@@ -203,7 +203,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
             int centerIndex = (highIndex + lowIndex) / 2;
             if (keyValue.compareTo(kBuckets.get(centerIndex).getStartId()) < 0)
                 highIndex = centerIndex - 1;
-            else if (keyValue.compareTo(kBuckets.get(centerIndex).getEndId()) > 0)
+            else if (keyValue.compareTo(kBuckets.get(centerIndex).getEndId()) >= 0)
                 lowIndex = centerIndex + 1;
             else
                 return centerIndex;
@@ -310,7 +310,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      * Return the total number of known Kademlia peers.
      * @return
      */
-    public int getPeerCount() {
+    int getPeerCount() {
         int count = 0;
         for (KBucket bucket: kBuckets)
             count += bucket.size();
@@ -343,9 +343,13 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         
         // any type of incoming packet updates the peer's record in the bucket/sibling list, or adds the peer to the bucket/sibling list
         if (!banned)
-            addOrUpdate(sender);
+            addOrUpdate(new KademliaPeer(sender));
     }
 
+    SBucket getSBucket() {
+        return sBucket;
+    }
+    
     /**
      * Iterates over the k-buckets. Does not include the sibling bucket.
      * @return

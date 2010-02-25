@@ -21,7 +21,9 @@
 
 package i2p.bote.network.kademlia;
 
+import static i2p.bote.network.kademlia.KademliaConstants.K;
 import i2p.bote.UniqueId;
+import i2p.bote.Util;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketListener;
@@ -40,14 +42,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
-import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 
 public class ClosestNodesLookupTask implements Runnable {
@@ -60,8 +61,9 @@ public class ClosestNodesLookupTask implements Runnable {
     private BucketManager bucketManager;
     private Random randomNumberGenerator;
     private I2PSendQueue sendQueue;
-    private Set<Destination> responses;
-    private Set<Destination> notQueriedYet;
+    private Comparator<Destination> peerComparator;
+    private SortedSet<Destination> responses;   // sorted by distance to the key to look up
+    private SortedSet<Destination> notQueriedYet;   // sorted by distance to the key to look up
     private Map<Destination, FindClosePeersPacket> pendingRequests;
     private long startTime;
     
@@ -71,8 +73,10 @@ public class ClosestNodesLookupTask implements Runnable {
         this.i2pReceiver = i2pReceiver;
         this.bucketManager = bucketManager;
         randomNumberGenerator = new Random(getTime());
-        responses = Collections.synchronizedSet(new TreeSet<Destination>(new HashDistanceComparator(key)));   // nodes that have responded to a query; sorted by distance to the key
-        notQueriedYet = new ConcurrentHashSet<Destination>();   // peers we haven't contacted yet
+        
+        peerComparator = new HashDistanceComparator(key);
+        responses = Collections.synchronizedSortedSet(new TreeSet<Destination>(peerComparator));   // nodes that have responded to a query
+        notQueriedYet = Collections.synchronizedSortedSet(new TreeSet<Destination>(peerComparator));   // peers we haven't contacted yet
         pendingRequests = new ConcurrentHashMap<Destination, FindClosePeersPacket>();   // outstanding queries
     }
     
@@ -101,7 +105,7 @@ public class ClosestNodesLookupTask implements Runnable {
             for (Map.Entry<Destination, FindClosePeersPacket> request: pendingRequests.entrySet())
                 if (hasTimedOut(request.getValue(), REQUEST_TIMEOUT)) {
                     Destination peer = request.getKey();
-                    bucketManager.noResponse(peer);   // resetting is also done in BucketManager
+                    bucketManager.noResponse(peer);
                     pendingRequests.remove(peer);
                 }
             
@@ -119,10 +123,27 @@ public class ClosestNodesLookupTask implements Runnable {
     }
 
     private boolean isDone() {
-        if (pendingRequests.isEmpty() && notQueriedYet.isEmpty())   // if there are no more requests to send, and no more responses to wait for, we're finished
+        // if there are no more requests to send, and no more responses to wait for, we're finished
+        if (pendingRequests.isEmpty() && notQueriedYet.isEmpty())
             return true;
-        if (responses.size() >= KademliaConstants.K)   // if we have received enough responses, we're also finished
-            return true;
+        
+        // if we have received responses from the k closest peers, we're also finished
+        Destination kthClosestResult = null;
+        synchronized(responses) {
+            if (responses.size() >= K)
+                kthClosestResult = Util.get(responses, K-1);
+        }
+        if (kthClosestResult != null) {
+            Destination closestUnqueriedPeer = null;
+            synchronized(notQueriedYet) {
+                if (notQueriedYet.isEmpty())
+                    return true;
+                closestUnqueriedPeer = notQueriedYet.first();
+            }
+            if (peerComparator.compare(kthClosestResult, closestUnqueriedPeer) <= 0)
+                return true;
+        }
+        
         if (hasTimedOut(startTime, CLOSEST_NODES_LOOKUP_TIMEOUT)) {
             log.error("Lookup for closest nodes timed out.");
             return true;
@@ -150,19 +171,17 @@ public class ClosestNodesLookupTask implements Runnable {
     }
     
     /**
-     * Returns up to <code>k</code> peers. If no peers were found, an empty
-     * <code>List</code> is returned.
+     * Returns up to <code>k</code> peers, sorted by distance from the key.
+     * If no peers were found, an empty <code>List</code> is returned.
      * @return
      */
     public List<Destination> getResults() {
         List<Destination> resultsList = new ArrayList<Destination>();
-        for (Destination destination: responses)
+        for (Destination destination: responses) {
             resultsList.add(destination);
-        Collections.sort(resultsList, new HashDistanceComparator(key));
-        
-        // trim the list to the k closest nodes
-        if (resultsList.size() > KademliaConstants.K)
-            resultsList = resultsList.subList(0, KademliaConstants.K);
+            if (resultsList.size() >= KademliaConstants.K)
+                break;
+        }
         return resultsList;
     }
 

@@ -21,6 +21,7 @@
 
 package i2p.bote.network.kademlia;
 
+import i2p.bote.Util;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.DhtPeerStats;
@@ -30,6 +31,7 @@ import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketBatch;
 import i2p.bote.network.PacketListener;
+import i2p.bote.network.kademlia.SBucket.BucketSection;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.PeerList;
@@ -81,7 +83,6 @@ import com.nettgryppa.security.HashCash;
  *   
  */
 public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
-    private static final int PING_TIMEOUT = 20 * 1000;
     private static final int RESPONSE_TIMEOUT = 60;   // Max. number of seconds to wait for replies to retrieve requests
     private static final URL BUILT_IN_PEER_FILE = KademliaDHT.class.getResource("built-in-peers.txt");
     
@@ -129,6 +130,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      */
     private Collection<Destination> getClosestNodes(Hash key) {
         bucketManager.getKBucket(key).setLastLookupTime(System.currentTimeMillis());
+        bucketManager.getSBucket().setLastLookupTime(key, System.currentTimeMillis());
         
         ClosestNodesLookupTask lookupTask = new ClosestNodesLookupTask(key, sendQueue, i2pReceiver, bucketManager);
         lookupTask.run();
@@ -297,7 +299,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             i2pReceiver.addPacketListener(this);
         outerLoop:  
             while (true) {
-                for (Destination bootstrapNode: initialPeers) {
+                for (KademliaPeer bootstrapNode: initialPeers) {
                     bucketManager.addOrUpdate(bootstrapNode);
                     Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
                     
@@ -351,12 +353,27 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * Refreshes all buckets whose <code>lastLookupTime</code> is too old.
      */
     private void refreshOldBuckets() {
+        log.debug("Refreshing buckets...");
         long now = System.currentTimeMillis();
-        for (KBucket bucket: bucketManager)
+        
+        // refresh k-buckets
+        for (KBucket bucket: Util.synchronizedCopy(bucketManager))
             if (now > bucket.getLastLookupTime() + KademliaConstants.REFRESH_TIMEOUT*1000) {
                 log.debug("Refreshing bucket: " + bucket);
                 refresh(bucket);
             }
+        
+        // Refresh the s-bucket by doing a lookup for a random key in each section of the bucket.
+        // For example, if k=20 and s=100, there would be a lookup for a random key between
+        // the 0th and the 20th sibling (i=0), another one for a random key between the 20th
+        // and the 40th sibling (i=1), etc., and finally a lookup for a random key between the
+        // 80th and the 100th sibling (i=4).
+        SBucket sBucket = bucketManager.getSBucket();
+        for (BucketSection section: sBucket.getSections())
+            if (now > section.getLastLookupTime() + KademliaConstants.REFRESH_TIMEOUT*1000)
+                refresh(sBucket, section.getStart(), section.getEnd());
+        
+        log.debug("Done refreshing buckets.");
     }
     
     private void refresh(KBucket bucket) {
@@ -364,15 +381,25 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         getClosestNodes(key);
     }
 
+    private void refresh(AbstractBucket bucket, BigInteger min, BigInteger max) {
+        Hash key = createRandomHash(min, max);
+        getClosestNodes(key);
+    }
+
     /**
-     * Returns a random value <code>r</code> such that <code>min &lt;= r &lt;= max</code>.
+     * Returns a random value <code>r</code> such that <code>min &lt;= r &lt; max</code>.
      * @param min
      * @param max
      * @return
      */
     private Hash createRandomHash(BigInteger min, BigInteger max) {
-        BigInteger hashValue = new BigInteger(Hash.HASH_LENGTH*8, RandomSource.getInstance());   // a random number between 0 and 2^256-1
-        hashValue = min.add(hashValue.mod(max.subtract(min).add(BigInteger.ONE)));   // a random number between min and max
+        BigInteger hashValue;
+        if (min.compareTo(max) >= 0)
+            hashValue = min;
+        else {
+            hashValue = new BigInteger(Hash.HASH_LENGTH*8, RandomSource.getInstance());   // a random number between 0 and 2^256-1
+            hashValue = min.add(hashValue.mod(max.subtract(min)));   // a random number equal to or greater than min, and less than max
+        }
         byte[] hashArray = hashValue.toByteArray();
         if (hashArray.length>Hash.HASH_LENGTH+1 || (hashArray.length==Hash.HASH_LENGTH+1 && hashArray[0]!=0))   // it's okay for the array length to be Hash.HASH_LENGTH if the zeroth byte only contains the sign bit
             log.error("Hash value too big to fit in " + Hash.HASH_LENGTH + " bytes: " + hashValue);

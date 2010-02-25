@@ -59,7 +59,7 @@ public class KademliaPeerStats implements DhtPeerStats {
             row.add(getBucketPrefix(bucket));
             BigInteger distance = KademliaUtil.getDistance(localDestinationHash, peer.calculateHash());
             row.add(distance.shiftRight((Hash.HASH_LENGTH-2)*8).toString());   // show the 2 most significant bytes
-            row.add(String.valueOf(peer.isLocked()?"Yes":"No"));
+            row.add(String.valueOf(peer.isLocked() ? "Yes ("+(peer.getConsecTimeouts())+")" : "No"));
             String activeSince = formatter.format(peer.getActiveSince());
             row.add(String.valueOf(activeSince));
             data.add(row);

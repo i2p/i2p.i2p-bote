@@ -26,12 +26,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.ThreadFactory;
 
 import net.i2p.client.I2PSession;
 import net.i2p.data.DataFormatException;
-import net.i2p.data.Hash;
-import net.i2p.util.RandomSource;
 
 public class Util {
 	private static final int BUFFER_SIZE = 32 * 1024;
@@ -83,5 +83,36 @@ public class Util {
                 return new Thread(null, runnable, threadName, stackSize);
             }
         };
+    }
+    
+    /**
+     * Creates a thread-safe <code>Iterable</code> from a thread-unsafe one.
+     * @param <E>
+     * @param iterable
+     * @return
+     */
+    public static <E> Iterable<E> synchronizedCopy(Iterable<E> iterable) {
+        synchronized(iterable) {
+            Collection<E> collection = new ArrayList<E>();
+            for (E element: iterable)
+                collection.add(element);
+            return collection;
+        }
+    }
+
+    /**
+     * Returns the <code>i</code>-th element of a <code>Collection</code>'s <code>Iterator</code>.
+     * @param <E>
+     * @param collection
+     * @param i
+     * @return
+     */
+    public static <E> E get(Collection<E> collection, int i) {
+        for (E element: collection) {
+            if (i == 0)
+                return element;
+            i--;
+        }
+        return null;
     }
 }

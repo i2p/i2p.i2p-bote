@@ -38,8 +38,8 @@ import net.i2p.util.Log;
  *  * knows its depth in the bucket tree, and
  *  * maintains a replacement cache.
  * 
- * Peers are kept in an <code>ArrayList</code>. New peers are added at
- * index 0. When a peer is updated, it is moved to index 0.
+ * Peers are kept in an <code>ArrayList</code>. Active peers are added
+ * at index 0. When a peer is updated, it is moved to index 0.
  * When the bucket needs to make room for a new peer, the peer at the
  * highest index (the least recently seen one) is dropped.
  * This effectively sorts peers by the time of most recent communication.
@@ -59,8 +59,8 @@ class KBucket extends AbstractBucket {
     private volatile long lastLookupTime;
 
     // capacity - The maximum number of peers the bucket can hold
-    KBucket(BigInteger startId, BigInteger endId, int capacity, int depth) {
-        super(capacity);
+    KBucket(BigInteger startId, BigInteger endId, int depth) {
+        super(KademliaConstants.K);
         this.startId = startId;
         this.endId = endId;
         replacementCache = Collections.synchronizedList(new ArrayList<KademliaPeer>());
@@ -92,15 +92,6 @@ class KBucket extends AbstractBucket {
         return lastLookupTime;
     }
 
-    synchronized void add(Destination destination) {
-        if (isFull())
-            log.error("Error: adding a node to a full k-bucket. Bucket needs to be split first. Size=" + size() + ", capacity=" + capacity);
-        
-        KademliaPeer peer = getPeer(destination);
-        if (peer == null)
-            peers.add(new KademliaPeer(destination));
-    }
-    
     /**
      * Returns <code>true</code> if the bucket needs to, AND can be split
      * so a given <code>Destination</code> can be added.
@@ -123,32 +114,44 @@ class KBucket extends AbstractBucket {
      * before adding the new peer.
      * If the bucket is full and the replacement cache is empty, the peer is
      * added to the replacement cache.
-     * @param destination
+     * @param peer
      */
-    void addOrUpdate(Destination destination) {
+    void addOrUpdate(KademliaPeer peer) {
         // TODO log an error if peer outside bucket's range
-        int index = getPeerIndex(destination);
+        int index = getPeerIndex(peer);
         if (index >= 0) {
-            KademliaPeer peer = peers.remove(index);
-            peer.responseReceived();
-            peers.add(0, peer);
+            KademliaPeer existingPeer = peers.remove(index);
+            existingPeer.responseReceived();
+            add(existingPeer);
         }
         else {
             if (!isFull())
-                peers.add(0, new KademliaPeer(destination));
+                add(peer);
             else
-                addOrUpdateReplacement(destination);
+                addOrUpdateReplacement(peer);
         }
     }
 
+    /**
+     * Adds a peer to the tail of the bucket if it is locked, or to the
+     * head of the bucket if it isn't locked.
+     * The bucket cannot be full when calling this method.
+     * @param peer
+     */
+    private void add(KademliaPeer peer) {
+        if (isFull())
+            log.error("Error: adding a node to a full k-bucket. Bucket needs to be split first. Size=" + size() + ", capacity=" + capacity);
+        
+        if (peer.isLocked())
+            peers.add(peer);
+        else
+            peers.add(0, peer);
+    }
+    
     void noResponse(KademliaPeer peer) {
         if (!replacementCache.isEmpty())
             if (peers.remove(peer))
                 peers.add(replacementCache.remove(0));
-    }
-    
-    private void addOrUpdateReplacement(Destination destination) {
-        addOrUpdateReplacement(new KademliaPeer(destination));
     }
     
     /**
@@ -201,8 +204,8 @@ class KBucket extends AbstractBucket {
      */
     private KBucket split(BigInteger pivot) {
         depth++;
-        KBucket newBucket = new KBucket(pivot, endId, capacity, depth);
-        endId = pivot.subtract(BigInteger.ONE);
+        KBucket newBucket = new KBucket(pivot, endId, depth);
+        endId = pivot;
         for (int i=peers.size()-1; i>=0; i--) {
             KademliaPeer peer = peers.get(i);
             BigInteger nodeId = new BigInteger(1, peer.getDestinationHash().getData());

@@ -21,8 +21,6 @@
 
 package i2p.bote.network.kademlia;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -32,7 +30,7 @@ public class KademliaPeer extends Destination {
     private Destination destination;
     private Hash destinationHash;
     private long activeSince;
-    private AtomicInteger consecutiveTimeouts;
+    private volatile int consecutiveTimeouts;
     private long lockedUntil;
     
     public KademliaPeer(Destination destination, long lastReception) {
@@ -48,7 +46,6 @@ public class KademliaPeer extends Destination {
             log.error("calculateHash() returned null!");
         
         activeSince = lastReception;
-        consecutiveTimeouts = new AtomicInteger(0);
     }
     
     public KademliaPeer(Destination destination) {
@@ -67,6 +64,10 @@ public class KademliaPeer extends Destination {
     	return activeSince;
     }
 
+    public int getConsecTimeouts() {
+        return consecutiveTimeouts;
+    }
+    
     long getLockedUntil() {
         return lockedUntil;
     }
@@ -80,15 +81,14 @@ public class KademliaPeer extends Destination {
      * two consecutive timeouts, 8 minutes after 3 consecutive timeouts, and
      * 16 minutes for 4 and more consecutive timeouts.
      */
-    void noResponse() {
-        consecutiveTimeouts.incrementAndGet();
-        
-        int lockDuration = 1 << Math.min(consecutiveTimeouts.get(), 5);   // in minutes
+    synchronized void noResponse() {
+        consecutiveTimeouts++;
+        int lockDuration = 1 << Math.min(consecutiveTimeouts, 5);   // in minutes
         lockedUntil = System.currentTimeMillis() + 60*1000*lockDuration;
     }
     
     void responseReceived() {
-        consecutiveTimeouts.set(0);
+        consecutiveTimeouts = 0;
         lockedUntil = 0;
     }
 }

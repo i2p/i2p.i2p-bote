@@ -50,10 +50,6 @@ abstract class AbstractBucket implements Iterable<KademliaPeer> {
         this.capacity = capacity;
     }
 
-    protected void add(int index, Destination destination) {
-        peers.add(index, new KademliaPeer(destination));
-    }
-    
     /**
      * Removes a peer from the bucket. If the peer doesn't exist in the bucket, nothing happens.
      * @param node

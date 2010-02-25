@@ -21,9 +21,10 @@
 
 package i2p.bote.network.kademlia;
 
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Collections;
 
-import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
@@ -36,26 +37,34 @@ import net.i2p.util.Log;
 public class SBucket extends AbstractBucket {
     private Log log = new Log(SBucket.class);
     private PeerDistanceComparator distanceComparator;
+    private BucketSection[] sections;   // used for refreshing the s-bucket
     
-    public SBucket(int capacity, Hash localDestinationHash) {
-        super(capacity);
+    public SBucket(Hash localDestinationHash) {
+        super(KademliaConstants.S);
         distanceComparator = new PeerDistanceComparator(localDestinationHash);
+        
+        int numSections = (KademliaConstants.S - 1) / KademliaConstants.K + 1;
+        if (numSections < 1)
+            numSections = 1;
+        sections = new BucketSection[numSections];
+        for (int i=0; i<numSections; i++)
+            sections[i] = new BucketSection(BigInteger.ZERO, BigInteger.ZERO, 0);
     }
 
     /**
      * Adds/updates a peer if there is room in the bucket, or if the peer is not
      * further away from the local destination than the furthest sibling in the
      * bucket.
-     * @param destination
+     * @param peer
      * @return The peer that was removed to make room for the new peer, or
      * <code>null</code> if no peer was removed from the bucket. If
-     * <code>destination</code> didn't exist in the bucket but was not added
+     * <code>peer</code> didn't exist in the bucket but was not added
      * because it was too far away from the local destination,
-     * <code>destination</code> itself is returned.
+     * <code>peer</code> itself is returned.
      */
-    Destination addOrUpdate(Destination destination) {
+    KademliaPeer addOrUpdate(KademliaPeer peer) {
         synchronized(peers) {
-            int index = Collections.binarySearch(peers, destination, distanceComparator);
+            int index = Collections.binarySearch(peers, peer, distanceComparator);
             
             if (index >= 0) {   // destination is already in the bucket, so update it
                 peers.get(index).responseReceived();
@@ -64,22 +73,96 @@ public class SBucket extends AbstractBucket {
             else {
                 int insertionPoint = -(index+1);
                 if (isFull()) {
-                    // insertionPoint can only be equal to or greater than size(), see Collections.binarySearch javadoc
+                    // insertionPoint can only be equal to or greater than size() at this point, see Collections.binarySearch javadoc
                     if (insertionPoint > size())
                         log.error("insertionPoint > size(), this shouldn't happen.");
                     if (insertionPoint < size()) {   // if destination is closer than an existing sibling, replace the furthest away sibling and return the removed sibling
                         KademliaPeer removedPeer = peers.remove(size() - 1);
-                        peers.add(insertionPoint, new KademliaPeer(destination));
+                        peers.add(insertionPoint, new KademliaPeer(peer));
                         return removedPeer;
                     }
                     else   // insertionPoint==size(), this means the new peer is further away than all other siblings
-                        return destination;
+                        return peer;
                 }
                 else {
-                    add(insertionPoint, destination);
+                    peers.add(insertionPoint, peer);
                     return null;
                 }
             }
+        }
+    }
+
+    BucketSection[] getSections() {
+        if (peers.isEmpty())
+            return sections;
+        
+        BigInteger[] siblingIDs = new BigInteger[peers.size()];
+        int siblingIndex = 0;
+        for (KademliaPeer peer: peers) {
+            siblingIDs[siblingIndex] = new BigInteger(1, peer.getDestinationHash().getData());
+            siblingIndex++;
+        }
+        Arrays.sort(siblingIDs);
+
+        for (int i=0; i<sections.length; i++) {
+            sections[i].start = siblingIDs[peers.size()*i/sections.length];
+            if (i == sections.length-1)
+                sections[i].end = siblingIDs[peers.size()-1].add(BigInteger.ONE);
+            else
+                sections[i].end = siblingIDs[peers.size()*(i+1)/sections.length];
+        }
+        
+        return sections;
+    }
+    
+    private BucketSection getSection(Hash key) {
+        for (BucketSection section: sections)
+            if (section.contains(key))
+                return section;
+        
+        return null;
+    }
+    
+    void setLastLookupTime(Hash key, long lastLookupTime) {
+        BucketSection section = getSection(key);
+        if (section != null)
+            section.lastLookupTime = lastLookupTime;
+    }
+    
+    /**
+     * Stores the start and end key, and the time of the last lookup, for one section of the s-bucket.
+     * There are ceil(s/k) sections in the bucket.
+     */
+    class BucketSection {
+        private BigInteger start;
+        private BigInteger end;
+        private long lastLookupTime;
+        
+        public BucketSection(BigInteger start, BigInteger end, long lastLookupTime) {
+            this.start = start;
+            this.end = end;
+            this.lastLookupTime = lastLookupTime;
+        }
+        
+        long getLastLookupTime() {
+            return lastLookupTime;
+        }
+
+        public BigInteger getStart() {
+            return start;
+        }
+        
+        public void setStart(BigInteger start) {
+            this.start = start;
+        }
+
+        public BigInteger getEnd() {
+            return end;
+        }
+        
+        public boolean contains(Hash key) {
+            BigInteger keyValue = new BigInteger(1, key.getData());
+            return (start.compareTo(keyValue)<=0 && keyValue.compareTo(end)<0);
         }
     }
 }

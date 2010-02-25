@@ -21,6 +21,8 @@
 
 package i2p.bote.network.kademlia;
 
+import static i2p.bote.network.kademlia.KademliaConstants.K;
+import static i2p.bote.network.kademlia.KademliaConstants.S;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -39,9 +41,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BucketManagerTest {
-    private static final int S = KademliaConstants.S;
-    private static final int K = KademliaConstants.K;
-    
     private BucketManager bucketManager;
     private Destination localDestination;
     private Destination[] peers;
@@ -264,7 +263,7 @@ public class BucketManagerTest {
         
         // add S destinations
         for (int i=0; i<S; i++)
-            bucketManager.addOrUpdate(peers[i]);
+            bucketManager.addOrUpdate(new KademliaPeer(peers[i]));
         assertEquals(S, bucketManager.getPeerCount());
         assertEquals(S, bucketManager.getAllPeers().size());
         assertEquals(1, getNumKBuckets());
@@ -272,14 +271,14 @@ public class BucketManagerTest {
         // add another K destinations
         int startIndex = S;
         for (int i=0; i<K; i++)
-            bucketManager.addOrUpdate(peers[startIndex+i]);
+            bucketManager.addOrUpdate(new KademliaPeer(peers[startIndex+i]));
         assertEquals(S + K, bucketManager.getPeerCount());
         assertEquals(S + K, bucketManager.getAllPeers().size());
         assertEquals(1, getNumKBuckets());
         
         // add one more destination, which should split the k-bucket
         int index = S + K;
-        bucketManager.addOrUpdate(peers[index]);
+        bucketManager.addOrUpdate(new KademliaPeer(peers[index]));
         assertEquals(S+K+1, bucketManager.getPeerCount());
         assertEquals(S+K+1, bucketManager.getAllPeers().size());
         assertTrue(getNumKBuckets() >= 2);   // there should be at least 2 buckets after the split
@@ -287,7 +286,7 @@ public class BucketManagerTest {
         // add 4*K-1 more peers for a total of S + 5 * K
         startIndex = S + K + 1;
         for (int i=0; i<4*K-1; i++)
-            bucketManager.addOrUpdate(peers[startIndex+i]);
+            bucketManager.addOrUpdate(new KademliaPeer(peers[startIndex+i]));
         
         // check that all peers are still there
         int totalPeersAdded = S + 5 * K;
@@ -308,8 +307,8 @@ public class BucketManagerTest {
                 }
             }
             
-            // start ID of bucket n+1 should be one higher than end ID of bucket n
-            assertEquals(bucket1.getEndId().add(BigInteger.ONE), bucket2.getStartId());
+            // start ID of bucket n+1 should be the end ID of bucket n
+            assertEquals(bucket1.getEndId(), bucket2.getStartId());
             
             bucket1 = bucket2;
         }
@@ -323,6 +322,7 @@ public class BucketManagerTest {
             }
         
         // all peers in a bucket at depth d should have the same value at the d-th highest bit
+        // TODO and all bits above it
         for (KBucket bucket: bucketManager) {
             int depth = getDepth(bucket);
             int bitIndex = Hash.HASH_LENGTH*8 - depth;
