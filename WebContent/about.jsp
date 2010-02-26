@@ -42,6 +42,7 @@
         <td><strong>Contributors:</strong></td>
     </tr><tr>
         <td></td><td>Mixxy</td>
+        <td></td><td>zzz</td>
     </tr></table>
 </div>
 

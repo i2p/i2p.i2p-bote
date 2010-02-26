@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="all" name="I2P-Bote">
+<project basedir="." default="help" name="I2P-Bote">
     <property name="i2pbase" value="../i2p"/>
     <property name="i2plib" value="${i2pbase}/core/java/build"/>
     <property name="jettylib" value="${i2pbase}/apps/jetty/jettylib"/>
     <property name="antlib" value="${jettylib}"/>
     <property name="jstllib" value="${i2pbase}/apps/susidns/src/WEB-INF/lib"/>
     <property name="lib" value="WebContent/WEB-INF/lib"/>
+    <property name="makeplugin" value="../i2p.scripts/plugin/makeplugin.sh"/>
     <path id="cp">
         <pathelement path="${java.class.path}" />
         <pathelement location="${i2plib}/i2p.jar" />
@@ -20,7 +21,16 @@
         <pathelement location="${lib}/mailapi.jar" />
     </path>
 
-    <target name="all" depends="clean, war" />
+    <target name="help">
+        <echo message="Useful targets:" />
+        <echo message="  war:    Makes a .war file" />
+        <echo message="  plugin: Makes a I2P plugin. Only runs on Linux;" />
+        <echo message="          $I2P must point to an I2P installation." />
+        <echo message="  all:    war + plugin" />
+        <echo message="  junit:  Runs all unit tests" />
+    </target>
+
+    <target name="all" depends="clean, war, plugin" />
 
     <target name="compile">
         <mkdir dir="./ant_build" />
@@ -89,6 +99,69 @@
         </exec>
     </target>
     
+    <!--
+      - Make two plugins, one for initial installs and one for updates.
+      - Only the initial install includes mailapi.jar.
+      - Neither includes jstl.jar or standard.jar, as any i2p version that has
+      - plugin support has these two jars pulled out of susidns.war and put in
+      - $I2P/lib. We set the classpath in webapps.config to find them.
+    -->
+    <target name="plugin" depends="pluginwar"> 
+        <mkdir dir="plugin/plugin.tmp/lib" />
+        <mkdir dir="plugin/plugin.tmp/console/webapps" />
+        <copy file="plugin/webapps.config" todir="plugin/plugin.tmp/console/" />
+        <move file="i2pbote-plugin.war" tofile="plugin/plugin.tmp/console/webapps/i2pbote.war" />
+        <delete file="plugin/plugin.tmp/lib/mailapi.jar" />
+
+        <!-- get version number -->
+        <buildnumber file="plugin/build.number" />
+        <exec executable="grep" outputproperty="versionLine" failonerror="true" >
+            <arg value="private static final String APP_VERSION" />
+	    <arg value="src/i2p/bote/I2PBote.java" />
+        </exec>
+        <exec executable="cut" inputstring="${versionLine}" outputproperty="release.number" failonerror="true" >
+            <arg value="-f2" />
+	    <arg value="-d&quot;" />
+        </exec>
+
+        <!-- make the update xpi2p -->
+        <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
+        <exec executable="echo" osfamily="unix" failifexecutionfails="true" output="plugin/plugin.tmp/plugin.config" append="true">
+            <arg value="version=${release.number}-b${build.number}" />
+        </exec>
+        <exec executable="echo" osfamily="unix" failifexecutionfails="true" output="plugin/plugin.tmp/plugin.config" append="true">
+            <arg value="update-only=true" />
+        </exec>
+        <exec executable="${makeplugin}" >
+            <arg value="plugin/plugin.tmp" />
+        </exec>
+        <move file="i2pbote.xpi2p" tofile="i2pbote-update.xpi2p" />
+
+        <!-- make the install xpi2p -->
+        <copy file="${lib}/mailapi.jar" todir="plugin/plugin.tmp/lib" />
+        <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
+        <exec executable="echo" osfamily="unix" failifexecutionfails="true" output="plugin/plugin.tmp/plugin.config" append="true">
+            <arg value="version=${release.number}-b${build.number}" />
+        </exec>
+        <exec executable="${makeplugin}" >
+            <arg value="plugin/plugin.tmp" />
+        </exec>
+    </target>
+
+    <!-- same as war but without the library jars -->
+    <target name="pluginwar" depends="compile,precompilejsp"> 
+        <mkdir dir="ant_build" />
+        <war destfile="i2pbote-plugin.war" webxml="ant_build/web.xml">
+            <classes dir="ant_build/classes" includes="**/*.class" />
+            <classes dir="src" includes="i2p/bote/network/kademlia/built-in-peers.txt" />
+            <fileset dir="WebContent" includes="index.html"/>
+            <fileset dir="WebContent" includes="*.css"/>
+            <fileset dir="WebContent/" includes="*.xml"/>
+            <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
+          <zipfileset dir="WebContent/images" prefix="images"/>
+        </war>
+    </target>
+    
     <target name="junit" depends="compile">
         <path id="junitcp">
             <pathelement location="${lib}/junit.jar"/>
@@ -141,6 +214,10 @@
     <target name="clean">
         <delete dir="ant_build" />
         <delete file="i2pbote.war" />
+        <delete file="i2pbote-plugin.war" />
+        <delete dir="plugin/plugin.tmp" />
+        <delete file="i2pbote.xpi2p" />
+        <delete file="i2pbote-update.xpi2p" />
         <delete file="src.zip" />
     </target>
 </project>
