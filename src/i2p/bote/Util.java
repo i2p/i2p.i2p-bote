@@ -87,6 +87,8 @@ public class Util {
     
     /**
      * Creates a thread-safe <code>Iterable</code> from a thread-unsafe one.
+     * Modifications to the old <code>Iterable</code> will not affect the
+     * new one.
      * @param <E>
      * @param iterable
      * @return
