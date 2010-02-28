@@ -277,7 +277,7 @@ public class I2PBote {
 		return instance;
 	}
 	
-	public String getAppVersion() {
+	public static String getAppVersion() {
 	    return APP_VERSION;
 	}
 	

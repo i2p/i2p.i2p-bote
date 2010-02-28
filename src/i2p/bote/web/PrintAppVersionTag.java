@@ -39,7 +39,7 @@ public class PrintAppVersionTag extends SimpleTagSupport {
         JspWriter out = pageContext.getOut();
         
         try {
-            out.println(I2PBote.getInstance().getAppVersion());
+            out.println(I2PBote.getAppVersion());
         } catch (IOException e) {
             log.error("Can't write output to HTML page", e);
         }
