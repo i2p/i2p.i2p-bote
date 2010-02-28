@@ -110,7 +110,18 @@
         <mkdir dir="plugin/plugin.tmp/lib" />
         <mkdir dir="plugin/plugin.tmp/console/webapps" />
         <copy file="plugin/webapps.config" todir="plugin/plugin.tmp/console/" />
-        <move file="i2pbote-plugin.war" tofile="plugin/plugin.tmp/console/webapps/i2pbote.war" />
+
+        <!-- run i2pbote-plugin.war through pack200 -->
+        <move file="i2pbote-plugin.war" tofile="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
+        <exec executable="pack200" failifexecutionfails="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/console/webapps/i2pbote.war.pack"/>
+            <arg value="plugin/plugin.tmp/console/webapps/i2pbote.jar"/>
+        </exec>
+        <delete file="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
+
         <delete file="plugin/plugin.tmp/lib/mailapi.jar" />
 
         <!-- get build number -->
@@ -124,13 +135,19 @@
         <exec executable="echo" osfamily="unix" failifexecutionfails="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="update-only=true" />
         </exec>
-        <exec executable="${makeplugin}" >
+        <exec executable="${makeplugin}" failifexecutionfails="true" >
             <arg value="plugin/plugin.tmp" />
         </exec>
         <move file="i2pbote.xpi2p" tofile="i2pbote-update.xpi2p" />
 
         <!-- make the install xpi2p -->
-        <copy file="${lib}/mailapi.jar" todir="plugin/plugin.tmp/lib" />
+        <exec executable="pack200" failifexecutionfails="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/mailapi.jar.pack"/>
+            <arg value="${lib}/mailapi.jar"/>
+        </exec>
         <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
         <exec executable="echo" osfamily="unix" failifexecutionfails="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="version=${version}-b${build.number}" />
