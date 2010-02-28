@@ -257,35 +257,26 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     }
     
     /**
-     * Return the <code>count</code> peers that are closest to a given key,
+     * Returns the <code>count</code> peers that are closest to a given key,
      * and which are not locked.
      * Less than <code>count</code> peers may be returned if there aren't
      * enough peers in the k-buckets and the s-bucket.
      * @param key
      * @param count
-     * @return
+     * @return Up to <code>count</code> peers, sorted by distance to <code>key</code>.
      */
-    public Collection<Destination> getClosestPeers(Hash key, int count) {
-        Collection<Destination> closestPeers = new ConcurrentHashSet<Destination>();
-        
-        // TODO don't put all peers in one huge list, only use two buckets at a time
-        Destination[] allPeers = getUnlockedPeersSortedByDistance(key);
-        
-        for (int i=0; i<count && i<allPeers.length; i++)
-            closestPeers.add(allPeers[i]);
-        
-        return closestPeers;
+    public List<Destination> getClosestPeers(Hash key, int count) {
+        // TODO don't put all peers in one huge list, only use two k-buckets and the s-bucket at a time
+        List<Destination> peers = getAllUnlockedPeers();
+        Collections.sort(peers, new PeerDistanceComparator(key));
+        if (peers.size() < count)
+            return peers;
+        else
+            return peers.subList(0, count);
     }
 
-    private KademliaPeer[] getUnlockedPeersSortedByDistance(Hash key) {
-        List<KademliaPeer> allPeers = getAllUnlockedPeers();
-        KademliaPeer[] peerArray = allPeers.toArray(new KademliaPeer[allPeers.size()]);
-        Arrays.sort(peerArray, new PeerDistanceComparator(key));
-        return peerArray;
-    }
-    
-    public synchronized List<KademliaPeer> getAllUnlockedPeers() {
-        List<KademliaPeer> allPeers = new ArrayList<KademliaPeer>();
+    private synchronized List<Destination> getAllUnlockedPeers() {
+        List<Destination> allPeers = new ArrayList<Destination>();
         
         for (KBucket bucket: kBuckets)
             for (KademliaPeer peer: bucket.getPeers())
