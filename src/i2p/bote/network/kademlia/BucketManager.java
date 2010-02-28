@@ -29,7 +29,6 @@ import i2p.bote.packet.CommunicationPacket;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -37,7 +36,6 @@ import java.util.List;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
-import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 
 /**
@@ -298,7 +296,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     }
     
     /**
-     * Return the total number of known Kademlia peers.
+     * Return the total number of known Kademlia peers (locked + unlocked peers).
      * @return
      */
     int getPeerCount() {
@@ -307,6 +305,14 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
             count += bucket.size();
         count += sBucket.size();
         return count;
+    }
+
+    /**
+     * Return the total number of Kademlia peers that are not locked.
+     * @return
+     */
+    int getUnlockedPeerCount() {
+        return getAllUnlockedPeers().size();
     }
 
     /**

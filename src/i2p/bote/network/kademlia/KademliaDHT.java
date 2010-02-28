@@ -538,6 +538,10 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         while (!shutdownRequested()) {
             try {
                 TimeUnit.MINUTES.sleep(1);
+                if (bucketManager.getUnlockedPeerCount() == 0) {
+                    log.debug("All peers are gone. Re-bootstrapping.");
+                    bootstrap();
+                }
                 refreshOldBuckets();
                 // TODO replicate();
             }
