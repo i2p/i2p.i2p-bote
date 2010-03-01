@@ -141,7 +141,9 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
                 for (Hash keyToDelete: keysToDelete) {
                     UniqueId deletionKeyFromRequest = delRequest.getDeletionKey(keyToDelete);
                     UniqueId storedDeletionKey = indexPacket.getDeletionKey(keyToDelete);
-                    if (storedDeletionKey.equals(deletionKeyFromRequest))
+                    if (storedDeletionKey == null)
+                        log.debug("Deletion key " + deletionKeyFromRequest + " from IndexPacketDeleteRequest not found in index packet for destination " + dhtKey);
+                    else if (storedDeletionKey.equals(deletionKeyFromRequest))
                         remove(indexPacket, keyToDelete);
                     else
                         log.debug("Deletion key in IndexPacketDeleteRequest does not match. Should be: <" + storedDeletionKey + ">, is <" + deletionKeyFromRequest +">");
