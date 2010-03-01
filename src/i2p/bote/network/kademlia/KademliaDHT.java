@@ -353,7 +353,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * Refreshes all buckets whose <code>lastLookupTime</code> is too old.
      */
     private void refreshOldBuckets() {
-        log.debug("Refreshing buckets...");
         long now = System.currentTimeMillis();
         
         // refresh k-buckets
@@ -372,8 +371,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         for (BucketSection section: sBucket.getSections())
             if (now > section.getLastLookupTime() + KademliaConstants.REFRESH_TIMEOUT*1000)
                 refresh(sBucket, section.getStart(), section.getEnd());
-        
-        log.debug("Done refreshing buckets.");
     }
     
     private void refresh(KBucket bucket) {
