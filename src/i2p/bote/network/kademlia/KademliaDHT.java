@@ -53,6 +53,7 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -121,14 +122,16 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     /**
-     * Returns the k nodes closest to a given key by querying peers.
-     * This method blocks. It returns after <code>ClosestNodesLookupTask.CLOSEST_NODES_LOOKUP_TIMEOUT+1</code> seconds at
-     * the longest.
+     * Queries the DHT for the <code>k</code> peers closest to a given key.
+     * The results are sorted by distance from the key.
+     * 
+     * This method blocks. It returns after <code>ClosestNodesLookupTask.CLOSEST_NODES_LOOKUP_TIMEOUT+1</code>
+     * seconds at the longest.
      *
-     * The number of pending requests never exceeds ALPHA. According to [4], this is the most efficient.
+     * The number of pending requests never exceeds <code>ALPHA</code>. According to [4], this is the most efficient.
      * @see ClosestNodesLookupTask
      */
-    private Collection<Destination> getClosestNodes(Hash key) {
+    private List<Destination> getClosestNodes(Hash key) {
         bucketManager.getKBucket(key).setLastLookupTime(System.currentTimeMillis());
         bucketManager.getSBucket().setLastLookupTime(key, System.currentTimeMillis());
         
@@ -242,9 +245,12 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     public void store(DhtStorablePacket packet) throws DhtException {
         Hash key = packet.getDhtKey();
         
-        Collection<Destination> closeNodes = getClosestNodes(key);
+        List<Destination> closeNodes = getClosestNodes(key);
         if (closeNodes.isEmpty())
             throw new DhtException("Cannot store packet because no storage nodes found.");
+        // store on local node if appropriate
+        if (closeNodes.size()<KademliaConstants.K || isCloser(localDestination, closeNodes.get(0), key))
+            closeNodes.add(localDestination);
             
         log.debug("Storing a " + packet.getClass().getSimpleName() + " with key " + key + " on " + closeNodes.size() + " nodes");
         
@@ -273,6 +279,17 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         sendQueue.remove(batch);
     }
 
+    /**
+     * Returns <code>true</code> if <code>dest1</code> is closer to <code>key</code> than <code>dest2</code>.
+     * @param key
+     * @param destination
+     * @param peers
+     * @return
+     */
+    private boolean isCloser(Destination dest1, Destination dest2, Hash key) {
+        return new PeerDistanceComparator(key).compare(dest1, dest2) < 0;
+    }
+    
     @Override
     public void shutDown() {
         i2pReceiver.removePacketListener(this);
