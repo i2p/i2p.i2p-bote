@@ -124,26 +124,30 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      * @param destination
      */
     public synchronized void noResponse(Destination destination) {
-        AbstractBucket bucket = getBucket(destination);
+        KademliaPeer peer = getPeer(destination);
+        if (peer != null)
+            peer.noResponse();
+        else
+            log.debug("Peer not found in buckets: " + destination.calculateHash());
+    }
+    
+    private void logBucketStats() {
+        int numBuckets = kBuckets.size();
+        int numPeers = getAllPeers().size();
+        int numSiblings = sBucket.size();
+        
+        log.debug("total #peers=" + numPeers + ", #siblings=" + numSiblings + ", #buckets=" + numBuckets + " (not counting the sibling bucket)");
+    }
+    
+    public void remove(Destination peer) {
+        AbstractBucket bucket = getBucket(peer);
         if (bucket != null) {
-            KademliaPeer peer = bucket.getPeer(destination);
-            if (peer != null) {
-                peer.noResponse();
-                
-                if (bucket instanceof KBucket)
-                    ((KBucket)bucket).noResponse(peer);
-                else if (bucket instanceof SBucket) {
-                    // move the unresponsive peer from the s-bucket to a k-bucket and refill the s-bucket with a good peer
-                    ((SBucket)bucket).remove(peer);
-                    addToKBucket(peer);
-                    refillSiblings();
-                }
-                else
-                    log.error("This shouldn't happen! Bucket class = " + bucket.getClass().getName());
-            }
+            bucket.remove(peer);
+            if (bucket instanceof SBucket)
+                refillSiblings();
         }
         else
-            log.debug("Can't increment stale counter because peer not found in buckets: " + destination.calculateHash());
+            log.debug("Can't remove peer because no bucket contains it: " + peer.calculateHash().toBase64());
     }
     
     /**
@@ -163,22 +167,6 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
                         addToKBucket(removedOrNotAdded);
                 }
             }
-    }
-    
-    private void logBucketStats() {
-        int numBuckets = kBuckets.size();
-        int numPeers = getAllPeers().size();
-        int numSiblings = sBucket.size();
-        
-        log.debug("total #peers=" + numPeers + ", #siblings=" + numSiblings + ", #buckets=" + numBuckets + " (not counting the sibling bucket)");
-    }
-    
-    public void remove(Destination peer) {
-        AbstractBucket bucket = getBucket(peer);
-        if (bucket != null)
-            bucket.remove(peer);
-        else
-            log.debug("Can't remove peer because no bucket contains it: " + peer.calculateHash().toBase64());
     }
     
     /**
