@@ -41,7 +41,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,7 +58,6 @@ public class ClosestNodesLookupTask implements Runnable {
     private Hash key;
     private I2PPacketDispatcher i2pReceiver;
     private BucketManager bucketManager;
-    private Random randomNumberGenerator;
     private I2PSendQueue sendQueue;
     private Comparator<Destination> peerComparator;
     private SortedSet<Destination> responses;   // sorted by distance to the key to look up
@@ -72,7 +70,6 @@ public class ClosestNodesLookupTask implements Runnable {
         this.sendQueue = sendQueue;
         this.i2pReceiver = i2pReceiver;
         this.bucketManager = bucketManager;
-        randomNumberGenerator = new Random(getTime());
         
         peerComparator = new HashDistanceComparator(key);
         responses = Collections.synchronizedSortedSet(new TreeSet<Destination>(peerComparator));   // nodes that have responded to a query
@@ -87,14 +84,14 @@ public class ClosestNodesLookupTask implements Runnable {
         PacketListener packetListener = new IncomingPacketHandler();
         i2pReceiver.addPacketListener(packetListener);
         
-        // prepare a list of close nodes (might need more than alpha if they don't all respond)
-        notQueriedYet.addAll(bucketManager.getClosestPeers(key, KademliaConstants.S));
+        // get a list of all peers (we don't how many we really need because some may not respond)
+        notQueriedYet.addAll(bucketManager.getAllPeers());
         
         startTime = getTime();
         do {
             // send new requests if less than alpha are pending
             while (pendingRequests.size()<KademliaConstants.ALPHA && !notQueriedYet.isEmpty()) {
-                Destination peer = selectRandom(notQueriedYet);
+                Destination peer = notQueriedYet.first();   // query the closest unqueried peer
                 notQueriedYet.remove(peer);
                 FindClosePeersPacket packet = new FindClosePeersPacket(key);
                 pendingRequests.put(peer, packet);
@@ -151,12 +148,6 @@ public class ClosestNodesLookupTask implements Runnable {
         return false;
     }
     
-    private Destination selectRandom(Collection<Destination> collection) {
-        Destination[] array = new Destination[collection.size()];
-        int index = randomNumberGenerator.nextInt(array.length);
-        return collection.toArray(array)[index];
-    }
-    
     private long getTime() {
         return System.currentTimeMillis();
     }
@@ -179,7 +170,7 @@ public class ClosestNodesLookupTask implements Runnable {
         List<Destination> resultsList = new ArrayList<Destination>();
         for (Destination destination: responses) {
             resultsList.add(destination);
-            if (resultsList.size() >= KademliaConstants.K)
+            if (resultsList.size() >= K)
                 break;
         }
         return resultsList;
