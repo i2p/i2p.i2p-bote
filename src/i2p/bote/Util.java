@@ -80,7 +80,7 @@ public class Util {
         return new ThreadFactory() {
             @Override
             public Thread newThread(Runnable runnable) {
-                return new Thread(null, runnable, threadName, stackSize);
+                return new Thread(Thread.currentThread().getThreadGroup(), runnable, threadName, stackSize);
             }
         };
     }
