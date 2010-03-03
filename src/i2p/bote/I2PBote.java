@@ -47,6 +47,7 @@ import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.RelayPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.service.AutoMailCheckTask;
+import i2p.bote.service.I2PBoteThread;
 import i2p.bote.service.OutboxProcessor;
 import i2p.bote.service.POP3Service;
 import i2p.bote.service.RelayPacketSender;
@@ -87,7 +88,7 @@ import net.i2p.util.Log;
 public class I2PBote {
     public static final int PROTOCOL_VERSION = 2;
     private static final String APP_VERSION = "0.2";
-    private static final int STARTUP_DELAY = 3 * 60 * 1000;   // the number of milliseconds to wait before connecting to I2P (this gives the router time to get ready)
+    private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
 	private static volatile I2PBote instance;
 	
     private Log log = new Log(I2PBote.class);
@@ -117,7 +118,6 @@ public class I2PBote {
     private Collection<Future<Boolean>> pendingMailCheckTasks;
     private long lastMailCheckTime;
     private ConnectTask connectTask;
-    private volatile Future<?> connectTaskResult;
 
 	private I2PBote() {
 	    Thread.currentThread().setName("I2PBoteMain");
@@ -136,7 +136,7 @@ public class I2PBote {
         // The rest of the initialization happens in ConnectTask because it needs an I2PSession.
         // It is done in the background so we don't block the webapp thread.
         connectTask = new ConnectTask();
-        connectTaskResult = Executors.newSingleThreadExecutor().submit(connectTask);
+        connectTask.start();
 	}
 
 	/**
@@ -383,25 +383,65 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
     
     private void startAllServices()  {
         dht.start();
-		outboxProcessor.start();
-		relayPacketSender.start();
-		smtpService.start();
-		pop3Service.start();
+//		outboxProcessor.start();
+//		relayPacketSender.start();
+//		smtpService.start();
+//		pop3Service.start();
 		sendQueue.start();
 		autoMailCheckTask.start();
 	}
 
 	private void stopAllServices()  {
-        dht.shutDown();
-		outboxProcessor.shutDown();
-		relayPacketSender.requestShutdown();
-		smtpService.shutDown();
-		pop3Service.shutDown();
-        sendQueue.requestShutdown();
-        mailCheckExecutor.shutdownNow();
-        autoMailCheckTask.shutDown();
-	}
+	    if (connectTask != null)
+	        connectTask.requestShutdown();
+	    if (dht != null) 	           dht.requestShutdown();
+	    if (outboxProcessor != null)   outboxProcessor.requestShutdown();
+		if (relayPacketSender != null) relayPacketSender.requestShutdown();
+		if (smtpService != null)       smtpService.requestShutdown();
+		if (pop3Service != null)       pop3Service.requestShutdown();
+        if (sendQueue != null)         sendQueue.requestShutdown();
+        if (mailCheckExecutor != null) mailCheckExecutor.shutdown();
+        if (pendingMailCheckTasks != null)
+            for (Future<Boolean> mailCheckTask: pendingMailCheckTasks)
+                mailCheckTask.cancel(false);
+        if (autoMailCheckTask != null) autoMailCheckTask.requestShutdown();
+        
+        long deadline = System.currentTimeMillis() + 1000 * 60;   // the time at which any background threads that are still running are killed
+        if (dht != null)
+            dht.awaitShutdown(deadline, TimeUnit.MILLISECONDS);
+        join(outboxProcessor, deadline);
+        join(relayPacketSender, deadline);
+        join(smtpService, deadline);
+        join(pop3Service, deadline);
+        join(sendQueue, deadline);
+        if (mailCheckExecutor != null) mailCheckExecutor.shutdownNow();
+        join(autoMailCheckTask, deadline);
+        long currentTime = System.currentTimeMillis();
+        if (mailCheckExecutor!=null && currentTime<deadline)
+            try {
+                mailCheckExecutor.awaitTermination(deadline-currentTime, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                log.error("Interrupted while waiting for mailCheckExecutor to exit", e);
+            }
+        try {
+            if (i2pSession != null)
+                i2pSession.destroySession();
+        } catch (I2PSessionException e) {
+            log.error("Can't destroy I2P session.", e);
+        }
 
+	private void join(Thread thread, long until) {
+	    if (thread == null)
+	        return;
+	    long timeout = System.currentTimeMillis() - until;
+	    if (timeout > 0)
+            try {
+                thread.join(timeout);
+            } catch (InterruptedException e) {
+                log.error("Interrupted while waiting for thread <" + thread.getName() + "> to exit", e);
+            }
+	}
+	
 	/**
 	 * Connects to the network, skipping the connect delay.
 	 * If the delay time has already passed, calling this method has no effect.
@@ -411,7 +451,7 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 	}
 
 	public NetworkStatus getNetworkStatus() {
-	    if (!connectTaskResult.isDone())
+	    if (!connectTask.isDone())
 	        return connectTask.getNetworkStatus();
 	    else if (dht != null)
 	        return dht.isConnected()?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
@@ -424,26 +464,44 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 	 * is triggered from outside this class, then sets up an I2P session and everything
 	 * that depends on it.
 	 */
-	private class ConnectTask implements Runnable {
-	    volatile NetworkStatus status = NetworkStatus.NOT_STARTED;
+	private class ConnectTask extends I2PBoteThread {
+        volatile NetworkStatus status = NetworkStatus.NOT_STARTED;
 	    CountDownLatch startSignal = new CountDownLatch(1);
+	    CountDownLatch doneSignal = new CountDownLatch(1);
 	    
+        protected ConnectTask() {
+            super("ConnectTask");
+            setDaemon(true);
+        }
+
 	    public NetworkStatus getNetworkStatus() {
 	        return status;
+	    }
+	    
+	    public boolean isDone() {
+	        try {
+                return doneSignal.await(0, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                return false;
+            }
+	    }
+	    
+	    @Override
+	    public void requestShutdown() {
+	        super.requestShutdown();
+	        startSignal.countDown();
 	    }
 	    
         @Override
         public void run() {
             status = NetworkStatus.DELAY;
             try {
-                startSignal.await(STARTUP_DELAY, TimeUnit.MILLISECONDS);
+                startSignal.await(STARTUP_DELAY, TimeUnit.MINUTES);
+                status = NetworkStatus.CONNECTING;
                 initializeSession();
                 initializeServices();
                 startAllServices();
-                status = NetworkStatus.CONNECTING;
-            } catch (InterruptedException e) {
-                status = NetworkStatus.ERROR;
-                log.warn("Interrupted during connect delay.", e);
+                doneSignal.countDown();
             } catch (Exception e) {
                 status = NetworkStatus.ERROR;
                 log.error("Can't initialize the application.", e);

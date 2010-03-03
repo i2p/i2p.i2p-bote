@@ -44,13 +44,12 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import net.i2p.I2PAppContext;
-import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
  * A background thread that checks the outbox for emails and sends them to the I2P network.
  */
-public class OutboxProcessor extends I2PAppThread {
+public class OutboxProcessor extends I2PBoteThread {
     private static final int PAUSE = 10;   // The wait time, in minutes, before processing the folder again. Can be interrupted from the outside.
     
     private Log log = new Log(OutboxProcessor.class);
@@ -60,7 +59,7 @@ public class OutboxProcessor extends I2PAppThread {
     private I2PAppContext appContext;
     private EmailAddressResolver emailAddressResolver;
     private Map<EmailDestination, String> statusMap;
-    private CountDownLatch checkForEmailSignal;
+    private CountDownLatch wakeupSignal;   // tells the thread to interrupt the current wait and resume the loop
     
     public OutboxProcessor(DHT dht, Outbox outbox, Configuration configuration, PeerManager peerManager, I2PAppContext appContext) {
         super("OutboxProcsr");
@@ -74,9 +73,9 @@ public class OutboxProcessor extends I2PAppThread {
     
     @Override
     public void run() {
-        while (true) {
+        while (!shutdownRequested()) {
             synchronized(this) {
-                checkForEmailSignal = new CountDownLatch(1);
+                wakeupSignal = new CountDownLatch(1);
             }
             
             log.info("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
@@ -90,7 +89,7 @@ public class OutboxProcessor extends I2PAppThread {
             }
             
             try {
-                checkForEmailSignal.await(PAUSE, TimeUnit.MINUTES);
+                wakeupSignal.await(PAUSE, TimeUnit.MINUTES);
             } catch (InterruptedException e) {
                 log.error("OutboxProcessor received an InterruptedException.", e);
             }
@@ -101,7 +100,14 @@ public class OutboxProcessor extends I2PAppThread {
      * Tells the <code>OutboxProcessor</code> to check for new outgoing emails immediately.
      */
     public void checkForEmail() {
-        checkForEmailSignal.countDown();
+        wakeupSignal.countDown();
+    }
+
+    @Override
+    public void requestShutdown() {
+        super.requestShutdown();
+        if (wakeupSignal != null)
+            wakeupSignal.countDown();
     }
     
     /**
@@ -141,9 +147,5 @@ public class OutboxProcessor extends I2PAppThread {
 
     public Map<EmailDestination, String> getStatus() {
         return statusMap;
-    }
-    
-    public void shutDown() {
-        // TODO
     }
 }

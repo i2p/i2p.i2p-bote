@@ -21,6 +21,8 @@
 
 package i2p.bote.network;
 
+import java.util.concurrent.TimeUnit;
+
 import i2p.bote.packet.dht.DhtStorablePacket;
 import net.i2p.data.Hash;
 
@@ -56,5 +58,11 @@ public interface DHT {
     
     void start();
     
-    void shutDown();
+    void requestShutdown();
+
+    /**
+     * @param deadline System time in milliseconds
+     * @return
+     */
+    boolean awaitShutdown(long deadline, TimeUnit unit);
 }

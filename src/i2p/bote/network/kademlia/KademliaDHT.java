@@ -290,12 +290,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         return new PeerDistanceComparator(key).compare(dest1, dest2) < 0;
     }
     
-    @Override
-    public void shutDown() {
-        i2pReceiver.removePacketListener(this);
-        writePeersToFile(peerFile);
-    }
-    
     /**
      * Connects to the Kademlia network; blocks until done.
      */
@@ -315,7 +309,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             log.debug("Bootstrap start");
             i2pReceiver.addPacketListener(this);
         outerLoop:  
-            while (true) {
+            while (!shutdownRequested()) {
                 for (KademliaPeer bootstrapNode: initialPeers) {
                     bucketManager.addOrUpdate(bootstrapNode);
                     Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
@@ -550,18 +544,15 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         connected = true;
         
         while (!shutdownRequested()) {
-            try {
-                TimeUnit.MINUTES.sleep(1);
-                if (bucketManager.getUnlockedPeerCount() == 0) {
-                    log.debug("All peers are gone. Re-bootstrapping.");
-                    bootstrap();
-                }
-                refreshOldBuckets();
-                // TODO replicate();
+            if (bucketManager.getUnlockedPeerCount() == 0) {
+                log.debug("All peers are gone. Re-bootstrapping.");
+                bootstrap();
             }
-            catch (InterruptedException e) {
-                log.debug("Thread '" + getName() + "' + interrupted", e);
-            }
+            refreshOldBuckets();
+            // TODO replicate();
+            awaitShutdown(1, TimeUnit.MINUTES);
         }
+        i2pReceiver.removePacketListener(this);
+        writePeersToFile(peerFile);
     }
 }

@@ -21,21 +21,35 @@
 
 package i2p.bote.service;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import net.i2p.util.I2PAppThread;
+import net.i2p.util.Log;
 
 public class I2PBoteThread extends I2PAppThread {
-
+    private Log log = new Log(I2PBoteThread.class);
+    private CountDownLatch shutdownSignal;
+    
     protected I2PBoteThread(String name) {
         super(name);
+        shutdownSignal = new CountDownLatch(1);
     }
     
-    private volatile boolean shutdown;
-    
     public void requestShutdown() {
-        shutdown = true;
+        shutdownSignal.countDown();
+    }
+    
+    public boolean awaitShutdown(long timeout, TimeUnit unit) {
+        try {
+            return shutdownSignal.await(timeout, unit);
+        } catch (InterruptedException e) {
+            log.error("Interrupted in thread <" + getName() + ">", e);
+            return true;
+        }
     }
     
     protected boolean shutdownRequested() {
-        return shutdown;
+        return awaitShutdown(0, TimeUnit.SECONDS);
     }
 }

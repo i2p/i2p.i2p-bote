@@ -39,5 +39,4 @@ public class ServiceInitializer implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent event) {
 		I2PBote.startUp();
 	}
-
 }

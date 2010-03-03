@@ -21,13 +21,12 @@
 
 package i2p.bote.service;
 
-import java.util.concurrent.TimeUnit;
-
 import i2p.bote.I2PBote;
 import i2p.bote.network.NetworkStatus;
-import net.i2p.util.I2PAppThread;
 
-public class AutoMailCheckTask extends I2PAppThread {
+import java.util.concurrent.TimeUnit;
+
+public class AutoMailCheckTask extends I2PBoteThread {
     private long interval;   // in milliseconds
     
     /**
@@ -35,27 +34,20 @@ public class AutoMailCheckTask extends I2PAppThread {
      * @param interval In minutes
      */
     public AutoMailCheckTask(int interval) {
+        super("AutoMailChk");
         this.interval = TimeUnit.MINUTES.toMillis(interval);
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (!shutdownRequested()) {
             long timeSinceLastCheck = System.currentTimeMillis() - I2PBote.getInstance().getLastMailCheckTime();
-            try {
-                if (I2PBote.getInstance().getNetworkStatus() != NetworkStatus.CONNECTED)   // if not connected, use a shorter wait interval
-                    TimeUnit.MINUTES.sleep(1);
-                else if (timeSinceLastCheck < interval)
-                    Thread.sleep(interval - timeSinceLastCheck);
-                else
-                    I2PBote.getInstance().checkForMail();
-            } catch (InterruptedException e) {
-                return;
-            }
+            if (I2PBote.getInstance().getNetworkStatus() != NetworkStatus.CONNECTED)   // if not connected, use a shorter wait interval
+                awaitShutdown(1, TimeUnit.MINUTES);
+            else if (timeSinceLastCheck < interval)
+                awaitShutdown(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
+            else
+                I2PBote.getInstance().checkForMail();
         }
-    }
-    
-    public void shutDown() {
-        interrupt();
     }
 }

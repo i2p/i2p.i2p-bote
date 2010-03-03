@@ -187,6 +187,9 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         I2PDatagramMaker datagramMaker = new I2PDatagramMaker(i2pSession);
         
         while (true) {
+            if (shutdownRequested() && packetQueue.isEmpty())
+                break;
+            
             ScheduledPacket scheduledPacket;
             try {
                 scheduledPacket = packetQueue.take();
@@ -195,6 +198,8 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                 log.warn("Interrupted while waiting for new packets.", e);
                 break;
             }
+            if (shutdownRequested())
+                break;
             CommunicationPacket i2pBotePacket = scheduledPacket.data;
             
             // wait long enough so rate <= maxBandwidth;
@@ -245,7 +250,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     }
     
     // TODO use ArrayList, not LinkedList; consider making the ArrayList a member field rather than extending it
-    private static class PacketQueue extends LinkedList<ScheduledPacket> {
+    private class PacketQueue extends LinkedList<ScheduledPacket> {
         private static final long serialVersionUID = -7294556384443251074L;
 
         /**
@@ -276,7 +281,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         }
 
         public synchronized ScheduledPacket take() throws InterruptedException {
-            while (isEmpty())
+            while (isEmpty() && !shutdownRequested())
                 TimeUnit.SECONDS.sleep(1);
             return pollLast();
         }
