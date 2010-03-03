@@ -1,6 +1,14 @@
 I2P-Bote Version History
 ------------------------
 
+0.2.1
+  * I2P-Bote can now be run as an I2P plugin (I2P 0.7.12 or newer required)
+  * Option to set a default Email Identity
+  * Address book
+  * Umlaute and other non-ASCII characters are now supported
+  * Increase k-bucket size to 20
+  * Several bug fixes
+
 0.2
   * Sending and retrieving now much faster
   * Email packets are now deleted from storage nodes after retrieval
