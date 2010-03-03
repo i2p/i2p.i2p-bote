@@ -545,8 +545,10 @@ I2P destination
 
 11. To Do
 
-  * run FindBugs
-  * Is AbstractBucket.contains(Destination) still needed, or will peers.contains(Destination) work?
+  * some synchronized ArrayLists should be replaced with externally synchronized ArrayLists
+  * should bootstrapping continue until the sibling bucket is full?
+  * identities: "publish to distributed address book" button, asks for an email address
+  * <jsp:useBean> instead of zero-param JSP functions?
   * Bug? checking emails after deleting an email causes an error. something about not being able to delete an email.
   * wenn ich eine mail von dest xyz erhalte, und diese in meinem addressbuch ist, sollte als absender nicht der vom Sender gewählte username sein (da kann er ja behaupten, was er will), sondern der beim empfänger loval im Addbuch gespeicherte pet name.
     Ist der user local nicht bekannt, dann kann der public name verwendet werden, allerdings sollte ersichtlich sein dass es nur der public name ist, z.B. durch andere Farbe oder ein Feld mit nem Sternchen für authenticated wenn er in local addy book steht (eine spalte wie datum oder so, ganz schmal mit nur nem sternchen drin, ähnlich sollten auch ungelesene mails markiert werden - ist aber nicht high priority, ich sag's nur für deine todo list, falls du d'accord bist.) 
