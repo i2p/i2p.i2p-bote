@@ -87,7 +87,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     }
 
     /**
-     * Adds a peer to the appropriate bucket, splitting the bucket if necessary, or updates the
+     * Adds a peer to the appropriate k-bucket, splitting the bucket if necessary, or updates the
      * peer if it exists in the bucket.
      * @param peer
      */
@@ -155,18 +155,19 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      * or all k-buckets are empty.
      */
     private void refillSiblings() {
+        // Sort all k-peers by distance to the local destination
+        List<KademliaPeer> kPeers = new ArrayList<KademliaPeer>();
         for (KBucket kBucket: kBuckets)
-            for (KademliaPeer peer: kBucket) {
-                if (sBucket.isFull())
-                    return;
-                
-                if (!peer.isLocked()) {
-                    KademliaPeer removedOrNotAdded = sBucket.addOrUpdate(peer);
-                    // if the peer replaced another peer in the s-bucket, put the replaced peer into a k-bucket
-                    if (removedOrNotAdded!=peer && removedOrNotAdded!=null)
-                        addToKBucket(removedOrNotAdded);
-                }
-            }
+            kPeers.addAll(kBucket.getPeers());
+        Collections.sort(kPeers, new PeerDistanceComparator(localDestinationHash));
+        
+        while (!sBucket.isFull() && !kPeers.isEmpty()) {
+            // move the closest k-peer to the s-bucket
+            KademliaPeer peerToMove = kPeers.remove(0);
+            int bucketIndex = getBucketIndex(peerToMove.getDestinationHash());
+            kBuckets.get(bucketIndex).remove(peerToMove);
+            sBucket.addOrUpdate(peerToMove);
+        }
     }
     
     /**
@@ -184,7 +185,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         int lowIndex = 0;
         int highIndex = kBuckets.size() - 1;
         
-        BigInteger keyValue = new BigInteger(1, key.getData());   // 
+        BigInteger keyValue = new BigInteger(1, key.getData());
         while (lowIndex < highIndex) {
             int centerIndex = (highIndex + lowIndex) / 2;
             if (keyValue.compareTo(kBuckets.get(centerIndex).getStartId()) < 0)
