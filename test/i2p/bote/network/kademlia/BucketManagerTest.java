@@ -292,7 +292,54 @@ public class BucketManagerTest {
         int totalPeersAdded = S + 5 * K;
         for (int i=0; i<totalPeersAdded; i++)
             assertTrue(bucketManager.getAllPeers().contains(peers[i]));
+
+        checkBucketConsistency();
         
+        // remove peers one at a time and check that it got removed from the right bucket
+        List<Integer> bucketSizes = new ArrayList<Integer>();   // sizes of the k-buckets by bucket index
+        List<KBucket> kBuckets = getKBuckets();
+        for (KBucket bucket: kBuckets)
+            bucketSizes.add(bucket.size());
+        int peersRemaining = totalPeersAdded;
+        while (peersRemaining > 0) {
+            Destination peer = peers[peersRemaining-1];
+            BigInteger peerId = new BigInteger(1, peer.calculateHash().getData());
+            
+            
+            boolean isSibling = bucketManager.getSBucket().contains(peer);
+            bucketManager.remove(peer);
+            peersRemaining--;
+            assertEquals(peersRemaining, bucketManager.getPeerCount());
+            
+            if (isSibling) {
+                // the removed peer was a sibling, so a k-peer should have taken its place unless there were no k-peers left
+                assertTrue(bucketManager.getSBucket().isFull() || getKPeers().isEmpty());
+                
+                // if the s-bucket is still full, a k-peer became a sibling, so update bucketSizes
+                if (bucketManager.getSBucket().isFull())
+                    for (int i=0; i<kBuckets.size(); i++)
+                        if (getKBuckets().get(i).size() == bucketSizes.get(i)-1)
+                            bucketSizes.set(i, bucketSizes.get(i)-1);
+            }
+            else
+                // one of the k-buckets just became one smaller, find out which one and check that it is the correct one
+                for (int i=0; i<kBuckets.size(); i++) {
+                    KBucket bucket = kBuckets.get(i);
+                    if (bucket.size() == bucketSizes.get(i)-1) {
+                        bucketSizes.set(i, bucketSizes.get(i)-1);
+                        BigInteger startId = ((KBucket)bucket).getStartId();
+                        BigInteger endId = ((KBucket)bucket).getEndId();
+                        assertTrue("Peer is in the wrong bucket: peer id=" + peerId + ", bucket start=" + startId + " bucket end=" + endId,
+                                startId.compareTo(peerId)<=0 && endId.compareTo(peerId)>=0);
+                    }
+                    else
+                        assertEquals(bucket.size(), bucketSizes.get(i).intValue());
+            }
+            checkBucketConsistency();
+        }
+    }
+
+    private void checkBucketConsistency() throws Exception {
         Iterator<KBucket> iter = bucketManager.iterator();
         KBucket bucket1 = iter.next();
         while (iter.hasNext()) {
@@ -352,32 +399,8 @@ public class BucketManagerTest {
             assertNotNull(bucket);
         }
         
-        // remove peers one at a time and check that it got removed from the right bucket
-        List<Integer> bucketSizes = new ArrayList<Integer>();
-        List<AbstractBucket> allBuckets = getAllBuckets();
-        for (AbstractBucket bucket: allBuckets)
-            bucketSizes.add(bucket.size());
-        int peersRemaining = totalPeersAdded;
-        while (peersRemaining > 0) {
-            Destination peer = peers[peersRemaining-1];
-            BigInteger peerId = new BigInteger(1, peer.calculateHash().getData());
-            bucketManager.remove(peer);
-            peersRemaining--;
-            assertEquals(peersRemaining, bucketManager.getPeerCount());
-            // one of the buckets just became one smaller, find out which one and check that it is the correct one
-            for (int i=0; i<allBuckets.size(); i++) {
-                AbstractBucket bucket = allBuckets.get(i);
-                if (bucket.size() == bucketSizes.get(i)-1) {
-                    bucketSizes.set(i, bucketSizes.get(i)-1);
-                    if (bucket instanceof KBucket)
-                        assertTrue(((KBucket)bucket).getStartId().compareTo(peerId)<=0 && ((KBucket)bucket).getEndId().compareTo(peerId)>=0);
-                }
-                else
-                    assertEquals(bucket.size(), bucketSizes.get(i).intValue());
-            }
-        }
     }
-
+    
     private int getNumKBuckets() {
         int numBuckets = 0;
         for (@SuppressWarnings("unused") KBucket bucket: bucketManager)
@@ -385,15 +408,14 @@ public class BucketManagerTest {
         return numBuckets;
     }
 
-    // returns all k-buckets and the sibling bucket
-    private List<AbstractBucket> getAllBuckets() throws IllegalArgumentException, SecurityException, IllegalAccessException, NoSuchFieldException {
-        List<AbstractBucket> buckets = new ArrayList<AbstractBucket>();
-        for (AbstractBucket bucket: bucketManager)
+    // returns all k-buckets
+    private List<KBucket> getKBuckets() {
+        List<KBucket> buckets = new ArrayList<KBucket>();
+        for (KBucket bucket: bucketManager)
             buckets.add(bucket);
-        buckets.add(getSiblingBucket());
         return buckets;
     }
-
+    
     // returns all peers from the k-buckets, i.e. all peers except siblings
     private List<KademliaPeer> getKPeers() {
         List<KademliaPeer> peers = new ArrayList<KademliaPeer>();
