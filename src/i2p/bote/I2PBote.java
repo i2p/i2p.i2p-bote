@@ -89,43 +89,43 @@ public class I2PBote {
     public static final int PROTOCOL_VERSION = 2;
     private static final String APP_VERSION = "0.2.1";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
-	private static volatile I2PBote instance;
-	
+    private static volatile I2PBote instance;
+    
     private Log log = new Log(I2PBote.class);
     private I2PAppContext appContext;
-	private I2PClient i2pClient;
-	private I2PSession i2pSession;
-	private Configuration configuration;
-	private Identities identities;
-	private AddressBook addressBook;
-	private I2PSendQueue sendQueue;
-	private Outbox outbox;   // stores outgoing emails for all local users
+    private I2PClient i2pClient;
+    private I2PSession i2pSession;
+    private Configuration configuration;
+    private Identities identities;
+    private AddressBook addressBook;
+    private I2PSendQueue sendQueue;
+    private Outbox outbox;   // stores outgoing emails for all local users
     private EmailFolder inbox;   // stores incoming emails for all local users
-	private PacketFolder<RelayPacket> relayPacketFolder;   // stores email packets we're forwarding for other machines
-	private IncompleteEmailFolder incompleteEmailFolder;   // stores email packets addressed to a local user
+    private PacketFolder<RelayPacket> relayPacketFolder;   // stores email packets we're forwarding for other machines
+    private IncompleteEmailFolder incompleteEmailFolder;   // stores email packets addressed to a local user
     private EmailPacketFolder emailDhtStorageFolder;   // stores email packets for other peers
     private IndexPacketFolder indexPacketDhtStorageFolder;   // stores index packets
 //TODO    private PacketFolder<> addressDhtStorageFolder;   // stores email address-destination mappings
-	private SMTPService smtpService;
-	private POP3Service pop3Service;
-	private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
-	private AutoMailCheckTask autoMailCheckTask;
-	private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
-	private DHT dht;
-	private PeerManager peerManager;
+    private SMTPService smtpService;
+    private POP3Service pop3Service;
+    private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
+    private AutoMailCheckTask autoMailCheckTask;
+    private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
+    private DHT dht;
+    private PeerManager peerManager;
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
     private Collection<Future<Boolean>> pendingMailCheckTasks;
     private long lastMailCheckTime;
     private ConnectTask connectTask;
 
-	private I2PBote() {
-	    Thread.currentThread().setName("I2PBoteMain");
-	    
+    private I2PBote() {
+        Thread.currentThread().setName("I2PBoteMain");
+                
         appContext = new I2PAppContext();
         i2pClient = I2PClientFactory.createClient();
         configuration = new Configuration();
-		
+        
         mailCheckThreadFactory = Util.createThreadFactory("ChkMailTask", CheckEmailTask.THREAD_STACK_SIZE);
         mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
     
@@ -137,30 +137,30 @@ public class I2PBote {
         // It is done in the background so we don't block the webapp thread.
         connectTask = new ConnectTask();
         connectTask.start();
-	}
+    }
 
-	/**
-	 * Initializes objects for accessing emails and packet files on the filesystem.
-	 */
-	private void initializeFolderAccess() {
-	    inbox = new EmailFolder(configuration.getInboxDir());
-		outbox = new Outbox(configuration.getLocalOutboxDir());
-		relayPacketFolder = new PacketFolder<RelayPacket>(configuration.getRelayOutboxDir());
-		incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), inbox);
-		emailDhtStorageFolder = new EmailPacketFolder(configuration.getEmailDhtStorageDir());
+    /**
+     * Initializes objects for accessing emails and packet files on the filesystem.
+     */
+    private void initializeFolderAccess() {
+        inbox = new EmailFolder(configuration.getInboxDir());
+        outbox = new Outbox(configuration.getLocalOutboxDir());
+        relayPacketFolder = new PacketFolder<RelayPacket>(configuration.getRelayOutboxDir());
+        incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), inbox);
+        emailDhtStorageFolder = new EmailPacketFolder(configuration.getEmailDhtStorageDir());
         indexPacketDhtStorageFolder = new IndexPacketFolder(configuration.getIndexPacketDhtStorageDir());
-	}
+    }
 
-	/**
-	 * Sets up a {@link I2PSession}, using the I2P destination stored on disk or creating a new I2P
-	 * destination if no key file exists.
-	 */
-	private void initializeSession() {
-	    Properties sessionProperties = new Properties();
-	    sessionProperties.setProperty("inbound.nickname", "I2P-Bote");
+    /**
+     * Sets up a {@link I2PSession}, using the I2P destination stored on disk or creating a new I2P
+     * destination if no key file exists.
+     */
+    private void initializeSession() {
+        Properties sessionProperties = new Properties();
+        sessionProperties.setProperty("inbound.nickname", "I2P-Bote");
         sessionProperties.setProperty("outbound.nickname", "I2P-Bote");
-	    sessionProperties.setProperty("i2cp.gzip", String.valueOf(false));   // most of the data we send is encrypted and therefore uncompressible
-	    
+        sessionProperties.setProperty("i2cp.gzip", String.valueOf(false));   // most of the data we send is encrypted and therefore uncompressible
+                
         // read the local destination key from the key file if it exists
         File destinationKeyFile = configuration.getDestinationKeyFile();
         FileReader fileReader = null;
@@ -170,14 +170,14 @@ public class I2PBote {
             fileReader.read(destKeyBuffer);
             byte[] localDestinationKey = Base64.decode(new String(destKeyBuffer));
             ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
-       		i2pSession = i2pClient.createSession(inputStream, sessionProperties);
-        	i2pSession.connect();
+            i2pSession = i2pClient.createSession(inputStream, sessionProperties);
+            i2pSession.connect();
         }
         catch (IOException e) {
-        	log.debug("Destination key file doesn't exist or isn't readable." + e);
+            log.debug("Destination key file doesn't exist or isn't readable." + e);
         } catch (I2PSessionException e) {
-        	log.warn("Error creating I2PSession.", e);
-		}
+            log.warn("Error creating I2PSession.", e);
+        }
         finally {
             if (fileReader != null)
                 try {
@@ -188,33 +188,33 @@ public class I2PBote {
                 }
         }
         
-		// if the local destination key can't be read or is invalid, create a new one
+        // if the local destination key can't be read or is invalid, create a new one
         if (i2pSession == null) {
-			log.debug("Creating new local destination key");
-			try {
-				ByteArrayOutputStream arrayStream = new ByteArrayOutputStream();
-				i2pClient.createDestination(arrayStream);
-			    byte[] localDestinationArray = arrayStream.toByteArray();
-				
-				i2pSession = i2pClient.createSession(new ByteArrayInputStream(localDestinationArray), sessionProperties);
-	        	i2pSession.connect();
-	        	
-	        	saveLocalDestinationKeys(destinationKeyFile, localDestinationArray);
-			} catch (I2PException e) {
-				log.error("Error creating local destination key or I2PSession.", e);
-			} catch (IOException e) {
-				log.error("Error writing local destination key to file.", e);
-			}
+            log.debug("Creating new local destination key");
+            try {
+                ByteArrayOutputStream arrayStream = new ByteArrayOutputStream();
+                i2pClient.createDestination(arrayStream);
+                    byte[] localDestinationArray = arrayStream.toByteArray();
+                    
+                i2pSession = i2pClient.createSession(new ByteArrayInputStream(localDestinationArray), sessionProperties);
+                i2pSession.connect();
+                    
+                saveLocalDestinationKeys(destinationKeyFile, localDestinationArray);
+            } catch (I2PException e) {
+                log.error("Error creating local destination key or I2PSession.", e);
+            } catch (IOException e) {
+                log.error("Error writing local destination key to file.", e);
+            }
         }
         
         Destination localDestination = i2pSession.getMyDestination();
         log.debug("Local destination key = " + localDestination.toBase64());
         log.debug("Local destination hash = " + localDestination.calculateHash().toBase64());
-	}
-	
-	/**
-	 * Initializes daemon threads, doesn't start them yet.
-	 */
+    }
+    
+    /**
+     * Initializes daemon threads, doesn't start them yet.
+     */
     private void initializeServices() {
         I2PPacketDispatcher dispatcher = new I2PPacketDispatcher();
         i2pSession.addSessionListener(dispatcher, I2PSession.PROTO_ANY, I2PSession.PORT_ANY);
@@ -247,53 +247,53 @@ public class I2PBote {
      * @throws DataFormatException
      * @throws IOException
      */
-	private void saveLocalDestinationKeys(File keyFile, byte[] localDestinationArray) throws DataFormatException, IOException {
-		if (keyFile.exists()) {
-			File oldKeyFile = new File(keyFile.getPath() + "_backup");
-			if (!keyFile.renameTo(oldKeyFile))
-			    log.error("Cannot rename destination key file <" + keyFile.getAbsolutePath() + "> to <" + oldKeyFile.getAbsolutePath() + ">");
-		}
-		else
-		    if (!keyFile.createNewFile())
-		        log.error("Cannot create destination key file: <" + keyFile.getAbsolutePath() + ">");
-		
+    private void saveLocalDestinationKeys(File keyFile, byte[] localDestinationArray) throws DataFormatException, IOException {
+        if (keyFile.exists()) {
+            File oldKeyFile = new File(keyFile.getPath() + "_backup");
+            if (!keyFile.renameTo(oldKeyFile))
+                log.error("Cannot rename destination key file <" + keyFile.getAbsolutePath() + "> to <" + oldKeyFile.getAbsolutePath() + ">");
+        }
+        else
+            if (!keyFile.createNewFile())
+                log.error("Cannot create destination key file: <" + keyFile.getAbsolutePath() + ">");
+        
         FileWriter fileWriter = new FileWriter(keyFile);
         fileWriter.write(Base64.encode(localDestinationArray));
         fileWriter.close();
-	}
-	
-	public static void startUp() {
-		getInstance();
-	}
-	
-	public static void shutDown() {
-		if (instance != null)
-			instance.stopAllServices();
-	}
+    }
+    
+    public static void startUp() {
+        getInstance();
+    }
+    
+    public static void shutDown() {
+        if (instance != null)
+            instance.stopAllServices();
+    }
 
-	public static I2PBote getInstance() {
-		if (instance == null)
-			instance = new I2PBote();
-		return instance;
-	}
-	
-	public static String getAppVersion() {
-	    return APP_VERSION;
-	}
-	
-	public Identities getIdentities() {
-	    return identities;
-	}
-	
+    public static I2PBote getInstance() {
+        if (instance == null)
+            instance = new I2PBote();
+        return instance;
+    }
+    
+    public static String getAppVersion() {
+        return APP_VERSION;
+    }
+    
+    public Identities getIdentities() {
+        return identities;
+    }
+    
     public AddressBook getAddressBook() {
         return addressBook;
     }
     
-	public Destination getLocalDestination() {
-	    return i2pSession.getMyDestination();
-	}
-	
-	public void sendEmail(Email email) throws Exception {
+    public Destination getLocalDestination() {
+        return i2pSession.getMyDestination();
+    }
+    
+    public void sendEmail(Email email) throws Exception {
 /*XXX*/
 String recipient = email.getAllRecipients()[0].toString();
 EmailDestination emailDestination = new EmailDestination(recipient);
@@ -302,10 +302,10 @@ Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt
 for (EncryptedEmailPacket packet: encryptedPackets)
     dht.store(packet);
 dht.store(new IndexPacket(encryptedPackets, emailDestination));
-	    // TODO uncomment for next milestone, move code above into OutboxProcessor
-/*		outbox.add(email);
-		outboxProcessor.checkForEmail();*/
-	}
+        // TODO uncomment for next milestone, move code above into OutboxProcessor
+/*        outbox.add(email);
+        outboxProcessor.checkForEmail();*/
+    }
 
     public synchronized void checkForMail() {
         if (!isCheckingForMail()) {
@@ -383,22 +383,22 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
     
     private void startAllServices()  {
         dht.start();
-//		outboxProcessor.start();
-//		relayPacketSender.start();
-//		smtpService.start();
-//		pop3Service.start();
-		sendQueue.start();
-		autoMailCheckTask.start();
-	}
+//        outboxProcessor.start();
+//        relayPacketSender.start();
+//        smtpService.start();
+//        pop3Service.start();
+        sendQueue.start();
+        autoMailCheckTask.start();
+    }
 
-	private void stopAllServices()  {
-	    if (connectTask != null)
-	        connectTask.requestShutdown();
-	    if (dht != null) 	           dht.requestShutdown();
-	    if (outboxProcessor != null)   outboxProcessor.requestShutdown();
-		if (relayPacketSender != null) relayPacketSender.requestShutdown();
-		if (smtpService != null)       smtpService.requestShutdown();
-		if (pop3Service != null)       pop3Service.requestShutdown();
+    private void stopAllServices()  {
+        if (connectTask != null)
+            connectTask.requestShutdown();
+        if (dht != null)                dht.requestShutdown();
+        if (outboxProcessor != null)   outboxProcessor.requestShutdown();
+        if (relayPacketSender != null) relayPacketSender.requestShutdown();
+        if (smtpService != null)       smtpService.requestShutdown();
+        if (pop3Service != null)       pop3Service.requestShutdown();
         if (sendQueue != null)         sendQueue.requestShutdown();
         if (mailCheckExecutor != null) mailCheckExecutor.shutdown();
         if (pendingMailCheckTasks != null)
@@ -429,69 +429,70 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
         } catch (I2PSessionException e) {
             log.error("Can't destroy I2P session.", e);
         }
+    }
 
-	private void join(Thread thread, long until) {
-	    if (thread == null)
-	        return;
-	    long timeout = System.currentTimeMillis() - until;
-	    if (timeout > 0)
+    private void join(Thread thread, long until) {
+        if (thread == null)
+            return;
+        long timeout = System.currentTimeMillis() - until;
+        if (timeout > 0)
             try {
                 thread.join(timeout);
             } catch (InterruptedException e) {
                 log.error("Interrupted while waiting for thread <" + thread.getName() + "> to exit", e);
             }
-	}
-	
-	/**
-	 * Connects to the network, skipping the connect delay.
-	 * If the delay time has already passed, calling this method has no effect.
-	 */
-	public void connectNow() {
-	    connectTask.startSignal.countDown();
-	}
+    }
+    
+    /**
+     * Connects to the network, skipping the connect delay.
+     * If the delay time has already passed, calling this method has no effect.
+     */
+    public void connectNow() {
+        connectTask.startSignal.countDown();
+    }
 
-	public NetworkStatus getNetworkStatus() {
-	    if (!connectTask.isDone())
-	        return connectTask.getNetworkStatus();
-	    else if (dht != null)
-	        return dht.isConnected()?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
-	    else
-	        return NetworkStatus.ERROR;
-	}
-	
-	/**
-	 * Waits <code>STARTUP_DELAY</code> milliseconds or until <code>startSignal</code>
-	 * is triggered from outside this class, then sets up an I2P session and everything
-	 * that depends on it.
-	 */
-	private class ConnectTask extends I2PBoteThread {
+    public NetworkStatus getNetworkStatus() {
+        if (!connectTask.isDone())
+            return connectTask.getNetworkStatus();
+        else if (dht != null)
+            return dht.isConnected()?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
+        else
+            return NetworkStatus.ERROR;
+    }
+    
+    /**
+     * Waits <code>STARTUP_DELAY</code> milliseconds or until <code>startSignal</code>
+     * is triggered from outside this class, then sets up an I2P session and everything
+     * that depends on it.
+     */
+    private class ConnectTask extends I2PBoteThread {
         volatile NetworkStatus status = NetworkStatus.NOT_STARTED;
-	    CountDownLatch startSignal = new CountDownLatch(1);
-	    CountDownLatch doneSignal = new CountDownLatch(1);
-	    
+        CountDownLatch startSignal = new CountDownLatch(1);
+        CountDownLatch doneSignal = new CountDownLatch(1);
+        
         protected ConnectTask() {
             super("ConnectTask");
             setDaemon(true);
         }
 
-	    public NetworkStatus getNetworkStatus() {
-	        return status;
-	    }
-	    
-	    public boolean isDone() {
-	        try {
+        public NetworkStatus getNetworkStatus() {
+            return status;
+        }
+        
+        public boolean isDone() {
+            try {
                 return doneSignal.await(0, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 return false;
             }
-	    }
-	    
-	    @Override
-	    public void requestShutdown() {
-	        super.requestShutdown();
-	        startSignal.countDown();
-	    }
-	    
+        }
+        
+        @Override
+        public void requestShutdown() {
+            super.requestShutdown();
+            startSignal.countDown();
+        }
+        
         @Override
         public void run() {
             status = NetworkStatus.DELAY;
@@ -507,5 +508,5 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
                 log.error("Can't initialize the application.", e);
             }
         }
-	}
+    }
 }
