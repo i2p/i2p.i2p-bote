@@ -77,8 +77,8 @@ public class SBucket extends AbstractBucket {
                     if (insertionPoint > size())
                         log.error("insertionPoint > size(), this shouldn't happen.");
                     if (insertionPoint < size()) {   // if destination is closer than an existing sibling, replace the furthest away sibling and return the removed sibling
-                        KademliaPeer removedPeer = peers.remove(size() - 1);
                         peers.add(insertionPoint, new KademliaPeer(peer));
+                        KademliaPeer removedPeer = peers.remove(size() - 1);
                         return removedPeer;
                     }
                     else   // insertionPoint==size(), this means the new peer is further away than all other siblings
