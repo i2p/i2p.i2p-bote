@@ -370,11 +370,17 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
     }
 
     public int getNumDhtPeers() {
-        return dht.getNumPeers();
+        if (dht == null)
+            return 0;
+        else
+            return dht.getNumPeers();
     }
     
     public DhtPeerStats getDhtStats() {
-        return dht.getPeerStats();
+        if (dht == null)
+            return null;
+        else
+            return dht.getPeerStats();
     }
     
     public Collection<BannedPeer> getBannedPeers() {

@@ -45,6 +45,9 @@ public class PeerInfoTag extends SimpleTagSupport {
         try {
             // Print DHT peer info
             DhtPeerStats dhtStats = I2PBote.getInstance().getDhtStats();
+            if (dhtStats == null)
+                return;
+            
             int numPeers = dhtStats.getData().size();
             out.println("<strong>K-Peers: " + numPeers + "</strong>");
             if (numPeers > 0) {
