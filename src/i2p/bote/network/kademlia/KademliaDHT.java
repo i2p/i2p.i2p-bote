@@ -368,7 +368,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         
         // refresh k-buckets
         for (KBucket bucket: Util.synchronizedCopy(bucketManager))
-            if (now > bucket.getLastLookupTime() + KademliaConstants.REFRESH_TIMEOUT*1000) {
+            if (now > bucket.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000) {
                 log.debug("Refreshing bucket: " + bucket);
                 refresh(bucket);
             }
@@ -380,7 +380,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // 80th and the 100th sibling (i=4).
         SBucket sBucket = bucketManager.getSBucket();
         for (BucketSection section: sBucket.getSections())
-            if (now > section.getLastLookupTime() + KademliaConstants.REFRESH_TIMEOUT*1000)
+            if (now > section.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000)
                 refresh(sBucket, section.getStart(), section.getEnd());
     }
     
