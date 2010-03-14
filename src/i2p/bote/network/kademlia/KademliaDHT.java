@@ -356,7 +356,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * lookup of a random key that is within that k-bucket range."
      */
     public void refreshAll() {
-        for (KBucket bucket: bucketManager)
+        for (KBucket bucket: Util.synchronizedCopy(bucketManager))
             refresh(bucket);
     }
     

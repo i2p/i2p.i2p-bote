@@ -338,6 +338,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     
     /**
      * Iterates over the k-buckets. Does not include the sibling bucket.
+     * This method is not thread safe.
      * @return
      */
     @Override
