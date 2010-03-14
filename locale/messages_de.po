@@ -1,0 +1,379 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-14 17:42+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+msgid "Active Since"
+msgstr "Aktiv seit"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+msgid "BktPfx"
+msgstr "K-Buck."
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+msgid "Distance"
+msgstr "Entfernung"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+msgid "I2P Destination"
+msgstr "I2P-Adresse"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+msgid "Locked?"
+msgstr "Gesperrt?"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+#: src/i2p/bote/web/PeerInfoTag.java:82
+msgid "Peer"
+msgstr "Gegenstelle"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:63
+msgid "No"
+msgstr "Nein"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:63
+msgid "Yes"
+msgstr "Ja"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:80
+msgid "(None)"
+msgstr "-"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:85
+msgid "(S)"
+msgstr "(S)"
+
+#: src/i2p/bote/web/PeerInfoTag.java:53
+msgid "Kademlia Peers:"
+msgstr "Kademlia-Gegenstellen:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:78
+msgid "Banned Peers:"
+msgstr "Verbannte Gegenstellen:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:83
+msgid "Destination Hash"
+msgstr "I2P-Adresse (SHA256-Summe)"
+
+#: src/i2p/bote/web/PeerInfoTag.java:84
+msgid "Ban Reason"
+msgstr "Verbannungsgrund"
+
+msgid "New Contact"
+msgstr "Neuer Eintrag"
+
+# ################### editContact.jsp ####################
+msgid "Add"
+msgstr "Hinzufügen"
+
+msgid "Edit Contact"
+msgstr "Bearbeiten"
+
+msgid "Email Destination"
+msgstr "Postfachkennung"
+
+msgid "(required field, must be 512 characters)"
+msgstr "(Pflichtfeld; die Länge muss 512 Zeichen betragen)"
+
+msgid "Name:"
+msgstr "Name:"
+
+msgid "(required field)"
+msgstr "(Pflichtfeld)"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+# ################### editIdentity.jsp ####################
+msgid "New Email Identity"
+msgstr "Neue Absenderidentität"
+
+msgid "Create"
+msgstr "Anlegen"
+
+msgid "Edit Email Identity"
+msgstr "Absenderidentität bearbeiten"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Public Name:"
+msgstr "Öffentlicher Name:"
+
+msgid "(required field, shown to recipients)"
+msgstr "(Pflichtfeld, für Empfänger sichtbar)"
+
+msgid "Description:"
+msgstr "Beschreibung:"
+
+msgid "(optional, kept private)"
+msgstr "(Optional, nicht für andere sichtbar)"
+
+msgid "Email Address:"
+msgstr "Mailadresse:"
+
+msgid "(optional)"
+msgstr "(Optional)"
+
+msgid "Email Destination:"
+msgstr "Postfachkennung:"
+
+# ################### noIdentities.jsp ####################
+# ################### saveContact.jsp ####################
+msgid "Please fill in the Destination field."
+msgstr "Bitte füllen Sie das Empfängerfeld aus."
+
+msgid "Please fill in the Name field."
+msgstr "Bitte füllen Sie das Namensfeld aus."
+
+msgid "The contact has been saved."
+msgstr "Der Adressbucheintrag wurde gespeichert."
+
+# ################### newEmail.jsp ####################
+msgid "New Email"
+msgstr "Neue Mail"
+
+# ################### identities.jsp ####################
+msgid "Email Identities"
+msgstr "Absenderidentitäten"
+
+msgid "No email identities are defined."
+msgstr "Es sind noch keine Absenderidentitäten angelegt worden."
+
+msgid "Public Name"
+msgstr "Öffentlicher Name"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Email Address"
+msgstr "Mailadresse"
+
+msgid "Key"
+msgstr "Absenderidentität"
+
+msgid "New Identity"
+msgstr "Neue Identität"
+
+msgid "Delete this identity"
+msgstr "Diese Identität löschen"
+
+msgid "New"
+msgstr "Neu"
+
+msgid "From:"
+msgstr "Von:"
+
+msgid "To:"
+msgstr "An:"
+
+msgid "CC:"
+msgstr "Kopie:"
+
+msgid "BCC:"
+msgstr "Blindkopie:"
+
+msgid "Reply To:"
+msgstr "Antwort an:"
+
+msgid "Addr. Book..."
+msgstr "Adressbuch..."
+
+msgid "Subject:"
+msgstr "Betreff:"
+
+msgid "Message:"
+msgstr "Nachricht:"
+
+msgid "Send"
+msgstr "Senden"
+
+# ################### about.jsp ####################
+msgid "About I2P-Bote"
+msgstr "über I2P-Bote"
+
+msgid "I2P-Bote Version {0}"
+msgstr "I2P-Bote, Version {0}"
+
+msgid "Author:"
+msgstr "Autor:"
+
+msgid "Contributors:"
+msgstr "Unterstützer:"
+
+# ################### buttonFrame.jsp ####################
+msgid "Check Mail"
+msgstr "Mails abrufen"
+
+# ################### connect.jsp ####################
+# ################### deleteContact.jsp ####################
+msgid "The contact has been deleted from the address book."
+msgstr "Der Adressbucheintrag wurde gelöscht."
+
+msgid "Error"
+msgstr "Fehler"
+
+# ################### showEmail.jsp ####################
+msgid "Add to Address Book"
+msgstr "Zum Adressbuch hinzufügen"
+
+msgid "Reply"
+msgstr "Antworten"
+
+msgid "Re:"
+msgstr "AW:"
+
+msgid "Delete"
+msgstr "Löschen"
+
+# ################### addressBook.jsp ####################
+msgid "Address Book"
+msgstr "Adressbuch"
+
+msgid "Private Address Book"
+msgstr "Privates Addressbuch"
+
+msgid "Select One or More Entries"
+msgstr "Wählen Sie einen oder mehrere Einträge aus"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Add Recipients"
+msgstr "Empfänger hinzufügen"
+
+msgid "Delete this contact"
+msgstr "Diesen Eintrag löschen"
+
+# ################### footer.jsp ####################
+# ################### getStatus.jsp ####################
+# ################### header.jsp ####################
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
+
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
+
+msgid "Secure Distributed Email"
+msgstr "Sichere, dezentrale Mailkommunikation"
+
+msgid "Folders"
+msgstr "Ordner"
+
+msgid "Inbox"
+msgstr "Posteingang"
+
+msgid "Outbox"
+msgstr "Postausgang"
+
+msgid "Sent"
+msgstr "Gesendet"
+
+msgid "Drafts"
+msgstr "Entwürfe"
+
+msgid "Trash"
+msgstr "Papierkorb"
+
+msgid "Identities"
+msgstr "Identitäten"
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Network Status"
+msgstr "Netzwerkstatus"
+
+msgid "Help"
+msgstr "Hilfe"
+
+msgid "User Guide"
+msgstr "Benutzerleitfaden"
+
+msgid "About"
+msgstr "über I2P-Bote"
+
+# ################### deleteIdentity.jsp ####################
+msgid "Error:"
+msgstr "Fehler:"
+
+# ################### deleteEmail.jsp ####################
+msgid "Error: Couldn't delete email."
+msgstr "Fehler: Die Mail konnte nicht gelï¿½scht werden."
+
+# ################### saveIdentity.jsp ####################
+msgid "Please fill in the Public Name field."
+msgstr "Bitte füllen Sie das Feld „Öffentlicher Name“ aus."
+
+msgid "The email identity has been saved."
+msgstr "Die Absenderidentität wurde gespeichert."
+
+# ################### folder.jsp ####################
+msgid "From"
+msgstr "Von"
+
+msgid "To"
+msgstr "An"
+
+msgid "Subject"
+msgstr "Betreff"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Anonymous"
+msgstr "Anonym"
+
+msgid "Unknown"
+msgstr "Unbekannt"
+
+msgid "(No subject)"
+msgstr "(Kein Betreff)"
+
+msgid "Delete this email"
+msgstr "Diese Mail löschen"
+
+# ################### index.jsp ####################
+# ################### network.jsp ####################
+msgid "Network"
+msgstr "Netzwerk"
+
+msgid "Network information is not available because I2P-Bote hasn't started connecting to the network yet."
+msgstr "Es sind keine Netzwerkinformationen verfügbar, weil sich I2P-Bote noch nicht mit dem Netzwerk verbunden hat."
+
+msgid "Local destination:"
+msgstr "Eigene I2P-Kennung:"
+
+# ################### statusFrame.jsp ####################
+msgid "Not Started"
+msgstr "Nicht gestartet"
+
+msgid "Waiting 3 Minutes..."
+msgstr "Warte 3 Minuten..."
+
+msgid "Connect Now"
+msgstr "Jetzt verbinden"
+
+msgid "Connecting..."
+msgstr "Verbinde..."
+
+msgid "Connected"
+msgstr "Verbunden"
+
+msgid "Unknown Status"
+msgstr "Unbek. Status"
+
+#~ msgid "K-Peers:"
+#~ msgstr "Gegenstellen:"
+
