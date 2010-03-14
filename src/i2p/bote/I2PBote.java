@@ -81,9 +81,10 @@ import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
+import net.i2p.util.Translate;
 
 /**
- * This is the core class of the application. Is is implemented as a singleton.
+ * This is the core class of the application. It is implemented as a singleton.
  */
 public class I2PBote {
     public static final int PROTOCOL_VERSION = 2;
@@ -279,6 +280,10 @@ public class I2PBote {
     
     public static String getAppVersion() {
         return APP_VERSION;
+    }
+    
+    public String getLanguage() {
+        return Translate.getLanguage(appContext);
     }
     
     public Identities getIdentities() {

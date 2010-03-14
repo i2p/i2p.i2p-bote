@@ -35,12 +35,12 @@
 
 <div class="main">
     <h2>
-        Email Identities
+        <ib:message key="Email Identities"/>
     </h2>
 
     <c:set var="identities" value="${ib:getIdentities().all}"/>
     <c:if test="${empty identities}">
-        No email identities are defined.
+        <ib:message key="No email identities are defined."/>
     </c:if>
     
     <div class="identities">
@@ -48,10 +48,10 @@
     <c:if test="${!empty identities}">
         <tr>
             <th style="width: 20px;">Def.</th>
-            <th>Public Name</th>
-            <th>Description</th>
-            <th>Email Address</th>
-            <th>Key</th>
+            <th><ib:message key="Public Name"/></th>
+            <th><ib:message key="Description"/></th>
+            <th><ib:message key="Email Address"/></th>
+            <th><ib:message key="Key"/></th>
             <th style="width: 20px; padding: 0px"></th>
         </tr>
     </c:if>
@@ -85,7 +85,7 @@
             </div>
         </td>
         <td>
-            <a href="deleteIdentity.jsp?key=${identity.key}"><img src="images/delete.png" alt="Delete" title="Delete this identity"/></a>
+            <a href="deleteIdentity.jsp?key=${identity.key}"><img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this identity'/>"/></a>
         </td>
         </tr>
     </c:forEach>
@@ -94,7 +94,7 @@
     
     <p/>
     <form action="editIdentity.jsp?new=true" method="POST">
-        <button type="submit" value="New">New Identity</button>
+        <button type="submit" value="<ib:message key='New'/>"><ib:message key="New Identity"/></button>
     </form>
 </div>
 

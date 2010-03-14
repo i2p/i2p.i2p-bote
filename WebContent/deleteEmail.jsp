@@ -33,6 +33,5 @@
     <jsp:forward page="folder.jsp?path=Inbox"/>
 </c:if>
 <c:if test="${!deleted}">
-    Error: Couldn't delete email.
+    <ib:message key="Error: Couldn't delete email."/>
 </c:if>
-<%-- <ib:deleteEmail folderName="${param.folder}" messageId="${param.messageID}"/> --%>

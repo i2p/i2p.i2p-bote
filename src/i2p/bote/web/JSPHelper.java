@@ -32,6 +32,7 @@ import i2p.bote.folder.EmailFolder;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -41,14 +42,14 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import net.i2p.data.DataFormatException;
+import net.i2p.util.Translate;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
  */
 public class JSPHelper {
 
-    private JSPHelper() {
-        throw new UnsupportedOperationException();
+    public JSPHelper() {
     }
     
     public static NetworkStatus getNetworkStatus() {
@@ -291,6 +292,18 @@ public class JSPHelper {
             }
         }
         return newMap;
+    }
+    
+    public String getAppVersion() {
+        return I2PBote.getAppVersion();
+    }
+    
+    /**
+     * Returns the two-letter language code for the current locale.
+     * @return
+     */
+    public String getLanguage() {
+        return I2PBote.getInstance().getLanguage();
     }
     
     private static boolean isNumeric(String str) {

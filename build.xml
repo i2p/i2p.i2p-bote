@@ -78,7 +78,7 @@
         </replace>
     </target>
 
-    <target name="war" depends="compile,precompilejsp"> 
+    <target name="war" depends="compile,precompilejsp,bundle"> 
         <mkdir dir="ant_build" />
         <war destfile="i2pbote.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="**/*.class" />
@@ -158,7 +158,7 @@
     </target>
 
     <!-- same as war but without the library jars -->
-    <target name="pluginwar" depends="compile,precompilejsp"> 
+    <target name="pluginwar" depends="compile,precompilejsp,bundle"> 
         <mkdir dir="ant_build" />
         <war destfile="i2pbote-plugin.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="**/*.class" />
@@ -171,6 +171,39 @@
         </war>
     </target>
     
+    <target name="bundle">
+        <!-- Update the messages_*.po files.
+             We need to supply the bat file for windows, and then change the fai
+l property to true -->
+        <exec executable="sh" osfamily="unix" failifexecutionfails="false" >
+            <arg value="./bundle-messages.sh" />
+        </exec>
+        <exec executable="sh" osfamily="mac" failifexecutionfails="false" >
+            <arg value="./bundle-messages.sh" />
+        </exec>
+        <exec executable="cmd" osfamily="windows" failifexecutionfails="false" >
+            <arg value="/c" />
+            <arg value="bundle-messages.bat" />
+        </exec>
+    </target>
+
+    <target name="poupdate">
+        <!-- Update the messages_*.po files.  -->
+        <exec executable="sh" osfamily="unix" failifexecutionfails="true" >
+            <arg value="./bundle-messages.sh" />
+            <arg value="-p" />
+        </exec>
+        <exec executable="sh" osfamily="mac" failifexecutionfails="true" >
+            <arg value="./bundle-messages.sh" />
+            <arg value="-p" />
+        </exec>
+        <exec executable="cmd" osfamily="windows" failifexecutionfails="true" >
+            <arg value="/c" />
+            <arg value="bundle-messages.bat" />
+            <arg value="-p" />
+        </exec>
+    </target>
+
     <target name="junit" depends="compile">
         <path id="junitcp">
             <pathelement location="${lib}/junit.jar"/>

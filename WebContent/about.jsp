@@ -25,21 +25,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<c:set var="title" value="About I2P-Bote" scope="request"/>
+<ib:message key="About I2P-Bote" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <div class="main">
     <h2>
-        I2P-Bote Version <ib:printVersion/>
+        <ib:message key="I2P-Bote Version {0}">
+            <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+            <ib:param value="${jspHelperBean.appVersion}"/>
+        </ib:message>
     </h2>
     <br/>
     
     <table><tr>
-        <td><strong>Author:</strong></td>
+        <td><strong><ib:message key="Author:"/></strong></td>
     </tr><tr>
         <td></td><td>HungryHobo@mail.i2p</td>
     </tr><tr>
-        <td><strong>Contributors:</strong></td>
+        <td><strong><ib:message key="Contributors:"/></strong></td>
     </tr><tr>
         <td></td><td>Mixxy</td>
     </tr><tr>

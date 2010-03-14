@@ -26,17 +26,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-
 <c:if test="${param.action == 'Cancel'}">
     <jsp:forward page="addressBook.jsp"/>
 </c:if>
 
 <c:choose>
     <c:when test="${empty param.destination}">
-        <c:set var="errorMessage" value="Please fill in the Destination field."/>
+        <ib:message key="Please fill in the Destination field." var="errorMessage"/>
     </c:when>
     <c:when test="${empty param.name}">
-        <c:set var="errorMessage" value="Please fill in the Name field."/>
+        <ib:message key="Please fill in the Name field." var="errorMessage"/>
     </c:when>
     <c:otherwise>
         <c:set var="errorMessage" value="${ib:saveContact(param.destination, param.name)}"/>
@@ -44,8 +43,9 @@
 </c:choose>
 
 <c:if test="${empty errorMessage}">
+    <ib:message key="The contact has been saved." var="infoMessage"/>
     <jsp:forward page="addressBook.jsp">
-        <jsp:param name="infoMessage" value="The contact has been saved."/>
+        <jsp:param name="infoMessage" value="${infoMessage}"/>
     </jsp:forward>
 </c:if>
 <c:if test="${!empty errorMessage}">

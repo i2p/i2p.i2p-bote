@@ -74,7 +74,7 @@
                 
                 <form action="${url}" ${frame} method="GET">
                     <input type="hidden" name="checkMail" value="1"/>
-                    <button type="submit" value="Check Mail" ${disable}>Check Mail</button>
+                    <button type="submit" value="<ib:message key="Check Mail"/>" ${disable}>Check Mail</button>
                 </form>
             </div>
             <c:if test="${ib:newMailReceived()}">
@@ -88,7 +88,7 @@
     </td>
     <td>
         <form action="newEmail.jsp" target="_top" method="GET">
-            <button type="submit" value="New" ${disable}>New</button>
+            <button type="submit" value="<ib:message key="New"/>" ${disable}>New</button>
         </form>
     </td>
 </tr></table>

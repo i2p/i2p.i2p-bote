@@ -92,12 +92,6 @@
 </tag>
 
 <tag>
-    <name>printVersion</name>
-    <tag-class>i2p.bote.web.PrintAppVersionTag</tag-class>
-    <body-content>empty</body-content>
-</tag>
-
-<tag>
     <name>connect</name>
     <tag-class>i2p.bote.web.ConnectTag</tag-class>
     <body-content>empty</body-content>
@@ -113,6 +107,50 @@
     <name>peerInfo</name>
     <tag-class>i2p.bote.web.PeerInfoTag</tag-class>
     <body-content>empty</body-content>
+</tag>
+
+<tag>
+    <name>message</name>
+    <description>
+        Same as fmt:message, except that message keys in
+        the "en" locale translate to the message key itself.
+    </description>
+    <tag-class>i2p.bote.web.MessageTag</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+        <name>key</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>bundle</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+    <attribute>
+        <name>var</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+    <attribute>
+        <name>scope</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+</tag>
+
+<tag>
+    <name>param</name>
+    <description>
+        Same as fmt:param. Must be inside an ib:message tag.
+    </description>
+    <tag-class>i2p.bote.web.ParamTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+        <name>value</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
 </tag>
 
 <function>

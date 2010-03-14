@@ -21,6 +21,7 @@
 
 package i2p.bote.web;
 
+import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
@@ -49,7 +50,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                 return;
             
             int numPeers = dhtStats.getData().size();
-            out.println("<strong>K-Peers: " + numPeers + "</strong>");
+            out.println("<strong>" + _("Kademlia Peers:") + " " + numPeers + "</strong>");
             if (numPeers > 0) {
                 out.println("<table>");
                 
@@ -74,13 +75,13 @@ public class PeerInfoTag extends SimpleTagSupport {
             
             // List banned peers
             Collection<BannedPeer> bannedPeers = I2PBote.getInstance().getBannedPeers();
-            out.println("<strong>Banned Peers: " + bannedPeers.size() + "</strong>");
+            out.println("<strong>" + _("Banned Peers:") + " " + bannedPeers.size() + "</strong>");
             if (bannedPeers.size() > 0) {
                 out.println("<table>");
                 out.println("<tr>");
-                out.println("<th>Peer</th>");
-                out.println("<th>Destination Hash</th>");
-                out.println("<th>Ban Reason</th>");
+                out.println("<th>" + _("Peer") + "</th>");
+                out.println("<th>" + _("Destination Hash") + "</th>");
+                out.println("<th>" + _("Ban Reason") + "</th>");
                 out.println("</tr>");
                 
                 int peerIndex = 1;

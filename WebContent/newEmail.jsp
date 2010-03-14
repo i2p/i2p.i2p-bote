@@ -39,7 +39,7 @@
     </c:when>
 </c:choose>
 
-<c:set var="title" value="New Email" scope="request"/>
+<ib:message key="New Email" var="title"scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <div class="main">
@@ -47,7 +47,7 @@
         <table>
             <tr>
                 <td>
-                    From:
+                    <ib:message key="From:"/>
                 </td>
                 <td>
                     <select name="sender">
@@ -102,10 +102,10 @@
                     <c:set var="maxRecipientIndex" value="${maxRecipientIndex+1}"/>
                     <tr><td>
                         <select name="recipientType${maxRecipientIndex}">
-                            <option value="to">To:</option>
-                            <option value="cc">CC:</option>
-                            <option value="bcc">BCC:</option>
-                            <option value="replyto">Reply To:</option>
+                            <option value="to"><ib:message key="To:"/></option>
+                            <option value="cc"><ib:message key="CC:"/></option>
+                            <option value="bcc"><ib:message key="BCC:"/></option>
+                            <option value="replyto"><ib:message key="Reply To:"/></option>
                         </select>
                     </td><td>
                         <input type="text" size="80" name="recipient${maxRecipientIndex}" value="${destination}"/>
@@ -115,10 +115,10 @@
             <c:set var="maxRecipientIndex" value="${maxRecipientIndex+1}"/>
             <tr><td>
                 <select name="recipientType${maxRecipientIndex}">
-                    <option value="to">To:</option>
-                    <option value="cc">CC:</option>
-                    <option value="bcc">BCC:</option>
-                    <option value="replyto">Reply To:</option>
+                    <option value="to"><ib:message key="To:"/></option>
+                    <option value="cc"><ib:message key="CC:"/></option>
+                    <option value="bcc"><ib:message key="BCC:"/></option>
+                    <option value="replyto"><ib:message key="Reply To:"/></option>
                 </select>
             </td><td>
                 <input type="text" size="80" name="recipient${maxRecipientIndex}"/>
@@ -128,15 +128,15 @@
                 <td/>
                 <td style="text-align: right;">
                     <button type="submit" name="action" value="addRecipient" disabled="disabled">+</button>
-                    <button type="submit" name="action" value="lookup0">Addr. Book...</button>
+                    <button type="submit" name="action" value="lookup0"><ib:message key="Addr. Book..."/></button>
                 </td>
             </tr>
             <tr>
-                <td valign="top"><br/>Subject:</td>
+                <td valign="top"><br/><ib:message key="Subject:"/></td>
                 <td><input type="text" size="80" name="subject" value="${param.subject}"/></td>
             </tr>
             <tr>
-                <td valign="top"><br/>Message:</td>
+                <td valign="top"><br/><ib:message key="Message:"/></td>
                 <td>
                     <textarea rows="30" cols="80" name="message"><c:if test="${!empty param.quoteMsgId}">
 <%-- The following lines are not indented because the indentation would show up as blank chars on the textarea --%>
@@ -147,8 +147,8 @@
             </tr>
             <tr>
                 <td colspan=3 align="center">
-                    <button type="submit" name="action" value="send">Send</button>
-                    <button type="submit" name="action" disabled="disabled">Save</button>
+                    <button type="submit" name="action" value="send"><ib:message key="Send"/></button>
+                    <button type="submit" name="action" disabled="disabled"><ib:message key="Save"/></button>
                 </td>
             </tr>
         </table>

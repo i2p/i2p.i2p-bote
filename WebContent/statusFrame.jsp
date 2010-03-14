@@ -39,18 +39,18 @@
 
 <div class="statusbox">
     <c:choose>
-        <c:when test="${connStatus == NOT_STARTED}"><img src="images/redsquare.png"/> Not Started</c:when>
-        <c:when test="${connStatus == DELAY}"><img src="images/yellowsquare.png"/> Waiting 3 Minutes...<br/>
+        <c:when test="${connStatus == NOT_STARTED}"><img src="images/redsquare.png"/> <ib:message key="Not Started"/></c:when>
+        <c:when test="${connStatus == DELAY}"><img src="images/yellowsquare.png"/> <ib:message key="Waiting 3 Minutes..."/><br/>
             <div style="text-align: center">
                 <form action="connect.jsp" target="_top" method="GET">
-                    <button type="submit">Connect Now</button>
+                    <button type="submit"><ib:message key="Connect Now"/></button>
                 </form>
             </div>
         </c:when>
-        <c:when test="${connStatus == CONNECTING}"><img src="images/yellowsquare.png"/> Connecting...</c:when>
-        <c:when test="${connStatus == CONNECTED}"><img src="images/greensquare.png"/> Connected</c:when>
-        <c:when test="${connStatus == ERROR}"><img src="images/redsquare.png"/> Error</c:when>
-        <c:otherwise> Unknown Status</c:otherwise>
+        <c:when test="${connStatus == CONNECTING}"><img src="images/yellowsquare.png"/> <ib:message key="Connecting..."/></c:when>
+        <c:when test="${connStatus == CONNECTED}"><img src="images/greensquare.png"/> <ib:message key="Connected"/></c:when>
+        <c:when test="${connStatus == ERROR}"><img src="images/redsquare.png"/> <ib:message key="Error"/></c:when>
+        <c:otherwise> <ib:message key="Unknown Status"/></c:otherwise>
     </c:choose>
 </div>
 

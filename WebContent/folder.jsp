@@ -39,29 +39,29 @@
 <div class="folder">
 	<table>
 	    <tr>
-	        <th style="width: 100px;">From</th>
-            <th style="width: 100px;">To</th>
-            <th style="width: 150px;">Subject</th>
-            <th style="width: 100px;">Date</th>
+	        <th style="width: 100px;"><ib:message key="From"/></th>
+            <th style="width: 100px;"><ib:message key="To"/></th>
+            <th style="width: 150px;"><ib:message key="Subject"/></th>
+            <th style="width: 100px;"><ib:message key="Date"/></th>
             <th style="width: 20px;"></th>
 	    </tr>
 	    <c:forEach items="${ib:getMailFolder(folderName).elements}" var="email">
 	        <tr>
                 <c:set var="sender" value="${email.sender}"/>
                 <c:if test="${empty sender}">
-                    <c:set var="sender" value="Anonymous"/>
+                    <ib:message key="Anonymous" var="sender"/>
                 </c:if>
                 
                 <c:set var="recipient" value="${ib:getOneLocalRecipient(email)}"/>
                 
                 <c:set var="date" value="${email.sentDate}"/>
                 <c:if test="${empty date}">
-                    <c:set var="date" value="Unknown"/>
+                    <ib:message key="Unknown" var="date"/>"/>
                 </c:if>
                 
                 <c:set var="subject" value="${email.subject}"/>
                 <c:if test="${empty subject}">
-                    <c:set var="subject" value="(No subject)"/>
+                    <ib:message key="(No subject)" var="subject"/>
                 </c:if>
                 
                 <c:set var="mailUrl" value="showEmail.jsp?folder=${folderName}&messageID=${email.messageID}"/>
@@ -75,7 +75,10 @@
                 <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
                 <td><div class="ellipsis"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
                 <td><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(date)}</a></td>
-                <td><a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}"><img src="images/delete.png" alt="Delete" title="Delete this email"/></a></td>
+                <td>
+                    <a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}">
+                    <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
+                </td>
 	        </tr>
 	    </c:forEach>
 	</table>

@@ -29,28 +29,28 @@
 
 <c:choose>
     <c:when test="${param.new}">
-        <c:set var="title" value="New Contact" scope="request"/>
-        <c:set var="commitAction" value="Create"/>
+        <ib:message key="New Contact" var="title"/>
+        <c:set var="title" value="${title}" scope="request"/>
+        <ib:message key="Add" var="action"/>
+        <c:set var="commitAction" value="${action}"/>
     </c:when>
     <c:otherwise>
-        <c:set var="title" value="Edit Contact" scope="request"/>
-        <c:set var="commitAction" value="Save"/>
+        <ib:message key="Edit Contact" var="title"/>
+        <c:set var="title" value="${title}" scope="request"/>
+        <ib:message key="Add" var="action"/>
+        <c:set var="commitAction" value="${action}"/>
     </c:otherwise>
 </c:choose>
 <jsp:include page="header.jsp"/>
-
-<div class="errorMessage">
-    ${fn:escapeXml(param.errorMessage)}
-</div>
 
 <div class="main">
     <form name="form" action="saveContact.jsp" method="post">
         <table>
             <tr>
                 <td>
-                    <div style="font-weight: bold;">Email Destination</div>
+                    <div style="font-weight: bold;"><ib:message key="Email Destination"/></div>
                     <c:if test="${empty param.destination}">
-                        <div style="font-size: 0.8em;">(required field, must be 512 characters)</div>
+                        <div style="font-size: 0.8em;"><ib:message key="(required field, must be 512 characters)"/></div>
                     </c:if>
                 </td>
                 <td>
@@ -59,8 +59,8 @@
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight: bold;">Name:</div>
-                    <div style="font-size: 0.8em;">(required field)</div>
+                    <div style="font-weight: bold;"><ib:message key="Name:"/></div>
+                    <div style="font-size: 0.8em;"><ib:message key="(required field)"/></div>
                 </td>
                 <td>
                     <input type="text" size="25" name="name" value="${param.name}"/>
@@ -69,7 +69,7 @@
         </table>
         <input type="hidden" name="destination" value="${param.destination}"/>
         <input type="submit" name="action" value="${commitAction}"/>
-        <input type="submit" name="action" value="Cancel"/>
+        <input type="submit" name="action" value="<ib:message key="Cancel"/>"/>
     </form>
 
     <script type="text/javascript" language="JavaScript">

@@ -21,6 +21,7 @@
 
 package i2p.bote.network.kademlia;
 
+import static i2p.bote.Util._;
 import i2p.bote.network.DhtPeerStats;
 
 import java.math.BigInteger;
@@ -40,7 +41,7 @@ public class KademliaPeerStats implements DhtPeerStats {
     private List<List<String>> data;
     
     KademliaPeerStats(SBucket sBucket, List<KBucket> kBuckets, Hash localDestinationHash) {
-        String[] headerArray = new String[] {"Peer", "I2P Destination", "BktPfx", "Distance", "Locked?", "Active Since"};
+        String[] headerArray = new String[] {_("Peer"), _("I2P Destination"), _("BktPfx"), _("Distance"), _("Locked?"), _("Active Since")};
         header = Arrays.asList(headerArray);
         
         data = new ArrayList<List<String>>();
@@ -59,7 +60,7 @@ public class KademliaPeerStats implements DhtPeerStats {
             row.add(getBucketPrefix(bucket));
             BigInteger distance = KademliaUtil.getDistance(localDestinationHash, peer.calculateHash());
             row.add(distance.shiftRight((Hash.HASH_LENGTH-2)*8).toString());   // show the 2 most significant bytes
-            row.add(String.valueOf(peer.isLocked() ? "Yes ("+(peer.getConsecTimeouts())+")" : "No"));
+            row.add(String.valueOf(peer.isLocked() ? _("Yes")+"("+(peer.getConsecTimeouts())+")" : _("No")));
             String activeSince = formatter.format(peer.getActiveSince());
             row.add(String.valueOf(activeSince));
             data.add(row);
@@ -76,12 +77,12 @@ public class KademliaPeerStats implements DhtPeerStats {
             KBucket kBucket = (KBucket)bucket;
             String prefix = kBucket.getBucketPrefix();
             if (prefix.isEmpty())
-                return "(None)";
+                return _("(None)");
             else
                 return prefix;
         }
         else
-            return "(S)";
+            return _("(S)");
     }
     
     @Override

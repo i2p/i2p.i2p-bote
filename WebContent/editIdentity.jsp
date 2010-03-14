@@ -29,12 +29,12 @@
 
 <c:choose>
     <c:when test="${param.new}">
-        <c:set var="title" value="New Email Identity" scope="request"/>
-        <c:set var="commitAction" value="Create"/>
+        <ib:message key="New Email Identity" var="title"/>" scope="request"/>
+        <ib:message key="Create" var="commitAction"/>"/>
     </c:when>
     <c:otherwise>
-        <c:set var="title" value="Edit Email Identity" scope="request"/>
-        <c:set var="commitAction" value="Save"/>
+        <ib:message key="Edit Email Identity" var="title"/>
+        <ib:message key="Save" var="commitAction"/>
     </c:otherwise>
 </c:choose>
 
@@ -49,8 +49,8 @@
         <table>
             <tr>
                 <td>
-                    <div style="font-weight: bold;">Public Name:</div>
-                    <div style="font-size: 0.8em;">(required field, shown to recipients)</div>
+                    <div style="font-weight: bold;"><ib:message key="Public Name:"/></div>
+                    <div style="font-size: 0.8em;"><ib:message key="(required field, shown to recipients)"/></div>
                 </td>
                 <td>
                     <input type="text" size="25" name="publicName" value="${param.publicName}"/>
@@ -58,8 +58,8 @@
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight: bold;">Description:</div>
-                    <div style="font-size: 0.8em;">(optional, kept private)</div>
+                    <div style="font-weight: bold;"><ib:message key="Description:"/></div>
+                    <div style="font-size: 0.8em;"><ib:message key="(optional, kept private)"/></div>
                 </td>
                 <td>
                     <input type="text" size="25" name="description" value="${param.description}"/>
@@ -67,8 +67,8 @@
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight: bold;">Email Address:</div>
-                    <div style="font-size: 0.8em;">(optional)</div>
+                    <div style="font-weight: bold;"><ib:message key="Email Address:"/></div>
+                    <div style="font-size: 0.8em;"><ib:message key="(optional)"/></div>
                 </td>
                 <td>
                     <input type="text" size="50" name="emailAddress" value="${param.emailAddress}"/>
@@ -77,7 +77,7 @@
             <c:if test="${!empty param.key}">
             <tr>
                 <td style="font-weight: bold; vertical-align: top;">
-                    Email Destination:
+                    <ib:message key="Email Destination:"/>
                 </td>
                 <td>
                     <textarea cols="64" rows="9" readonly="yes" wrap="soft" class="destinationtextarea">${param.key}</textarea>
@@ -98,7 +98,7 @@
         </table>
         <input type="hidden" name="key" value="${param.key}"/>
         <input type="submit" name="action" value="${commitAction}"/>
-        <input type="submit" name="action" value="Cancel"/>
+        <input type="submit" name="action" value="<ib:message key='Cancel'/>"/>
     </form>
 
     <script type="text/javascript" language="JavaScript">

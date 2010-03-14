@@ -26,14 +26,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-
 <c:if test="${param.action == 'Cancel'}">
     <jsp:forward page="identities.jsp"/>
 </c:if>
 
 <c:choose>
     <c:when test="${empty param.publicName}">
-        <c:set var="errorMessage" value="Please fill in the Public Name field."/>
+        <ib:message key="Please fill in the Public Name field." var="errorMessage"/>
     </c:when>
     <c:otherwise>
         <c:set var="errorMessage" value="${ib:saveIdentity(param.key, param.publicName, param.description, param.emailAddress, param.isDefault=='on')}"/>
@@ -41,8 +40,9 @@
 </c:choose>
 
 <c:if test="${empty errorMessage}">
+    <ib:message key="The email identity has been saved." var="infoMessage"/>
     <jsp:forward page="identities.jsp">
-        <jsp:param name="infoMessage" value="The email identity has been saved."/>
+        <jsp:param name="infoMessage" value="${infoMessage}"/>
     </jsp:forward>
 </c:if>
 <c:if test="${!empty errorMessage}">

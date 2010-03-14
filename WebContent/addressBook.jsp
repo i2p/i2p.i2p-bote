@@ -31,19 +31,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<c:set var="title" value="Address Book" scope="request"/>
+<ib:message key="Address Book" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
-
-<div class="infoMessage">
-    ${param.infoMessage}
-</div>
 
 <div class="main">
     <c:set var="contacts" value="${ib:getAddressBook().all}"/>
     
     <h2>
-        <c:if test="${!param.search}">Private Address Book</c:if>
-        <c:if test="${param.search && !empty contacts}">Select One or More Entries</c:if>
+        <c:if test="${!param.search}"><ib:message key="Private Address Book"/></c:if>
+        <c:if test="${param.search && !empty contacts}"><ib:message key="Select One or More Entries"/></c:if>
     </h2>
 
     <c:if test="${empty contacts}">
@@ -63,8 +59,8 @@
     <c:if test="${!empty contacts}">
         <tr>
             <c:if test="${param.search}"><th style="width: 10px;"></th></c:if>
-            <th>Name</th>
-            <th>Email Destination</th>
+            <th><ib:message key="Name"/></th>
+            <th><ib:message key="Email Destination"/></th>
             <th style="width: 20px; padding: 0px"></th>
         </tr>
     </c:if>
@@ -93,7 +89,7 @@
         </td>
         <td>
             <c:if test="${!param.search}">
-                <a href="deleteContact.jsp?destination=${contact.destination}"><img src="images/delete.png" alt="Delete" title="Delete this contact"/></a>
+                <a href="deleteContact.jsp?destination=${contact.destination}"><img src="images/delete.png" alt="<ib:message key='Delete'/>" title='<ib:message key='Delete this contact'/>'/></a>
             </c:if>
         </td>
         </tr>
@@ -106,13 +102,13 @@
         <c:if test="${!param.search}">
             <tr><td>
                 <form action="editContact.jsp?new=true" method="POST">
-                    <button type="submit" value="New">New Contact</button>
+                    <button type="submit" value="New"><ib:message key="New Contact"/></button>
                 </form>
             </td></tr>
         </c:if>
         <c:if test="${param.search}">
             <tr><td>
-                <button type="submit" value="New">Add Recipients</button>
+                <button type="submit" value="New"><ib:message key="Add Recipients"/></button>
             </td></tr>
         </c:if>
     </table>

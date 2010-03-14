@@ -30,12 +30,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ThreadFactory;
 
+import net.i2p.I2PAppContext;
 import net.i2p.client.I2PSession;
 import net.i2p.data.DataFormatException;
+import net.i2p.util.Translate;
 
 public class Util {
 	private static final int BUFFER_SIZE = 32 * 1024;
-
+	private static final String BUNDLE_NAME = "i2p.bote.locale.Messages";
+	
 	private Util() { }
 	
 	public static void copyBytes(InputStream inputStream, OutputStream outputStream) throws IOException {
@@ -116,5 +119,9 @@ public class Util {
             i--;
         }
         return null;
+    }
+    
+    public static String _(String messageKey) {
+        return Translate.getString(messageKey, I2PAppContext.getGlobalContext(), BUNDLE_NAME);
     }
 }

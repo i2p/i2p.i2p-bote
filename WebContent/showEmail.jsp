@@ -37,20 +37,20 @@
 <div class="main">
     <table>
         <tr>
-            <td valign="top"><strong>From:</strong></td>
+            <td valign="top"><strong><ib:message key="From:"/></strong></td>
             <td>
                 <ib:address address="${email.sender}"/>
                 <c:set var="senderDestination" value="${ib:extractEmailDestination(email.sender)}"/>
                 <c:if test="${!empty senderDestination}">
                     <form action="editContact.jsp?new=true&destination=${senderDestination}&name=${ib:extractName(email.sender)}" method="POST">
                         <c:set var="disabled" value="${empty ib:getContact(senderDestination) ? '' : 'disabled=&quot; disabled&quot; title=&quot;The Email Destination already exists in the address book.&quot;'}"/>
-                        <button type="submit"${disabled}>Add to Address Book</button>
+                        <button type="submit"${disabled}><ib:message key="Add to Address Book"/></button>
                     </form>
                 </c:if>
             </td>
         </tr>
         <tr>
-            <td valign="top"><strong>To:</strong></td>
+            <td valign="top"><strong><ib:message key="To:"/></strong></td>
             <td>
                 <c:forEach var="recipient" varStatus="status" items="${email.allRecipients}">
                     <ib:address address="${recipient}"/>
@@ -59,11 +59,11 @@
             </td>
         </tr>
         <tr>
-            <td valign="top"><strong>Subject:</strong></td>
+            <td valign="top"><strong><ib:message key="Subject:"/></strong></td>
             <td>${fn:escapeXml(email.subject)}</td>
         </tr>
         <tr>
-            <td valign="top"><strong>Message:</strong></td>
+            <td valign="top"><strong><ib:message key="Message:"/></strong></td>
             <td><ib:formatPlainText text="${fn:escapeXml(email.text)}"/></td>
         </tr>
         <tr>
@@ -71,11 +71,11 @@
                 <table><tr>
                     <td>
                     <form action="newEmail.jsp" method="post">
-                        <button type="submit">Reply</button>
+                        <button type="submit"><ib:message key="Reply"/></button>
                         <input type="hidden" name="sender" value="${ib:getOneLocalRecipient(email)}"/>
                         <input type="hidden" name="recipient0" value="${email.sender}"/>
                         
-                        <c:set var="responsePrefix" value="Re: "/>
+                        <ib:message key="Re:" var="responsePrefix"/>
                         <c:if test="${fn:startsWith(email.subject, responsePrefix)}">
                             <c:set var="responsePrefix" value=""/>
                         </c:if>
@@ -86,7 +86,7 @@
                     </form>
                     </td><td>
                     <form action="deleteEmail.jsp" method="post">
-                        <button type="submit">Delete</button>
+                        <button type="submit"><ib:message key="Delete"/></button>
                         <input type="hidden" name="folder" value="${param.folder}"/>
                         <input type="hidden" name="messageID" value="${email.messageID}"/>
                     </form>

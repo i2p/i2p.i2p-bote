@@ -29,14 +29,15 @@
 <c:set var="errorMessage" value="${ib:deleteContact(param.destination)}"/>
 
 <c:if test="${empty errorMessage}">
+    <ib:message key="The contact has been deleted from the address book." var="message"/>
     <jsp:forward page="addressBook.jsp">
-        <jsp:param name="message" value="The contact has been deleted from the address book."/>
+        <jsp:param name="message" value="${message}"/>
     </jsp:forward>
 </c:if>
 <c:if test="${!empty errorMessage}">
     <jsp:include page="header.jsp"/>
     <div class="main">
-        Error: ${errorMessage}
+        <ib:message key="Error"/>: ${errorMessage}
     </div>
     <jsp:include page="footer.jsp"/>
 </c:if>

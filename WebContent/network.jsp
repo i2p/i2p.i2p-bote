@@ -28,16 +28,16 @@
 
 <jsp:include page="getStatus.jsp"/>
 
-<c:set var="title" value="Network" scope="request"/>
+<ib:message key="Network" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <div class="main">
     <c:choose>
         <c:when test="${connStatus==NOT_STARTED || connStatus==DELAY}">
-            <strong>Network information is not available because I2P-Bote hasn't started connecting to the network yet.</strong>
+            <strong><ib:message key="Network information is not available because I2P-Bote hasn't started connecting to the network yet."/></strong>
         </c:when>
         <c:otherwise>
-            <strong>Local destination: </strong><ib:localDestination/><p/><br/>
+            <strong><ib:message key="Local destination:"/> </strong><ib:localDestination/><p/><br/>
             <ib:peerInfo/>
         </c:otherwise>
     </c:choose>
