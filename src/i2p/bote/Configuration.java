@@ -71,6 +71,7 @@ public class Configuration extends Properties {
 	
 	private Log log = new Log(Configuration.class);
 	private File i2pBoteDir;
+	private File configFile;
 	
 	/**
 	 * Reads configuration settings from the <code>I2P_BOTE_SUBDIR</code> subdirectory under
@@ -89,7 +90,7 @@ public class Configuration extends Properties {
 		    log.error("Cannot create directory: <" + i2pBoteDir.getAbsolutePath() + ">");
 
 		// read the configuration file
-        File configFile = new File(i2pBoteDir, CONFIG_FILE_NAME);
+        configFile = new File(i2pBoteDir, CONFIG_FILE_NAME);
         boolean configurationLoaded = false;
         if (configFile.exists()) {
 			log.debug("Loading config file <" + configFile.getAbsolutePath() + ">");
@@ -159,11 +160,14 @@ public class Configuration extends Properties {
 	/**
 	 * Save the configuration
 	 * @param configFile
-	 * @throws IOException
 	 */
-	public void saveToFile(File configFile) throws IOException {
+	public void save() {
 		log.debug("Saving config file <" + configFile.getAbsolutePath() + ">");
-		DataHelper.storeProps(this, configFile);
+		try {
+            DataHelper.storeProps(this, configFile);
+        } catch (IOException e) {
+            log.error("Cannot save configuration to file <" + configFile.getAbsolutePath() + ">", e);
+        }
 	}
 
 	/**
