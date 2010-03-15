@@ -47,7 +47,7 @@
     <table>
     <c:if test="${!empty identities}">
         <tr>
-            <th style="width: 20px;">Def.</th>
+            <th style="width: 20px;"><ib:message key="Def."/></th>
             <th><ib:message key="Public Name"/></th>
             <th><ib:message key="Description"/></th>
             <th><ib:message key="Email Address"/></th>

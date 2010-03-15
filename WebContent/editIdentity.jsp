@@ -85,7 +85,7 @@
             </tr>
             <tr>
                 <td style="font-weight: bold; vertical-align: top;">
-                    Default Identity:
+                    <ib:message key="Default Identity:"/>
                 </td>
                 <td>
                     <c:if test="${param.isDefault}">

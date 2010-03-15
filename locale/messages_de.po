@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-14 17:42+0000\n"
+"POT-Creation-Date: 2010-03-15 06:49+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -67,6 +67,14 @@ msgstr "I2P-Adresse (SHA256-Summe)"
 msgid "Ban Reason"
 msgstr "Verbannungsgrund"
 
+#: src/i2p/bote/web/SendEmailTag.java:60
+msgid "The email has been sent."
+msgstr "Die Mail wurde gesendet."
+
+#: src/i2p/bote/web/SendEmailTag.java:63
+msgid "Error sending email:"
+msgstr "Fehler beim Senden der Mail:"
+
 msgid "New Contact"
 msgstr "Neuer Eintrag"
 
@@ -126,6 +134,9 @@ msgstr "(Optional)"
 msgid "Email Destination:"
 msgstr "Postfachkennung:"
 
+msgid "Default Identity:"
+msgstr "Beim Senden voreingestellt:"
+
 # ################### noIdentities.jsp ####################
 # ################### saveContact.jsp ####################
 msgid "Please fill in the Destination field."
@@ -147,6 +158,9 @@ msgstr "Absenderidentitäten"
 
 msgid "No email identities are defined."
 msgstr "Es sind noch keine Absenderidentitäten angelegt worden."
+
+msgid "Def."
+msgstr "Voreinst."
 
 msgid "Public Name"
 msgstr "Öffentlicher Name"
@@ -282,6 +296,13 @@ msgstr "Entwürfe"
 
 msgid "Trash"
 msgstr "Papierkorb"
+
+msgid "Manage Folders"
+msgstr "Ordner verwalten"
+
+# ################### addressBook.jsp ####################
+msgid "Addresses"
+msgstr "Adressen"
 
 msgid "Identities"
 msgstr "Identitäten"

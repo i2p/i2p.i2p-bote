@@ -21,6 +21,7 @@
 
 package i2p.bote.web;
 
+import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
 
@@ -56,10 +57,10 @@ public class SendEmailTag extends SimpleTagSupport {
             email.setText(message, "UTF-8");
 
             I2PBote.getInstance().sendEmail(email);
-            statusMessage = "The email has been sent.";
+            statusMessage = _("The email has been sent.");
         }
         catch (Exception e) {
-            statusMessage = "Error sending email: " + e.getLocalizedMessage();
+            statusMessage = _("Error sending email:") + " " + e.getLocalizedMessage();
             log.error("Error sending email", e);
         }
 

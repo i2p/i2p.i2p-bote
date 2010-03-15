@@ -87,10 +87,10 @@
                             <c:set var="ccSelected" value="${recipientType eq 'cc' ? ' selected' : ''}"/>
                             <c:set var="bccSelected" value="${recipientType eq 'bcc' ? ' selected' : ''}"/>
                             <c:set var="replytoSelected" value="${recipientType eq 'replyto' ? ' selected' : ''}"/>
-                            <option value="to"${toSelected}>To:</option>
-                            <option value="cc"${ccSelected}>CC:</option>
-                            <option value="bcc"${bccSelected}>BCC:</option>
-                            <option value="replyto"${replytoSelected}>Reply To:</option>
+                            <option value="to"${toSelected}><ib:message key="To:"/></option>
+                            <option value="cc"${ccSelected}><ib:message key="CC:"/></option>
+                            <option value="bcc"${bccSelected}><ib:message key="BCC:"/></option>
+                            <option value="replyto"${replytoSelected}><ib:message key="Reply To:"/></option>
                         </select>
                     </td><td>
                         <input type="text" size="80" name="${recipientField}" value="${recipient}"/>

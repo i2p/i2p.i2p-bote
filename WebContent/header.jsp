@@ -64,11 +64,11 @@
     <img src="images/folder.png"/>User_created_Folder_2<br/>
     <img src="images/folder.png"/>User_created_Folder_3<br/>
     <hr/>
-    Manage Folders
+    <ib:message key="Manage Folders"/>
 </div>
 
 <div class="menubox">
-    <h2>Addresses</h2>
+    <h2><ib:message key="Addresses"/></h2>
     <a href="identities.jsp"><ib:message key="Identities"/></a><br/>
     <a href="addressBook.jsp"><ib:message key="Address Book"/></a><br/>
     Public Address Directory<br/>
