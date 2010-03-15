@@ -31,7 +31,10 @@ import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
 import i2p.bote.service.I2PBoteThread;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -143,10 +146,6 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         runningBatches.remove(batch);
     }
     
-    public int getQueueLength() {
-        return packetQueue.size();
-    }
-    
     /**
      * Set the maximum outgoing bandwidth in kbits/s
      * @param maxBandwidth
@@ -202,7 +201,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                 break;
             CommunicationPacket i2pBotePacket = scheduledPacket.data;
             
-            // wait long enough so rate <= maxBandwidth;
+            // wait long enough so rate <= maxBandwidth, and don't send before earliestSendTime
             if (maxBandwidth > 0) {
                 int packetSizeBits = i2pBotePacket.getSize() * 8;
                 int maxBWBitsPerSecond = maxBandwidth * 1024;
@@ -225,14 +224,13 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             try {
                 i2pSession.sendMessage(scheduledPacket.destination, replyableDatagram);
                 
-                // set sentTime; update queue+cache, update countdown latch, fire packet listeners
+                // set sentTime, update queue and sentLatch, fire packet listeners
                 scheduledPacket.data.setSentTime(System.currentTimeMillis());
-                packetQueue.remove(scheduledPacket);
                 if (isBatchPacket)
                     batch.decrementSentLatch();
                 scheduledPacket.decrementSentLatch();
                 
-                log.debug("Packet sent. Send queue length is now " + packetQueue.size());
+                log.debug("Packet of type " + scheduledPacket.data.getClass().getSimpleName() + " sent. Send queue length is now " + packetQueue.size());
                 if (isBatchPacket)
                     log.debug("  Batch has " + batch.getPacketCount() + " packets total, " + batch.getUnsentPacketCount() + " waiting to be sent.");
             }
@@ -249,41 +247,59 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         }
     }
     
-    // TODO use ArrayList, not LinkedList; consider making the ArrayList a member field rather than extending it
-    private class PacketQueue extends LinkedList<ScheduledPacket> {
-        private static final long serialVersionUID = -7294556384443251074L;
-
-        /**
-         * Always returns <code>true</code>.
-         */
-        @Override
-        public boolean add(ScheduledPacket packet) {
+    /**
+     * Keeps packets sorted by <code>earliestSendTime</code>.
+     */
+    private class PacketQueue {
+        private List<ScheduledPacket> queue;
+        private Comparator<ScheduledPacket> comparator;
+        
+        public PacketQueue() {
+            queue = new ArrayList<ScheduledPacket>();
+            comparator = new Comparator<ScheduledPacket>() {
+                @Override
+                public int compare(ScheduledPacket packet1, ScheduledPacket packet2) {
+                    return new Long(packet1.earliestSendTime).compareTo(packet2.earliestSendTime);
+                }
+            };
+        }
+        
+        public synchronized void add(ScheduledPacket packet) {
             if (packet.earliestSendTime > 0) {
                 int index = getInsertionIndex(packet);
-                super.add(index, packet);
+                queue.add(index, packet);
             }
             else
-                super.add(packet);
-            return true;
+                queue.add(packet);
         }
 
         private int getInsertionIndex(ScheduledPacket packet) {
-            if (isEmpty())
-                return 0;
-
-            // do a linear search (binary search isn't a good fit for LinkedList)
-            // TODO using foreach would be more efficient
-            for (int i=0; i<size(); i++)
-                if (get(i).earliestSendTime <= packet.earliestSendTime)
-                    return i;
-
-            return size();
+            int index = Collections.binarySearch(queue, packet, comparator);
+            if (index < 0)
+                return -(index+1);
+            else {
+                log.warn("Packet exists in queue already: " + packet);
+                return index;
+            }
         }
 
-        public synchronized ScheduledPacket take() throws InterruptedException {
-            while (isEmpty() && !shutdownRequested())
+        public ScheduledPacket take() throws InterruptedException {
+            while (queue.isEmpty() && !shutdownRequested())
                 TimeUnit.SECONDS.sleep(1);
-            return pollLast();
+            synchronized(this) {
+                if (queue.isEmpty())
+                    return null;
+                else
+                    return queue.remove(queue.size()-1);
+            }
+        }
+        
+        public synchronized int size() {
+            return queue.size();
+        }
+        
+        public synchronized boolean isEmpty() {
+            return queue.isEmpty();
         }
     }
 
