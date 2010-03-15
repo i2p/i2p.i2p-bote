@@ -54,7 +54,7 @@ import net.i2p.util.Log;
  * on the network.
  */
 public class CheckEmailTask implements Callable<Boolean> {
-    public static final int THREAD_STACK_SIZE = 64 * 1024;   // TODO find a safe low value (default in 64-bit Java 1.6 = 1MByte)
+    public static final int THREAD_STACK_SIZE = 256 * 1024;   // TODO find a safe low value (64k is too low, default in 64-bit Java 1.6 = 1MByte)
     private static final int MAX_THREADS = 50;
     private static final ThreadFactory EMAIL_PACKET_TASK_THREAD_FACTORY = Util.createThreadFactory("EmailPktTask", THREAD_STACK_SIZE);
     
