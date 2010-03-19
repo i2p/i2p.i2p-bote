@@ -197,7 +197,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                 log.warn("Interrupted while waiting for new packets.", e);
                 break;
             }
-            if (shutdownRequested())
+            if (shutdownRequested() && scheduledPacket==null)   // send remaining packets before shutting down
                 break;
             CommunicationPacket i2pBotePacket = scheduledPacket.data;
             
@@ -245,6 +245,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                 }
             }
         }
+        log.info("I2PSendQueue exiting.");
     }
     
     /**
