@@ -234,6 +234,16 @@ input:active {
 }
 
 input[type=text] {
+    background: #eef;
+    color: #001;
+    margin: 5px;
+    padding: 5px;
+    font: bold 8pt "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
+    border: 1px solid #001;
+    text-decoration: none;
+}
+
+.widetextfield {
     width: 100%;
     background: #eef;
     color: #001;

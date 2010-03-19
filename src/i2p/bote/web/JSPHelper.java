@@ -21,6 +21,7 @@
 
 package i2p.bote.web;
 
+import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.addressbook.Contact;
@@ -32,7 +33,6 @@ import i2p.bote.folder.EmailFolder;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -42,7 +42,6 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import net.i2p.data.DataFormatException;
-import net.i2p.util.Translate;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
@@ -292,6 +291,10 @@ public class JSPHelper {
             }
         }
         return newMap;
+    }
+    
+    public Configuration getConfiguration() {
+        return I2PBote.getInstance().getConfiguration();
     }
     
     public String getAppVersion() {

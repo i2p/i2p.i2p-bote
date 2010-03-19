@@ -153,6 +153,15 @@
     </attribute>
 </tag>
 
+<tag>
+    <name>saveConfiguration</name>
+    <description>
+        Saves the configuration to the config file.
+    </description>
+    <tag-class>i2p.bote.web.SaveConfigurationTag</tag-class>
+    <body-content>empty</body-content>
+</tag>
+
 <function>
     <name>getNetworkStatus</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
