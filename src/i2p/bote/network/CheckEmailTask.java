@@ -65,7 +65,6 @@ public class CheckEmailTask implements Callable<Boolean> {
     private I2PSendQueue sendQueue;
     private IncompleteEmailFolder incompleteEmailFolder;
     private I2PAppContext appContext;
-    private ExecutorService executor;
 
     // TODO move appContext into EncryptedEmailPacket so there is one less parameter here
     public CheckEmailTask(EmailIdentity identity, DHT dht, PeerManager peerManager, I2PSendQueue sendQueue, IncompleteEmailFolder incompleteEmailFolder, I2PAppContext appContext) {
@@ -75,7 +74,6 @@ public class CheckEmailTask implements Callable<Boolean> {
         this.sendQueue = sendQueue;
         this.incompleteEmailFolder = incompleteEmailFolder;
         this.appContext = appContext;
-        executor = Executors.newFixedThreadPool(MAX_THREADS, EMAIL_PACKET_TASK_THREAD_FACTORY);
     }
     
     /**
@@ -93,10 +91,12 @@ public class CheckEmailTask implements Callable<Boolean> {
         Collection<Hash> emailPacketKeys = findEmailPacketKeys(indexPacketResults.getPackets());
 
         Collection<Future<Boolean>> results = new ArrayList<Future<Boolean>>();
+        ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS, EMAIL_PACKET_TASK_THREAD_FACTORY);
         for (Hash emailPacketKey: emailPacketKeys) {
             Future<Boolean> result = executor.submit(new EmailPacketTask(emailPacketKey, identity.getHash(), indexPacketResults.getPeers()));
             results.add(result);
         }
+        executor.shutdown();   // finish all tasks, then shut down
         
         boolean newEmail = false;
         for (Future<Boolean> result: results)

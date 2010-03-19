@@ -128,7 +128,6 @@ public class I2PBote {
         configuration = new Configuration();
         
         mailCheckThreadFactory = Util.createThreadFactory("ChkMailTask", CheckEmailTask.THREAD_STACK_SIZE);
-        mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
     
         identities = new Identities(configuration.getIdentitiesFile());
         addressBook = new AddressBook(configuration.getAddressBookFile());
@@ -321,11 +320,13 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
             log.debug("Checking mail for " + identities.size() + " Email Identities...");
             lastMailCheckTime = System.currentTimeMillis();
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
+            mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
             for (EmailIdentity identity: identities) {
                 Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, appContext);
                 Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
                 pendingMailCheckTasks.add(task);
             }
+            mailCheckExecutor.shutdown();   // finish all tasks, then shut down
         }
         else
             log.debug("Not checking for mail because the last mail check hasn't finished.");
@@ -336,14 +337,10 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
     }
     
     public synchronized boolean isCheckingForMail() {
-        if (pendingMailCheckTasks == null)
+        if (mailCheckExecutor == null)
             return false;
         
-        for (Future<Boolean> task: pendingMailCheckTasks)
-            if (!task.isDone())
-                return true;
-        
-        return false;
+        return !mailCheckExecutor.isTerminated();
     }
     
     /**
