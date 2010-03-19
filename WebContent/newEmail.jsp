@@ -121,7 +121,7 @@
                     <option value="replyto"><ib:message key="Reply To:"/></option>
                 </select>
             </td><td>
-                <input type="text" size="80" name="recipient${maxRecipientIndex}"/>
+                <input class="widetextfield" type="text" size="80" name="recipient${maxRecipientIndex}"/>
             </td></tr>
 
             <tr>
@@ -133,7 +133,7 @@
             </tr>
             <tr>
                 <td valign="top"><br/><ib:message key="Subject:"/></td>
-                <td><input type="text" size="80" name="subject" value="${param.subject}"/></td>
+                <td><input class="widetextfield" type="text" size="80" name="subject" value="${param.subject}"/></td>
             </tr>
             <tr>
                 <td valign="top"><br/><ib:message key="Message:"/></td>

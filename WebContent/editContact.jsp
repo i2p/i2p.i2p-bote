@@ -63,7 +63,7 @@
                     <div style="font-size: 0.8em;"><ib:message key="(required field)"/></div>
                 </td>
                 <td>
-                    <input type="text" size="25" name="name" value="${param.name}"/>
+                    <input type="text" size="40" name="name" value="${param.name}"/>
                 </td>
             </tr>
         </table>

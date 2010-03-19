@@ -53,7 +53,7 @@
                     <div style="font-size: 0.8em;"><ib:message key="(required field, shown to recipients)"/></div>
                 </td>
                 <td>
-                    <input type="text" size="25" name="publicName" value="${param.publicName}"/>
+                    <input type="text" size="40" name="publicName" value="${param.publicName}"/>
                 </td>
             </tr>
             <tr>
@@ -62,7 +62,7 @@
                     <div style="font-size: 0.8em;"><ib:message key="(optional, kept private)"/></div>
                 </td>
                 <td>
-                    <input type="text" size="25" name="description" value="${param.description}"/>
+                    <input type="text" size="40" name="description" value="${param.description}"/>
                 </td>
             </tr>
             <tr>
@@ -71,7 +71,7 @@
                     <div style="font-size: 0.8em;"><ib:message key="(optional)"/></div>
                 </td>
                 <td>
-                    <input type="text" size="50" name="emailAddress" value="${param.emailAddress}"/>
+                    <input type="text" size="40" name="emailAddress" value="${param.emailAddress}"/>
                 </td>
             </tr>
             <c:if test="${!empty param.key}">
