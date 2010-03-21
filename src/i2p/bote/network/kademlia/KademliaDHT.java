@@ -44,8 +44,10 @@ import i2p.bote.packet.dht.StoreRequest;
 import i2p.bote.service.I2PBoteThread;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -53,6 +55,8 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -100,7 +104,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
 
     public KademliaDHT(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile) {
         super("Kademlia");
-        setDaemon(true);
         
         this.localDestination = localDestination;
         localDestinationHash = localDestination.calculateHash();
@@ -329,11 +332,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 }
                 
                 log.warn("Can't bootstrap off any known peer, will retry shortly.");
-                try {
-                    TimeUnit.MINUTES.sleep(1);
-                } catch (InterruptedException e) {
-                    log.error("Interrupted while pausing after unsuccessful bootstrap attempt.", e);
-                }
+                awaitShutdownRequest(1, TimeUnit.MINUTES);
             }
             i2pReceiver.removePacketListener(this);
         }
@@ -420,15 +419,69 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     /**
-     * Writes all peers to a file.
-     * @param peerFile
+     * Writes all peers to a file, sorted in descending order of uptime.
+     * @param file
      */
-    private void writePeersToFile(File peerFile) {
-        // TODO
+    private void writePeersSorted(File file) {
+        List<KademliaPeer> peers = bucketManager.getAllPeers();
+        if (peers.isEmpty())
+            return;
+        
+        sortByUptime(peers);
+        
+        log.info("Writing peers to file: <" + file.getAbsolutePath() + ">");
+        writePeers(peers, file);
     }
 
+    private void writePeers(List<KademliaPeer> peers, File file) {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write("# Each line is one Base64-encoded I2P destination.");
+            writer.newLine();
+            writer.write("# Do not edit while I2P-Bote is running as it will be overwritten.");
+            writer.newLine();
+            for (KademliaPeer peer: peers) {
+                writer.write(peer.toBase64());
+                writer.newLine();
+            }
+        }
+        catch (IOException e) {
+            log.error("Can't write peers to file <" + file.getAbsolutePath() + ">", e);
+        }
+        finally {
+            if (writer != null)
+                try {
+                    writer.close();
+                }
+                catch (IOException e) {
+                    log.error("Can't close BufferedWriter for file <" + file.getAbsolutePath() + ">", e);
+                }
+        }
+    }
+    
+    /**
+     * Sorts a list of peers in descending order of "active since" time.
+     * Locked peers are placed after the last unlocked peer.
+     * @param peers
+     */
+    private void sortByUptime(List<KademliaPeer> peers) {
+        Collections.sort(peers, new Comparator<KademliaPeer>() {
+            @Override
+            public int compare(KademliaPeer peer1, KademliaPeer peer2) {
+                if (peer1.isLocked() || peer2.isLocked()) {
+                    int n1 = peer1.isLocked() ? 0 : 1;
+                    int n2 = peer2.isLocked() ? 0 : 1;
+                    return n2 - n1;
+                }
+                else
+                    return Long.valueOf(peer2.getActiveSince()).compareTo(peer1.getActiveSince());
+            }
+        });
+    }
+    
     private void readPeers(URL url) {
-        log.info("Reading peers from URL: '" + url + "'");
+        log.info("Reading peers from URL: <" + url + ">");
         InputStream stream = null;
         try {
             stream = url.openStream();
@@ -446,11 +499,11 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         }
     }
     
-    private void readPeers(File peerFile) {
-        log.info("Reading peers from file: '" + peerFile.getAbsolutePath() + "'");
+    private void readPeers(File file) {
+        log.info("Reading peers from file: <" + file.getAbsolutePath() + ">");
         InputStream stream = null;
         try {
-            stream = new FileInputStream(peerFile);
+            stream = new FileInputStream(file);
             readPeers(stream);
         } catch (IOException e) {
             log.error("Error reading peers from file.", e);
@@ -550,9 +603,14 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             }
             refreshOldBuckets();
             // TODO replicate();
-            awaitShutdown(1, TimeUnit.MINUTES);
+            awaitShutdownRequest(1, TimeUnit.MINUTES);
         }
+        writePeersSorted(peerFile);
         i2pReceiver.removePacketListener(this);
-        writePeersToFile(peerFile);
+    }
+
+    @Override
+    public void awaitShutdown(long timeout) throws InterruptedException {
+        join(timeout);
     }
 }

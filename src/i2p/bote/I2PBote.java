@@ -420,7 +420,12 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
         
         long deadline = System.currentTimeMillis() + 1000 * 60;   // the time at which any background threads that are still running are killed
         if (dht != null)
-            dht.awaitShutdown(deadline, TimeUnit.MILLISECONDS);
+            try {
+                dht.awaitShutdown(deadline - System.currentTimeMillis());
+            }
+            catch(InterruptedException e) {
+                log.error("Interrupted while waiting for DHT shutdown.", e);
+            }
         join(outboxProcessor, deadline);
         join(relayPacketSender, deadline);
         join(smtpService, deadline);

@@ -44,12 +44,12 @@ public class AutoMailCheckTask extends I2PBoteThread {
             I2PBote boteInstance = I2PBote.getInstance();
             long timeSinceLastCheck = System.currentTimeMillis() - boteInstance.getLastMailCheckTime();
             if (boteInstance.getNetworkStatus() != NetworkStatus.CONNECTED)   // if not connected, use a shorter wait interval
-                awaitShutdown(1, TimeUnit.MINUTES);
+                awaitShutdownRequest(1, TimeUnit.MINUTES);
             else if (timeSinceLastCheck < interval)
-                awaitShutdown(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
+                awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
             else if (boteInstance.getConfiguration().isAutoMailCheckEnabled()) {
                 boteInstance.checkForMail();
-                awaitShutdown(1, TimeUnit.MINUTES);
+                awaitShutdownRequest(1, TimeUnit.MINUTES);
             }
         }
     }

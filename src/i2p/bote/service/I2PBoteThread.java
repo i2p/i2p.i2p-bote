@@ -40,7 +40,7 @@ public class I2PBoteThread extends I2PAppThread {
         shutdownSignal.countDown();
     }
     
-    public boolean awaitShutdown(long timeout, TimeUnit unit) {
+    public boolean awaitShutdownRequest(long timeout, TimeUnit unit) {
         try {
             return shutdownSignal.await(timeout, unit);
         } catch (InterruptedException e) {
@@ -49,7 +49,7 @@ public class I2PBoteThread extends I2PAppThread {
         }
     }
     
-    protected boolean shutdownRequested() {
-        return awaitShutdown(0, TimeUnit.SECONDS);
+    public boolean shutdownRequested() {
+        return awaitShutdownRequest(0, TimeUnit.SECONDS);
     }
 }
