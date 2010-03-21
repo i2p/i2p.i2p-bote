@@ -29,7 +29,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -99,14 +98,13 @@ public class AddressBook implements Iterable<Contact> {
     }
  
     public void save() throws IOException {
-        String newLine = System.getProperty("line.separator");
-        Writer writer = new BufferedWriter(new FileWriter(addressFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(addressFile));
         try {
             for (Contact contact: contacts) {
                 writer.write(contact.toBase64());
                 writer.write("\t");
                 writer.write(contact.getName());
-                writer.write(newLine);
+                writer.newLine();
             }
         }
         catch (IOException e) {
