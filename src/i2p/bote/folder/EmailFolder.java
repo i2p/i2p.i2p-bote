@@ -46,9 +46,21 @@ public class EmailFolder extends Folder<Email> {
     public EmailFolder(File storageDir) {
         super(storageDir, EMAIL_FILE_EXTENSION);
     }
-    
-    // store an email file
+
+    /**
+     * Stores an email in the folder. If an email with the same
+     * message ID exists already, nothing happens.
+     * @param email
+     * @throws IOException
+     * @throws MessagingException
+     */
     public void add(Email email) throws IOException, MessagingException {
+        // check if an email exists already with that message id
+        if (getEmailFile(email.getMessageID()) != null) {
+            log.debug("Not storing email because there is an existing one with the same message ID: <" + email.getMessageID()+ ">");
+            return;
+        }
+        
         // write out the email file
         File emailFile = getEmailFile(email);
         log.info("Mail folder <" + storageDir + ">: storing email file: <" + emailFile.getAbsolutePath() + ">");
@@ -56,7 +68,6 @@ public class EmailFolder extends Folder<Email> {
         try {
             emailOutputStream = new FileOutputStream(emailFile);
             email.writeTo(emailOutputStream);
-            emailOutputStream.close();
         }
         finally {
             if (emailOutputStream != null)
@@ -93,7 +104,8 @@ public class EmailFolder extends Folder<Email> {
     }
 
     /**
-     * Returns a file for a given message ID, or <code>null</code> if there is none.
+     * Returns a file in the file system for a given message ID, or <code>null</code> if
+     * none exists.
      * @param messageId
      * @return
      */
