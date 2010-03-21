@@ -101,6 +101,22 @@ body {
     -moz-box-shadow: inset 0px 0px 1px 0px #002;
 }
 
+.emailtext {
+    width: 800px;
+    margin: 0px 20px 20px 240px;
+    padding: 0 15px 15px 25px;
+    background: #eef;
+    font: 9pt/130% "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
+    text-align: left;
+    color: #001;
+    border: 1px solid #000033;
+    background: #cce2ff;
+    -moz-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: inset 0px 0px 1px 0px #002;
+}
+
 .infoMessage {
     margin: 0px 20px 5px 240px;
     text-align: left;

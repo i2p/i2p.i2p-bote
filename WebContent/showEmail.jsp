@@ -34,7 +34,7 @@
 <c:set var="title" value="${email.subject}" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
+<div class="emailtext">
     <table>
         <tr>
             <td valign="top"><strong><ib:message key="From:"/></strong></td>
