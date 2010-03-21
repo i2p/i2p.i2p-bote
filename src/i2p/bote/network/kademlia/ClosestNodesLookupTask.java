@@ -33,6 +33,7 @@ import i2p.bote.packet.MalformedCommunicationPacket;
 import i2p.bote.packet.PeerList;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.dht.FindClosePeersPacket;
+import i2p.bote.service.I2PBoteThread;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -65,6 +66,12 @@ public class ClosestNodesLookupTask implements Runnable {
     private Map<Destination, FindClosePeersPacket> pendingRequests;
     private long startTime;
     
+    /**
+     * @param key The DHT key to look up
+     * @param sendQueue For sending I2P packets
+     * @param i2pReceiver For receiving I2P packets
+     * @param bucketManager For looking up peers, and updating them
+     */
     public ClosestNodesLookupTask(Hash key, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager) {
         this.key = key;
         this.sendQueue = sendQueue;
@@ -145,6 +152,12 @@ public class ClosestNodesLookupTask implements Runnable {
             log.error("Lookup for closest nodes timed out.");
             return true;
         }
+        
+        // If a shutdown has been initiated, exit immediately
+        Thread currentThread = Thread.currentThread();
+        if (currentThread instanceof I2PBoteThread && ((I2PBoteThread)currentThread).shutdownRequested())
+            return true;
+        
         return false;
     }
     
