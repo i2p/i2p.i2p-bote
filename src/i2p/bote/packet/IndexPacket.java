@@ -46,7 +46,6 @@ import net.i2p.util.Log;
 @TypeCode('I')
 public class IndexPacket extends DhtStorablePacket {
     private Log log = new Log(IndexPacket.class);
-//    private Collection<Entry> entries; should probably use a Map and get rid of the Entry class
     private Map<Hash, UniqueId> entries;
     private Hash destinationHash;   // The DHT key of this packet
 
@@ -56,10 +55,8 @@ public class IndexPacket extends DhtStorablePacket {
      * @param emailDestination Determines the DHT key of this Index Packet
      */
     public IndexPacket(Collection<EncryptedEmailPacket> emailPackets, EmailDestination emailDestination) {
-//        entries = new ArrayList<Entry>();
         entries = new ConcurrentHashMap<Hash, UniqueId>();
         for (EncryptedEmailPacket emailPacket: emailPackets)
-//            Entry entry = new Entry(emailPacket.getDhtKey(), emailPacket.getPlaintextDeletionKey());
             entries.put(emailPacket.getDhtKey(), emailPacket.getPlaintextDeletionKey());
         
         destinationHash = emailDestination.getHash();
@@ -108,6 +105,9 @@ public class IndexPacket extends DhtStorablePacket {
         // TODO catch BufferUnderflowException; warn if extra bytes in the array
     }
 
+    /**
+     * The keys are not guaranteed to be in any particular order in the array.
+     */
     @Override
     public byte[] toByteArray() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -119,7 +119,6 @@ public class IndexPacket extends DhtStorablePacket {
                 entry.getKey().writeBytes(outputStream);
                 entry.getValue().writeTo(outputStream);
             }
-            // TODO in the unit test, verify that toByteArray().length = Hash.NUM_BYTES + 1 + dhtKeys.size()*Hash.NUM_BYTES
         } catch (DataFormatException e) {
             log.error("Invalid format for email destination.", e);
         } catch (IOException e) {
@@ -140,6 +139,7 @@ public class IndexPacket extends DhtStorablePacket {
     
     /**
      * Returns all DHT keys in this <code>IndexPacket</code>.
+     * The keys are not guaranteed to be in any particular order.
      * @return
      */
     public Collection<Hash> getDhtKeys() {
@@ -178,7 +178,6 @@ public class IndexPacket extends DhtStorablePacket {
      * by this <code>IndexPacket</code>.
      * @return
      */
-//    public Collection<Entry> getEntries() {
     public Map<Hash, UniqueId> getEntries() {
         return entries;
     }
@@ -191,17 +190,4 @@ public class IndexPacket extends DhtStorablePacket {
     public Hash getDhtKey() {
         return destinationHash;
     }
-
-    /**
-     * This class holds a DHT key and a deletion key for an email packet.
-     */
-/*    public class Entry {
-        public Hash dhtKey;   // The DHT key of an email packet
-        public UniqueId deletionKey;   // The deletion key of the email packet
-        
-        public Entry(Hash dhtKey, UniqueId deletionKey) {
-            this.dhtKey = dhtKey;
-            this.deletionKey = deletionKey;
-        }
-    }*/
 }
