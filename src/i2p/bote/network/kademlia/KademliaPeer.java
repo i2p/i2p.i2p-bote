@@ -59,7 +59,15 @@ public class KademliaPeer extends Destination {
     public Hash getDestinationHash() {
     	return destinationHash;
     }
-    
+
+    /**
+     * @param activeSince Milliseconds since Jan 1, 1970
+     * @return
+     */
+    void setActiveSince(long activeSince) {
+        this.activeSince = activeSince;
+    }
+
     public long getActiveSince() {
     	return activeSince;
     }

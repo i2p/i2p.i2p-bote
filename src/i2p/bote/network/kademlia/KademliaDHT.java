@@ -314,6 +314,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         outerLoop:  
             while (!shutdownRequested()) {
                 for (KademliaPeer bootstrapNode: initialPeers) {
+                    bootstrapNode.setActiveSince(System.currentTimeMillis());   // Set the "active since" time to the current time before every bootstrap attempt
                     bucketManager.addOrUpdate(bootstrapNode);
                     Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
                     
