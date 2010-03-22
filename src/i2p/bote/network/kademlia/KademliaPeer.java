@@ -86,12 +86,12 @@ public class KademliaPeer extends Destination {
     
     /**
      * Locks the peer for 2 minutes after the first timeout, 4 minutes after
-     * two consecutive timeouts, 8 minutes after 3 consecutive timeouts, and
-     * 16 minutes for 4 and more consecutive timeouts.
+     * two consecutive timeouts, 8 minutes after 3 consecutive timeouts, etc.,
+     * up to 2^10 minutes (about 17h) for 10 or more consecutive timeouts.
      */
     synchronized void noResponse() {
         consecutiveTimeouts++;
-        int lockDuration = 1 << Math.min(consecutiveTimeouts, 5);   // in minutes
+        int lockDuration = 1 << Math.min(consecutiveTimeouts, 10);   // in minutes
         lockedUntil = System.currentTimeMillis() + 60*1000*lockDuration;
     }
     
