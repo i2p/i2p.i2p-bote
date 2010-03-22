@@ -1,7 +1,14 @@
 I2P-Bote Version History
 ------------------------
 
-0.2.1
+0.2.2 (Released on Mar 22, 2010)
+  * German translation
+  * Automatic mail checking is now user-configurable
+  * Save peers.txt on exit
+  * Several minor changes
+  * Several bug fixes
+
+0.2.1 (Released on Mar 05, 2010)
   * I2P-Bote can now be run as an I2P plugin (I2P 0.7.12 or newer required)
   * Option to set a default Email Identity
   * Address book
@@ -9,7 +16,7 @@ I2P-Bote Version History
   * Increase k-bucket size to 20
   * Several bug fixes
 
-0.2
+0.2 (Released on Feb 01, 2010)
   * Sending and retrieving now much faster
   * Email packets are now deleted from storage nodes after retrieval
   * Reply button
@@ -21,7 +28,7 @@ I2P-Bote Version History
   * "Network" page now shows peer info
   * Several bug fixes and minor enhancements
         
-0.1.5
+0.1.5 (Released on Dec 19, 2009)
   * Fixes a number of bugs in the Kademlia code
   * Removed unimplemented HTML links
   * Network-related UI elements are now disabled until tunnel is ready
@@ -46,5 +53,5 @@ I2P-Bote Version History
 0.1.1
   Fix: Clicking on an email in the inbox causes an error.
   
-0.1
+0.1 (Released on Dec 06, 2009)
   First version. Lets a user create email identities and send/receive plain-text emails
