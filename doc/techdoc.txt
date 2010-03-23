@@ -543,10 +543,12 @@ I2P destination
   I2P destinations and Email Destinations look similar, but are completely independent of each other.
 
 
-11. To Do
+11. To Do / Ideas
 
+  * Notify peers before shutting down?
+  * Option to hide send time
+  * Seedless for bootstrapping
   * some synchronized ArrayLists should be replaced with externally synchronized ArrayLists
-  * should bootstrapping continue until the sibling bucket is full?
   * identities: "publish to distributed address book" button, asks for an email address
   * <jsp:useBean> instead of zero-param JSP functions?
   * Bug? checking emails after deleting an email causes an error. something about not being able to delete an email.
@@ -554,7 +556,6 @@ I2P destination
     Ist der user local nicht bekannt, dann kann der public name verwendet werden, allerdings sollte ersichtlich sein dass es nur der public name ist, z.B. durch andere Farbe oder ein Feld mit nem Sternchen für authenticated wenn er in local addy book steht (eine spalte wie datum oder so, ganz schmal mit nur nem sternchen drin, ähnlich sollten auch ungelesene mails markiert werden - ist aber nicht high priority, ich sag's nur für deine todo list, falls du d'accord bist.) 
   * make sure del key is zeroed out when responding to a retrieve request for an EncryptedEmailPacket
   * don't send delete requests to self, just delete the file locally
-  * make blue background solid, lighter color so chinese chars are readable
   * button to delete all packets with an invalid protocol version
   * auto-refresh network.jsp
   * show remaining time for the 3-min delay at startup
@@ -574,7 +575,7 @@ I2P destination
   * delivery confirmation to sender
   * What about incoming bandwith, can it be limited?
   * Turnkey outproxy feature?
-  * All nodes keep track of I2PBote peers through Peer List Requests and by pinging known peers
+  * All nodes keep track of relay peers through Peer List Requests and by pinging known peers
     periodically.
   * select different set of hops for each packet
   * instead of sending dummy messages for cover traffic, test gateways by routing packet to self
@@ -583,7 +584,6 @@ I2P destination
   * Use three different I2P destinations for sending and receiving data
   * Use more storage nodes if email destination is known to be heavily frequented (like Kademlia does for popular hashes)
   * mention that min/max delay = earliest/latest send time (explain that there is no guarantee for the send time being between min and max, it can be after max)
-  * Consider replacing ElGamal with 256-bit ECC encryption (=86 base64 chars) which comes standard in Java 7
   * Emails in the Outbox: Show addt'l "progress" progress column which is clickable and brings up detailed info.
   * On first run, offer to create a new email identity, and optionally assign an email address to it.
   * Folder structure on disk should reflect folders in app. All email folders visible to the user have the same root directory: [app dir]/folders.
@@ -592,16 +592,12 @@ I2P destination
   * use a key store for email identities so they are not locally readable?
   * unit test candidates:
     * KBucket
-    * BucketManager
     * KademliaDHT
     * EmailIdentity
     * Identities
     * OutboxProcessor
   * generate javadoc in ant build
-  * are non-daemon threads preventing app from shutting down in eclipse?
   * prioritize packets in I2PSendQueue? Should PeerListRequests get higher priority than relay packets etc.?
-  * use I2P time, not System.currentTimeMillis()
-  * make some public methods package private
   * AAAAA.... in local_dest.key file doesn't look right, fix
   * Don't use Kademlia for getRandomNodes(), implement a RelayPeerManager instead
   * comment code
