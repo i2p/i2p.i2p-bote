@@ -208,8 +208,8 @@ public class I2PBote {
         }
         
         Destination localDestination = i2pSession.getMyDestination();
-        log.debug("Local destination key = " + localDestination.toBase64());
-        log.debug("Local destination hash = " + localDestination.calculateHash().toBase64());
+        log.info("Local destination key = " + localDestination.toBase64());
+        log.info("Local destination hash = " + localDestination.calculateHash().toBase64());
     }
     
     /**
@@ -317,7 +317,11 @@ dht.store(new IndexPacket(encryptedPackets, emailDestination));
 
     public synchronized void checkForMail() {
         if (!isCheckingForMail()) {
-            log.debug("Checking mail for " + identities.size() + " Email Identities...");
+            if (identities.size() <= 0)
+                log.debug("Not checking for mail because no identities are defined.");
+            else
+                log.debug("Checking mail for " + identities.size() + " Email Identities...");
+            
             lastMailCheckTime = System.currentTimeMillis();
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);

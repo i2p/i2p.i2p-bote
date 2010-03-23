@@ -26,7 +26,10 @@ import i2p.bote.network.NetworkStatus;
 
 import java.util.concurrent.TimeUnit;
 
+import net.i2p.util.Log;
+
 public class AutoMailCheckTask extends I2PBoteThread {
+    private Log log = new Log(AutoMailCheckTask.class);
     private long interval;   // in milliseconds
     
     /**
@@ -52,5 +55,7 @@ public class AutoMailCheckTask extends I2PBoteThread {
                 awaitShutdownRequest(1, TimeUnit.MINUTES);
             }
         }
+        
+        log.info(getClass().getSimpleName() + " exiting.");
     }
 }

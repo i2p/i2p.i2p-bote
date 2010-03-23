@@ -126,12 +126,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     
     /**
      * Queries the DHT for the <code>k</code> peers closest to a given key.
-     * The results are sorted by distance from the key.
-     * 
-     * This method blocks. It returns after <code>ClosestNodesLookupTask.CLOSEST_NODES_LOOKUP_TIMEOUT+1</code>
-     * seconds at the longest.
-     *
-     * The number of pending requests never exceeds <code>ALPHA</code>. According to [4], this is the most efficient.
+     * This method blocks.
      * @see ClosestNodesLookupTask
      */
     private List<Destination> getClosestNodes(Hash key) {
@@ -180,7 +175,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         DhtStorablePacket localResult = findLocally(key, dataType);
         // if a local packet exists and one result is requested, return the local packet
         if (!exhaustive && localResult!=null) {
-            log.debug("Locally stored packet found for hash " + key + " and data type " + dataType);
+            log.debug("Locally stored packet found for hash " + key + " and data type " + dataType.getSimpleName());
             DhtResults results = new DhtResults();
             results.put(localDestination, localResult);
             return results;
@@ -208,7 +203,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         catch (InterruptedException e) {
             log.warn("Interrupted while waiting for responses to Retrieve Requests.", e);
         }
-        log.debug(batch.getResponses().size() + " response packets received for hash " + key + " and data type " + dataType);
+        log.debug(batch.getResponses().size() + " response packets received for hash " + key + " and data type " + dataType.getSimpleName());
         
         sendQueue.remove(batch);
         
@@ -247,6 +242,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     @Override
     public void store(DhtStorablePacket packet) throws DhtException {
         Hash key = packet.getDhtKey();
+        log.debug("Looking up nodes to store a " + packet.getClass().getSimpleName() + " with key " + key);
         
         List<Destination> closeNodes = getClosestNodes(key);
         if (closeNodes.isEmpty())
@@ -301,6 +297,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     private class BootstrapTask implements Runnable, PacketListener {
+        private Log log = new Log(BootstrapTask.class);
         I2PPacketDispatcher i2pReceiver;
         
         public BootstrapTask(I2PPacketDispatcher i2pReceiver) {
@@ -316,6 +313,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 for (KademliaPeer bootstrapNode: initialPeers) {
                     bootstrapNode.setActiveSince(System.currentTimeMillis());   // Set the "active since" time to the current time before every bootstrap attempt
                     bucketManager.addOrUpdate(bootstrapNode);
+                    log.debug("Trying " + bootstrapNode.calculateHash().toBase64() + " bootstrapping.");
                     Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
                     
                     if (closestNodes.isEmpty()) {
@@ -323,11 +321,11 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                         bucketManager.remove(bootstrapNode);
                     }
                     else {
-                        log.debug("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash());
+                        log.debug("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash().toBase64());
                         refreshAll();
                         log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
                         for (Destination peer: bucketManager.getAllPeers())
-                            log.debug("  Peer: " + peer.calculateHash());
+                            log.debug("  Peer: " + peer.calculateHash().toBase64());
                         break outerLoop;
                     }
                 }
@@ -336,6 +334,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 awaitShutdownRequest(1, TimeUnit.MINUTES);
             }
             i2pReceiver.removePacketListener(this);
+            log.info(getClass().getSimpleName() + " exiting.");
         }
 
         /**
@@ -385,11 +384,13 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     private void refresh(KBucket bucket) {
+        log.debug("Refreshing k-bucket: " + bucket);
         Hash key = createRandomHash(bucket.getStartId(), bucket.getEndId());
         getClosestNodes(key);
     }
 
-    private void refresh(AbstractBucket bucket, BigInteger min, BigInteger max) {
+    private void refresh(SBucket bucket, BigInteger min, BigInteger max) {
+        log.debug("Refreshing the s-bucket.");
         Hash key = createRandomHash(min, max);
         getClosestNodes(key);
     }
@@ -608,6 +609,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         }
         writePeersSorted(peerFile);
         i2pReceiver.removePacketListener(this);
+        log.info(getClass().getSimpleName() + " exiting.");
     }
 
     @Override

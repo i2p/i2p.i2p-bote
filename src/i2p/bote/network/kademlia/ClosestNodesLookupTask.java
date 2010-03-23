@@ -67,6 +67,11 @@ public class ClosestNodesLookupTask implements Runnable {
     private long startTime;
     
     /**
+     * Queries the DHT for the <code>k</code> peers closest to a given key.
+     * The results are sorted by distance from the key.
+     * 
+     * The number of pending requests never exceeds <code>ALPHA</code>. According to [4], this is the most efficient.
+     * 
      * @param key The DHT key to look up
      * @param sendQueue For sending I2P packets
      * @param i2pReceiver For receiving I2P packets
@@ -109,6 +114,7 @@ public class ClosestNodesLookupTask implements Runnable {
             for (Map.Entry<Destination, FindClosePeersPacket> request: pendingRequests.entrySet())
                 if (hasTimedOut(request.getValue(), REQUEST_TIMEOUT)) {
                     Destination peer = request.getKey();
+                    log.debug("FindCloseNodes request to peer " + peer.calculateHash().toBase64() + " timed out.");
                     bucketManager.noResponse(peer);
                     pendingRequests.remove(peer);
                 }
@@ -119,9 +125,9 @@ public class ClosestNodesLookupTask implements Runnable {
                 log.warn("Interrupted while doing a closest nodes lookup.", e);
             }
         } while (!isDone());
-        log.debug(responses.size() + " nodes found (may include local node).");
+        log.debug("Kademlia lookup found " + responses.size() + " nodes (may include local node).");
         for (Destination node: responses)
-            log.debug("  Node: " + node.calculateHash());
+            log.debug("  Node: " + node.calculateHash().toBase64());
         
         i2pReceiver.removePacketListener(packetListener);
     }
@@ -211,8 +217,9 @@ public class ClosestNodesLookupTask implements Runnable {
                 ResponsePacket responsePacket = (ResponsePacket)packet;
                 FindClosePeersPacket request = getPacketById(pendingRequests.values(), responsePacket.getPacketId());   // find the request the node list is in response to
                 
-                // if the packet is in response to a pending request, update the three Sets
+                // if the packet is in response to a pending request, update responses + notQueriedYet + pendingRequests
                 if (request != null) {
+                    log.debug("Response to FindCloseNodesPacket received from " + sender.calculateHash().toBase64());
                     responses.add(sender);
                     DataPacket payload = responsePacket.getPayload();
                     if (payload instanceof PeerList)
@@ -220,8 +227,6 @@ public class ClosestNodesLookupTask implements Runnable {
                     
                     pendingRequests.remove(sender);
                 }
-                else
-                    log.debug("No Find Close Nodes packet found for Response Packet: " + responsePacket);
             }
             else if (packet instanceof MalformedCommunicationPacket)
                 pendingRequests.remove(sender);   // since it is not generally possible to tell if an invalid comm packet is in response to a certain request, always remove invalid packets from the pending list
@@ -235,9 +240,9 @@ public class ClosestNodesLookupTask implements Runnable {
          * @param receiveTime
          */
         private void updatePeers(PeerList peerListPacket, Destination sender, long receiveTime) {
-            log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.calculateHash());
+            log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.calculateHash().toBase64());
             for (Destination peer: peerListPacket.getPeers())
-                log.debug("  Peer: " + peer.calculateHash());
+                log.debug("  Peer: " + peer.calculateHash().toBase64());
 
             // TODO make responseReceived and pendingRequests a parameter in the constructor?
             responses.add(sender);
@@ -251,8 +256,8 @@ public class ClosestNodesLookupTask implements Runnable {
         }
 
         /**
-         * Returns a packet that matches a given {@link UniqueId} from a {@link Collection} of packets, or
-         * <code>null</code> if no match.
+         * Returns a <code>FindClosePeersPacket</code> that matches a given {@link UniqueId}
+         * from a {@link Collection} of packets, or <code>null</code> if no match.
          * @param packets
          * @param packetId
          * @return

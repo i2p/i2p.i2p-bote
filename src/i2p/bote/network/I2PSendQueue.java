@@ -166,8 +166,6 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
         if (packet instanceof ResponsePacket) {
-            log.debug("Response Packet received: Packet Id = " + packet.getPacketId() + " Sender = " + sender.calculateHash());
-            
             UniqueId packetId = packet.getPacketId();
             
             for (PacketBatch batch: runningBatches)
@@ -218,7 +216,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             
             PacketBatch batch = scheduledPacket.batch;
             boolean isBatchPacket = batch != null;
-            log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to peer: " + scheduledPacket.destination.calculateHash());
+            log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to " + scheduledPacket.destination.calculateHash().toBase64());
                 
             byte[] replyableDatagram = datagramMaker.makeI2PDatagram(i2pBotePacket.toByteArray());
             try {
@@ -230,9 +228,11 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                     batch.decrementSentLatch();
                 scheduledPacket.decrementSentLatch();
                 
-                log.debug("Packet of type " + scheduledPacket.data.getClass().getSimpleName() + " sent. Send queue length is now " + packetQueue.size());
+                // log
+                String logMsg = "Send queue length is now " + packetQueue.size();
                 if (isBatchPacket)
-                    log.debug("  Batch has " + batch.getPacketCount() + " packets total, " + batch.getUnsentPacketCount() + " waiting to be sent.");
+                    logMsg += ". Batch has " + batch.getPacketCount() + " packets total, " + batch.getUnsentPacketCount() + " waiting to be sent.";
+                log.debug(logMsg);
             }
             catch (I2PSessionException sessExc) {
                 log.error("Can't send packet.", sessExc);
@@ -245,7 +245,8 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                 }
             }
         }
-        log.info("I2PSendQueue exiting.");
+        
+        log.info(getClass().getSimpleName() + " exiting.");
     }
     
     /**

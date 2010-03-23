@@ -75,15 +75,17 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
             return;
         }
         
-        log.debug("Adding/updating peer: Hash = " + destHash);
-
         KademliaPeer removedOrNotAdded = sBucket.addOrUpdate(peer);
         if (removedOrNotAdded == null)
             getKBucket(destHash).remove(peer);   // if the peer was in a k-bucket, remove it because it is now in the s-bucket
         else
             addToKBucket(removedOrNotAdded);   // if a peer was removed from the s-bucket or didn't qualify as a sibling, add it to a k-bucket
-        
-        logBucketStats();
+
+        // log
+        int numBuckets = kBuckets.size();
+        int numPeers = getAllPeers().size();
+        int numSiblings = sBucket.size();
+        log.debug("Peer " + destHash.toBase64() + " added/updated. Peers=" + numPeers + " sib=" + numSiblings + " buk=" + numBuckets + " (not counting the sibling bucket)");
     }
 
     /**
@@ -129,14 +131,6 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
             peer.noResponse();
         else
             log.debug("Peer not found in buckets: " + destination.calculateHash());
-    }
-    
-    private void logBucketStats() {
-        int numBuckets = kBuckets.size();
-        int numPeers = getAllPeers().size();
-        int numSiblings = sBucket.size();
-        
-        log.debug("total #peers=" + numPeers + ", #siblings=" + numSiblings + ", #buckets=" + numBuckets + " (not counting the sibling bucket)");
     }
     
     public void remove(Destination peer) {

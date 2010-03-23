@@ -42,7 +42,7 @@ public class RelayPacketSender extends I2PBoteThread {
     private static final long PAUSE = 10 * 60 * 1000;   // the wait time, in milliseconds,  before processing the folder again
     private static final long EXPIRED_CHECK_INTERVAL = TimeUnit.DAYS.toMillis(1);   // the interval for checking expired packets, in milliseconds
     private static final int PADDED_SIZE = 16 * 1024;
-    private static final Log log = new Log(RelayPacketSender.class);
+    private final Log log = new Log(RelayPacketSender.class);
     
     private I2PSendQueue sendQueue;
     private I2PAppContext appContext;
@@ -60,7 +60,7 @@ public class RelayPacketSender extends I2PBoteThread {
     public void run() {
         long lastExpiredCheck = 0;
         
-        while (true) {
+        while (!shutdownRequested()) {
             if (System.currentTimeMillis() - lastExpiredCheck > EXPIRED_CHECK_INTERVAL) {
                 lastExpiredCheck = System.currentTimeMillis();
                 log.debug("Checking for expired relay packets...");
@@ -89,6 +89,7 @@ public class RelayPacketSender extends I2PBoteThread {
                 log.error("RelayPacketSender received an InterruptedException.");
             }
         }
+        log.info(getClass().getSimpleName() + " exiting.");
     }
     
     private long getRandomSendTime(RelayPacket packet) {

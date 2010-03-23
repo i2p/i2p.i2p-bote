@@ -94,6 +94,7 @@ public class OutboxProcessor extends I2PBoteThread {
                 log.error("OutboxProcessor received an InterruptedException.", e);
             }
         }
+        log.info(getClass().getSimpleName() + " exiting.");
     }
     
     /**
