@@ -250,6 +250,8 @@ public class Configuration {
             return true;
         else if ("false".equalsIgnoreCase(stringValue) || "no".equalsIgnoreCase(stringValue) || "off".equalsIgnoreCase(stringValue) || "0".equals(stringValue))
             return false;
+        else if (stringValue == null)
+            return defaultValue;
         else {
             log.warn("<" + stringValue + "> is not a legal value for the boolean parameter <" + parameterName + ">");
             return defaultValue;
