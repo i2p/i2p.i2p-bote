@@ -215,17 +215,19 @@ public class ClosestNodesLookupTask implements Runnable {
         public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
             if (packet instanceof ResponsePacket) {
                 ResponsePacket responsePacket = (ResponsePacket)packet;
-                FindClosePeersPacket request = getPacketById(pendingRequests.values(), responsePacket.getPacketId());   // find the request the node list is in response to
-                
-                // if the packet is in response to a pending request, update responses + notQueriedYet + pendingRequests
-                if (request != null) {
-                    log.debug("Response to FindCloseNodesPacket received from " + sender.calculateHash().toBase64());
-                    responses.add(sender);
-                    DataPacket payload = responsePacket.getPayload();
-                    if (payload instanceof PeerList)
-                        updatePeers((PeerList)payload, sender, receiveTime);
+                synchronized(pendingRequests) {
+                    FindClosePeersPacket request = getPacketById(pendingRequests.values(), responsePacket.getPacketId());   // find the request the node list is in response to
                     
-                    pendingRequests.remove(sender);
+                    // if the packet is in response to a pending request, update responses + notQueriedYet + pendingRequests
+                    if (request != null) {
+                        log.debug("Response to FindCloseNodesPacket received from " + sender.calculateHash().toBase64());
+                        responses.add(sender);
+                        DataPacket payload = responsePacket.getPayload();
+                        if (payload instanceof PeerList)
+                            updatePeers((PeerList)payload, sender, receiveTime);
+                        
+                        pendingRequests.remove(sender);
+                    }
                 }
             }
             else if (packet instanceof MalformedCommunicationPacket)
@@ -241,8 +243,6 @@ public class ClosestNodesLookupTask implements Runnable {
          */
         private void updatePeers(PeerList peerListPacket, Destination sender, long receiveTime) {
             log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.calculateHash().toBase64());
-            for (Destination peer: peerListPacket.getPeers())
-                log.debug("  Peer: " + peer.calculateHash().toBase64());
 
             // TODO make responseReceived and pendingRequests a parameter in the constructor?
             responses.add(sender);
