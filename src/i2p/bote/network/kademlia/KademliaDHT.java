@@ -57,6 +57,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -130,8 +131,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * @see ClosestNodesLookupTask
      */
     private List<Destination> getClosestNodes(Hash key) {
-        bucketManager.getKBucket(key).setLastLookupTime(System.currentTimeMillis());
-        bucketManager.getSBucket().setLastLookupTime(key, System.currentTimeMillis());
+        bucketManager.updateLastLookupTime(key);
         
         ClosestNodesLookupTask lookupTask = new ClosestNodesLookupTask(key, sendQueue, i2pReceiver, bucketManager);
         lookupTask.run();
@@ -368,7 +368,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // refresh k-buckets
         for (KBucket bucket: Util.synchronizedCopy(bucketManager))
             if (now > bucket.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000) {
-                log.debug("Refreshing bucket: " + bucket);
+                log.debug("Refreshing k-bucket: " + bucket);
                 refresh(bucket);
             }
         
@@ -378,19 +378,21 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // and the 40th sibling (i=1), etc., and finally a lookup for a random key between the
         // 80th and the 100th sibling (i=4).
         SBucket sBucket = bucketManager.getSBucket();
-        for (BucketSection section: sBucket.getSections())
-            if (now > section.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000)
+        for (int i=0; i<sBucket.getNumSections(); i++) {
+            BucketSection section = sBucket.getSections()[i];
+            if (now > section.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000) {
+                log.debug("Refreshing s-bucket section " + i + " of " + sBucket.getNumSections() + " (last refresh: " + new Date(section.getLastLookupTime()) + ")");
                 refresh(sBucket, section.getStart(), section.getEnd());
+            }
+        }
     }
     
     private void refresh(KBucket bucket) {
-        log.debug("Refreshing k-bucket: " + bucket);
         Hash key = createRandomHash(bucket.getStartId(), bucket.getEndId());
         getClosestNodes(key);
     }
 
     private void refresh(SBucket bucket, BigInteger min, BigInteger max) {
-        log.debug("Refreshing the s-bucket.");
         Hash key = createRandomHash(min, max);
         getClosestNodes(key);
     }

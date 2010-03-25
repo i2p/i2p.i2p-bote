@@ -227,12 +227,6 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                 if (isBatchPacket)
                     batch.decrementSentLatch();
                 scheduledPacket.decrementSentLatch();
-                
-                // log
-                String logMsg = "Send queue length is now " + packetQueue.size();
-                if (isBatchPacket)
-                    logMsg += ". Batch has " + batch.getPacketCount() + " packets total, " + batch.getUnsentPacketCount() + " waiting to be sent.";
-                log.debug(logMsg);
             }
             catch (I2PSessionException sessExc) {
                 log.error("Can't send packet.", sessExc);

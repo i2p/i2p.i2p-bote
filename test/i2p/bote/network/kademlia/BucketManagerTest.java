@@ -29,6 +29,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -389,13 +391,13 @@ public class BucketManagerTest {
         
         // check that siblings are closer to the local destination than all k-bucket peers
         PeerDistanceComparator comparator = new PeerDistanceComparator(localDestination.calculateHash());
-        for (KademliaPeer sibling: getSiblingBucket())
+        for (KademliaPeer sibling: bucketManager.getSBucket())
             for (KademliaPeer peer: getKPeers())
                 assertTrue(comparator.compare(sibling, peer) <= 0);
         
         // check that every hash falls into a bucket's key range
         for (Destination peer: peers) {
-            KBucket bucket = bucketManager.getKBucket(peer.calculateHash());
+            KBucket bucket = getKBucket(peer.calculateHash());
             assertNotNull(bucket);
         }
         
@@ -432,10 +434,10 @@ public class BucketManagerTest {
         return depthField.getInt(bucket);
     }
     
-    // returns the value of the private field sBucket
-    private SBucket getSiblingBucket() throws IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
-        Field sBucketField = BucketManager.class.getDeclaredField("sBucket");
-        sBucketField.setAccessible(true);
-        return (SBucket)sBucketField.get(bucketManager);
+    // calls the private method getKBucket
+    private KBucket getKBucket(Hash key) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+        Method getKBucketMethod = BucketManager.class.getDeclaredMethod("getKBucket", Hash.class);
+        getKBucketMethod.setAccessible(true);
+        return (KBucket)getKBucketMethod.invoke(bucketManager, key);
     }
 }

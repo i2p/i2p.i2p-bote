@@ -200,7 +200,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      * @param key
      * @return
      */
-    public KBucket getKBucket(Hash key) {
+    private KBucket getKBucket(Hash key) {
         return kBuckets.get(getBucketIndex(key));
     }
     
@@ -303,6 +303,17 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      */
     DhtPeerStats getPeerStats() {
         return new KademliaPeerStats(sBucket, kBuckets, localDestinationHash);
+    }
+
+    /**
+     * Updates the time at which the k-bucket for a DHT key, and the s-bucket,
+     * was last refreshed.
+     * @param key
+     */
+    void updateLastLookupTime(Hash key) {
+        long time = System.currentTimeMillis();
+        getKBucket(key).setLastLookupTime(time);
+        sBucket.setLastLookupTime(key, time);
     }
     
     // PacketListener implementation

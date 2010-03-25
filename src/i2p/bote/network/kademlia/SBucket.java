@@ -92,6 +92,10 @@ public class SBucket extends AbstractBucket {
         }
     }
 
+    int getNumSections() {
+        return sections.length;
+    }
+    
     BucketSection[] getSections() {
         if (peers.isEmpty())
             return sections;
