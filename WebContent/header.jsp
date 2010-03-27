@@ -54,7 +54,7 @@
 
 <div class="menubox">
     <h2><ib:message key="Folders"/></h2>
-    <ib:message key="Inbox" var="folderName"/><ib:folderLink folderName="${folderName}"/><br/>
+    <ib:message key="Inbox" var="displayName"/><ib:folderLink dirName="Inbox" displayName="${displayName}"/><br/>
     <img src="images/folder.png"/><ib:message key="Outbox"/><br/>
     <img src="images/folder.png"/><ib:message key="Sent"/><br/>
     <img src="images/folder.png"/><ib:message key="Drafts"/><br/>
