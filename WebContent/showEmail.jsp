@@ -75,7 +75,7 @@
                         <input type="hidden" name="sender" value="${ib:getOneLocalRecipient(email)}"/>
                         <input type="hidden" name="recipient0" value="${email.sender}"/>
                         
-                        <ib:message key="Re:" var="responsePrefix"/>
+                        <ib:message key="Re:" var="responsePrefix" hide="true"/>
                         <c:set var="responsePrefix" value="${responsePrefix} "/>
                         <c:if test="${fn:startsWith(email.subject, responsePrefix)}">
                             <c:set var="responsePrefix" value=""/>

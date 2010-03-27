@@ -23,11 +23,13 @@ package i2p.bote;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
 
 import net.i2p.I2PAppContext;
 import net.i2p.data.DataHelper;
 import net.i2p.util.Log;
+import net.i2p.util.Translate;
 
 public class Configuration {
     private static final long serialVersionUID = -6318245413106186095L;
@@ -57,6 +59,8 @@ public class Configuration {
     private static final String PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = "maxConcurIdCheckMail";
     private static final String PARAMETER_AUTO_MAIL_CHECK = "autoMailCheckEnabled";
     private static final String PARAMETER_MAIL_CHECK_INTERVAL = "mailCheckInterval";
+    private static final String PARAMETER_LANGUAGE = "locale";
+    private static final String PARAMETER_HIDE_LOCALE = "hideLocale";
     
     // Defaults for each parameter
     private static final int DEFAULT_REDUNDANCY = 2;
@@ -70,6 +74,8 @@ public class Configuration {
     private static final int DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = 10;
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
+    private static final String DEFAULT_LANGUAGE = null;
+    private static final boolean DEFAULT_HIDE_LOCALE = true;
     
     private Log log = new Log(Configuration.class);
     private Properties properties;
@@ -109,6 +115,9 @@ public class Configuration {
         }
         if (!configurationLoaded)
             log.info("Can't read configuration file <" + configFile.getAbsolutePath() + ">, using default settings.");
+        
+        // Apply the language setting if there is one in the config file
+        setLanguage(getLanguage());
     }
 
     public File getDestinationKeyFile() {
@@ -243,7 +252,58 @@ public class Configuration {
     public int getMailCheckInterval() {
         return getIntParameter(PARAMETER_MAIL_CHECK_INTERVAL, DEFAULT_MAIL_CHECK_INTERVAL);
     }
+
+    /**
+     * Sets the UI language.
+     * @param languageCode A two-letter language code such as "en" or "de", or null for the system default.
+     */
+    public void setLanguage(String languageCode) {
+        if (languageCode == null) {
+            properties.remove(PARAMETER_LANGUAGE);
+            System.clearProperty(Translate.PROP_LANG);
+        }
+        else {
+            properties.setProperty(PARAMETER_LANGUAGE, languageCode);
+
+            // Set the language used by i2p.bote.Util._().
+            // This may interfere with other I2P apps.
+            // Unfortunately, there is no setProperty() in I2PAppContext.
+            System.setProperty(Translate.PROP_LANG, languageCode);
+        }
+    }
+
+    /**
+     * Returns the two-letter language code for the current locale.
+     * @return
+     */
+    public String getLanguage() {
+        return properties.getProperty(PARAMETER_LANGUAGE, DEFAULT_LANGUAGE);
+    }
+
+    /**
+     * Returns all locales for which a translation exists.
+     * @return
+     */
+    public Locale[] getAllLocales() {
+        return I2PBote.getInstance().getAllLocales();
+    }
+
+    /**
+     * Controls whether strings that are added to outgoing email, like "Re:" or "Fwd:",
+     * are translated or not.
+     * If <code>hideLocale</code> is <code>false</code>, the UI language is used.
+     * If <code>hideLocale</code> is <code>true</code>, the strings are left untranslated
+     * (which means they are in English).
+     * @param hideLocale
+     */
+    public void setHideLocale(boolean hideLocale) {
+        properties.setProperty(PARAMETER_HIDE_LOCALE, new Boolean(hideLocale).toString());
+    }
     
+    public boolean getHideLocale() {
+        return getBooleanParameter(PARAMETER_HIDE_LOCALE, DEFAULT_HIDE_LOCALE);
+    }
+
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
         String stringValue = properties.getProperty(parameterName);
         if ("true".equalsIgnoreCase(stringValue) || "yes".equalsIgnoreCase(stringValue) || "on".equalsIgnoreCase(stringValue) || "1".equals(stringValue))

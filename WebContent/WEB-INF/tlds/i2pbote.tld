@@ -81,17 +81,6 @@
 </tag>
 
 <tag>
-    <name>shortSenderName</name>
-    <tag-class>i2p.bote.web.PrintShortSenderNameTag</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-        <name>sender</name>
-        <rtexprvalue>true</rtexprvalue>
-        <required>true</required>
-    </attribute>
-</tag>
-
-<tag>
     <name>connect</name>
     <tag-class>i2p.bote.web.ConnectTag</tag-class>
     <body-content>empty</body-content>
@@ -107,6 +96,17 @@
     <name>peerInfo</name>
     <tag-class>i2p.bote.web.PeerInfoTag</tag-class>
     <body-content>empty</body-content>
+</tag>
+
+<tag>
+    <name>localizedLanguageName</name>
+    <tag-class>i2p.bote.web.LocalizedLanguageNameTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>locale</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
 </tag>
 
 <tag>
@@ -137,6 +137,15 @@
         <rtexprvalue>true</rtexprvalue>
         <required>false</required>
     </attribute>
+    <attribute>
+        <name>hide</name>
+        <description>
+            If this parameter is set to true, and the user has chosen to hide
+            the UI language from email recipients, the message is not translated.
+        </description>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
 </tag>
 
 <tag>
@@ -149,7 +158,7 @@
     <attribute>
         <name>value</name>
         <rtexprvalue>true</rtexprvalue>
-        <required>true</required>
+        <required>false</required>
     </attribute>
 </tag>
 
@@ -255,6 +264,17 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         i2p.bote.email.Email getEmail(java.lang.String, java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>getShortSenderName</name>
+    <description>
+        Returns up to maxLength characters of a "sender" header field.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getShortSenderName(java.lang.String, int)
     </function-signature>
 </function>
 

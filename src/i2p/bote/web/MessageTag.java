@@ -1,5 +1,6 @@
 package i2p.bote.web;
 
+import i2p.bote.I2PBote;
 import i2p.bote.Util;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class MessageTag extends BodyTagSupport {
     private String bundle;
     private String var;
     private int scope = PageContext.PAGE_SCOPE;
+    private boolean hide;
     private List<String> parameters = new ArrayList<String>();   // holds values specified in <ib:param> tags
     private PageContext pageContext;
 
@@ -32,7 +34,11 @@ public class MessageTag extends BodyTagSupport {
     }
     
     public int doEndTag() throws JspException {
-        String translation = Util._(key);
+        String translation;
+        if (hide && I2PBote.getInstance().getConfiguration().getHideLocale())
+            translation = key;
+        else
+            translation = Util._(key);
         
         // replace {0}, {1},... with param values
         do {
@@ -107,6 +113,14 @@ public class MessageTag extends BodyTagSupport {
         return Integer.valueOf(scope).toString();
     }
     
+    public void setHide(boolean hide) {
+        this.hide = hide;
+    }
+
+    public boolean isHide() {
+        return hide;
+    }
+
     void addParameter(String param) {
         parameters.add(param);
     }

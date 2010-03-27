@@ -32,6 +32,7 @@ import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.PacketFolder;
+import i2p.bote.locale.Locales;
 import i2p.bote.network.BanList;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.CheckEmailTask;
@@ -62,6 +63,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
@@ -81,7 +83,6 @@ import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
-import net.i2p.util.Translate;
 
 /**
  * This is the core class of the application. It is implemented as a singleton.
@@ -285,8 +286,8 @@ public class I2PBote {
         return APP_VERSION;
     }
     
-    public String getLanguage() {
-        return Translate.getLanguage(appContext);
+    public Locale[] getAllLocales() {
+        return Locales.ALL_LOCALES;
     }
     
     public Identities getIdentities() {

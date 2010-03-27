@@ -33,6 +33,7 @@ import i2p.bote.folder.EmailFolder;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -202,6 +203,21 @@ public class JSPHelper {
         return getMailFolder(folderName).getEmail(messageId);
     }
 
+    public static String getShortSenderName(String sender, int maxLength) {
+        if (sender == null)
+            return null;
+        else {
+            int angBracketIndex = sender.indexOf('<');
+            if (angBracketIndex > 0)
+                sender = sender.substring(0, angBracketIndex-1);
+            
+            if (sender.length() > maxLength)
+                return sender.substring(0, maxLength-3) + "...";
+            else
+                return sender;
+        }
+    }
+
     /**
      * Returns the recipient address for an email that has been received by
      * the local node.
@@ -299,14 +315,6 @@ public class JSPHelper {
     
     public String getAppVersion() {
         return I2PBote.getAppVersion();
-    }
-    
-    /**
-     * Returns the two-letter language code for the current locale.
-     * @return
-     */
-    public String getLanguage() {
-        return I2PBote.getInstance().getLanguage();
     }
     
     private static boolean isNumeric(String str) {

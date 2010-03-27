@@ -25,6 +25,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+<c:set var="configuration" value="${jspHelperBean.configuration}"/>
+<c:if test="${param.action eq 'save'}">
+    <jsp:setProperty name="configuration" property="autoMailCheckEnabled" value="${param.autoMailCheckEnabled eq 'on' ? 'true' : 'false'}"/>
+    <jsp:setProperty name="configuration" property="mailCheckInterval" value="${param.mailCheckInterval}"/>
+    <jsp:setProperty name="configuration" property="language" value="${param.language}"/>
+    <jsp:setProperty name="configuration" property="hideLocale" value="${param.hideLocale eq 'on' ? 'true' : 'false'}"/>
+    <ib:saveConfiguration/>
+</c:if>
+
 <ib:message key="Settings" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
@@ -34,21 +44,36 @@
     </h2>
     <br/>
     
-    <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-    <c:set var="configuration" value="${jspHelperBean.configuration}"/>
-    <c:if test="${param.action eq 'save'}">
-        <jsp:setProperty name="configuration" property="autoMailCheckEnabled" value="${param.autoMailCheckEnabled eq 'on' ? 'true' : 'false'}"/>
-        <jsp:setProperty name="configuration" property="mailCheckInterval" value="${param.mailCheckInterval}"/>
-        <ib:saveConfiguration/>
-    </c:if>
-    
     <form action="settings.jsp" method="post">
         <input type="hidden" name="action" value="save"/>
         
-        <c:set var="autoMailCheckEnabled" value="${jspHelperBean.configuration.autoMailCheckEnabled}"/>
-        <c:set var="checked" value="${autoMailCheckEnabled ? ' checked' : ''}"/>
-        <input type="checkbox"${checked} name="autoMailCheckEnabled"/>Check for mail every
-        <input type="text" name="mailCheckInterval" size="3" value="${configuration.mailCheckInterval}"/> minutes
+        <%-- Auto mail checking --%>
+        <c:set var="checked" value="${configuration.autoMailCheckEnabled ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="autoMailCheckEnabled"/>
+        <ib:message key="Check for mail every {0} minutes">
+            <ib:param><input type="text" name="mailCheckInterval" size="3" value="${configuration.mailCheckInterval}"/></ib:param>
+        </ib:message>
+        <br/>
+        
+        <%-- Locale --%>
+        <ib:message key="Language:"/>
+        <select name="language">
+            <c:set var="selected" value=""/>
+            <c:if test="${empty configuration.language}">
+                <c:set var="selected" value=" selected"/>
+            </c:if>
+            <option value=""${selected}><ib:message key="Default"/></option>
+            <c:forEach var="locale" items="${configuration.allLocales}">
+                <c:set var="selected" value=""/>
+                <c:if test="${locale.language eq configuration.language}">
+                    <c:set var="selected" value=" selected"/>
+                </c:if>
+                <option value="${locale.language}"${selected}><ib:localizedLanguageName locale="${locale}"/></option>
+            </c:forEach>
+        </select>
+        <c:set var="checked" value="${configuration.hideLocale ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="hideLocale"/>
+        <ib:message key="Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"/>
         
         <p/>
         <button type="submit"><ib:message key="Save"/></button>

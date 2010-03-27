@@ -138,11 +138,12 @@
             <tr>
                 <td valign="top"><br/><ib:message key="Message:"/></td>
                 <td>
-                    <textarea rows="30" cols="80" name="message"><c:if test="${!empty param.quoteMsgId}">
+                    <textarea rows="30" cols="80" name="message">
 <%-- The following lines are not indented because the indentation would show up as blank chars on the textarea --%>
-<c:set var="origEmail" value="${ib:getEmail(param.quoteMsgFolder, param.quoteMsgId)}"/>
-<ib:shortSenderName sender="${origEmail.sender}"/> wrote:
-<ib:quote text="${origEmail.text}"/></c:if><c:if test="${empty param.quoteMsgId}">${param.message}</c:if></textarea>
+<c:if test="${!empty param.quoteMsgId}"><c:set var="origEmail" value="${ib:getEmail(param.quoteMsgFolder, param.quoteMsgId)}"/>
+<ib:message key="{0} wrote:" hide="true">
+    <ib:param value="${ib:getShortSenderName(origEmail.sender, 50)}"></ib:param>
+</ib:message><ib:quote text="${origEmail.text}"/></c:if><c:if test="${empty param.quoteMsgId}">${param.message}</c:if></textarea>
                 </td>
             </tr>
             <tr>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-15 06:49+0000\n"
+"POT-Creation-Date: 2010-03-26 23:14+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -207,12 +207,15 @@ msgstr "Betreff:"
 msgid "Message:"
 msgstr "Nachricht:"
 
+msgid "{0} wrote:"
+msgstr "{0} schrieb:"
+
 msgid "Send"
 msgstr "Senden"
 
 # ################### about.jsp ####################
 msgid "About I2P-Bote"
-msgstr "über I2P-Bote"
+msgstr "Über I2P-Bote"
 
 msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote, Version {0}"
@@ -324,6 +327,20 @@ msgstr "Benutzerleitfaden"
 
 msgid "About"
 msgstr "über I2P-Bote"
+
+# ################### buttonFrame.jsp ####################
+msgid "Check for mail every {0} minutes"
+msgstr "Alle {0} Minuten auf Mails prüfen"
+
+# ################### WebContent/settings.jsp ####################
+msgid "Language:"
+msgstr "Sprache:"
+
+msgid "Default"
+msgstr "Voreinstellung"
+
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr "Hinzufügungen in zu sendenden Mails auf englisch halten („Re:“, „wrote:“ usw.)"
 
 # ################### deleteIdentity.jsp ####################
 msgid "Error:"
