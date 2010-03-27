@@ -336,7 +336,12 @@ select {
 
 .folder table {
     table-layout: fixed;
+    border-spacing: 0px;
     width: 800px;
+}
+
+.altrow {
+    background: #ddf url('images/lightbluetile-alt.png');
 }
 
 .identities table {
@@ -392,5 +397,37 @@ select {
 .moz-ellipsis > DIV + DIV::after
 {
     background: url('images/lightbluetile.png');
+    content: '...';
+}
+
+.ellipsis-alt
+{
+    line-height: 1.2em;
+    height: 1.2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis-alt;
+    width: 100%;
+    -o-text-overflow: ellipsis-alt;
+    -moz-binding: url(moz_fix2-alt.xml#ellipsis);
+}
+
+.moz-ellipsis-alt > DIV:first-child
+{
+    float: left;
+    margin-right: -26px;
+}
+
+.moz-ellipsis-alt > DIV + DIV
+{
+    float: right;
+    margin-top: -1.2em;
+    background: url('images/lightbluefade-alt.png');
+    padding-left: 26px;
+}
+
+.moz-ellipsis-alt > DIV + DIV::after
+{
+    background: url('images/lightbluetile-alt.png');
     content: '...';
 }
