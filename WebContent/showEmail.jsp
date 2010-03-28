@@ -59,6 +59,10 @@
             </td>
         </tr>
         <tr>
+            <td valign="top"><strong><ib:message key="Sent:"/></strong></td>
+            <td><ib:emailDate email="${email}" timeStyle="full"/></td>
+        </tr>
+        <tr>
             <td valign="top"><strong><ib:message key="Subject:"/></strong></td>
             <td>${fn:escapeXml(email.subject)}</td>
         </tr>

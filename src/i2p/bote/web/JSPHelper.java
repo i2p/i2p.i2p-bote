@@ -33,7 +33,6 @@ import i2p.bote.folder.EmailFolder;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;

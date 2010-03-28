@@ -30,6 +30,10 @@
 
 <fmt:requestEncoding value="UTF-8"/>
 
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+<c:set var="configuration" value="${jspHelperBean.configuration}"/>
+<fmt:setLocale value="${configuration.language}" scope="request"/>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

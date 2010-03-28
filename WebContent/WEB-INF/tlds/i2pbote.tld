@@ -333,4 +333,13 @@
     <path>/WEB-INF/tags/address.tag</path>
 </tag-file> 
 
+<tag-file>
+    <description>
+        Prints the "sent" date and time of an email. Handles null dates.
+        timeStyle can be "short", "medium", "long", or "full".
+    </description>
+    <name>emailDate</name>
+    <path>/WEB-INF/tags/emailDate.tag</path>
+</tag-file> 
+
 </taglib>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-26 23:14+0000\n"
+"POT-Creation-Date: 2010-03-28 04:00+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -230,6 +230,9 @@ msgstr "Unterstützer:"
 msgid "Check Mail"
 msgstr "Mails abrufen"
 
+msgid "Unknown"
+msgstr "Unbekannt"
+
 # ################### connect.jsp ####################
 # ################### deleteContact.jsp ####################
 msgid "The contact has been deleted from the address book."
@@ -241,6 +244,9 @@ msgstr "Fehler"
 # ################### showEmail.jsp ####################
 msgid "Add to Address Book"
 msgstr "Zum Adressbuch hinzufügen"
+
+msgid "Sent:"
+msgstr "Gesendet:"
 
 msgid "Reply"
 msgstr "Antworten"
@@ -367,14 +373,8 @@ msgstr "An"
 msgid "Subject"
 msgstr "Betreff"
 
-msgid "Date"
-msgstr "Datum"
-
 msgid "Anonymous"
 msgstr "Anonym"
-
-msgid "Unknown"
-msgstr "Unbekannt"
 
 msgid "(No subject)"
 msgstr "(Kein Betreff)"
@@ -412,6 +412,9 @@ msgstr "Verbunden"
 msgid "Unknown Status"
 msgstr "Unbek. Status"
 
+#, fuzzy
+#~ msgid "Date:"
+#~ msgstr "Datum"
 #~ msgid "K-Peers:"
 #~ msgstr "Gegenstellen:"
 

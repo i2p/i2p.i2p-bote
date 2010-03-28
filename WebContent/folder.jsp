@@ -42,7 +42,7 @@
             <th style="width: 100px;"><ib:message key="From"/></th>
             <th style="width: 100px;"><ib:message key="To"/></th>
             <th style="width: 150px;"><ib:message key="Subject"/></th>
-            <th style="width: 100px;"><ib:message key="Date"/></th>
+            <th style="width: 100px;"><ib:message key="Sent"/></th>
             <th style="width: 20px;"></th>
         </tr>
         <c:forEach items="${ib:getMailFolder(folderName).elements}" var="email" varStatus="status">
@@ -58,11 +58,6 @@
             </c:if>
             
             <c:set var="recipient" value="${ib:getOneLocalRecipient(email)}"/>
-            
-            <c:set var="date" value="${email.sentDate}"/>
-            <c:if test="${empty date}">
-                <ib:message key="Unknown" var="date"/>"/>
-            </c:if>
             
             <c:set var="subject" value="${email.subject}"/>
             <c:if test="${empty subject}">
@@ -85,7 +80,7 @@
             <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
             <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
             <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
-            <td><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(date)}</a></td>
+            <td><a href="${mailUrl}" style="font-weight: ${fontWeight}"><ib:emailDate email="${email}" timeStyle="short"/></a></td>
             <td>
                 <a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}">
                 <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
