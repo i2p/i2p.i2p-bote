@@ -256,7 +256,11 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
             return peers.subList(0, count);
     }
 
-    private synchronized List<Destination> getAllUnlockedPeers() {
+    /**
+     * Returns all peers that are not locked.
+     * @return
+     */
+    public synchronized List<Destination> getAllUnlockedPeers() {
         List<Destination> allPeers = new ArrayList<Destination>();
         
         for (KBucket bucket: kBuckets)
@@ -270,6 +274,14 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         return allPeers;
     }
     
+    /**
+     * Returns the total number of peers that are not locked.
+     * @return
+     */
+    int getUnlockedPeerCount() {
+        return getAllUnlockedPeers().size();
+    }
+
     public synchronized List<KademliaPeer> getAllPeers() {
         List<KademliaPeer> allPeers = new ArrayList<KademliaPeer>();
         for (KBucket bucket: kBuckets)
@@ -288,14 +300,6 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
             count += bucket.size();
         count += sBucket.size();
         return count;
-    }
-
-    /**
-     * Return the total number of Kademlia peers that are not locked.
-     * @return
-     */
-    int getUnlockedPeerCount() {
-        return getAllUnlockedPeers().size();
     }
 
     /**

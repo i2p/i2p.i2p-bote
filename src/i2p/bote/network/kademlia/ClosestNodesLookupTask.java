@@ -96,8 +96,8 @@ public class ClosestNodesLookupTask implements Runnable {
         PacketListener packetListener = new IncomingPacketHandler();
         i2pReceiver.addPacketListener(packetListener);
         
-        // get a list of all peers (we don't how many we really need because some may not respond)
-        notQueriedYet.addAll(bucketManager.getAllPeers());
+        // get a list of all unlocked peers (we don't how many we really need because some may not respond)
+        notQueriedYet.addAll(bucketManager.getAllUnlockedPeers());
         
         startTime = getTime();
         do {
