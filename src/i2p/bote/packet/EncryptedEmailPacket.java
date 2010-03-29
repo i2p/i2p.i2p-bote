@@ -47,7 +47,7 @@ import net.i2p.util.RandomSource;
  * and an unencrypted copy of the deletion key. The unencrypted deletion key (<code>deletionKeyPlain</code>)
  * is used for validation of delete requests (the sender of a delete request has to decrypt the deletion key
  * using the decryption key for the Email Destination because it doesn't have the unencrypted copy).
- * deletion key).
+ * 
  * An alternative to this scheme would have been to only use plain-text deletion keys in email packets and
  * have the recipient sign deletion requests, but this would require a storage node to know the recipient's
  * public signing key.
@@ -149,6 +149,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
      * @param identity
      * @param appContext
      * @return The decrypted data
+     * @throws DataFormatException 
      */
     private byte[] decrypt(byte[] data, EmailIdentity identity, I2PAppContext appContext) throws DataFormatException {
         PrivateKey privateKey = identity.getPrivateEncryptionKey();
@@ -163,7 +164,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
      * @return The encrypted data
      */
     // TODO should this method be in this class?
-    public byte[] encrypt(byte[] data, EmailDestination emailDestination, I2PAppContext appContext) {
+    private byte[] encrypt(byte[] data, EmailDestination emailDestination, I2PAppContext appContext) {
         PublicKey publicKey = emailDestination.getPublicEncryptionKey();
         SessionKey sessionKey = appContext.sessionKeyManager().createSession(publicKey);
         return appContext.elGamalAESEngine().encrypt(data, publicKey, sessionKey, PADDED_SIZE);
