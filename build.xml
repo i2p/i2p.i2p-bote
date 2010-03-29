@@ -27,6 +27,7 @@
         <echo message="  plugin: Makes a I2P plugin. Only runs on Linux;" />
         <echo message="          $I2P must point to an I2P installation." />
         <echo message="  all:    war + plugin" />
+        <echo message="  src:    Zips up the source code" />
         <echo message="  junit:  Runs all unit tests" />
     </target>
 
@@ -123,6 +124,7 @@
         <delete file="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
 
         <delete file="plugin/plugin.tmp/lib/mailapi.jar" />
+        <delete file="plugin/plugin.tmp/lib/mailapi.jar.pack" />
 
         <!-- get build number -->
         <buildnumber file="plugin/build.number" />
@@ -259,7 +261,11 @@ l property to true -->
             <zipfileset dir="test" prefix="${subdir}/test"/>
             <zipfileset dir="ant" prefix="${subdir}/ant"/>
             <zipfileset dir="doc" prefix="${subdir}/doc"/>
+            <zipfileset dir="plugin" prefix="${subdir}/plugin"/>
             <zipfileset file="build.xml" prefix="${subdir}"/>
+            <zipfileset file="locale/messages_de.po" prefix="${subdir}/locale"/>
+            <zipfileset file="bundle-messages.sh" prefix="${subdir}"/>
+            <zipfileset file="jsp2po.sh" prefix="${subdir}"/>
             <zipfileset file="history.txt" prefix="${subdir}"/>
             <zipfileset file="license.txt" prefix="${subdir}"/>
         </zip>
