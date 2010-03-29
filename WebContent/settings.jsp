@@ -32,6 +32,7 @@
     <jsp:setProperty name="configuration" property="mailCheckInterval" value="${param.mailCheckInterval}"/>
     <jsp:setProperty name="configuration" property="language" value="${param.language}"/>
     <jsp:setProperty name="configuration" property="hideLocale" value="${param.hideLocale eq 'on' ? 'true' : 'false'}"/>
+    <jsp:setProperty name="configuration" property="includeSentTime" value="${param.includeSentTime eq 'on' ? 'true' : 'false'}"/>
     <ib:saveConfiguration/>
 </c:if>
 
@@ -74,6 +75,12 @@
         <c:set var="checked" value="${configuration.hideLocale ? ' checked' : ''}"/>
         <input type="checkbox"${checked} name="hideLocale"/>
         <ib:message key="Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"/>
+        <br/>
+
+        <%-- Send time --%>
+        <c:set var="checked" value="${configuration.includeSentTime ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="includeSentTime"/>
+        <ib:message key="Include send time in outgoing emails"/>
         
         <p/>
         <button type="submit"><ib:message key="Save"/></button>

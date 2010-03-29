@@ -21,6 +21,7 @@
 
 package i2p.bote.email;
 
+import i2p.bote.I2PBote;
 import i2p.bote.UniqueId;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
@@ -34,10 +35,9 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -110,10 +110,19 @@ public class Email extends MimeMessage {
             super.updateHeaders();
             scrubHeaders();
             
-            // Set the "Date" field, using english for the locale.
-            Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("GMT+0"));
-            DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss +0000", Locale.ENGLISH);   // always use UTC for outgoing mail
-            setHeader("Date", formatter.format(calendar.getTime()));
+            // Set the send time if the "Include sent time" config setting is enabled;
+            // otherwise, remove the send time field.
+            if (I2PBote.getInstance().getConfiguration().getIncludeSentTime()) {
+                // Set the "Date" field in UTC time, using the English locale.
+                long currentTime = new Date().getTime();
+                long timeZoneOffset = TimeZone.getDefault().getOffset(currentTime);
+                currentTime -= timeZoneOffset;
+                DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss +0000", Locale.ENGLISH);   // always use UTC for outgoing mail
+                setHeader("Date", formatter.format(currentTime));
+            }
+            else
+                removeHeader("Date");
+            
         } catch (MessagingException e) {
             log.error("Cannot set mail headers.", e);
         }

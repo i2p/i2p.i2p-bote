@@ -11,6 +11,6 @@
     <fmt:formatDate value="${email.sentDate}" var="date" type="both" timeStyle="${timeStyle}"/>
 </c:if>
 <c:if test="${empty date}">
-    <ib:message key="Unknown" var="date"/>"/>
+    <ib:message key="Unknown" var="date"/>
 </c:if>
 ${fn:escapeXml(date)}

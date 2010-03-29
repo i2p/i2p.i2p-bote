@@ -61,6 +61,7 @@ public class Configuration {
     private static final String PARAMETER_MAIL_CHECK_INTERVAL = "mailCheckInterval";
     private static final String PARAMETER_LANGUAGE = "locale";
     private static final String PARAMETER_HIDE_LOCALE = "hideLocale";
+    private static final String PARAMETER_INCLUDE_SENT_TIME = "includeSentTime";
     
     // Defaults for each parameter
     private static final int DEFAULT_REDUNDANCY = 2;
@@ -76,6 +77,7 @@ public class Configuration {
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
     private static final String DEFAULT_LANGUAGE = null;
     private static final boolean DEFAULT_HIDE_LOCALE = true;
+    private static final boolean DEFAULT_INCLUDE_SENT_TIME = true;
     
     private Log log = new Log(Configuration.class);
     private Properties properties;
@@ -281,6 +283,14 @@ public class Configuration {
     }
 
     /**
+     * Returns the current locale.
+     * @return
+     */
+    public Locale getLocale() {
+        return new Locale(getLanguage());
+    }
+
+    /**
      * Returns all locales for which a translation exists.
      * @return
      */
@@ -302,6 +312,18 @@ public class Configuration {
     
     public boolean getHideLocale() {
         return getBooleanParameter(PARAMETER_HIDE_LOCALE, DEFAULT_HIDE_LOCALE);
+    }
+
+    /**
+     * Controls whether the send time is included in outgoing emails.
+     * @param includeSentTime
+     */
+    public void setIncludeSentTime(boolean includeSentTime) {
+        properties.setProperty(PARAMETER_INCLUDE_SENT_TIME, new Boolean(includeSentTime).toString());
+    }
+    
+    public boolean getIncludeSentTime() {
+        return getBooleanParameter(PARAMETER_INCLUDE_SENT_TIME, DEFAULT_INCLUDE_SENT_TIME);
     }
 
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {

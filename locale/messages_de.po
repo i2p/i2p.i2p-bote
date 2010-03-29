@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-28 04:00+0000\n"
+"POT-Creation-Date: 2010-03-29 05:16+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -10,44 +10,44 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 msgid "Active Since"
 msgstr "Aktiv seit"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 msgid "BktPfx"
 msgstr "K-Buck."
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 msgid "Distance"
 msgstr "Entfernung"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 msgid "I2P Destination"
 msgstr "I2P-Adresse"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 msgid "Locked?"
 msgstr "Gesperrt?"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:44
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 #: src/i2p/bote/web/PeerInfoTag.java:82
 msgid "Peer"
 msgstr "Gegenstelle"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:63
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:66
 msgid "No"
 msgstr "Nein"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:63
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:66
 msgid "Yes"
 msgstr "Ja"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:80
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:83
 msgid "(None)"
 msgstr "-"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:85
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:88
 msgid "(S)"
 msgstr "(S)"
 
@@ -246,7 +246,7 @@ msgid "Add to Address Book"
 msgstr "Zum Adressbuch hinzufügen"
 
 msgid "Sent:"
-msgstr "Gesendet:"
+msgstr "Abs.zeit:"
 
 msgid "Reply"
 msgstr "Antworten"
@@ -298,7 +298,7 @@ msgid "Outbox"
 msgstr "Postausgang"
 
 msgid "Sent"
-msgstr "Gesendet"
+msgstr "Absendezeit"
 
 msgid "Drafts"
 msgstr "Entwürfe"
@@ -347,6 +347,9 @@ msgstr "Voreinstellung"
 
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
 msgstr "Hinzufügungen in zu sendenden Mails auf englisch halten („Re:“, „wrote:“ usw.)"
+
+msgid "Include send time in outgoing emails"
+msgstr "Absendezeit mitschicken"
 
 # ################### deleteIdentity.jsp ####################
 msgid "Error:"

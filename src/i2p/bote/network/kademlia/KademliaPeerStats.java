@@ -22,6 +22,7 @@
 package i2p.bote.network.kademlia;
 
 import static i2p.bote.Util._;
+import i2p.bote.I2PBote;
 import i2p.bote.network.DhtPeerStats;
 
 import java.math.BigInteger;
@@ -29,6 +30,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import net.i2p.data.Hash;
 
@@ -51,7 +53,8 @@ public class KademliaPeerStats implements DhtPeerStats {
     }
     
     private void addPeerData(AbstractBucket bucket, Hash localDestinationHash) {
-        DateFormat formatter = DateFormat.getDateTimeInstance();
+        Locale locale = I2PBote.getInstance().getConfiguration().getLocale();
+        DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
         
         for (KademliaPeer peer: bucket) {
             List<String> row = new ArrayList<String>();
