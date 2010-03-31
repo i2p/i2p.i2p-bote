@@ -22,8 +22,10 @@
 package i2p.bote.service;
 
 import i2p.bote.Configuration;
+import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
+import i2p.bote.email.EmailIdentity;
 import i2p.bote.folder.Outbox;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
@@ -44,6 +46,8 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import net.i2p.I2PAppContext;
+import net.i2p.client.I2PSessionException;
+import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
 
 /**
@@ -117,32 +121,41 @@ public class OutboxProcessor extends I2PBoteThread {
      * @throws IOException
      * @throws MessagingException 
      */
-    private void sendEmail(Email email) throws IOException, MessagingException {
+    private void sendEmail(Email email) throws IOException, MessagingException, I2PSessionException {
         for (Address recipient: email.getAllRecipients())
             sendToOne(recipient.toString(), email);
     }
 
     /**
      * Sends an {@link Email} to one recipient.
-     * @param address
+     * @param recipient
      * @param email
+     * @throws I2PSessionException 
      */
-    private void sendToOne(String address, Email email) {
+    private void sendToOne(String recipient, Email email) throws I2PSessionException {
         String logSuffix = null;   // only used for logging
         try {
-            logSuffix = "Recipient = '" + address + "' Message ID = '" + email.getMessageID() + "'";
-            EmailDestination emailDestination = emailAddressResolver.getDestination(address);
+            logSuffix = "Recipient = '" + recipient + "' Message ID = '" + email.getMessageID() + "'";
+//            EmailDestination emailDestination = emailAddressResolver.getDestination(address);
+            EmailDestination emailDestination = new EmailDestination(recipient);
+            String base64Dest = emailDestination.toBase64();
+            EmailIdentity identity = I2PBote.getInstance().getIdentities().get(base64Dest);
             
-            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(address);
+            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(identity.getPrivateSigningKey(), recipient);
             Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, emailDestination, appContext);
             for (EncryptedEmailPacket packet: encryptedPackets)
                 dht.store(packet);
             dht.store(new IndexPacket(encryptedPackets, emailDestination));
-            outbox.updateStatus(email, new int[] {1}, "Email sent to recipient: " + address);
-        }
-        catch (DhtException e) {
+            outbox.updateStatus(email, new int[] {1}, "Email sent to recipient: " + recipient);
+        } catch (DataFormatException e) {
+            log.error("Invalid recipient address. " + logSuffix);
+            outbox.updateStatus(email, new int[] {1}, "Error trying to send email to recipient: " + recipient);
+        } catch (MessagingException e) {
+            log.error("Can't create email packets. " + logSuffix);
+            outbox.updateStatus(email, new int[] {1}, "Error trying to send email to recipient: " + recipient);
+        } catch (DhtException e) {
             log.error("Can't store email packet on the DHT. " + logSuffix);
-            outbox.updateStatus(email, new int[] {1}, "Error trying to send email to recipient: " + address);
+            outbox.updateStatus(email, new int[] {1}, "Error trying to send email to recipient: " + recipient);
         }
     }
 

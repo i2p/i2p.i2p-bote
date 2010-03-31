@@ -21,49 +21,48 @@
 
 package i2p.bote;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ThreadFactory;
 
 import net.i2p.I2PAppContext;
-import net.i2p.client.I2PSession;
-import net.i2p.data.DataFormatException;
 import net.i2p.util.Translate;
 
 public class Util {
-	private static final int BUFFER_SIZE = 32 * 1024;
 	private static final String BUNDLE_NAME = "i2p.bote.locale.Messages";
 	
 	private Util() { }
 	
-	public static void copyBytes(InputStream inputStream, OutputStream outputStream) throws IOException {
-		byte[] buffer = new byte[BUFFER_SIZE];
-		boolean done = false;
-		while (!done) {
-			int bytesRead = inputStream.read(buffer);
-			outputStream.write(buffer);
-			if (bytesRead < 0)
-				done = true;
-		}
-	}
-
-	public static void writeKeyStream(I2PSession i2pSession, OutputStream outputStream) throws DataFormatException, IOException {
-		i2pSession.getMyDestination().writeBytes(outputStream);
-		i2pSession.getDecryptionKey().writeBytes(outputStream);
-		i2pSession.getPrivateKey().writeBytes(outputStream);
-	}
-
-	public static InputStream createKeyStream(I2PSession i2pSession) throws DataFormatException, IOException {
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		writeKeyStream(i2pSession, outputStream);
-		return new ByteArrayInputStream(outputStream.toByteArray());
-	}	
-
+    /**
+     * Looks for a Base64-encoded Email Destination in a string. Returns
+     * the 512-byte Base64 string, or <code>null</code> if nothing is found.
+     * Even if the return value is non-<code>null</code>, it is not
+     * guaranteed to be a valid Email Destination.
+     * @param address
+     * @return
+     */
+	public static String extractBase64Dest(String address) {
+        if (address==null || address.length()<512)
+            return null;
+        
+        if (address.length() == 512)
+            return address;
+        
+        // Check if the string contains 512 chars in angle brackets
+        int bracketIndex = address.indexOf('<');
+        if (bracketIndex>=0 && address.length()>bracketIndex+512)
+            return address.substring(bracketIndex+1, bracketIndex+1+512);
+        
+        // Check if the string is of the form EmailDest@foo
+        if (address.indexOf('@') == 512)
+            return address.substring(0, 513);
+        
+        return null;
+    }
+    
     public static byte[] readInputStream(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[32*1024];

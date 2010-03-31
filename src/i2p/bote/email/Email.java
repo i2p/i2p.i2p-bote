@@ -43,12 +43,17 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.TimeZone;
 
+import javax.mail.Address;
 import javax.mail.Header;
 import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeMessage;
 
+import net.i2p.crypto.DSAEngine;
+import net.i2p.data.Base64;
+import net.i2p.data.DataFormatException;
+import net.i2p.data.Signature;
+import net.i2p.data.SigningPrivateKey;
 import net.i2p.util.Log;
 
 import com.nettgryppa.security.HashCash;
@@ -57,7 +62,7 @@ public class Email extends MimeMessage {
     private static final int MAX_BYTES_PER_PACKET = 30 * 1024;
     private static final String[] HEADER_WHITELIST = new String[] {
         "From", "Sender", "To", "CC", "BCC", "Reply-To", "Subject", "Date", "MIME-Version", "Content-Type",
-        "Content-Transfer-Encoding", "In-Reply-To", "X-HashCash", "X-Priority"
+        "Content-Transfer-Encoding", "In-Reply-To", "X-HashCash", "X-Priority", "X-I2PBote-Signature"
     };
     
     private static Log log = new Log(Email.class);
@@ -95,6 +100,10 @@ public class Email extends MimeMessage {
         messageId = new UniqueId();
     }
 
+    public EmailDestination getSenderDestination() throws DataFormatException, MessagingException {
+        return new EmailDestination(getSender().toString());
+    }
+    
     public void setHashCash(HashCash hashCash) throws MessagingException {
         setHeader("X-HashCash", hashCash.toString());
     }
@@ -103,53 +112,60 @@ public class Email extends MimeMessage {
      * Removes all headers that are not on the whitelist, and initializes some
      * basic header fields.
      * Called by <code>saveChanges()</code>, see JavaMail JavaDoc.
+     * @throws MessagingException
      */
     @Override
-    public void updateHeaders() {
-        try {
-            super.updateHeaders();
-            scrubHeaders();
-            
-            // Set the send time if the "Include sent time" config setting is enabled;
-            // otherwise, remove the send time field.
-            if (I2PBote.getInstance().getConfiguration().getIncludeSentTime()) {
-                // Set the "Date" field in UTC time, using the English locale.
-                long currentTime = new Date().getTime();
-                long timeZoneOffset = TimeZone.getDefault().getOffset(currentTime);
-                currentTime -= timeZoneOffset;
-                DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss +0000", Locale.ENGLISH);   // always use UTC for outgoing mail
-                setHeader("Date", formatter.format(currentTime));
-            }
-            else
-                removeHeader("Date");
-            
-        } catch (MessagingException e) {
-            log.error("Cannot set mail headers.", e);
+    public void updateHeaders() throws MessagingException {
+        super.updateHeaders();
+        scrubHeaders();
+        
+        // Set the send time if the "Include sent time" config setting is enabled;
+        // otherwise, remove the send time field.
+        if (I2PBote.getInstance().getConfiguration().getIncludeSentTime()) {
+            // Set the "Date" field in UTC time, using the English locale.
+            long currentTime = new Date().getTime();
+            long timeZoneOffset = TimeZone.getDefault().getOffset(currentTime);
+            currentTime -= timeZoneOffset;
+            DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss +0000", Locale.ENGLISH);   // always use UTC for outgoing mail
+            setHeader("Date", formatter.format(currentTime));
         }
+        else
+            removeHeader("Date");
     }
 
-    /**
-     * Creates a copy of the <code>Email</code> with all "BCC" headers removed, except the one for
-     * <code>recipient<code>.
-     * @String recipient
-     * @return
-     * @throws MessagingException 
-     * @throws IOException 
-     */
-    private Email removeBCCs(String recipient) throws MessagingException, IOException {
-        // make a copy of the email
-        Email newEmail = new Email();
-        newEmail.setContent(getContent(), getDataHandler().getContentType());
-        
-        // set new headers
-        newEmail.headers = new InternetHeaders();
-        @SuppressWarnings("unchecked")
-        List<Header> headers = Collections.list(getAllHeaders());
-        for (Header header: headers)
-            if (!"BCC".equals(header.getName()) || !recipient.equals(header.getValue()))
-                newEmail.addHeader(header.getName(), header.getValue());
-
-        return newEmail;
+    private void sign(SigningPrivateKey signingKey) throws MessagingException {
+        removeHeader("X-I2PBote-Signature");   // make sure there is no existing signature which would make the new signature invalid
+        Signature signature = DSAEngine.getInstance().sign(toByteArray(), signingKey);
+        setHeader("X-I2PBote-Signature", signature.toBase64());
+    }
+    
+    public boolean isSignatureValid() {
+        try {
+            String[] signatureHeaders = getHeader("X-I2PBote-Signature");
+            if (signatureHeaders==null || signatureHeaders.length<=0)
+                return false;
+                
+            String base64Signature = signatureHeaders[0];
+            removeHeader("X-I2PBote-Signature");
+            Signature signature = new Signature(Base64.decode(base64Signature));
+            EmailDestination senderDestination = new EmailDestination(getSender().toString());
+            boolean valid = DSAEngine.getInstance().verifySignature(signature, toByteArray(), senderDestination.getPublicSigningKey());
+            setHeader("X-I2PBote-Signature", base64Signature);
+            return valid;
+        } catch (Exception e) {
+            log.error("Cannot verify email signature. Email: [" + this + "]", e);
+            return false;
+        }
+    }
+    
+    private byte[] toByteArray() throws MessagingException {
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        try {
+            writeTo(byteStream);
+        } catch (IOException e) {
+            throw new MessagingException("Cannot write email to ByteArrayOutputStream.", e);
+        }
+        return byteStream.toByteArray();
     }
     
     /**
@@ -206,36 +222,41 @@ public class Email extends MimeMessage {
     }
     
     /**
-     * Converts the email into one or more email packets.
+     * Updates headers, signs the email, and converts it into one or more email packets.
      * If an error occurs, an empty <code>Collection</code> is returned.
-     * 
+     *
+     * @param signingKey 
      * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
      * @return
+     * @throws MessagingException
      */
-    public Collection<UnencryptedEmailPacket> createEmailPackets(String bccToKeep) {
+    public Collection<UnencryptedEmailPacket> createEmailPackets(SigningPrivateKey signingKey, String bccToKeep) throws MessagingException {
         ArrayList<UnencryptedEmailPacket> packets = new ArrayList<UnencryptedEmailPacket>();
         
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String[] bccHeaders = null;
         try {
+            bccHeaders = getHeader("BCC");
             saveChanges();
-            if (bccToKeep == null)
-                writeTo(outputStream);
-            else
-                removeBCCs(bccToKeep).writeTo(outputStream);
-            
+            if (bccToKeep!=null && isBCC(bccToKeep))
+                setHeader("BCC", bccToKeep);   // set bccToKeep and remove any other existing BCC addresses
+            sign(signingKey);
+            writeTo(outputStream);
         } catch (IOException e) {
-            log.error("Can't write to ByteArrayOutputStream.", e);
-            return packets;
-        } catch (MessagingException e) {
-            log.error("Can't remove BCC headers.", e);
-            return packets;
+            throw new MessagingException("Can't write to ByteArrayOutputStream.", e);
+        } finally {
+            // restore the BCC headers
+            removeHeader("BCC");
+            if (bccHeaders != null)
+                for (String bccAddress: bccHeaders)
+                    addHeader("BCC", bccAddress);
         }
         byte[] emailArray = outputStream.toByteArray();
         
-        // calculate fragment count
-        int numFragments = (emailArray.length+MAX_BYTES_PER_PACKET-1) / MAX_BYTES_PER_PACKET;
+        // calculate packet count
+        int numPackets = (emailArray.length+MAX_BYTES_PER_PACKET-1) / MAX_BYTES_PER_PACKET;
         
-        int fragmentIndex = 0;
+        int packetIndex = 0;
         int blockStart = 0;   // the array index where the next block of data starts
         while (true) {
             int blockSize = Math.min(emailArray.length-blockStart, MAX_BYTES_PER_PACKET);
@@ -246,13 +267,57 @@ public class Email extends MimeMessage {
                 byte[] block = new byte[blockSize];
                 System.arraycopy(emailArray, blockStart, block, 0, blockSize);
                 UniqueId deletionKey = new UniqueId();
-                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, block, deletionKey);
+                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(messageId, packetIndex, numPackets, block, deletionKey);
                 packets.add(packet);
-                fragmentIndex++;
+                packetIndex++;
                 blockStart += blockSize;
             }
         }
         
         return packets;
+    }
+    
+    /**
+     * Tests if <code>address</code> is a BCC address.
+     * @param address
+     * @return
+     * @throws MessagingException
+     */
+    private boolean isBCC(String address) throws MessagingException {
+        String[] bccAddresses = getHeader("BCC");
+        if (bccAddresses == null)
+            return false;
+        
+        for (String bccAddress: bccAddresses)
+            if (bccAddress.equals(address))
+                return true;
+        
+        return false;
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder("MsgId: ").append(getMessageID());
+        try {
+            result = result.append("Sender: ").append(getSender());
+            result = result.append("Recipients: ");
+            for (Address recipient: getAllRecipients()) {
+                if (result.length() > 1000) {
+                    result = result.append("...");
+                    break;
+                }
+                if (result.length() > 0)
+                    result = result.append(", ");
+                String recipientAddress = recipient.toString();
+                if (recipientAddress.length() > 20)
+                    result = result.append(recipientAddress).append("...");
+                else
+                    result = result.append(recipientAddress);
+            }
+        } catch (MessagingException e) {
+            log.error("Error getting sender or recipients.");
+            result.append("#Error#");
+        }
+        return result.toString();
     }
 }

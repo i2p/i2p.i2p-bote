@@ -219,17 +219,30 @@ public class Identities implements Iterable<EmailIdentity> {
     }
 
     /**
-     * Looks up an {@link EmailIdentity} by its Base64 key. If none is found,
-     * <code>null</code> is returned.
+     * Looks up an {@link EmailIdentity} that has the same public encryption key and the
+     * same public signing key as a given {@link EmailDestination}.
+     * Returns <code>null</code> if nothing is found.
+     * @param key
+     * @return
+     */
+    public EmailIdentity get(EmailDestination destination) {
+        for (EmailIdentity identity: identities)
+            if (identity.getPublicEncryptionKey().equals(destination.getPublicEncryptionKey())
+                    && identity.getPublicSigningKey().equals(destination.getPublicSigningKey()))
+                return identity;
+        return null;
+    }
+    
+    /**
+     * Looks up an {@link EmailIdentity} by its Base64 key (the two public keys, to be
+     * more precise).
+     * Returns <code>null</code> if nothing is found.
      * @param key
      * @return
      */
     public EmailIdentity get(String key) {
-        if (key==null || key.isEmpty())
-            return null;
-        
         for (EmailIdentity identity: identities)
-            if (key.equals(identity.getKey()))
+            if (identity.getKey().equals(key))
                 return identity;
         return null;
     }

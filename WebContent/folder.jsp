@@ -56,6 +56,10 @@
             <c:if test="${empty sender}">
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
+            <c:if test="${!email.signatureValid}">
+                <ib:message key="[SIG!]" var="sigWarning"/>
+                <c:set var="sender" value="${sigWarning} ${sender}"/>
+            </c:if>
             
             <c:set var="recipient" value="${ib:getOneLocalRecipient(email)}"/>
             

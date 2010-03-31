@@ -125,6 +125,12 @@ public class I2PBote {
         Thread.currentThread().setName("I2PBoteMain");
                 
         appContext = new I2PAppContext();
+        appContext.addShutdownTask(new Runnable() {
+            @Override
+            public void run() {
+                shutDown();
+            }
+        });
         i2pClient = I2PClientFactory.createClient();
         configuration = new Configuration();
         
@@ -304,13 +310,15 @@ public class I2PBote {
     
     public void sendEmail(Email email) throws Exception {
 /*XXX*/
+EmailDestination senderDest = email.getSenderDestination();
+EmailIdentity senderIdentity = I2PBote.getInstance().getIdentities().get(senderDest);
 String recipient = email.getAllRecipients()[0].toString();
-EmailDestination emailDestination = new EmailDestination(recipient);
-Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(recipient);
-Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, emailDestination, appContext);
+Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity.getPrivateSigningKey(), recipient);
+EmailDestination recipientDest = new EmailDestination(recipient);
+Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, recipientDest, appContext);
 for (EncryptedEmailPacket packet: encryptedPackets)
     dht.store(packet);
-dht.store(new IndexPacket(encryptedPackets, emailDestination));
+dht.store(new IndexPacket(encryptedPackets, recipientDest));
         // TODO uncomment for next milestone, move code above into OutboxProcessor
 /*        outbox.add(email);
         outboxProcessor.checkForEmail();*/
