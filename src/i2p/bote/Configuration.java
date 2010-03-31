@@ -75,7 +75,7 @@ public class Configuration {
     private static final int DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = 10;
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
-    private static final String DEFAULT_LANGUAGE = null;
+    private static final String DEFAULT_LANGUAGE = Locale.getDefault().getLanguage();
     private static final boolean DEFAULT_HIDE_LOCALE = true;
     private static final boolean DEFAULT_INCLUDE_SENT_TIME = true;
     
