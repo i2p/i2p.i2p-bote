@@ -146,6 +146,16 @@ public class AddressBook implements Iterable<Contact> {
         return null;
     }
     
+    /**
+     * Returns <code>true</code> if a given <code>EmailDestination</code>
+     * is in the address book.
+     * @param destination
+     * @return
+     */
+    public boolean contains(EmailDestination destination) {
+        return contacts.contains(destination);
+    }
+    
     public Collection<Contact> getAll() {
         return contacts;
     }

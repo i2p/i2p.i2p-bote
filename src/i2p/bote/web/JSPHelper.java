@@ -308,6 +308,22 @@ public class JSPHelper {
         return newMap;
     }
     
+    /**
+     * Returns <code>true</code> if <code>address</code> contains a base64-encoded
+     * email destination that is either in the address book or among the local
+     * email identities.
+     * @param address
+     * @return
+     */
+    public static boolean isKnown(String address) {
+        EmailDestination destination = extractEmailDestination(address);
+        if (destination == null)
+            return false;
+        else if (getAddressBook().contains(destination))
+            return true;
+        else return getIdentities().contains(destination);
+    }
+    
     public Configuration getConfiguration() {
         return I2PBote.getInstance().getConfiguration();
     }

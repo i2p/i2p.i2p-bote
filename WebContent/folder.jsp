@@ -40,6 +40,8 @@
     <table>
         <tr>
             <th style="width: 100px;"><ib:message key="From"/></th>
+            <th style="width: 30px; text-align: center;"><ib:message key="Unkn."/></th>
+            <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
             <th style="width: 100px;"><ib:message key="To"/></th>
             <th style="width: 150px;"><ib:message key="Subject"/></th>
             <th style="width: 100px;"><ib:message key="Sent"/></th>
@@ -56,9 +58,12 @@
             <c:if test="${empty sender}">
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
+            
+            <c:if test="${email.signatureValid}">
+                <c:set var="signature" value="<div style='color: green;'>&#10004;</div>"/>
+            </c:if>
             <c:if test="${!email.signatureValid}">
-                <ib:message key="[SIG!]" var="sigWarning"/>
-                <c:set var="sender" value="${sigWarning} ${sender}"/>
+                <c:set var="signature" value="<div style='color: red;'>&#10008;</div>"/>
             </c:if>
             
             <c:set var="recipient" value="${ib:getOneLocalRecipient(email)}"/>
@@ -82,6 +87,8 @@
                 <c:set var="class" value="ellipsis-alt"/>
             </c:if>
             <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
+            <td style="text-align: center;"><c:if test="${!ib:isKnown(email.sender)}">&#10007;</c:if></td>
+            <td style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></td>
             <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
             <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
             <td><a href="${mailUrl}" style="font-weight: ${fontWeight}"><ib:emailDate email="${email}" timeStyle="short"/></a></td>

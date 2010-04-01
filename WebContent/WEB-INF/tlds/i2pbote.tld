@@ -318,6 +318,14 @@
     </function-signature>
 </function>
 
+<function>
+    <name>isKnown</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        boolean isKnown(java.lang.String)
+    </function-signature>
+</function>
+
 <tag-file>
     <name>printWithLineBreaks</name>
     <path>/WEB-INF/tags/printWithLineBreaks.tag</path>

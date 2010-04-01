@@ -133,12 +133,25 @@ public class Email extends MimeMessage {
             removeHeader("Date");
     }
 
+    /**
+     * Creates a digital signature of the email and stores it in the
+     * <code>X-I2PBote-Signature</code> header field.
+     * The signature is computed over the stream representation of the
+     * email, minus the signature header if it is present.
+     * @param signingKey
+     * @throws MessagingException
+     */
     private void sign(SigningPrivateKey signingKey) throws MessagingException {
         removeHeader("X-I2PBote-Signature");   // make sure there is no existing signature which would make the new signature invalid
         Signature signature = DSAEngine.getInstance().sign(toByteArray(), signingKey);
         setHeader("X-I2PBote-Signature", signature.toBase64());
     }
     
+    /**
+     * Verifies that the <code>X-I2PBote-Signature</code> header field
+     * contains a valid signature.
+     * @return
+     */
     public boolean isSignatureValid() {
         try {
             String[] signatureHeaders = getHeader("X-I2PBote-Signature");

@@ -50,6 +50,13 @@
             </td>
         </tr>
         <tr>
+            <td valign="top"><strong>Signature:</strong></td>
+            <td>
+                <c:if test="${email.signatureValid}">Valid</c:if>
+                <c:if test="${!email.signatureValid}"><div style="color: red;">Invalid</div></c:if>
+            </td>
+        </tr>
+        <tr>
             <td valign="top"><strong><ib:message key="To:"/></strong></td>
             <td>
                 <c:forEach var="recipient" varStatus="status" items="${email.allRecipients}">

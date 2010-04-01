@@ -251,6 +251,21 @@ public class Identities implements Iterable<EmailIdentity> {
         return identities;
     }
     
+    /**
+     * Returns <code>true</code> if any of the <code>Identities</code> matches
+     * the two public keys of a given <code>EmailDestination</code>
+     * (which can be an <code>EmailIdentity</code>).
+     * @param destination
+     * @return
+     */
+    public boolean contains(EmailDestination destination) {
+        for (EmailIdentity identity: identities)
+            if (identity.getPublicEncryptionKey().equals(destination.getPublicEncryptionKey())
+                    && identity.getPublicSigningKey().equals(destination.getPublicSigningKey()))
+                return true;
+        return false;
+    }
+    
     public int size() {
         return identities.size();
     }
