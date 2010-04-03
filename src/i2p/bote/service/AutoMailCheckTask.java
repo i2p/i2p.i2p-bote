@@ -50,8 +50,9 @@ public class AutoMailCheckTask extends I2PBoteThread {
                 awaitShutdownRequest(1, TimeUnit.MINUTES);
             else if (timeSinceLastCheck < interval)
                 awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
-            else if (boteInstance.getConfiguration().isAutoMailCheckEnabled()) {
-                boteInstance.checkForMail();
+            else {
+                if (boteInstance.getConfiguration().isAutoMailCheckEnabled())
+                    boteInstance.checkForMail();
                 awaitShutdownRequest(1, TimeUnit.MINUTES);
             }
         }
