@@ -2,7 +2,7 @@
 # Update messages_xx.po and messages_xx.class files,
 # from both java and jsp sources.
 # Requires installed programs xgettext, msgfmt, msgmerge, find,
-# plus everything jsp2po.sh depends on: grep, sed, awk, sort, and bash.
+# and the Java class i2p.bote.ant.JspStrings.
 #
 # usage:
 #    bundle-messages.sh (generates the resource bundle from the .po file)
@@ -10,6 +10,7 @@
 #
 # zzz - public domain
 #
+JAVA=java
 CLASS=i2p.bote.locale.Messages
 TMPFILE=ant_build/javafiles.txt
 export TZ=UTC
@@ -63,7 +64,13 @@ do
 		fi
 		
 		# extract strings from jsp files
-		./jsp2po.sh $JSPPATHS >> ${i}t
+                $JAVA -cp ant_build/classes i2p.bote.ant.JspStrings WebContent >> ${i}t
+		if [ $? -ne 0 ]
+		then
+			echo 'Warning - JspStrings failed, not updating translations'
+			rm -f ${i}t
+			break
+		fi
 
 		msgmerge -U --backup=none $i ${i}t
 		if [ $? -ne 0 ]

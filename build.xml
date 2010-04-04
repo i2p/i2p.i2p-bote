@@ -189,7 +189,7 @@ l property to true -->
         </exec>
     </target>
 
-    <target name="poupdate">
+    <target name="poupdate" depends="compilejspstrings">
         <!-- Update the messages_*.po files.  -->
         <exec executable="sh" osfamily="unix" failifexecutionfails="true" >
             <arg value="./bundle-messages.sh" />
@@ -204,6 +204,17 @@ l property to true -->
             <arg value="bundle-messages.bat" />
             <arg value="-p" />
         </exec>
+    </target>
+
+    <target name="compilejspstrings" depends="compile">
+        <javac
+            srcdir="./ant"
+            debug="true"
+            deprecation="on"
+            destdir="./ant_build/classes"
+            classpathref="cp"
+            classpath="./ant_build/classes"
+            failonerror="true" />
     </target>
 
     <target name="junit" depends="compile">

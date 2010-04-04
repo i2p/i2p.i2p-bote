@@ -51,7 +51,7 @@
             <th><ib:message key="Public Name"/></th>
             <th><ib:message key="Description"/></th>
             <th><ib:message key="Email Address"/></th>
-            <th><ib:message key="Key"/></th>
+            <th><ib:message key="Email Destination"/></th>
             <th style="width: 20px; padding: 0px"></th>
         </tr>
     </c:if>
@@ -94,7 +94,7 @@
     
     <p/>
     <form action="editIdentity.jsp?new=true" method="POST">
-        <button type="submit" value="<ib:message key='New'/>"><ib:message key="New Identity"/></button>
+        <button type="submit" value="New"><ib:message key="New Identity"/></button>
     </form>
 </div>
 

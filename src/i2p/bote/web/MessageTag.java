@@ -29,11 +29,29 @@ public class MessageTag extends BodyTagSupport {
     private List<String> parameters = new ArrayList<String>();   // holds values specified in <ib:param> tags
     private PageContext pageContext;
 
+    @Override
     public void setPageContext(PageContext pageContext) {
         this.pageContext = pageContext;
     }
     
+    /**
+     * Overridden to remove parameters from the previous MessageTag object so the old
+     * parameters aren't used for the new MessageTag (at least Tomcat re-uses MessageTag objects)
+     */
+    @Override
+    public int doStartTag() throws JspException {
+        parameters.clear();
+        return super.doStartTag();
+    }
+    
+    @Override
     public int doEndTag() throws JspException {
+        if (key==null && getBodyContent()!=null)
+            key = getBodyContent().getString();
+        
+        // JspStrings.java does this, so do it here too, in order for the strings to match
+        key = Util.removeExtraWhitespace(key);
+        
         String translation;
         if (hide && I2PBote.getInstance().getConfiguration().getHideLocale())
             translation = key;
@@ -68,7 +86,10 @@ public class MessageTag extends BodyTagSupport {
             } catch (IOException e) {
                 throw new JspException(e);
             }
-            
+        
+        // Prevent old keys from overriding the body when the object is re-used (which at least Tomcat does)
+        key = null;
+        
         return EVAL_PAGE;
     }
     

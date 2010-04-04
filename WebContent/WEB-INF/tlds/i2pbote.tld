@@ -120,7 +120,7 @@
     <attribute>
         <name>key</name>
         <rtexprvalue>true</rtexprvalue>
-        <required>true</required>
+        <required>false</required>
     </attribute>
     <attribute>
         <name>bundle</name>

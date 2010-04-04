@@ -50,10 +50,10 @@
             </td>
         </tr>
         <tr>
-            <td valign="top"><strong>Signature:</strong></td>
+            <td valign="top"><strong><ib:message key="Signature:"/></strong></td>
             <td>
-                <c:if test="${email.signatureValid}">Valid</c:if>
-                <c:if test="${!email.signatureValid}"><div style="color: red;">Invalid</div></c:if>
+                <c:if test="${email.signatureValid}"><ib:message key="Valid"/></c:if>
+                <c:if test="${!email.signatureValid}"><div style="color: red;"><ib:message key="Invalid"/></div></c:if>
             </td>
         </tr>
         <tr>

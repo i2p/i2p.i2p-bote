@@ -43,7 +43,7 @@
     </h2>
 
     <c:if test="${empty contacts}">
-        The address book is empty.
+        <ib:message key="The address book is empty."/>
     </c:if>
     
     <div class="addressbook">

@@ -23,40 +23,47 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ib" uri="I2pBoteTags" %>
+
 <c:set var="title" value="No Identity" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <div class="main">
-    <h2>No Email Identity Defined</h2>
+    <h2><ib:message key="No Email Identity Defined"/></h2>
     <p>
-    In order to receive email from other people, you need to create an email identity
-    first.
+    <ib:message>
+        In order to receive email from other people, you need to create an email identity
+        first.
+    </ib:message>
     </p><p>
-    This is similar to traditional email where you first have to set up an email account
-    with an email provider. The difference is that in I2P-Bote, there is no provider that
-    can read all your email because I2P-Bote stores all emails encrypted on the network.
+    <ib:message>
+        Every email identity is associated with an email destination. Anybody can send email
+        to the email destination, but only the identity holder can read it.
+    </ib:message>
+    <br/>
+    <ib:message>
+        In a sense, email identities are the equivalent to traditional email accounts -
+        except that there is no provider that can read all your email because I2P-Bote
+        stores all emails encrypted on the network.
+    </ib:message>
     </p><p>
-    I2P-Bote automatically decrypts emails sent to you, using the email identity you
-    created.
-    </p><p>
-    An email identity has a secret key, and a public key. Anybody who has the secret key
-    can download and decrypt your emails, so you should never give it to anybody. The
-    public key, on the other hand, allows people to send email to you. Think of it as
-    the equivalent of a traditional email address. Give it to everybody you want to be
-    able to contact you, or make it public.
-    </p><p>
-    [TODO paragraph about spam, HashCash].
-    </p><p>
-    You will find that email identities are long combinations of numbers and letters,
-    and that they are impossible to memorize. I2P-Bote lets you assign an email address
-    to an email identity to make it easier for you and your contacts to remember.
-    </p><p>
-    [TODO name attribute, address attribute].
-    The public addressbook should not be 100% trusted. Only destination keys are secure.
-    </p><p>
-    [TODO private address book, address directory].
+    <ib:message>
+        I2P-Bote automatically decrypts emails sent to you, using the email identity you
+        created. Email identities are stored in a file named identities.txt; never give
+        this file to anyone or they will be able to read all your emails.
+    </ib:message>
+    <br/>
+    <ib:message>
+        Do give out the email destination so others can contact you.
+    </ib:message>
+    <br/>
+    <ib:message>
+        It is easy to create multiple identities for different purposes, or different
+        contacts.
+    </ib:message>
     <form action="editIdentity.jsp?new=true" method="POST">
-        <button type="submit" value="New">Create a New Email Identity</button>
+        <button type="submit" value="New"><ib:message key="Create a New Email Identity"/></button>
     </form>
 </div>
 

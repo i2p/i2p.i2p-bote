@@ -123,4 +123,16 @@ public class Util {
     public static String _(String messageKey) {
         return Translate.getString(messageKey, I2PAppContext.getGlobalContext(), BUNDLE_NAME);
     }
+    
+    /**
+     * Removes all whitespace at the beginning and the end of a string,
+     * and replaces multiple whitespace characters with a single space.
+     * @param string
+     * @return
+     */
+    public static String removeExtraWhitespace(String string) {
+        if (string == null)
+            return null;
+        return string.trim().replaceAll("\\s+", " ");
+    }
 }
