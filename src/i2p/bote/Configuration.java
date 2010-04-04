@@ -346,7 +346,7 @@ public class Configuration {
     		return defaultValue;
     	else
     		try {
-    			return new Integer(properties.getProperty(parameterName));
+    			return new Integer(stringValue);
     		}
     		catch (NumberFormatException e) {
     			log.warn("Can't convert value <" + stringValue + "> for parameter <" + parameterName + "> to int, using default.");
