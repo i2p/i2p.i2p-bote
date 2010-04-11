@@ -232,7 +232,7 @@ l property to true -->
             classpathref="junitcp"
             failonerror="true" />
 
-        <junit printsummary="off">
+        <junit printsummary="off" failureproperty="failed">
             <classpath>
                 <path refid="junitcp"/>
             </classpath>
@@ -241,6 +241,13 @@ l property to true -->
                 <formatter type="plain"/>
             </batchtest>
         </junit>
+        <condition property="result"
+            value="At least one unit test failed."
+            else="All unit tests were successful.">
+            <isset property="failed"/>
+        </condition>
+        <echo message="${result}"/>
+        <echo message="For details, see ant_build/TEST*"/>
     </target>
 
     <!-- Write the app version into ${version} -->
