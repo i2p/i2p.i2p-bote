@@ -23,11 +23,15 @@ package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
 import i2p.bote.email.Email;
+import i2p.bote.email.Field;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.mail.MessagingException;
 
@@ -40,6 +44,7 @@ import net.i2p.util.Log;
  */
 public class EmailFolder extends Folder<Email> {
     protected static final String EMAIL_FILE_EXTENSION = ".mail";
+    private static final Field DEFAULT_SORT_COLUMN = Field.DATE;
     
     private Log log = new Log(EmailFolder.class);
     
@@ -78,6 +83,19 @@ public class EmailFolder extends Folder<Email> {
                     log.error("Can't close file: <" + emailFile + ">", e);
                 }
         }
+    }
+    
+    /**
+     * Returns all emails in the folder, in the order specified by <code>sortColumn</code>.
+     */
+    public List<Email> getElements(Field sortColumn, boolean descending) {
+        List<Email> emails = super.getElements();
+        
+        Comparator<Email> comparator = Email.getComparator(sortColumn);
+        if (descending)
+            comparator = Collections.reverseOrder(comparator);
+        Collections.sort(emails, comparator);
+        return emails;
     }
     
     /**

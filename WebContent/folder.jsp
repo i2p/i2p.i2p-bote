@@ -27,6 +27,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<%
+    pageContext.setAttribute("FROM", i2p.bote.email.Field.FROM, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("TO", i2p.bote.email.Field.TO, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("SUBJECT", i2p.bote.email.Field.SUBJECT, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("DATE", i2p.bote.email.Field.DATE, PageContext.PAGE_SCOPE);
+%> 
+
 <c:set var="title" value="${param.path}" scope="request"/>
 <jsp:include page="header.jsp"/>
 
@@ -35,19 +42,68 @@
     <div id="inboxFlag"></div>
 </c:if>
 
+<c:set var="sortcolumn" value="${DATE}"/>
+<c:if test="${!empty param.sortcolumn}">
+    <c:set var="sortcolumn" value="${param.sortcolumn}"/>
+</c:if>
+<c:set var="sortdirection" value="desc"/>
+<c:if test="${!empty param.sortcolumn}">
+    <c:set var="sortdirection" value="${param.sortdirection}"/>
+</c:if>
+<c:set var="reversedirection" value="asc"/>
+<c:if test="${param.dir ne 'asc'}">
+    <c:set var="reversedirection" value="desc"/>
+</c:if>
+
+<c:set var="descending" value="false"/>
+<c:set var="sortIndicator" value="&#x25b4;"/>
+<c:if test="${param.descending eq 'true'}">
+    <c:set var="descending" value="true"/>
+    <c:set var="sortIndicator" value="&#x25be;"/>
+</c:if>
+
 <div class="main">
 <div class="folder">
     <table>
+        <c:set var="folder" value="${ib:getMailFolder(folderName)}"/>
         <tr>
-            <th style="width: 100px;"><ib:message key="From"/></th>
+            <th style="width: 100px;">
+                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${FROM}"/>
+                <c:if test="${sortcolumn eq FROM}">
+                    <c:set var="fromColumnIndicator" value=" ${sortIndicator}"/>
+                    <c:if test="${!descending}">
+                        <c:set var="sortLink" value="${sortLink}&descending=true"/>
+                    </c:if>
+                </c:if>
+                <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
+            </th>
             <th style="width: 30px; text-align: center;"><ib:message key="Unkn."/></th>
             <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
             <th style="width: 100px;"><ib:message key="To"/></th>
-            <th style="width: 150px;"><ib:message key="Subject"/></th>
-            <th style="width: 100px;"><ib:message key="Sent"/></th>
+            <th style="width: 150px;">
+                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${SUBJECT}"/>
+                <c:if test="${sortcolumn eq SUBJECT}">
+                    <c:set var="subjectColumnIndicator" value=" ${sortIndicator}"/>
+                    <c:if test="${!descending}">
+                        <c:set var="sortLink" value="${sortLink}&descending=true"/>
+                    </c:if>
+                </c:if>
+                <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
+            </th>
+            <th style="width: 100px;">
+                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${DATE}"/>
+                <c:if test="${sortcolumn eq DATE}">
+                    <c:set var="dateColumnIndicator" value=" ${sortIndicator}"/>
+                    <c:if test="${!descending}">
+                        <c:set var="sortLink" value="${sortLink}&descending=true"/>
+                    </c:if>
+                </c:if>
+                <a href="${sortLink}"><ib:message key="Sent"/>${dateColumnIndicator}</a>
+            </th>
             <th style="width: 20px;"></th>
         </tr>
-        <c:forEach items="${ib:getMailFolder(folderName).elements}" var="email" varStatus="status">
+        
+        <c:forEach items="${ib:getEmails(folder, sortcolumn, descending)}" var="email" varStatus="status">
             <c:if test="${status.index%2 == 0}">
                 <tr>
             </c:if>

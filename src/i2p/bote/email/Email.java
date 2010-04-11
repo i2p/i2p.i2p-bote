@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -308,6 +309,34 @@ public class Email extends MimeMessage {
         return false;
     }
     
+    /**
+     * Returns a <code>Comparator</code> for sorting a given email field.
+     * If <code>field</code> is <code>null</code>, the date field is used.
+     * @param field
+     * @return
+     */
+    public static Comparator<Email> getComparator(Field field) {
+        if (field == null)
+            field = Field.DATE;
+        return new EmailComparator(field);
+    }
+    
+    private String getOneFromAddress() throws MessagingException {
+        Address[] fromAddresses = getFrom();
+        if (fromAddresses==null || fromAddresses.length==0)
+            return null;
+        else
+            return fromAddresses[0].toString();
+    }
+    
+    private String getOneRecipient() throws MessagingException {
+        Address[] recipients = getAllRecipients();
+        if (recipients==null || recipients.length==0)
+            return null;
+        else
+            return recipients[0].toString();
+    }
+    
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("MsgId: ").append(getMessageID());
@@ -332,5 +361,71 @@ public class Email extends MimeMessage {
             result.append("#Error#");
         }
         return result.toString();
+    }
+    
+    /**
+     * For sorting emails.
+     */
+    private static class EmailComparator implements Comparator<Email> {
+        private Field field;
+        
+        public EmailComparator(Field field) {
+            this.field = field;
+        }
+        
+        @Override
+        public int compare(Email email1, Email email2) {
+            @SuppressWarnings("unchecked") Comparable value1 = 0;
+            @SuppressWarnings("unchecked") Comparable value2 = 0;
+            
+            try {
+                switch(field) {
+                case DATE:
+                    value1 = email1.getSentDate();
+                    value2 = email2.getSentDate();
+                    break;
+                case FROM:
+                    value1 = email1.getOneFromAddress();
+                    value2 = email2.getOneFromAddress();
+                    break;
+                case TO:
+                    value1 = email1.getOneRecipient();
+                    value2 = email2.getOneRecipient();
+                    break;
+                case SUBJECT:
+                    value1 = email1.getSubject();
+                    value2 = email2.getSubject();
+                    break;
+                default:
+                    log.error("Unknown email field type: " + field);
+                }
+                
+                return nullSafeCompare(value1, value2);
+            }
+            catch (MessagingException e) {
+                log.error("Can't read the " + field + " field from an email", e);
+                return 0;
+            }
+        }
+        
+        @SuppressWarnings("unchecked")
+        private int nullSafeCompare(Comparable value1, Comparable value2) {
+            if (value1 == null) {
+                if (value2 == null)
+                    return 0;
+                else
+                    return -1;
+            }
+            else {
+                if (value2 == null)
+                    return 1;
+                else {
+                    if (value1 instanceof String)
+                        return ((String)value1).compareToIgnoreCase((String)value2);
+                    else
+                        return value1.compareTo(value2);
+                }
+            }
+        }
     }
 }

@@ -25,9 +25,9 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import net.i2p.util.Log;
 
@@ -81,8 +81,8 @@ public abstract class Folder<T> implements Iterable<T> {
         return files;
     }
     
-    public Collection<T> getElements() {
-        Collection<T> elements = new ArrayList<T>();
+    public List<T> getElements() {
+        List<T> elements = new ArrayList<T>();
         Iterator<T> iterator = iterator();
         while (iterator.hasNext())
             elements.add(iterator.next());

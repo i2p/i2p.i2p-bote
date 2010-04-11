@@ -28,11 +28,13 @@ import i2p.bote.addressbook.Contact;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.Field;
 import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -202,6 +204,10 @@ public class JSPHelper {
         return getMailFolder(folderName).getEmail(messageId);
     }
 
+    public static List<Email> getEmails(EmailFolder folder, Field sortColumn, boolean descending) {
+        return folder.getElements(sortColumn, descending);
+    }
+    
     public static String getShortSenderName(String sender, int maxLength) {
         if (sender == null)
             return null;
