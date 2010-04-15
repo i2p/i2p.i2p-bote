@@ -24,27 +24,78 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
+
+<%--
+    Valid actions:
+        <default> - show the "edit contact" form
+        save      - add a contact or update an existing one
+        cancel    - go to the URL in backUrl
+        
+    Other parameters:
+        new       - true for new contact, false for existing contact
+--%>
+
+<c:if test="${param.action eq 'cancel'}">
+    <c:set var="backUrl" value="${param.backUrl}"/>
+    <c:if test="${empty backUrl}">
+        <c:set var="backUrl" value="addressBook.jsp"/>
+    </c:if>
+    <jsp:forward page="${backUrl}">
+        <jsp:param value="action" name=""/>
+    </jsp:forward>
+</c:if>
+
+<c:if test="${param.action eq 'save'}">
+    <c:choose>
+        <c:when test="${empty param.destination}">
+            <ib:message key="Please fill in the Destination field." var="errorMessage"/>
+        </c:when>
+        <c:when test="${empty param.name}">
+            <ib:message key="Please fill in the Name field." var="errorMessage"/>
+        </c:when>
+        <c:otherwise>
+            <c:set var="errorMessage" value="${ib:saveContact(param.destination, param.name)}"/>
+        </c:otherwise>
+    </c:choose>
+
+    <c:if test="${empty errorMessage}">
+        <ib:message key="The contact has been saved." var="infoMessage"/>
+        <c:set var="forwardUrl" value="${param.forwardUrl}"/>
+        <c:if test="${empty forwardUrl}">
+            <c:set var="forwardUrl" value="addressBook.jsp"/>
+        </c:if>
+        <jsp:forward page="${forwardUrl}">
+            <jsp:param name="action" value=""/>
+            <jsp:param name="infoMessage" value="${infoMessage}"/>
+        </jsp:forward>
+    </c:if>
+    <c:if test="${!empty errorMessage}">
+        <jsp:forward page="editContact.jsp">
+            <jsp:param name="action" value=""/>
+            <jsp:param name="errorMessage" value="${errorMessage}"/>
+        </jsp:forward>
+    </c:if>
+</c:if>
 
 <c:choose>
     <c:when test="${param.new}">
         <ib:message key="New Contact" var="title"/>
         <c:set var="title" value="${title}" scope="request"/>
-        <ib:message key="Add" var="action"/>
-        <c:set var="commitAction" value="${action}"/>
+        <ib:message key="Add" var="submitButtonText"/>
     </c:when>
     <c:otherwise>
         <ib:message key="Edit Contact" var="title"/>
         <c:set var="title" value="${title}" scope="request"/>
-        <ib:message key="Add" var="action"/>
-        <c:set var="commitAction" value="${action}"/>
+        <ib:message key="Save" var="submitButtonText"/>
     </c:otherwise>
 </c:choose>
 <jsp:include page="header.jsp"/>
 
 <div class="main">
-    <form name="form" action="saveContact.jsp" method="post">
+    <form name="form" action="editContact.jsp" method="post">
+        <ib:copyParams paramsToCopy="${param.paramsToCopy}"/>
+        
         <table>
             <tr>
                 <td>
@@ -67,9 +118,8 @@
                 </td>
             </tr>
         </table>
-        <input type="hidden" name="destination" value="${param.destination}"/>
-        <input type="submit" name="action" value="${commitAction}"/>
-        <input type="submit" name="action" value="<ib:message key="Cancel"/>"/>
+        <button name="action" value="save">${submitButtonText}</button>
+        <button name="action" value="cancel"/><ib:message key="Cancel"/></button>
     </form>
 
     <script type="text/javascript" language="JavaScript">

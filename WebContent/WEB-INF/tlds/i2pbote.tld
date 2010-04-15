@@ -111,10 +111,10 @@
 
 <tag>
     <name>message</name>
-    <description>
+    <info>
         Same as fmt:message, except that message keys in
         the "en" locale translate to the message key itself.
-    </description>
+    </info>
     <tag-class>i2p.bote.web.MessageTag</tag-class>
     <body-content>JSP</body-content>
     <attribute>
@@ -150,9 +150,9 @@
 
 <tag>
     <name>param</name>
-    <description>
+    <info>
         Same as fmt:param. Must be inside an ib:message tag.
-    </description>
+    </info>
     <tag-class>i2p.bote.web.ParamTag</tag-class>
     <body-content>scriptless</body-content>
     <attribute>
@@ -164,9 +164,9 @@
 
 <tag>
     <name>saveConfiguration</name>
-    <description>
+    <info>
         Saves the configuration to the config file.
-    </description>
+    </info>
     <tag-class>i2p.bote.web.SaveConfigurationTag</tag-class>
     <body-content>empty</body-content>
 </tag>
@@ -350,12 +350,13 @@
 </tag-file> 
 
 <tag-file>
-    <description>
-        Prints the "sent" date and time of an email. Handles null dates.
-        timeStyle can be "short", "medium", "long", or "full".
-    </description>
     <name>emailDate</name>
     <path>/WEB-INF/tags/emailDate.tag</path>
+</tag-file> 
+
+<tag-file>
+    <name>copyParams</name>
+    <path>/WEB-INF/tags/copyParams.tag</path>
 </tag-file> 
 
 </taglib>

@@ -27,14 +27,36 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<%--
+    Valid actions:
+        <default>     - show the "new email" form
+        send          - send an email using the request data
+        addToAddrBook - add a recipient to the address book and return here
+        lookup        - add one or more address book entries as recipients and return here
+        
+    Other parameters:
+        new    - true for new contact, false for existing contact
+--%>
+
 <c:choose>
     <c:when test="${param.action eq 'send'}">
         <jsp:forward page="sendEmail.jsp"/>
     </c:when>
-    <c:when test="${fn:startsWith(param.action, 'lookup')}">
+    <c:when test="${param.action eq 'addToAddrBook'}">
+        <c:set var="destparam" value="${param.destparamname}"/>
+        <jsp:forward page="editContact.jsp">
+            <jsp:param name="new" value="true"/>
+            <jsp:param name="destination" value="${param[destparam]}"/>
+            <jsp:param name="forwardUrl" value="newEmail.jsp"/>
+            <jsp:param name="backUrl" value="newEmail.jsp"/>
+            <jsp:param name="paramsToCopy" value="recipient*,to*,cc*,bcc*,replyto*,subject,message,forwardUrl,backUrl,paramsToCopy"/>
+        </jsp:forward>
+    </c:when>
+    <c:when test="${param.action eq 'lookup'}">
         <jsp:forward page="addressBook.jsp">
-            <jsp:param name="search" value="true"/>
-            <jsp:param name="action" value=""/>
+            <jsp:param name="select" value="true"/>
+            <jsp:param name="forwardUrl" value="newEmail.jsp"/>
+            <jsp:param name="paramsToCopy" value="recipient*,to*,cc*,bcc*,replyto*,subject,message,forwardUrl"/>
         </jsp:forward>
     </c:when>
 </c:choose>
@@ -69,6 +91,7 @@
                 </td>
             </tr>
             
+            <%-- Add an address line for each recipient# parameter, where # is a number --%>
             <c:set var="maxRecipientIndex" value="-1"/>
             <c:forEach var="parameter" items="${ib:getRecipients(param)}">
                 <c:set var="isRecipient" value="${fn:startsWith(parameter.key, 'recipient') and !fn:contains(parameter.key, 'Type')}"/>
@@ -97,6 +120,7 @@
                     </td></tr>
                 </c:if>
             </c:forEach>
+            <%-- Add an address line for each selectedContact parameter (from addressbook.jsp) --%>
             <c:if test="${!empty param.selectedContact}">
                 <c:forEach var="destination" items="${paramValues.selectedContact}">
                     <c:set var="maxRecipientIndex" value="${maxRecipientIndex+1}"/>
@@ -112,6 +136,7 @@
                     </td></tr>
                 </c:forEach>
             </c:if>
+            <%-- Add a blank recipient field --%>
             <c:set var="maxRecipientIndex" value="${maxRecipientIndex+1}"/>
             <tr><td>
                 <select name="recipientType${maxRecipientIndex}">
@@ -121,14 +146,17 @@
                     <option value="replyto"><ib:message key="Reply To:"/></option>
                 </select>
             </td><td>
-                <input class="widetextfield" type="text" size="80" name="recipient${maxRecipientIndex}"/>
+                <c:set var="newRecipientField" value="recipient${maxRecipientIndex}"/>
+                <input type="text" size="80" name="${newRecipientField}"/>
+                <input type="hidden" name="destparamname" value="${newRecipientField}"/>
+                <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="images/addressbook.gif"/></button>
             </td></tr>
 
             <tr>
                 <td/>
                 <td style="text-align: right;">
                     <button type="submit" name="action" value="addRecipient" disabled="disabled">+</button>
-                    <button type="submit" name="action" value="lookup0"><ib:message key="Addr. Book..."/></button>
+                    <button type="submit" name="action" value="lookup"><ib:message key="Addr. Book..."/></button>
                 </td>
             </tr>
             <tr>

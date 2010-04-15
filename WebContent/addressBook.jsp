@@ -20,9 +20,9 @@
  --%>
 
 <%--
-    This page behaves differently depending on the "search" boolean parameter.
-    If search is true, the user can select contacts and add them as recipients.
-    If search is false, the user can view and edit the address book.
+    This page behaves differently depending on the "select" boolean parameter.
+    If select is true, the user can select contacts and add them as recipients.
+    If select is false, the user can view and edit the address book.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -38,8 +38,8 @@
     <c:set var="contacts" value="${ib:getAddressBook().all}"/>
     
     <h2>
-        <c:if test="${!param.search}"><ib:message key="Private Address Book"/></c:if>
-        <c:if test="${param.search && !empty contacts}"><ib:message key="Select One or More Entries"/></c:if>
+        <c:if test="${!param.select}"><ib:message key="Private Address Book"/></c:if>
+        <c:if test="${param.select && !empty contacts}"><ib:message key="Select One or More Entries"/></c:if>
     </h2>
 
     <c:if test="${empty contacts}">
@@ -48,17 +48,15 @@
     
     <div class="addressbook">
 
-    <c:if test="${param.search}">
-        <form action="newEmail.jsp" method="POST">
-        <c:forEach var="parameter" items="${param}">
-            <input type="hidden" name="${parameter.key}" value="${parameter.value}"/>
-        </c:forEach>
+    <c:if test="${param.select}">
+        <form action="${forwardUrl}" method="POST">
+        <ib:copyParams paramsToCopy="${param.paramsToCopy}"/>
     </c:if>
     
     <table>
     <c:if test="${!empty contacts}">
         <tr>
-            <c:if test="${param.search}"><th style="width: 10px;"></th></c:if>
+            <c:if test="${param.select}"><th style="width: 10px;"></th></c:if>
             <th><ib:message key="Name"/></th>
             <th><ib:message key="Email Destination"/></th>
             <th style="width: 20px; padding: 0px"></th>
@@ -66,18 +64,18 @@
     </c:if>
     <c:forEach items="${contacts}" var="contact" varStatus="loopStatus">
         <tr>
-        <c:if test="${param.search}">
+        <c:if test="${param.select}">
             <td>
                 <input type="checkbox" name="selectedContact" value="${contact.name} &lt;${contact.destination}&gt;"/>
             </td>
         </c:if>
         <td style="width: 100px;">
             <div class="ellipsis">
-                <c:if test="${!param.search}">
+                <c:if test="${!param.select}">
                     <a href="editContact.jsp?new=false&destination=${contact.destination}&name=${contact.name}">
                 </c:if>
                     ${contact.name}
-                <c:if test="${!param.search}">
+                <c:if test="${!param.select}">
                     </a>
                 </c:if>
             </div>
@@ -88,7 +86,7 @@
             </div>
         </td>
         <td>
-            <c:if test="${!param.search}">
+            <c:if test="${!param.select}">
                 <a href="deleteContact.jsp?destination=${contact.destination}"><img src="images/delete.png" alt="<ib:message key='Delete'/>" title='<ib:message key='Delete this contact'/>'/></a>
             </c:if>
         </td>
@@ -99,21 +97,26 @@
     
     <p/>
     <table>
-        <c:if test="${!param.search}">
+        <c:if test="${!param.select}">
             <tr><td>
                 <form action="editContact.jsp?new=true" method="POST">
                     <button type="submit" value="New"><ib:message key="New Contact"/></button>
                 </form>
             </td></tr>
         </c:if>
-        <c:if test="${param.search}">
+        <c:if test="${param.select}">
             <tr><td>
-                <button type="submit" value="New"><ib:message key="Add Recipients"/></button>
+                <c:if test="${!empty contacts}">
+                    <button type="submit" value="New"><ib:message key="Add Recipients"/></button>
+                </c:if>
+                <c:if test="${empty contacts}">
+                    <button type="submit" value="New"><ib:message key="Return"/></button>
+                </c:if>
             </td></tr>
         </c:if>
     </table>
     
-    <c:if test="${param.search}">
+    <c:if test="${param.select}">
         </form>
     </c:if>
     
