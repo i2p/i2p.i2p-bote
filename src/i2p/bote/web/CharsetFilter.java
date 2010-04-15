@@ -1,3 +1,7 @@
+/**
+ * Presumably under the Apache License, v2.0 which is compatible with GPL v3.
+ */
+
 package i2p.bote.web;
 
 import java.io.IOException;
@@ -10,7 +14,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * Taken from http://wiki.apache.org/tomcat/Tomcat/UTF-8
+ * Taken from http://wiki.apache.org/tomcat/Tomcat/UTF-8.
+ * The link is dead now, but similar code ships with Tomcat and can be found at
+ * $TOMCAT/webapps/examples/WEB-INF/classes/filters/SetCharacterEncodingFilter.java.
  */
 public class CharsetFilter implements Filter {
     private String encoding;
