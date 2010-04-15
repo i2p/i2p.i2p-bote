@@ -44,7 +44,6 @@ import net.i2p.util.Log;
  */
 public class EmailFolder extends Folder<Email> {
     protected static final String EMAIL_FILE_EXTENSION = ".mail";
-    private static final Field DEFAULT_SORT_COLUMN = Field.DATE;
     
     private Log log = new Log(EmailFolder.class);
     
