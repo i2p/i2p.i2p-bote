@@ -46,20 +46,33 @@
 <c:if test="${!empty param.sortcolumn}">
     <c:set var="sortcolumn" value="${param.sortcolumn}"/>
 </c:if>
-<c:set var="sortdirection" value="desc"/>
-<c:if test="${!empty param.sortcolumn}">
-    <c:set var="sortdirection" value="${param.sortdirection}"/>
-</c:if>
-<c:set var="reversedirection" value="asc"/>
-<c:if test="${param.dir ne 'asc'}">
-    <c:set var="reversedirection" value="desc"/>
-</c:if>
 
-<c:set var="descending" value="false"/>
-<c:set var="sortIndicator" value="&#x25b4;"/>
-<c:if test="${param.descending eq 'true'}">
-    <c:set var="descending" value="true"/>
+<c:choose>
+    <c:when test="${empty param.descending}">
+        <%-- Use the default sort direction: descending for date, ascending for everything else --%>
+        <c:if test="${sortcolumn eq DATE}">
+            <c:set var="descending" value="true"/>
+        </c:if>
+        <c:if test="${sortcolumn ne DATE}">
+            <c:set var="descending" value="false"/>
+        </c:if>
+    </c:when>
+    <c:otherwise>
+        <%-- Set the sort direction depending on param.descending --%>
+        <c:set var="descending" value="false"/>
+        <c:if test="${param.descending}">
+            <c:set var="descending" value="true"/>
+        </c:if>
+    </c:otherwise>
+</c:choose>
+
+<c:if test="${!descending}">
+    <c:set var="sortIndicator" value="&#x25b4;"/>
+    <c:set var="reverseSortOrder" value="&descending=true"/>
+</c:if>
+<c:if test="${descending}">
     <c:set var="sortIndicator" value="&#x25be;"/>
+    <c:set var="reverseSortOrder" value="&descending=false"/>
 </c:if>
 
 <div class="main">
@@ -70,10 +83,8 @@
             <th style="width: 100px;">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${FROM}"/>
                 <c:if test="${sortcolumn eq FROM}">
+                    <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="fromColumnIndicator" value=" ${sortIndicator}"/>
-                    <c:if test="${!descending}">
-                        <c:set var="sortLink" value="${sortLink}&descending=true"/>
-                    </c:if>
                 </c:if>
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
@@ -83,20 +94,16 @@
             <th style="width: 150px;">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${SUBJECT}"/>
                 <c:if test="${sortcolumn eq SUBJECT}">
+                    <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="subjectColumnIndicator" value=" ${sortIndicator}"/>
-                    <c:if test="${!descending}">
-                        <c:set var="sortLink" value="${sortLink}&descending=true"/>
-                    </c:if>
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
             </th>
             <th style="width: 100px;">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${DATE}"/>
                 <c:if test="${sortcolumn eq DATE}">
+                    <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="dateColumnIndicator" value=" ${sortIndicator}"/>
-                    <c:if test="${!descending}">
-                        <c:set var="sortLink" value="${sortLink}&descending=true"/>
-                    </c:if>
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Sent"/>${dateColumnIndicator}</a>
             </th>
