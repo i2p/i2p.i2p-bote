@@ -85,6 +85,6 @@ public class RetrieveRequest extends CommunicationPacket {
     
     @Override
     public String toString() {
-        return super.toString() + ", DhtKey=" + key.toBase64();
+        return super.toString() + ", DhtKey=" + key.toBase64() + ", DataType=" + (dataType==null?"<null>":dataType.getSimpleName());
     }
 }

@@ -92,4 +92,9 @@ public class StoreRequest extends CommunicationPacket {
         }
         return byteArrayStream.toByteArray();
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + ", PayldType=" + (packetToStore==null?"<null>":packetToStore.getClass().getSimpleName());
+    }
 }
