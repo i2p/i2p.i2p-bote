@@ -117,7 +117,7 @@
             <c:if test="${status.index%2 != 0}">
                 <tr class="altrow">
             </c:if>
-            <c:set var="sender" value="${email.sender}"/>
+            <c:set var="sender" value="${ib:getNameAndDestination(email.sender)}"/>
             <c:if test="${empty sender}">
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
@@ -129,7 +129,7 @@
                 <c:set var="signature" value="<div style='color: red;'>&#10008;</div>"/>
             </c:if>
             
-            <c:set var="recipient" value="${ib:getOneLocalRecipient(email)}"/>
+            <c:set var="recipient" value="${ib:getNameAndDestination(ib:getOneLocalRecipient(email))}"/>
             
             <c:set var="subject" value="${email.subject}"/>
             <c:if test="${empty subject}">

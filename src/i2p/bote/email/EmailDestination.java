@@ -21,8 +21,6 @@
 
 package i2p.bote.email;
 
-import i2p.bote.Util;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -86,7 +84,7 @@ public class EmailDestination {
      * @throws DataFormatException If <code>address</code> doesn't contain a valid Email Destination
      */
     public EmailDestination(String address) throws DataFormatException {
-        String base64Data = Util.extractBase64Dest(address);
+        String base64Data = extractBase64Dest(address);
         if (base64Data == null) {
             String msg = "No Email Destination found in string: <" + address + ">";
             log.debug(msg);
@@ -97,6 +95,34 @@ public class EmailDestination {
         Destination i2pDestination = new Destination(base64Data);
         publicEncryptionKey = i2pDestination.getPublicKey();
         publicSigningKey = i2pDestination.getSigningPublicKey();
+    }
+    
+    /**
+     * Looks for a Base64-encoded Email Destination in a string. Returns
+     * the 512-byte Base64 string, or <code>null</code> if nothing is found.
+     * Even if the return value is non-<code>null</code>, it is not
+     * guaranteed to be a valid Email Destination.
+     * @param address
+     * @return
+     */
+    public static String extractBase64Dest(String address) {
+        if (address==null || address.length()<512)
+            return null;
+        
+        if (address.length() == 512)
+            return address;
+        
+        // Check if the string contains 512 chars in angle brackets
+        int ltIndex = address.indexOf('<');
+        int gtIndex = address.indexOf('>', ltIndex);
+        if (ltIndex>=0 && ltIndex+513==gtIndex)
+            return address.substring(ltIndex+1, gtIndex);
+        
+        // Check if the string is of the form EmailDest@foo
+        if (address.indexOf('@') == 512)
+            return address.substring(0, 513);
+        
+        return null;
     }
     
     protected void initKeys(I2PSession i2pSession) {

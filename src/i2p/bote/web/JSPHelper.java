@@ -23,6 +23,7 @@ package i2p.bote.web;
 
 import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
+import i2p.bote.Util;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.addressbook.Contact;
 import i2p.bote.email.Email;
@@ -177,10 +178,6 @@ public class JSPHelper {
         }
     }
     
-    public static Contact getContact(String destination) {
-        return getAddressBook().get(destination);
-    }
-    
     public static void checkForMail() {
         I2PBote.getInstance().checkForMail();
     }
@@ -207,7 +204,7 @@ public class JSPHelper {
     public static List<Email> getEmails(EmailFolder folder, Field sortColumn, boolean descending) {
         return folder.getElements(sortColumn, descending);
     }
-    
+
     public static String getShortSenderName(String sender, int maxLength) {
         if (sender == null)
             return null;
@@ -230,11 +227,10 @@ public class JSPHelper {
      * of them is returned.
      * If the email does not contain a local Email Destination, <code>null</code>
      * is returned.
-     * TODO also check the local address book when it is implemented
      * @param email
      * @return
      */
-    public static String getOneLocalRecipient(Email email) {
+    public static Address getOneLocalRecipient(Email email) {
         Address[] recipients;
         try {
             recipients = email.getAllRecipients();
@@ -246,11 +242,9 @@ public class JSPHelper {
         Identities identities = getIdentities();
         for (EmailDestination localDestination: identities) {
             String base64Dest = localDestination.toBase64();
-            for (Address recipient: recipients) {
-                String recipientString = recipient.toString();
-                if (recipientString.contains(base64Dest))
-                    return recipientString;
-            }
+            for (Address recipient: recipients)
+                if (recipient.toString().contains(base64Dest))
+                    return recipient;
         }
         
         return null;
@@ -266,28 +260,8 @@ public class JSPHelper {
      * @param address
      * @return
      */
-    public static EmailDestination extractEmailDestination(String address) {
-        if (address == null)
-            return null;
-        
-        String destinationString = null;
-        if (address.length() == 512)
-            destinationString = address;
-        else {
-            int ltIndex = address.indexOf('<');
-            int gtIndex = address.indexOf('>');
-            if (ltIndex>=0 && ltIndex+513==gtIndex)
-                destinationString = address.substring(ltIndex, gtIndex+1);
-        }
-        
-        if (destinationString == null)
-            return null;
-        else
-            try {
-                return new EmailDestination(destinationString);
-            } catch (DataFormatException e) {
-                return null;
-            }
+    public static String extractEmailDestination(String address) {
+        return EmailDestination.extractBase64Dest(address);
     }
     
     /**
@@ -322,12 +296,16 @@ public class JSPHelper {
      * @return
      */
     public static boolean isKnown(String address) {
-        EmailDestination destination = extractEmailDestination(address);
+        String destination = extractEmailDestination(address);
         if (destination == null)
             return false;
         else if (getAddressBook().contains(destination))
             return true;
         else return getIdentities().contains(destination);
+    }
+    
+    public static String getNameAndDestination(Address address) {
+        return Util.getNameAndDestination(getIdentities(), getAddressBook(), address);
     }
     
     public Configuration getConfiguration() {

@@ -253,16 +253,19 @@ public class Identities implements Iterable<EmailIdentity> {
     
     /**
      * Returns <code>true</code> if any of the <code>Identities</code> matches
-     * the two public keys of a given <code>EmailDestination</code>
+     * the two public keys of a given {@link EmailDestination}
      * (which can be an <code>EmailIdentity</code>).
-     * @param destination
+     * @param destination A base64-encoded Email Destination
      * @return
      */
-    public boolean contains(EmailDestination destination) {
+    public boolean contains(String base64dest) {
+        if (base64dest == null)
+            return false;
+        
         for (EmailIdentity identity: identities)
-            if (identity.getPublicEncryptionKey().equals(destination.getPublicEncryptionKey())
-                    && identity.getPublicSigningKey().equals(destination.getPublicSigningKey()))
+            if (base64dest.equals(identity.toBase64()))
                 return true;
+        
         return false;
     }
     

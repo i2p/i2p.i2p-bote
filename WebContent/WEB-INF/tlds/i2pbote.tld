@@ -228,14 +228,6 @@
 </function>
 
 <function>
-    <name>getContact</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
-    <function-signature>
-        i2p.bote.addressbook.Contact getContact(java.lang.String)
-    </function-signature>
-</function>
-
-<function>
     <name>isCheckingForMail</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
@@ -303,6 +295,20 @@
 </function>
 
 <function>
+    <name>getNameAndDestination</name>
+    <description>
+        Returns a string containing the locally known name of the Email Destination
+        in the Address parameter, and the Base64-encoded Email Destination.
+        If the Email Destination is not locally known (if it doesn't exist in the
+        address book or any of the identities), the address is returned unaltered.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getNameAndDestination(javax.mail.Address)
+    </function-signature>
+</function>
+
+<function>
     <name>extractName</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
@@ -328,6 +334,10 @@
 
 <function>
     <name>isKnown</name>
+    <description>
+        Returns true if a string contains a Base64-encoded Email Destination that
+        is either in the address book or among the Email Identities.
+    </description>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         boolean isKnown(java.lang.String)

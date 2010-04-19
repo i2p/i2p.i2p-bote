@@ -147,13 +147,19 @@ public class AddressBook implements Iterable<Contact> {
     }
     
     /**
-     * Returns <code>true</code> if a given <code>EmailDestination</code>
+     * Returns <code>true</code> if a given Base64-encoded Email Destination
      * is in the address book.
-     * @param destination
+     * @param base64dest
      * @return
      */
-    public boolean contains(EmailDestination destination) {
-        return contacts.contains(destination);
+    public boolean contains(String base64dest) {
+        if (base64dest == null)
+            return false;
+        
+        for (Contact contact: contacts)
+            if (base64dest.equals(contact.toBase64()))
+                return true;
+        return false;
     }
     
     public Collection<Contact> getAll() {

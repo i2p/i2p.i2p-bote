@@ -21,12 +21,20 @@
 
 package i2p.bote;
 
+import i2p.bote.addressbook.AddressBook;
+import i2p.bote.addressbook.Contact;
+import i2p.bote.email.EmailDestination;
+import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.Identities;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ThreadFactory;
+
+import javax.mail.Address;
 
 import net.i2p.I2PAppContext;
 import net.i2p.util.Translate;
@@ -37,30 +45,41 @@ public class Util {
 	private Util() { }
 	
     /**
-     * Looks for a Base64-encoded Email Destination in a string. Returns
-     * the 512-byte Base64 string, or <code>null</code> if nothing is found.
-     * Even if the return value is non-<code>null</code>, it is not
-     * guaranteed to be a valid Email Destination.
-     * @param address
+     * Looks up the name associated with a Base64-encoded Email Destination,
+     * in the address book and the local identities, and returns a string
+     * that contains the name and the Base64-encoded destination.
+     * If <code>address</code> already contains a name, it is replaced with
+     * the one from the address book or identities.
+     * If no name is found in the address book or the identities, or if
+     * <code>address</code> does not contain a valid Email Destination,
+     * <code>address</code> is returned.
+     * @param identities
+     * @param addressBook
+     * @param address A Base64-encoded Email Destination, and optionally a name
      * @return
      */
-	public static String extractBase64Dest(String address) {
-        if (address==null || address.length()<512)
+    public static String getNameAndDestination(Identities identities, AddressBook addressBook, String address) {
+        String base64dest = EmailDestination.extractBase64Dest(address);
+        if (base64dest != null) {
+            // try the address book
+            Contact contact = addressBook.get(base64dest);
+            if (contact != null)
+                return contact.getName() + "<" + contact.toBase64() + ">";
+            
+            // if no address book entry, try the email identities
+            EmailIdentity identity = identities.get(base64dest);
+            if (identity != null)
+                return identity.getPublicName() + "<" + identity.toBase64() + ">";
+        }
+        
+        return address;
+    }
+    
+    public static String getNameAndDestination(Identities identities, AddressBook addressBook, Address address) {
+        if (address == null)
             return null;
-        
-        if (address.length() == 512)
-            return address;
-        
-        // Check if the string contains 512 chars in angle brackets
-        int bracketIndex = address.indexOf('<');
-        if (bracketIndex>=0 && address.length()>bracketIndex+512)
-            return address.substring(bracketIndex+1, bracketIndex+1+512);
-        
-        // Check if the string is of the form EmailDest@foo
-        if (address.indexOf('@') == 512)
-            return address.substring(0, 513);
-        
-        return null;
+        else
+            return getNameAndDestination(identities, addressBook, address.toString());
     }
     
     public static byte[] readInputStream(InputStream inputStream) throws IOException {

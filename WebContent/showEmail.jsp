@@ -39,11 +39,11 @@
         <tr>
             <td valign="top"><strong><ib:message key="From:"/></strong></td>
             <td>
-                <ib:address address="${email.sender}"/>
+                <ib:address address="${ib:getNameAndDestination(email.sender)}"/>
                 <c:set var="senderDestination" value="${ib:extractEmailDestination(email.sender)}"/>
                 <c:if test="${!empty senderDestination}">
                     <form action="editContact.jsp?new=true&destination=${senderDestination}&name=${ib:extractName(email.sender)}" method="POST">
-                        <c:set var="disabled" value="${empty ib:getContact(senderDestination) ? '' : 'disabled=&quot; disabled&quot; title=&quot;The Email Destination already exists in the address book.&quot;'}"/>
+                        <c:set var="disabled" value="${ib:isKnown(senderDestination) ? 'disabled=&quot; disabled&quot; title=&quot;The Email Destination already exists in the address book.&quot;' : ''}"/>
                         <button type="submit"${disabled}><ib:message key="Add to Address Book"/></button>
                     </form>
                 </c:if>
@@ -60,7 +60,7 @@
             <td valign="top"><strong><ib:message key="To:"/></strong></td>
             <td>
                 <c:forEach var="recipient" varStatus="status" items="${email.allRecipients}">
-                    <ib:address address="${recipient}"/>
+                    <ib:address address="${ib:getNameAndDestination(recipient)}"/>
                     <c:if test="${!status.last}">,<p/></c:if>
                 </c:forEach>
             </td>
