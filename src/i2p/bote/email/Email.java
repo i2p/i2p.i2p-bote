@@ -21,6 +21,7 @@
 
 package i2p.bote.email;
 
+import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.UniqueId;
 import i2p.bote.packet.UnencryptedEmailPacket;
@@ -35,6 +36,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -172,6 +174,45 @@ public class Email extends MimeMessage {
         }
     }
     
+    /**
+     * Throws an exception if one or more address fields contain an invalid
+     * Email Destination. If all addresses are valid, nothing happens.
+     * @throws MessagingException
+     * @throws DataFormatException
+     */
+    public void checkAddresses() throws MessagingException, DataFormatException {
+        Collection<Address> allAddresses = getAllAddresses();
+        for (Address address: allAddresses)
+            try {
+                new EmailDestination(address.toString());
+            }
+            catch (DataFormatException e) {
+                throw new DataFormatException(_("Invalid address: {0}", address), e);
+            }
+    }
+    
+    private Collection<Address> getAllAddresses() throws MessagingException {
+        Collection<Address> addresses = new ArrayList<Address>();
+        
+        Address[] from = getFrom();
+        if (from != null)
+            addresses.addAll(Arrays.asList(from));
+        
+        Address sender = getSender();
+        if (sender != null)
+            addresses.add(sender);
+        
+        Address[] recipients = getAllRecipients();
+        if (recipients != null)
+            addresses.addAll(Arrays.asList(recipients));
+        
+        Address[] replyTo = getReplyTo();
+        if (replyTo != null)
+            addresses.addAll(Arrays.asList(replyTo));
+        
+        return addresses;
+    }
+    
     private byte[] toByteArray() throws MessagingException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         try {
@@ -189,10 +230,11 @@ public class Email extends MimeMessage {
     private void scrubHeaders() throws MessagingException {
         @SuppressWarnings("unchecked")
         List<Header> nonMatchingHeaders = Collections.list(getNonMatchingHeaders(HEADER_WHITELIST));
-        for (Header header: nonMatchingHeaders) {
-            log.debug("Removing all instances of non-whitelisted header <" + header.getName() + ">");
-            removeHeader(header.getName());
-        }
+        for (Header header: nonMatchingHeaders)
+            if (header != null) {
+                log.debug("Removing all instances of non-whitelisted header <" + header.getName() + ">");
+                removeHeader(header.getName());
+            }
     }
 
     /**

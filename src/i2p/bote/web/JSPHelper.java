@@ -193,6 +193,8 @@ public class JSPHelper {
     public static EmailFolder getMailFolder(String folderName) {
         if ("Inbox".equals(folderName))
             return I2PBote.getInstance().getInbox();
+        else if ("Outbox".equals(folderName))
+            return I2PBote.getInstance().getOutbox();
         else
             return null;
     }
@@ -248,6 +250,10 @@ public class JSPHelper {
         }
         
         return null;
+    }
+    
+    public static String getEmailStatus(Email email) {
+        return I2PBote.getInstance().getOutbox().getStatus(email);
     }
     
     public static boolean deleteEmail(String folderName, String messageId) {

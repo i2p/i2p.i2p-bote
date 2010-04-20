@@ -23,7 +23,6 @@ package i2p.bote;
 
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.email.Email;
-import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
@@ -46,7 +45,6 @@ import i2p.bote.network.kademlia.KademliaDHT;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.RelayPacket;
-import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.service.AutoMailCheckTask;
 import i2p.bote.service.I2PBoteThread;
 import i2p.bote.service.OutboxProcessor;
@@ -242,7 +240,7 @@ public class I2PBote {
         
         peerManager = new PeerManager();
         
-        outboxProcessor = new OutboxProcessor(dht, outbox, configuration, peerManager, appContext);
+        outboxProcessor = new OutboxProcessor(dht, outbox, peerManager, appContext);
         
         autoMailCheckTask = new AutoMailCheckTask(configuration.getMailCheckInterval());
     }
@@ -309,19 +307,9 @@ public class I2PBote {
     }
     
     public void sendEmail(Email email) throws Exception {
-/*XXX*/
-EmailDestination senderDest = email.getSenderDestination();
-EmailIdentity senderIdentity = I2PBote.getInstance().getIdentities().get(senderDest);
-String recipient = email.getAllRecipients()[0].toString();
-Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity.getPrivateSigningKey(), recipient);
-EmailDestination recipientDest = new EmailDestination(recipient);
-Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, recipientDest, appContext);
-for (EncryptedEmailPacket packet: encryptedPackets)
-    dht.store(packet);
-dht.store(new IndexPacket(encryptedPackets, recipientDest));
-        // TODO uncomment for next milestone, move code above into OutboxProcessor
-/*        outbox.add(email);
-        outboxProcessor.checkForEmail();*/
+        email.checkAddresses();
+        outbox.add(email);
+        outboxProcessor.checkForEmail();
     }
 
     public synchronized void checkForMail() {
@@ -387,7 +375,11 @@ dht.store(new IndexPacket(encryptedPackets, recipientDest));
     public EmailFolder getInbox() {
         return inbox;
     }
-
+    
+    public Outbox getOutbox() {
+        return outbox;
+    }
+    
     public int getNumDhtPeers() {
         if (dht == null)
             return 0;
@@ -408,7 +400,7 @@ dht.store(new IndexPacket(encryptedPackets, recipientDest));
     
     private void startAllServices()  {
         dht.start();
-//        outboxProcessor.start();
+        outboxProcessor.start();
 //        relayPacketSender.start();
 //        smtpService.start();
 //        pop3Service.start();

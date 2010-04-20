@@ -88,7 +88,7 @@ public class EmailFolder extends Folder<Email> {
      * Returns all emails in the folder, in the order specified by <code>sortColumn</code>.
      */
     public List<Email> getElements(Field sortColumn, boolean descending) {
-        List<Email> emails = super.getElements();
+        List<Email> emails = getElements();
         
         Comparator<Email> comparator = Email.getComparator(sortColumn);
         if (descending)

@@ -287,6 +287,17 @@
 </function>
 
 <function>
+    <name>getEmailStatus</name>
+    <description>
+        Returns the status of an email in the outbox. See OutboxProcessor.java.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getEmailStatus(i2p.bote.email.Email)
+    </function-signature>
+</function>
+ 
+<function>
     <name>deleteEmail</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>

@@ -31,34 +31,20 @@
     pageContext.setAttribute("FROM", i2p.bote.email.Field.FROM, PageContext.PAGE_SCOPE);
     pageContext.setAttribute("TO", i2p.bote.email.Field.TO, PageContext.PAGE_SCOPE);
     pageContext.setAttribute("SUBJECT", i2p.bote.email.Field.SUBJECT, PageContext.PAGE_SCOPE);
-    pageContext.setAttribute("DATE", i2p.bote.email.Field.DATE, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("STATUS", i2p.bote.email.Field.STATUS, PageContext.PAGE_SCOPE);
 %> 
 
 <c:set var="title" value="${param.path}" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<c:set var="folderName" value="${param.path}"/>
-<c:if test="${empty folderName}">
-    <c:set var="folderName" value="Inbox"/>
-</c:if>
-<c:if test="${folderName == 'Inbox'}">
-    <div id="inboxFlag"></div>
-</c:if>
-
-<c:set var="sortcolumn" value="${DATE}"/>
+<c:set var="sortcolumn" value="${STATUS}"/>
 <c:if test="${!empty param.sortcolumn}">
     <c:set var="sortcolumn" value="${param.sortcolumn}"/>
 </c:if>
 
 <c:choose>
     <c:when test="${empty param.descending}">
-        <%-- Use the default sort direction: descending for date, ascending for everything else --%>
-        <c:if test="${sortcolumn eq DATE}">
-            <c:set var="descending" value="true"/>
-        </c:if>
-        <c:if test="${sortcolumn ne DATE}">
-            <c:set var="descending" value="false"/>
-        </c:if>
+        <c:set var="descending" value="false"/>
     </c:when>
     <c:otherwise>
         <%-- Set the sort direction depending on param.descending --%>
@@ -81,21 +67,19 @@
 <div class="main">
 <div class="folder">
     <table>
-        <c:set var="folder" value="${ib:getMailFolder(folderName)}"/>
+        <c:set var="folder" value="${ib:getMailFolder('Outbox')}"/>
         <tr>
             <th style="width: 100px;">
-                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${FROM}"/>
+                <c:set var="sortLink" value="outbox.jsp?sortcolumn=${FROM}"/>
                 <c:if test="${sortcolumn eq FROM}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="fromColumnIndicator" value=" ${sortIndicator}"/>
                 </c:if>
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
-            <th style="width: 30px; text-align: center;"><ib:message key="Unkn."/></th>
-            <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
             <th style="width: 100px;"><ib:message key="To"/></th>
             <th style="width: 150px;">
-                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${SUBJECT}"/>
+                <c:set var="sortLink" value="outbox.jsp?sortcolumn=${SUBJECT}"/>
                 <c:if test="${sortcolumn eq SUBJECT}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="subjectColumnIndicator" value=" ${sortIndicator}"/>
@@ -103,12 +87,12 @@
                 <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
             </th>
             <th style="width: 100px;">
-                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${DATE}"/>
-                <c:if test="${sortcolumn eq DATE}">
+                <c:set var="sortLink" value="outbox.jsp?path=${param.path}&sortcolumn=${STATUS}"/>
+                <c:if test="${sortcolumn eq STATUS}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
-                    <c:set var="dateColumnIndicator" value=" ${sortIndicator}"/>
+                    <c:set var="statusColumnIndicator" value=" ${sortIndicator}"/>
                 </c:if>
-                <a href="${sortLink}"><ib:message key="Sent"/>${dateColumnIndicator}</a>
+                <a href="${sortLink}"><ib:message key="Status"/>${statusColumnIndicator}</a>
             </th>
             <th style="width: 20px;"></th>
         </tr>
@@ -125,13 +109,6 @@
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
             
-            <c:if test="${email.signatureValid}">
-                <c:set var="signature" value="<div style='color: green;'>&#10004;</div>"/>
-            </c:if>
-            <c:if test="${!email.signatureValid}">
-                <c:set var="signature" value="<div style='color: red;'>&#10008;</div>"/>
-            </c:if>
-            
             <c:set var="recipient" value="${ib:getNameAndDestination(ib:getOneLocalRecipient(email))}"/>
             
             <c:set var="subject" value="${email.subject}"/>
@@ -139,7 +116,7 @@
                 <ib:message key="(No subject)" var="subject"/>
             </c:if>
             
-            <c:set var="mailUrl" value="showEmail.jsp?folder=${folderName}&messageID=${email.messageID}"/>
+            <c:set var="mailUrl" value="showEmail.jsp?folder=Outbox&messageID=${email.messageID}"/>
             
             <c:choose>
                 <c:when test="${email.new}"><c:set var="fontWeight" value="bold"/></c:when>
@@ -153,13 +130,11 @@
                 <c:set var="class" value="ellipsis-alt"/>
             </c:if>
             <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
-            <td style="text-align: center;"><c:if test="${!ib:isKnown(email.sender)}">&#10007;</c:if></td>
-            <td style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></td>
             <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
             <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
-            <td><a href="${mailUrl}" style="font-weight: ${fontWeight}"><ib:emailDate email="${email}" timeStyle="short"/></a></td>
+            <td><a href="${mailUrl}" style="font-weight: ${fontWeight}">${ib:getEmailStatus(email)}</a></td>
             <td>
-                <a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}">
+                <a href="deleteEmail.jsp?folder=Outbox&messageID=${email.messageID}">
                 <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
             </td>
             </tr>

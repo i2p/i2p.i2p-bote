@@ -56,10 +56,10 @@ public class SendEmailTag extends SimpleTagSupport {
             email.setText(message, "UTF-8");
 
             I2PBote.getInstance().sendEmail(email);
-            statusMessage = _("The email has been sent.");
+            statusMessage = _("The email has been queued for sending.");
         }
         catch (Exception e) {
-            statusMessage = _("Error sending email:") + " " + e.getLocalizedMessage();
+            statusMessage = _("Error sending email: {0}", e.getLocalizedMessage());
             log.error("Error sending email", e);
         }
 

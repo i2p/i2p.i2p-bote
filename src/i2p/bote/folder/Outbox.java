@@ -22,69 +22,97 @@
 package i2p.bote.folder;
 
 import i2p.bote.email.Email;
+import i2p.bote.email.Field;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import javax.mail.MessagingException;
-
-import net.i2p.util.Log;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Stores emails in a directory on the filesystem. For each email, two files are created; the actual
- * email and a status file.
- * Status files and email files have the same name, except for the extension.
- * Even emails that need to be fragmented are stored as a whole.
- * Message IDs are used for filenames.
- * 
- * Status files contain a status for each recipient address.
+ * An {@link EmailFolder} that maintains a status for each email.
+ * The status is not written to a file. It is reset when the application
+ * is restarted.
+ * Another difference is that emails are never set to "old".
  */
 public class Outbox extends EmailFolder {
-	private static final String STATUS_FILE_EXTENSION = ".status";
-//	private static final String PARAM_QUEUE_DATE = "X-QueueDate";
-	private static final Log log = new Log(Outbox.class);
+    public static final String DEFAULT_STATUS = "Queued";
 	
+    private Map<String, String> statusMap;   // maps message IDs to status strings
+    
 	public Outbox(File storageDir) {
 		super(storageDir);
-	}
-	
-	// store one email file + one status file.
-	@Override
-	public void add(Email email) throws IOException, MessagingException {
-        // write out the email file
-	    super.add(email);
-		
-		// collect info for status file
-		String queueDate = String.valueOf(System.currentTimeMillis());
-		
-		// write out the status file
-		File statusFile = getStatusFile(email);
-		FileWriter statusFileWriter = new FileWriter(statusFile);
-		statusFileWriter.write(queueDate);
-		statusFileWriter.close();
-	}
-	
-	private File getStatusFile(Email email) {
-		return new File(storageDir, email.getMessageID() + STATUS_FILE_EXTENSION);
+		statusMap = new ConcurrentHashMap<String, String>();
 	}
 
-	// delete an email file + the status file
+    /**
+     * Overridden to handle the <code>STATUS</code> field.
+     */
     @Override
-    public void delete(Email email) {
-	    super.delete(email);
-	    
-        if (!getStatusFile(email).delete())
-            log.error("Cannot delete file: '" + getStatusFile(email) + "'");
+    public List<Email> getElements(Field sortColumn, boolean descending) {
+        if (!Field.STATUS.equals(sortColumn))
+            return super.getElements(sortColumn, descending);
+            
+        // sort by status
+        List<Email> emails = getElements();
+        Comparator<Email> comparator = new Comparator<Email>() {
+            @Override
+            public int compare(Email email1, Email email2) {
+                return getStatus(email1).compareTo(getStatus(email2));
+            }
+        };
+        if (descending)
+            comparator = Collections.reverseOrder(comparator);
+        Collections.sort(emails, comparator);
+        return emails;
     }
 
-	/**
-	 * 
-	 * @param email
-	 * @param relayInfo A 0-length array means no relays were used, i.e. the email was sent directly to the recipient.
-	 * @param statusMessage
-	 */
-	public void updateStatus(Email email, int[] relayInfo, String statusMessage) {
-		// TODO write out a new status file. filename is the msg id, statusMessage goes into the file.
-	}
+    /**
+     * Overridden to always treat outgoing emails as new, so they show
+     * up in the "Outbox" folder link even after the user opens them.
+     */
+    @Override
+    public void setNew(String messageId, boolean isNew) {
+    }
+
+    public void setStatus(String messageId, String status) {
+        statusMap.put(messageId, status);
+    }
+
+    public void setStatus(Email email, String status) {
+        String messageId = email.getMessageID();
+        if (messageId != null)
+            statusMap.put(messageId, status);
+    }
+
+    /**
+     * Returns the status of an email with a given message ID.
+     * If no email exists under the message ID, or if no status is set,
+     * <code>DEFAULT_STATUS</code> is returned.
+     * @param messageId The message ID of the email
+     * @return
+     */
+    public String getStatus(String messageId) {
+        if (statusMap.containsKey(messageId))
+            return statusMap.get(messageId);
+        else
+            return DEFAULT_STATUS;
+    }
+    
+    /**
+     * Returns the status of an {@link Email}.
+     * If the email doesn't exist in the outbox, or if no status is set,
+     * <code>DEFAULT_STATUS</code> is returned.
+     * @param email
+     * @return
+     */
+    public String getStatus(Email email) {
+        String messageId = email.getMessageID();
+        if (messageId == null)
+            return null;
+        else
+            return getStatus(messageId);
+    }
 }

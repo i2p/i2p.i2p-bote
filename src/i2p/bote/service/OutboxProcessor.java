@@ -21,7 +21,7 @@
 
 package i2p.bote.service;
 
-import i2p.bote.Configuration;
+import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
@@ -29,16 +29,13 @@ import i2p.bote.email.EmailIdentity;
 import i2p.bote.folder.Outbox;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
-import i2p.bote.network.EmailAddressResolver;
+import i2p.bote.network.NetworkStatus;
 import i2p.bote.network.PeerManager;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
-import java.io.IOException;
 import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -46,33 +43,26 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import net.i2p.I2PAppContext;
-import net.i2p.client.I2PSessionException;
 import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
 
 /**
- * A background thread that checks the outbox for emails and sends them to the I2P network.
+ * A background thread that periodically checks the outbox for emails and sends them.
  */
 public class OutboxProcessor extends I2PBoteThread {
-    private static final int PAUSE = 10;   // The wait time, in minutes, before processing the folder again. Can be interrupted from the outside.
+    private static final int PAUSE = 10;   // The wait time, in minutes, before processing the folder again. Can be interrupted from the outside by calling checkForEmail().
     
     private Log log = new Log(OutboxProcessor.class);
     private DHT dht;
     private Outbox outbox;
-    private Configuration configuration;
     private I2PAppContext appContext;
-    private EmailAddressResolver emailAddressResolver;
-    private Map<EmailDestination, String> statusMap;
     private CountDownLatch wakeupSignal;   // tells the thread to interrupt the current wait and resume the loop
     
-    public OutboxProcessor(DHT dht, Outbox outbox, Configuration configuration, PeerManager peerManager, I2PAppContext appContext) {
+    public OutboxProcessor(DHT dht, Outbox outbox, PeerManager peerManager, I2PAppContext appContext) {
         super("OutboxProcsr");
         this.dht = dht;
         this.outbox = outbox;
-        this.configuration = configuration;
         this.appContext = appContext;
-        statusMap = new ConcurrentHashMap<EmailDestination, String>();
-        emailAddressResolver = new EmailAddressResolver();
     }
     
     @Override
@@ -82,14 +72,20 @@ public class OutboxProcessor extends I2PBoteThread {
                 wakeupSignal = new CountDownLatch(1);
             }
             
-            log.info("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
-            for (Email email: outbox) {
-                log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
-                try {
-                    sendEmail(email);
-                } catch (Exception e) {
-                    log.error("Error sending email.", e);
-                }
+            if (I2PBote.getInstance().getNetworkStatus() == NetworkStatus.CONNECTED) {
+                log.info("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
+                for (Email email: outbox)
+                    // only send emails whose status has not been set
+                    if (Outbox.DEFAULT_STATUS.equals(outbox.getStatus(email))) {
+                        log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
+                        try {
+                            sendEmail(email);
+                            outbox.delete(email);
+                        }
+                        catch (Exception e) {
+                            log.error("Error sending email.", e);
+                        }
+                    }
             }
             
             try {
@@ -118,48 +114,63 @@ public class OutboxProcessor extends I2PBoteThread {
     /**
      * Sends an {@link Email} to all recipients specified in the header.
      * @param email
-     * @throws IOException
+     * @throws DataFormatException 
      * @throws MessagingException 
+     * @throws DhtException 
      */
-    private void sendEmail(Email email) throws IOException, MessagingException, I2PSessionException {
+    private void sendEmail(Email email) throws DataFormatException, MessagingException, DhtException {
+        Address sender = email.getSender();
+        if (sender == null) {
+            log.error("No sender/from field in email: " + email);
+            outbox.setStatus(email, _("No sender found in email."));
+            return;
+        }
+        String base64sender = EmailDestination.extractBase64Dest(sender.toString());
+        EmailIdentity senderIdentity = I2PBote.getInstance().getIdentities().get(base64sender);
+        if (senderIdentity == null) {
+            log.error("No identity matches the sender/from field: " + base64sender + " in email: " + email);
+            return;
+        }
+        
+        outbox.setStatus(email, _("Sending"));
         for (Address recipient: email.getAllRecipients())
-            sendToOne(recipient.toString(), email);
+            sendToOne(senderIdentity, recipient.toString(), email);
+        outbox.setStatus(email, _("Sent"));
     }
 
     /**
      * Sends an {@link Email} to one recipient.
+     * @param senderIdentity
      * @param recipient
      * @param email
-     * @throws I2PSessionException 
+     * @throws DataFormatException 
+     * @throws MessagingException 
+     * @throws DhtException 
      */
-    private void sendToOne(String recipient, Email email) throws I2PSessionException {
+    private void sendToOne(EmailIdentity senderIdentity, String recipient, Email email) throws DataFormatException, MessagingException, DhtException {
         String logSuffix = null;   // only used for logging
         try {
             logSuffix = "Recipient = '" + recipient + "' Message ID = '" + email.getMessageID() + "'";
-//            EmailDestination emailDestination = emailAddressResolver.getDestination(address);
-            EmailDestination emailDestination = new EmailDestination(recipient);
-            String base64Dest = emailDestination.toBase64();
-            EmailIdentity identity = I2PBote.getInstance().getIdentities().get(base64Dest);
+            EmailDestination recipientDest = new EmailDestination(recipient);
             
-            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(identity.getPrivateSigningKey(), recipient);
-            Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, emailDestination, appContext);
+            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity.getPrivateSigningKey(), recipient);
+            Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, recipientDest, appContext);
             for (EncryptedEmailPacket packet: encryptedPackets)
                 dht.store(packet);
-            dht.store(new IndexPacket(encryptedPackets, emailDestination));
-            outbox.updateStatus(email, new int[] {1}, "Email sent to recipient: " + recipient);
+            dht.store(new IndexPacket(encryptedPackets, recipientDest));
+            outbox.setStatus(email, "Email sent to recipient: " + recipient);
         } catch (DataFormatException e) {
-            log.error("Invalid recipient address. " + logSuffix);
-            outbox.updateStatus(email, new int[] {1}, "Error trying to send email to recipient: " + recipient);
+            log.error("Invalid recipient address. " + logSuffix, e);
+            outbox.setStatus(email, _("Invalid recipient address: {0}", recipient));
+            throw e;
         } catch (MessagingException e) {
-            log.error("Can't create email packets. " + logSuffix);
-            outbox.updateStatus(email, new int[] {1}, "Error trying to send email to recipient: " + recipient);
+            log.error("Can't create email packets. " + logSuffix, e);
+            outbox.setStatus(email, _("Error creating email packets: {0}", e.getLocalizedMessage()));
+            throw e;
         } catch (DhtException e) {
-            log.error("Can't store email packet on the DHT. " + logSuffix);
-            outbox.updateStatus(email, new int[] {1}, "Error trying to send email to recipient: " + recipient);
+            log.error("Can't store email packet on the DHT. " + logSuffix, e);
+            outbox.setStatus(email, _("Error while sending email: {0}", e.getLocalizedMessage()));
+            throw e;
         }
-    }
-
-    public Map<EmailDestination, String> getStatus() {
-        return statusMap;
     }
 }

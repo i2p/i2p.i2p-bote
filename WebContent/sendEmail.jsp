@@ -28,6 +28,8 @@
 <ib:message key="New Email" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
+<div class="main">
 <ib:sendEmail sender="${param.sender}" recipient="${param.recipient0}" subject="${param.subject}" message="${param.message}" />
+</div>
 
 <jsp:include page="footer.jsp"/>
