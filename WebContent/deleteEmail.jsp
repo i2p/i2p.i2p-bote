@@ -30,7 +30,7 @@
 
 <c:set var="deleted" value="${ib:deleteEmail(param.folder, param.messageID)}"/>
 <c:if test="${deleted}">
-    <jsp:forward page="folder.jsp?path=Inbox"/>
+    <jsp:forward page="folder.jsp?path=${param.folder}"/>
 </c:if>
 <c:if test="${!deleted}">
     <ib:message key="Error: Couldn't delete email."/>
