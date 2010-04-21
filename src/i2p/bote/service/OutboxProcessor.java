@@ -133,8 +133,12 @@ public class OutboxProcessor extends I2PBoteThread {
         }
         
         outbox.setStatus(email, _("Sending"));
-        for (Address recipient: email.getAllRecipients())
+        Address[] recipients = email.getAllRecipients();
+        for (int i=0; i<recipients.length; i++) {
+            Address recipient = recipients[i];
             sendToOne(senderIdentity, recipient.toString(), email);
+            outbox.setStatus(email, _("Sent to {0} out of {1} recipients", i+1, recipients.length));
+        }
         outbox.setStatus(email, _("Sent"));
     }
 
@@ -151,6 +155,7 @@ public class OutboxProcessor extends I2PBoteThread {
         String logSuffix = null;   // only used for logging
         try {
             logSuffix = "Recipient = '" + recipient + "' Message ID = '" + email.getMessageID() + "'";
+            log.debug("Sending email: " + logSuffix);
             EmailDestination recipientDest = new EmailDestination(recipient);
             
             Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity.getPrivateSigningKey(), recipient);
@@ -158,7 +163,6 @@ public class OutboxProcessor extends I2PBoteThread {
             for (EncryptedEmailPacket packet: encryptedPackets)
                 dht.store(packet);
             dht.store(new IndexPacket(encryptedPackets, recipientDest));
-            outbox.setStatus(email, "Email sent to recipient: " + recipient);
         } catch (DataFormatException e) {
             log.error("Invalid recipient address. " + logSuffix, e);
             outbox.setStatus(email, _("Invalid recipient address: {0}", recipient));
