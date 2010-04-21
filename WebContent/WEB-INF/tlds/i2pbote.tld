@@ -8,14 +8,9 @@
 <tag>
     <name>sendEmail</name>
     <tag-class>i2p.bote.web.SendEmailTag</tag-class>
-    <body-content>empty</body-content>
+    <body-content>JSP</body-content>
     <attribute>
         <name>sender</name>
-        <rtexprvalue>true</rtexprvalue>
-        <required>true</required>
-    </attribute>
-    <attribute>
-        <name>recipient</name>
         <rtexprvalue>true</rtexprvalue>
         <required>true</required>
     </attribute>
@@ -26,6 +21,29 @@
     </attribute>
     <attribute>
         <name>message</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+</tag>
+
+<tag>
+    <name>recipient</name>
+    <info>
+        Adds an email recipient. Must be inside an ib:sendEmail tag.
+    </info>
+    <tag-class>i2p.bote.web.RecipientTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+        <name>type</name>
+        <description>
+            Can be any of the javax.mail.Message.RecipientType values
+            (TO, CC, or BCC).
+        </description>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>address</name>
         <rtexprvalue>true</rtexprvalue>
         <required>true</required>
     </attribute>

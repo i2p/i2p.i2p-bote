@@ -56,15 +56,30 @@
                 <c:if test="${!email.signatureValid}"><div style="color: red;"><ib:message key="Invalid"/></div></c:if>
             </td>
         </tr>
-        <tr>
-            <td valign="top"><strong><ib:message key="To:"/></strong></td>
-            <td>
-                <c:forEach var="recipient" varStatus="status" items="${email.allRecipients}">
-                    <ib:address address="${ib:getNameAndDestination(recipient)}"/>
-                    <c:if test="${!status.last}">,<p/></c:if>
-                </c:forEach>
-            </td>
-        </tr>
+        <c:forEach var="replyToAddress" varStatus="status" items="${email.replyToAddresses}">
+            <tr>
+                <td valign="top"><strong><ib:message key="Reply To:"/></strong></td>
+                <td><ib:address address="${ib:getNameAndDestination(replyToAddress)}"/></td>
+            </tr>
+        </c:forEach>
+        <c:forEach var="toAddress" varStatus="status" items="${email.toAddresses}">
+            <tr>
+                <td valign="top"><strong><ib:message key="To:"/></strong></td>
+                <td><ib:address address="${ib:getNameAndDestination(toAddress)}"/></td>
+            </tr>
+        </c:forEach>
+        <c:forEach var="ccAddress" varStatus="status" items="${email.CCAddresses}">
+            <tr>
+                <td valign="top"><strong><ib:message key="CC:"/></strong></td>
+                <td><ib:address address="${ib:getNameAndDestination(ccAddress)}"/></td>
+            </tr>
+        </c:forEach>
+        <c:forEach var="bccAddress" varStatus="status" items="${email.BCCAddresses}">
+            <tr>
+                <td valign="top"><strong><ib:message key="BCC:"/></strong></td>
+                <td><ib:address address="${ib:getNameAndDestination(bccAddress)}"/></td>
+            </tr>
+        </c:forEach>
         <tr>
             <td valign="top"><strong><ib:message key="Sent:"/></strong></td>
             <td><ib:emailDate email="${email}" timeStyle="full"/></td>

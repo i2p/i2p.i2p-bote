@@ -23,13 +23,27 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
  
 <ib:message key="New Email" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <div class="main">
-<ib:sendEmail sender="${param.sender}" recipient="${param.recipient0}" subject="${param.subject}" message="${param.message}" />
+
+<ib:sendEmail sender="${param.sender}" subject="${param.subject}" message="${param.message}">
+    <c:forEach var="parameter" items="${param}">
+        <c:if test="${fn:startsWith(parameter.key, 'recipient') and !fn:startsWith(parameter.key, 'recipientType')}">
+            <c:set var="recipientIndex" value="${fn:substringAfter(parameter.key, 'recipient')}"/>
+            <c:set var="recipientTypeAttrName" value="recipientType${recipientIndex}"/>
+            <c:if test="${not empty parameter.value}">
+                <ib:recipient type="${param[recipientTypeAttrName]}" address="${parameter.value}"/>
+            </c:if>
+        </c:if>
+    </c:forEach>
+</ib:sendEmail>
+
 </div>
 
 <jsp:include page="footer.jsp"/>

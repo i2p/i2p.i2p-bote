@@ -26,34 +26,49 @@ import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.mail.Message.RecipientType;
+import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
+import javax.mail.Message.RecipientType;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.i2p.util.Log;
 
-public class SendEmailTag extends SimpleTagSupport {
-    // TODO make all Log instances final
+public class SendEmailTag extends BodyTagSupport {
+    private static final long serialVersionUID = 5746062176954959787L;
+    
     private Log log = new Log(SendEmailTag.class);
     private String senderAddress;
-    private String recipientAddress;
+    private List<Recipient> recipients = new ArrayList<Recipient>();
     private String subject;
     private String message;
-
-    public void doTag() {
-        PageContext pageContext = (PageContext) getJspContext();
+    
+    /**
+     * Overridden to remove parameters from the previous SendEmailTag object so the old
+     * parameters aren't used for the new SendEmailTag (at least Tomcat re-uses SendEmailTag objects)
+     */
+    @Override
+    public int doStartTag() throws JspException {
+        recipients.clear();
+        return super.doStartTag();
+    }
+    
+    @Override
+    public int doEndTag() {
         JspWriter out = pageContext.getOut();
 
         Email email = new Email();
         String statusMessage;
         try {
             email.setSender(new InternetAddress(senderAddress));
-            email.addRecipient(RecipientType.TO, new InternetAddress(recipientAddress));
             email.setSubject(subject, "UTF-8");
             email.setText(message, "UTF-8");
+            for (Recipient recipient: recipients)
+                email.addRecipient(recipient.type, recipient.address);
 
             I2PBote.getInstance().sendEmail(email);
             statusMessage = _("The email has been queued for sending.");
@@ -68,6 +83,7 @@ public class SendEmailTag extends SimpleTagSupport {
         } catch (IOException e) {
             log.error("Can't write output to HTML page", e);
         }
+        return EVAL_PAGE;
     }
 
     /**
@@ -83,12 +99,8 @@ public class SendEmailTag extends SimpleTagSupport {
         return senderAddress;
     }
 
-    public void setRecipient(String recipient) {
-        this.recipientAddress = recipient;
-    }
-
-    public String getRecipient() {
-        return recipientAddress;
+    void addRecipient(RecipientType type, Address address) {
+        recipients.add(new Recipient(type, address));
     }
 
     public void setSubject(String subject) {
@@ -105,5 +117,15 @@ public class SendEmailTag extends SimpleTagSupport {
 
     public String getMessage() {
         return message;
+    }
+
+    private static class Recipient {
+        RecipientType type;
+        Address address;
+        
+        public Recipient(RecipientType type, Address address) {
+            this.type = type;
+            this.address = address;
+        }
     }
 }

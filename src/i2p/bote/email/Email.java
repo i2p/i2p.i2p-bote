@@ -213,6 +213,29 @@ public class Email extends MimeMessage {
         return addresses;
     }
     
+    /**
+     * Returns all "Reply To" addresses (usually zero or one).
+     * Unlike {@link getReplyTo()}, this method does not return
+     * the "From" address if there is no "Reply To" address.
+     * @return
+     * @throws MessagingException
+     */
+    public String[] getReplyToAddresses() throws MessagingException {
+        return getHeader("Reply-To");
+    }
+    
+    public Address[] getToAddresses() throws MessagingException {
+        return getRecipients(RecipientType.TO);
+    }
+    
+    public Address[] getCCAddresses() throws MessagingException {
+        return getRecipients(RecipientType.CC);
+    }
+    
+    public Address[] getBCCAddresses() throws MessagingException {
+        return getRecipients(RecipientType.BCC);
+    }
+    
     private byte[] toByteArray() throws MessagingException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         try {
@@ -296,6 +319,8 @@ public class Email extends MimeMessage {
             saveChanges();
             if (bccToKeep!=null && isBCC(bccToKeep))
                 setHeader("BCC", bccToKeep);   // set bccToKeep and remove any other existing BCC addresses
+            else
+                removeHeader("BCC");
             sign(signingKey);
             writeTo(outputStream);
         } catch (IOException e) {

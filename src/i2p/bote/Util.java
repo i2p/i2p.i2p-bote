@@ -147,6 +147,10 @@ public class Util {
         return Translate.getString(messageKey, parameter, I2PAppContext.getGlobalContext(), BUNDLE_NAME);
     }
     
+    public static String _(String messageKey, Object parameter1, Object parameter2) {
+        return Translate.getString(messageKey, parameter1, parameter2, I2PAppContext.getGlobalContext(), BUNDLE_NAME);
+    }
+    
     /**
      * Removes all whitespace at the beginning and the end of a string,
      * and replaces multiple whitespace characters with a single space.
