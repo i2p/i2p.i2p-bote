@@ -34,7 +34,7 @@
     pageContext.setAttribute("STATUS", i2p.bote.email.Field.STATUS, PageContext.PAGE_SCOPE);
 %> 
 
-<c:set var="title" value="${param.path}" scope="request"/>
+<c:set var="title" value="Outbox" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <c:set var="sortcolumn" value="${STATUS}"/>
@@ -87,7 +87,7 @@
                 <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
             </th>
             <th style="width: 100px;">
-                <c:set var="sortLink" value="outbox.jsp?path=${param.path}&sortcolumn=${STATUS}"/>
+                <c:set var="sortLink" value="outbox.jsp?sortcolumn=${STATUS}"/>
                 <c:if test="${sortcolumn eq STATUS}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="statusColumnIndicator" value=" ${sortIndicator}"/>
