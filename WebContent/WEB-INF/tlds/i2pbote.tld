@@ -327,13 +327,13 @@
     <name>getNameAndDestination</name>
     <description>
         Returns a string containing the locally known name of the Email Destination
-        in the Address parameter, and the Base64-encoded Email Destination.
+        in the String argument, and the Base64-encoded Email Destination.
         If the Email Destination is not locally known (if it doesn't exist in the
         address book or any of the identities), the address is returned unaltered.
     </description>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
-        java.lang.String getNameAndDestination(javax.mail.Address)
+        java.lang.String getNameAndDestination(java.lang.String)
     </function-signature>
 </function>
 

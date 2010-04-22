@@ -310,7 +310,7 @@ public class JSPHelper {
         else return getIdentities().contains(destination);
     }
     
-    public static String getNameAndDestination(Address address) {
+    public static String getNameAndDestination(String address) {
         return Util.getNameAndDestination(getIdentities(), getAddressBook(), address);
     }
     

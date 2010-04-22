@@ -38,16 +38,7 @@
     <table>
         <tr>
             <td valign="top"><strong><ib:message key="From:"/></strong></td>
-            <td>
-                <ib:address address="${ib:getNameAndDestination(email.sender)}"/>
-                <c:set var="senderDestination" value="${ib:extractEmailDestination(email.sender)}"/>
-                <c:if test="${!empty senderDestination}">
-                    <form action="editContact.jsp?new=true&destination=${senderDestination}&name=${ib:extractName(email.sender)}" method="POST">
-                        <c:set var="disabled" value="${ib:isKnown(senderDestination) ? 'disabled=&quot; disabled&quot; title=&quot;The Email Destination already exists in the address book.&quot;' : ''}"/>
-                        <button type="submit"${disabled}><ib:message key="Add to Address Book"/></button>
-                    </form>
-                </c:if>
-            </td>
+            <td><ib:address address="${email.sender}"/></td>
         </tr>
         <tr>
             <td valign="top"><strong><ib:message key="Signature:"/></strong></td>
@@ -59,25 +50,25 @@
         <c:forEach var="replyToAddress" varStatus="status" items="${email.replyToAddresses}">
             <tr>
                 <td valign="top"><strong><ib:message key="Reply To:"/></strong></td>
-                <td><ib:address address="${ib:getNameAndDestination(replyToAddress)}"/></td>
+                <td><ib:address address="${replyToAddress}"/></td>
             </tr>
         </c:forEach>
         <c:forEach var="toAddress" varStatus="status" items="${email.toAddresses}">
             <tr>
                 <td valign="top"><strong><ib:message key="To:"/></strong></td>
-                <td><ib:address address="${ib:getNameAndDestination(toAddress)}"/></td>
+                <td><ib:address address="${toAddress}"/></td>
             </tr>
         </c:forEach>
         <c:forEach var="ccAddress" varStatus="status" items="${email.CCAddresses}">
             <tr>
                 <td valign="top"><strong><ib:message key="CC:"/></strong></td>
-                <td><ib:address address="${ib:getNameAndDestination(ccAddress)}"/></td>
+                <td><ib:address address="${ccAddress}"/></td>
             </tr>
         </c:forEach>
         <c:forEach var="bccAddress" varStatus="status" items="${email.BCCAddresses}">
             <tr>
                 <td valign="top"><strong><ib:message key="BCC:"/></strong></td>
-                <td><ib:address address="${ib:getNameAndDestination(bccAddress)}"/></td>
+                <td><ib:address address="${bccAddress}"/></td>
             </tr>
         </c:forEach>
         <tr>

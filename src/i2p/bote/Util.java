@@ -75,13 +75,6 @@ public class Util {
         return address;
     }
     
-    public static String getNameAndDestination(Identities identities, AddressBook addressBook, Address address) {
-        if (address == null)
-            return null;
-        else
-            return getNameAndDestination(identities, addressBook, address.toString());
-    }
-    
     public static byte[] readInputStream(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[32*1024];
