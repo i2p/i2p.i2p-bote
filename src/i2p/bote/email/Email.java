@@ -24,6 +24,7 @@ package i2p.bote.email;
 import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.UniqueId;
+import i2p.bote.Util;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.ByteArrayInputStream;
@@ -36,11 +37,11 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -67,6 +68,7 @@ public class Email extends MimeMessage {
         "From", "Sender", "To", "CC", "BCC", "Reply-To", "Subject", "Date", "MIME-Version", "Content-Type",
         "Content-Transfer-Encoding", "In-Reply-To", "X-HashCash", "X-Priority", "X-I2PBote-Signature"
     };
+    private static final String[] ADDRESS_HEADERS = new String[] {"From", "Sender", "To", "CC", "BCC", "Reply-To"};
     
     private static Log log = new Log(Email.class);
     private UniqueId messageId;
@@ -181,36 +183,32 @@ public class Email extends MimeMessage {
      * @throws DataFormatException
      */
     public void checkAddresses() throws MessagingException, DataFormatException {
-        Collection<Address> allAddresses = getAllAddresses();
-        for (Address address: allAddresses)
+        Collection<Header> headers = getAllAddressHeaders();
+        for (Header header: headers) {
+            String address = header.getValue();
             try {
-                new EmailDestination(address.toString());
+                new EmailDestination(address);
             }
             catch (DataFormatException e) {
                 throw new DataFormatException(_("Invalid address: {0}", address), e);
             }
+        }
     }
     
-    private Collection<Address> getAllAddresses() throws MessagingException {
-        Collection<Address> addresses = new ArrayList<Address>();
-        
-        Address[] from = getFrom();
-        if (from != null)
-            addresses.addAll(Arrays.asList(from));
-        
-        Address sender = getSender();
-        if (sender != null)
-            addresses.add(sender);
-        
-        Address[] recipients = getAllRecipients();
-        if (recipients != null)
-            addresses.addAll(Arrays.asList(recipients));
-        
-        Address[] replyTo = getReplyTo();
-        if (replyTo != null)
-            addresses.addAll(Arrays.asList(replyTo));
-        
-        return addresses;
+    public void fixAddresses() throws MessagingException {
+        List<Header> addressHeaders = getAllAddressHeaders();
+        for (String headerName: ADDRESS_HEADERS)
+            removeHeader(headerName);
+        for (Header header: addressHeaders) {
+            String fixedAddress = Util.fixAddress(header.getValue());
+            addHeader(header.getName(), fixedAddress);
+        }
+    }
+    
+    private List<Header> getAllAddressHeaders() throws MessagingException {
+        @SuppressWarnings("unchecked")
+        Enumeration<Header> addressHeaders = (Enumeration<Header>)getMatchingHeaders(ADDRESS_HEADERS);
+        return Collections.list(addressHeaders);
     }
     
     /**

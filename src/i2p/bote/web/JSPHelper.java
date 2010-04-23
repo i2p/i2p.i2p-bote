@@ -135,6 +135,8 @@ public class JSPHelper {
      * @return null if sucessful, or an error message if an error occured
      */
     public static String saveContact(String destinationString, String name) {
+        destinationString = Util.fixAddress(destinationString);
+        
         AddressBook addressBook = getAddressBook();
         Contact contact = addressBook.get(destinationString);
         

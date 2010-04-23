@@ -34,8 +34,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ThreadFactory;
 
-import javax.mail.Address;
-
 import net.i2p.I2PAppContext;
 import net.i2p.util.Translate;
 
@@ -154,5 +152,23 @@ public class Util {
         if (string == null)
             return null;
         return string.trim().replaceAll("\\s+", " ");
+    }
+    
+    /**
+     * Removes whitespace from the beginning and end of an address.
+     * Also removes angle brackets if the address begins and ends
+     * with an angle bracket.
+     * @param address
+     * @return
+     */
+    public static String fixAddress(String address) {
+        if (address == null)
+            return null;
+        
+        address = address.trim();
+        if (address.startsWith("<") && address.endsWith(">"))
+            address = address.substring(1, address.length()-1);
+        
+        return address;
     }
 }

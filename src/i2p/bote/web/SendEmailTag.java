@@ -23,6 +23,7 @@ package i2p.bote.web;
 
 import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
+import i2p.bote.Util;
 import i2p.bote.email.Email;
 
 import java.io.IOException;
@@ -69,6 +70,7 @@ public class SendEmailTag extends BodyTagSupport {
             email.setText(message, "UTF-8");
             for (Recipient recipient: recipients)
                 email.addRecipient(recipient.type, recipient.address);
+            email.fixAddresses();
 
             I2PBote.getInstance().sendEmail(email);
             statusMessage = _("The email has been queued for sending.");
