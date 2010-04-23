@@ -29,7 +29,7 @@
 
 <c:choose>
     <c:when test="${param.new}">
-        <ib:message key="New Email Identity" var="title"/>" scope="request"/>
+        <ib:message key="New Email Identity" var="title"/>
         <ib:message key="Create" var="commitAction"/>"/>
     </c:when>
     <c:otherwise>
