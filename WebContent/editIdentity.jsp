@@ -28,13 +28,19 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <c:choose>
-    <c:when test="${param.new}">
+    <c:when test="${empty param.key}">
         <ib:message key="New Email Identity" var="title"/>
         <ib:message key="Create" var="commitAction"/>"/>
+        <c:set var="publicName" value="${param.publicName}"/>
+        <c:set var="description" value="${param.description}"/>
     </c:when>
     <c:otherwise>
         <ib:message key="Edit Email Identity" var="title"/>
         <ib:message key="Save" var="commitAction"/>
+        <c:set var="key" value="${param.key}"/>
+        <c:set var="identity" value="${ib:getIdentity(key)}"/>
+        <c:set var="publicName" value="${ib:escapeQuotes(identity.publicName)}"/>
+        <c:set var="description" value="${ib:escapeQuotes(identity.description)}"/>
     </c:otherwise>
 </c:choose>
 
@@ -53,7 +59,7 @@
                     <div style="font-size: 0.8em;"><ib:message key="(required field, shown to recipients)"/></div>
                 </td>
                 <td>
-                    <input type="text" size="40" name="publicName" value="${param.publicName}"/>
+                    <input type="text" size="40" name="publicName" value="${publicName}"/>
                 </td>
             </tr>
             <tr>
@@ -62,7 +68,7 @@
                     <div style="font-size: 0.8em;"><ib:message key="(optional, kept private)"/></div>
                 </td>
                 <td>
-                    <input type="text" size="40" name="description" value="${param.description}"/>
+                    <input type="text" size="40" name="description" value="${description}"/>
                 </td>
             </tr>
             <tr>

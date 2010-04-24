@@ -64,7 +64,7 @@
         </td>
         <td style="width: 100px;">
             <div class="ellipsis">
-                <a href="editIdentity.jsp?new=false&key=${identity.key}&publicName=${identity.publicName}&description=${identity.description}&emailAddress=${identity.emailAddress}&isDefault=${identity.default}">
+                <a href="editIdentity.jsp?key=${identity.key}&publicName=${ib:escapeQuotes(identity.publicName)}&description=${ib:escapeQuotes(identity.description)}&emailAddress=${ib:escapeQuotes(identity.emailAddress)}&isDefault=${identity.default}">
                     ${identity.publicName}
                 </a>
             </div>
@@ -93,7 +93,8 @@
     </div>
     
     <p/>
-    <form action="editIdentity.jsp?new=true" method="POST">
+    <%-- calling editIdentity.jsp with no "key" param creates a new identity --%>
+    <form action="editIdentity.jsp" method="POST">
         <button type="submit" value="New"><ib:message key="New Identity"/></button>
     </form>
 </div>

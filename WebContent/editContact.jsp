@@ -33,7 +33,11 @@
         cancel    - go to the URL in backUrl
         
     Other parameters:
-        new       - true for new contact, false for existing contact
+        new       - true for new contact, false for existing contact.
+                    If new=true, the name field is populated with
+                    the value of the "name" parameter.
+                    If new=false, the name is read from the address
+                    book, and the "name" parameter is ignored.
 --%>
 
 <c:if test="${param.action eq 'cancel'}">
@@ -83,11 +87,13 @@
         <ib:message key="New Contact" var="title"/>
         <c:set var="title" value="${title}" scope="request"/>
         <ib:message key="Add" var="submitButtonText"/>
+        <c:set var="name" value="${param.name}"/>
     </c:when>
     <c:otherwise>
         <ib:message key="Edit Contact" var="title"/>
         <c:set var="title" value="${title}" scope="request"/>
         <ib:message key="Save" var="submitButtonText"/>
+        <c:set var="name" value="${ib:getContactName(param.destination)}"/>
     </c:otherwise>
 </c:choose>
 <jsp:include page="header.jsp"/>
@@ -105,7 +111,7 @@
                     </c:if>
                 </td>
                 <td>
-                    <input type="text" size="80" name="destination" value="${param.destination}"/>
+                    <input type="text" size="80" name="destination" value="${ib:escapeQuotes(param.destination)}"/>
                 </td>
             </tr>
             <tr>
@@ -114,7 +120,7 @@
                     <div style="font-size: 0.8em;"><ib:message key="(required field)"/></div>
                 </td>
                 <td>
-                    <input type="text" size="40" name="name" value="${param.name}"/>
+                    <input type="text" size="40" name="name" value="${ib:escapeQuotes(name)}"/>
                 </td>
             </tr>
         </table>

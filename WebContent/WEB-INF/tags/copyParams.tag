@@ -28,6 +28,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <c:forEach var="parameter" items="${param}">
     <c:set var="exactMatch" value="false"/>
@@ -41,6 +42,6 @@
         </c:if>
     </c:forEach>
     <c:if test="${exactMatch or prefixMatch}">
-        <input type="hidden" name="${parameter.key}" value="${parameter.value}"/>
+        <input type="hidden" name="${parameter.key}" value="${ib:escapeQuotes(parameter.value)}"/>
     </c:if>
 </c:forEach>

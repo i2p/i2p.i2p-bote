@@ -66,13 +66,13 @@
         <tr>
         <c:if test="${param.select}">
             <td>
-                <input type="checkbox" name="selectedContact" value="${contact.name} &lt;${contact.destination}&gt;"/>
+                <input type="checkbox" name="selectedContact" value="${ib:escapeQuotes(contact.name)} &lt;${contact.destination}&gt;"/>
             </td>
         </c:if>
         <td style="width: 100px;">
             <div class="ellipsis">
                 <c:if test="${!param.select}">
-                    <a href="editContact.jsp?new=false&destination=${contact.destination}&name=${contact.name}">
+                    <a href="editContact.jsp?new=false&destination=${contact.destination}">
                 </c:if>
                     ${contact.name}
                 <c:if test="${!param.select}">
@@ -99,7 +99,8 @@
     <table>
         <c:if test="${!param.select}">
             <tr><td>
-                <form action="editContact.jsp?new=true" method="POST">
+                <form action="editContact.jsp" method="POST">
+                    <input type="hidden" name="new" value="true"/>
                     <button type="submit" value="New"><ib:message key="New Contact"/></button>
                 </form>
             </td></tr>

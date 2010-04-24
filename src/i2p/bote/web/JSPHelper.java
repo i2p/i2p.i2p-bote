@@ -126,7 +126,11 @@ public class JSPHelper {
             return e.getLocalizedMessage();
         }
     }
-
+    
+    public static EmailIdentity getIdentity(String key) {
+        return getIdentities().get(key);
+    }
+    
     /**
      * Updates acontact in the address book if the Destination <code>destinationString</code> exists,
      * or adds a new contact to the address book.
@@ -178,6 +182,14 @@ public class JSPHelper {
         catch (IOException e) {
             return e.getLocalizedMessage();
         }
+    }
+    
+    public static String getContactName(String destination) {
+        Contact contact = getAddressBook().get(destination);
+        if (contact == null)
+            return null;
+        else
+            return contact.getName();
     }
     
     public static void checkForMail() {
@@ -343,5 +355,12 @@ public class JSPHelper {
             return address.substring(0, ltIndex);
         else
             return "";
+    }
+    
+    public static String escapeQuotes(String s) {
+        if (s == null)
+            return null;
+        
+        return s.replaceAll("\"", "&quot;").replaceAll("'", "&apos;");
     }
 }

@@ -33,7 +33,11 @@
     <c:set var="emailDestination" value="${ib:extractEmailDestination(address)}"/>
     <c:set var="name" value="${ib:extractName(address)}"/>
     
-    <form action="editContact.jsp?new=true&destination=${emailDestination}&name=${name}" method="POST">
+    <form action="editContact.jsp" method="POST">
+        <input type="hidden" name="new" value="true"/>
+        <input type="hidden" name="destination" value="${emailDestination}"/>
+        <input type="hidden" name="name" value="${ib:escapeQuotes(name)}"/>
+    
         <%-- Print the shortened address which is always visible--%>
         <c:set var="shortAdr" value="${name}"/>
         <c:if test="${!empty name}">
@@ -50,7 +54,7 @@
             <%-- put wbr tags in the address so the lines don't get too long --%>
             <c:set var="wbrDest" value=""/>
             <c:forEach begin="0" end="${fn:length(emailDestination)-1}" step="5" var="i">
-                <c:set var="wbrDest" value="${wbrDest}${fn:substring(emailDestination, i, i+5)}<wbr>"/>
+                <c:set var="wbrDest" value="${wbrDest}${fn:substring(emailDestination, i, i+5)}<wbr/>"/>
             </c:forEach>
 
             <strong><ib:message key="Email Destination: "/></strong> ${wbrDest}

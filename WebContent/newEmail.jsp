@@ -46,7 +46,7 @@
         <c:set var="destparam" value="${param.destparamname}"/>
         <jsp:forward page="editContact.jsp">
             <jsp:param name="new" value="true"/>
-            <jsp:param name="destination" value="${param[destparam]}"/>
+            <jsp:param name="destination" value="${ib:escapeQuotes(param[destparam])}"/>
             <jsp:param name="forwardUrl" value="newEmail.jsp"/>
             <jsp:param name="backUrl" value="newEmail.jsp"/>
             <jsp:param name="paramsToCopy" value="recipient*,to*,cc*,bcc*,replyto*,subject,message,forwardUrl,backUrl,paramsToCopy"/>
@@ -116,7 +116,7 @@
                             <option value="replyto"${replytoSelected}><ib:message key="Reply To:"/></option>
                         </select>
                     </td><td>
-                        <input type="text" size="80" name="${recipientField}" value="${recipient}"/>
+                        <input type="text" size="80" name="${recipientField}" value="${ib:escapeQuotes(recipient)}"/>
                     </td></tr>
                 </c:if>
             </c:forEach>
@@ -132,7 +132,7 @@
                             <option value="replyto"><ib:message key="Reply To:"/></option>
                         </select>
                     </td><td>
-                        <input type="text" size="80" name="recipient${maxRecipientIndex}" value="${destination}"/>
+                        <input type="text" size="80" name="recipient${maxRecipientIndex}" value="${ib:escapeQuotes(destination)}"/>
                     </td></tr>
                 </c:forEach>
             </c:if>
@@ -147,8 +147,8 @@
                 </select>
             </td><td>
                 <c:set var="newRecipientField" value="recipient${maxRecipientIndex}"/>
-                <input type="text" size="80" name="${newRecipientField}"/>
-                <input type="hidden" name="destparamname" value="${newRecipientField}"/>
+                <input type="text" size="80" name="${ib:escapeQuotes(newRecipientField)}"/>
+                <input type="hidden" name="destparamname" value="${ib:escapeQuotes(newRecipientField)}"/>
                 <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="images/addressbook.gif"/></button>
             </td></tr>
 
@@ -161,7 +161,7 @@
             </tr>
             <tr>
                 <td valign="top"><br/><ib:message key="Subject:"/></td>
-                <td><input class="widetextfield" type="text" size="80" name="subject" value="${param.subject}"/></td>
+                <td><input class="widetextfield" type="text" size="80" name="subject" value="${ib:escapeQuotes(param.subject)}"/></td>
             </tr>
             <tr>
                 <td valign="top"><br/><ib:message key="Message:"/></td>

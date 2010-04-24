@@ -89,15 +89,15 @@
                     <td>
                     <form action="newEmail.jsp" method="post">
                         <button type="submit"><ib:message key="Reply"/></button>
-                        <input type="hidden" name="sender" value="${ib:getOneLocalRecipient(email)}"/>
-                        <input type="hidden" name="recipient0" value="${email.sender}"/>
+                        <input type="hidden" name="sender" value="${ib:escapeQuotes(ib:getOneLocalRecipient(email))}"/>
+                        <input type="hidden" name="recipient0" value="${ib:escapeQuotes(email.sender)}"/>
                         
                         <ib:message key="Re:" var="responsePrefix" hide="true"/>
                         <c:set var="responsePrefix" value="${responsePrefix} "/>
                         <c:if test="${fn:startsWith(email.subject, responsePrefix)}">
                             <c:set var="responsePrefix" value=""/>
                         </c:if>
-                        <input type="hidden" name="subject" value="${responsePrefix}${email.subject}"/>
+                        <input type="hidden" name="subject" value="${responsePrefix}${ib:escapeQuotes(email.subject)}"/>
                         
                         <input type="hidden" name="quoteMsgFolder" value="${param.folder}"/>
                         <input type="hidden" name="quoteMsgId" value="${param.messageID}"/>

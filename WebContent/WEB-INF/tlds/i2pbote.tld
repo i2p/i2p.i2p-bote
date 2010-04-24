@@ -222,6 +222,17 @@
 </function>
 
 <function>
+    <name>getIdentity</name>
+    <description>
+        Looks up an EmailIdentity by destination key.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        i2p.bote.email.EmailIdentity getIdentity(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
     <name>getAddressBook</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
@@ -242,6 +253,19 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         boolean deleteContact(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>getContactName</name>
+    <description>
+        Looks up a name for an Email Destination in the address book.
+        If the Email Destination does not exist in the address book,
+        an empty string is returned.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getContactName(java.lang.String)
     </function-signature>
 </function>
 
@@ -370,6 +394,18 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         boolean isKnown(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>escapeQuotes</name>
+    <description>
+        Converts all double and single quotes in a string to HTML entities,
+        which makes the string safe to use in hidden form fields.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String escapeQuotes(java.lang.String)
     </function-signature>
 </function>
 
