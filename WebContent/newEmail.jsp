@@ -143,7 +143,7 @@
 <c:set var="origEmail" value="${ib:getEmail(param.quoteMsgFolder, param.quoteMsgId)}"/>
 <ib:message key="{0} wrote:" hide="true">
     <ib:param value="${ib:getShortSenderName(origEmail.sender, 50)}"></ib:param>
-</ib:message><ib:quote text="${origEmail.text}"/></c:if><c:if test="${empty param.quoteMsgId}">${param.message}</c:if></textarea>
+</ib:message><ib:quote text="${fn:escapeXml(origEmail.text)}"/></c:if><c:if test="${empty param.quoteMsgId}">${fn:escapeXml(param.message)}</c:if></textarea>
                 </td>
             </tr>
             <tr>
