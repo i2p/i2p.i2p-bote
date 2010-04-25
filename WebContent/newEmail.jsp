@@ -99,7 +99,7 @@
             <c:set var="maxRecipientIndex" value="-1"/>
             <c:set var="selectedContacts" value="${paramValues.selectedContact}"/>
             <c:set var="nextSelectedContactIndex" value="0"/>   <%-- An index into the selectedContacts array --%>
-            <c:forEach var="parameter" items="${ib:getSortedRecipientParams(param)}">
+            <c:forEach var="parameter" items="${ib:getSortedRecipientParams(param)}" varStatus="status">
                 <c:set var="recipientField" value="${parameter.key}"/>
                 <c:set var="recipient" value="${parameter.value}"/>
                 
@@ -128,7 +128,16 @@
                     </select>
                 </td><td>
                     <input type="text" size="80" name="${recipientField}" value="${ib:escapeQuotes(recipient)}"/>
-                </td></tr>
+                </td>
+                <%-- If this address line is the last one in the form, put the "add to address book" button here --%>
+                <c:if test="${nextSelectedContactIndex ge fn:length(selectedContacts) and status.last and param.action ne 'addRecipientField'}">
+                    <td>
+                    <c:set var="newRecipientField" value="recipient${maxRecipientIndex}"/>
+                    <input type="hidden" name="destparamname" value="${newRecipientField}"/>
+                    <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="images/addressbook.gif"/></button>
+                    </td>
+                </c:if>
+                </tr>
             </c:forEach>
             <%-- Add an address line for each selectedContact parameter (from addressbook.jsp) --%>
             <c:if test="${!empty selectedContacts}">
@@ -144,7 +153,16 @@
                             </select>
                         </td><td>
                             <input type="text" size="80" name="recipient${maxRecipientIndex}" value="${ib:escapeQuotes(destination)}"/>
-                        </td></tr>
+                        </td>
+                        <%-- If this address line is the last one in the form, put the "add to address book" button here --%>
+                        <c:if test="${nextSelectedContactIndex ge fn:length(selectedContacts) and param.action ne 'addRecipientField'}">
+                            <td>
+                            <c:set var="newRecipientField" value="recipient${maxRecipientIndex}"/>
+                            <input type="hidden" name="destparamname" value="${newRecipientField}"/>
+                            <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="images/addressbook.gif"/></button>
+                            </td>
+                        </c:if>
+                        </tr>
                     </c:if>
                 </c:forEach>
             </c:if>
