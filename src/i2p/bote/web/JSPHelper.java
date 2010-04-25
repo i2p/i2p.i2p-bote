@@ -291,7 +291,7 @@ public class JSPHelper {
      * @param parameters
      * @return A map whose keys start with "recipient", sorted by key
      */
-    public static SortedMap<String, String> getRecipients(Map<String, String> parameters) {
+    public static SortedMap<String, String> getSortedRecipientParams(Map<String, String> parameters) {
         SortedMap<String, String> newMap = new TreeMap<String, String>();
         for (String key: parameters.keySet()) {
             if (key == null)
@@ -300,8 +300,9 @@ public class JSPHelper {
                 String indexString = key.substring("recipient".length());
                 if (isNumeric(indexString)) {
                     String value = parameters.get(key);
-                    if (value!=null && !value.isEmpty())
-                        newMap.put(key, value);
+                    if (value ==null)
+                        value = "";
+                    newMap.put(key, value);
                 }
             }
         }

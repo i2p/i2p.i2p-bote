@@ -33,13 +33,11 @@
 <div class="main">
 
 <ib:sendEmail sender="${param.sender}" subject="${param.subject}" message="${param.message}">
-    <c:forEach var="parameter" items="${param}">
-        <c:if test="${fn:startsWith(parameter.key, 'recipient') and !fn:startsWith(parameter.key, 'recipientType')}">
-            <c:set var="recipientIndex" value="${fn:substringAfter(parameter.key, 'recipient')}"/>
-            <c:set var="recipientTypeAttrName" value="recipientType${recipientIndex}"/>
-            <c:if test="${not empty parameter.value}">
-                <ib:recipient type="${param[recipientTypeAttrName]}" address="${parameter.value}"/>
-            </c:if>
+    <c:forEach var="parameter" items="${ib:getSortedRecipientParams(param)}">
+        <c:set var="recipientIndex" value="${fn:substringAfter(parameter.key, 'recipient')}"/>
+        <c:set var="recipientTypeAttrName" value="recipientType${recipientIndex}"/>
+        <c:if test="${not empty parameter.value}">
+            <ib:recipient type="${param[recipientTypeAttrName]}" address="${parameter.value}"/>
         </c:if>
     </c:forEach>
 </ib:sendEmail>

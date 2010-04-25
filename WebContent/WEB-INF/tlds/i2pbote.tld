@@ -378,10 +378,10 @@
 </function>
 
 <function>
-    <name>getRecipients</name>
+    <name>getSortedRecipientParams</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
-        java.util.Map getRecipients(java.util.Map)
+        java.util.Map getSortedRecipientParams(java.util.Map)
     </function-signature>
 </function>
 

@@ -29,10 +29,11 @@
 
 <%--
     Valid actions:
-        <default>     - show the "new email" form
-        send          - send an email using the request data
-        addToAddrBook - add a recipient to the address book and return here
-        lookup        - add one or more address book entries as recipients and return here
+        <default>         - show the "new email" form
+        send              - send an email using the request data
+        addToAddrBook     - add a recipient to the address book and return here
+        lookup            - add one or more address book entries as recipients and return here
+        addRecipientField - add a recipient field
         
     Other parameters:
         new    - true for new contact, false for existing contact
@@ -91,71 +92,101 @@
                 </td>
             </tr>
             
-            <%-- Add an address line for each recipient# parameter, where # is a number --%>
+            <%--
+                Add an address line for each recipient# parameter, where # is a number.
+                Fill in selectedContacts entries for empty recipient addresses if available.
+            --%>
             <c:set var="maxRecipientIndex" value="-1"/>
-            <c:forEach var="parameter" items="${ib:getRecipients(param)}">
-                <c:set var="isRecipient" value="${fn:startsWith(parameter.key, 'recipient') and !fn:contains(parameter.key, 'Type')}"/>
-                <c:if test="${isRecipient && !empty parameter.value}">
-                    <c:set var="recipientField" value="${parameter.key}"/>
-                    <c:set var="recipient" value="${parameter.value}"/>
-                    <c:set var="recipientIndex" value="${fn:substringAfter(recipientField, 'recipient')}"/>
-                    <c:if test="${recipientIndex gt maxRecipientIndex}">
-                        <c:set var="maxRecipientIndex" value="${recipientIndex}"/>
-                    </c:if>
-                    <tr><td>
-                        <c:set var="recipientTypeField" value="recipientType${recipientIndex}"/>
-                        <c:set var="recipientType" value="${param[recipientTypeField]}"/>
-                        <select name="${recipientTypeField}">
-                            <c:set var="toSelected" value="${recipientType eq 'to' ? ' selected' : ''}"/>
-                            <c:set var="ccSelected" value="${recipientType eq 'cc' ? ' selected' : ''}"/>
-                            <c:set var="bccSelected" value="${recipientType eq 'bcc' ? ' selected' : ''}"/>
-                            <c:set var="replytoSelected" value="${recipientType eq 'replyto' ? ' selected' : ''}"/>
-                            <option value="to"${toSelected}><ib:message key="To:"/></option>
-                            <option value="cc"${ccSelected}><ib:message key="CC:"/></option>
-                            <option value="bcc"${bccSelected}><ib:message key="BCC:"/></option>
-                            <option value="replyto"${replytoSelected}><ib:message key="Reply To:"/></option>
-                        </select>
-                    </td><td>
-                        <input type="text" size="80" name="${recipientField}" value="${ib:escapeQuotes(recipient)}"/>
-                    </td></tr>
+            <c:set var="selectedContacts" value="${paramValues.selectedContact}"/>
+            <c:set var="nextSelectedContactIndex" value="0"/>   <%-- An index into the selectedContacts array --%>
+            <c:forEach var="parameter" items="${ib:getSortedRecipientParams(param)}">
+                <c:set var="recipientField" value="${parameter.key}"/>
+                <c:set var="recipient" value="${parameter.value}"/>
+                
+                <%-- If the address is blank, and there is at least one remaining selectedContacts entry, fill it in --%>
+                <c:if test="${empty recipient and nextSelectedContactIndex lt fn:length(selectedContacts)}">
+                    <c:set var="recipient" value="${selectedContacts[nextSelectedContactIndex]}"/>
+                    <c:set var="nextSelectedContactIndex" value="${nextSelectedContactIndex + 1}"/>
                 </c:if>
+                
+                <c:set var="recipientIndex" value="${fn:substringAfter(recipientField, 'recipient')}"/>
+                <c:if test="${recipientIndex gt maxRecipientIndex}">
+                    <c:set var="maxRecipientIndex" value="${recipientIndex}"/>
+                </c:if>
+                <tr><td>
+                    <c:set var="recipientTypeField" value="recipientType${recipientIndex}"/>
+                    <c:set var="recipientType" value="${param[recipientTypeField]}"/>
+                    <select name="${recipientTypeField}">
+                        <c:set var="toSelected" value="${recipientType eq 'to' ? ' selected' : ''}"/>
+                        <c:set var="ccSelected" value="${recipientType eq 'cc' ? ' selected' : ''}"/>
+                        <c:set var="bccSelected" value="${recipientType eq 'bcc' ? ' selected' : ''}"/>
+                        <c:set var="replytoSelected" value="${recipientType eq 'replyto' ? ' selected' : ''}"/>
+                        <option value="to"${toSelected}><ib:message key="To:"/></option>
+                        <option value="cc"${ccSelected}><ib:message key="CC:"/></option>
+                        <option value="bcc"${bccSelected}><ib:message key="BCC:"/></option>
+                        <option value="replyto"${replytoSelected}><ib:message key="Reply To:"/></option>
+                    </select>
+                </td><td>
+                    <input type="text" size="80" name="${recipientField}" value="${ib:escapeQuotes(recipient)}"/>
+                </td></tr>
             </c:forEach>
             <%-- Add an address line for each selectedContact parameter (from addressbook.jsp) --%>
-            <c:if test="${!empty param.selectedContact}">
-                <c:forEach var="destination" items="${paramValues.selectedContact}">
-                    <c:set var="maxRecipientIndex" value="${maxRecipientIndex+1}"/>
-                    <tr><td>
-                        <select name="recipientType${maxRecipientIndex}">
-                            <option value="to"><ib:message key="To:"/></option>
-                            <option value="cc"><ib:message key="CC:"/></option>
-                            <option value="bcc"><ib:message key="BCC:"/></option>
-                            <option value="replyto"><ib:message key="Reply To:"/></option>
-                        </select>
-                    </td><td>
-                        <input type="text" size="80" name="recipient${maxRecipientIndex}" value="${ib:escapeQuotes(destination)}"/>
-                    </td></tr>
+            <c:if test="${!empty selectedContacts}">
+                <c:forEach var="destination" items="${selectedContacts}" varStatus="status">
+                    <c:if test="${status.index ge nextSelectedContactIndex}">
+                        <c:set var="maxRecipientIndex" value="${maxRecipientIndex+1}"/>
+                        <tr><td>
+                            <select name="recipientType${maxRecipientIndex}">
+                                <option value="to"><ib:message key="To:"/></option>
+                                <option value="cc"><ib:message key="CC:"/></option>
+                                <option value="bcc"><ib:message key="BCC:"/></option>
+                                <option value="replyto"><ib:message key="Reply To:"/></option>
+                            </select>
+                        </td><td>
+                            <input type="text" size="80" name="recipient${maxRecipientIndex}" value="${ib:escapeQuotes(destination)}"/>
+                        </td></tr>
+                    </c:if>
                 </c:forEach>
             </c:if>
-            <%-- Add a blank recipient field --%>
-            <c:set var="maxRecipientIndex" value="${maxRecipientIndex+1}"/>
-            <tr><td>
-                <select name="recipientType${maxRecipientIndex}">
-                    <option value="to"><ib:message key="To:"/></option>
-                    <option value="cc"><ib:message key="CC:"/></option>
-                    <option value="bcc"><ib:message key="BCC:"/></option>
-                    <option value="replyto"><ib:message key="Reply To:"/></option>
-                </select>
-            </td><td>
-                <c:set var="newRecipientField" value="recipient${maxRecipientIndex}"/>
-                <input type="text" size="80" name="${ib:escapeQuotes(newRecipientField)}"/>
-                <input type="hidden" name="destparamname" value="${ib:escapeQuotes(newRecipientField)}"/>
-                <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="images/addressbook.gif"/></button>
-            </td></tr>
+            <%-- Make sure there is at least one recipient field --%>
+            <c:if test="${maxRecipientIndex lt 0}">
+                <c:set var="maxRecipientIndex" value="0"/>
+                <tr><td>
+                    <select name="recipientType${maxRecipientIndex}">
+                        <option value="to"><ib:message key="To:"/></option>
+                        <option value="cc"><ib:message key="CC:"/></option>
+                        <option value="bcc"><ib:message key="BCC:"/></option>
+                        <option value="replyto"><ib:message key="Reply To:"/></option>
+                    </select>
+                </td><td>
+                    <c:set var="newRecipientField" value="recipient${maxRecipientIndex}"/>
+                    <input type="text" size="80" name="${newRecipientField}"/>
+                    <input type="hidden" name="destparamname" value="${newRecipientField}"/>
+                    <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="images/addressbook.gif"/></button>
+                </td></tr>
+            </c:if>
+            <%-- Add a blank address line if action=addRecipientField --%>
+            <c:if test="${param.action eq 'addRecipientField'}">
+                <c:set var="maxRecipientIndex" value="${maxRecipientIndex+1}"/>
+                <tr><td>
+                    <select name="recipientType${maxRecipientIndex}">
+                        <option value="to"><ib:message key="To:"/></option>
+                        <option value="cc"><ib:message key="CC:"/></option>
+                        <option value="bcc"><ib:message key="BCC:"/></option>
+                        <option value="replyto"><ib:message key="Reply To:"/></option>
+                    </select>
+                </td><td>
+                    <c:set var="newRecipientField" value="recipient${maxRecipientIndex}"/>
+                    <input type="text" size="80" name="${ib:escapeQuotes(newRecipientField)}"/>
+                    <input type="hidden" name="destparamname" value="${ib:escapeQuotes(newRecipientField)}"/>
+                    <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="images/addressbook.gif"/></button>
+                </td></tr>
+            </c:if>
 
             <tr>
                 <td/>
                 <td style="text-align: right;">
-                    <button type="submit" name="action" value="addRecipient" disabled="disabled">+</button>
+                    <button type="submit" name="action" value="addRecipientField">+</button>
                     <button type="submit" name="action" value="lookup"><ib:message key="Addr. Book..."/></button>
                 </td>
             </tr>
