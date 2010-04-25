@@ -386,6 +386,21 @@
 </function>
 
 <function>
+    <name>mergeRecipientFields</name>
+    <description>
+        This method is used by newEmail.jsp. It adds the values of all
+        selectedContact keys as recipient addresses, and returns a List
+        containing the old recipient addresses as well as the new ones.
+        If the "action" parameter is set to "addRecipientField", a blank
+        recipient address is added additionally.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.util.List mergeRecipientFields(javax.servlet.ServletRequest)
+    </function-signature>
+</function>
+
+<function>
     <name>isKnown</name>
     <description>
         Returns true if a string contains a Base64-encoded Email Destination that
