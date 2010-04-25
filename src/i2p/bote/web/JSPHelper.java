@@ -331,6 +331,14 @@ public class JSPHelper {
         }
         Map<String, String> oldAddresses = getSortedRecipientParams(parameterStringMap);
         
+        String action = request.getParameter("action");
+        int indexToRemove = -1;
+        if (action!=null && action.startsWith("removeRecipient")) {
+            String indexString = action.substring("removeRecipient".length());
+            if (isNumeric(indexString))
+                indexToRemove = Integer.valueOf(indexString);
+        }
+        
         // make an Iterator over the selectedContact values
         String[] newAddressesArray = request.getParameterValues("selectedContact");
         Iterator<String> newAddresses;
@@ -343,13 +351,18 @@ public class JSPHelper {
         List<RecipientAddress> mergedAddresses = new ArrayList<RecipientAddress>();
         int i = 0;
         for (String address: oldAddresses.values()) {
-            String addressKey = "recipient" + i;
+            // don't add it if it needs to be removed
+            if (i == indexToRemove) {
+                i++;
+                continue;
+            }
+            
             String typeKey = "recipientType" + i;
             String type;
             if (parameterStringMap.containsKey(typeKey))
                 type = parameterStringMap.get(typeKey);
             else {
-                log.error("Request contains no recipient type for recipient key: <" + addressKey + ">");
+                log.error("Request contains a parameter named recipient" + i + ", but no parameter named recipientType" + i + ".");
                 type = "to";
             }
             
@@ -360,6 +373,8 @@ public class JSPHelper {
                 mergedAddresses.add(new RecipientAddress(type, newAddresses.next()));
             else
                 mergedAddresses.add(new RecipientAddress(type, ""));
+            
+            i++;
         }
         
         // add any remaining selectedContacts
@@ -370,7 +385,7 @@ public class JSPHelper {
         if (mergedAddresses.isEmpty())
             mergedAddresses.add(new RecipientAddress("to", ""));
         
-        if ("addRecipientField".equalsIgnoreCase(request.getParameter("action")))
+        if ("addRecipientField".equalsIgnoreCase(action))
             mergedAddresses.add(new RecipientAddress("to", ""));
         
         return mergedAddresses;
@@ -422,6 +437,11 @@ public class JSPHelper {
         return I2PBote.getAppVersion();
     }
     
+    /**
+     * Tests whether a given string can be converted to an integer.
+     * @param str
+     * @return
+     */
     private static boolean isNumeric(String str) {
         return Pattern.matches("\\d+", str);
     }

@@ -393,6 +393,8 @@
         containing the old recipient addresses as well as the new ones.
         If the "action" parameter is set to "addRecipientField", a blank
         recipient address is added additionally.
+        If the action is "removeRecipient" followed by a number, the
+        recipient field with that index is removed.
     </description>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>

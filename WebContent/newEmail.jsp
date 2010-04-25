@@ -29,11 +29,12 @@
 
 <%--
     Valid actions:
-        <default>         - show the "new email" form
-        send              - send an email using the request data
-        addToAddrBook     - add a recipient to the address book and return here
-        lookup            - add one or more address book entries as recipients and return here
-        addRecipientField - add a recipient field
+        <default>          - show the "new email" form
+        send               - send an email using the request data
+        addToAddrBook      - add a recipient to the address book and return here
+        lookup             - add one or more address book entries as recipients and return here
+        addRecipientField  - add a recipient field
+        removeRecipient<i> - remove the recipient field with index i
         
     Other parameters:
         new    - true for new contact, false for existing contact
@@ -111,13 +112,14 @@
                     </select>
                 </td><td>
                     <input type="text" size="80" name="${recipientField}" value="${ib:escapeQuotes(recipient.address)}"/>
-                </td>
-                <td>
                     <c:choose>
                         <c:when test="${status.last}">
                             <input type="hidden" name="destparamname" value="${recipientField}"/>
                             <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="images/addressbook.gif"/></button>
                         </c:when>
+                        <c:otherwise>
+                            <button type="submit" name="action" value="removeRecipient${status.index}">-</button>
+                        </c:otherwise>
                     </c:choose>
                 </td></tr>
             </c:forEach>
