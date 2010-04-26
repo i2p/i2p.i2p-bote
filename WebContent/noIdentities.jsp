@@ -62,7 +62,8 @@
         It is easy to create multiple identities for different purposes, or different
         contacts.
     </ib:message>
-    <form action="editIdentity.jsp?new=true" method="POST">
+    <%-- calling editIdentity.jsp with no "key" param creates a new identity --%>
+    <form action="editIdentity.jsp" method="POST">
         <button type="submit" value="New"><ib:message key="Create a New Email Identity"/></button>
     </form>
 </div>
