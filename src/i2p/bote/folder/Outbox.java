@@ -22,7 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.email.Email;
-import i2p.bote.email.Field;
+import i2p.bote.email.EmailAttribute;
 
 import java.io.File;
 import java.util.Collections;
@@ -48,11 +48,11 @@ public class Outbox extends EmailFolder {
 	}
 
     /**
-     * Overridden to handle the <code>STATUS</code> field.
+     * Overridden to handle the <code>STATUS</code> attribute.
      */
     @Override
-    public List<Email> getElements(Field sortColumn, boolean descending) {
-        if (!Field.STATUS.equals(sortColumn))
+    public List<Email> getElements(EmailAttribute sortColumn, boolean descending) {
+        if (!EmailAttribute.STATUS.equals(sortColumn))
             return super.getElements(sortColumn, descending);
             
         // sort by status

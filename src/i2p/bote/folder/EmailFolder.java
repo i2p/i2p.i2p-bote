@@ -23,7 +23,7 @@ package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
 import i2p.bote.email.Email;
-import i2p.bote.email.Field;
+import i2p.bote.email.EmailAttribute;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -87,7 +87,7 @@ public class EmailFolder extends Folder<Email> {
     /**
      * Returns all emails in the folder, in the order specified by <code>sortColumn</code>.
      */
-    public List<Email> getElements(Field sortColumn, boolean descending) {
+    public List<Email> getElements(EmailAttribute sortColumn, boolean descending) {
         List<Email> emails = getElements();
         
         Comparator<Email> comparator = Email.getComparator(sortColumn);

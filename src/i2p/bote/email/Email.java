@@ -375,15 +375,15 @@ public class Email extends MimeMessage {
     }
     
     /**
-     * Returns a <code>Comparator</code> for sorting a given email field.
-     * If <code>field</code> is <code>null</code>, the date field is used.
-     * @param field
+     * Returns a <code>Comparator</code> for sorting a given email attribute.
+     * If <code>attribute</code> is <code>null</code>, the date field is used.
+     * @param attribute
      * @return
      */
-    public static Comparator<Email> getComparator(Field field) {
-        if (field == null)
-            field = Field.DATE;
-        return new EmailComparator(field);
+    public static Comparator<Email> getComparator(EmailAttribute attribute) {
+        if (attribute == null)
+            attribute = EmailAttribute.DATE;
+        return new EmailComparator(attribute);
     }
     
     private String getOneFromAddress() throws MessagingException {
@@ -432,10 +432,10 @@ public class Email extends MimeMessage {
      * For sorting emails.
      */
     private static class EmailComparator implements Comparator<Email> {
-        private Field field;
+        private EmailAttribute attribute;
         
-        public EmailComparator(Field field) {
-            this.field = field;
+        public EmailComparator(EmailAttribute attribute) {
+            this.attribute = attribute;
         }
         
         @Override
@@ -444,7 +444,7 @@ public class Email extends MimeMessage {
             @SuppressWarnings("unchecked") Comparable value2 = 0;
             
             try {
-                switch(field) {
+                switch(attribute) {
                 case DATE:
                     value1 = email1.getSentDate();
                     value2 = email2.getSentDate();
@@ -462,13 +462,13 @@ public class Email extends MimeMessage {
                     value2 = email2.getSubject();
                     break;
                 default:
-                    log.error("Unknown email field type: " + field);
+                    log.error("Unknown email attribute type: " + attribute);
                 }
                 
                 return nullSafeCompare(value1, value2);
             }
             catch (MessagingException e) {
-                log.error("Can't read the " + field + " field from an email", e);
+                log.error("Can't read the " + attribute + " attribute from an email", e);
                 return 0;
             }
         }

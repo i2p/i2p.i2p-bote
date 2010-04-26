@@ -305,7 +305,7 @@
     <name>getEmails</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
-        java.util.List getEmails(i2p.bote.folder.EmailFolder, i2p.bote.email.Field, boolean)
+        java.util.List getEmails(i2p.bote.folder.EmailFolder, i2p.bote.email.EmailAttribute, boolean)
     </function-signature>
 </function>
 

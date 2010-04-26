@@ -28,10 +28,10 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <%
-    pageContext.setAttribute("FROM", i2p.bote.email.Field.FROM, PageContext.PAGE_SCOPE);
-    pageContext.setAttribute("TO", i2p.bote.email.Field.TO, PageContext.PAGE_SCOPE);
-    pageContext.setAttribute("SUBJECT", i2p.bote.email.Field.SUBJECT, PageContext.PAGE_SCOPE);
-    pageContext.setAttribute("STATUS", i2p.bote.email.Field.STATUS, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("FROM", i2p.bote.email.EmailAttribute.FROM, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("TO", i2p.bote.email.EmailAttribute.TO, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("SUBJECT", i2p.bote.email.EmailAttribute.SUBJECT, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("STATUS", i2p.bote.email.EmailAttribute.STATUS, PageContext.PAGE_SCOPE);
 %> 
 
 <c:set var="title" value="Outbox" scope="request"/>
