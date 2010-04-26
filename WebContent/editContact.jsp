@@ -129,7 +129,10 @@
     </form>
 
     <script type="text/javascript" language="JavaScript">
-        document.forms['form'].elements['name'].focus();
+        if (document.forms['form'].elements['destination'].value == "")
+            document.forms['form'].elements['destination'].focus();
+        else
+            document.forms['form'].elements['name'].focus();
     </script>
 </div>
 
