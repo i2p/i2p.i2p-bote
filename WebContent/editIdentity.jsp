@@ -29,13 +29,13 @@
 
 <c:choose>
     <c:when test="${empty param.key}">
-        <ib:message key="New Email Identity" var="title"/>
+        <ib:message key="New Email Identity" var="title" scope="request"/>
         <ib:message key="Create" var="commitAction"/>"/>
         <c:set var="publicName" value="${param.publicName}"/>
         <c:set var="description" value="${param.description}"/>
     </c:when>
     <c:otherwise>
-        <ib:message key="Edit Email Identity" var="title"/>
+        <ib:message key="Edit Email Identity" var="title" scope="request"/>
         <ib:message key="Save" var="commitAction"/>
         <c:set var="key" value="${param.key}"/>
         <c:set var="identity" value="${ib:getIdentity(key)}"/>
