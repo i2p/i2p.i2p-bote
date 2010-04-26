@@ -29,10 +29,6 @@
 <c:set var="title" value="Identities" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="infoMessage">
-    ${param.infoMessage}
-</div>
-
 <div class="main">
     <h2>
         <ib:message key="Email Identities"/>
