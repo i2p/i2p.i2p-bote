@@ -108,6 +108,22 @@ public class Email extends MimeMessage {
         return new EmailDestination(getSender().toString());
     }
     
+    public String getOneFromAddress() throws MessagingException {
+        Address[] fromAddresses = getFrom();
+        if (fromAddresses==null || fromAddresses.length==0)
+            return null;
+        else
+            return fromAddresses[0].toString();
+    }
+    
+    public String getOneRecipient() throws MessagingException {
+        Address[] recipients = getAllRecipients();
+        if (recipients==null || recipients.length==0)
+            return null;
+        else
+            return recipients[0].toString();
+    }
+    
     public void setHashCash(HashCash hashCash) throws MessagingException {
         setHeader("X-HashCash", hashCash.toString());
     }

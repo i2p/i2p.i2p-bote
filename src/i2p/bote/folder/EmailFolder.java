@@ -34,7 +34,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import net.i2p.util.Log;
@@ -126,12 +125,12 @@ public class EmailFolder extends Folder<Email> {
                     value2 = email2.getSentDate();
                     break;
                 case FROM:
-                    value1 = displayFilter.getNameAndDestination(getOneFromAddress(email1));
-                    value2 = displayFilter.getNameAndDestination(getOneFromAddress(email2));
+                    value1 = displayFilter.getNameAndDestination(email1.getOneFromAddress());
+                    value2 = displayFilter.getNameAndDestination(email2.getOneFromAddress());
                     break;
                 case TO:
-                    value1 = displayFilter.getNameAndDestination(getOneRecipient(email1));
-                    value2 = displayFilter.getNameAndDestination(getOneRecipient(email2));
+                    value1 = displayFilter.getNameAndDestination(email1.getOneRecipient());
+                    value2 = displayFilter.getNameAndDestination(email2.getOneRecipient());
                     break;
                 case SUBJECT:
                     value1 = email1.getSubject();
@@ -147,22 +146,6 @@ public class EmailFolder extends Folder<Email> {
                 log.error("Can't read the " + attribute + " attribute from an email", e);
                 return 0;
             }
-        }
-        
-        private String getOneFromAddress(Email email) throws MessagingException {
-            Address[] fromAddresses = email.getFrom();
-            if (fromAddresses==null || fromAddresses.length==0)
-                return null;
-            else
-                return fromAddresses[0].toString();
-        }
-        
-        private String getOneRecipient(Email email) throws MessagingException {
-            Address[] recipients = email.getAllRecipients();
-            if (recipients==null || recipients.length==0)
-                return null;
-            else
-                return recipients[0].toString();
         }
         
         @SuppressWarnings("unchecked")

@@ -116,7 +116,7 @@
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
             
-            <c:set var="recipient" value="${ib:getNameAndDestination(ib:getOneLocalRecipient(email))}"/>
+            <c:set var="recipient" value="${ib:getNameAndDestination(email.oneRecipient)}"/>
             
             <c:set var="subject" value="${email.subject}"/>
             <c:if test="${empty subject}">
