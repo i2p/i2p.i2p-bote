@@ -21,12 +21,6 @@
 
 package i2p.bote;
 
-import i2p.bote.addressbook.AddressBook;
-import i2p.bote.addressbook.Contact;
-import i2p.bote.email.EmailDestination;
-import i2p.bote.email.EmailIdentity;
-import i2p.bote.email.Identities;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,37 +36,6 @@ public class Util {
 	
 	private Util() { }
 	
-    /**
-     * Looks up the name associated with a Base64-encoded Email Destination,
-     * in the address book and the local identities, and returns a string
-     * that contains the name and the Base64-encoded destination.
-     * If <code>address</code> already contains a name, it is replaced with
-     * the one from the address book or identities.
-     * If no name is found in the address book or the identities, or if
-     * <code>address</code> does not contain a valid Email Destination,
-     * <code>address</code> is returned.
-     * @param identities
-     * @param addressBook
-     * @param address A Base64-encoded Email Destination, and optionally a name
-     * @return
-     */
-    public static String getNameAndDestination(Identities identities, AddressBook addressBook, String address) {
-        String base64dest = EmailDestination.extractBase64Dest(address);
-        if (base64dest != null) {
-            // try the address book
-            Contact contact = addressBook.get(base64dest);
-            if (contact != null)
-                return contact.getName() + "<" + contact.toBase64() + ">";
-            
-            // if no address book entry, try the email identities
-            EmailIdentity identity = identities.get(base64dest);
-            if (identity != null)
-                return identity.getPublicName() + "<" + identity.toBase64() + ">";
-        }
-        
-        return address;
-    }
-    
     public static byte[] readInputStream(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[32*1024];

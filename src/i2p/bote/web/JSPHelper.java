@@ -26,6 +26,7 @@ import i2p.bote.I2PBote;
 import i2p.bote.Util;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.addressbook.Contact;
+import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
@@ -56,6 +57,7 @@ import net.i2p.util.Log;
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
  */
 public class JSPHelper {
+    private static AddressDisplayFilter addressDisplayFilter;
 
     public JSPHelper() {
     }
@@ -224,7 +226,7 @@ public class JSPHelper {
     }
 
     public static List<Email> getEmails(EmailFolder folder, EmailAttribute sortColumn, boolean descending) {
-        return folder.getElements(sortColumn, descending);
+        return folder.getElements(getAddressDisplayFilter(), sortColumn, descending);
     }
 
     public static String getShortSenderName(String sender, int maxLength) {
@@ -426,7 +428,13 @@ public class JSPHelper {
     }
     
     public static String getNameAndDestination(String address) {
-        return Util.getNameAndDestination(getIdentities(), getAddressBook(), address);
+        return getAddressDisplayFilter().getNameAndDestination(address);
+    }
+    
+    private static AddressDisplayFilter getAddressDisplayFilter() {
+        if (addressDisplayFilter == null)
+            addressDisplayFilter = new AddressDisplayFilter(getIdentities(), getAddressBook());
+        return addressDisplayFilter;
     }
     
     public Configuration getConfiguration() {

@@ -22,6 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
+import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
 
@@ -33,6 +34,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import net.i2p.util.Log;
@@ -87,14 +89,101 @@ public class EmailFolder extends Folder<Email> {
     /**
      * Returns all emails in the folder, in the order specified by <code>sortColumn</code>.
      */
-    public List<Email> getElements(EmailAttribute sortColumn, boolean descending) {
-        List<Email> emails = getElements();
-        
-        Comparator<Email> comparator = Email.getComparator(sortColumn);
+    public List<Email> getElements(AddressDisplayFilter displayFilter, EmailAttribute sortColumn, boolean descending) {
+        Comparator<Email> comparator = new EmailComparator(sortColumn, displayFilter);
         if (descending)
             comparator = Collections.reverseOrder(comparator);
+        
+        List<Email> emails = getElements();
         Collections.sort(emails, comparator);
         return emails;
+    }
+    
+    /**
+     * A <code>Comparator</code> for sorting emails by a given {@link EmailAttribute}.
+     * If <code>attribute</code> is <code>null</code>, the date field is used.
+     */
+    private class EmailComparator implements Comparator<Email> {
+        private EmailAttribute attribute;
+        private AddressDisplayFilter displayFilter;
+        
+        public EmailComparator(EmailAttribute attribute, AddressDisplayFilter displayFilter) {
+            if (attribute == null)
+                attribute = EmailAttribute.DATE;
+            this.attribute = attribute;
+            this.displayFilter = displayFilter;
+        }
+        
+        @Override
+        public int compare(Email email1, Email email2) {
+            @SuppressWarnings("unchecked") Comparable value1 = 0;
+            @SuppressWarnings("unchecked") Comparable value2 = 0;
+            
+            try {
+                switch(attribute) {
+                case DATE:
+                    value1 = email1.getSentDate();
+                    value2 = email2.getSentDate();
+                    break;
+                case FROM:
+                    value1 = displayFilter.getNameAndDestination(getOneFromAddress(email1));
+                    value2 = displayFilter.getNameAndDestination(getOneFromAddress(email2));
+                    break;
+                case TO:
+                    value1 = displayFilter.getNameAndDestination(getOneRecipient(email1));
+                    value2 = displayFilter.getNameAndDestination(getOneRecipient(email2));
+                    break;
+                case SUBJECT:
+                    value1 = email1.getSubject();
+                    value2 = email2.getSubject();
+                    break;
+                default:
+                    log.error("Unknown email attribute type: " + attribute);
+                }
+                
+                return nullSafeCompare(value1, value2);
+            }
+            catch (MessagingException e) {
+                log.error("Can't read the " + attribute + " attribute from an email", e);
+                return 0;
+            }
+        }
+        
+        private String getOneFromAddress(Email email) throws MessagingException {
+            Address[] fromAddresses = email.getFrom();
+            if (fromAddresses==null || fromAddresses.length==0)
+                return null;
+            else
+                return fromAddresses[0].toString();
+        }
+        
+        private String getOneRecipient(Email email) throws MessagingException {
+            Address[] recipients = email.getAllRecipients();
+            if (recipients==null || recipients.length==0)
+                return null;
+            else
+                return recipients[0].toString();
+        }
+        
+        @SuppressWarnings("unchecked")
+        private int nullSafeCompare(Comparable value1, Comparable value2) {
+            if (value1 == null) {
+                if (value2 == null)
+                    return 0;
+                else
+                    return -1;
+            }
+            else {
+                if (value2 == null)
+                    return 1;
+                else {
+                    if (value1 instanceof String)
+                        return ((String)value1).compareToIgnoreCase((String)value2);
+                    else
+                        return value1.compareTo(value2);
+                }
+            }
+        }
     }
     
     /**
