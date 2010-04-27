@@ -93,7 +93,14 @@
             </th>
             <th style="width: 30px; text-align: center;"><ib:message key="Unkn."/></th>
             <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
-            <th style="width: 100px;"><ib:message key="To"/></th>
+            <th style="width: 100px;">
+                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${TO}"/>
+                <c:if test="${sortcolumn eq TO}">
+                    <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
+                    <c:set var="toColumnIndicator" value=" ${sortIndicator}"/>
+                </c:if>
+                <a href="${sortLink}"><ib:message key="To"/>${toColumnIndicator}</a>
+            </th>
             <th style="width: 150px;">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${SUBJECT}"/>
                 <c:if test="${sortcolumn eq SUBJECT}">
