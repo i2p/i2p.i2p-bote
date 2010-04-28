@@ -34,13 +34,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.i2p.I2PAppContext;
+import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Hash;
 import net.i2p.data.PrivateKey;
 import net.i2p.data.PublicKey;
 import net.i2p.data.SessionKey;
 import net.i2p.util.Log;
-import net.i2p.util.RandomSource;
 
 /**
  * An <code>EncryptedEmailPacket</code> basically contains an encrypted <code>UnencryptedEmailPacket</code>
@@ -70,7 +70,6 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
 	 * @param appContext
 	 */
 	public EncryptedEmailPacket(UnencryptedEmailPacket unencryptedPacket, EmailDestination emailDestination, I2PAppContext appContext) {
-        dhtKey = generateRandomHash();
         deletionKeyPlain = unencryptedPacket.getVerificationDeletionKey();
         
         // put all the encrypted fields into an array
@@ -87,6 +86,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
             dataStream.write(content);
             
             encryptedData = encrypt(byteStream.toByteArray(), emailDestination, appContext);
+            dhtKey = getDhtKey();
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream/DataOutputStream.", e);
@@ -111,16 +111,32 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         buffer.get(encryptedData);
 	}
 	
-    private Hash generateRandomHash() {
-        RandomSource randomSource = RandomSource.getInstance();
+    /**
+     * Returns a hash computed from </code>encryptedData</code>.
+     */
+	@Override
+    public Hash getDhtKey() {
+        ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
+        DataOutputStream dataStream = new DataOutputStream(byteArrayStream);
 
-        byte[] bytes = new byte[Hash.HASH_LENGTH];
-        for (int i=0; i<bytes.length; i++)
-            bytes[i] = (byte)randomSource.nextInt(256);
-
-        return new Hash(bytes);
-	}
+        try {
+            dataStream.write(deletionKeyPlain.toByteArray());
+            dataStream.writeShort(encryptedData.length);
+            dataStream.write(encryptedData);
+            
+            byte[] dataToHash = byteArrayStream.toByteArray();
+            return SHA256Generator.getInstance().calculateHash(dataToHash);
+        }
+        catch (IOException e) {
+            log.error("Can't write to ByteArrayOutputStream/DataOutputStream.", e);
+            return null;
+        }
+    }
     
+	public boolean verifyHash() {
+	    return getDhtKey().equals(dhtKey);
+	}
+	
 	/**
 	 * Decrypts the encrypted part of the packet with the private key of <code>identity</code>.
 	 * @param identity
@@ -177,11 +193,6 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
     	return encryptedPackets;
     }
     
-    @Override
-    public Hash getDhtKey() {
-        return dhtKey;
-    }
-
     /**
      * Returns the value of the "plain-text deletion key" field.
      * Storage nodes set this to all zero bytes when the packet is retrieved.

@@ -21,11 +21,13 @@
 
 package i2p.bote.packet;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 import net.i2p.I2PAppContext;
@@ -76,5 +78,23 @@ public class EncryptedEmailPacketTest {
         byte[] arrayA = decryptedPacket.getContent();
         byte[] arrayB = message.getBytes();
         assertTrue("Email message differs after decryption!", Arrays.equals(arrayA, arrayB));
+    }
+    
+    @Test
+    public void testHash() throws Exception {
+        assertTrue(encryptedPacket.verifyHash());
+        
+        alterEncryptedData(encryptedPacket);
+        assertFalse(encryptedPacket.verifyHash());
+    }
+    
+    private void alterEncryptedData(EncryptedEmailPacket packet) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        Field encryptedDataField = EncryptedEmailPacket.class.getDeclaredField("encryptedData");
+        encryptedDataField.setAccessible(true);
+        Object encryptedDataObject = encryptedDataField.get(packet);
+        byte[] encryptedData = (byte[])encryptedDataObject;
+        
+        // flip one bit
+        encryptedData[0] ^= 1;
     }
 }
