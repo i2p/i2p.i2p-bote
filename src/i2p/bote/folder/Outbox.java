@@ -21,6 +21,7 @@
 
 package i2p.bote.folder;
 
+import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
 
@@ -51,9 +52,9 @@ public class Outbox extends EmailFolder {
      * Overridden to handle the <code>STATUS</code> attribute.
      */
     @Override
-    public List<Email> getElements(EmailAttribute sortColumn, boolean descending) {
+    public List<Email> getElements(AddressDisplayFilter displayFilter, EmailAttribute sortColumn, boolean descending) {
         if (!EmailAttribute.STATUS.equals(sortColumn))
-            return super.getElements(sortColumn, descending);
+            return super.getElements(displayFilter, sortColumn, descending);
             
         // sort by status
         List<Email> emails = getElements();
