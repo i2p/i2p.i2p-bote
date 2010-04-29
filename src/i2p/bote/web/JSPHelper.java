@@ -217,6 +217,8 @@ public class JSPHelper {
             return I2PBote.getInstance().getInbox();
         else if ("Outbox".equals(folderName))
             return I2PBote.getInstance().getOutbox();
+        else if ("Sent".equals(folderName))
+            return I2PBote.getInstance().getSentFolder();
         else
             return null;
     }

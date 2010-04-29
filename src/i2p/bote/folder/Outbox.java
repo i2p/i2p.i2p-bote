@@ -36,7 +36,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * An {@link EmailFolder} that maintains a status for each email.
  * The status is not written to a file. It is reset when the application
  * is restarted.
- * Another difference is that emails are never set to "old".
+ * Statuses can be any string. Their purpose is to inform the user
+ * about the sending progress.
  */
 public class Outbox extends EmailFolder {
     public static final String DEFAULT_STATUS = "Queued";
@@ -68,14 +69,6 @@ public class Outbox extends EmailFolder {
             comparator = Collections.reverseOrder(comparator);
         Collections.sort(emails, comparator);
         return emails;
-    }
-
-    /**
-     * Overridden to always treat outgoing emails as new, so they show
-     * up in the "Outbox" folder link even after the user opens them.
-     */
-    @Override
-    public void setNew(String messageId, boolean isNew) {
     }
 
     public void setStatus(String messageId, String status) {

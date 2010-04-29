@@ -47,6 +47,7 @@ import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.RelayPacket;
 import i2p.bote.service.AutoMailCheckTask;
 import i2p.bote.service.I2PBoteThread;
+import i2p.bote.service.OutboxListener;
 import i2p.bote.service.OutboxProcessor;
 import i2p.bote.service.POP3Service;
 import i2p.bote.service.RelayPacketSender;
@@ -101,6 +102,7 @@ public class I2PBote {
     private I2PSendQueue sendQueue;
     private Outbox outbox;   // stores outgoing emails for all local users
     private EmailFolder inbox;   // stores incoming emails for all local users
+    private EmailFolder sentFolder;
     private PacketFolder<RelayPacket> relayPacketFolder;   // stores email packets we're forwarding for other machines
     private IncompleteEmailFolder incompleteEmailFolder;   // stores email packets addressed to a local user
     private EmailPacketFolder emailDhtStorageFolder;   // stores email packets for other peers
@@ -150,6 +152,7 @@ public class I2PBote {
     private void initializeFolderAccess() {
         inbox = new EmailFolder(configuration.getInboxDir());
         outbox = new Outbox(configuration.getLocalOutboxDir());
+        sentFolder = new EmailFolder(configuration.getSentFolderDir());
         relayPacketFolder = new PacketFolder<RelayPacket>(configuration.getRelayOutboxDir());
         incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), inbox);
         emailDhtStorageFolder = new EmailPacketFolder(configuration.getEmailDhtStorageDir());
@@ -241,6 +244,20 @@ public class I2PBote {
         peerManager = new PeerManager();
         
         outboxProcessor = new OutboxProcessor(dht, outbox, peerManager, appContext);
+        outboxProcessor.addOutboxListener(new OutboxListener() {
+            /** Moves sent emails to the "sent" folder */
+            @Override
+            public void emailSent(Email email) {
+                try {
+                    outbox.setNew(email, false);   // this prevents OutboxProcessor from sending the email again if it can't be moved for some reason
+                    log.debug("Moving email [" + email + "] to the \"sent\" folder.");
+                    outbox.move(email, sentFolder);
+                }
+                catch (Exception e) {
+                    log.error("Cannot move email from outbox to sent folder: " + email, e);
+                }
+            }
+        });
         
         autoMailCheckTask = new AutoMailCheckTask(configuration.getMailCheckInterval());
     }
@@ -378,6 +395,10 @@ public class I2PBote {
     
     public Outbox getOutbox() {
         return outbox;
+    }
+    
+    public EmailFolder getSentFolder() {
+        return sentFolder;
     }
     
     public int getNumDhtPeers() {

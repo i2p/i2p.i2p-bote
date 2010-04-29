@@ -46,6 +46,7 @@ public class Configuration {
     private static final String EMAIL_DHT_SUBDIR = "dht_email_pkt";    // relative to I2P_BOTE_SUBDIR
     private static final String INDEX_PACKET_DHT_SUBDIR = "dht_index_pkt";    // relative to I2P_BOTE_SUBDIR
     private static final String INBOX_SUBDIR = "inbox";             // relative to I2P_BOTE_SUBDIR
+    private static final String SENT_FOLDER_DIR = "sent";             // relative to I2P_BOTE_SUBDIR
 
     // Parameter names in the config file
     private static final String PARAMETER_REDUNDANCY = "redundancy";
@@ -148,6 +149,10 @@ public class Configuration {
     
     private File getOutboxBaseDir() {
         return new File(i2pBoteDir, OUTBOX_DIR);
+    }
+    
+    public File getSentFolderDir() {
+        return new File(i2pBoteDir, SENT_FOLDER_DIR);
     }
     
     public File getInboxDir() {

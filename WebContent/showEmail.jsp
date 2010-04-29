@@ -29,7 +29,9 @@
 
 <c:set var="email" value="${ib:getEmail(param.folder, param.messageID)}"/>
 
-<ib:setEmailRead folder="${ib:getMailFolder(param.folder)}" messageId="${param.messageID}" read="true"/>
+<c:if test="${fn:toLowerCase(param.folder) ne 'outbox'}">
+    <ib:setEmailRead folder="${ib:getMailFolder(param.folder)}" messageId="${param.messageID}" read="true"/>
+</c:if>
 
 <c:set var="title" value="${email.subject}" scope="request"/>
 <jsp:include page="header.jsp"/>

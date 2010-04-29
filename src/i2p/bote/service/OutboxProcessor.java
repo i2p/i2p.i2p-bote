@@ -35,7 +35,10 @@ import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -57,12 +60,14 @@ public class OutboxProcessor extends I2PBoteThread {
     private Outbox outbox;
     private I2PAppContext appContext;
     private CountDownLatch wakeupSignal;   // tells the thread to interrupt the current wait and resume the loop
+    private List<OutboxListener> outboxListeners;
     
     public OutboxProcessor(DHT dht, Outbox outbox, PeerManager peerManager, I2PAppContext appContext) {
         super("OutboxProcsr");
         this.dht = dht;
         this.outbox = outbox;
         this.appContext = appContext;
+        outboxListeners = Collections.synchronizedList(new ArrayList<OutboxListener>());
     }
     
     @Override
@@ -75,12 +80,12 @@ public class OutboxProcessor extends I2PBoteThread {
             if (I2PBote.getInstance().getNetworkStatus() == NetworkStatus.CONNECTED) {
                 log.info("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
                 for (Email email: outbox)
-                    // only send emails whose status has not been set
-                    if (Outbox.DEFAULT_STATUS.equals(outbox.getStatus(email))) {
+                    // only send emails whose status has not been set and which have not been set to "old"
+                    if (Outbox.DEFAULT_STATUS.equals(outbox.getStatus(email)) && email.isNew()) {
                         log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
                         try {
                             sendEmail(email);
-                            outbox.delete(email);
+                            fireOutboxListeners(email);
                         }
                         catch (Exception e) {
                             log.error("Error sending email.", e);
@@ -176,5 +181,18 @@ public class OutboxProcessor extends I2PBoteThread {
             outbox.setStatus(email, _("Error while sending email: {0}", e.getLocalizedMessage()));
             throw e;
         }
+    }
+    
+    public void addOutboxListener(OutboxListener listener) {
+        outboxListeners.add(listener);
+    }
+    
+    /**
+     * Notifies listeners that an email has been sent.
+     * @param email
+     */
+    private void fireOutboxListeners(Email email) {
+        for (OutboxListener listener: outboxListeners)
+            listener.emailSent(email);
     }
 }

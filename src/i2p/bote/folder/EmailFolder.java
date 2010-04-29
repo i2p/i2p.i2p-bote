@@ -187,6 +187,25 @@ public class EmailFolder extends Folder<Email> {
             return null;
         }
     }
+
+    /**
+     * Moves an email from this folder to another. May not work if the
+     * two folders are on different filesystems, or if a file with the
+     * same name exists already.
+     * @param email
+     * @param newFolder
+     */
+    public void move(Email email, EmailFolder newFolder) {
+        File emailFile = getEmailFile(email);
+        if (emailFile == null) {
+            log.error("Cannot move email [" + email + "] to folder [" + newFolder + "]: email file doesn't exist.");
+            return;
+        }
+        File newFile = new File(newFolder.getStorageDirectory(), emailFile.getName());
+        boolean success = emailFile.renameTo(newFile);
+        if (!success)
+            log.error("Cannot move <" + emailFile.getAbsolutePath() + "> to <" + newFile.getAbsolutePath() + ">");
+    }
     
     private File getEmailFile(Email email) {
         return getEmailFile(email.getMessageID(), email.isNew());
@@ -240,13 +259,23 @@ public class EmailFolder extends Folder<Email> {
         }
     }
     
+    public void setNew(Email email, boolean isNew) {
+        String messageId = email.getMessageID();
+        if (messageId != null) {
+            boolean success = setNew(messageId, isNew);
+            if (success)
+                email.setNew(isNew);
+        }
+    }
+    
     /**
      * Flags an email "new" (if <code>isNew</code> is <code>true</code>) or
      * "old" (if <code>isNew</code> is <code>false</code>).
      * @param messageId
      * @param isNew
+     * @return true if the email file was renamed, false if something went wrong
      */
-    public void setNew(String messageId, boolean isNew) {
+    public boolean setNew(String messageId, boolean isNew) {
         File file = getEmailFile(messageId);
         if (file != null) {
             char newIndicator = isNew?'N':'O';   // the new start character
@@ -255,9 +284,12 @@ public class EmailFolder extends Folder<Email> {
             boolean success = file.renameTo(newFile);
             if (!success)
                 log.error("Cannot rename <" + file.getAbsolutePath() + "> to <" + newFile.getAbsolutePath() + ">");
+            return success;
         }
-        else
+        else {
             log.error("No email found for message Id: <" + messageId + ">");
+            return false;
+        }
     }
     
     /**
