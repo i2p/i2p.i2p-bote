@@ -57,18 +57,7 @@
 </div>
 
 <div class="menubox">
-    <h2><ib:message key="Folders"/></h2>
-    <ib:message key="Inbox" var="displayName"/><ib:folderLink dirName="Inbox" displayName="${displayName}"/><br/>
-    <ib:message key="Outbox" var="displayName"/><ib:folderLink dirName="Outbox" displayName="${displayName}"/><br/>
-    <img src="images/folder.png"/><ib:message key="Sent"/><br/>
-    <img src="images/folder.png"/><ib:message key="Drafts"/><br/>
-    <img src="images/folder.png"/><ib:message key="Trash"/><br/>
-    <hr/>
-    <img src="images/folder.png"/>User_created_Folder_1<br/>
-    <img src="images/folder.png"/>User_created_Folder_2<br/>
-    <img src="images/folder.png"/>User_created_Folder_3<br/>
-    <hr/>
-    <ib:message key="Manage Folders"/>
+    <iframe src="folders.jsp" width="100%" height="250px" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
 </div>
 
 <div class="menubox">

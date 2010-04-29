@@ -10,12 +10,12 @@
 
 <c:choose>
     <c:when test="${dirName eq 'Outbox'}">
-        <a href="outbox.jsp" title="${numEmails} emails total, ${numNew} new">
+        <a href="outbox.jsp" target="_parent" title="${numEmails} emails total, ${numNew} new">
             <img src="images/folder.png"/>${displayName}
         </a>
     </c:when>
     <c:otherwise>
-        <a href="folder.jsp?path=${dirName}" title="${numEmails} emails total, ${numNew} new">
+        <a href="folder.jsp?path=${dirName}" target="_parent" title="${numEmails} emails total, ${numNew} new">
             <img src="images/folder.png"/>${displayName}
         </a>
     </c:otherwise>
