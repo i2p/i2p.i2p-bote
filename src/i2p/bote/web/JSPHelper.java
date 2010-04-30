@@ -33,6 +33,7 @@ import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.TrashFolder;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
@@ -219,6 +220,8 @@ public class JSPHelper {
             return I2PBote.getInstance().getOutbox();
         else if ("Sent".equals(folderName))
             return I2PBote.getInstance().getSentFolder();
+        else if ("Trash".equals(folderName))
+            return I2PBote.getInstance().getTrashFolder();
         else
             return null;
     }
@@ -280,8 +283,19 @@ public class JSPHelper {
         return I2PBote.getInstance().getOutbox().getStatus(email);
     }
     
+    /**
+     * Moves an email from the folder denoted by <code>folderName</code> to
+     * the trash folder. If <code>folderName</code> is the name of the trash
+     * folder, the email is deleted.
+     * @param folderName
+     * @param messageId The message ID of the email to delete / move to the trash
+     */
     public static boolean deleteEmail(String folderName, String messageId) {
-        return getMailFolder(folderName).delete(messageId);
+        EmailFolder folder = getMailFolder(folderName);
+        if (folder instanceof TrashFolder)
+            return folder.delete(messageId);
+        else
+            return I2PBote.getInstance().moveToTrash(folder, messageId);
     }
     
     /**

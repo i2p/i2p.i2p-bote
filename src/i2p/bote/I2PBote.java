@@ -31,6 +31,7 @@ import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.PacketFolder;
+import i2p.bote.folder.TrashFolder;
 import i2p.bote.locale.Locales;
 import i2p.bote.network.BanList;
 import i2p.bote.network.BannedPeer;
@@ -103,6 +104,7 @@ public class I2PBote {
     private Outbox outbox;   // stores outgoing emails for all local users
     private EmailFolder inbox;   // stores incoming emails for all local users
     private EmailFolder sentFolder;
+    private TrashFolder trashFolder;
     private PacketFolder<RelayPacket> relayPacketFolder;   // stores email packets we're forwarding for other machines
     private IncompleteEmailFolder incompleteEmailFolder;   // stores email packets addressed to a local user
     private EmailPacketFolder emailDhtStorageFolder;   // stores email packets for other peers
@@ -153,6 +155,7 @@ public class I2PBote {
         inbox = new EmailFolder(configuration.getInboxDir());
         outbox = new Outbox(configuration.getLocalOutboxDir());
         sentFolder = new EmailFolder(configuration.getSentFolderDir());
+        trashFolder = new TrashFolder(configuration.getTrashFolderDir());
         relayPacketFolder = new PacketFolder<RelayPacket>(configuration.getRelayOutboxDir());
         incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), inbox);
         emailDhtStorageFolder = new EmailPacketFolder(configuration.getEmailDhtStorageDir());
@@ -399,6 +402,14 @@ public class I2PBote {
     
     public EmailFolder getSentFolder() {
         return sentFolder;
+    }
+    
+    public EmailFolder getTrashFolder() {
+        return trashFolder;
+    }
+    
+    public boolean moveToTrash(EmailFolder sourceFolder, String messageId) {
+        return sourceFolder.move(messageId, trashFolder);
     }
     
     public int getNumDhtPeers() {

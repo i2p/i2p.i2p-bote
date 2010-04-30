@@ -22,7 +22,7 @@
     <ib:message key="Outbox" var="displayName"/><ib:folderLink dirName="Outbox" displayName="${displayName}"/><br/>
     <ib:message key="Sent" var="displayName"/><ib:folderLink dirName="Sent" displayName="${displayName}"/><br/>
     <img src="images/folder.png"/><ib:message key="Drafts"/><br/>
-    <img src="images/folder.png"/><ib:message key="Trash"/><br/>
+    <ib:message key="Trash" var="displayName"/><ib:folderLink dirName="Trash" displayName="${displayName}"/><br/>
     <hr/>
     <img src="images/folder.png"/>User_created_Folder_1<br/>
     <img src="images/folder.png"/>User_created_Folder_2<br/>
