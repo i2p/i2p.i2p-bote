@@ -53,6 +53,7 @@ import javax.servlet.ServletRequest;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
+import net.i2p.util.RandomSource;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
@@ -492,5 +493,9 @@ public class JSPHelper {
             return null;
         
         return s.replaceAll("\"", "&quot;").replaceAll("'", "&apos;");
+    }
+    
+    public long getRandomNumber() {
+        return RandomSource.getInstance().nextLong();
     }
 }

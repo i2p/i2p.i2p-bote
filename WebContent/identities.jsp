@@ -60,7 +60,9 @@
         </td>
         <td style="width: 100px;">
             <div class="ellipsis">
-                <a href="editIdentity.jsp?key=${identity.key}&publicName=${ib:escapeQuotes(identity.publicName)}&description=${ib:escapeQuotes(identity.description)}&emailAddress=${ib:escapeQuotes(identity.emailAddress)}&isDefault=${identity.default}">
+                <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+                    <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
+                <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&key=${identity.key}&publicName=${ib:escapeQuotes(identity.publicName)}&description=${ib:escapeQuotes(identity.description)}&emailAddress=${ib:escapeQuotes(identity.emailAddress)}&isDefault=${identity.default}">
                     ${identity.publicName}
                 </a>
             </div>

@@ -72,7 +72,9 @@
         <td style="width: 100px;">
             <div class="ellipsis">
                 <c:if test="${!param.select}">
-                    <a href="editContact.jsp?new=false&destination=${contact.destination}">
+                    <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+                    <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
+                    <a href="editContact.jsp?rnd=${jspHelperBean.randomNumber}&new=false&destination=${contact.destination}">
                 </c:if>
                     ${contact.name}
                 <c:if test="${!param.select}">
