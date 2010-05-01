@@ -138,6 +138,7 @@ public class Email extends MimeMessage {
     public void updateHeaders() throws MessagingException {
         super.updateHeaders();
         scrubHeaders();
+        removeRecipientNames();
         
         // Set the send time if the "Include sent time" config setting is enabled;
         // otherwise, remove the send time field.
@@ -272,7 +273,28 @@ public class Email extends MimeMessage {
                 removeHeader(header.getName());
             }
     }
-
+    
+    /**
+     * Removes everything but the 512-char email destination from all recipient fields,
+     * in order to keep local contact names private.
+     * @throws MessagingException
+     */
+    private void removeRecipientNames() throws MessagingException {
+        removeRecipientNames("To");
+        removeRecipientNames("CC");
+        removeRecipientNames("BCC");
+    }
+    
+    private void removeRecipientNames(String headerName) throws MessagingException {
+        String[] headerValues = getHeader(headerName);
+        removeHeader(headerName);
+        if (headerValues != null)
+            for (String recipient: headerValues) {
+                String dest = EmailDestination.extractBase64Dest(recipient);
+                addHeader(headerName, dest);
+            }
+    }
+    
     /**
      * 
      * @param messageIdString Must be a 44-character Base64-encoded string.
