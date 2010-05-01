@@ -179,6 +179,8 @@ public class EmailFolder extends Folder<Email> {
      */
     public Email getEmail(String messageId) {
         File file = getEmailFile(messageId);
+        if (file == null)
+            return null;
         try {
             return createFolderElement(file);
         }
