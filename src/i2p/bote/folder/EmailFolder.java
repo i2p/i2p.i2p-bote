@@ -194,17 +194,30 @@ public class EmailFolder extends Folder<Email> {
      * same name exists already.
      * @param email
      * @param newFolder
+     * @return true if successful, false if not
      */
-    public void move(Email email, EmailFolder newFolder) {
+    public boolean move(Email email, EmailFolder newFolder) {
         File emailFile = getEmailFile(email);
         if (emailFile == null) {
             log.error("Cannot move email [" + email + "] to folder [" + newFolder + "]: email file doesn't exist.");
-            return;
+            return false;
         }
         File newFile = new File(newFolder.getStorageDirectory(), emailFile.getName());
         boolean success = emailFile.renameTo(newFile);
         if (!success)
             log.error("Cannot move <" + emailFile.getAbsolutePath() + "> to <" + newFile.getAbsolutePath() + ">");
+        return success;
+    }
+    
+    /** @see move(Email, EmailFolder) */
+    public boolean move(String messageId, EmailFolder newFolder) {
+        Email email = getEmail(messageId);
+        if (email == null) {
+            log.error("Cannot move email: Email with message ID " + messageId + " not found in folder <" + getStorageDirectory() + ">.");
+            return false;
+        }
+        else
+            return move(email, newFolder);
     }
     
     private File getEmailFile(Email email) {
