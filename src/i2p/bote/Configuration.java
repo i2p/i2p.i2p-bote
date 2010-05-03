@@ -39,6 +39,7 @@ public class Configuration {
     private static final String PEER_FILE_NAME = "peers.txt";
     private static final String IDENTITIES_FILE_NAME = "identities.txt";
     private static final String ADDRESS_BOOK_FILE_NAME = "addressBook.txt";
+    private static final String MESSAGE_ID_CACHE_FILE = "msgidcache.txt";
     private static final String OUTBOX_DIR = "outbox";              // relative to I2P_BOTE_SUBDIR
     private static final String OUTBOX_SUBDIR_LOCAL = "local";      // relative to OUTBOX_DIR
     private static final String OUTBOX_SUBDIR_RELAY = "relay";      // relative to OUTBOX_DIR
@@ -64,6 +65,7 @@ public class Configuration {
     private static final String PARAMETER_LANGUAGE = "locale";
     private static final String PARAMETER_HIDE_LOCALE = "hideLocale";
     private static final String PARAMETER_INCLUDE_SENT_TIME = "includeSentTime";
+    private static final String PARAMETER_MESSAGE_ID_CACHE_SIZE = "messageIdCacheSize";
     
     // Defaults for each parameter
     private static final int DEFAULT_REDUNDANCY = 2;
@@ -80,6 +82,7 @@ public class Configuration {
     private static final String DEFAULT_LANGUAGE = Locale.getDefault().getLanguage();
     private static final boolean DEFAULT_HIDE_LOCALE = true;
     private static final boolean DEFAULT_INCLUDE_SENT_TIME = true;
+    private static final int DEFAULT_MESSAGE_ID_CACHE_SIZE = 1000;   // the maximum number of message IDs to cache
     
     private Log log = new Log(Configuration.class);
     private Properties properties;
@@ -138,6 +141,10 @@ public class Configuration {
     
     public File getAddressBookFile() {
         return new File(i2pBoteDir, ADDRESS_BOOK_FILE_NAME);
+    }
+    
+    public File getMessageIdCacheFile() {
+        return new File(i2pBoteDir, MESSAGE_ID_CACHE_FILE);
     }
     
     public File getLocalOutboxDir() {
@@ -335,7 +342,11 @@ public class Configuration {
     public boolean getIncludeSentTime() {
         return getBooleanParameter(PARAMETER_INCLUDE_SENT_TIME, DEFAULT_INCLUDE_SENT_TIME);
     }
-
+    
+    public int getMessageIdCacheSize() {
+        return getIntParameter(PARAMETER_MESSAGE_ID_CACHE_SIZE, DEFAULT_MESSAGE_ID_CACHE_SIZE);
+    }
+    
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
         String stringValue = properties.getProperty(parameterName);
         if ("true".equalsIgnoreCase(stringValue) || "yes".equalsIgnoreCase(stringValue) || "on".equalsIgnoreCase(stringValue) || "1".equals(stringValue))

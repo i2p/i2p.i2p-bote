@@ -29,6 +29,7 @@ import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.EmailPacketFolder;
 import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
+import i2p.bote.folder.MessageIdCache;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.PacketFolder;
 import i2p.bote.folder.TrashFolder;
@@ -157,7 +158,8 @@ public class I2PBote {
         sentFolder = new EmailFolder(configuration.getSentFolderDir());
         trashFolder = new TrashFolder(configuration.getTrashFolderDir());
         relayPacketFolder = new PacketFolder<RelayPacket>(configuration.getRelayOutboxDir());
-        incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), inbox);
+        MessageIdCache messageIdCache = new MessageIdCache(configuration.getMessageIdCacheFile(), configuration.getMessageIdCacheSize());
+        incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), messageIdCache, inbox);
         emailDhtStorageFolder = new EmailPacketFolder(configuration.getEmailDhtStorageDir());
         indexPacketDhtStorageFolder = new IndexPacketFolder(configuration.getIndexPacketDhtStorageDir());
     }

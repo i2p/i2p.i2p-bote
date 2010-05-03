@@ -52,7 +52,8 @@ public class IncompleteEmailFolderTest {
 		inbox = new EmailFolder(inboxDir);
 		
 		File incompleteDir = new File(testDir, "incomplete");
-		incompleteFolder = new IncompleteEmailFolder(incompleteDir, inbox);
+		MessageIdCache messageIdCache = new MessageIdCache(new File(testDir, "msgidcache.txt"), 1000);
+		incompleteFolder = new IncompleteEmailFolder(incompleteDir, messageIdCache, inbox);
 	}
 	
 	@After

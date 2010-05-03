@@ -45,10 +45,12 @@ import net.i2p.util.Log;
 public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> {
     private Log log = new Log(IncompleteEmailFolder.class);
     private EmailFolder inbox;
+    private MessageIdCache messageIdCache;
 
-    public IncompleteEmailFolder(File storageDir, EmailFolder inbox) {
+    public IncompleteEmailFolder(File storageDir, MessageIdCache messageIdCache, EmailFolder inbox) {
         super(storageDir);
         this.inbox = inbox;
+        this.messageIdCache = messageIdCache;
     }
     
     @Override
@@ -63,14 +65,22 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
      * @return
      */
     public synchronized boolean addEmailPacket(UnencryptedEmailPacket packetToStore) {
+        UniqueId messageId = packetToStore.getMessageId();
+        // if a previously assembled (completed) email contained the message ID, ignore the email packet
+        if (messageIdCache.contains(messageId)) {
+            log.debug("Discarding email packet because the message ID matches a previously received email. Packet: " + packetToStore);
+            return false;
+        }
+        
         add(packetToStore, getFilename(packetToStore));
         
         // TODO possible optimization: if getNumFragments == 1, no need to check for other packet files
-        File[] finishedPacketFiles = getAllMatchingFiles(packetToStore.getMessageId());
+        File[] finishedPacketFiles = getAllMatchingFiles(messageId);
         
         // if all packets of the email are available, assemble them into an email
         if (finishedPacketFiles.length == packetToStore.getNumFragments()) {
             assemble(finishedPacketFiles);
+            messageIdCache.add(messageId);
             return true;
         }
         return false;
