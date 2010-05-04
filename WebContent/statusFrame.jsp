@@ -42,6 +42,7 @@
         <c:when test="${connStatus == NOT_STARTED}"><img src="images/redsquare.png"/> <ib:message key="Not Started"/></c:when>
         <c:when test="${connStatus == DELAY}"><img src="images/yellowsquare.png"/> <ib:message key="Waiting 3 Minutes..."/><br/>
             <div style="text-align: center">
+                <%-- When the connect button is clicked, refresh the entire page so the buttons in buttonFrame.jsp are enabled --%>
                 <form action="connect.jsp" target="_top" method="GET">
                     <button type="submit"><ib:message key="Connect Now"/></button>
                 </form>
