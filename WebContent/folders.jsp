@@ -9,9 +9,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="i2pbote.css" />
+    <c:set var="refreshInterval" value="120"/>
     <c:if test="${ib:getMailFolder('Outbox').numElements gt 0}">
-        <meta http-equiv="refresh" content="20" />
+        <c:set var="refreshInterval" value="20"/>
     </c:if>
+    <meta http-equiv="refresh" content="${refreshInterval}" />
 </head>
 
 <body style="background-color: transparent; margin: 0px;">
