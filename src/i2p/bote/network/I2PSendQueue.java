@@ -290,10 +290,6 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             }
         }
         
-        public synchronized int size() {
-            return queue.size();
-        }
-        
         public synchronized boolean isEmpty() {
             return queue.isEmpty();
         }
