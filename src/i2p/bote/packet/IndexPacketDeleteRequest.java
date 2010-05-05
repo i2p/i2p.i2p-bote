@@ -116,4 +116,9 @@ public class IndexPacketDeleteRequest extends CommunicationPacket {
         
         return byteStream.toByteArray();
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " #entries=" + getNumEntries();
+    }
 }

@@ -60,9 +60,10 @@ public class ClosestNodesLookupTask implements Runnable {
     private I2PPacketDispatcher i2pReceiver;
     private BucketManager bucketManager;
     private I2PSendQueue sendQueue;
+    private Destination localDestination;
     private Comparator<Destination> peerComparator;
     private SortedSet<Destination> responses;   // sorted by distance to the key to look up
-    private SortedSet<Destination> notQueriedYet;   // sorted by distance to the key to look up
+    private SortedSet<Destination> notQueriedYet;   // peers that are yet to be queried; sorted by distance to the key to look up
     private Map<Destination, FindClosePeersPacket> pendingRequests;
     private long startTime;
     
@@ -73,6 +74,7 @@ public class ClosestNodesLookupTask implements Runnable {
      * The number of pending requests never exceeds <code>ALPHA</code>. According to [4], this is the most efficient.
      * 
      * @param key The DHT key to look up
+     * @param localDestination The I2P destination of the local node
      * @param sendQueue For sending I2P packets
      * @param i2pReceiver For receiving I2P packets
      * @param bucketManager For looking up peers, and updating them
@@ -80,6 +82,7 @@ public class ClosestNodesLookupTask implements Runnable {
     public ClosestNodesLookupTask(Hash key, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager) {
         this.key = key;
         this.sendQueue = sendQueue;
+        localDestination = sendQueue.getLocalDestination();
         this.i2pReceiver = i2pReceiver;
         this.bucketManager = bucketManager;
         
@@ -98,6 +101,7 @@ public class ClosestNodesLookupTask implements Runnable {
         
         // get a list of all unlocked peers (we don't how many we really need because some may not respond)
         notQueriedYet.addAll(bucketManager.getAllUnlockedPeers());
+        logStatus();
         
         startTime = getTime();
         do {
@@ -105,9 +109,14 @@ public class ClosestNodesLookupTask implements Runnable {
             while (pendingRequests.size()<KademliaConstants.ALPHA && !notQueriedYet.isEmpty()) {
                 Destination peer = notQueriedYet.first();   // query the closest unqueried peer
                 notQueriedYet.remove(peer);
-                FindClosePeersPacket packet = new FindClosePeersPacket(key);
-                pendingRequests.put(peer, packet);
-                sendQueue.send(packet, peer);
+                // if the peer is us, do a local lookup; otherwise, send a request to the peer
+                if (localDestination.equals(peer))
+                    addLocalResults(key);
+                else {
+                    FindClosePeersPacket packet = new FindClosePeersPacket(key);
+                    pendingRequests.put(peer, packet);
+                    sendQueue.send(packet, peer);
+                }
             }
 
             // handle timeouts
@@ -125,13 +134,17 @@ public class ClosestNodesLookupTask implements Runnable {
                 log.warn("Interrupted while doing a closest nodes lookup.", e);
             }
         } while (!isDone());
-        log.debug("Kademlia lookup found " + responses.size() + " nodes (may include local node).");
+        log.debug("Node lookup for " + key + " found " + responses.size() + " nodes (may include local node).");
         for (Destination node: responses)
             log.debug("  Node: " + node.calculateHash().toBase64());
         
         i2pReceiver.removePacketListener(packetListener);
     }
-
+    
+    private void logStatus() {
+        log.debug("Lookup status for key " + key.toBase64().substring(0, 8) + "...: resp=" + responses.size() +" pend=" + pendingRequests.size() + " notQ=" + notQueriedYet.size());
+    }
+    
     private boolean isDone() {
         // if there are no more requests to send, and no more responses to wait for, we're finished
         if (pendingRequests.isEmpty() && notQueriedYet.isEmpty())
@@ -182,6 +195,8 @@ public class ClosestNodesLookupTask implements Runnable {
     
     /**
      * Returns up to <code>k</code> peers, sorted by distance from the key.
+     * The list may contain the local node if it is among the <code>k</code>
+     * closest.
      * If no peers were found, an empty <code>List</code> is returned.
      * @return
      */
@@ -194,7 +209,32 @@ public class ClosestNodesLookupTask implements Runnable {
         }
         return resultsList;
     }
-
+    
+    /**
+     * Updates <code>notQueriedYet</code> with the <code>k</code> closest locally known peers.
+     * This has the the same effect as sending a <code>FindClosePeersPacket</code> to the local destination,
+     * but without the network round-trip.
+     * @param key
+     * @see IncomingPacketHandler.packetReceived(CommunicationPacket, Destination, long)
+     */
+    private void addLocalResults(Hash key) {
+        log.debug("Adding local results for key " + key.toBase64());
+        responses.add(localDestination);
+        Collection<Destination> closestPeers = bucketManager.getClosestPeers(key, KademliaConstants.K);
+        addPeersToBeQueried(closestPeers);
+    }
+    
+    /**
+     * Adds peers to <code>notQueriedYet</code> (the list of peers that need to be queried), excluding those
+     * that have already responded.
+     * @param peers
+     */
+    private void addPeersToBeQueried(Collection<Destination> peers) {
+        for (Destination peer: peers)
+            if (!pendingRequests.containsKey(peer) && !responses.contains(peer))
+                notQueriedYet.add(peer);   // this won't create duplicates because notQueriedYet is a Set
+    }
+    
     // compares two Destinations in terms of closeness to <code>reference</code>
     private static class HashDistanceComparator implements Comparator<Destination> {
         private Hash reference;
@@ -227,6 +267,7 @@ public class ClosestNodesLookupTask implements Runnable {
                             updatePeers((PeerList)payload, sender, receiveTime);
                         
                         pendingRequests.remove(sender);
+                        logStatus();
                     }
                 }
             }
@@ -244,15 +285,9 @@ public class ClosestNodesLookupTask implements Runnable {
         private void updatePeers(PeerList peerListPacket, Destination sender, long receiveTime) {
             log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.calculateHash().toBase64());
 
-            // TODO make responseReceived and pendingRequests a parameter in the constructor?
-            responses.add(sender);
+            // update the list of peers to query
             Collection<Destination> peersReceived = peerListPacket.getPeers();
-            
-            // add all peers from the PeerList, excluding those that we have already queried
-            // TODO don't add local dest
-            for (Destination peer: peersReceived)
-                if (!pendingRequests.containsKey(peer) && !responses.contains(peer))
-                    notQueriedYet.add(peer);   // this won't create duplicates because notQueriedYet is a Set
+            addPeersToBeQueried(peersReceived);
         }
 
         /**

@@ -130,27 +130,34 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
         if (packet instanceof IndexPacketDeleteRequest) {
             IndexPacketDeleteRequest delRequest = (IndexPacketDeleteRequest)packet;
-            log.debug("IndexPacketDeleteRequest received. #entries=" + delRequest.getNumEntries());
-            
-            Hash dhtKey = delRequest.getEmailDestHash();
-            DhtStorablePacket storedPacket = retrieve(dhtKey);
-            if (storedPacket instanceof IndexPacket) {
-                IndexPacket indexPacket = (IndexPacket)storedPacket;
-                Collection<Hash> keysToDelete = delRequest.getDhtKeys();
-            
-                for (Hash keyToDelete: keysToDelete) {
-                    UniqueId deletionKeyFromRequest = delRequest.getDeletionKey(keyToDelete);
-                    UniqueId storedDeletionKey = indexPacket.getDeletionKey(keyToDelete);
-                    if (storedDeletionKey == null)
-                        log.debug("Deletion key " + deletionKeyFromRequest + " from IndexPacketDeleteRequest not found in index packet for destination " + dhtKey);
-                    else if (storedDeletionKey.equals(deletionKeyFromRequest))
-                        remove(indexPacket, keyToDelete);
-                    else
-                        log.debug("Deletion key in IndexPacketDeleteRequest does not match. Should be: <" + storedDeletionKey + ">, is <" + deletionKeyFromRequest +">");
-                }
-            }
-            else
-                log.debug("IndexPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
+            process(delRequest);
         }
+    }
+    
+    /**
+     * Deletes all index packet entries that match the keys in a delete request.
+     * @param delRequest
+     */
+    public void process(IndexPacketDeleteRequest delRequest) {
+        log.debug("Processing delete request: " + delRequest);
+        Hash dhtKey = delRequest.getEmailDestHash();
+        DhtStorablePacket storedPacket = retrieve(dhtKey);
+        if (storedPacket instanceof IndexPacket) {
+            IndexPacket indexPacket = (IndexPacket)storedPacket;
+            Collection<Hash> keysToDelete = delRequest.getDhtKeys();
+        
+            for (Hash keyToDelete: keysToDelete) {
+                UniqueId deletionKeyFromRequest = delRequest.getDeletionKey(keyToDelete);
+                UniqueId storedDeletionKey = indexPacket.getDeletionKey(keyToDelete);
+                if (storedDeletionKey == null)
+                    log.debug("Deletion key " + deletionKeyFromRequest + " from IndexPacketDeleteRequest not found in index packet for destination " + dhtKey);
+                else if (storedDeletionKey.equals(deletionKeyFromRequest))
+                    remove(indexPacket, keyToDelete);
+                else
+                    log.debug("Deletion key in IndexPacketDeleteRequest does not match. Should be: <" + storedDeletionKey + ">, is <" + deletionKeyFromRequest +">");
+            }
+        }
+        else
+            log.debug("IndexPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
     }
 }

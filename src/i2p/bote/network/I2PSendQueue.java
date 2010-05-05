@@ -162,6 +162,10 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         return maxBandwidth;
     }
     
+    public Destination getLocalDestination() {
+        return i2pSession.getMyDestination();
+    }
+    
     // Implementation of PacketListener
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {

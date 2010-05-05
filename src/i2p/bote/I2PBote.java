@@ -345,7 +345,7 @@ public class I2PBote {
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
             for (EmailIdentity identity: identities) {
-                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, appContext);
+                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder, appContext);
                 Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
                 pendingMailCheckTasks.add(task);
             }

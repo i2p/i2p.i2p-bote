@@ -184,7 +184,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // Send the retrieve requests
         PacketBatch batch = new PacketBatch();
         for (Destination node: closeNodes)
-            batch.putPacket(new RetrieveRequest(key, dataType), node);
+            if (!localDestination.equals(node))   // local has already been taken care of
+                batch.putPacket(new RetrieveRequest(key, dataType), node);
         sendQueue.send(batch);
         try {
             batch.awaitSendCompletion();
@@ -248,8 +249,9 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         if (closeNodes.isEmpty())
             throw new DhtException("Cannot store packet because no storage nodes found.");
         // store on local node if appropriate
-        if (closeNodes.size()<KademliaConstants.K || isCloser(localDestination, closeNodes.get(0), key))
-            closeNodes.add(localDestination);
+        if (!closeNodes.contains(localDestination))
+            if (closeNodes.size()<KademliaConstants.K || isCloser(localDestination, closeNodes.get(0), key))
+                closeNodes.add(localDestination);
             
         log.debug("Storing a " + packet.getClass().getSimpleName() + " with key " + key + " on " + closeNodes.size() + " nodes");
         
@@ -261,10 +263,13 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         }
         
         PacketBatch batch = new PacketBatch();
-        for (Destination node: closeNodes) {
-            StoreRequest storeRequest = new StoreRequest(hashCash, packet);   // use a separate packet id for each request
-            batch.putPacket(storeRequest, node);
-        }
+        for (Destination node: closeNodes)
+            if (localDestination.equals(node))
+                storeLocally(packet);
+            else {
+                StoreRequest storeRequest = new StoreRequest(hashCash, packet);   // use a separate packet id for each request
+                batch.putPacket(storeRequest, node);
+            }
         sendQueue.send(batch);
         
         try {
@@ -553,7 +558,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     private void sendPeerList(FindClosePeersPacket packet, Destination destination) {
-        // TODO don't include the requesting peer
         Collection<Destination> closestPeers = bucketManager.getClosestPeers(packet.getKey(), KademliaConstants.K);
         PeerList peerList = new PeerList(closestPeers);
         sendQueue.sendResponse(peerList, destination, packet.getPacketId());
@@ -566,13 +570,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             sendPeerList((FindClosePeersPacket)packet, sender);
         else if (packet instanceof StoreRequest) {
             DhtStorablePacket packetToStore = ((StoreRequest)packet).getPacketToStore();
-            if (packetToStore != null) {
-                DhtStorageHandler storageHandler = storageHandlers.get(packetToStore.getClass());
-                if (storageHandler != null)
-                    storageHandler.store(packetToStore);
-                else
-                    log.warn("No storage handler found for type " + packetToStore.getClass().getSimpleName() + ".");
-            }
+            storeLocally(packetToStore);
         }
         else if (packet instanceof RetrieveRequest) {
             RetrieveRequest retrieveRequest = (RetrieveRequest)packet;
@@ -594,7 +592,17 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // bucketManager is not registered as a PacketListener, so notify it here
         bucketManager.packetReceived(packet, sender, receiveTime);
     }
-
+    
+    private void storeLocally(DhtStorablePacket packetToStore) {
+        if (packetToStore != null) {
+            DhtStorageHandler storageHandler = storageHandlers.get(packetToStore.getClass());
+            if (storageHandler != null)
+                storageHandler.store(packetToStore);
+            else
+                log.warn("No storage handler found for type " + packetToStore.getClass().getSimpleName() + ".");
+        }
+    }
+    
     @Override
     public void run() {
         i2pReceiver.addPacketListener(this);
