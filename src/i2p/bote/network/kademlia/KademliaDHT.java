@@ -93,25 +93,25 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private static final URL BUILT_IN_PEER_FILE = KademliaDHT.class.getResource("built-in-peers.txt");
     
     private Log log = new Log(KademliaDHT.class);
-    private Destination localDestination;
-    private Hash localDestinationHash;
     private I2PSendQueue sendQueue;
     private I2PPacketDispatcher i2pReceiver;
     private File peerFile;
+    private Destination localDestination;
+    private Hash localDestinationHash;
     private Set<KademliaPeer> initialPeers;
     private BucketManager bucketManager;
     private Map<Class<? extends DhtStorablePacket>, DhtStorageHandler> storageHandlers;
     private volatile boolean connected;   // false until bootstrapping is done
 
-    public KademliaDHT(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile) {
+    public KademliaDHT(I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile) {
         super("Kademlia");
         
-        this.localDestination = localDestination;
-        localDestinationHash = localDestination.calculateHash();
         this.sendQueue = sendQueue;
         this.i2pReceiver = i2pReceiver;
         this.peerFile = peerFile;
         
+        localDestination = sendQueue.getLocalDestination();
+        localDestinationHash = localDestination.calculateHash();
         initialPeers = new ConcurrentHashSet<KademliaPeer>();
         // Read the built-in peer file
         readPeers(BUILT_IN_PEER_FILE);

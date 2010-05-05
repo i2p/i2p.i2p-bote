@@ -77,7 +77,7 @@ public class KademliaDHTTest {
             else
                 firstNode = destination;
             
-            nodes.add(new KademliaDHT(destination, sendQueue, packetDispatcher, peerFile));
+            nodes.add(new KademliaDHT(sendQueue, packetDispatcher, peerFile));
         }
     }
 

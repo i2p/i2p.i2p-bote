@@ -237,7 +237,7 @@ public class I2PBote {
         relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, appContext);
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
         
-        dht = new KademliaDHT(i2pSession.getMyDestination(), sendQueue, dispatcher, configuration.getPeerFile());
+        dht = new KademliaDHT(sendQueue, dispatcher, configuration.getPeerFile());
         
         dht.setStorageHandler(EncryptedEmailPacket.class, emailDhtStorageFolder);
         dht.setStorageHandler(IndexPacket.class, indexPacketDhtStorageFolder);
