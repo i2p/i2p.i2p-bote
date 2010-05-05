@@ -105,12 +105,6 @@
 </tag>
 
 <tag>
-    <name>localDestination</name>
-    <tag-class>i2p.bote.web.LocalDestinationTag</tag-class>
-    <body-content>empty</body-content>
-</tag>
-
-<tag>
     <name>peerInfo</name>
     <tag-class>i2p.bote.web.PeerInfoTag</tag-class>
     <body-content>empty</body-content>

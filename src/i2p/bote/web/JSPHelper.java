@@ -76,7 +76,7 @@ public class JSPHelper {
         return I2PBote.getInstance().getAddressBook();
     }
     
-    public static String getLocalDestination() {
+    public String getLocalDestination() {
         return I2PBote.getInstance().getLocalDestination().calculateHash().toBase64();
     }
     

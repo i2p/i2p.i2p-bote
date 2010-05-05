@@ -37,7 +37,8 @@
             <strong><ib:message key="Network information is not available because I2P-Bote hasn't started connecting to the network yet."/></strong>
         </c:when>
         <c:otherwise>
-            <strong><ib:message key="Local destination:"/> </strong><ib:localDestination/><p/><br/>
+            <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+            <strong><ib:message key="Local destination:"/> </strong>${jspHelperBean.localDestination}<p/><br/>
             <ib:peerInfo/>
         </c:otherwise>
     </c:choose>
