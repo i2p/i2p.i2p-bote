@@ -66,14 +66,4 @@ public class DhtResults implements Iterable<DhtStorablePacket> {
     public Iterator<DhtStorablePacket> iterator() {
         return getPackets().iterator();
     }
-    
-    // Returns all packets except for the local result.
-/*    public Collection<DhtStorablePacket> getRemoteResults() {
-        ArrayList<DhtStorablePacket> packets = new ArrayList<DhtStorablePacket>();
-        for (Destination peer: map.keySet())
-            if (!peer.calculateHash().equals(localDestHash))
-                packets.add(map.get(peer));
-
-        return packets;
-    }*/
 }
