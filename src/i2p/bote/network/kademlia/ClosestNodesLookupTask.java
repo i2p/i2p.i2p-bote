@@ -53,7 +53,7 @@ import net.i2p.util.Log;
 
 public class ClosestNodesLookupTask implements Runnable {
     private static final int REQUEST_TIMEOUT = 30 * 1000;
-    private static final int CLOSEST_NODES_LOOKUP_TIMEOUT = 2 * 60 * 1000;   // the maximum amount of time a FIND_CLOSEST_NODES can take
+    private static final int CLOSEST_NODES_LOOKUP_TIMEOUT = 5 * 60 * 1000;   // the maximum amount of time a FIND_CLOSEST_NODES can take
     
     private Log log = new Log(ClosestNodesLookupTask.class);
     private Hash key;
