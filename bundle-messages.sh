@@ -1,8 +1,9 @@
 #
 # Update messages_xx.po and messages_xx.class files,
 # from both java and jsp sources.
-# Requires installed programs xgettext, msgfmt, msgmerge, find,
+# Requires installed programs xgettext, msgfmt, msgmerge, msguniq, find,
 # and the Java class i2p.bote.ant.JspStrings.
+# On Linux, the programs xgettext and msg* can be found in the gettext package.
 #
 # usage:
 #    bundle-messages.sh (generates the resource bundle from the .po file)
@@ -72,6 +73,7 @@ do
 			break
 		fi
 
+		msguniq -o ${i}t ${i}t
 		msgmerge -U --backup=none $i ${i}t
 		if [ $? -ne 0 ]
 		then
