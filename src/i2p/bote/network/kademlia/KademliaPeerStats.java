@@ -43,7 +43,7 @@ public class KademliaPeerStats implements DhtPeerStats {
     private List<List<String>> data;
     
     KademliaPeerStats(SBucket sBucket, List<KBucket> kBuckets, Hash localDestinationHash) {
-        String[] headerArray = new String[] {_("Peer"), _("I2P Destination"), _("BktPfx"), _("Distance"), _("Locked?"), _("Active Since")};
+        String[] headerArray = new String[] {_("Peer"), _("I2P Destination"), _("BktPfx"), _("Distance"), _("Locked?"), _("First Seen")};
         header = Arrays.asList(headerArray);
         
         data = new ArrayList<List<String>>();
@@ -64,8 +64,8 @@ public class KademliaPeerStats implements DhtPeerStats {
             BigInteger distance = KademliaUtil.getDistance(localDestinationHash, peer.calculateHash());
             row.add(distance.shiftRight((Hash.HASH_LENGTH-2)*8).toString());   // show the 2 most significant bytes
             row.add(String.valueOf(peer.isLocked() ? _("Yes")+"("+(peer.getConsecTimeouts())+")" : _("No")));
-            String activeSince = formatter.format(peer.getActiveSince());
-            row.add(String.valueOf(activeSince));
+            String firstSeen = formatter.format(peer.getFirstSeen());
+            row.add(String.valueOf(firstSeen));
             data.add(row);
         }
     }

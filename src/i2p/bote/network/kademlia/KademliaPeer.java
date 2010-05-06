@@ -29,7 +29,7 @@ public class KademliaPeer extends Destination {
     private Log log = new Log(KademliaPeer.class);
     private Destination destination;
     private Hash destinationHash;
-    private long activeSince;
+    private long firstSeen;
     private volatile int consecutiveTimeouts;
     private long lockedUntil;
     
@@ -45,7 +45,7 @@ public class KademliaPeer extends Destination {
         if (destinationHash == null)
             log.error("calculateHash() returned null!");
         
-        activeSince = lastReception;
+        firstSeen = lastReception;
     }
     
     public KademliaPeer(Destination destination) {
@@ -61,15 +61,15 @@ public class KademliaPeer extends Destination {
     }
 
     /**
-     * @param activeSince Milliseconds since Jan 1, 1970
+     * @param firstSeen Milliseconds since Jan 1, 1970
      * @return
      */
-    void setActiveSince(long activeSince) {
-        this.activeSince = activeSince;
+    void setFirstSeen(long firstSeen) {
+        this.firstSeen = firstSeen;
     }
 
-    public long getActiveSince() {
-    	return activeSince;
+    public long getFirstSeen() {
+    	return firstSeen;
     }
 
     public int getConsecTimeouts() {
