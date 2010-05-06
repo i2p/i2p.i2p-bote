@@ -81,7 +81,7 @@
                 <script language="Javascript">
                 // If inbox is being displayed, reload so the new email(s) show
                 if (parent.document.getElementById('inboxFlag'))
-                    parent.location = 'folder.jsp?path=Inbox';
+                    parent.location.href = 'folder.jsp?path=Inbox';
                 </script>
             </c:if>
         </c:if>
