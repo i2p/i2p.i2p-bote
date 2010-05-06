@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-04 05:53+0000\n"
+"POT-Creation-Date: 2010-05-06 07:49+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -10,9 +10,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
-msgid "Active Since"
-msgstr "Aktiv seit"
+#: src/i2p/bote/email/Email.java:209
+#, java-format
+msgid "Invalid address: {0}"
+msgstr "Ungültige Adresse: {0}"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 msgid "BktPfx"
@@ -21,6 +22,10 @@ msgstr "K-Buck."
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 msgid "Distance"
 msgstr "Entfernung"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
+msgid "First Seen"
+msgstr "Erster Empfang"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 msgid "I2P Destination"
@@ -51,6 +56,39 @@ msgstr "-"
 msgid "(S)"
 msgstr "(S)"
 
+#: src/i2p/bote/service/OutboxProcessor.java:130
+msgid "No sender found in email."
+msgstr "Die Mail enthält keine Senderangabe."
+
+#: src/i2p/bote/service/OutboxProcessor.java:140
+msgid "Sending"
+msgstr "Senden"
+
+#: src/i2p/bote/service/OutboxProcessor.java:145
+#, java-format
+msgid "Sent to {0} out of {1} recipients"
+msgstr "An {0} von {1} Empfänger gesendet"
+
+#: src/i2p/bote/service/OutboxProcessor.java:147
+#: WebContent/folders.jsp
+msgid "Sent"
+msgstr "Absendezeit"
+
+#: src/i2p/bote/service/OutboxProcessor.java:173
+#, java-format
+msgid "Invalid recipient address: {0}"
+msgstr "Ungültige Empfängeradresse: {0}"
+
+#: src/i2p/bote/service/OutboxProcessor.java:177
+#, java-format
+msgid "Error creating email packets: {0}"
+msgstr "Fehler beim Erstellen der Mailpakete: {0}"
+
+#: src/i2p/bote/service/OutboxProcessor.java:181
+#, java-format
+msgid "Error while sending email: {0}"
+msgstr "Fehler beim Senden der Mail: {0}"
+
 #: src/i2p/bote/web/PeerInfoTag.java:53
 msgid "Kademlia Peers:"
 msgstr "Kademlia-Gegenstellen:"
@@ -67,13 +105,26 @@ msgstr "I2P-Adresse (SHA256-Summe)"
 msgid "Ban Reason"
 msgstr "Verbannungsgrund"
 
-#: src/i2p/bote/web/SendEmailTag.java:59
-msgid "The email has been sent."
-msgstr "Die Mail wurde gesendet."
+#: src/i2p/bote/web/SendEmailTag.java:76
+msgid "The email has been queued for sending."
+msgstr "Die Mail wurde in die Sendeschlange eingestellt."
 
-#: src/i2p/bote/web/SendEmailTag.java:62
-msgid "Error sending email:"
-msgstr "Fehler beim Senden der Mail:"
+#: src/i2p/bote/web/SendEmailTag.java:79
+#, java-format
+msgid "Error sending email: {0}"
+msgstr "Fehler beim Senden der Mail: {0}"
+
+#: WebContent/editContact.jsp
+msgid "Please fill in the Destination field."
+msgstr "Bitte füllen Sie das Empfängerfeld aus."
+
+#: WebContent/editContact.jsp
+msgid "Please fill in the Name field."
+msgstr "Bitte füllen Sie das Namensfeld aus."
+
+#: WebContent/editContact.jsp
+msgid "The contact has been saved."
+msgstr "Der Adressbucheintrag wurde gespeichert."
 
 #: WebContent/editContact.jsp
 msgid "New Contact"
@@ -86,6 +137,10 @@ msgstr "Hinzufügen"
 #: WebContent/editContact.jsp
 msgid "Edit Contact"
 msgstr "Bearbeiten"
+
+#: WebContent/editContact.jsp
+msgid "Save"
+msgstr "Speichern"
 
 #: WebContent/editContact.jsp
 msgid "Email Destination"
@@ -120,10 +175,6 @@ msgid "Edit Email Identity"
 msgstr "Identität bearbeiten"
 
 #: WebContent/editIdentity.jsp
-msgid "Save"
-msgstr "Speichern"
-
-#: WebContent/editIdentity.jsp
 msgid "Public Name:"
 msgstr "Öffentlicher Name:"
 
@@ -154,18 +205,6 @@ msgstr "Postfachkennung:"
 #: WebContent/editIdentity.jsp
 msgid "Default Identity:"
 msgstr "Beim Senden voreingestellt:"
-
-#: WebContent/saveContact.jsp
-msgid "Please fill in the Destination field."
-msgstr "Bitte füllen Sie das Empfängerfeld aus."
-
-#: WebContent/saveContact.jsp
-msgid "Please fill in the Name field."
-msgstr "Bitte füllen Sie das Namensfeld aus."
-
-#: WebContent/saveContact.jsp
-msgid "The contact has been saved."
-msgstr "Der Adressbucheintrag wurde gespeichert."
 
 #: WebContent/sendEmail.jsp
 msgid "New Email"
@@ -275,6 +314,58 @@ msgstr "Abrufen"
 msgid "New"
 msgstr "Neu"
 
+#: WebContent/outbox.jsp
+msgid "From"
+msgstr "Von"
+
+#: WebContent/outbox.jsp
+msgid "To"
+msgstr "An"
+
+#: WebContent/outbox.jsp
+msgid "Subject"
+msgstr "Betreff"
+
+#: WebContent/outbox.jsp
+msgid "Status"
+msgstr "Netzwerkstatus"
+
+#: WebContent/outbox.jsp
+msgid "Anonymous"
+msgstr "Anonym"
+
+#: WebContent/outbox.jsp
+msgid "(No subject)"
+msgstr "(Kein Betreff)"
+
+#: WebContent/outbox.jsp
+msgid "Delete this email"
+msgstr "Diese Mail lösche"
+
+#: WebContent/folders.jsp
+msgid "Folders"
+msgstr "Ordner"
+
+#: WebContent/folders.jsp
+msgid "Inbox"
+msgstr "Posteingang"
+
+#: WebContent/folders.jsp
+msgid "Outbox"
+msgstr "Postausgang"
+
+#: WebContent/folders.jsp
+msgid "Drafts"
+msgstr "Entwürfe"
+
+#: WebContent/folders.jsp
+msgid "Trash"
+msgstr "Papierkorb"
+
+#: WebContent/folders.jsp
+msgid "Manage Folders"
+msgstr "Ordner verwalten"
+
 #: WebContent/deleteContact.jsp
 msgid "The contact has been deleted from the address book."
 msgstr "Der Adressbucheintrag wurde gelöscht."
@@ -282,10 +373,6 @@ msgstr "Der Adressbucheintrag wurde gelöscht."
 #: WebContent/deleteContact.jsp
 msgid "Error"
 msgstr "Fehler"
-
-#: WebContent/showEmail.jsp
-msgid "Add to Address Book"
-msgstr "Zum Adressbuch hinzufügen"
 
 #: WebContent/showEmail.jsp
 msgid "Signature:"
@@ -339,6 +426,10 @@ msgstr "Diesen Eintrag löschen"
 msgid "Add Recipients"
 msgstr "Empfänger hinzufügen"
 
+#: WebContent/addressBook.jsp
+msgid "Return"
+msgstr "Zurück"
+
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
 msgstr "- I2P-Bote"
@@ -350,34 +441,6 @@ msgstr "I2P-Bote"
 #: WebContent/header.jsp
 msgid "Secure Distributed Email"
 msgstr "Sichere, dezentrale Mailkommunikation"
-
-#: WebContent/header.jsp
-msgid "Folders"
-msgstr "Ordner"
-
-#: WebContent/header.jsp
-msgid "Inbox"
-msgstr "Posteingang"
-
-#: WebContent/header.jsp
-msgid "Outbox"
-msgstr "Postausgang"
-
-#: WebContent/header.jsp
-msgid "Sent"
-msgstr "Absendezeit"
-
-#: WebContent/header.jsp
-msgid "Drafts"
-msgstr "Entwürfe"
-
-#: WebContent/header.jsp
-msgid "Trash"
-msgstr "Papierkorb"
-
-#: WebContent/header.jsp
-msgid "Manage Folders"
-msgstr "Ordner verwalten"
 
 #: WebContent/header.jsp
 msgid "Addresses"
@@ -425,9 +488,7 @@ msgstr "Voreinstellung"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Hinzufügungen in zu sendenden Mails auf englisch halten („Re:“, „wrote:“ "
-"usw.)"
+msgstr "Hinzufügungen in zu sendenden Mails auf englisch halten („Re:“, „wrote:“ usw.)"
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -450,10 +511,6 @@ msgid "The email identity has been saved."
 msgstr "Die Identität wurde gespeichert."
 
 #: WebContent/folder.jsp
-msgid "From"
-msgstr "Von"
-
-#: WebContent/folder.jsp
 msgid "Unkn."
 msgstr "Unbek."
 
@@ -461,76 +518,29 @@ msgstr "Unbek."
 msgid "Sig"
 msgstr "Uschr."
 
-#: WebContent/folder.jsp
-msgid "To"
-msgstr "An"
-
-#: WebContent/folder.jsp
-msgid "Subject"
-msgstr "Betreff"
-
-#: WebContent/folder.jsp
-msgid "Anonymous"
-msgstr "Anonym"
-
-#: WebContent/folder.jsp
-msgid "(No subject)"
-msgstr "(Kein Betreff)"
-
-#: WebContent/folder.jsp
-msgid "Delete this email"
-msgstr "Diese Mail lösche"
+#: WebContent/noIdentities.jsp
+msgid "In order to receive email from other people, you need to create an email identity first."
+msgstr "Um Mails empfangen zu können, müssen Sie zuerst eine Identität anlegen."
 
 #: WebContent/noIdentities.jsp
-msgid ""
-"In order to receive email from other people, you need to create an email "
-"identity first."
-msgstr ""
-"Um Mails empfangen zu können, müssen Sie zuerst eine Identität anlegen."
+msgid "Every email identity is associated with an email destination. Anybody can send email to the email destination, but only the identity holder can read it."
+msgstr "Jeder Identität  ist eine Postfachkennung zugeordnet. Jeder kann Mails an die Postfachkennung schicken, aber nur der Besitzer der Identität kann sie lesen."
 
 #: WebContent/noIdentities.jsp
-msgid ""
-"Every email identity is associated with an email destination. Anybody can "
-"send email to the email destination, but only the identity holder can read "
-"it."
-msgstr ""
-"Jeder Identität  ist eine Postfachkennung zugeordnet. Jeder kann Mails an "
-"die Postfachkennung schicken, aber nur der Besitzer der Identität kann sie "
-"lesen."
+msgid "In a sense, email identities are the equivalent to traditional email accounts - except that there is no provider that can read all your email because I2P-Bote stores all emails encrypted on the network."
+msgstr "(Mail-) Identitäten entsprechen ungefähr herkömmlichen Mailkonten, nur dass es bei I2P-Bote keinen Mailanbieter gibt, der den Mailverkehr mitesen kann."
 
 #: WebContent/noIdentities.jsp
-msgid ""
-"In a sense, email identities are the equivalent to traditional email "
-"accounts - except that there is no provider that can read all your email "
-"because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"(Mail-) Identitäten entsprechen ungefähr herkömmlichen Mailkonten, nur dass "
-"es bei I2P-Bote keinen Mailanbieter gibt, der den Mailverkehr mitesen kann."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities.txt; "
-"never give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Bote entschlüsselt empfangene Mails automatisch mit Hilfe der jeweiligen "
-"Identität. Identitäten sind in der Datei identities.txt abgelegt; geben Sie "
-"diese Datei niemand anderem, da dieser sonst alle Ihre Mails lesen kann."
+msgid "I2P-Bote automatically decrypts emails sent to you, using the email identity you created. Email identities are stored in a file named identities.txt; never give this file to anyone or they will be able to read all your emails."
+msgstr "I2P-Bote entschlüsselt empfangene Mails automatisch mit Hilfe der jeweiligen Identität. Identitäten sind in der Datei identities.txt abgelegt; geben Sie diese Datei niemand anderem, da dieser sonst alle Ihre Mails lesen kann."
 
 #: WebContent/noIdentities.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr ""
-"Postfachkennungen dagegen können anderen mitgeteilt werden, um in Kontakt zu "
-"treten. Das Weitergeben einer Postfachkennung entspricht dem Weitergeben "
-"einer herkömmlichen Mailadresse."
+msgstr "Postfachkennungen dagegen können anderen mitgeteilt werden, um in Kontakt zu treten. Das Weitergeben einer Postfachkennung entspricht dem Weitergeben einer herkömmlichen Mailadresse."
 
 #: WebContent/noIdentities.jsp
-msgid ""
-"It is easy to create multiple identities for different purposes, or "
-"different contacts."
-msgstr ""
-"Es ist auch ohne weiteres möglich, mehrere Identitäten für unterschiedliche "
-"Einsatzzwecke oder Mailpartner anzulegen."
+msgid "It is easy to create multiple identities for different purposes, or different contacts."
+msgstr "Es ist auch ohne weiteres möglich, mehrere Identitäten für unterschiedliche Einsatzzwecke oder Mailpartner anzulegen."
 
 #: WebContent/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -545,12 +555,8 @@ msgid "Network"
 msgstr "Netzwerk"
 
 #: WebContent/network.jsp
-msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr ""
-"Es sind keine Netzwerkinformationen verfügbar, weil sich I2P-Bote noch nicht "
-"mit dem Netzwerk verbunden hat."
+msgid "Network information is not available because I2P-Bote hasn't started connecting to the network yet."
+msgstr "Es sind keine Netzwerkinformationen verfügbar, weil sich I2P-Bote noch nicht mit dem Netzwerk verbunden hat."
 
 #: WebContent/network.jsp
 msgid "Local destination:"
@@ -580,9 +586,20 @@ msgstr "Verbunden"
 msgid "Unknown Status"
 msgstr "Unbek. Status"
 
+#: WebContent/WEB-INF/tags/address.tag
+msgid "Email Destination: "
+msgstr "Postfachkennung:"
+
+#: WebContent/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Zum Adressbuch hinzufügen"
+
 #: WebContent/WEB-INF/tags/emailDate.tag
 msgid "Unknown"
 msgstr "Unbekannt"
 
+#~ msgid "Active Since"
+#~ msgstr "Aktiv seit"
 #~ msgid "Key"
 #~ msgstr "Identität"
+
