@@ -117,6 +117,7 @@ public class ClosestNodesLookupTask implements Runnable {
                     pendingRequests.put(peer, packet);
                     sendQueue.send(packet, peer);
                 }
+                logStatus();
             }
 
             // handle timeouts
@@ -267,7 +268,6 @@ public class ClosestNodesLookupTask implements Runnable {
                             updatePeers((PeerList)payload, sender, receiveTime);
                         
                         pendingRequests.remove(sender);
-                        logStatus();
                     }
                 }
             }
