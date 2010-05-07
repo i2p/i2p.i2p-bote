@@ -52,7 +52,7 @@ public class PeerInfoTag extends SimpleTagSupport {
             int numPeers = dhtStats.getData().size();
             out.println("<strong>" + _("Kademlia Peers:") + " " + numPeers + "</strong>");
             if (numPeers > 0) {
-                out.println("<table>");
+                out.println("<table class=\"table\">");
                 
                 // header
                 out.println("<tr>");

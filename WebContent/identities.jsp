@@ -39,8 +39,7 @@
         <ib:message key="No email identities are defined."/>
     </c:if>
     
-    <div class="identities">
-    <table>
+    <table class="table">
     <c:if test="${!empty identities}">
         <tr>
             <th style="width: 20px;"><ib:message key="Def."/></th>
@@ -48,18 +47,25 @@
             <th><ib:message key="Description"/></th>
             <th><ib:message key="Email Address"/></th>
             <th><ib:message key="Email Destination"/></th>
-            <th style="width: 20px; padding: 0px"></th>
+            <th style="width: 20px"></th>
         </tr>
     </c:if>
-    <c:forEach items="${identities}" var="identity">
+    <c:forEach items="${identities}" var="identity" varStatus="loopStatus">
+        <c:set var="class" value=""/>
+        <c:if test="${loopStatus.index%2 != 0}">
+            <c:set var="class" value=" class=\"alttablecell\""/>
+        </c:if>
+        
         <tr>
         <td style="width: 20px; text-align: right;">
+            <div${class}>
             <c:if test="${identity.default}">
                 <img src="images/asterisk.png"/>
             </c:if>
+            </div>
         </td>
         <td style="width: 100px;">
-            <div class="ellipsis">
+            <div${class}>
                 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
                     <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
                 <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&key=${identity.key}&publicName=${ib:escapeQuotes(identity.publicName)}&description=${ib:escapeQuotes(identity.description)}&emailAddress=${ib:escapeQuotes(identity.emailAddress)}&isDefault=${identity.default}">
@@ -68,17 +74,17 @@
             </div>
         </td>
         <td style="width: 150px;">
-            <div class="ellipsis">
+            <div${class}>
                 ${identity.description}
             </div>
         </td>
         <td style="width: 150px;">
-            <div class="ellipsis">
+            <div${class}>
                 ${identity.emailAddress}
             </div>
         </td>
         <td style="width: 100px;">
-            <div class="ellipsis">
+            <div${class}>
                 ${identity.key}
             </div>
         </td>
@@ -88,7 +94,6 @@
         </tr>
     </c:forEach>
     </table>
-    </div>
     
     <p/>
     <%-- calling editIdentity.jsp with no "key" param creates a new identity --%>

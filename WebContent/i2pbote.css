@@ -328,36 +328,28 @@ select {
     text-align: left !important;
 }
 
-.folder table {
-    table-layout: fixed;
-    border-spacing: 0px;
-    width: 800px;
-}
-
-.altrow {
-    background: #ddf url('images/lightbluetile-alt.png');
-}
-
-.identities table {
+.table {
     table-layout: fixed;
     width: 800px;
 }
 
-.identities td, .identities th {
-    vertical-align: top;
-    padding: 0px 30px 0px 0px;
+.table td, th {
+    padding-left: 10px;
+    background: url('images/lightbluetile.png');
     white-space: nowrap;
     overflow-x: hidden;
 }
 
-.addressbook table {
-    table-layout: fixed;
-    width: 800px;
+.table td:first-child, th:first-child {
+    padding-left: 0px;
+    background: url('images/lightbluetile.png');
+    white-space: nowrap;
+    overflow-x: hidden;
 }
 
-.addressbook td, .addressbook th {
-    vertical-align: middle;
-    padding: 0px 30px 0px 0px;
+.alttablecell
+{
+    background: url('images/lightbluetile-alt.png');
     white-space: nowrap;
     overflow-x: hidden;
 }
@@ -371,67 +363,3 @@ select {
 }
 
 wbr:after { content: "\00200B" }   /* For Opera */
-
-.ellipsis
-{
-    line-height: 1.2em;
-    height: 1.2em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
-    -o-text-overflow: ellipsis;
-    -moz-binding: url(moz_fix2.xml#ellipsis);
-}
-
-.moz-ellipsis > DIV:first-child
-{
-    float: left;
-    margin-right: -26px;
-}
-
-.moz-ellipsis > DIV + DIV
-{
-    float: right;
-    margin-top: -1.2em;
-    background: url('images/lightbluefade.png');
-    padding-left: 26px;
-}
-
-.moz-ellipsis > DIV + DIV::after
-{
-    background: url('images/lightbluetile.png');
-    content: '...';
-}
-
-.ellipsis-alt
-{
-    line-height: 1.2em;
-    height: 1.2em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis-alt;
-    width: 100%;
-    -o-text-overflow: ellipsis-alt;
-    -moz-binding: url(moz_fix2-alt.xml#ellipsis);
-}
-
-.moz-ellipsis-alt > DIV:first-child
-{
-    float: left;
-    margin-right: -26px;
-}
-
-.moz-ellipsis-alt > DIV + DIV
-{
-    float: right;
-    margin-top: -1.2em;
-    background: url('images/lightbluefade-alt.png');
-    padding-left: 26px;
-}
-
-.moz-ellipsis-alt > DIV + DIV::after
-{
-    background: url('images/lightbluetile-alt.png');
-    content: '...';
-}

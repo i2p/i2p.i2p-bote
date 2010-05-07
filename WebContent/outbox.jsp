@@ -66,7 +66,7 @@
 
 <div class="main">
 <div class="folder">
-    <table>
+    <table class="table">
         <c:set var="folder" value="${ib:getMailFolder('Outbox')}"/>
         <tr>
             <th style="width: 100px;">
@@ -105,12 +105,6 @@
         </tr>
         
         <c:forEach items="${ib:getEmails(folder, sortcolumn, descending)}" var="email" varStatus="status">
-            <c:if test="${status.index%2 == 0}">
-                <tr>
-            </c:if>
-            <c:if test="${status.index%2 != 0}">
-                <tr class="altrow">
-            </c:if>
             <c:set var="sender" value="${ib:getNameAndDestination(email.sender)}"/>
             <c:if test="${empty sender}">
                 <ib:message key="Anonymous" var="sender"/>
@@ -130,19 +124,19 @@
                 <c:otherwise><c:set var="fontWeight" value="normal"/></c:otherwise>
             </c:choose>
             
-            <c:if test="${status.index%2 == 0}">
-                <c:set var="class" value="ellipsis"/>
-            </c:if>
+            <c:set var="class" value=""/>
             <c:if test="${status.index%2 != 0}">
-                <c:set var="class" value="ellipsis-alt"/>
+                <c:set var="class" value=" class=\"alttablecell\""/>
             </c:if>
-            <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
-            <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
-            <td><div class="${class}"><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
-            <td><a href="${mailUrl}" style="font-weight: ${fontWeight}">${ib:getEmailStatus(email)}</a></td>
-            <td>
+            
+            <tr>
+            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
+            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
+            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
+            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${ib:getEmailStatus(email)}</a></div></td>
+            <td><div${class}>
                 <a href="deleteEmail.jsp?folder=Outbox&messageID=${email.messageID}">
-                <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
+                <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a></div>
             </td>
             </tr>
         </c:forEach>

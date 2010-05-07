@@ -46,56 +46,55 @@
         <ib:message key="The address book is empty."/>
     </c:if>
     
-    <div class="addressbook">
-
     <c:if test="${param.select}">
         <form action="${forwardUrl}" method="POST">
         <ib:copyParams paramsToCopy="${param.paramsToCopy}"/>
     </c:if>
     
-    <table>
+    <table class="table">
     <c:if test="${!empty contacts}">
         <tr>
-            <c:if test="${param.select}"><th style="width: 10px;"></th></c:if>
+            <c:if test="${param.select}"><th style="width: 20px;"></th></c:if>
             <th><ib:message key="Name"/></th>
             <th><ib:message key="Email Destination"/></th>
-            <th style="width: 20px; padding: 0px"></th>
+            <c:if test="${not param.select}"><th style="width: 20px"></th></c:if>
         </tr>
     </c:if>
     <c:forEach items="${contacts}" var="contact" varStatus="loopStatus">
+        <c:set var="class" value=""/>
+        <c:if test="${loopStatus.index%2 != 0}">
+            <c:set var="class" value=" class=\"alttablecell\""/>
+        </c:if>
+        
         <tr>
         <c:if test="${param.select}">
-            <td>
+            <td><div${class}>
                 <input type="checkbox" name="selectedContact" value="${ib:escapeQuotes(contact.name)} &lt;${contact.destination}&gt;"/>
-            </td>
+            </div></td>
         </c:if>
-        <td style="width: 100px;">
-            <div class="ellipsis">
-                <c:if test="${!param.select}">
-                    <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-                    <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
-                    <a href="editContact.jsp?rnd=${jspHelperBean.randomNumber}&new=false&destination=${contact.destination}">
-                </c:if>
-                    ${contact.name}
-                <c:if test="${!param.select}">
-                    </a>
-                </c:if>
-            </div>
-        </td>
-        <td style="width: 100px;">
-            <div class="ellipsis">
-                ${contact.destination}
-            </div>
-        </td>
-        <td>
+        
+        <td><div${class}>
             <c:if test="${!param.select}">
-                <a href="deleteContact.jsp?destination=${contact.destination}"><img src="images/delete.png" alt="<ib:message key='Delete'/>" title='<ib:message key='Delete this contact'/>'/></a>
+                <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+                <%-- Insert a random number into the request string so others can't see contacts using the CSS history hack --%>
+                <a href="editContact.jsp?rnd=${jspHelperBean.randomNumber}&new=false&destination=${contact.destination}">
             </c:if>
-        </td>
+                ${contact.name}
+            <c:if test="${!param.select}">
+                </a>
+            </c:if>
+        </div></td>
+        <td><div${class}>
+            ${contact.destination}
+        </div></td>
+        <c:if test="${!param.select}">
+            <td><div${class}>
+                <a href="deleteContact.jsp?destination=${contact.destination}"><img src="images/delete.png" alt="<ib:message key='Delete'/>" title='<ib:message key='Delete this contact'/>'/></a>
+            </div></td>
+        </c:if>
         </tr>
     </c:forEach>
     </table>
-    </div>
     
     <p/>
     <table>
