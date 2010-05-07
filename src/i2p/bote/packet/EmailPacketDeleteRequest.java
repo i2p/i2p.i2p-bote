@@ -75,4 +75,9 @@ public class EmailPacketDeleteRequest extends CommunicationPacket {
         
         return outputStream.toByteArray();
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " dhtKey=" + (dhtKey==null?"<null>":dhtKey.toBase64().substring(0, 8)) + "...";
+    }
 }
