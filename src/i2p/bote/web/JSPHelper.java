@@ -268,6 +268,8 @@ public class JSPHelper {
         catch (MessagingException e) {
             return null;
         }
+        if (recipients == null)
+            return null;
         
         Identities identities = getIdentities();
         for (EmailDestination localDestination: identities) {
