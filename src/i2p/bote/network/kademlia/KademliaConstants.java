@@ -26,7 +26,7 @@ public class KademliaConstants {
     public static final int S = 100;   // The size of the sibling list for S/Kademlia.
 //    public static final int B = 5;   // This is the value from the original Kademlia paper.
     public static final int B = 1;
-    public static final int ALPHA = 3;   // According to the literature, this is the optimum choice for alpha.
+    public static final int ALPHA = 10;   // According to the literature, 3 is the optimum choice, but until the network becomes significantly larger than S, we'll use a higher value for speed
     public static final int BUCKET_REFRESH_INTERVAL = 3600;
     public static final int REPLICATE_INTERVAL = 3600;   // TODO would it be better for REPLICATE_INTERVAL to be slightly longer than REFRESH_TIMEOUT?
     public static final int STALE_THRESHOLD = 3;   // Maximum number of times a peer can time out in a row before it is dropped
