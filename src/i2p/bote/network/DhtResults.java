@@ -33,9 +33,11 @@ import i2p.bote.packet.dht.DhtStorablePacket;
 
 public class DhtResults implements Iterable<DhtStorablePacket> {
     private Map<Destination, DhtStorablePacket> map;
+    private int totalResponses;
 
     public DhtResults() {
         map = new ConcurrentHashMap<Destination, DhtStorablePacket>();
+        totalResponses = -1;
     }
     
     public void put(Destination peer, DhtStorablePacket packet) {
@@ -62,6 +64,23 @@ public class DhtResults implements Iterable<DhtStorablePacket> {
         return map.get(peer);
     }
     
+    /**
+     * Sets the number of peers that have responded to the DHT lookup.
+     * @param totalResponses
+     */
+    public void setTotalResponses(int totalResponses) {
+        this.totalResponses = totalResponses;
+    }
+
+    /**
+     * Gets the number of peers that have responded to the DHT lookup,
+     * including negative responses (those that did not return a data packet).
+     * @return
+     */
+    public int getTotalResponses() {
+        return totalResponses;
+    }
+
     @Override
     public Iterator<DhtStorablePacket> iterator() {
         return getPackets().iterator();

@@ -236,8 +236,12 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 results.put(result.getKey(), (DhtStorablePacket)packet);
         }
         
-        if (localResult != null)
+        int totalResponses = responses.size();
+        if (localResult != null) {
             results.put(localDestination, localResult);
+            totalResponses++;
+        }
+        results.setTotalResponses(totalResponses);
         
         return results;
     }
