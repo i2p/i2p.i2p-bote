@@ -78,7 +78,7 @@ public class OutboxProcessor extends I2PBoteThread {
             }
             
             if (I2PBote.getInstance().getNetworkStatus() == NetworkStatus.CONNECTED) {
-                log.info("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
+                log.debug("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
                 for (Email email: outbox)
                     // only send emails whose status has not been set and which have not been set to "old"
                     if (Outbox.DEFAULT_STATUS.equals(outbox.getStatus(email)) && email.isNew()) {
@@ -160,7 +160,7 @@ public class OutboxProcessor extends I2PBoteThread {
         String logSuffix = null;   // only used for logging
         try {
             logSuffix = "Recipient = '" + recipient + "' Message ID = '" + email.getMessageID() + "'";
-            log.debug("Sending email: " + logSuffix);
+            log.info("Sending email: " + logSuffix);
             EmailDestination recipientDest = new EmailDestination(recipient);
             
             Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity.getPrivateSigningKey(), recipient);

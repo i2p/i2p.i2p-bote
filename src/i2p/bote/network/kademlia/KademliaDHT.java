@@ -170,7 +170,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     
     private DhtResults find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {
         final Collection<Destination> closeNodes = getClosestNodes(key);
-        log.debug("Querying localhost + " + closeNodes.size() + " peers for data type " + dataType.getSimpleName() + ", Kademlia key " + key);
+        log.info("Querying localhost + " + closeNodes.size() + " peers for data type " + dataType.getSimpleName() + ", Kademlia key " + key);
         
         DhtStorablePacket localResult = findLocally(key, dataType);
         // if a local packet exists and one result is requested, return the local packet
@@ -204,7 +204,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         catch (InterruptedException e) {
             log.warn("Interrupted while waiting for responses to Retrieve Requests.", e);
         }
-        log.debug(batch.getResponses().size() + " response packets received for hash " + key + " and data type " + dataType.getSimpleName());
+        log.info(batch.getResponses().size() + " response packets received for hash " + key + " and data type " + dataType.getSimpleName());
         
         sendQueue.remove(batch);
         
@@ -249,7 +249,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     @Override
     public void store(DhtStorablePacket packet) throws DhtException {
         Hash key = packet.getDhtKey();
-        log.debug("Looking up nodes to store a " + packet.getClass().getSimpleName() + " with key " + key);
+        log.info("Looking up nodes to store a " + packet.getClass().getSimpleName() + " with key " + key);
         
         List<Destination> closeNodes = getClosestNodes(key);
         if (closeNodes.isEmpty())
@@ -259,7 +259,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             if (closeNodes.size()<KademliaConstants.K || isCloser(localDestination, closeNodes.get(0), key))
                 closeNodes.add(localDestination);
             
-        log.debug("Storing a " + packet.getClass().getSimpleName() + " with key " + key + " on " + closeNodes.size() + " nodes");
+        log.info("Storing a " + packet.getClass().getSimpleName() + " with key " + key + " on " + closeNodes.size() + " nodes");
         
         HashCash hashCash;
         try {
@@ -317,7 +317,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         
         @Override
         public void run() {
-            log.debug("Bootstrap start");
+            log.info("Bootstrap start");
             i2pReceiver.addPacketListener(this);
         outerLoop:  
             while (!shutdownRequested()) {
@@ -325,15 +325,15 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                     bootstrapNode.setFirstSeen(System.currentTimeMillis());   // Set the "first seen" time to the current time before every bootstrap attempt
                     bootstrapNode.responseReceived();   // unlock the peer so ClosestNodesLookupTask will give it a chance
                     bucketManager.addOrUpdate(bootstrapNode);
-                    log.debug("Trying " + bootstrapNode.calculateHash().toBase64() + " bootstrapping.");
+                    log.info("Trying " + bootstrapNode.calculateHash().toBase64() + " bootstrapping.");
                     Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
                     
                     if (closestNodes.isEmpty()) {
-                        log.debug("No response from bootstrap node " + bootstrapNode.calculateHash());
+                        log.info("No response from bootstrap node " + bootstrapNode.calculateHash());
                         bucketManager.remove(bootstrapNode);
                     }
                     else {
-                        log.debug("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash().toBase64());
+                        log.info("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash().toBase64());
                         refreshAll();
                         log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
                         for (Destination peer: bucketManager.getAllPeers())
@@ -380,7 +380,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // refresh k-buckets
         for (KBucket bucket: Util.synchronizedCopy(bucketManager))
             if (now > bucket.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000) {
-                log.debug("Refreshing k-bucket: " + bucket);
+                log.info("Refreshing k-bucket: " + bucket);
                 refresh(bucket);
             }
         
@@ -394,7 +394,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         for (int i=0; i<sections.length; i++) {
             BucketSection section = sections[i];
             if (now > section.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000) {
-                log.debug("Refreshing s-bucket section " + i + " of " + sections.length + " (last refresh: " + new Date(section.getLastLookupTime()) + ")");
+                log.info("Refreshing s-bucket section " + i + " of " + sections.length + " (last refresh: " + new Date(section.getLastLookupTime()) + ")");
                 refresh(section);
             }
         }
@@ -561,7 +561,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                     log.error("Invalid destination key in line " + line, e);
                 }
         }
-        log.debug(initialPeers.size()-numPeersBefore + " peers read.");
+        log.info(initialPeers.size()-numPeersBefore + " peers read.");
     }
     
     private void sendPeerList(FindClosePeersPacket packet, Destination destination) {
@@ -618,7 +618,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         
         while (!shutdownRequested()) {
             if (bucketManager.getUnlockedPeerCount() == 0) {
-                log.debug("All peers are gone. Re-bootstrapping.");
+                log.info("All peers are gone. Re-bootstrapping.");
                 bootstrap();
             }
             refreshOldBuckets();

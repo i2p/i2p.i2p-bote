@@ -111,7 +111,7 @@ public class Configuration {
         configFile = new File(i2pBoteDir, CONFIG_FILE_NAME);
         boolean configurationLoaded = false;
         if (configFile.exists()) {
-            log.debug("Loading config file <" + configFile.getAbsolutePath() + ">");
+            log.info("Loading config file <" + configFile.getAbsolutePath() + ">");
             
             try {
                 DataHelper.loadProps(properties, configFile);

@@ -337,9 +337,9 @@ public class I2PBote {
     public synchronized void checkForMail() {
         if (!isCheckingForMail()) {
             if (identities.size() <= 0)
-                log.debug("Not checking for mail because no identities are defined.");
+                log.info("Not checking for mail because no identities are defined.");
             else
-                log.debug("Checking mail for " + identities.size() + " Email Identities...");
+                log.info("Checking mail for " + identities.size() + " Email Identities...");
             
             lastMailCheckTime = System.currentTimeMillis();
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
@@ -352,7 +352,7 @@ public class I2PBote {
             mailCheckExecutor.shutdown();   // finish all tasks, then shut down
         }
         else
-            log.debug("Not checking for mail because the last mail check hasn't finished.");
+            log.info("Not checking for mail because the last mail check hasn't finished.");
     }
 
     public synchronized long getLastMailCheckTime() {
