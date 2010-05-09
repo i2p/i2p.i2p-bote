@@ -27,7 +27,6 @@ import i2p.bote.packet.MalformedCommunicationPacket;
 import i2p.bote.packet.MalformedCommunicationPacketException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.i2p.client.I2PSession;
@@ -47,20 +46,26 @@ public class I2PPacketDispatcher implements I2PSessionListener {
     private List<PacketListener> packetListeners;
 
 	public I2PPacketDispatcher() {
-		packetListeners = Collections.synchronizedList(new ArrayList<PacketListener>());
+		packetListeners = new ArrayList<PacketListener>();
 	}
     
     public void addPacketListener(PacketListener listener) {
-        packetListeners.add(listener);
+        synchronized(packetListeners) {
+            packetListeners.add(listener);
+        }
     }
     
     public void removePacketListener(PacketListener listener) {
-        packetListeners.remove(listener);
+        synchronized(packetListeners) {
+            packetListeners.remove(listener);
+        }
     }
     
     private void firePacketReceivedEvent(CommunicationPacket packet, Destination sender) {
-        for (PacketListener listener: packetListeners)
-            listener.packetReceived(packet, sender, System.currentTimeMillis());
+        synchronized(packetListeners) {
+            for (PacketListener listener: packetListeners)
+                listener.packetReceived(packet, sender, System.currentTimeMillis());
+        }
     }
             
 	public void shutDown() {
