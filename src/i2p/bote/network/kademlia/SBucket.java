@@ -22,7 +22,6 @@
 package i2p.bote.network.kademlia;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.Collections;
 
 import net.i2p.data.Hash;
@@ -92,28 +91,34 @@ public class SBucket extends AbstractBucket {
         }
     }
 
-    int getNumSections() {
-        return sections.length;
-    }
-    
     BucketSection[] getSections() {
-        if (peers.isEmpty())
-            return sections;
-        
-        BigInteger[] siblingIDs = new BigInteger[peers.size()];
-        int siblingIndex = 0;
-        for (KademliaPeer peer: peers) {
-            siblingIDs[siblingIndex] = new BigInteger(1, peer.getDestinationHash().getData());
-            siblingIndex++;
+        BigInteger minSiblingId;
+        BigInteger maxSiblingId;
+        if (peers.size() < 2) {
+            // If there are less than two siblings, use the whole ID space. This avoids zero-length bucket sections.
+            minSiblingId = MIN_HASH_VALUE;
+            maxSiblingId = MAX_HASH_VALUE;
         }
-        Arrays.sort(siblingIDs);
-
+        else {
+            // find the minimum and the maximum Kademlia id of all siblings
+            minSiblingId = MAX_HASH_VALUE;
+            maxSiblingId = MIN_HASH_VALUE;
+            for (KademliaPeer sibling: peers) {
+                BigInteger id = new BigInteger(1, sibling.getDestinationHash().getData());
+                minSiblingId = minSiblingId.min(id);
+                maxSiblingId = maxSiblingId.max(id);
+            }
+        }
+        
+        // divide the interval [minSiblingId, maxSiblingId] in sections.length equal size parts
+        BigInteger interval = maxSiblingId.subtract(minSiblingId);
+        BigInteger numSections = BigInteger.valueOf(sections.length);
+        sections[0].start = minSiblingId;
         for (int i=0; i<sections.length; i++) {
-            sections[i].start = siblingIDs[peers.size()*i/sections.length];
-            if (i == sections.length-1)
-                sections[i].end = siblingIDs[peers.size()-1].add(BigInteger.ONE);
-            else
-                sections[i].end = siblingIDs[peers.size()*(i+1)/sections.length];
+            if (i > 0)
+                sections[i].start = sections[i-1].end;
+            BigInteger iPlusOne = BigInteger.valueOf(i+1);
+            sections[i].end = minSiblingId.add(interval.multiply(iPlusOne).divide(numSections));   // sections[i].end = minSiblingId + interval*(i+1)/numSections
         }
         
         return sections;
@@ -136,6 +141,7 @@ public class SBucket extends AbstractBucket {
     /**
      * Stores the start and end key, and the time of the last lookup, for one section of the s-bucket.
      * There are ceil(s/k) sections in the bucket.
+     * A hash h is considered within a section if <code>section.start <= h < section.end</code>.
      */
     class BucketSection {
         private BigInteger start;
@@ -156,10 +162,6 @@ public class SBucket extends AbstractBucket {
             return start;
         }
         
-        public void setStart(BigInteger start) {
-            this.start = start;
-        }
-
         public BigInteger getEnd() {
             return end;
         }

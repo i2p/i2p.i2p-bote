@@ -227,8 +227,10 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * @return
      */
     private DhtResults getDhtResults(PacketBatch batch, DhtStorablePacket localResult) {
+        Map<Destination, DataPacket> responses = batch.getResponses();
+        
         DhtResults results = new DhtResults();
-        for (Entry<Destination, DataPacket> result: batch.getResponses().entrySet()) {
+        for (Entry<Destination, DataPacket> result: responses.entrySet()) {
             DataPacket packet = result.getValue();
             if (packet instanceof DhtStorablePacket)
                 results.put(result.getKey(), (DhtStorablePacket)packet);
@@ -384,11 +386,12 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         // and the 40th sibling (i=1), etc., and finally a lookup for a random key between the
         // 80th and the 100th sibling (i=4).
         SBucket sBucket = bucketManager.getSBucket();
-        for (int i=0; i<sBucket.getNumSections(); i++) {
-            BucketSection section = sBucket.getSections()[i];
+        BucketSection[] sections = sBucket.getSections();
+        for (int i=0; i<sections.length; i++) {
+            BucketSection section = sections[i];
             if (now > section.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000) {
-                log.debug("Refreshing s-bucket section " + i + " of " + sBucket.getNumSections() + " (last refresh: " + new Date(section.getLastLookupTime()) + ")");
-                refresh(sBucket, section.getStart(), section.getEnd());
+                log.debug("Refreshing s-bucket section " + i + " of " + sections.length + " (last refresh: " + new Date(section.getLastLookupTime()) + ")");
+                refresh(section);
             }
         }
     }
@@ -398,8 +401,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         getClosestNodes(key);
     }
 
-    private void refresh(SBucket bucket, BigInteger min, BigInteger max) {
-        Hash key = createRandomHash(min, max);
+    private void refresh(BucketSection section) {
+        Hash key = createRandomHash(section.getStart(), section.getEnd());
         getClosestNodes(key);
     }
 
