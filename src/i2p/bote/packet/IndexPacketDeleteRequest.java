@@ -37,6 +37,7 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
+ * A request to a peer to delete an entry from a stored {@link IndexPacket}.
  * This class is not thread-safe.
  */
 @TypeCode('X')
@@ -67,6 +68,10 @@ public class IndexPacketDeleteRequest extends CommunicationPacket {
             log.debug("Index Packet Delete Request has " + buffer.remaining() + " extra bytes.");
     }
     
+    /**
+     * @param dhtKey The Email Packet key to delete
+     * @param deletionKey The delete authorization.
+     */
     public void put(Hash dhtKey, UniqueId deletionKey) {
         entries.put(dhtKey, deletionKey);
     }

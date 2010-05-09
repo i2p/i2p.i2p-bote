@@ -138,7 +138,7 @@ public class IndexPacket extends DhtStorablePacket {
     }
     
     /**
-     * Returns all DHT keys in this <code>IndexPacket</code>.
+     * Returns all email packet keys in this <code>IndexPacket</code>.
      * The keys are not guaranteed to be in any particular order.
      * @return
      */
