@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-06 07:49+0000\n"
+"POT-Creation-Date: 2010-05-09 07:36+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -70,7 +70,7 @@ msgid "Sent to {0} out of {1} recipients"
 msgstr "An {0} von {1} Empfänger gesendet"
 
 #: src/i2p/bote/service/OutboxProcessor.java:147
-#: WebContent/folders.jsp
+#: WebContent/folder.jsp
 msgid "Sent"
 msgstr "Absendezeit"
 
@@ -353,6 +353,10 @@ msgstr "Posteingang"
 #: WebContent/folders.jsp
 msgid "Outbox"
 msgstr "Postausgang"
+
+#: WebContent/folders.jsp
+msgid "Sent Emails"
+msgstr "Gesendet"
 
 #: WebContent/folders.jsp
 msgid "Drafts"
