@@ -30,7 +30,7 @@
 <c:choose>
     <c:when test="${empty param.key}">
         <ib:message key="New Email Identity" var="title" scope="request"/>
-        <ib:message key="Create" var="commitAction"/>"/>
+        <ib:message key="Create" var="commitAction"/>
         <c:set var="publicName" value="${param.publicName}"/>
         <c:set var="description" value="${param.description}"/>
     </c:when>
@@ -103,8 +103,8 @@
             </c:if>
         </table>
         <input type="hidden" name="key" value="${param.key}"/>
-        <input type="submit" name="action" value="${commitAction}"/>
-        <input type="submit" name="action" value="<ib:message key='Cancel'/>"/>
+        <button name="action" value="${commitAction}">${commitAction}</button>
+        <button name="action" value="cancel"/><ib:message key="Cancel"/></button>
     </form>
 
     <script type="text/javascript" language="JavaScript">

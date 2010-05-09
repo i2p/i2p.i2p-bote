@@ -26,7 +26,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<c:if test="${param.action == 'Cancel'}">
+<c:if test="${param.action == 'cancel'}">
     <jsp:forward page="identities.jsp"/>
 </c:if>
 
