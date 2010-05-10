@@ -1,6 +1,25 @@
 I2P-Bote Version History
 ------------------------
 
+0.2.3 (Released on May 10, 2010)
+  * Email signatures
+  * Multiple recipients / CC / BCC implemented
+  * A button on the "new email" page for adding a recipient to the address book
+  * Local names for Email Destinations are displayed automatically and
+    take priority over names chosen by senders
+  * Local names for Email Destinations are removed from emails before sending
+  * Sorted mail folders
+  * Outbox functionality; emails are now sent in the background
+  * Sent folder, Trash folder
+  * No more getting the same email over and over again
+  * New options on the Settings page:
+     o Enable/disable sending of date/time
+     o Enable/disable localization of text that recipients see, such as "Re:"
+     o UI language
+  * Misc UI enhancements
+  * Fix for a bug that caused excessive CPU usage
+  * Fix for a bug that hid the first row in a table (identities, inbox, etc.)
+
 0.2.2 (Released on Mar 22, 2010)
   * German translation
   * Automatic mail checking is now user-configurable

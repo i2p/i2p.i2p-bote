@@ -90,7 +90,7 @@ import net.i2p.util.Log;
  */
 public class I2PBote {
     public static final int PROTOCOL_VERSION = 2;
-    private static final String APP_VERSION = "0.2.2";
+    private static final String APP_VERSION = "0.2.3";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
     private static volatile I2PBote instance;
     
