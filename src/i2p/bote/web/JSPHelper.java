@@ -26,17 +26,20 @@ import i2p.bote.I2PBote;
 import i2p.bote.Util;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.addressbook.Contact;
+import i2p.bote.crypto.CryptoFactory;
+import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
+import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
-import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.TrashFolder;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -51,7 +54,6 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.servlet.ServletRequest;
 
-import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 
@@ -81,7 +83,10 @@ public class JSPHelper {
     }
     
     /**
-     * Updates an email identity if the Destination <code>key</code> exists, or adds a new identity.
+     * Updates an email identity if <code>createNew</code> is <code>false</code>,
+     * or adds a new identity if <code>createNew</code> is <code>true</code>.
+     * @param createNew 
+     * @param cryptoImplId The id value of the cryptographic algorithm set to use for the new identity; ignored if <code>createNew</code> is <code>false</code>
      * @param key A base64-encoded Email Destination key
      * @param description
      * @param publicName
@@ -89,21 +94,34 @@ public class JSPHelper {
      * @param setDefault If this is <code>true</code>, the identity becomes the new default identity. Otherwise, the default stays the same.
      * @return null if sucessful, or an error message if an error occured
      */
-    public static String saveIdentity(String key, String publicName, String description, String emailAddress, boolean setDefault) {
+    public static String saveIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) {
+        Log log = new Log(JSPHelper.class);
         Identities identities = getIdentities();
         EmailIdentity identity = identities.get(key);
         
-        if (identity != null) {
-            identity.setPublicName(publicName);
-            identity.setDescription(description);
-            identity.setEmailAddress(emailAddress);
-        }
-        else {
-            identity = new EmailIdentity();
+        if (createNew) {
+            CryptoImplementation cryptoImpl = CryptoFactory.getInstance(cryptoImplId);
+            if (cryptoImpl == null) {
+                String errorMsg = "Invalid ID number for CryptoImplementation: " + cryptoImplId;
+                log.error(errorMsg);
+                return errorMsg;
+            }
+                
+            try {
+                identity = new EmailIdentity(cryptoImpl);
+            } catch (GeneralSecurityException e) {
+                log.error("Can't create email identity from base64 string: <" + key + ">", e);
+                return Util._("Error creating the Email Destination.");
+            }
             identity.setPublicName(publicName);
             identity.setDescription(description);
             identity.setEmailAddress(emailAddress);
             identities.add(identity);
+        }
+        else {
+            identity.setPublicName(publicName);
+            identity.setDescription(description);
+            identity.setEmailAddress(emailAddress);
         }
 
         // update the default identity
@@ -114,7 +132,7 @@ public class JSPHelper {
             identities.save();
             return null;
         }
-        catch (IOException e) {
+        catch (Exception e) {
             return e.getLocalizedMessage();
         }
     }
@@ -132,13 +150,21 @@ public class JSPHelper {
             identities.save();
             return null;
         }
-        catch (IOException e) {
+        catch (Exception e) {
             return e.getLocalizedMessage();
         }
     }
     
     public static EmailIdentity getIdentity(String key) {
         return getIdentities().get(key);
+    }
+    
+    public static CryptoImplementation getCryptoImplementation(int id) {
+        return CryptoFactory.getInstance(id);
+    }
+    
+    public List<CryptoImplementation> getCryptoImplementations() {
+        return CryptoFactory.getInstances();
     }
     
     /**
@@ -160,7 +186,9 @@ public class JSPHelper {
             EmailDestination destination;
             try {
                 destination = new EmailDestination(destinationString);
-            } catch (DataFormatException e) {
+            } catch (GeneralSecurityException e) {
+                Log log = new Log(JSPHelper.class);
+                log.error("Can't save contact to address book.", e);
                 return e.getLocalizedMessage();
             }
             contact = new Contact(destination, name);

@@ -45,23 +45,29 @@ public class EmailPacketFolder extends DhtPacketFolder<EncryptedEmailPacket> imp
         super(storageDir);
     }
 
+    /** Handles delete requests */
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
         if (packet instanceof EmailPacketDeleteRequest) {
             EmailPacketDeleteRequest delRequest = (EmailPacketDeleteRequest)packet;
             
+            // see if the packet exists
             Hash dhtKey = delRequest.getDhtKey();
             DhtStorablePacket storedPacket = retrieve(dhtKey);
             if (storedPacket instanceof EncryptedEmailPacket) {
-                UniqueId storedDeletionKey = ((EncryptedEmailPacket)storedPacket).getPlaintextDeletionKey();
+                // verify
+                Hash expectedHash = ((EncryptedEmailPacket)storedPacket).getDeleteVerificationHash();
+                UniqueId delAuthorization = delRequest.getAuthorization();
+                Hash actualHash = new Hash(delAuthorization.toByteArray());
+                boolean valid = actualHash.equals(expectedHash);
             
-                if (storedDeletionKey.equals(delRequest.getDeletionKey()))
+                if (valid)
                     delete(dhtKey);
                 else
-                    log.debug("Deletion key in EmailPacketDeleteRequest does not match. Should be: <" + storedDeletionKey + ">, is <" + delRequest.getDeletionKey() +">");
+                    log.debug("Invalid Delete Authorization in EmailPacketDeleteRequest. Should be: <" + expectedHash.toBase64() + ">, is <" + actualHash.toBase64() +">");
             }
             else
-                log.debug("EncryptedEmailPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
+                log.debug("EncryptedEmailPacket expected for DHT key <" + dhtKey + ">, found " + (storedPacket==null?"<null>":storedPacket.getClass().getSimpleName()));
         }
     }
 }

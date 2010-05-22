@@ -38,6 +38,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class IncompleteEmailFolderTest {
+    private static final String MSG_ID_CACHE_DIR = "msgidcache.txt";
+    
     private File inboxDir;
 	private EmailFolder inbox;
 	private IncompleteEmailFolder incompleteFolder;
@@ -52,7 +54,7 @@ public class IncompleteEmailFolderTest {
 		inbox = new EmailFolder(inboxDir);
 		
 		File incompleteDir = new File(testDir, "incomplete");
-		MessageIdCache messageIdCache = new MessageIdCache(new File(testDir, "msgidcache.txt"), 1000);
+		MessageIdCache messageIdCache = new MessageIdCache(new File(testDir, MSG_ID_CACHE_DIR), 1000);
 		incompleteFolder = new IncompleteEmailFolder(incompleteDir, messageIdCache, inbox);
 	}
 	
@@ -62,6 +64,7 @@ public class IncompleteEmailFolderTest {
 	        file.delete();
 	    inboxDir.delete();
 		incompleteFolder.getStorageDirectory().delete();
+		new File(testDir, MSG_ID_CACHE_DIR).delete();
 		testDir.delete();
     }
 	
@@ -87,12 +90,12 @@ public class IncompleteEmailFolderTest {
         email.setText(mailContent);
         
         EmailIdentity identity = new EmailIdentity("DVkhqF6R9SHB5svViGtqRYZO7oI-0-omnIFtae29fNnNtTTH2j37Fr5fWp4t6rseTjiJ8gwg08DnbA4qP72aSQcDQPSErOELOMSU5BUTtsT8hnv1-DKdhIn~1qoIjxzIFHbxT3xnR3nFI7lKd6couscilzPBCjoFDUKb5ds2u23RO29K7~EKxU1O7Ltu6sT5etXkJkhAziOcuyfZyxJXqH1caYX5e2aWIhY3D2ESfy4nMK66r5KcDVQOPTzCkJq6d1FFOmnDGrlJjN~HgHmfUCtLbO~TLugWx9FCiDGfPkBb-3ODYTDaUR1zobOj1tiffV3Nm73PsYddRt84emLKzIRsC77JJpflw~h8UIRYJ29vJDf4VQ54BhZcelmN192sIrWr2nKN8n6PpSP4LI4RAuG2UvLytnDYzFM7O9WcnFP2-Qs3t1lD9aF72JVTYTpH5PZupnB1cglSsdRg8RmtRa41Fseyx8D3EdH~DCdpMGmfupaWp9~dKpFMleqk9scRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTjDxn3wEOjCjJ4APg~2IGpqWwy2Hw728aZ3eCC5l0MP913BLdIfSUiXPbs6sN9A2");
-        Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(identity.getPrivateSigningKey(), recipient);
+        Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(identity, recipient);
         assertTrue("Expected " + expectedNumPackets + " email packets, got " + packets.size(), packets.size() == expectedNumPackets);
         
         assertTrue("The inbox should be empty at this point!", inbox.getElements().size() == 0);
         for (UnencryptedEmailPacket emailPacket: packets)
-            incompleteFolder.add(emailPacket);
+            incompleteFolder.addEmailPacket(emailPacket);
         
         assertTrue("The incomplete emails folder is not empty!", incompleteFolder.getElements().size() == 0);
         assertTrue("Expected: one email in the inbox, actual number = " + inbox.getElements().size(), inbox.getElements().size() == 1);

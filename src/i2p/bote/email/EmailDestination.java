@@ -21,154 +21,135 @@
 
 package i2p.bote.email;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.ByteBuffer;
+import i2p.bote.crypto.CryptoFactory;
+import i2p.bote.crypto.CryptoImplementation;
+import i2p.bote.crypto.PublicKeyPair;
 
-import net.i2p.client.I2PClient;
-import net.i2p.client.I2PClientFactory;
-import net.i2p.client.I2PSession;
+import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
+import java.security.PublicKey;
+import java.util.Arrays;
+
 import net.i2p.crypto.SHA256Generator;
-import net.i2p.data.Base64;
-import net.i2p.data.DataFormatException;
-import net.i2p.data.Destination;
 import net.i2p.data.Hash;
-import net.i2p.data.PublicKey;
-import net.i2p.data.SigningPublicKey;
 import net.i2p.util.Log;
 
 /**
- * Uniquely identifies an email recipient. This implementation uses I2P keypairs.
+ * Uniquely identifies an email recipient.
  */
 public class EmailDestination {
     private Log log = new Log(EmailDestination.class);
-    private PublicKey publicEncryptionKey;
-    private SigningPublicKey publicSigningKey;
+    protected CryptoImplementation cryptoImpl;
+    protected PublicKey publicEncryptionKey;
+    protected PublicKey publicSigningKey;
     
-    /**
-     * Creates a fresh <code>EmailDestination</code>.
-     */
-    public EmailDestination() {
-        try {
-            I2PClient i2pClient = I2PClientFactory.createClient();
-            ByteArrayOutputStream arrayStream = new ByteArrayOutputStream();
-            i2pClient.createDestination(arrayStream);
-            byte[] destinationArray = arrayStream.toByteArray();
-            I2PSession i2pSession = i2pClient.createSession(new ByteArrayInputStream(destinationArray), null);
-            
-            initKeys(i2pSession);
-        }
-        catch (Exception e) {
-            log.error("Can't generate EmailDestination.", e);
-        }
-    }
-
-    /**
-     * Creates a <code>EmailDestination</code> using data read from a {@link ByteBuffer}.
-     * @param buffer
-     */
-    public EmailDestination(ByteBuffer buffer) {
-        byte[] encryptionKeyArray = new byte[PublicKey.KEYSIZE_BYTES];
-        buffer.get(encryptionKeyArray);
-        publicEncryptionKey = new PublicKey(encryptionKeyArray);
-        
-        byte[] signingKeyArray = new byte[SigningPublicKey.KEYSIZE_BYTES];
-        buffer.get(signingKeyArray);
-        publicSigningKey = new SigningPublicKey(signingKeyArray);
+    protected EmailDestination() {
     }
     
     /**
      * @param address A string containing a valid base64-encoded Email Destination
-     * @throws DataFormatException If <code>address</code> doesn't contain a valid Email Destination
+     * @throws GeneralSecurityException If <code>address</code> doesn't contain a valid Email Destination
      */
-    public EmailDestination(String address) throws DataFormatException {
-        String base64Data = extractBase64Dest(address);
-        if (base64Data == null) {
-            String msg = "No Email Destination found in string: <" + address + ">";
-            log.debug(msg);
-            throw new DataFormatException(msg);
-        }
+    public EmailDestination(String address) throws GeneralSecurityException {
+        String base64Key = extractBase64Dest(address);
+        if (base64Key == null)
+            throw new GeneralSecurityException("No Email Destination found in string: <" + address + ">");
         
-        base64Data += "AAAA";   // add a null certificate
-        Destination i2pDestination = new Destination(base64Data);
-        publicEncryptionKey = i2pDestination.getPublicKey();
-        publicSigningKey = i2pDestination.getSigningPublicKey();
+        // find the crypto implementation for this key length
+        for (CryptoImplementation cryptoImpl: CryptoFactory.getInstances()) {
+            int base64Length = cryptoImpl.getBase64PublicKeyPairLength();   // length of an email identity that uses this CryptoImplementation
+            if (base64Key.length() == base64Length)
+                this.cryptoImpl = cryptoImpl;
+        }
+        if (cryptoImpl == null)
+            throw new InvalidKeyException("Not a valid Email Identity: <" + base64Key + ">");
+        
+        PublicKeyPair keyPair = cryptoImpl.createPublicKeyPair(base64Key);
+        publicEncryptionKey = keyPair.encryptionKey;
+        publicSigningKey = keyPair.signingKey;
+    }
+    
+    public EmailDestination(byte[] bytes) throws GeneralSecurityException {
+        // find the crypto implementation for this key length
+        for (CryptoImplementation cryptoImpl: CryptoFactory.getInstances()) {
+            int byteArrayLength = cryptoImpl.getByteArrayPublicKeyPairLength();   // length of an email identity that uses this CryptoImplementation
+            if (bytes.length == byteArrayLength)
+                this.cryptoImpl = cryptoImpl;
+        }
+        if (cryptoImpl == null)
+            throw new InvalidKeyException("Not a valid Email Identity: " + Arrays.toString(bytes));
+        
+        PublicKeyPair keyPair = cryptoImpl.createPublicKeyPair(bytes);
+        publicEncryptionKey = keyPair.encryptionKey;
+        publicSigningKey = keyPair.signingKey;
     }
     
     /**
      * Looks for a Base64-encoded Email Destination in a string. Returns
-     * the 512-byte Base64 string, or <code>null</code> if nothing is found.
+     * the Base64 encoding, or <code>null</code> if nothing is found.
      * Even if the return value is non-<code>null</code>, it is not
      * guaranteed to be a valid Email Destination.
      * @param address
      * @return
      */
     public static String extractBase64Dest(String address) {
-        if (address==null || address.length()<512)
+        if (address == null)
             return null;
         
-        if (address.length() == 512)
-            return address;
-        
-        // Check if the string contains 512 chars in angle brackets
-        int ltIndex = address.indexOf('<');
-        int gtIndex = address.indexOf('>', ltIndex);
-        if (ltIndex>=0 && ltIndex+513==gtIndex)
-            return address.substring(ltIndex+1, gtIndex);
-        
-        // Check if the string is of the form EmailDest@foo
-        if (address.indexOf('@') == 512)
-            return address.substring(0, 513);
+        // find the crypto implementation for this key length
+        for (CryptoImplementation cryptoImpl: CryptoFactory.getInstances()) {
+            int base64Length = cryptoImpl.getBase64PublicKeyPairLength();   // length of an email destination with this CryptoImplementation
+            
+            if (address.length() == base64Length)
+                return address;
+            
+            // Check if the string contains base64Length chars in angle brackets
+            int ltIndex = address.indexOf('<');
+            int gtIndex = address.indexOf('>', ltIndex);
+            if (ltIndex>=0 && ltIndex+base64Length+1==gtIndex)
+                return address.substring(ltIndex+1, gtIndex);
+            
+            // Check if the string is of the form EmailDest@foo
+            if (address.indexOf('@') == base64Length)
+                return address.substring(0, base64Length+1);
+        }
         
         return null;
     }
     
-    protected void initKeys(I2PSession i2pSession) {
-        publicEncryptionKey = i2pSession.getMyDestination().getPublicKey();
-        publicSigningKey = i2pSession.getMyDestination().getSigningPublicKey();
+    public CryptoImplementation getCryptoImpl() {
+        return cryptoImpl;
     }
     
     public PublicKey getPublicEncryptionKey() {
         return publicEncryptionKey;
     }
 
-    public SigningPublicKey getPublicSigningKey() {
+    public PublicKey getPublicSigningKey() {
         return publicSigningKey;
     }
     
-    private byte[] getKeysAsArray() {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        try {
-            writeTo(byteStream);
-        }
-        catch (IOException e) {
-            log.error("Can't write to ByteArrayOutputStream.", e);
-        }
-        return byteStream.toByteArray();
-    }
-    
-    private void writeTo(OutputStream outputStream) throws IOException {
-        try {
-            publicEncryptionKey.writeBytes(outputStream);
-            publicSigningKey.writeBytes(outputStream);
-        }
-        catch (DataFormatException e) {
-            log.error("Invalid encryption key or signing key.", e);
-        }
+    public byte[] toByteArray() {
+        PublicKeyPair keys = new PublicKeyPair(publicEncryptionKey, publicSigningKey);
+        return cryptoImpl.toByteArray(keys);
     }
     
     public Hash getHash() {
         // TODO cache the hash value?
-        return SHA256Generator.getInstance().calculateHash(getKeysAsArray());
+        return SHA256Generator.getInstance().calculateHash(toByteArray());
     }
     
     /**
      * Returns the two public keys in Base64 representation.
      */
     public String getKey() {
-        return Base64.encode(getKeysAsArray());
+        PublicKeyPair keys = new PublicKeyPair(publicEncryptionKey, publicSigningKey);
+        try {
+            return cryptoImpl.toBase64(keys);
+        } catch (GeneralSecurityException e) {
+            log.error("Can't get email destination keys.", e);
+            return "<Error>: " + e.getLocalizedMessage();
+        }
     }
     
     public String toBase64() {

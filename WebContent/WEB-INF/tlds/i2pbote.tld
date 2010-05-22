@@ -203,7 +203,7 @@
     <name>saveIdentity</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
-        boolean saveIdentity(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
+        boolean saveIdentity(boolean, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
     </function-signature>
 </function>
 
@@ -223,6 +223,17 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         i2p.bote.email.EmailIdentity getIdentity(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>getCryptoImplementation</name>
+    <description>
+        Looks up a CryptoImplementation by ID number.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        i2p.bote.crypto.CryptoImplementation getCryptoImplementation(int)
     </function-signature>
 </function>
 

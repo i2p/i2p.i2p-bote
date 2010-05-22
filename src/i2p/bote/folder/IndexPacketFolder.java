@@ -38,11 +38,12 @@ import net.i2p.util.Log;
 
 /**
  * This class uses Email Destination hashes for DHT keys.
- * It differs from {@link DhtPacketFolder} in two ways:
+ * It differs from {@link DhtPacketFolder} in the following ways:
  *  * It doesn't overwrite an existing packet when a new packet is stored under the same key,
  *    but merges the packets.
  *  * It retains DHT keys of deleted packets in a file named <code>DEL_<dht_key>.pkt</code>
  *    for later reference. These files use the same format as Index Packet files.
+ *  * The <code>retrieve</code> method encrypts Index Packets.
  * 
  */
 public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements PacketListener {
@@ -78,31 +79,28 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
         throw new UnsupportedOperationException("Index packets are never deleted. Use remove(Hash, Hash) to remove an entry from an index packet file.");
     }
     
-    /**
-     * Deletes an entry from an {@link IndexPacket} and saves the packet to disk.
-     * @param indexPacket
-     * @param emailPacketKey The entry to delete
-     */
-    public void remove(IndexPacket indexPacket, Hash emailPacketKey) {
-        log.debug("Removing DHT key " + emailPacketKey + " from Index Packet for Email Dest " + indexPacket.getDhtKey());
-        UniqueId deletionKey = indexPacket.getDeletionKey(emailPacketKey);
-        if (deletionKey == null)
-            log.debug("DHT key " + emailPacketKey + " not found in index packet " + indexPacket);
-        else {
-            indexPacket.remove(emailPacketKey);
-            addToDeletedPackets(indexPacket, emailPacketKey, deletionKey);
-        }
-        super.store(indexPacket);   // don't merge, but overwrite the file with the key removed
+    /** Overridden to encrypt the Index Packet */
+    @Override
+    public DhtStorablePacket retrieve(Hash dhtKey) {
+        DhtStorablePacket packet = super.retrieve(dhtKey);
+        if (packet == null)
+            return null;
+            
+        if (!(packet instanceof IndexPacket))
+            log.error("Packet of type " + packet.getClass().getSimpleName() + " found in the index packet folder.");
+        
+        return (IndexPacket)packet;
     }
     
     /**
-     * Adds a DHT key of an Email Packet to the list of deleted packets.
+     * Adds a DHT key of an Email Packet to the list of deleted packets and sets the
+     * delete authorization key.
      * If the key is already on the list, nothing happens.
      * @param indexPacket
      * @param dhtKey
-     * @param deletionKey
+     * @param delAuthorization
      */
-    private void addToDeletedPackets(IndexPacket indexPacket, Hash dhtKey, UniqueId deletionKey) {
+    private void addToDeletedPackets(IndexPacket indexPacket, Hash dhtKey, UniqueId delAuthorization) {
         String delFileName = DEL_FILE_PREFIX + getFilename(indexPacket);
         File delFile = new File(storageDir, delFileName);
 
@@ -122,7 +120,7 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
                 return;
             }
         }
-        ((IndexPacket)delListPacket).put(dhtKey, deletionKey);
+        ((IndexPacket)delListPacket).put(dhtKey, delAuthorization);
         add(delListPacket, delFileName);
     }
 
@@ -135,7 +133,8 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
     }
     
     /**
-     * Deletes all index packet entries that match the keys in a delete request.
+     * Deletes all index packet entries that match the keys in a delete request,
+     * and for which the request contains a valid delete authorization.
      * @param delRequest
      */
     public void process(IndexPacketDeleteRequest delRequest) {
@@ -147,17 +146,33 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
             Collection<Hash> keysToDelete = delRequest.getDhtKeys();
         
             for (Hash keyToDelete: keysToDelete) {
-                UniqueId deletionKeyFromRequest = delRequest.getDeletionKey(keyToDelete);
-                UniqueId storedDeletionKey = indexPacket.getDeletionKey(keyToDelete);
-                if (storedDeletionKey == null)
-                    log.debug("Deletion key " + deletionKeyFromRequest + " from IndexPacketDeleteRequest not found in index packet for destination " + dhtKey);
-                else if (storedDeletionKey.equals(deletionKeyFromRequest))
-                    remove(indexPacket, keyToDelete);
+                UniqueId delAuthorizationFromRequest = delRequest.getDeleteAuthorization(keyToDelete);
+                UniqueId storedDeleteAuthorization = indexPacket.getDeleteAuthorization(keyToDelete);
+                if (storedDeleteAuthorization == null)
+                    log.debug("Delete Authorization key " + delAuthorizationFromRequest + " from IndexPacketDeleteRequest not found in index packet for destination " + dhtKey);
+                else if (storedDeleteAuthorization.equals(delAuthorizationFromRequest))
+                    remove(indexPacket, keyToDelete, storedDeleteAuthorization);
                 else
-                    log.debug("Deletion key in IndexPacketDeleteRequest does not match. Should be: <" + storedDeletionKey + ">, is <" + deletionKeyFromRequest +">");
+                    log.debug("Delete authorization in IndexPacketDeleteRequest does not match. Should be: <" + storedDeleteAuthorization + ">, is <" + delAuthorizationFromRequest +">");
             }
         }
         else
             log.debug("IndexPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
+    }
+
+    /**
+     * Deletes an entry from an {@link IndexPacket} and saves the packet to disk.
+     * @param indexPacket
+     * @param emailPacketKey The entry to delete
+     */
+    private void remove(IndexPacket indexPacket, Hash emailPacketKey, UniqueId delAuthorization) {
+        log.debug("Removing DHT key " + emailPacketKey + " from Index Packet for Email Dest " + indexPacket.getDhtKey());
+        if (delAuthorization == null)
+            log.debug("DHT key " + emailPacketKey + " not found in index packet " + indexPacket);
+        else {
+            indexPacket.remove(emailPacketKey);
+            addToDeletedPackets(indexPacket, emailPacketKey, delAuthorization);
+        }
+        super.store(indexPacket);   // don't merge, but overwrite the file with the key removed
     }
 }

@@ -34,11 +34,11 @@ import net.i2p.util.Log;
 public class EmailPacketDeleteRequest extends CommunicationPacket {
     private Log log = new Log(EmailPacketDeleteRequest.class);
     private Hash dhtKey;
-    private UniqueId deletionKey;
+    private UniqueId authorization;
 
-    public EmailPacketDeleteRequest(Hash dhtKey, UniqueId deletionKey) {
+    public EmailPacketDeleteRequest(Hash dhtKey, UniqueId authorization) {
         this.dhtKey = dhtKey;
-        this.deletionKey = deletionKey;
+        this.authorization = authorization;
     }
     
     public EmailPacketDeleteRequest(byte[] data) {
@@ -46,7 +46,7 @@ public class EmailPacketDeleteRequest extends CommunicationPacket {
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
 
         dhtKey = readHash(buffer);
-        deletionKey = new UniqueId(buffer);
+        authorization = new UniqueId(buffer);
         
         if (buffer.hasRemaining())
             log.debug("Email Packet Delete Request has " + buffer.remaining() + " extra bytes.");
@@ -56,8 +56,8 @@ public class EmailPacketDeleteRequest extends CommunicationPacket {
         return dhtKey;
     }
     
-    public UniqueId getDeletionKey() {
-        return deletionKey;
+    public UniqueId getAuthorization() {
+        return authorization;
     }
     
     @Override
@@ -67,7 +67,7 @@ public class EmailPacketDeleteRequest extends CommunicationPacket {
         try {
             writeHeader(outputStream);
             outputStream.write(dhtKey.toByteArray());
-            outputStream.write(deletionKey.toByteArray());
+            outputStream.write(authorization.toByteArray());
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);

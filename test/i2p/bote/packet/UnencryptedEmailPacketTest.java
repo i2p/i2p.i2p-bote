@@ -37,7 +37,6 @@ public class UnencryptedEmailPacketTest {
     public void setUp() throws Exception {
         String message = "This is a test message. Test 1 2 3 Test";
         byte[] content = message.getBytes();
-        UniqueId deletionKeyVerify = new UniqueId(new byte[] {-62, -112, 99, -65, 13, 44, -117, -111, 96, 45, -6, 64, 78, 57, 117, 103, -24, 101, 106, -116, -18, 62, 99, -49, 60, -81, 8, 64, 27, -41, -104, 58}, 0);
         
         byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
@@ -45,7 +44,7 @@ public class UnencryptedEmailPacketTest {
         int fragmentIndex = 0;
         int numFragments = 1;
 
-        packet = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content, deletionKeyVerify);
+        packet = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content);
     }
     
 	@Test

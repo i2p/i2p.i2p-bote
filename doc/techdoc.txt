@@ -22,6 +22,8 @@ For relays, the guaranteed retention time is only 7 days.
 If a node runs out of email storage space, and there are no old packets that can be deleted, the
 node refuses storage requests.
 
+TODO only use names, not xxx@yyy.zzz style addresses. An @host can be used optionally for
+     email clients that insist on it, like Thunderbird, but the @host part is dropped by I2P-Bote.
 Email addresses are entered in the format "username@domain.i2p"; they must match an entry in the
 local address book or the distributed email directory. An exception are addresses of the form
 "dest_key@bote.i2p", where dest_key is a 516-byte base64-encoded email keypair. No lookup is done
@@ -123,176 +125,72 @@ TODO explain modified Kademlia: index packets, 2-stage retrieval;
 exhaustive Kademlia search for index packets, standard Kademlia search for email packets;
 no need for exponential expiration time (used in standard kademlia to prevent over-caching of popular files) because
 emails are only retrieved once (or a few times if there is a transmission error).
+Delete Authorization keys / Verification hashes.
+
+Replication of email packets is done by index packet storage nodes.
 
 TODO mention the problem of highly unbalanced trees and the sibling list solution.
 
 
 3. Packet Types
 
-3.1. Communication Packets
+As of release 0.2.4, the protocol version is 3. It is incompatible to earlier versions.
 
-  Communication packets are used for sending data between two I2P-Bote nodes. They contain a
-  payload packet, see 3.2.
-  All Communication Packets start with a four-byte prefix, followed by one byte for the packet
-  type, one byte for the packet version, and a 32-byte packet ID.
-  Strings are UTF8 encoded.
-
-   Packet Type         | Field | Data Type  | Description
-  ---------------------+-------+------------+----------------------------------------------------
-   Relay Request       |       |            | Request to a node to forward a Relay Packet
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'Y'
-                       | VER   | 1 byte     | Protocol version
-                       | PID   | 32 bytes   | Packet ID, used for delivery confirmation
-                       | HLEN  | 2 bytes    | HashCash length
-                       | HK    | byte[]     | HashCash token (HLEN bytes)
-                       | DLEN  | 2 bytes    | Length of DATA field in bytes, up to ~30k
-                       | DATA  | byte[]     | A Relay Packet
-  ---------------------+-------+------------+----------------------------------------------------
-   Fetch Request       |       |            | Request to a chain end point to fetch emails
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'T'
-                       | VER   | 1 byte     | Protocol version
-                       | PID   | 32 bytes   | Packet ID, used for delivery confirmation
-                       | DTYP  | 1 byte     | Type of data to retrieve:
-                       | KEY   | 32 bytes   | DHT key to look up
-                       | KPR   | 384 bytes  | Email keypair of recipient
-                       | RLEN  | 2 bytes    | Length of RET field
-                       | RET   | byte[]     | Relay packet, contains the return chain (RLEN bytes)
-  ---------------------+-------+------------+----------------------------------------------------
-   Response Packet     |       |            | Response to a Retrieve Request, Fetch Request,
-                       |       |            | Find Close Peers Request, or a Relay List Request
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'N'
-                       | VER   | 1 byte     | Protocol version
-                       | PID   | 32 bytes   | Packet Id of the request packet
-                       | STA   | 1 byte     | Status code:
-                       |       |            |   0 = OK
-                       |       |            |   1 = General error
-                       |       |            |   2 = No data found
-                       |       |            |   3 = Invalid packet
-                       |       |            |   4 = Invalid HashCash
-                       |       |            |   5 = Not enough HashCash provided
-                       |       |            |   6 = No disk space left
-                       | DLEN  | 2 bytes    | Length of DATA field; can be 0 if no payload
-                       | DATA  | byte[]     | A Payload Packet
-  ---------------------+-------+------------+----------------------------------------------------
-   Email Packet        |       |            | Request to delete an Email Packet by DHT key
-   Delete Request      |       |            | 
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'D'
-                       | VER   | 1 byte     | Protocol version
-                       | KEY   | 32 bytes   | DHT key of the Email Packet to delete
-                       | DEL   | 32 bytes   | Deletion key, must match DEL value in the email pkt
-  ---------------------+-------+------------+----------------------------------------------------
-   Index Packet        |       |            | Request to remove one or more entries (Email
-   Delete Request      |       |            | Packet key / del key pairs) from an Index Packet
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'X'
-                       | VER   | 1 byte     | Protocol version
-                       | DH    | 32 bytes   | The Email Destination hash of the Index Packet
-                       | N     | 1 byte     | Number of entries in the packet
-                       | DHT1  | 32 bytes   | First DHT key to remove
-                       | DEL1  | 32 bytes   | Deletion key for DHT1
-                       | DHT2  | 32 bytes   | Second DHT key to remove
-                       | DEL2  | 32 bytes   | Deletion key for DHT2
-                       | ...   | ...        | ...
-                       | DHTn  | 32 bytes   | n-th DHT key to remove
-                       | DELn  | 32 bytes   | Deletion key for DHTn
-  ---------------------+-------+------------+-------------------------------------------------
-   Ping                |       |            | Check to see if a host is still up.
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'P'
-                       | VER   | 1 byte     | Protocol version
-                       | PID   | 32 bytes   | Packet ID
-  ---------------------+-------+------------+-------------------------------------------------
-   Pong                |       |            | Let the the pinger know we're still there.
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'O' (the letter O)
-                       | VER   | 1 byte     | Protocol version
-                       | PID   | 32 bytes   | Packet ID of the corresponding Ping packet
-                       | HKS   | 1 byte     | Minimum HashCash strength this node will accept
-  ---------------------+-------+------------+----------------------------------------------------
-   Relay List Request  |       |            | "Send me your list of relay peers"
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'A'
-                       | VER   | 1 byte     | Protocol version
-                       | PID   | 32 bytes   | Packet ID
-  ---------------------+-------+------------+----------------------------------------------------
-
-  DHT Packets
-  
-   Packet Type         | Field | Data Type  | Description
-  ---------------------+-------+------------+----------------------------------------------------
-   Retrieve Request    |       |            | DHT Request for a value for a key
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'Q'
-                       | VER   | 1 byte     | Protocol version
-                       | PID   | 32 bytes   | Packet ID, used for delivery confirmation
-                       | DTYP  | 1 byte     | Type of data to retrieve:
-                       |       |            |   'I' = Index Packet
-                       |       |            |   'E' = Email Packet
-                       |       |            |   'K' = Email destination
-                       | KEY   | 32 bytes   | DHT key to look up
-  ---------------------+-------+------------+----------------------------------------------------
-   Store Request       |       |            | DHT Store Request
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'S'
-                       | VER   | 1 byte     | Protocol version
-                       | PID   | 32 bytes   | Packet ID, used for delivery confirmation
-                       | HLEN  | 2 bytes    | HashCash length
-                       | HK    | byte[]     | HashCash token (HLEN bytes)
-                       | DLEN  | 2 bytes    | Length of DATA field
-                       | DATA  | byte[]     | Payload packet to store (DLEN bytes). Can be an
-                       |       |            | Index Pkt / Email Pkt / Email Destination)
-  ---------------------+-------+------------+----------------------------------------------------
-   Find Close Peers    |       |            | Request for k peers close to a key
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'F'
-                       | VER   | 1 byte     | Protocol version
-                       | PID   | 32 bytes   | Packet ID, used for delivery confirmation
-                       | KEY   | 32 bytes   | DHT key
-  ---------------------+-------+------------+----------------------------------------------------
-
-3.2. Data Packets
+3.1. Data Packets
 
   These are always sent wrapped in a Communication Packet (see 3.1).
   E denotes an encrypted field.
+  Supported encryption and signature algorithms:
+    ALG=1: ElGamal-2048 / DSA-1024 / AES-256 / SHA-256 (same as the I2P router uses)
+    ALG=2: ECDH-521 / ECDSA-521 / AES-256 / SHA-256
 
    Packet Type         | Field | Data Type  | Description
   ---------------------+-------+------------+----------------------------------------------------
-   Email Packet        |       |            | An email or email fragment, 1 recipient.
-   (encrypted)         | TYPE  | 1 byte     | Value = 'E'
+   Email Packet,       |       |            | An email or email fragment, 1 recipient. Part of
+   encrypted           |       |            | the packet is encrypted with the recipient's key.
+                       | TYPE  | 1 byte     | Value = 'E'
                        | VER   | 1 byte     | Protocol version
                        | KEY   | 32 bytes   | DHT key of the packet, SHA-256 hash of LEN+DATA
-                       | DELP  | 32 bytes   | Deletion key in plaintext, zeroed out for retrieving
-                       | LEN   | 2 bytes    | Length of the encrypted part of the packet
-                       | DATA  | byte[]     | LEN bytes, encrypted with recipient's key
+                       | TIM   | 4 bytes    | The time the packet was stored on a storage node
+                       | DV    | 32 bytes   | Delete verification hash, SHA-256 hash of DA
+                       | ALG   | 1 byte     | Encryption algorithm used
+                       | LEN   | 2 bytes    | Length of DA+DATA together
+                       | DA    | 32 bytes E | Delete authorization key, random data
+                       | DATA  | byte[]   E | An Unencrypted Email Packet
   ---------------------+-------+------------+----------------------------------------------------
-   Email Packet        |       |            | Storage format for the Incomplete Email Folder.
-   (unencrypted)       | TYPE  | 1 byte     | Value = 'U'
+   Email Packet,       |       |            | Storage format for the Incomplete Email Folder.
+   unencrypted         | TYPE  | 1 byte     | Value = 'U'
                        | VER   | 1 byte     | Protocol version
                        | MSID  | 32 bytes   | Message ID in binary format
+                       | DA    | 32 bytes   | Delete authorization key, random data
                        | FRID  | 2 bytes    | Fragment Index of this packet (0..NFR-1)
                        | NFR   | 2 bytes    | Number of fragments in the email
                        | MLEN  | 2 bytes    | Length of the MSG field
                        | MSG   | byte[]     | email content (MLEN bytes)
   ---------------------+-------+------------+----------------------------------------------------
-   Index Packet        |       |            | Contains the DHT keys of one or more Email Packets.
+   Index Packet        |       |            | Contains the DHT keys of one or more Email Packets,
+                       |       |            | together with data for delete authentication and
+                       |       |            | a time stamp.
                        | TYPE  | 1 byte     | Value = 'I'
                        | VER   | 1 byte     | Protocol version
                        | DH    | 32 bytes   | SHA-256 hash of the recipient's email destination
-                       | NP    | 1 byte     | Number of keys in the packet
-                       | DHT1  | 32 bytes   | DHT key of the first Email Packet
-                       | DEL1  | 32 bytes   | Deletion key of the first Email Packet
-                       | DHT2  | 32 bytes   | DHT key of the second Email Packet
-                       | DEL2  | 32 bytes   | Deletion key of the second Email Packet
+                       | NP    | 4 bytes    | Number of entries in the packet
+                       | KEY1  | 32 bytes   | DHT key of the first Email Packet
+                       | DA1   | 32 bytes   | Delete Authorization for KEY1, random data
+                       | DV1   | 32 bytes   | Delete verification hash for KEY1, SHA-256 hash of DA1
+                       | TIM1  | 4 bytes    | The time the key KEY1 was added
+                       | KEY2  | 32 bytes   | DHT key of the second Email Packet
+                       | DA2   | 32 bytes   | Delete Authorization for KEY2, random data
+                       | DV2   | 32 bytes   | Delete verification hash for KEY2, SHA-256 hash of DA2
+                       | TIM2  | 4 bytes    | The time the key KEY2 was added
                        | ...   | ...        | ...
-                       | DHTn  | 32 bytes   | DHT key of the n-th Email Packet
-                       | DELn  | 32 bytes   | Deletion key of the n-th Email Packet
+                       | KEYn  | 32 bytes   | DHT key of the n-th Email Packet
+                       | DAn   | 32 bytes   | Delete Authorization for KEYn, random data
+                       | DVn   | 32 bytes   | Delete verification hash for KEYn, SHA-256 hash of DAn
+                       | TIMn  | 4 bytes    | The time the key KEYn was added
   ---------------------+-------+------------+----------------------------------------------------
    Relay Packet        |       |            | The payload of a Relay Request
-                       | TYPE  | 1 byte     | Value = 'R'
+                       | TYPE  | 1 byte     | Value = 'L'
                        | VER   | 1 byte     | Protocol version
                        | TMIN  | 4 bytes    | Earliest send time
                        | TMAX  | 4 bytes    | Latest sent time (no guarantee!)
@@ -305,7 +203,7 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
   ---------------------+-------+------------+-------------------------------------------------
    Peer List           |       |            | Response to a Find Close Peers Request or
                        |       |            | a Relay List Request
-                       | TYPE  | 1 byte     | Value = 'L'
+                       | TYPE  | 1 byte     | Value = 'P'
                        | VER   | 1 byte     | Protocol version
                        | NUMP  | 2 bytes    | Number of peers in the list
                        | P1    | 384 bytes  | Destination key
@@ -314,12 +212,136 @@ TODO mention the problem of highly unbalanced trees and the sibling list solutio
                        | Pn    | 384 bytes  | Destination key
   ---------------------+-------+------------+-------------------------------------------------
    Email Destination   |       |            | TBD
-                       |       |            | 
+                       | TYPE  | 1 byte     | Value = 'M'
                        |       |            | 
                        |       |            | 
                        |       |            | 
                        |       |            | 
   ---------------------+-------+------------+-------------------------------------------------
+
+3.2. Communication Packets
+
+  Communication packets are used for sending data between two I2P-Bote nodes. They contain a
+  data packet, see 3.1.
+  All Communication Packets start with a four-byte prefix, followed by one byte for the packet
+  type, one byte for the packet version, and a 32-byte packet ID.
+  Strings are UTF8 encoded.
+
+   Packet Type         | Field | Data Type  | Description
+  ---------------------+-------+------------+----------------------------------------------------
+   Relay Request       |       |            | Request to a node to forward a Relay Packet
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'Y'
+                       | VER   | 1 byte     | Protocol version
+                       | HLEN  | 2 bytes    | HashCash length
+                       | HK    | byte[]     | HashCash token (HLEN bytes)
+                       | DLEN  | 2 bytes    | Length of DATA field in bytes, up to ~30k
+                       | DATA  | byte[]     | A Relay Packet
+  ---------------------+-------+------------+----------------------------------------------------
+   Fetch Request       |       |            | Request to a chain end point to fetch emails
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'F'
+                       | VER   | 1 byte     | Protocol version
+                       | SID   | 32 bytes   | Session ID, used for responses
+                       | DTYP  | 1 byte     | Type of data to retrieve:
+                       | KEY   | 32 bytes   | DHT key to look up
+                       | KPR   | 384 bytes  | Email keypair of recipient
+                       | RLEN  | 2 bytes    | Length of RET field
+                       | RET   | byte[]     | Relay packet, contains the return chain (RLEN bytes)
+  ---------------------+-------+------------+----------------------------------------------------
+   Response Packet     |       |            | Response to a Retrieve Request, Fetch Request,
+                       |       |            | Find Close Peers Request, or a Relay List Request
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'R'
+                       | VER   | 1 byte     | Protocol version
+                       | SID   | 32 bytes   | Session ID of the request packet
+                       | STA   | 1 byte     | Status code:
+                       |       |            |   0 = OK
+                       |       |            |   1 = General error
+                       |       |            |   2 = No data found
+                       |       |            |   3 = Invalid packet
+                       |       |            |   4 = Invalid HashCash
+                       |       |            |   5 = Not enough HashCash provided
+                       |       |            |   6 = No disk space left
+                       | DLEN  | 2 bytes    | Length of DATA field; can be 0 if no payload
+                       | DATA  | byte[]     | A Data Packet
+  ---------------------+-------+------------+-------------------------------------------------
+   Ping                |       |            | Check to see if a host is still up.
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'N'
+                       | VER   | 1 byte     | Protocol version
+                       | SID   | 32 bytes   | Session ID
+  ---------------------+-------+------------+-------------------------------------------------
+   Pong                |       |            | Let the the pinger know we're still there.
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'G'
+                       | VER   | 1 byte     | Protocol version
+                       | SID   | 32 bytes   | Session ID of the corresponding Ping packet
+                       | HKS   | 1 byte     | Minimum HashCash strength this node will accept
+  ---------------------+-------+------------+----------------------------------------------------
+   Relay List Request  |       |            | "Send me your list of relay peers"
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'A'
+                       | VER   | 1 byte     | Protocol version
+                       | SID   | 32 bytes   | Session ID, used for responses
+  ---------------------+-------+------------+----------------------------------------------------
+
+  DHT Communication Packets
+  
+   Packet Type         | Field | Data Type  | Description
+  ---------------------+-------+------------+----------------------------------------------------
+   Retrieve Request    |       |            | DHT Request for a value for a key
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'Q'
+                       | VER   | 1 byte     | Protocol version
+                       | SID   | 32 bytes   | Session ID, used for responses
+                       | DTYP  | 1 byte     | Type of data to retrieve:
+                       |       |            |   'I' = Index Packet
+                       |       |            |   'E' = Email Packet
+                       |       |            |   'M' = Email destination
+                       | KEY   | 32 bytes   | DHT key to look up
+  ---------------------+-------+------------+----------------------------------------------------
+   Store Request       |       |            | DHT Store Request
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'S'
+                       | VER   | 1 byte     | Protocol version
+                       | SID   | 32 bytes   | Session ID, used for responses
+                       | HLEN  | 2 bytes    | HashCash length
+                       | HK    | byte[]     | HashCash token (HLEN bytes)
+                       | DLEN  | 2 bytes    | Length of DATA field
+                       | DATA  | byte[]     | Data packet to store (DLEN bytes). Can be an
+                       |       |            | Index Pkt / Email Pkt / Email Destination)
+  ---------------------+-------+------------+----------------------------------------------------
+   Email Packet        |       |            | Request to delete an Email Packet by DHT key
+   Delete Request      |       |            | 
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'D'
+                       | VER   | 1 byte     | Protocol version
+                       | KEY   | 32 bytes   | DHT key of the Email Packet to delete
+                       | DA    | 32 bytes   | Delete Authorization, SHA-256 must = DV in the email pkt
+  ---------------------+-------+------------+----------------------------------------------------
+   Index Packet        |       |            | Request to remove one or more entries (Email
+   Delete Request      |       |            | Packet keys) from an Index Packet
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'X'
+                       | VER   | 1 byte     | Protocol version
+                       | DH    | 32 bytes   | The Email Destination hash of the Index Packet
+                       | N     | 1 byte     | Number of entries in the packet
+                       | DHT1  | 32 bytes   | First DHT key to remove
+                       | DA1   | 32 bytes   | Delete Authorization, SHA-256 must = DV1 in the email pkt
+                       | DHT2  | 32 bytes   | Second DHT key to remove
+                       | DA2   | 32 bytes   | Delete Authorization for DHT2, random data
+                       | ...   | ...        | ...
+                       | DHTn  | 32 bytes   | n-th DHT key to remove
+                       | DAn   | 32 bytes   | Delete Authorization for DHTn, random data
+  ---------------------+-------+------------+----------------------------------------------------
+   Find Close Peers    |       |            | Request for k peers close to a key
+                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
+                       | TYPE  | 1 byte     | Value = 'C'
+                       | VER   | 1 byte     | Protocol version
+                       | SID   | 32 bytes   | Session ID, used for responses
+                       | KEY   | 32 bytes   | DHT key
+  ---------------------+-------+------------+----------------------------------------------------
 
 
 4. Protocols For Inter-Node Communication
@@ -545,6 +567,9 @@ I2P destination
 
 11. To Do / Ideas
 
+  * ignore store requests for existing packets so malicious index nodes cannot replace email packets on other index nodes
+  * instead of republishing after T seconds, pick a random time from the interval [T-a, T+a];
+    the probability should be low at T-a and then increase
   * Cache email dest - closest node mappings for faster Kademlia lookups
   * Seedless for bootstrapping
   * some synchronized ArrayLists should be replaced with externally synchronized ArrayLists
@@ -556,7 +581,6 @@ I2P destination
   * button to delete all packets with an invalid protocol version
   * auto-refresh network.jsp
   * show remaining time for the 3-min delay at startup
-  * Packet ID field isn't really a packet id, rename to Conversation ID or maybe Session ID
   * Replication per the Kademlia spec
   * Have an option to disable automatic lookups in the distributed address directory for your own address
   * Automatically create a different sender address for each recipient
@@ -567,7 +591,6 @@ I2P destination
     if necessary.
   * Always keep incoming bandwidth the same as outgoing bandwidth
   * Pad packets before encrypting to prevent tagging attacks
-  * packet id for confirmation
   * onion packets/regular packets
   * delivery confirmation to sender
   * What about incoming bandwith, can it be limited?
@@ -588,7 +611,6 @@ I2P destination
   * unit test candidates:
     * KBucket
     * KademliaDHT
-    * EmailIdentity
     * Identities
     * OutboxProcessor
   * prioritize packets in I2PSendQueue? Should PeerListRequests get higher priority than relay packets etc.?

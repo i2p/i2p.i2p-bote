@@ -29,7 +29,6 @@ import i2p.bote.packet.RelayPacket;
 import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 
-import net.i2p.I2PAppContext;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 
@@ -45,15 +44,12 @@ public class RelayPacketSender extends I2PBoteThread {
     private final Log log = new Log(RelayPacketSender.class);
     
     private I2PSendQueue sendQueue;
-    private I2PAppContext appContext;
     private PacketFolder<RelayPacket> packetStore;
-    private Configuration configuration;
     
-    public RelayPacketSender(I2PSendQueue sendQueue, PacketFolder<RelayPacket> packetStore, I2PAppContext appContext) {
+    public RelayPacketSender(I2PSendQueue sendQueue, PacketFolder<RelayPacket> packetStore) {
         super("RelayPacketSender");
         this.sendQueue = sendQueue;
         this.packetStore = packetStore;
-        this.appContext = appContext;
     }
     
     @Override

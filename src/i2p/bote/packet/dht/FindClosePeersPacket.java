@@ -30,7 +30,7 @@ import java.io.IOException;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
-@TypeCode('F')
+@TypeCode('C')
 public class FindClosePeersPacket extends CommunicationPacket {
     private Log log = new Log(FindClosePeersPacket.class);
     private Hash key;

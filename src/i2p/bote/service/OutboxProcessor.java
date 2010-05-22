@@ -23,6 +23,7 @@ package i2p.bote.service;
 
 import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
+import i2p.bote.UniqueId;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
@@ -35,18 +36,19 @@ import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
 
-import net.i2p.I2PAppContext;
-import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
 
 /**
@@ -58,15 +60,13 @@ public class OutboxProcessor extends I2PBoteThread {
     private Log log = new Log(OutboxProcessor.class);
     private DHT dht;
     private Outbox outbox;
-    private I2PAppContext appContext;
     private CountDownLatch wakeupSignal;   // tells the thread to interrupt the current wait and resume the loop
     private List<OutboxListener> outboxListeners;
     
-    public OutboxProcessor(DHT dht, Outbox outbox, PeerManager peerManager, I2PAppContext appContext) {
+    public OutboxProcessor(DHT dht, Outbox outbox, PeerManager peerManager) {
         super("OutboxProcsr");
         this.dht = dht;
         this.outbox = outbox;
-        this.appContext = appContext;
         outboxListeners = Collections.synchronizedList(new ArrayList<OutboxListener>());
     }
     
@@ -122,8 +122,9 @@ public class OutboxProcessor extends I2PBoteThread {
      * @throws DataFormatException 
      * @throws MessagingException 
      * @throws DhtException 
+     * @throws GeneralSecurityException 
      */
-    private void sendEmail(Email email) throws DataFormatException, MessagingException, DhtException {
+    private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException {
         Address sender = email.getSender();
         if (sender == null) {
             log.error("No sender/from field in email: " + email);
@@ -152,23 +153,30 @@ public class OutboxProcessor extends I2PBoteThread {
      * @param senderIdentity
      * @param recipient
      * @param email
-     * @throws DataFormatException 
      * @throws MessagingException 
      * @throws DhtException 
+     * @throws GeneralSecurityException 
      */
-    private void sendToOne(EmailIdentity senderIdentity, String recipient, Email email) throws DataFormatException, MessagingException, DhtException {
+    private void sendToOne(EmailIdentity senderIdentity, String recipient, Email email) throws MessagingException, DhtException, GeneralSecurityException {
         String logSuffix = null;   // only used for logging
         try {
             logSuffix = "Recipient = '" + recipient + "' Message ID = '" + email.getMessageID() + "'";
             log.info("Sending email: " + logSuffix);
             EmailDestination recipientDest = new EmailDestination(recipient);
             
-            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity.getPrivateSigningKey(), recipient);
-            Collection<EncryptedEmailPacket> encryptedPackets = EncryptedEmailPacket.encrypt(emailPackets, recipientDest, appContext);
-            for (EncryptedEmailPacket packet: encryptedPackets)
-                dht.store(packet);
-            dht.store(new IndexPacket(encryptedPackets, recipientDest));
-        } catch (DataFormatException e) {
+            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity, recipient);
+            
+            IndexPacket indexPacket = new IndexPacket(recipientDest);
+            Map<EncryptedEmailPacket, UniqueId> encryptedPackets = new HashMap<EncryptedEmailPacket, UniqueId>();
+            for (UnencryptedEmailPacket unencryptedPacket: emailPackets) {
+                UniqueId delAuthorization = new UniqueId();
+                EncryptedEmailPacket emailPacket = new EncryptedEmailPacket(unencryptedPacket, recipientDest);
+                encryptedPackets.put(emailPacket, delAuthorization);
+                dht.store(emailPacket);
+                indexPacket.put(emailPacket);
+            }
+            dht.store(indexPacket);
+        } catch (GeneralSecurityException e) {
             log.error("Invalid recipient address. " + logSuffix, e);
             outbox.setStatus(email, _("Invalid recipient address: {0}", recipient));
             throw e;

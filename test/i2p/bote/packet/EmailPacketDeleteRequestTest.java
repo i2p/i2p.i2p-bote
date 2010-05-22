@@ -31,7 +31,6 @@ import net.i2p.data.Hash;
 import org.junit.Before;
 import org.junit.Test;
 
-// TODO add to AllTests
 public class EmailPacketDeleteRequestTest {
     private EmailPacketDeleteRequest delRequest;
 
@@ -39,8 +38,8 @@ public class EmailPacketDeleteRequestTest {
     public void setUp() throws Exception {
         Hash dhtKey = new Hash(new byte[] {-48, 78, 66, 58, -79, 87, 38, -103, -60, -27, 108, 55, 117, 37, -99, 93, -23, -102, -83, 20, 44, -80, 65, 89, -68, -73, 69, 51, 115, 79, 24, 127});
         byte[] packetIdBytes = new byte[] {120, 120, -8, -88, 21, 126, 46, -61, 18, -101, 15, 53, 20, -44, -112, 42, 86, -117, 30, -96, -66, 33, 71, -55, -102, -78, 78, -82, -105, 66, -116, 43};
-        UniqueId deletionKey = new UniqueId(packetIdBytes, 0);
-        delRequest = new EmailPacketDeleteRequest(dhtKey, deletionKey);
+        UniqueId deleteAuthorization = new UniqueId(packetIdBytes, 0);
+        delRequest = new EmailPacketDeleteRequest(dhtKey, deleteAuthorization);
     }
 
     @Test

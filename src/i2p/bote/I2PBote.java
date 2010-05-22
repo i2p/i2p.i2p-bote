@@ -89,13 +89,12 @@ import net.i2p.util.Log;
  * This is the core class of the application. It is implemented as a singleton.
  */
 public class I2PBote {
-    public static final int PROTOCOL_VERSION = 2;
+    public static final int PROTOCOL_VERSION = 3;
     private static final String APP_VERSION = "0.2.3";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
     private static volatile I2PBote instance;
     
     private Log log = new Log(I2PBote.class);
-    private I2PAppContext appContext;
     private I2PClient i2pClient;
     private I2PSession i2pSession;
     private Configuration configuration;
@@ -127,7 +126,7 @@ public class I2PBote {
     private I2PBote() {
         Thread.currentThread().setName("I2PBoteMain");
                 
-        appContext = new I2PAppContext();
+        I2PAppContext appContext = new I2PAppContext();
         appContext.addShutdownTask(new Runnable() {
             @Override
             public void run() {
@@ -234,7 +233,7 @@ public class I2PBote {
         
         smtpService = new SMTPService();
         pop3Service = new POP3Service();
-        relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, appContext);
+        relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder);
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
         
         dht = new KademliaDHT(sendQueue, dispatcher, configuration.getPeerFile());
@@ -248,7 +247,7 @@ public class I2PBote {
         
         peerManager = new PeerManager();
         
-        outboxProcessor = new OutboxProcessor(dht, outbox, peerManager, appContext);
+        outboxProcessor = new OutboxProcessor(dht, outbox, peerManager);
         outboxProcessor.addOutboxListener(new OutboxListener() {
             /** Moves sent emails to the "sent" folder */
             @Override
@@ -345,7 +344,7 @@ public class I2PBote {
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
             for (EmailIdentity identity: identities) {
-                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder, appContext);
+                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder);
                 Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
                 pendingMailCheckTasks.add(task);
             }

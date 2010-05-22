@@ -32,10 +32,9 @@ import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 
-@TypeCode('L')
+@TypeCode('P')
 public class PeerList extends DataPacket {
     private Log log = new Log(PeerList.class);
-    // TODO should be a Collection<Destination> because this class will also be used for relay peer lists
     private Collection<Destination> peers;
 
     public PeerList(Collection<Destination> peers) {

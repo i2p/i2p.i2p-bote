@@ -25,18 +25,14 @@ import static junit.framework.Assert.assertTrue;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 
-import java.security.NoSuchAlgorithmException;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
-
-import net.i2p.I2PAppContext;
-import net.i2p.data.DataFormatException;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class ResponsePacketTest {
     private ResponsePacket responsePacket;
-    private I2PAppContext appContext = new I2PAppContext();
 
     @Before
     public void setUp() throws Exception {
@@ -46,16 +42,15 @@ public class ResponsePacketTest {
         responsePacket = new ResponsePacket(createDataPacket(), StatusCode.OK, packetId);
     }
 
-    private DataPacket createDataPacket() throws NoSuchAlgorithmException, DataFormatException {
+    private DataPacket createDataPacket() throws GeneralSecurityException {
         byte[] dataToStore = new byte[] {2, 109, -80, -37, -106, 83, -33, -39, -94, -76, -112, -98, 99, 25, -61, 44, -92, -85, 1, 10, -128, -2, -27, -86, -126, -33, -11, 42, 56, 3, -97, -101, 111, 7, -96, 25, 121, 74, 89, -40, -33, 82, -50, -18, 49, 106, 13, -121, 53, -83, -2, 35, -7, 71, -71, 26, 90, 1};
         
-        UniqueId deletionKeyVerify = new UniqueId(new byte[] {-62, -112, 99, -65, 13, 44, -117, -111, 96, 45, -6, 64, 78, 57, 117, 103, -24, 101, 106, -116, -18, 62, 99, -49, 60, -81, 8, 64, 27, -41, -104, 58}, 0);
         byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         
-        UnencryptedEmailPacket unencryptedPacket = new UnencryptedEmailPacket(messageId, 0, 1, dataToStore, deletionKeyVerify);
+        UnencryptedEmailPacket unencryptedPacket = new UnencryptedEmailPacket(messageId, 0, 1, dataToStore);
         EmailDestination destination = new EmailDestination("0XuJjhgp58aOhvHHgpaxoQYsCUfDS6BECMEoVxFGEFPdk3y8lbzIsq9eUyeizFleMacYwoscCir8nQLlW34lxfRmirkNpD9vU1XnmjnZ5hGdnor1qIDqz3KJ040dVQ617MwyG97xxYLT0FsH907vBXgdc4RCHwKd1~9siagA5CSMaA~wM8ymKXLypiZGYexENLmim7nMzJTQYoOM~fVS99UaGJleDBN3pgZ2EvRYDQV2VqKH7Gee07R3y7b~c0tAKVHS0IbPQfTVJigrIHjTl~ZczxpaeTM04T8IgxKnO~lSmR1w7Ik8TpEkETwT9PDwUqQsjmlSY8E~WwwGMRJVyIRZUkHeRZ0aFq7us8W9EKzYtjjiU1z0QFpZrTfJE8oqCbnH5Lqv5Q86UdTPpriJC1N99E77TpCTnNzcBnpp6ko2JCy2IJUveaigKxS6EmS9KarkkkBRsckOKZZ6UNTOqPZsBCsx0Q9WvDF-Uc3dtouXWyenxRptaQsdkZyYlEQv");
-        return new EncryptedEmailPacket(unencryptedPacket, destination, appContext);
+        return new EncryptedEmailPacket(unencryptedPacket, destination);
     }
     
     @Test

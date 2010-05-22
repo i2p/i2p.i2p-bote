@@ -24,41 +24,52 @@ package i2p.bote.packet;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import i2p.bote.UniqueId;
+import i2p.bote.crypto.ECDH521_ECDSA521;
+import i2p.bote.crypto.ElGamal2048_DSA1024;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-import net.i2p.I2PAppContext;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class EncryptedEmailPacketTest {
-	EncryptedEmailPacket encryptedPacket;
-    EmailIdentity identity;
+	EncryptedEmailPacket[] encryptedPackets;
+    EncryptedEmailPacket ecdhEncryptedPacket;
+    EmailIdentity[] identities;
     String message = "This is a test message. Test 1 2 3 Test";
-    I2PAppContext appContext = new I2PAppContext();
 
     @Before
     public void setUp() throws Exception {
+        // make an UnencryptedEmailPacket
         byte[] content = message.getBytes();
-        UniqueId deletionKeyVerify = new UniqueId(new byte[] {-62, -112, 99, -65, 13, 44, -117, -111, 96, 45, -6, 64, 78, 57, 117, 103, -24, 101, 106, -116, -18, 62, 99, -49, 60, -81, 8, 64, 27, -41, -104, 58}, 0);
-        
         byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
-        
         int fragmentIndex = 0;
         int numFragments = 1;
+        UnencryptedEmailPacket plaintextPacket = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content);
         
-        String base64Identity = "piYT1uJ3O8~bBPZmTvehMbp3-Zksg5enhvIlp2X8txqL25l0WdQMWwyt30UAOVQqxGdnMPTqqjh~-zoa~rCQORo~J1gRxLwCX9LlHQqaIimJilrbN-rhKy4Xlft054wbgQjLSC-WICE4W64KDfitwRzdr7lV6lz~0KFiZ8erZ-~WPMG1CgWEku9lILQUdUHyFBguPcK9oPDq7oGBuFGy8w0CvAq7ex3nmbL7zQVA~VqILtOGeGK2fidCuuofj4AQsTcXmH9O0nxZGCIJBhf~4EWmazvxu8XVB8pabNQvRDbmFu6q85JTwmxC45lCjqNw30hp8q2zoqP-zchjWOrxFUhSumpBdD0xXJR~qmhejh4WnuRnnam9j3fcxH5i~T7xWgmvIbpZEI4kyc9VEbXbLI7k-bU2A6sdP-AGt5~TjGLcxpdsPnOLRXO-Dsi7E9-3Kc84s4TmdpEJdtHn1dxYyeeT-ysVOqXjv5w5Cuk0XJpUIJG8n7aXHpNb-QLxPD3yAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWF3qnAX-p41Po~VNmOUzS-Yt~noD8-e~L3P5rZXBWf-XtB4hkloo6m1jwqphEdf1";
-        identity = new EmailIdentity(base64Identity);
-        EmailDestination destination = new EmailDestination(identity.getKey());   // corresponds to identity
-
-        UnencryptedEmailPacket plaintextPacket = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content, deletionKeyVerify);
-        encryptedPacket = new EncryptedEmailPacket(plaintextPacket, destination, appContext);
+        encryptedPackets = new EncryptedEmailPacket[2];
+        identities = new EmailIdentity[2];
+        
+        // make a ElGamal/DSA identity
+        String elGamalBase64 = "piYT1uJ3O8~bBPZmTvehMbp3-Zksg5enhvIlp2X8txqL25l0WdQMWwyt30UAOVQqxGdnMPTqqjh~-zoa~rCQORo~J1gRxLwCX9LlHQqaIimJilrbN-rhKy4Xlft054wbgQjLSC-WICE4W64KDfitwRzdr7lV6lz~0KFiZ8erZ-~WPMG1CgWEku9lILQUdUHyFBguPcK9oPDq7oGBuFGy8w0CvAq7ex3nmbL7zQVA~VqILtOGeGK2fidCuuofj4AQsTcXmH9O0nxZGCIJBhf~4EWmazvxu8XVB8pabNQvRDbmFu6q85JTwmxC45lCjqNw30hp8q2zoqP-zchjWOrxFUhSumpBdD0xXJR~qmhejh4WnuRnnam9j3fcxH5i~T7xWgmvIbpZEI4kyc9VEbXbLI7k-bU2A6sdP-AGt5~TjGLcxpdsPnOLRXO-Dsi7E9-3Kc84s4TmdpEJdtHn1dxYyeeT-ysVOqXjv5w5Cuk0XJpUIJG8n7aXHpNb-QLxPD3yAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWF3qnAX-p41Po~VNmOUzS-Yt~noD8-e~L3P5rZXBWf-XtB4hkloo6m1jwqphEdf1";
+        identities[0] = new EmailIdentity(elGamalBase64);
+        EmailDestination elGamalDestination = new EmailDestination(identities[0].getKey());
+        // make an ElGamal encrypted packet
+        assertTrue(identities[0].getCryptoImpl() instanceof ElGamal2048_DSA1024);
+        encryptedPackets[0] = new EncryptedEmailPacket(plaintextPacket, elGamalDestination);
+        
+        // make a ECDH/ECDSA identity
+        String ecdhBase64 = "m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UYYujtjOOwCqXPH9PIbcZeFRkegbOxw5G6I7M4-TZBFbxYDtaew6HX9hnQEGWHkaapq2kTTB3Hmv0Uyo64jvcfMmSRcPng3J1Ho5mHgnzsH0qxQemnBcw7Lfc9fU8xRz858uyiQ8J8XH3T8S7k2~8L7awSgaT7uHQgpV~Rs0p1ofJ70g";
+        identities[1] = new EmailIdentity(ecdhBase64);
+        EmailDestination ecdhDestination = new EmailDestination(identities[1].getKey());
+        // make an ECDH encrypted packet
+        assertTrue(identities[1].getCryptoImpl() instanceof ECDH521_ECDSA521);
+        encryptedPackets[1] = new EncryptedEmailPacket(plaintextPacket, ecdhDestination);
     }
 
     @After
@@ -67,25 +78,32 @@ public class EncryptedEmailPacketTest {
 
     @Test
     public void toByteArrayAndBack() throws Exception {
-        byte[] arrayA = encryptedPacket.toByteArray();
-        byte[] arrayB = new EncryptedEmailPacket(arrayA).toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        for (EncryptedEmailPacket packet: encryptedPackets) {
+            byte[] arrayA = packet.toByteArray();
+            byte[] arrayB = new EncryptedEmailPacket(arrayA).toByteArray();
+            assertTrue("The two arrays differ! CryptoImplementation = " + packet.getCryptoImpl().getName(), Arrays.equals(arrayA, arrayB));
+        }
     }
     
     @Test
     public void testEncryptionDecryption() throws Exception {
-        UnencryptedEmailPacket decryptedPacket = encryptedPacket.decrypt(identity,appContext );
-        byte[] arrayA = decryptedPacket.getContent();
-        byte[] arrayB = message.getBytes();
-        assertTrue("Email message differs after decryption!", Arrays.equals(arrayA, arrayB));
+        for (int i=0; i<encryptedPackets.length; i++) {
+            EncryptedEmailPacket packet = encryptedPackets[i];
+            UnencryptedEmailPacket decryptedPacket = packet.decrypt(identities[i]);
+            byte[] arrayA = decryptedPacket.getContent();
+            byte[] arrayB = message.getBytes();
+            assertTrue("Email message differs after decryption! CryptoImplementation = " + packet.getCryptoImpl().getName(), Arrays.equals(arrayA, arrayB));
+        }
     }
     
     @Test
     public void testHash() throws Exception {
-        assertTrue(encryptedPacket.verifyHash());
+        for (EncryptedEmailPacket packet: encryptedPackets) {
+            assertTrue("Hash not valid! CryptoImplementation = " + packet.getCryptoImpl().getName(), packet.verifyPacketHash());
         
-        alterEncryptedData(encryptedPacket);
-        assertFalse(encryptedPacket.verifyHash());
+            alterEncryptedData(packet);
+            assertFalse("Hash is valid, but should be invalid! CryptoImplementation = " + packet.getCryptoImpl().getName(), packet.verifyPacketHash());
+        }
     }
     
     private void alterEncryptedData(EncryptedEmailPacket packet) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {

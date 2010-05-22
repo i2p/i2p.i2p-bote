@@ -21,23 +21,19 @@
 
 package i2p.bote.email;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import i2p.bote.crypto.CryptoFactory;
+import i2p.bote.crypto.CryptoImplementation;
+import i2p.bote.crypto.PrivateKeyPair;
+import i2p.bote.crypto.PublicKeyPair;
 
-import net.i2p.client.I2PClient;
-import net.i2p.client.I2PClientFactory;
-import net.i2p.client.I2PSession;
-import net.i2p.client.I2PSessionException;
-import net.i2p.data.Base64;
-import net.i2p.data.PrivateKey;
-import net.i2p.data.SigningPrivateKey;
-import net.i2p.util.Log;
+import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.PrivateKey;
 
 public class EmailIdentity extends EmailDestination {
-    private Log log = new Log(EmailIdentity.class);
     private PrivateKey privateEncryptionKey;
-    private SigningPrivateKey privateSigningKey;
+    private PrivateKey privateSigningKey;
     private String publicName;
     private String description;   // optional
     private String emailAddress;   // optional
@@ -45,31 +41,54 @@ public class EmailIdentity extends EmailDestination {
 
     /**
      * Creates a random <code>EmailIdentity</code>.
+     * @param cryptoImpl
+     * @throws GeneralSecurityException 
      */
-    public EmailIdentity() {
-        // key initialization happens in the super constructor, which calls initKeys
+    public EmailIdentity(CryptoImplementation cryptoImpl) throws GeneralSecurityException {
+        super();
+        this.cryptoImpl = cryptoImpl;
+        KeyPair encryptionKeys = cryptoImpl.generateEncryptionKeyPair();
+        KeyPair signingKeys = cryptoImpl.generateSigningKeyPair();
+        
+        publicEncryptionKey = encryptionKeys.getPublic();
+        privateEncryptionKey = encryptionKeys.getPrivate();
+        publicSigningKey = signingKeys.getPublic();
+        privateSigningKey = signingKeys.getPrivate();
     }
 
     /**
-     * Creates a <code>EmailIdentity</code> from a Base64-encoded string. The format is the same as
-     * for Base64-encoded local I2P destinations, except there is no null certificate.
-     * @param key
-     * @throws I2PSessionException
+     * Creates a <code>EmailIdentity</code> from a Base64-encoded string.
+     * The format can be any format supported by one of the {@link CryptoImplementation}s.
+     * @param base64Key
+     * @throws GeneralSecurityException 
      */
-    public EmailIdentity(String key) throws I2PSessionException {
-        key = key.substring(0, 512) + "AAAA" + key.substring(512);   // insert a null certificate for I2PClient.createSession()
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.decode(key));
+    public EmailIdentity(String base64Key) throws GeneralSecurityException {
+        // find the crypto implementation for this key length
+        for (CryptoImplementation cryptoImpl: CryptoFactory.getInstances()) {
+            int base64Length = cryptoImpl.getBase64CompleteKeySetLength();   // length of an email identity with this CryptoImplementation
+            if (base64Key.length() == base64Length) {
+                this.cryptoImpl = cryptoImpl;
+                break;
+            }
+        }
+        if (cryptoImpl == null)
+            throw new InvalidKeyException("Not a valid Email Identity: <" + base64Key + ">"); 
+            
+        PublicKeyPair publicKeys = cryptoImpl.createPublicKeyPair(base64Key);
+        String base64PrivateKeys = base64Key.substring(cryptoImpl.getBase64PublicKeyPairLength());   // the two private keys start after the two public keys
+        PrivateKeyPair privateKeys = cryptoImpl.createPrivateKeyPair(base64PrivateKeys);
         
-        I2PClient i2pClient = I2PClientFactory.createClient();
-        I2PSession i2pSession = i2pClient.createSession(inputStream, null);
-        initKeys(i2pSession);
+        publicEncryptionKey = publicKeys.encryptionKey;
+        privateEncryptionKey = privateKeys.encryptionKey;
+        publicSigningKey = publicKeys.signingKey;
+        privateSigningKey = privateKeys.signingKey;
     }
     
     public PrivateKey getPrivateEncryptionKey() {
         return privateEncryptionKey;
     }
     
-    public SigningPrivateKey getPrivateSigningKey() {
+    public PrivateKey getPrivateSigningKey() {
         return privateSigningKey;
     }
 
@@ -105,32 +124,18 @@ public class EmailIdentity extends EmailDestination {
         return isDefault;
     }
 
-    protected void initKeys(I2PSession i2pSession) {
-        super.initKeys(i2pSession);
-        privateEncryptionKey = i2pSession.getDecryptionKey();
-        privateSigningKey = i2pSession.getPrivateKey();
-    }
-    
-    private byte[] getKeysAsArray() {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        try {
-            byteStream.write(getPublicEncryptionKey().getData());
-            byteStream.write(getPublicSigningKey().getData());
-            byteStream.write(getPrivateEncryptionKey().getData());
-            byteStream.write(getPrivateSigningKey().getData());
-        }
-        catch (IOException e) {
-            log.error("Can't write to ByteArrayOutputStream.", e);
-        }
-        return byteStream.toByteArray();
-    }
-    
     /**
      * Returns the two key pairs (public + private) as one Base64-encoded string.
      * @return
+     * @throws GeneralSecurityException 
      */
-    public String getFullKey() {
-        return Base64.encode(getKeysAsArray());
+    public String getFullKey() throws GeneralSecurityException {
+        PublicKeyPair publicKeys = new PublicKeyPair(publicEncryptionKey, publicSigningKey);
+        PrivateKeyPair privateKeys = new PrivateKeyPair(privateEncryptionKey, privateSigningKey);
+        
+        String pubKeys = cryptoImpl.toBase64(publicKeys);
+        String privKeys = cryptoImpl.toBase64(privateKeys);
+        return pubKeys + privKeys;
     }
     
     @Override

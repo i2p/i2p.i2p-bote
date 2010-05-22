@@ -30,7 +30,7 @@ import java.nio.ByteBuffer;
 
 import net.i2p.util.Log;
 
-@TypeCode('N')
+@TypeCode('R')
 public class ResponsePacket extends CommunicationPacket {
     private Log log = new Log(ResponsePacket.class);
     private StatusCode statusCode;

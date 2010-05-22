@@ -35,7 +35,7 @@
         <ib:message key="Please fill in the Public Name field." var="errorMessage"/>
     </c:when>
     <c:otherwise>
-        <c:set var="errorMessage" value="${ib:saveIdentity(param.key, param.publicName, param.description, param.emailAddress, param.isDefault=='on')}"/>
+        <c:set var="errorMessage" value="${ib:saveIdentity(param.new, param.cryptoImpl, param.key, param.publicName, param.description, param.emailAddress, param.isDefault=='on')}"/>
     </c:otherwise>
 </c:choose>
 

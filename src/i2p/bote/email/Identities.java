@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +36,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
-import net.i2p.client.I2PSessionException;
 import net.i2p.util.Log;
 
 /**
@@ -93,8 +93,8 @@ public class Identities implements Iterable<EmailIdentity> {
                 defaultIdentity.setDefault(true);
             else if (!identities.isEmpty())
                 identities.get(0).setDefault(true);
-        } catch (IOException e) {
-            log.error("Can't read identities file.", e);
+        } catch (Exception e) {
+            log.error("Error reading the identities file.", e);
         }
         finally {
             if (input != null)
@@ -126,7 +126,7 @@ public class Identities implements Iterable<EmailIdentity> {
         catch (PatternSyntaxException e) {
             log.debug("Unparseable email identity: <" + emailIdentityString + ">");
             return null;
-        } catch (I2PSessionException e) {
+        } catch (GeneralSecurityException e) {
             log.debug("Invalid email identity: <" + fields[0] + ">");
             return null;
         }
@@ -137,8 +137,9 @@ public class Identities implements Iterable<EmailIdentity> {
      * an entry for the identities file.
      * @param identity
      * @return
+     * @throws GeneralSecurityException 
      */
-    private String toFileFormat(EmailIdentity identity) {
+    private String toFileFormat(EmailIdentity identity) throws GeneralSecurityException {
         StringBuilder string = new StringBuilder();
         string = string.append(identity.getFullKey());
         string = string.append("\t");
@@ -152,7 +153,7 @@ public class Identities implements Iterable<EmailIdentity> {
         return string.toString();
     }
     
-    public void save() throws IOException {
+    public void save() throws IOException, GeneralSecurityException {
         String newLine = System.getProperty("line.separator");
         Writer writer = new BufferedWriter(new FileWriter(identitiesFile));
         try {
@@ -164,6 +165,10 @@ public class Identities implements Iterable<EmailIdentity> {
                 writer.write(toFileFormat(identity) + newLine);
         }
         catch (IOException e) {
+            log.error("Can't save email identities to file <" + identitiesFile.getAbsolutePath() + ">.", e);
+            throw e;
+        }
+        catch (GeneralSecurityException e) {
             log.error("Can't save email identities to file <" + identitiesFile.getAbsolutePath() + ">.", e);
             throw e;
         }

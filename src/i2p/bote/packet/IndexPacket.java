@@ -26,56 +26,69 @@ import i2p.bote.email.EmailDestination;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Iterator;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
- * Stores DHT keys of Email Packets and their deletion keys.
+ * Contains {@link IndexPacketEntry} objects for an Email Destination.
+ * Index Packets can be sent between two peers, or stored in a file. They are used
+ * in four different scenarios:
+ * 
+ *   1. A peer sends an Index Packet to another peer in a Store Request, or
+ *      responds to a Retrieve Request.
+ *      Each entry contains an Email Packet key and a Delete Verification Hash.
+ *      Delete Authorization and time stamp are not used.
+ *   2. A peer stores entries in an Index Packet file.
+ *      Each entry contains a an Email Packet key, a Delete Verification Hash,
+ *      and a time stamp. The Delete Authorization field is left blank.
+ *   3. A peer stores information about deleted Email Packets in a file. These
+ *      files use the same format as regular Index Packet files, but the Delete
+ *      Authorization field is not blank.
  * 
  * This class is not thread-safe.
  */
 @TypeCode('I')
-public class IndexPacket extends DhtStorablePacket {
+public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPacketEntry> {
     private Log log = new Log(IndexPacket.class);
-    private Map<Hash, UniqueId> entries;
-    private Hash destinationHash;   // The DHT key of this packet
+    private Hash destinationHash;   // The DHT key of this packet, which is the hash of the Email Destination for which this Index Packet stores Email Packet keys
+    private Collection<IndexPacketEntry> entries;
 
     /**
-     * 
-     * @param emailPackets One or more email packets
      * @param emailDestination Determines the DHT key of this Index Packet
      */
-    public IndexPacket(Collection<EncryptedEmailPacket> emailPackets, EmailDestination emailDestination) {
-        entries = new ConcurrentHashMap<Hash, UniqueId>();
-        for (EncryptedEmailPacket emailPacket: emailPackets)
-            entries.put(emailPacket.getDhtKey(), emailPacket.getPlaintextDeletionKey());
-        
+    public IndexPacket(EmailDestination emailDestination) {
         destinationHash = emailDestination.getHash();
+        entries = new ArrayList<IndexPacketEntry>();
     }
     
     /**
      * Merges the DHT keys of multiple index packets into one big index packet.
-     * The DHT key of this packet is set to the DHT key of the first input packet.
+     * The Email Destination of this packet is set to that of the first input packet.
      * @param indexPackets
      * @throws IllegalArgumentException If an empty <code>Collection</code> or <code>null</code> was passed in
      */
     public IndexPacket(Collection<IndexPacket> indexPackets) {
         if (indexPackets==null || indexPackets.isEmpty())
             throw new IllegalArgumentException("This method must be invoked with at least one index packet.");
+
+        IndexPacket firstPacket = indexPackets.iterator().next();
+        destinationHash = firstPacket.getDhtKey();
         
-        destinationHash = indexPackets.iterator().next().getDhtKey();
-        entries = new ConcurrentHashMap<Hash, UniqueId>();
-        for (IndexPacket packet: indexPackets)
-            entries.putAll(packet.getEntries());
+        entries = new ArrayList<IndexPacketEntry>();
+        for (IndexPacket packet: indexPackets) {
+            for (IndexPacketEntry entry: packet)
+                put(entry);
+        }
     }
     
     /**
@@ -88,98 +101,135 @@ public class IndexPacket extends DhtStorablePacket {
     
     public IndexPacket(byte[] data) {
         super(data);
-        
+        entries = new ArrayList<IndexPacketEntry>();
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
-        destinationHash = readHash(buffer);
-
-        int numKeys = buffer.get();
-        
-        entries = new ConcurrentHashMap<Hash, UniqueId>();
-        for (int i=0; i<numKeys; i++) {
-            Hash dhtKey = readHash(buffer);
-            UniqueId delKey = new UniqueId(buffer);
-            entries.put(dhtKey, delKey);
+        try {
+            destinationHash = readHash(buffer);
+            int numEntries = buffer.getInt();
+            for (int i=0; i<numEntries; i++) {
+                Hash emailPacketKey = readHash(buffer);
+                Hash delVerificationHash = readHash(buffer);
+                UniqueId delAuthorization = new UniqueId(buffer);
+                int timeStamp = buffer.getInt();
+                IndexPacketEntry entry = new IndexPacketEntry(emailPacketKey, delVerificationHash, delAuthorization, timeStamp);
+                entries.add(entry);
+            }
+        }
+        catch (BufferUnderflowException e) {
+            log.error("Not enough bytes in packet.", e);
         }
         
-        // TODO catch BufferUnderflowException; warn if extra bytes in the array
+        if (buffer.hasRemaining())
+            log.debug("Extra bytes in Index Packet data.");
     }
-
-    /**
-     * The keys are not guaranteed to be in any particular order in the array.
-     */
+    
     @Override
     public byte[] toByteArray() {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        DataOutputStream dataStream = new DataOutputStream(byteStream);
         try {
-            writeHeader(outputStream);
-            destinationHash.writeBytes(outputStream);
-            outputStream.write((byte)entries.size());
-            for (Entry<Hash, UniqueId> entry: entries.entrySet()) {
-                entry.getKey().writeBytes(outputStream);
-                entry.getValue().writeTo(outputStream);
+            writeHeader(dataStream);
+            
+            destinationHash.writeBytes(dataStream);
+            dataStream.writeInt(entries.size());
+            for (IndexPacketEntry entry: entries) {
+                dataStream.write(entry.emailPacketKey.toByteArray());
+                dataStream.write(entry.delVerificationHash.toByteArray());
+                dataStream.write(entry.delAuthorization.toByteArray());
+                dataStream.writeInt(entry.timeStamp);
             }
-        } catch (DataFormatException e) {
-            log.error("Invalid format for email destination.", e);
-        } catch (IOException e) {
-            log.error("Can't write to ByteArrayOutputStream.", e);
         }
-        return outputStream.toByteArray();
+        catch (IOException e) {
+            log.error("Can't write to ByteArrayOutputStream/DataOutputStream.", e);
+        } catch (DataFormatException e) {
+            log.error("Can't write destination hash to output stream: " + destinationHash, e);
+        }
+        return byteStream.toByteArray();
     }
-
+    
+    public void put(EncryptedEmailPacket emailPacket) {
+        Hash emailPacketKey = emailPacket.getDhtKey();
+        Hash delVerificationHash = emailPacket.getDeleteVerificationHash();
+        IndexPacketEntry newEntry = new IndexPacketEntry(emailPacketKey, delVerificationHash);
+        put(newEntry);
+    }
+    
     /**
-     * Returns the deletion key for a given DHT key of an Email Packet, or <code>null</code> if
-     * the <code>IndexPacket</code> doesn't contain the DHT key.
-     * @param dhtKey
+     * Adds an entry containins an Email Packet DHT key and a Delete Authorization key.
+     * The time stamp is set to the current system time; the Delete Verification hash
+     * is not set.
+     * If the DHT key exists in the packet already, nothing happens.
+     * @param emailPacketKey
+     * @param delAuthorization
+     */
+    public void put(Hash emailPacketKey, UniqueId delAuthorization) {
+        if (contains(emailPacketKey))
+            return;
+        int timeStamp = (int)(System.currentTimeMillis() / 1000);
+        IndexPacketEntry newEntry = new IndexPacketEntry(emailPacketKey, delAuthorization, timeStamp);
+        entries.add(newEntry);
+    }
+    
+    public void put(Collection<EncryptedEmailPacket> emailPackets) {
+        for (EncryptedEmailPacket emailPacket: emailPackets) {
+            Hash emailPacketKey = emailPacket.getDhtKey();
+            Hash delVerificationHash = emailPacket.getDeleteVerificationHash();
+            IndexPacketEntry entry = new IndexPacketEntry(emailPacketKey, delVerificationHash);
+            put(entry);
+        }
+    }
+    
+    /**
+     * Adds an entry to the <code>IndexPacket</code>. If an entry with the same DHT key
+     * exists in the packet already, nothing happens.
+     * @param entry
+     */
+    public void put(IndexPacketEntry entry) {
+        if (contains(entry.emailPacketKey))
+            return;
+        entries.add(entry);
+    }
+    
+    /**
+     * Returns the delete authorization key for an email packet DHT key,
+     * or <code>null</code> if the index packet doesn't contain the
+     * DHT key.
+     * @param emailPacketKey
      * @return
      */
-    public UniqueId getDeletionKey(Hash dhtKey) {
-        return entries.get(dhtKey);
+    public UniqueId getDeleteAuthorization(Hash emailPacketKey) {
+        IndexPacketEntry entry = getEntry(emailPacketKey);
+        if (entry == null)
+            return null;
+        else
+            return entry.delAuthorization;
     }
     
     /**
-     * Returns all email packet keys in this <code>IndexPacket</code>.
-     * The keys are not guaranteed to be in any particular order.
-     * @return
+     * Removes an entry from the <code>IndexPacket</code> if it exists.
+     * @param emailPacketKey
      */
-    public Collection<Hash> getDhtKeys() {
-        return entries.keySet();
-    }
-    
-    /**
-     * Adds an entry to the <code>IndexPacket</code>. If the DHT key exists in the packet already,
-     * nothing happens.
-     * @param dhtKey
-     * @param deletionKey
-     */
-    public void put(Hash dhtKey, UniqueId deletionKey) {
-        entries.put(dhtKey, deletionKey);
-    }
-    
-    /**
-     * Removes an entry from the <code>IndexPacket</code>.
-     * @param dhtKey
-     */
-    public void remove(Hash dhtKey) {
-        entries.remove(dhtKey);
+    public void remove(Hash emailPacketKey) {
+        IndexPacketEntry entry = getEntry(emailPacketKey);
+        if (entry != null)
+            entries.remove(entry);
     }
     
     /**
      * Tests if the <code>IndexPacket</code> contains a given DHT key.
-     * @param dhtKey
+     * @param emailPacketKey
      * @return <code>true</code> if the packet containes the DHT key, <code>false</code> otherwise.
      */
-    public boolean contains(Hash dhtKey) {
-        return entries.containsKey(dhtKey);
+    public boolean contains(Hash emailPacketKey) {
+        return getEntry(emailPacketKey) != null;
     }
     
-    /**
-     * Returns the DHT key / deletion key pairs for the {@link EncryptedEmailPacket}s referenced
-     * by this <code>IndexPacket</code>.
-     * @return
-     */
-    public Map<Hash, UniqueId> getEntries() {
-        return entries;
+    private IndexPacketEntry getEntry(Hash emailPacketKey) {
+        for (IndexPacketEntry entry: entries)
+            if (entry.emailPacketKey.equals(emailPacketKey))
+                return entry;
+        return null;
     }
     
     /**
@@ -189,5 +239,17 @@ public class IndexPacket extends DhtStorablePacket {
     @Override
     public Hash getDhtKey() {
         return destinationHash;
+    }
+    
+    /**
+     * Returns the number of entries in this Index Packet.
+     */
+    public int getNumEntries() {
+        return entries.size();
+    }
+    
+    @Override
+    public Iterator<IndexPacketEntry> iterator() {
+        return entries.iterator();
     }
 }

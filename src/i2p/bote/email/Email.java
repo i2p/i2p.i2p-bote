@@ -25,6 +25,8 @@ import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.UniqueId;
 import i2p.bote.Util;
+import i2p.bote.crypto.CryptoFactory;
+import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.ByteArrayInputStream;
@@ -34,6 +36,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.GeneralSecurityException;
+import java.security.PrivateKey;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,11 +56,8 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
-import net.i2p.crypto.DSAEngine;
 import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
-import net.i2p.data.Signature;
-import net.i2p.data.SigningPrivateKey;
 import net.i2p.util.Log;
 
 import com.nettgryppa.security.HashCash;
@@ -104,7 +105,7 @@ public class Email extends MimeMessage {
         messageId = new UniqueId();
     }
 
-    public EmailDestination getSenderDestination() throws DataFormatException, MessagingException {
+    public EmailDestination getSenderDestination() throws GeneralSecurityException, MessagingException {
         return new EmailDestination(getSender().toString());
     }
     
@@ -159,13 +160,18 @@ public class Email extends MimeMessage {
      * <code>X-I2PBote-Signature</code> header field.
      * The signature is computed over the stream representation of the
      * email, minus the signature header if it is present.
+     * The signature includes the ID number of the {@link CryptoImplementation}
+     * used (signature lengths can be different for the same algorithm).
      * @param signingKey
      * @throws MessagingException
+     * @throws GeneralSecurityException 
      */
-    private void sign(SigningPrivateKey signingKey) throws MessagingException {
+    private void sign(EmailIdentity senderIdentity) throws MessagingException, GeneralSecurityException {
         removeHeader("X-I2PBote-Signature");   // make sure there is no existing signature which would make the new signature invalid
-        Signature signature = DSAEngine.getInstance().sign(toByteArray(), signingKey);
-        setHeader("X-I2PBote-Signature", signature.toBase64());
+        CryptoImplementation cryptoImpl = senderIdentity.getCryptoImpl();
+        PrivateKey signingKey = senderIdentity.getPrivateSigningKey();
+        byte[] signature = cryptoImpl.sign(toByteArray(), signingKey);
+        setHeader("X-I2PBote-Signature", cryptoImpl.getId() + "_" + Base64.encode(signature));
     }
     
     /**
@@ -174,21 +180,48 @@ public class Email extends MimeMessage {
      * @return
      */
     public boolean isSignatureValid() {
+        String[] signatureHeaders;
         try {
-            String[] signatureHeaders = getHeader("X-I2PBote-Signature");
-            if (signatureHeaders==null || signatureHeaders.length<=0)
-                return false;
-                
-            String base64Signature = signatureHeaders[0];
+            signatureHeaders = getHeader("X-I2PBote-Signature");
+        } catch (MessagingException e) {
+            log.error("Cannot get signature header field.", e);
+            return false;
+        }
+        if (signatureHeaders==null || signatureHeaders.length<=0)
+            return false;
+        String signatureHeader = signatureHeaders[0];
+        
+        // the crypto implementation ID is the number before the underscore
+        int _index = signatureHeader.indexOf('_');
+        if (_index < 0)
+            return false;
+        String cryptoImplIdString = signatureHeader.substring(0, _index);
+        int cryptoImplId = 0;
+        try {
+            cryptoImplId = Integer.valueOf(cryptoImplIdString);
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+        CryptoImplementation cryptoImpl = CryptoFactory.getInstance(cryptoImplId);
+        
+        // the actual signature is everything after the underscore
+        String base64Signature = signatureHeader.substring(_index + 1);
+        try {
             removeHeader("X-I2PBote-Signature");
-            Signature signature = new Signature(Base64.decode(base64Signature));
+            byte[] signature = Base64.decode(base64Signature);
             EmailDestination senderDestination = new EmailDestination(getSender().toString());
-            boolean valid = DSAEngine.getInstance().verifySignature(signature, toByteArray(), senderDestination.getPublicSigningKey());
-            setHeader("X-I2PBote-Signature", base64Signature);
-            return valid;
+            return cryptoImpl.verify(toByteArray(), signature, senderDestination.getPublicSigningKey());
         } catch (Exception e) {
             log.error("Cannot verify email signature. Email: [" + this + "]", e);
             return false;
+        } finally {
+            try {
+                setHeader("X-I2PBote-Signature", signatureHeader);
+            } catch (MessagingException e) {
+                log.error("Cannot set signature header field.", e);
+                return false;
+            }
         }
     }
     
@@ -205,7 +238,7 @@ public class Email extends MimeMessage {
             try {
                 new EmailDestination(address);
             }
-            catch (DataFormatException e) {
+            catch (GeneralSecurityException e) {
                 throw new DataFormatException(_("Invalid address: {0}", address), e);
             }
         }
@@ -339,12 +372,13 @@ public class Email extends MimeMessage {
      * Updates headers, signs the email, and converts it into one or more email packets.
      * If an error occurs, an empty <code>Collection</code> is returned.
      *
-     * @param signingKey 
+     * @param senderIdentity 
      * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
      * @return
      * @throws MessagingException
+     * @throws GeneralSecurityException 
      */
-    public Collection<UnencryptedEmailPacket> createEmailPackets(SigningPrivateKey signingKey, String bccToKeep) throws MessagingException {
+    public Collection<UnencryptedEmailPacket> createEmailPackets(EmailIdentity senderIdentity, String bccToKeep) throws MessagingException, GeneralSecurityException {
         ArrayList<UnencryptedEmailPacket> packets = new ArrayList<UnencryptedEmailPacket>();
         
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -356,10 +390,12 @@ public class Email extends MimeMessage {
                 setHeader("BCC", bccToKeep);   // set bccToKeep and remove any other existing BCC addresses
             else
                 removeHeader("BCC");
-            sign(signingKey);
+            sign(senderIdentity);
             writeTo(outputStream);
         } catch (IOException e) {
             throw new MessagingException("Can't write to ByteArrayOutputStream.", e);
+        } catch (GeneralSecurityException e) {
+            throw new GeneralSecurityException("Can't sign email.", e);
         } finally {
             // restore the BCC headers
             removeHeader("BCC");
@@ -382,8 +418,7 @@ public class Email extends MimeMessage {
                 // make a new array with the right length
                 byte[] block = new byte[blockSize];
                 System.arraycopy(emailArray, blockStart, block, 0, blockSize);
-                UniqueId deletionKey = new UniqueId();
-                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(messageId, packetIndex, numPackets, block, deletionKey);
+                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(messageId, packetIndex, numPackets, block);
                 packets.add(packet);
                 packetIndex++;
                 blockStart += blockSize;

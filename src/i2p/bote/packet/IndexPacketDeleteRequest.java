@@ -38,6 +38,7 @@ import net.i2p.util.Log;
 
 /**
  * A request to a peer to delete an entry from a stored {@link IndexPacket}.
+ * Contains pairs of DHT keys and delete authorization keys.
  * This class is not thread-safe.
  */
 @TypeCode('X')
@@ -60,8 +61,8 @@ public class IndexPacketDeleteRequest extends CommunicationPacket {
         int numEntries = buffer.getShort();
         for (int i=0; i<numEntries; i++) {
             Hash dhtKey = readHash(buffer);
-            UniqueId deletionKey = new UniqueId(buffer);
-            entries.put(dhtKey, deletionKey);
+            UniqueId delAuthorization = new UniqueId(buffer);
+            entries.put(dhtKey, delAuthorization);
         }
         
         if (buffer.hasRemaining())
@@ -70,15 +71,11 @@ public class IndexPacketDeleteRequest extends CommunicationPacket {
     
     /**
      * @param dhtKey The Email Packet key to delete
-     * @param deletionKey The delete authorization.
+     * @param delAuthorization The delete authorization.
      */
-    public void put(Hash dhtKey, UniqueId deletionKey) {
-        entries.put(dhtKey, deletionKey);
+    public void put(Hash dhtKey, UniqueId delAuthorization) {
+        entries.put(dhtKey, delAuthorization);
     }
-    
-/*    public Map<Hash, UniqueId> getAll() {
-        return entries;
-    }*/
     
     public Hash getEmailDestHash() {
         return emailDestHash;
@@ -88,7 +85,7 @@ public class IndexPacketDeleteRequest extends CommunicationPacket {
         return entries.keySet();
     }
 
-    public UniqueId getDeletionKey(Hash dhtKey) {
+    public UniqueId getDeleteAuthorization(Hash dhtKey) {
         return entries.get(dhtKey);
     }
     

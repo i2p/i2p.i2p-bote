@@ -28,7 +28,7 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <c:choose>
-    <c:when test="${empty param.key}">
+    <c:when test="${param.new}">
         <ib:message key="New Email Identity" var="title" scope="request"/>
         <ib:message key="Create" var="commitAction"/>
         <c:set var="publicName" value="${param.publicName}"/>
@@ -80,7 +80,37 @@
                     <input type="text" size="40" name="emailAddress" value="${param.emailAddress}"/>
                 </td>
             </tr>
-            <c:if test="${!empty param.key}">
+            <tr>
+                <td>
+                    <div style="font-weight: bold;"><ib:message key="Encryption:"/></div>
+                    <c:if test="${param.new}">
+                        <div style="font-size: 0.8em;"><ib:message key="(If unsure, leave the default)"/></div>
+                    </c:if>
+                </td>
+                <c:if test="${param.new}">
+                <td>
+                    <select name="cryptoImpl">
+                        <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+                        <c:forEach items="${jspHelperBean.cryptoImplementations}" var="cryptoImpl">
+                            <c:set var="selected" value=""/>
+                            <c:if test="${param.cryptoImpl eq cryptoImpl.id}">
+                                <c:set var="selected" value=" selected"/>
+                            </c:if>
+                            <option value="${cryptoImpl.id}"${selected}>
+                                ${cryptoImpl.name}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </td>
+                </c:if>
+                <c:if test="${not param.new}">
+                <td>
+                    <c:set var="cryptoImpl" value="${ib:getCryptoImplementation(identity.cryptoImpl.id)}"/>
+                    ${cryptoImpl.name}
+                </td>
+                </c:if>
+            </tr>
+            <c:if test="${!param.new}">
             <tr>
                 <td style="font-weight: bold; vertical-align: top;">
                     <ib:message key="Email Destination:"/>
@@ -102,6 +132,7 @@
             </tr>
             </c:if>
         </table>
+        <input type="hidden" name="new" value="${param.new}"/>
         <input type="hidden" name="key" value="${param.key}"/>
         <button name="action" value="${commitAction}">${commitAction}</button>
         <button name="action" value="cancel"/><ib:message key="Cancel"/></button>

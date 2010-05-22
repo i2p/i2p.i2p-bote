@@ -29,13 +29,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
 
 /**
@@ -79,8 +79,8 @@ public class AddressBook implements Iterable<Contact> {
                         name = fields[1];
                     contacts.add(new Contact(destination, name));
                 }
-                catch (DataFormatException e) {
-                    log.error("Not a valid Email Destination: <" + fields[0] + ">");
+                catch (GeneralSecurityException e) {
+                    log.error("Not a valid Email Destination: <" + fields[0] + ">", e);
                 }
             }
         } catch (IOException e) {

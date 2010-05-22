@@ -33,7 +33,7 @@ import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 
-@TypeCode('R')
+@TypeCode('L')
 public class RelayPacket extends DataPacket {
     public static final int XOR_KEY_LENGTH = 32;   // length of the XOR key in bytes
     

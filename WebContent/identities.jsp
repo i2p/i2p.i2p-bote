@@ -68,7 +68,7 @@
             <div${class}>
                 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
                     <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
-                <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&key=${identity.key}&publicName=${ib:escapeQuotes(identity.publicName)}&description=${ib:escapeQuotes(identity.description)}&emailAddress=${ib:escapeQuotes(identity.emailAddress)}&isDefault=${identity.default}">
+                <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&new=false&key=${identity.key}&cryptoImpl=${identity.cryptoImpl}&publicName=${ib:escapeQuotes(identity.publicName)}&description=${ib:escapeQuotes(identity.description)}&emailAddress=${ib:escapeQuotes(identity.emailAddress)}&isDefault=${identity.default}">
                     ${identity.publicName}
                 </a>
             </div>
@@ -96,8 +96,7 @@
     </table>
     
     <p/>
-    <%-- calling editIdentity.jsp with no "key" param creates a new identity --%>
-    <form action="editIdentity.jsp" method="POST">
+    <form action="editIdentity.jsp?new=true" method="POST">
         <button type="submit" value="New"><ib:message key="New Identity"/></button>
     </form>
 </div>
