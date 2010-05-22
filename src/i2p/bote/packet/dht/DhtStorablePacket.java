@@ -89,7 +89,7 @@ public abstract class DhtStorablePacket extends DataPacket {
         if (dataPacket instanceof DhtStorablePacket)
             return (DhtStorablePacket)dataPacket;
         else {
-            log.warn("Expected: DhtStorablePacket, got: " + dataPacket.getClass().getSimpleName());
+            log.warn("Expected: DhtStorablePacket, got: " + (dataPacket==null?"<null>":dataPacket.getClass().getSimpleName()));
             return null;
         }
     }

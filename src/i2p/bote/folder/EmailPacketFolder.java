@@ -67,7 +67,7 @@ public class EmailPacketFolder extends DhtPacketFolder<EncryptedEmailPacket> imp
                     log.debug("Invalid Delete Authorization in EmailPacketDeleteRequest. Should be: <" + expectedHash.toBase64() + ">, is <" + actualHash.toBase64() +">");
             }
             else
-                log.debug("EncryptedEmailPacket expected for DHT key <" + dhtKey + ">, found " + (storedPacket==null?"<null>":storedPacket.getClass().getSimpleName()));
+                log.debug("EncryptedEmailPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
         }
     }
 }
