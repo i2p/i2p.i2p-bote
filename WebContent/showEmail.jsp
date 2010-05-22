@@ -46,7 +46,7 @@
             <td valign="top"><strong><ib:message key="Signature:"/></strong></td>
             <td>
                 <c:if test="${email.signatureValid}"><ib:message key="Valid"/></c:if>
-                <c:if test="${!email.signatureValid}"><div style="color: red;"><ib:message key="Invalid"/></div></c:if>
+                <c:if test="${!email.signatureValid}"><div style="color: red;"><ib:message key="Invalid or missing"/></div></c:if>
             </td>
         </tr>
         <c:forEach var="replyToAddress" varStatus="status" items="${email.replyToAddresses}">

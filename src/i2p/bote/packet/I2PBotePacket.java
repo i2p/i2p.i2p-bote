@@ -61,6 +61,7 @@ public abstract class I2PBotePacket {
 	 * @return
 	 */
 	// TODO rename to getPacketSize
+	// TODO override in subclasses to avoid calling toByteArray by adding field lengths
 	public int getSize() {
 	    return toByteArray().length;
 	}

@@ -114,7 +114,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
     }
     
     /**
-     * Makes a set of {@link UnencryptedEmailPacket}s into an {@link Email}, stores the email in an {@link EmailFolder},
+     * Makes a set of {@link UnencryptedEmailPacket}s into an {@link Email}, stores the email in the inbox,
      * and deletes the packet files.
      */
     private class AssembleTask implements Runnable {
@@ -174,8 +174,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
 
     // FolderElement implementation
 	@Override
-	protected UnencryptedEmailPacket createFolderElement(File file)
-			throws Exception {
+	protected UnencryptedEmailPacket createFolderElement(File file) throws Exception {
         FileInputStream inputStream = new FileInputStream(file);
         return new UnencryptedEmailPacket(inputStream);
 	}

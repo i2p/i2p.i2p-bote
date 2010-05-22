@@ -23,7 +23,6 @@ package i2p.bote.web;
 
 import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
-import i2p.bote.Util;
 import i2p.bote.email.Email;
 
 import java.io.IOException;
@@ -31,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.Address;
-import javax.mail.internet.InternetAddress;
 import javax.mail.Message.RecipientType;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;

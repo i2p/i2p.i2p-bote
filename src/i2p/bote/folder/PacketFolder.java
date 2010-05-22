@@ -21,7 +21,6 @@
 
 package i2p.bote.folder;
 
-import i2p.bote.UniqueId;
 import i2p.bote.packet.DataPacket;
 
 import java.io.File;
@@ -44,12 +43,6 @@ public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketTy
         super(storageDir, PACKET_FILE_EXTENSION);
     }
     
-    // TODO rename to write because existing files are overwritten
-    public <T extends PacketType> void add(T packetToStore) {
-        String filename = new UniqueId().toBase64() + PACKET_FILE_EXTENSION;
-        add(packetToStore, filename);
-    }
-
     /**
      * @param packetToStore
      * @param filename A filename relative to this folder's storage directory.
@@ -75,10 +68,6 @@ public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketTy
         }
     }
     
-/*    public void delete(UniqueId packetId) {
-        // TODO
-    }*/
-
     @Override
     @SuppressWarnings("unchecked")
     protected PacketType createFolderElement(File file) throws Exception {
