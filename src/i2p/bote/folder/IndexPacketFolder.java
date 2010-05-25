@@ -26,11 +26,13 @@ import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.IndexPacketDeleteRequest;
+import i2p.bote.packet.IndexPacketEntry;
 import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Iterator;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
@@ -46,7 +48,7 @@ import net.i2p.util.Log;
  *  * The <code>retrieve</code> method encrypts Index Packets.
  * 
  */
-public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements PacketListener {
+public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements PacketListener, ExpirationListener {
     private static final String DEL_FILE_PREFIX = "DEL_";
     
     private final Log log = new Log(IndexPacketFolder.class);
@@ -55,8 +57,9 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
         super(storageDir);
     }
 
+    /** Overridden to merge the packet with an existing one, and to set time stamps on the packet entries */
     @Override
-    public void store(DhtStorablePacket packetToStore) {
+    public synchronized void store(DhtStorablePacket packetToStore) {
         if (!(packetToStore instanceof IndexPacket))
             throw new IllegalArgumentException("This class only stores packets of type " + IndexPacket.class.getSimpleName() + ".");
         
@@ -71,25 +74,36 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
                 log.error("After merging, IndexPacket is too big for a datagram: size=" + packetToStore.getSize());
         }
         
+        setTimeStamps(indexPacketToStore);
         super.store(packetToStore);
     }
 
-    @Override
-    public void delete(Hash dhtKey) {
-        throw new UnsupportedOperationException("Index packets are never deleted. Use remove(Hash, Hash) to remove an entry from an index packet file.");
+    private void setTimeStamps(IndexPacket packet) {
+        long currentTime = System.currentTimeMillis();
+        for (IndexPacketEntry entry: packet)
+            entry.storeTime = currentTime;
     }
     
-    /** Overridden to encrypt the Index Packet */
+    /** Overridden to erase time stamps because there is no need for other peers to see it. */
     @Override
     public DhtStorablePacket retrieve(Hash dhtKey) {
         DhtStorablePacket packet = super.retrieve(dhtKey);
-        if (packet == null)
+        if (!(packet instanceof IndexPacket)) {
+            if (packet != null)
+                log.error("Packet of type " + packet.getClass().getSimpleName() + " found in " + getClass().getSimpleName());
             return null;
-            
-        if (!(packet instanceof IndexPacket))
-            log.error("Packet of type " + packet.getClass().getSimpleName() + " found in the index packet folder.");
-        
-        return (IndexPacket)packet;
+        }
+        else {
+            IndexPacket indexPacket = (IndexPacket)packet;
+            for (IndexPacketEntry entry: indexPacket)
+                entry.storeTime = 0;
+            return indexPacket;
+        }
+    }
+    
+    @Override
+    public void delete(Hash dhtKey) {
+        throw new UnsupportedOperationException("Index packets are never deleted. Use remove(Hash, Hash) to remove an entry from an index packet file.");
     }
     
     /**
@@ -137,7 +151,7 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
      * and for which the request contains a valid delete authorization.
      * @param delRequest
      */
-    public void process(IndexPacketDeleteRequest delRequest) {
+    public synchronized void process(IndexPacketDeleteRequest delRequest) {
         log.debug("Processing delete request: " + delRequest);
         Hash dhtKey = delRequest.getEmailDestHash();
         DhtStorablePacket storedPacket = retrieve(dhtKey);
@@ -165,7 +179,7 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
      * @param indexPacket
      * @param emailPacketKey The entry to delete
      */
-    private void remove(IndexPacket indexPacket, Hash emailPacketKey, UniqueId delAuthorization) {
+    private synchronized void remove(IndexPacket indexPacket, Hash emailPacketKey, UniqueId delAuthorization) {
         log.debug("Removing DHT key " + emailPacketKey + " from Index Packet for Email Dest " + indexPacket.getDhtKey());
         if (delAuthorization == null)
             log.debug("DHT key " + emailPacketKey + " not found in index packet " + indexPacket);
@@ -173,6 +187,27 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
             indexPacket.remove(emailPacketKey);
             addToDeletedPackets(indexPacket, emailPacketKey, delAuthorization);
         }
-        super.store(indexPacket);   // don't merge, but overwrite the file with the key removed
+        super.store(indexPacket);   // don't merge, but overwrite the file with the entry removed
+    }
+
+    @Override
+    public synchronized void deleteExpired() {
+        long currentTime = System.currentTimeMillis();
+        for (IndexPacket indexPacket: this) {
+            boolean removed = false;   // true if at least one entry was removed
+            synchronized(indexPacket) {
+                Iterator<IndexPacketEntry> iterator = indexPacket.iterator();
+                while (iterator.hasNext()) {
+                    IndexPacketEntry entry = iterator.next();
+                    if (currentTime > entry.storeTime + EXPIRATION_TIME_MILLISECONDS) {
+                        log.debug("Deleting expired index packet entry: file=<" + getFilename(indexPacket) + ">, emailPktKey=" + entry.emailPacketKey.toBase64());
+                        iterator.remove();
+                        removed = true;
+                    }
+                }
+                if (removed)
+                    super.store(indexPacket);   // don't merge, but overwrite the file with the entry/entries removed
+            }
+        }
     }
 }

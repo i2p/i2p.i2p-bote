@@ -123,7 +123,7 @@ public class IndexPacketTest {
                 if (entryA.emailPacketKey.equals(entryB.emailPacketKey)) {
                     boolean delVerifEqual = (entryA.delVerificationHash==null && entryB.delVerificationHash==null) || entryA.delVerificationHash.equals(entryB.delVerificationHash);
                     boolean delAuthEqual = (entryA.delAuthorization==null && entryB.delAuthorization==null) || entryA.delAuthorization.equals(entryB.delAuthorization);
-                    boolean timeEqual = entryA.timeStamp == entryB.timeStamp;
+                    boolean timeEqual = entryA.storeTime == entryB.storeTime;
                     if (delVerifEqual && delAuthEqual && timeEqual) {
                         found = true;
                         break;

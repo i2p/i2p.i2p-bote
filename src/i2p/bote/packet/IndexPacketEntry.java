@@ -32,21 +32,21 @@ public class IndexPacketEntry {
     public Hash emailPacketKey;
     public Hash delVerificationHash;
     public UniqueId delAuthorization;
-    public int timeStamp;   // seconds since 1-1-1970
+    public long storeTime;   // milliseconds since 1-1-1970
     
     public IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash) {
         this(emailPacketKey, delVerificationHash, zeroId(), 0);
     }
     
-    public IndexPacketEntry(Hash emailPacketKey, UniqueId delAuthorization, int timeStamp) {
-        this(emailPacketKey, zeroHash(), delAuthorization, timeStamp);
+    public IndexPacketEntry(Hash emailPacketKey, UniqueId delAuthorization, long storeTime) {
+        this(emailPacketKey, zeroHash(), delAuthorization, storeTime);
     }
     
-    public IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash, UniqueId delAuthorization, int timeStamp) {
+    public IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash, UniqueId delAuthorization, long storeTime) {
         this.emailPacketKey = emailPacketKey;
         this.delVerificationHash = delVerificationHash;
         this.delAuthorization = delAuthorization;
-        this.timeStamp = timeStamp;
+        this.storeTime = storeTime;
     }
     
     private static UniqueId zeroId() {

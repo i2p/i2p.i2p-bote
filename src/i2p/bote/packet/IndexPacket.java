@@ -111,8 +111,8 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
                 Hash emailPacketKey = readHash(buffer);
                 Hash delVerificationHash = readHash(buffer);
                 UniqueId delAuthorization = new UniqueId(buffer);
-                int timeStamp = buffer.getInt();
-                IndexPacketEntry entry = new IndexPacketEntry(emailPacketKey, delVerificationHash, delAuthorization, timeStamp);
+                long storeTime = buffer.getInt() * 1000L;
+                IndexPacketEntry entry = new IndexPacketEntry(emailPacketKey, delVerificationHash, delAuthorization, storeTime);
                 entries.add(entry);
             }
         }
@@ -137,7 +137,7 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
                 dataStream.write(entry.emailPacketKey.toByteArray());
                 dataStream.write(entry.delVerificationHash.toByteArray());
                 dataStream.write(entry.delAuthorization.toByteArray());
-                dataStream.writeInt(entry.timeStamp);
+                dataStream.writeInt((int)(entry.storeTime/1000L));   // store as seconds
             }
         }
         catch (IOException e) {
@@ -166,8 +166,8 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
     public void put(Hash emailPacketKey, UniqueId delAuthorization) {
         if (contains(emailPacketKey))
             return;
-        int timeStamp = (int)(System.currentTimeMillis() / 1000);
-        IndexPacketEntry newEntry = new IndexPacketEntry(emailPacketKey, delAuthorization, timeStamp);
+        long storeTime = System.currentTimeMillis();
+        IndexPacketEntry newEntry = new IndexPacketEntry(emailPacketKey, delAuthorization, storeTime);
         entries.add(newEntry);
     }
     

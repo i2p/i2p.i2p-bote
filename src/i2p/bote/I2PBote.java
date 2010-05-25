@@ -114,6 +114,7 @@ public class I2PBote {
     private POP3Service pop3Service;
     private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
     private AutoMailCheckTask autoMailCheckTask;
+    private ExpirationThread expirationThread;
     private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
     private DHT dht;
     private PeerManager peerManager;
@@ -244,6 +245,10 @@ public class I2PBote {
         
         dispatcher.addPacketListener(emailDhtStorageFolder);
         dispatcher.addPacketListener(indexPacketDhtStorageFolder);
+        
+        expirationThread = new ExpirationThread();
+        expirationThread.addExpirationListener(emailDhtStorageFolder);
+        expirationThread.addExpirationListener(indexPacketDhtStorageFolder);
         
         peerManager = new PeerManager();
         
@@ -439,6 +444,7 @@ public class I2PBote {
 //        pop3Service.start();
         sendQueue.start();
         autoMailCheckTask.start();
+        expirationThread.start();
     }
 
     private void stopAllServices()  {
@@ -455,6 +461,7 @@ public class I2PBote {
             for (Future<Boolean> mailCheckTask: pendingMailCheckTasks)
                 mailCheckTask.cancel(false);
         if (autoMailCheckTask != null) autoMailCheckTask.requestShutdown();
+        if (expirationThread != null) expirationThread.requestShutdown();
         
         long deadline = System.currentTimeMillis() + 1000 * 60;   // the time at which any background threads that are still running are killed
         if (dht != null)

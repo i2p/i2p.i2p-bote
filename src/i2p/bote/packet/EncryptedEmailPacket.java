@@ -54,7 +54,8 @@ import net.i2p.util.Log;
 public class EncryptedEmailPacket extends DhtStorablePacket {
     private Log log = new Log(EncryptedEmailPacket.class);
     private Hash dhtKey;
-    private int storeTime;
+    private long storeTime;   // in milliseconds since 1970
+
     private Hash delVerificationHash;
     private CryptoImplementation cryptoImpl;
     private byte[] encryptedData;   // an UnencryptedEmailPacket, converted to a byte array and encrypted
@@ -88,7 +89,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
         dhtKey = readHash(buffer);
-        storeTime = buffer.getInt();
+        storeTime = buffer.getInt() * 1000L;
         delVerificationHash = readHash(buffer);
         byte cryptoImplId = buffer.get();
         cryptoImpl = CryptoFactory.getInstance(cryptoImplId);
@@ -126,6 +127,18 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         return delVerificationHash;
     }
     
+    /**
+     * Returns the time the packet was stored in a file, in milliseconds since 1-1-1970.
+     * @return
+     */
+    public long getStoreTime() {
+        return storeTime;
+    }
+
+    public void setStoreTime(long storeTime) {
+        this.storeTime = storeTime;
+    }
+    
     public CryptoImplementation getCryptoImpl() {
         return cryptoImpl;
     }
@@ -153,7 +166,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         try {
             writeHeader(dataStream);
             dataStream.write(dhtKey.toByteArray());
-            dataStream.writeInt(storeTime);
+            dataStream.writeInt((int)(storeTime / 1000));   // store as seconds
             dataStream.write(delVerificationHash.toByteArray());
             dataStream.write(cryptoImpl.getId());
             dataStream.writeShort(encryptedData.length);

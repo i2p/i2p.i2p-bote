@@ -38,13 +38,39 @@ import net.i2p.util.Log;
  * A subclass of {@link DhtPacketFolder} that stores email packets and deletes them
  * upon {@link EmailPacketDeleteRequest}s.
  */
-public class EmailPacketFolder extends DhtPacketFolder<EncryptedEmailPacket> implements PacketListener {
+public class EmailPacketFolder extends DhtPacketFolder<EncryptedEmailPacket> implements PacketListener, ExpirationListener {
     private Log log = new Log(EmailPacketFolder.class);
 
     public EmailPacketFolder(File storageDir) {
         super(storageDir);
     }
 
+    /** Overridden to set a time stamp on the packet */
+    @Override
+    public void store(DhtStorablePacket packetToStore) {
+        if (packetToStore instanceof EncryptedEmailPacket) {
+            ((EncryptedEmailPacket)packetToStore).setStoreTime(System.currentTimeMillis());
+            super.store(packetToStore);
+        }
+        else
+            log.error("Not storing packet of type " + (packetToStore==null?"<null>":packetToStore.getClass().getSimpleName()) + " in EmailPacketFolder.");
+    }
+    
+    /** Overridden to erase the time stamp because there is no need for other peers to see it. */
+    @Override
+    public DhtStorablePacket retrieve(Hash dhtKey) {
+        DhtStorablePacket packet = super.retrieve(dhtKey);
+        if (!(packet instanceof EncryptedEmailPacket)) {
+            log.error("Packet of type " + (packet==null?"<null>":packet.getClass().getSimpleName()) + " found in " + getClass().getSimpleName());
+            return null;
+        }
+        else {
+            EncryptedEmailPacket emailPacket = (EncryptedEmailPacket)packet;
+            emailPacket.setStoreTime(0);
+            return emailPacket;
+        }
+    }
+    
     /** Handles delete requests */
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
@@ -69,5 +95,23 @@ public class EmailPacketFolder extends DhtPacketFolder<EncryptedEmailPacket> imp
             else
                 log.debug("EncryptedEmailPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
         }
+    }
+    
+    @Override
+    public synchronized void deleteExpired() {
+        long currentTimeMillis = System.currentTimeMillis();
+        File[] files = getFilenames();
+        for (File file: files)
+            try {
+                EncryptedEmailPacket emailPacket = createFolderElement(file);
+                if (currentTimeMillis > emailPacket.getStoreTime() + EXPIRATION_TIME_MILLISECONDS) {
+                    log.debug("Deleting expired email packet: <" + file.getAbsolutePath() + ">");
+                    if (!file.delete())
+                        log.error("Can't delete file: <" + file.getAbsolutePath() + ">");
+                }
+            }
+            catch (Exception e) {
+                log.error("Can't create af EmailPacket from file: " + file.getAbsolutePath(), e);
+            }
     }
 }
