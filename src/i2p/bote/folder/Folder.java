@@ -106,11 +106,11 @@ public abstract class Folder<T> implements Iterable<T> {
             @Override
             public T next() {
                 File file = files[nextIndex];
+                nextIndex++;
                 String filePath = file.getAbsolutePath();
-                log.info("Reading file: '" + filePath + "'");
+                log.debug("Reading file: '" + filePath + "'");
                 try {
                     T nextElement = createFolderElement(file);
-                    nextIndex++;
                     return nextElement;
                 }
                 catch (Exception e) {
