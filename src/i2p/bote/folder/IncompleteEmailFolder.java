@@ -53,11 +53,6 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
         this.messageIdCache = messageIdCache;
     }
     
-    @Override
-    public void add(UnencryptedEmailPacket packetToStore) {
-        addEmailPacket(packetToStore);
-    }
-    
     /**
      * Same as {@link add(UnencryptedEmailPacket)}, but returns <code>true</code>
      * if an email was completed as a result of adding the packet.
