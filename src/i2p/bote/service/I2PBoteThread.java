@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
-public class I2PBoteThread extends I2PAppThread {
+public abstract class I2PBoteThread extends I2PAppThread {
     private Log log = new Log(I2PBoteThread.class);
     private CountDownLatch shutdownSignal;
     

@@ -35,7 +35,10 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
- * Uniquely identifies an email recipient.
+ * an <code>EmailDestination</code> uniquely identifies an email recipient. It consists
+ * of a public encryption key and a public signing key.
+ * The {@link CryptoImplementation} used by an Email Destination is not explicitly
+ * encoded in the base64 representation. It is determined by the length of the base64 string.
  */
 public class EmailDestination {
     private Log log = new Log(EmailDestination.class);
