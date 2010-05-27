@@ -23,22 +23,20 @@ package i2p.bote.crypto;
 
 import i2p.bote.Util;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.KeyFactory;
+import java.security.Key;
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.Security;
-import java.security.Signature;
 import java.security.SignatureException;
 import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
@@ -46,31 +44,34 @@ import java.security.spec.ECPoint;
 import java.security.spec.ECPrivateKeySpec;
 import java.security.spec.ECPublicKeySpec;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.Arrays;
 
 import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyAgreement;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
+import net.i2p.I2PAppContext;
 import net.i2p.data.Base64;
+import net.i2p.data.SessionKey;
 import net.i2p.util.Log;
 
 import org.bouncycastle.asn1.nist.NISTNamedCurves;
 import org.bouncycastle.asn1.x9.X9ECParameters;
+import org.bouncycastle.crypto.InvalidCipherTextException;
+import org.bouncycastle.crypto.paddings.PKCS7Padding;
 import org.bouncycastle.jce.ECPointUtil;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.provider.asymmetric.ec.EC5Util;
+import org.bouncycastle.jce.provider.asymmetric.ec.KeyAgreement;
+import org.bouncycastle.jce.provider.asymmetric.ec.KeyFactory;
+import org.bouncycastle.jce.provider.asymmetric.ec.KeyPairGenerator;
+import org.bouncycastle.jce.provider.asymmetric.ec.Signature.ecDSA256;
 import org.bouncycastle.jce.spec.ECNamedCurveSpec;
 
 /**
  * 521-bit ECDH with AES-256 and 521-bit ECDSA with SHA-256.
  * 
- * This class uses BouncyCastle for key encoding and decoding, but it can use any ECC provider for
- * encryption, signing, and key generation.
+ * This class uses BouncyCastle for key encoding and decoding, encryption, signing, and key generation.
  * 
  * Because the first 6 bits are always zero, public and private keys produced by this class always
  * start with an upper case A when base64-encoded. The leading A is omitted, which saves two
@@ -80,34 +81,33 @@ import org.bouncycastle.jce.spec.ECNamedCurveSpec;
  */
 public class ECDH521_ECDSA521 implements CryptoImplementation {
     private static final String CURVE_NAME = "P-521";   // The NIST P-521 curve, also known as secp521r1
-	private static final int IV_LENGTH = 16;   // length of the AES initialization vector
-	private static final int ENCODED_KEY_LENGTH = 66;   // length of a byte-encoded key
-	
-	private ECNamedCurveSpec ecParameterSpec;
-	private KeyPairGenerator encryptionKeyPairGenerator;
-	private KeyPairGenerator signingKeyPairGenerator;
+    private static final int BLOCK_SIZE = 16;   // length of the AES initialization vector; also the AES block size for padding
+    private static final int ENCODED_KEY_LENGTH = 66;   // length of a byte-encoded key
+    
+    private ECNamedCurveSpec ecParameterSpec;
+    private KeyPairGenerator.ECDH encryptionKeyPairGenerator;
+    private KeyPairGenerator.ECDSA signingKeyPairGenerator;
+    private BouncyECDHKeyFactory ecdhKeyFactory;
+    private BouncyECDSAKeyFactory ecdsaKeyFactory;
+    private I2PAppContext appContext;
     private Log log = new Log(ECDH521_ECDSA521.class);
-
-	ECDH521_ECDSA521() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-	    // Attempt to install the BouncyCastle JCE provider; if there is an error, continue anyway because a
-	    // provider might have been installed in lib/security/java.security.
-        try {
-            Security.addProvider(new BouncyCastleProvider());
-        } catch (Exception e) {
-            Log log = new Log(CryptoFactory.class);
-            log.debug("Can't instantiate crypto provider.", e);
-        }
-        
+    
+    ECDH521_ECDSA521() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         X9ECParameters params = NISTNamedCurves.getByName(CURVE_NAME);
         ecParameterSpec = new ECNamedCurveSpec(CURVE_NAME, params.getCurve(), params.getG(), params.getN(), params.getH(), null);
         
-		encryptionKeyPairGenerator = KeyPairGenerator.getInstance("ECDH");
+        encryptionKeyPairGenerator = new KeyPairGenerator.ECDH();
         encryptionKeyPairGenerator.initialize(ecParameterSpec);
         
-        signingKeyPairGenerator = KeyPairGenerator.getInstance("ECDSA");
+        signingKeyPairGenerator = new KeyPairGenerator.ECDSA();
         signingKeyPairGenerator.initialize(ecParameterSpec);
-	}
-	
+        
+        ecdhKeyFactory = new BouncyECDHKeyFactory();
+        ecdsaKeyFactory = new BouncyECDSAKeyFactory();
+        
+        appContext = new I2PAppContext();
+    }
+    
     @Override
     public String getName() {
         return Util._("521-bit Elliptic Curve Encryption");
@@ -225,16 +225,26 @@ public class ECDH521_ECDSA521 implements CryptoImplementation {
     @Override
     public PublicKeyPair createPublicKeyPair(byte[] bytes) throws GeneralSecurityException {
         PublicKeyPair keyPair = new PublicKeyPair();
-        keyPair.encryptionKey = createPublicKey(Arrays.copyOf(bytes, ENCODED_KEY_LENGTH), "ECDH");
-        keyPair.signingKey = createPublicKey(Arrays.copyOfRange(bytes, ENCODED_KEY_LENGTH, 2*ENCODED_KEY_LENGTH), "ECDSA");
+        
+        ECPublicKeySpec encryptionKeySpec = createPublicKeySpec(Arrays.copyOf(bytes, ENCODED_KEY_LENGTH));
+        keyPair.encryptionKey = ecdhKeyFactory.generatePublic(encryptionKeySpec);
+        
+        ECPublicKeySpec signingKeySpec = createPublicKeySpec(Arrays.copyOfRange(bytes, ENCODED_KEY_LENGTH, 2*ENCODED_KEY_LENGTH));
+        keyPair.signingKey = ecdsaKeyFactory.generatePublic(signingKeySpec);
+        
         return keyPair;
     }
     
     @Override
     public PrivateKeyPair createPrivateKeyPair(byte[] bytes) throws GeneralSecurityException {
         PrivateKeyPair keyPair = new PrivateKeyPair();
-        keyPair.encryptionKey = createPrivateKey(Arrays.copyOf(bytes, ENCODED_KEY_LENGTH), "ECDH");
-        keyPair.signingKey = createPrivateKey(Arrays.copyOfRange(bytes, ENCODED_KEY_LENGTH, 2*ENCODED_KEY_LENGTH), "ECDSA");
+        
+        ECPrivateKeySpec encryptionKeySpec = createPrivateKeySpec(Arrays.copyOf(bytes, ENCODED_KEY_LENGTH));
+        keyPair.encryptionKey = ecdhKeyFactory.generatePrivate(encryptionKeySpec);
+        
+        ECPrivateKeySpec signingKeySpec = createPrivateKeySpec(Arrays.copyOfRange(bytes, ENCODED_KEY_LENGTH, 2*ENCODED_KEY_LENGTH));
+        keyPair.signingKey = ecdsaKeyFactory.generatePrivate(signingKeySpec);
+        
         return keyPair;
     }
     
@@ -276,35 +286,49 @@ public class ECDH521_ECDSA521 implements CryptoImplementation {
         return createPrivateKeyPair(bytes);
     }
 
-    private PrivateKey createPrivateKey(byte[] encodedKey, String keyType) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    private ECPrivateKeySpec createPrivateKeySpec(byte[] encodedKey) throws InvalidKeySpecException, NoSuchAlgorithmException {
         // make a private key from the private point s
         BigInteger s = new BigInteger(encodedKey);
-        ECPrivateKeySpec privateKeySpec = new ECPrivateKeySpec(s, ecParameterSpec);
-        PrivateKey key = KeyFactory.getInstance(keyType).generatePrivate(privateKeySpec);
-        
-        return key;
+        return new ECPrivateKeySpec(s, ecParameterSpec);
     }
     
-	/**
-	 * Encrypts a block of data using the following steps:
-	 * 
+    /**
+     * Encrypts a block of data using the following steps:
+     * 
      * 1. Generate an ephemeral EC key.
      * 2. Use that key and the public key of the recipient, generate a secret using ECDH.
      * 3. Use that secret as a key to encrypt the message with AES.
      * 4. Return the encrypted message and the ephemeral public key generated in step 1.
      * 
-	 * @throws NoSuchProviderException 
-	 * @throws NoSuchAlgorithmException 
-	 * @throws InvalidKeyException 
-	 * @throws NoSuchPaddingException 
-	 * @throws BadPaddingException 
-	 * @throws IllegalBlockSizeException 
-	 */
-	@Override
-	public byte[] encrypt(byte[] data, PublicKey encryptionKey) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+     * @throws NoSuchProviderException 
+     * @throws NoSuchAlgorithmException 
+     * @throws InvalidKeyException 
+     * @throws NoSuchPaddingException 
+     * @throws BadPaddingException 
+     * @throws IllegalBlockSizeException 
+     */
+    @Override
+    public byte[] encrypt(byte[] data, PublicKey encryptionKey) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+        
+        // pad the data
+        int lastBlockLength = data.length % BLOCK_SIZE;   // unpadded length of the last block
+        int lastBlockStart = data.length - lastBlockLength;
+        if (lastBlockLength > 0) {
+            byte[] lastBlock = new byte[BLOCK_SIZE];
+            System.arraycopy(data, lastBlockStart, lastBlock, 0, lastBlockLength);
+            PKCS7Padding padding = new PKCS7Padding();
+            int numAdded = padding.addPadding(lastBlock, lastBlockLength);
+            if (numAdded != BLOCK_SIZE-lastBlockLength)
+                log.error("Error: " + numAdded + " pad bytes added, expected: " + (BLOCK_SIZE-lastBlockLength));
+            int paddedLength = lastBlockStart + BLOCK_SIZE;
+            byte[] paddedData = Arrays.copyOf(data, paddedLength);
+            System.arraycopy(lastBlock, 0, paddedData, lastBlockStart, BLOCK_SIZE);
+            data = paddedData;
+        }
+
         // generate an ephemeral EC key and a shared secret
         KeyPair ephKeyPair = encryptionKeyPairGenerator.generateKeyPair();
-        KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
+        ECDHKeyAgreement keyAgreement = new ECDHKeyAgreement();
         keyAgreement.init(ephKeyPair.getPrivate());
         keyAgreement.doPhase(encryptionKey, true);
         byte[] sharedSecret = keyAgreement.generateSecret();
@@ -312,70 +336,77 @@ public class ECDH521_ECDSA521 implements CryptoImplementation {
         byte[] secretHash = hashAlg.digest(sharedSecret);
         
         // encrypt the data using the hash of the shared secret as an AES key
-        SecretKeySpec symmKeySpec = new SecretKeySpec(secretHash, "AES");
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, symmKeySpec);
+        SessionKey aesKey = new SessionKey(secretHash);
+        byte iv[] = new byte[BLOCK_SIZE];
+        appContext.random().nextBytes(iv);
+        byte[] encryptedData = new byte[data.length];
+        appContext.aes().encrypt(data, 0, encryptedData, 0, aesKey, iv, data.length);   // this method also checks that data.length is divisible by 16
+        
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         try {
             byteStream.write(toByteArray(ephKeyPair.getPublic()));
-        	byte[] iv = cipher.getIV();
-        	if (iv.length != IV_LENGTH)
-        		log.error("Length of the initialization vector is " + iv.length + ", should be " + IV_LENGTH);
-			byteStream.write(iv);
-			byteStream.write(cipher.doFinal(data));
-		} catch (IOException e) {
-			log.debug("Can't write to ByteArrayOutputStream.", e);
-		}
-        byte[] encrypted = byteStream.toByteArray();
-        
-        return encrypted;
-	}
-
-	/**
+            byteStream.write(iv);
+            byteStream.write(encryptedData);
+        } catch (IOException e) {
+            log.debug("Can't write to ByteArrayOutputStream.", e);
+        }
+        return byteStream.toByteArray();
+    }
+    
+    /**
      * Signs a block of data using the following steps:
      * 
      * 1. Read the ephemeral public key from the message.
      * 2. Use that public key together with your recipient key to generate a secret using ECDH.
      * 3. Use that secret as a key to decrypt the message with AES.
      * 
-	 * @throws NoSuchProviderException 
-	 * @throws NoSuchAlgorithmException 
-	 * @throws InvalidKeyException 
-	 * @throws InvalidAlgorithmParameterException 
-	 * @throws BadPaddingException 
-	 * @throws IllegalBlockSizeException 
-	 * @throws NoSuchPaddingException 
-	 * @throws InvalidKeySpecException 
-	 */
-	@Override
-	public byte[] decrypt(byte[] data, PrivateKey key) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeySpecException {
-		KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
-        keyAgreement.init(key);
+     * @throws NoSuchAlgorithmException 
+     * @throws InvalidKeyException 
+     * @throws InvalidKeySpecException 
+     * @throws InvalidCipherTextException 
+     */
+    @Override
+    public byte[] decrypt(byte[] data, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, InvalidCipherTextException {
+        ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
+        try {
+            byte[] encodedKey = new byte[ENCODED_KEY_LENGTH];
+            byteStream.read(encodedKey);
+            ECPublicKeySpec ephPublicKeySpec = createPublicKeySpec(encodedKey);
+            PublicKey ephPublicKey = ecdhKeyFactory.generatePublic(ephPublicKeySpec);
         
-        byte[] encodedKey = Arrays.copyOf(data, ENCODED_KEY_LENGTH);
-        PublicKey ephPublicKey = createPublicKey(encodedKey, "ECDH");
+            ECDHKeyAgreement keyAgreement = new ECDHKeyAgreement();
+            keyAgreement.init(key);
+            keyAgreement.doPhase(ephPublicKey, true);
+            byte[] sharedSecret = keyAgreement.generateSecret();
+            MessageDigest hashAlg = MessageDigest.getInstance("SHA-256");
+            byte[] secretHash = hashAlg.digest(sharedSecret);
         
-        keyAgreement.doPhase(ephPublicKey, true);
-        byte[] sharedSecret = keyAgreement.generateSecret();
-        MessageDigest hashAlg = MessageDigest.getInstance("SHA-256");
-        byte[] secretHash = hashAlg.digest(sharedSecret);
-        
-        SecretKeySpec symmKeySpec = new SecretKeySpec(secretHash, "AES");
-        if (data.length < ENCODED_KEY_LENGTH+IV_LENGTH)
-            log.error("Can't read all " + IV_LENGTH + " bytes of the initialization vector from the encrypted data.");
-        byte[] iv = Arrays.copyOfRange(data, ENCODED_KEY_LENGTH, ENCODED_KEY_LENGTH+IV_LENGTH);
-        IvParameterSpec ivSpec = new IvParameterSpec(iv);
-        
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, symmKeySpec, ivSpec);
-        byte[] encryptedData = Arrays.copyOfRange(data, ENCODED_KEY_LENGTH+IV_LENGTH, data.length);
-        byte[] decryptedData = cipher.doFinal(encryptedData);
-        
-        return decryptedData;
-	}
+            // decrypt using the shared secret as an AES key
+            byte[] iv = new byte[BLOCK_SIZE];
+            byteStream.read(iv);
+            byte[] encryptedData = Util.readInputStream(byteStream);
+            SessionKey aesKey = new SessionKey(secretHash);
+            byte[] decryptedData = new byte[encryptedData.length];
+            if (encryptedData.length%16 != 0)
+                log.error("Length of encrypted data is not divisible by " + BLOCK_SIZE + ". Length=" + decryptedData.length);
+            appContext.aes().decrypt(encryptedData, 0, decryptedData, 0, aesKey, iv, decryptedData.length);
+            
+            // unpad the decrypted data
+            byte[] lastBlock = Arrays.copyOfRange(decryptedData, decryptedData.length-BLOCK_SIZE, decryptedData.length);
+            PKCS7Padding padding = new PKCS7Padding();
+            int padCount = padding.padCount(lastBlock);
+            decryptedData = Arrays.copyOf(decryptedData, decryptedData.length-padCount);
+            
+            return decryptedData;
+        }
+        catch (IOException e) {
+            log.debug("Can't read from ByteArrayOutputStream.", e);
+            return null;
+        }
+    }
 
-	private PublicKey createPublicKey(byte[] encodedKey, String keyType) throws InvalidKeySpecException, NoSuchAlgorithmException {
-		// convert the key to the format used by BouncyCastle, which adds one byte
+    private ECPublicKeySpec createPublicKeySpec(byte[] encodedKey) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        // convert the key to the format used by BouncyCastle, which adds one byte
         byte[] bouncyCompressedKey = new byte[ENCODED_KEY_LENGTH+1];
         System.arraycopy(encodedKey, 0, bouncyCompressedKey, 1, ENCODED_KEY_LENGTH);
         bouncyCompressedKey[0] = (byte)((bouncyCompressedKey[1] >> 1) + 2);
@@ -385,28 +416,91 @@ public class ECDH521_ECDSA521 implements CryptoImplementation {
         
         // make a public key from the public point w
         ECPublicKeySpec publicKeySpec = new ECPublicKeySpec(w, ecParameterSpec);
-        PublicKey key = KeyFactory.getInstance(keyType).generatePublic(publicKeySpec);
         
-        return key;
-	}
-	
-	@Override
-	public byte[] sign(byte[] data, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        Signature signatureAlg = Signature.getInstance("SHA256WITHECDSA");
+        return publicKeySpec;
+    }
+    
+    @Override
+    public byte[] sign(byte[] data, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        BouncyECDSASigner signatureAlg = new BouncyECDSASigner();
         signatureAlg.initSign(key);
         signatureAlg.update(data);
         byte[] signature = signatureAlg.sign();
         
         return signature;
-	}
+    }
 
-	@Override
-	public boolean verify(byte[] data, byte[] signature, PublicKey key) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException {
-	    Signature signatureAlg = Signature.getInstance("SHA256WITHECDSA");
+    @Override
+    public boolean verify(byte[] data, byte[] signature, PublicKey key) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException {
+        BouncyECDSASigner signatureAlg = new BouncyECDSASigner();
         signatureAlg.initVerify(key);
         signatureAlg.update(data);
         boolean valid = signatureAlg.verify(signature);
         
         return valid;
-	}
+    }
+    
+    /** This class exposes the protected <code>engine*</code> methods in {@link KeyAgreement.DH} */
+    private class ECDHKeyAgreement extends KeyAgreement.DH {
+        
+        public void init(Key key) throws InvalidKeyException {
+            engineInit(key, appContext.random());
+        }
+        
+        public void doPhase(Key key, boolean lastPhase) throws InvalidKeyException, IllegalStateException {
+            engineDoPhase(key, lastPhase);
+        }
+        
+        public byte[] generateSecret() {
+            return engineGenerateSecret();
+        }
+    }
+    
+    /** This class exposes the protected <code>engine*</code> methods in {@link KeyFactory.ECDH} */
+    private class BouncyECDHKeyFactory extends KeyFactory.ECDH {
+        
+        public PublicKey generatePublic(KeySpec keySpec) throws InvalidKeySpecException {
+            return engineGeneratePublic(keySpec);
+        }
+        
+        public PrivateKey generatePrivate(KeySpec keySpec) throws InvalidKeySpecException {
+            return engineGeneratePrivate(keySpec);
+        }
+    }
+    
+    /** This class exposes the protected <code>engine*</code> methods in {@link KeyFactory.ECDSA} */
+    private class BouncyECDSAKeyFactory extends KeyFactory.ECDSA {
+        
+        public PublicKey generatePublic(KeySpec keySpec) throws InvalidKeySpecException {
+            return engineGeneratePublic(keySpec);
+        }
+        
+        public PrivateKey generatePrivate(KeySpec keySpec) throws InvalidKeySpecException {
+            return engineGeneratePrivate(keySpec);
+        }
+    }
+    
+    /** This class exposes the protected <code>engine*</code> methods in {@link Signature.ecDSA256} */
+    private class BouncyECDSASigner extends ecDSA256 {
+        
+        public final void initSign(PrivateKey privateKey) throws InvalidKeyException {
+            engineInitSign(privateKey);
+        }
+        
+        public final void initVerify(PublicKey publicKey) throws InvalidKeyException {
+            engineInitVerify(publicKey);
+        }
+        
+        public final void update(byte[] data) throws SignatureException {
+            engineUpdate(data, 0, data.length);
+        }
+        
+        public final byte[] sign() throws SignatureException {
+            return engineSign();
+        }
+        
+        public final boolean verify(byte[] signature) throws SignatureException {
+            return engineVerify(signature);
+        }
+    }
 }

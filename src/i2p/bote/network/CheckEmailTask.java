@@ -202,7 +202,7 @@ public class CheckEmailTask implements Callable<Boolean> {
                         UniqueId delAuthorization = decryptedPacket.getDeleteAuthorization();
                         sendDeleteRequest(emailPacketKey, delAuthorization, peer);
                     }
-                    catch (GeneralSecurityException e) {
+                    catch (Exception e) {
                         log.error("Can't decrypt email packet: " + emailPacket, e);
                     }
                 }

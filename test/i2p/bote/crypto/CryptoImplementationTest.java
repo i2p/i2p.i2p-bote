@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -104,7 +105,7 @@ public class CryptoImplementationTest {
     }
 
     @Test
-    public void encryptAndDecrypt() throws GeneralSecurityException {
+    public void encryptAndDecrypt() throws GeneralSecurityException, InvalidCipherTextException {
         for (TestData testData: testDataSet) {
             CryptoImplementation cryptoImpl = testData.cryptoImpl;
             KeyPair encryptionKeys = testData.encryptionKeys;

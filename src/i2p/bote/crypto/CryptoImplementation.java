@@ -26,6 +26,8 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+import org.bouncycastle.crypto.InvalidCipherTextException;
+
 /**
  * Interface for all encryption/signature algorithm combinations supported by
  * I2P-Bote. Also contains methods for converting between Base64 keys and
@@ -122,7 +124,7 @@ public interface CryptoImplementation {
     
 	byte[] encrypt(byte[] data, PublicKey key) throws GeneralSecurityException;
 	
-	byte[] decrypt(byte[] data, PrivateKey key) throws GeneralSecurityException;
+	byte[] decrypt(byte[] data, PrivateKey key) throws GeneralSecurityException, InvalidCipherTextException;
 	
 	byte[] sign(byte[] data, PrivateKey key) throws GeneralSecurityException;
 	
