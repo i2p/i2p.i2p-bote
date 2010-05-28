@@ -60,8 +60,10 @@ public class EmailPacketFolder extends DhtPacketFolder<EncryptedEmailPacket> imp
     @Override
     public DhtStorablePacket retrieve(Hash dhtKey) {
         DhtStorablePacket packet = super.retrieve(dhtKey);
-        if (!(packet instanceof EncryptedEmailPacket)) {
-            log.error("Packet of type " + (packet==null?"<null>":packet.getClass().getSimpleName()) + " found in " + getClass().getSimpleName());
+        if (packet == null)
+            return null;
+        else if (!(packet instanceof EncryptedEmailPacket)) {
+            log.error("Packet of type " + packet.getClass().getSimpleName() + " found in " + getClass().getSimpleName());
             return null;
         }
         else {

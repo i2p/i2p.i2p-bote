@@ -167,11 +167,8 @@ public class OutboxProcessor extends I2PBoteThread {
             Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity, recipient);
             
             IndexPacket indexPacket = new IndexPacket(recipientDest);
-            Map<EncryptedEmailPacket, UniqueId> encryptedPackets = new HashMap<EncryptedEmailPacket, UniqueId>();
             for (UnencryptedEmailPacket unencryptedPacket: emailPackets) {
-                UniqueId delAuthorization = new UniqueId();
                 EncryptedEmailPacket emailPacket = new EncryptedEmailPacket(unencryptedPacket, recipientDest);
-                encryptedPackets.put(emailPacket, delAuthorization);
                 dht.store(emailPacket);
                 indexPacket.put(emailPacket);
             }
