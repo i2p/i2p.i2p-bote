@@ -27,7 +27,6 @@ import i2p.bote.email.EmailIdentity;
 import i2p.bote.folder.EmailPacketFolder;
 import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
-import i2p.bote.network.kademlia.KademliaConstants;
 import i2p.bote.packet.EmailPacketDeleteRequest;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
@@ -110,7 +109,7 @@ public class CheckEmailTask implements Callable<Boolean> {
         Collection<Future<?>> futureResults = new ArrayList<Future<?>>();
         ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS, EMAIL_PACKET_TASK_THREAD_FACTORY);
         for (IndexPacketEntry entry: mergedPacket) {
-            Runnable task = new EmailPacketTask(entry.emailPacketKey, entry.delAuthorization);
+            Runnable task = new EmailPacketTask(entry.emailPacketKey);
             futureResults.add(executor.submit(task));
         }
         
@@ -164,16 +163,13 @@ public class CheckEmailTask implements Callable<Boolean> {
      */
     private class EmailPacketTask implements Runnable {
         private Hash emailPacketKey;
-        private UniqueId indexPacketDelAuth;
         
         /**
          * 
          * @param emailPacketKey The DHT key of the email packet to retrieve
-         * @param indexPacketDelAuth The delete authorization key for the index packet
          */
-        public EmailPacketTask(Hash emailPacketKey, UniqueId indexPacketDelAuth) {
+        public EmailPacketTask(Hash emailPacketKey) {
             this.emailPacketKey = emailPacketKey;
-            this.indexPacketDelAuth = indexPacketDelAuth;
         }
         
         /**
@@ -198,6 +194,10 @@ public class CheckEmailTask implements Callable<Boolean> {
                         if (validPacket == null) {
                             emailCompleted = incompleteEmailFolder.addEmailPacket(decryptedPacket);
                             validPacket = emailPacket;
+                            // successfully decrypted the email packet, add to delete requests
+                            synchronized(indexPacketDeleteRequest) {
+                                indexPacketDeleteRequest.put(emailPacketKey, decryptedPacket.getDeleteAuthorization());
+                            }
                         }
                         UniqueId delAuthorization = decryptedPacket.getDeleteAuthorization();
                         sendDeleteRequest(emailPacketKey, delAuthorization, peer);
@@ -210,15 +210,6 @@ public class CheckEmailTask implements Callable<Boolean> {
                     if (packet != null)
                         log.error("DHT returned packet of class " + packet.getClass().getSimpleName() + ", expected EmailPacket.");
             }
-            
-            // For safety, check the number of responses for the email packet before deleting the index packet entry from the DHT.
-            // Deleting an index packet entry before the email packet is received is very bad because the email packet will be gone forever.
-            // We assume that if enough responses (negative or positive) are received for an email packet retrieve request, it is safe to
-            // delete the index packet entry.
-            if (results.getTotalResponses() > KademliaConstants.K*3/4)
-                synchronized(indexPacketDeleteRequest) {
-                    indexPacketDeleteRequest.put(emailPacketKey, indexPacketDelAuth);
-                }
             
             newEmail |= emailCompleted;
         }
