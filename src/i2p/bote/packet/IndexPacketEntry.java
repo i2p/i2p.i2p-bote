@@ -22,6 +22,7 @@
 package i2p.bote.packet;
 
 import i2p.bote.UniqueId;
+import i2p.bote.Util;
 import net.i2p.data.Hash;
 
 /**
@@ -35,11 +36,11 @@ public class IndexPacketEntry {
     public long storeTime;   // milliseconds since 1-1-1970
     
     public IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash) {
-        this(emailPacketKey, delVerificationHash, zeroId(), 0);
+        this(emailPacketKey, delVerificationHash, Util.zeroId(), 0);
     }
     
     public IndexPacketEntry(Hash emailPacketKey, UniqueId delAuthorization, long storeTime) {
-        this(emailPacketKey, zeroHash(), delAuthorization, storeTime);
+        this(emailPacketKey, Util.zeroHash(), delAuthorization, storeTime);
     }
     
     public IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash, UniqueId delAuthorization, long storeTime) {
@@ -47,13 +48,5 @@ public class IndexPacketEntry {
         this.delVerificationHash = delVerificationHash;
         this.delAuthorization = delAuthorization;
         this.storeTime = storeTime;
-    }
-    
-    private static UniqueId zeroId() {
-        return new UniqueId(new byte[UniqueId.LENGTH], 0);
-    }
-    
-    private static Hash zeroHash() {
-        return new Hash(new byte[Hash.HASH_LENGTH]);
     }
 }

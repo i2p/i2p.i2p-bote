@@ -22,6 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
+import i2p.bote.Util;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.IndexPacket;
@@ -95,8 +96,10 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
         }
         else {
             IndexPacket indexPacket = (IndexPacket)packet;
-            for (IndexPacketEntry entry: indexPacket)
+            for (IndexPacketEntry entry: indexPacket) {
+                entry.delAuthorization = Util.zeroId();
                 entry.storeTime = 0;
+            }
             return indexPacket;
         }
     }
@@ -153,25 +156,28 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
      */
     public synchronized void process(IndexPacketDeleteRequest delRequest) {
         log.debug("Processing delete request: " + delRequest);
-        Hash dhtKey = delRequest.getEmailDestHash();
-        DhtStorablePacket storedPacket = retrieve(dhtKey);
+        Hash destHash = delRequest.getEmailDestHash();
+        DhtStorablePacket storedPacket = retrieve(destHash);
         if (storedPacket instanceof IndexPacket) {
             IndexPacket indexPacket = (IndexPacket)storedPacket;
             Collection<Hash> keysToDelete = delRequest.getDhtKeys();
         
             for (Hash keyToDelete: keysToDelete) {
-                UniqueId delAuthorizationFromRequest = delRequest.getDeleteAuthorization(keyToDelete);
-                UniqueId storedDeleteAuthorization = indexPacket.getDeleteAuthorization(keyToDelete);
-                if (storedDeleteAuthorization == null)
-                    log.debug("Delete Authorization key " + delAuthorizationFromRequest + " from IndexPacketDeleteRequest not found in index packet for destination " + dhtKey);
-                else if (storedDeleteAuthorization.equals(delAuthorizationFromRequest))
-                    remove(indexPacket, keyToDelete, storedDeleteAuthorization);
-                else
-                    log.debug("Delete authorization in IndexPacketDeleteRequest does not match. Should be: <" + storedDeleteAuthorization + ">, is <" + delAuthorizationFromRequest +">");
+                Hash expectedVerificationHash = indexPacket.getDeleteVerificationHash(keyToDelete);
+                if (expectedVerificationHash == null)
+                    log.debug("Email packet key " + keyToDelete + " from IndexPacketDeleteRequest not found in index packet for destination " + destHash);
+                else {
+                    UniqueId delAuthorization = delRequest.getDeleteAuthorization(keyToDelete);
+                    Hash actualVerificationHash = new Hash(delAuthorization.toByteArray());
+                    if (expectedVerificationHash.equals(actualVerificationHash))
+                        remove(indexPacket, keyToDelete, delAuthorization);
+                    else
+                        log.debug("Invalid delete verification hash in IndexPacketDeleteRequest. Should be: <" + expectedVerificationHash.toBase64() + ">, is <" + actualVerificationHash.toBase64() +">");
+                }
             }
         }
         else
-            log.debug("IndexPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
+            log.debug("IndexPacket expected for DHT key <" + destHash + ">, found " + storedPacket.getClass().getSimpleName());
     }
 
     /**

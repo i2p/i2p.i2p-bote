@@ -41,8 +41,7 @@ import net.i2p.util.Log;
 
 /**
  * Contains {@link IndexPacketEntry} objects for an Email Destination.
- * Index Packets can be sent between two peers, or stored in a file. They are used
- * in four different scenarios:
+ * Index Packets can be sent between two peers, or stored in a file. They are used when:
  * 
  *   1. A peer sends an Index Packet to another peer in a Store Request, or
  *      responds to a Retrieve Request.
@@ -148,6 +147,11 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
         return byteStream.toByteArray();
     }
     
+    /**
+     * Adds a new entry containing the DHT key and Delete Verification Hash of an Email Packet.
+     * If an entry with the same DHT key exists already, nothing happens.
+     * @param emailPacket
+     */
     public void put(EncryptedEmailPacket emailPacket) {
         Hash emailPacketKey = emailPacket.getDhtKey();
         Hash delVerificationHash = emailPacket.getDeleteVerificationHash();
@@ -192,18 +196,18 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
     }
     
     /**
-     * Returns the delete authorization key for an email packet DHT key,
+     * Returns the delete verification hash for an email packet DHT key,
      * or <code>null</code> if the index packet doesn't contain the
      * DHT key.
      * @param emailPacketKey
      * @return
      */
-    public UniqueId getDeleteAuthorization(Hash emailPacketKey) {
+    public Hash getDeleteVerificationHash(Hash emailPacketKey) {
         IndexPacketEntry entry = getEntry(emailPacketKey);
         if (entry == null)
             return null;
         else
-            return entry.delAuthorization;
+            return entry.delVerificationHash;
     }
     
     /**
