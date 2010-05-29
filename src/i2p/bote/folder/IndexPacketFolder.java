@@ -22,13 +22,12 @@
 package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
-import i2p.bote.Util;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
+import i2p.bote.packet.DeletionInfoPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.IndexPacketDeleteRequest;
 import i2p.bote.packet.IndexPacketEntry;
-import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
@@ -44,14 +43,10 @@ import net.i2p.util.Log;
  * It differs from {@link DhtPacketFolder} in the following ways:
  *  * It doesn't overwrite an existing packet when a new packet is stored under the same key,
  *    but merges the packets.
- *  * It retains DHT keys of deleted packets in a file named <code>DEL_<dht_key>.pkt</code>
- *    for later reference. These files use the same format as Index Packet files.
- *  * The <code>retrieve</code> method encrypts Index Packets.
- * 
+ *  * It retains DHT keys of deleted packets in a {@link DeletionInfoPacket} file named
+ *    <code>DEL_<dht_key>.pkt</code>, where <dht_key> is the DHT key of the index packet.
  */
-public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements PacketListener, ExpirationListener {
-    private static final String DEL_FILE_PREFIX = "DEL_";
-    
+public class IndexPacketFolder extends DeletionAwareFolder<IndexPacket> implements PacketListener, ExpirationListener {
     private final Log log = new Log(IndexPacketFolder.class);
 
     public IndexPacketFolder(File storageDir) {
@@ -96,51 +91,12 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
         }
         else {
             IndexPacket indexPacket = (IndexPacket)packet;
-            for (IndexPacketEntry entry: indexPacket) {
-                entry.delAuthorization = Util.zeroId();
+            for (IndexPacketEntry entry: indexPacket)
                 entry.storeTime = 0;
-            }
             return indexPacket;
         }
     }
     
-    @Override
-    public void delete(Hash dhtKey) {
-        throw new UnsupportedOperationException("Index packets are never deleted. Use remove(Hash, Hash) to remove an entry from an index packet file.");
-    }
-    
-    /**
-     * Adds a DHT key of an Email Packet to the list of deleted packets and sets the
-     * delete authorization key.
-     * If the key is already on the list, nothing happens.
-     * @param indexPacket
-     * @param dhtKey
-     * @param delAuthorization
-     */
-    private void addToDeletedPackets(IndexPacket indexPacket, Hash dhtKey, UniqueId delAuthorization) {
-        String delFileName = DEL_FILE_PREFIX + getFilename(indexPacket);
-        File delFile = new File(storageDir, delFileName);
-
-        // read delete list from file or create a new one if file doesn't exist
-        DhtStorablePacket delListPacket;
-        if (!delFile.exists())
-            delListPacket = new IndexPacket(indexPacket);
-        else {
-            try {
-                delListPacket = DhtStorablePacket.createPacket(delFile);
-            } catch (MalformedDataPacketException e) {
-                log.error("Cannot read Delete List Packet, creating a new one: <" + delFile.getAbsolutePath() + ">", e);
-                delListPacket = new IndexPacket(indexPacket);
-            }
-            if (!(delListPacket instanceof IndexPacket)) {
-                log.error("Not an Index Packet file: <" + delFile + ">");
-                return;
-            }
-        }
-        ((IndexPacket)delListPacket).put(dhtKey, delAuthorization);
-        add(delListPacket, delFileName);
-    }
-
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
         if (packet instanceof IndexPacketDeleteRequest) {
@@ -161,22 +117,24 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
         if (storedPacket instanceof IndexPacket) {
             IndexPacket indexPacket = (IndexPacket)storedPacket;
             Collection<Hash> keysToDelete = delRequest.getDhtKeys();
-        
+            
             for (Hash keyToDelete: keysToDelete) {
+                // verify
                 Hash expectedVerificationHash = indexPacket.getDeleteVerificationHash(keyToDelete);
                 if (expectedVerificationHash == null)
                     log.debug("Email packet key " + keyToDelete + " from IndexPacketDeleteRequest not found in index packet for destination " + destHash);
                 else {
                     UniqueId delAuthorization = delRequest.getDeleteAuthorization(keyToDelete);
                     Hash actualVerificationHash = new Hash(delAuthorization.toByteArray());
-                    if (expectedVerificationHash.equals(actualVerificationHash))
+                    boolean valid = expectedVerificationHash.equals(actualVerificationHash);
+                    if (valid)
                         remove(indexPacket, keyToDelete, delAuthorization);
                     else
                         log.debug("Invalid delete verification hash in IndexPacketDeleteRequest. Should be: <" + expectedVerificationHash.toBase64() + ">, is <" + actualVerificationHash.toBase64() +">");
                 }
             }
         }
-        else
+        else if (storedPacket != null)
             log.debug("IndexPacket expected for DHT key <" + destHash + ">, found " + storedPacket.getClass().getSimpleName());
     }
 
@@ -187,15 +145,15 @@ public class IndexPacketFolder extends DhtPacketFolder<IndexPacket> implements P
      */
     private synchronized void remove(IndexPacket indexPacket, Hash emailPacketKey, UniqueId delAuthorization) {
         log.debug("Removing DHT key " + emailPacketKey + " from Index Packet for Email Dest " + indexPacket.getDhtKey());
-        if (delAuthorization == null)
-            log.debug("DHT key " + emailPacketKey + " not found in index packet " + indexPacket);
-        else {
-            indexPacket.remove(emailPacketKey);
-            addToDeletedPackets(indexPacket, emailPacketKey, delAuthorization);
-        }
+        indexPacket.remove(emailPacketKey);
+        String delFileName = DEL_FILE_PREFIX + getFilename(indexPacket);
+        addToDeletedPackets(delFileName, emailPacketKey, delAuthorization);
         super.store(indexPacket);   // don't merge, but overwrite the file with the entry removed
     }
 
+    /**
+     * Does not add a Deletion Record, just deletes the file.
+     */
     @Override
     public synchronized void deleteExpired() {
         long currentTime = System.currentTimeMillis();

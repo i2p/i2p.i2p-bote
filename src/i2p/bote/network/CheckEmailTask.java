@@ -222,14 +222,14 @@ public class CheckEmailTask implements Callable<Boolean> {
          * @param peer
          */
         private void sendDeleteRequest(Hash dhtKey, UniqueId delAuthorization, Destination peer) {
+            EmailPacketDeleteRequest request = new EmailPacketDeleteRequest(dhtKey, delAuthorization);
             if (localDestination.equals(peer)) {
                 log.debug("Handling email packet delete request locally. DHT key: " + dhtKey);
-                emailPacketFolder.delete(dhtKey);
+                emailPacketFolder.process(request);
             }
             else {
-                EmailPacketDeleteRequest packet = new EmailPacketDeleteRequest(dhtKey, delAuthorization);
                 log.debug("Sending an EmailPacketDeleteRequest for DHT key " + dhtKey + " to " + peer.calculateHash());
-                sendQueue.send(packet, peer);
+                sendQueue.send(request, peer);
             }
         }
    }

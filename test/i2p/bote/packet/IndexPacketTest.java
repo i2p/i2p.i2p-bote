@@ -84,12 +84,12 @@ public class IndexPacketTest {
     public void testToByteArray() throws SecurityException, IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
         // test the first index packet
         int arrayLength1 = indexPacket1.toByteArray().length;
-        int expectedLength1 = 2 + Hash.HASH_LENGTH + 4 + indexPacket1.getNumEntries() * (2*Hash.HASH_LENGTH+UniqueId.LENGTH+4);
+        int expectedLength1 = 2 + Hash.HASH_LENGTH + 4 + indexPacket1.getNumEntries() * (2*Hash.HASH_LENGTH+4);
         assertEquals(expectedLength1, arrayLength1);
         
         // test the second index packet
         int arrayLength2 = indexPacket2.toByteArray().length;
-        int expectedLength2 = 2 + Hash.HASH_LENGTH + 4 + indexPacket2.getNumEntries() * (2*Hash.HASH_LENGTH+UniqueId.LENGTH+4);
+        int expectedLength2 = 2 + Hash.HASH_LENGTH + 4 + indexPacket2.getNumEntries() * (2*Hash.HASH_LENGTH+4);
         assertEquals(expectedLength2, arrayLength2);
     }
     
@@ -122,9 +122,8 @@ public class IndexPacketTest {
                 // compare entryA and entryB
                 if (entryA.emailPacketKey.equals(entryB.emailPacketKey)) {
                     boolean delVerifEqual = (entryA.delVerificationHash==null && entryB.delVerificationHash==null) || entryA.delVerificationHash.equals(entryB.delVerificationHash);
-                    boolean delAuthEqual = (entryA.delAuthorization==null && entryB.delAuthorization==null) || entryA.delAuthorization.equals(entryB.delAuthorization);
                     boolean timeEqual = entryA.storeTime == entryB.storeTime;
-                    if (delVerifEqual && delAuthEqual && timeEqual) {
+                    if (delVerifEqual && timeEqual) {
                         found = true;
                         break;
                     }

@@ -21,7 +21,6 @@
 
 package i2p.bote.packet;
 
-import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
@@ -46,13 +45,10 @@ import net.i2p.util.Log;
  *   1. A peer sends an Index Packet to another peer in a Store Request, or
  *      responds to a Retrieve Request.
  *      Each entry contains an Email Packet key and a Delete Verification Hash.
- *      Delete Authorization and time stamp are not used.
+ *      The time stamp is zero.
  *   2. A peer stores entries in an Index Packet file.
  *      Each entry contains a an Email Packet key, a Delete Verification Hash,
- *      and a time stamp. The Delete Authorization field is left blank.
- *   3. A peer stores information about deleted Email Packets in a file. These
- *      files use the same format as regular Index Packet files, but the Delete
- *      Authorization field is not blank.
+ *      and a time stamp.
  * 
  * This class is not thread-safe.
  */
@@ -109,9 +105,8 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
             for (int i=0; i<numEntries; i++) {
                 Hash emailPacketKey = readHash(buffer);
                 Hash delVerificationHash = readHash(buffer);
-                UniqueId delAuthorization = new UniqueId(buffer);
                 long storeTime = buffer.getInt() * 1000L;
-                IndexPacketEntry entry = new IndexPacketEntry(emailPacketKey, delVerificationHash, delAuthorization, storeTime);
+                IndexPacketEntry entry = new IndexPacketEntry(emailPacketKey, delVerificationHash, storeTime);
                 entries.add(entry);
             }
         }
@@ -135,7 +130,6 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
             for (IndexPacketEntry entry: entries) {
                 dataStream.write(entry.emailPacketKey.toByteArray());
                 dataStream.write(entry.delVerificationHash.toByteArray());
-                dataStream.write(entry.delAuthorization.toByteArray());
                 dataStream.writeInt((int)(entry.storeTime/1000L));   // store as seconds
             }
         }
@@ -157,22 +151,6 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
         Hash delVerificationHash = emailPacket.getDeleteVerificationHash();
         IndexPacketEntry newEntry = new IndexPacketEntry(emailPacketKey, delVerificationHash);
         put(newEntry);
-    }
-    
-    /**
-     * Adds an entry containins an Email Packet DHT key and a Delete Authorization key.
-     * The time stamp is set to the current system time; the Delete Verification hash
-     * is not set.
-     * If the DHT key exists in the packet already, nothing happens.
-     * @param emailPacketKey
-     * @param delAuthorization
-     */
-    public void put(Hash emailPacketKey, UniqueId delAuthorization) {
-        if (contains(emailPacketKey))
-            return;
-        long storeTime = System.currentTimeMillis();
-        IndexPacketEntry newEntry = new IndexPacketEntry(emailPacketKey, delAuthorization, storeTime);
-        entries.add(newEntry);
     }
     
     public void put(Collection<EncryptedEmailPacket> emailPackets) {

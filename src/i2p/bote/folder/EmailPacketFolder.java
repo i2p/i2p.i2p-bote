@@ -24,6 +24,7 @@ package i2p.bote.folder;
 import i2p.bote.UniqueId;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
+import i2p.bote.packet.DeletionInfoPacket;
 import i2p.bote.packet.EmailPacketDeleteRequest;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.dht.DhtStorablePacket;
@@ -37,8 +38,15 @@ import net.i2p.util.Log;
 /**
  * A subclass of {@link DhtPacketFolder} that stores email packets and deletes them
  * upon {@link EmailPacketDeleteRequest}s.
+ * When a packet is deleted, its DHT key is added to a {@link DeletionInfoPacket} file
+ * whose file name starts with <code>DEL_</code>.
+ * 
+ * Deletion Records are kept until they expire (see {@link ExpirationListener}), so
+ * there will be a large number of them after a while. To keep the number of files to
+ * a reasonable level, the records are grouped together in Deletion Info Packets
+ * (unlike Email Packets, which are all stored in separate files).
  */
-public class EmailPacketFolder extends DhtPacketFolder<EncryptedEmailPacket> implements PacketListener, ExpirationListener {
+public class EmailPacketFolder extends DeletionAwareFolder<EncryptedEmailPacket> implements PacketListener, ExpirationListener {
     private Log log = new Log(EmailPacketFolder.class);
 
     public EmailPacketFolder(File storageDir) {
@@ -78,27 +86,47 @@ public class EmailPacketFolder extends DhtPacketFolder<EncryptedEmailPacket> imp
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
         if (packet instanceof EmailPacketDeleteRequest) {
             EmailPacketDeleteRequest delRequest = (EmailPacketDeleteRequest)packet;
-            
-            // see if the packet exists
-            Hash dhtKey = delRequest.getDhtKey();
-            DhtStorablePacket storedPacket = retrieve(dhtKey);
-            if (storedPacket instanceof EncryptedEmailPacket) {
-                // verify
-                Hash expectedHash = ((EncryptedEmailPacket)storedPacket).getDeleteVerificationHash();
-                UniqueId delAuthorization = delRequest.getAuthorization();
-                Hash actualHash = new Hash(delAuthorization.toByteArray());
-                boolean valid = actualHash.equals(expectedHash);
-            
-                if (valid)
-                    delete(dhtKey);
-                else
-                    log.debug("Invalid Delete Authorization in EmailPacketDeleteRequest. Should be: <" + expectedHash.toBase64() + ">, is <" + actualHash.toBase64() +">");
-            }
-            else
-                log.debug("EncryptedEmailPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
+            process(delRequest);
         }
     }
     
+    /**
+     * Deletes all index packet entries that match the keys in a delete request,
+     * and for which the request contains a valid delete authorization.
+     * @param delRequest
+     */
+    public synchronized void process(EmailPacketDeleteRequest delRequest) {
+        log.debug("Processing delete request: " + delRequest);
+        // see if the packet exists
+        Hash dhtKey = delRequest.getDhtKey();
+        DhtStorablePacket storedPacket = retrieve(dhtKey);
+        if (storedPacket instanceof EncryptedEmailPacket) {
+            // verify
+            Hash expectedHash = ((EncryptedEmailPacket)storedPacket).getDeleteVerificationHash();
+            UniqueId delAuthorization = delRequest.getAuthorization();
+            Hash actualHash = new Hash(delAuthorization.toByteArray());
+            boolean valid = actualHash.equals(expectedHash);
+        
+            if (valid)
+                delete(dhtKey, delAuthorization);
+            else
+                log.debug("Invalid Delete Authorization in EmailPacketDeleteRequest. Should be: <" + expectedHash.toBase64() + ">, is <" + actualHash.toBase64() +">");
+        }
+        else if (storedPacket != null)
+            log.debug("EncryptedEmailPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
+    }
+    
+    /**
+     * Deletes an Email Packet and adds its DHT key to the {@link DeletionInfoPacket} file.
+     * @param dhtKey
+     * @param delAuthorization
+     */
+    private void delete(Hash dhtKey, UniqueId delAuthorization) {
+        delete(dhtKey);
+        String delFileName = DEL_FILE_PREFIX + dhtKey.toBase64().substring(0, 2) + PACKET_FILE_EXTENSION;
+        addToDeletedPackets(delFileName, dhtKey, delAuthorization);
+    }
+
     @Override
     public synchronized void deleteExpired() {
         long currentTimeMillis = System.currentTimeMillis();

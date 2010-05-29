@@ -21,28 +21,29 @@
 
 package i2p.bote.packet;
 
+import i2p.bote.UniqueId;
 import net.i2p.data.Hash;
 
 /**
- * One entry in an {@link IndexPacket}.
+ * One entry in a {@link DeletionInfoPacket}.
  */
-public class IndexPacketEntry {
-    public Hash emailPacketKey;
-    public Hash delVerificationHash;
+public class DeletionRecord {
+    public Hash dhtKey;
+    public UniqueId delAuthorization;
     public long storeTime;   // milliseconds since 1-1-1970
     
     /**
-     * Constructs an <code>IndexPacketEntry</code> with a time stamp of 0.
-     * @param emailPacketKey
-     * @param delVerificationHash
+     * Creates a new {@link DeletionRecord} and sets the store time to the current time.
+     * @param dhtKey
+     * @param delAuthorization
      */
-    public IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash) {
-        this(emailPacketKey, delVerificationHash, 0);
+    public DeletionRecord(Hash dhtKey, UniqueId delAuthorization) {
+        this(dhtKey, delAuthorization, System.currentTimeMillis());
     }
     
-    public IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash, long storeTime) {
-        this.emailPacketKey = emailPacketKey;
-        this.delVerificationHash = delVerificationHash;
+    public DeletionRecord(Hash dhtKey, UniqueId delAuthorization, long storeTime) {
+        this.dhtKey = dhtKey;
+        this.delAuthorization = delAuthorization;
         this.storeTime = storeTime;
     }
 }

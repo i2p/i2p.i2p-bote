@@ -38,7 +38,7 @@ public abstract class I2PBotePacket {
     private static Class<? extends I2PBotePacket>[] ALL_PACKET_TYPES = new Class[] {
         RelayPacket.class, ResponsePacket.class, RetrieveRequest.class, StoreRequest.class, FindClosePeersPacket.class,
         PeerList.class, EncryptedEmailPacket.class, UnencryptedEmailPacket.class, IndexPacket.class,
-        EmailPacketDeleteRequest.class, IndexPacketDeleteRequest.class
+        EmailPacketDeleteRequest.class, IndexPacketDeleteRequest.class, DeletionInfoPacket.class
     };
     
     private int protocolVersion;

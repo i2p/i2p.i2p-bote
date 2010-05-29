@@ -29,7 +29,6 @@ import java.util.Collection;
 import java.util.concurrent.ThreadFactory;
 
 import net.i2p.I2PAppContext;
-import net.i2p.data.Hash;
 import net.i2p.util.Translate;
 
 public class Util {
@@ -138,9 +137,5 @@ public class Util {
     
     public static UniqueId zeroId() {
         return new UniqueId(new byte[UniqueId.LENGTH], 0);
-    }
-    
-    public static Hash zeroHash() {
-        return new Hash(new byte[Hash.HASH_LENGTH]);
     }
 }
