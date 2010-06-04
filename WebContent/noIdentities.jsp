@@ -57,10 +57,24 @@
     <ib:message>
         Do give out the email destination so others can contact you.
     </ib:message>
-    <br/>
+    </p><p>
     <ib:message>
         It is easy to create multiple identities for different purposes, or different
         contacts.
+    </ib:message>
+    </p><p>
+    <ib:message>
+        When you create a new email identity, you can choose the type of encryption that
+        will be used for outgoing emails. While all encryption algorithms offered by
+        I2P-Bote provide a high level of privacy, the length of an email destination
+        depends on the encryption used. The higher the number of bits, the longer the
+        email destination.
+    </ib:message>
+    <br/>
+    <ib:message>
+        Note that the same is not true for encryption strength. 256-bit elliptic curve
+        encryption is equivalent in strength to 3072-bit ElGamal. 521-bit elliptic curve
+        is equivalent to 15360-bit ElGamal.
     </ib:message>
     <form action="editIdentity.jsp?new=true" method="POST">
         <button type="submit" value="New"><ib:message key="Create a New Email Identity"/></button>
