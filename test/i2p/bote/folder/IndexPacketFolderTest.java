@@ -15,6 +15,7 @@ import i2p.bote.packet.dht.DhtStorablePacket;
 import java.io.File;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +29,9 @@ public class IndexPacketFolderTest {
     private IndexPacketFolder folder;
     private EncryptedEmailPacket emailPacket1;
     private EncryptedEmailPacket emailPacket2;
-    private EmailDestination destination;
+    private EmailDestination destination1;
+    private EmailDestination destination2;
+    private EmailDestination destination3;
     private File testDir;
     private File folderDir;
 
@@ -48,10 +51,12 @@ public class IndexPacketFolderTest {
         UnencryptedEmailPacket unencryptedPacket1 = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content1);
         UnencryptedEmailPacket unencryptedPacket2 = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content2);
         
-        String base64Dest = "m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UY";
-        destination = new EmailDestination(base64Dest);
-        emailPacket1 = new EncryptedEmailPacket(unencryptedPacket1, destination);
-        emailPacket2 = new EncryptedEmailPacket(unencryptedPacket2, destination);
+        destination1 = new EmailDestination("2XP9Ep3WWLk3-FTlMgUjgw4h8GYVBCvR6YrPyKdhP4xyQMSh8Da0VjZCmQGbD3PCeaGXAShBKbKjhJjQ7laekI");
+        destination2 = new EmailDestination("m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UY");
+        destination3 = new EmailDestination("0XuJjhgp58aOhvHHgpaxoQYsCUfDS6BECMEoVxFGEFPdk3y8lbzIsq9eUyeizFleMacYwoscCir8nQLlW34lxfRmirkNpD9vU1XnmjnZ5hGdnor1qIDqz3KJ040dVQ617MwyG97xxYLT0FsH907vBXgdc4RCHwKd1~9siagA5CSMaA~wM8ymKXLypiZGYexENLmim7nMzJTQYoOM~fVS99UaGJleDBN3pgZ2EvRYDQV2VqKH7Gee07R3y7b~c0tAKVHS0IbPQfTVJigrIHjTl~ZczxpaeTM04T8IgxKnO~lSmR1w7Ik8TpEkETwT9PDwUqQsjmlSY8E~WwwGMRJVyIRZUkHeRZ0aFq7us8W9EKzYtjjiU1z0QFpZrTfJE8oqCbnH5Lqv5Q86UdTPpriJC1N99E77TpCTnNzcBnpp6ko2JCy2IJUveaigKxS6EmS9KarkkkBRsckOKZZ6UNTOqPZsBCsx0Q9WvDF-Uc3dtouXWyenxRptaQsdkZyYlEQv");
+        
+        emailPacket1 = new EncryptedEmailPacket(unencryptedPacket1, destination1);
+        emailPacket2 = new EncryptedEmailPacket(unencryptedPacket2, destination2);
     }
 
     @Test
@@ -59,7 +64,7 @@ public class IndexPacketFolderTest {
         long cutoffTime = System.currentTimeMillis() - ExpirationListener.EXPIRATION_TIME_MILLISECONDS;
         
         // store a packet that expired 3 seconds ago
-        IndexPacket indexPacket = new IndexPacket(destination);
+        IndexPacket indexPacket = new IndexPacket(destination1);
         indexPacket.put(emailPacket1);
         long expirationTime1 = cutoffTime - 3*1000;
         setStoreTime(indexPacket, emailPacket1.getDhtKey(), expirationTime1);
@@ -104,6 +109,27 @@ public class IndexPacketFolderTest {
         testDir.delete();
     }
 
+    @Test
+    public void testIndividualPackets() {
+        IndexPacket indexPacket1 = new IndexPacket(destination1);
+        indexPacket1.put(emailPacket1);
+        IndexPacket indexPacket2 = new IndexPacket(destination2);
+        IndexPacket indexPacket3 = new IndexPacket(destination3);
+        indexPacket2.put(emailPacket1);
+        indexPacket2.put(emailPacket2);
+        folder.store(indexPacket1);
+        folder.store(indexPacket2);
+        folder.store(indexPacket3);
+        
+        Iterator<IndexPacket> iterator = folder.individualPackets();
+        int numIndivEntries = 0;
+        while (iterator.hasNext()) {
+            iterator.next();
+            numIndivEntries++;
+        }
+        assertEquals(3, numIndivEntries);
+    }
+    
     /**
      * A modified version of {@link IndexPacketFolder} that does not update the store times
      * of packet entries to the current time when the packet is written to a file.

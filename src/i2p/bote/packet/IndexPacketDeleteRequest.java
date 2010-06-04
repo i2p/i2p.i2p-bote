@@ -42,7 +42,7 @@ import net.i2p.util.Log;
  * This class is not thread-safe.
  */
 @TypeCode('X')
-public class IndexPacketDeleteRequest extends CommunicationPacket {
+public class IndexPacketDeleteRequest extends DeleteRequest {
     private Log log = new Log(IndexPacketDeleteRequest.class);
     private Hash emailDestHash;
     private Map<Hash, UniqueId> entries;
@@ -117,6 +117,11 @@ public class IndexPacketDeleteRequest extends CommunicationPacket {
         }
         
         return byteStream.toByteArray();
+    }
+
+    @Override
+    public Class<? extends I2PBotePacket> getDataType() {
+        return IndexPacket.class;
     }
 
     @Override

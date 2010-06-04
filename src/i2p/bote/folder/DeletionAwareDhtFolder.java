@@ -23,13 +23,15 @@ package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
 import i2p.bote.packet.DataPacket;
+import i2p.bote.packet.DeleteRequest;
 import i2p.bote.packet.DeletionInfoPacket;
-import i2p.bote.packet.DeletionRecord;
 import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import net.i2p.data.Hash;
@@ -39,12 +41,12 @@ import net.i2p.util.Log;
  * A <code>DhtPacketFolder</code> that keeps a record of DHT keys that have been deleted.
  * @param <T>
  */
-public abstract class DeletionAwareFolder<T extends DhtStorablePacket> extends DhtPacketFolder<T> {
+public abstract class DeletionAwareDhtFolder<T extends DhtStorablePacket> extends DhtPacketFolder<T> {
     protected static final String DEL_FILE_PREFIX = "DEL_";   // file name prefix for DeletionInfoPackets to distinguish them from regular DHT packets
     
-    private Log log = new Log(DeletionAwareFolder.class);
+    private Log log = new Log(DeletionAwareDhtFolder.class);
     
-    public DeletionAwareFolder(File storageDir) {
+    public DeletionAwareDhtFolder(File storageDir) {
         super(storageDir);
     }
 
@@ -56,7 +58,7 @@ public abstract class DeletionAwareFolder<T extends DhtStorablePacket> extends D
      * @param delAuthorization
      */
     protected void addToDeletedPackets(String delFileName, Hash dhtKey, UniqueId delAuthorization) {
-        DeletionInfoPacket packet = createPacket(delFileName);
+        DeletionInfoPacket packet = createDelInfoPacket(delFileName);
         if (packet == null) {
             log.debug("Creating a new Deletion Info Packet file: <" + delFileName + ">");
             packet = new DeletionInfoPacket();
@@ -66,27 +68,7 @@ public abstract class DeletionAwareFolder<T extends DhtStorablePacket> extends D
         add(packet, delFileName);
     }
     
-    /**
-     * Returns the Delete Authorization for a DHT key, or <code>null</code>
-     * if the key was not found.
-     * @param delFileName
-     * @param dhtKey
-     * @return
-     */
-    protected UniqueId getDeleteAuthorization(String delFileName, Hash dhtKey) {
-        DeletionInfoPacket packet = createPacket(delFileName);
-        if (packet == null)
-            return null;
-        else {
-            DeletionRecord entry = packet.getEntry(dhtKey);
-            if (entry == null)
-                return null;
-            else
-                return entry.delAuthorization;
-        }
-    }
-    
-    private DeletionInfoPacket createPacket(String delFileName) {
+    protected DeletionInfoPacket createDelInfoPacket(String delFileName) {
         File delFile = new File(storageDir, delFileName);
         try {
             DataPacket dataPacket = DataPacket.createPacket(delFile);
@@ -104,6 +86,10 @@ public abstract class DeletionAwareFolder<T extends DhtStorablePacket> extends D
         }
     }
     
+    public abstract DeleteRequest storeAndCreateDeleteRequest(DhtStorablePacket packetToStore);
+    
+    public abstract void process(DeleteRequest delRequest);
+    
     /** Overridden to only return real DHT packets, not Deletion Info Packets. */
     @Override
     public File[] getFilenames() {
@@ -112,5 +98,36 @@ public abstract class DeletionAwareFolder<T extends DhtStorablePacket> extends D
             if (!file.getName().startsWith(DEL_FILE_PREFIX))
                 filteredNames.add(file);
         return filteredNames.toArray(new File[0]);
+    }
+    
+    /** Overridden to only return real DHT packets, not Deletion Info Packets. */
+    @Override
+    public Iterator<T> individualPackets() {
+        final Iterator<File> fileIterator = Arrays.asList(getFilenames()).iterator();
+        
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return fileIterator.hasNext();
+            }
+
+            @Override
+            public T next() {
+                File nextFile = fileIterator.next();
+                try {
+                    T nextElement = createFolderElement(nextFile);
+                    return nextElement;
+                }
+                catch (Exception e) {
+                    log.error("Can't create a DhtStorablePacket from file: " + nextFile.getAbsolutePath(), e);
+                    return null;
+                }
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("Not supported.");
+            }
+        };
     }
 }

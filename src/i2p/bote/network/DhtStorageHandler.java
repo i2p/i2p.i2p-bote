@@ -22,6 +22,9 @@
 package i2p.bote.network;
 
 import i2p.bote.packet.dht.DhtStorablePacket;
+
+import java.util.Iterator;
+
 import net.i2p.data.Hash;
 
 /**
@@ -31,6 +34,9 @@ public interface DhtStorageHandler {
 
     void store(DhtStorablePacket packetToStore);
     
-    // Retrieves a packet by DHT key. If no matching packet is found, <code>null</code> is returned.
+    /** Retrieves a packet by DHT key. If no matching packet is found, <code>null</code> is returned. */
     DhtStorablePacket retrieve(Hash dhtKey);
+    
+    /** Returns all stored packets in the smallest possible units */
+    Iterator<? extends DhtStorablePacket> individualPackets();
 }

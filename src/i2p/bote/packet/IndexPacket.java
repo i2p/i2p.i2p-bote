@@ -62,7 +62,14 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
      * @param emailDestination Determines the DHT key of this Index Packet
      */
     public IndexPacket(EmailDestination emailDestination) {
-        destinationHash = emailDestination.getHash();
+        this(emailDestination.getHash());
+    }
+    
+    /**
+     * @param destinationHash The DHT key of this Index Packet
+     */
+    public IndexPacket(Hash destinationHash) {
+        this.destinationHash = destinationHash;
         entries = new ArrayList<IndexPacketEntry>();
     }
     

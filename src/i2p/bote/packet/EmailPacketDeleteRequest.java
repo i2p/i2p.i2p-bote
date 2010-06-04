@@ -31,7 +31,7 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 @TypeCode('D')
-public class EmailPacketDeleteRequest extends CommunicationPacket {
+public class EmailPacketDeleteRequest extends DeleteRequest {
     private Log log = new Log(EmailPacketDeleteRequest.class);
     private Hash dhtKey;
     private UniqueId authorization;
@@ -74,6 +74,11 @@ public class EmailPacketDeleteRequest extends CommunicationPacket {
         }
         
         return outputStream.toByteArray();
+    }
+
+    @Override
+    public Class<? extends I2PBotePacket> getDataType() {
+        return EncryptedEmailPacket.class;
     }
     
     @Override

@@ -24,12 +24,15 @@ package i2p.bote.folder;
 import i2p.bote.UniqueId;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
+import i2p.bote.packet.DeleteRequest;
 import i2p.bote.packet.DeletionInfoPacket;
+import i2p.bote.packet.DeletionRecord;
 import i2p.bote.packet.EmailPacketDeleteRequest;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
+import java.util.Iterator;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
@@ -46,7 +49,7 @@ import net.i2p.util.Log;
  * a reasonable level, the records are grouped together in Deletion Info Packets
  * (unlike Email Packets, which are all stored in separate files).
  */
-public class EmailPacketFolder extends DeletionAwareFolder<EncryptedEmailPacket> implements PacketListener, ExpirationListener {
+public class EmailPacketFolder extends DeletionAwareDhtFolder<EncryptedEmailPacket> implements PacketListener, ExpirationListener {
     private Log log = new Log(EmailPacketFolder.class);
 
     public EmailPacketFolder(File storageDir) {
@@ -56,12 +59,14 @@ public class EmailPacketFolder extends DeletionAwareFolder<EncryptedEmailPacket>
     /** Overridden to set a time stamp on the packet */
     @Override
     public void store(DhtStorablePacket packetToStore) {
-        if (packetToStore instanceof EncryptedEmailPacket) {
-            ((EncryptedEmailPacket)packetToStore).setStoreTime(System.currentTimeMillis());
-            super.store(packetToStore);
-        }
-        else
-            log.error("Not storing packet of type " + (packetToStore==null?"<null>":packetToStore.getClass().getSimpleName()) + " in EmailPacketFolder.");
+        if (!(packetToStore instanceof EncryptedEmailPacket))
+            throw new IllegalArgumentException("Invalid packet type: " + packetToStore.getClass().getSimpleName() + "; this folder only stores packets of type " + EncryptedEmailPacket.class.getSimpleName() + ".");
+        
+        EncryptedEmailPacket emailPacket = (EncryptedEmailPacket)packetToStore;
+        // If the packet didn't come with a time stamp, set it to the current time
+        if (emailPacket.getStoreTime() == 0)
+            emailPacket.setStoreTime(System.currentTimeMillis());
+        super.store(packetToStore);
     }
     
     /** Overridden to erase the time stamp because there is no need for other peers to see it. */
@@ -95,15 +100,20 @@ public class EmailPacketFolder extends DeletionAwareFolder<EncryptedEmailPacket>
      * and for which the request contains a valid delete authorization.
      * @param delRequest
      */
-    public synchronized void process(EmailPacketDeleteRequest delRequest) {
+    @Override
+    public synchronized void process(DeleteRequest delRequest) {
         log.debug("Processing delete request: " + delRequest);
+        if (!(delRequest instanceof EmailPacketDeleteRequest))
+            log.error("Invalid type of delete request for EmailPacketFolder: " + delRequest.getClass());
+        EmailPacketDeleteRequest emailPacketDelRequest = (EmailPacketDeleteRequest)delRequest;
+        
         // see if the packet exists
-        Hash dhtKey = delRequest.getDhtKey();
+        Hash dhtKey = emailPacketDelRequest.getDhtKey();
         DhtStorablePacket storedPacket = retrieve(dhtKey);
         if (storedPacket instanceof EncryptedEmailPacket) {
             // verify
             Hash expectedHash = ((EncryptedEmailPacket)storedPacket).getDeleteVerificationHash();
-            UniqueId delAuthorization = delRequest.getAuthorization();
+            UniqueId delAuthorization = emailPacketDelRequest.getAuthorization();
             Hash actualHash = new Hash(delAuthorization.toByteArray());
             boolean valid = actualHash.equals(expectedHash);
         
@@ -123,7 +133,7 @@ public class EmailPacketFolder extends DeletionAwareFolder<EncryptedEmailPacket>
      */
     private void delete(Hash dhtKey, UniqueId delAuthorization) {
         delete(dhtKey);
-        String delFileName = DEL_FILE_PREFIX + dhtKey.toBase64().substring(0, 2) + PACKET_FILE_EXTENSION;
+        String delFileName = getDeletionFileName(dhtKey);
         addToDeletedPackets(delFileName, dhtKey, delAuthorization);
     }
 
@@ -143,5 +153,37 @@ public class EmailPacketFolder extends DeletionAwareFolder<EncryptedEmailPacket>
             catch (Exception e) {
                 log.error("Can't create af EmailPacket from file: " + file.getAbsolutePath(), e);
             }
+    }
+    
+    private String getDeletionFileName(Hash dhtKey) {
+        return DEL_FILE_PREFIX + dhtKey.toBase64().substring(0, 2) + PACKET_FILE_EXTENSION;
+    }
+
+    @Override
+    public DeleteRequest storeAndCreateDeleteRequest(DhtStorablePacket packetToStore) {
+        if (!(packetToStore instanceof EncryptedEmailPacket))
+            throw new IllegalArgumentException("Invalid packet type: " + packetToStore.getClass().getSimpleName() + "; this folder only stores packets of type " + EncryptedEmailPacket.class.getSimpleName() + ".");
+        
+        DeleteRequest delRequest = null;
+        
+        // read the deletion info file for the email packet's DHT key
+        String delFileName = getDeletionFileName(packetToStore.getDhtKey());
+        DeletionInfoPacket delInfo = createDelInfoPacket(delFileName);
+        if (delInfo != null) {
+            Iterator<DeletionRecord> delRecords = delInfo.iterator();
+            // if there is a deletion record for the DHT key, make an EmailPacketDeleteRequest
+            if (delRecords.hasNext()) {
+                DeletionRecord delRecord = delRecords.next();
+                delRequest = new EmailPacketDeleteRequest(delRecord.dhtKey, delRecord.delAuthorization);
+                if (delRecords.hasNext())
+                    log.error("DeletionInfoPacket for EmailPacketFolder has more than one entry!");
+            }
+        }
+        
+        // if the DHT key has not been recorded as deleted, store the email packet
+        if (delRequest == null)
+            store(packetToStore);
+        
+        return delRequest;
     }
 }

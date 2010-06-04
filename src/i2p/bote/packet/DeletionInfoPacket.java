@@ -30,6 +30,7 @@ import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -41,7 +42,7 @@ import net.i2p.util.Log;
  * This class is not thread-safe.
  */
 @TypeCode('T')
-public class DeletionInfoPacket extends DataPacket {
+public class DeletionInfoPacket extends DataPacket implements Iterable<DeletionRecord> {
     private Collection<DeletionRecord> entries;
     private Log log = new Log(DeletionInfoPacket.class);
 
@@ -119,5 +120,13 @@ public class DeletionInfoPacket extends DataPacket {
             log.error("Can't write to ByteArrayOutputStream/DataOutputStream.", e);
         }
         return byteStream.toByteArray();
+    }
+    
+    public boolean isEmpty() {
+        return entries.isEmpty();
+    }
+    
+    public Iterator<DeletionRecord> iterator() {
+        return entries.iterator();
     }
 }

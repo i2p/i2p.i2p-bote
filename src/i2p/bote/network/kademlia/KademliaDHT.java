@@ -22,6 +22,7 @@
 package i2p.bote.network.kademlia;
 
 import i2p.bote.Util;
+import i2p.bote.folder.DeletionAwareDhtFolder;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.DhtPeerStats;
@@ -34,6 +35,7 @@ import i2p.bote.network.PacketListener;
 import i2p.bote.network.kademlia.SBucket.BucketSection;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
+import i2p.bote.packet.DeleteRequest;
 import i2p.bote.packet.PeerList;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
@@ -96,6 +98,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private I2PSendQueue sendQueue;
     private I2PPacketDispatcher i2pReceiver;
     private File peerFile;
+    private ReplicateThread replicateThread;   // is notified of <code>store</code> calls
     private Destination localDestination;
     private Hash localDestinationHash;
     private Set<KademliaPeer> initialPeers;
@@ -103,6 +106,12 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private Map<Class<? extends DhtStorablePacket>, DhtStorageHandler> storageHandlers;
     private volatile boolean connected;   // false until bootstrapping is done
 
+    /**
+     * 
+     * @param sendQueue
+     * @param i2pReceiver
+     * @param peerFile
+     */
     public KademliaDHT(I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile) {
         super("Kademlia");
         
@@ -123,6 +132,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         
         bucketManager = new BucketManager(localDestinationHash);
         storageHandlers = new ConcurrentHashMap<Class<? extends DhtStorablePacket>, DhtStorageHandler>();
+        replicateThread = new ReplicateThread(localDestination, sendQueue, i2pReceiver, bucketManager);
     }
     
     /**
@@ -151,6 +161,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     @Override
     public void setStorageHandler(Class<? extends DhtStorablePacket> packetType, DhtStorageHandler storageHandler) {
         storageHandlers.put(packetType, storageHandler);
+        replicateThread.addDhtStoreToReplicate(storageHandler);
     }
 
     @Override
@@ -379,7 +390,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         
         // refresh k-buckets
         for (KBucket bucket: Util.synchronizedCopy(bucketManager))
-            if (now > bucket.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000) {
+            if (now > bucket.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL) {
                 log.info("Refreshing k-bucket: " + bucket);
                 refresh(bucket);
             }
@@ -393,7 +404,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         BucketSection[] sections = sBucket.getSections();
         for (int i=0; i<sections.length; i++) {
             BucketSection section = sections[i];
-            if (now > section.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL*1000) {
+            if (now > section.getLastLookupTime() + KademliaConstants.BUCKET_REFRESH_INTERVAL) {
                 log.info("Refreshing s-bucket section " + i + " of " + sections.length + " (last refresh: " + new Date(section.getLastLookupTime()) + ")");
                 refresh(section);
             }
@@ -577,7 +588,16 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             sendPeerList((FindClosePeersPacket)packet, sender);
         else if (packet instanceof StoreRequest) {
             DhtStorablePacket packetToStore = ((StoreRequest)packet).getPacketToStore();
-            storeLocally(packetToStore);
+            // If another peer is trying to store a packet that we know has been deleted, let them know and don't store the packet.
+            DhtStorageHandler storageHandler = storageHandlers.get(packetToStore.getClass());
+            if (storageHandler instanceof DeletionAwareDhtFolder<?>) {
+                DeletionAwareDhtFolder<?> folder = (DeletionAwareDhtFolder<?>)storageHandler;
+                DeleteRequest delRequest = folder.storeAndCreateDeleteRequest(packetToStore);
+                if (delRequest != null)
+                    sendQueue.send(delRequest, sender);
+            }
+            else
+                storeLocally(packetToStore);
         }
         else if (packet instanceof RetrieveRequest) {
             RetrieveRequest retrieveRequest = (RetrieveRequest)packet;
@@ -595,6 +615,13 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             else
                 log.warn("No storage handler found for type " + packet.getClass().getSimpleName() + ".");
         }
+        else if (packet instanceof DeleteRequest) {
+            DeleteRequest delRequest = (DeleteRequest)packet;
+            DhtStorageHandler storageHandler = storageHandlers.get(delRequest.getDataType());
+            if (storageHandler instanceof DeletionAwareDhtFolder<?>) {
+                ((DeletionAwareDhtFolder<?>)storageHandler).process(delRequest);
+            }
+        }
         
         // bucketManager is not registered as a PacketListener, so notify it here
         bucketManager.packetReceived(packet, sender, receiveTime);
@@ -603,11 +630,19 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private void storeLocally(DhtStorablePacket packetToStore) {
         if (packetToStore != null) {
             DhtStorageHandler storageHandler = storageHandlers.get(packetToStore.getClass());
-            if (storageHandler != null)
+            if (storageHandler != null) {
                 storageHandler.store(packetToStore);
+                replicateThread.packetStored(storageHandler, packetToStore);
+            }
             else
                 log.warn("No storage handler found for type " + packetToStore.getClass().getSimpleName() + ".");
         }
+    }
+    
+    @Override
+    public void start() {
+        super.start();
+        replicateThread.start();
     }
     
     @Override

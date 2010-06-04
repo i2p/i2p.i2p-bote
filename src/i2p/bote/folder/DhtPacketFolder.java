@@ -27,6 +27,7 @@ import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Iterator;
 
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -45,11 +46,11 @@ public class DhtPacketFolder<T extends DhtStorablePacket> extends PacketFolder<T
     
     @Override
     public void store(DhtStorablePacket packetToStore) {
-        add(packetToStore, getFilename(packetToStore));
+        add(packetToStore, getFilename(packetToStore.getDhtKey()));
     }
     
-    protected String getFilename(DhtStorablePacket packet) {
-        return packet.getDhtKey().toBase64() + PACKET_FILE_EXTENSION;
+    protected String getFilename(Hash dhtKey) {
+        return dhtKey.toBase64() + PACKET_FILE_EXTENSION;
     }
     
     @Override
@@ -98,5 +99,11 @@ public class DhtPacketFolder<T extends DhtStorablePacket> extends PacketFolder<T
         }
         else
             log.debug("No file found for DHT key: " + dhtKey);
+    }
+    
+    /** Does the same as <code>iterator()</code>. */
+    @Override
+    public Iterator<T> individualPackets() {
+        return iterator();
     }
 }

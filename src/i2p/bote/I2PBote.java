@@ -436,7 +436,7 @@ public class I2PBote {
         return BanList.getInstance().getAll();
     }
     
-    private void startAllServices()  {
+    private void startAllServices() {
         dht.start();
         outboxProcessor.start();
 //        relayPacketSender.start();
@@ -447,7 +447,7 @@ public class I2PBote {
         expirationThread.start();
     }
 
-    private void stopAllServices()  {
+    private void stopAllServices() {
         if (connectTask != null)
             connectTask.requestShutdown();
         if (dht != null)                dht.requestShutdown();

@@ -121,7 +121,7 @@ public abstract class Folder<T> implements Iterable<T> {
             
             @Override
             public void remove() {
-                throw new UnsupportedOperationException("Use the Folder instance to delete a folder element.");
+                throw new UnsupportedOperationException("Not supported!");
             }
         };
     }
