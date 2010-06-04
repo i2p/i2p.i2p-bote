@@ -23,7 +23,6 @@ package i2p.bote.service;
 
 import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
-import i2p.bote.UniqueId;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
@@ -40,9 +39,7 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -119,7 +116,6 @@ public class OutboxProcessor extends I2PBoteThread {
     /**
      * Sends an {@link Email} to all recipients specified in the header.
      * @param email
-     * @throws DataFormatException 
      * @throws MessagingException 
      * @throws DhtException 
      * @throws GeneralSecurityException 
