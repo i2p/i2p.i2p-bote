@@ -31,7 +31,5 @@ public class KademliaConstants {
     public static final int REPLICATE_INTERVAL = 3600 * 1000;   // time interval for Kademlia replication (plus or minus REPLICATE_VARIATION)
     public static final long REPLICATE_VARIANCE = 5 * 60 * 1000;   // the maximum amount of time the replication interval can deviate from REPLICATE_INTERVAL
     
-    public static final int STALE_THRESHOLD = 3;   // Maximum number of times a peer can time out in a row before it is dropped
-
     private KademliaConstants() { }
 }
