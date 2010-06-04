@@ -34,7 +34,7 @@ import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.junit.Before;
 import org.junit.Test;
 
-/** Tests both <code>CryptoImplementation</code>s */
+/** Tests all <code>CryptoImplementation</code>s */
 public class CryptoImplementationTest {
     private List<TestData> testDataSet;
 
@@ -48,6 +48,13 @@ public class CryptoImplementationTest {
         elGamal2048TestData.base64PublicKeyPair = "-GygBJmy3XXPaDCD6uG0a7c23udye7H9jVFQ2WCeCnmls353ewLyITt7D3oneFYBsM1dHm~ciORrLtgZUCRqeJwIJIjzzKMVL93FSuMD8PQB9IX~F2l-Jn~5oBJCJWK~rnkNX7yBl-uUrylzPidfZ-NpW0U6wJREOQTx4oGvcGNv2oDkHBL44Oqencuw9NXxHJ9SjapuSgo2vg8YN6BP67oHR5-SlaIN6bHaF9T5tjJMkf32frT-qmWTcyB~0OgXXL3Z9cTERqVihYIBmk4EaTPa5oB~sOUIhUv5DqedBD~BDY5P4d7TroNWoW4FOhnfGqtTD-cS-qEn0ww3tHn7JEppbWGcgKrbdb4F4Qt8VYBd-ogATOXFbbo-PG~PgmUOa2QWGIi4RSXK1L3NoYO4ha7SkQMJpKj8ySi-ixk3ivofk6lRgoZ4WhbReaB352pF1iMXqp4p7-mnLMPZUX41ibHPeWrq7TyNqb-ouyn9ZfqORlko3bi04eXkfzkeDVuf";
         elGamal2048TestData.base64PrivateKeyPair = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADClvCJzneZ4R4yUJbm6zOP3wOh~CTfnWx3MSR7QDZS22-njK3KHuZHBbCK7HbyQLr";
         testDataSet.add(elGamal2048TestData);
+        
+        TestData ecdh256TestData;
+        ecdh256TestData = new TestData();
+        ecdh256TestData.cryptoImpl = new ECDH256_ECDSA256();
+        ecdh256TestData.base64PublicKeyPair = "xE1fQK3nPfcmABNpYrHEDVHLj1sq01mmtrDrrIKAZcMnK9vmbiBZ4ygsksNpe5rV-TILTQUUTIUry5qt8q5ybB";
+        ecdh256TestData.base64PrivateKeyPair = "M3yBbveBPFwfd59UY06RtJnfZtHU8yC7RZMYCITBwdRGkyPsftKS7M2~OSMsmHWUfejRolqztJ4lf4keS~KSge";
+        testDataSet.add(ecdh256TestData);
         
         TestData ecdh521TestData;
         ecdh521TestData = new TestData();
@@ -75,6 +82,7 @@ public class CryptoImplementationTest {
             PublicKeyPair keyPairPublic = cryptoImpl.createPublicKeyPair(testData.base64PublicKeyPair);
             byte[] reencodedPublic = cryptoImpl.toByteArray(keyPairPublic);
             assertTrue(Arrays.equals(originalPublic, reencodedPublic));
+            assertEquals(cryptoImpl.getByteArrayPublicKeyPairLength(), reencodedPublic.length);
             
             // test private key pair
             PrivateKeyPair originalPrivateKeyPair = cryptoImpl.createPrivateKeyPair(testData.base64PrivateKeyPair);

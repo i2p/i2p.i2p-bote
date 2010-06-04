@@ -34,77 +34,62 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 
 import net.i2p.data.Base64;
-import net.i2p.util.Log;
 
 import org.bouncycastle.jce.ECPointUtil;
 import org.bouncycastle.jce.provider.asymmetric.ec.EC5Util;
 
-/**
- * TODO document the 66-byte format
- */
-public class ECDH521_ECDSA521 extends ECDH_ECDSA {
-    private Log log = new Log(ECDH521_ECDSA521.class);
+public class ECDH256_ECDSA256 extends ECDH_ECDSA {
 
-    public ECDH521_ECDSA521() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        super("P-521", 66);   // Use the NIST P-521 curve, also known as secp521r1
+    public ECDH256_ECDSA256() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+        super("P-256", 33);   // Use the NIST P-256 curve, also known as secp256r1
     }
     
     @Override
     public String getName() {
-        return Util._("521-bit Elliptic Curve Encryption");
+        return Util._("256-bit Elliptic Curve Encryption");
     }
     
     @Override
     public byte getId() {
-        return 3;
+        return 2;
     }
 
     @Override
     public int getBase64PublicKeyPairLength() {
-        return 174;
+        return 86;
     }
     
     @Override
     public int getBase64CompleteKeySetLength() {
-        return 348;
+        return 172;
     }
     
     @Override
     protected byte[] toByteArray(PublicKey key) {
         ECPublicKey ecKey = castToEcKey(key);
-        byte[] bouncyCompressedKey = EC5Util.convertPoint(ecKey.getParams(), ecKey.getW(), true).getEncoded();
-        
-        // shorten by one byte (bouncyCompressedKey[0] is either 2 or 3, bouncyCompressedKey[1] is either 0 or 1, so they can fit in two bits)
-        if (bouncyCompressedKey[0]!=2 && bouncyCompressedKey[0]!=3)
-            log.error("Illegal value in encoded EC key at byte 0: " + bouncyCompressedKey[0] + ", can only be 2 or 3.");
-        if (bouncyCompressedKey[1]!=0 && bouncyCompressedKey[1]!=1)
-            log.error("Illegal value in encoded EC key at byte 1: " + bouncyCompressedKey[1] + ", can only be 0 or 1.");
-        byte[] compressedKey = Arrays.copyOfRange(bouncyCompressedKey, 1, keyLengthBytes+1);
-        compressedKey[0] |= (bouncyCompressedKey[0]-2) << 1;
-        
-        return compressedKey;
+        return EC5Util.convertPoint(ecKey.getParams(), ecKey.getW(), true).getEncoded();
     }
     
     protected ECPublicKeySpec createPublicKeySpec(byte[] encodedKey) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        // convert the key to the format used by BouncyCastle, which adds one byte
-        byte[] bouncyCompressedKey = new byte[keyLengthBytes+1];
-        System.arraycopy(encodedKey, 0, bouncyCompressedKey, 1, keyLengthBytes);
-        bouncyCompressedKey[0] = (byte)((bouncyCompressedKey[1] >> 1) + 2);
-        bouncyCompressedKey[1] &= 1;
         // decompress into an EC point
-        ECPoint w = ECPointUtil.decodePoint(ecParameterSpec.getCurve(), bouncyCompressedKey);
+        ECPoint w = ECPointUtil.decodePoint(ecParameterSpec.getCurve(), encodedKey);
         
         // make a public key from the public point w
         ECPublicKeySpec publicKeySpec = new ECPublicKeySpec(w, ecParameterSpec);
         
         return publicKeySpec;
     }
-
+    
     @Override
     public PrivateKeyPair createPrivateKeyPair(String base64) throws GeneralSecurityException {
         int base64PrivateKeyLength = getBase64PrivateKeyPairLength() / 2;
-        base64 = "A" + base64.substring(0, base64PrivateKeyLength) + "A" + base64.substring(base64PrivateKeyLength);
-        byte[] bytes = Base64.decode(base64);
+        String base64EncrKey = "A" + base64.substring(0, base64PrivateKeyLength);
+        byte[] encrKeyBytes = Base64.decode(base64EncrKey);
+        String base64SigKey = "A" + base64.substring(base64PrivateKeyLength);
+        byte[] sigKeyBytes = Base64.decode(base64SigKey);
+        
+        byte[] bytes = Arrays.copyOf(encrKeyBytes, encrKeyBytes.length + sigKeyBytes.length);
+        System.arraycopy(sigKeyBytes, 0, bytes, encrKeyBytes.length, sigKeyBytes.length);
         return createPrivateKeyPair(bytes);
     }
 }

@@ -89,11 +89,15 @@
                 </td>
                 <c:if test="${param.new}">
                 <td>
+                    <c:set var="selectedCryptoImplId" value="${param.cryptoImpl}"/>
+                    <c:if test="${empty param.cryptoImpl}">
+                        <c:set var="selectedCryptoImplId" value="2"/>
+                    </c:if>
                     <select name="cryptoImpl">
                         <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
                         <c:forEach items="${jspHelperBean.cryptoImplementations}" var="cryptoImpl">
                             <c:set var="selected" value=""/>
-                            <c:if test="${param.cryptoImpl eq cryptoImpl.id}">
+                            <c:if test="${selectedCryptoImplId eq cryptoImpl.id}">
                                 <c:set var="selected" value=" selected"/>
                             </c:if>
                             <option value="${cryptoImpl.id}"${selected}>

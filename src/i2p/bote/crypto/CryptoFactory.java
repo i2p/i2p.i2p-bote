@@ -51,6 +51,7 @@ public class CryptoFactory {
         instances = Collections.synchronizedList(new ArrayList<CryptoImplementation>());
         instances.add(new ElGamal2048_DSA1024());
         try {
+            instances.add(new ECDH256_ECDSA256());
             instances.add(new ECDH521_ECDSA521());
         }
         catch (Exception e) {
