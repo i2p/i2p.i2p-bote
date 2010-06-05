@@ -65,6 +65,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.DataFormatException;
@@ -99,12 +100,12 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private I2PPacketDispatcher i2pReceiver;
     private File peerFile;
     private ReplicateThread replicateThread;   // is notified of <code>store</code> calls
+    private CountDownLatch readySignal;   // switches to 0 when bootstrapping is done
     private Destination localDestination;
     private Hash localDestinationHash;
     private Set<KademliaPeer> initialPeers;
     private BucketManager bucketManager;
     private Map<Class<? extends DhtStorablePacket>, DhtStorageHandler> storageHandlers;
-    private volatile boolean connected;   // false until bootstrapping is done
 
     /**
      * 
@@ -119,6 +120,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         this.i2pReceiver = i2pReceiver;
         this.peerFile = peerFile;
         
+        readySignal = new CountDownLatch(1);
         localDestination = sendQueue.getLocalDestination();
         localDestinationHash = localDestination.calculateHash();
         initialPeers = new ConcurrentHashSet<KademliaPeer>();
@@ -132,7 +134,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         
         bucketManager = new BucketManager(localDestinationHash);
         storageHandlers = new ConcurrentHashMap<Class<? extends DhtStorablePacket>, DhtStorageHandler>();
-        replicateThread = new ReplicateThread(localDestination, sendQueue, i2pReceiver, bucketManager);
+        replicateThread = new ReplicateThread(localDestination, sendQueue, i2pReceiver, bucketManager, readySignal);
     }
     
     /**
@@ -165,10 +167,10 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
 
     @Override
-    public boolean isConnected() {
-        return connected;
+    public CountDownLatch readySignal() {
+        return readySignal;
     }
-    
+
     @Override
     public int getNumPeers() {
         return bucketManager.getPeerCount();
@@ -357,6 +359,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 awaitShutdownRequest(1, TimeUnit.MINUTES);
             }
             i2pReceiver.removePacketListener(this);
+            readySignal.countDown();
             log.info(getClass().getSimpleName() + " exiting.");
         }
 
@@ -649,7 +652,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     public void run() {
         i2pReceiver.addPacketListener(this);
         bootstrap();
-        connected = true;
         
         while (!shutdownRequested()) {
             if (bucketManager.getUnlockedPeerCount() == 0) {

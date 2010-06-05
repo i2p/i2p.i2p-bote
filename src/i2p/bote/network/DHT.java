@@ -22,6 +22,9 @@
 package i2p.bote.network;
 
 import i2p.bote.packet.dht.DhtStorablePacket;
+
+import java.util.concurrent.CountDownLatch;
+
 import net.i2p.data.Hash;
 
 public interface DHT {
@@ -40,11 +43,8 @@ public interface DHT {
      */
     void setStorageHandler(Class<? extends DhtStorablePacket> packetType, DhtStorageHandler storageHandler);
 
-    /**
-     * Returns <code>true</code> if a connection to the DHT has been established.
-     * @return
-     */
-    boolean isConnected();
+    /** Returns a <code>CountDownLatch</code> that switches to zero when a connection to the DHT has been established. */
+    CountDownLatch readySignal();
     
     /**
      * Returns the current number of known active peers.

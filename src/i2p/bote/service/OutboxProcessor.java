@@ -69,6 +69,17 @@ public class OutboxProcessor extends I2PBoteThread {
     
     @Override
     public void run() {
+        // wait until DHT is ready
+        CountDownLatch startSignal = dht.readySignal();
+        while (!shutdownRequested()) {
+            try {
+                if (startSignal.await(1, TimeUnit.SECONDS))
+                    break;
+            } catch (InterruptedException e) {
+                log.error("OutboxProcessor received an InterruptedException.", e);
+            }
+        }
+        
         while (!shutdownRequested()) {
             synchronized(this) {
                 wakeupSignal = new CountDownLatch(1);

@@ -437,8 +437,8 @@ public class I2PBote {
     }
     
     private void startAllServices() {
-        dht.start();
         outboxProcessor.start();
+        dht.start();
 //        relayPacketSender.start();
 //        smtpService.start();
 //        pop3Service.start();
@@ -516,8 +516,15 @@ public class I2PBote {
     public NetworkStatus getNetworkStatus() {
         if (!connectTask.isDone())
             return connectTask.getNetworkStatus();
-        else if (dht != null)
-            return dht.isConnected()?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
+        else if (dht != null) {
+            try {
+                boolean isConnected = dht.readySignal().await(0, TimeUnit.SECONDS);
+                return isConnected?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
+            } catch (InterruptedException e) {
+                log.error("Interrupted during a zero-second wait!", e);
+                return NetworkStatus.ERROR;
+            }
+        }
         else
             return NetworkStatus.ERROR;
     }

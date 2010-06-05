@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.Destination;
@@ -70,17 +71,19 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
     private I2PSendQueue sendQueue;
     private I2PPacketDispatcher i2pReceiver;
     private BucketManager bucketManager;
+    private CountDownLatch startSignal;
     private Random rng;
     private long nextReplicationTime;
     private Map<DhtStorageHandler, Set<Hash>> upToDateKeys;   // all DHT keys that have been re-stored since the last replication
     private Map<Destination, DeleteRequest> receivedDeleteRequests;   // null when not replicating
 
-    public ReplicateThread(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager) {
+    public ReplicateThread(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager, CountDownLatch startSignal) {
         super("ReplicateThd");
         this.localDestination = localDestination;
         this.sendQueue = sendQueue;
         this.i2pReceiver = i2pReceiver;
         this.bucketManager = bucketManager;
+        this.startSignal = startSignal;
         rng = new Random();
         upToDateKeys = new ConcurrentHashMap<DhtStorageHandler, Set<Hash>>();
     }
@@ -164,15 +167,18 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
         keys.add(packet.getDhtKey());
     }
     
-    // TODO don't start this thread until done bootstrapping
     @Override
     public void run() {
-        try {
-            TimeUnit.SECONDS.sleep(80);
-        } catch (InterruptedException e) {
-            log.error("Replication thread interrupted!", e);
-            return;
+        // wait for startSignal
+        while (!shutdownRequested()) {
+            try {
+                if (startSignal.await(1, TimeUnit.SECONDS))
+                    break;
+            } catch (InterruptedException e) {
+                log.error("Replication thread interrupted!", e);
+            }
         }
+        
         // Replicate on startup and every REPLICATE_INTERVAL seconds after that
         nextReplicationTime = System.currentTimeMillis();
         while (!shutdownRequested()) {
