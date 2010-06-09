@@ -76,30 +76,6 @@ public class PacketBatch implements Iterable<PacketBatchItem> {
         return outgoingPackets.values().iterator();
     }
     
-/*    private void decrementConfirmedLatch() {
-        initSignals();
-        confirmedSignal.countDown();
-    }
-
-    boolean areAllPacketsConfirmed() {
-        return confirmedSignal.getCount() == 0;
-    }
-
-    boolean isPacketConfirmed(UniqueId packetId) {
-        decrementConfirmedLatch();
-        return packetMap.get(packetId).isDeliveryConfirmed();
-    }*/
-
-    /**
-     * Notify the <code>PacketBatch</code> that delivery confirmation has been received for
-     * a packet.
-     * @param packetId
-     */
-/*    void confirmDelivery(UniqueId packetId) {
-        if (outgoingPackets.containsKey(packetId))
-            outgoingPackets.get(packetId).confirmDelivery();
-    }*/
-    
     void addResponse(Destination peer, DataPacket packet) {
         incomingPackets.put(peer, packet);
         firstReplyReceivedSignal.countDown();
@@ -124,10 +100,6 @@ public class PacketBatch implements Iterable<PacketBatchItem> {
       boolean timedOut = !sentSignal.await(5, TimeUnit.MINUTES);
         if (timedOut)
             log.warn("Batch not sent within 5 minutes!");
-    }
-    
-    public int getUnsentPacketCount() {
-        return (int)sentSignal.getCount();
     }
     
     public void awaitFirstReply(long timeout, TimeUnit timeoutUnit) throws InterruptedException {
