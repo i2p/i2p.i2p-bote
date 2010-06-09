@@ -27,26 +27,40 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 
+import net.i2p.I2PAppContext;
+import net.i2p.client.I2PSession;
+import net.i2p.data.DataFormatException;
+import net.i2p.data.Destination;
+import net.i2p.data.PrivateKey;
+import net.i2p.data.PublicKey;
+import net.i2p.data.SessionKey;
 import net.i2p.util.Log;
 
 import com.nettgryppa.security.HashCash;
 
 /**
- * A <code>RelayRequest</code> contains a {@link RelayDataPacket} or a {@link DhtStorablePacket}.
+ * A <code>RelayRequest</code> contains an encrypted {@link RelayDataPacket} or {@link DhtStorablePacket}.
  */
 @TypeCode('Y')
 public class RelayRequest extends CommunicationPacket {
+    private static final int PADDED_SIZE = 16;   // pad to the length of an AES-256 block (not to be confused with the AES key size)
+    
     private Log log = new Log(RelayRequest.class);
     private HashCash hashCash;
-    private DataPacket payload;
+    private byte[] payload;   // a DataPacket
 
-    public RelayRequest(DataPacket payload) {
+    /**
+     * Creates a <code>RelayRequest</code> that contains an encrypted <code>DataPacket</code>.
+     * @param payload
+     * @param destination
+     */
+    public RelayRequest(DataPacket payload, Destination destination) {
         try {
             hashCash = HashCash.mintCash("", 1);   // TODO
         } catch (NoSuchAlgorithmException e) {
             log.error("Cannot create HashCash.", e);
         }
-        this.payload = payload;
+        this.payload = encrypt(payload, destination);
     }
     
     public RelayRequest(byte[] data) throws MalformedDataPacketException {
@@ -63,9 +77,8 @@ public class RelayRequest extends CommunicationPacket {
         }
         
         int payloadLength = buffer.getShort();
-        byte[] payloadData = new byte[payloadLength];
-        buffer.get(payloadData);
-        payload = DataPacket.createPacket(payloadData);
+        payload = new byte[payloadLength];
+        buffer.get(payload);
         
         if (buffer.hasRemaining())
             log.debug("Storage Request Packet has " + buffer.remaining() + " extra bytes.");
@@ -78,9 +91,11 @@ public class RelayRequest extends CommunicationPacket {
     /**
      * Returns the payload packet, i.e. the data that is being relayed.
      * @return
+     * @throws DataFormatException 
+     * @throws MalformedDataPacketException 
      */
-    public DataPacket getStoredPacket() {
-        return payload;
+    public DataPacket getStoredPacket(I2PSession i2pSession) throws DataFormatException, MalformedDataPacketException {
+        return decrypt(i2pSession);
     }
 
     @Override
@@ -94,13 +109,32 @@ public class RelayRequest extends CommunicationPacket {
             dataStream.writeShort(hashCashString.length());
             dataStream.write(hashCashString.getBytes());
             
-            byte[] payloadBytes = payload.toByteArray();
-            dataStream.writeShort(payloadBytes.length);
-            dataStream.write(payloadBytes);
+            dataStream.writeShort(payload.length);
+            dataStream.write(payload);
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);
         }
         return byteArrayStream.toByteArray();
+    }
+    
+    private byte[] encrypt(DataPacket dataPacket, Destination destination) {
+        PublicKey publicKey = destination.getPublicKey();
+        I2PAppContext appContext = I2PAppContext.getGlobalContext();
+        SessionKey sessionKey = appContext.sessionKeyManager().createSession(publicKey);
+        byte[] data = dataPacket.toByteArray();
+        return appContext.elGamalAESEngine().encrypt(data, publicKey, sessionKey, PADDED_SIZE);
+    }
+
+    /**
+     * Decrypts the <code>RelayDataPacket</code> inside this packet.
+     * @throws DataFormatException
+     * @throws MalformedDataPacketException
+     */
+    private DataPacket decrypt(I2PSession i2pSession) throws DataFormatException, MalformedDataPacketException {
+        PrivateKey privateKey = i2pSession.getDecryptionKey();
+        I2PAppContext appContext = I2PAppContext.getGlobalContext();
+        byte[] decryptedData = appContext.elGamalAESEngine().decrypt(payload, privateKey, appContext.sessionKeyManager());
+        return DataPacket.createPacket(decryptedData);
     }
 }

@@ -28,64 +28,41 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.List;
 
-import net.i2p.I2PAppContext;
-import net.i2p.client.I2PSession;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
-import net.i2p.data.PrivateKey;
-import net.i2p.data.PublicKey;
-import net.i2p.data.SessionKey;
 import net.i2p.util.Log;
 
 /**
- * A <code>RelayDataPacket</code> contains an encrypted or unencrypted {@link RelayRequest},
+ * A <code>RelayDataPacket</code> contains a {@link RelayRequest},
  * an I2P destination to send it to, and a time window for the send time.
  */
 @TypeCode('L')
 public class RelayDataPacket extends DataPacket {
-    private static final int PADDED_SIZE = 32;   // pad to the length of an AES-256 key
-    
     private Log log = new Log(RelayDataPacket.class);
     private long minDelay;
     private long maxDelay;
     private long sendTime;
     private Destination nextDestination;
-    private byte[] request;   // a RelayRequest
+    private RelayRequest request;
 
     /**
-     * Creates a new <code>RelayDataPacket</code> with an encrypted <code>RelayRequest</code>.
+     * 
      * @param nextDestination The I2P destination to send the packet to
      * @param minDelayMilliseconds In milliseconds
      * @param maxDelayMilliseconds In milliseconds
      * @param request
      */
     public RelayDataPacket(Destination nextDestination, long minDelayMilliseconds, long maxDelayMilliseconds, RelayRequest request) {
-        this(nextDestination, minDelayMilliseconds, maxDelayMilliseconds, request, true);
-    }
-
-    /**
-     * Creates a new <code>RelayDataPacket</code> with an encrypted or unencrypted <code>RelayRequest</code>.
-     * @param nextDestination The I2P destination to send the packet to
-     * @param minDelayMilliseconds In milliseconds
-     * @param maxDelayMilliseconds In milliseconds
-     * @param request
-     * @param encrypt
-     */
-    private RelayDataPacket(Destination nextDestination, long minDelayMilliseconds, long maxDelayMilliseconds, RelayRequest request, boolean encrypt) {
         this.nextDestination = nextDestination;
         this.minDelay = minDelayMilliseconds;
         this.maxDelay = maxDelayMilliseconds;
-        if (encrypt)
-            this.request = encrypt(request, nextDestination);
-        else
-            this.request = request.toByteArray();
+        this.request = request;
     }
 
-    public RelayDataPacket(byte[] data) throws DataFormatException {
+    public RelayDataPacket(byte[] data) throws DataFormatException, MalformedDataPacketException {
         super(data);
         
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
@@ -95,16 +72,34 @@ public class RelayDataPacket extends DataPacket {
         nextDestination = Util.createDestination(buffer);
         
         int requestDataLength = buffer.getShort();
-        request = new byte[requestDataLength];
-        buffer.get(request);
+        byte[] requestBytes = new byte[requestDataLength];
+        buffer.get(requestBytes);
+        request = new RelayRequest(requestBytes);
         
         if (buffer.hasRemaining())
             log.debug("Relay Packet has " + buffer.remaining() + " extra bytes.");
     }
     
     /**
-     * Creates <code>numHops</code> nested <code>RelayDataPacket</code>s.
+     * Creates a <code>RelayDataPacket</code> containing <code>numHops</code> nested
+     * <code>RelayRequest</code>s, each containing a <code>RelayDataPacket</code>.
      * Returns <code>null</code> if <code>numHops</code> is <code>0</code>.
+     * 
+     * If <code>numHops = 1</code>, the finished packet looks as follows (outermost to innermost):
+     * 
+     * Unencrypted RelayDataPacket
+     * RelayRequest
+     * Encrypted DataPacket
+     * 
+     * For <code>numHops = 2</code>:
+     * 
+     * Unencrypted RelayDataPacket
+     * RelayRequest
+     * Encrypted RelayDataPacket
+     * RelayRequest
+     * Encrypted DataPacket
+     * 
+     * Each additional hop adds an encrypted <code>RelayDataPacket</code> and a <code>RelayRequest</code>.
      * @param payload
      * @param peerManager
      * @param numHops
@@ -118,23 +113,22 @@ public class RelayDataPacket extends DataPacket {
         Log log = new Log(RelayDataPacket.class);
         if (log.shouldLog(Log.DEBUG)) {
             StringBuilder debugMsg = new StringBuilder("Creating relay chain: [");
-            for (int i=0; i<relayPeers.size(); i++) {
-                debugMsg.append(relayPeers.get(i).toBase64().substring(0, 8));
-                if (i < relayPeers.size()-1)
+            for (int i=relayPeers.size()-1; i>=0; i--) {
+                debugMsg.append(relayPeers.get(i).calculateHash().toBase64().substring(0, 8));
+                if (i > 0)
                     debugMsg.append("... --> ");
             }
             debugMsg.append("...]");
             log.debug(debugMsg.toString());
         }
         
-        RelayDataPacket relayPacket = null;
+        DataPacket dataPacket = payload;
         for (Iterator<Destination> iterator=relayPeers.iterator(); iterator.hasNext();) {
             Destination relayPeer = iterator.next();
-            RelayRequest request = new RelayRequest(relayPacket==null?payload:relayPacket);
-            boolean encrypt = iterator.hasNext();   // don't encrypt the outermost RelayRequest so RelayPacketSender can read it from the file
-            relayPacket = new RelayDataPacket(relayPeer, minDelayMilliseconds, maxDelayMilliseconds, request, encrypt);
+            RelayRequest request = new RelayRequest(dataPacket, relayPeer);
+            dataPacket = new RelayDataPacket(relayPeer, minDelayMilliseconds, maxDelayMilliseconds, request);
         }
-        return relayPacket;
+        return (RelayDataPacket)dataPacket;
     }
     
     public Destination getNextDestination() {
@@ -166,15 +160,11 @@ public class RelayDataPacket extends DataPacket {
     }
 
     /**
-     * Returns the <code>RelayRequest</code>. Do not call this method on an encrypted
-     * <code>RelayDataPacket</code>, call {@link decrypt(I2PSession)} first.
+     * Returns the <code>RelayRequest</code> this packet contains.
      * @return
-     * @throws DataFormatException
-     * @throws NoSuchAlgorithmException
-     * @throws MalformedDataPacketException
      */
-    public RelayRequest getRequest() throws DataFormatException, NoSuchAlgorithmException, MalformedDataPacketException {
-        return new RelayRequest(request);
+    public RelayRequest getRequest() {
+        return request;
     }
     
     @Override
@@ -188,28 +178,14 @@ public class RelayDataPacket extends DataPacket {
             dataStream.writeInt((int)(maxDelay/1000));
             // write the first 384 bytes (the two public keys)
             dataStream.write(nextDestination.toByteArray(), 0, 384);
-            dataStream.writeShort(request.length);
-            dataStream.write(request);
+            byte[] requestBytes = request.toByteArray();
+            dataStream.writeShort(requestBytes.length);
+            dataStream.write(requestBytes);
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);
         }
         
         return arrayOutputStream.toByteArray();
-    }
-    
-    private byte[] encrypt(RelayRequest request, Destination destination) {
-        PublicKey publicKey = destination.getPublicKey();
-        I2PAppContext appContext = I2PAppContext.getGlobalContext();
-        SessionKey sessionKey = appContext.sessionKeyManager().createSession(publicKey);
-        byte[] data = request.toByteArray();
-        return appContext.elGamalAESEngine().encrypt(data, publicKey, sessionKey, PADDED_SIZE);
-    }
-
-    /** Decrypts the <code>RelayRequest</code> inside this packet. */
-    public void decrypt(I2PSession i2pSession) throws DataFormatException {
-        PrivateKey privateKey = i2pSession.getDecryptionKey();
-        I2PAppContext appContext = I2PAppContext.getGlobalContext();
-        request = appContext.elGamalAESEngine().decrypt(request, privateKey, appContext.sessionKeyManager());
     }
 }
