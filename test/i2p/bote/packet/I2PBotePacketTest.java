@@ -43,6 +43,8 @@ public class I2PBotePacketTest {
     public void testDecodePacketTypeCode() throws Exception {
         Field allPacketTypesField = I2PBotePacket.class.getDeclaredField("ALL_PACKET_TYPES");
         allPacketTypesField.setAccessible(true);
+        
+        @SuppressWarnings("unchecked")
         Class<? extends I2PBotePacket>[] allPacketTypes = (Class<? extends I2PBotePacket>[])allPacketTypesField.get(null);
         
         for (Class<? extends I2PBotePacket> packetType: allPacketTypes) {

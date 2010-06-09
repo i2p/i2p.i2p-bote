@@ -44,10 +44,10 @@ public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketTy
     }
     
     /**
+     * Saves a packet to a file in the folder. If the file already exists, it is overwritten.
      * @param packetToStore
      * @param filename A filename relative to this folder's storage directory.
      */
-    // TODO rename to write because existing files are overwritten
     protected void add(DataPacket packetToStore, String filename) {
         FileOutputStream outputStream = null;
         try {

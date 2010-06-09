@@ -21,13 +21,13 @@
 
 package i2p.bote.network.kademlia;
 
+import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 public class KademliaPeer extends Destination {
     private Log log = new Log(KademliaPeer.class);
-    private Destination destination;
     private Hash destinationHash;
     private long firstSeen;
     private volatile int consecutiveTimeouts;
@@ -40,7 +40,6 @@ public class KademliaPeer extends Destination {
         setPublicKey(destination.getPublicKey());
         
         // initialize KademliaPeer-specific fields
-        this.destination = destination;
         destinationHash = destination.calculateHash();
         if (destinationHash == null)
             log.error("calculateHash() returned null!");
@@ -52,8 +51,8 @@ public class KademliaPeer extends Destination {
         this(destination, System.currentTimeMillis());
     }
     
-    public Destination getDestination() {
-    	return destination;
+    public KademliaPeer(String peerFileEntry) throws DataFormatException {
+        this(new Destination(peerFileEntry));
     }
     
     public Hash getDestinationHash() {

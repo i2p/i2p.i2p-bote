@@ -93,7 +93,10 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
     }
     
     private long randomTime(long min, long max) {
-        return min + rng.nextLong() % (max-min);
+        if (min < max)
+            return min + rng.nextLong() % (max-min);
+        else
+            return min;
     }
 
     private void replicate() throws InterruptedException {

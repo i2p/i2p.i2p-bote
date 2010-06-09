@@ -42,22 +42,19 @@ public class CryptoImplementationTest {
     public void setUp() throws Exception {
         testDataSet = new ArrayList<TestData>();
         
-        TestData elGamal2048TestData;
-        elGamal2048TestData = new TestData();
+        TestData elGamal2048TestData = new TestData();
         elGamal2048TestData.cryptoImpl = new ElGamal2048_DSA1024();
         elGamal2048TestData.base64PublicKeyPair = "-GygBJmy3XXPaDCD6uG0a7c23udye7H9jVFQ2WCeCnmls353ewLyITt7D3oneFYBsM1dHm~ciORrLtgZUCRqeJwIJIjzzKMVL93FSuMD8PQB9IX~F2l-Jn~5oBJCJWK~rnkNX7yBl-uUrylzPidfZ-NpW0U6wJREOQTx4oGvcGNv2oDkHBL44Oqencuw9NXxHJ9SjapuSgo2vg8YN6BP67oHR5-SlaIN6bHaF9T5tjJMkf32frT-qmWTcyB~0OgXXL3Z9cTERqVihYIBmk4EaTPa5oB~sOUIhUv5DqedBD~BDY5P4d7TroNWoW4FOhnfGqtTD-cS-qEn0ww3tHn7JEppbWGcgKrbdb4F4Qt8VYBd-ogATOXFbbo-PG~PgmUOa2QWGIi4RSXK1L3NoYO4ha7SkQMJpKj8ySi-ixk3ivofk6lRgoZ4WhbReaB352pF1iMXqp4p7-mnLMPZUX41ibHPeWrq7TyNqb-ouyn9ZfqORlko3bi04eXkfzkeDVuf";
         elGamal2048TestData.base64PrivateKeyPair = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADClvCJzneZ4R4yUJbm6zOP3wOh~CTfnWx3MSR7QDZS22-njK3KHuZHBbCK7HbyQLr";
         testDataSet.add(elGamal2048TestData);
         
-        TestData ecdh256TestData;
-        ecdh256TestData = new TestData();
+        TestData ecdh256TestData = new TestData();
         ecdh256TestData.cryptoImpl = new ECDH256_ECDSA256();
         ecdh256TestData.base64PublicKeyPair = "xE1fQK3nPfcmABNpYrHEDVHLj1sq01mmtrDrrIKAZcMnK9vmbiBZ4ygsksNpe5rV-TILTQUUTIUry5qt8q5ybB";
         ecdh256TestData.base64PrivateKeyPair = "M3yBbveBPFwfd59UY06RtJnfZtHU8yC7RZMYCITBwdRGkyPsftKS7M2~OSMsmHWUfejRolqztJ4lf4keS~KSge";
         testDataSet.add(ecdh256TestData);
         
-        TestData ecdh521TestData;
-        ecdh521TestData = new TestData();
+        TestData ecdh521TestData = new TestData();
         ecdh521TestData.cryptoImpl = new ECDH521_ECDSA521();
         ecdh521TestData.base64PublicKeyPair = "m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UY";
         ecdh521TestData.base64PrivateKeyPair = "YujtjOOwCqXPH9PIbcZeFRkegbOxw5G6I7M4-TZBFbxYDtaew6HX9hnQEGWHkaapq2kTTB3Hmv0Uyo64jvcfMmSRcPng3J1Ho5mHgnzsH0qxQemnBcw7Lfc9fU8xRz858uyiQ8J8XH3T8S7k2~8L7awSgaT7uHQgpV~Rs0p1ofJ70g";

@@ -115,7 +115,7 @@ public class I2PPacketDispatcher implements I2PSessionListener {
 
     private void logPacket(I2PBotePacket packet, Destination sender) {
         String senderHash = sender.calculateHash().toBase64().substring(0, 8) + "...";
-        log.debug("I2P packet received: [" + packet + "] Sender: [" + senderHash + "]");
+        log.debug("I2P packet received: [" + packet + "] Sender: [" + senderHash + "], notifying " + packetListeners.size() + " PacketListeners.");
     }
     
     @Override
