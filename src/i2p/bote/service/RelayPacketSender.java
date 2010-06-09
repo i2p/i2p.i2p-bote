@@ -52,9 +52,10 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
     @Override
     public void run() {
         while (!shutdownRequested()) {
-            log.debug("Processing outgoing relay packets in directory '" + packetFolder.getStorageDirectory().getAbsolutePath() + "'");
-            for (Iterator<RelayDataPacket> iterator=packetFolder.iterator(); iterator.hasNext();) {
+            Iterator<RelayDataPacket> iterator = packetFolder.iterator();
+            while (iterator.hasNext()) {
                 RelayDataPacket packet = iterator.next();
+                log.debug("Processing relay packet: " + packet);
                 if (System.currentTimeMillis() >= packet.getSendTime()) {
                     log.debug("Processing packet file for destination " + packet.getNextDestination().calculateHash());
                     try {
@@ -69,7 +70,6 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
                     }
                 }
             }
-            log.debug("Done processing outgoing relay packets.");
             
             try {
                 Thread.sleep(PAUSE);
