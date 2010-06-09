@@ -21,14 +21,27 @@
 
 package i2p.bote;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ThreadFactory;
 
 import net.i2p.I2PAppContext;
+import net.i2p.data.Base32;
+import net.i2p.data.DataFormatException;
+import net.i2p.data.Destination;
+import net.i2p.data.Hash;
+import net.i2p.util.Log;
 import net.i2p.util.Translate;
 
 public class Util {
@@ -36,7 +49,7 @@ public class Util {
 	
 	private Util() { }
 	
-    public static byte[] readInputStream(InputStream inputStream) throws IOException {
+    public static byte[] readBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[32*1024];
         while (true) {
@@ -51,6 +64,108 @@ public class Util {
         return byteStream.toByteArray();
     }
 
+    /**
+     * Opens a <code>URL</code> and reads one line at a time.
+     * Returns the lines as a <code>List</code> of <code>String</code>s,
+     * or an empty <code>List</code> if an error occurred.
+     * @param url
+     * @return
+     * @see readLines(File)
+     */
+    public static List<String> readLines(URL url) {
+        Log log = new Log(Util.class);
+        log.info("Reading URL: <" + url + ">");
+        
+        InputStream stream = null;
+        try {
+            stream = url.openStream();
+            return readLines(stream);
+        }
+        catch (IOException e) {
+            log.error("Error reading URL.", e);
+            return Collections.emptyList();
+        } finally {
+            if (stream != null)
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    log.error("Can't close input stream.", e);
+                }
+        }
+    }
+    
+    /**
+     * Opens a <code>File</code> and reads one line at a time.
+     * Returns the lines as a <code>List</code> of <code>String</code>s,
+     * or an empty <code>List</code> if an error occurred.
+     * @param file
+     * @return
+     * @see readLines(URL)
+     */
+    public static List<String> readLines(File file) {
+        Log log = new Log(Util.class);
+        log.info("Reading file: <" + file.getAbsolutePath() + ">");
+        
+        InputStream stream = null;
+        try {
+            stream = new FileInputStream(file);
+            return readLines(stream);
+        } catch (IOException e) {
+            log.error("Error reading file.", e);
+            return Collections.emptyList();
+        } finally {
+            if (stream != null)
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    log.error("Can't close input stream.", e);
+                }
+        }
+    }
+    
+    /**
+     * Opens an <code>InputStream</code> and reads one line at a time.
+     * Returns the lines as a <code>List</code> of <code>String</code>s.
+     * or an empty <code>List</code> if an error occurred.
+     * @param url
+     * @return
+     * @see readLines(URL)
+     */
+    private static List<String> readLines(InputStream inputStream) throws IOException {
+        Log log = new Log(Util.class);
+        
+        BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(inputStream));
+        List<String> lines = new ArrayList<String>();
+        
+        int linesRead = 0;
+        while (true) {
+            String line = null;
+            line = inputBuffer.readLine();
+            if (line == null)
+                break;
+            lines.add(line);
+        }
+        
+        log.info(linesRead + " lines read.");
+        return lines;
+    }
+    
+    /**
+     * Creates an I2P destination with a null certificate from 384 bytes that
+     * are read from a <code>ByteBuffer</code>.
+     * @param buffer
+     * @return
+     * @throws DataFormatException 
+     */
+    public static Destination createDestination(ByteBuffer buffer) throws DataFormatException {
+        byte[] bytes = new byte[388];
+        // read 384 bytes, leave the last 3 bytes zero
+        buffer.get(bytes, 0, 384);
+        Destination peer = new Destination();
+        peer.readBytes(bytes, 0);
+        return peer;
+    }
+    
     public static ThreadFactory createThreadFactory(final String threadName, final int stackSize) {
         return new ThreadFactory() {
             @Override
@@ -137,5 +252,9 @@ public class Util {
     
     public static UniqueId zeroId() {
         return new UniqueId(new byte[UniqueId.LENGTH], 0);
+    }
+    
+    public static String toBase32(Hash hash) {
+        return Base32.encode(hash.toByteArray());
     }
 }

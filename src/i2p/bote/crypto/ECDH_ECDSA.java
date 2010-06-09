@@ -380,7 +380,7 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
             // decrypt using the shared secret as an AES key
             byte[] iv = new byte[BLOCK_SIZE];
             byteStream.read(iv);
-            byte[] encryptedData = Util.readInputStream(byteStream);
+            byte[] encryptedData = Util.readBytes(byteStream);
             SessionKey aesKey = new SessionKey(secretHash);
             byte[] decryptedData = new byte[encryptedData.length];
             if (encryptedData.length%16 != 0)

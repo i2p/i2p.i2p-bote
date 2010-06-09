@@ -21,63 +21,55 @@
 
 package i2p.bote.service;
 
-import i2p.bote.Configuration;
+import i2p.bote.folder.ExpirationListener;
 import i2p.bote.folder.PacketFolder;
 import i2p.bote.network.I2PSendQueue;
-import i2p.bote.packet.RelayPacket;
+import i2p.bote.packet.RelayDataPacket;
+import i2p.bote.packet.RelayRequest;
 
-import java.text.ParseException;
-import java.util.concurrent.TimeUnit;
+import java.util.Iterator;
+import java.util.concurrent.CountDownLatch;
 
 import net.i2p.util.Log;
-import net.i2p.util.RandomSource;
-
-import com.nettgryppa.security.HashCash;
 
 /**
  * A background thread that sends packets in the relay outbox to the I2P network.
  */
-public class RelayPacketSender extends I2PBoteThread {
-    private static final long PAUSE = 10 * 60 * 1000;   // the wait time, in milliseconds,  before processing the folder again
-    private static final long EXPIRED_CHECK_INTERVAL = TimeUnit.DAYS.toMillis(1);   // the interval for checking expired packets, in milliseconds
-    private static final int PADDED_SIZE = 16 * 1024;
+public class RelayPacketSender extends I2PBoteThread implements ExpirationListener {
     private final Log log = new Log(RelayPacketSender.class);
+    private static final long PAUSE = 60 * 1000;   // the wait time, in milliseconds,  before processing the folder again
     
     private I2PSendQueue sendQueue;
-    private PacketFolder<RelayPacket> packetStore;
+    private PacketFolder<RelayDataPacket> packetFolder;
     
-    public RelayPacketSender(I2PSendQueue sendQueue, PacketFolder<RelayPacket> packetStore) {
-        super("RelayPacketSender");
+    public RelayPacketSender(I2PSendQueue sendQueue, PacketFolder<RelayDataPacket> packetFolder) {
+        super("RelayPktSndr");
+        setPriority(MIN_PRIORITY);
         this.sendQueue = sendQueue;
-        this.packetStore = packetStore;
+        this.packetFolder = packetFolder;
     }
     
     @Override
     public void run() {
-        long lastExpiredCheck = 0;
-        
         while (!shutdownRequested()) {
-            if (System.currentTimeMillis() - lastExpiredCheck > EXPIRED_CHECK_INTERVAL) {
-                lastExpiredCheck = System.currentTimeMillis();
-                log.debug("Checking for expired relay packets...");
-                try {
-                    deleteExpiredPackets();
-                } catch (Exception e) {
-                    log.error("Error deleting expired packets", e);
+            log.debug("Processing outgoing relay packets in directory '" + packetFolder.getStorageDirectory().getAbsolutePath() + "'");
+            for (Iterator<RelayDataPacket> iterator=packetFolder.iterator(); iterator.hasNext();) {
+                RelayDataPacket packet = iterator.next();
+                if (System.currentTimeMillis() >= packet.getSendTime()) {
+                    log.debug("Processing packet file for destination " + packet.getNextDestination().calculateHash());
+                    try {
+                        RelayRequest request = packet.getRequest();
+                        CountDownLatch sentSignal = sendQueue.send(request, packet.getNextDestination());
+                        sentSignal.await();
+                        iterator.remove();   // delete the packet after it has been sent
+                    } catch (InterruptedException e) {
+                        log.error("Interrupting while waiting for packet to be sent.", e);
+                    } catch (Exception e) {
+                        log.error("Error sending packet.", e);
+                    }
                 }
             }
-            
-            log.info("Processing outgoing packets in directory '" + packetStore.getStorageDirectory().getAbsolutePath() + "'");
-            for (RelayPacket packet: packetStore) {
-                log.info("Processing packet file for destination <" + packet.getNextDestination().calculateHash() + ">");
-                try {
-                    HashCash hashCash = null;   // TODO
-                    long sendTime = getRandomSendTime(packet);
-                    sendQueue.sendRelayRequest(packet, hashCash, sendTime);
-                } catch (Exception e) {
-                    log.error("Error sending packet. ", e);
-                }
-            }
+            log.debug("Done processing outgoing relay packets.");
             
             try {
                 Thread.sleep(PAUSE);
@@ -88,13 +80,13 @@ public class RelayPacketSender extends I2PBoteThread {
         log.info(getClass().getSimpleName() + " exiting.");
     }
     
-    private long getRandomSendTime(RelayPacket packet) {
-        long min = packet.getEarliestSendTime();
-        long max = packet.getLatestSendTime();
-        return min + RandomSource.getInstance().nextLong(max-min);
-    }
-    
-    public void deleteExpiredPackets() throws ParseException {
-        // TODO look at filename which = receive time, delete if too old
+    /** Deletes relay packets that are still in the folder 100 days after the scheduled send time */
+    @Override
+    public void deleteExpired() {
+        for (Iterator<RelayDataPacket> iterator=packetFolder.iterator(); iterator.hasNext();) {
+            RelayDataPacket packet = iterator.next();
+            if (System.currentTimeMillis() > packet.getSendTime() + EXPIRATION_TIME_MILLISECONDS)
+                iterator.remove();
+        }
     }
 }

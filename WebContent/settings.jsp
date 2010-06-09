@@ -33,6 +33,9 @@
     <jsp:setProperty name="configuration" property="language" value="${param.language}"/>
     <jsp:setProperty name="configuration" property="hideLocale" value="${param.hideLocale eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="includeSentTime" value="${param.includeSentTime eq 'on' ? 'true' : 'false'}"/>
+    <jsp:setProperty name="configuration" property="numStoreHops" value="${param.numStoreHops}"/>
+    <jsp:setProperty name="configuration" property="relayMinDelay" value="${param.minDelay}"/>
+    <jsp:setProperty name="configuration" property="relayMaxDelay" value="${param.maxDelay}"/>
     <ib:saveConfiguration/>
 </c:if>
 
@@ -54,6 +57,31 @@
         <ib:message key="Check for mail every {0} minutes">
             <ib:param><input type="text" name="mailCheckInterval" size="3" value="${configuration.mailCheckInterval}"/></ib:param>
         </ib:message>
+        <br/>
+        
+        <%-- Relays --%>
+        <ib:message key="Use relays when sending mail:"/>
+        <select name="numStoreHops">
+            <c:set var="selected" value=""/>
+            <c:if test="${configuration.numStoreHops eq 0}">
+                <c:set var="selected" value=" selected"/>
+            </c:if>
+            <option value=""${selected}><ib:message key="0 (off)"/></option>
+            <c:forEach var="hops" begin="1" end="3">
+                <c:set var="selected" value=""/>
+                <c:if test="${hops eq configuration.numStoreHops}">
+                    <c:set var="selected" value=" selected"/>
+                </c:if>
+                <option value="${hops}"${selected}>${hops}</option>
+            </c:forEach>
+        </select>
+        <br/>
+        
+        <ib:message key="Delay per relay hop: Between "/>
+        <input type="text" name="minDelay" size="3" value="${configuration.relayMinDelay}"/>
+        <ib:message key=" and "/>
+        <input type="text" name="maxDelay" size="3" value="${configuration.relayMaxDelay}"/>
+        <ib:message key=" minutes "/>
         <br/>
         
         <%-- Locale --%>

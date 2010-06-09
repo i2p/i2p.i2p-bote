@@ -31,7 +31,7 @@ import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
 import i2p.bote.folder.MessageIdCache;
 import i2p.bote.folder.Outbox;
-import i2p.bote.folder.PacketFolder;
+import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.folder.TrashFolder;
 import i2p.bote.locale.Locales;
 import i2p.bote.network.BanList;
@@ -42,11 +42,12 @@ import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.NetworkStatus;
-import i2p.bote.network.PeerManager;
+import i2p.bote.network.RelayPacketHandler;
+import i2p.bote.network.RelayPeer;
+import i2p.bote.network.RelayPeerManager;
 import i2p.bote.network.kademlia.KademliaDHT;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
-import i2p.bote.packet.RelayPacket;
 import i2p.bote.service.AutoMailCheckTask;
 import i2p.bote.service.I2PBoteThread;
 import i2p.bote.service.OutboxListener;
@@ -64,6 +65,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -105,7 +107,7 @@ public class I2PBote {
     private EmailFolder inbox;   // stores incoming emails for all local users
     private EmailFolder sentFolder;
     private TrashFolder trashFolder;
-    private PacketFolder<RelayPacket> relayPacketFolder;   // stores email packets we're forwarding for other machines
+    private RelayPacketFolder relayPacketFolder;   // stores email packets we're forwarding for other machines
     private IncompleteEmailFolder incompleteEmailFolder;   // stores email packets addressed to a local user
     private EmailPacketFolder emailDhtStorageFolder;   // stores email packets for other peers
     private IndexPacketFolder indexPacketDhtStorageFolder;   // stores index packets
@@ -117,7 +119,7 @@ public class I2PBote {
     private ExpirationThread expirationThread;
     private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
     private DHT dht;
-    private PeerManager peerManager;
+    private RelayPeerManager peerManager;
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
     private Collection<Future<Boolean>> pendingMailCheckTasks;
@@ -157,7 +159,7 @@ public class I2PBote {
         outbox = new Outbox(configuration.getLocalOutboxDir());
         sentFolder = new EmailFolder(configuration.getSentFolderDir());
         trashFolder = new TrashFolder(configuration.getTrashFolderDir());
-        relayPacketFolder = new PacketFolder<RelayPacket>(configuration.getRelayOutboxDir());
+        relayPacketFolder = new RelayPacketFolder(configuration.getRelayPacketDir());
         MessageIdCache messageIdCache = new MessageIdCache(configuration.getMessageIdCacheFile(), configuration.getMessageIdCacheSize());
         incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), messageIdCache, inbox);
         emailDhtStorageFolder = new EmailPacketFolder(configuration.getEmailDhtStorageDir());
@@ -234,25 +236,28 @@ public class I2PBote {
         
         smtpService = new SMTPService();
         pop3Service = new POP3Service();
-        relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder);
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
+        relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder);
         
-        dht = new KademliaDHT(sendQueue, dispatcher, configuration.getPeerFile());
+        dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile());
         
         dht.setStorageHandler(EncryptedEmailPacket.class, emailDhtStorageFolder);
         dht.setStorageHandler(IndexPacket.class, indexPacketDhtStorageFolder);
 //TODO        dht.setStorageHandler(AddressPacket.class, );
         
+        peerManager = new RelayPeerManager(sendQueue, getLocalDestination(), configuration.getRelayPeerFile());
+        
         dispatcher.addPacketListener(emailDhtStorageFolder);
         dispatcher.addPacketListener(indexPacketDhtStorageFolder);
+        dispatcher.addPacketListener(new RelayPacketHandler(relayPacketFolder, dht, i2pSession));
+        dispatcher.addPacketListener(peerManager);
         
         expirationThread = new ExpirationThread();
         expirationThread.addExpirationListener(emailDhtStorageFolder);
         expirationThread.addExpirationListener(indexPacketDhtStorageFolder);
+        expirationThread.addExpirationListener(relayPacketSender);
         
-        peerManager = new PeerManager();
-        
-        outboxProcessor = new OutboxProcessor(dht, outbox, peerManager);
+        outboxProcessor = new OutboxProcessor(dht, outbox, peerManager, relayPacketFolder, configuration);
         outboxProcessor.addOutboxListener(new OutboxListener() {
             /** Moves sent emails to the "sent" folder */
             @Override
@@ -432,6 +437,10 @@ public class I2PBote {
             return dht.getPeerStats();
     }
     
+    public List<RelayPeer> getRelayPeers() {
+        return peerManager.getAllPeers();
+    }
+    
     public Collection<BannedPeer> getBannedPeers() {
         return BanList.getInstance().getAll();
     }
@@ -439,7 +448,7 @@ public class I2PBote {
     private void startAllServices() {
         outboxProcessor.start();
         dht.start();
-//        relayPacketSender.start();
+        relayPacketSender.start();
 //        smtpService.start();
 //        pop3Service.start();
         sendQueue.start();
@@ -516,15 +525,8 @@ public class I2PBote {
     public NetworkStatus getNetworkStatus() {
         if (!connectTask.isDone())
             return connectTask.getNetworkStatus();
-        else if (dht != null) {
-            try {
-                boolean isConnected = dht.readySignal().await(0, TimeUnit.SECONDS);
-                return isConnected?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
-            } catch (InterruptedException e) {
-                log.error("Interrupted during a zero-second wait!", e);
-                return NetworkStatus.ERROR;
-            }
-        }
+        else if (dht != null)
+            return dht.isReady()?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
         else
             return NetworkStatus.ERROR;
     }

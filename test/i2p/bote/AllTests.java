@@ -27,6 +27,7 @@ import i2p.bote.email.EmailTest;
 import i2p.bote.folder.EmailPacketFolderTest;
 import i2p.bote.folder.IncompleteEmailFolderTest;
 import i2p.bote.folder.IndexPacketFolderTest;
+import i2p.bote.folder.RelayPacketFolderTest;
 import i2p.bote.network.kademlia.BucketManagerTest;
 import i2p.bote.packet.EmailPacketDeleteRequestTest;
 import i2p.bote.packet.EncryptedEmailPacketTest;
@@ -34,6 +35,7 @@ import i2p.bote.packet.I2PBotePacketTest;
 import i2p.bote.packet.IndexPacketDeleteRequestTest;
 import i2p.bote.packet.IndexPacketTest;
 import i2p.bote.packet.PeerListTest;
+import i2p.bote.packet.RelayPacketTest;
 import i2p.bote.packet.ResponsePacketTest;
 import i2p.bote.packet.UnencryptedEmailPacketTest;
 import i2p.bote.packet.dht.FindClosePeersPacketTest;
@@ -49,7 +51,7 @@ import org.junit.runners.Suite;
 	FindClosePeersPacketTest.class, PeerListTest.class, ResponsePacketTest.class, IncompleteEmailFolderTest.class,
 	EmailPacketDeleteRequestTest.class, IndexPacketDeleteRequestTest.class, IndexPacketTest.class, IndexPacketFolderTest.class,
 	EmailTest.class, EmailIdentityTest.class, EmailPacketFolderTest.class, EmailPacketDeleteRequestTest.class,
-	BucketManagerTest.class, CryptoImplementationTest.class })
+	RelayPacketTest.class, RelayPacketFolderTest.class, BucketManagerTest.class, CryptoImplementationTest.class })
 public class AllTests {
 
     public static Test suite() {

@@ -1,0 +1,215 @@
+/**
+ * Copyright (C) 2009  HungryHobo@mail.i2p
+ * 
+ * The GPG fingerprint for HungryHobo@mail.i2p is:
+ * 6DD3 EAA2 9990 29BC 4AD2 7486 1E2C 7B61 76DC DC12
+ * 
+ * This file is part of I2P-Bote.
+ * I2P-Bote is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * I2P-Bote is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package i2p.bote.packet;
+
+import i2p.bote.Util;
+import i2p.bote.network.RelayPeerManager;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.List;
+
+import net.i2p.I2PAppContext;
+import net.i2p.client.I2PSession;
+import net.i2p.data.DataFormatException;
+import net.i2p.data.Destination;
+import net.i2p.data.PrivateKey;
+import net.i2p.data.PublicKey;
+import net.i2p.data.SessionKey;
+import net.i2p.util.Log;
+
+/**
+ * A <code>RelayDataPacket</code> contains an encrypted or unencrypted {@link RelayRequest},
+ * an I2P destination to send it to, and a time window for the send time.
+ */
+@TypeCode('L')
+public class RelayDataPacket extends DataPacket {
+    private static final int PADDED_SIZE = 32;   // pad to the length of an AES-256 key
+    
+    private Log log = new Log(RelayDataPacket.class);
+    private long minDelay;
+    private long maxDelay;
+    private long sendTime;
+    private Destination nextDestination;
+    private byte[] request;   // a RelayRequest
+
+    /**
+     * Creates a new <code>RelayDataPacket</code> with an encrypted <code>RelayRequest</code>.
+     * @param nextDestination The I2P destination to send the packet to
+     * @param minDelayMilliseconds In milliseconds
+     * @param maxDelayMilliseconds In milliseconds
+     * @param request
+     */
+    public RelayDataPacket(Destination nextDestination, long minDelayMilliseconds, long maxDelayMilliseconds, RelayRequest request) {
+        this(nextDestination, minDelayMilliseconds, maxDelayMilliseconds, request, true);
+    }
+
+    /**
+     * Creates a new <code>RelayDataPacket</code> with an encrypted or unencrypted <code>RelayRequest</code>.
+     * @param nextDestination The I2P destination to send the packet to
+     * @param minDelayMilliseconds In milliseconds
+     * @param maxDelayMilliseconds In milliseconds
+     * @param request
+     * @param encrypt
+     */
+    private RelayDataPacket(Destination nextDestination, long minDelayMilliseconds, long maxDelayMilliseconds, RelayRequest request, boolean encrypt) {
+        this.nextDestination = nextDestination;
+        this.minDelay = minDelayMilliseconds;
+        this.maxDelay = maxDelayMilliseconds;
+        if (encrypt)
+            this.request = encrypt(request, nextDestination);
+        else
+            this.request = request.toByteArray();
+    }
+
+    public RelayDataPacket(byte[] data) throws DataFormatException {
+        super(data);
+        
+        ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
+        
+        minDelay = buffer.getInt() * 1000L;
+        maxDelay = buffer.getInt() * 1000L;
+        nextDestination = Util.createDestination(buffer);
+        
+        int requestDataLength = buffer.getShort();
+        request = new byte[requestDataLength];
+        buffer.get(request);
+        
+        if (buffer.hasRemaining())
+            log.debug("Relay Packet has " + buffer.remaining() + " extra bytes.");
+    }
+    
+    /**
+     * Creates <code>numHops</code> nested <code>RelayDataPacket</code>s.
+     * Returns <code>null</code> if <code>numHops</code> is <code>0</code>.
+     * @param payload
+     * @param peerManager
+     * @param numHops
+     * @param minDelayMilliseconds
+     * @param maxDelayMilliseconds
+     * @return
+     */
+    public static RelayDataPacket create(DataPacket payload, RelayPeerManager peerManager, int numHops, long minDelayMilliseconds, long maxDelayMilliseconds) {
+        List<Destination> relayPeers = peerManager.getRandomPeers(numHops);
+        
+        Log log = new Log(RelayDataPacket.class);
+        if (log.shouldLog(Log.DEBUG)) {
+            StringBuilder debugMsg = new StringBuilder("Creating relay chain: [");
+            for (int i=0; i<relayPeers.size(); i++) {
+                debugMsg.append(relayPeers.get(i).toBase64().substring(0, 8));
+                if (i < relayPeers.size()-1)
+                    debugMsg.append("... --> ");
+            }
+            debugMsg.append("...]");
+            log.debug(debugMsg.toString());
+        }
+        
+        RelayDataPacket relayPacket = null;
+        for (Iterator<Destination> iterator=relayPeers.iterator(); iterator.hasNext();) {
+            Destination relayPeer = iterator.next();
+            RelayRequest request = new RelayRequest(relayPacket==null?payload:relayPacket);
+            boolean encrypt = iterator.hasNext();   // don't encrypt the outermost RelayRequest so RelayPacketSender can read it from the file
+            relayPacket = new RelayDataPacket(relayPeer, minDelayMilliseconds, maxDelayMilliseconds, request, encrypt);
+        }
+        return relayPacket;
+    }
+    
+    public Destination getNextDestination() {
+        return nextDestination;
+    }
+
+    /** Returns the minimum delay time for this packet in milliseconds */
+    public long getMinimumDelay() {
+        return minDelay;
+    }
+
+    /** Returns the maximum delay time for this packet in milliseconds */
+    public long getMaximumDelay() {
+        return maxDelay;
+    }
+    
+    /**
+     * @param The time the packet is scheduled for sending, in milliseconds since 1-1-1970
+     */
+    public void setSendTime(long sendTime) {
+        this.sendTime = sendTime;
+    }
+    
+    /**
+     * @return The time the packet is scheduled for sending, in milliseconds since 1-1-1970
+     */
+    public long getSendTime() {
+        return sendTime;
+    }
+
+    /**
+     * Returns the <code>RelayRequest</code>. Do not call this method on an encrypted
+     * <code>RelayDataPacket</code>, call {@link decrypt(I2PSession)} first.
+     * @return
+     * @throws DataFormatException
+     * @throws NoSuchAlgorithmException
+     * @throws MalformedDataPacketException
+     */
+    public RelayRequest getRequest() throws DataFormatException, NoSuchAlgorithmException, MalformedDataPacketException {
+        return new RelayRequest(request);
+    }
+    
+    @Override
+    public byte[] toByteArray() {
+        ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+        DataOutputStream dataStream = new DataOutputStream(arrayOutputStream);
+ 
+        try {
+            writeHeader(dataStream);
+            dataStream.writeInt((int)(minDelay/1000));
+            dataStream.writeInt((int)(maxDelay/1000));
+            // write the first 384 bytes (the two public keys)
+            dataStream.write(nextDestination.toByteArray(), 0, 384);
+            dataStream.writeShort(request.length);
+            dataStream.write(request);
+        }
+        catch (IOException e) {
+            log.error("Can't write to ByteArrayOutputStream.", e);
+        }
+        
+        return arrayOutputStream.toByteArray();
+    }
+    
+    private byte[] encrypt(RelayRequest request, Destination destination) {
+        PublicKey publicKey = destination.getPublicKey();
+        I2PAppContext appContext = I2PAppContext.getGlobalContext();
+        SessionKey sessionKey = appContext.sessionKeyManager().createSession(publicKey);
+        byte[] data = request.toByteArray();
+        return appContext.elGamalAESEngine().encrypt(data, publicKey, sessionKey, PADDED_SIZE);
+    }
+
+    /** Decrypts the <code>RelayRequest</code> inside this packet. */
+    public void decrypt(I2PSession i2pSession) throws DataFormatException {
+        PrivateKey privateKey = i2pSession.getDecryptionKey();
+        I2PAppContext appContext = I2PAppContext.getGlobalContext();
+        request = appContext.elGamalAESEngine().decrypt(request, privateKey, appContext.sessionKeyManager());
+    }
+}

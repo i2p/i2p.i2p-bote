@@ -85,7 +85,7 @@ public abstract class DataPacket extends I2PBotePacket {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
-            DataPacket packet = createPacket(Util.readInputStream(inputStream));
+            DataPacket packet = createPacket(Util.readBytes(inputStream));
             return packet;
         }
         catch (IOException e) {

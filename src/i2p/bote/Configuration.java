@@ -36,13 +36,14 @@ public class Configuration {
     private static final String I2P_BOTE_SUBDIR = "i2pbote";       // relative to the I2P app dir
     private static final String CONFIG_FILE_NAME = "i2pbote.config";
     private static final String DEST_KEY_FILE_NAME = "local_dest.key";
-    private static final String PEER_FILE_NAME = "peers.txt";
+    private static final String DHT_PEER_FILE_NAME = "dht_peers.txt";
+    private static final String RELAY_PEER_FILE_NAME = "relay_peers.txt";
     private static final String IDENTITIES_FILE_NAME = "identities.txt";
     private static final String ADDRESS_BOOK_FILE_NAME = "addressBook.txt";
     private static final String MESSAGE_ID_CACHE_FILE = "msgidcache.txt";
     private static final String OUTBOX_DIR = "outbox";              // relative to I2P_BOTE_SUBDIR
     private static final String OUTBOX_SUBDIR_LOCAL = "local";      // relative to OUTBOX_DIR
-    private static final String OUTBOX_SUBDIR_RELAY = "relay";      // relative to OUTBOX_DIR
+    private static final String RELAY_PKT_SUBDIR = "relay_pkt";     // relative to I2P_BOTE_SUBDIR
     private static final String INCOMPLETE_SUBDIR = "incomplete";   // relative to I2P_BOTE_SUBDIR
     private static final String EMAIL_DHT_SUBDIR = "dht_email_pkt";    // relative to I2P_BOTE_SUBDIR
     private static final String INDEX_PACKET_DHT_SUBDIR = "dht_index_pkt";    // relative to I2P_BOTE_SUBDIR
@@ -66,6 +67,10 @@ public class Configuration {
     private static final String PARAMETER_HIDE_LOCALE = "hideLocale";
     private static final String PARAMETER_INCLUDE_SENT_TIME = "includeSentTime";
     private static final String PARAMETER_MESSAGE_ID_CACHE_SIZE = "messageIdCacheSize";
+    private static final String PARAMETER_RELAY_REDUNDANCY = "relayRedundancy";
+    private static final String PARAMETER_RELAY_MIN_DELAY = "relayMinDelay";
+    private static final String PARAMETER_RELAY_MAX_DELAY = "relayMaxDelay";
+    private static final String PARAMETER_NUM_STORE_HOPS = "numSendHops";
     
     // Defaults for each parameter
     private static final int DEFAULT_REDUNDANCY = 2;
@@ -83,6 +88,10 @@ public class Configuration {
     private static final boolean DEFAULT_HIDE_LOCALE = true;
     private static final boolean DEFAULT_INCLUDE_SENT_TIME = true;
     private static final int DEFAULT_MESSAGE_ID_CACHE_SIZE = 1000;   // the maximum number of message IDs to cache
+    private static final int DEFAULT_RELAY_REDUNDANCY = 5;
+    private static final int DEFAULT_RELAY_MIN_DELAY = 120;   // in minutes
+    private static final int DEFAULT_RELAY_MAX_DELAY = 600;   // in minutes
+    private static final int DEFAULT_NUM_STORE_HOPS = 0;
     
     private Log log = new Log(Configuration.class);
     private Properties properties;
@@ -131,8 +140,12 @@ public class Configuration {
         return new File(i2pBoteDir, DEST_KEY_FILE_NAME);
     }
     
-    public File getPeerFile() {
-        return new File(i2pBoteDir, PEER_FILE_NAME);
+    public File getDhtPeerFile() {
+        return new File(i2pBoteDir, DHT_PEER_FILE_NAME);
+    }
+    
+    public File getRelayPeerFile() {
+        return new File(i2pBoteDir, RELAY_PEER_FILE_NAME);
     }
     
     public File getIdentitiesFile() {
@@ -151,8 +164,8 @@ public class Configuration {
         return new File(getOutboxBaseDir(), OUTBOX_SUBDIR_LOCAL);	    
     }
     
-    public File getRelayOutboxDir() {
-        return new File(getOutboxBaseDir(), OUTBOX_SUBDIR_RELAY);       
+    public File getRelayPacketDir() {
+        return new File(i2pBoteDir, RELAY_PKT_SUBDIR);       
     }
     
     private File getOutboxBaseDir() {
@@ -260,7 +273,7 @@ public class Configuration {
     }
     
     public void setMailCheckInterval(int minutes) {
-        properties.setProperty(PARAMETER_MAIL_CHECK_INTERVAL, new Integer(minutes).toString());
+        properties.setProperty(PARAMETER_MAIL_CHECK_INTERVAL, Integer.valueOf(minutes).toString());
     }
     
     /**
@@ -324,7 +337,7 @@ public class Configuration {
      * @param hideLocale
      */
     public void setHideLocale(boolean hideLocale) {
-        properties.setProperty(PARAMETER_HIDE_LOCALE, new Boolean(hideLocale).toString());
+        properties.setProperty(PARAMETER_HIDE_LOCALE, Boolean.valueOf(hideLocale).toString());
     }
     
     public boolean getHideLocale() {
@@ -336,7 +349,7 @@ public class Configuration {
      * @param includeSentTime
      */
     public void setIncludeSentTime(boolean includeSentTime) {
-        properties.setProperty(PARAMETER_INCLUDE_SENT_TIME, new Boolean(includeSentTime).toString());
+        properties.setProperty(PARAMETER_INCLUDE_SENT_TIME, Boolean.valueOf(includeSentTime).toString());
     }
     
     public boolean getIncludeSentTime() {
@@ -345,6 +358,54 @@ public class Configuration {
     
     public int getMessageIdCacheSize() {
         return getIntParameter(PARAMETER_MESSAGE_ID_CACHE_SIZE, DEFAULT_MESSAGE_ID_CACHE_SIZE);
+    }
+    
+    /**
+     * Returns the number of relay chains that should be used per Relay Request.
+     * @return
+     */
+    public int getRelayRedundancy() {
+        return getIntParameter(PARAMETER_RELAY_REDUNDANCY, DEFAULT_RELAY_REDUNDANCY);
+    }
+    
+    /**
+     * Sets the minimum amount of time that a Relay Request is delayed.
+     * @param minDelay The minimum delay in minutes
+     */
+    public void setRelayMinDelay(int minDelay) {
+        properties.setProperty(PARAMETER_RELAY_MIN_DELAY, Integer.valueOf(minDelay).toString());
+    }
+    
+    public int getRelayMinDelay() {
+        return getIntParameter(PARAMETER_RELAY_MIN_DELAY, DEFAULT_RELAY_MIN_DELAY);
+    }
+    
+    /**
+     * Sets the maximum amount of time that a Relay Request is delayed.
+     * @param minDelay The minimum delay in minutes
+     */
+    public void setRelayMaxDelay(int maxDelay) {
+        properties.setProperty(PARAMETER_RELAY_MAX_DELAY, Integer.valueOf(maxDelay).toString());
+    }
+    
+    /**
+     * Returns the maximum amount of time in minutes that a Relay Request is delayed.
+     * @return
+     */
+    public int getRelayMaxDelay() {
+        return getIntParameter(PARAMETER_RELAY_MAX_DELAY, DEFAULT_RELAY_MAX_DELAY);
+    }
+    
+    /**
+     * Returns the number of relays that should be used when sending a DHT store request.
+     * @return
+     */
+    public void setNumStoreHops(int numHops) {
+        properties.setProperty(PARAMETER_NUM_STORE_HOPS, Integer.valueOf(numHops).toString());
+    }
+    
+    public int getNumStoreHops() {
+        return getIntParameter(PARAMETER_NUM_STORE_HOPS, DEFAULT_NUM_STORE_HOPS);
     }
     
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {

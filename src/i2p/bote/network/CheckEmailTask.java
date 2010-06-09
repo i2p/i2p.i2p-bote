@@ -65,7 +65,7 @@ public class CheckEmailTask implements Callable<Boolean> {
     private Log log = new Log(CheckEmailTask.class);
     private EmailIdentity identity;
     private DHT dht;
-    private PeerManager peerManager;
+    private RelayPeerManager peerManager;
     private I2PSendQueue sendQueue;
     private Destination localDestination;
     private IncompleteEmailFolder incompleteEmailFolder;
@@ -74,7 +74,7 @@ public class CheckEmailTask implements Callable<Boolean> {
     private volatile boolean newEmail;   // EmailPacketTask sets this to true if an email was completed
     private IndexPacketDeleteRequest indexPacketDeleteRequest;   // EmailPacketTask populates this
 
-    public CheckEmailTask(EmailIdentity identity, DHT dht, PeerManager peerManager, I2PSendQueue sendQueue,
+    public CheckEmailTask(EmailIdentity identity, DHT dht, RelayPeerManager peerManager, I2PSendQueue sendQueue,
             IncompleteEmailFolder incompleteEmailFolder, EmailPacketFolder emailPacketFolder, IndexPacketFolder indexPacketFolder) {
         this.identity = identity;
         this.dht = dht;

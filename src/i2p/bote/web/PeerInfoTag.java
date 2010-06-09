@@ -25,6 +25,7 @@ import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
+import i2p.bote.network.RelayPeer;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -49,9 +50,9 @@ public class PeerInfoTag extends SimpleTagSupport {
             if (dhtStats == null)
                 return;
             
-            int numPeers = dhtStats.getData().size();
-            out.println("<strong>" + _("Kademlia Peers:") + " " + numPeers + "</strong>");
-            if (numPeers > 0) {
+            int numDhtPeers = dhtStats.getData().size();
+            out.println("<strong>" + _("Kademlia Peers:") + " " + numDhtPeers + "</strong>");
+            if (numDhtPeers > 0) {
                 out.println("<table class=\"table\">");
                 
                 // header
@@ -68,6 +69,30 @@ public class PeerInfoTag extends SimpleTagSupport {
                     out.println("</tr>");
                 }
                 
+                out.println("</table>");
+            }
+            
+            out.println("<p/><br/>");
+            
+            // Print relay peer info
+            List<RelayPeer> relayPeers = I2PBote.getInstance().getRelayPeers();
+            out.println("<strong>" + _("Relay Peers:") + " " + relayPeers.size() + "</strong>");
+            if (numDhtPeers > 0) {
+                out.println("<table class=\"table\">");
+                out.println("<tr>");
+                out.println("<th>" + _("Peer") + "</th>");
+                out.println("<th>" + _("I2P Destination") + "</th>");
+                out.println("<th>" + _("Up %") + "</th>");
+                out.println("</tr>");
+                
+                for (int i=0; i<relayPeers.size(); i++) {
+                    RelayPeer peer = relayPeers.get(i);
+                    out.println("<tr>");
+                    out.println("<td>" + (i+1) + "</th>");
+                    out.println("<td>" + peer.toBase64() + "</th>");
+                    out.println("<td>" + peer.getReachability() + "</th>");
+                    out.println("</tr>");
+                }
                 out.println("</table>");
             }
             

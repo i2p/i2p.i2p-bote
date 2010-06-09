@@ -25,8 +25,6 @@ import i2p.bote.UniqueId;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.EmptyResponse;
-import i2p.bote.packet.RelayPacket;
-import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
 import i2p.bote.service.I2PBoteThread;
@@ -45,8 +43,6 @@ import net.i2p.client.datagram.I2PDatagramMaker;
 import net.i2p.data.Destination;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
-
-import com.nettgryppa.security.HashCash;
 
 /**
  * All outgoing I2P traffic goes through this class.
@@ -100,12 +96,6 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         return scheduledPacket.getSentLatch();
     }
 
-    public void sendRelayRequest(RelayPacket relayPacket, HashCash hashCash, long earliestSendTime) {
-        RelayRequest relayRequest = new RelayRequest(hashCash, relayPacket);
-        ScheduledPacket scheduledPacket = new ScheduledPacket(relayRequest, relayPacket.getNextDestination(), earliestSendTime);
-        packetQueue.add(scheduledPacket);
-    }
-    
     /**
      * Sends a Response Packet to a {@link Destination}, with the status code "OK".
      * @param packet

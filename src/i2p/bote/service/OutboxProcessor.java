@@ -22,18 +22,22 @@
 package i2p.bote.service;
 
 import static i2p.bote.Util._;
+import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.folder.Outbox;
+import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.NetworkStatus;
-import i2p.bote.network.PeerManager;
+import i2p.bote.network.RelayPeerManager;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
+import i2p.bote.packet.RelayDataPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
+import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -57,13 +61,19 @@ public class OutboxProcessor extends I2PBoteThread {
     private Log log = new Log(OutboxProcessor.class);
     private DHT dht;
     private Outbox outbox;
+    private RelayPeerManager peerManager;
+    private RelayPacketFolder relayPacketFolder;
+    private Configuration configuration;
     private CountDownLatch wakeupSignal;   // tells the thread to interrupt the current wait and resume the loop
     private List<OutboxListener> outboxListeners;
     
-    public OutboxProcessor(DHT dht, Outbox outbox, PeerManager peerManager) {
+    public OutboxProcessor(DHT dht, Outbox outbox, RelayPeerManager peerManager, RelayPacketFolder relayPacketFolder, Configuration configuration) {
         super("OutboxProcsr");
         this.dht = dht;
         this.outbox = outbox;
+        this.peerManager = peerManager;
+        this.relayPacketFolder = relayPacketFolder;
+        this.configuration = configuration;
         outboxListeners = Collections.synchronizedList(new ArrayList<OutboxListener>());
     }
     
@@ -176,10 +186,10 @@ public class OutboxProcessor extends I2PBoteThread {
             IndexPacket indexPacket = new IndexPacket(recipientDest);
             for (UnencryptedEmailPacket unencryptedPacket: emailPackets) {
                 EncryptedEmailPacket emailPacket = new EncryptedEmailPacket(unencryptedPacket, recipientDest);
-                dht.store(emailPacket);
+                send(emailPacket);
                 indexPacket.put(emailPacket);
             }
-            dht.store(indexPacket);
+            send(indexPacket);
         } catch (GeneralSecurityException e) {
             log.error("Invalid recipient address. " + logSuffix, e);
             outbox.setStatus(email, _("Invalid recipient address: {0}", recipient));
@@ -193,6 +203,24 @@ public class OutboxProcessor extends I2PBoteThread {
             outbox.setStatus(email, _("Error while sending email: {0}", e.getLocalizedMessage()));
             throw e;
         }
+    }
+    
+    /**
+     * Stores a packet in the DHT directly or via relay peers. 
+     * @throws DhtException 
+     */
+    private void send(DhtStorablePacket dhtPacket) throws DhtException {
+        int hops = configuration.getNumStoreHops();
+        long minDelay = configuration.getRelayMinDelay() * 60 * 1000;
+        long maxDelay = configuration.getRelayMaxDelay() * 60 * 1000;
+        if (hops > 0)
+            for (int i=0; i<configuration.getRelayRedundancy(); i++) {
+                // TODO don't use the same relay peer twice if there are enough peers
+                RelayDataPacket packet = RelayDataPacket.create(dhtPacket, peerManager, hops, minDelay, maxDelay);
+                relayPacketFolder.add(packet);
+            }
+        else
+            dht.store(dhtPacket);
     }
     
     public void addOutboxListener(OutboxListener listener) {

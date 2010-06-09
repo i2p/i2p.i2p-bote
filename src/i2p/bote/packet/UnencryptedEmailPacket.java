@@ -46,7 +46,7 @@ public class UnencryptedEmailPacket extends DataPacket {
     private byte[] content;
 
     public UnencryptedEmailPacket(InputStream inputStream) throws IOException {
-        this(Util.readInputStream(inputStream));
+        this(Util.readBytes(inputStream));
     }
     
     public UnencryptedEmailPacket(UniqueId messageId, int fragmentIndex, int numFragments, byte[] content) {

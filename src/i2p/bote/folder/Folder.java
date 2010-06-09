@@ -89,7 +89,7 @@ public abstract class Folder<T> implements Iterable<T> {
         return elements;
     }
     
-    // An {@link Iterator} implementation that loads one file into memory at a time.
+    /** An {@link Iterator} implementation that loads one file into memory at a time. */
     @Override
     public final Iterator<T> iterator() {
         final File[] files = getFilenames();
@@ -97,6 +97,7 @@ public abstract class Folder<T> implements Iterable<T> {
 
         return new Iterator<T>() {
             int nextIndex = 0;
+            File currentFile;
             
             @Override
             public boolean hasNext() {
@@ -105,12 +106,12 @@ public abstract class Folder<T> implements Iterable<T> {
 
             @Override
             public T next() {
-                File file = files[nextIndex];
+                currentFile = files[nextIndex];
                 nextIndex++;
-                String filePath = file.getAbsolutePath();
+                String filePath = currentFile.getAbsolutePath();
                 log.debug("Reading file: '" + filePath + "'");
                 try {
-                    T nextElement = createFolderElement(file);
+                    T nextElement = createFolderElement(currentFile);
                     return nextElement;
                 }
                 catch (Exception e) {
@@ -121,7 +122,10 @@ public abstract class Folder<T> implements Iterable<T> {
             
             @Override
             public void remove() {
-                throw new UnsupportedOperationException("Not supported!");
+                if (currentFile == null)
+                    throw new IllegalStateException("remove() was called before next()");
+                if (!currentFile.delete())
+                    log.error("Can't delete file: <" + currentFile.getAbsolutePath() + ">");
             }
         };
     }

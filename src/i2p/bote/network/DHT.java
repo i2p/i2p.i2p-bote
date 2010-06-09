@@ -46,6 +46,9 @@ public interface DHT {
     /** Returns a <code>CountDownLatch</code> that switches to zero when a connection to the DHT has been established. */
     CountDownLatch readySignal();
     
+    /** Returns <code>true</code> if a connection to the DHT has been established. */
+    boolean isReady();
+
     /**
      * Returns the current number of known active peers.
      * @return

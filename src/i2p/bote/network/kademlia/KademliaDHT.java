@@ -32,6 +32,7 @@ import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketBatch;
 import i2p.bote.network.PacketListener;
+import i2p.bote.network.PeerFileAnchor;
 import i2p.bote.network.kademlia.SBucket.BucketSection;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
@@ -45,14 +46,10 @@ import i2p.bote.packet.dht.RetrieveRequest;
 import i2p.bote.packet.dht.StoreRequest;
 import i2p.bote.service.I2PBoteThread;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -93,7 +90,6 @@ import com.nettgryppa.security.HashCash;
  */
 public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private static final int RESPONSE_TIMEOUT = 60;   // Max. number of seconds to wait for replies to retrieve requests
-    private static final URL BUILT_IN_PEER_FILE = KademliaDHT.class.getResource("built-in-peers.txt");
     
     private Log log = new Log(KademliaDHT.class);
     private I2PSendQueue sendQueue;
@@ -125,16 +121,42 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         localDestinationHash = localDestination.calculateHash();
         initialPeers = new ConcurrentHashSet<KademliaPeer>();
         // Read the built-in peer file
-        readPeers(BUILT_IN_PEER_FILE);
+        URL builtInPeerFile = PeerFileAnchor.getBuiltInPeersFile();
+        List<String> builtInPeers = Util.readLines(builtInPeerFile);
+        addPeers(builtInPeers);
         // Read the updateable peer file if it exists
-        if (peerFile.exists())
-            readPeers(peerFile);
+        if (peerFile.exists()) {
+            List<String> receivedPeers = Util.readLines(peerFile);
+            addPeers(receivedPeers);
+        }
         else
             log.info("Peer file doesn't exist, using built-in peers only (File not found: <" + peerFile.getAbsolutePath() + ">)");
         
         bucketManager = new BucketManager(localDestinationHash);
         storageHandlers = new ConcurrentHashMap<Class<? extends DhtStorablePacket>, DhtStorageHandler>();
         replicateThread = new ReplicateThread(localDestination, sendQueue, i2pReceiver, bucketManager, readySignal);
+    }
+    
+    /**
+     * Creates peer destinations from a <code>String</code> each, and adds them to <code>initialPeers</code>.
+     * @param peerFileEntries A list of <code>String</code>s as they appear in the peer file
+     */
+    private void addPeers(List<String> peerFileEntries) {
+        for (String line: peerFileEntries) {
+            if (!line.startsWith("#"))
+                try {
+                    Destination destination = new Destination(line);
+                    
+                    // don't add the local destination as a peer
+                    if (!destination.equals(localDestination)) {
+                        KademliaPeer peer = new KademliaPeer(destination, 0);
+                        initialPeers.add(peer);
+                    }
+                }
+                catch (DataFormatException e) {
+                    log.error("Invalid destination key in line " + line, e);
+                }
+        }
     }
     
     /**
@@ -169,6 +191,16 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     @Override
     public CountDownLatch readySignal() {
         return readySignal;
+    }
+    
+    @Override
+    public boolean isReady() {
+        try {
+            return readySignal().await(0, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            log.error("Interrupted during a zero-second wait!", e);
+            return false;
+        }
     }
 
     @Override
@@ -511,73 +543,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         });
     }
     
-    private void readPeers(URL url) {
-        log.info("Reading peers from URL: <" + url + ">");
-        InputStream stream = null;
-        try {
-            stream = url.openStream();
-            readPeers(stream);
-        }
-        catch (IOException e) {
-            log.error("Error reading peers from URL.", e);
-        } finally {
-            if (stream != null)
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    log.error("Can't close input stream.", e);
-                }
-        }
-    }
-    
-    private void readPeers(File file) {
-        log.info("Reading peers from file: <" + file.getAbsolutePath() + ">");
-        InputStream stream = null;
-        try {
-            stream = new FileInputStream(file);
-            readPeers(stream);
-        } catch (IOException e) {
-            log.error("Error reading peers from file.", e);
-        } finally {
-            if (stream != null)
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    log.error("Can't close input stream.", e);
-                }
-        }
-    }
-    
-    /**
-     * Reads peer destinations from an <code>InputStream</code> and writes them to <code>initialPeers</code>.
-     * @param inputStream
-     */
-    private void readPeers(InputStream inputStream) throws IOException {
-        BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(inputStream));
-        
-        int numPeersBefore = initialPeers.size();
-        while (true) {
-            String line = null;
-            line = inputBuffer.readLine();
-            if (line == null)
-                break;
-            
-            if (!line.startsWith("#"))
-                try {
-                	Destination destination = new Destination(line);
-                	KademliaPeer peer = new KademliaPeer(destination, 0);
-                	
-                    // don't add the local destination as a peer
-                    if (!peer.getDestination().equals(localDestination))
-                        initialPeers.add(peer);
-                }
-                catch (DataFormatException e) {
-                    log.error("Invalid destination key in line " + line, e);
-                }
-        }
-        log.info(initialPeers.size()-numPeersBefore + " peers read.");
-    }
-    
     private void sendPeerList(FindClosePeersPacket packet, Destination destination) {
         Collection<Destination> closestPeers = bucketManager.getClosestPeers(packet.getKey(), KademliaConstants.K);
         PeerList peerList = new PeerList(closestPeers);
@@ -659,7 +624,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 bootstrap();
             }
             refreshOldBuckets();
-            // TODO replicate();
             awaitShutdownRequest(1, TimeUnit.MINUTES);
         }
         writePeersSorted(peerFile);

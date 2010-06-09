@@ -140,19 +140,13 @@ public class EmailPacketFolder extends DeletionAwareDhtFolder<EncryptedEmailPack
     @Override
     public synchronized void deleteExpired() {
         long currentTimeMillis = System.currentTimeMillis();
-        File[] files = getFilenames();
-        for (File file: files)
-            try {
-                EncryptedEmailPacket emailPacket = createFolderElement(file);
-                if (currentTimeMillis > emailPacket.getStoreTime() + EXPIRATION_TIME_MILLISECONDS) {
-                    log.debug("Deleting expired email packet: <" + file.getAbsolutePath() + ">");
-                    if (!file.delete())
-                        log.error("Can't delete file: <" + file.getAbsolutePath() + ">");
-                }
+        for (Iterator<EncryptedEmailPacket> iterator=iterator(); iterator.hasNext();) {
+            EncryptedEmailPacket emailPacket = iterator.next();
+            if (currentTimeMillis > emailPacket.getStoreTime() + EXPIRATION_TIME_MILLISECONDS) {
+                log.debug("Deleting expired email packet: <" + emailPacket + ">");
+                iterator.remove();
             }
-            catch (Exception e) {
-                log.error("Can't create af EmailPacket from file: " + file.getAbsolutePath(), e);
-            }
+        }
     }
     
     private String getDeletionFileName(Hash dhtKey) {

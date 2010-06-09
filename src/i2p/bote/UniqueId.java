@@ -28,6 +28,7 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
+import net.i2p.data.Base32;
 import net.i2p.data.Base64;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
@@ -87,6 +88,10 @@ public class UniqueId implements Comparable<UniqueId> {
         return bytes;
     }
     
+    public String toBase32() {
+        return Base32.encode(bytes);
+    }
+
     public String toBase64() {
         return Base64.encode(bytes);
     }

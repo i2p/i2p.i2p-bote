@@ -27,36 +27,45 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 
-import net.i2p.I2PAppContext;
-import net.i2p.data.DataFormatException;
-import net.i2p.data.PrivateKey;
 import net.i2p.util.Log;
 
 import com.nettgryppa.security.HashCash;
 
+/**
+ * A <code>RelayRequest</code> contains a {@link RelayDataPacket} or a {@link DhtStorablePacket}.
+ */
 @TypeCode('Y')
 public class RelayRequest extends CommunicationPacket {
     private Log log = new Log(RelayRequest.class);
     private HashCash hashCash;
-    private byte[] storedData;
+    private DataPacket payload;
 
-    public RelayRequest(HashCash hashCash, DataPacket dataPacket) {
-        this.hashCash = hashCash;
-        this.storedData = dataPacket.toByteArray();
+    public RelayRequest(DataPacket payload) {
+        try {
+            hashCash = HashCash.mintCash("", 1);   // TODO
+        } catch (NoSuchAlgorithmException e) {
+            log.error("Cannot create HashCash.", e);
+        }
+        this.payload = payload;
     }
     
-    public RelayRequest(byte[] data) throws NoSuchAlgorithmException {
+    public RelayRequest(byte[] data) throws MalformedDataPacketException {
         super(data);
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
         int hashCashLength = buffer.getShort();
         byte[] hashCashData = new byte[hashCashLength];
         buffer.get(hashCashData);
-        hashCash = new HashCash(new String(hashCashData));
+        try {
+            hashCash = new HashCash(new String(hashCashData));
+        } catch (NoSuchAlgorithmException e) {
+            log.error("Cannot create HashCash.", e);
+        }
         
-        int dataLength = buffer.getShort();
-        storedData = new byte[dataLength];
-        buffer.get(storedData);
+        int payloadLength = buffer.getShort();
+        byte[] payloadData = new byte[payloadLength];
+        buffer.get(payloadData);
+        payload = DataPacket.createPacket(payloadData);
         
         if (buffer.hasRemaining())
             log.debug("Storage Request Packet has " + buffer.remaining() + " extra bytes.");
@@ -68,15 +77,10 @@ public class RelayRequest extends CommunicationPacket {
 
     /**
      * Returns the payload packet, i.e. the data that is being relayed.
-     * @param localDecryptionKey
-     * @param appContext
      * @return
-     * @throws DataFormatException
-     * @throws MalformedCommunicationPacketException 
      */
-    public DataPacket getStoredPacket(PrivateKey localDecryptionKey, I2PAppContext appContext) throws DataFormatException, MalformedDataPacketException {
-        byte[] decryptedData = appContext.elGamalAESEngine().decrypt(storedData, localDecryptionKey, appContext.sessionKeyManager());
-        return DataPacket.createPacket(decryptedData);
+    public DataPacket getStoredPacket() {
+        return payload;
     }
 
     @Override
@@ -89,8 +93,10 @@ public class RelayRequest extends CommunicationPacket {
             String hashCashString = hashCash.toString();
             dataStream.writeShort(hashCashString.length());
             dataStream.write(hashCashString.getBytes());
-            dataStream.writeShort(storedData.length);
-            dataStream.write(storedData);
+            
+            byte[] payloadBytes = payload.toByteArray();
+            dataStream.writeShort(payloadBytes.length);
+            dataStream.write(payloadBytes);
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);

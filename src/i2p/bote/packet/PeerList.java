@@ -21,6 +21,8 @@
 
 package i2p.bote.packet;
 
+import i2p.bote.Util;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -49,12 +51,7 @@ public class PeerList extends DataPacket {
         int numPeers = buffer.getShort();
         peers = new ArrayList<Destination>();
         for (int i=0; i<numPeers; i++) {
-            byte[] peerData = new byte[388];
-            // read 384 bytes, leave the last 3 bytes zero
-            buffer.get(peerData, 0, 384);
-            
-            Destination peer = new Destination();
-            peer.readBytes(peerData, 0);
+            Destination peer = Util.createDestination(buffer);
             peers.add(peer);
         }
         
