@@ -63,6 +63,8 @@ public abstract class CommunicationPacket extends I2PBotePacket {
         verifyHeader(data);
         checkPacketType(data[4]);
         packetId = new UniqueId(data, 6);
+        sentSignal = new CountDownLatch(1);
+        sentTime = -1;
     }
     
     /**
