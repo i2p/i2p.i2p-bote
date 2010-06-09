@@ -329,8 +329,8 @@ public class BucketManagerTest {
                     KBucket bucket = kBuckets.get(i);
                     if (bucket.size() == bucketSizes.get(i)-1) {
                         bucketSizes.set(i, bucketSizes.get(i)-1);
-                        BigInteger startId = ((KBucket)bucket).getStartId();
-                        BigInteger endId = ((KBucket)bucket).getEndId();
+                        BigInteger startId = bucket.getStartId();
+                        BigInteger endId = bucket.getEndId();
                         assertTrue("Peer is in the wrong bucket: peer id=" + peerId + ", bucket start=" + startId + " bucket end=" + endId,
                                 startId.compareTo(peerId)<=0 && endId.compareTo(peerId)>=0);
                     }
