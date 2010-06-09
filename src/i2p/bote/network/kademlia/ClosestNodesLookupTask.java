@@ -99,47 +99,50 @@ public class ClosestNodesLookupTask implements Runnable {
         PacketListener packetListener = new IncomingPacketHandler();
         i2pReceiver.addPacketListener(packetListener);
         
-        // get a list of all unlocked peers (we don't how many we really need because some may not respond)
-        notQueriedYet.addAll(bucketManager.getAllUnlockedPeers());
-        logStatus();
-        
-        startTime = getTime();
-        do {
-            // send new requests if less than alpha are pending
-            while (pendingRequests.size()<KademliaConstants.ALPHA && !notQueriedYet.isEmpty()) {
-                Destination peer = notQueriedYet.first();   // query the closest unqueried peer
-                notQueriedYet.remove(peer);
-                // if the peer is us, do a local lookup; otherwise, send a request to the peer
-                if (localDestination.equals(peer))
-                    addLocalResults(key);
-                else {
-                    FindClosePeersPacket packet = new FindClosePeersPacket(key);
-                    pendingRequests.put(peer, packet);
-                    sendQueue.send(packet, peer);
-                }
-                logStatus();
-            }
-
-            // handle timeouts
-            for (Map.Entry<Destination, FindClosePeersPacket> request: pendingRequests.entrySet())
-                if (hasTimedOut(request.getValue(), REQUEST_TIMEOUT)) {
-                    Destination peer = request.getKey();
-                    log.debug("FindCloseNodes request to peer " + peer.calculateHash().toBase64() + " timed out.");
-                    bucketManager.noResponse(peer);
-                    pendingRequests.remove(peer);
-                }
+        try {
+            // get a list of all unlocked peers (we don't how many we really need because some may not respond)
+            notQueriedYet.addAll(bucketManager.getAllUnlockedPeers());
+            logStatus();
             
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                log.warn("Interrupted while doing a closest nodes lookup.", e);
-            }
-        } while (!isDone());
-        log.debug("Node lookup for " + key + " found " + responses.size() + " nodes (may include local node).");
-        for (Destination node: responses)
-            log.debug("  Node: " + node.calculateHash().toBase64());
-        
-        i2pReceiver.removePacketListener(packetListener);
+            startTime = getTime();
+            do {
+                // send new requests if less than alpha are pending
+                while (pendingRequests.size()<KademliaConstants.ALPHA && !notQueriedYet.isEmpty()) {
+                    Destination peer = notQueriedYet.first();   // query the closest unqueried peer
+                    notQueriedYet.remove(peer);
+                    // if the peer is us, do a local lookup; otherwise, send a request to the peer
+                    if (localDestination.equals(peer))
+                        addLocalResults(key);
+                    else {
+                        FindClosePeersPacket packet = new FindClosePeersPacket(key);
+                        pendingRequests.put(peer, packet);
+                        sendQueue.send(packet, peer);
+                    }
+                    logStatus();
+                }
+    
+                // handle timeouts
+                for (Map.Entry<Destination, FindClosePeersPacket> request: pendingRequests.entrySet())
+                    if (hasTimedOut(request.getValue(), REQUEST_TIMEOUT)) {
+                        Destination peer = request.getKey();
+                        log.debug("FindCloseNodes request to peer " + peer.calculateHash().toBase64() + " timed out.");
+                        bucketManager.noResponse(peer);
+                        pendingRequests.remove(peer);
+                    }
+                
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    log.warn("Interrupted while doing a closest nodes lookup.", e);
+                }
+            } while (!isDone());
+            log.debug("Node lookup for " + key + " found " + responses.size() + " nodes (may include local node).");
+            for (Destination node: responses)
+                log.debug("  Node: " + node.calculateHash().toBase64());
+        }
+        finally {
+            i2pReceiver.removePacketListener(packetListener);
+        }
     }
     
     private void logStatus() {
