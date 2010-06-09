@@ -74,6 +74,7 @@ public class OutboxProcessor extends I2PBoteThread {
         this.peerManager = peerManager;
         this.relayPacketFolder = relayPacketFolder;
         this.configuration = configuration;
+        wakeupSignal = new CountDownLatch(1);
         outboxListeners = Collections.synchronizedList(new ArrayList<OutboxListener>());
     }
     
