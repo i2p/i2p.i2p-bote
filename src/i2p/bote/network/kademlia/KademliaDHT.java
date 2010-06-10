@@ -635,4 +635,10 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     public void awaitShutdown(long timeout) throws InterruptedException {
         join(timeout);
     }
+    
+    @Override
+    public void requestShutdown() {
+        super.requestShutdown();
+        replicateThread.requestShutdown();
+    }
 }
