@@ -22,7 +22,7 @@
 package i2p.bote.packet;
 
 import i2p.bote.Util;
-import i2p.bote.network.RelayPeerManager;
+import i2p.bote.service.RelayPeerManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

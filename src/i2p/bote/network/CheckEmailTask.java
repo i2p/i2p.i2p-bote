@@ -34,6 +34,7 @@ import i2p.bote.packet.IndexPacketDeleteRequest;
 import i2p.bote.packet.IndexPacketEntry;
 import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.packet.dht.DhtStorablePacket;
+import i2p.bote.service.RelayPeerManager;
 
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;

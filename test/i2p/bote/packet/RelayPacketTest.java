@@ -27,7 +27,7 @@ import static junit.framework.Assert.fail;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
-import i2p.bote.network.RelayPeerManager;
+import i2p.bote.service.RelayPeerManager;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;

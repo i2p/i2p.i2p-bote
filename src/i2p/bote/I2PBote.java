@@ -44,7 +44,6 @@ import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.NetworkStatus;
 import i2p.bote.network.RelayPacketHandler;
 import i2p.bote.network.RelayPeer;
-import i2p.bote.network.RelayPeerManager;
 import i2p.bote.network.kademlia.KademliaDHT;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
@@ -54,6 +53,7 @@ import i2p.bote.service.OutboxListener;
 import i2p.bote.service.OutboxProcessor;
 import i2p.bote.service.POP3Service;
 import i2p.bote.service.RelayPacketSender;
+import i2p.bote.service.RelayPeerManager;
 import i2p.bote.service.SMTPService;
 
 import java.io.ByteArrayInputStream;
@@ -65,9 +65,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -437,7 +437,7 @@ public class I2PBote {
             return dht.getPeerStats();
     }
     
-    public List<RelayPeer> getRelayPeers() {
+    public Set<RelayPeer> getRelayPeers() {
         return peerManager.getAllPeers();
     }
     
@@ -446,6 +446,7 @@ public class I2PBote {
     }
     
     private void startAllServices() {
+        peerManager.start();
         outboxProcessor.start();
         dht.start();
         relayPacketSender.start();
@@ -471,6 +472,7 @@ public class I2PBote {
                 mailCheckTask.cancel(false);
         if (autoMailCheckTask != null) autoMailCheckTask.requestShutdown();
         if (expirationThread != null) expirationThread.requestShutdown();
+        if (peerManager != null) peerManager.requestShutdown();
         
         long deadline = System.currentTimeMillis() + 1000 * 60;   // the time at which any background threads that are still running are killed
         if (dht != null)

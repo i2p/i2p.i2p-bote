@@ -32,7 +32,6 @@ import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.NetworkStatus;
-import i2p.bote.network.RelayPeerManager;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.RelayDataPacket;

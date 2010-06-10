@@ -27,6 +27,15 @@ public class RelayPeer extends Destination {
     private long requestsSent;
     private long responsesReceived;
 
+    /**
+     * Creates a new <code>RelayPeer</code> with the <code>requestsSent</code> and
+     * <code>responsesReceived</code> number set to <code>0</code>.
+     * @param destination
+     */
+    public RelayPeer(Destination destination) {
+        this(destination, 0, 0);
+    }
+    
     public RelayPeer(Destination destination, long requestsSent, long responsesReceived) {
         // initialize the Destination part of the RelayPeer
         setCertificate(destination.getCertificate());
@@ -38,12 +47,22 @@ public class RelayPeer extends Destination {
         this.responsesReceived = responsesReceived;
     }
 
-    public long getRequestsSent() {
+    public synchronized long getRequestsSent() {
         return requestsSent;
     }
 
-    public long getResponsesReceived() {
+    public synchronized long getResponsesReceived() {
         return responsesReceived;
+    }
+
+    /** Increments the number of requests made to this <code>RelayPeer</code> by one */
+    public synchronized void requestSent() {
+        requestsSent++;
+    }
+
+    /** Increments the number of responses received from this <code>RelayPeer</code> by one */
+    public synchronized void responseReceived() {
+        responsesReceived++;
     }
 
     /**
@@ -51,7 +70,7 @@ public class RelayPeer extends Destination {
      * a response was received.
      * @return
      */
-    public int getReachability() {
+    public synchronized int getReachability() {
         if (requestsSent == 0)
             return 100;   // assume 100% reachability for new peers so the peer isn't removed before it has had a chance to respond to a request
         else
