@@ -308,7 +308,7 @@ public class Email extends MimeMessage {
     }
     
     /**
-     * Removes everything but the 512-char email destination from all recipient fields,
+     * Removes everything but the email destination from all recipient fields,
      * in order to keep local contact names private.
      * @throws MessagingException
      */

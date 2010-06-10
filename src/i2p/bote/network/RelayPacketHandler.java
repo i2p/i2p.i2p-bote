@@ -44,7 +44,7 @@ import net.i2p.util.Log;
  */
 public class RelayPacketHandler implements PacketListener {
     private static final int MAX_CONCURRENT_DHT_TASKS = 5;
-    private static final int THREAD_STACK_SIZE = 262144;
+    public static final int THREAD_STACK_SIZE = 256 * 1024;
     
     private Log log = new Log(RelayPacketHandler.class);
     private RelayPacketFolder relayPacketFolder;
