@@ -19,6 +19,7 @@
         <pathelement location="${jstllib}/jstl.jar" />
         <pathelement location="${jstllib}/standard.jar" />
         <pathelement location="${lib}/mailapi.jar" />
+        <pathelement location="${lib}/bcprov-ecc-jdk16-145.jar" />
     </path>
 
     <target name="help">
@@ -83,14 +84,13 @@
         <mkdir dir="ant_build" />
         <war destfile="i2pbote.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="**/*.class" />
-            <classes dir="src" includes="i2p/bote/network/kademlia/built-in-peers.txt" />
+            <classes dir="src" includes="i2p/bote/network/built-in-peers.txt" />
             <fileset dir="WebContent" includes="index.html"/>
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
-            <lib file="${jstllib}/jstl.jar"/>
-            <lib file="${jstllib}/standard.jar"/>
             <lib file="${lib}/mailapi.jar"/>
+            <lib file="${lib}/bcprov-ecc-jdk16-145.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
         </war>
 
@@ -122,6 +122,14 @@
             <arg value="plugin/plugin.tmp/console/webapps/i2pbote.jar"/>
         </exec>
         <delete file="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
+        <!-- run bcprov-ecc-jdk16-145.jar through pack200 -->
+        <exec executable="pack200" failifexecutionfails="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/bcprov-ecc-jdk16-145.jar.pack"/>
+            <arg value="${lib}/bcprov-ecc-jdk16-145.jar"/>
+        </exec>
 
         <delete file="plugin/plugin.tmp/lib/mailapi.jar" />
         <delete file="plugin/plugin.tmp/lib/mailapi.jar.pack" />
@@ -164,7 +172,7 @@
         <mkdir dir="ant_build" />
         <war destfile="i2pbote-plugin.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="**/*.class" />
-            <classes dir="src" includes="i2p/bote/network/kademlia/built-in-peers.txt" />
+            <classes dir="src" includes="i2p/bote/network/built-in-peers.txt" />
             <fileset dir="WebContent" includes="index.html"/>
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
