@@ -34,7 +34,7 @@ import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 
-@TypeCode('P')
+@TypeCode('L')
 public class PeerList extends DataPacket {
     private Log log = new Log(PeerList.class);
     private Collection<Destination> peers;

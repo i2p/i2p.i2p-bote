@@ -39,7 +39,7 @@ import net.i2p.util.Log;
  * A <code>RelayDataPacket</code> contains a {@link RelayRequest},
  * an I2P destination to send it to, and a time window for the send time.
  */
-@TypeCode('L')
+@TypeCode('R')
 public class RelayDataPacket extends DataPacket {
     private Log log = new Log(RelayDataPacket.class);
     private long minDelay;
