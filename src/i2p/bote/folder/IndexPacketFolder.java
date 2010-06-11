@@ -196,7 +196,7 @@ public class IndexPacketFolder extends DeletionAwareDhtFolder<IndexPacket> imple
         else if (existingPacket != null)
             log.error("Packet of type " + existingPacket.getClass().getSimpleName() + " found in IndexPacketFolder.");
         
-        super.store(packetToStore);   // don't merge, but overwrite
+        super.store(indexPacketToStore);   // don't merge, but overwrite
         return delRequest;
     }
         
