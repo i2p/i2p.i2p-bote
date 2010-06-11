@@ -269,7 +269,7 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
                     if (peers.size() <= MAX_PEERS)
                         break;
                     RelayPeer peer = iterator.next();
-                    if (peer.getReachability() < MIN_REACHABILITY)
+                    if (peer.getRequestsSent()>0 && peer.getReachability()<MIN_REACHABILITY)   // don't remove the peer before it has had a chance to respond to a request
                         iterator.remove();
                 }
             }

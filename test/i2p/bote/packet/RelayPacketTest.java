@@ -89,12 +89,11 @@ public class RelayPacketTest {
         destKeys[2] = "ypxYUiP70IurS7HBRaFUIl5UxAwIo0pboudvT9FrY~JcFTOVYxd3u2K9QW9IAvyeceQgXMKZVNmL6fdw8j3DDSS8faB043MMM2RB6md9ziRwBW60r7tt0b9-Jn-~98lBv4ilwH8H0ivd8S7xEsbFT0W7dvqyInJ0kkC8yfX5bUlQYedkozQxl8LikSZWL4hyfGkNcHmLGl11OkRdBf-QjIEEdUE614iVY5bRxc~XS9TedXuRFfSciwVB14M7RRz0-mY61uNeH-7tVJZ1ixsoHBCoXqY9TFZ33zZkjyUQaFJaJxWVA5069ureV0BpvO-wBfCdTqUe92v5-hZaCqzlr3PqWLMAhR82yUZlarlZdeeTvnU-4g1~2tsnyUZQlev2i9jmpCb2~N0goo6hPOWTfWADsgq8xABIfi7mUchlMz~tuzCZwOUx2WVjy66u-tccHEdGC737zyPEhvOmZqjo3tg54IeX72FVP7kHc2QYNbfO7HXzK1x6FQ0dTr-E-OUeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFD91On9qR24Vcrdp-QmybkllCrh6k~3FcBUcIETv1AG79DSell4tLImTenGkRKt1";
         File peerFile = new File(testDir, "peers.txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(peerFile));
-        writer.write(destKeys[0]);
-        writer.newLine();
-        writer.write(destKeys[1]);
-        writer.newLine();
-        writer.write(destKeys[2]);
-        writer.newLine();
+        for (String destKey: destKeys) {
+            // make an entry in the peers file, set #sent and #recvd to 1
+            writer.write(destKey + "\t1\t1");
+            writer.newLine();
+        }
         writer.close();
         peerManager = new RelayPeerManager(sendQueue, i2pSession.getMyDestination(), peerFile);
         assertEquals(destKeys.length, peerManager.getAllPeers().size());
