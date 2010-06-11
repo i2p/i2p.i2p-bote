@@ -440,6 +440,7 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     }
     
     /** This class exposes the protected <code>engine*</code> methods in {@link KeyFactory.ECDH} */
+    @SuppressWarnings("unchecked")   // this eliminates a warning in the ant build caused by org.bouncycastle.jce.provider.asymmetric.ec.KeyFactory.engineGetKeySpec(java.security.Key,java.lang.Class)
     private class BouncyECDHKeyFactory extends KeyFactory.ECDH {
         
         public PublicKey generatePublic(KeySpec keySpec) throws InvalidKeySpecException {
@@ -452,6 +453,7 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     }
     
     /** This class exposes the protected <code>engine*</code> methods in {@link KeyFactory.ECDSA} */
+    @SuppressWarnings("unchecked")   // this eliminates a warning in the ant build caused by org.bouncycastle.jce.provider.asymmetric.ec.KeyFactory.engineGetKeySpec(java.security.Key,java.lang.Class)
     private class BouncyECDSAKeyFactory extends KeyFactory.ECDSA {
         
         public PublicKey generatePublic(KeySpec keySpec) throws InvalidKeySpecException {
