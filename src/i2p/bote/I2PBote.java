@@ -92,7 +92,7 @@ import net.i2p.util.Log;
  */
 public class I2PBote {
     public static final int PROTOCOL_VERSION = 3;
-    private static final String APP_VERSION = "0.2.3";
+    private static final String APP_VERSION = "0.2.4";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
     private static volatile I2PBote instance;
     
@@ -156,7 +156,7 @@ public class I2PBote {
      */
     private void initializeFolderAccess() {
         inbox = new EmailFolder(configuration.getInboxDir());
-        outbox = new Outbox(configuration.getLocalOutboxDir());
+        outbox = new Outbox(configuration.getOutboxDir());
         sentFolder = new EmailFolder(configuration.getSentFolderDir());
         trashFolder = new TrashFolder(configuration.getTrashFolderDir());
         relayPacketFolder = new RelayPacketFolder(configuration.getRelayPacketDir());

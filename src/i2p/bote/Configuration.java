@@ -42,7 +42,6 @@ public class Configuration {
     private static final String ADDRESS_BOOK_FILE_NAME = "addressBook.txt";
     private static final String MESSAGE_ID_CACHE_FILE = "msgidcache.txt";
     private static final String OUTBOX_DIR = "outbox";              // relative to I2P_BOTE_SUBDIR
-    private static final String OUTBOX_SUBDIR_LOCAL = "local";      // relative to OUTBOX_DIR
     private static final String RELAY_PKT_SUBDIR = "relay_pkt";     // relative to I2P_BOTE_SUBDIR
     private static final String INCOMPLETE_SUBDIR = "incomplete";   // relative to I2P_BOTE_SUBDIR
     private static final String EMAIL_DHT_SUBDIR = "dht_email_pkt";    // relative to I2P_BOTE_SUBDIR
@@ -160,16 +159,12 @@ public class Configuration {
         return new File(i2pBoteDir, MESSAGE_ID_CACHE_FILE);
     }
     
-    public File getLocalOutboxDir() {
-        return new File(getOutboxBaseDir(), OUTBOX_SUBDIR_LOCAL);	    
+    public File getOutboxDir() {
+        return new File(i2pBoteDir, OUTBOX_DIR);	    
     }
     
     public File getRelayPacketDir() {
         return new File(i2pBoteDir, RELAY_PKT_SUBDIR);       
-    }
-    
-    private File getOutboxBaseDir() {
-        return new File(i2pBoteDir, OUTBOX_DIR);
     }
     
     public File getSentFolderDir() {
