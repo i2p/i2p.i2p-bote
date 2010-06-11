@@ -105,8 +105,14 @@ public class Email extends MimeMessage {
         messageId = new UniqueId();
     }
 
-    public EmailDestination getSenderDestination() throws GeneralSecurityException, MessagingException {
-        return new EmailDestination(getSender().toString());
+    /**
+     * Returns <code>true</code> if the sender is anonymous.
+     * @return
+     * @throws MessagingException
+     */
+    public boolean isAnonymous() throws MessagingException {
+        Address sender = getSender();
+        return sender==null || "Anonymous".equalsIgnoreCase(sender.toString());
     }
     
     public String getOneFromAddress() throws MessagingException {
@@ -235,12 +241,13 @@ public class Email extends MimeMessage {
         Collection<Header> headers = getAllAddressHeaders();
         for (Header header: headers) {
             String address = header.getValue();
-            try {
-                new EmailDestination(address);
-            }
-            catch (GeneralSecurityException e) {
-                throw new DataFormatException(_("Invalid address: {0}", address), e);
-            }
+            if (!"Sender".equalsIgnoreCase(header.getName()) || !isAnonymous())   // don't validate if this is the "sender" field and the sender is anonymous
+                try {
+                    new EmailDestination(address);
+                }
+                catch (GeneralSecurityException e) {
+                    throw new DataFormatException(_("Invalid address: {0}", address), e);
+                }
         }
     }
     
@@ -372,7 +379,7 @@ public class Email extends MimeMessage {
      * Updates headers, signs the email, and converts it into one or more email packets.
      * If an error occurs, an empty <code>Collection</code> is returned.
      *
-     * @param senderIdentity 
+     * @param senderIdentity The sender's Email Identity, or <code>null</code> for anonymous emails
      * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
      * @return
      * @throws MessagingException
@@ -390,7 +397,8 @@ public class Email extends MimeMessage {
                 setHeader("BCC", bccToKeep);   // set bccToKeep and remove any other existing BCC addresses
             else
                 removeHeader("BCC");
-            sign(senderIdentity);
+            if (!isAnonymous())
+                sign(senderIdentity);
             writeTo(outputStream);
         } catch (IOException e) {
             throw new MessagingException("Can't write to ByteArrayOutputStream.", e);

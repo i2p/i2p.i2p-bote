@@ -142,17 +142,15 @@ public class OutboxProcessor extends I2PBoteThread {
      * @throws GeneralSecurityException 
      */
     private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException {
-        Address sender = email.getSender();
-        if (sender == null) {
-            log.error("No sender/from field in email: " + email);
-            outbox.setStatus(email, _("No sender found in email."));
-            return;
-        }
-        String base64sender = EmailDestination.extractBase64Dest(sender.toString());
-        EmailIdentity senderIdentity = I2PBote.getInstance().getIdentities().get(base64sender);
-        if (senderIdentity == null) {
-            log.error("No identity matches the sender/from field: " + base64sender + " in email: " + email);
-            return;
+        EmailIdentity senderIdentity = null;
+        if (!email.isAnonymous()) {
+            Address sender = email.getSender();
+            String base64sender = EmailDestination.extractBase64Dest(sender.toString());
+            senderIdentity = I2PBote.getInstance().getIdentities().get(base64sender);
+            if (senderIdentity == null) {
+                log.error("No identity matches the sender/from field: " + base64sender + " in email: " + email);
+                return;
+            }
         }
         
         outbox.setStatus(email, _("Sending"));
@@ -167,7 +165,7 @@ public class OutboxProcessor extends I2PBoteThread {
 
     /**
      * Sends an {@link Email} to one recipient.
-     * @param senderIdentity
+     * @param senderIdentity The sender's Email Identity, or <code>null</code> for anonymous emails
      * @param recipient
      * @param email
      * @throws MessagingException 

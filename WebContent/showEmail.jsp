@@ -40,7 +40,14 @@
     <table>
         <tr>
             <td valign="top"><strong><ib:message key="From:"/></strong></td>
-            <td><ib:address address="${email.sender}"/></td>
+            <td>
+                <c:if test="${email.anonymous}">
+                    <ib:message key="Anonymous"/>
+                </c:if>
+                <c:if test="${!email.anonymous}">
+                    <ib:address address="${email.sender}"/>
+                </c:if>
+            </td>
         </tr>
         <tr>
             <td valign="top"><strong><ib:message key="Signature:"/></strong></td>
@@ -90,7 +97,8 @@
                 <table><tr>
                     <td>
                     <form action="newEmail.jsp" method="post">
-                        <button type="submit"><ib:message key="Reply"/></button>
+                        <c:set var="replyDisabled" value="${email.anonymous ? 'disabled=&quot;disabled&quot;' : ''}"/>
+                        <button type="submit"${replyDisabled}><ib:message key="Reply"/></button>
                         <input type="hidden" name="sender" value="${ib:escapeQuotes(ib:getOneLocalRecipient(email))}"/>
                         <input type="hidden" name="recipient0" value="${ib:escapeQuotes(email.sender)}"/>
                         

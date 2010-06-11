@@ -75,7 +75,7 @@
                 </td>
                 <td>
                     <select name="sender">
-                        <option value="anonymous">Anonymous</option>
+                        <option value="anonymous"><ib:message key="Anonymous"/></option>
                         <c:forEach items="${ib:getIdentities().all}" var="identity">
                             <c:set var="selected" value=""/>
                             <c:if test="${fn:contains(param.sender, identity.key)}">
