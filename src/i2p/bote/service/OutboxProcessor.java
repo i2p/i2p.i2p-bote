@@ -48,6 +48,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 import net.i2p.util.Log;
 
@@ -153,14 +155,28 @@ public class OutboxProcessor extends I2PBoteThread {
             }
         }
         
+        // send to I2P-Bote recipients
         outbox.setStatus(email, _("Sending"));
         Address[] recipients = email.getAllRecipients();
+        boolean containsExternalRecipients = false;
         for (int i=0; i<recipients.length; i++) {
             Address recipient = recipients[i];
-            sendToOne(senderIdentity, recipient.toString(), email);
+            if (isExternalAddress(recipient))
+                containsExternalRecipients = true;
+            else
+                sendToOne(senderIdentity, recipient.toString(), email);
             outbox.setStatus(email, _("Sent to {0} out of {1} recipients", i+1, recipients.length));
         }
-        outbox.setStatus(email, _("Sent"));
+        
+        // send to external recipients if there are any
+        if (containsExternalRecipients && configuration.isGatewayEnabled()) {
+            outbox.setStatus(email, _("Sent"));
+            sendToOne(senderIdentity, configuration.getGatewayDestination(), email);
+        }
+        else {
+            outbox.setStatus(email, _("Gateway disabled"));
+            throw new MessagingException("The email contains external addresses, but the gateway is disabled.");
+        }
     }
 
     /**
@@ -219,6 +235,18 @@ public class OutboxProcessor extends I2PBoteThread {
             }
         else
             dht.store(dhtPacket);
+    }
+    
+    /** Returns <code>true</code> if a given address is a regular email address. */
+    private boolean isExternalAddress(Address address) {
+        try {
+            String adrString = address.toString();
+            new InternetAddress(adrString, true);
+            // InternetAddress accepts addresses without a domain, so check that there is a '.' after the '@'
+            return adrString.indexOf('@') < adrString.indexOf('.');
+        } catch (AddressException e) {
+            return false;
+        }
     }
     
     public void addOutboxListener(OutboxListener listener) {

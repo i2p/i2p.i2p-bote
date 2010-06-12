@@ -38,31 +38,37 @@
         <input type="hidden" name="destination" value="${emailDestination}"/>
         <input type="hidden" name="name" value="${ib:escapeQuotes(name)}"/>
     
-        <%-- Print the shortened address which is always visible--%>
-        <c:set var="shortAdr" value="${name}"/>
-        <c:if test="${!empty name}">
-            <c:set var="shortAdr" value="${shortAdr} &lt;"/>
+        <c:if test="${empty emailDestination}">
+            ${address}
         </c:if>
-        <c:set var="shortAdr" value="${shortAdr}${fn:substring(emailDestination, 0, 10)}..."/>
-        <c:if test="${!empty name}">
-            <c:set var="shortAdr" value="${shortAdr}&gt;"/>
-        </c:if>
-        ${shortAdr}<br/>
         
-        <%-- Print the full email destination and the button only when expanded --%>
-        <span>
-            <%-- put wbr tags in the address so the lines don't get too long --%>
-            <c:set var="wbrDest" value=""/>
-            <c:forEach begin="0" end="${fn:length(emailDestination)-1}" step="5" var="i">
-                <c:set var="wbrDest" value="${wbrDest}${fn:substring(emailDestination, i, i+5)}<wbr/>"/>
-            </c:forEach>
-
-            <strong><ib:message key="Email Destination: "/></strong> ${wbrDest}
-            <c:if test="${!empty emailDestination}">
-                <c:set var="disabled" value="${ib:isKnown(emailDestination) ? 'disabled=&quot; disabled&quot; title=&quot;The Email Destination already exists in the address book.&quot;' : ''}"/>
-                <br/>
-                <button type="submit"${disabled}><ib:message key="Add to Address Book"/></button>
-            </c:if>
-        </span>
+        <c:if test="${not empty emailDestination}">
+	        <%-- Print the shortened address which is always visible--%>
+	        <c:set var="shortAdr" value="${name}"/>
+	        <c:if test="${!empty name}">
+	            <c:set var="shortAdr" value="${shortAdr} &lt;"/>
+	        </c:if>
+	        <c:set var="shortAdr" value="${shortAdr}${fn:substring(emailDestination, 0, 10)}..."/>
+	        <c:if test="${!empty name}">
+	            <c:set var="shortAdr" value="${shortAdr}&gt;"/>
+	        </c:if>
+	        ${shortAdr}<br/>
+	        
+	        <%-- Print the full email destination and the button only when expanded --%>
+	        <span>
+	            <%-- put wbr tags in the address so the lines don't get too long --%>
+	            <c:set var="wbrDest" value=""/>
+	            <c:forEach begin="0" end="${fn:length(emailDestination)-1}" step="5" var="i">
+	                <c:set var="wbrDest" value="${wbrDest}${fn:substring(emailDestination, i, i+5)}<wbr/>"/>
+	            </c:forEach>
+	
+	            <strong><ib:message key="Email Destination: "/></strong> ${wbrDest}
+	            <c:if test="${!empty emailDestination}">
+	                <c:set var="disabled" value="${ib:isKnown(emailDestination) ? 'disabled=&quot; disabled&quot; title=&quot;The Email Destination already exists in the address book.&quot;' : ''}"/>
+	                <br/>
+	                <button type="submit"${disabled}><ib:message key="Add to Address Book"/></button>
+	            </c:if>
+	        </span>
+        </c:if>
     </form>
 </div>

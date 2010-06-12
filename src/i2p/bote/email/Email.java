@@ -54,6 +54,8 @@ import javax.mail.Address;
 import javax.mail.Header;
 import javax.mail.MessagingException;
 import javax.mail.Session;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import net.i2p.data.Base64;
@@ -241,13 +243,28 @@ public class Email extends MimeMessage {
         Collection<Header> headers = getAllAddressHeaders();
         for (Header header: headers) {
             String address = header.getValue();
-            if (!"Sender".equalsIgnoreCase(header.getName()) || !isAnonymous())   // don't validate if this is the "sender" field and the sender is anonymous
+            if (!"Sender".equalsIgnoreCase(header.getName()) || !isAnonymous()) {   // don't validate if this is the "sender" field and the sender is anonymous
+                boolean validEmailDest = false;
                 try {
                     new EmailDestination(address);
+                    validEmailDest = true;
                 }
                 catch (GeneralSecurityException e) {
-                    throw new DataFormatException(_("Invalid address: {0}", address), e);
+                    log.debug("Address contains no email destination: <" + address + ">, message: " + e.getLocalizedMessage());
                 }
+                try {
+                    String adrString = address.toString();
+                    new InternetAddress(adrString, true);
+                    // InternetAddress accepts addresses without a domain, so check that there is a '.' after the '@'
+                    if (adrString.indexOf('@') >= adrString.indexOf('.'))
+                        throw new DataFormatException(_("Invalid address: {0}", address));
+                    validEmailDest = true;
+                } catch (AddressException e) {
+                    log.debug("Address contains no external email address: <" + address + ">, message: " + e.getLocalizedMessage());
+                }
+                if (!validEmailDest)
+                    throw new DataFormatException(_("Address doesn't contain an Email Destination or an external address: {0}", address));
+            }
         }
     }
     
@@ -331,7 +348,11 @@ public class Email extends MimeMessage {
         if (headerValues != null)
             for (String recipient: headerValues) {
                 String dest = EmailDestination.extractBase64Dest(recipient);
-                addHeader(headerName, dest);
+                if (dest != null)
+                    addHeader(headerName, dest);
+                // If there is no email destination, assume it is an external address and don't change it
+                else
+                    addHeader(headerName, recipient);
             }
     }
     

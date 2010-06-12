@@ -70,6 +70,8 @@ public class Configuration {
     private static final String PARAMETER_RELAY_MIN_DELAY = "relayMinDelay";
     private static final String PARAMETER_RELAY_MAX_DELAY = "relayMaxDelay";
     private static final String PARAMETER_NUM_STORE_HOPS = "numSendHops";
+    private static final String PARAMETER_GATEWAY_DESTINATION = "gatewayDestination";
+    private static final String PARAMETER_GATEWAY_ENABLED = "gatewayEnabled";
     
     // Defaults for each parameter
     private static final int DEFAULT_REDUNDANCY = 2;
@@ -91,6 +93,8 @@ public class Configuration {
     private static final int DEFAULT_RELAY_MIN_DELAY = 120;   // in minutes
     private static final int DEFAULT_RELAY_MAX_DELAY = 600;   // in minutes
     private static final int DEFAULT_NUM_STORE_HOPS = 0;
+    private static final String DEFAULT_GATEWAY_DESTINATION = "";
+    private static final boolean DEFAULT_GATEWAY_ENABLED = true;
     
     private Log log = new Log(Configuration.class);
     private Properties properties;
@@ -401,6 +405,22 @@ public class Configuration {
     
     public int getNumStoreHops() {
         return getIntParameter(PARAMETER_NUM_STORE_HOPS, DEFAULT_NUM_STORE_HOPS);
+    }
+    
+    public void setGatewayDestination(String destination) {
+        properties.setProperty(PARAMETER_GATEWAY_DESTINATION, destination);
+    }
+    
+    public String getGatewayDestination() {
+        return properties.getProperty(PARAMETER_GATEWAY_DESTINATION, DEFAULT_GATEWAY_DESTINATION);
+    }
+    
+    public void setGatewayEnabled(boolean enable) {
+        properties.setProperty(PARAMETER_GATEWAY_ENABLED, Boolean.valueOf(enable).toString());
+    }
+
+    public boolean isGatewayEnabled() {
+        return getBooleanParameter(PARAMETER_GATEWAY_ENABLED, DEFAULT_GATEWAY_ENABLED);
     }
     
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {

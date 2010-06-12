@@ -36,6 +36,8 @@
     <jsp:setProperty name="configuration" property="numStoreHops" value="${param.numStoreHops}"/>
     <jsp:setProperty name="configuration" property="relayMinDelay" value="${param.minDelay}"/>
     <jsp:setProperty name="configuration" property="relayMaxDelay" value="${param.maxDelay}"/>
+    <jsp:setProperty name="configuration" property="gatewayEnabled" value="${param.gatewayEnabled eq 'on' ? 'true' : 'false'}"/>
+    <jsp:setProperty name="configuration" property="gatewayDestination" value="${param.gatewayDestination}"/>
     <ib:saveConfiguration/>
 </c:if>
 
@@ -82,6 +84,15 @@
         <ib:message key=" and "/>
         <input type="text" name="maxDelay" size="3" value="${configuration.relayMaxDelay}"/>
         <ib:message key=" minutes "/>
+        <br/>
+        
+        <%-- Gateway --%>
+        <c:set var="checked" value="${configuration.gatewayEnabled ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="gatewayEnabled"/>
+        <ib:message key="Use a gateway when sending to non-I2P email addresses"/>
+        <br/>
+        <ib:message key="Email Destination of the gateway:"/>
+        <input type="text" name="gatewayDestination" size="50" value="${configuration.gatewayDestination}"/>
         <br/>
         
         <%-- Locale --%>
