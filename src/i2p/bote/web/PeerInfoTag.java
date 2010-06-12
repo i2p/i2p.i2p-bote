@@ -77,7 +77,7 @@ public class PeerInfoTag extends SimpleTagSupport {
             // Print relay peer info
             Collection<RelayPeer> relayPeers = I2PBote.getInstance().getRelayPeers();
             out.println("<strong>" + _("Relay Peers:") + " " + relayPeers.size() + "</strong>");
-            if (numDhtPeers > 0) {
+            if (relayPeers.size() > 0) {
                 out.println("<table class=\"table\">");
                 out.println("<tr>");
                 out.println("<th>" + _("Peer") + "</th>");
@@ -88,9 +88,9 @@ public class PeerInfoTag extends SimpleTagSupport {
                 int i = 1;
                 for (RelayPeer peer: relayPeers) {
                     out.println("<tr>");
-                    out.println("<td>" + i + "</th>");
-                    out.println("<td>" + peer.calculateHash().toBase64() + "</th>");
-                    out.println("<td>" + peer.getReachability() + "</th>");
+                    out.println("<td>" + i + "</td>");
+                    out.println("<td>" + peer.calculateHash().toBase64() + "</td>");
+                    out.println("<td>" + peer.getReachability() + "</td>");
                     out.println("</tr>");
                     i++;
                 }
