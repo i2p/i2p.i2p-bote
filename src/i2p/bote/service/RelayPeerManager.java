@@ -22,6 +22,7 @@
 package i2p.bote.service;
 
 import i2p.bote.Util;
+import i2p.bote.network.BanList;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketBatch;
 import i2p.bote.network.PacketBatchItem;
@@ -250,12 +251,14 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
             
             // make a Set with the new peers
             Set<Destination> receivedPeers = new HashSet<Destination>();
+            BanList banList = BanList.getInstance();
             for (DataPacket response: batch.getResponses().values()) {
                 if (!(response instanceof PeerList))
                     continue;
                 PeerList peerList = (PeerList)response;
                 for (Destination peer: peerList.getPeers())
-                    receivedPeers.add(peer);
+                    if (!banList.isBanned(peer))
+                        receivedPeers.add(peer);
             }
             log.debug("Received a total of " + receivedPeers.size() + " relay peers in " + batch.getResponses().size() + " packets.");
             
@@ -280,7 +283,14 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
 
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
+        BanList banList = BanList.getInstance();
+        banList.update(sender, packet.getProtocolVersion());
         synchronized(peers) {
+            if (banList.isBanned(sender)) {
+                peers.remove(sender);
+                return;
+            }
+            
             // respond to PeerListRequests
             if (packet instanceof PeerListRequest) {
                 // send all high-reachability peers minus the sender itself

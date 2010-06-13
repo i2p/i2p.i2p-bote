@@ -21,6 +21,9 @@
 
 package i2p.bote.network;
 
+import static i2p.bote.Util._;
+import i2p.bote.I2PBote;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -43,11 +46,11 @@ public class BanList {
         bannedPeers = new ConcurrentHashMap<Destination, String>();
     }
     
-    public void ban(Destination destination, String reason) {
+    private void ban(Destination destination, String reason) {
         bannedPeers.put(destination, reason);
     }
     
-    public void unban(Destination destination) {
+    private void unban(Destination destination) {
         bannedPeers.remove(destination);
     }
     
@@ -64,5 +67,12 @@ public class BanList {
         for (Entry<Destination, String> entry: bannedPeers.entrySet())
             peerCollection.add(new BannedPeer(entry.getKey(), entry.getValue()));
         return peerCollection;
+    }
+    
+    public void update(Destination peer, int protocolVersion) {
+        if (protocolVersion != I2PBote.PROTOCOL_VERSION)
+            ban(peer, _("Wrong protocol version:") + " " + protocolVersion);
+        else
+            unban(peer);
     }
 }
