@@ -111,7 +111,7 @@ public class JSPHelper {
                 identity = new EmailIdentity(cryptoImpl);
             } catch (GeneralSecurityException e) {
                 log.error("Can't create email identity from base64 string: <" + key + ">", e);
-                return Util._("Error creating the Email Destination.");
+                return Util._("Error creating the Email Identity.");
             }
             identity.setPublicName(publicName);
             identity.setDescription(description);

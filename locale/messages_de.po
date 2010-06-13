@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-09 07:36+0000\n"
+"POT-Creation-Date: 2010-06-13 03:00+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -10,10 +10,30 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/i2p/bote/email/Email.java:209
+#: src/i2p/bote/crypto/ECDH256_ECDSA256.java:49
+msgid "256-bit Elliptic Curve Encryption"
+msgstr "Elliptische-Kurven-Verschlüsselung, 256 Bit"
+
+#: src/i2p/bote/crypto/ECDH521_ECDSA521.java:54
+msgid "521-bit Elliptic Curve Encryption"
+msgstr "Elliptische-Kurven-Verschlüsselung, 512 Bit"
+
+#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:67
+msgid "2048-bit ElGamal Encryption"
+msgstr "El-Gamal-Verschlüsselung, 2048 Bit"
+
+#: src/i2p/bote/email/Email.java:260
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Ungültige Adresse: {0}"
+
+#: src/i2p/bote/email/Email.java:266
+msgid "Address doesn't contain an Email Destination or an external address: {0}"
+msgstr "Die Adresse enthält weder eine Bote-Adresse noch eine externe Mailadresse: {0}"
+
+#: src/i2p/bote/network/kademlia/BucketManager.java:332
+msgid "Wrong protocol version:"
+msgstr "Falsche Protokollversion:"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
 msgid "BktPfx"
@@ -28,6 +48,7 @@ msgid "First Seen"
 msgstr "Erster Empfang"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
+#: src/i2p/bote/web/PeerInfoTag.java:84
 msgid "I2P Destination"
 msgstr "I2P-Adresse"
 
@@ -36,7 +57,8 @@ msgid "Locked?"
 msgstr "Gesperrt?"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:46
-#: src/i2p/bote/web/PeerInfoTag.java:82
+#: src/i2p/bote/web/PeerInfoTag.java:83
+#: src/i2p/bote/web/PeerInfoTag.java:108
 msgid "Peer"
 msgstr "Gegenstelle"
 
@@ -56,60 +78,72 @@ msgstr "-"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/i2p/bote/service/OutboxProcessor.java:130
-msgid "No sender found in email."
-msgstr "Die Mail enthält keine Senderangabe."
-
-#: src/i2p/bote/service/OutboxProcessor.java:140
+#: src/i2p/bote/service/OutboxProcessor.java:159
 msgid "Sending"
 msgstr "Senden"
 
-#: src/i2p/bote/service/OutboxProcessor.java:145
+#: src/i2p/bote/service/OutboxProcessor.java:168
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "An {0} von {1} Empfänger gesendet"
 
-#: src/i2p/bote/service/OutboxProcessor.java:147
+#: src/i2p/bote/service/OutboxProcessor.java:173
 #: WebContent/folder.jsp
 msgid "Sent"
 msgstr "Absendezeit"
 
-#: src/i2p/bote/service/OutboxProcessor.java:173
+#: src/i2p/bote/service/OutboxProcessor.java:177
+msgid "Gateway disabled"
+msgstr "Durchleitung deaktiviert"
+
+#: src/i2p/bote/service/OutboxProcessor.java:209
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Ungültige Empfängeradresse: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:177
+#: src/i2p/bote/service/OutboxProcessor.java:213
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Fehler beim Erstellen der Mailpakete: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:181
+#: src/i2p/bote/service/OutboxProcessor.java:217
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Fehler beim Senden der Mail: {0}"
 
-#: src/i2p/bote/web/PeerInfoTag.java:53
+#: src/i2p/bote/web/JSPHelper.java:114
+msgid "Error creating the Email Identity."
+msgstr "Fehler beim Erstellen der Mailidentität"
+
+#: src/i2p/bote/web/PeerInfoTag.java:54
 msgid "Kademlia Peers:"
 msgstr "Kademlia-Gegenstellen:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:78
+#: src/i2p/bote/web/PeerInfoTag.java:79
+msgid "Relay Peers:"
+msgstr "Verfügbare Zwischenstationen:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:85
+msgid "Reachability %"
+msgstr "Erreichbarkeit in %"
+
+#: src/i2p/bote/web/PeerInfoTag.java:104
 msgid "Banned Peers:"
 msgstr "Verbannte Gegenstellen:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:83
+#: src/i2p/bote/web/PeerInfoTag.java:109
 msgid "Destination Hash"
 msgstr "I2P-Adresse (SHA256-Summe)"
 
-#: src/i2p/bote/web/PeerInfoTag.java:84
+#: src/i2p/bote/web/PeerInfoTag.java:110
 msgid "Ban Reason"
 msgstr "Verbannungsgrund"
 
-#: src/i2p/bote/web/SendEmailTag.java:76
+#: src/i2p/bote/web/SendEmailTag.java:75
 msgid "The email has been queued for sending."
 msgstr "Die Mail wurde in die Sendeschlange eingestellt."
 
-#: src/i2p/bote/web/SendEmailTag.java:79
+#: src/i2p/bote/web/SendEmailTag.java:78
 #, java-format
 msgid "Error sending email: {0}"
 msgstr "Fehler beim Senden der Mail: {0}"
@@ -143,20 +177,16 @@ msgid "Save"
 msgstr "Speichern"
 
 #: WebContent/editContact.jsp
-msgid "Email Destination"
-msgstr "Postfachkennung"
-
-#: WebContent/editContact.jsp
-msgid "(required field, must be 512 characters)"
-msgstr "(Pflichtfeld; die Länge muss 512 Zeichen betragen)"
-
-#: WebContent/editContact.jsp
-msgid "Name:"
-msgstr "Name:"
+msgid "Email Destination:"
+msgstr "Bote-Adresse:"
 
 #: WebContent/editContact.jsp
 msgid "(required field)"
 msgstr "(Pflichtfeld)"
+
+#: WebContent/editContact.jsp
+msgid "Name:"
+msgstr "Name:"
 
 #: WebContent/editContact.jsp
 msgid "Cancel"
@@ -199,8 +229,12 @@ msgid "(optional)"
 msgstr "(Optional)"
 
 #: WebContent/editIdentity.jsp
-msgid "Email Destination:"
-msgstr "Postfachkennung:"
+msgid "Encryption:"
+msgstr "Verschlüsselung:"
+
+#: WebContent/editIdentity.jsp
+msgid "(If unsure, leave the default)"
+msgstr "(Im Zweifelsfall die Voreinstellung belassen)"
 
 #: WebContent/editIdentity.jsp
 msgid "Default Identity:"
@@ -235,6 +269,10 @@ msgid "Email Address"
 msgstr "Mailadresse"
 
 #: WebContent/identities.jsp
+msgid "Email Destination"
+msgstr "Bote-Adresse"
+
+#: WebContent/identities.jsp
 msgid "Delete"
 msgstr "Löschen"
 
@@ -249,6 +287,10 @@ msgstr "Neue Identität"
 #: WebContent/newEmail.jsp
 msgid "From:"
 msgstr "Von:"
+
+#: WebContent/newEmail.jsp
+msgid "Anonymous"
+msgstr "Anonym"
 
 #: WebContent/newEmail.jsp
 msgid "To:"
@@ -328,11 +370,7 @@ msgstr "Betreff"
 
 #: WebContent/outbox.jsp
 msgid "Status"
-msgstr "Netzwerkstatus"
-
-#: WebContent/outbox.jsp
-msgid "Anonymous"
-msgstr "Anonym"
+msgstr "Status"
 
 #: WebContent/outbox.jsp
 msgid "(No subject)"
@@ -340,7 +378,7 @@ msgstr "(Kein Betreff)"
 
 #: WebContent/outbox.jsp
 msgid "Delete this email"
-msgstr "Diese Mail lösche"
+msgstr "Diese Mail löschen"
 
 #: WebContent/folders.jsp
 msgid "Folders"
@@ -387,8 +425,8 @@ msgid "Valid"
 msgstr "Gültig"
 
 #: WebContent/showEmail.jsp
-msgid "Invalid"
-msgstr "Ungültig"
+msgid "Invalid or missing"
+msgstr "Ungültig oder nicht vorhanden"
 
 #: WebContent/showEmail.jsp
 msgid "Sent:"
@@ -483,6 +521,34 @@ msgid "Check for mail every {0} minutes"
 msgstr "Alle {0} Minuten auf Mails prüfen"
 
 #: WebContent/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "Über Zwischenstationen senden:"
+
+#: WebContent/settings.jsp
+msgid "None"
+msgstr "Aus"
+
+#: WebContent/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr "Verzögerung pro Zwischenstation: Zwischen"
+
+#: WebContent/settings.jsp
+msgid "and"
+msgstr "und"
+
+#: WebContent/settings.jsp
+msgid "minutes"
+msgstr "Minuten"
+
+#: WebContent/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "Durchleitung von Mails an Nicht-I2P-Adressen"
+
+#: WebContent/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "Bote-Adresse des Durchleitungsdienstes:"
+
+#: WebContent/settings.jsp
 msgid "Language:"
 msgstr "Sprache:"
 
@@ -520,7 +586,7 @@ msgstr "Unbek."
 
 #: WebContent/folder.jsp
 msgid "Sig"
-msgstr "Uschr."
+msgstr "Sig"
 
 #: WebContent/noIdentities.jsp
 msgid "In order to receive email from other people, you need to create an email identity first."
@@ -528,7 +594,7 @@ msgstr "Um Mails empfangen zu können, müssen Sie zuerst eine Identität anlege
 
 #: WebContent/noIdentities.jsp
 msgid "Every email identity is associated with an email destination. Anybody can send email to the email destination, but only the identity holder can read it."
-msgstr "Jeder Identität  ist eine Postfachkennung zugeordnet. Jeder kann Mails an die Postfachkennung schicken, aber nur der Besitzer der Identität kann sie lesen."
+msgstr "Jeder Identität  ist eine Bote-Adresse zugeordnet. Jeder kann Mails an die Adresse schicken, aber nur der Besitzer der Identität kann sie lesen."
 
 #: WebContent/noIdentities.jsp
 msgid "In a sense, email identities are the equivalent to traditional email accounts - except that there is no provider that can read all your email because I2P-Bote stores all emails encrypted on the network."
@@ -540,11 +606,19 @@ msgstr "I2P-Bote entschlüsselt empfangene Mails automatisch mit Hilfe der jewei
 
 #: WebContent/noIdentities.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr "Postfachkennungen dagegen können anderen mitgeteilt werden, um in Kontakt zu treten. Das Weitergeben einer Postfachkennung entspricht dem Weitergeben einer herkömmlichen Mailadresse."
+msgstr "Bote-Adressen dagegen können anderen mitgeteilt werden, um in Kontakt zu treten. Das Weitergeben einer Bote-Adresse entspricht dem Weitergeben einer herkömmlichen Mailadresse."
 
 #: WebContent/noIdentities.jsp
 msgid "It is easy to create multiple identities for different purposes, or different contacts."
 msgstr "Es ist auch ohne weiteres möglich, mehrere Identitäten für unterschiedliche Einsatzzwecke oder Mailpartner anzulegen."
+
+#: WebContent/noIdentities.jsp
+msgid "When you create a new email identity, you can choose the type of encryption that will be used by the email identity. While all encryption algorithms offered by I2P-Bote provide a high level of privacy, the length of an email destination depends on the encryption used. The higher the number of bits, the longer the email destination."
+msgstr "Beim Anlegen einer neuen Identität kann zwischen verschiedenen Verschlüsselungsverfahren gewählt werden. Alle in I2P-Bote verfügbaren Verfahren bieten eine hohe bis höchste Verschlüsselungsstärke, bewirken aber unterschiedliche Adresslängen. Je höher die Anzahl Bit, umso länger die Adresse."
+
+#: WebContent/noIdentities.jsp
+msgid "Note that the same is not true for encryption strength. 256-bit elliptic curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit elliptic curve is equivalent to 15360-bit ElGamal."
+msgstr "Eine längere Adresse bedeutet allerdings keine höhere Verschlüsselungsstärke. Die Elliptische-Kurven-Verschlüsselung mit 256 Bit und El-Gamal mit 3072 Bit sind gleichwertig. Gleiches gilt für die Elliptische-Kurven-Verschlüsselung mit 521 Bit und El-Gamal mit 15360 Bit."
 
 #: WebContent/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -592,7 +666,7 @@ msgstr "Unbek. Status"
 
 #: WebContent/WEB-INF/tags/address.tag
 msgid "Email Destination: "
-msgstr "Postfachkennung:"
+msgstr "Bote-Adresse:"
 
 #: WebContent/WEB-INF/tags/address.tag
 msgid "Add to Address Book"
@@ -602,6 +676,16 @@ msgstr "Zum Adressbuch hinzufügen"
 msgid "Unknown"
 msgstr "Unbekannt"
 
+#~ msgid "Up %"
+#~ msgstr "Erreichbarkeit"
+#~ msgid "(required field, must be 512 characters)"
+#~ msgstr "(Pflichtfeld; die Länge muss 512 Zeichen betragen)"
+#~ msgid "0 (off)"
+#~ msgstr "0 (aus)"
+#~ msgid "No sender found in email."
+#~ msgstr "Die Mail enthält keine Senderangabe."
+#~ msgid "Invalid"
+#~ msgstr "Ungültig"
 #~ msgid "Active Since"
 #~ msgstr "Aktiv seit"
 #~ msgid "Key"

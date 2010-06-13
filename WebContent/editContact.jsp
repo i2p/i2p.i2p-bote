@@ -105,9 +105,9 @@
         <table>
             <tr>
                 <td>
-                    <div style="font-weight: bold;"><ib:message key="Email Destination"/></div>
+                    <div style="font-weight: bold;"><ib:message key="Email Destination:"/></div>
                     <c:if test="${empty param.destination}">
-                        <div style="font-size: 0.8em;"><ib:message key="(required field, must be 512 characters)"/></div>
+                        <div style="font-size: 0.8em;"><ib:message key="(required field)"/></div>
                     </c:if>
                 </td>
                 <td>
@@ -117,7 +117,9 @@
             <tr>
                 <td>
                     <div style="font-weight: bold;"><ib:message key="Name:"/></div>
-                    <div style="font-size: 0.8em;"><ib:message key="(required field)"/></div>
+                    <c:if test="${empty param.destination}">
+                        <div style="font-size: 0.8em;"><ib:message key="(required field)"/></div>
+                    </c:if>
                 </td>
                 <td>
                     <input type="text" size="40" name="name" value="${ib:escapeQuotes(name)}"/>

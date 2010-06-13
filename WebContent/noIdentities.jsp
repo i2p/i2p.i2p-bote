@@ -65,7 +65,7 @@
     </p><p>
     <ib:message>
         When you create a new email identity, you can choose the type of encryption that
-        will be used for outgoing emails. While all encryption algorithms offered by
+        will be used by the email identity. While all encryption algorithms offered by
         I2P-Bote provide a high level of privacy, the length of an email destination
         depends on the encryption used. The higher the number of bits, the longer the
         email destination.

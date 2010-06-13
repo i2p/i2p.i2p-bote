@@ -68,7 +68,7 @@
             <c:if test="${configuration.numStoreHops eq 0}">
                 <c:set var="selected" value=" selected"/>
             </c:if>
-            <option value=""${selected}><ib:message key="0 (off)"/></option>
+            <option value="0"${selected}><ib:message key="None"/></option>
             <c:forEach var="hops" begin="1" end="3">
                 <c:set var="selected" value=""/>
                 <c:if test="${hops eq configuration.numStoreHops}">
@@ -79,11 +79,11 @@
         </select>
         <br/>
         
-        <ib:message key="Delay per relay hop: Between "/>
+        <ib:message key="Delay per relay hop: Between"/>
         <input type="text" name="minDelay" size="3" value="${configuration.relayMinDelay}"/>
-        <ib:message key=" and "/>
+        <ib:message key="and"/>
         <input type="text" name="maxDelay" size="3" value="${configuration.relayMaxDelay}"/>
-        <ib:message key=" minutes "/>
+        <ib:message key="minutes"/>
         <br/>
         
         <%-- Gateway --%>

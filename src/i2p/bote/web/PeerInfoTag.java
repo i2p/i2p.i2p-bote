@@ -82,7 +82,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                 out.println("<tr>");
                 out.println("<th>" + _("Peer") + "</th>");
                 out.println("<th>" + _("I2P Destination") + "</th>");
-                out.println("<th>" + _("Up %") + "</th>");
+                out.println("<th>" + _("Reachability %") + "</th>");
                 out.println("</tr>");
                 
                 int i = 1;
