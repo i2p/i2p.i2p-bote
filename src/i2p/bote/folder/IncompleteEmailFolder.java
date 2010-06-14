@@ -137,6 +137,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
                     outputStream.write(packet.getContent());
                 Email email = new Email(outputStream.toByteArray());
                 email.setMessageID(packets[0].getMessageId());   // all packets in the array have the same message ID
+                email.setSignatureFlag();
                 inbox.add(email);
                 
                 // delete packets

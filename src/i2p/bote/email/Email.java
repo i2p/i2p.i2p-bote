@@ -66,9 +66,11 @@ import com.nettgryppa.security.HashCash;
 
 public class Email extends MimeMessage {
     private static final int MAX_BYTES_PER_PACKET = 30 * 1024;
+    private static final String SIGNATURE_HEADER = "X-I2PBote-Signature";   // contains the sender's base64-encoded signature
+    private static final String SIGNATURE_VALID_HEADER = "X-I2PBote-Sig-Valid";   // contains the string "true" or "false"
     private static final String[] HEADER_WHITELIST = new String[] {
         "From", "Sender", "To", "CC", "BCC", "Reply-To", "Subject", "Date", "MIME-Version", "Content-Type",
-        "Content-Transfer-Encoding", "In-Reply-To", "X-HashCash", "X-Priority", "X-I2PBote-Signature"
+        "Content-Transfer-Encoding", "In-Reply-To", "X-HashCash", "X-Priority", SIGNATURE_HEADER
     };
     private static final String[] ADDRESS_HEADERS = new String[] {"From", "Sender", "To", "CC", "BCC", "Reply-To"};
     
@@ -165,34 +167,70 @@ public class Email extends MimeMessage {
 
     /**
      * Creates a digital signature of the email and stores it in the
-     * <code>X-I2PBote-Signature</code> header field.
+     * <code>SIGNATURE_HEADER</code> header field. It also removes the
+     * <code>SIGNATURE_VALID_FLAG</code> header.
      * The signature is computed over the stream representation of the
      * email, minus the signature header if it is present.
      * The signature includes the ID number of the {@link CryptoImplementation}
      * used (signature lengths can be different for the same algorithm).
-     * @param signingKey
+     * @param senderIdentity
      * @throws MessagingException
      * @throws GeneralSecurityException 
      */
     private void sign(EmailIdentity senderIdentity) throws MessagingException, GeneralSecurityException {
-        removeHeader("X-I2PBote-Signature");   // make sure there is no existing signature which would make the new signature invalid
+        removeHeader(SIGNATURE_HEADER);   // make sure there is no existing signature which would make the new signature invalid
+        removeHeader(SIGNATURE_VALID_HEADER);   // remove the signature validity flag before signing
         CryptoImplementation cryptoImpl = senderIdentity.getCryptoImpl();
         PrivateKey signingKey = senderIdentity.getPrivateSigningKey();
         byte[] signature = cryptoImpl.sign(toByteArray(), signingKey);
-        setHeader("X-I2PBote-Signature", cryptoImpl.getId() + "_" + Base64.encode(signature));
+        setHeader(SIGNATURE_HEADER, cryptoImpl.getId() + "_" + Base64.encode(signature));
     }
     
     /**
-     * Verifies that the <code>X-I2PBote-Signature</code> header field
-     * contains a valid signature.
+     * Verifies the signature and sets the <code>SIGNATURE_VALID_FLAG</code>
+     * header field accordingly.
+     */
+    public void setSignatureFlag() {
+        try {
+            removeHeader(SIGNATURE_VALID_HEADER);   // remove the signature validity flag before verifying
+            boolean valid = verifySignature();
+            setHeader(SIGNATURE_VALID_HEADER, Boolean.valueOf(valid).toString());
+        } catch (MessagingException e) {
+            log.error("Cannot get header field: " + SIGNATURE_VALID_HEADER, e);
+        }
+    }
+    
+    /**
+     * Verifies that the email contains a valid signature. If the
+     * <code>SIGNATURE_VALID_FLAG</code> is present, its value is used.
+     * If not, the value of the <code>SIGNATURE_HEADER</code> header
+     * field is verified (which is more CPU intensive).
      * @return
      */
     public boolean isSignatureValid() {
+        try {
+            String[] sigValidFlag = getHeader(SIGNATURE_VALID_HEADER);
+            if (sigValidFlag==null || sigValidFlag.length==0)
+                return verifySignature();
+            else
+                return "true".equalsIgnoreCase(sigValidFlag[0]);
+        } catch (MessagingException e) {
+            log.error("Cannot get header field: " + SIGNATURE_VALID_HEADER, e);
+            return false;
+        }
+    }
+
+    /**
+     * Verifies that the <code>SIGNATURE_HEADER</code> header field
+     * contains a valid signature.
+     * @return
+     */
+    private boolean verifySignature() {
         String[] signatureHeaders;
         try {
-            signatureHeaders = getHeader("X-I2PBote-Signature");
+            signatureHeaders = getHeader(SIGNATURE_HEADER);
         } catch (MessagingException e) {
-            log.error("Cannot get signature header field.", e);
+            log.error("Cannot get header field: " + SIGNATURE_HEADER, e);
             return false;
         }
         if (signatureHeaders==null || signatureHeaders.length<=0)
@@ -216,7 +254,7 @@ public class Email extends MimeMessage {
         // the actual signature is everything after the underscore
         String base64Signature = signatureHeader.substring(_index + 1);
         try {
-            removeHeader("X-I2PBote-Signature");
+            removeHeader(SIGNATURE_HEADER);
             byte[] signature = Base64.decode(base64Signature);
             EmailDestination senderDestination = new EmailDestination(getSender().toString());
             return cryptoImpl.verify(toByteArray(), signature, senderDestination.getPublicSigningKey());
@@ -225,7 +263,7 @@ public class Email extends MimeMessage {
             return false;
         } finally {
             try {
-                setHeader("X-I2PBote-Signature", signatureHeader);
+                setHeader(SIGNATURE_HEADER, signatureHeader);
             } catch (MessagingException e) {
                 log.error("Cannot set signature header field.", e);
                 return false;
