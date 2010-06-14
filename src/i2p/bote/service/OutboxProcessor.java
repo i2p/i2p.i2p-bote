@@ -169,13 +169,15 @@ public class OutboxProcessor extends I2PBoteThread {
         }
         
         // send to external recipients if there are any
-        if (containsExternalRecipients && configuration.isGatewayEnabled()) {
-            outbox.setStatus(email, _("Sent"));
-            sendToOne(senderIdentity, configuration.getGatewayDestination(), email);
-        }
-        else {
-            outbox.setStatus(email, _("Gateway disabled"));
-            throw new MessagingException("The email contains external addresses, but the gateway is disabled.");
+        if (containsExternalRecipients) {
+            if (configuration.isGatewayEnabled()) {
+                sendToOne(senderIdentity, configuration.getGatewayDestination(), email);
+                outbox.setStatus(email, _("Sent"));
+            }
+            else {
+                outbox.setStatus(email, _("Gateway disabled"));
+                throw new MessagingException("The email contains external addresses, but the gateway is disabled.");
+            }
         }
     }
 
