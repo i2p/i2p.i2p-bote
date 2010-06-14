@@ -6,13 +6,13 @@ I2P-Bote Ver. 0.1
 I2P-Bote is a serverless pseudonymous email exchange service for the I2P network. Emails are
 stored encrypted on other I2P-bote nodes.
 There is a SMTP/POP interface [TO BE IMPLEMENTED] to use with an email client, and a web interface
-[TO BE IMPLEMENTED] that lets you change settings or send/read email.
+that lets you change settings or send/read email.
 
-Email can be sent through a number of other nodes (relays) for increased security, or directly to
+Email can be sent through a number of other nodes (relays) [TO BE IMPLEMENTED] for increased security, or directly to
 a set of storage nodes for faster delivery. The same applies to retrieving email.
 All nodes are created equal. There are no "supernodes" or designated relay/storage nodes.
 Everybody acts as a potential relay and storage node. The maximum amount of disk space used for
-relayed/stored email packets can be configured by the user.
+relayed/stored email packets can be configured by the user [TO BE IMPLEMENTED].
 Before an email is sent to a relay, it is broken up into packets and encrypted with the recipient's
 public key.
 
@@ -142,7 +142,8 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
   E denotes an encrypted field.
   Supported encryption and signature algorithms:
     ALG=1: ElGamal-2048 / DSA-1024 / AES-256 / SHA-256 (same as the I2P router uses)
-    ALG=2: ECDH-521 / ECDSA-521 / AES-256 / SHA-256
+    ALG=2: ECDH-256 / ECDSA-256 / AES-256 / SHA-256
+    ALG=3: ECDH-521 / ECDSA-521 / AES-256 / SHA-256
 
    Packet Type         | Field | Data Type  | Description
   ---------------------+-------+------------+----------------------------------------------------
@@ -169,40 +170,52 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
                        | MSG   | byte[]     | email content (MLEN bytes)
   ---------------------+-------+------------+----------------------------------------------------
    Index Packet        |       |            | Contains the DHT keys of one or more Email Packets,
-                       |       |            | together with data for delete authentication and
-                       |       |            | a time stamp.
+                       |       |            | and a Delete verification hash and time stamp for
+                       |       |            | each DHT key.
                        | TYPE  | 1 byte     | Value = 'I'
                        | VER   | 1 byte     | Protocol version
                        | DH    | 32 bytes   | SHA-256 hash of the recipient's email destination
                        | NP    | 4 bytes    | Number of entries in the packet
                        | KEY1  | 32 bytes   | DHT key of the first Email Packet
-                       | DA1   | 32 bytes   | Delete Authorization for KEY1, random data
-                       | DV1   | 32 bytes   | Delete verification hash for KEY1, SHA-256 hash of DA1
+                       | DV1   | 32 bytes   | Delete verification hash for KEY1, SHA-256 hash of DA in the email packet
                        | TIM1  | 4 bytes    | The time the key KEY1 was added
                        | KEY2  | 32 bytes   | DHT key of the second Email Packet
-                       | DA2   | 32 bytes   | Delete Authorization for KEY2, random data
-                       | DV2   | 32 bytes   | Delete verification hash for KEY2, SHA-256 hash of DA2
+                       | DV2   | 32 bytes   | Delete verification hash for KEY2, SHA-256 hash of DA in the email packet
                        | TIM2  | 4 bytes    | The time the key KEY2 was added
                        | ...   | ...        | ...
                        | KEYn  | 32 bytes   | DHT key of the n-th Email Packet
-                       | DAn   | 32 bytes   | Delete Authorization for KEYn, random data
-                       | DVn   | 32 bytes   | Delete verification hash for KEYn, SHA-256 hash of DAn
+                       | DVn   | 32 bytes   | Delete verification hash for KEYn, SHA-256 hash of DA in the email packet
                        | TIMn  | 4 bytes    | The time the key KEYn was added
   ---------------------+-------+------------+----------------------------------------------------
-   Relay Packet        |       |            | The payload of a Relay Request
+   Deletion Info       |       |            | Contains information about deleted DHT items, which
+   Packet              |       |            | can be Email Packets or Index Packet entries.
+                       |       |            | Only used locally.
+                       | TYPE  | 1 byte     | Value = 'T'
+                       | VER   | 1 byte     | Protocol version
+                       | NP    | 4 bytes    | Number of entries in the packet
+                       | KEY1  | 32 bytes   | First DHT key
+                       | DA1   | 32 bytes   | Delete Authorization for KEY1
+                       | TIM1  | 4 bytes    | The time the key KEY1 was added
+                       | KEY2  | 32 bytes   | Second DHT key
+                       | DA2   | 32 bytes   | Delete Authorization for KEY2
+                       | TIM2  | 4 bytes    | The time the key KEY2 was added
+                       | ...   | ...        | ...
+                       | KEYn  | 32 bytes   | The n-th DHT key
+                       | DAn   | 32 bytes   | Delete Authorization for KEYn
+                       | TIMn  | 4 bytes    | The time the key KEYn was added
+  ---------------------+-------+------------+----------------------------------------------------
+   Relay Data Packet   |       |            | Contains an I2P destination, a time window,
+                       |       |            | and a Relay Request
                        | TYPE  | 1 byte     | Value = 'L'
                        | VER   | 1 byte     | Protocol version
-                       | TMIN  | 4 bytes    | Earliest send time
-                       | TMAX  | 4 bytes    | Latest sent time (no guarantee!)
-                       | XK    | 32 bytes   | Key to XOR the payload with
+                       | DMIN  | 4 bytes    | Minimum delay in seconds
+                       | DMAX  | 4 bytes    | Maximum delay in seconds (no guarantee!)
                        | NEXT  | 384 bytes  | Destination to forward the packet to
-                       | DLEN  | 2 bytes    | Length of DATA field in bytes, up to ~30k
-                       | DATA  | byte[]   E | Payload, encrypted with NEXT's key (DLEN bytes)
-                       |       |            | (can contain another Relay Packet, Email Packet,
-                       |       |            | or Retrieve Request)
+                       | DLEN  | 2 bytes    | Length of DATA field in bytes
+                       | DATA  | byte[]     | A Relay Request
   ---------------------+-------+------------+-------------------------------------------------
    Peer List           |       |            | Response to a Find Close Peers Request or
-                       |       |            | a Relay List Request
+                       |       |            | a Peer List Request
                        | TYPE  | 1 byte     | Value = 'P'
                        | VER   | 1 byte     | Protocol version
                        | NUMP  | 2 bytes    | Number of peers in the list
@@ -224,25 +237,29 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
   Communication packets are used for sending data between two I2P-Bote nodes. They contain a
   data packet, see 3.1.
   All Communication Packets start with a four-byte prefix, followed by one byte for the packet
-  type, one byte for the packet version, and a 32-byte packet ID.
-  Strings are UTF8 encoded.
+  type and one byte for the packet version. Some have a 32-byte Request ID after the packet
+  version.
+  Strings in packets are UTF8 encoded.
 
    Packet Type         | Field | Data Type  | Description
   ---------------------+-------+------------+----------------------------------------------------
-   Relay Request       |       |            | Request to a node to forward a Relay Packet
+   Relay Request       |       |            | A packet that tells the receiver to do communicate
+                       |       |            | with a peer, or peers, on behalf of the sender.
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'Y'
                        | VER   | 1 byte     | Protocol version
                        | HLEN  | 2 bytes    | HashCash length
                        | HK    | byte[]     | HashCash token (HLEN bytes)
-                       | DLEN  | 2 bytes    | Length of DATA field in bytes, up to ~30k
-                       | DATA  | byte[]     | A Relay Packet
+                       | DLEN  | 2 bytes    | Length of DATA field in bytes
+                       | DATA  | byte[]   E | Encrypted with the recipient's public key. Can
+                       |       |            | contain an Email Packet, an Index Packet, or a
+                       |       |            | Relay Data Packet.
   ---------------------+-------+------------+----------------------------------------------------
    Fetch Request       |       |            | Request to a chain end point to fetch emails
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'F'
                        | VER   | 1 byte     | Protocol version
-                       | SID   | 32 bytes   | Session ID, used for responses
+                       | SID   | 32 bytes   | Request ID, used for responses
                        | DTYP  | 1 byte     | Type of data to retrieve:
                        | KEY   | 32 bytes   | DHT key to look up
                        | KPR   | 384 bytes  | Email keypair of recipient
@@ -250,11 +267,11 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
                        | RET   | byte[]     | Relay packet, contains the return chain (RLEN bytes)
   ---------------------+-------+------------+----------------------------------------------------
    Response Packet     |       |            | Response to a Retrieve Request, Fetch Request,
-                       |       |            | Find Close Peers Request, or a Relay List Request
+                       |       |            | Find Close Peers Request, or a Peer List Request
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'R'
                        | VER   | 1 byte     | Protocol version
-                       | SID   | 32 bytes   | Session ID of the request packet
+                       | SID   | 32 bytes   | Request ID of the request packet
                        | STA   | 1 byte     | Status code:
                        |       |            |   0 = OK
                        |       |            |   1 = General error
@@ -265,25 +282,12 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
                        |       |            |   6 = No disk space left
                        | DLEN  | 2 bytes    | Length of DATA field; can be 0 if no payload
                        | DATA  | byte[]     | A Data Packet
-  ---------------------+-------+------------+-------------------------------------------------
-   Ping                |       |            | Check to see if a host is still up.
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'N'
-                       | VER   | 1 byte     | Protocol version
-                       | SID   | 32 bytes   | Session ID
-  ---------------------+-------+------------+-------------------------------------------------
-   Pong                |       |            | Let the the pinger know we're still there.
-                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                       | TYPE  | 1 byte     | Value = 'G'
-                       | VER   | 1 byte     | Protocol version
-                       | SID   | 32 bytes   | Session ID of the corresponding Ping packet
-                       | HKS   | 1 byte     | Minimum HashCash strength this node will accept
   ---------------------+-------+------------+----------------------------------------------------
-   Relay List Request  |       |            | "Send me your list of relay peers"
+   Peer List Request   |       |            | A request for a list of high-reachability relay peers
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'A'
                        | VER   | 1 byte     | Protocol version
-                       | SID   | 32 bytes   | Session ID, used for responses
+                       | SID   | 32 bytes   | Request ID, used for responses
   ---------------------+-------+------------+----------------------------------------------------
 
   DHT Communication Packets
@@ -294,7 +298,7 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'Q'
                        | VER   | 1 byte     | Protocol version
-                       | SID   | 32 bytes   | Session ID, used for responses
+                       | SID   | 32 bytes   | Request ID, used for responses
                        | DTYP  | 1 byte     | Type of data to retrieve:
                        |       |            |   'I' = Index Packet
                        |       |            |   'E' = Email Packet
@@ -305,7 +309,7 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'S'
                        | VER   | 1 byte     | Protocol version
-                       | SID   | 32 bytes   | Session ID, used for responses
+                       | SID   | 32 bytes   | Request ID, used for responses
                        | HLEN  | 2 bytes    | HashCash length
                        | HK    | byte[]     | HashCash token (HLEN bytes)
                        | DLEN  | 2 bytes    | Length of DATA field
@@ -339,14 +343,14 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
                        | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                        | TYPE  | 1 byte     | Value = 'C'
                        | VER   | 1 byte     | Protocol version
-                       | SID   | 32 bytes   | Session ID, used for responses
+                       | SID   | 32 bytes   | Request ID, used for responses
                        | KEY   | 32 bytes   | DHT key
   ---------------------+-------+------------+----------------------------------------------------
 
 
 4. Protocols For Inter-Node Communication
 
-4.1. Sending Email
+4.1. Sending Email via relays
   I2P nodes involved: A=Sender, R1...Rn=Relays, S1...Sm=Storage Nodes
 
   1) A sends an Relay Packet to R1.
@@ -356,7 +360,7 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
   5) Rn decrypts the Relay Packet into an Email Packet.
   6) Rn sends the packet to S1,...,Sm through a Kademlia STORE
 
-4.2. Retrieving Email
+4.2. Retrieving Email via relays (not implemented yet)
   I2P nodes involved: A=Address Owner, O1...On=Outbound Relays, I1...In=Inbound Relays, S1...Sm=Storage Nodes
 
   1) A sends a Relay Packet to O1.
@@ -374,9 +378,6 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
   13) I2 confirms delivery with I1.
   14) Repeat the last two steps until packet arrives at A.
   15) A decrypts the packet into a plaintext email or email fragment.
-
-  Note: The system purposely does not prevent retrieval of email by unauthorized nodes, in order to
-  allow a node to test the reliability of a storage node before using it to store an Email Packet.
 
 
 4.3. Pinging a node
@@ -432,7 +433,7 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
   2) Pick a random packet/recipient combination for which the wait time is up, and for which
      less than <storage redundancy> distinct delivery confirmations have been received within the
      timeout period, and the maximum number of retries has not been reached.
-  3) Set a random packet ID on the packet.
+  3) Set a random Request ID on the packet.
   4) Encrypt the packet with the public key for the recipient
   5) Encrypt the packet with the public keys of relay n, relay n-1, ..., relay 1, and add
      the destination key of the next relay each time. Also included is a minimum/maximum delay
@@ -446,6 +447,8 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
      
 5.2. Retrieving Email
 
+   see also http://forum.i2p/viewtopic.php?p=19927#19927 ff.
+   
    1) Randomly choose a set of n relay nodes,  R1...Rn (outgoing chain for request)
    2) Randomly choose a set of m relay nodes, S1...Sm.(return chain / inbound mail chain)
         - with Sm being the node closest to the receiver
@@ -461,7 +464,7 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
   10) Encrypt the resulting packet, using the public keys of relays
       Rn (Fetcher), Rn-1, ..., R1, and add the destination key of the next relay each time.
       Also included is a minimum/maximum delay value for each relay.
-  11) Set a random packet ID on the packet at each layer
+  11) Set a random Request ID on the packet at each layer
   12) Queue the packet for immediate sending to the first relay.
   
   The following is done continuously and asynchronously, regardless of whether there a Retrieve
@@ -474,9 +477,9 @@ As of release 0.2.4, the protocol version is 3. It is incompatible to earlier ve
 5.3. Fetching Email Packets For an Address Through Kademlia
 
   1) Do a Kademlia lookup for the keypair in the Retrieve Request
-  2) Extract packet IDs from the Index Packet(s)
-  3) Do a Kademlia lookup for each packet ID
-  4) Check the packet ID on the Email Packets and send them back to the first return relay
+  2) Extract Request IDs from the Index Packet(s)
+  3) Do a Kademlia lookup for each Request ID
+  4) Check the Request ID on the Email Packets and send them back to the first return relay
   
 5.4. Relaying a Packet
 
@@ -532,7 +535,8 @@ secure as manually adding keypairs to the local address book, although it is mor
 
 Email Destination
   As the name implies, an Email Destination is an identifier by which somebody can be reached via I2P-Bote.
-  An Email Destination is a 512-character Base64 string containing a public encryption key and a signature verification key. Example:
+  An Email Destination is a Base64 string containing a public encryption key and a signature verification key.
+  Example:
   
   uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
   In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
