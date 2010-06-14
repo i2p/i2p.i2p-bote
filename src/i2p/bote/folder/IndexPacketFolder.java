@@ -173,11 +173,15 @@ public class IndexPacketFolder extends DeletionAwareDhtFolder<IndexPacket> imple
         DeletionInfoPacket delInfo = createDelInfoPacket(delFileName);
         IndexPacketDeleteRequest delRequest = null;
         if (delInfo != null) {
-            delRequest = new IndexPacketDeleteRequest(indexPacketToStore.getDhtKey());
+            delRequest = null;
             for (IndexPacketEntry entry: indexPacketToStore) {
                 DeletionRecord delRecord = delInfo.getEntry(entry.emailPacketKey);
-                if (delRecord != null)
+                if (delRecord != null) {
+                    // leave delRequest null until a DeletionRecord is found
+                    if (delRequest == null)
+                        delRequest = new IndexPacketDeleteRequest(indexPacketToStore.getDhtKey());
                     delRequest.put(delRecord.dhtKey, delRecord.delAuthorization);
+                }
             }
         }
         
