@@ -283,11 +283,13 @@ l property to true -->
         <property name="subdir" value="i2pbote-${version}-src"/>
         <zip destfile="src.zip">
             <zipfileset dir="src" prefix="${subdir}/src"/>
-            <zipfileset dir="WebContent" prefix="${subdir}/WebContent"/>
+            <zipfileset dir="WebContent" prefix="${subdir}/WebContent" followsymlinks="false"/>
             <zipfileset dir="test" prefix="${subdir}/test"/>
             <zipfileset dir="ant" prefix="${subdir}/ant"/>
             <zipfileset dir="doc" prefix="${subdir}/doc"/>
-            <zipfileset dir="plugin" prefix="${subdir}/plugin"/>
+            <zipfileset dir="plugin" prefix="${subdir}/plugin">
+                <exclude name="plugin.tmp/**"/>
+            </zipfileset>
             <zipfileset file="build.xml" prefix="${subdir}"/>
             <zipfileset file="locale/messages_de.po" prefix="${subdir}/locale"/>
             <zipfileset file="bundle-messages.sh" prefix="${subdir}"/>
