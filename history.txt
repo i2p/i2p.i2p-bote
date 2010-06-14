@@ -1,6 +1,14 @@
 I2P-Bote Version History
 ------------------------
 
+0.2.4 (Released on Jun 14, 2010)
+  * Elliptic curve encryption
+  * Email can be sent via relays for added anonymity
+  * Experimental gateway (in/outproxy) support
+  * Protocol version 3, fixes two weaknesses
+  * Kademlia replication
+  * Fix: Error when trying to send anonymously
+
 0.2.3 (Released on May 10, 2010)
   * Email signatures
   * Multiple recipients / CC / BCC implemented
