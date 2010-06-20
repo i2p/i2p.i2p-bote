@@ -114,7 +114,7 @@
 
         <!-- run i2pbote-plugin.war through pack200 -->
         <move file="i2pbote-plugin.war" tofile="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
-        <exec executable="pack200" failifexecutionfails="true">
+        <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
             <arg value="--effort=9"/>
             <arg value="--modification-time=latest"/>
@@ -123,7 +123,7 @@
         </exec>
         <delete file="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
         <!-- run bcprov-ecc-jdk16-145.jar through pack200 -->
-        <exec executable="pack200" failifexecutionfails="true">
+        <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
             <arg value="--effort=9"/>
             <arg value="--modification-time=latest"/>
@@ -139,19 +139,19 @@
 
         <!-- make the update xpi2p -->
         <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
-        <exec executable="echo" osfamily="unix" failifexecutionfails="true" output="plugin/plugin.tmp/plugin.config" append="true">
+        <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="version=${version}-b${build.number}" />
         </exec>
-        <exec executable="echo" osfamily="unix" failifexecutionfails="true" output="plugin/plugin.tmp/plugin.config" append="true">
+        <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="update-only=true" />
         </exec>
-        <exec executable="${makeplugin}" failifexecutionfails="true" >
+        <exec executable="${makeplugin}" failonerror="true" >
             <arg value="plugin/plugin.tmp" />
         </exec>
         <move file="i2pbote.xpi2p" tofile="i2pbote-update.xpi2p" />
 
         <!-- make the install xpi2p -->
-        <exec executable="pack200" failifexecutionfails="true">
+        <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
             <arg value="--effort=9"/>
             <arg value="--modification-time=latest"/>
@@ -159,7 +159,7 @@
             <arg value="${lib}/mailapi.jar"/>
         </exec>
         <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
-        <exec executable="echo" osfamily="unix" failifexecutionfails="true" output="plugin/plugin.tmp/plugin.config" append="true">
+        <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="version=${version}-b${build.number}" />
         </exec>
         <exec executable="${makeplugin}" >
@@ -199,15 +199,15 @@ l property to true -->
 
     <target name="poupdate" depends="compilejspstrings">
         <!-- Update the messages_*.po files.  -->
-        <exec executable="sh" osfamily="unix" failifexecutionfails="true" >
+        <exec executable="sh" osfamily="unix" failonerror="true" >
             <arg value="./bundle-messages.sh" />
             <arg value="-p" />
         </exec>
-        <exec executable="sh" osfamily="mac" failifexecutionfails="true" >
+        <exec executable="sh" osfamily="mac" failonerror="true" >
             <arg value="./bundle-messages.sh" />
             <arg value="-p" />
         </exec>
-        <exec executable="cmd" osfamily="windows" failifexecutionfails="true" >
+        <exec executable="cmd" osfamily="windows" failonerror="true" >
             <arg value="/c" />
             <arg value="bundle-messages.bat" />
             <arg value="-p" />
