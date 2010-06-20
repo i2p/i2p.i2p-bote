@@ -107,14 +107,14 @@ public class EmailPacketFolderTest {
     public void testCheckExpiration() throws GeneralSecurityException, InterruptedException {
         final long cutoffTime = System.currentTimeMillis() - ExpirationListener.EXPIRATION_TIME_MILLISECONDS;
 
-        // store a packet that expired 3 seconds ago
-        long expirationTime1 = cutoffTime - 3*1000;
+        // store a packet that expired 10 seconds ago
+        long expirationTime1 = cutoffTime - 10*1000;
         EncryptedEmailPacket emailPacket1 = new SettableStoreTimeEncryptedEmailPacket(unencryptedPacket, recipient, expirationTime1);
         packetFolder.store(emailPacket1);
         assertEquals(expirationTime1/1000L, packetFolder.getElements().get(0).getStoreTime()/1000L);   // round to seconds
         
-        // store a packet that expires in 3 seconds
-        long expirationTime2 = cutoffTime + 3*1000;
+        // store a packet that expires in 10 seconds
+        long expirationTime2 = cutoffTime + 10*1000;
         EncryptedEmailPacket emailPacket2 = new SettableStoreTimeEncryptedEmailPacket(unencryptedPacket2, recipient, expirationTime2);
         packetFolder.store(emailPacket2);
         
@@ -124,8 +124,8 @@ public class EmailPacketFolderTest {
         packetFolder.deleteExpired();
         assertEquals(1, packetFolder.getElements().size());
         
-        // 4 seconds later, the remaining packet should have expired
-        TimeUnit.SECONDS.sleep(4);
+        // 11 seconds later, the remaining packet should have expired
+        TimeUnit.SECONDS.sleep(11);
         packetFolder.deleteExpired();
         assertEquals(0, packetFolder.getElements().size());
     }
