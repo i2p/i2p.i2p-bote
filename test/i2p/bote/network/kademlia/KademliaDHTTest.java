@@ -65,7 +65,7 @@ public class KademliaDHTTest {
             I2PSession i2pSession = i2pClient.createSession(new ByteArrayInputStream(destinationArray), null);
             
             I2PPacketDispatcher packetDispatcher = new I2PPacketDispatcher();
-            i2pSession.addSessionListener(packetDispatcher, I2PSession.PROTO_ANY, I2PSession.PORT_ANY);
+            i2pSession.addSessionListener(packetDispatcher, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_ANY);
             
             I2PSendQueue sendQueue = new I2PSendQueue(i2pSession, packetDispatcher);
             

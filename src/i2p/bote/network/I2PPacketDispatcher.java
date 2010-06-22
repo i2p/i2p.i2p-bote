@@ -31,7 +31,8 @@ import java.util.List;
 
 import net.i2p.client.I2PSession;
 import net.i2p.client.I2PSessionException;
-import net.i2p.client.I2PSessionListener;
+//import net.i2p.client.I2PSessionListener;
+import net.i2p.client.I2PSessionMuxedListener;
 import net.i2p.client.datagram.I2PDatagramDissector;
 import net.i2p.client.datagram.I2PInvalidDatagramException;
 import net.i2p.data.DataFormatException;
@@ -41,7 +42,7 @@ import net.i2p.util.Log;
 /**
  * An {@link I2PSessionListener} that receives datagrams from the I2P network and notifies {@link PacketListener}s.
  */
-public class I2PPacketDispatcher implements I2PSessionListener {
+public class I2PPacketDispatcher implements I2PSessionMuxedListener {
     private Log log = new Log(I2PPacketDispatcher.class);
     private List<PacketListener> packetListeners;
 
@@ -76,7 +77,15 @@ public class I2PPacketDispatcher implements I2PSessionListener {
     @Override
     public void reportAbuse(I2PSession session, int severity) {
     }
-    
+
+    @Override
+    public void messageAvailable(I2PSession session, int msgId, long size, int proto, int fromPort, int toPort) {
+        if(proto == I2PSession.PROTO_DATAGRAM) {
+            messageAvailable(session, msgId, size);
+        }
+        // else { do we even bother to report this??  What do we do with it? }
+    }
+
     @Override
     public void messageAvailable(I2PSession session, int msgId, long size) {
         byte[] msg = new byte[0];
@@ -127,4 +136,5 @@ public class I2PPacketDispatcher implements I2PSessionListener {
     public void disconnected(I2PSession session) {
         log.warn("I2P session disconnected.");
     }
+
 }
