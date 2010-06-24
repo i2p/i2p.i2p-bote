@@ -735,6 +735,28 @@ public class I2PBote {
         }
     }
 
+    // Tobad this isn't public... oh well, I steal it :-)
+    static String getPassword() {
+        List<RouterContext> contexts = RouterContext.listContexts();
+        if (contexts != null) {
+            for (int i = 0; i < contexts.size(); i++) {
+                RouterContext ctx = contexts.get(i);
+                String password = ctx.getProperty("consolePassword");
+                if (password != null) {
+                    password = password.trim();
+                    if (password.length() > 0) {
+                        return password;
+                    }
+                }
+            }
+            // no password in any context
+            return null;
+        } else {
+            // no contexts?!
+            return null;
+        }
+    }
+
     private Boolean checkForSeedless() {
         /*
          * Of course we can do reflection, but...
@@ -776,7 +798,7 @@ public class I2PBote {
             return false;
         }
         // 2: Get console password
-
+        apass = getPassword();
         log.info("Testing Seedless API");
         // 3: Check for the console API, if it exists, wait 'till it's status is ready.
         // and set the needed settings. Repeat test 10 times with some delay between when it fails.
@@ -995,9 +1017,9 @@ public class I2PBote {
                     Iterator it = metadatas.iterator();
                     while(it.hasNext()) {
                         foo = (String)it.next();
-                        ip32 = Base64.decodeToString(foo).split(" ")[0];
+                        ip32 = Base64.decodeToString(foo).split(" ")[0].trim();
                         if(!ip32s.contains(ip32)) {
-                            ip32s.add(ip32.trim());
+                            ip32s.add(ip32);
                         }
                     }
                 }
@@ -1007,6 +1029,7 @@ public class I2PBote {
         }
         BotePeers = ip32s;
         log.debug("doSeedlessScrapePeers Done.");
+        dht.injectPeers(BotePeers);
         lastSeedlessScrapePeers = System.currentTimeMillis();
     }
 
@@ -1054,6 +1077,7 @@ public class I2PBote {
         log.debug("doSeedlessScrapeServers Done");
         lastSeedlessScrapeServers = System.currentTimeMillis();
     }
+
 }
 
 class ContextHelper {
