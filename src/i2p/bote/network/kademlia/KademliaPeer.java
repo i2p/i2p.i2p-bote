@@ -52,9 +52,15 @@ public class KademliaPeer extends Destination {
     }
 
     public KademliaPeer(String b32, Boolean foo) {
+        try {
+        System.out.println("Attempting to inject "+ b32 +" as " + b32.trim().substring(0, 52));
+        destinationHash = new Hash();
         destinationHash.setData(Base32.decode(b32.trim().substring(0, 52)));
         firstSeen = System.currentTimeMillis();
         found = false;
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public KademliaPeer(Destination destination) {
