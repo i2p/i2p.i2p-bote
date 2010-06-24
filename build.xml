@@ -27,8 +27,7 @@
         <pathelement location="${mstream}/mstreaming.jar" />
         <pathelement location="${stream}/streaming.jar" />
         <pathelement location="${router}/router.jar" />
-        <pathelement location="${tunnel}/i2ptunnel.jar" />
-        
+        <pathelement location="${tunnel}/i2ptunnel.jar" />        
     </path>
     <target name="help">
         <echo message="Useful targets:" />
