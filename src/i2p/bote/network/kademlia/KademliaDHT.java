@@ -64,8 +64,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
@@ -367,18 +365,22 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * every single b32 from floodfills. It's tobad we just can't lookup as needed.
      * HH-- FIX ME PLEASE!!!
      */
-    public void injectPeers(List<String> botePeers) {
+    public List<String> injectPeers(List<String> botePeers) {
         List<String> b32peers = botePeers;
+        List<String> okpeers = null;
         Iterator it = b32peers.iterator();
         while(it.hasNext()) {
-            KademliaPeer peer = new KademliaPeer((String)it.next(), false);
+            String b32 = (String)it.next();
+            KademliaPeer peer = new KademliaPeer(b32, false);
             try {
                 peer.lookup();
                 bucketManager.addOrUpdate(peer);
+                okpeers.add(b32);
             } catch(DataFormatException ex) {
                 // nop
                 }
         }
+        return okpeers;
     }
 
     private class BootstrapTask implements Runnable, PacketListener {

@@ -1029,7 +1029,8 @@ public class I2PBote {
         }
         BotePeers = ip32s;
         log.debug("doSeedlessScrapePeers Done.");
-        dht.injectPeers(BotePeers);
+        BotePeers = dht.injectPeers(BotePeers);
+        peerManager.injectPeers(BotePeers);
         lastSeedlessScrapePeers = System.currentTimeMillis();
     }
 

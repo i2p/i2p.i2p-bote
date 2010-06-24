@@ -18,7 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package i2p.bote.service;
 
 import i2p.bote.Util;
@@ -49,24 +48,25 @@ import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
+import net.i2p.i2ptunnel.I2PTunnel;
 import net.i2p.util.Log;
 
 /**
-  * Relay peers are managed independently of the DHT peers because:
-  * <ul>
-  * <li/>They need to be uniformly distributed across the key space to prevent leaking
-  *      information about the local destination key to nodes that could link it to a
-  *      local email destination.
-  * <li/>We're interested in the highest-uptime peers, regardless of their I2P destination.
-  * <li/>Using relay peers for DHT bootstrapping could make it easier for
-  *      malicious relay peers to mount a partitioning attack (not 100% sure about this).
-  * </ul>
+ * Relay peers are managed independently of the DHT peers because:
+ * <ul>
+ * <li/>They need to be uniformly distributed across the key space to prevent leaking
+ *      information about the local destination key to nodes that could link it to a
+ *      local email destination.
+ * <li/>We're interested in the highest-uptime peers, regardless of their I2P destination.
+ * <li/>Using relay peers for DHT bootstrapping could make it easier for
+ *      malicious relay peers to mount a partitioning attack (not 100% sure about this).
+ * </ul>
  */
 public class RelayPeerManager extends I2PBoteThread implements PacketListener {
+
     private static final int MAX_PEERS = 50;   // maximum number of peers
     private static final int MIN_REACHABILITY = 80;
     private static final int UPDATE_INTERVAL = 30;   // time in minutes between updating peers
-    
     private Log log = new Log(RelayPeerManager.class);
     private I2PSendQueue sendQueue;
     private Destination localDestination;
@@ -75,45 +75,63 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
 
     public RelayPeerManager(I2PSendQueue sendQueue, Destination localDestination, File peerFile) {
         super("RelayPeerMgr");
-        
+
         this.peerFile = peerFile;
         this.sendQueue = sendQueue;
         this.localDestination = localDestination;
         peers = new HashSet<RelayPeer>();
-        
+
         // Read the updateable peer file if it exists
-        if (peerFile.exists()) {
+        if(peerFile.exists()) {
             List<String> receivedPeers = Util.readLines(peerFile);
             addPeers(receivedPeers);
-        }
-        else
+        } else {
             log.info("Peer file doesn't exist, using built-in peers (File not found: <" + peerFile.getAbsolutePath() + ">)");
+        }
         // If no peers have been read, use the built-in peer file
-        if (peers.isEmpty()) {
+        if(peers.isEmpty()) {
             URL builtInPeerFile = PeerFileAnchor.getBuiltInPeersFile();
             List<String> builtInPeers = Util.readLines(builtInPeerFile);
             addPeers(builtInPeers);
         }
     }
-    
+
     /**
      * Creates peer destinations from a <code>String</code> each, and adds them to <code>peers</code>.
      * @param peerFileEntries A list of <code>String</code>s as they appear in the peer file
      */
     private void addPeers(List<String> peerFileEntries) {
         synchronized(peers) {
-            for (String line: peerFileEntries) {
-                if (peers.size() >= MAX_PEERS)
+            for(String line: peerFileEntries) {
+                if(peers.size() >= MAX_PEERS) {
                     return;
-                if (!line.startsWith("#")) {
+                }
+                if(!line.startsWith("#")) {
                     RelayPeer peer = parsePeerFileEntry(line);
-                    if (peer!=null && !localDestination.equals(peer))
+                    if(peer != null && !localDestination.equals(peer)) {
                         peers.add(peer);
+                    }
                 }
             }
         }
     }
-    
+
+    /**
+     * Creates peer destination from a <code>String</code>, and adds it to <code>peers</code>.
+     * @param dest A Base 64 destination encoded as a <code>String</code>
+     */
+    private void addPeer(String dest) {
+        synchronized(peers) {
+            if(peers.size() >= MAX_PEERS) {
+                return;
+            }
+            RelayPeer peer = parsePeerFileEntry(dest);
+            if(peer != null && !localDestination.equals(peer)) {
+                peers.add(peer);
+            }
+        }
+    }
+
     /**
      * Creates a <code>RelayPeer</code> from an entry of the peer file.
      * An entry is an I2P destination which can (but doesn't have to) be
@@ -124,60 +142,77 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
      */
     private RelayPeer parsePeerFileEntry(String line) {
         String[] fields = line.split("\\t", 3);
-        if (fields.length <= 0) {
+        if(fields.length <= 0) {
             log.error("Invalid entry in peer file: <" + line + ">");
             return null;
         }
-        
+
         try {
             Destination destination = new Destination(fields[0]);
-            if (fields.length >= 3) {
+            if(fields.length >= 3) {
                 long requestsSent = Long.valueOf(fields[1]);
                 long responsesReceived = Long.valueOf(fields[1]);
                 return new RelayPeer(destination, requestsSent, responsesReceived);
-            }
-            else
+            } else {
                 return new RelayPeer(destination);
-        }
-        catch (DataFormatException e) {
+            }
+        } catch(DataFormatException e) {
             log.error("Invalid I2P destination: <" + fields[0] + ">");
             return null;
-        }
-        catch (NumberFormatException e) {
+        } catch(NumberFormatException e) {
             log.error("Invalid number in line: <" + line + ">");
             return null;
         }
     }
-    
+
     private void writePeers(File file) {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(file));
-            writer.write("# Format: <dest> <req> <resp>"); writer.newLine();
-            writer.write("#   dest = the I2P destination"); writer.newLine();
-            writer.write("#   req  = the number of requests sent to the peer"); writer.newLine();
-            writer.write("#   resp = the number of responses to all requests"); writer.newLine();
-            writer.write("# The three fields are separated by a tab character."); writer.newLine();
-            writer.write("# Do not edit this file while I2P-Bote is running as it will be overwritten."); writer.newLine();
-            for (RelayPeer peer: peers) {
+            writer.write("# Format: <dest> <req> <resp>");
+            writer.newLine();
+            writer.write("#   dest = the I2P destination");
+            writer.newLine();
+            writer.write("#   req  = the number of requests sent to the peer");
+            writer.newLine();
+            writer.write("#   resp = the number of responses to all requests");
+            writer.newLine();
+            writer.write("# The three fields are separated by a tab character.");
+            writer.newLine();
+            writer.write("# Do not edit this file while I2P-Bote is running as it will be overwritten.");
+            writer.newLine();
+            for(RelayPeer peer: peers) {
                 writer.write(peer.toBase64() + "\t" + peer.getRequestsSent() + "\t" + peer.getResponsesReceived());
                 writer.newLine();
             }
-        }
-        catch (IOException e) {
+        } catch(IOException e) {
             log.error("Can't write peers to file <" + file.getAbsolutePath() + ">", e);
-        }
-        finally {
-            if (writer != null)
+        } finally {
+            if(writer != null) {
                 try {
                     writer.close();
-                }
-                catch (IOException e) {
+                } catch(IOException e) {
                     log.error("Can't close BufferedWriter for file <" + file.getAbsolutePath() + ">", e);
                 }
+            }
         }
     }
-    
+
+    public void injectPeers(List<String> botePeers) {
+        List<String> b32peers = botePeers;
+        Iterator it = b32peers.iterator();
+        while(it.hasNext()) {
+            try {
+                String b32 = (String)it.next();
+                String destination = I2PTunnel.destFromName(b32).toBase64();
+                addPeer(destination);
+            } catch(DataFormatException ex) {
+                // nop
+                }
+        }
+
+    }
+
     /**
      * Returns <code>numPeers</code> randomly selected peers with a reachability
      * of <code>MIN_REACHABILITY</code> or higher. If less than <code>numPeers</code>
@@ -185,9 +220,9 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
      * @return
      */
     public List<Destination> getRandomPeers(int numPeers) {
-        while (!shutdownRequested()) {
+        while(!shutdownRequested()) {
             List<Destination> goodPeers = getGoodPeers();
-            if (goodPeers.size() >= numPeers) {
+            if(goodPeers.size() >= numPeers) {
                 Collections.shuffle(goodPeers);
                 goodPeers = goodPeers.subList(0, numPeers);
                 return goodPeers;
@@ -203,77 +238,91 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
     private List<Destination> getGoodPeers() {
         List<Destination> goodPeers = new ArrayList<Destination>();
         synchronized(peers) {
-            for (RelayPeer peer: peers)
-                if (peer.getReachability() > MIN_REACHABILITY)
+            for(RelayPeer peer: peers) {
+                if(peer.getReachability() > MIN_REACHABILITY) {
                     goodPeers.add(peer);
+                }
+            }
         }
         return goodPeers;
     }
-    
+
     public Set<RelayPeer> getAllPeers() {
         return peers;
     }
-    
+
     @Override
     public void run() {
-        while (!shutdownRequested()) {
+        while(!shutdownRequested()) {
             boolean shutdownRequested = awaitShutdownRequest(UPDATE_INTERVAL, TimeUnit.MINUTES);
-            if (shutdownRequested)
+            if(shutdownRequested) {
                 break;
-            
+            }
+
             // ask all peers for their peer lists
             PacketBatch batch = new PacketBatch();
             synchronized(peers) {
-                for (RelayPeer peer: peers)
+                for(RelayPeer peer: peers) {
                     batch.putPacket(new PeerListRequest(), peer);   // don't reuse request packets because PacketBatch will not add the same one more than once
+                }
             }
             sendQueue.send(batch);
             try {
                 batch.awaitSendCompletion();
                 batch.awaitAllResponses(2, TimeUnit.MINUTES);
-            }
-            catch (InterruptedException e) {
+            } catch(InterruptedException e) {
                 log.error("Interrupted while waiting for responses to PeerListRequests.", e);
             }
-            
+
             // update reachability counters
             log.debug("Relay peer stats:");
             synchronized(peers) {
-                for (RelayPeer peer: peers) {
-                    for (PacketBatchItem batchItem: batch)
-                        if (peer.equals(batchItem.getDestination()))
+                for(RelayPeer peer: peers) {
+                    for(PacketBatchItem batchItem: batch) {
+                        if(peer.equals(batchItem.getDestination())) {
                             peer.requestSent();
-                    if (batch.getResponses().containsKey(peer))
+                        }
+                    }
+                    if(batch.getResponses().containsKey(peer)) {
                         peer.responseReceived();
+                    }
                     log.debug("  " + peer.calculateHash().toBase64() + " req=" + peer.getRequestsSent() + " resp=" + peer.getResponsesReceived());
                 }
             }
-            
+
             // make a Set with the new peers
             Set<Destination> receivedPeers = new HashSet<Destination>();
             BanList banList = BanList.getInstance();
-            for (DataPacket response: batch.getResponses().values()) {
-                if (!(response instanceof PeerList))
+            for(DataPacket response: batch.getResponses().values()) {
+                if(!(response instanceof PeerList)) {
                     continue;
+                }
                 PeerList peerList = (PeerList)response;
-                for (Destination peer: peerList.getPeers())
-                    if (!banList.isBanned(peer))
+                for(Destination peer: peerList.getPeers()) {
+                    if(!banList.isBanned(peer)) {
                         receivedPeers.add(peer);
+                    }
+                }
             }
             log.debug("Received a total of " + receivedPeers.size() + " relay peers in " + batch.getResponses().size() + " packets.");
-            
+
             // replace low-reachability peers with new peers (a PeerList is supposed to contain only high-reachability peers)
             synchronized(peers) {
                 // add all received peers, then remove low-reachability ones (all of which are existing peers)
-                for (Destination newPeer: receivedPeers)
-                    if (!localDestination.equals(newPeer))
+                for(Destination newPeer: receivedPeers) {
+                    if(!localDestination.equals(newPeer)) {
                         peers.add(new RelayPeer(newPeer));
-                for (Iterator<RelayPeer> iterator=peers.iterator(); iterator.hasNext();) {
-                    if (peers.size() <= MAX_PEERS)
+                    }
+                }
+                for(Iterator<RelayPeer> iterator = peers.iterator(); iterator.hasNext();) {
+                    if(peers.size() <= MAX_PEERS) {
                         break;
+                    }
                     RelayPeer peer = iterator.next();
-                    if (peer.getRequestsSent()>0 && peer.getReachability()<MIN_REACHABILITY)   // don't remove the peer before it has had a chance to respond to a request
+                    if(peer.getRequestsSent() > 0 && peer.getReachability() < MIN_REACHABILITY) // don't remove the peer before it has had a chance to respond to a request
+                    {
                         iterator.remove();
+                    }
                 }
             }
             log.debug("Number of relay peers is now " + peers.size());
@@ -286,13 +335,13 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
         BanList banList = BanList.getInstance();
         banList.update(sender, packet.getProtocolVersion());
         synchronized(peers) {
-            if (banList.isBanned(sender)) {
+            if(banList.isBanned(sender)) {
                 peers.remove(sender);
                 return;
             }
-            
+
             // respond to PeerListRequests
-            if (packet instanceof PeerListRequest) {
+            if(packet instanceof PeerListRequest) {
                 // send all high-reachability peers minus the sender itself
                 List<Destination> peersToSend = new ArrayList<Destination>();
                 peersToSend.addAll(getGoodPeers());
@@ -301,14 +350,15 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
                 log.debug("Sending a PeerList containing " + peersToSend.size() + " peers in response to a PeerListRequest from " + sender.calculateHash().toBase64());
                 sendQueue.sendResponse(response, sender, packet.getPacketId());
             }
-            
+
             // If there are less than MAX_PEERS/2 peers, add the sender (which can be a relay peer or a DHT peer)
             // as a relay peer. The other MAX_PEERS/2 are reserved for peers from PeerListRequests since they are preferrable.
-            if (peers.size() < MAX_PEERS/2)
+            if(peers.size() < MAX_PEERS / 2) {
                 peers.add(new RelayPeer(sender));
+            }
         }
     }
-    
+
     @Override
     public void requestShutdown() {
         writePeers(peerFile);

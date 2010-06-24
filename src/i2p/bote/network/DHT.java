@@ -57,9 +57,9 @@ public interface DHT {
     int getNumPeers();
     
     /**
-     * Injects a list peers.
+     * Injects a list peers. Returns a list that were successfully looked up
      */
-    void injectPeers(List<String> botePeers);
+    List<String> injectPeers(List<String> botePeers);
 
     DhtPeerStats getPeerStats();
     
