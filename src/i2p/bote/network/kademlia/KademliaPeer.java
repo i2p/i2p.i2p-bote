@@ -1,20 +1,20 @@
 /**
  * Copyright (C) 2009  HungryHobo@mail.i2p
- * 
+ *
  * The GPG fingerprint for HungryHobo@mail.i2p is:
  * 6DD3 EAA2 9990 29BC 4AD2 7486 1E2C 7B61 76DC DC12
- * 
+ *
  * This file is part of I2P-Bote.
  * I2P-Bote is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * I2P-Bote is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -53,11 +53,11 @@ public class KademliaPeer extends Destination {
 
     public KademliaPeer(String b32, Boolean foo) {
         try {
-        System.out.println("Attempting to inject "+ b32 +" as " + b32.trim().substring(0, 52));
-        destinationHash = new Hash();
-        destinationHash.setData(Base32.decode(b32.trim().substring(0, 52)));
-        firstSeen = System.currentTimeMillis();
-        found = false;
+            log.debug("Attempting to inject " + b32 + " as " + b32.trim().substring(0, 52));
+            destinationHash = new Hash();
+            destinationHash.setData(Base32.decode(b32.trim().substring(0, 52)));
+            firstSeen = System.currentTimeMillis();
+            found = false;
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -75,15 +75,16 @@ public class KademliaPeer extends Destination {
         return destinationHash;
     }
 
-
     public Boolean wasFound() {
-            return found;
+        return found;
     }
-    
+
     public void lookup() throws DataFormatException {
-        if(found) return;
+        if(found) {
+            return;
+        }
         Destination destination = null;
-        destination = I2PTunnel.destFromName(Base32.encode(destinationHash.getData())+".b32.i2p");
+        destination = I2PTunnel.destFromName(Base32.encode(destinationHash.getData()) + ".b32.i2p");
         if(destination == null) {
             throw new DataFormatException("Can't find peer in floodfill.");
         }
@@ -92,6 +93,7 @@ public class KademliaPeer extends Destination {
         setPublicKey(destination.getPublicKey());
         found = true;
     }
+
     /**
      * @param firstSeen Milliseconds since Jan 1, 1970
      * @return
