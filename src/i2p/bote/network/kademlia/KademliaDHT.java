@@ -72,6 +72,7 @@ import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 
 import com.nettgryppa.security.HashCash;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -367,7 +368,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      */
     public List<String> injectPeers(List<String> botePeers) {
         List<String> b32peers = botePeers;
-        List<String> okpeers = null;
+        List<String> okpeers = new ArrayList<String>();
         Iterator it = b32peers.iterator();
         while(it.hasNext()) {
             String b32 = (String)it.next();
