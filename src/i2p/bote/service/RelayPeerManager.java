@@ -205,7 +205,7 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
             try {
                 String b32 = (String)it.next();
                 String destination = I2PTunnel.destFromName(b32).toBase64();
-                addPeer(destination);
+                addPeer(destination + "\t60\t60");
             } catch(DataFormatException ex) {
                 // nop
                 }
