@@ -156,15 +156,12 @@ public class I2PBote {
     private I2PSocketManager sockMgr;
     private long lastSeedlessAnnounce = 0;
     private long lastSeedlessRequestPeers = 0;
-    private long lastSeedlessRequestServers = 0;
     private long lastSeedlessScrapePeers = 0;
     private long lastSeedlessScrapeServers = 0;
     private SeedlessAnnounce seedlessAnnounce = null;
     private SeedlessRequestPeers seedlessRequestPeers = null;
     private SeedlessScrapePeers seedlessScrapePeers = null;
     private SeedlessScrapeServers seedlessScrapeServers = null;
-    private String phost = null;
-    private int pport = 0;
     private String svcURL = null;
     private String cpass = null;
     private String peersReqHeader;
@@ -389,7 +386,12 @@ public class I2PBote {
     }
 
     public Destination getLocalDestination() {
-        return i2pSession.getMyDestination();
+        try {
+            return i2pSession.getMyDestination();
+        } catch (NullPointerException npe) {
+            // nop
+        }
+        return null;
     }
 
     public void sendEmail(Email email) throws Exception {
