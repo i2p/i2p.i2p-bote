@@ -222,7 +222,8 @@ public class I2PBote {
         Properties sessionProperties = new Properties();
         sessionProperties.setProperty("inbound.nickname", "I2P-Bote");
         sessionProperties.setProperty("outbound.nickname", "I2P-Bote");
-        sessionProperties.setProperty("i2cp.gzip", String.valueOf(false));   // most of the data we send is encrypted and therefore uncompressible
+        // I think muxed depends on gzip, let's try it.
+        //sessionProperties.setProperty("i2cp.gzip", String.valueOf(false));   // most of the data we send is encrypted and therefore uncompressible
 
         // read the local destination key from the key file if it exists
         File destinationKeyFile = configuration.getDestinationKeyFile();
