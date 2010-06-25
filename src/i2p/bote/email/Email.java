@@ -33,9 +33,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.GeneralSecurityException;
 import java.security.PrivateKey;
 import java.text.DateFormat;
@@ -64,6 +64,9 @@ import net.i2p.util.Log;
 
 import com.nettgryppa.security.HashCash;
 
+import SevenZip.Compression.LZMA.Decoder;
+import SevenZip.Compression.LZMA.Encoder;
+
 public class Email extends MimeMessage {
     private static final int MAX_BYTES_PER_PACKET = 30 * 1024;
     private static final String SIGNATURE_HEADER = "X-I2PBote-Signature";   // contains the sender's base64-encoded signature
@@ -73,6 +76,7 @@ public class Email extends MimeMessage {
         "Content-Transfer-Encoding", "In-Reply-To", "X-HashCash", "X-Priority", SIGNATURE_HEADER
     };
     private static final String[] ADDRESS_HEADERS = new String[] {"From", "Sender", "To", "CC", "BCC", "Reply-To"};
+    private enum CompressionAlgorithm {UNCOMPRESSED, LZMA};   // The first byte in a compressed email
     
     private static Log log = new Log(Email.class);
     private UniqueId messageId;
@@ -83,29 +87,36 @@ public class Email extends MimeMessage {
         messageId = new UniqueId();
     }
 
-    public Email(File file) throws FileNotFoundException, MessagingException {
-        this(new FileInputStream(file));
+    /**
+     * Creates an <code>Email</code> from an InputStream containing an <strong>uncompressed</strong> MIME email.
+     * @param file
+     * @throws MessagingException
+     * @throws IOException
+     */
+    public Email(File file) throws MessagingException, IOException {
+        this(new FileInputStream(file), false);
     }
     
     /**
-     * Creates an Email object from an InputStream containing a MIME email.
-     * 
+     * Creates an <code>Email</code> from an InputStream containing a compressed or uncompressed MIME email.
      * @param inputStream
+     * @param compressed <code>true</code> if the stream contains compressed data
      * @throws MessagingException 
+     * @throws IOException 
      */
-    private Email(InputStream inputStream) throws MessagingException {
-        super(Session.getDefaultInstance(new Properties()), inputStream);
+    private Email(InputStream inputStream, boolean compressed) throws MessagingException, IOException {
+        super(Session.getDefaultInstance(new Properties()), compressed?Email.decompress(inputStream):inputStream);
         messageId = new UniqueId();
     }
 
    /**
-    * Creates an Email object from a byte array containing a MIME email.
-    * 
+    * Creates an <code>Email</code> from a byte array containing a <strong>compressed</strong> MIME email.
     * @param bytes
     * @throws MessagingException 
+    * @throws IOException 
     */
-    public Email(byte[] bytes) throws MessagingException {
-        super(Session.getDefaultInstance(new Properties()), new ByteArrayInputStream(bytes));
+    public Email(byte[] bytes) throws MessagingException, IOException {
+        this(new ByteArrayInputStream(bytes), true);
         messageId = new UniqueId();
     }
 
@@ -119,6 +130,7 @@ public class Email extends MimeMessage {
         return sender==null || "Anonymous".equalsIgnoreCase(sender.toString());
     }
     
+    /** Returns the value of the "from:" header, or <code>null</code> if there is none. */
     public String getOneFromAddress() throws MessagingException {
         Address[] fromAddresses = getFrom();
         if (fromAddresses==null || fromAddresses.length==0)
@@ -458,9 +470,9 @@ public class Email extends MimeMessage {
                 removeHeader("BCC");
             if (!isAnonymous())
                 sign(senderIdentity);
-            writeTo(outputStream);
+            compressTo(outputStream);
         } catch (IOException e) {
-            throw new MessagingException("Can't write to ByteArrayOutputStream.", e);
+            throw new MessagingException("Can't write the email to an OutputStream.", e);
         } catch (GeneralSecurityException e) {
             throw new GeneralSecurityException("Can't sign email.", e);
         } finally {
@@ -493,6 +505,77 @@ public class Email extends MimeMessage {
         }
         
         return packets;
+    }
+    
+    /**
+     * Like {@link writeTo(OutputStream)}, but compresses the data if it reduces the size.
+     * @param input
+     * @return
+     * @throws IOException 
+     * @throws MessagingException 
+     * @see Encoder
+     */
+    private void compressTo(OutputStream outputStream) throws IOException, MessagingException {
+        // Make an uncompressed byte array
+        ByteArrayOutputStream uncompressedStream = new ByteArrayOutputStream();
+        writeTo(uncompressedStream);
+        byte[] uncompressedArray = uncompressedStream.toByteArray();
+        
+        // Make a compressed byte array
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(uncompressedArray);
+        ByteArrayOutputStream compressedStream = new ByteArrayOutputStream();
+        Encoder lzmaEncoder = new Encoder();
+        lzmaEncoder.SetDictionarySize(24);   // dictionary size = 2^24 = 16m
+        lzmaEncoder.SetEndMarkerMode(true);   // by using an end marker, the uncompressed size doesn't need to be stored with the compressed data
+        lzmaEncoder.WriteCoderProperties(compressedStream);
+        lzmaEncoder.Code(inputStream, compressedStream, -1, -1, null);
+        byte[] compressedArray = compressedStream.toByteArray();
+        
+        // Write the compressed or uncompressed array, whichever is shorter
+        if (uncompressedArray.length <= compressedArray.length) {
+            outputStream.write(CompressionAlgorithm.UNCOMPRESSED.ordinal());
+            outputStream.write(uncompressedArray);
+        }
+        else {
+            outputStream.write(CompressionAlgorithm.LZMA.ordinal());
+            outputStream.write(compressedArray);
+        }
+    }
+    
+    /**
+     * Decompresses the data from an <code>InputStream</code> and returns
+     * it as a new <code>InputStream</code>.<br/>
+     * (Kind of a poor man's <code>FilterInputStream</code>)
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
+    private static InputStream decompress(InputStream inputStream) throws IOException {
+        Decoder lzmaDecoder = new Decoder();
+        byte[] lzmaProperties = new byte[Encoder.kPropSize];
+        
+        int compressionAlgOrdinal = inputStream.read();
+        CompressionAlgorithm compressionAlgorithm = null;
+        if (compressionAlgOrdinal>=0 && compressionAlgOrdinal<CompressionAlgorithm.values().length)
+            compressionAlgorithm = CompressionAlgorithm.values()[compressionAlgOrdinal];
+        
+        switch(compressionAlgorithm) {
+        case UNCOMPRESSED:
+            return inputStream;
+        case LZMA:
+            int bytesRead = inputStream.read(lzmaProperties);
+            if (bytesRead < Encoder.kPropSize)
+                throw new IOException("Input is too short! Must be at least " + Encoder.kPropSize + " bytes.");
+            if (!lzmaDecoder.SetDecoderProperties(lzmaProperties))
+                throw new IOException("Incorrect stream properties.");
+            
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            if (!lzmaDecoder.Code(inputStream, outputStream, -1))   // size = -1 means use the end marker
+                throw new IOException("Error in data stream");
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        default:
+            throw new IOException("Unknown compression algorithm: " + compressionAlgOrdinal);
+        }
     }
     
     /**
@@ -538,5 +621,4 @@ public class Email extends MimeMessage {
         }
         return result.toString();
     }
-    
 }

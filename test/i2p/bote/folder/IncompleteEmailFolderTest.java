@@ -29,6 +29,7 @@ import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Random;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
@@ -75,12 +76,15 @@ public class IncompleteEmailFolderTest {
 	
 	@Test
 	public void testAddThreePacketEmail() throws Exception {
-		StringBuilder stringBuilder = new StringBuilder();
-		// create a 80,000-char string
-		for (int i=0; i<8000; i++)
-			stringBuilder.append("0123456789");
-
-        testAddEmail(stringBuilder.toString(), 3);
+        // Create a 80,000-char string. Use random data (more or less, because it has to be
+        // US ASCII chars) so it doesn't get compressed into less than 3 packets.
+        Random rng = new Random();
+        rng.setSeed(0);
+        byte[] message = new byte[80000];
+        for (int i=0; i<message.length; i++)
+            message[i] = (byte)(32 + rng.nextInt(127-32));
+	    
+        testAddEmail(new String(message), 3);
 	}
 
     private void testAddEmail(String mailContent, int expectedNumPackets) throws Exception {

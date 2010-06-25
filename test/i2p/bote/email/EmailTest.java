@@ -28,12 +28,14 @@ import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.Message.RecipientType;
@@ -92,16 +94,20 @@ public class EmailTest {
         emails[3].setSubject("Test", "UTF-8");
         
         for (Email email: emails) {
-            // Make a large email so it is a good test case for testCreateEmailPackets()
-            StringBuilder emailText = new StringBuilder();
-            for (int i=0; i<50*1000; i++)
-                emailText.append("1234567890");
-            email.setText(emailText.toString(), "UTF-8");
+            // Make a large email so it is a good test case for testCreateEmailPackets().
+            // Use random data (more or less, because it has to be US ASCII chars)
+            // so it doesn't get compressed into 1 packet.
+            Random rng = new Random();
+            rng.setSeed(0);
+            byte[] message = new byte[500000];
+            for (int i=0; i<message.length; i++)
+                message[i] = (byte)(32 + rng.nextInt(127-32));
+            email.setText(new String(message));
         }
     }
 
     @Test
-    public void testSign() throws MessagingException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException {
+    public void testSign() throws MessagingException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, GeneralSecurityException {
         assertEquals(emails.length-1, identities.size());
         
         for (Email email: emails) {
@@ -115,7 +121,8 @@ public class EmailTest {
             
             // write the email to a byte array, make a new email from the byte array, and verify the signature
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            email.writeTo(outputStream);
+            for (UnencryptedEmailPacket packet: email.createEmailPackets(identity, null))
+                outputStream.write(packet.getContent());
             email = new Email(outputStream.toByteArray());
             assertTrue(email.isSignatureValid());
         }
@@ -138,17 +145,32 @@ public class EmailTest {
     }
     
     @Test
-    public void testCreateEmailPackets() throws MessagingException, IOException, GeneralSecurityException {
+    public void testCreateEmailPackets() throws MessagingException, IOException, GeneralSecurityException, SecurityException, IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
         // convert an email to a byte array, convert back, and compare with the original email
         for (Email email: emails) {
             EmailIdentity identity = identities.get(email);
             Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(identity, null);
+            assertTrue("Expected more email packets. #packets = " + packets.size(), packets.size() > email.getText().length()/getMaxBytesPerPacket()/2);   // the emails are somewhat compressible, but definitely not by 50%
+            
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             for (UnencryptedEmailPacket packet: packets)
                 outputStream.write(packet.getContent());
             Email newEmail = new Email(outputStream.toByteArray());
             assertEquals(email.getContent(), newEmail.getContent());
         }
+    }
+    
+    /**
+     * Returns the value of the private field <code>Email.MAX_BYTES_PER_PACKET</code>.
+     * @throws NoSuchFieldException 
+     * @throws SecurityException 
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException
+     */
+    private int getMaxBytesPerPacket() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        Field maxBytesField = Email.class.getDeclaredField("MAX_BYTES_PER_PACKET");
+        maxBytesField.setAccessible(true);
+        return (Integer)maxBytesField.get(null);
     }
     
     @Test
@@ -176,4 +198,19 @@ public class EmailTest {
         assertEquals("One BCC header expected!", 1, newEmail.getHeader("BCC").length);
         assertEquals(4, newEmail.getAllRecipients().length);
     }
+    
+    @Test
+    public void testCompression() throws MessagingException, GeneralSecurityException {
+        // create a 500,000-char string that should compress to one packet
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i=0; i<50000; i++)
+            stringBuilder.append("0123456789");
+        
+        Email newEmail = new Email();
+        newEmail.setText(stringBuilder.toString());
+        Collection<UnencryptedEmailPacket> packets = newEmail.createEmailPackets(bccIdentity, null);
+        assertEquals("The email was not compressed into one email packet.", 1, packets.size());
+    }
+    
+    // TODO test an uncompressible email
 }
