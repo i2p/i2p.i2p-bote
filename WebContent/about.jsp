@@ -40,13 +40,19 @@
     <table><tr>
         <td><strong><ib:message key="Author:"/></strong></td>
     </tr><tr>
-        <td></td><td>HungryHobo@mail.i2p</td>
+        <td></td><td>
+            <ib:message key="Click to send an email" var="linkTitle"/>
+            <ib:message key="Feedback on I2P-Bote" var="subject"/>
+            <a href="newEmail.jsp?recipient0=hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n&recipientType0=to&subject=${subject}" title="${linkTitle}">HungryHobo</a>
+        </td>
     </tr><tr>
         <td><strong><ib:message key="Contributors:"/></strong></td>
     </tr><tr>
         <td></td><td>Mixxy</td>
     </tr><tr>
         <td></td><td>zzz</td>
+    </tr><tr>
+        <td></td><td>sponge</td>
     </tr></table>
 </div>
 
