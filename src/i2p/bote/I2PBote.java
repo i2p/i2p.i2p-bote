@@ -110,6 +110,7 @@ import net.i2p.router.RouterContext;
 import net.i2p.router.startup.ClientAppConfig;
 import java.net.HttpURLConnection;
 import java.util.Iterator;
+import java.util.Random;
 import net.i2p.i2ptunnel.I2PTunnel;
 
 
@@ -160,7 +161,7 @@ public class I2PBote {
     private long lastSeedlessScrapeServers = 0;
     private SeedlessAnnounce seedlessAnnounce = null;
     private SeedlessRequestPeers seedlessRequestPeers = null;
-    private SeedlessScrapePeers seedlessScreapePeers = null;
+    private SeedlessScrapePeers seedlessScrapePeers = null;
     private SeedlessScrapeServers seedlessScrapeServers = null;
     private String phost = null;
     private int pport = 0;
@@ -321,7 +322,7 @@ public class I2PBote {
 
             seedlessAnnounce = new SeedlessAnnounce(180);
             seedlessRequestPeers = new SeedlessRequestPeers(60);
-            seedlessScreapePeers = new SeedlessScrapePeers(10);
+            seedlessScrapePeers = new SeedlessScrapePeers(10);
             seedlessScrapeServers = new SeedlessScrapeServers(10);
         } else {
             log.info("Seedless NOT found.");
@@ -525,8 +526,8 @@ public class I2PBote {
         if(seedlessRequestPeers != null) {
             seedlessRequestPeers.start();
         }
-        if(seedlessScreapePeers != null) {
-            seedlessScreapePeers.start();
+        if(seedlessScrapePeers != null) {
+            seedlessScrapePeers.start();
         }
         if(seedlessScrapeServers != null) {
             seedlessScrapeServers.start();
@@ -583,8 +584,8 @@ public class I2PBote {
         if(seedlessRequestPeers != null) {
             seedlessRequestPeers.requestShutdown();
         }
-        if(seedlessScreapePeers != null) {
-            seedlessScreapePeers.requestShutdown();
+        if(seedlessScrapePeers != null) {
+            seedlessScrapePeers.requestShutdown();
         }
         if(seedlessScrapeServers != null) {
             seedlessScrapeServers.requestShutdown();
@@ -605,8 +606,8 @@ public class I2PBote {
         if(seedlessRequestPeers != null) {
             join(seedlessRequestPeers, deadline);
         }
-        if(seedlessScreapePeers != null) {
-            join(seedlessScreapePeers, deadline);
+        if(seedlessScrapePeers != null) {
+            join(seedlessScrapePeers, deadline);
         }
         if(seedlessScrapeServers != null) {
             join(seedlessScrapeServers, deadline);
@@ -739,13 +740,13 @@ public class I2PBote {
     // Tobad this isn't public... oh well, I steal it :-)
     static String getPassword() {
         List<RouterContext> contexts = RouterContext.listContexts();
-        if (contexts != null) {
-            for (int i = 0; i < contexts.size(); i++) {
+        if(contexts != null) {
+            for(int i = 0; i < contexts.size(); i++) {
                 RouterContext ctx = contexts.get(i);
                 String password = ctx.getProperty("consolePassword");
-                if (password != null) {
+                if(password != null) {
                     password = password.trim();
-                    if (password.length() > 0) {
+                    if(password.length() > 0) {
                         return password;
                     }
                 }
@@ -883,6 +884,7 @@ public class I2PBote {
         // We do this over the i2pSocket.
         int successful = Math.min(10, SeedlessServers.size());
         log.debug("Try to announce to " + successful + " Seedless Servers");
+        Collections.shuffle(SeedlessServers, new Random());
         Iterator it = SeedlessServers.iterator();
         String line;
         I2PSocket I2P;
@@ -967,6 +969,11 @@ public class I2PBote {
     }
 
     public synchronized void doSeedlessRequestPeers() {
+        if(getNetworkStatus().equals(NetworkStatus.CONNECTED)) {
+            // We are connected, let kad do it's thing.
+            lastSeedlessRequestPeers = System.currentTimeMillis() - (seedlessRequestPeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
+            return;
+        }
         HttpURLConnection h;
         int i;
         String foo;
@@ -984,15 +991,16 @@ public class I2PBote {
         lastSeedlessRequestPeers = System.currentTimeMillis();
     }
 
-    public synchronized long getlastSeedlessRequestServers() {
-        return lastSeedlessRequestServers;
-    }
-
     public synchronized long getlastSeedlessScrapePeers() {
         return lastSeedlessScrapePeers;
     }
 
     public synchronized void doSeedlessScrapePeers() {
+        if(getNetworkStatus().equals(NetworkStatus.CONNECTED)) {
+            // We are connected, let kad do it's thing.
+            lastSeedlessScrapePeers = System.currentTimeMillis() - (seedlessScrapePeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
+            return;
+        }
         HttpURLConnection h;
         int i;
         String foo;
@@ -1032,6 +1040,7 @@ public class I2PBote {
         log.debug("doSeedlessScrapePeers Done.");
         BotePeers = dht.injectPeers(BotePeers);
         peerManager.injectPeers(BotePeers);
+        BotePeers = null; // garbage now.
         lastSeedlessScrapePeers = System.currentTimeMillis();
     }
 
@@ -1075,11 +1084,11 @@ public class I2PBote {
 
         } catch(IOException ex) {
         }
+        Collections.shuffle(ip32s, new Random());
         SeedlessServers = ip32s;
         log.debug("doSeedlessScrapeServers Done");
         lastSeedlessScrapeServers = System.currentTimeMillis();
     }
-
 }
 
 class ContextHelper {

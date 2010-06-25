@@ -61,5 +61,8 @@ public class SeedlessScrapePeers extends I2PBoteThread {
             
         }
     }
+    public long getInterval() {
+        return interval;
+    }
 
 }
