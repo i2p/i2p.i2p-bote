@@ -61,6 +61,8 @@ public interface DHT {
      */
     List<String> injectPeers(List<String> botePeers);
 
+    Boolean needsMore();
+    
     DhtPeerStats getPeerStats();
     
     void start();

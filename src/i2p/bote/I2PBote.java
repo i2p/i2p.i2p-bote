@@ -146,7 +146,7 @@ public class I2PBote {
     private AutoMailCheckTask autoMailCheckTask;
     private ExpirationThread expirationThread;
     private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
-    private DHT dht;
+    private DHT dht = null;
     private RelayPeerManager peerManager;
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
@@ -170,6 +170,7 @@ public class I2PBote {
     private List<String> SeedlessServers = new ArrayList<String>();
     private List<String> BotePeers = new ArrayList<String>();
     private String announceString;
+    private Boolean GotSeedless = false;
 
     private I2PBote() {
         Thread.currentThread().setName("I2PBoteMain");
@@ -270,7 +271,18 @@ public class I2PBote {
      */
     private void initializeServices() {
         I2PPacketDispatcher dispatcher = new I2PPacketDispatcher();
-//        i2pSession.addSessionListener(dispatcher, I2PSession.PROTO_ANY, I2PSession.PORT_ANY);
+
+        // HH wants to depend on Seedless _FIRST_
+        if(checkForSeedless()) {
+            log.info("Seedless found.");
+            GotSeedless = true;
+            seedlessAnnounce = new SeedlessAnnounce(180);
+            seedlessRequestPeers = new SeedlessRequestPeers(60);
+            seedlessScrapePeers = new SeedlessScrapePeers(10);
+            seedlessScrapeServers = new SeedlessScrapeServers(10);
+        } else {
+            log.info("Seedless NOT found.");
+        }
         i2pSession.addMuxedSessionListener(dispatcher, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_ANY);
 
         smtpService = new SMTPService();
@@ -278,7 +290,7 @@ public class I2PBote {
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
         relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder);
 
-        dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile());
+        dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile(), GotSeedless);
 
         dht.setStorageHandler(EncryptedEmailPacket.class, emailDhtStorageFolder);
         dht.setStorageHandler(IndexPacket.class, indexPacketDhtStorageFolder);
@@ -314,16 +326,6 @@ public class I2PBote {
 
         autoMailCheckTask = new AutoMailCheckTask(configuration.getMailCheckInterval());
 
-        if(checkForSeedless()) {
-            log.info("Seedless found.");
-
-            seedlessAnnounce = new SeedlessAnnounce(180);
-            seedlessRequestPeers = new SeedlessRequestPeers(60);
-            seedlessScrapePeers = new SeedlessScrapePeers(10);
-            seedlessScrapeServers = new SeedlessScrapeServers(10);
-        } else {
-            log.info("Seedless NOT found.");
-        }
     }
 
     /**
@@ -971,7 +973,11 @@ public class I2PBote {
     }
 
     public synchronized void doSeedlessRequestPeers() {
-        if(getNetworkStatus().equals(NetworkStatus.CONNECTED)) {
+        if(dht == null || peerManager == null) {
+            lastSeedlessRequestPeers = System.currentTimeMillis() - (seedlessRequestPeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
+            return;
+        }
+        if(!dht.needsMore() && getNetworkStatus().equals(NetworkStatus.CONNECTED)) {
             // We are connected, let kad do it's thing.
             lastSeedlessRequestPeers = System.currentTimeMillis() - (seedlessRequestPeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
             return;
@@ -998,7 +1004,11 @@ public class I2PBote {
     }
 
     public synchronized void doSeedlessScrapePeers() {
-        if(getNetworkStatus().equals(NetworkStatus.CONNECTED)) {
+        if(dht == null || peerManager == null) {
+            lastSeedlessRequestPeers = System.currentTimeMillis() - (seedlessRequestPeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
+            return;
+        }
+        if(!dht.needsMore() && getNetworkStatus().equals(NetworkStatus.CONNECTED)) {
             // We are connected, let kad do it's thing.
             lastSeedlessScrapePeers = System.currentTimeMillis() - (seedlessScrapePeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
             return;

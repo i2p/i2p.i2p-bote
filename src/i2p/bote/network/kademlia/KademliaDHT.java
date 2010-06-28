@@ -64,6 +64,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
@@ -103,6 +105,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private Set<KademliaPeer> initialPeers;
     private BucketManager bucketManager;
     private Map<Class<? extends DhtStorablePacket>, DhtStorageHandler> storageHandlers;
+    private Boolean useSeedless = false;
 
     /**
      *
@@ -110,12 +113,13 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * @param i2pReceiver
      * @param peerFile
      */
-    public KademliaDHT(I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile) {
+    public KademliaDHT(I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile, Boolean useSeedless) {
         super("Kademlia");
 
         this.sendQueue = sendQueue;
         this.i2pReceiver = i2pReceiver;
         this.peerFile = peerFile;
+        this.useSeedless = useSeedless;
 
         readySignal = new CountDownLatch(1);
         localDestination = sendQueue.getLocalDestination();
@@ -212,6 +216,11 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     @Override
     public DhtPeerStats getPeerStats() {
         return bucketManager.getPeerStats();
+    }
+
+    @Override
+    public Boolean needsMore() {
+        return bucketManager.getAllUnlockedPeers(true).isEmpty();
     }
 
     private DhtResults find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {
@@ -357,7 +366,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * Connects to the Kademlia network; blocks until done.
      */
     private void bootstrap() {
-        new BootstrapTask(i2pReceiver).run();
+        new BootstrapTask(i2pReceiver, useSeedless).run();
     }
 
     /**
@@ -388,43 +397,56 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
 
         private Log log = new Log(BootstrapTask.class);
         I2PPacketDispatcher i2pReceiver;
+        Boolean useSeedless;
 
-        public BootstrapTask(I2PPacketDispatcher i2pReceiver) {
+        public BootstrapTask(I2PPacketDispatcher i2pReceiver, Boolean useSeedless) {
             this.i2pReceiver = i2pReceiver;
+            this.useSeedless = useSeedless;
         }
 
         @Override
         public void run() {
             log.info("Bootstrap start");
-            i2pReceiver.addPacketListener(this);
-            outerLoop:
-            while(!shutdownRequested()) {
-                for(KademliaPeer bootstrapNode: initialPeers) {
-                    bootstrapNode.setFirstSeen(System.currentTimeMillis());   // Set the "first seen" time to the current time before every bootstrap attempt
-                    bootstrapNode.responseReceived();   // unlock the peer so ClosestNodesLookupTask will give it a chance
-                    bucketManager.addOrUpdate(bootstrapNode);
-                    log.info("Trying " + bootstrapNode.calculateHash().toBase64() + " bootstrapping.");
-                    Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
+            if(!useSeedless) {
+                i2pReceiver.addPacketListener(this);
+                outerLoop:
+                while(!shutdownRequested()) {
+                    for(KademliaPeer bootstrapNode: initialPeers) {
+                        bootstrapNode.setFirstSeen(System.currentTimeMillis());   // Set the "first seen" time to the current time before every bootstrap attempt
+                        bootstrapNode.responseReceived();   // unlock the peer so ClosestNodesLookupTask will give it a chance
+                        bucketManager.addOrUpdate(bootstrapNode);
+                        log.info("Trying " + bootstrapNode.calculateHash().toBase64() + " bootstrapping.");
+                        Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
 
-                    if(closestNodes.isEmpty()) {
-                        log.info("No response from bootstrap node " + bootstrapNode.calculateHash());
-                        bucketManager.remove(bootstrapNode);
-                    } else {
-                        log.info("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash().toBase64());
-                        refreshAll();
-                        log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
-                        for(Destination peer: bucketManager.getAllPeers()) {
-                            log.debug("  Peer: " + peer.calculateHash().toBase64());
+                        if(closestNodes.isEmpty()) {
+                            log.info("No response from bootstrap node " + bootstrapNode.calculateHash());
+                            bucketManager.remove(bootstrapNode);
+                        } else {
+                            log.info("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash().toBase64());
+                            refreshAll();
+                            log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
+                            for(Destination peer: bucketManager.getAllPeers()) {
+                                log.debug("  Peer: " + peer.calculateHash().toBase64());
+                            }
+                            break outerLoop;
                         }
-                        break outerLoop;
+                    }
+
+                    log.warn("Can't bootstrap off any known peer, will retry shortly.");
+                    awaitShutdownRequest(1, TimeUnit.MINUTES);
+                }
+                i2pReceiver.removePacketListener(this);
+                readySignal.countDown();
+            } else {
+                while(bucketManager.getAllUnlockedPeers(true).isEmpty() && !shutdownRequested()) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch(InterruptedException ex) {
+                        break;
                     }
                 }
-
-                log.warn("Can't bootstrap off any known peer, will retry shortly.");
-                awaitShutdownRequest(1, TimeUnit.MINUTES);
+                readySignal.countDown();
             }
-            i2pReceiver.removePacketListener(this);
-            readySignal.countDown();
             log.info(getClass().getSimpleName() + " exiting.");
         }
 

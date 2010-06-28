@@ -71,7 +71,7 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
     private I2PSendQueue sendQueue;
     private Destination localDestination;
     private File peerFile;
-    private Set<RelayPeer> peers;
+    private final Set<RelayPeer> peers;
 
     public RelayPeerManager(I2PSendQueue sendQueue, Destination localDestination, File peerFile) {
         super("RelayPeerMgr");
@@ -208,9 +208,8 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
                 addPeer(destination + "\t60\t60");
             } catch(DataFormatException ex) {
                 // nop
-                }
+            }
         }
-
     }
 
     /**
