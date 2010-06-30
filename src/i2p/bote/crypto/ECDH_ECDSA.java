@@ -305,20 +305,12 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     public byte[] encrypt(byte[] data, PublicKey encryptionKey) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
         
         // pad the data
-        int lastBlockLength = data.length % BLOCK_SIZE;   // unpadded length of the last block
-        int lastBlockStart = data.length - lastBlockLength;
-        if (lastBlockLength > 0) {
-            byte[] lastBlock = new byte[BLOCK_SIZE];
-            System.arraycopy(data, lastBlockStart, lastBlock, 0, lastBlockLength);
-            PKCS7Padding padding = new PKCS7Padding();
-            int numAdded = padding.addPadding(lastBlock, lastBlockLength);
-            if (numAdded != BLOCK_SIZE-lastBlockLength)
-                log.error("Error: " + numAdded + " pad bytes added, expected: " + (BLOCK_SIZE-lastBlockLength));
-            int paddedLength = lastBlockStart + BLOCK_SIZE;
-            byte[] paddedData = Arrays.copyOf(data, paddedLength);
-            System.arraycopy(lastBlock, 0, paddedData, lastBlockStart, BLOCK_SIZE);
-            data = paddedData;
-        }
+        int unpaddedLength = data.length;
+        data = Arrays.copyOf(data, unpaddedLength + BLOCK_SIZE - unpaddedLength%BLOCK_SIZE);  // make data.length a multiple of BLOCK_SIZE; if the length is a multiple of BLOCK_LENGTH, add a block of zeros
+        PKCS7Padding padding = new PKCS7Padding();
+        int numAdded = padding.addPadding(data, unpaddedLength);
+        if (log.shouldLog(Log.DEBUG) && numAdded != BLOCK_SIZE-unpaddedLength%BLOCK_SIZE)
+            log.error("Error: " + numAdded + " pad bytes added, expected: " + (BLOCK_SIZE-unpaddedLength%BLOCK_SIZE));
 
         // generate an ephemeral EC key and a shared secret
         KeyPair ephKeyPair = encryptionKeyPairGenerator.generateKeyPair();
