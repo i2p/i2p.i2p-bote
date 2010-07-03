@@ -50,9 +50,55 @@
 </tag>
 
 <tag>
+    <name>attachment</name>
+    <info>
+        Adds an email attachment. Must be inside an ib:sendEmail tag.
+    </info>
+    <tag-class>i2p.bote.web.AttachmentTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+        <name>origFilename</name>
+        <description>
+            The name of the file when the sender attached it to the email.
+            Also the name under which the attachment appears on the recipient's side.
+        </description>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>tempFilename</name>
+        <description>
+            The name of the file after it is uploaded to the I2P-Bote server (which is
+            usually the same machine).
+        </description>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+</tag>
+
+<tag>
     <name>checkForMail</name>
     <tag-class>i2p.bote.web.CheckMailTag</tag-class>
     <body-content>empty</body-content>
+</tag>
+
+<tag>
+    <name>showAttachments</name>
+    <info>
+        Displays links to all attachments in an email.
+    </info>
+    <tag-class>i2p.bote.web.ShowAttachmentsTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>email</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>folder</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
 </tag>
 
 <tag>

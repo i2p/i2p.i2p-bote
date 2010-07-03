@@ -25,13 +25,25 @@ import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.activation.MimetypesFileTypeMap;
 import javax.mail.Address;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
@@ -44,6 +56,7 @@ public class SendEmailTag extends BodyTagSupport {
     private Log log = new Log(SendEmailTag.class);
     private String senderAddress;
     private List<Recipient> recipients = new ArrayList<Recipient>();
+    private List<Attachment> attachments = new ArrayList<Attachment>();
     private String subject;
     private String message;
     
@@ -54,6 +67,7 @@ public class SendEmailTag extends BodyTagSupport {
     @Override
     public int doStartTag() throws JspException {
         recipients.clear();
+        attachments.clear();
         return super.doStartTag();
     }
     
@@ -64,14 +78,36 @@ public class SendEmailTag extends BodyTagSupport {
         Email email = new Email();
         String statusMessage;
         try {
+            // set addresses
             email.setSender(new InternetAddress(senderAddress));
             email.setSubject(subject, "UTF-8");
-            email.setText(message, "UTF-8");
             for (Recipient recipient: recipients)
                 email.addRecipient(recipient.type, recipient.address);
             email.fixAddresses();
+            
+            // set the text and add attachments
+            if (attachments.isEmpty())
+                email.setText(message, "UTF-8");
+            else {
+                Multipart multiPart = new MimeMultipart();
+                MimeBodyPart textPart = new MimeBodyPart();
+                textPart.setText(message, "UTF-8");
+                multiPart.addBodyPart(textPart);
+                
+                attach(multiPart, attachments);
+                email.setContent(multiPart);
+            }
 
+            // send the email
             I2PBote.getInstance().sendEmail(email);
+            
+            // delete attachment temp files
+            for (Attachment attachment: attachments) {
+                File tempFile = new File(attachment.tempFilename);
+                if (!tempFile.delete())
+                    log.error("Can't delete file: <" + tempFile.getAbsolutePath() + ">");
+            }
+            
             statusMessage = _("The email has been queued for sending.");
         }
         catch (Exception e) {
@@ -87,9 +123,60 @@ public class SendEmailTag extends BodyTagSupport {
         return EVAL_PAGE;
     }
 
+    private void attach(Multipart multiPart, List<Attachment> attachments) throws MessagingException {
+        for (Attachment attachment: attachments) {
+            final String mimeType = getMimeType(attachment);
+            
+            MimeBodyPart attachmentPart = new MimeBodyPart();
+            FileDataSource dataSource = new FileDataSource(attachment.tempFilename) {
+                @Override
+                public String getContentType() {
+                    return mimeType;
+                }
+            };
+            attachmentPart.setDataHandler(new DataHandler(dataSource));
+            attachmentPart.setFileName(attachment.origFilename);
+            multiPart.addBodyPart(attachmentPart);
+        }
+    }
+    
+    /**
+     * Returns the MIME type for an <code>Attachment</code>. MIME detection is done with
+     * JRE classes, so only a small number of MIME types are supported.<p/>
+     * It might be worthwhile to use the mime-util library which a much better job:
+     * {@link http://sourceforge.net/projects/mime-util/files/}.
+     * @param attachment
+     * @return
+     */
+    private String getMimeType(Attachment attachment) {
+        MimetypesFileTypeMap mimeTypeMap = new MimetypesFileTypeMap();
+        String mimeType = mimeTypeMap.getContentType(attachment.origFilename);
+        if (mimeType != null)
+            return mimeType;
+        
+        InputStream inputStream = null;
+        try {
+            inputStream = new BufferedInputStream(new FileInputStream(attachment.tempFilename));
+            mimeType = URLConnection.guessContentTypeFromStream(inputStream);
+            if (mimeType != null)
+                return mimeType;
+        } catch (IOException e) {
+            log.error("Can't read file: <" + attachment.tempFilename + ">", e);
+        } finally {
+            try {
+                if (inputStream != null)
+                    inputStream.close();
+            } catch (IOException e) {
+                log.error("Can't close file: <" + attachment.tempFilename + ">", e);
+            }
+        }
+        
+        return "application/octet-stream";
+    }
+    
     /**
      * 
-     * @param sender Can be a (Base64-encoded) email identity key or a public name plus
+     * @param sender Can be a (Base64-encoded) email identity key or a name plus
      * an email identity key.
      */
     public void setSender(String sender) {
@@ -102,6 +189,10 @@ public class SendEmailTag extends BodyTagSupport {
 
     void addRecipient(RecipientType type, Address address) {
         recipients.add(new Recipient(type, address));
+    }
+
+    void addAttachment(String origFilename, String tempFilename) {
+        attachments.add(new Attachment(origFilename, tempFilename));
     }
 
     public void setSubject(String subject) {
@@ -127,6 +218,16 @@ public class SendEmailTag extends BodyTagSupport {
         public Recipient(RecipientType type, Address address) {
             this.type = type;
             this.address = address;
+        }
+    }
+
+    private static class Attachment {
+        String origFilename;
+        String tempFilename;
+        
+        public Attachment(String origFilename, String tempFilename) {
+            this.origFilename = origFilename;
+            this.tempFilename = tempFilename;
         }
     }
 }

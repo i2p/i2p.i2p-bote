@@ -166,11 +166,18 @@ public class Util {
         return peer;
     }
     
+    /** Returns a <code>ThreadFactory</code> that creates threads that run at minimum priority */
     public static ThreadFactory createThreadFactory(final String threadName, final int stackSize) {
+        return createThreadFactory(threadName, stackSize, Thread.MIN_PRIORITY);
+    }
+    
+    public static ThreadFactory createThreadFactory(final String threadName, final int stackSize, final int priority) {
         return new ThreadFactory() {
             @Override
             public Thread newThread(Runnable runnable) {
-                return new Thread(Thread.currentThread().getThreadGroup(), runnable, threadName, stackSize);
+                Thread newThread = new Thread(Thread.currentThread().getThreadGroup(), runnable, threadName, stackSize);
+                newThread.setPriority(priority);
+                return newThread;
             }
         };
     }

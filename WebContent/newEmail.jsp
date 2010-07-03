@@ -29,12 +29,14 @@
 
 <%--
     Valid actions:
-        <default>          - show the "new email" form
-        send               - send an email using the request data
-        addToAddrBook      - add a recipient to the address book and return here
-        lookup             - add one or more address book entries as recipients and return here
-        addRecipientField  - add a recipient field
-        removeRecipient<i> - remove the recipient field with index i
+        <default>           - show the "new email" form
+        send                - send an email using the request data
+        addToAddrBook       - add a recipient to the address book and return here
+        lookup              - add one or more address book entries as recipients and return here
+        addRecipientField   - add a recipient field
+        removeRecipient<i>  - remove the recipient field with index i
+        attach              - add the file given in the parameter "file" as an attachment
+        removeAttachment<i> - remove the attachment with index i
         
     Other parameters:
         new    - true for new contact, false for existing contact
@@ -51,14 +53,14 @@
             <jsp:param name="destination" value="${ib:escapeQuotes(param[destparam])}"/>
             <jsp:param name="forwardUrl" value="newEmail.jsp"/>
             <jsp:param name="backUrl" value="newEmail.jsp"/>
-            <jsp:param name="paramsToCopy" value="recipient*,to*,cc*,bcc*,replyto*,subject,message,forwardUrl,backUrl,paramsToCopy"/>
+            <jsp:param name="paramsToCopy" value="recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl,backUrl,paramsToCopy"/>
         </jsp:forward>
     </c:when>
     <c:when test="${param.action eq 'lookup'}">
         <jsp:forward page="addressBook.jsp">
             <jsp:param name="select" value="true"/>
             <jsp:param name="forwardUrl" value="newEmail.jsp"/>
-            <jsp:param name="paramsToCopy" value="recipient*,to*,cc*,bcc*,replyto*,subject,message,forwardUrl"/>
+            <jsp:param name="paramsToCopy" value="recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl"/>
         </jsp:forward>
     </c:when>
 </c:choose>
@@ -67,7 +69,7 @@
 <jsp:include page="header.jsp"/>
 
 <div class="main">
-    <form action="newEmail.jsp" method="post">
+    <form action="newEmail.jsp" method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <td>
@@ -135,6 +137,56 @@
                 <td valign="top"><br/><ib:message key="Subject:"/></td>
                 <td><input class="widetextfield" type="text" size="80" name="subject" value="${ib:escapeQuotes(param.subject)}"/></td>
             </tr>
+            
+            <%-- Attachments --%>
+            <tr>
+                <td valign="top"><ib:message key="Attachments:"/></td>
+                <td><table>
+                    <c:set var="maxAttachmentIndex" value="-1"/>
+                    <c:forEach items="${param}" var="parameter">
+                        <c:if test="${fn:startsWith(parameter.key, 'attachmentNameOrig')}">
+                            <c:set var="attachmentIndex" value="${fn:substringAfter(parameter.key, 'attachmentNameOrig')}"/>
+                            <c:set var="removeAction" value="removeAttachment${attachmentIndex}"/>
+                            <c:set var="removed" value="${param.action eq removeAction}"/>
+                            <c:if test="${!removed}">
+	                            <c:if test="${attachmentIndex gt maxAttachmentIndex}">
+	                                <c:set var="maxAttachmentIndex" value="${attachmentIndex}"/>
+	                            </c:if>
+	                            <tr>
+	                                <td>
+	                                    ${parameter.value}
+	                                    <input type="hidden" name="attachmentNameOrig${attachmentIndex}" value="${parameter.value}"/>
+	                                    <c:set var="tempFileParamName" value="attachmentNameTemp${attachmentIndex}"/>
+	                                    <input type="hidden" name="attachmentNameTemp${attachmentIndex}" value="${param[tempFileParamName]}"/>
+	                                </td>
+	                                <ib:message key="Remove this attachment" var="linkTitle"/>
+	                                <td><button type="submit" name="action" value="removeAttachment${attachmentIndex}" title="${linkTitle}">-</button></td>
+	                            </tr>
+                            </c:if>
+                        </c:if>
+                    </c:forEach>
+                    
+                    <c:if test="${param.action eq 'attach'}">
+                        <tr><td>
+                            ${requestScope['newAttachment'].name}
+                            <c:set var="maxAttachmentIndex" value="${maxAttachmentIndex + 1}"/>
+                            <input type="hidden" name="attachmentNameOrig${maxAttachmentIndex}" value="${requestScope['newAttachment'].name}"/>
+                            <input type="hidden" name="attachmentNameTemp${maxAttachmentIndex}" value="${requestScope['newAttachment'].storeLocation}"/>   <%-- the storeLocation property of the DiskFileItem created by MultipartFilter --%>
+                            <c:remove var="newAttachment" scope="request"/>
+                        </td><td>
+                            <button type="submit" name="action" value="removeAttachment${maxAttachmentIndex}">-</button>
+                        </td></tr>
+                    </c:if>
+                    
+                    <tr>
+                        <td><input type="file" name="newAttachment" value="/tmp/test.jpg"/></td>
+                        <ib:message key="Add another attachment" var="linkTitle"/>
+                        <td><button type="submit" name="action" value="attach" title="${linkTitle}"><ib:message key="Attach"/></button></td>
+                    </tr>
+                </table></td>
+            </tr>
+            
+            <%-- The message field --%>
             <tr>
                 <td valign="top"><br/><ib:message key="Message:"/></td>
                 <td>

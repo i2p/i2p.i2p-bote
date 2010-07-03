@@ -40,6 +40,14 @@
             <ib:recipient type="${param[recipientTypeAttrName]}" address="${parameter.value}"/>
         </c:if>
     </c:forEach>
+    
+    <c:forEach var="parameter" items="${param}">
+        <c:if test="${fn:startsWith(parameter.key, 'attachmentNameOrig')}">
+            <c:set var="attachmentIndex" value="${fn:substringAfter(parameter.key, 'attachmentNameOrig')}"/>
+            <c:set var="tempFileParamName" value="attachmentNameTemp${attachmentIndex}"/>
+            <ib:attachment origFilename="${parameter.value}" tempFilename="${param[tempFileParamName]}"/>
+        </c:if>
+    </c:forEach>
 </ib:sendEmail>
 
 </div>

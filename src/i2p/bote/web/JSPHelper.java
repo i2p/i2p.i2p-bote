@@ -256,7 +256,11 @@ public class JSPHelper {
     }
     
     public static Email getEmail(String folderName, String messageId) {
-        return getMailFolder(folderName).getEmail(messageId);
+        EmailFolder folder = getMailFolder(folderName);
+        if (folder == null)
+            return null;
+        else
+            return folder.getEmail(messageId);
     }
 
     public static List<Email> getEmails(EmailFolder folder, EmailAttribute sortColumn, boolean descending) {

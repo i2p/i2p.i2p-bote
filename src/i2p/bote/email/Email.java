@@ -53,6 +53,8 @@ import java.util.TimeZone;
 import javax.mail.Address;
 import javax.mail.Header;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -436,16 +438,6 @@ public class Email extends MimeMessage {
         return isNew;
     }
 
-    public String getText() {
-        try {
-            return getContent().toString();
-        } catch (Exception e) {
-            String errorMsg = "Error reading email content.";
-            log.error(errorMsg, e);
-            return errorMsg;
-        }
-    }
-    
     /**
      * Updates headers, signs the email, and converts it into one or more email packets.
      * If an error occurs, an empty <code>Collection</code> is returned.
@@ -596,6 +588,93 @@ public class Email extends MimeMessage {
         return false;
     }
     
+    /**
+     * Returns the text part of the email. If the email contains no text {@link Part},
+     * <code>null</code> is returned. If an error occurs, an error message is returned.
+     * @return
+     */
+    public String getText() {
+        try {
+            Object content = getMainTextPart().getContent();
+            if (content != null)
+                return content.toString();
+            else
+                return null;
+        } catch (Exception e) {
+            String errorMsg = "Error reading email content.";
+            log.error(errorMsg, e);
+            return errorMsg;
+        }
+    }
+    
+    /**
+     * Returns the <code>Part</code> whose <code>content</code>
+     * should be displayed inline.
+     * @throws MessagingException 
+     * @throws IOException 
+     */
+    private Part getMainTextPart() throws MessagingException, IOException {
+        List<Part> parts = getParts();
+
+        Part mostPreferable = this;
+        for (Part part: parts) {
+            String disposition = part.getDisposition();
+            if (!Part.ATTACHMENT.equalsIgnoreCase(disposition)) {
+                // prefer plain text
+                if (part.isMimeType("text/plain"))
+                    return part;
+                else if (part.isMimeType("text/html"))
+                    mostPreferable = part;
+            }
+        }
+        return mostPreferable;
+    }
+
+    /**
+     * Returns the <code>Part</code>s of the email as a <code>List</code>.
+     * <code>Part</code>s that are only containers are not included.<br/>
+     * The <code>List</code> is sorted in ascending order of depth.<br/>
+     * If this method is invoked more than once, the ordering of the elements
+     * is the same.
+     * @throws IOException 
+     * @throws MessagingException 
+     */
+    public List<Part> getParts() throws MessagingException, IOException {
+        return getAllSubparts(this);
+    }
+    
+    /**
+     * Returns a <code>List</code> that contains a <code>Part</code>
+     * for each descendent of a given <code>Part</code>.
+     * @param part
+     * @return
+     * @throws MessagingException
+     * @throws IOException
+     * @see Part
+     */
+    private List<Part> getAllSubparts(Part part) throws MessagingException, IOException {
+        List<Part> parts = new ArrayList<Part>();
+        addSubhierarchy(parts, part, 0);
+        return parts;
+    } 
+
+    // TODO limit recursion depth
+    private void addSubhierarchy(List<Part> parts, Part part, int depth) throws MessagingException, IOException {
+        if (part.isMimeType("message/rfc822")) {   // nested message
+            Part subpart = (Part)part.getContent();
+            addSubhierarchy(parts, subpart, depth);
+        }
+        else if (part.isMimeType("multipart/*")) {
+            Multipart subparts = (Multipart)part.getContent();
+            for (int i=0; i<subparts.getCount(); i++) {
+                Part subpart = subparts.getBodyPart(i);
+                addSubhierarchy(parts, subpart, depth);
+            }
+        }
+        else
+            parts.add(part);
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("MsgId: ").append(getMessageID());

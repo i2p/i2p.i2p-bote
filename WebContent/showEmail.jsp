@@ -93,6 +93,10 @@
             <td><ib:formatPlainText text="${fn:escapeXml(email.text)}"/></td>
         </tr>
         <tr>
+            <td valign="top"><strong><ib:message key="Attachments:"/></strong></td>
+            <td><ib:showAttachments email="${email}" folder="${param.folder}"/></td>
+        </tr>
+        <tr>
             <td colspan="2">
                 <table><tr>
                     <td>
