@@ -23,6 +23,7 @@ package i2p.bote.network;
 
 import i2p.bote.packet.dht.DhtStorablePacket;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import net.i2p.data.Hash;
@@ -54,6 +55,13 @@ public interface DHT {
      * @return
      */
     int getNumPeers();
+    
+    /**
+     * Injects a list peers. Returns a list that were successfully looked up
+     */
+    List<String> injectPeers(List<String> botePeers);
+
+    Boolean needsMore();
     
     DhtPeerStats getPeerStats();
     

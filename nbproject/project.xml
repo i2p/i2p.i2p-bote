@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <name>I2P-Bote</name>
+        </general-data>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
+            <name>I2P-Bote</name>
+            <properties/>
+            <folders>
+                <source-folder>
+                    <label>I2P-Bote</label>
+                    <location>.</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>WebContent</label>
+                    <type>doc_root</type>
+                    <location>WebContent</location>
+                </source-folder>
+                <source-folder>
+                    <label>WEB-INF</label>
+                    <type>web_inf</type>
+                    <location>WebContent/WEB-INF</location>
+                </source-folder>
+                <source-folder>
+                    <label>test</label>
+                    <type>java</type>
+                    <location>test</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>src</label>
+                    <type>java</type>
+                    <location>src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+            </folders>
+            <ide-actions>
+                <action name="build">
+                    <target>all</target>
+                </action>
+                <action name="clean">
+                    <target>clean</target>
+                </action>
+                <action name="test">
+                    <target>junit</target>
+                </action>
+                <action name="rebuild">
+                    <target>clean</target>
+                    <target>all</target>
+                </action>
+            </ide-actions>
+            <export>
+                <type>folder</type>
+                <location>ant_build/classes</location>
+                <build-target>all</build-target>
+            </export>
+            <view>
+                <items>
+                    <source-folder style="tree">
+                        <label>Web Pages</label>
+                        <location>WebContent</location>
+                    </source-folder>
+                    <source-folder style="tree">
+                        <label>WEB-INF Content</label>
+                        <location>WebContent/WEB-INF</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>test</label>
+                        <location>test</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>src</label>
+                        <location>src</location>
+                    </source-folder>
+                    <source-file>
+                        <location>build.xml</location>
+                    </source-file>
+                </items>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="rebuild"/>
+                    <ide-action name="clean"/>
+                    <ide-action name="test"/>
+                </context-menu>
+            </view>
+            <subprojects/>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+            <compilation-unit>
+                <package-root>test</package-root>
+                <classpath mode="compile">../i2p/core/java/build/i2p.jar:../i2p/apps/jetty/jettylib/org.mortbay.jetty.jar:../i2p/apps/jetty/jettylib/jasper-compiler.jar:../i2p/apps/jetty/jettylib/jasper-runtime.jar:../i2p/apps/jetty/jettylib/javax.servlet.jar:../i2p/apps/jetty/jettylib/commons-logging.jar:../i2p/apps/jetty/jettylib/commons-el.jar:../i2p/apps/susidns/src/WEB-INF/lib/jstl.jar:../i2p/apps/susidns/src/WEB-INF/lib/standard.jar:WebContent/WEB-INF/lib/mailapi.jar:WebContent/WEB-INF/lib/bcprov-ecc-jdk16-145.jar:ant_build/classes:/usr/local/netbeans-6.5/platform9/modules/ext/junit-4.5.jar:../i2p/router/java/build/router.jar</classpath>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>src</package-root>
+                <classpath mode="compile">../i2p/core/java/build/i2p.jar:../i2p/apps/jetty/jettylib/org.mortbay.jetty.jar:../i2p/apps/jetty/jettylib/jasper-compiler.jar:../i2p/apps/jetty/jettylib/jasper-runtime.jar:../i2p/apps/jetty/jettylib/javax.servlet.jar:../i2p/apps/jetty/jettylib/commons-logging.jar:../i2p/apps/jetty/jettylib/commons-el.jar:../i2p/apps/susidns/src/WEB-INF/lib/jstl.jar:../i2p/apps/susidns/src/WEB-INF/lib/standard.jar:WebContent/WEB-INF/lib/mailapi.jar:WebContent/WEB-INF/lib/bcprov-ecc-jdk16-145.jar:ant_build/classes:../i2p/apps/streaming/java/build/streaming.jar:../i2p/apps/ministreaming/java/build/mstreaming.jar:../i2p/apps/routerconsole/java/build/routerconsole.jar:../i2p/apps/i2ptunnel/java/build/i2ptunnel.jar:../i2p/router/java/build/router.jar</classpath>
+                <built-to>ant_build/classes</built-to>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+        </java-data>
+        <web-data xmlns="http://www.netbeans.org/ns/freeform-project-web/1">
+            <web-module>
+                <doc-root>WebContent</doc-root>
+                <classpath/>
+                <context-path/>
+                <j2ee-spec-level>1.5</j2ee-spec-level>
+            </web-module>
+        </web-data>
+    </configuration>
+</project>

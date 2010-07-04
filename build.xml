@@ -6,7 +6,11 @@
     <property name="antlib" value="${jettylib}"/>
     <property name="jstllib" value="${i2pbase}/apps/susidns/src/WEB-INF/lib"/>
     <property name="lib" value="WebContent/WEB-INF/lib"/>
+    <property name="mstream" value="${i2pbase}/apps/ministreaming/java/build"/>
+    <property name="stream" value="${i2pbase}/apps/streaming/java/build"/>
     <property name="makeplugin" value="../i2p.scripts/plugin/makeplugin.sh"/>
+    <property name="router" value="${i2pbase}/router/java/build"/>
+    <property name="tunnel" value="${i2pbase}/apps/i2ptunnel/java/build"/>
     <path id="cp">
         <pathelement path="${java.class.path}" />
         <pathelement location="${i2plib}/i2p.jar" />
@@ -20,8 +24,11 @@
         <pathelement location="${jstllib}/standard.jar" />
         <pathelement location="${lib}/mailapi.jar" />
         <pathelement location="${lib}/bcprov-ecc-jdk16-145.jar" />
+        <pathelement location="${mstream}/mstreaming.jar" />
+        <pathelement location="${stream}/streaming.jar" />
+        <pathelement location="${router}/router.jar" />
+        <pathelement location="${tunnel}/i2ptunnel.jar" />        
     </path>
-
     <target name="help">
         <echo message="Useful targets:" />
         <echo message="  war:    Makes a .war file" />
