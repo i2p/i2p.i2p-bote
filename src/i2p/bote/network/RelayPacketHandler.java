@@ -49,12 +49,14 @@ public class RelayPacketHandler implements PacketListener {
     private Log log = new Log(RelayPacketHandler.class);
     private RelayPacketFolder relayPacketFolder;
     private DHT dht;
+    private I2PSendQueue sendQueue;
     private I2PSession i2pSession;
     private ExecutorService dhtTaskExecutor;
 
-    public RelayPacketHandler(RelayPacketFolder relayPacketFolder, DHT dht, I2PSession i2pSession) {
+    public RelayPacketHandler(RelayPacketFolder relayPacketFolder, DHT dht, I2PSendQueue sendQueue, I2PSession i2pSession) {
         this.relayPacketFolder = relayPacketFolder;
         this.dht = dht;
+        this.sendQueue = sendQueue;
         this.i2pSession = i2pSession;
         dhtTaskExecutor = Executors.newFixedThreadPool(MAX_CONCURRENT_DHT_TASKS, Util.createThreadFactory("DHTStoreTask", THREAD_STACK_SIZE));
     }
@@ -75,11 +77,15 @@ public class RelayPacketHandler implements PacketListener {
                 log.error("Invalid RelayDataPacket received from peer " + sender.toBase64(), e);
                 return;
             }
+            log.debug("Received a relay request, payload: " + dataPacket);
             if (dataPacket instanceof RelayDataPacket) {
+                log.debug("Relay packet is of type " + dataPacket.getClass().getSimpleName() + ", storing it in the relay packet folder.");
                 RelayDataPacket relayDataPacket = (RelayDataPacket)dataPacket;
                 relayPacketFolder.add(relayDataPacket);
+                confirm(sender, relayRequest);
             }
             else if (dataPacket instanceof DhtStorablePacket) {
+                log.debug("Relay packet is of type " + dataPacket.getClass().getSimpleName() + ", storing it in the DHT.");
                 final DhtStorablePacket dhtPacket = (DhtStorablePacket)dataPacket;
                 // do dht.store() in a separate thread so we don't block the notifier thread
                 dhtTaskExecutor.submit(new Runnable() {
@@ -93,9 +99,14 @@ public class RelayPacketHandler implements PacketListener {
                         }
                     }
                 });
+                confirm(sender, relayRequest);
             }
             else
                 log.error("Don't know how to handle relay packet of type " + dataPacket.getClass());
         }
+    }
+    
+    private void confirm(Destination sender, RelayRequest request) {
+        sendQueue.sendResponse(sender, request.getPacketId());
     }
 }

@@ -41,8 +41,8 @@ import net.i2p.util.Log;
 // TODO use I2PSendQueue.sendAndWait(), get rid of PacketBatch.sentSignal, etc?
 public class PacketBatch implements Iterable<PacketBatchItem> {
     private final Log log = new Log(PacketBatch.class);
-    private Map<UniqueId, PacketBatchItem> outgoingPackets;
-    private Map<Destination, DataPacket> incomingPackets;
+    private volatile Map<UniqueId, PacketBatchItem> outgoingPackets;
+    private volatile Map<Destination, DataPacket> incomingPackets;
     private CountDownLatch sentSignal;   // this field is initialized by I2PSendQueue when the batch is submitted for sending
     private CountDownLatch firstReplyReceivedSignal;
 
@@ -81,6 +81,7 @@ public class PacketBatch implements Iterable<PacketBatchItem> {
         firstReplyReceivedSignal.countDown();
     }
     
+    /** Returns an empty <code>Map</code> or <code>null</code>. */
     public Map<Destination, DataPacket> getResponses() {
         return incomingPackets;
     }

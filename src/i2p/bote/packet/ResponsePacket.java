@@ -73,6 +73,10 @@ public class ResponsePacket extends CommunicationPacket {
         return payload;
     }
     
+    public StatusCode getStatusCode() {
+        return statusCode;
+    }
+    
     @Override
     public byte[] toByteArray() {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();

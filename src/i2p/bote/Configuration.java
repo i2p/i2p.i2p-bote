@@ -62,6 +62,7 @@ public class Configuration {
     private static final String PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = "maxConcurIdCheckMail";
     private static final String PARAMETER_AUTO_MAIL_CHECK = "autoMailCheckEnabled";
     private static final String PARAMETER_MAIL_CHECK_INTERVAL = "mailCheckInterval";
+    private static final String PARAMETER_RELAY_SEND_PAUSE = "RelaySendPause";
     private static final String PARAMETER_LANGUAGE = "locale";
     private static final String PARAMETER_HIDE_LOCALE = "hideLocale";
     private static final String PARAMETER_INCLUDE_SENT_TIME = "includeSentTime";
@@ -85,6 +86,7 @@ public class Configuration {
     private static final int DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = 10;
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
+    private static final int DEFAULT_RELAY_SEND_PAUSE = 10;   // in minutes, see RelayPacketSender.java
     private static final String DEFAULT_LANGUAGE = Locale.getDefault().getLanguage();
     private static final boolean DEFAULT_HIDE_LOCALE = true;
     private static final boolean DEFAULT_INCLUDE_SENT_TIME = true;
@@ -284,6 +286,18 @@ public class Configuration {
         return getIntParameter(PARAMETER_MAIL_CHECK_INTERVAL, DEFAULT_MAIL_CHECK_INTERVAL);
     }
 
+    public void setRelaySendPause(int minutes) {
+        properties.setProperty(PARAMETER_RELAY_SEND_PAUSE, Integer.valueOf(minutes).toString());
+    }
+    
+    /**
+     * Returns the number of minutes to wait before processing the relay packet folder again.
+     * @return
+     */
+    public int getRelaySendPause() {
+        return getIntParameter(PARAMETER_RELAY_SEND_PAUSE, DEFAULT_RELAY_SEND_PAUSE);
+    }
+    
     /**
      * Sets the UI language.
      * @param languageCode A two-letter language code such as "en" or "de", or null for the system default.

@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -77,7 +78,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
      * Queues a packet behind the last undelayed packet.
      * @param packet
      * @param destination
-     * @return 
+     * @return A <code>CountdownLatch</code> that switches to zero when the packet has been sent
      */
     public CountDownLatch send(CommunicationPacket packet, Destination destination) {
         return send(packet, destination, 0);
@@ -88,7 +89,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
      * @param packet
      * @param destination
      * @param earliestSendTime
-     * @return
+     * @return A <code>CountdownLatch</code> that switches to zero when the packet has been sent
      */
     public CountDownLatch send(CommunicationPacket packet, Destination destination, long earliestSendTime) {
         ScheduledPacket scheduledPacket = new ScheduledPacket(packet, destination, earliestSendTime);
@@ -97,8 +98,17 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     }
 
     /**
+     * Sends an empty response to a {@link Destination}, with the status code "OK".
+     * @param destination
+     * @param requestPacketId The packet id of the packet we're responding to
+     */
+    public void sendResponse(Destination destination, UniqueId requestPacketId) {
+        sendResponse(null, destination, StatusCode.OK, requestPacketId);
+    }
+    
+    /**
      * Sends a Response Packet to a {@link Destination}, with the status code "OK".
-     * @param packet
+     * @param packet Can be <code>null</code> for a response that only contains a status code.
      * @param destination
      * @param requestPacketId The packet id of the packet we're responding to
      */
@@ -108,7 +118,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     
     /**
      * Sends a Response Packet to a {@link Destination}.
-     * @param packet
+     * @param packet Can be <code>null</code> for a response that only contains a status code.
      * @param destination
      * @param statusCode
      * @param requestPacketId The packet id of the packet we're responding to

@@ -21,32 +21,42 @@
 
 package i2p.bote.service;
 
+import i2p.bote.Configuration;
 import i2p.bote.folder.ExpirationListener;
 import i2p.bote.folder.PacketFolder;
 import i2p.bote.network.I2PSendQueue;
+import i2p.bote.network.PacketListener;
+import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.RelayDataPacket;
 import i2p.bote.packet.RelayRequest;
+import i2p.bote.packet.ResponsePacket;
+import i2p.bote.packet.StatusCode;
 
 import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import net.i2p.data.Destination;
 import net.i2p.util.Log;
 
 /**
  * A background thread that sends packets in the relay outbox to the I2P network.
  */
-public class RelayPacketSender extends I2PBoteThread implements ExpirationListener {
+public class RelayPacketSender extends I2PBoteThread implements ExpirationListener, PacketListener {
     private final Log log = new Log(RelayPacketSender.class);
-    private static final long PAUSE = 60 * 1000;   // the wait time, in milliseconds,  before processing the folder again
-    
+
     private I2PSendQueue sendQueue;
     private PacketFolder<RelayDataPacket> packetFolder;
+    private int pause;   // the wait time, in milliseconds, before processing the folder again
+    private RelayRequest lastSentPacket;   // last relay packet sent, or null
+    private CountDownLatch confirmationReceived;   // zero if a "OK" response has been received for lastSentPacket
     
-    public RelayPacketSender(I2PSendQueue sendQueue, PacketFolder<RelayDataPacket> packetFolder) {
+    public RelayPacketSender(I2PSendQueue sendQueue, PacketFolder<RelayDataPacket> packetFolder, Configuration configuration) {
         super("RelayPktSndr");
         setPriority(MIN_PRIORITY);
         this.sendQueue = sendQueue;
         this.packetFolder = packetFolder;
+        pause = configuration.getRelaySendPause() * 60 * 1000;
     }
     
     @Override
@@ -55,14 +65,22 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
             Iterator<RelayDataPacket> iterator = packetFolder.iterator();
             while (iterator.hasNext()) {
                 RelayDataPacket packet = iterator.next();
-                log.debug("Processing relay packet: " + packet);
                 if (System.currentTimeMillis() >= packet.getSendTime()) {
-                    log.debug("Processing packet file for destination " + packet.getNextDestination().calculateHash());
+                    log.debug("Sending relay packet to destination " + packet.getNextDestination().calculateHash());
                     try {
-                        RelayRequest request = packet.getRequest();
-                        CountDownLatch sentSignal = sendQueue.send(request, packet.getNextDestination());
+                        CountDownLatch sentSignal;
+                        // synchronize access to lastSentPacket (which can be null, so synchronize on "this")
+                        synchronized(this) {
+                            lastSentPacket = packet.getRequest();
+                            confirmationReceived = new CountDownLatch(1);
+                            sentSignal = sendQueue.send(lastSentPacket, packet.getNextDestination());
+                        }
                         sentSignal.await();
-                        iterator.remove();   // delete the packet after it has been sent
+                        
+                        awaitShutdownRequest(2, TimeUnit.MINUTES);
+                        // if confirmation has been received, delete the packet
+                        if (confirmationReceived.await(0, TimeUnit.SECONDS))
+                            iterator.remove();
                     } catch (InterruptedException e) {
                         log.error("Interrupting while waiting for packet to be sent.", e);
                     } catch (Exception e) {
@@ -72,7 +90,7 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
             }
             
             try {
-                Thread.sleep(PAUSE);
+                Thread.sleep(pause);
             } catch (InterruptedException e) {
                 log.error("RelayPacketSender received an InterruptedException.");
             }
@@ -87,6 +105,20 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
             RelayDataPacket packet = iterator.next();
             if (System.currentTimeMillis() > packet.getSendTime() + EXPIRATION_TIME_MILLISECONDS)
                 iterator.remove();
+        }
+    }
+    
+    @Override
+    public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
+        // synchronize access to lastSentPacket (which can be null, so synchronize on "this")
+        synchronized(this) {
+            if (lastSentPacket!=null && packet instanceof ResponsePacket) {
+                ResponsePacket responsePacket = (ResponsePacket)packet;
+                boolean packetIdMatches = lastSentPacket.getPacketId().equals(responsePacket.getPacketId());
+                boolean statusOk = StatusCode.OK == responsePacket.getStatusCode();
+                if (packetIdMatches && statusOk)
+                    confirmationReceived.countDown();
+            }
         }
     }
 }

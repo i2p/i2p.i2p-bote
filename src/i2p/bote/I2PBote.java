@@ -237,7 +237,7 @@ public class I2PBote {
         smtpService = new SMTPService();
         pop3Service = new POP3Service();
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
-        relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder);
+        relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, configuration);
         
         dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile());
         
@@ -249,8 +249,9 @@ public class I2PBote {
         
         dispatcher.addPacketListener(emailDhtStorageFolder);
         dispatcher.addPacketListener(indexPacketDhtStorageFolder);
-        dispatcher.addPacketListener(new RelayPacketHandler(relayPacketFolder, dht, i2pSession));
+        dispatcher.addPacketListener(new RelayPacketHandler(relayPacketFolder, dht, sendQueue, i2pSession));
         dispatcher.addPacketListener(peerManager);
+        dispatcher.addPacketListener(relayPacketSender);
         
         expirationThread = new ExpirationThread();
         expirationThread.addExpirationListener(emailDhtStorageFolder);
