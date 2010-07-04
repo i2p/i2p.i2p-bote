@@ -43,11 +43,11 @@ import com.nettgryppa.security.HashCash;
  */
 @TypeCode('Y')
 public class RelayRequest extends CommunicationPacket {
-    private static final int PADDED_SIZE = 16;   // pad to the length of an AES-256 block (not to be confused with the AES key size)
+    private static final int PADDED_SIZE = 16;   // pad to the length of an AES block (not to be confused with the AES key size)
     
     private Log log = new Log(RelayRequest.class);
     private HashCash hashCash;
-    private byte[] payload;   // a DataPacket
+    private byte[] payload;   // an encrypted DataPacket
 
     /**
      * Creates a <code>RelayRequest</code> that contains an encrypted <code>DataPacket</code>.
@@ -90,6 +90,7 @@ public class RelayRequest extends CommunicationPacket {
 
     /**
      * Returns the payload packet, i.e. the data that is being relayed.
+     * @param i2pSession An <code>I2PSession</code> that contains the private key necessary to decrypt the payload
      * @return
      * @throws DataFormatException 
      * @throws MalformedDataPacketException 

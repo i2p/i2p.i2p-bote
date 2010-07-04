@@ -31,6 +31,12 @@ import java.util.concurrent.TimeUnit;
 
 import net.i2p.util.Log;
 
+/**
+ * This is the abstract superclass for all packets that are sent between two
+ * I2P-Bote nodes.<br/>
+ * Some types of <code>CommunicationPacket</code>s contain a data packet.<br/>
+ * The packet Id is only used by some subclasses.
+ */
 public abstract class CommunicationPacket extends I2PBotePacket {
     protected static final int HEADER_LENGTH = 6 + UniqueId.LENGTH;   // length of the common packet header in the byte array representation; this is where subclasses start reading
     private static final byte[] PACKET_PREFIX = new byte[] {(byte)0x6D, (byte)0x30, (byte)0x52, (byte)0xE9};
