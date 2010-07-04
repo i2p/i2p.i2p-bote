@@ -21,12 +21,15 @@
 
 package i2p.bote.folder;
 
-import i2p.bote.UniqueId;
+import i2p.bote.Util;
 import i2p.bote.packet.RelayDataPacket;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.Random;
 
+import net.i2p.crypto.SHA256Generator;
+import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
@@ -47,25 +50,35 @@ public class RelayPacketFolder extends PacketFolder<RelayDataPacket> {
      * @param packet
      */
     public void add(RelayDataPacket packet) {
-        while (true) {
-            UniqueId id = new UniqueId();
-            long minDelay = packet.getMinimumDelay();
-            long maxDelay = packet.getMaximumDelay();
-            // generate a random time between minDelay and maxDelay milliseconds in the future
-            long sendTime;
-            if (minDelay == maxDelay)
-                sendTime = System.currentTimeMillis() + minDelay;
-            else
-                sendTime = System.currentTimeMillis() + minDelay + Math.abs(random.nextLong()) % Math.abs(maxDelay-minDelay);
-            
-            String filename = sendTime + "_" + id.toBase32() + PACKET_FILE_EXTENSION;
-            
-            File file = new File(storageDir, filename);
-            if (!file.exists()) {
-                add(packet, filename);
-                return;
-            }
+        long minDelay = packet.getMinimumDelay();
+        long maxDelay = packet.getMaximumDelay();
+        // generate a random time between minDelay and maxDelay milliseconds in the future
+        long sendTime;
+        if (minDelay == maxDelay)
+            sendTime = System.currentTimeMillis() + minDelay;
+        else
+            sendTime = System.currentTimeMillis() + minDelay + Math.abs(random.nextLong()) % Math.abs(maxDelay-minDelay);
+        
+        // make the packet's hash part of the filename and don't save if a file with the same hash exists already
+        byte[] bytes = packet.toByteArray();
+        Hash packetHash = SHA256Generator.getInstance().calculateHash(bytes);
+        String base32Hash = Util.toBase32(packetHash);
+        if (!fileExistsForHash(base32Hash)) {
+            String filename = sendTime + "_" + base32Hash + PACKET_FILE_EXTENSION;
+            add(packet, filename);
+            return;
         }
+    }
+    
+    private boolean fileExistsForHash(final String base32Hash) {
+        File[] files = storageDir.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.contains(base32Hash);
+            }
+        });
+        
+        return files.length > 0;
     }
     
     @Override
