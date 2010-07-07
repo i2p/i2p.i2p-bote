@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package i2p.bote.network.kademlia;
 
 import static i2p.bote.Util._;
@@ -38,39 +39,36 @@ import net.i2p.data.Hash;
  * @see DhtPeerStats
  */
 public class KademliaPeerStats implements DhtPeerStats {
-
     private List<String> header;
     private List<List<String>> data;
-
+    
     KademliaPeerStats(SBucket sBucket, List<KBucket> kBuckets, Hash localDestinationHash) {
         String[] headerArray = new String[] {_("Peer"), _("I2P Destination"), _("BktPfx"), _("Distance"), _("Locked?"), _("First Seen")};
         header = Arrays.asList(headerArray);
-
+        
         data = new ArrayList<List<String>>();
         addPeerData(sBucket, localDestinationHash);
-        for(KBucket kBucket: kBuckets) {
+        for (KBucket kBucket: kBuckets)
             addPeerData(kBucket, localDestinationHash);
-        }
     }
-
+    
     private void addPeerData(AbstractBucket bucket, Hash localDestinationHash) {
         Locale locale = I2PBote.getInstance().getConfiguration().getLocale();
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
-
-        for(KademliaPeer peer: bucket) {
-            if(peer.wasFound()) {
+        
+        for (KademliaPeer peer: bucket)
+            if (peer.wasFound()) {
                 List<String> row = new ArrayList<String>();
                 row.add(String.valueOf(data.size() + 1));
                 row.add(peer.calculateHash().toBase64());
                 row.add(getBucketPrefix(bucket));
                 BigInteger distance = KademliaUtil.getDistance(localDestinationHash, peer.calculateHash());
-                row.add(distance.shiftRight((Hash.HASH_LENGTH - 2) * 8).toString());   // show the 2 most significant bytes
-                row.add(String.valueOf(peer.isLocked() ? _("Yes") + "(" + (peer.getConsecTimeouts()) + ")" : _("No")));
+                row.add(distance.shiftRight((Hash.HASH_LENGTH-2)*8).toString());   // show the 2 most significant bytes
+                row.add(String.valueOf(peer.isLocked() ? _("Yes")+"("+(peer.getConsecTimeouts())+")" : _("No")));
                 String firstSeen = formatter.format(peer.getFirstSeen());
                 row.add(String.valueOf(firstSeen));
                 data.add(row);
             }
-        }
     }
 
     /**
@@ -79,19 +77,18 @@ public class KademliaPeerStats implements DhtPeerStats {
      * @return
      */
     private String getBucketPrefix(AbstractBucket bucket) {
-        if(bucket instanceof KBucket) {
+        if (bucket instanceof KBucket) {
             KBucket kBucket = (KBucket)bucket;
             String prefix = kBucket.getBucketPrefix();
-            if(prefix.isEmpty()) {
+            if (prefix.isEmpty())
                 return _("(None)");
-            } else {
+            else
                 return prefix;
-            }
-        } else {
-            return _("(S)");
         }
+        else
+            return _("(S)");
     }
-
+    
     @Override
     public List<String> getHeader() {
         return header;

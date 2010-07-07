@@ -1,23 +1,24 @@
 /**
  * Copyright (C) 2009  HungryHobo@mail.i2p
- *
+ * 
  * The GPG fingerprint for HungryHobo@mail.i2p is:
  * 6DD3 EAA2 9990 29BC 4AD2 7486 1E2C 7B61 76DC DC12
- *
+ * 
  * This file is part of I2P-Bote.
  * I2P-Bote is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * I2P-Bote is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package i2p.bote;
 
 import i2p.bote.addressbook.AddressBook;
@@ -119,11 +120,11 @@ import net.i2p.i2ptunnel.I2PTunnel;
  * This is the core class of the application. It is implemented as a singleton.
  */
 public class I2PBote {
-
     public static final int PROTOCOL_VERSION = 4;
     private static final String APP_VERSION = "0.2.4";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
     private static volatile I2PBote instance;
+    
     private Log log = new Log(I2PBote.class);
     private I2PClient i2pClient;
     private I2PSession i2pSession;
@@ -146,7 +147,7 @@ public class I2PBote {
     private AutoMailCheckTask autoMailCheckTask;
     private ExpirationThread expirationThread;
     private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
-    private DHT dht = null;
+    private DHT dht;
     private RelayPeerManager peerManager;
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
@@ -174,10 +175,9 @@ public class I2PBote {
 
     private I2PBote() {
         Thread.currentThread().setName("I2PBoteMain");
-
+                
         I2PAppContext appContext = new I2PAppContext();
         appContext.addShutdownTask(new Runnable() {
-
             @Override
             public void run() {
                 shutDown();
@@ -185,9 +185,9 @@ public class I2PBote {
         });
         i2pClient = I2PClientFactory.createClient();
         configuration = new Configuration();
-
+        
         mailCheckThreadFactory = Util.createThreadFactory("ChkMailTask", CheckEmailTask.THREAD_STACK_SIZE);
-
+    
         identities = new Identities(configuration.getIdentitiesFile());
         addressBook = new AddressBook(configuration.getAddressBookFile());
         initializeFolderAccess();
@@ -221,51 +221,62 @@ public class I2PBote {
         Properties sessionProperties = new Properties();
         sessionProperties.setProperty("inbound.nickname", "I2P-Bote");
         sessionProperties.setProperty("outbound.nickname", "I2P-Bote");
-        // I think muxed depends on gzip, let's try it.
-        //sessionProperties.setProperty("i2cp.gzip", String.valueOf(false));   // most of the data we send is encrypted and therefore uncompressible
-
+        // According to sponge, muxed depends on gzip, so leave gzip enabled
+                
         // read the local destination key from the key file if it exists
         File destinationKeyFile = configuration.getDestinationKeyFile();
         FileReader fileReader = null;
-        byte[] localDestinationKey = null;
         try {
             fileReader = new FileReader(destinationKeyFile);
             char[] destKeyBuffer = new char[(int)destinationKeyFile.length()];
             fileReader.read(destKeyBuffer);
-            localDestinationKey = Base64.decode(new String(destKeyBuffer));
-
-        } catch(IOException e) {
+            byte[] localDestinationKey = Base64.decode(new String(destKeyBuffer));
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
+            sockMgr = I2PSocketManagerFactory.createManager(inputStream, sessionProperties);
+            if (sockMgr != null)   // null indicates an error
+                i2pSession = sockMgr.getSession();
+        }
+        catch (IOException e) {
             log.debug("Destination key file doesn't exist or isn't readable." + e);
+        }
+        finally {
+            if (fileReader != null)
+                try {
+                    fileReader.close();
+                }
+                catch (IOException e) {
+                    log.debug("Error closing file: <" + destinationKeyFile.getAbsolutePath() + ">" + e);
+                }
+        }
+        
+        // if the local destination key can't be read or is invalid, create a new one
+        if (i2pSession == null) {
             log.debug("Creating new local destination key");
             try {
                 ByteArrayOutputStream arrayStream = new ByteArrayOutputStream();
                 i2pClient.createDestination(arrayStream);
-                localDestinationKey = arrayStream.toByteArray();
+                byte[] localDestinationKey = arrayStream.toByteArray();
+                
+                ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
+                sockMgr = I2PSocketManagerFactory.createManager(inputStream, sessionProperties);
+                if (sockMgr != null)   // null indicates an error
+                    i2pSession = sockMgr.getSession();
+                else
+                    log.error("Error creating I2PSocketManagerFactory");
+                    
                 saveLocalDestinationKeys(destinationKeyFile, localDestinationKey);
-            } catch(I2PException ex) {
-                log.error("Error creating local destination key or I2PSession.", ex);
-            } catch(IOException ex) {
-                log.error("Error writing local destination key to file.", ex);
-            }
-        } finally {
-            if(fileReader != null) {
-                try {
-                    fileReader.close();
-                } catch(IOException e) {
-                    log.debug("Error closing file: <" + destinationKeyFile.getAbsolutePath() + ">" + e);
-                }
+            } catch (I2PException e) {
+                log.error("Error creating local destination key.", e);
+            } catch (IOException e) {
+                log.error("Error writing local destination key to file.", e);
             }
         }
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
-        // i2pSession = i2pClient.createSession(inputStream, sessionProperties);
-        sockMgr = I2PSocketManagerFactory.createManager(inputStream, sessionProperties);
-        i2pSession = sockMgr.getSession();
+        
         Destination localDestination = i2pSession.getMyDestination();
         log.info("Local destination key = " + localDestination.toBase64());
         log.info("Local destination hash = " + localDestination.calculateHash().toBase64());
-
     }
-
+    
     /**
      * Initializes daemon threads, doesn't start them yet.
      */
@@ -273,45 +284,44 @@ public class I2PBote {
         I2PPacketDispatcher dispatcher = new I2PPacketDispatcher();
 
         // HH wants to depend on Seedless _FIRST_
-        if(checkForSeedless()) {
+        if (checkForSeedless()) {
             log.info("Seedless found.");
             GotSeedless = true;
             seedlessAnnounce = new SeedlessAnnounce(180);
             seedlessRequestPeers = new SeedlessRequestPeers(60);
             seedlessScrapePeers = new SeedlessScrapePeers(10);
             seedlessScrapeServers = new SeedlessScrapeServers(10);
-        } else {
-            log.info("Seedless NOT found.");
         }
+        else
+            log.info("Seedless NOT found.");
         i2pSession.addMuxedSessionListener(dispatcher, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_ANY);
-
+        
         smtpService = new SMTPService();
         pop3Service = new POP3Service();
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
         relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, configuration);
-
+        
         dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile(), GotSeedless);
-
+        
         dht.setStorageHandler(EncryptedEmailPacket.class, emailDhtStorageFolder);
         dht.setStorageHandler(IndexPacket.class, indexPacketDhtStorageFolder);
 //TODO        dht.setStorageHandler(AddressPacket.class, );
-
+        
         peerManager = new RelayPeerManager(sendQueue, getLocalDestination(), configuration.getRelayPeerFile());
-
+        
         dispatcher.addPacketListener(emailDhtStorageFolder);
         dispatcher.addPacketListener(indexPacketDhtStorageFolder);
         dispatcher.addPacketListener(new RelayPacketHandler(relayPacketFolder, dht, sendQueue, i2pSession));
         dispatcher.addPacketListener(peerManager);
         dispatcher.addPacketListener(relayPacketSender);
-
+        
         expirationThread = new ExpirationThread();
         expirationThread.addExpirationListener(emailDhtStorageFolder);
         expirationThread.addExpirationListener(indexPacketDhtStorageFolder);
         expirationThread.addExpirationListener(relayPacketSender);
-
+        
         outboxProcessor = new OutboxProcessor(dht, outbox, peerManager, relayPacketFolder, configuration);
         outboxProcessor.addOutboxListener(new OutboxListener() {
-
             /** Moves sent emails to the "sent" folder */
             @Override
             public void emailSent(Email email) {
@@ -319,14 +329,14 @@ public class I2PBote {
                     outbox.setNew(email, false);   // this prevents OutboxProcessor from sending the email again if it can't be moved for some reason
                     log.debug("Moving email [" + email + "] to the \"sent\" folder.");
                     outbox.move(email, sentFolder);
-                } catch(Exception e) {
+                }
+                catch (Exception e) {
                     log.error("Cannot move email from outbox to sent folder: " + email, e);
                 }
             }
         });
-
+        
         autoMailCheckTask = new AutoMailCheckTask(configuration.getMailCheckInterval());
-
     }
 
     /**
@@ -337,66 +347,62 @@ public class I2PBote {
      * @throws IOException
      */
     private void saveLocalDestinationKeys(File keyFile, byte[] localDestinationArray) throws DataFormatException, IOException {
-        if(keyFile.exists()) {
+        if (keyFile.exists()) {
             File oldKeyFile = new File(keyFile.getPath() + "_backup");
-            if(!keyFile.renameTo(oldKeyFile)) {
+            if (!keyFile.renameTo(oldKeyFile))
                 log.error("Cannot rename destination key file <" + keyFile.getAbsolutePath() + "> to <" + oldKeyFile.getAbsolutePath() + ">");
-            }
-        } else if(!keyFile.createNewFile()) {
-            log.error("Cannot create destination key file: <" + keyFile.getAbsolutePath() + ">");
         }
-
+        else
+            if (!keyFile.createNewFile())
+                log.error("Cannot create destination key file: <" + keyFile.getAbsolutePath() + ">");
+        
         FileWriter fileWriter = new FileWriter(keyFile);
         fileWriter.write(Base64.encode(localDestinationArray));
         fileWriter.close();
     }
-
+    
     public static void startUp() {
         getInstance();
     }
-
+    
     public static void shutDown() {
-        if(instance != null) {
+        if (instance != null)
             instance.stopAllServices();
-        }
     }
 
     public static I2PBote getInstance() {
-        if(instance == null) {
+        if (instance == null)
             instance = new I2PBote();
-        }
         return instance;
     }
-
+    
     public Configuration getConfiguration() {
         return configuration;
     }
-
+    
     public static String getAppVersion() {
         return APP_VERSION;
     }
-
+    
     public Locale[] getAllLocales() {
         return Locales.ALL_LOCALES;
     }
-
+    
     public Identities getIdentities() {
         return identities;
     }
-
+    
     public AddressBook getAddressBook() {
         return addressBook;
     }
-
+    
     public Destination getLocalDestination() {
-        try {
+        if (i2pSession == null)
+            return null;
+        else
             return i2pSession.getMyDestination();
-        } catch (NullPointerException npe) {
-            // nop
-        }
-        return null;
     }
-
+    
     public void sendEmail(Email email) throws Exception {
         email.checkAddresses();
         outbox.add(email);
@@ -404,39 +410,37 @@ public class I2PBote {
     }
 
     public synchronized void checkForMail() {
-        if(!isCheckingForMail()) {
-            if(identities.size() <= 0) {
+        if (!isCheckingForMail()) {
+            if (identities.size() <= 0)
                 log.info("Not checking for mail because no identities are defined.");
-            } else {
+            else
                 log.info("Checking mail for " + identities.size() + " Email Identities...");
-            }
-
+            
             lastMailCheckTime = System.currentTimeMillis();
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
-            for(EmailIdentity identity: identities) {
+            for (EmailIdentity identity: identities) {
                 Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder);
                 Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
                 pendingMailCheckTasks.add(task);
             }
             mailCheckExecutor.shutdown();   // finish all tasks, then shut down
-        } else {
-            log.info("Not checking for mail because the last mail check hasn't finished.");
         }
+        else
+            log.info("Not checking for mail because the last mail check hasn't finished.");
     }
 
     public synchronized long getLastMailCheckTime() {
         return lastMailCheckTime;
     }
-
+    
     public synchronized boolean isCheckingForMail() {
-        if(mailCheckExecutor == null) {
+        if (mailCheckExecutor == null)
             return false;
-        }
-
+        
         return !mailCheckExecutor.isTerminated();
     }
-
+    
     /**
      * Returns <code>true</code> if the last call to {@link checkForMail} has completed
      * and added new mail to the inbox.
@@ -445,68 +449,64 @@ public class I2PBote {
      * @return
      */
     public synchronized boolean newMailReceived() {
-        if(pendingMailCheckTasks == null) {
+        if (pendingMailCheckTasks == null)
             return false;
-        }
-        if(isCheckingForMail()) {
+        if (isCheckingForMail())
             return false;
-        }
-
+        
         try {
-            for(Future<Boolean> result: pendingMailCheckTasks) {
-                if(result.get(1, TimeUnit.MILLISECONDS)) {
+            for (Future<Boolean> result: pendingMailCheckTasks)
+                if (result.get(1, TimeUnit.MILLISECONDS)) {
                     pendingMailCheckTasks = null;
                     return true;
                 }
-            }
-        } catch(Exception e) {
+        }
+        catch (Exception e) {
             log.error("Error while checking whether new mail has arrived.", e);
         }
-
+        
         pendingMailCheckTasks = null;
         return false;
     }
-
+    
     public EmailFolder getInbox() {
         return inbox;
     }
-
+    
     public Outbox getOutbox() {
         return outbox;
     }
-
+    
     public EmailFolder getSentFolder() {
         return sentFolder;
     }
-
+    
     public EmailFolder getTrashFolder() {
         return trashFolder;
     }
-
+    
     public boolean moveToTrash(EmailFolder sourceFolder, String messageId) {
         return sourceFolder.move(messageId, trashFolder);
     }
-
+    
     public int getNumDhtPeers() {
-        if(dht == null) {
+        if (dht == null)
             return 0;
-        } else {
+        else
             return dht.getNumPeers();
-        }
     }
-
+    
     public DhtPeerStats getDhtStats() {
-        if(dht == null) {
+        if (dht == null)
             return null;
-        } else {
+        else
             return dht.getPeerStats();
-        }
     }
-
+    
     public Set<RelayPeer> getRelayPeers() {
         return peerManager.getAllPeers();
     }
-
+    
     public Collection<BannedPeer> getBannedPeers() {
         return BanList.getInstance().getAll();
     }
@@ -543,136 +543,77 @@ public class I2PBote {
     // Also would be nice to control things in a ThreadGroup, but, meh.
     // --Sponge
     private void stopAllServices() {
-        if(connectTask != null) {
+        if (connectTask != null)
             connectTask.requestShutdown();
-        }
-        if(dht != null) {
-            dht.requestShutdown();
-        }
-        if(outboxProcessor != null) {
-            outboxProcessor.requestShutdown();
-        }
-        if(relayPacketSender != null) {
-            relayPacketSender.requestShutdown();
-        }
-        if(smtpService != null) {
-            smtpService.requestShutdown();
-        }
-        if(pop3Service != null) {
-            pop3Service.requestShutdown();
-        }
-        if(sendQueue != null) {
-            sendQueue.requestShutdown();
-        }
-        if(mailCheckExecutor != null) {
-            mailCheckExecutor.shutdown();
-        }
-        if(pendingMailCheckTasks != null) {
-            for(Future<Boolean> mailCheckTask: pendingMailCheckTasks) {
+        if (dht != null)               dht.requestShutdown();
+        if (outboxProcessor != null)   outboxProcessor.requestShutdown();
+        if (relayPacketSender != null) relayPacketSender.requestShutdown();
+        if (smtpService != null)       smtpService.requestShutdown();
+        if (pop3Service != null)       pop3Service.requestShutdown();
+        if (sendQueue != null)         sendQueue.requestShutdown();
+        if (mailCheckExecutor != null) mailCheckExecutor.shutdown();
+        if (pendingMailCheckTasks != null)
+            for (Future<Boolean> mailCheckTask: pendingMailCheckTasks)
                 mailCheckTask.cancel(false);
-            }
-        }
-        if(autoMailCheckTask != null) {
-            autoMailCheckTask.requestShutdown();
-        }
-        if(expirationThread != null) {
-            expirationThread.requestShutdown();
-        }
-        if(peerManager != null) {
-            peerManager.requestShutdown();
-        }
-
-
-        if(seedlessAnnounce != null) {
-            seedlessAnnounce.requestShutdown();
-        }
-        if(seedlessRequestPeers != null) {
-            seedlessRequestPeers.requestShutdown();
-        }
-        if(seedlessScrapePeers != null) {
-            seedlessScrapePeers.requestShutdown();
-        }
-        if(seedlessScrapeServers != null) {
-            seedlessScrapeServers.requestShutdown();
-        }
-
+        if (autoMailCheckTask != null) autoMailCheckTask.requestShutdown();
+        if (expirationThread != null)  expirationThread.requestShutdown();
+        if (peerManager != null) peerManager.requestShutdown();
+        
+        if (seedlessAnnounce != null)      seedlessAnnounce.requestShutdown();
+        if (seedlessRequestPeers != null)  seedlessRequestPeers.requestShutdown();
+        if (seedlessScrapePeers != null)   seedlessScrapePeers.requestShutdown();
+        if (seedlessScrapeServers != null) seedlessScrapeServers.requestShutdown();
+        
         long deadline = System.currentTimeMillis() + 1000 * 60;   // the time at which any background threads that are still running are killed
-        if(dht != null) {
+        if (dht != null)
             try {
                 dht.awaitShutdown(deadline - System.currentTimeMillis());
-            } catch(InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 log.error("Interrupted while waiting for DHT shutdown.", e);
             }
-        }
 
-        if(seedlessAnnounce != null) {
-            join(seedlessAnnounce, deadline);
-        }
-        if(seedlessRequestPeers != null) {
-            join(seedlessRequestPeers, deadline);
-        }
-        if(seedlessScrapePeers != null) {
-            join(seedlessScrapePeers, deadline);
-        }
-        if(seedlessScrapeServers != null) {
-            join(seedlessScrapeServers, deadline);
-        }
+        join(seedlessAnnounce, deadline);
+        join(seedlessRequestPeers, deadline);
+        join(seedlessScrapePeers, deadline);
+        join(seedlessScrapeServers, deadline);
 
-        if(outboxProcessor != null) {
-            join(outboxProcessor, deadline);
-        }
-        if(relayPacketSender != null) {
-            join(relayPacketSender, deadline);
-        }
-        if(smtpService != null) {
-            join(smtpService, deadline);
-        }
-        if(pop3Service != null) {
-            join(pop3Service, deadline);
-        }
-        if(sendQueue != null) {
-            join(sendQueue, deadline);
-        }
-        if(mailCheckExecutor != null) {
-            mailCheckExecutor.shutdownNow();
-        }
-        if(autoMailCheckTask != null) {
-            join(autoMailCheckTask, deadline);
-        }
+        join(outboxProcessor, deadline);
+        join(relayPacketSender, deadline);
+        join(smtpService, deadline);
+        join(pop3Service, deadline);
+        join(sendQueue, deadline);
+        if (mailCheckExecutor != null) mailCheckExecutor.shutdownNow();
+        join(autoMailCheckTask, deadline);
         long currentTime = System.currentTimeMillis();
-        if(mailCheckExecutor != null && currentTime < deadline) {
+        if (mailCheckExecutor!=null && currentTime<deadline)
             try {
-                mailCheckExecutor.awaitTermination(deadline - currentTime, TimeUnit.MILLISECONDS);
-            } catch(InterruptedException e) {
+                mailCheckExecutor.awaitTermination(deadline-currentTime, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
                 log.error("Interrupted while waiting for mailCheckExecutor to exit", e);
             }
-        }
         try {
-            if(i2pSession != null) {
+            if (i2pSession != null)
                 i2pSession.destroySession();
-            }
-        } catch(I2PSessionException e) {
+        } catch (I2PSessionException e) {
             log.error("Can't destroy I2P session.", e);
         }
-        if(sockMgr != null) {
+        if (sockMgr != null)
             sockMgr.destroySocketManager();
-        }
     }
 
     private void join(Thread thread, long until) {
-        if(thread == null) {
+        if (thread == null)
             return;
-        }
         long timeout = System.currentTimeMillis() - until;
-        if(timeout > 0) {
+        if (timeout > 0)
             try {
                 thread.join(timeout);
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 log.error("Interrupted while waiting for thread <" + thread.getName() + "> to exit", e);
             }
-        }
     }
-
+    
     /**
      * Connects to the network, skipping the connect delay.
      * If the delay time has already passed, calling this method has no effect.
@@ -682,26 +623,24 @@ public class I2PBote {
     }
 
     public NetworkStatus getNetworkStatus() {
-        if(!connectTask.isDone()) {
+        if (!connectTask.isDone())
             return connectTask.getNetworkStatus();
-        } else if(dht != null) {
-            return dht.isReady() ? NetworkStatus.CONNECTED : NetworkStatus.CONNECTING;
-        } else {
+        else if (dht != null)
+            return dht.isReady()?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
+        else
             return NetworkStatus.ERROR;
-        }
     }
-
+    
     /**
      * Waits <code>STARTUP_DELAY</code> milliseconds or until <code>startSignal</code>
      * is triggered from outside this class, then sets up an I2P session and everything
      * that depends on it.
      */
     private class ConnectTask extends I2PBoteThread {
-
         volatile NetworkStatus status = NetworkStatus.NOT_STARTED;
         CountDownLatch startSignal = new CountDownLatch(1);
         CountDownLatch doneSignal = new CountDownLatch(1);
-
+        
         protected ConnectTask() {
             super("ConnectTask");
             setDaemon(true);
@@ -710,21 +649,21 @@ public class I2PBote {
         public NetworkStatus getNetworkStatus() {
             return status;
         }
-
+        
         public boolean isDone() {
             try {
                 return doneSignal.await(0, TimeUnit.SECONDS);
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 return false;
             }
         }
-
+        
         @Override
         public void requestShutdown() {
             super.requestShutdown();
             startSignal.countDown();
         }
-
+        
         @Override
         public void run() {
             status = NetworkStatus.DELAY;
@@ -735,7 +674,7 @@ public class I2PBote {
                 initializeServices();
                 startAllServices();
                 doneSignal.countDown();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 status = NetworkStatus.ERROR;
                 log.error("Can't initialize the application.", e);
             }

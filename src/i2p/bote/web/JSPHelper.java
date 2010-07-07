@@ -58,7 +58,6 @@ import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 import net.i2p.data.Destination;
 
-
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
  */
@@ -82,9 +81,8 @@ public class JSPHelper {
     
     public String getLocalDestination() {
         Destination dest = I2PBote.getInstance().getLocalDestination();
-        if(dest != null) {
+        if (dest != null)
             return I2PBote.getInstance().getLocalDestination().calculateHash().toBase64();
-        }
         return "Not set.";
     }
     
