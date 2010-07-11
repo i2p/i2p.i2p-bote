@@ -56,19 +56,18 @@ public class KademliaPeerStats implements DhtPeerStats {
         Locale locale = I2PBote.getInstance().getConfiguration().getLocale();
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
         
-        for (KademliaPeer peer: bucket)
-            if (peer.wasFound()) {
-                List<String> row = new ArrayList<String>();
-                row.add(String.valueOf(data.size() + 1));
-                row.add(peer.calculateHash().toBase64());
-                row.add(getBucketPrefix(bucket));
-                BigInteger distance = KademliaUtil.getDistance(localDestinationHash, peer.calculateHash());
-                row.add(distance.shiftRight((Hash.HASH_LENGTH-2)*8).toString());   // show the 2 most significant bytes
-                row.add(String.valueOf(peer.isLocked() ? _("Yes")+"("+(peer.getConsecTimeouts())+")" : _("No")));
-                String firstSeen = formatter.format(peer.getFirstSeen());
-                row.add(String.valueOf(firstSeen));
-                data.add(row);
-            }
+        for (KademliaPeer peer: bucket) {
+            List<String> row = new ArrayList<String>();
+            row.add(String.valueOf(data.size() + 1));
+            row.add(peer.calculateHash().toBase64());
+            row.add(getBucketPrefix(bucket));
+            BigInteger distance = KademliaUtil.getDistance(localDestinationHash, peer.calculateHash());
+            row.add(distance.shiftRight((Hash.HASH_LENGTH-2)*8).toString());   // show the 2 most significant bytes
+            row.add(String.valueOf(peer.isLocked() ? _("Yes")+"("+(peer.getConsecTimeouts())+")" : _("No")));
+            String firstSeen = formatter.format(peer.getFirstSeen());
+            row.add(String.valueOf(firstSeen));
+            data.add(row);
+        }
     }
 
     /**

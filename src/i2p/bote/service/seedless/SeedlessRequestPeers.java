@@ -22,9 +22,13 @@
  * ...for any additional details and license questions.
  */
 
-package i2p.bote.service;
+package i2p.bote.service.seedless;
 
-import i2p.bote.I2PBote;
+import i2p.bote.service.I2PBoteThread;
+import i2p.bote.service.ProxyRequest;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.util.Log;
@@ -35,13 +39,17 @@ import net.i2p.util.Log;
  */
 public class SeedlessRequestPeers extends I2PBoteThread {
     private Log log = new Log(SeedlessRequestPeers.class);
+    private SeedlessParameters seedlessParameters;
     private long interval;   // in milliseconds
+    private long lastSeedlessRequestPeers = 0;
+    
     /**
      *
      * @param interval In minutes
      */
-    public SeedlessRequestPeers(int interval) {
-        super("SeedlessRequestPeers");
+    public SeedlessRequestPeers(SeedlessParameters seedlessParameters, int interval) {
+        super("SeedlsReqPrs");
+        this.seedlessParameters = seedlessParameters;
         this.interval = TimeUnit.MINUTES.toMillis(interval);
     }
 
@@ -50,11 +58,10 @@ public class SeedlessRequestPeers extends I2PBoteThread {
         long lastTime;
         long timeSinceLastCheck;
         while (!shutdownRequested()) {
-            I2PBote boteInstance = I2PBote.getInstance();
-            lastTime = boteInstance.getlastSeedlessRequestPeers();
+            lastTime = getlastSeedlessRequestPeers();
             timeSinceLastCheck = System.currentTimeMillis() - lastTime;
             if (lastTime == 0 || timeSinceLastCheck > this.interval) {
-                boteInstance.doSeedlessRequestPeers();
+                doSeedlessRequestPeers();
             } else {
                 awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
             }
@@ -65,4 +72,25 @@ public class SeedlessRequestPeers extends I2PBoteThread {
         return interval;
     }
 
+    public synchronized long getlastSeedlessRequestPeers() {
+        return lastSeedlessRequestPeers;
+    }
+
+    public synchronized void doSeedlessRequestPeers() {
+        HttpURLConnection h;
+//        int i;
+        log.debug("doSeedlessRequestPeers");
+        try {
+            ProxyRequest proxy = new ProxyRequest();
+            h = proxy.doURLRequest(seedlessParameters.getSeedlessUrl(), seedlessParameters.getPeersRequestHeader(), null, -1, "admin", seedlessParameters.getConsolePassword());
+            if(h != null) {
+//                i = h.getResponseCode();
+                h.getResponseCode();
+            }
+
+        } catch(IOException ex) {
+        }
+        log.debug("doSeedlessRequestPeers Done.");
+        lastSeedlessRequestPeers = System.currentTimeMillis();
+    }
 }

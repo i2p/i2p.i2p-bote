@@ -24,6 +24,8 @@ package i2p.bote.network.kademlia;
 import static org.junit.Assert.fail;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
+import i2p.bote.service.seedless.SeedlessParameters;
+import i2p.bote.service.seedless.SeedlessScrapePeers;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -77,7 +79,9 @@ public class KademliaDHTTest {
             else
                 firstNode = destination;
             
-            nodes.add(new KademliaDHT(sendQueue, packetDispatcher, peerFile));
+            SeedlessScrapePeers seedlessScrapePeers = new SeedlessScrapePeers(SeedlessParameters.getInstance(), 10);
+            
+            nodes.add(new KademliaDHT(sendQueue, packetDispatcher, peerFile, seedlessScrapePeers));
         }
     }
 

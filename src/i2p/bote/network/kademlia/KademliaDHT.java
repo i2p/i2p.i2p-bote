@@ -45,6 +45,7 @@ import i2p.bote.packet.dht.FindClosePeersPacket;
 import i2p.bote.packet.dht.RetrieveRequest;
 import i2p.bote.packet.dht.StoreRequest;
 import i2p.bote.service.I2PBoteThread;
+import i2p.bote.service.seedless.SeedlessScrapePeers;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -73,8 +74,6 @@ import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 
 import com.nettgryppa.security.HashCash;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * The main class of the Kademlia implementation. All the high-level Kademlia logic
@@ -97,6 +96,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private I2PSendQueue sendQueue;
     private I2PPacketDispatcher i2pReceiver;
     private File peerFile;
+    private SeedlessScrapePeers seedlessScrapePeers;
     private ReplicateThread replicateThread;   // is notified of <code>store</code> calls
     private CountDownLatch readySignal;   // switches to 0 when bootstrapping is done
     private Destination localDestination;
@@ -104,21 +104,21 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private Set<KademliaPeer> initialPeers;
     private BucketManager bucketManager;
     private Map<Class<? extends DhtStorablePacket>, DhtStorageHandler> storageHandlers;
-    private Boolean useSeedless = false;
 
     /**
      * 
      * @param sendQueue
      * @param i2pReceiver
      * @param peerFile
+     * @param seedlessScrapePeers
      */
-    public KademliaDHT(I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile, Boolean useSeedless) {
+    public KademliaDHT(I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile, SeedlessScrapePeers seedlessScrapePeers) {
         super("Kademlia");
         
         this.sendQueue = sendQueue;
         this.i2pReceiver = i2pReceiver;
         this.peerFile = peerFile;
-        this.useSeedless = useSeedless;
+        this.seedlessScrapePeers = seedlessScrapePeers;
         
         readySignal = new CountDownLatch(1);
         localDestination = sendQueue.getLocalDestination();
@@ -215,11 +215,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     @Override
     public DhtPeerStats getPeerStats() {
         return bucketManager.getPeerStats();
-    }
-
-    @Override
-    public Boolean needsMore() {
-        return bucketManager.getAllUnlockedPeers(true).isEmpty();
     }
     
     private DhtResults find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {
@@ -358,88 +353,57 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * Connects to the Kademlia network; blocks until done.
      */
     private void bootstrap() {
-        new BootstrapTask(i2pReceiver, useSeedless).run();
+        new BootstrapTask(i2pReceiver).run();
     }
     
-    /**
-     * Inject a list of peers.
-     * This is really going to suck on a huge list because we have to lookup
-     * every single b32 from floodfills. It's tobad we just can't lookup as needed.
-     * HH-- FIX ME PLEASE!!!
-     */
-    public List<String> injectPeers(List<String> botePeers) {
-        List<String> b32peers = botePeers;
-        List<String> okpeers = new ArrayList<String>();
-        Iterator it = b32peers.iterator();
-        while(it.hasNext()) {
-            String b32 = (String)it.next();
-            KademliaPeer peer = new KademliaPeer(b32, false);
-            try {
-                peer.lookup();
-                bucketManager.addOrUpdate(peer);
-                okpeers.add(b32);
-            } catch(DataFormatException ex) {
-                // nop
-                }
-        }
-        return okpeers;
-    }
-
     private class BootstrapTask implements Runnable, PacketListener {
         private Log log = new Log(BootstrapTask.class);
         I2PPacketDispatcher i2pReceiver;
-        Boolean useSeedless;
         
-        public BootstrapTask(I2PPacketDispatcher i2pReceiver, Boolean useSeedless) {
+        public BootstrapTask(I2PPacketDispatcher i2pReceiver) {
             this.i2pReceiver = i2pReceiver;
-            this.useSeedless = useSeedless;
         }
         
         @Override
         public void run() {
             log.info("Bootstrap start");
-            if (!useSeedless) {
-                i2pReceiver.addPacketListener(this);
-            outerLoop:
-                while (!shutdownRequested()) {
-                    for (KademliaPeer bootstrapNode: initialPeers) {
-                        bootstrapNode.setFirstSeen(System.currentTimeMillis());   // Set the "first seen" time to the current time before every bootstrap attempt
-                        bootstrapNode.responseReceived();   // unlock the peer so ClosestNodesLookupTask will give it a chance
-                        bucketManager.addOrUpdate(bootstrapNode);
-                        log.info("Trying " + bootstrapNode.calculateHash().toBase64() + " bootstrapping.");
-                        Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
-
-                        if (closestNodes.isEmpty()) {
-                            log.info("No response from bootstrap node " + bootstrapNode.calculateHash());
-                            bucketManager.remove(bootstrapNode);
-                        }
-                        else {
-                            log.info("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash().toBase64());
-                            refreshAll();
-                            log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
-                            for (Destination peer: bucketManager.getAllPeers())
-                                log.debug("  Peer: " + peer.calculateHash().toBase64());
-                            break outerLoop;
-                        }
-                    }
-
-                    log.warn("Can't bootstrap off any known peer, will retry shortly.");
-                    awaitShutdownRequest(1, TimeUnit.MINUTES);
+            i2pReceiver.addPacketListener(this);
+        outerLoop:
+            while (!shutdownRequested()) {
+                // add any known seedless peers
+                if (seedlessScrapePeers != null) {
+                    List<Destination> seedlessPeers = seedlessScrapePeers.getPeers();
+                    for (Destination destination: seedlessPeers)
+                        initialPeers.add(new KademliaPeer(destination));
                 }
-                i2pReceiver.removePacketListener(this);
-                readySignal.countDown();
-            }
-            else {
-                while (bucketManager.getAllUnlockedPeers(true).isEmpty() && !shutdownRequested()) {
-                    try {
-                        Thread.sleep(1000);
+                
+                for (KademliaPeer bootstrapNode: initialPeers) {
+                    bootstrapNode.setFirstSeen(System.currentTimeMillis());   // Set the "first seen" time to the current time before every bootstrap attempt
+                    bootstrapNode.responseReceived();   // unlock the peer so ClosestNodesLookupTask will give it a chance
+                    bucketManager.addOrUpdate(bootstrapNode);
+                    log.info("Trying " + bootstrapNode.calculateHash().toBase64() + " bootstrapping.");
+                    Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
+                    
+                    if (closestNodes.isEmpty()) {
+                        log.info("No response from bootstrap node " + bootstrapNode.calculateHash());
+                        bucketManager.remove(bootstrapNode);
                     }
-                    catch(InterruptedException ex) {
-                        break;
+                    else {
+                        log.info("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash().toBase64());
+                        refreshAll();
+                        log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
+                        for (Destination peer: bucketManager.getAllPeers())
+                            log.debug("  Peer: " + peer.calculateHash().toBase64());
+                        break outerLoop;
                     }
                 }
-                readySignal.countDown();
+                
+                log.warn("Can't bootstrap off any known peer, will retry shortly.");
+                awaitShutdownRequest(1, TimeUnit.MINUTES);
             }
+            i2pReceiver.removePacketListener(this);
+            readySignal.countDown();
+                
             log.info(getClass().getSimpleName() + " exiting.");
         }
 
@@ -552,11 +516,10 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             writer.newLine();
             writer.write("# Do not edit while I2P-Bote is running as it will be overwritten.");
             writer.newLine();
-            for(KademliaPeer peer: peers)
-                if (peer.wasFound()) {
-                    writer.write(peer.toBase64());
-                    writer.newLine();
-                }
+            for (KademliaPeer peer: peers) {
+                writer.write(peer.toBase64());
+                writer.newLine();
+            }
         }
         catch (IOException e) {
             log.error("Can't write peers to file <" + file.getAbsolutePath() + ">", e);

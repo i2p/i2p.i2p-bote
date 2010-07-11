@@ -101,7 +101,7 @@ public class ClosestNodesLookupTask implements Runnable {
         
         try {
             // get a list of all unlocked peers (we don't how many we really need because some may not respond)
-            notQueriedYet.addAll(bucketManager.getAllUnlockedPeers(true));
+            notQueriedYet.addAll(bucketManager.getAllUnlockedPeers());
             logStatus();
             
             startTime = getTime();

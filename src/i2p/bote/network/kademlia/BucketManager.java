@@ -33,7 +33,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -248,7 +247,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      */
     public List<Destination> getClosestPeers(Hash key, int count) {
         // TODO don't put all peers in one huge list, only use two k-buckets and the s-bucket at a time
-        List<Destination> peers = getAllUnlockedPeers(true);
+        List<Destination> peers = getAllUnlockedPeers();
         Collections.sort(peers, new PeerDistanceComparator(key));
         if (peers.size() < count)
             return peers;
@@ -260,28 +259,16 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      * Returns all peers that are not locked.
      * @return
      */
-    public synchronized List<Destination> getAllUnlockedPeers(Boolean lookup) {
+    public synchronized List<Destination> getAllUnlockedPeers() {
         List<Destination> allPeers = new ArrayList<Destination>();
         
         for (KBucket bucket: kBuckets)
             for (KademliaPeer peer: bucket.getPeers())
                 if (!peer.isLocked())
-                    try {
-                        if (!peer.wasFound() && lookup)
-                            peer.lookup();
-                        allPeers.add(peer);
-                    } catch(DataFormatException e) {
-                        log.error("Can't look up peer: " + peer);
-                    }
+                    allPeers.add(peer);
         for (KademliaPeer peer: sBucket.getPeers())
             if (!peer.isLocked())
-                try {
-                    if (!peer.wasFound() && lookup)
-                        peer.lookup();
-                    allPeers.add(peer);
-                } catch (DataFormatException e) {
-                    log.error("Can't look up peer: " + peer);
-                }
+                allPeers.add(peer);
         
         return allPeers;
     }
@@ -291,7 +278,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
      * @return
      */
     int getUnlockedPeerCount() {
-        return getAllUnlockedPeers(false).size();
+        return getAllUnlockedPeers().size();
     }
 
     public synchronized List<KademliaPeer> getAllPeers() {

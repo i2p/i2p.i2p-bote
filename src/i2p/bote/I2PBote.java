@@ -52,34 +52,24 @@ import i2p.bote.service.I2PBoteThread;
 import i2p.bote.service.OutboxListener;
 import i2p.bote.service.OutboxProcessor;
 import i2p.bote.service.POP3Service;
-import i2p.bote.service.ProxyRequest;
 import i2p.bote.service.RelayPacketSender;
 import i2p.bote.service.RelayPeerManager;
 import i2p.bote.service.SMTPService;
+import i2p.bote.service.seedless.SeedlessAnnounce;
+import i2p.bote.service.seedless.SeedlessParameters;
+import i2p.bote.service.seedless.SeedlessRequestPeers;
+import i2p.bote.service.seedless.SeedlessScrapePeers;
+import i2p.bote.service.seedless.SeedlessScrapeServers;
 
-import i2p.bote.service.SeedlessAnnounce;
-import i2p.bote.service.SeedlessRequestPeers;
-import i2p.bote.service.SeedlessScrapePeers;
-import i2p.bote.service.SeedlessScrapeServers;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.InterruptedIOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.ConnectException;
-import java.net.NoRouteToHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
@@ -97,30 +87,19 @@ import net.i2p.client.I2PClient;
 import net.i2p.client.I2PClientFactory;
 import net.i2p.client.I2PSession;
 import net.i2p.client.I2PSessionException;
-import net.i2p.client.streaming.I2PSocket;
+import net.i2p.client.streaming.I2PSocketManager;
+import net.i2p.client.streaming.I2PSocketManagerFactory;
 import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 
-import net.i2p.client.streaming.I2PSocketManager;
-import net.i2p.client.streaming.I2PSocketManagerFactory;
-import net.i2p.data.Hash;
-import net.i2p.router.RouterContext;
-
-import net.i2p.router.startup.ClientAppConfig;
-import java.net.HttpURLConnection;
-import java.util.Iterator;
-import java.util.Random;
-import net.i2p.i2ptunnel.I2PTunnel;
-
-
-// Because it's not public, grrr so much for OOP!
 /**
  * This is the core class of the application. It is implemented as a singleton.
  */
 public class I2PBote {
-    public static final int PROTOCOL_VERSION = 4;
+//    change version to 4 before committing to mtn
+    public static final int PROTOCOL_VERSION = 3;
     private static final String APP_VERSION = "0.2.4";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
     private static volatile I2PBote instance;
@@ -128,6 +107,7 @@ public class I2PBote {
     private Log log = new Log(I2PBote.class);
     private I2PClient i2pClient;
     private I2PSession i2pSession;
+    private I2PSocketManager socketManager;
     private Configuration configuration;
     private Identities identities;
     private AddressBook addressBook;
@@ -148,30 +128,16 @@ public class I2PBote {
     private ExpirationThread expirationThread;
     private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
     private DHT dht;
+    private SeedlessAnnounce seedlessAnnounce;
+    private SeedlessRequestPeers seedlessRequestPeers;
+    private SeedlessScrapePeers seedlessScrapePeers;
+    private SeedlessScrapeServers seedlessScrapeServers;
     private RelayPeerManager peerManager;
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
     private Collection<Future<Boolean>> pendingMailCheckTasks;
     private long lastMailCheckTime;
     private ConnectTask connectTask;
-    private I2PSocketManager sockMgr;
-    private long lastSeedlessAnnounce = 0;
-    private long lastSeedlessRequestPeers = 0;
-    private long lastSeedlessScrapePeers = 0;
-    private long lastSeedlessScrapeServers = 0;
-    private SeedlessAnnounce seedlessAnnounce = null;
-    private SeedlessRequestPeers seedlessRequestPeers = null;
-    private SeedlessScrapePeers seedlessScrapePeers = null;
-    private SeedlessScrapeServers seedlessScrapeServers = null;
-    private String svcURL = null;
-    private String cpass = null;
-    private String peersReqHeader;
-    private String serversLocHeader;
-    private String peersLocHeader;
-    private List<String> SeedlessServers = new ArrayList<String>();
-    private List<String> BotePeers = new ArrayList<String>();
-    private String announceString;
-    private Boolean GotSeedless = false;
 
     private I2PBote() {
         Thread.currentThread().setName("I2PBoteMain");
@@ -232,9 +198,7 @@ public class I2PBote {
             fileReader.read(destKeyBuffer);
             byte[] localDestinationKey = Base64.decode(new String(destKeyBuffer));
             ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
-            sockMgr = I2PSocketManagerFactory.createManager(inputStream, sessionProperties);
-            if (sockMgr != null)   // null indicates an error
-                i2pSession = sockMgr.getSession();
+            socketManager = I2PSocketManagerFactory.createManager(inputStream, sessionProperties);
         }
         catch (IOException e) {
             log.debug("Destination key file doesn't exist or isn't readable." + e);
@@ -250,7 +214,7 @@ public class I2PBote {
         }
         
         // if the local destination key can't be read or is invalid, create a new one
-        if (i2pSession == null) {
+        if (socketManager == null) {
             log.debug("Creating new local destination key");
             try {
                 ByteArrayOutputStream arrayStream = new ByteArrayOutputStream();
@@ -258,10 +222,8 @@ public class I2PBote {
                 byte[] localDestinationKey = arrayStream.toByteArray();
                 
                 ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
-                sockMgr = I2PSocketManagerFactory.createManager(inputStream, sessionProperties);
-                if (sockMgr != null)   // null indicates an error
-                    i2pSession = sockMgr.getSession();
-                else
+                socketManager = I2PSocketManagerFactory.createManager(inputStream, sessionProperties);
+                if (socketManager == null)   // null indicates an error
                     log.error("Error creating I2PSocketManagerFactory");
                     
                 saveLocalDestinationKeys(destinationKeyFile, localDestinationKey);
@@ -272,6 +234,7 @@ public class I2PBote {
             }
         }
         
+        i2pSession = socketManager.getSession();
         Destination localDestination = i2pSession.getMyDestination();
         log.info("Local destination key = " + localDestination.toBase64());
         log.info("Local destination hash = " + localDestination.calculateHash().toBase64());
@@ -284,16 +247,18 @@ public class I2PBote {
         I2PPacketDispatcher dispatcher = new I2PPacketDispatcher();
 
         // HH wants to depend on Seedless _FIRST_
-        if (checkForSeedless()) {
+        SeedlessParameters seedlessParameters = SeedlessParameters.getInstance();   // this call may take some time, but we're in the ConnectTask thread
+        // the following call may take some time, but that's okay because it runs on the ConnectTask thread
+        if (seedlessParameters.isSeedlessAvailable()) {
             log.info("Seedless found.");
-            GotSeedless = true;
-            seedlessAnnounce = new SeedlessAnnounce(180);
-            seedlessRequestPeers = new SeedlessRequestPeers(60);
-            seedlessScrapePeers = new SeedlessScrapePeers(10);
-            seedlessScrapeServers = new SeedlessScrapeServers(10);
+            seedlessRequestPeers = new SeedlessRequestPeers(seedlessParameters, 60);
+            seedlessScrapePeers = new SeedlessScrapePeers(seedlessParameters, 10);
+            seedlessScrapeServers = new SeedlessScrapeServers(seedlessParameters, 10);
+            seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 180);
         }
         else
             log.info("Seedless NOT found.");
+        
         i2pSession.addMuxedSessionListener(dispatcher, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_ANY);
         
         smtpService = new SMTPService();
@@ -301,7 +266,7 @@ public class I2PBote {
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
         relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, configuration);
         
-        dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile(), GotSeedless);
+        dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile(), seedlessScrapePeers);
         
         dht.setStorageHandler(EncryptedEmailPacket.class, emailDhtStorageFolder);
         dht.setStorageHandler(IndexPacket.class, indexPacketDhtStorageFolder);
@@ -511,7 +476,6 @@ public class I2PBote {
         return BanList.getInstance().getAll();
     }
 
-
     // This would be MUCH easier if it was a list of threads we could iterate! :-)
     // Also would be nice to control things in a ThreadGroup, but, meh.
     // --Sponge
@@ -525,18 +489,10 @@ public class I2PBote {
         sendQueue.start();
         autoMailCheckTask.start();
         expirationThread.start();
-        if(seedlessAnnounce != null) {
-            seedlessAnnounce.start();
-        }
-        if(seedlessRequestPeers != null) {
-            seedlessRequestPeers.start();
-        }
-        if(seedlessScrapePeers != null) {
-            seedlessScrapePeers.start();
-        }
-        if(seedlessScrapeServers != null) {
-            seedlessScrapeServers.start();
-        }
+        if (seedlessAnnounce != null)      seedlessAnnounce.start();
+        if (seedlessRequestPeers != null)  seedlessRequestPeers.start();
+        if (seedlessScrapePeers != null)   seedlessScrapePeers.start();
+        if (seedlessScrapeServers != null) seedlessScrapeServers.start();
     }
 
     // This would be MUCH easier if it was a list of threads we could iterate! :-)
@@ -598,8 +554,8 @@ public class I2PBote {
         } catch (I2PSessionException e) {
             log.error("Can't destroy I2P session.", e);
         }
-        if (sockMgr != null)
-            sockMgr.destroySocketManager();
+        if (socketManager != null)
+            socketManager.destroySocketManager();
     }
 
     private void join(Thread thread, long until) {
@@ -679,392 +635,5 @@ public class I2PBote {
                 log.error("Can't initialize the application.", e);
             }
         }
-    }
-
-    // Tobad this isn't public... oh well, I steal it :-)
-    static String getPassword() {
-        List<RouterContext> contexts = RouterContext.listContexts();
-        if(contexts != null) {
-            for(int i = 0; i < contexts.size(); i++) {
-                RouterContext ctx = contexts.get(i);
-                String password = ctx.getProperty("consolePassword");
-                if(password != null) {
-                    password = password.trim();
-                    if(password.length() > 0) {
-                        return password;
-                    }
-                }
-            }
-            // no password in any context
-            return null;
-        } else {
-            // no contexts?!
-            return null;
-        }
-    }
-
-    private Boolean checkForSeedless() {
-        /*
-         * Of course we can do reflection, but...
-         * Reflection is powerful, but should not be used indiscriminately.
-         * If it is possible to perform an operation without using reflection,
-         * then it is preferable to avoid using it. The following concerns
-         * should be kept in mind when accessing code via reflection.
-         *
-         * http://java.sun.com/docs/books/tutorial/reflect/index.html
-         *
-         */
-        Boolean ready = false;
-        String host = null;
-        String port = null;
-        RouterContext _context = ContextHelper.getContext(null);
-        String apass = null;
-        // 1: Get the console IP:port
-        List<ClientAppConfig> clients = ClientAppConfig.getClientApps(_context);
-        for(int cur = 0; cur < clients.size(); cur++) {
-            ClientAppConfig ca = clients.get(cur);
-
-            if("net.i2p.router.web.RouterConsoleRunner".equals(ca.className)) {
-                port = ca.args.split(" ")[0];
-                host = ca.args.split(" ")[1];
-                if(host.contains(",")) {
-                    String checks[] = host.split(",");
-                    host = null;
-                    for(int h = 0; h < checks.length; h++) {
-                        if(!checks[h].contains(":")) {
-                            host = checks[h];
-                        }
-                    }
-
-                }
-            }
-        }
-        if(port == null || host == null) {
-            log.error("checkForSeedless, no router console found!");
-            return false;
-        }
-        // 2: Get console password
-        apass = getPassword();
-        log.info("Testing Seedless API");
-        // 3: Check for the console API, if it exists, wait 'till it's status is ready.
-        // and set the needed settings. Repeat test 10 times with some delay between when it fails.
-        String url = "http://" + host + ":" + port + "/SeedlessConsole/";
-        String svcurl = url + "Service";
-        int tries = 10;
-        BufferedReader in;
-        HttpURLConnection h;
-        int i;
-        while(tries > 0) {
-            try {
-                ProxyRequest proxy = new ProxyRequest();
-                h = proxy.doURLRequest(url, null, null, -1, "admin", apass);
-                if(h != null) {
-                    i = h.getResponseCode();
-                    if(i == 200) {
-                        log.info("Seedless, API says OK");
-                        break;
-                    }
-                }
-
-            } catch(IOException ex) {
-            }
-
-            tries--;
-        }
-        if(tries > 0) {
-            // Now wait for it to be ready.
-            // but not forever!
-            log.info("Waiting for Seedless to become ready...");
-            tries = 60; // ~2 minutes.
-            String foo;
-            while(!ready && tries > 0) {
-                tries--;
-                try {
-                    ProxyRequest proxy = new ProxyRequest();
-                    h = proxy.doURLRequest(svcurl, "stat ping!", null, -1, "admin", apass);
-                    if(h != null) {
-                        i = h.getResponseCode();
-                        if(i == 200) {
-                            foo = h.getHeaderField("X-Seedless");
-                            ready = Boolean.parseBoolean(foo);
-                        }
-                    }
-
-                } catch(IOException ex) {
-                }
-                if(!ready) {
-                    try {
-                        Thread.sleep(2000); // sleep for 2 seconds
-                    } catch(InterruptedException ex) {
-                        return false;
-                    }
-                }
-
-            }
-        }
-        if(ready) {
-            svcURL = svcurl;
-            cpass = apass;
-            peersReqHeader = "scan " + Base64.encode("i2p-bote X" + PROTOCOL_VERSION + "X");
-            peersLocHeader = "locate " + Base64.encode("i2p-bote X" + PROTOCOL_VERSION + "X");
-            serversLocHeader = "locate " + Base64.encode("seedless i2p-bote");
-            announceString = "GET /Seedless/seedless HTTP/1.0\r\nX-Seedless: announce " + Base64.encode("i2p-bote X" + PROTOCOL_VERSION + "X") + "\r\n\r\n";
-        }
-        return ready;
-    }
-
-    public synchronized long getlastSeedlessAnnounce() {
-        return lastSeedlessAnnounce;
-    }
-
-    public synchronized void doSeedlessAnnounce() {
-        if(SeedlessServers.isEmpty()) {
-            // try again in a minute.
-            log.error("SeedlessServers.isEmpty, will retry shortly.");
-            lastSeedlessAnnounce = System.currentTimeMillis() - (seedlessAnnounce.getInterval() - TimeUnit.MINUTES.toMillis(1));
-            return;
-        }
-        // Announce to 10 servers.
-        // We do this over the i2pSocket.
-        int successful = Math.min(10, SeedlessServers.size());
-        log.debug("Try to announce to " + successful + " Seedless Servers");
-        Collections.shuffle(SeedlessServers, new Random());
-        Iterator it = SeedlessServers.iterator();
-        String line;
-        I2PSocket I2P;
-        InputStream Iin;
-        OutputStream Iout;
-        BufferedReader data;
-        Boolean didsomething = false;
-        BufferedWriter output;
-        while(successful > 0 && it.hasNext()) {
-            lastSeedlessAnnounce = System.currentTimeMillis();
-            String b32 = (String)it.next();
-            Destination dest = null;
-            I2P = null;
-            try {
-                lastSeedlessAnnounce = System.currentTimeMillis();
-                dest = I2PTunnel.destFromName(b32);
-                lastSeedlessAnnounce = System.currentTimeMillis();
-                line = dest.toBase64();
-                dest = new Destination();
-                dest.fromBase64(line);
-                I2P = sockMgr.connect(dest);
-                // I2P.setReadTimeout(0); // temp bugfix, this *SHOULD* be the default
-                // make readers/writers
-                Iin = I2P.getInputStream();
-                Iout = I2P.getOutputStream();
-                output = new BufferedWriter(new OutputStreamWriter(Iout));
-                output.write(announceString);
-                output.flush();
-                data = new BufferedReader(new InputStreamReader(Iin));
-                // Check for success.
-                line = data.readLine();
-                if(line != null) {
-                    if(line.contains(" 200 ")) {
-                        log.debug("Announced to " + b32);
-                        successful--;
-                        didsomething = true;
-                    } else {
-                        log.debug("Announce to " + b32 + " Failed with Error " + line);
-                        log.debug("We sent " + announceString);
-                    }
-                }
-                while((line = data.readLine()) != null) {
-                }
-
-            } catch(DataFormatException ex) {
-                // not base64!
-                log.debug("DataFormatException");
-            } catch(ConnectException ex) {
-                log.debug("ConnectException");
-            } catch(NoRouteToHostException ex) {
-                log.debug("NoRouteToHostException");
-            } catch(InterruptedIOException ex) {
-                log.debug("InterruptedIOException");
-            } catch(IOException ex) {
-                log.debug("IOException" + ex.toString());
-                ex.printStackTrace();
-            } catch(I2PException ex) {
-                log.debug("I2PException");
-            } catch(NullPointerException npe) {
-                // Could not find the destination!
-                log.debug("NullPointerException");
-            }
-            if(I2P != null) {
-                try {
-                    I2P.close();
-                } catch(IOException ex) {
-                    // don't care.
-                }
-            }
-        }
-        if(!didsomething) {
-            // try again in 1 minute.
-            lastSeedlessAnnounce = System.currentTimeMillis() - (seedlessAnnounce.getInterval() - TimeUnit.MINUTES.toMillis(1));
-            return;
-        }
-
-        lastSeedlessAnnounce = System.currentTimeMillis();
-    }
-
-    public synchronized long getlastSeedlessRequestPeers() {
-        return lastSeedlessRequestPeers;
-    }
-
-    public synchronized void doSeedlessRequestPeers() {
-        if(dht == null || peerManager == null) {
-            lastSeedlessRequestPeers = System.currentTimeMillis() - (seedlessRequestPeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
-            return;
-        }
-        if(!dht.needsMore() && getNetworkStatus().equals(NetworkStatus.CONNECTED)) {
-            // We are connected, let kad do it's thing.
-            lastSeedlessRequestPeers = System.currentTimeMillis() - (seedlessRequestPeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
-            return;
-        }
-        HttpURLConnection h;
-        int i;
-        String foo;
-        log.debug("doSeedlessRequestPeers");
-        try {
-            ProxyRequest proxy = new ProxyRequest();
-            h = proxy.doURLRequest(svcURL, peersReqHeader, null, -1, "admin", cpass);
-            if(h != null) {
-                i = h.getResponseCode();
-            }
-
-        } catch(IOException ex) {
-        }
-        log.debug("doSeedlessRequestPeers Done.");
-        lastSeedlessRequestPeers = System.currentTimeMillis();
-    }
-
-    public synchronized long getlastSeedlessScrapePeers() {
-        return lastSeedlessScrapePeers;
-    }
-
-    public synchronized void doSeedlessScrapePeers() {
-        if(dht == null || peerManager == null) {
-            lastSeedlessRequestPeers = System.currentTimeMillis() - (seedlessRequestPeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
-            return;
-        }
-        if(!dht.needsMore() && getNetworkStatus().equals(NetworkStatus.CONNECTED)) {
-            // We are connected, let kad do it's thing.
-            lastSeedlessScrapePeers = System.currentTimeMillis() - (seedlessScrapePeers.getInterval() - TimeUnit.MINUTES.toMillis(1));
-            return;
-        }
-        HttpURLConnection h;
-        int i;
-        String foo;
-        List<String> metadatas = new ArrayList<String>();
-        List<String> ip32s = new ArrayList<String>();
-        InputStream in;
-        BufferedReader data;
-        String line;
-        String ip32;
-        log.debug("doSeedlessScrapePeers");
-
-        try {
-            ProxyRequest proxy = new ProxyRequest();
-            h = proxy.doURLRequest(svcURL, peersLocHeader, null, -1, "admin", cpass);
-            if(h != null) {
-                i = h.getResponseCode();
-                if(i == 200) {
-                    in = h.getInputStream();
-                    data = new BufferedReader(new InputStreamReader(in));
-                    while((line = data.readLine()) != null) {
-                        metadatas.add(line);
-                    }
-                    Iterator it = metadatas.iterator();
-                    while(it.hasNext()) {
-                        foo = (String)it.next();
-                        ip32 = Base64.decodeToString(foo).split(" ")[0].trim();
-                        if(!ip32s.contains(ip32)) {
-                            ip32s.add(ip32);
-                        }
-                    }
-                }
-            }
-
-        } catch(IOException ex) {
-        }
-        BotePeers = ip32s;
-        log.debug("doSeedlessScrapePeers Done.");
-        BotePeers = dht.injectPeers(BotePeers);
-        peerManager.injectPeers(BotePeers);
-        BotePeers = null; // garbage now.
-        lastSeedlessScrapePeers = System.currentTimeMillis();
-    }
-
-    public synchronized long getlastSeedlessScrapeServers() {
-        return lastSeedlessScrapeServers;
-    }
-
-    public synchronized void doSeedlessScrapeServers() {
-        HttpURLConnection h;
-        int i;
-        String foo;
-        List<String> metadatas = new ArrayList<String>();
-        List<String> ip32s = new ArrayList<String>();
-        InputStream in;
-        BufferedReader data;
-        String line;
-        String ip32;
-
-        log.debug("doSeedlessScrapeServers");
-        try {
-            ProxyRequest proxy = new ProxyRequest();
-            h = proxy.doURLRequest(svcURL, serversLocHeader, null, -1, "admin", cpass);
-            if(h != null) {
-                i = h.getResponseCode();
-                if(i == 200) {
-                    in = h.getInputStream();
-                    data = new BufferedReader(new InputStreamReader(in));
-                    while((line = data.readLine()) != null) {
-                        metadatas.add(line);
-                    }
-                    Iterator it = metadatas.iterator();
-                    while(it.hasNext()) {
-                        foo = (String)it.next();
-                        ip32 = Base64.decodeToString(foo).split(" ")[0];
-                        if(!ip32s.contains(ip32)) {
-                            ip32s.add(ip32.trim());
-                        }
-                    }
-                }
-            }
-
-        } catch(IOException ex) {
-        }
-        Collections.shuffle(ip32s, new Random());
-        SeedlessServers = ip32s;
-        log.debug("doSeedlessScrapeServers Done");
-        lastSeedlessScrapeServers = System.currentTimeMillis();
-    }
-}
-
-class ContextHelper {
-
-    /** @throws IllegalStateException if no context available */
-    public static RouterContext getContext(String contextId) {
-        List contexts = RouterContext.listContexts();
-        if((contexts == null) || (contexts.isEmpty())) {
-            throw new IllegalStateException("No contexts. This is usually because the router is either starting up or shutting down.");
-        }
-        if((contextId == null) || (contextId.trim().length() <= 0)) {
-            return (RouterContext)contexts.get(0);
-        }
-        for(int i = 0; i < contexts.size(); i++) {
-            RouterContext context = (RouterContext)contexts.get(i);
-            Hash hash = context.routerHash();
-            if(hash == null) {
-                continue;
-            }
-            if(hash.toBase64().startsWith(contextId)) {
-                return context;
-            }
-        }
-        // not found, so just give them the first we can find
-        return (RouterContext)contexts.get(0);
     }
 }

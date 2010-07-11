@@ -21,11 +21,9 @@
 
 package i2p.bote.network.kademlia;
 
-import net.i2p.data.Base32;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
-import net.i2p.i2ptunnel.I2PTunnel;
 import net.i2p.util.Log;
 
 public class KademliaPeer extends Destination {
@@ -34,7 +32,6 @@ public class KademliaPeer extends Destination {
     private long firstSeen;
     private volatile int consecutiveTimeouts;
     private long lockedUntil;
-    private boolean found;
     
     public KademliaPeer(Destination destination, long lastReception) {
         // initialize the Destination part of the KademliaPeer
@@ -47,22 +44,9 @@ public class KademliaPeer extends Destination {
         if (destinationHash == null)
             log.error("calculateHash() returned null!");
         
-        found = true;
         firstSeen = lastReception;
     }
     
-    public KademliaPeer(String b32, Boolean foo) {
-        try {
-            log.debug("Attempting to inject " + b32 + " as " + b32.trim().substring(0, 52));
-            destinationHash = new Hash();
-            destinationHash.setData(Base32.decode(b32.trim().substring(0, 52)));
-            firstSeen = System.currentTimeMillis();
-            found = false;
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public KademliaPeer(Destination destination) {
         this(destination, System.currentTimeMillis());
     }
@@ -73,25 +57,6 @@ public class KademliaPeer extends Destination {
     
     public Hash getDestinationHash() {
         return destinationHash;
-    }
-
-    public Boolean wasFound() {
-        return found;
-    }
-
-    public void lookup() throws DataFormatException {
-        if(found) {
-            return;
-        }
-        Destination destination = null;
-        destination = I2PTunnel.destFromName(Base32.encode(destinationHash.getData()) + ".b32.i2p");
-        if(destination == null) {
-            throw new DataFormatException("Can't find peer in floodfill.");
-        }
-        setCertificate(destination.getCertificate());
-        setSigningPublicKey(destination.getSigningPublicKey());
-        setPublicKey(destination.getPublicKey());
-        found = true;
     }
 
     /**
