@@ -287,7 +287,7 @@ public class I2PBote {
         if (checkForSeedless()) {
             log.info("Seedless found.");
             GotSeedless = true;
-            seedlessAnnounce = new SeedlessAnnounce(180);
+            seedlessAnnounce = new SeedlessAnnounce(60);
             seedlessRequestPeers = new SeedlessRequestPeers(60);
             seedlessScrapePeers = new SeedlessScrapePeers(10);
             seedlessScrapeServers = new SeedlessScrapeServers(10);
