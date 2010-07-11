@@ -19,6 +19,7 @@ package net.balusc.webapp;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -33,6 +34,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+
+import net.i2p.util.Log;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -87,12 +90,14 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * <li>Delete non-attachment files created by ServletFileUpload.parseRequest().
  * Not creating them in the first place would be more elegant, but much more
  * difficult to do.</li>
+ * <li>UTF-8 related modifications</li>
  * </ul>
  *
  * @author BalusC
  * @link http://balusc.blogspot.com/2007/11/multipartfilter.html
  */
 public class MultipartFilter implements Filter {
+    private Log log = new Log(MultipartFilter.class);
 
     // Init ---------------------------------------------------------------------------------------
 
@@ -197,7 +202,9 @@ public class MultipartFilter implements Filter {
             };
             fileItemFactory.setSizeThreshold(0);
             fileItemFactory.setFileCleaningTracker(null);
-            multipartItems = new ServletFileUpload(fileItemFactory).parseRequest(request);
+            ServletFileUpload upload = new ServletFileUpload(fileItemFactory);
+            upload.setHeaderEncoding("UTF-8");
+            multipartItems = upload.parseRequest(request);
             // Note: we could use ServletFileUpload#setFileSizeMax() here, but that would throw a
             // FileUploadException immediately without processing the other fields. So we're
             // checking the file size only if the items are already parsed. See processFileField().
@@ -232,7 +239,13 @@ public class MultipartFilter implements Filter {
      */
     private void processFormField(FileItem formField, Map<String, String[]> parameterMap) {
         String name = formField.getFieldName();
-        String value = formField.getString();
+        String value;
+        try {
+            value = formField.getString("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            log.error("Cannot get value of form field in UTF-8. Field name: <" + name + ">", e);
+            value = formField.getString();
+        }
         String[] values = parameterMap.get(name);
 
         if (values == null) {
@@ -296,6 +309,26 @@ public class MultipartFilter implements Filter {
             }
             public Enumeration<String> getParameterNames() {
                 return Collections.enumeration(parameterMap.keySet());
+            }
+            
+            // Do not pass the call through to the underlying request because it
+            // causes an error in Jetty:
+            // "java.lang.IllegalStateException: getReader() or getInputStream() called",
+            // which indicates that setCharacterEncoding() was called after getReader()
+            // or getInputStream().
+            // Putting a <c:catch> around the <fmt:requestEncoding> in header.jsp makes
+            // the problem go away, but fixing it here avoids the exception being thrown
+            // in the first place.
+            // I haven't figured out what the root problem is, but I think it might have
+            // something to do with the <jsp:forward> from newEmail.jsp to sendEmail.jsp,
+            // and <fmt:requestEncoding> being called on the original HTTP request after
+            // the MultipartFilter has read the input stream already.
+            @Override
+            public void setCharacterEncoding(String enc) {
+            }
+            @Override
+            public String getCharacterEncoding() {
+                return "UTF-8";
             }
         };
     }

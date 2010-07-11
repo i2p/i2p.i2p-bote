@@ -69,7 +69,7 @@
 <jsp:include page="header.jsp"/>
 
 <div class="main">
-    <form action="newEmail.jsp" method="post" enctype="multipart/form-data">
+    <form action="newEmail.jsp" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
         <table>
             <tr>
                 <td>
