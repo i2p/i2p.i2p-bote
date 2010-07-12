@@ -254,7 +254,7 @@ public class I2PBote {
             seedlessRequestPeers = new SeedlessRequestPeers(seedlessParameters, 60);
             seedlessScrapePeers = new SeedlessScrapePeers(seedlessParameters, 10);
             seedlessScrapeServers = new SeedlessScrapeServers(seedlessParameters, 10);
-            seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 180);
+            seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 60);
         }
         else
             log.info("Seedless NOT found.");
