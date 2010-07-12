@@ -16,16 +16,6 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>WebContent</label>
-                    <type>doc_root</type>
-                    <location>WebContent</location>
-                </source-folder>
-                <source-folder>
-                    <label>WEB-INF</label>
-                    <type>web_inf</type>
-                    <location>WebContent/WEB-INF</location>
-                </source-folder>
-                <source-folder>
                     <label>test</label>
                     <type>java</type>
                     <location>test</location>
@@ -36,6 +26,16 @@
                     <type>java</type>
                     <location>src</location>
                     <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>WebContent</label>
+                    <type>doc_root</type>
+                    <location>WebContent</location>
+                </source-folder>
+                <source-folder>
+                    <label>WEB-INF</label>
+                    <type>web_inf</type>
+                    <location>WebContent/WEB-INF</location>
                 </source-folder>
             </folders>
             <ide-actions>
@@ -92,12 +92,12 @@
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
             <compilation-unit>
                 <package-root>test</package-root>
-                <classpath mode="compile">../i2p/core/java/build/i2p.jar:../i2p/apps/jetty/jettylib/org.mortbay.jetty.jar:../i2p/apps/jetty/jettylib/jasper-compiler.jar:../i2p/apps/jetty/jettylib/jasper-runtime.jar:../i2p/apps/jetty/jettylib/javax.servlet.jar:../i2p/apps/jetty/jettylib/commons-logging.jar:../i2p/apps/jetty/jettylib/commons-el.jar:../i2p/apps/susidns/src/WEB-INF/lib/jstl.jar:../i2p/apps/susidns/src/WEB-INF/lib/standard.jar:WebContent/WEB-INF/lib/mailapi.jar:WebContent/WEB-INF/lib/bcprov-ecc-jdk16-145.jar:ant_build/classes:/usr/local/netbeans-6.5/platform9/modules/ext/junit-4.5.jar:../i2p/router/java/build/router.jar</classpath>
+                <classpath mode="compile">../i2p/core/java/build/i2p.jar:../i2p/apps/jetty/jettylib/org.mortbay.jetty.jar:../i2p/apps/jetty/jettylib/jasper-compiler.jar:../i2p/apps/jetty/jettylib/jasper-runtime.jar:../i2p/apps/jetty/jettylib/javax.servlet.jar:../i2p/apps/jetty/jettylib/commons-logging.jar:../i2p/apps/jetty/jettylib/commons-el.jar:../i2p/apps/susidns/src/WEB-INF/lib/jstl.jar:../i2p/apps/susidns/src/WEB-INF/lib/standard.jar:WebContent/WEB-INF/lib/mailapi.jar:WebContent/WEB-INF/lib/bcprov-ecc-jdk16-145.jar:ant_build/classes:/usr/local/netbeans-6.5/platform9/modules/ext/junit-4.5.jar:../i2p/router/java/build/router.jar:WebContent/WEB-INF/lib/commons-fileupload-1.2.1.jar:WebContent/WEB-INF/lib/commons-io-1.4.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>
             <compilation-unit>
                 <package-root>src</package-root>
-                <classpath mode="compile">../i2p/core/java/build/i2p.jar:../i2p/apps/jetty/jettylib/org.mortbay.jetty.jar:../i2p/apps/jetty/jettylib/jasper-compiler.jar:../i2p/apps/jetty/jettylib/jasper-runtime.jar:../i2p/apps/jetty/jettylib/javax.servlet.jar:../i2p/apps/jetty/jettylib/commons-logging.jar:../i2p/apps/jetty/jettylib/commons-el.jar:../i2p/apps/susidns/src/WEB-INF/lib/jstl.jar:../i2p/apps/susidns/src/WEB-INF/lib/standard.jar:WebContent/WEB-INF/lib/mailapi.jar:WebContent/WEB-INF/lib/bcprov-ecc-jdk16-145.jar:ant_build/classes:../i2p/apps/streaming/java/build/streaming.jar:../i2p/apps/ministreaming/java/build/mstreaming.jar:../i2p/apps/routerconsole/java/build/routerconsole.jar:../i2p/apps/i2ptunnel/java/build/i2ptunnel.jar:../i2p/router/java/build/router.jar</classpath>
+                <classpath mode="compile">../i2p/core/java/build/i2p.jar:../i2p/apps/jetty/jettylib/org.mortbay.jetty.jar:../i2p/apps/jetty/jettylib/jasper-compiler.jar:../i2p/apps/jetty/jettylib/jasper-runtime.jar:../i2p/apps/jetty/jettylib/javax.servlet.jar:../i2p/apps/jetty/jettylib/commons-logging.jar:../i2p/apps/jetty/jettylib/commons-el.jar:../i2p/apps/susidns/src/WEB-INF/lib/jstl.jar:../i2p/apps/susidns/src/WEB-INF/lib/standard.jar:WebContent/WEB-INF/lib/mailapi.jar:WebContent/WEB-INF/lib/bcprov-ecc-jdk16-145.jar:ant_build/classes:../i2p/apps/streaming/java/build/streaming.jar:../i2p/apps/ministreaming/java/build/mstreaming.jar:../i2p/apps/routerconsole/java/build/routerconsole.jar:../i2p/apps/i2ptunnel/java/build/i2ptunnel.jar:../i2p/router/java/build/router.jar:WebContent/WEB-INF/lib/commons-fileupload-1.2.1.jar:WebContent/WEB-INF/lib/commons-io-1.4.jar</classpath>
                 <built-to>ant_build/classes</built-to>
                 <source-level>1.5</source-level>
             </compilation-unit>
