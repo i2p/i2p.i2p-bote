@@ -98,8 +98,7 @@ import net.i2p.util.Log;
  * This is the core class of the application. It is implemented as a singleton.
  */
 public class I2PBote {
-//    change version to 4 before committing to mtn
-    public static final int PROTOCOL_VERSION = 3;
+    public static final int PROTOCOL_VERSION = 4;
     private static final String APP_VERSION = "0.2.4";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
     private static volatile I2PBote instance;
@@ -246,7 +245,6 @@ public class I2PBote {
     private void initializeServices() {
         I2PPacketDispatcher dispatcher = new I2PPacketDispatcher();
 
-        // HH wants to depend on Seedless _FIRST_
         SeedlessParameters seedlessParameters = SeedlessParameters.getInstance();   // this call may take some time, but we're in the ConnectTask thread
         // the following call may take some time, but that's okay because it runs on the ConnectTask thread
         if (seedlessParameters.isSeedlessAvailable()) {
@@ -254,7 +252,7 @@ public class I2PBote {
             seedlessRequestPeers = new SeedlessRequestPeers(seedlessParameters, 60);
             seedlessScrapePeers = new SeedlessScrapePeers(seedlessParameters, 10);
             seedlessScrapeServers = new SeedlessScrapeServers(seedlessParameters, 10);
-            seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 180);
+            seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 60);
         }
         else
             log.info("Seedless NOT found.");
