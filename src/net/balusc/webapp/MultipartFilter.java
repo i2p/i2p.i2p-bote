@@ -91,6 +91,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * Not creating them in the first place would be more elegant, but much more
  * difficult to do.</li>
  * <li>UTF-8 related modifications</li>
+ * <li>If a parameter isn't found in the parsed parameters, call
+ * <code>getParameter()</code> on the original request so parameters added
+ * inside a <code>jsp:forward</code> aren't lost.</li>
  * </ul>
  *
  * @author BalusC
@@ -305,7 +308,7 @@ public class MultipartFilter implements Filter {
             }
             public String getParameter(String name) {
                 String[] params = getParameterValues(name);
-                return params != null && params.length > 0 ? params[0] : null;
+                return params != null && params.length > 0 ? params[0] : super.getParameter(name);
             }
             public Enumeration<String> getParameterNames() {
                 return Collections.enumeration(parameterMap.keySet());
