@@ -21,6 +21,7 @@
 
 package i2p.bote.folder;
 
+import static i2p.bote.Util._;
 import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
@@ -40,7 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * about the sending progress.
  */
 public class Outbox extends EmailFolder {
-    public static final String DEFAULT_STATUS = "Queued";
+    private static final String DEFAULT_STATUS = "Queued";
 	
     private Map<String, String> statusMap;   // maps message IDs to status strings
     
@@ -71,10 +72,6 @@ public class Outbox extends EmailFolder {
         return emails;
     }
 
-    public void setStatus(String messageId, String status) {
-        statusMap.put(messageId, status);
-    }
-
     public void setStatus(Email email, String status) {
         String messageId = email.getMessageID();
         if (messageId != null)
@@ -88,11 +85,11 @@ public class Outbox extends EmailFolder {
      * @param messageId The message ID of the email
      * @return
      */
-    public String getStatus(String messageId) {
+    private String getStatus(String messageId) {
         if (statusMap.containsKey(messageId))
             return statusMap.get(messageId);
         else
-            return DEFAULT_STATUS;
+            return _(DEFAULT_STATUS);
     }
     
     /**
@@ -105,8 +102,15 @@ public class Outbox extends EmailFolder {
     public String getStatus(Email email) {
         String messageId = email.getMessageID();
         if (messageId == null)
-            return null;
+            return _(DEFAULT_STATUS);
         else
             return getStatus(messageId);
+    }
+    
+    public boolean isStatusSet(Email email) {
+        if (email == null)
+            return false;
+        else
+            return statusMap.containsKey(email.getMessageID());
     }
 }
