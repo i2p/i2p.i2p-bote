@@ -53,14 +53,14 @@
             <jsp:param name="destination" value="${ib:escapeQuotes(param[destparam])}"/>
             <jsp:param name="forwardUrl" value="newEmail.jsp"/>
             <jsp:param name="backUrl" value="newEmail.jsp"/>
-            <jsp:param name="paramsToCopy" value="recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl,backUrl,paramsToCopy"/>
+            <jsp:param name="paramsToCopy" value="sender,recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl,backUrl,paramsToCopy"/>
         </jsp:forward>
     </c:when>
     <c:when test="${param.action eq 'lookup'}">
         <jsp:forward page="addressBook.jsp">
             <jsp:param name="select" value="true"/>
             <jsp:param name="forwardUrl" value="newEmail.jsp"/>
-            <jsp:param name="paramsToCopy" value="recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl"/>
+            <jsp:param name="paramsToCopy" value="sender,recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl"/>
         </jsp:forward>
     </c:when>
 </c:choose>
