@@ -137,7 +137,6 @@ public class Util {
         BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(inputStream));
         List<String> lines = new ArrayList<String>();
         
-        int linesRead = 0;
         while (true) {
             String line = null;
             line = inputBuffer.readLine();
@@ -146,7 +145,7 @@ public class Util {
             lines.add(line);
         }
         
-        log.info(linesRead + " lines read.");
+        log.info(lines.size() + " lines read.");
         return lines;
     }
     
