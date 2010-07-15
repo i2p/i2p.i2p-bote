@@ -21,6 +21,8 @@
 
 package i2p.bote.folder;
 
+import i2p.bote.Util;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public abstract class Folder<T> implements Iterable<T> {
         
         if (!storageDir.exists() && !storageDir.mkdirs())
             log.error("Can't create directory: '" + storageDir + "'");
+        Util.makePrivate(storageDir);
     }
 
     public File getStorageDirectory() {

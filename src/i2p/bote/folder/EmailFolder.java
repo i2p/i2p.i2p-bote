@@ -22,6 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
+import i2p.bote.Util;
 import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
@@ -73,6 +74,7 @@ public class EmailFolder extends Folder<Email> {
         try {
             emailOutputStream = new FileOutputStream(emailFile);
             email.writeTo(emailOutputStream);
+            Util.makePrivate(emailFile);
         }
         finally {
             if (emailOutputStream != null)

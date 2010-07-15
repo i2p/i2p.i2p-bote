@@ -22,6 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
+import i2p.bote.Util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -102,6 +103,7 @@ public class MessageIdCache {
             writer = new BufferedWriter(new FileWriter(cacheFile));
             for (UniqueId id: idList)
                 writer.write(id.toBase64() + newLine);
+            Util.makePrivate(cacheFile);
         }
         catch (IOException e) {
             log.error("Can't write message ID cache file.", e);

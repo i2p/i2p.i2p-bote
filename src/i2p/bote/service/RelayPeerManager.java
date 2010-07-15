@@ -180,6 +180,7 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
                 writer.write(peer.toBase64() + "\t" + peer.getRequestsSent() + "\t" + peer.getResponsesReceived());
                 writer.newLine();
             }
+            Util.makePrivate(file);
         }
         catch (IOException e) {
             log.error("Can't write peers to file <" + file.getAbsolutePath() + ">", e);

@@ -21,6 +21,7 @@
 
 package i2p.bote.addressbook;
 
+import i2p.bote.Util;
 import i2p.bote.email.EmailDestination;
 
 import java.io.BufferedReader;
@@ -106,6 +107,7 @@ public class AddressBook implements Iterable<Contact> {
                 writer.write(contact.getName());
                 writer.newLine();
             }
+            Util.makePrivate(addressFile);
         }
         catch (IOException e) {
             log.error("Can't save address book to file <" + addressFile.getAbsolutePath() + ">.", e);

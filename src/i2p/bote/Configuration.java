@@ -212,6 +212,7 @@ public class Configuration {
     	log.debug("Saving config file <" + configFile.getAbsolutePath() + ">");
     	try {
             DataHelper.storeProps(properties, configFile);
+            Util.makePrivate(configFile);
         } catch (IOException e) {
             log.error("Cannot save configuration to file <" + configFile.getAbsolutePath() + ">", e);
         }

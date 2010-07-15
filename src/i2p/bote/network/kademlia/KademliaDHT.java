@@ -520,6 +520,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 writer.write(peer.toBase64());
                 writer.newLine();
             }
+            Util.makePrivate(file);
         }
         catch (IOException e) {
             log.error("Can't write peers to file <" + file.getAbsolutePath() + ">", e);

@@ -21,6 +21,7 @@
 
 package i2p.bote.folder;
 
+import i2p.bote.Util;
 import i2p.bote.packet.DataPacket;
 
 import java.io.File;
@@ -54,6 +55,7 @@ public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketTy
             File file = new File(storageDir, filename);
             outputStream = new FileOutputStream(file);
             packetToStore.writeTo(outputStream);
+            Util.makePrivate(file);
         } catch (Exception e) {
             log.error("Can't save packet to file: <" + filename + ">", e);
         }

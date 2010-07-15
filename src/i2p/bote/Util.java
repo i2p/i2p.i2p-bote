@@ -263,4 +263,16 @@ public class Util {
     public static String toBase32(Hash hash) {
         return Base32.encode(hash.toByteArray());
     }
+
+    /**
+     * Makes a file readable and writable only by the current OS user,
+     * if the operating system supports it. Errors are ignored.
+     * @param file
+     */
+    public static void makePrivate(File file) {
+        file.setReadable(false, false);
+        file.setReadable(true, true);
+        file.setWritable(false, false);
+        file.setWritable(true, true);
+    }
 }

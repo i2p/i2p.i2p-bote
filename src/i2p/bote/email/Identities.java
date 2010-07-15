@@ -21,6 +21,8 @@
 
 package i2p.bote.email;
 
+import i2p.bote.Util;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -163,6 +165,8 @@ public class Identities implements Iterable<EmailIdentity> {
             
             for (EmailIdentity identity: identities)
                 writer.write(toFileFormat(identity) + newLine);
+            
+            Util.makePrivate(identitiesFile);
         }
         catch (IOException e) {
             log.error("Can't save email identities to file <" + identitiesFile.getAbsolutePath() + ">.", e);

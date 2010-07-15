@@ -323,6 +323,7 @@ public class I2PBote {
         FileWriter fileWriter = new FileWriter(keyFile);
         fileWriter.write(Base64.encode(localDestinationArray));
         fileWriter.close();
+        Util.makePrivate(keyFile);
     }
     
     public static void startUp() {
