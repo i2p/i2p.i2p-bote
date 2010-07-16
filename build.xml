@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="help" name="I2P-Bote">
-    <property name="i2pbase" value="../i2p"/>
-    <property name="i2plib" value="${i2pbase}/core/java/build"/>
-    <property name="jettylib" value="${i2pbase}/apps/jetty/jettylib"/>
-    <property name="antlib" value="${jettylib}"/>
+    <property environment="env"/>
+    <condition property="i2pbase" value="${env.I2P}">
+        <isset property="env.I2P"/>
+    </condition>
+
+    <property name="i2plib" value="${i2pbase}/lib"/>
     <property name="jstllib" value="${i2pbase}/apps/susidns/src/WEB-INF/lib"/>
     <property name="lib" value="WebContent/WEB-INF/lib"/>
-    <property name="mstream" value="${i2pbase}/apps/ministreaming/java/build"/>
-    <property name="stream" value="${i2pbase}/apps/streaming/java/build"/>
     <property name="makeplugin" value="../i2p.scripts/plugin/makeplugin.sh"/>
-    <property name="router" value="${i2pbase}/router/java/build"/>
-    <property name="tunnel" value="${i2pbase}/apps/i2ptunnel/java/build"/>
     <path id="cp">
         <pathelement path="${java.class.path}" />
         <pathelement location="${i2plib}/i2p.jar" />
-        <pathelement location="${jettylib}/org.mortbay.jetty.jar"/>
-        <pathelement location="${jettylib}/jasper-compiler.jar" />
-        <pathelement location="${jettylib}/jasper-runtime.jar" />
-        <pathelement location="${jettylib}/javax.servlet.jar" />
-        <pathelement location="${jettylib}/commons-logging.jar" />
-        <pathelement location="${jettylib}/commons-el.jar" />
-        <pathelement location="${jstllib}/jstl.jar" />
-        <pathelement location="${jstllib}/standard.jar" />
+        <pathelement location="${i2plib}/mstreaming.jar" />
+        <pathelement location="${i2plib}/streaming.jar" />
+        <pathelement location="${i2plib}/router.jar" />
+        <pathelement location="${i2plib}/i2ptunnel.jar" />        
+        <pathelement location="${i2plib}/org.mortbay.jetty.jar"/>
+        <pathelement location="${i2plib}/jasper-compiler.jar" />
+        <pathelement location="${i2plib}/jasper-runtime.jar" />
+        <pathelement location="${i2plib}/javax.servlet.jar" />
+        <pathelement location="${i2plib}/commons-logging.jar" />
+        <pathelement location="${i2plib}/commons-el.jar" />
+        <pathelement location="${i2plib}/jstl.jar" />
+        <pathelement location="${i2plib}/standard.jar" />
         <pathelement location="${lib}/mailapi.jar" />
         <pathelement location="${lib}/bcprov-ecc-jdk16-145.jar" />
         <pathelement location="${lib}/commons-fileupload-1.2.1.jar" />
         <pathelement location="${lib}/commons-io-1.4.jar" />
-        <pathelement location="${mstream}/mstreaming.jar" />
-        <pathelement location="${stream}/streaming.jar" />
-        <pathelement location="${router}/router.jar" />
-        <pathelement location="${tunnel}/i2ptunnel.jar" />        
     </path>
+
     <target name="help">
         <echo message="Useful targets:" />
-        <echo message="  war:    Makes a .war file" />
-        <echo message="  plugin: Makes a I2P plugin. Only runs on Linux;" />
-        <echo message="          $I2P must point to an I2P installation." />
-        <echo message="  all:    war + plugin" />
-        <echo message="  src:    Zips up the source code" />
-        <echo message="  junit:  Runs all unit tests" />
+        <echo message="  war:      Makes a .war file" />
+        <echo message="  plugin:   Makes a I2P plugin. Only runs on Linux." />
+        <echo message="            Requires the i2p.scripts branch to be checked out" />
+        <echo message="            alongside this directory (for makeplugin.sh)." />
+        <echo message="  all:      src + war + plugin" />
+        <echo message="  poupdate: Updates the messages_*.po files from the source code," />
+        <echo message="            adding any untranslated strings. Depends on additional" />
+        <echo message="            software, see bundle-messages.sh." />
+        <echo message="            This task only runs on Linux at the moment." />
+        <echo message="  src:      Zips up the source code" />
+        <echo message="  junit:    Runs all unit tests" />
+        <echo message="  clean:    Removes all generated files and directories" />
     </target>
 
-    <target name="all" depends="clean, war, plugin" />
+    <target name="all" depends="clean, src, war, plugin" />
 
-    <target name="compile">
+    <target name="checki2pbase">
+        <fail unless="i2pbase" message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p."/>
+    </target>
+
+    <target name="compile" depends="checki2pbase">
         <mkdir dir="./ant_build" />
         <mkdir dir="./ant_build/classes" />
         <javac
@@ -237,8 +246,10 @@ l property to true -->
     </target>
 
     <target name="junit" depends="compile">
+        <property environment="env"/>
+        <fail unless="env.JUNITJAR" message="The JUNITJAR environment variable is not set.${line.separator}It must point to a JUnit4 .jar, for example /usr/share/java/junit4.jar."/>
         <path id="junitcp">
-            <pathelement location="${lib}/junit.jar"/>
+            <pathelement location="${env.JUNITJAR}"/>
             <pathelement location="./ant_build/classes"/>
             <path refid="cp"/>
         </path>
@@ -251,6 +262,7 @@ l property to true -->
             classpathref="junitcp"
             failonerror="true" />
 
+        <echo message="Running JUnit tests..."/>
         <junit printsummary="off" failureproperty="failed">
             <classpath>
                 <path refid="junitcp"/>
