@@ -54,10 +54,10 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
     }
     
     /**
-     * Same as {@link add(UnencryptedEmailPacket)}, but returns <code>true</code>
+     * Stores an <code>UnencryptedEmailPacket</code> in the folder and returns <code>true</code>
      * if an email was completed as a result of adding the packet.
      * @param packetToStore
-     * @return
+     * @see i2p.bote.folder.PacketFolder#add(DataPacket, String)
      */
     public synchronized boolean addEmailPacket(UnencryptedEmailPacket packetToStore) {
         UniqueId messageId = packetToStore.getMessageId();

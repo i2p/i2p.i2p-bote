@@ -71,7 +71,7 @@ import org.bouncycastle.jce.spec.ECNamedCurveSpec;
  * <p/>
  * The key length used for ECDH and ECDSA depends on the concrete subclass.
  * Symmetric encryption is always AES-256, which for shorter ECDH keys wastes a few
- * bytes and a few CPU cycles.
+ * bytes and a few CPU cycles (because AES-128 would be sufficient).
  * The same is true for hashing which uses SHA-256 regardless of the ECDH/ECDSA key length.
  * <p/>
  * This class uses BouncyCastle for everything related to ECC (key encoding and decoding,
@@ -81,7 +81,7 @@ import org.bouncycastle.jce.spec.ECNamedCurveSpec;
  * Because the first 6 bits are always zero for all currently existing subclasses, public
  * and private keys produced by this class always start with an upper case A when
  * base64-encoded. The leading A is omitted, which saves two bytes in email destinations
- * (see the {@link toBase64(PublicKey)} and {@link toBase64(PrivateKey} methods).
+ * (see the {@link #toBase64(PublicKey)} and {@link #toBase64(PrivateKey)} methods).
  */
 public abstract class ECDH_ECDSA implements CryptoImplementation {
     private static final int BLOCK_SIZE = 16;   // length of the AES initialization vector; also the AES block size for padding. Not to be confused with the AES key size.
@@ -237,7 +237,6 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
      * This method assumes a base64 encoding of a byte array encoded key always starts
      * with an 'A', which is currently the case for all subclasses.
      * @param publicKey
-     * @return
      * @throws GeneralSecurityException
      */
     protected String toBase64(PublicKey publicKey) throws GeneralSecurityException {
@@ -251,7 +250,6 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
      * This method assumes a base64 encoding of a byte array encoded key always starts
      * with an 'A', which is currently the case for all subclasses.
      * @param privateKey
-     * @return
      * @throws GeneralSecurityException
      */
     protected String toBase64(PrivateKey privateKey) throws GeneralSecurityException {
@@ -289,11 +287,12 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     /**
      * Encrypts a block of data using the following steps:
      * <p/>
-     * 1. Generate an ephemeral EC key.<br/>
-     * 2. Use that key and the public key of the recipient, generate a secret using ECDH.<br/>
-     * 3. Use that secret as a key to encrypt the message with AES.<br/>
-     * 4. Return the encrypted message and the ephemeral public key generated in step 1.<br/>
-     * <p/>
+     * <ol>
+     *   <li/>Generate an ephemeral EC key.<br/>
+     *   <li/>Use that key and the public key of the recipient, generate a secret using ECDH.<br/>
+     *   <li/>Use that secret as a key to encrypt the message with AES.<br/>
+     *   <li/>Return the encrypted message and the ephemeral public key generated in step 1.<br/>
+     * </ol>
      * @throws NoSuchProviderException 
      * @throws NoSuchAlgorithmException 
      * @throws InvalidKeyException 
@@ -341,11 +340,11 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     
     /**
      * Signs a block of data using the following steps:
-     * <p/>
-     * 1. Read the ephemeral public key from the message.<br/>
-     * 2. Use that public key together with your recipient key to generate a secret using ECDH.<br/>
-     * 3. Use that secret as a key to decrypt the message with AES.<br/>
-     * <p/>
+     * <ol>
+     *   <li/>Read the ephemeral public key from the message.<br/>
+     *   <li/>Use that public key together with your recipient key to generate a secret using ECDH.<br/>
+     *   <li/>Use that secret as a key to decrypt the message with AES.<br/>
+     * </ol>
      * @throws NoSuchAlgorithmException 
      * @throws InvalidKeyException 
      * @throws InvalidKeySpecException 

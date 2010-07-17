@@ -59,7 +59,6 @@ public abstract class I2PBotePacket {
 	
 	/**
 	 * Returns the size of the packet in bytes.
-	 * @return
 	 */
 	// TODO rename to getPacketSize
 	// TODO override in subclasses to avoid calling toByteArray by adding field lengths
@@ -69,7 +68,6 @@ public abstract class I2PBotePacket {
     
     /**
      * Returns <code>false</code> if this packet can't fit into an I2P datagram.
-     * @return
      */
     public boolean isTooBig() {
         return getSize() > MAX_DATAGRAM_SIZE;
@@ -97,8 +95,7 @@ public abstract class I2PBotePacket {
     }
 
     /**
-     * Returns the version of the I2P-Bote network protocol used by this packet.
-     * @return
+     * Returns the version of the I2P-Bote network protocol this packet conforms to.
      */
     public int getProtocolVersion() {
         return protocolVersion;

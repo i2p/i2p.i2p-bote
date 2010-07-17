@@ -62,7 +62,6 @@ public class PacketBatch implements Iterable<PacketBatchItem> {
     /**
      * Return <code>true</code> if the batch contains a packet with a given {@link UniqueId}.
      * @param packetId
-     * @return
      */
     public boolean contains(final UniqueId packetId) {
         return outgoingPackets.containsKey(packetId);

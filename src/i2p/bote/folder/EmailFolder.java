@@ -177,7 +177,6 @@ public class EmailFolder extends Folder<Email> {
      * The <code>messageId</code> parameter must be a 44-character base64-encoded
      * {@link UniqueId}.
      * @param messageId
-     * @return
      */
     public Email getEmail(String messageId) {
         File file = getEmailFile(messageId);
@@ -213,7 +212,7 @@ public class EmailFolder extends Folder<Email> {
         return success;
     }
     
-    /** @see move(Email, EmailFolder) */
+    /** @see #move(Email, EmailFolder) */
     public boolean move(String messageId, EmailFolder newFolder) {
         Email email = getEmail(messageId);
         if (email == null) {
@@ -253,8 +252,8 @@ public class EmailFolder extends Folder<Email> {
     }
     
     /**
-     * @see Folder.getNumElements()
-     * @return
+     * Returns the number of <strong>new</strong> emails in the folder.
+     * @see i2p.bote.folder.Folder#getNumElements()
      */
     public int getNumNewEmails() {
         int numNew = 0;

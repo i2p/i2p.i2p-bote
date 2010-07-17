@@ -34,7 +34,6 @@ public class KademliaUtil {
      * than zero.
      * @param key1
      * @param key2
-     * @return
      */
     public static BigInteger getDistance(Hash key1, Hash key2) {
         // This shouldn't be a performance bottleneck, so save some mem by not using Hash.cachedXor

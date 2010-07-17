@@ -75,7 +75,6 @@ public class DhtResults implements Iterable<DhtStorablePacket> {
     /**
      * Gets the number of peers that have responded to the DHT lookup,
      * including negative responses (those that did not return a data packet).
-     * @return
      */
     public int getTotalResponses() {
         return totalResponses;

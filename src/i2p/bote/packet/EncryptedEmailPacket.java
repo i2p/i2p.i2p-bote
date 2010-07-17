@@ -65,6 +65,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
 	/**
 	 * Creates an <code>EncryptedEmailPacket</code> from an <code>UnencryptedEmailPacket</code>.
 	 * The public key of <code>emailDestination</code> is used for encryption.
+         * The store time is set to <code>0</code>.
 	 * @param unencryptedPacket
 	 * @param emailDestination
 	 * @throws GeneralSecurityException If an error occurred during encryption
@@ -130,8 +131,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
     }
     
     /**
-     * Returns the time the packet was stored in a file, in milliseconds since 1-1-1970.
-     * @return
+     * Returns the time the packet was stored in a file, in milliseconds since <code>1-1-1970</code>.
      */
     public long getStoreTime() {
         return storeTime;

@@ -37,8 +37,10 @@ import net.i2p.util.Log;
 
 /**
  * Contains information about deleted DHT items, which
- * can be Email Packets or Index Packet entries.
- * 
+ * can be Email Packets or Index Packet entries.<br/>
+ * Objects of this class are not sent over the network,
+ * they are only used locally.
+ * <p/>
  * This class is not thread-safe.
  */
 @TypeCode('T')

@@ -43,6 +43,7 @@
         <echo message="            This task only runs on Linux at the moment." />
         <echo message="  src:      Zips up the source code" />
         <echo message="  junit:    Runs all unit tests" />
+        <echo message="  javadoc:  Generates code documentation in the javadoc dir" />
         <echo message="  clean:    Removes all generated files and directories" />
     </target>
 
@@ -203,8 +204,7 @@
     
     <target name="bundle">
         <!-- Update the messages_*.po files.
-             We need to supply the bat file for windows, and then change the fai
-l property to true -->
+             We need to supply the bat file for windows, and then change the fail property to true -->
         <exec executable="sh" osfamily="unix" failifexecutionfails="false" >
             <arg value="./bundle-messages.sh" />
         </exec>
@@ -282,6 +282,7 @@ l property to true -->
     </target>
 
     <!-- Write the app version into ${version} -->
+    <!-- Depends on compile b/c it gets the app version from I2PBote.class -->
     <target name="getversion" depends="compile">
         <javac
             srcdir="./ant"
@@ -301,7 +302,6 @@ l property to true -->
         <echo message="I2P-Bote version is ${version}"/>
     </target>
 
-    <!-- depends on compile b/c it gets the app version from I2PBote.class -->
     <target name="src" depends="getversion">
         <property name="subdir" value="i2pbote-${version}-src"/>
         <zip destfile="src.zip">
@@ -327,6 +327,64 @@ l property to true -->
         </exec>
     </target>
 
+    <target name="javadoc" depends="getversion">
+        <!--
+           Instead of eepgetting the package list, it would be easier to just let Ant
+           do it through the eeproxy:
+           
+           <javadoc ...>
+               <link href="http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/api/"/>
+             
+           But Ant falls back to no proxy if a proxied download fails, so eepget is preferable.
+        -->
+        <mkdir dir="ant_build" />
+        <property name="pkglistdir" value="ant_build/package_lists"/>
+        <mkdir dir="${pkglistdir}" />
+        <echo message="Downloading package lists"/>
+    	
+        <mkdir dir="${pkglistdir}/jdk"/>
+        <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
+            <arg value="-o"/>
+            <arg value="${pkglistdir}/jdk/package-list"/>
+            <arg value="http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/api/package-list"/>
+        </java>
+        <mkdir dir="${pkglistdir}/servlet"/>
+        <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
+            <arg value="-o"/>
+            <arg value="${pkglistdir}/servlet/package-list"/>
+            <arg value="http://download.oracle.com/docs/cd/E17477_01/javaee/1.4/api/package-list"/>
+        </java>
+        <mkdir dir="${pkglistdir}/javamail"/>
+        <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
+            <arg value="-o"/>
+            <arg value="${pkglistdir}/javamail/package-list"/>
+            <arg value="http://java.sun.com/products/javamail/javadocs/package-list"/>
+        </java>
+        <mkdir dir="${pkglistdir}/bouncycastle"/>
+        <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
+            <arg value="-o"/>
+            <arg value="${pkglistdir}/bouncycastle/package-list"/>
+            <arg value="http://bouncycastle.org/docs/docs1.6/package-list"/>
+        </java>
+        
+        <javadoc
+                sourcepath="src"
+                destdir="javadoc"
+                classpathref="cp"
+                windowtitle="I2P-Bote"
+                doctitle="I2P-Bote ${version} Javadoc"
+                use="true"
+                linksource="yes">
+            <arg value="-J-Dhttp.proxyHost=localhost"/>
+            <arg value="-J-Dhttp.proxyPort=4444"/>
+            <link href="http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/api/" offline="true" packagelistloc="${pkglistdir}/jdk"/>
+            <link href="http://download.oracle.com/docs/cd/E17477_01/javaee/1.4/api/" offline="true" packagelistloc="${pkglistdir}/servlet"/>
+            <link href="http://java.sun.com/products/javamail/javadocs/" offline="true" packagelistloc="${pkglistdir}/javamail"/>
+            <link href="http://bouncycastle.org/docs/docs1.6/" offline="true" packagelistloc="${pkglistdir}/bouncycastle"/>
+            <link href="http://bob.i2p/javadoc/"/>
+        </javadoc>
+    </target>
+
     <target name="clean">
         <delete dir="ant_build" />
         <delete file="i2pbote.war" />
@@ -335,5 +393,6 @@ l property to true -->
         <delete file="i2pbote.xpi2p" />
         <delete file="i2pbote-update.xpi2p" />
         <delete file="src.zip" />
+        <delete dir="javadoc" />
     </target>
 </project>

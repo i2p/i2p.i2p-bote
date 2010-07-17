@@ -210,7 +210,7 @@ public class JSPHelper {
 
     /**
      * Deletes a contact from the address book.
-     * @param key A base64-encoded email destination
+     * @param destination A base64-encoded email destination
      * @return null if sucessful, or an error message if an error occured
      */
     public static String deleteContact(String destination) {
@@ -288,13 +288,12 @@ public class JSPHelper {
 
     /**
      * Returns the recipient address for an email that has been received by
-     * the local node.
+     * the local node.<br/>
      * If the email was sent to more than one local Email Destination, one
-     * of them is returned.
+     * of them is returned.<br/>
      * If the email does not contain a local Email Destination, <code>null</code>
      * is returned.
      * @param email
-     * @return
      */
     public static Address getOneLocalRecipient(Email email) {
         Address[] recipients;
@@ -341,7 +340,6 @@ public class JSPHelper {
      * Looks for an Email Destination in a sender address. If no Email Destination
      * is found, </code>null</code> is returned.
      * @param address
-     * @return
      */
     public static String extractEmailDestination(String address) {
         return EmailDestination.extractBase64Dest(address);
@@ -471,7 +469,6 @@ public class JSPHelper {
      * email destination that is either in the address book or among the local
      * email identities.
      * @param address
-     * @return
      */
     public static boolean isKnown(String address) {
         String destination = extractEmailDestination(address);
@@ -513,7 +510,6 @@ public class JSPHelper {
      * Looks for a name in a sender address. If the address contains no name
      * (i.e. only an Email Destination), an empty string is returned.
      * @param address
-     * @return
      */
     public static String extractName(String address) {
         if (address == null)

@@ -24,7 +24,8 @@ package i2p.bote.folder;
 import java.io.File;
 
 /**
- * Subclassed for distinction between the trash folder and non-trash folders.
+ * Subclassed for distinction between folders that move emails to
+ * the trash, and the trash folder which deletes them permanently.
  */
 public class TrashFolder extends EmailFolder {
 

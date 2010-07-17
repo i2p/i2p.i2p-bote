@@ -107,11 +107,10 @@ public class Configuration {
      * Reads configuration settings from the <code>I2P_BOTE_SUBDIR</code> subdirectory under
      * the I2P application directory. The I2P application directory can be changed via the
      * <code>i2p.dir.app</code> system property.
-     * 
+     * <p/>
      * Logging is done through the I2P logger. I2P reads the log configuration from the
      * <code>logger.config</code> file whose location is determined by the
      * <code>i2p.dir.config</code> system property.
-     * @return
      */
     public Configuration() {
         properties = new Properties();
@@ -205,8 +204,7 @@ public class Configuration {
     }
     
     /**
-     * Save the configuration
-     * @param configFile
+     * Saves the configuration to a file.
      */
     public void save() {
     	log.debug("Saving config file <" + configFile.getAbsolutePath() + ">");
@@ -219,8 +217,8 @@ public class Configuration {
     }
 
     /**
-     * Returns the number of relays to use for sending and receiving email. Zero is a legal value.
-     * @return
+     * Returns the number of relays to use for sending and receiving email.
+     * @return A non-negative number
      */
     public int getRedundancy() {
     	return getIntParameter(PARAMETER_REDUNDANCY, DEFAULT_REDUNDANCY);
@@ -228,7 +226,6 @@ public class Configuration {
 
     /**
      * Returns the maximum size (in bytes) the inbox can take up.
-     * @return
      */
     public int getStorageSpaceInbox() {
     	return getIntParameter(PARAMETER_STORAGE_SPACE_INBOX, DEFAULT_STORAGE_SPACE_INBOX);
@@ -236,15 +233,13 @@ public class Configuration {
     
     /**
      * Returns the maximum size (in bytes) all messages stored for relaying can take up.
-     * @return
      */
     public int getStorageSpaceRelay() {
     	return getIntParameter(PARAMETER_STORAGE_SPACE_RELAY, DEFAULT_STORAGE_SPACE_RELAY);
     }
     
     /**
-     * Returns the time (in milliseconds) after which an email is deleted from the outbox if it cannot be sent / relayed.
-     * @return
+     * Returns the time (in milliseconds) after which an email is deleted from the outbox if it cannot be sent or relayed.
      */
     public long getStorageTime() {
     	return 24L * 3600 * 1000 * getIntParameter(PARAMETER_STORAGE_TIME, DEFAULT_STORAGE_TIME);
@@ -260,7 +255,6 @@ public class Configuration {
     
     /**
      * Returns the maximum number of email identities to retrieve new emails for at a time.
-     * @return
      */
     public int getMaxConcurIdCheckMail() {
         return getIntParameter(PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL, DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL);
@@ -279,9 +273,10 @@ public class Configuration {
     }
     
     /**
-     * Returns the number of minutes the application should wait before automatically
-     * checking for mail.
-     * @return
+     * Returns the number of minutes the application should wait before 
+     * checking for mail again. This setting only has an effect if
+     * automatic mail checking is disabled.
+     * @see #isAutoMailCheckEnabled()
      */
     public int getMailCheckInterval() {
         return getIntParameter(PARAMETER_MAIL_CHECK_INTERVAL, DEFAULT_MAIL_CHECK_INTERVAL);
@@ -293,7 +288,6 @@ public class Configuration {
     
     /**
      * Returns the number of minutes to wait before processing the relay packet folder again.
-     * @return
      */
     public int getRelaySendPause() {
         return getIntParameter(PARAMETER_RELAY_SEND_PAUSE, DEFAULT_RELAY_SEND_PAUSE);
@@ -320,7 +314,6 @@ public class Configuration {
 
     /**
      * Returns the two-letter language code for the current locale.
-     * @return
      */
     public String getLanguage() {
         return properties.getProperty(PARAMETER_LANGUAGE, DEFAULT_LANGUAGE);
@@ -328,7 +321,6 @@ public class Configuration {
 
     /**
      * Returns the current locale.
-     * @return
      */
     public Locale getLocale() {
         return new Locale(getLanguage());
@@ -336,7 +328,6 @@ public class Configuration {
 
     /**
      * Returns all locales for which a translation exists.
-     * @return
      */
     public Locale[] getAllLocales() {
         return I2PBote.getInstance().getAllLocales();
@@ -344,8 +335,8 @@ public class Configuration {
 
     /**
      * Controls whether strings that are added to outgoing email, like "Re:" or "Fwd:",
-     * are translated or not.
-     * If <code>hideLocale</code> is <code>false</code>, the UI language is used.
+     * are translated or not.<br/>
+     * If <code>hideLocale</code> is <code>false</code>, the UI language is used.<br/>
      * If <code>hideLocale</code> is <code>true</code>, the strings are left untranslated
      * (which means they are in English).
      * @param hideLocale
@@ -376,48 +367,41 @@ public class Configuration {
     
     /**
      * Returns the number of relay chains that should be used per Relay Request.
-     * @return
      */
     public int getRelayRedundancy() {
         return getIntParameter(PARAMETER_RELAY_REDUNDANCY, DEFAULT_RELAY_REDUNDANCY);
     }
     
-    /**
-     * Sets the minimum amount of time that a Relay Request is delayed.
-     * @param minDelay The minimum delay in minutes
-     */
     public void setRelayMinDelay(int minDelay) {
         properties.setProperty(PARAMETER_RELAY_MIN_DELAY, Integer.valueOf(minDelay).toString());
     }
     
+    /**
+     * Returns the minimum amount of time in minutes that a Relay Request is delayed.
+     */
     public int getRelayMinDelay() {
         return getIntParameter(PARAMETER_RELAY_MIN_DELAY, DEFAULT_RELAY_MIN_DELAY);
     }
     
-    /**
-     * Sets the maximum amount of time that a Relay Request is delayed.
-     * @param minDelay The minimum delay in minutes
-     */
     public void setRelayMaxDelay(int maxDelay) {
         properties.setProperty(PARAMETER_RELAY_MAX_DELAY, Integer.valueOf(maxDelay).toString());
     }
     
     /**
      * Returns the maximum amount of time in minutes that a Relay Request is delayed.
-     * @return
      */
     public int getRelayMaxDelay() {
         return getIntParameter(PARAMETER_RELAY_MAX_DELAY, DEFAULT_RELAY_MAX_DELAY);
     }
     
-    /**
-     * Returns the number of relays that should be used when sending a DHT store request.
-     * @return
-     */
     public void setNumStoreHops(int numHops) {
         properties.setProperty(PARAMETER_NUM_STORE_HOPS, Integer.valueOf(numHops).toString());
     }
     
+    /**
+     * Returns the number of relays that should be used when sending a DHT store request.
+     * @return A non-negative number
+     */
     public int getNumStoreHops() {
         return getIntParameter(PARAMETER_NUM_STORE_HOPS, DEFAULT_NUM_STORE_HOPS);
     }

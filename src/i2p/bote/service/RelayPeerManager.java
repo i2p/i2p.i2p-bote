@@ -65,7 +65,7 @@ import net.i2p.util.Log;
  */
 public class RelayPeerManager extends I2PBoteThread implements PacketListener {
     private static final int MAX_PEERS = 50;   // maximum number of peers
-    private static final int MIN_REACHABILITY = 80;
+    private static final int MIN_REACHABILITY = 80;   // percentage of requests sent to a peer / responses received back
     private static final int UPDATE_INTERVAL = 30;   // time in minutes between updating peers
     
     private Log log = new Log(RelayPeerManager.class);
@@ -214,7 +214,6 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
      * Returns <code>numPeers</code> randomly selected peers with a reachability
      * of <code>MIN_REACHABILITY</code> or higher. If less than <code>numPeers</code>
      * suitable peers are available, this method blocks until there are enough.
-     * @return
      */
     public List<Destination> getRandomPeers(int numPeers) {
         while (!shutdownRequested()) {

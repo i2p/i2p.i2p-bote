@@ -39,7 +39,9 @@ import net.i2p.util.Log;
 import com.nettgryppa.security.HashCash;
 
 /**
- * A <code>RelayRequest</code> contains an encrypted {@link RelayDataPacket} or {@link DhtStorablePacket}.
+ * A <code>RelayRequest</code> tells the receiver to communicate with a peer, or peers,
+ * on behalf of the sender.<br/>
+ * It contains an encrypted {@link RelayDataPacket} or {@link i2p.bote.packet.dht.DhtStorablePacket}.
  */
 @TypeCode('Y')
 public class RelayRequest extends CommunicationPacket {
@@ -91,7 +93,6 @@ public class RelayRequest extends CommunicationPacket {
     /**
      * Returns the payload packet, i.e. the data that is being relayed.
      * @param i2pSession An <code>I2PSession</code> that contains the private key necessary to decrypt the payload
-     * @return
      * @throws DataFormatException 
      * @throws MalformedDataPacketException 
      */

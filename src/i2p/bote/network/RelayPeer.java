@@ -68,8 +68,7 @@ public class RelayPeer extends Destination {
     /**
      * Returns the percentage of requests sent to this peer for which 
      * a response was received.
-     * If no request has been sent to the peer, <code>0</code> is returned.
-     * @return
+     * If no request has been sent to the peer yet, <code>0</code> is returned.
      */
     public synchronized int getReachability() {
         if (requestsSent == 0)

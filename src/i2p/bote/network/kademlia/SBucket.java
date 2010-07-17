@@ -28,10 +28,10 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
- * An {@link AbstractBucket} that implements an S/Kademlia sibling list.
+ * An {@link AbstractBucket} that implements an S/Kademlia sibling list.<br/>
  * Peers are kept in an <code>ArrayList</code> sorted by XOR distance
- * from the local destination. The closest peer is at index 0, the
- * most distant peer is at index <code>n-1</code>.
+ * from the local destination.<br/>
+ * The closest peer is at index 0, the most distant peer is at index <code>n-1</code>.
  */
 public class SBucket extends AbstractBucket {
     private Log log = new Log(SBucket.class);

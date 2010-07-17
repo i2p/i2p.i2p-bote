@@ -51,7 +51,6 @@ public interface DHT {
 
     /**
      * Returns the current number of known active peers.
-     * @return
      */
     int getNumPeers();
     
@@ -63,9 +62,9 @@ public interface DHT {
 
     /**
      * Waits <code>timeout</code> milliseconds for the DHT engine to exit
-     * after {@link requestShutdown} has been called.
+     * after {@link #requestShutdown()} has been called.
      * @param timeout
-     * @throw InterruptedException
+     * @throws InterruptedException
      */
     void awaitShutdown(long timeout) throws InterruptedException;
 }

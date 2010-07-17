@@ -31,13 +31,11 @@ public interface DhtPeerStats {
 
     /**
      * Returns the header row for the table
-     * @return
      */
-    public List<String> getHeader();
+    List<String> getHeader();
 
     /**
      * Returns the table data, one row per peer.
-     * @return
      */
-    public List<List<String>> getData();
+    List<List<String>> getData();
 }

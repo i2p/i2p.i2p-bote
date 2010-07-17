@@ -37,8 +37,8 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
- * A request to a peer to delete an entry from a stored {@link IndexPacket}.
- * Contains pairs of DHT keys and delete authorization keys.
+ * A request to a peer to delete one or more entries from a stored {@link IndexPacket}.<br/>
+ * Contains pairs of DHT keys and delete authorization keys.<br/>
  * This class is not thread-safe.
  */
 @TypeCode('X')

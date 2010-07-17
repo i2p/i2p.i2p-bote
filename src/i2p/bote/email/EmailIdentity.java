@@ -126,7 +126,6 @@ public class EmailIdentity extends EmailDestination {
 
     /**
      * Returns the two key pairs (public + private) as one Base64-encoded string.
-     * @return
      * @throws GeneralSecurityException 
      */
     public String getFullKey() throws GeneralSecurityException {

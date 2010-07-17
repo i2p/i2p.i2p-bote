@@ -49,7 +49,6 @@ public class RelayDataPacket extends DataPacket {
     private RelayRequest request;
 
     /**
-     * 
      * @param nextDestination The I2P destination to send the packet to
      * @param minDelayMilliseconds In milliseconds
      * @param maxDelayMilliseconds In milliseconds
@@ -82,30 +81,31 @@ public class RelayDataPacket extends DataPacket {
     
     /**
      * Creates a <code>RelayDataPacket</code> containing <code>numHops</code> nested
-     * <code>RelayRequest</code>s, each containing a <code>RelayDataPacket</code>.
+     * <code>RelayRequest</code>s, each containing a <code>RelayDataPacket</code>.<br/>
      * Returns <code>null</code> if <code>numHops</code> is <code>0</code>.
-     * 
-     * If <code>numHops = 1</code>, the finished packet looks as follows (outermost to innermost):
-     * 
-     * Unencrypted RelayDataPacket
-     * RelayRequest
-     * Encrypted DataPacket
-     * 
-     * For <code>numHops = 2</code>:
-     * 
-     * Unencrypted RelayDataPacket
-     * RelayRequest
-     * Encrypted RelayDataPacket
-     * RelayRequest
-     * Encrypted DataPacket
-     * 
-     * Each additional hop adds an encrypted <code>RelayDataPacket</code> and a <code>RelayRequest</code>.
+     * <p/>
+     * If <code>numHops = 1</code>, the finished packet looks as follows (outermost to innermost):<br/>
+     * <ul>
+     *   <li/>Unencrypted RelayDataPacket<br/>
+     *   <li/>RelayRequest<br/>
+     *   <li/>Encrypted DataPacket
+     * </ul>
+     * <p/>
+     * For <code>numHops = 2</code>:<br/>
+     * <ul>
+     *   <li/>Unencrypted RelayDataPacket<br/>
+     *   <li/>RelayRequest<br/>
+     *   <li/>Encrypted RelayDataPacket<br/>
+     *   <li/>RelayRequest<br/>
+     *   <li/>Encrypted DataPacket
+     * </ul>
+     * <p/>
+     * For each additional hop, an encrypted <code>RelayDataPacket</code> and a <code>RelayRequest</code> is added.
      * @param payload
      * @param peerManager
      * @param numHops
      * @param minDelayMilliseconds
      * @param maxDelayMilliseconds
-     * @return
      */
     public static RelayDataPacket create(DataPacket payload, RelayPeerManager peerManager, int numHops, long minDelayMilliseconds, long maxDelayMilliseconds) {
         List<Destination> relayPeers = peerManager.getRandomPeers(numHops);
@@ -146,7 +146,7 @@ public class RelayDataPacket extends DataPacket {
     }
     
     /**
-     * @param The time the packet is scheduled for sending, in milliseconds since 1-1-1970
+     * @param sendTime The time the packet is scheduled for sending, in milliseconds since <code>1-1-1970</code>
      */
     public void setSendTime(long sendTime) {
         this.sendTime = sendTime;
@@ -161,7 +161,6 @@ public class RelayDataPacket extends DataPacket {
 
     /**
      * Returns the <code>RelayRequest</code> this packet contains.
-     * @return
      */
     public RelayRequest getRequest() {
         return request;

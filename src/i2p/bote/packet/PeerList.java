@@ -34,6 +34,9 @@ import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 
+/**
+ * A response to a Find Close Peers Request or a Peer List Request.
+ */
 @TypeCode('L')
 public class PeerList extends DataPacket {
     private Log log = new Log(PeerList.class);

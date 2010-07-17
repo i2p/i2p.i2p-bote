@@ -50,12 +50,12 @@ public class Identities implements Iterable<EmailIdentity> {
 
     /**
      * Constructs <code>Identities</code> from a text file. Each identity is defined
-     * by one line that contains two to four tab-separated fields:
+     * by one line that contains two to four tab-separated fields:<br/>
      * Email Destination key, Public Name, Description, and Email Address.
      * The first two are mandatory, the last two are optional.
-     * 
+     * <p/>
      * Additionally, the file can set a default Email Destination by including a
-     * line that starts with "Default ", followed by an Email Destination key.
+     * line that starts with "Default ", followed by an Email Destination key.<br/>
      * The destination key must match one of the Email Destinations defined in
      * the file.
      * @param identitiesFile
@@ -201,7 +201,6 @@ public class Identities implements Iterable<EmailIdentity> {
     /**
      * Sets the default identity. Assumes this <code>Identities</code> already
      * contains <code>defaultIdentity</code>.
-     * @return
      */
     public void setDefault(EmailIdentity defaultIdentity) {
         // clear the old default
@@ -213,7 +212,6 @@ public class Identities implements Iterable<EmailIdentity> {
     
     /**
      * Returns the default identity, or <code>null</code> if no default is set.
-     * @return
      */
     public EmailIdentity getDefault() {
         for (EmailIdentity identity: identities)
@@ -229,10 +227,9 @@ public class Identities implements Iterable<EmailIdentity> {
 
     /**
      * Looks up an {@link EmailIdentity} that has the same public encryption key and the
-     * same public signing key as a given {@link EmailDestination}.
+     * same public signing key as a given {@link EmailDestination}.<br/>
      * Returns <code>null</code> if nothing is found.
-     * @param key
-     * @return
+     * @param destination
      */
     public EmailIdentity get(EmailDestination destination) {
         for (EmailIdentity identity: identities)
@@ -244,10 +241,9 @@ public class Identities implements Iterable<EmailIdentity> {
     
     /**
      * Looks up an {@link EmailIdentity} by its Base64 key (the two public keys, to be
-     * more precise).
-     * Returns <code>null</code> if nothing is found.
+     * more precise).<br/>
+     * Returns An <code>EmailIdentity</code>, or <code>null</code> if nothing is found.
      * @param key
-     * @return
      */
     public EmailIdentity get(String key) {
         for (EmailIdentity identity: identities)
@@ -263,16 +259,15 @@ public class Identities implements Iterable<EmailIdentity> {
     /**
      * Returns <code>true</code> if any of the <code>Identities</code> matches
      * the two public keys of a given {@link EmailDestination}
-     * (which can be an <code>EmailIdentity</code>).
-     * @param destination A base64-encoded Email Destination
-     * @return
+     * (Note that an <code>EmailIdentity</code> is an <code>EmailDestination</code>).
+     * @param base64Dest A base64-encoded Email Destination
      */
-    public boolean contains(String base64dest) {
-        if (base64dest == null)
+    public boolean contains(String base64Dest) {
+        if (base64Dest == null)
             return false;
         
         for (EmailIdentity identity: identities)
-            if (base64dest.equals(identity.toBase64()))
+            if (base64Dest.equals(identity.toBase64()))
                 return true;
         
         return false;

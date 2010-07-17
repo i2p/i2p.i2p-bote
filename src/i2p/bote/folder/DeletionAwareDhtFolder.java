@@ -88,9 +88,9 @@ public abstract class DeletionAwareDhtFolder<T extends DhtStorablePacket> extend
     
     /**
      * Stores a packet and returns a <code>DeleteRequest</code> if the packet, or entries in the
-     * packet, have been deleted. The <code>DeleteRequest</code> contains a Delete Authorization
-     * key (or keys if there are several entries) and can be sent to the peer that is trying to
-     * store the <code>DhtStorablePacket</code>.
+     * packet, have been deleted.<br/>
+     * The <code>DeleteRequest</code> contains a Delete Authorization key (or keys) and can be
+     * sent to the peer that is trying to store the <code>DhtStorablePacket</code>.
      * @param packetToStore
      * @return a <code>DeleteRequest</code> or <code>null</code> if the <code>DhtStorablePacket</code>
      * contains no deleted data.

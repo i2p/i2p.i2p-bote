@@ -407,11 +407,10 @@ public class I2PBote {
     }
     
     /**
-     * Returns <code>true</code> if the last call to {@link checkForMail} has completed
-     * and added new mail to the inbox.
+     * Returns <code>true</code> if the last call to {@link #checkForMail()} has completed
+     * and added new mail to the inbox.</br>
      * If this method returns <code>true</code>, subsequent calls will always return
-     * <code>false</code> until {@link checkForMail} is executed again.
-     * @return
+     * <code>false</code> until {@link #checkForMail()} is executed again.
      */
     public synchronized boolean newMailReceived() {
         if (pendingMailCheckTasks == null)
@@ -571,7 +570,7 @@ public class I2PBote {
     }
     
     /**
-     * Connects to the network, skipping the connect delay.
+     * Connects to the network, skipping the connect delay.<br/>
      * If the delay time has already passed, calling this method has no effect.
      */
     public void connectNow() {

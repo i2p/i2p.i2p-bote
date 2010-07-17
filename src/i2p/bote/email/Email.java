@@ -123,8 +123,8 @@ public class Email extends MimeMessage {
     }
 
     /**
-     * Returns <code>true</code> if the sender is anonymous.
-     * @return
+     * Returns <code>true</code> if the sender is anonymous, or
+     * <code>false</code> if the email contains a sender.
      * @throws MessagingException
      */
     public boolean isAnonymous() throws MessagingException {
@@ -155,7 +155,7 @@ public class Email extends MimeMessage {
 
     /**
      * Removes all headers that are not on the whitelist, and initializes some
-     * basic header fields.
+     * basic header fields.<br/>
      * Called by <code>saveChanges()</code>, see JavaMail JavaDoc.
      * @throws MessagingException
      */
@@ -215,11 +215,13 @@ public class Email extends MimeMessage {
     }
     
     /**
-     * Verifies that the email contains a valid signature. If the
-     * <code>SIGNATURE_VALID_FLAG</code> is present, its value is used.
+     * Verifies that the email contains a valid signature.<br/>
+     * If the <code>SIGNATURE_VALID_FLAG</code> is present, its value is
+     * used.<br/>
      * If not, the value of the <code>SIGNATURE_HEADER</code> header
      * field is verified (which is more CPU intensive).
-     * @return
+     * @return <code>true</code> if the signature is valid; <code>false</code>
+     * if it is invalid or an error occurred.
      */
     public boolean isSignatureValid() {
         try {
@@ -237,7 +239,8 @@ public class Email extends MimeMessage {
     /**
      * Verifies that the <code>SIGNATURE_HEADER</code> header field
      * contains a valid signature.
-     * @return
+     * @return <code>true</code> if the signature is valid; <code>false</code>
+     * if it is invalid or an error occurred.
      */
     private boolean verifySignature() {
         String[] signatureHeaders;
@@ -338,9 +341,8 @@ public class Email extends MimeMessage {
     
     /**
      * Returns all "Reply To" addresses (usually zero or one).
-     * Unlike {@link getReplyTo()}, this method does not return
+     * Unlike {@link #getReplyTo()}, this method does not return
      * the "From" address if there is no "Reply To" address.
-     * @return
      * @throws MessagingException
      */
     public String[] getReplyToAddresses() throws MessagingException {
@@ -432,7 +434,6 @@ public class Email extends MimeMessage {
     /**
      * Returns <code>true</code> if the email is unread (incoming mail), or
      * if it has not been sent yet (outgoing mail).
-     * @return
      */
     public boolean isNew() {
         return isNew;
@@ -444,9 +445,8 @@ public class Email extends MimeMessage {
      *
      * @param senderIdentity The sender's Email Identity, or <code>null</code> for anonymous emails
      * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
-     * @return
      * @throws MessagingException
-     * @throws GeneralSecurityException 
+     * @throws GeneralSecurityException If the email cannot be signed
      */
     public Collection<UnencryptedEmailPacket> createEmailPackets(EmailIdentity senderIdentity, String bccToKeep) throws MessagingException, GeneralSecurityException {
         ArrayList<UnencryptedEmailPacket> packets = new ArrayList<UnencryptedEmailPacket>();
@@ -591,7 +591,6 @@ public class Email extends MimeMessage {
     /**
      * Returns the text part of the email. If the email contains no text {@link Part},
      * <code>null</code> is returned. If an error occurs, an error message is returned.
-     * @return
      */
     public String getText() {
         try {

@@ -39,17 +39,17 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
- * Contains {@link IndexPacketEntry} objects for an Email Destination.
+ * Contains {@link IndexPacketEntry} objects for an Email Destination.<br/>
  * Index Packets can be sent between two peers, or stored in a file. They are used when:
- * 
- *   1. A peer sends an Index Packet to another peer in a Store Request, or
- *      responds to a Retrieve Request.
- *      Each entry contains an Email Packet key and a Delete Verification Hash.
- *      The time stamp is zero.
- *   2. A peer stores entries in an Index Packet file.
- *      Each entry contains a an Email Packet key, a Delete Verification Hash,
- *      and a time stamp.
- * 
+ * <ol>
+ *   <li/>A peer sends an Index Packet to another peer in a Store Request, or
+ *        responds to a Retrieve Request.<br/>
+ *        Each entry contains an Email Packet key and a Delete Verification Hash.<br/>
+ *        The time stamp is zero.
+ *   <li/>A peer stores entries in an Index Packet file.<br/>
+ *        Each entry contains a an Email Packet key, a Delete Verification Hash,
+ *        and a time stamp.
+ * </ol>
  * This class is not thread-safe.
  */
 @TypeCode('I')
@@ -74,7 +74,7 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
     }
     
     /**
-     * Merges the DHT keys of multiple index packets into one big index packet.
+     * Merges the DHT keys of multiple index packets into one big index packet.<br/>
      * The Email Destination of this packet is set to that of the first input packet.
      * @param indexPackets
      * @throws IllegalArgumentException If an empty <code>Collection</code> or <code>null</code> was passed in
@@ -94,7 +94,7 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
     }
     
     /**
-     * A varargs version of {@link IndexPacket(Collection<IndexPacket>)}.
+     * A varargs version of {@link #IndexPacket(Collection)}.
      * @param indexPackets
      */
     public IndexPacket(IndexPacket... indexPackets) {
@@ -149,7 +149,7 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
     }
     
     /**
-     * Adds a new entry containing the DHT key and Delete Verification Hash of an Email Packet.
+     * Adds a new entry containing the DHT key and Delete Verification Hash of an Email Packet.<br/>
      * If an entry with the same DHT key exists already, nothing happens.
      * @param emailPacket
      */
@@ -182,10 +182,8 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
     
     /**
      * Returns the delete verification hash for an email packet DHT key,
-     * or <code>null</code> if the index packet doesn't contain the
-     * DHT key.
+     * or <code>null</code> if the index packet doesn't contain the DHT key.
      * @param emailPacketKey
-     * @return
      */
     public Hash getDeleteVerificationHash(Hash emailPacketKey) {
         IndexPacketEntry entry = getEntry(emailPacketKey);

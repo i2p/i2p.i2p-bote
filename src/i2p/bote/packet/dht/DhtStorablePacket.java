@@ -37,7 +37,7 @@ public abstract class DhtStorablePacket extends DataPacket {
     }
 
     /**
-     * @see DataPacket(byte[])
+     * @see i2p.bote.packet.DataPacket#DataPacket(byte[])
      */
     public DhtStorablePacket(byte[] data) {
         super(data);
@@ -50,8 +50,6 @@ public abstract class DhtStorablePacket extends DataPacket {
      * The type of packet depends on the packet type field in the byte array.
      * If there is an error, <code>null</code> is returned.
      * @param data
-     * @param log
-     * @return
      * @throws MalformedDataPacketException
      */
     public static DhtStorablePacket createPacket(byte[] data) throws MalformedDataPacketException {
@@ -75,9 +73,10 @@ public abstract class DhtStorablePacket extends DataPacket {
     }
     
     /**
-     * Returns <code>null</code> if the file doesn't exist.
+     * Loads a <code>DhtStorablePacket</code> from a file.<br/>
+     * Returns <code>null</code> if the file doesn't exist, or if
+     * an error occurred.
      * @param file
-     * @return
      * @throws MalformedDataPacketException
      */
     public static DhtStorablePacket createPacket(File file) throws MalformedDataPacketException {

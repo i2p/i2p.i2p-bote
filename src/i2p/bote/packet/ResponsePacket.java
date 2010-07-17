@@ -30,6 +30,9 @@ import java.nio.ByteBuffer;
 
 import net.i2p.util.Log;
 
+/**
+ * A response to a Retrieve Request, Fetch Request, Find Close Peers Request, or a Peer List Request
+ */
 @TypeCode('N')
 public class ResponsePacket extends CommunicationPacket {
     private Log log = new Log(ResponsePacket.class);

@@ -51,6 +51,15 @@ import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
+/**
+ * Queries the DHT for the {@link i2p.bote.network.kademlia.KademliaConstants#K}
+ * peers closest to a given key.<br/>
+ * The results are sorted by distance from the key.
+ * <p/>
+ * The number of pending requests never exceeds {@link KademliaConstants#ALPHA}.
+ * According to the <code>infocom-2006-kad.pdf</code> paper (see
+ * {@link i2p.bote.network.kademlia.KademliaDHT}), this is the most efficient.
+ */
 public class ClosestNodesLookupTask implements Runnable {
     private static final int REQUEST_TIMEOUT = 30 * 1000;
     private static final int CLOSEST_NODES_LOOKUP_TIMEOUT = 5 * 60 * 1000;   // the maximum amount of time a FIND_CLOSEST_NODES can take
@@ -60,7 +69,7 @@ public class ClosestNodesLookupTask implements Runnable {
     private I2PPacketDispatcher i2pReceiver;
     private BucketManager bucketManager;
     private I2PSendQueue sendQueue;
-    private Destination localDestination;
+    private Destination localDestination;   // The I2P destination of the local node
     private Comparator<Destination> peerComparator;
     private SortedSet<Destination> responses;   // sorted by distance to the key to look up
     private SortedSet<Destination> notQueriedYet;   // peers that are yet to be queried; sorted by distance to the key to look up
@@ -68,13 +77,7 @@ public class ClosestNodesLookupTask implements Runnable {
     private long startTime;
     
     /**
-     * Queries the DHT for the <code>k</code> peers closest to a given key.
-     * The results are sorted by distance from the key.
-     * 
-     * The number of pending requests never exceeds <code>ALPHA</code>. According to [4], this is the most efficient.
-     * 
      * @param key The DHT key to look up
-     * @param localDestination The I2P destination of the local node
      * @param sendQueue For sending I2P packets
      * @param i2pReceiver For receiving I2P packets
      * @param bucketManager For looking up peers, and updating them
@@ -198,11 +201,11 @@ public class ClosestNodesLookupTask implements Runnable {
     }
     
     /**
-     * Returns up to <code>k</code> peers, sorted by distance from the key.
+     * Returns up to {@link i2p.bote.network.kademlia.KademliaConstants#K} peers,
+     * sorted by distance from the key.<br/>
      * The list may contain the local node if it is among the <code>k</code>
-     * closest.
+     * closest.<br/>
      * If no peers were found, an empty <code>List</code> is returned.
-     * @return
      */
     public List<Destination> getResults() {
         List<Destination> resultsList = new ArrayList<Destination>();
@@ -215,7 +218,7 @@ public class ClosestNodesLookupTask implements Runnable {
     }
     
     /**
-     * Updates <code>notQueriedYet</code> with the <code>k</code> closest locally known peers.
+     * Updates <code>notQueriedYet</code> with the <code>k</code> closest locally known peers.<br/>
      * This has the the same effect as sending a <code>FindClosePeersPacket</code> to the local destination,
      * but without the network round-trip.
      * @param key

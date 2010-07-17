@@ -32,6 +32,9 @@ import java.nio.ByteBuffer;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
+/**
+ * A request to a peer to return a data item with a given DHT key and data type.
+ */
 @TypeCode('Q')
 public class RetrieveRequest extends CommunicationPacket {
     private Log log = new Log(RetrieveRequest.class);

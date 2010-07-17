@@ -37,7 +37,7 @@ import org.bouncycastle.crypto.InvalidCipherTextException;
  * nor a hash algorithm, which is always SHA-256.
  */
 public interface CryptoImplementation {
-	
+    
     /** Returns a user-friendly name for this <code>CryptoImplementation</code>. */ 
     String getName();
     
@@ -74,8 +74,8 @@ public interface CryptoImplementation {
      * The toByteArray methods are incompatible with the toBase64 methods.
      * Using this method and base64-encoding the byte array may result in longer strings than calling toBase64 directly.
      */
-	byte[] toByteArray(PublicKeyPair keyPair);
-	
+    byte[] toByteArray(PublicKeyPair keyPair);
+    
     /**
      * The toByteArray methods are incompatible with the toBase64 methods.
      * Using this method and base64-encoding the byte array may result in longer strings than calling toBase64 directly.
@@ -83,12 +83,12 @@ public interface CryptoImplementation {
     byte[] toByteArray(PrivateKeyPair keyPair);
     
     /**
-     * This is the counterpart to {@link toByteArray(PublicKeyPair)}.
+     * This is the counterpart to {@link #toByteArray(PublicKeyPair)}.
      */
     PublicKeyPair createPublicKeyPair(byte[] bytes) throws GeneralSecurityException;
     
     /**
-     * This is the counterpart to {@link toByteArray(PrivateKeyPair)}.
+     * This is the counterpart to {@link #toByteArray(PrivateKeyPair)}.
      */
     PrivateKeyPair createPrivateKeyPair(byte[] bytes) throws GeneralSecurityException;
     
@@ -105,16 +105,16 @@ public interface CryptoImplementation {
     String toBase64(PrivateKeyPair keyPair) throws GeneralSecurityException;
     
     /**
-     * This is the counterpart to {@link toBase64(PublicKeyPair)}.
+     * This is the counterpart to {@link #toBase64(PublicKeyPair)}.
      * The toBase64 methods are incompatible with the toByteArray methods.
-     * This method may not work with strings obtained by Base64-encoding the result of {@link toByteArray(PublicKeyPair)}.
+     * This method may not work with strings obtained by Base64-encoding the result of {@link #toByteArray(PublicKeyPair)}.
      */
     PublicKeyPair createPublicKeyPair(String base64) throws GeneralSecurityException;
     
     /**
-     * This is the counterpart to {@link toBase64(PrivateKeyPair)}.
+     * This is the counterpart to {@link #toBase64(PrivateKeyPair)}.
      * The toBase64 methods are incompatible with the toByteArray methods.
-     * This method may not work with strings obtained by Base64-encoding the result of {@link toByteArray(PrivateKeyPair)}.
+     * This method may not work with strings obtained by Base64-encoding the result of {@link #toByteArray(PrivateKeyPair)}.
      */
     PrivateKeyPair createPrivateKeyPair(String base64) throws GeneralSecurityException;
     
@@ -122,11 +122,11 @@ public interface CryptoImplementation {
     // Encryption and signing
     // 
     
-	byte[] encrypt(byte[] data, PublicKey key) throws GeneralSecurityException;
-	
-	byte[] decrypt(byte[] data, PrivateKey key) throws GeneralSecurityException, InvalidCipherTextException;
-	
-	byte[] sign(byte[] data, PrivateKey key) throws GeneralSecurityException;
-	
-	boolean verify(byte[] data, byte[] signature, PublicKey key) throws GeneralSecurityException;
+    byte[] encrypt(byte[] data, PublicKey key) throws GeneralSecurityException;
+    
+    byte[] decrypt(byte[] data, PrivateKey key) throws GeneralSecurityException, InvalidCipherTextException;
+    
+    byte[] sign(byte[] data, PrivateKey key) throws GeneralSecurityException;
+    
+    boolean verify(byte[] data, byte[] signature, PublicKey key) throws GeneralSecurityException;
 }

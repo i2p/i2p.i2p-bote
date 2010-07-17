@@ -66,7 +66,6 @@ abstract class AbstractBucket implements Iterable<KademliaPeer> {
      * Looks up a <code>KademliaPeer</code> by I2P destination. If the bucket
      * doesn't contain the peer, <code>null</code> is returned.
      * @param destination
-     * @return
      */
     protected KademliaPeer getPeer(Destination destination) {
         int index = getPeerIndex(destination);
@@ -78,9 +77,8 @@ abstract class AbstractBucket implements Iterable<KademliaPeer> {
     
     /**
      * Looks up the index of a <code>Destination</code> in the bucket.
-     * if nothing is found, -1 is returned.
+     * if nothing is found, <code>-1</code> is returned.
      * @param destination
-     * @return
      */
     protected int getPeerIndex(Destination destination) {
         // An alternative to indexOf, which does a linear search, would be to maintain a Map<Destination, KademliaPeer>.

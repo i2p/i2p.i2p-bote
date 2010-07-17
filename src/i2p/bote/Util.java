@@ -69,8 +69,7 @@ public class Util {
      * Returns the lines as a <code>List</code> of <code>String</code>s,
      * or an empty <code>List</code> if an error occurred.
      * @param url
-     * @return
-     * @see readLines(File)
+     * @see #readLines(File)
      */
     public static List<String> readLines(URL url) {
         Log log = new Log(Util.class);
@@ -99,8 +98,7 @@ public class Util {
      * Returns the lines as a <code>List</code> of <code>String</code>s,
      * or an empty <code>List</code> if an error occurred.
      * @param file
-     * @return
-     * @see readLines(URL)
+     * @see #readLines(URL)
      */
     public static List<String> readLines(File file) {
         Log log = new Log(Util.class);
@@ -153,7 +151,6 @@ public class Util {
      * Creates an I2P destination with a null certificate from 384 bytes that
      * are read from a <code>ByteBuffer</code>.
      * @param buffer
-     * @return
      * @throws DataFormatException 
      */
     public static Destination createDestination(ByteBuffer buffer) throws DataFormatException {
@@ -187,7 +184,6 @@ public class Util {
      * new one.
      * @param <E>
      * @param iterable
-     * @return
      */
     public static <E> Iterable<E> synchronizedCopy(Iterable<E> iterable) {
         synchronized(iterable) {
@@ -203,7 +199,6 @@ public class Util {
      * @param <E>
      * @param collection
      * @param i
-     * @return
      */
     public static <E> E get(Collection<E> collection, int i) {
         for (E element: collection) {
@@ -230,7 +225,6 @@ public class Util {
      * Removes all whitespace at the beginning and the end of a string,
      * and replaces multiple whitespace characters with a single space.
      * @param string
-     * @return
      */
     public static String removeExtraWhitespace(String string) {
         if (string == null)
@@ -243,7 +237,6 @@ public class Util {
      * Also removes angle brackets if the address begins and ends
      * with an angle bracket.
      * @param address
-     * @return
      */
     public static String fixAddress(String address) {
         if (address == null)

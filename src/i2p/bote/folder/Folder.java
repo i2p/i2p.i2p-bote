@@ -61,7 +61,6 @@ public abstract class Folder<T> implements Iterable<T> {
     
     /**
      * Returns the names of all files in the folder.
-     * @return
      */
     public File[] getFilenames() {
         File[] files = storageDir.listFiles(new FilenameFilter() {

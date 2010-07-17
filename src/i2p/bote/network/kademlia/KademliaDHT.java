@@ -77,17 +77,18 @@ import com.nettgryppa.security.HashCash;
 
 /**
  * The main class of the Kademlia implementation. All the high-level Kademlia logic
- * is in here.
+ * is in here.<br/>
  * In addition to standard Kademlia, the sibling list feature of S-Kademlia is implemented.
- * 
- * Resources used:
- *   [1] http://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf
- *   [2] http://xlattice.sourceforge.net/components/protocol/kademlia/specs.html
- *   [3] http://en.wikipedia.org/wiki/Kademlia
- *   [4] http://www.barsoom.org/papers/infocom-2006-kad.pdf
- *   [5] http://doc.tm.uka.de/SKademlia_2007.pdf
- *   [6] OverSim (http://www.oversim.org/), which includes a S/Kademlia implementation
- *   
+ * <p/>
+ * Resources used:<br/>
+ * <ol>
+ *   <li>http://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf<br/>
+ *   <li>http://xlattice.sourceforge.net/components/protocol/kademlia/specs.html<br/>
+ *   <li>http://en.wikipedia.org/wiki/Kademlia<br/>
+ *   <li>http://www.barsoom.org/papers/infocom-2006-kad.pdf<br/>
+ *   <li>http://doc.tm.uka.de/SKademlia_2007.pdf<br/>
+ *   <li>OverSim (http://www.oversim.org/), which includes a S/Kademlia implementation<br/>
+ * </ol>
  */
 public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private static final int RESPONSE_TIMEOUT = 60;   // Max. number of seconds to wait for replies to retrieve requests

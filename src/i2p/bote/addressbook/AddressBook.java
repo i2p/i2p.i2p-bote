@@ -40,7 +40,7 @@ import java.util.List;
 import net.i2p.util.Log;
 
 /**
- * Implements the private address book. Holds a set of <code>Addresses</code>.
+ * Implements the private address book. Holds a set of {@link Contact}s.
  */
 public class AddressBook implements Iterable<Contact> {
     private Log log = new Log(AddressBook.class);
@@ -136,7 +136,6 @@ public class AddressBook implements Iterable<Contact> {
      * Looks up an {@link Contact} by its Base64 key. If none is found,
      * <code>null</code> is returned.
      * @param destination
-     * @return
      */
     public Contact get(String destination) {
         if (destination==null || destination.isEmpty())
@@ -152,7 +151,6 @@ public class AddressBook implements Iterable<Contact> {
      * Returns <code>true</code> if a given Base64-encoded Email Destination
      * is in the address book.
      * @param base64dest
-     * @return
      */
     public boolean contains(String base64dest) {
         if (base64dest == null)

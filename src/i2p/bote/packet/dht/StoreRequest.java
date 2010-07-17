@@ -36,6 +36,9 @@ import net.i2p.util.Log;
 
 import com.nettgryppa.security.HashCash;
 
+/**
+ * A request to a peer to store a DHT data item.
+ */
 @TypeCode('S')
 public class StoreRequest extends CommunicationPacket {
     private Log log = new Log(StoreRequest.class);

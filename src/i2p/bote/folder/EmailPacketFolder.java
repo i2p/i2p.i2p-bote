@@ -40,10 +40,10 @@ import net.i2p.util.Log;
 
 /**
  * A subclass of {@link DhtPacketFolder} that stores email packets and deletes them
- * upon {@link EmailPacketDeleteRequest}s.
+ * upon {@link EmailPacketDeleteRequest}s.<br/>
  * When a packet is deleted, its DHT key is added to a {@link DeletionInfoPacket} file
  * whose file name starts with <code>DEL_</code>.
- * 
+ * <p/>
  * Deletion Records are kept until they expire (see {@link ExpirationListener}), so
  * there will be a large number of them after a while. To keep the number of files to
  * a reasonable level, the records are grouped together in Deletion Info Packets

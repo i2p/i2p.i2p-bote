@@ -36,7 +36,7 @@ import net.i2p.util.Log;
 
 /**
  * an <code>EmailDestination</code> uniquely identifies an email recipient. It consists
- * of a public encryption key and a public signing key.
+ * of a public encryption key and a public signing key.<br/>
  * The {@link CryptoImplementation} used by an Email Destination is not explicitly
  * encoded in the base64 representation. It is determined by the length of the base64 string.
  */
@@ -93,7 +93,6 @@ public class EmailDestination {
      * Even if the return value is non-<code>null</code>, it is not
      * guaranteed to be a valid Email Destination.
      * @param address
-     * @return
      */
     public static String extractBase64Dest(String address) {
         if (address == null)

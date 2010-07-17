@@ -34,9 +34,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * An {@link EmailFolder} that maintains a status for each email.
+ * An {@link EmailFolder} that maintains a status for each email.<br/>
  * The status is not written to a file. It is reset when the application
- * is restarted.
+ * is restarted.<br/>
  * Statuses can be any string. Their purpose is to inform the user
  * about the sending progress.
  */
@@ -97,7 +97,6 @@ public class Outbox extends EmailFolder {
      * If the email doesn't exist in the outbox, or if no status is set,
      * <code>DEFAULT_STATUS</code> is returned.
      * @param email
-     * @return
      */
     public String getStatus(Email email) {
         String messageId = email.getMessageID();

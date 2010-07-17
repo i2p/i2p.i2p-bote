@@ -38,16 +38,15 @@ public class AddressDisplayFilter {
     }
     
     /**
-     * Looks up the name associated with a Base64-encoded Email Destination,
+     * Looks up the name associated with a Base64-encoded Email Destination
      * in the address book and the local identities, and returns a string
-     * that contains the name and the Base64-encoded destination.
+     * that contains the name and the Base64-encoded destination.<br/>
      * If <code>address</code> already contains a name, it is replaced with
-     * the one from the address book or identities.
+     * the one from the address book or identities.<br/>
      * If no name is found in the address book or the identities, or if
      * <code>address</code> does not contain a valid Email Destination,
      * <code>address</code> is returned.
      * @param address A Base64-encoded Email Destination, and optionally a name
-     * @return
      */
     public String getNameAndDestination(String address) {
         String base64dest = EmailDestination.extractBase64Dest(address);

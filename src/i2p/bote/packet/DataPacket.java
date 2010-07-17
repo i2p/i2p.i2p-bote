@@ -44,7 +44,7 @@ public abstract class DataPacket extends I2PBotePacket {
 
     /**
      * Creates a <code>DataPacket</code> from raw datagram data. The only thing that is initialized
-     * is the protocol version. The packet type code is verified.
+     * is the protocol version. The packet type code is verified.<br/>
      * Subclasses should start reading at byte <code>HEADER_LENGTH</code> after calling this constructor.
      * @param data
      */
@@ -72,10 +72,9 @@ public abstract class DataPacket extends I2PBotePacket {
     }
     
     /**
-     * Creates a {@link DataPacket} object from a file, using the same format as the
-     * {@link createPacket(byte[])} method.
+     * Creates a {@link #DataPacket} object from a file, using the same format as the
+     * {@link #createPacket(byte[])} method.
      * @param file
-     * @return
      * @throws MalformedDataPacketException
      */
     public static DataPacket createPacket(File file) throws MalformedDataPacketException {
@@ -102,10 +101,9 @@ public abstract class DataPacket extends I2PBotePacket {
     }
     
     /**
-     * Creates a {@link DataPacket} object from its byte array representation.
+     * Creates a {@link DataPacket} object from its byte array representation.<br/>
      * If there is an error, <code>null</code> is returned.
      * @param data
-     * @return
      * @throws MalformedDataPacketException
      */
     public static DataPacket createPacket(byte[] data) throws MalformedDataPacketException {

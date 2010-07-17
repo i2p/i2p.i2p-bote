@@ -14,9 +14,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * Taken from http://wiki.apache.org/tomcat/Tomcat/UTF-8.
+ * Taken from <code>http://wiki.apache.org/tomcat/Tomcat/UTF-8.</code></br>
  * The link is dead now, but similar code ships with Tomcat and can be found at
- * $TOMCAT/webapps/examples/WEB-INF/classes/filters/SetCharacterEncodingFilter.java.
+ * <code>$TOMCAT/webapps/examples/WEB-INF/classes/filters/SetCharacterEncodingFilter.java</code>.
  */
 public class CharsetFilter implements Filter {
     private String encoding;

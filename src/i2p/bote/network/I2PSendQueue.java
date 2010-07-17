@@ -45,11 +45,11 @@ import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 
 /**
- * All outgoing I2P traffic goes through this class.
+ * All outgoing I2P traffic goes through this class.<br/>
  * Packets are sent at a rate no greater than specified by the
  * <CODE>maxBandwidth</CODE> property.
- *
- * The packet queue is FIFO with the exception of delayed packets.
+ * <p/>
+ * The packet queue is FIFO with the exception of delayed packets.<br/>
  * The packet with the highest index in the queue is always the next
  * to be sent.
  */
@@ -128,7 +128,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     
     /**
      * Sends a batch of packets, each to its own destination.
-     * Replies to the batch's packets are received until {@link remove(PacketBatch)} is called.
+     * Replies to the batch's packets are received until {@link #remove(PacketBatch)} is called.
      * @param batch
      */
     public void send(PacketBatch batch) {
@@ -155,7 +155,6 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
 
     /**
      * Return the maximum outgoing bandwidth in kbits/s
-     * @return
      */
     public int getMaxBandwidth() {
         return maxBandwidth;

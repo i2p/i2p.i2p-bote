@@ -59,9 +59,9 @@ public abstract class CommunicationPacket extends I2PBotePacket {
     }
     
     /**
-     * Creates a packet and initializes the header fields shared by all Communication Packets:
-     * packet type, protocol version, and packet id.
-     * Subclasses should start reading at byte <code>HEADER_LENGTH</code> after calling this constructor.
+     * Creates a packet and initializes the header fields shared by all Communication Packets:<br/>
+     * packet type, protocol version, and packet id.<br/>
+     * Subclasses should start reading at byte {@link #HEADER_LENGTH} after calling this constructor.
      * @param data
      */
     protected CommunicationPacket(byte[] data) {
@@ -77,8 +77,6 @@ public abstract class CommunicationPacket extends I2PBotePacket {
      * Creates a packet object from its byte array representation. If there is an error,
      * <code>null</code> is returned.
      * @param data
-     * @param log
-     * @return
      * @throws MalformedCommunicationPacketException
      */
     public static CommunicationPacket createPacket(byte[] data) throws MalformedCommunicationPacketException {

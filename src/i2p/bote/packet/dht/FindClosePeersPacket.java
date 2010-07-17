@@ -30,6 +30,10 @@ import java.io.IOException;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
+/**
+ * A request for {@link i2p.bote.network.kademlia.KademliaConstants#K} peers that
+ * are closest to a given key.
+ */
 @TypeCode('F')
 public class FindClosePeersPacket extends CommunicationPacket {
     private Log log = new Log(FindClosePeersPacket.class);

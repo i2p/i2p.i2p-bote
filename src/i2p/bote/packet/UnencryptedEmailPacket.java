@@ -102,7 +102,6 @@ public class UnencryptedEmailPacket extends DataPacket {
     
     /**
      * Returns the payload of the packet, which is compressed or uncompressed MIME data.
-     * @return
      */
     public byte[] getContent() {
        return content;

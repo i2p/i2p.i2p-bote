@@ -30,6 +30,9 @@ import java.nio.ByteBuffer;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
+/**
+ * A request to delete an Email Packet by DHT key
+ */
 @TypeCode('D')
 public class EmailPacketDeleteRequest extends DeleteRequest {
     private Log log = new Log(EmailPacketDeleteRequest.class);
