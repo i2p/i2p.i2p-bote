@@ -77,43 +77,46 @@ public class SendEmailTag extends BodyTagSupport {
 
         Email email = new Email();
         String statusMessage;
-        try {
-            // set addresses
-            email.setSender(new InternetAddress(senderAddress));
-            email.setSubject(subject, "UTF-8");
-            for (Recipient recipient: recipients)
-                email.addRecipient(recipient.type, recipient.address);
-            email.fixAddresses();
-            
-            // set the text and add attachments
-            if (attachments.isEmpty())
-                email.setText(message, "UTF-8");
-            else {
-                Multipart multiPart = new MimeMultipart();
-                MimeBodyPart textPart = new MimeBodyPart();
-                textPart.setText(message, "UTF-8");
-                multiPart.addBodyPart(textPart);
+        if (recipients.isEmpty())
+            statusMessage = _("Error: Please add at least one recipient.");
+        else
+            try {
+                // set addresses
+                email.setSender(new InternetAddress(senderAddress));
+                email.setSubject(subject, "UTF-8");
+                for (Recipient recipient: recipients)
+                    email.addRecipient(recipient.type, recipient.address);
+                email.fixAddresses();
                 
-                attach(multiPart, attachments);
-                email.setContent(multiPart);
+                // set the text and add attachments
+                if (attachments.isEmpty())
+                    email.setText(message, "UTF-8");
+                else {
+                    Multipart multiPart = new MimeMultipart();
+                    MimeBodyPart textPart = new MimeBodyPart();
+                    textPart.setText(message, "UTF-8");
+                    multiPart.addBodyPart(textPart);
+                    
+                    attach(multiPart, attachments);
+                    email.setContent(multiPart);
+                }
+    
+                // send the email
+                I2PBote.getInstance().sendEmail(email);
+                
+                // delete attachment temp files
+                for (Attachment attachment: attachments) {
+                    File tempFile = new File(attachment.tempFilename);
+                    if (!tempFile.delete())
+                        log.error("Can't delete file: <" + tempFile.getAbsolutePath() + ">");
+                }
+                
+                statusMessage = _("The email has been queued for sending.");
             }
-
-            // send the email
-            I2PBote.getInstance().sendEmail(email);
-            
-            // delete attachment temp files
-            for (Attachment attachment: attachments) {
-                File tempFile = new File(attachment.tempFilename);
-                if (!tempFile.delete())
-                    log.error("Can't delete file: <" + tempFile.getAbsolutePath() + ">");
+            catch (Exception e) {
+                statusMessage = _("Error sending email: {0}", e.getLocalizedMessage());
+                log.error("Error sending email", e);
             }
-            
-            statusMessage = _("The email has been queued for sending.");
-        }
-        catch (Exception e) {
-            statusMessage = _("Error sending email: {0}", e.getLocalizedMessage());
-            log.error("Error sending email", e);
-        }
 
         try {
             out.println(statusMessage);
