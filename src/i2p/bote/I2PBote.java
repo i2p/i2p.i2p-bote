@@ -371,7 +371,8 @@ public class I2PBote {
     public void sendEmail(Email email) throws Exception {
         email.checkAddresses();
         outbox.add(email);
-        outboxProcessor.checkForEmail();
+        if (outboxProcessor != null)
+            outboxProcessor.checkForEmail();
     }
 
     public synchronized void checkForMail() {
