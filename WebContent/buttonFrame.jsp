@@ -40,17 +40,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="i2pbote.css" />
-    <c:if test="${checkingForMail}">
+    
+    <%-- Refresh until the Check Mail button becomes ungreyed --%>
+    <c:if test="${checkingForMail or connStatus eq NOT_STARTED or connStatus eq DELAY}">
         <meta http-equiv="refresh" content="20;url=buttonFrame.jsp" />
     </c:if>
 </head>
 
 <body style="background-color: transparent; margin: 0px;">
-
-<c:set var="disable" value=""/>
-<c:if test="${connStatus == DELAY}">
-    <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
-</c:if>
 
 <table><tr>
     <td>
@@ -74,6 +71,10 @@
                 
                 <form action="${url}" ${frame} method="GET">
                     <input type="hidden" name="checkMail" value="1"/>
+					<c:set var="disable" value=""/>
+					<c:if test="${connStatus == DELAY}">
+					    <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
+					</c:if>
                     <button type="submit" value="Check Mail/>" ${disable}><ib:message key="Check Mail"/></button>
                 </form>
             </div>
@@ -88,7 +89,7 @@
     </td>
     <td>
         <form action="newEmail.jsp" target="_top" method="GET">
-            <button type="submit" value="New" ${disable}><ib:message key="New"/></button>
+            <button type="submit" value="New"><ib:message key="New"/></button>
         </form>
     </td>
 </tr></table>
