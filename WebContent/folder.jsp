@@ -34,6 +34,11 @@
     pageContext.setAttribute("DATE", i2p.bote.email.EmailAttribute.DATE, PageContext.PAGE_SCOPE);
 %> 
 
+<%-- Autorefresh inbox and sent folders --%>
+<c:if test="${param.path eq 'Inbox' or param.path eq 'Sent'}">
+    <c:set var="refreshInterval" value="60" scope="request"/>
+    <c:set var="refreshUrl" value="folder.jsp?path=${param.path}&sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
+</c:if>
 <c:set var="title" value="${param.path}" scope="request"/>
 <jsp:include page="header.jsp"/>
 

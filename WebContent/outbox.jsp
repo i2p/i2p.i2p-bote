@@ -34,6 +34,11 @@
     pageContext.setAttribute("STATUS", i2p.bote.email.EmailAttribute.STATUS, PageContext.PAGE_SCOPE);
 %> 
 
+<%-- Refresh page if there are mails in the outbox --%>
+<c:if test="${ib:getMailFolder('Outbox').numElements gt 0}">
+    <c:set var="refreshInterval" value="20" scope="request"/>
+    <c:set var="refreshUrl" value="outbox.jsp?sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
+</c:if>
 <c:set var="title" value="Outbox" scope="request"/>
 <jsp:include page="header.jsp"/>
 
@@ -78,7 +83,7 @@
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
             <th style="width: 100px;">
-                <c:set var="sortLink" value="outbox.jsp?path=${param.path}&sortcolumn=${TO}"/>
+                <c:set var="sortLink" value="outbox.jsp?sortcolumn=${TO}"/>
                 <c:if test="${sortcolumn eq TO}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="toColumnIndicator" value=" ${sortIndicator}"/>

@@ -28,6 +28,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<%--
+    JSP variables that can be passed into this JSP:
+    
+        title           - The page title to set
+        refreshInterval - If this parameter is set, do an HTTP refresh every refreshInterval seconds
+        refreshUrl      - If refreshInterval is set, load this URL when refreshing
+--%>
+
 <fmt:requestEncoding value="UTF-8"/>
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
@@ -37,6 +45,12 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <%-- Refresh --%>
+    <c:if test="${not empty refreshInterval}">
+        <meta http-equiv="refresh" content="${refreshInterval};url=${refreshUrl}" />
+    </c:if>
+    
     <link rel="stylesheet" href="i2pbote.css" />
     <link rel="icon" type="image/png" href="images/favicon.png" />
     <c:if test="${!empty title}">
