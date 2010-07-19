@@ -32,7 +32,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="i2pbote.css" />
-    <meta http-equiv="refresh" content="20" />
+    <c:if test="${connStatus ne CONNECTED and connStatus ne ERROR}">
+        <meta http-equiv="refresh" content="20" />
+    </c:if>
 </head>
 
 <body style="background-color: transparent; margin: 0px;">
