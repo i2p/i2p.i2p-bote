@@ -45,7 +45,7 @@ import net.i2p.util.Log;
  * An <code>EncryptedEmailPacket</code> contains an encrypted <code>UnencryptedEmailPacket</code>
  * and additional data.
  * <p/>
- * The field <code>authHash</code> is the SHA-256 hash of a 32-byte block of data (the
+ * The field <code>delVerificationHash</code> is the SHA-256 hash of a 32-byte block of data (the
  * delete authorization) that is part of <code>encryptedData</code>. Storage nodes will verify
  * the hash before deleting an <code>EncryptedEmailPacket</code>.
  * <p/>
