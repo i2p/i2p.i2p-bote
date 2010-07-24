@@ -49,7 +49,6 @@ import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
-import net.i2p.i2ptunnel.I2PTunnel;
 import net.i2p.util.Log;
 
 /**
@@ -116,22 +115,6 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
     }
     
     /**
-     * Creates peer destination from a <code>String</code>, and adds it to <code>peers</code>.
-     * @param dest A Base 64 destination encoded as a <code>String</code>
-     */
-    private void addPeer(String dest) {
-        synchronized(peers) {
-            if(peers.size() >= MAX_PEERS) {
-                return;
-            }
-            RelayPeer peer = parsePeerFileEntry(dest);
-            if(peer != null && !localDestination.equals(peer)) {
-                peers.add(peer);
-            }
-        }
-    }
-
-    /**
      * Creates a <code>RelayPeer</code> from an entry of the peer file.
      * An entry is an I2P destination which can (but doesn't have to) be
      * followed by "requests sent" and "responses received" numbers.
@@ -196,20 +179,6 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
         }
     }
     
-    public void injectPeers(List<String> botePeers) {
-        List<String> b32peers = botePeers;
-        Iterator it = b32peers.iterator();
-        while(it.hasNext()) {
-            try {
-                String b32 = (String)it.next();
-                String destination = I2PTunnel.destFromName(b32).toBase64();
-                addPeer(destination + "\t60\t60");
-            } catch(DataFormatException ex) {
-                // nop
-            }
-        }
-    }
-
     /**
      * Returns <code>numPeers</code> randomly selected peers with a reachability
      * of <code>MIN_REACHABILITY</code> or higher. If less than <code>numPeers</code>
