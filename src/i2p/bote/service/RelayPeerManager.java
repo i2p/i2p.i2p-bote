@@ -133,7 +133,7 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
             Destination destination = new Destination(fields[0]);
             if (fields.length >= 3) {
                 long requestsSent = Long.valueOf(fields[1]);
-                long responsesReceived = Long.valueOf(fields[1]);
+                long responsesReceived = Long.valueOf(fields[2]);
                 return new RelayPeer(destination, requestsSent, responsesReceived);
             }
             else
