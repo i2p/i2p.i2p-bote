@@ -113,6 +113,7 @@ public class CheckEmailTask implements Callable<Boolean> {
             Runnable task = new EmailPacketTask(entry.emailPacketKey);
             futureResults.add(executor.submit(task));
         }
+        executor.shutdown();   // end all EmailPacketTask threads when tasks are finished
         
         // wait until all EmailPacketTasks are done
         for (Future<?> result: futureResults)
