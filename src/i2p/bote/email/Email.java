@@ -37,15 +37,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
 import java.security.PrivateKey;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Locale;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -57,6 +54,7 @@ import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MailDateFormat;
 import javax.mail.internet.MimeMessage;
 
 import net.i2p.data.Base64;
@@ -169,14 +167,14 @@ public class Email extends MimeMessage {
         scrubHeaders();
         removeRecipientNames();
         
-        // Set the send time or remove the send time field
+        // Depending on includeSendTime, set the send time or remove the send time field
         if (includeSendTime) {
-            // Set the "Date" field in UTC time, using the English locale.
-            long currentTime = new Date().getTime();
-            long timeZoneOffset = TimeZone.getDefault().getOffset(currentTime);
-            currentTime -= timeZoneOffset;
-            DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss +0000", Locale.ENGLISH);   // always use UTC for outgoing mail
-            setHeader("Date", formatter.format(currentTime));
+            if (getSentDate() == null) {
+                // Set the "Date" field in UTC time, using the English locale.
+                MailDateFormat formatter = new MailDateFormat();
+                formatter.setTimeZone(TimeZone.getTimeZone("GMT"));   // always use UTC for outgoing mail
+                setHeader("Date", formatter.format(new Date()));
+            }
         }
         else
             removeHeader("Date");
