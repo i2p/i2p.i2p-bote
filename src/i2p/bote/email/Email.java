@@ -22,7 +22,6 @@
 package i2p.bote.email;
 
 import static i2p.bote.Util._;
-import i2p.bote.I2PBote;
 import i2p.bote.UniqueId;
 import i2p.bote.Util;
 import i2p.bote.crypto.CryptoFactory;
@@ -63,11 +62,10 @@ import javax.mail.internet.MimeMessage;
 import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
-
-import com.nettgryppa.security.HashCash;
-
 import SevenZip.Compression.LZMA.Decoder;
 import SevenZip.Compression.LZMA.Encoder;
+
+import com.nettgryppa.security.HashCash;
 
 public class Email extends MimeMessage {
     private static final int MAX_BYTES_PER_PACKET = 30 * 1024;
@@ -83,10 +81,15 @@ public class Email extends MimeMessage {
     private static Log log = new Log(Email.class);
     private UniqueId messageId;
     private boolean isNew = true;
+    private boolean includeSendTime;
 
-    public Email() {
+    /**
+     * @param includeSendTime Whether to add a "Date" header.
+     */
+    public Email(boolean includeSendTime) {
         super(Session.getDefaultInstance(new Properties()));
         messageId = new UniqueId();
+        this.includeSendTime = includeSendTime;
     }
 
     /**
@@ -109,6 +112,7 @@ public class Email extends MimeMessage {
     private Email(InputStream inputStream, boolean compressed) throws MessagingException, IOException {
         super(Session.getDefaultInstance(new Properties()), compressed?Email.decompress(inputStream):inputStream);
         messageId = new UniqueId();
+        includeSendTime = getSentDate() != null;
     }
 
    /**
@@ -165,9 +169,8 @@ public class Email extends MimeMessage {
         scrubHeaders();
         removeRecipientNames();
         
-        // Set the send time if the "Include sent time" config setting is enabled;
-        // otherwise, remove the send time field.
-        if (I2PBote.getInstance().getConfiguration().getIncludeSentTime()) {
+        // Set the send time or remove the send time field
+        if (includeSendTime) {
             // Set the "Date" field in UTC time, using the English locale.
             long currentTime = new Date().getTime();
             long timeZoneOffset = TimeZone.getDefault().getOffset(currentTime);

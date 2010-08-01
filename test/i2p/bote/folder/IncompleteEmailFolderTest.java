@@ -88,7 +88,7 @@ public class IncompleteEmailFolderTest {
 	}
 
     private void testAddEmail(String mailContent, int expectedNumPackets) throws Exception {
-        Email email = new Email();
+        Email email = new Email(true);
         String recipient = "test@bote.i2p";
         email.addRecipient(RecipientType.TO, new InternetAddress(recipient));
         email.setText(mailContent);

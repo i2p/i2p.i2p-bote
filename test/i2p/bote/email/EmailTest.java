@@ -58,7 +58,7 @@ public class EmailTest {
         
         identity = new EmailIdentity("uDl~luJ5RMhTJHIpYIiZUoxyE6xQHcOELDq9yaXELLYnODd88DBClohCfoIKDKOJL4fMBb34mLN42K8ptisCkLiVWliAZl4jiFtaXUGbXtNnZtkCYheelbL5mFyvcuGmmri-smOMZ-ROcio3V18VwQZfBeV-4-LHWpLaa8tqc1B0KVwCr0PVnwihcibut10VdfELhbhLYfI32fHQFTG6hCCZzhhe1jt8Ixl-aTAj2vXaPyJrfWn3M~Md1XsBAuFAQ5EHh0niJgF~CHn~gsRROpVvVZRDL9OAfAGAomnZMFEixnFW6B3Dce-uCTKFP5Jck3n1gP7cgRfVcXsRd4WCvWmzDFlmNMA~fIfscbTseSSke0AzA05sGskqQxNlnLyPFaXSX5OE4szfYz55onKRbgQFIJ-Pru9C8Ejvd7WGocmF6Lz6mtxhnzEl8-~wutAga94XQuRTlGr1kDSsve1hdGMyQ8UrUS~wP3Ke9JjLI7feg~uUI-bB6YvaVsOuVEHCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQ2~7HQlbJ7oT-fpSot9DUclsw0LGra2Fk86phRsyGriq5uCv1GLGawFTkFvtBkOP");
         identity.setPublicName("Max Mustermann");
-        emails[0] = new Email();
+        emails[0] = new Email(true);
         emails[0].setSender(new InternetAddress(identity.getPublicName() + " <" + identity.getKey() + ">"));
         emails[0].addRecipient(RecipientType.TO, new InternetAddress("Erika Mustermann <uDl~luJ5RMhTJHIpYIiZUoxyE6xQHcOELDq9yaXELLYnODd88DBClohCfoIKDKOJL4fMBb34mLN42K8ptisCkLiVWliAZl4jiFtaXUGbXtNnZtkCYheelbL5mFyvcuGmmri-smOMZ-ROcio3V18VwQZfBeV-4-LHWpLaa8tqc1B0KVwCr0PVnwihcibut10VdfELhbhLYfI32fHQFTG6hCCZzhhe1jt8Ixl-aTAj2vXaPyJrfWn3M~Md1XsBAuFAQ5EHh0niJgF~CHn~gsRROpVvVZRDL9OAfAGAomnZMFEixnFW6B3Dce-uCTKFP5Jck3n1gP7cgRfVcXsRd4WCvWmzDFlmNMA~fIfscbTseSSke0AzA05sGskqQxNlnLyPFaXSX5OE4szfYz55onKRbgQFIJ-Pru9C8Ejvd7WGocmF6Lz6mtxhnzEl8-~wutAga94XQuRTlGr1kDSsve1hdGMyQ8UrUS~wP3Ke9JjLI7feg~uUI-bB6YvaVsOuVEHC>"));
         emails[0].setSubject("Test", "UTF-8");
@@ -66,7 +66,7 @@ public class EmailTest {
         
         identity = new EmailIdentity("m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UYYujtjOOwCqXPH9PIbcZeFRkegbOxw5G6I7M4-TZBFbxYDtaew6HX9hnQEGWHkaapq2kTTB3Hmv0Uyo64jvcfMmSRcPng3J1Ho5mHgnzsH0qxQemnBcw7Lfc9fU8xRz858uyiQ8J8XH3T8S7k2~8L7awSgaT7uHQgpV~Rs0p1ofJ70g");
         identity.setPublicName("Max Mustermann");
-        emails[1] = new Email();
+        emails[1] = new Email(true);
         emails[1].setSender(new InternetAddress(identity.getPublicName() + " <" + identity.getKey() + ">"));
         emails[1].addRecipient(RecipientType.TO, new InternetAddress("Erika Mustermann <m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UY>"));
         emails[1].setSubject("Test", "UTF-8");
@@ -74,7 +74,7 @@ public class EmailTest {
         
         identity = new EmailIdentity("p2Njb7qvettUyfW3-GdMasoi9PIZbszjC-t2y55yFsP-ib4p2wXUlxL2KTofdcQkhOpR24nnZATfol-QQVKS9AOjggfWIkXQcf6dWraE~YIiNyQJ3sa~MixqKixRsSfpsLuFotDPBShvuSwKTIx7~9k0cfbJn98y1HV7VAEz8xhS");
         identity.setPublicName("Lieschen Müller");
-        emails[2] = new Email();
+        emails[2] = new Email(true);
         emails[2].setSender(new InternetAddress(identity.getPublicName() + " <" + identity.getKey() + ">"));
         emails[2].addRecipient(RecipientType.TO, new InternetAddress("E. Kishon <ix4fWGXnWUJRWtTsbFUiNks8BPAsBzEnVuzFErMNikjhtfdkBIiF-XdhmnnHxKRVGTCzGoo8dqoeI2hfLCZxds>"));
         emails[2].addRecipient(RecipientType.CC, new InternetAddress("R. Sheckley <uXh8-RSBNBVHbLd8ZznhcRcklM2KUHZxYwpEDvBQeyXne0tEiW8IdrT8IA27IjPRSV1k8c4BX9VB0sE7oA0sO3>"));
@@ -88,7 +88,7 @@ public class EmailTest {
         bccIdentity = new EmailIdentity("lnd40Y0WI2JXWs69EQXLLxpKGrVF-c0xyZiOnAalIhxuHrnvdFqjH-vKWUg6wVooT1etxPCZFzRkWDG8tYMU7OM7vU0XG79~OcRzXlHsMgfpID4HN71-eOReQm8g0lNGgEJ-OPGDNCT1ti5Zs7bge6hu033Je-ihI2OLCc6WXgK8");
         
         // create an anonymous email, don't map it to an identity
-        emails[3] = new Email();
+        emails[3] = new Email(true);
         emails[3].setSender(new InternetAddress("anonymous"));
         emails[3].addRecipient(RecipientType.TO, new InternetAddress("Erika Mustermann <m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UY>"));
         emails[3].setSubject("Test", "UTF-8");
@@ -206,7 +206,7 @@ public class EmailTest {
         for (int i=0; i<50000; i++)
             stringBuilder.append("0123456789");
         
-        Email newEmail = new Email();
+        Email newEmail = new Email(true);
         newEmail.setText(stringBuilder.toString());
         Collection<UnencryptedEmailPacket> packets = newEmail.createEmailPackets(bccIdentity, null);
         assertEquals("The email was not compressed into one email packet.", 1, packets.size());

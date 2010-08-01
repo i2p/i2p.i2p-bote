@@ -32,7 +32,9 @@
 
 <div class="main">
 
-<ib:sendEmail sender="${param.sender}" subject="${param.subject}" message="${param.message}">
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+<c:set var="configuration" value="${jspHelperBean.configuration}"/>
+<ib:sendEmail sender="${param.sender}" subject="${param.subject}" message="${param.message}" includeSentTime="${configuration.includeSentTime}">
     <c:forEach var="parameter" items="${ib:getSortedRecipientParams(param)}">
         <c:set var="recipientIndex" value="${fn:substringAfter(parameter.key, 'recipient')}"/>
         <c:set var="recipientTypeAttrName" value="recipientType${recipientIndex}"/>

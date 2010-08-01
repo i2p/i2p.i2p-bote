@@ -59,6 +59,7 @@ public class SendEmailTag extends BodyTagSupport {
     private List<Attachment> attachments = new ArrayList<Attachment>();
     private String subject;
     private String message;
+    private boolean includeSentTime;
     
     /**
      * Overridden to remove parameters from the previous SendEmailTag object so the old
@@ -75,7 +76,7 @@ public class SendEmailTag extends BodyTagSupport {
     public int doEndTag() {
         JspWriter out = pageContext.getOut();
 
-        Email email = new Email();
+        Email email = new Email(includeSentTime);
         String statusMessage;
         if (recipients.isEmpty())
             statusMessage = _("Error: Please add at least one recipient.");
@@ -214,6 +215,14 @@ public class SendEmailTag extends BodyTagSupport {
         return message;
     }
 
+    public void setIncludeSentTime(boolean includeSentTime) {
+        this.includeSentTime = includeSentTime;
+    }
+ 
+    public boolean getIncludeSentTime() {
+        return includeSentTime;
+    }
+ 
     private static class Recipient {
         RecipientType type;
         Address address;

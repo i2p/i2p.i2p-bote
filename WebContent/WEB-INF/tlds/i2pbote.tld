@@ -24,6 +24,11 @@
         <rtexprvalue>true</rtexprvalue>
         <required>true</required>
     </attribute>
+    <attribute>
+        <name>includeSentTime</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
 </tag>
 
 <tag>
