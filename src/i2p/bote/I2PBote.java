@@ -233,23 +233,6 @@ public class I2PBote implements NetworkStatusSource {
     private void initializeServices() {
         I2PPacketDispatcher dispatcher = new I2PPacketDispatcher();
 
-        SeedlessParameters seedlessParameters = SeedlessParameters.getInstance();
-        // the following call may take some time waiting for Seedless to start up
-        // but that is not a problem because this method runs on the ConnectTask thread.
-        if (seedlessParameters.isSeedlessAvailable()) {
-            log.info("Seedless found.");
-            seedlessRequestPeers = new SeedlessRequestPeers(seedlessParameters, 60);
-            backgroundThreads.add(seedlessRequestPeers);
-            seedlessScrapePeers = new SeedlessScrapePeers(seedlessParameters, 10);
-            backgroundThreads.add(seedlessScrapePeers);
-            seedlessScrapeServers = new SeedlessScrapeServers(seedlessParameters, 10);
-            backgroundThreads.add(seedlessScrapeServers);
-            seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 60);
-            backgroundThreads.add(seedlessAnnounce);
-        }
-        else
-            log.info("Seedless NOT found.");
-        
         i2pSession.addMuxedSessionListener(dispatcher, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_ANY);
         
 /*        smtpService = new SMTPService();
@@ -302,6 +285,23 @@ public class I2PBote implements NetworkStatusSource {
         
         emailChecker = new EmailChecker(identities, configuration, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder, this, sendQueue, dht, peerManager);
         backgroundThreads.add(emailChecker);
+        
+        SeedlessParameters seedlessParameters = SeedlessParameters.getInstance();
+        // the following call may take some time waiting for Seedless to start up
+        // but that is not a problem because this method runs on the ConnectTask thread.
+        if (seedlessParameters.isSeedlessAvailable()) {
+            log.info("Seedless found.");
+            seedlessRequestPeers = new SeedlessRequestPeers(seedlessParameters, 60);
+            backgroundThreads.add(seedlessRequestPeers);
+            seedlessScrapePeers = new SeedlessScrapePeers(seedlessParameters, 10);
+            backgroundThreads.add(seedlessScrapePeers);
+            seedlessScrapeServers = new SeedlessScrapeServers(seedlessParameters, 10);
+            backgroundThreads.add(seedlessScrapeServers);
+            seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 60);
+            backgroundThreads.add(seedlessAnnounce);
+        }
+        else
+            log.info("Seedless NOT found.");
     }
 
     /**
