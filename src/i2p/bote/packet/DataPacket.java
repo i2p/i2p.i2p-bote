@@ -102,17 +102,14 @@ public abstract class DataPacket extends I2PBotePacket {
     
     /**
      * Creates a {@link DataPacket} object from its byte array representation.<br/>
-     * If there is an error, <code>null</code> is returned.
      * @param data
-     * @throws MalformedDataPacketException
+     * @throws MalformedDataPacketException If the byte array does not contain a valid <code>DataPacket</code>.
      */
     public static DataPacket createPacket(byte[] data) throws MalformedDataPacketException {
         char packetTypeCode = (char)data[0];   // first byte of a data packet is the packet type code
         Class<? extends I2PBotePacket> packetType = decodePacketTypeCode(packetTypeCode);
-        if (packetType==null || !DataPacket.class.isAssignableFrom(packetType)) {
-            log.error("Type code is not a DataPacket type code: <" + packetTypeCode + ">");
-            return null;
-        }
+        if (packetType==null || !DataPacket.class.isAssignableFrom(packetType))
+            throw new MalformedDataPacketException("Type code is not a DataPacket type code: <" + packetTypeCode + ">");
         
         Class<? extends DataPacket> dataPacketType = packetType.asSubclass(DataPacket.class);
         DataPacket packet = null;
@@ -123,10 +120,8 @@ public abstract class DataPacket extends I2PBotePacket {
             throw new MalformedDataPacketException("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
         }
         
-        if (packet.getProtocolVersion() != I2PBote.PROTOCOL_VERSION) {
-            log.warn("Ignoring " + packetType.getSimpleName() + " packet with protocol version " + packet.getProtocolVersion());
-            return null;
-        }
+        if (packet.getProtocolVersion() != I2PBote.PROTOCOL_VERSION)
+            throw new MalformedDataPacketException("Incorrect protocol version: " + packet.getProtocolVersion() + ", packet: " + packet);
         
         return packet;
     }

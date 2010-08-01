@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import net.i2p.util.Log;
 
@@ -60,7 +61,8 @@ public abstract class Folder<T> implements Iterable<T> {
     }
     
     /**
-     * Returns the names of all files in the folder.
+     * Returns the names of all files in the folder that end in <code>fileExtension</code>.<br/>
+     * If there are no such files, an empty array is returned.
      */
     public File[] getFilenames() {
         File[] files = storageDir.listFiles(new FilenameFilter() {
@@ -91,43 +93,71 @@ public abstract class Folder<T> implements Iterable<T> {
         return elements;
     }
     
-    /** An {@link Iterator} implementation that loads one file into memory at a time. */
+    /**
+      * An {@link Iterator} implementation that loads one file into memory at a time.<br/>
+      * Files that cannot be read or contain invalid data are skipped.
+      */
     @Override
     public final Iterator<T> iterator() {
         final File[] files = getFilenames();
         log.debug(files.length + " files with the extension '" + fileExtension + "' found in '" + storageDir + "'.");
 
         return new Iterator<T>() {
-            int nextIndex = 0;
-            File currentFile;
-            
+            Iterator<File> fileIterator = Arrays.asList(files).iterator();
+            T nextElement;   // the next value to return
+            File lastFile;   // the file that corresponds to the last element returned by next()
+            File currentFile;   // the last file read in findNextElement()
+
             @Override
             public boolean hasNext() {
-                return nextIndex < files.length;
+                if (nextElement == null)
+                    findNextElement();
+                return nextElement != null;
             }
 
             @Override
             public T next() {
-                currentFile = files[nextIndex];
-                nextIndex++;
-                String filePath = currentFile.getAbsolutePath();
-                log.debug("Reading file: '" + filePath + "'");
-                try {
-                    T nextElement = createFolderElement(currentFile);
-                    return nextElement;
+                if (nextElement == null)
+                    findNextElement();
+                if (nextElement == null)
+                    throw new NoSuchElementException("No more folder elements!");
+                else {
+                    lastFile = currentFile;
+                    T retVal = nextElement;
+                    findNextElement();
+                    return retVal;
                 }
-                catch (Exception e) {
-                    log.error("Can't create a FolderElement from file: " + filePath, e);
-                    return null;
+            }
+            
+            /**
+             * Reads the next valid file into <code>currentElement</code>.<br/>
+             * If there are no more files, <code>currentElement</code> is set to <code>null</code>.
+             * <p/>
+             * <code>currentFile</code> is set to the last file read.
+             * @param updateCurrentFile
+             */
+            void findNextElement() {
+                while (fileIterator.hasNext()) {
+                    currentFile = fileIterator.next();
+                    String filePath = currentFile.getAbsolutePath();
+                    log.debug("Reading file: '" + filePath + "'");
+                    try {
+                        nextElement = createFolderElement(currentFile);
+                        return;
+                    }
+                    catch (Exception e) {
+                        log.error("Can't create a FolderElement from file: " + filePath, e);
+                    }
                 }
+                nextElement = null;
             }
             
             @Override
             public void remove() {
-                if (currentFile == null)
+                if (lastFile == null)
                     throw new IllegalStateException("remove() was called before next()");
-                if (!currentFile.delete())
-                    log.error("Can't delete file: <" + currentFile.getAbsolutePath() + ">");
+                if (!lastFile.delete())
+                    log.error("Can't delete file: <" + lastFile.getAbsolutePath() + ">");
             }
         };
     }

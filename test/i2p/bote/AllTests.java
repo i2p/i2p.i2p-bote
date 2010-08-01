@@ -25,6 +25,7 @@ import i2p.bote.crypto.CryptoImplementationTest;
 import i2p.bote.email.EmailIdentityTest;
 import i2p.bote.email.EmailTest;
 import i2p.bote.folder.EmailPacketFolderTest;
+import i2p.bote.folder.FolderTest;
 import i2p.bote.folder.IncompleteEmailFolderTest;
 import i2p.bote.folder.IndexPacketFolderTest;
 import i2p.bote.folder.RelayPacketFolderTest;
@@ -48,7 +49,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( { I2PBotePacketTest.class, StoreRequestTest.class, EncryptedEmailPacketTest.class, UnencryptedEmailPacketTest.class,
-	FindClosePeersPacketTest.class, PeerListTest.class, ResponsePacketTest.class, IncompleteEmailFolderTest.class,
+	FindClosePeersPacketTest.class, PeerListTest.class, ResponsePacketTest.class, IncompleteEmailFolderTest.class, FolderTest.class,
 	EmailPacketDeleteRequestTest.class, IndexPacketDeleteRequestTest.class, IndexPacketTest.class, IndexPacketFolderTest.class,
 	EmailTest.class, EmailIdentityTest.class, EmailPacketFolderTest.class, EmailPacketDeleteRequestTest.class,
 	RelayPacketTest.class, RelayPacketFolderTest.class, BucketManagerTest.class, CryptoImplementationTest.class })
