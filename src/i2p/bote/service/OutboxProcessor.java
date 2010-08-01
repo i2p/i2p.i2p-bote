@@ -31,7 +31,7 @@ import i2p.bote.folder.Outbox;
 import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
-import i2p.bote.network.NetworkStatus;
+import i2p.bote.network.NetworkStatusSource;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.RelayDataPacket;
@@ -65,61 +65,49 @@ public class OutboxProcessor extends I2PBoteThread {
     private RelayPeerManager peerManager;
     private RelayPacketFolder relayPacketFolder;
     private Configuration configuration;
+    private NetworkStatusSource networkStatusSource;
     private CountDownLatch wakeupSignal;   // tells the thread to interrupt the current wait and resume the loop
     private List<OutboxListener> outboxListeners;
     
-    public OutboxProcessor(DHT dht, Outbox outbox, RelayPeerManager peerManager, RelayPacketFolder relayPacketFolder, Configuration configuration) {
+    public OutboxProcessor(DHT dht, Outbox outbox, RelayPeerManager peerManager, RelayPacketFolder relayPacketFolder, Configuration configuration, NetworkStatusSource networkStatusSource) {
         super("OutboxProcsr");
         this.dht = dht;
         this.outbox = outbox;
         this.peerManager = peerManager;
         this.relayPacketFolder = relayPacketFolder;
         this.configuration = configuration;
+        this.networkStatusSource = networkStatusSource;
         wakeupSignal = new CountDownLatch(1);
         outboxListeners = Collections.synchronizedList(new ArrayList<OutboxListener>());
     }
     
     @Override
-    public void run() {
-        // wait until DHT is ready
-        CountDownLatch startSignal = dht.readySignal();
-        while (!shutdownRequested()) {
-            try {
-                if (startSignal.await(1, TimeUnit.SECONDS))
-                    break;
-            } catch (InterruptedException e) {
-                log.error("OutboxProcessor received an InterruptedException.", e);
-            }
+    public void doStep() {
+        synchronized(this) {
+            wakeupSignal = new CountDownLatch(1);
         }
         
-        while (!shutdownRequested()) {
-            synchronized(this) {
-                wakeupSignal = new CountDownLatch(1);
-            }
-            
-            if (I2PBote.getInstance().getNetworkStatus() == NetworkStatus.CONNECTED) {
-                log.debug("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
-                for (Email email: outbox)
-                    // only send emails whose status has not been set and which have not been set to "old"
-                    if (!outbox.isStatusSet(email) && email.isNew()) {
-                        log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
-                        try {
-                            sendEmail(email);
-                            fireOutboxListeners(email);
-                        }
-                        catch (Exception e) {
-                            log.error("Error sending email.", e);
-                        }
+        if (networkStatusSource.isConnected()) {
+            log.debug("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
+            for (Email email: outbox)
+                // only send emails whose status has not been set and which have not been set to "old"
+                if (!outbox.isStatusSet(email) && email.isNew()) {
+                    log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
+                    try {
+                        sendEmail(email);
+                        fireOutboxListeners(email);
                     }
-            }
-            
-            try {
-                wakeupSignal.await(PAUSE, TimeUnit.MINUTES);
-            } catch (InterruptedException e) {
-                log.error("OutboxProcessor received an InterruptedException.", e);
-            }
+                    catch (Exception e) {
+                        log.error("Error sending email.", e);
+                    }
+                }
         }
-        log.info(getClass().getSimpleName() + " exiting.");
+        
+        try {
+            wakeupSignal.await(PAUSE, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            log.error("OutboxProcessor received an InterruptedException.", e);
+        }
     }
     
     /**
@@ -132,8 +120,10 @@ public class OutboxProcessor extends I2PBoteThread {
     @Override
     public void requestShutdown() {
         super.requestShutdown();
-        if (wakeupSignal != null)
-            wakeupSignal.countDown();
+        synchronized(this) {
+            if (wakeupSignal != null)
+                wakeupSignal.countDown();
+        }
     }
     
     /**
@@ -227,14 +217,15 @@ public class OutboxProcessor extends I2PBoteThread {
      */
     private void send(DhtStorablePacket dhtPacket) throws DhtException {
         int hops = configuration.getNumStoreHops();
-        long minDelay = configuration.getRelayMinDelay() * 60 * 1000;
-        long maxDelay = configuration.getRelayMaxDelay() * 60 * 1000;
-        if (hops > 0)
+        if (hops > 0) {
+            long minDelay = configuration.getRelayMinDelay() * 60 * 1000;
+            long maxDelay = configuration.getRelayMaxDelay() * 60 * 1000;
             for (int i=0; i<configuration.getRelayRedundancy(); i++) {
                 // TODO don't use the same relay peer twice if there are enough peers
                 RelayDataPacket packet = RelayDataPacket.create(dhtPacket, peerManager, hops, minDelay, maxDelay);
                 relayPacketFolder.add(packet);
             }
+        }
         else
             dht.store(dhtPacket);
     }

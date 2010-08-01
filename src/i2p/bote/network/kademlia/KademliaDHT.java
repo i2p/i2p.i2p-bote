@@ -139,7 +139,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         
         bucketManager = new BucketManager(localDestinationHash);
         storageHandlers = new ConcurrentHashMap<Class<? extends DhtStorablePacket>, DhtStorageHandler>();
-        replicateThread = new ReplicateThread(localDestination, sendQueue, i2pReceiver, bucketManager, readySignal);
+        replicateThread = new ReplicateThread(localDestination, sendQueue, i2pReceiver, bucketManager);
     }
     
     /**
@@ -628,21 +628,25 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     @Override
-    public void run() {
+    public void doStep() throws InterruptedException {
+        if (bucketManager.getUnlockedPeerCount() == 0) {
+            log.info("All peers are gone. Re-bootstrapping.");
+            bootstrap();
+        }
+        refreshOldBuckets();
+        awaitShutdownRequest(1, TimeUnit.MINUTES);
+    }
+    
+    @Override
+    public void postStartup() {
         i2pReceiver.addPacketListener(this);
         bootstrap();
-        
-        while (!shutdownRequested()) {
-            if (bucketManager.getUnlockedPeerCount() == 0) {
-                log.info("All peers are gone. Re-bootstrapping.");
-                bootstrap();
-            }
-            refreshOldBuckets();
-            awaitShutdownRequest(1, TimeUnit.MINUTES);
-        }
+    }
+
+    @Override
+    public void preShutdown() {
         writePeersSorted(peerFile);
         i2pReceiver.removePacketListener(this);
-        log.info(getClass().getSimpleName() + " exiting.");
     }
 
     @Override

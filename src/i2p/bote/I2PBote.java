@@ -23,7 +23,6 @@ package i2p.bote;
 
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.email.Email;
-import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.EmailPacketFolder;
@@ -36,18 +35,17 @@ import i2p.bote.folder.TrashFolder;
 import i2p.bote.locale.Locales;
 import i2p.bote.network.BanList;
 import i2p.bote.network.BannedPeer;
-import i2p.bote.network.CheckEmailTask;
-import i2p.bote.network.DHT;
 import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.NetworkStatus;
+import i2p.bote.network.NetworkStatusSource;
 import i2p.bote.network.RelayPacketHandler;
 import i2p.bote.network.RelayPeer;
 import i2p.bote.network.kademlia.KademliaDHT;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
-import i2p.bote.service.AutoMailCheckTask;
+import i2p.bote.service.EmailChecker;
 import i2p.bote.service.I2PBoteThread;
 import i2p.bote.service.OutboxListener;
 import i2p.bote.service.OutboxProcessor;
@@ -67,18 +65,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.I2PAppContext;
@@ -97,9 +90,8 @@ import net.i2p.util.Log;
 /**
  * This is the core class of the application. It is implemented as a singleton.
  */
-public class I2PBote {
-//    change version to 4 before committing to mtn
-    public static final int PROTOCOL_VERSION = 3;
+public class I2PBote implements NetworkStatusSource {
+    public static final int PROTOCOL_VERSION = 4;
     private static final String APP_VERSION = "0.2.4";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
     private static volatile I2PBote instance;
@@ -121,27 +113,29 @@ public class I2PBote {
     private EmailPacketFolder emailDhtStorageFolder;   // stores email packets for other peers
     private IndexPacketFolder indexPacketDhtStorageFolder;   // stores index packets
 //TODO    private PacketFolder<> addressDhtStorageFolder;   // stores email address-destination mappings
+    private Collection<I2PBoteThread> backgroundThreads;
     private SMTPService smtpService;
     private POP3Service pop3Service;
     private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
-    private AutoMailCheckTask autoMailCheckTask;
+    private EmailChecker emailChecker;
     private ExpirationThread expirationThread;
     private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
-    private DHT dht;
+    private KademliaDHT dht;
     private SeedlessAnnounce seedlessAnnounce;
     private SeedlessRequestPeers seedlessRequestPeers;
     private SeedlessScrapePeers seedlessScrapePeers;
     private SeedlessScrapeServers seedlessScrapeServers;
     private RelayPeerManager peerManager;
-    private ThreadFactory mailCheckThreadFactory;
-    private ExecutorService mailCheckExecutor;
-    private Collection<Future<Boolean>> pendingMailCheckTasks;
-    private long lastMailCheckTime;
     private ConnectTask connectTask;
 
+    /**
+     * Constructs a new instance of <code>I2PBote</code> and initializes
+     * folders and a few other things. No background threads are spawned,
+     * and network connectitivy is not initialized.
+     */
     private I2PBote() {
         Thread.currentThread().setName("I2PBoteMain");
-                
+        
         I2PAppContext appContext = new I2PAppContext();
         appContext.addShutdownTask(new Runnable() {
             @Override
@@ -152,16 +146,9 @@ public class I2PBote {
         i2pClient = I2PClientFactory.createClient();
         configuration = new Configuration();
         
-        mailCheckThreadFactory = Util.createThreadFactory("ChkMailTask", CheckEmailTask.THREAD_STACK_SIZE);
-    
         identities = new Identities(configuration.getIdentitiesFile());
         addressBook = new AddressBook(configuration.getAddressBookFile());
         initializeFolderAccess();
-
-        // The rest of the initialization happens in ConnectTask because it needs an I2PSession.
-        // It is done in the background so we don't block the webapp thread.
-        connectTask = new ConnectTask();
-        connectTask.start();
     }
 
     /**
@@ -246,32 +233,43 @@ public class I2PBote {
     private void initializeServices() {
         I2PPacketDispatcher dispatcher = new I2PPacketDispatcher();
 
-        SeedlessParameters seedlessParameters = SeedlessParameters.getInstance();   // this call may take some time, but we're in the ConnectTask thread
-        // the following call may take some time, but that's okay because it runs on the ConnectTask thread
+        SeedlessParameters seedlessParameters = SeedlessParameters.getInstance();
+        // the following call may take some time waiting for Seedless to start up
+        // but that is not a problem because this method runs on the ConnectTask thread.
         if (seedlessParameters.isSeedlessAvailable()) {
             log.info("Seedless found.");
             seedlessRequestPeers = new SeedlessRequestPeers(seedlessParameters, 60);
+            backgroundThreads.add(seedlessRequestPeers);
             seedlessScrapePeers = new SeedlessScrapePeers(seedlessParameters, 10);
+            backgroundThreads.add(seedlessScrapePeers);
             seedlessScrapeServers = new SeedlessScrapeServers(seedlessParameters, 10);
+            backgroundThreads.add(seedlessScrapeServers);
             seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 60);
+            backgroundThreads.add(seedlessAnnounce);
         }
         else
             log.info("Seedless NOT found.");
         
         i2pSession.addMuxedSessionListener(dispatcher, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_ANY);
         
-        smtpService = new SMTPService();
+/*        smtpService = new SMTPService();
+        backgroundThreads.add(smtpService);
         pop3Service = new POP3Service();
+        backgroundThreads.add(pop3Service);*/
         sendQueue = new I2PSendQueue(i2pSession, dispatcher);
+        backgroundThreads.add(sendQueue);
         relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, configuration);
+        backgroundThreads.add(relayPacketSender);
         
         dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile(), seedlessScrapePeers);
+        backgroundThreads.add(dht);
         
         dht.setStorageHandler(EncryptedEmailPacket.class, emailDhtStorageFolder);
         dht.setStorageHandler(IndexPacket.class, indexPacketDhtStorageFolder);
 //TODO        dht.setStorageHandler(AddressPacket.class, );
         
         peerManager = new RelayPeerManager(sendQueue, getLocalDestination(), configuration.getRelayPeerFile());
+        backgroundThreads.add(peerManager);
         
         dispatcher.addPacketListener(emailDhtStorageFolder);
         dispatcher.addPacketListener(indexPacketDhtStorageFolder);
@@ -283,8 +281,9 @@ public class I2PBote {
         expirationThread.addExpirationListener(emailDhtStorageFolder);
         expirationThread.addExpirationListener(indexPacketDhtStorageFolder);
         expirationThread.addExpirationListener(relayPacketSender);
+        backgroundThreads.add(expirationThread);
         
-        outboxProcessor = new OutboxProcessor(dht, outbox, peerManager, relayPacketFolder, configuration);
+        outboxProcessor = new OutboxProcessor(dht, outbox, peerManager, relayPacketFolder, configuration, this);
         outboxProcessor.addOutboxListener(new OutboxListener() {
             /** Moves sent emails to the "sent" folder */
             @Override
@@ -299,8 +298,10 @@ public class I2PBote {
                 }
             }
         });
+        backgroundThreads.add(outboxProcessor);
         
-        autoMailCheckTask = new AutoMailCheckTask(configuration.getMailCheckInterval());
+        emailChecker = new EmailChecker(identities, configuration, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder, this, sendQueue, dht, peerManager);
+        backgroundThreads.add(emailChecker);
     }
 
     /**
@@ -326,13 +327,29 @@ public class I2PBote {
         Util.makePrivate(keyFile);
     }
     
-    public static void startUp() {
-        getInstance();
+    /**
+     * Initializes network connectivity and starts background threads.<br/>
+     * This is done in a separate thread so the webapp thread is not blocked
+     * by this method.
+     */
+    public void startUp() {
+        backgroundThreads = new ArrayList<I2PBoteThread>();
+        connectTask = new ConnectTask();
+        backgroundThreads.add(connectTask);
+        connectTask.start();
     }
     
-    public static void shutDown() {
-        if (instance != null)
-            instance.stopAllServices();
+    public void shutDown() {
+        stopAllServices();
+
+        try {
+            if (i2pSession != null)
+                i2pSession.destroySession();
+        } catch (I2PSessionException e) {
+            log.error("Can't destroy I2P session.", e);
+        }
+        if (socketManager != null)
+            socketManager.destroySocketManager();
     }
 
     public static I2PBote getInstance() {
@@ -376,62 +393,27 @@ public class I2PBote {
     }
 
     public synchronized void checkForMail() {
-        if (!isCheckingForMail()) {
-            if (identities.size() <= 0)
-                log.info("Not checking for mail because no identities are defined.");
-            else
-                log.info("Checking mail for " + identities.size() + " Email Identities...");
-            
-            lastMailCheckTime = System.currentTimeMillis();
-            pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
-            mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
-            for (EmailIdentity identity: identities) {
-                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder);
-                Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
-                pendingMailCheckTasks.add(task);
-            }
-            mailCheckExecutor.shutdown();   // finish all tasks, then shut down
-        }
-        else
-            log.info("Not checking for mail because the last mail check hasn't finished.");
+        emailChecker.checkForMail();
     }
 
-    public synchronized long getLastMailCheckTime() {
-        return lastMailCheckTime;
-    }
-    
-    public synchronized boolean isCheckingForMail() {
-        if (mailCheckExecutor == null)
-            return false;
-        
-        return !mailCheckExecutor.isTerminated();
-    }
-    
     /**
-     * Returns <code>true</code> if the last call to {@link #checkForMail()} has completed
-     * and added new mail to the inbox.</br>
-     * If this method returns <code>true</code>, subsequent calls will always return
-     * <code>false</code> until {@link #checkForMail()} is executed again.
+     * @see EmailChecker#isCheckingForMail()
      */
-    public synchronized boolean newMailReceived() {
-        if (pendingMailCheckTasks == null)
+    public synchronized boolean isCheckingForMail() {
+        if (emailChecker == null)
             return false;
-        if (isCheckingForMail())
+        else
+            return emailChecker.isCheckingForMail();
+    }
+
+    /**
+     * @see EmailChecker#newMailReceived()
+     */
+    public boolean newMailReceived() {
+        if (emailChecker == null)
             return false;
-        
-        try {
-            for (Future<Boolean> result: pendingMailCheckTasks)
-                if (result.get(1, TimeUnit.MILLISECONDS)) {
-                    pendingMailCheckTasks = null;
-                    return true;
-                }
-        }
-        catch (Exception e) {
-            log.error("Error while checking whether new mail has arrived.", e);
-        }
-        
-        pendingMailCheckTasks = null;
-        return false;
+        else
+            return emailChecker.newMailReceived();
     }
     
     public EmailFolder getInbox() {
@@ -476,98 +458,53 @@ public class I2PBote {
         return BanList.getInstance().getAll();
     }
 
-    // This would be MUCH easier if it was a list of threads we could iterate! :-)
-    // Also would be nice to control things in a ThreadGroup, but, meh.
-    // --Sponge
-    private void startAllServices() {
-        peerManager.start();
-        outboxProcessor.start();
-        dht.start();
-        relayPacketSender.start();
-//        smtpService.start();
-//        pop3Service.start();
-        sendQueue.start();
-        autoMailCheckTask.start();
-        expirationThread.start();
-        if (seedlessAnnounce != null)      seedlessAnnounce.start();
-        if (seedlessRequestPeers != null)  seedlessRequestPeers.start();
-        if (seedlessScrapePeers != null)   seedlessScrapePeers.start();
-        if (seedlessScrapeServers != null) seedlessScrapeServers.start();
+   private void startAllServices() {
+        for (I2PBoteThread thread: backgroundThreads)
+            if (thread!=null && thread.getState()==State.NEW)   // the check for State.NEW is only there for ConnectTask
+                thread.start();
     }
 
-    // This would be MUCH easier if it was a list of threads we could iterate! :-)
-    // Also would be nice to control things in a ThreadGroup, but, meh.
-    // --Sponge
     private void stopAllServices() {
-        if (connectTask != null)
-            connectTask.requestShutdown();
-        if (dht != null)               dht.requestShutdown();
-        if (outboxProcessor != null)   outboxProcessor.requestShutdown();
-        if (relayPacketSender != null) relayPacketSender.requestShutdown();
-        if (smtpService != null)       smtpService.requestShutdown();
-        if (pop3Service != null)       pop3Service.requestShutdown();
-        if (sendQueue != null)         sendQueue.requestShutdown();
-        if (mailCheckExecutor != null) mailCheckExecutor.shutdown();
-        if (pendingMailCheckTasks != null)
-            for (Future<Boolean> mailCheckTask: pendingMailCheckTasks)
-                mailCheckTask.cancel(false);
-        if (autoMailCheckTask != null) autoMailCheckTask.requestShutdown();
-        if (expirationThread != null)  expirationThread.requestShutdown();
-        if (peerManager != null) peerManager.requestShutdown();
-        
-        if (seedlessAnnounce != null)      seedlessAnnounce.requestShutdown();
-        if (seedlessRequestPeers != null)  seedlessRequestPeers.requestShutdown();
-        if (seedlessScrapePeers != null)   seedlessScrapePeers.requestShutdown();
-        if (seedlessScrapeServers != null) seedlessScrapeServers.requestShutdown();
-        
-        long deadline = System.currentTimeMillis() + 1000 * 60;   // the time at which any background threads that are still running are killed
-        if (dht != null)
-            try {
-                dht.awaitShutdown(deadline - System.currentTimeMillis());
-            }
-            catch (InterruptedException e) {
-                log.error("Interrupted while waiting for DHT shutdown.", e);
-            }
+        // first ask threads nicely to shut down
+        for (I2PBoteThread thread: backgroundThreads)
+            if (thread != null)
+                thread.requestShutdown();
+        awaitShutdown(backgroundThreads, 60 * 1000);
+        printRunningThreads("Threads still running after requestShutdown():");
 
-        join(seedlessAnnounce, deadline);
-        join(seedlessRequestPeers, deadline);
-        join(seedlessScrapePeers, deadline);
-        join(seedlessScrapeServers, deadline);
-
-        join(outboxProcessor, deadline);
-        join(relayPacketSender, deadline);
-        join(smtpService, deadline);
-        join(pop3Service, deadline);
-        join(sendQueue, deadline);
-        if (mailCheckExecutor != null) mailCheckExecutor.shutdownNow();
-        join(autoMailCheckTask, deadline);
-        long currentTime = System.currentTimeMillis();
-        if (mailCheckExecutor!=null && currentTime<deadline)
-            try {
-                mailCheckExecutor.awaitTermination(deadline-currentTime, TimeUnit.MILLISECONDS);
-            } catch (InterruptedException e) {
-                log.error("Interrupted while waiting for mailCheckExecutor to exit", e);
-            }
-        try {
-            if (i2pSession != null)
-                i2pSession.destroySession();
-        } catch (I2PSessionException e) {
-            log.error("Can't destroy I2P session.", e);
-        }
-        if (socketManager != null)
-            socketManager.destroySocketManager();
+        // interrupt all threads that are still running
+        for (I2PBoteThread thread: backgroundThreads)
+            if (thread!=null && thread.isAlive())
+                thread.interrupt();
+        awaitShutdown(backgroundThreads, 5 * 1000);
+        printRunningThreads("Threads still running 5 seconds after interrupt():");
     }
 
-    private void join(Thread thread, long until) {
-        if (thread == null)
-            return;
-        long timeout = System.currentTimeMillis() - until;
-        if (timeout > 0)
-            try {
-                thread.join(timeout);
-            } catch (InterruptedException e) {
-                log.error("Interrupted while waiting for thread <" + thread.getName() + "> to exit", e);
-            }
+    private void printRunningThreads(String caption) {
+        log.debug(caption);
+        for (Thread thread: backgroundThreads)
+            if (thread.isAlive())
+                log.debug("  " + thread.getName());
+    }
+    
+    /**
+     * Waits up to <code>timeout</code> milliseconds for a <code>Collection</code> of threads to end.
+     * @param threads
+     * @param timeout In milliseconds
+     */
+    private void awaitShutdown(Collection<I2PBoteThread> threads, long timeout) {
+        long deadline = System.currentTimeMillis() + timeout;   // the time at which any background threads that are still running are interrupted
+
+        for (I2PBoteThread thread: backgroundThreads)
+            if (thread != null)
+                try {
+                    long remainingTime = System.currentTimeMillis() - deadline;   // the time until the original timeout
+                    if (remainingTime < 0)
+                        return;
+                    thread.join(remainingTime);
+                } catch (InterruptedException e) {
+                    log.error("Interrupted while waiting for thread <" + thread.getName() + "> to exit", e);
+                }
     }
     
     /**
@@ -578,6 +515,7 @@ public class I2PBote {
         connectTask.startSignal.countDown();
     }
 
+    @Override
     public NetworkStatus getNetworkStatus() {
         if (!connectTask.isDone())
             return connectTask.getNetworkStatus();
@@ -585,6 +523,11 @@ public class I2PBote {
             return dht.isReady()?NetworkStatus.CONNECTED:NetworkStatus.CONNECTING;
         else
             return NetworkStatus.ERROR;
+    }
+    
+    @Override
+    public boolean isConnected() {
+        return getNetworkStatus() == NetworkStatus.CONNECTED;
     }
     
     /**
@@ -621,7 +564,7 @@ public class I2PBote {
         }
         
         @Override
-        public void run() {
+        public void doStep() {
             status = NetworkStatus.DELAY;
             try {
                 startSignal.await(STARTUP_DELAY, TimeUnit.MINUTES);
@@ -634,6 +577,7 @@ public class I2PBote {
                 status = NetworkStatus.ERROR;
                 log.error("Can't initialize the application.", e);
             }
+            requestShutdown();
         }
     }
 }

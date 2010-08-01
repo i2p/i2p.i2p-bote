@@ -42,6 +42,8 @@ public class SeedlessRequestPeers extends I2PBoteThread {
     private SeedlessParameters seedlessParameters;
     private long interval;   // in milliseconds
     private long lastSeedlessRequestPeers = 0;
+    private long lastTime;
+    private long timeSinceLastCheck;
     
     /**
      *
@@ -54,20 +56,16 @@ public class SeedlessRequestPeers extends I2PBoteThread {
     }
 
     @Override
-    public void run() {
-        long lastTime;
-        long timeSinceLastCheck;
-        while (!shutdownRequested()) {
-            lastTime = getlastSeedlessRequestPeers();
-            timeSinceLastCheck = System.currentTimeMillis() - lastTime;
-            if (lastTime == 0 || timeSinceLastCheck > this.interval) {
-                doSeedlessRequestPeers();
-            } else {
-                awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
-            }
-            
+    public void doStep() {
+        lastTime = getlastSeedlessRequestPeers();
+        timeSinceLastCheck = System.currentTimeMillis() - lastTime;
+        if (lastTime == 0 || timeSinceLastCheck > this.interval) {
+            doSeedlessRequestPeers();
+        } else {
+            awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
         }
     }
+    
     public long getInterval() {
         return interval;
     }
@@ -78,13 +76,11 @@ public class SeedlessRequestPeers extends I2PBoteThread {
 
     public synchronized void doSeedlessRequestPeers() {
         HttpURLConnection h;
-//        int i;
         log.debug("doSeedlessRequestPeers");
         try {
             ProxyRequest proxy = new ProxyRequest();
             h = proxy.doURLRequest(seedlessParameters.getSeedlessUrl(), seedlessParameters.getPeersRequestHeader(), null, -1, "admin", seedlessParameters.getConsolePassword());
             if(h != null) {
-//                i = h.getResponseCode();
                 h.getResponseCode();
             }
 

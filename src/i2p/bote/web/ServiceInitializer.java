@@ -32,11 +32,11 @@ import javax.servlet.ServletContextListener;
 public class ServiceInitializer implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
-		I2PBote.shutDown();
+		I2PBote.getInstance().shutDown();
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		I2PBote.startUp();
+		I2PBote.getInstance().startUp();
 	}
 }

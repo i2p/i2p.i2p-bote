@@ -44,7 +44,7 @@ import net.i2p.i2ptunnel.I2PTunnel;
 import net.i2p.util.Log;
 
 /**
- * This 
+ * 
  * @author sponge
  */
 public class SeedlessScrapePeers extends I2PBoteThread {
@@ -53,6 +53,8 @@ public class SeedlessScrapePeers extends I2PBoteThread {
     private long interval;   // in milliseconds
     private long lastSeedlessScrapePeers = 0;
     private List<Destination> peers;
+    private long lastTime;
+    private long timeSinceLastCheck;
     
     /**
      *
@@ -66,18 +68,13 @@ public class SeedlessScrapePeers extends I2PBoteThread {
     }
 
     @Override
-    public void run() {
-        long lastTime;
-        long timeSinceLastCheck;
-        while (!shutdownRequested()) {
-            lastTime = getlastSeedlessScrapePeers();
-            timeSinceLastCheck = System.currentTimeMillis() - lastTime;
-            if (lastTime == 0 || timeSinceLastCheck > this.interval) {
-                doSeedlessScrapePeers();
-            } else {
-                awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
-            }
-            
+    public void doStep() {
+        lastTime = getlastSeedlessScrapePeers();
+        timeSinceLastCheck = System.currentTimeMillis() - lastTime;
+        if (lastTime == 0 || timeSinceLastCheck > this.interval) {
+            doSeedlessScrapePeers();
+        } else {
+            awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
         }
     }
     public long getInterval() {

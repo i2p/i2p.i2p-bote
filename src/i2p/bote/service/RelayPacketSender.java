@@ -60,42 +60,35 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
     }
     
     @Override
-    public void run() {
-        while (!shutdownRequested()) {
-            Iterator<RelayDataPacket> iterator = packetFolder.iterator();
-            while (iterator.hasNext()) {
-                RelayDataPacket packet = iterator.next();
-                if (System.currentTimeMillis() >= packet.getSendTime()) {
-                    log.debug("Sending relay packet to destination " + packet.getNextDestination().calculateHash());
-                    try {
-                        CountDownLatch sentSignal;
-                        // synchronize access to lastSentPacket (which can be null, so synchronize on "this")
-                        synchronized(this) {
-                            lastSentPacket = packet.getRequest();
-                            confirmationReceived = new CountDownLatch(1);
-                            sentSignal = sendQueue.send(lastSentPacket, packet.getNextDestination());
-                        }
-                        sentSignal.await();
-                        
-                        awaitShutdownRequest(2, TimeUnit.MINUTES);
-                        // if confirmation has been received, delete the packet
-                        if (confirmationReceived.await(0, TimeUnit.SECONDS))
-                            iterator.remove();
-                    } catch (InterruptedException e) {
-                        log.error("Interrupting while waiting for packet to be sent.", e);
-                    } catch (Exception e) {
-                        log.error("Error sending packet.", e);
+    public void doStep() throws InterruptedException {
+        Iterator<RelayDataPacket> iterator = packetFolder.iterator();
+        while (iterator.hasNext()) {
+            RelayDataPacket packet = iterator.next();
+            if (System.currentTimeMillis() >= packet.getSendTime()) {
+                log.debug("Sending relay packet to destination " + packet.getNextDestination().calculateHash());
+                try {
+                    CountDownLatch sentSignal;
+                    // synchronize access to lastSentPacket (which can be null, so synchronize on "this")
+                    synchronized(this) {
+                        lastSentPacket = packet.getRequest();
+                        confirmationReceived = new CountDownLatch(1);
+                        sentSignal = sendQueue.send(lastSentPacket, packet.getNextDestination());
                     }
+                    sentSignal.await();
+                    
+                    awaitShutdownRequest(2, TimeUnit.MINUTES);
+                    // if confirmation has been received, delete the packet
+                    if (confirmationReceived.await(0, TimeUnit.SECONDS))
+                        iterator.remove();
+                } catch (InterruptedException e) {
+                    log.error("Interrupting while waiting for packet to be sent.", e);
+                } catch (Exception e) {
+                    log.error("Error sending packet.", e);
                 }
             }
-            
-            try {
-                Thread.sleep(pause);
-            } catch (InterruptedException e) {
-                log.error("RelayPacketSender received an InterruptedException.");
-            }
         }
-        log.info(getClass().getSimpleName() + " exiting.");
+        
+        Thread.sleep(pause);
     }
     
     /** Deletes relay packets that are still in the folder 100 days after the scheduled send time */

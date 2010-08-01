@@ -52,6 +52,8 @@ public class SeedlessScrapeServers extends I2PBoteThread {
     private long interval;   // in milliseconds
     private long lastSeedlessScrapeServers = 0;
     private List<String> seedlessServers = new ArrayList<String>();
+    private long lastTime;
+    private long timeSinceLastCheck;
     
     /**
      * @param seedlessParameters
@@ -64,18 +66,13 @@ public class SeedlessScrapeServers extends I2PBoteThread {
     }
 
     @Override
-    public void run() {
-        long lastTime;
-        long timeSinceLastCheck;
-        while (!shutdownRequested()) {
-            lastTime = lastSeedlessScrapeServers;
-            timeSinceLastCheck = System.currentTimeMillis() - lastTime;
-            if (lastTime == 0 || timeSinceLastCheck > this.interval) {
-                doSeedlessScrapeServers();
-            } else {
-                awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
-            }
-            
+    public void doStep() {
+        lastTime = lastSeedlessScrapeServers;
+        timeSinceLastCheck = System.currentTimeMillis() - lastTime;
+        if (lastTime == 0 || timeSinceLastCheck > this.interval) {
+            doSeedlessScrapeServers();
+        } else {
+            awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
         }
     }
 

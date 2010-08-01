@@ -24,6 +24,10 @@ package i2p.bote.service;
 public class POP3Service extends I2PBoteThread {
 
 	public POP3Service() {
-		super("Background thread for delivering email to email clients");
+		super("POP3Service");
 	}
+
+    @Override
+    protected void doStep() throws InterruptedException {
+    }
 }

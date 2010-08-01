@@ -19,15 +19,18 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.service;
+package i2p.bote.network;
 
-public class SMTPService extends I2PBoteThread {
-
-	public SMTPService() {
-		super("SMTPService");
-	}
-
-    @Override
-    protected void doStep() throws InterruptedException {
-    }
+public interface NetworkStatusSource {
+    
+    /**
+     * Returns the status of initialization of the application.
+     */
+    NetworkStatus getNetworkStatus();
+    
+    /**
+     * Returns <code>true</code> if the application has sucessfully
+     * connected to I2P and the DHT.
+     */
+    boolean isConnected();
 }

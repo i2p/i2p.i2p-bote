@@ -27,6 +27,12 @@ import java.util.concurrent.TimeUnit;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
+/**
+ * A base class for background threads.<br/>
+ * The {@link #run()} method is final; subclasses override
+ * {@link #doStep()} and optionally the methods {@link #postStartup()}
+ * and {@link #preShutdown()}.
+ */
 public abstract class I2PBoteThread extends I2PAppThread {
     private Log log = new Log(I2PBoteThread.class);
     private CountDownLatch shutdownSignal;
@@ -45,6 +51,7 @@ public abstract class I2PBoteThread extends I2PAppThread {
             return shutdownSignal.await(timeout, unit);
         } catch (InterruptedException e) {
             log.error("Interrupted in thread <" + getName() + ">", e);
+            shutdownSignal.countDown();
             return true;
         }
     }
@@ -52,4 +59,60 @@ public abstract class I2PBoteThread extends I2PAppThread {
     public boolean shutdownRequested() {
         return awaitShutdownRequest(0, TimeUnit.SECONDS);
     }
+    
+    /**
+     * Executes {@link #doStep()} in a loop until {@link #requestShutdown()} is called.
+     * There is no pause between the <code>doStep</code> calls.<br/>
+     * Before the first invocation of <code>doStep</code>, {@link #postStartup()} is called.</br>
+     * After the last invocation of <code>doStep</code>, {@link #preShutdown()} is called.</br>
+     */
+    @Override
+    public final void run() {
+        postStartup();
+        
+        while (true) {
+            if (shutdownRequested())
+                break;
+            try {
+                doStep();
+            }
+            catch (InterruptedException e) {
+                log.error("Interrupted in thread <" + getName() + ">", e);
+                break;
+            }
+            catch (Throwable t) {
+                log.error("An exception occurred in thread " + getName(), t);
+            }
+        }
+        
+        try {
+            preShutdown();
+        }
+        catch (Throwable t) {
+            log.error("An exception occurred in thread " + getName(), t);
+        }
+            
+        log.info("Thread " + getName() + " exiting.");
+    }
+    
+    /**
+     * This method is called after {@link #postStartup()} and continues
+     * to be called every time it returns, until {@link #requestShutdown()}
+     * is invoked.<br/>
+     * Because the invocations happen without interruption, all implementations
+     * of this method call <code>Thread.sleep</code>.
+     * @throws InterruptedException
+     * @see #run()
+     */
+    protected abstract void doStep() throws InterruptedException;
+    
+    /**
+     * @see #run()
+     */
+    protected void postStartup() { }
+    
+    /**
+     * @see #run()
+     */
+    protected void preShutdown() throws InterruptedException { }
 }

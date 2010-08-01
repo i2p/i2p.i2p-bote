@@ -215,70 +215,67 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
     }
     
     @Override
-    public void run() {
-        while (!shutdownRequested()) {
-            boolean shutdownRequested = awaitShutdownRequest(UPDATE_INTERVAL, TimeUnit.MINUTES);
-            if (shutdownRequested)
-                break;
-            
-            // ask all peers for their peer lists
-            PacketBatch batch = new PacketBatch();
-            synchronized(peers) {
-                for (RelayPeer peer: peers)
-                    batch.putPacket(new PeerListRequest(), peer);   // don't reuse request packets because PacketBatch will not add the same one more than once
-            }
-            sendQueue.send(batch);
-            try {
-                batch.awaitSendCompletion();
-                batch.awaitAllResponses(2, TimeUnit.MINUTES);
-            }
-            catch (InterruptedException e) {
-                log.error("Interrupted while waiting for responses to PeerListRequests.", e);
-            }
-            
-            // update reachability counters
-            log.debug("Relay peer stats:");
-            synchronized(peers) {
-                for (RelayPeer peer: peers) {
-                    for (PacketBatchItem batchItem: batch)
-                        if (peer.equals(batchItem.getDestination()))
-                            peer.requestSent();
-                    if (batch.getResponses().containsKey(peer))
-                        peer.responseReceived();
-                    log.debug("  " + peer.calculateHash().toBase64() + " req=" + peer.getRequestsSent() + " resp=" + peer.getResponsesReceived());
-                }
-            }
-            
-            // make a Set with the new peers
-            Set<Destination> receivedPeers = new HashSet<Destination>();
-            BanList banList = BanList.getInstance();
-            for (DataPacket response: batch.getResponses().values()) {
-                if (!(response instanceof PeerList))
-                    continue;
-                PeerList peerList = (PeerList)response;
-                for (Destination peer: peerList.getPeers())
-                    if (!banList.isBanned(peer))
-                        receivedPeers.add(peer);
-            }
-            log.debug("Received a total of " + receivedPeers.size() + " relay peers in " + batch.getResponses().size() + " packets.");
-            
-            // replace low-reachability peers with new peers (a PeerList is supposed to contain only high-reachability peers)
-            synchronized(peers) {
-                // add all received peers, then remove low-reachability ones (all of which are existing peers)
-                for (Destination newPeer: receivedPeers)
-                    if (!localDestination.equals(newPeer))
-                        peers.add(new RelayPeer(newPeer));
-                for (Iterator<RelayPeer> iterator=peers.iterator(); iterator.hasNext();) {
-                    if (peers.size() <= MAX_PEERS)
-                        break;
-                    RelayPeer peer = iterator.next();
-                    if (peer.getRequestsSent()>0 && peer.getReachability()<MIN_REACHABILITY)   // don't remove the peer before it has had a chance to respond to a request
-                        iterator.remove();
-                }
-            }
-            log.debug("Number of relay peers is now " + peers.size());
+    public void doStep() {
+        boolean shutdownRequested = awaitShutdownRequest(UPDATE_INTERVAL, TimeUnit.MINUTES);
+        if (shutdownRequested)
+            return;
+        
+        // ask all peers for their peer lists
+        PacketBatch batch = new PacketBatch();
+        synchronized(peers) {
+            for (RelayPeer peer: peers)
+                batch.putPacket(new PeerListRequest(), peer);   // don't reuse request packets because PacketBatch will not add the same one more than once
         }
-        log.info(getClass().getSimpleName() + " exiting.");
+        sendQueue.send(batch);
+        try {
+            batch.awaitSendCompletion();
+            batch.awaitAllResponses(2, TimeUnit.MINUTES);
+        }
+        catch (InterruptedException e) {
+            log.error("Interrupted while waiting for responses to PeerListRequests.", e);
+        }
+        
+        // update reachability counters
+        log.debug("Relay peer stats:");
+        synchronized(peers) {
+            for (RelayPeer peer: peers) {
+                for (PacketBatchItem batchItem: batch)
+                    if (peer.equals(batchItem.getDestination()))
+                        peer.requestSent();
+                if (batch.getResponses().containsKey(peer))
+                    peer.responseReceived();
+                log.debug("  " + peer.calculateHash().toBase64() + " req=" + peer.getRequestsSent() + " resp=" + peer.getResponsesReceived());
+            }
+        }
+        
+        // make a Set with the new peers
+        Set<Destination> receivedPeers = new HashSet<Destination>();
+        BanList banList = BanList.getInstance();
+        for (DataPacket response: batch.getResponses().values()) {
+            if (!(response instanceof PeerList))
+                continue;
+            PeerList peerList = (PeerList)response;
+            for (Destination peer: peerList.getPeers())
+                if (!banList.isBanned(peer))
+                    receivedPeers.add(peer);
+        }
+        log.debug("Received a total of " + receivedPeers.size() + " relay peers in " + batch.getResponses().size() + " packets.");
+        
+        // replace low-reachability peers with new peers (a PeerList is supposed to contain only high-reachability peers)
+        synchronized(peers) {
+            // add all received peers, then remove low-reachability ones (all of which are existing peers)
+            for (Destination newPeer: receivedPeers)
+                if (!localDestination.equals(newPeer))
+                    peers.add(new RelayPeer(newPeer));
+            for (Iterator<RelayPeer> iterator=peers.iterator(); iterator.hasNext();) {
+                if (peers.size() <= MAX_PEERS)
+                    break;
+                RelayPeer peer = iterator.next();
+                if (peer.getRequestsSent()>0 && peer.getReachability()<MIN_REACHABILITY)   // don't remove the peer before it has had a chance to respond to a request
+                    iterator.remove();
+            }
+        }
+        log.debug("Number of relay peers is now " + peers.size());
     }
 
     @Override

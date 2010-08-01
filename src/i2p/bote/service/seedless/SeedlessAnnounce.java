@@ -63,6 +63,8 @@ public class SeedlessAnnounce extends I2PBoteThread {
     private String announceString = "GET /Seedless/seedless HTTP/1.0\r\nX-Seedless: announce " + Base64.encode("i2p-bote X" + I2PBote.PROTOCOL_VERSION + "X") + "\r\n\r\n";
     private I2PSocketManager socketManager;
     private SeedlessScrapeServers seedlessScrapeServers;
+    private long lastTime;
+    private long timeSinceLastCheck;
     
     /**
      *
@@ -78,18 +80,13 @@ public class SeedlessAnnounce extends I2PBoteThread {
     }
 
     @Override
-    public void run() {
-        long lastTime;
-        long timeSinceLastCheck;
-        while (!shutdownRequested()) {
-            lastTime = lastSeedlessAnnounce;
-            timeSinceLastCheck = System.currentTimeMillis() - lastTime;
-            if (lastTime == 0 || timeSinceLastCheck > this.interval) {
-                doSeedlessAnnounce();
-            } else {
-                awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
-            }
-
+    public void doStep() {
+        lastTime = lastSeedlessAnnounce;
+        timeSinceLastCheck = System.currentTimeMillis() - lastTime;
+        if (lastTime == 0 || timeSinceLastCheck > this.interval) {
+            doSeedlessAnnounce();
+        } else {
+            awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
         }
     }
 

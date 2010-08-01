@@ -43,11 +43,9 @@ public class ExpirationThread extends I2PBoteThread {
     }
     
     @Override
-    public void run() {
-        while (!shutdownRequested()) {
-            for (ExpirationListener listener: expirationListeners)
-                listener.deleteExpired();
-            awaitShutdownRequest(1, TimeUnit.DAYS);
-        }
+    public void doStep() {
+        for (ExpirationListener listener: expirationListeners)
+            listener.deleteExpired();
+        awaitShutdownRequest(1, TimeUnit.DAYS);
     }
 }

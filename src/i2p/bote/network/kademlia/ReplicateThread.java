@@ -41,7 +41,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.Destination;
@@ -52,16 +51,23 @@ import net.i2p.util.Log;
 import com.nettgryppa.security.HashCash;
 
 /**
+ * Replicates locally stored DHT data on startup and every REPLICATE_INTERVAL seconds after that.<br/>
  * The basic algorithm goes like this:
- * 
- * 1. Do a lookup for the local node ID to refresh the s-bucket
- * 2. For each locally stored DHT item (index packet entries and email packets) that has not been deleted:
- *  a. Store the entry on the k closest nodes, based on info from local buckets
- *  b. If at least one peer responds with a valid delete request,
- *    - delete it locally (this is already handled by code outside this class), and
- *    - send a delete request to the nodes that didn't respond (which they
- *      won't if they don't know the packet has been deleted)
- *  c. Otherwise, replication for that entry is finished.
+ * <p/>
+ * <ol>
+ *   <li/>Do a lookup for the local node ID to refresh the s-bucket
+ *   <li/>For each locally stored DHT item (index packet entries and email packets) that has not been deleted:
+ *   <ol type="a">
+ *     <li/>Store the entry on the k closest nodes, based on info from local buckets
+ *     <li/>If at least one peer responds with a valid delete request,
+ *       <ul>
+ *         <li/>delete it locally (this is already handled by code outside this class), and
+ *         <li/>send a delete request to the nodes that didn't respond (which they
+ *           won't if they don't know the packet has been deleted)
+ *       </ul>
+ *     <li/>Otherwise, replication for that entry is finished.
+ *   </ol>  
+ * </ol>
  */
 public class ReplicateThread extends I2PBoteThread implements PacketListener {
     private static final int WAIT_TIME_SECONDS = 5;   // amount of time to wait after sending <number of nodes> store requests
@@ -71,19 +77,17 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
     private I2PSendQueue sendQueue;
     private I2PPacketDispatcher i2pReceiver;
     private BucketManager bucketManager;
-    private CountDownLatch startSignal;
     private Random rng;
     private long nextReplicationTime;
     private Map<DhtStorageHandler, Set<Hash>> upToDateKeys;   // all DHT keys that have been re-stored since the last replication
     private Map<Destination, DeleteRequest> receivedDeleteRequests;   // null when not replicating
 
-    public ReplicateThread(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager, CountDownLatch startSignal) {
+    public ReplicateThread(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager) {
         super("ReplicateThd");
         this.localDestination = localDestination;
         this.sendQueue = sendQueue;
         this.i2pReceiver = i2pReceiver;
         this.bucketManager = bucketManager;
-        this.startSignal = startSignal;
         rng = new Random();
         upToDateKeys = new ConcurrentHashMap<DhtStorageHandler, Set<Hash>>();
     }
@@ -171,31 +175,17 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
     }
     
     @Override
-    public void run() {
-        // wait for startSignal
-        while (!shutdownRequested()) {
-            try {
-                if (startSignal.await(1, TimeUnit.SECONDS))
-                    break;
-            } catch (InterruptedException e) {
-                log.error("Replication thread interrupted!", e);
-            }
-        }
-        
-        // Replicate on startup and every REPLICATE_INTERVAL seconds after that
+    public void postStartup() {
         nextReplicationTime = System.currentTimeMillis();
-        while (!shutdownRequested()) {
-            try {
-                replicate();
-            } catch (InterruptedException e) {
-                log.error("Interrupted while replicating!", e);
-                return;
-            }
-            long waitTime = randomTime(REPLICATE_INTERVAL-REPLICATE_VARIANCE, REPLICATE_INTERVAL+REPLICATE_VARIANCE);
-            nextReplicationTime += waitTime;
-            log.debug("Next replication at " + new Date(nextReplicationTime));
-            awaitShutdownRequest(waitTime, TimeUnit.SECONDS);
-        }
+    }
+    
+    @Override
+    public void doStep() throws InterruptedException {
+        replicate();
+        long waitTime = randomTime(REPLICATE_INTERVAL-REPLICATE_VARIANCE, REPLICATE_INTERVAL+REPLICATE_VARIANCE);
+        nextReplicationTime += waitTime;
+        log.debug("Next replication at " + new Date(nextReplicationTime));
+        awaitShutdownRequest(waitTime, TimeUnit.SECONDS);
     }
 
     // PacketListener implementation

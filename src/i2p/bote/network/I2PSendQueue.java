@@ -56,6 +56,7 @@ import net.i2p.util.Log;
 public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     private Log log = new Log(I2PSendQueue.class);
     private I2PSession i2pSession;
+    private I2PDatagramMaker datagramMaker;
     private PacketQueue packetQueue;
     private Set<PacketBatch> runningBatches;
     private int maxBandwidth;
@@ -182,67 +183,76 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     }
     
     @Override
-    public void run() {
-        I2PDatagramMaker datagramMaker = new I2PDatagramMaker(i2pSession);
-        
-        while (true) {
-            if (shutdownRequested() && packetQueue.isEmpty())
-                break;
-            
-            ScheduledPacket scheduledPacket;
+    public void postStartup() {
+        datagramMaker = new I2PDatagramMaker(i2pSession);
+    }
+    
+    @Override
+    public void doStep() throws InterruptedException {
+        ScheduledPacket scheduledPacket = packetQueue.take();
+        if (scheduledPacket != null) {
+            doPacketDelay(scheduledPacket);
+            send(scheduledPacket, datagramMaker);
+        }
+    }
+    
+    @Override
+    protected void preShutdown() throws InterruptedException {
+        while (!packetQueue.isEmpty()) {
+            ScheduledPacket scheduledPacket = packetQueue.take();
+            if (scheduledPacket != null)
+                send(scheduledPacket, datagramMaker);
+        }
+    }
+    
+    /**
+     * Waits for an amount of time that is long enough to keep the sending rate below <code>maxBandwidth<code>,
+     * and until the current time is past <code>earliestSendTime</code>.
+     * @param scheduledPacket
+     */
+    private void doPacketDelay(ScheduledPacket scheduledPacket) {
+        if (maxBandwidth > 0) {
+            CommunicationPacket i2pBotePacket = scheduledPacket.data;
+            int packetSizeBits = i2pBotePacket.getSize() * 8;
+            int maxBWBitsPerSecond = maxBandwidth * 1024;
+            long waitTimeMsecs = 1000L * packetSizeBits / maxBWBitsPerSecond;
+            if (System.currentTimeMillis()+waitTimeMsecs < scheduledPacket.earliestSendTime)
+                waitTimeMsecs = scheduledPacket.earliestSendTime;
             try {
-                scheduledPacket = packetQueue.take();
+                TimeUnit.MILLISECONDS.sleep(waitTimeMsecs);
             }
             catch (InterruptedException e) {
-                log.warn("Interrupted while waiting for new packets.", e);
-                break;
-            }
-            if (shutdownRequested() && scheduledPacket==null)   // send remaining packets before shutting down
-                break;
-            CommunicationPacket i2pBotePacket = scheduledPacket.data;
-            
-            // wait long enough so rate <= maxBandwidth, and don't send before earliestSendTime
-            if (maxBandwidth > 0) {
-                int packetSizeBits = i2pBotePacket.getSize() * 8;
-                int maxBWBitsPerSecond = maxBandwidth * 1024;
-                long waitTimeMsecs = 1000L * packetSizeBits / maxBWBitsPerSecond;
-                if (System.currentTimeMillis()+waitTimeMsecs < scheduledPacket.earliestSendTime)
-                    waitTimeMsecs = scheduledPacket.earliestSendTime;
-                try {
-                    TimeUnit.MILLISECONDS.sleep(waitTimeMsecs);
-                }
-                catch (InterruptedException e) {
-                    log.warn("Interrupted while waiting to send packet.", e);
-                }
-            }
-            
-            PacketBatch batch = scheduledPacket.batch;
-            boolean isBatchPacket = batch != null;
-            log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to " + scheduledPacket.destination.calculateHash().toBase64());
-                
-            byte[] replyableDatagram = datagramMaker.makeI2PDatagram(i2pBotePacket.toByteArray());
-            try {
-                i2pSession.sendMessage(scheduledPacket.destination, replyableDatagram, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_UNSPECIFIED, I2PSession.PORT_UNSPECIFIED);
-                
-                // set sentTime, update queue and sentLatch, fire packet listeners
-                scheduledPacket.data.setSentTime(System.currentTimeMillis());
-                if (isBatchPacket)
-                    batch.decrementSentLatch();
-                scheduledPacket.decrementSentLatch();
-            }
-            catch (I2PSessionException sessExc) {
-                log.error("Can't send packet.", sessExc);
-                // pause to avoid CPU hogging if the error doesn't go away
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                }
-                catch (InterruptedException intrExc) {
-                    log.error("Interrupted while sleeping after a send error.", intrExc);
-                }
+                log.warn("Interrupted while waiting to send packet.", e);
             }
         }
-        
-        log.info(getClass().getSimpleName() + " exiting.");
+    }
+    
+    private void send(ScheduledPacket scheduledPacket, I2PDatagramMaker datagramMaker) {
+        CommunicationPacket i2pBotePacket = scheduledPacket.data;
+        PacketBatch batch = scheduledPacket.batch;
+        boolean isBatchPacket = batch != null;
+        log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to " + scheduledPacket.destination.calculateHash().toBase64());
+            
+        byte[] replyableDatagram = datagramMaker.makeI2PDatagram(i2pBotePacket.toByteArray());
+        try {
+            i2pSession.sendMessage(scheduledPacket.destination, replyableDatagram, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_UNSPECIFIED, I2PSession.PORT_UNSPECIFIED);
+            
+            // set sentTime, update queue and sentLatch, fire packet listeners
+            scheduledPacket.data.setSentTime(System.currentTimeMillis());
+            if (isBatchPacket)
+                batch.decrementSentLatch();
+            scheduledPacket.decrementSentLatch();
+        }
+        catch (I2PSessionException sessExc) {
+            log.error("Can't send packet.", sessExc);
+            // pause to avoid CPU hogging if the error doesn't go away
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            }
+            catch (InterruptedException intrExc) {
+                log.error("Interrupted while sleeping after a send error.", intrExc);
+            }
+        }
     }
     
     /**
