@@ -64,7 +64,7 @@ public abstract class Folder<T> implements Iterable<T> {
      * Returns the names of all files in the folder that end in <code>fileExtension</code>.<br/>
      * If there are no such files, an empty array is returned.
      */
-    public File[] getFilenames() {
+    protected File[] getFilenames() {
         File[] files = storageDir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {

@@ -30,8 +30,6 @@ import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import net.i2p.data.Hash;
@@ -101,42 +99,11 @@ public abstract class DeletionAwareDhtFolder<T extends DhtStorablePacket> extend
     
     /** Overridden to only return real DHT packets, not Deletion Info Packets. */
     @Override
-    public File[] getFilenames() {
+    protected File[] getFilenames() {
         List<File> filteredNames = new ArrayList<File>();
         for (File file: super.getFilenames())
             if (!file.getName().startsWith(DEL_FILE_PREFIX))
                 filteredNames.add(file);
         return filteredNames.toArray(new File[0]);
-    }
-    
-    /** Overridden to only return real DHT packets, not Deletion Info Packets. */
-    @Override
-    public Iterator<T> individualPackets() {
-        final Iterator<File> fileIterator = Arrays.asList(getFilenames()).iterator();
-        
-        return new Iterator<T>() {
-            @Override
-            public boolean hasNext() {
-                return fileIterator.hasNext();
-            }
-
-            @Override
-            public T next() {
-                File nextFile = fileIterator.next();
-                try {
-                    T nextElement = createFolderElement(nextFile);
-                    return nextElement;
-                }
-                catch (Exception e) {
-                    log.error("Can't create a DhtStorablePacket from file: " + nextFile.getAbsolutePath(), e);
-                    return null;
-                }
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException("Not supported.");
-            }
-        };
     }
 }
