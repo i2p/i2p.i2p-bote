@@ -26,7 +26,6 @@ import i2p.bote.packet.RelayDataPacket;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Random;
 
 import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Hash;
@@ -34,15 +33,13 @@ import net.i2p.util.Log;
 
 /**
  * A <code>PacketFolder</code> that uses filenames that consist of
- * the packet's scheduled send time and a random part.
+ * the packet's scheduled send time and the SHA256 hash of the packet.
  */
 public class RelayPacketFolder extends PacketFolder<RelayDataPacket> {
     private final Log log = new Log(RelayPacketFolder.class);
-    private Random random;
 
     public RelayPacketFolder(File storageDir) {
         super(storageDir);
-        random = new Random();
     }
 
     /**
@@ -50,20 +47,12 @@ public class RelayPacketFolder extends PacketFolder<RelayDataPacket> {
      * @param packet
      */
     public void add(RelayDataPacket packet) {
-        long minDelay = packet.getMinimumDelay();
-        long maxDelay = packet.getMaximumDelay();
-        // generate a random time between minDelay and maxDelay milliseconds in the future
-        long sendTime;
-        if (minDelay == maxDelay)
-            sendTime = System.currentTimeMillis() + minDelay;
-        else
-            sendTime = System.currentTimeMillis() + minDelay + Math.abs(random.nextLong()) % Math.abs(maxDelay-minDelay);
-        
         // make the packet's hash part of the filename and don't save if a file with the same hash exists already
         byte[] bytes = packet.toByteArray();
         Hash packetHash = SHA256Generator.getInstance().calculateHash(bytes);
         String base32Hash = Util.toBase32(packetHash);
         if (!fileExistsForHash(base32Hash)) {
+            long sendTime = System.currentTimeMillis() + packet.getDelay();
             String filename = sendTime + "_" + base32Hash + PACKET_FILE_EXTENSION;
             add(packet, filename);
             return;

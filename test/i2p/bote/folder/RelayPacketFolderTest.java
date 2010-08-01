@@ -31,6 +31,7 @@ import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
@@ -57,8 +58,7 @@ public class RelayPacketFolderTest {
         // make an EncryptedEmailPacket
         String base64Destination = "X3oKYQJ~1EAz7B1ZYGSrOTIMCW5Rnn2Svoc38dx5D9~zvz8vqiWcH-pCqQDwLgPWl9RTBzHtTmZcGRPXIv54i0XWeUfX6rTPDQGuZsnBMM0xrkH2FNLNFaJa0NgW3uKXWpNj9AI1AXUXzK-2MYTYoaZHx5SBoCaKfAGMcFJvTON1~kopxBxdBF9Q7T4~PJ3I2LeU-ycmUlehe9N9bIu7adUGyPGVl8Ka-UxwQromoJ~vSWHHl8HkwcDkW--v9Aj~wvFqxqriFkB1EeBiThi3V4XtVY~GUP4IkRj9YZGTsSBf3eS4xwXgnYWlB7IvxAGBfHY9MCg3lbAa1Dg~1IH6rhtXxsXUtGcXsz9yMZTxXHd~rGo~JrXeM1y~Vcenpr6tJcum6pxevkKzzT0qDegGPH3Zhqz7sSeeIaJEcPBUAkX89csqyFWFIjTMm6yZp2rW-QYUnVNLNTjf7vndYUAEICogAkq~btqpIzrGEpm3Pr9F23br3SpbOmdxQxg51AMmAAAA";
         Destination nextDestination = new Destination(base64Destination.substring(0, 516));
-        long minDelayMilliseconds = TimeUnit.MILLISECONDS.convert(120, TimeUnit.MINUTES);
-        long maxDelayMilliseconds = TimeUnit.MILLISECONDS.convert(600, TimeUnit.MINUTES);
+        long delayMilliseconds = TimeUnit.MILLISECONDS.convert(111, TimeUnit.MINUTES);
         String content =
             "Warum, warum, warum\n" +
             "Ist die Banane krumm?\n" +
@@ -75,7 +75,7 @@ public class RelayPacketFolderTest {
         
         // make a RelayDataPacket
         RelayRequest request = new RelayRequest(emailPacket, nextDestination);
-        relayDataPacket = new RelayDataPacket(nextDestination, minDelayMilliseconds, maxDelayMilliseconds, request);
+        relayDataPacket = new RelayDataPacket(nextDestination, delayMilliseconds, request);
     }
 
     @After
@@ -86,23 +86,25 @@ public class RelayPacketFolderTest {
         testDir.delete();
     }
     
-    /** Tests <code>add(RelayDataPacket)</code>. */
+    /**
+     * Tests {@link RelayPacketFolder#add(RelayDataPacket)} and removal of the packet from the
+     * folder via an <code>Iterator</code>.
+     */
     @Test
     public void testAddRemove() {
-        long storeTime = System.currentTimeMillis();
-        // Add and remove the packet to the folder. Repeat a number of times so the send times cover the [minDelay, maxDelay] interval well
-        for (int i=0; i<1000; i++) {
-            folder.add(relayDataPacket);
-            Iterator<RelayDataPacket> iterator = folder.iterator();
-            assertTrue("Folder is empty!", iterator.hasNext());
-            RelayDataPacket storedPacket = iterator.next();
-            long retrieveTime = System.currentTimeMillis();
-            long sendTime = storedPacket.getSendTime();
-            assertTrue("send time < earliest send time!", sendTime >= storeTime + relayDataPacket.getMinimumDelay());
-            assertTrue("send time > latest send time!", sendTime <= retrieveTime + relayDataPacket.getMaximumDelay());
-            assertFalse("Folder has more than one element!", iterator.hasNext());
-            iterator.remove();
-            assertFalse("Packet was not deleted!", folder.iterator().hasNext());
-        }
+        folder.add(relayDataPacket);
+        Iterator<RelayDataPacket> iterator = folder.iterator();
+        assertTrue("Folder is empty after a packet was added to it!", iterator.hasNext());
+        
+        // Read the stored packet, convert to a byte array, and compare.
+        // This also verifies the send time which is not stored in the packet itself
+        RelayDataPacket storedPacket = iterator.next();
+        byte[] arrayA = relayDataPacket.toByteArray();
+        byte[] arrayB = storedPacket.toByteArray();
+        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertFalse("Folder has more than one element!", iterator.hasNext());
+
+        iterator.remove();
+        assertFalse("Packet was not deleted!", folder.iterator().hasNext());
     }
 }

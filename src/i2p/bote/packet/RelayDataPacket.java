@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
@@ -37,28 +38,28 @@ import net.i2p.util.Log;
 
 /**
  * A <code>RelayDataPacket</code> contains a {@link RelayRequest},
- * an I2P destination to send it to, and a time window for the send time.
+ * an I2P destination to send it to, and a delay before sending.
  */
 @TypeCode('R')
 public class RelayDataPacket extends DataPacket {
+    private static Random random = new Random();
+    
     private Log log = new Log(RelayDataPacket.class);
-    private long minDelay;
-    private long maxDelay;
+    private long delay;   // in milliseconds
     private long sendTime;
     private Destination nextDestination;
     private RelayRequest request;
 
     /**
      * @param nextDestination The I2P destination to send the packet to
-     * @param minDelayMilliseconds In milliseconds
-     * @param maxDelayMilliseconds In milliseconds
+     * @param delayMilliseconds The amount of time to wait before sending the packet
      * @param request
      */
-    public RelayDataPacket(Destination nextDestination, long minDelayMilliseconds, long maxDelayMilliseconds, RelayRequest request) {
+    public RelayDataPacket(Destination nextDestination, long delayMilliseconds, RelayRequest request) {
         this.nextDestination = nextDestination;
-        this.minDelay = minDelayMilliseconds;
-        this.maxDelay = maxDelayMilliseconds;
+        this.delay = delayMilliseconds;
         this.request = request;
+        random = new Random();
     }
 
     public RelayDataPacket(byte[] data) throws DataFormatException, MalformedDataPacketException {
@@ -66,8 +67,7 @@ public class RelayDataPacket extends DataPacket {
         
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
-        minDelay = buffer.getInt() * 1000L;
-        maxDelay = buffer.getInt() * 1000L;
+        delay = buffer.getInt() * 1000L;
         nextDestination = Util.createDestination(buffer);
         
         int requestDataLength = buffer.getShort();
@@ -104,10 +104,10 @@ public class RelayDataPacket extends DataPacket {
      * @param payload
      * @param peerManager
      * @param numHops
-     * @param minDelayMilliseconds
-     * @param maxDelayMilliseconds
+     * @param minDelay The minimum delay in milliseconds
+     * @param maxDelay The maximum delay in milliseconds
      */
-    public static RelayDataPacket create(DataPacket payload, RelayPeerManager peerManager, int numHops, long minDelayMilliseconds, long maxDelayMilliseconds) {
+    public static RelayDataPacket create(DataPacket payload, RelayPeerManager peerManager, int numHops, long minDelay, long maxDelay) {
         List<Destination> relayPeers = peerManager.getRandomPeers(numHops);
         
         Log log = new Log(RelayDataPacket.class);
@@ -124,9 +124,16 @@ public class RelayDataPacket extends DataPacket {
         
         DataPacket dataPacket = payload;
         for (Iterator<Destination> iterator=relayPeers.iterator(); iterator.hasNext();) {
+            // generate a random time between minDelay and maxDelay in the future
+            long delay;
+            if (minDelay == maxDelay)
+                delay = minDelay;
+            else
+                delay = minDelay + Math.abs(random.nextLong()) % Math.abs(maxDelay-minDelay);
+
             Destination relayPeer = iterator.next();
             RelayRequest request = new RelayRequest(dataPacket, relayPeer);
-            dataPacket = new RelayDataPacket(relayPeer, minDelayMilliseconds, maxDelayMilliseconds, request);
+            dataPacket = new RelayDataPacket(relayPeer, delay, request);
         }
         return (RelayDataPacket)dataPacket;
     }
@@ -135,16 +142,11 @@ public class RelayDataPacket extends DataPacket {
         return nextDestination;
     }
 
-    /** Returns the minimum delay time for this packet in milliseconds */
-    public long getMinimumDelay() {
-        return minDelay;
+    /** Returns the delay time for this packet in milliseconds */
+    public long getDelay() {
+        return delay;
     }
 
-    /** Returns the maximum delay time for this packet in milliseconds */
-    public long getMaximumDelay() {
-        return maxDelay;
-    }
-    
     /**
      * @param sendTime The time the packet is scheduled for sending, in milliseconds since <code>1-1-1970</code>
      */
@@ -173,8 +175,7 @@ public class RelayDataPacket extends DataPacket {
  
         try {
             writeHeader(dataStream);
-            dataStream.writeInt((int)(minDelay/1000));
-            dataStream.writeInt((int)(maxDelay/1000));
+            dataStream.writeInt((int)(delay/1000));
             // write the first 384 bytes (the two public keys)
             dataStream.write(nextDestination.toByteArray(), 0, 384);
             byte[] requestBytes = request.toByteArray();

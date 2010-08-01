@@ -21,8 +21,8 @@
 
 package i2p.bote.packet;
 
-import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.network.I2PPacketDispatcher;
@@ -46,12 +46,11 @@ import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test for {@link RelayDataPacket} and {@link RelayRequest}.
+ * A unit test for {@link RelayDataPacket} and {@link RelayRequest}.
  */
 public class RelayPacketTest {
     private IndexPacket indexPacket;
@@ -60,7 +59,9 @@ public class RelayPacketTest {
     private String[] destKeys;
     private RelayPeerManager peerManager;
     private I2PClient i2pClient;
-
+    private long minDelayMilliseconds;
+    private long maxDelayMilliseconds;
+    
     @Before
     public void setUp() throws Exception {
         Destination nextDestination = new Destination("X3oKYQJ~1EAz7B1ZYGSrOTIMCW5Rnn2Svoc38dx5D9~zvz8vqiWcH-pCqQDwLgPWl9RTBzHtTmZcGRPXIv54i0XWeUfX6rTPDQGuZsnBMM0xrkH2FNLNFaJa0NgW3uKXWpNj9AI1AXUXzK-2MYTYoaZHx5SBoCaKfAGMcFJvTON1~kopxBxdBF9Q7T4~PJ3I2LeU-ycmUlehe9N9bIu7adUGyPGVl8Ka-UxwQromoJ~vSWHHl8HkwcDkW--v9Aj~wvFqxqriFkB1EeBiThi3V4XtVY~GUP4IkRj9YZGTsSBf3eS4xwXgnYWlB7IvxAGBfHY9MCg3lbAa1Dg~1IH6rhtXxsXUtGcXsz9yMZTxXHd~rGo~JrXeM1y~Vcenpr6tJcum6pxevkKzzT0qDegGPH3Zhqz7sSeeIaJEcPBUAkX89csqyFWFIjTMm6yZp2rW-QYUnVNLNTjf7vndYUAEICogAkq~btqpIzrGEpm3Pr9F23br3SpbOmdxQxg51AMmAAAA");
@@ -69,9 +70,8 @@ public class RelayPacketTest {
         indexPacket = new IndexPacket(destination);
         relayRequest = new RelayRequest(indexPacket, nextDestination);
         
-        long minDelayMilliseconds = TimeUnit.MILLISECONDS.convert(120, TimeUnit.MINUTES);
-        long maxDelayMilliseconds = TimeUnit.MILLISECONDS.convert(600, TimeUnit.MINUTES);
-        relayDataPacket = new RelayDataPacket(nextDestination, minDelayMilliseconds, maxDelayMilliseconds, relayRequest);
+        long delayMilliseconds = TimeUnit.MILLISECONDS.convert(123, TimeUnit.MINUTES);
+        relayDataPacket = new RelayDataPacket(nextDestination, delayMilliseconds, relayRequest);
         
         // create a RelayPeerManager
         String localBase64DestKeys = "X3oKYQJ~1EAz7B1ZYGSrOTIMCW5Rnn2Svoc38dx5D9~zvz8vqiWcH-pCqQDwLgPWl9RTBzHtTmZcGRPXIv54i0XWeUfX6rTPDQGuZsnBMM0xrkH2FNLNFaJa0NgW3uKXWpNj9AI1AXUXzK-2MYTYoaZHx5SBoCaKfAGMcFJvTON1~kopxBxdBF9Q7T4~PJ3I2LeU-ycmUlehe9N9bIu7adUGyPGVl8Ka-UxwQromoJ~vSWHHl8HkwcDkW--v9Aj~wvFqxqriFkB1EeBiThi3V4XtVY~GUP4IkRj9YZGTsSBf3eS4xwXgnYWlB7IvxAGBfHY9MCg3lbAa1Dg~1IH6rhtXxsXUtGcXsz9yMZTxXHd~rGo~JrXeM1y~Vcenpr6tJcum6pxevkKzzT0qDegGPH3Zhqz7sSeeIaJEcPBUAkX89csqyFWFIjTMm6yZp2rW-QYUnVNLNTjf7vndYUAEICogAkq~btqpIzrGEpm3Pr9F23br3SpbOmdxQxg51AMmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADBrMolZp2gbXxrAef~UFJdSfiKSSSj~KcUOKndCndDipKboKQ5rcwHu0eKElE5NIS";
@@ -97,12 +97,11 @@ public class RelayPacketTest {
         writer.close();
         peerManager = new RelayPeerManager(sendQueue, i2pSession.getMyDestination(), peerFile);
         assertEquals(destKeys.length, peerManager.getAllPeers().size());
+
+        minDelayMilliseconds = TimeUnit.MILLISECONDS.convert(120, TimeUnit.MINUTES);
+        maxDelayMilliseconds = TimeUnit.MILLISECONDS.convert(600, TimeUnit.MINUTES);
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
-    
     @Test
     public void toByteArrayAndBack() throws DataFormatException, MalformedDataPacketException {
         byte[] bytes, bytes2;
@@ -120,8 +119,6 @@ public class RelayPacketTest {
     
     @Test
     public void testCreateAndUnwrap() throws I2PSessionException, DataFormatException, NoSuchAlgorithmException, MalformedDataPacketException {
-        long minDelayMilliseconds = TimeUnit.MILLISECONDS.convert(120, TimeUnit.MINUTES);
-        long maxDelayMilliseconds = TimeUnit.MILLISECONDS.convert(600, TimeUnit.MINUTES);
         DataPacket dataPacket = RelayDataPacket.create(indexPacket, peerManager, destKeys.length, minDelayMilliseconds, maxDelayMilliseconds);
         byte[] indexPacketBytes = indexPacket.toByteArray();
         Assert.assertNotNull(dataPacket);
@@ -143,5 +140,17 @@ public class RelayPacketTest {
             }
         fail("No matching I2PSession for I2P destination in packet: <" + destination.toBase64() + ">");
         return null;
+    }
+
+    /** Tests <code>add(RelayDataPacket)</code>. */
+    @Test
+    public void testAdd() {
+        // Create a relay packet and check that a valid delay time was set. Repeat a number of times so the delays cover the [minDelay, maxDelay] interval well
+        for (int i=0; i<1000; i++) {
+            RelayDataPacket relayPacket = RelayDataPacket.create(indexPacket, peerManager, destKeys.length, minDelayMilliseconds, maxDelayMilliseconds);
+            long delay = relayPacket.getDelay();
+            assertTrue("delay < min delay!", delay >= minDelayMilliseconds);
+            assertTrue("delay > max delay!", delay <= maxDelayMilliseconds);
+        }
     }
 }
