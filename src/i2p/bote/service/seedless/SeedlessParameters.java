@@ -104,7 +104,6 @@ public class SeedlessParameters {
             }
         }
         if(port == null || host == null) {
-//            log.error("isSeedlessAvailable, no router console found!");
             log.error("No router console found, trying default host/port: " + DEFAULT_HOST + ":" + DEFAULT_PORT);
             host = DEFAULT_HOST;
             port = DEFAULT_PORT;
