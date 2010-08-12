@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class UnencryptedEmailPacketTest {
-	private UnencryptedEmailPacket packet;
+    private UnencryptedEmailPacket packet;
 
     @Before
     public void setUp() throws Exception {
@@ -47,10 +47,10 @@ public class UnencryptedEmailPacketTest {
         packet = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content);
     }
     
-	@Test
-	public void toByteArrayAndBack() {
+    @Test
+    public void toByteArrayAndBack() {
         byte[] arrayA = packet.toByteArray();
         byte[] arrayB = new UnencryptedEmailPacket(arrayA).toByteArray();
         assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
-	}
+    }
 }

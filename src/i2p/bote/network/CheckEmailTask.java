@@ -75,6 +75,16 @@ public class CheckEmailTask implements Callable<Boolean> {
     private volatile boolean newEmail;   // EmailPacketTask sets this to true if an email was completed
     private IndexPacketDeleteRequest indexPacketDeleteRequest;   // EmailPacketTask populates this
 
+    /**
+     * 
+     * @param identity The email identity to check emails for
+     * @param dht For retrieving index packets and email packets
+     * @param peerManager Unused; will be needed once emails can be retrieved via relays
+     * @param sendQueue
+     * @param incompleteEmailFolder For storing retrieved email packets
+     * @param emailPacketFolder For accessing locally stored email packets directly (rather than sending a retrieve request)
+     * @param indexPacketFolder For accessing locally stored index packets directly
+     */
     public CheckEmailTask(EmailIdentity identity, DHT dht, RelayPeerManager peerManager, I2PSendQueue sendQueue,
             IncompleteEmailFolder incompleteEmailFolder, EmailPacketFolder emailPacketFolder, IndexPacketFolder indexPacketFolder) {
         this.identity = identity;
@@ -144,7 +154,7 @@ public class CheckEmailTask implements Callable<Boolean> {
     }
     
     /**
-     * Returns all Index Packets in <code>dhtPackets</code>.
+     * Returns all Index Packets in a <code>Collection</code> of {@link DhtStorablePacket}s.
      * @param dhtPackets Should only contain index packets; other packets are ignored
      * @return An <code>IndexPacket</code> containing all entries from the packets in the <code>Collection</code>
      */

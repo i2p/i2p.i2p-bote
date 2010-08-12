@@ -30,13 +30,13 @@ import javax.servlet.ServletContextListener;
  * Starts the I2PBote backend when the web app is initialized.
  */
 public class ServiceInitializer implements ServletContextListener {
-	@Override
-	public void contextDestroyed(ServletContextEvent event) {
-		I2PBote.getInstance().shutDown();
-	}
+    @Override
+    public void contextDestroyed(ServletContextEvent event) {
+        I2PBote.getInstance().shutDown();
+    }
 
-	@Override
-	public void contextInitialized(ServletContextEvent event) {
-		I2PBote.getInstance().startUp();
-	}
+    @Override
+    public void contextInitialized(ServletContextEvent event) {
+        I2PBote.getInstance().startUp();
+    }
 }

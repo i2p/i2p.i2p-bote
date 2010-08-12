@@ -122,7 +122,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
 
         @Override
         public void run() {
-        	UnencryptedEmailPacket[] packets = getEmailPackets(packetFiles).toArray(new UnencryptedEmailPacket[0]);
+            UnencryptedEmailPacket[] packets = getEmailPackets(packetFiles).toArray(new UnencryptedEmailPacket[0]);
             
             // sort by fragment index
             Arrays.sort(packets, new Comparator<UnencryptedEmailPacket>() {
@@ -171,9 +171,9 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
     }
 
     // FolderElement implementation
-	@Override
-	protected UnencryptedEmailPacket createFolderElement(File file) throws Exception {
+    @Override
+    protected UnencryptedEmailPacket createFolderElement(File file) throws Exception {
         FileInputStream inputStream = new FileInputStream(file);
         return new UnencryptedEmailPacket(inputStream);
-	}
+    }
 }

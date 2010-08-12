@@ -165,7 +165,7 @@ public class Configuration {
     }
     
     public File getOutboxDir() {
-        return new File(i2pBoteDir, OUTBOX_DIR);	    
+        return new File(i2pBoteDir, OUTBOX_DIR);        
     }
     
     public File getRelayPacketDir() {
@@ -207,8 +207,8 @@ public class Configuration {
      * Saves the configuration to a file.
      */
     public void save() {
-    	log.debug("Saving config file <" + configFile.getAbsolutePath() + ">");
-    	try {
+        log.debug("Saving config file <" + configFile.getAbsolutePath() + ">");
+        try {
             DataHelper.storeProps(properties, configFile);
             Util.makePrivate(configFile);
         } catch (IOException e) {
@@ -221,36 +221,36 @@ public class Configuration {
      * @return A non-negative number
      */
     public int getRedundancy() {
-    	return getIntParameter(PARAMETER_REDUNDANCY, DEFAULT_REDUNDANCY);
+        return getIntParameter(PARAMETER_REDUNDANCY, DEFAULT_REDUNDANCY);
     }
 
     /**
      * Returns the maximum size (in bytes) the inbox can take up.
      */
     public int getStorageSpaceInbox() {
-    	return getIntParameter(PARAMETER_STORAGE_SPACE_INBOX, DEFAULT_STORAGE_SPACE_INBOX);
+        return getIntParameter(PARAMETER_STORAGE_SPACE_INBOX, DEFAULT_STORAGE_SPACE_INBOX);
     }
     
     /**
      * Returns the maximum size (in bytes) all messages stored for relaying can take up.
      */
     public int getStorageSpaceRelay() {
-    	return getIntParameter(PARAMETER_STORAGE_SPACE_RELAY, DEFAULT_STORAGE_SPACE_RELAY);
+        return getIntParameter(PARAMETER_STORAGE_SPACE_RELAY, DEFAULT_STORAGE_SPACE_RELAY);
     }
     
     /**
      * Returns the time (in milliseconds) after which an email is deleted from the outbox if it cannot be sent or relayed.
      */
     public long getStorageTime() {
-    	return 24L * 3600 * 1000 * getIntParameter(PARAMETER_STORAGE_TIME, DEFAULT_STORAGE_TIME);
+        return 24L * 3600 * 1000 * getIntParameter(PARAMETER_STORAGE_TIME, DEFAULT_STORAGE_TIME);
     }
 
     public int getMaxFragmentSize() {
-    	return getIntParameter(PARAMETER_MAX_FRAGMENT_SIZE, DEFAULT_MAX_FRAGMENT_SIZE);
+        return getIntParameter(PARAMETER_MAX_FRAGMENT_SIZE, DEFAULT_MAX_FRAGMENT_SIZE);
     }
     
     public int getHashCashStrength() {
-    	return getIntParameter(PARAMETER_HASHCASH_STRENGTH, DEFAULT_HASHCASH_STRENGTH);
+        return getIntParameter(PARAMETER_HASHCASH_STRENGTH, DEFAULT_HASHCASH_STRENGTH);
     }
     
     /**
@@ -437,16 +437,16 @@ public class Configuration {
     }
     
     private int getIntParameter(String parameterName, int defaultValue) {
-    	String stringValue = properties.getProperty(parameterName);
-    	if (stringValue == null)
-    		return defaultValue;
-    	else
-    		try {
-    			return new Integer(stringValue);
-    		}
-    		catch (NumberFormatException e) {
-    			log.warn("Can't convert value <" + stringValue + "> for parameter <" + parameterName + "> to int, using default.");
-    			return defaultValue;
-    		}
+        String stringValue = properties.getProperty(parameterName);
+        if (stringValue == null)
+            return defaultValue;
+        else
+            try {
+                return new Integer(stringValue);
+            }
+            catch (NumberFormatException e) {
+                log.warn("Can't convert value <" + stringValue + "> for parameter <" + parameterName + "> to int, using default.");
+                return defaultValue;
+            }
     }
 }

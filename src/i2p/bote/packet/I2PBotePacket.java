@@ -55,16 +55,16 @@ public abstract class I2PBotePacket {
         this.protocolVersion = protocolVersion;
     }
     
-	public abstract byte[] toByteArray();
-	
-	/**
-	 * Returns the size of the packet in bytes.
-	 */
-	// TODO rename to getPacketSize
-	// TODO override in subclasses to avoid calling toByteArray by adding field lengths
-	public int getSize() {
-	    return toByteArray().length;
-	}
+    public abstract byte[] toByteArray();
+    
+    /**
+     * Returns the size of the packet in bytes.
+     */
+    // TODO rename to getPacketSize
+    // TODO override in subclasses to avoid calling toByteArray by adding field lengths
+    public int getSize() {
+        return toByteArray().length;
+    }
     
     /**
      * Returns <code>false</code> if this packet can't fit into an I2P datagram.
@@ -76,20 +76,20 @@ public abstract class I2PBotePacket {
     protected char getPacketTypeCode(Class<? extends I2PBotePacket> dataType) {
         return dataType.getAnnotation(TypeCode.class).value();
     }
-	
+    
     public char getPacketTypeCode() {
         return getPacketTypeCode(getClass());
     }
 
-	/**
-	 * Logs an error if the packet type of the packet instance is not correct
-	 * @param packetTypeCode
-	 */
-	protected void checkPacketType(char packetTypeCode) {
-	    if (getPacketTypeCode() != packetTypeCode)
-	        log.error("Packet type code of class " + getClass().getSimpleName() + " should be " + getPacketTypeCode() + ", is <" + packetTypeCode + ">");
-	}
-	
+    /**
+     * Logs an error if the packet type of the packet instance is not correct
+     * @param packetTypeCode
+     */
+    protected void checkPacketType(char packetTypeCode) {
+        if (getPacketTypeCode() != packetTypeCode)
+            log.error("Packet type code of class " + getClass().getSimpleName() + " should be " + getPacketTypeCode() + ", is <" + packetTypeCode + ">");
+    }
+    
     protected void checkPacketType(byte packetTypeCode) {
         checkPacketType((char)packetTypeCode);
     }
@@ -110,7 +110,7 @@ public abstract class I2PBotePacket {
         buffer.get(bytes);
         return new Hash(bytes);
     }
-	
+    
     protected static Class<? extends I2PBotePacket> decodePacketTypeCode(char packetTypeCode) {
         for (Class<? extends I2PBotePacket> packetType: ALL_PACKET_TYPES)
             if (packetType.getAnnotation(TypeCode.class).value() == packetTypeCode)
@@ -122,6 +122,6 @@ public abstract class I2PBotePacket {
 
     @Override
     public String toString() {
-    	return "Type=" + getClass().getSimpleName() + ", code=<" + getPacketTypeCode() + ">, sizeBytes=" + getSize();
+        return "Type=" + getClass().getSimpleName() + ", code=<" + getPacketTypeCode() + ">, sizeBytes=" + getSize();
     }
 }

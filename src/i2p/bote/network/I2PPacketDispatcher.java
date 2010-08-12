@@ -45,9 +45,9 @@ public class I2PPacketDispatcher implements I2PSessionMuxedListener {
     private Log log = new Log(I2PPacketDispatcher.class);
     private List<PacketListener> packetListeners;
 
-	public I2PPacketDispatcher() {
-		packetListeners = new ArrayList<PacketListener>();
-	}
+    public I2PPacketDispatcher() {
+        packetListeners = new ArrayList<PacketListener>();
+    }
     
     public void addPacketListener(PacketListener listener) {
         synchronized(packetListeners) {
@@ -68,11 +68,11 @@ public class I2PPacketDispatcher implements I2PSessionMuxedListener {
         }
     }
             
-	public void shutDown() {
-	}
+    public void shutDown() {
+    }
 
-	// I2PSessionMuxedListener implementation follows
-	
+    // I2PSessionMuxedListener implementation follows
+    
     @Override
     public void reportAbuse(I2PSession session, int severity) {
     }

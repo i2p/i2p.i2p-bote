@@ -49,10 +49,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( { I2PBotePacketTest.class, StoreRequestTest.class, EncryptedEmailPacketTest.class, UnencryptedEmailPacketTest.class,
-	FindClosePeersPacketTest.class, PeerListTest.class, ResponsePacketTest.class, IncompleteEmailFolderTest.class, FolderTest.class,
-	EmailPacketDeleteRequestTest.class, IndexPacketDeleteRequestTest.class, IndexPacketTest.class, IndexPacketFolderTest.class,
-	EmailTest.class, EmailIdentityTest.class, EmailPacketFolderTest.class, EmailPacketDeleteRequestTest.class,
-	RelayPacketTest.class, RelayPacketFolderTest.class, BucketManagerTest.class, CryptoImplementationTest.class })
+    FindClosePeersPacketTest.class, PeerListTest.class, ResponsePacketTest.class, IncompleteEmailFolderTest.class, FolderTest.class,
+    EmailPacketDeleteRequestTest.class, IndexPacketDeleteRequestTest.class, IndexPacketTest.class, IndexPacketFolderTest.class,
+    EmailTest.class, EmailIdentityTest.class, EmailPacketFolderTest.class, EmailPacketDeleteRequestTest.class,
+    RelayPacketTest.class, RelayPacketFolderTest.class, BucketManagerTest.class, CryptoImplementationTest.class })
 public class AllTests {
 
     public static Test suite() {

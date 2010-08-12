@@ -293,6 +293,7 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
      *   <li/>Use that secret as a key to encrypt the message with AES.<br/>
      *   <li/>Return the encrypted message and the ephemeral public key generated in step 1.<br/>
      * </ol>
+     * TODO Replace AESEngine.encrypt() with AESEngine.safeEncrypt(), remove padding code
      * @throws NoSuchProviderException 
      * @throws NoSuchAlgorithmException 
      * @throws InvalidKeyException 

@@ -32,12 +32,11 @@ import i2p.bote.email.EmailIdentity;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class EncryptedEmailPacketTest {
-	EncryptedEmailPacket[] encryptedPackets;
+    EncryptedEmailPacket[] encryptedPackets;
     EncryptedEmailPacket ecdhEncryptedPacket;
     EmailIdentity[] identities;
     String message = "This is a test message. Test 1 2 3 Test";
@@ -70,10 +69,6 @@ public class EncryptedEmailPacketTest {
         // make an ECDH encrypted packet
         assertTrue(identities[1].getCryptoImpl() instanceof ECDH521_ECDSA521);
         encryptedPackets[1] = new EncryptedEmailPacket(plaintextPacket, ecdhDestination);
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test

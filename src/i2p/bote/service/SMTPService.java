@@ -23,9 +23,9 @@ package i2p.bote.service;
 
 public class SMTPService extends I2PBoteThread {
 
-	public SMTPService() {
-		super("SMTPService");
-	}
+    public SMTPService() {
+        super("SMTPService");
+    }
 
     @Override
     protected void doStep() throws InterruptedException {

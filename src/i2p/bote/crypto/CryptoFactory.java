@@ -28,26 +28,26 @@ import java.util.List;
 import net.i2p.util.Log;
 
 public class CryptoFactory {
-	private static List<CryptoImplementation> instances;
+    private static List<CryptoImplementation> instances;
 
-	public static CryptoImplementation getInstance(int id) {
-		if (instances == null)
-		    init();
-		
-		for (CryptoImplementation instance: instances)
-			if (instance.getId() == id)
-				return instance;
-		return null;
-	}
-	
-	public static List<CryptoImplementation> getInstances() {
+    public static CryptoImplementation getInstance(int id) {
         if (instances == null)
             init();
         
-	    return instances;
-	}
-	
-	private static void init() {
+        for (CryptoImplementation instance: instances)
+            if (instance.getId() == id)
+                return instance;
+        return null;
+    }
+    
+    public static List<CryptoImplementation> getInstances() {
+        if (instances == null)
+            init();
+        
+        return instances;
+    }
+    
+    private static void init() {
         instances = Collections.synchronizedList(new ArrayList<CryptoImplementation>());
         instances.add(new ElGamal2048_DSA1024());
         try {
@@ -58,5 +58,5 @@ public class CryptoFactory {
             Log log = new Log(CryptoFactory.class);
             log.error("Error creating ECDH256_ECDSA256 or ECDH521_ECDSA521.", e);
         }
-	}
+    }
 }

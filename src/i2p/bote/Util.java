@@ -45,10 +45,10 @@ import net.i2p.util.Log;
 import net.i2p.util.Translate;
 
 public class Util {
-	private static final String BUNDLE_NAME = "i2p.bote.locale.Messages";
-	
-	private Util() { }
-	
+    private static final String BUNDLE_NAME = "i2p.bote.locale.Messages";
+    
+    private Util() { }
+    
     public static byte[] readBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[32*1024];

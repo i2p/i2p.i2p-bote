@@ -25,7 +25,6 @@
 package i2p.bote.service.seedless;
 
 import i2p.bote.service.I2PBoteThread;
-import i2p.bote.service.ProxyRequest;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

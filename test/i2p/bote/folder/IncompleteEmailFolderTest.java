@@ -43,40 +43,40 @@ public class IncompleteEmailFolderTest {
     private static final String MSG_ID_CACHE_DIR = "msgidcache.txt";
     
     private File inboxDir;
-	private EmailFolder inbox;
-	private IncompleteEmailFolder incompleteFolder;
-	private File testDir;
+    private EmailFolder inbox;
+    private IncompleteEmailFolder incompleteFolder;
+    private File testDir;
 
-	@Before
+    @Before
     public void setUp() throws Exception {
-		File tempDir = new File(System.getProperty("java.io.tmpdir"));
-		testDir = new File(tempDir, "IncompleteEmailFolderTest-" + System.currentTimeMillis());
-		
-		inboxDir = new File(testDir, "inbox");
-		inbox = new EmailFolder(inboxDir);
-		
-		File incompleteDir = new File(testDir, "incomplete");
-		MessageIdCache messageIdCache = new MessageIdCache(new File(testDir, MSG_ID_CACHE_DIR), 1000);
-		incompleteFolder = new IncompleteEmailFolder(incompleteDir, messageIdCache, inbox);
-	}
-	
-	@After
-    public void tearDown() throws Exception {
-	    for (File file: inboxDir.listFiles())
-	        file.delete();
-	    inboxDir.delete();
-		incompleteFolder.getStorageDirectory().delete();
-		new File(testDir, MSG_ID_CACHE_DIR).delete();
-		testDir.delete();
+        File tempDir = new File(System.getProperty("java.io.tmpdir"));
+        testDir = new File(tempDir, "IncompleteEmailFolderTest-" + System.currentTimeMillis());
+        
+        inboxDir = new File(testDir, "inbox");
+        inbox = new EmailFolder(inboxDir);
+        
+        File incompleteDir = new File(testDir, "incomplete");
+        MessageIdCache messageIdCache = new MessageIdCache(new File(testDir, MSG_ID_CACHE_DIR), 1000);
+        incompleteFolder = new IncompleteEmailFolder(incompleteDir, messageIdCache, inbox);
     }
-	
-	@Test
-	public void testAddSinglePacketEmail() throws Exception {
-		testAddEmail("Test message", 1);
-	}
-	
-	@Test
-	public void testAddThreePacketEmail() throws Exception {
+    
+    @After
+    public void tearDown() throws Exception {
+        for (File file: inboxDir.listFiles())
+            file.delete();
+        inboxDir.delete();
+        incompleteFolder.getStorageDirectory().delete();
+        new File(testDir, MSG_ID_CACHE_DIR).delete();
+        testDir.delete();
+    }
+    
+    @Test
+    public void testAddSinglePacketEmail() throws Exception {
+        testAddEmail("Test message", 1);
+    }
+    
+    @Test
+    public void testAddThreePacketEmail() throws Exception {
         // Create a 80,000-char string. Use random data (more or less, because it has to be
         // US ASCII chars) so it doesn't get compressed into less than 3 packets.
         Random rng = new Random();
@@ -84,9 +84,9 @@ public class IncompleteEmailFolderTest {
         byte[] message = new byte[80000];
         for (int i=0; i<message.length; i++)
             message[i] = (byte)(32 + rng.nextInt(127-32));
-	    
+        
         testAddEmail(new String(message), 3);
-	}
+    }
 
     private void testAddEmail(String mailContent, int expectedNumPackets) throws Exception {
         Email email = new Email(true);
@@ -102,9 +102,8 @@ public class IncompleteEmailFolderTest {
         for (UnencryptedEmailPacket emailPacket: packets)
             incompleteFolder.addEmailPacket(emailPacket);
         
-        assertEquals("The incomplete emails folder is not empty!", 0, incompleteFolder.getElements().size());
-        assertEquals("Expected one email in the inbox.", 1, inbox.getElements().size());
-        
+        assertTrue("The incomplete emails folder is not empty!", incompleteFolder.getElements().size() == 0);
+        assertTrue("Expected: one email in the inbox, actual number = " + inbox.getElements().size(), inbox.getElements().size() == 1);
         // Verify that the original email and the email in the folder are the same except for the signature header
         Email storedEmail = inbox.getElements().iterator().next();
         storedEmail.removeHeader("X-I2PBote-Sig-Valid");

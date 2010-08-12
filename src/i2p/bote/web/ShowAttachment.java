@@ -51,7 +51,7 @@ public class ShowAttachment extends HttpServlet {
     private Log log = new Log(ShowAttachment.class);
        
     @Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String folderName = request.getParameter("folder");
         String messageID = request.getParameter("messageID");
         Email email = JSPHelper.getEmail(folderName, messageID);
@@ -105,10 +105,10 @@ public class ShowAttachment extends HttpServlet {
         catch (MessagingException e) {
             throw new ServletException("Can't get MIME type of part " + partIndex + ". Message ID=" + messageID, e);
         }
-	}
+    }
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    doGet(request, response);
-	}
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
 }

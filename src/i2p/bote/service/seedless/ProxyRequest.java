@@ -21,7 +21,7 @@
  *
  * ...for any additional details and license questions.
  */
-package i2p.bote.service;
+package i2p.bote.service.seedless;
 
 import java.io.IOException;
 import java.net.Authenticator;

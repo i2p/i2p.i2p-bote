@@ -57,20 +57,19 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
     private Log log = new Log(EncryptedEmailPacket.class);
     private Hash dhtKey;
     private long storeTime;   // in milliseconds since 1970
-
     private Hash delVerificationHash;
     private CryptoImplementation cryptoImpl;
     private byte[] encryptedData;   // an UnencryptedEmailPacket, converted to a byte array and encrypted
 
-/**
- * Creates an <code>EncryptedEmailPacket</code> from an <code>UnencryptedEmailPacket</code>.
- * The public key of <code>emailDestination</code> is used for encryption.
-         * The store time is set to <code>0</code>.
- * @param unencryptedPacket
- * @param emailDestination
- * @throws GeneralSecurityException If an error occurred during encryption
- */
-public EncryptedEmailPacket(UnencryptedEmailPacket unencryptedPacket, EmailDestination emailDestination) throws GeneralSecurityException {
+    /**
+     * Creates an <code>EncryptedEmailPacket</code> from an <code>UnencryptedEmailPacket</code>.
+     * The public key of <code>emailDestination</code> is used for encryption.
+     * The store time is set to <code>0</code>.
+     * @param unencryptedPacket
+     * @param emailDestination
+     * @throws GeneralSecurityException If an error occurred during encryption
+     */
+    public EncryptedEmailPacket(UnencryptedEmailPacket unencryptedPacket, EmailDestination emailDestination) throws GeneralSecurityException {
         storeTime = 0;
         byte[] delAuthorizationBytes = unencryptedPacket.getDeleteAuthorization().toByteArray();
         delVerificationHash = new Hash(delAuthorizationBytes);
@@ -78,17 +77,17 @@ public EncryptedEmailPacket(UnencryptedEmailPacket unencryptedPacket, EmailDesti
         
         encryptedData = cryptoImpl.encrypt(unencryptedPacket.toByteArray(), emailDestination.getPublicEncryptionKey());
         dhtKey = getDhtKey();
-}
-
-/**
- * Creates an <code>EncryptedEmailPacket</code> from raw datagram data.
- * To read the encrypted parts of the packet, <code>decrypt</code> must be called first.
+    }
+    
+    /**
+     * Creates an <code>EncryptedEmailPacket</code> from raw datagram data.
+     * To read the encrypted parts of the packet, {@link #decrypt(EmailIdentity)} must be called first.
      * @param data
- * @throws InvalidAlgorithmParameterException 
- * @throws NoSuchAlgorithmException 
- */
-public EncryptedEmailPacket(byte[] data) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-    super(data);
+     * @throws InvalidAlgorithmParameterException 
+     * @throws NoSuchAlgorithmException 
+     */
+    public EncryptedEmailPacket(byte[] data) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+        super(data);
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
         dhtKey = readHash(buffer);
@@ -99,12 +98,12 @@ public EncryptedEmailPacket(byte[] data) throws NoSuchAlgorithmException, Invali
         int encryptedLength = buffer.getShort();   // length of the encrypted part of the packet
         encryptedData = new byte[encryptedLength];
         buffer.get(encryptedData);
-}
+    }
 
     /**
      * Returns a hash computed from </code>encryptedData</code>.
      */
-@Override
+    @Override
     public Hash getDhtKey() {
         ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
         DataOutputStream dataStream = new DataOutputStream(byteArrayStream);
@@ -122,9 +121,9 @@ public EncryptedEmailPacket(byte[] data) throws NoSuchAlgorithmException, Invali
         }
     }
     
-public boolean verifyPacketHash() {
-    return getDhtKey().equals(dhtKey);
-}
+    public boolean verifyPacketHash() {
+        return getDhtKey().equals(dhtKey);
+    }
 
     public Hash getDeleteVerificationHash() {
         return delVerificationHash;
@@ -145,14 +144,14 @@ public boolean verifyPacketHash() {
         return cryptoImpl;
     }
     
-/**
- * Decrypts the encrypted part of the packet with the private key of an <code>EmailIdentity</code>.
- * The {@link CryptoImplementation} in the <code>EmailIdentity</code> must be the same as the one
- * in this <code>EncryptedEmailPacket</code>.
- * @param identity
- * @throws GeneralSecurityException 
- * @throws InvalidCipherTextException 
- */
+    /**
+     * Decrypts the encrypted part of the packet with the private key of an <code>EmailIdentity</code>.
+     * The {@link CryptoImplementation} in the <code>EmailIdentity</code> must be the same as the one
+     * in this <code>EncryptedEmailPacket</code>.
+     * @param identity
+     * @throws GeneralSecurityException 
+     * @throws InvalidCipherTextException 
+     */
     public UnencryptedEmailPacket decrypt(EmailIdentity identity) throws GeneralSecurityException, InvalidCipherTextException {
         if (cryptoImpl != identity.getCryptoImpl())
             throw new IllegalArgumentException("CryptoImplementations don't match. Email Packet: <" + cryptoImpl.getName() + ">, Email Identity: <" + identity.getCryptoImpl().getName() + ">.");
@@ -183,6 +182,6 @@ public boolean verifyPacketHash() {
 
     @Override
     public String toString() {
-    return super.toString() + ", DHTkey=" + dhtKey + ", tstamp=" + storeTime + ", alg=" + cryptoImpl.getName() + ", delVerifHash=" + delVerificationHash + ", encrLen=" + encryptedData.length;
+        return super.toString() + ", DHTkey=" + dhtKey + ", tstamp=" + storeTime + ", alg=" + cryptoImpl.getName() + ", delVerifHash=" + delVerificationHash + ", encrLen=" + encryptedData.length;
     }
 }

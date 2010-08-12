@@ -42,13 +42,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Outbox extends EmailFolder {
     private static final String DEFAULT_STATUS = "Queued";
-	
+    
     private Map<String, String> statusMap;   // maps message IDs to status strings
     
-	public Outbox(File storageDir) {
-		super(storageDir);
-		statusMap = new ConcurrentHashMap<String, String>();
-	}
+    public Outbox(File storageDir) {
+        super(storageDir);
+        statusMap = new ConcurrentHashMap<String, String>();
+    }
 
     /**
      * Overridden to handle the <code>STATUS</code> attribute.
