@@ -163,7 +163,7 @@
             <td><div${class} style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></div></td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
-            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}"><ib:emailDate email="${email}" timeStyle="short"/></a></div></td>
+            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}"><ib:printDate date="${email.sentDate}" timeStyle="short"/></a></div></td>
             <td>
                 <div${class}>
                 <a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}">

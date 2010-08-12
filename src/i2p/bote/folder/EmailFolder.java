@@ -26,6 +26,7 @@ import i2p.bote.Util;
 import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
+import i2p.bote.email.EmailMetadata;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,12 +41,14 @@ import javax.mail.MessagingException;
 import net.i2p.util.Log;
 
 /**
- * Stores emails in a directory on the file system. Each email is stored in one file.
- * Filenames are in the format <code><N, O>_<message ID>.mail</code>, where
- * N is for new (unread or unsent) and O is for old (read or sent).
+ * Stores emails in a directory on the file system.<br/>
+ * Two files are stored for each email; one email file with the name
+ * <code>&lt;message ID&gt;.mail</code>, and a metadata file with the name
+ * <code>&lt;message ID&gt;.meta</code>.
  */
 public class EmailFolder extends Folder<Email> {
     protected static final String EMAIL_FILE_EXTENSION = ".mail";
+    protected static final String METADATA_FILE_EXTENSION = ".meta";
     
     private Log log = new Log(EmailFolder.class);
     
@@ -62,7 +65,7 @@ public class EmailFolder extends Folder<Email> {
      */
     public void add(Email email) throws IOException, MessagingException {
         // check if an email exists already with that message id
-        if (getEmailFile(email.getMessageID()) != null) {
+        if (getEmailFile(email.getMessageID()).exists()) {
             log.debug("Not storing email because there is an existing one with the same message ID: <" + email.getMessageID()+ ">");
             return;
         }
@@ -84,6 +87,17 @@ public class EmailFolder extends Folder<Email> {
                 catch (IOException e) {
                     log.error("Can't close file: <" + emailFile + ">", e);
                 }
+        }
+        
+        // write out the metadata
+        File metaFile = getMetadataFile(emailFile);
+        log.info("Mail folder <" + storageDir + ">: storing metadata file: <" + metaFile.getAbsolutePath() + ">");
+        try {
+            email.getMetadata().writeTo(metaFile);
+            Util.makePrivate(metaFile);
+        }
+        catch (IOException e) {
+            log.error("Can't write metadata.", e);
         }
     }
     
@@ -123,8 +137,13 @@ public class EmailFolder extends Folder<Email> {
             try {
                 switch(attribute) {
                 case DATE:
+                    // use the sent date if there is one, otherwise use the received date
                     value1 = email1.getSentDate();
+                    if (value1 == null)
+                        value1 = email1.getReceivedDate();
                     value2 = email2.getSentDate();
+                    if (value2 == null)
+                        value2 = email2.getReceivedDate();
                     break;
                 case FROM:
                     value1 = displayFilter.getNameAndDestination(email1.getOneFromAddress());
@@ -180,7 +199,7 @@ public class EmailFolder extends Folder<Email> {
      */
     public Email getEmail(String messageId) {
         File file = getEmailFile(messageId);
-        if (file == null)
+        if (!file.exists())
             return null;
         try {
             return createFolderElement(file);
@@ -192,23 +211,34 @@ public class EmailFolder extends Folder<Email> {
     }
 
     /**
-     * Moves an email from this folder to another. May not work if the
-     * two folders are on different filesystems, or if a file with the
-     * same name exists already.
+     * Moves an email from this folder to another. The email file and
+     * the metadata file are moved.<br/>
+     * This method may not work if the two folders are on different
+     * filesystems, or if a file with the same name exists already.
      * @param email
      * @param newFolder
-     * @return true if successful, false if not
+     * @return <code>true</code> if successful, <code>false</code> if not
      */
     public boolean move(Email email, EmailFolder newFolder) {
-        File emailFile = getEmailFile(email);
-        if (emailFile == null) {
+        File oldEmailFile = getEmailFile(email);
+        if (!oldEmailFile.exists()) {
             log.error("Cannot move email [" + email + "] to folder [" + newFolder + "]: email file doesn't exist.");
             return false;
         }
-        File newFile = new File(newFolder.getStorageDirectory(), emailFile.getName());
-        boolean success = emailFile.renameTo(newFile);
+        File newEmailFile = new File(newFolder.getStorageDirectory(), oldEmailFile.getName());
+        boolean emailFileSuccess = move(oldEmailFile, newEmailFile);
+        
+        File oldMetaFile = getMetadataFile(oldEmailFile);
+        File newMetaFile = getMetadataFile(newEmailFile);
+        boolean metaFileSuccess = move(oldMetaFile, newMetaFile);
+
+        return emailFileSuccess && metaFileSuccess;
+    }
+    
+    private boolean move(File from, File to) {
+        boolean success = from.renameTo(to);
         if (!success)
-            log.error("Cannot move <" + emailFile.getAbsolutePath() + "> to <" + newFile.getAbsolutePath() + ">");
+            log.error("Cannot move <" + from.getAbsolutePath() + "> to <" + to.getAbsolutePath() + ">");
         return success;
     }
     
@@ -224,64 +254,65 @@ public class EmailFolder extends Folder<Email> {
     }
     
     private File getEmailFile(Email email) {
-        return getEmailFile(email.getMessageID(), email.isNew());
+        return getEmailFile(email.getMessageID());
     }
 
     /**
-     * Returns a file in the file system for a given message ID, or <code>null</code> if
-     * none exists.
+     * Returns the name of an email file in the file system for a given message ID.<br/>
+     * The file may or may not exist.
      * @param messageId
-     * @return
      */
     private File getEmailFile(String messageId) {
-        // try new email
-        File newEmailFile = getEmailFile(messageId, true);
-        if (newEmailFile.exists())
-            return newEmailFile;
-        
-        // try old email
-        File oldEmailFile = getEmailFile(messageId, false);
-        if (oldEmailFile.exists())
-            return oldEmailFile;
-        
-        return null;
+        return new File(storageDir, messageId + EMAIL_FILE_EXTENSION);
     }
     
-    private File getEmailFile(String messageId, boolean newIndicator) {
-        return new File(storageDir, (newIndicator?'N':'O') + "_" + messageId + EMAIL_FILE_EXTENSION);
+    private File getMetadataFile(String messageId) {
+        return new File(storageDir, messageId + METADATA_FILE_EXTENSION);
     }
     
+    private File getMetadataFile(File emailFile) {
+        File parent = emailFile.getParentFile();
+        String filename = emailFile.getName();
+        filename = filename.substring(0, filename.length()-EMAIL_FILE_EXTENSION.length()) + METADATA_FILE_EXTENSION;
+        return new File(parent, filename);
+    }
+    
+    /**
+     * Returns the metadata for an email. If the metadata file doesn't exist or cannot be read,
+     * an empty {@link EmailMetadata} object is returned. This method never returns <code>null</code>.<br/>
+     * The returned metadata object is not connected to the 
+     */
+    private EmailMetadata getMetadata(String messageId) {
+        File file = getMetadataFile(messageId);
+        if (!file.exists())
+            return new EmailMetadata();
+        try {
+            return new EmailMetadata(file);
+        } catch (IOException e) {
+            log.error("Can't read metadata file: <" + file.getAbsolutePath() + ">", e);
+            return new EmailMetadata();
+        }
+    }
+
     /**
      * Returns the number of <strong>new</strong> emails in the folder.
      * @see i2p.bote.folder.Folder#getNumElements()
      */
     public int getNumNewEmails() {
         int numNew = 0;
-        for (File file: getFilenames())
-            if (isNew(file))
-                numNew++;
+        for (File emailFile: getFilenames()) {
+            File metaFile = getMetadataFile(emailFile);
+            if (metaFile.exists())
+                try {
+                    EmailMetadata metadata = new EmailMetadata(metaFile);
+                    if (metadata.isNew())
+                        numNew++;
+                } catch (IOException e) {
+                    log.error("Can't read metadata file: <" + metaFile.getAbsolutePath() + ">", e);
+                }
+        }
         
         return numNew;
-    }
-    
-    private boolean isNew(File file) {
-        switch (file.getName().charAt(0)) {
-        case 'N':
-            return true;
-        case 'O':
-            return false;
-        default:
-            throw new IllegalArgumentException("Illegal email filename, doesn't start with N or O: <" + file.getAbsolutePath() + ">");
-        }
-    }
-    
-    public void setNew(Email email, boolean isNew) {
-        String messageId = email.getMessageID();
-        if (messageId != null) {
-            boolean success = setNew(messageId, isNew);
-            if (success)
-                email.setNew(isNew);
-        }
     }
     
     /**
@@ -289,31 +320,44 @@ public class EmailFolder extends Folder<Email> {
      * "old" (if <code>isNew</code> is <code>false</code>).
      * @param messageId
      * @param isNew
-     * @return true if the email file was renamed, false if something went wrong
      */
-    public boolean setNew(String messageId, boolean isNew) {
-        File file = getEmailFile(messageId);
-        if (file != null) {
-            char newIndicator = isNew?'N':'O';   // the new start character
-            String newFilename = newIndicator + file.getName().substring(1);
-            File newFile = new File(file.getParentFile(), newFilename);
-            boolean success = file.renameTo(newFile);
-            if (!success)
-                log.error("Cannot rename <" + file.getAbsolutePath() + "> to <" + newFile.getAbsolutePath() + ">");
-            return success;
+    public void setNew(String messageId, boolean isNew) {
+        EmailMetadata metadata = getMetadata(messageId);
+        metadata.setNew(isNew);
+        try {
+            metadata.writeTo(getMetadataFile(messageId));
+        } catch (IOException e) {
+            log.error("Can't read metadata file for message ID <" + messageId + ">", e);
         }
-        else {
-            log.error("No email found for message Id: <" + messageId + ">");
-            return false;
+    }
+    
+    public void setNew(Email email, boolean isNew) {
+        EmailMetadata metadata = email.getMetadata();
+        metadata.setNew(isNew);
+        saveMetadata(email);
+    }
+    
+    private void saveMetadata(Email email) {
+        EmailMetadata metadata = email.getMetadata();
+        File metadataFile = getMetadataFile(email.getMessageID());
+        try {
+            metadata.writeTo(metadataFile);
+        } catch (IOException e) {
+            log.error("Can't write metadata to file <" + metadataFile + ">", e);
         }
     }
     
     /**
-     * Deletes an email with a given message ID.
+     * Deletes an email with a given message ID. If a metadata file exists, it is also
+     * deleted.
      * @param messageId
      * @return <code>true</code> if the email was deleted, <code>false</code> otherwise
      */
     public boolean delete(String messageId) {
+        File metadataFile = getMetadataFile(messageId);
+        if (metadataFile.exists())
+            metadataFile.delete();
+        
         File emailFile = getEmailFile(messageId);
         if (emailFile != null)
             return emailFile.delete();
@@ -321,17 +365,12 @@ public class EmailFolder extends Folder<Email> {
             return false;
     }
     
-    public void delete(Email email) {
-        if (!getEmailFile(email).delete())
-            log.error("Cannot delete file: '" + getEmailFile(email) + "'");
-    }
-
     @Override
-    protected Email createFolderElement(File file) throws Exception {
-        Email email = new Email(file);
-        email.setNew(isNew(file));
+    protected Email createFolderElement(File emailFile) throws Exception {
+        File metadataFile = getMetadataFile(emailFile);
+        Email email = new Email(emailFile, metadataFile);
         
-        String messageIdString = file.getName().substring(2, 46);
+        String messageIdString = emailFile.getName().substring(0, 44);
         email.setMessageID(messageIdString);
         
         return email;

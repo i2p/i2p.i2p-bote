@@ -19,12 +19,7 @@
  along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
 --%>
 
-<%--
-    Prints the "sent" date and time of an email. Handles null dates.
-    timeStyle can be "short", "medium", "long", or "full".
---%>
-
-<%@ attribute name="email" type="i2p.bote.email.Email" required="true" description="The directory used by the folder" %>
+<%@ attribute name="date" type="java.util.Date" required="true" description="The date to display" %>
 <%@ attribute name="timeStyle" required="false" description="See the timeStyle parameter of fmt:formatDate" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -32,9 +27,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<c:set var="date" value="${email.sentDate}"/>
 <c:if test="${!empty date}">
-    <fmt:formatDate value="${email.sentDate}" var="date" type="both" timeStyle="${timeStyle}"/>
+    <fmt:formatDate value="${date}" var="date" type="both" timeStyle="${timeStyle}"/>
 </c:if>
 <c:if test="${empty date}">
     <ib:message key="Unknown" var="date"/>

@@ -82,7 +82,11 @@
         </c:forEach>
         <tr>
             <td valign="top"><strong><ib:message key="Sent:"/></strong></td>
-            <td><ib:emailDate email="${email}" timeStyle="full"/></td>
+            <td><ib:printDate date="${email.sentDate}" timeStyle="full"/></td>
+        </tr>
+        <tr>
+            <td valign="top"><strong><ib:message key="Received:"/></strong></td>
+            <td><ib:printDate date="${email.receivedDate}" timeStyle="full"/></td>
         </tr>
         <tr>
             <td valign="top"><strong><ib:message key="Subject:"/></strong></td>

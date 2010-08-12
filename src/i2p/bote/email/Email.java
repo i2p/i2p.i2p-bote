@@ -76,9 +76,9 @@ public class Email extends MimeMessage {
     private static final String[] ADDRESS_HEADERS = new String[] {"From", "Sender", "To", "CC", "BCC", "Reply-To"};
     private enum CompressionAlgorithm {UNCOMPRESSED, LZMA};   // The first byte in a compressed email
     
-    private static Log log = new Log(Email.class);
+    private Log log = new Log(Email.class);
     private UniqueId messageId;
-    private boolean isNew = true;
+    private EmailMetadata metadata;
     private boolean includeSendTime;
 
     /**
@@ -87,17 +87,25 @@ public class Email extends MimeMessage {
     public Email(boolean includeSendTime) {
         super(Session.getDefaultInstance(new Properties()));
         messageId = new UniqueId();
+        metadata = new EmailMetadata();
         this.includeSendTime = includeSendTime;
     }
 
     /**
-     * Creates an <code>Email</code> from an InputStream containing an <strong>uncompressed</strong> MIME email.
-     * @param file
+     * Creates an <code>Email</code> from a file containing an <strong>uncompressed</strong> MIME email
+     * and another file containing metadata. If the metadata file doesn't exist, the metadata will be
+     * empty.
+     * @param emailFile
+     * @param metadataFile
      * @throws MessagingException
      * @throws IOException
      */
-    public Email(File file) throws MessagingException, IOException {
-        this(new FileInputStream(file), false);
+    public Email(File emailFile, File metadataFile) throws MessagingException, IOException {
+        this(new FileInputStream(emailFile), false);
+        if (metadataFile.exists())
+            metadata = new EmailMetadata(metadataFile);
+        else
+            metadata = new EmailMetadata();
     }
     
     /**
@@ -122,6 +130,18 @@ public class Email extends MimeMessage {
     public Email(byte[] bytes) throws MessagingException, IOException {
         this(new ByteArrayInputStream(bytes), true);
         messageId = new UniqueId();
+        metadata = new EmailMetadata();
+    }
+
+    public void setMetadata(EmailMetadata metadata) {
+        this.metadata = metadata;
+    }
+    
+    /**
+     * Returns the metadata for this email. This method never returns <code>null</code>.
+     */
+    public EmailMetadata getMetadata() {
+        return metadata;
     }
 
     /**
@@ -241,7 +261,7 @@ public class Email extends MimeMessage {
      * Verifies that the <code>SIGNATURE_HEADER</code> header field
      * contains a valid signature.
      * @return <code>true</code> if the signature is valid; <code>false</code>
-     * if it is invalid or an error occurred.
+     * if it is invalid or missing, or an error occurred.
      */
     private boolean verifySignature() {
         String[] signatureHeaders;
@@ -428,18 +448,21 @@ public class Email extends MimeMessage {
         return messageId.toBase64();
     }
     
+    /** @see EmailMetadata#setNew(boolean) */
     public void setNew(boolean isNew) {
-        this.isNew = isNew;
+        metadata.setNew(isNew);
     }
 
-    /**
-     * Returns <code>true</code> if the email is unread (incoming mail), or
-     * if it has not been sent yet (outgoing mail).
-     */
+    /** @see EmailMetadata#isNew(boolean) */
     public boolean isNew() {
-        return isNew;
+        return metadata.isNew();
     }
 
+    @Override
+    public Date getReceivedDate() {
+        return metadata.getReceivedDate();
+    }
+    
     /**
      * Updates headers, signs the email, and converts it into one or more email packets.
      * If an error occurs, an empty <code>Collection</code> is returned.

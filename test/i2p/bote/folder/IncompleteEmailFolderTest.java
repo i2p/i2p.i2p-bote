@@ -23,6 +23,7 @@ package i2p.bote.folder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import i2p.bote.TestUtil;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.packet.UnencryptedEmailPacket;
@@ -101,8 +102,12 @@ public class IncompleteEmailFolderTest {
         for (UnencryptedEmailPacket emailPacket: packets)
             incompleteFolder.addEmailPacket(emailPacket);
         
-        assertTrue("The incomplete emails folder is not empty!", incompleteFolder.getElements().size() == 0);
-        assertTrue("Expected: one email in the inbox, actual number = " + inbox.getElements().size(), inbox.getElements().size() == 1);
-        assertEquals("Content of stored email differs from content of original email!", email.getContent(), inbox.getElements().iterator().next().getContent());
+        assertEquals("The incomplete emails folder is not empty!", 0, incompleteFolder.getElements().size());
+        assertEquals("Expected one email in the inbox.", 1, inbox.getElements().size());
+        
+        // Verify that the original email and the email in the folder are the same except for the signature header
+        Email storedEmail = inbox.getElements().iterator().next();
+        storedEmail.removeHeader("X-I2PBote-Sig-Valid");
+        TestUtil.assertEquals("Stored email differs from original email!", email, storedEmail);
     }
 }

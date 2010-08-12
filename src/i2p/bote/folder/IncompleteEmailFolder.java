@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 
 import net.i2p.util.Log;
 
@@ -138,6 +139,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
                 Email email = new Email(outputStream.toByteArray());
                 email.setMessageID(packets[0].getMessageId());   // all packets in the array have the same message ID
                 email.setSignatureFlag();
+                email.getMetadata().setReceivedDate(new Date());
                 inbox.add(email);
                 
                 // delete packets
