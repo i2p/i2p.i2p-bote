@@ -46,6 +46,7 @@ import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,6 +59,8 @@ public class RelayPacketTest {
     private RelayRequest relayRequest;
     private String[] destKeys;
     private RelayPeerManager peerManager;
+    private File testDir;
+    private File peerFile;
     private I2PClient i2pClient;
     private long minDelayMilliseconds;
     private long maxDelayMilliseconds;
@@ -80,14 +83,14 @@ public class RelayPacketTest {
         I2PPacketDispatcher i2pReceiver = new I2PPacketDispatcher();
         I2PSendQueue sendQueue = new I2PSendQueue(i2pSession, i2pReceiver);
         File tempDir = new File(System.getProperty("java.io.tmpdir"));
-        File testDir = new File(tempDir, "RelayPacketTest-" + System.currentTimeMillis());
+        testDir = new File(tempDir, "RelayPacketTest-" + System.currentTimeMillis());
         if (!testDir.mkdirs())
             fail("Cannot create directory: <" + testDir + ">");
         destKeys = new String[3];
         destKeys[0] = "EN2qXoeZ-x3qCejofePmMfW~1gWo4~kKyRQg5NwzGW-gZ5rKD1pUN8eHFfEid6v7GLl6XRTOCPw4OELnqKhhtLSaQQz3U9qTcpbmS1Oc9U2cpqwiOwyGru-5RF8LU9s7VwhUTB1nh~NrSzEJlbCZ9eOZiJyw7t031aHRbWTIOniq3vUkEVpEkhYbO8TlNT~4KzvINoDGUsEr2b6vV6j8IpZN-J8Jd9mRBJCaY1dxyMJ~2rZ441m2q3ndHbu5~GUPBelf7nnTh2ggzdgtHJuy~j2MOJda65rPxBEZq8cOmN-YyA5-yagIPL34QH6yp10bERN8S3qz2LeyVRcvzDEhsJUOVYv2Bt67gJ-KhXyCB7qSpQjRaT~QKpYoKfdCH2eqYUA9Yj1QaZJZjWQTN6gGf0DUHNNz2VEBRyzkYNd7XHgt5vCIhSw0U2N6s~62iEzTQHF8QbgKYeUTmx8XVOgvSau0tdg-ZzG0-UKJ3Zzng93E75B3W7juUGA~Z59fXF-PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADRgSFr5W3QTfIjiKy1UjULHdz0nDnVQaC4OQOJ0baPyAq6IWu3cLrkTF5uXL9yk3r";
         destKeys[1] = "0hyT9FyR6yGcum~KP5jw40AGz-rhYvsNQd4CKrJooZtmy211zietpD8YukY3yJQ7w2XRel9CgnbkwuYd-LmdwMbcqgpn8RYwJNPU7luJuZcxNUvMsJ-TVjmVRY-6-Q~HrKABC2DU-5iQU2Qscvi3YqRiwerdK2Dd4PpPsmWZmCByUkLG46ELwjhR12JjflbPqwKPyd0EN-cDxNxj73hGMacxOw3awATkX8pBzIXvGZ6vjAsktIzNODJMLTizuILpdj-7jW8~MeRwEJGFFhHopZZkSQsAKDX5eM~gWXP9-cK3TSw-Yjx6AMZZ082SKhESW09Ec9Nj-U0tCQpgAhAI02GFS~knlBbELZGnBXS42hrMo6MDy71WhLvhqKV-Jt62AOX2MGyAy6FBAva3HEFDFVVBEkuaCF7QIGYwiy-BnQjC4GwivpcxxsAwgRE9h1tcuJozc52Cmp7nRGbPIHaCA0fEFzHh1~ObhpAqUEuWkmdccaVeDdxLkZrb4QQe~rrWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB6GbqdiiIgugHmtMH0qypF1etm04sGM7X5sXVSaTG-4f0zGPSrvhsRCAT7y7gP0ae";
         destKeys[2] = "ypxYUiP70IurS7HBRaFUIl5UxAwIo0pboudvT9FrY~JcFTOVYxd3u2K9QW9IAvyeceQgXMKZVNmL6fdw8j3DDSS8faB043MMM2RB6md9ziRwBW60r7tt0b9-Jn-~98lBv4ilwH8H0ivd8S7xEsbFT0W7dvqyInJ0kkC8yfX5bUlQYedkozQxl8LikSZWL4hyfGkNcHmLGl11OkRdBf-QjIEEdUE614iVY5bRxc~XS9TedXuRFfSciwVB14M7RRz0-mY61uNeH-7tVJZ1ixsoHBCoXqY9TFZ33zZkjyUQaFJaJxWVA5069ureV0BpvO-wBfCdTqUe92v5-hZaCqzlr3PqWLMAhR82yUZlarlZdeeTvnU-4g1~2tsnyUZQlev2i9jmpCb2~N0goo6hPOWTfWADsgq8xABIfi7mUchlMz~tuzCZwOUx2WVjy66u-tccHEdGC737zyPEhvOmZqjo3tg54IeX72FVP7kHc2QYNbfO7HXzK1x6FQ0dTr-E-OUeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFD91On9qR24Vcrdp-QmybkllCrh6k~3FcBUcIETv1AG79DSell4tLImTenGkRKt1";
-        File peerFile = new File(testDir, "peers.txt");
+        peerFile = new File(testDir, "peers.txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(peerFile));
         for (String destKey: destKeys) {
             // make an entry in the peers file, set #sent and #recvd to 1
@@ -102,6 +105,12 @@ public class RelayPacketTest {
         maxDelayMilliseconds = TimeUnit.MILLISECONDS.convert(600, TimeUnit.MINUTES);
     }
 
+    @After
+    public void tearDown() {
+        peerFile.delete();
+        testDir.delete();
+    }
+    
     @Test
     public void toByteArrayAndBack() throws DataFormatException, MalformedDataPacketException {
         byte[] bytes, bytes2;
