@@ -28,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -145,6 +146,19 @@ public class Util {
         
         log.info(lines.size() + " lines read.");
         return lines;
+    }
+    
+    /**
+     * Reads all data from an input stream and writes it to an output stream.
+     * @param input
+     * @param output
+     * @throws IOException
+     */
+    public static void copy(InputStream input, OutputStream output) throws IOException {
+        byte[] buffer = new byte[1024*1024];
+        int bytesRead;
+        while ((bytesRead=input.read(buffer)) >= 0)
+            output.write(buffer, 0, bytesRead);
     }
     
     /**

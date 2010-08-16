@@ -26,8 +26,6 @@
         <pathelement location="${i2plib}/standard.jar" />
         <pathelement location="${lib}/mailapi.jar" />
         <pathelement location="${lib}/bcprov-ecc-jdk16-145.jar" />
-        <pathelement location="${lib}/commons-fileupload-1.2.1.jar" />
-        <pathelement location="${lib}/commons-io-1.4.jar" />
     </path>
 
     <target name="help">
@@ -110,8 +108,6 @@
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
             <lib file="${lib}/mailapi.jar"/>
             <lib file="${lib}/bcprov-ecc-jdk16-145.jar"/>
-            <lib file="${lib}/commons-fileupload-1.2.1.jar"/>
-            <lib file="${lib}/commons-io-1.4.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
         </war>
 

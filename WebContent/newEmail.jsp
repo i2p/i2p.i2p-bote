@@ -168,10 +168,11 @@
                     
                     <c:if test="${param.action eq 'attach'}">
                         <tr><td>
-                            ${requestScope['newAttachment'].name}
+                            <%-- the newAttachment request attribute contains a UploadedFile object, see MultipartFilter.java --%>
+                            ${requestScope['newAttachment'].originalFilename}
                             <c:set var="maxAttachmentIndex" value="${maxAttachmentIndex + 1}"/>
-                            <input type="hidden" name="attachmentNameOrig${maxAttachmentIndex}" value="${requestScope['newAttachment'].name}"/>
-                            <input type="hidden" name="attachmentNameTemp${maxAttachmentIndex}" value="${requestScope['newAttachment'].storeLocation}"/>   <%-- the storeLocation property of the DiskFileItem created by MultipartFilter --%>
+                            <input type="hidden" name="attachmentNameOrig${maxAttachmentIndex}" value="${requestScope['newAttachment'].originalFilename}"/>
+                            <input type="hidden" name="attachmentNameTemp${maxAttachmentIndex}" value="${requestScope['newAttachment'].tempFilename}"/>
                             <c:remove var="newAttachment" scope="request"/>
                         </td><td>
                             <button type="submit" name="action" value="removeAttachment${maxAttachmentIndex}">-</button>
@@ -179,7 +180,7 @@
                     </c:if>
                     
                     <tr>
-                        <td><input type="file" name="newAttachment" value="/tmp/test.jpg"/></td>
+                        <td><input type="file" name="newAttachment"/></td>
                         <ib:message key="Add another attachment" var="linkTitle"/>
                         <td><button type="submit" name="action" value="attach" title="${linkTitle}"><ib:message key="Attach"/></button></td>
                     </tr>

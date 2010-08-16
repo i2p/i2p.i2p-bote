@@ -28,6 +28,7 @@ import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,6 +36,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLConnection;
 import java.security.GeneralSecurityException;
 import java.security.PrivateKey;
 import java.util.ArrayList;
@@ -46,6 +48,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.TimeZone;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.activation.MimetypesFileTypeMap;
 import javax.mail.Address;
 import javax.mail.Header;
 import javax.mail.MessagingException;
@@ -55,7 +60,9 @@ import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MailDateFormat;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
@@ -133,6 +140,92 @@ public class Email extends MimeMessage {
         metadata = new EmailMetadata();
     }
 
+    /**
+     * Sets the message text and adds attachments.
+     * @param text
+     * @param attachments Can be <code>null</code>
+     * @throws MessagingException
+     */
+    public void setContent(String text, List<Attachment> attachments) throws MessagingException {
+        if (attachments==null || attachments.isEmpty())
+            setText(text, "UTF-8");
+        else {
+            Multipart multiPart = new MimeMultipart();
+            MimeBodyPart textPart = new MimeBodyPart();
+            textPart.setText(text, "UTF-8");
+            multiPart.addBodyPart(textPart);
+            
+            attach(multiPart, attachments);
+            setContent(multiPart);
+        }
+    }
+    
+    /**
+     * Reads attachments from files and adds them to a {@link Multipart}.<br/>
+     * Attachments are not encoded in Base64 (because doesn't compress well),
+     * but in 8 bit encoding.
+     * @param multiPart
+     * @param attachments
+     * @throws MessagingException
+     * @TODO use 8 bit encoding only before compressing an email, use Base64 when writing an email to a file.
+     */
+    private void attach(Multipart multiPart, List<Attachment> attachments) throws MessagingException {
+        for (Attachment attachment: attachments) {
+            final String mimeType = getMimeType(attachment);
+            
+            MimeBodyPart attachmentPart = new MimeBodyPart() {
+                @Override
+                public void updateHeaders() throws MessagingException {
+                    super.updateHeaders();
+                    setHeader("Content-Transfer-Encoding", "8bit");
+                }
+            };
+            FileDataSource dataSource = new FileDataSource(attachment.tempFilename) {
+                @Override
+                public String getContentType() {
+                    return mimeType;
+                }
+            };
+            attachmentPart.setDataHandler(new DataHandler(dataSource));
+            attachmentPart.setFileName(attachment.origFilename);
+            multiPart.addBodyPart(attachmentPart);
+        }
+    }
+    
+    /**
+     * Returns the MIME type for an <code>Attachment</code>. MIME detection is done with
+     * JRE classes, so only a small number of MIME types are supported.<p/>
+     * It might be worthwhile to use the mime-util library which does a much better job:
+     * {@link http://sourceforge.net/projects/mime-util/files/}.
+     * @param attachment
+     * @return
+     */
+    private String getMimeType(Attachment attachment) {
+        MimetypesFileTypeMap mimeTypeMap = new MimetypesFileTypeMap();
+        String mimeType = mimeTypeMap.getContentType(attachment.origFilename);
+        if (mimeType != null)
+            return mimeType;
+        
+        InputStream inputStream = null;
+        try {
+            inputStream = new BufferedInputStream(new FileInputStream(attachment.tempFilename));
+            mimeType = URLConnection.guessContentTypeFromStream(inputStream);
+            if (mimeType != null)
+                return mimeType;
+        } catch (IOException e) {
+            log.error("Can't read file: <" + attachment.tempFilename + ">", e);
+        } finally {
+            try {
+                if (inputStream != null)
+                    inputStream.close();
+            } catch (IOException e) {
+                log.error("Can't close file: <" + attachment.tempFilename + ">", e);
+            }
+        }
+        
+        return "application/octet-stream";
+    }
+    
     public void setMetadata(EmailMetadata metadata) {
         this.metadata = metadata;
     }
@@ -178,7 +271,7 @@ public class Email extends MimeMessage {
     /**
      * Removes all headers that are not on the whitelist, and initializes some
      * basic header fields.<br/>
-     * Called by <code>saveChanges()</code>, see JavaMail JavaDoc.
+     * Called by {@link saveChanges()}, see JavaMail JavaDoc.
      * @throws MessagingException
      */
     @Override
@@ -203,7 +296,7 @@ public class Email extends MimeMessage {
     /**
      * Creates a digital signature of the email and stores it in the
      * <code>SIGNATURE_HEADER</code> header field. It also removes the
-     * <code>SIGNATURE_VALID_FLAG</code> header.
+     * <code>SIGNATURE_VALID_HEADER</code> header.
      * The signature is computed over the stream representation of the
      * email, minus the signature header if it is present.
      * The signature includes the ID number of the {@link CryptoImplementation}
@@ -222,7 +315,7 @@ public class Email extends MimeMessage {
     }
     
     /**
-     * Verifies the signature and sets the <code>SIGNATURE_VALID_FLAG</code>
+     * Verifies the signature and sets the <code>SIGNATURE_VALID_HEADER</code>
      * header field accordingly.
      */
     public void setSignatureFlag() {
@@ -237,7 +330,7 @@ public class Email extends MimeMessage {
     
     /**
      * Verifies that the email contains a valid signature.<br/>
-     * If the <code>SIGNATURE_VALID_FLAG</code> is present, its value is
+     * If the <code>SIGNATURE_VALID_HEADER</code> is present, its value is
      * used.<br/>
      * If not, the value of the <code>SIGNATURE_HEADER</code> header
      * field is verified (which is more CPU intensive).
@@ -259,7 +352,9 @@ public class Email extends MimeMessage {
 
     /**
      * Verifies that the <code>SIGNATURE_HEADER</code> header field
-     * contains a valid signature.
+     * contains a valid signature.<br/>
+     * The <code>SIGNATURE_VALID_HEADER</code> header field must not be
+     * present when this method is called.
      * @return <code>true</code> if the signature is valid; <code>false</code>
      * if it is invalid or missing, or an error occurred.
      */
@@ -292,7 +387,7 @@ public class Email extends MimeMessage {
         // the actual signature is everything after the underscore
         String base64Signature = signatureHeader.substring(_index + 1);
         try {
-            removeHeader(SIGNATURE_HEADER);
+            removeHeader(SIGNATURE_HEADER);   // remove the signature before verifying
             byte[] signature = Base64.decode(base64Signature);
             EmailDestination senderDestination = new EmailDestination(getSender().toString());
             return cryptoImpl.verify(toByteArray(), signature, senderDestination.getPublicSigningKey());
