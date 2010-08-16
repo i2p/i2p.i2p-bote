@@ -32,7 +32,6 @@ import i2p.bote.folder.MessageIdCache;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.folder.TrashFolder;
-import i2p.bote.locale.Locales;
 import i2p.bote.network.BanList;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
@@ -366,8 +365,15 @@ public class I2PBote implements NetworkStatusSource {
         return APP_VERSION;
     }
     
-    public Locale[] getAllLocales() {
-        return Locales.ALL_LOCALES;
+    /**
+     * Returns the current router console language.
+     */
+    public static String getLanguage() {
+        String language = System.getProperty("routerconsole.lang");
+        if (language != null)
+            return language;
+        else
+            return Locale.getDefault().getLanguage();
     }
     
     public Identities getIdentities() {

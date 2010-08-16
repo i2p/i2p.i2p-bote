@@ -54,9 +54,9 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.servlet.ServletRequest;
 
+import net.i2p.data.Destination;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
-import net.i2p.data.Destination;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
@@ -495,6 +495,10 @@ public class JSPHelper {
     
     public String getAppVersion() {
         return I2PBote.getAppVersion();
+    }
+    
+    public String getLanguage() {
+        return I2PBote.getLanguage();
     }
     
     /**

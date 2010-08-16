@@ -23,13 +23,11 @@ package i2p.bote;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Properties;
 
 import net.i2p.I2PAppContext;
 import net.i2p.data.DataHelper;
 import net.i2p.util.Log;
-import net.i2p.util.Translate;
 
 public class Configuration {
     private static final long serialVersionUID = -6318245413106186095L;
@@ -63,7 +61,6 @@ public class Configuration {
     private static final String PARAMETER_AUTO_MAIL_CHECK = "autoMailCheckEnabled";
     private static final String PARAMETER_MAIL_CHECK_INTERVAL = "mailCheckInterval";
     private static final String PARAMETER_RELAY_SEND_PAUSE = "RelaySendPause";
-    private static final String PARAMETER_LANGUAGE = "locale";
     private static final String PARAMETER_HIDE_LOCALE = "hideLocale";
     private static final String PARAMETER_INCLUDE_SENT_TIME = "includeSentTime";
     private static final String PARAMETER_MESSAGE_ID_CACHE_SIZE = "messageIdCacheSize";
@@ -87,7 +84,6 @@ public class Configuration {
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
     private static final int DEFAULT_RELAY_SEND_PAUSE = 10;   // in minutes, see RelayPacketSender.java
-    private static final String DEFAULT_LANGUAGE = Locale.getDefault().getLanguage();
     private static final boolean DEFAULT_HIDE_LOCALE = true;
     private static final boolean DEFAULT_INCLUDE_SENT_TIME = true;
     private static final int DEFAULT_MESSAGE_ID_CACHE_SIZE = 1000;   // the maximum number of message IDs to cache
@@ -135,9 +131,6 @@ public class Configuration {
         }
         if (!configurationLoaded)
             log.info("Can't read configuration file <" + configFile.getAbsolutePath() + ">, using default settings.");
-        
-        // Apply the language setting if there is one in the config file
-        setLanguage(getLanguage());
     }
 
     public File getDestinationKeyFile() {
@@ -293,46 +286,6 @@ public class Configuration {
         return getIntParameter(PARAMETER_RELAY_SEND_PAUSE, DEFAULT_RELAY_SEND_PAUSE);
     }
     
-    /**
-     * Sets the UI language.
-     * @param languageCode A two-letter language code such as "en" or "de", or null for the system default.
-     */
-    public void setLanguage(String languageCode) {
-        if (languageCode == null) {
-            properties.remove(PARAMETER_LANGUAGE);
-            System.clearProperty(Translate.PROP_LANG);
-        }
-        else {
-            properties.setProperty(PARAMETER_LANGUAGE, languageCode);
-
-            // Set the language used by i2p.bote.Util._().
-            // This may interfere with other I2P apps.
-            // Unfortunately, there is no setProperty() in I2PAppContext.
-            System.setProperty(Translate.PROP_LANG, languageCode);
-        }
-    }
-
-    /**
-     * Returns the two-letter language code for the current locale.
-     */
-    public String getLanguage() {
-        return properties.getProperty(PARAMETER_LANGUAGE, DEFAULT_LANGUAGE);
-    }
-
-    /**
-     * Returns the current locale.
-     */
-    public Locale getLocale() {
-        return new Locale(getLanguage());
-    }
-
-    /**
-     * Returns all locales for which a translation exists.
-     */
-    public Locale[] getAllLocales() {
-        return I2PBote.getInstance().getAllLocales();
-    }
-
     /**
      * Controls whether strings that are added to outgoing email, like "Re:" or "Fwd:",
      * are translated or not.<br/>

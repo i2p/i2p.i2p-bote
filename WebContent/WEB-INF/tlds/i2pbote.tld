@@ -162,17 +162,6 @@
 </tag>
 
 <tag>
-    <name>localizedLanguageName</name>
-    <tag-class>i2p.bote.web.LocalizedLanguageNameTag</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-        <name>locale</name>
-        <rtexprvalue>true</rtexprvalue>
-        <required>true</required>
-    </attribute>
-</tag>
-
-<tag>
     <name>message</name>
     <info>
         Same as fmt:message, except that message keys in

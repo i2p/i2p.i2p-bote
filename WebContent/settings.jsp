@@ -30,7 +30,6 @@
 <c:if test="${param.action eq 'save'}">
     <jsp:setProperty name="configuration" property="autoMailCheckEnabled" value="${param.autoMailCheckEnabled eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="mailCheckInterval" value="${param.mailCheckInterval}"/>
-    <jsp:setProperty name="configuration" property="language" value="${param.language}"/>
     <jsp:setProperty name="configuration" property="hideLocale" value="${param.hideLocale eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="includeSentTime" value="${param.includeSentTime eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="numStoreHops" value="${param.numStoreHops}"/>
@@ -96,21 +95,6 @@
         <br/>
         
         <%-- Locale --%>
-        <ib:message key="Language:"/>
-        <select name="language">
-            <c:set var="selected" value=""/>
-            <c:if test="${empty configuration.language}">
-                <c:set var="selected" value=" selected"/>
-            </c:if>
-            <option value=""${selected}><ib:message key="Default"/></option>
-            <c:forEach var="locale" items="${configuration.allLocales}">
-                <c:set var="selected" value=""/>
-                <c:if test="${locale.language eq configuration.language}">
-                    <c:set var="selected" value=" selected"/>
-                </c:if>
-                <option value="${locale.language}"${selected}><ib:localizedLanguageName locale="${locale}"/></option>
-            </c:forEach>
-        </select>
         <c:set var="checked" value="${configuration.hideLocale ? ' checked' : ''}"/>
         <input type="checkbox"${checked} name="hideLocale"/>
         <ib:message key="Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"/>

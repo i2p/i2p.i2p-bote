@@ -53,7 +53,7 @@ public class KademliaPeerStats implements DhtPeerStats {
     }
     
     private void addPeerData(AbstractBucket bucket, Hash localDestinationHash) {
-        Locale locale = I2PBote.getInstance().getConfiguration().getLocale();
+        Locale locale = new Locale(I2PBote.getLanguage());
         DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
         
         for (KademliaPeer peer: bucket) {
