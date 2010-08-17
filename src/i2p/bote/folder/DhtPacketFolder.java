@@ -101,7 +101,7 @@ public class DhtPacketFolder<T extends DhtStorablePacket> extends PacketFolder<T
             log.debug("No file found for DHT key: " + dhtKey);
     }
     
-    /** Does the same as <code>iterator()</code>. */
+    /** Does the same as {@link iterator()}. */
     @Override
     public Iterator<T> individualPackets() {
         return iterator();

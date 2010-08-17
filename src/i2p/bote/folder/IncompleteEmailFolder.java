@@ -41,7 +41,7 @@ import java.util.Date;
 import net.i2p.util.Log;
 
 /**
- * File name format: <message id>_<fragment index>.pkt
+ * File name format: <code>&lt;message id&gt;_&lt;fragment index&gt;.pkt</code>
  */
 public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> {
     private Log log = new Log(IncompleteEmailFolder.class);

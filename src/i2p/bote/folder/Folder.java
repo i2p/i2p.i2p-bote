@@ -56,12 +56,17 @@ public abstract class Folder<T> implements Iterable<T> {
         return storageDir;
     }
 
+    /**
+     * Returns the number of elements in the folder, which is the size
+     * of the array returned by {@link getFilenames()}. This number may
+     * differ from the total number of files in the folder.
+     */
     public int getNumElements() {
         return getFilenames().length;
     }
     
     /**
-     * Returns the names of all files in the folder that end in <code>fileExtension</code>.<br/>
+     * Returns the names of all files in the folder that end in {@link fileExtension}.<br/>
      * If there are no such files, an empty array is returned.
      */
     protected File[] getFilenames() {
@@ -85,6 +90,7 @@ public abstract class Folder<T> implements Iterable<T> {
         return files;
     }
     
+    /** Returns all folder elements as a {@link List}. */
     public List<T> getElements() {
         List<T> elements = new ArrayList<T>();
         Iterator<T> iterator = iterator();
@@ -163,4 +169,9 @@ public abstract class Folder<T> implements Iterable<T> {
     }
     
     protected abstract T createFolderElement(File file) throws Exception;
+    
+    @Override
+    public String toString() {
+        return "Folder type=" + getClass().getSimpleName() + ", dir=" + storageDir.getAbsolutePath();
+    }
 }

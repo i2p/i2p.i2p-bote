@@ -23,7 +23,9 @@ package i2p.bote;
 
 import i2p.bote.crypto.CryptoImplementationTest;
 import i2p.bote.email.EmailIdentityTest;
+import i2p.bote.email.EmailMetadataTest;
 import i2p.bote.email.EmailTest;
+import i2p.bote.folder.EmailFolderTest;
 import i2p.bote.folder.EmailPacketFolderTest;
 import i2p.bote.folder.FolderTest;
 import i2p.bote.folder.IncompleteEmailFolderTest;
@@ -48,11 +50,35 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { I2PBotePacketTest.class, StoreRequestTest.class, EncryptedEmailPacketTest.class, UnencryptedEmailPacketTest.class,
-    FindClosePeersPacketTest.class, PeerListTest.class, ResponsePacketTest.class, IncompleteEmailFolderTest.class, FolderTest.class,
-    EmailPacketDeleteRequestTest.class, IndexPacketDeleteRequestTest.class, IndexPacketTest.class, IndexPacketFolderTest.class,
-    EmailTest.class, EmailIdentityTest.class, EmailPacketFolderTest.class, EmailPacketDeleteRequestTest.class,
-    RelayPacketTest.class, RelayPacketFolderTest.class, BucketManagerTest.class, CryptoImplementationTest.class })
+@Suite.SuiteClasses( {
+    // Packets
+    I2PBotePacketTest.class,
+    StoreRequestTest.class,
+    ResponsePacketTest.class,
+    FindClosePeersPacketTest.class,
+    EmailPacketDeleteRequestTest.class,
+    EncryptedEmailPacketTest.class,
+    UnencryptedEmailPacketTest.class,
+    IndexPacketTest.class,
+    PeerListTest.class,
+    IndexPacketDeleteRequestTest.class,
+    RelayPacketTest.class,
+    
+    // Folders
+    FolderTest.class,
+    EmailFolderTest.class,
+    EmailPacketFolderTest.class,
+    IncompleteEmailFolderTest.class,
+    IndexPacketFolderTest.class,
+    RelayPacketFolderTest.class,
+    
+    // Other
+    EmailTest.class,
+    EmailMetadataTest.class,
+    EmailIdentityTest.class,
+    BucketManagerTest.class,
+    CryptoImplementationTest.class
+})
 public class AllTests {
 
     public static Test suite() {

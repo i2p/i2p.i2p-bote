@@ -21,7 +21,6 @@
 
 package i2p.bote.folder;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.TestUtil;
 import i2p.bote.email.Email;

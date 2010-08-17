@@ -198,7 +198,7 @@
         </war>
     </target>
     
-    <target name="bundle">
+    <target name="bundle" depends="compile">
         <!-- Update the messages_*.po files.
              We need to supply the bat file for windows, and then change the fail property to true -->
         <exec executable="sh" osfamily="unix" failifexecutionfails="false" >

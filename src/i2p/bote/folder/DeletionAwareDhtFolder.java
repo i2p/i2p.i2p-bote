@@ -36,7 +36,10 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
- * A <code>DhtPacketFolder</code> that keeps a record of DHT keys that have been deleted.
+ * A <code>DhtPacketFolder</code> that keeps a record of DHT keys that have been deleted,
+ * along with delete authorization keys.<br/>
+ * For this reason, elements of this folder are only deleted via {@link process(DeleteRequest)},
+ * not {@link delete(Hash)}.
  * @param <T>
  */
 public abstract class DeletionAwareDhtFolder<T extends DhtStorablePacket> extends DhtPacketFolder<T> {
@@ -66,6 +69,11 @@ public abstract class DeletionAwareDhtFolder<T extends DhtStorablePacket> extend
         add(packet, delFileName);
     }
     
+    /**
+     * Creates a <code>DeletionInfoPacket</code> from a file. If the file
+     * does not exist, or an error occurs, <code>null</code> is returned.
+     * @param delFileName
+     */
     protected DeletionInfoPacket createDelInfoPacket(String delFileName) {
         File delFile = new File(storageDir, delFileName);
         try {
@@ -95,6 +103,11 @@ public abstract class DeletionAwareDhtFolder<T extends DhtStorablePacket> extend
      */
     public abstract DeleteRequest storeAndCreateDeleteRequest(DhtStorablePacket packetToStore);
     
+    /**
+     * Deletes all DHT items that match the keys in a delete request,
+     * and for which the request contains a valid delete authorization.
+     * @param delRequest
+     */
     public abstract void process(DeleteRequest delRequest);
     
     /** Overridden to only return real DHT packets, not Deletion Info Packets. */
