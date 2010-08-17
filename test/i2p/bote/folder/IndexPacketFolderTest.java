@@ -1,18 +1,25 @@
 package i2p.bote.folder;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.packet.DataPacket;
+import i2p.bote.packet.DeleteRequest;
+import i2p.bote.packet.DeletionInfoPacket;
+import i2p.bote.packet.DeletionRecord;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.IndexPacket;
+import i2p.bote.packet.IndexPacketDeleteRequest;
 import i2p.bote.packet.IndexPacketEntry;
+import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,6 +34,8 @@ import org.junit.Test;
 
 public class IndexPacketFolderTest {
     private IndexPacketFolder folder;
+    private UnencryptedEmailPacket unencryptedPacket1;
+    private UnencryptedEmailPacket unencryptedPacket2;
     private EncryptedEmailPacket emailPacket1;
     private EncryptedEmailPacket emailPacket2;
     private EmailDestination destination1;
@@ -48,8 +57,8 @@ public class IndexPacketFolderTest {
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         int fragmentIndex = 0;
         int numFragments = 1;
-        UnencryptedEmailPacket unencryptedPacket1 = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content1);
-        UnencryptedEmailPacket unencryptedPacket2 = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content2);
+        unencryptedPacket1 = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content1);
+        unencryptedPacket2 = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content2);
         
         destination1 = new EmailDestination("2XP9Ep3WWLk3-FTlMgUjgw4h8GYVBCvR6YrPyKdhP4xyQMSh8Da0VjZCmQGbD3PCeaGXAShBKbKjhJjQ7laekI");
         destination2 = new EmailDestination("m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UY");
@@ -101,6 +110,57 @@ public class IndexPacketFolderTest {
         fail("Email packet key " + emailPacketKey + " not found in index packet.");
     }
     
+    @Test
+    public void testProcessDeleteRequest() throws GeneralSecurityException, MalformedDataPacketException {
+        IndexPacketFolder folder = new IndexPacketFolder(folderDir);
+        
+        // create another packet with the same destination as emailPacket1
+        EncryptedEmailPacket emailPacket3 = new EncryptedEmailPacket(unencryptedPacket2, destination1);
+        
+        IndexPacket indexPacket = new IndexPacket(destination1);
+        indexPacket.put(emailPacket1);
+        indexPacket.put(emailPacket3);
+        folder.store(indexPacket);
+        assertEquals("Folder should have exactly one element!", 1, folder.getElements().size());
+        
+        // add two entries and delete them via delete requests
+        Hash dest1Hash = destination1.getHash();
+        IndexPacketDeleteRequest delRequest = new IndexPacketDeleteRequest(dest1Hash);
+        Hash dhtKey1 = emailPacket1.getDhtKey();
+        Hash dhtKey3 = emailPacket3.getDhtKey();
+        delRequest.put(dhtKey1, unencryptedPacket1.getDeleteAuthorization());
+        delRequest.put(dhtKey3, unencryptedPacket2.getDeleteAuthorization());
+        folder.process(delRequest);
+        DhtStorablePacket storedPacket = folder.retrieve(dest1Hash);
+        assertTrue(storedPacket instanceof IndexPacket);
+        assertEquals("The index packet should have no entries!", 0, ((IndexPacket)storedPacket).getNumEntries());
+        
+        // verify that there is one deletion file containing two entries
+        File[] files = folder.getStorageDirectory().listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.startsWith("DEL_");
+            }
+        });
+        assertEquals(1, files.length);
+        DataPacket dataPacket = DataPacket.createPacket(files[0]);
+        assertTrue(dataPacket instanceof DeletionInfoPacket);
+        DeletionInfoPacket delInfoPacket = (DeletionInfoPacket)dataPacket;
+        Iterator<DeletionRecord> delPacketIterator = delInfoPacket.iterator();
+        assertTrue("DeletionInfoPacket has no elements!", delPacketIterator.hasNext());
+        delPacketIterator.next();
+        assertTrue("DeletionInfoPacket has less than one element!", delPacketIterator.hasNext());
+        delPacketIterator.next();
+        assertFalse("DeletionInfoPacket has more than two elements!", delPacketIterator.hasNext());
+        
+        // verify that the two deletion records match the DHT keys and auth keys of the deleted packets
+        DeleteRequest newDelRequest = folder.storeAndCreateDeleteRequest(indexPacket);
+        assertTrue(newDelRequest instanceof IndexPacketDeleteRequest);
+        IndexPacketDeleteRequest newIndexPacketDelRequest = (IndexPacketDeleteRequest)newDelRequest;
+        assertEquals(newIndexPacketDelRequest.getDeleteAuthorization(dhtKey1), unencryptedPacket1.getDeleteAuthorization());
+        assertEquals(newIndexPacketDelRequest.getDeleteAuthorization(dhtKey3), unencryptedPacket2.getDeleteAuthorization());
+    }
+    
     @After
     public void tearDown() throws Exception {
         for (File file: folderDir.listFiles())
@@ -133,7 +193,7 @@ public class IndexPacketFolderTest {
     /**
      * A modified version of {@link IndexPacketFolder} that does not update the store times
      * of packet entries to the current time when the packet is written to a file.
-     * 
+     * <p/>
      * (this class is only needed in order not to to have to change production code to
      * accommodate unit tests)
      */

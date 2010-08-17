@@ -22,20 +22,30 @@
 package i2p.bote.folder;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
+import i2p.bote.packet.DataPacket;
+import i2p.bote.packet.DeleteRequest;
+import i2p.bote.packet.DeletionInfoPacket;
+import i2p.bote.packet.DeletionRecord;
 import i2p.bote.packet.EmailPacketDeleteRequest;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.I2PBotePacket;
+import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.TypeCode;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.File;
 import java.security.GeneralSecurityException;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
+import net.i2p.data.Base64;
 import net.i2p.data.Destination;
 
+import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,7 +92,7 @@ public class EmailPacketFolderTest {
         testDir.delete();
     }
 
-    /** Tests processing of {@link EmailPacketDeleteRequest}s. */
+    /** Tests processing of one valid and one invalid {@link EmailPacketDeleteRequest}. */
     @Test
     public void testPacketReceived() {
         packetFolder.store(emailPacket);
@@ -101,6 +111,64 @@ public class EmailPacketFolderTest {
         delRequest = new EmailPacketDeleteRequest(emailPacket.getDhtKey(), unencryptedPacket.getDeleteAuthorization());
         packetFolder.packetReceived(delRequest, sender, System.currentTimeMillis());
         assertEquals(0, packetFolder.getElements().size());
+    }
+    
+    /**
+     * Tests creation of delete records when processing {@link EmailPacketDeleteRequest}s,
+     * and matching them against email packets.
+     */
+    @Test
+    public void testProcessDeleteRequest() throws GeneralSecurityException, InvalidCipherTextException, MalformedDataPacketException {
+        // create two packets whose base64 DHT keys start with the same two characters
+        byte[] emailPkt1Data = Base64.decode("RQTAJHelC-wnxq-OUAnfgqgN84zTCimrfUKw7AgDPHblcwAAAADUk24QY3EPEzk0UmB5PYQxwnEVIWGZkWJ-5ERh30l95QMA0gIs-itszDaiCa4ucekxDL6pZCVMTnI~S0nBx2FQ5Fl4-T50bNojkgJiQZNFB-vwQ4ChB~hxYIomMtbN6tiNDVwYRKjeZHbL3MAffKcwxwF3iPMl8aLLBaU6LxQ~3r7tgTiccHE39Ozm88~Hrf7H-5hWXzTXwm7j1pNJA7hc-wCL3BwngRl8KUsqsII2-PTMI34-a3RfpzMf2cKlY0NVayoW1UxC4dLvtSz-HoLYPMGIMf5zQghPS2PuZaRAKa5oa3PdYJrhvNXCJWpYCL~FynwShQ==");
+        byte[] emailPkt2Data = Base64.decode("RQTAJPXENHAvW18uRITLC8n~D0Npd0RwI1e~9IR8QN~BSwAAAAAD9RT-PXacKIest9~E2SzsR5dAlaoh-ZZVcFNcsQbGQwECkgCFnuT5N210f4SbS4pjPeh~hk9hvpEGCEXzOmPfSEeSWhrE5oiQuJI6fet1zrwZfbA6Iqvl-PoLgv5nKU~I7Nlu1f9UXuve2cvQOmTGDlHdzpwd3nTyJCR2bqG4SFPlnaDpa7yDOmH~e8LKBw1YTYSHSyVun7XuijyCcWGKRbSm3tFU382JSSqUQ2APwbHPtPG6akYO5iSq7XMvlBSyLsDHM5wDbaptxEUmnW20x3fVsK-0BNsIXFK-JJVQ12NApVanGaOsyDRh8l-geRWBcYpX7J~RI1A3ZKRBRJj2wgBc6TdAG0-jiI4OfpKZMr2NZ-ugg2-phU9OgY5ZbtBZjlbtADDYlxT~GHvXkCQLwRg4fsxTk9HoshfoWea-4RE1YmwRT96uKRy0SjcUduOPCsI6nEwm1p-5lzGFzcVTTXZyARRzRrhvtAJw616o3RoAj7vGHY~1POJ26m3UBUIXjh2fA7b5HTFARw9VfZYuz9zzT7UjtuPVIgBu-HyX5zBgSrCDhykGqggaVbURCaS2B6BZt8ikU0ponchHkVZzqX2UeT4T1Pd3fyc1fXp1xVInrYWUZvjSoBcJaiqlhvTMMsjzLbiG~a~HoJz67Dvl6GGtcBad1hjhSzwKN9vLpM-sFMqDCBDHDssVZEXk5EXQYltUZVvfaFJYimDfdiM~F23x0Wz2tM5LQXJ86-nn7d5DA-CspMg1xqkAr1iMkgYacOL~2u2PL1ImI1SMZGmY839ekgQlr1gWWU1evQQTUdHH6Bszs0vSW6wymbSTziJopMqv86f2y6SHDEq8qZzYdKhAFQbjFtvNwn7gEJqlhzzI1bO8zjG3xZTiaCpSrmE98L8PZhEIfXvN3PUADSuzsbHmuHQ=");
+        EncryptedEmailPacket emailPacket1 = new EncryptedEmailPacket(emailPkt1Data);
+        EncryptedEmailPacket emailPacket2 = new EncryptedEmailPacket(emailPkt2Data);
+        UniqueId delAuthKey1 = new UniqueId("nJlsaGZb1k6OFze1fUsHEF0osP5Wv9Rgta8EwHl8Te8=");   // matches emailPkt1Data
+        UniqueId delAuthKey2 = new UniqueId("ImXwDy7HZq7pyjGwxpYmlwaKAWoQlUl2fdrBK~mTt0g=");   // matches emailPkt2Data
+        String prefix1 = emailPacket1.getDhtKey().toBase64().substring(0, 2);
+        String prefix2 = emailPacket2.getDhtKey().toBase64().substring(0, 2);
+        assertEquals("Error setting up test packets: prefixes of DHT keys differ", prefix1, prefix2);
+        assertFalse("Error setting up test packets: DHT keys should be different", emailPacket1.getDhtKey().equals(emailPacket2.getDhtKey()));
+        
+        // add two packets and delete them via delete requests
+        packetFolder.store(emailPacket1);
+        assertEquals("Folder should have exactly one element!", 1, packetFolder.getElements().size());
+        packetFolder.store(emailPacket2);
+        assertEquals("Folder should have two elements!", 2, packetFolder.getElements().size());
+        
+        EmailPacketDeleteRequest delRequest1 = new EmailPacketDeleteRequest(emailPacket1.getDhtKey(), delAuthKey1);
+        packetFolder.process(delRequest1);
+        assertEquals("Folder should have exactly one element!", 1, packetFolder.getElements().size());
+        EmailPacketDeleteRequest delRequest2 = new EmailPacketDeleteRequest(emailPacket2.getDhtKey(), delAuthKey2);
+        packetFolder.process(delRequest2);
+        assertEquals("Folder should be empty!", 0, packetFolder.getElements().size());
+        
+        // verify that there is one deletion file containing two entries
+        File[] files = packetFolder.getStorageDirectory().listFiles();
+        assertEquals(1, files.length);
+        assertTrue(files[0].getName().startsWith("DEL_"));
+        DataPacket dataPacket = DataPacket.createPacket(files[0]);
+        assertTrue(dataPacket instanceof DeletionInfoPacket);
+        DeletionInfoPacket delInfoPacket = (DeletionInfoPacket)dataPacket;
+        Iterator<DeletionRecord> delPacketIterator = delInfoPacket.iterator();
+        assertTrue("DeletionInfoPacket has no elements!", delPacketIterator.hasNext());
+        delPacketIterator.next();
+        assertTrue("DeletionInfoPacket has less than one element!", delPacketIterator.hasNext());
+        delPacketIterator.next();
+        assertFalse("DeletionInfoPacket has more than two elements!", delPacketIterator.hasNext());
+        
+        // verify that the two deletion records match the DHT keys and auth keys of the deleted packets
+        DeleteRequest newDelRequest1 = packetFolder.storeAndCreateDeleteRequest(emailPacket1);
+        assertTrue(newDelRequest1 instanceof EmailPacketDeleteRequest);
+        EmailPacketDeleteRequest newEmailPacketDelRequest1 = (EmailPacketDeleteRequest)newDelRequest1;
+        assertEquals(newEmailPacketDelRequest1.getDhtKey(), emailPacket1.getDhtKey());
+        assertEquals(newEmailPacketDelRequest1.getAuthorization(), delAuthKey1);
+        DeleteRequest newDelRequest2 = packetFolder.storeAndCreateDeleteRequest(emailPacket2);
+        assertTrue(newDelRequest2 instanceof EmailPacketDeleteRequest);
+        EmailPacketDeleteRequest newEmailPacketDelRequest2 = (EmailPacketDeleteRequest)newDelRequest2;
+        assertEquals(newEmailPacketDelRequest2.getDhtKey(), emailPacket2.getDhtKey());
+        assertEquals(newEmailPacketDelRequest2.getAuthorization(), delAuthKey2);
     }
     
     @Test

@@ -72,7 +72,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
     public EncryptedEmailPacket(UnencryptedEmailPacket unencryptedPacket, EmailDestination emailDestination) throws GeneralSecurityException {
         storeTime = 0;
         byte[] delAuthorizationBytes = unencryptedPacket.getDeleteAuthorization().toByteArray();
-        delVerificationHash = new Hash(delAuthorizationBytes);
+        delVerificationHash = SHA256Generator.getInstance().calculateHash(delAuthorizationBytes);
         cryptoImpl = emailDestination.getCryptoImpl();
         
         encryptedData = cryptoImpl.encrypt(unencryptedPacket.toByteArray(), emailDestination.getPublicEncryptionKey());

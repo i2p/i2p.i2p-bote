@@ -36,6 +36,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 
+import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -225,9 +226,8 @@ public class IndexPacketFolder extends DeletionAwareDhtFolder<IndexPacket> imple
     }
 
     /**
-     * Deletes all index packet entries that match the keys in a delete request,
-     * and for which the request contains a valid delete authorization.
-     * @param delRequest
+     * Deletes index packet entries.
+     * @param delRequest An instance of {@link IndexPacketDeleteRequest}
      */
     @Override
     public synchronized void process(DeleteRequest delRequest) {
@@ -249,7 +249,7 @@ public class IndexPacketFolder extends DeletionAwareDhtFolder<IndexPacket> imple
                     log.debug("Email packet key " + keyToDelete + " from IndexPacketDeleteRequest not found in index packet for destination " + destHash);
                 else {
                     UniqueId delAuthorization = indexPacketDelRequest.getDeleteAuthorization(keyToDelete);
-                    Hash actualVerificationHash = new Hash(delAuthorization.toByteArray());
+                    Hash actualVerificationHash = SHA256Generator.getInstance().calculateHash(delAuthorization.toByteArray());
                     boolean valid = expectedVerificationHash.equals(actualVerificationHash);
                     if (valid)
                         remove(indexPacket, keyToDelete, delAuthorization);

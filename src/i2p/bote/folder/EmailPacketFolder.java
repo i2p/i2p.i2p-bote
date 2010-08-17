@@ -34,6 +34,7 @@ import i2p.bote.packet.dht.DhtStorablePacket;
 import java.io.File;
 import java.util.Iterator;
 
+import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -96,9 +97,8 @@ public class EmailPacketFolder extends DeletionAwareDhtFolder<EncryptedEmailPack
     }
     
     /**
-     * Deletes all index packet entries that match the keys in a delete request,
-     * and for which the request contains a valid delete authorization.
-     * @param delRequest
+     * Deletes email packets.
+     * @param delRequest An instance of {@link EmailPacketDeleteRequest}
      */
     @Override
     public synchronized void process(DeleteRequest delRequest) {
@@ -114,7 +114,7 @@ public class EmailPacketFolder extends DeletionAwareDhtFolder<EncryptedEmailPack
             // verify
             Hash expectedHash = ((EncryptedEmailPacket)storedPacket).getDeleteVerificationHash();
             UniqueId delAuthorization = emailPacketDelRequest.getAuthorization();
-            Hash actualHash = new Hash(delAuthorization.toByteArray());
+            Hash actualHash = SHA256Generator.getInstance().calculateHash(delAuthorization.toByteArray());
             boolean valid = actualHash.equals(expectedHash);
         
             if (valid)
@@ -150,6 +150,7 @@ public class EmailPacketFolder extends DeletionAwareDhtFolder<EncryptedEmailPack
     }
     
     private String getDeletionFileName(Hash dhtKey) {
+        // group deletion files by the first two base64 characters of the DHT key
         return DEL_FILE_PREFIX + dhtKey.toBase64().substring(0, 2) + PACKET_FILE_EXTENSION;
     }
 
@@ -161,21 +162,16 @@ public class EmailPacketFolder extends DeletionAwareDhtFolder<EncryptedEmailPack
         DeleteRequest delRequest = null;
         
         // read the deletion info file for the email packet's DHT key
-        String delFileName = getDeletionFileName(packetToStore.getDhtKey());
+        Hash dhtKey = packetToStore.getDhtKey();
+        String delFileName = getDeletionFileName(dhtKey);
         DeletionInfoPacket delInfo = createDelInfoPacket(delFileName);
         if (delInfo != null) {
-            Iterator<DeletionRecord> delRecords = delInfo.iterator();
-            // if there is a deletion record for the DHT key, make an EmailPacketDeleteRequest
-            if (delRecords.hasNext()) {
-                DeletionRecord delRecord = delRecords.next();
+            DeletionRecord delRecord = delInfo.getEntry(dhtKey);
+            if (delRecord != null)
                 delRequest = new EmailPacketDeleteRequest(delRecord.dhtKey, delRecord.delAuthorization);
-                if (delRecords.hasNext())
-                    log.error("DeletionInfoPacket for EmailPacketFolder has more than one entry!");
-            }
         }
-        
-        // if the DHT key has not been recorded as deleted, store the email packet
-        if (delRequest == null)
+        else
+            // if the DHT key has not been recorded as deleted, store the email packet
             store(packetToStore);
         
         return delRequest;
