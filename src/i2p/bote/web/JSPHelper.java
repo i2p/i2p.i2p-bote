@@ -291,8 +291,10 @@ public class JSPHelper {
      * the local node.<br/>
      * If the email was sent to more than one local Email Destination, one
      * of them is returned.<br/>
-     * If the email does not contain a local Email Destination, <code>null</code>
-     * is returned.
+     * If the email does not contain a local Email Destination, a non-local
+     * recipient is returned.<br/>
+     * If the email contains no recipients at all, or if an error occurred,
+     * <code>null</code> is returned.
      * @param email
      */
     public static Address getOneLocalRecipient(Email email) {
@@ -314,7 +316,10 @@ public class JSPHelper {
                     return recipient;
         }
         
-        return null;
+        if (recipients.length > 0)
+            return recipients[0];
+        else
+            return null;
     }
     
     public static String getEmailStatus(Email email) {
