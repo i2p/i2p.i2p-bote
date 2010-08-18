@@ -54,12 +54,12 @@ public class AddressDisplayFilter {
             // try the address book
             Contact contact = addressBook.get(base64dest);
             if (contact != null)
-                return contact.getName() + "<" + contact.toBase64() + ">";
+                return contact.getName() + " <" + contact.toBase64() + ">";
             
             // if no address book entry, try the email identities
             EmailIdentity identity = identities.get(base64dest);
             if (identity != null)
-                return identity.getPublicName() + "<" + identity.toBase64() + ">";
+                return identity.getPublicName() + " <" + identity.toBase64() + ">";
         }
         
         return address;
