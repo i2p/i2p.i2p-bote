@@ -25,6 +25,7 @@ import i2p.bote.UniqueId;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -80,9 +81,13 @@ public class PacketBatch implements Iterable<PacketBatchItem> {
         firstReplyReceivedSignal.countDown();
     }
     
-    /** Returns an empty <code>Map</code> or <code>null</code>. */
+    /**
+     * Returns all responses received so far. If there are no responses,
+     * an empty <code>Map</code> is returned.
+     * @return An immutable {@link Map}
+     */
     public Map<Destination, DataPacket> getResponses() {
-        return incomingPackets;
+        return Collections.unmodifiableMap(incomingPackets);
     }
     
     synchronized void initializeSentSignal() {
