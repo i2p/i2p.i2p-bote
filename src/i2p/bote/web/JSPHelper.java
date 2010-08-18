@@ -526,7 +526,7 @@ public class JSPHelper {
         
         int ltIndex = address.indexOf('<');
         if (ltIndex >= 0)
-            return address.substring(0, ltIndex);
+            return address.substring(0, ltIndex).trim();
         else
             return "";
     }
