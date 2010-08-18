@@ -47,7 +47,7 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
 
     private I2PSendQueue sendQueue;
     private PacketFolder<RelayDataPacket> packetFolder;
-    private int pause;   // the wait time, in milliseconds, before processing the folder again
+    private int pause;   // the wait time, in minutes, before processing the folder again
     private RelayRequest lastSentPacket;   // last relay packet sent, or null
     private CountDownLatch confirmationReceived;   // zero if a "OK" response has been received for lastSentPacket
     
@@ -56,7 +56,7 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
         setPriority(MIN_PRIORITY);
         this.sendQueue = sendQueue;
         this.packetFolder = packetFolder;
-        pause = configuration.getRelaySendPause() * 60 * 1000;
+        pause = configuration.getRelaySendPause();
     }
     
     @Override
@@ -88,7 +88,7 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
             }
         }
         
-        Thread.sleep(pause);
+        awaitShutdownRequest(pause, TimeUnit.MINUTES);
     }
     
     /** Deletes relay packets that are still in the folder 100 days after the scheduled send time */
