@@ -27,12 +27,14 @@ import static junit.framework.Assert.fail;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
+import i2p.bote.network.RelayPeer;
 import i2p.bote.service.RelayPeerManager;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
+import java.lang.reflect.Field;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -93,8 +95,10 @@ public class RelayPacketTest {
         peerFile = new File(testDir, "peers.txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(peerFile));
         for (String destKey: destKeys) {
-            // make an entry in the peers file, set #sent and #recvd to 1
-            writer.write(destKey + "\t1\t1");
+            // make an entry in the peers file, set reachability to 100%
+            writer.write(destKey);
+            for (int i=0; i<getMaxSamples(); i++)
+                writer.write("\ttrue");
             writer.newLine();
         }
         writer.close();
@@ -105,6 +109,17 @@ public class RelayPacketTest {
         maxDelayMilliseconds = TimeUnit.MILLISECONDS.convert(600, TimeUnit.MINUTES);
     }
 
+    /** Returns the value of the private field {@link RelayPeer#MAX_SAMPLES} 
+     * @throws NoSuchFieldException 
+     * @throws SecurityException 
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException */
+    private int getMaxSamples() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        Field maxSamplesField = RelayPeer.class.getDeclaredField("MAX_SAMPLES");
+        maxSamplesField.setAccessible(true);
+        return maxSamplesField.getInt(null);
+    }
+    
     @After
     public void tearDown() {
         peerFile.delete();
