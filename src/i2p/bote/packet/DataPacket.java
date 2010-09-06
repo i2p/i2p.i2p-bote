@@ -120,7 +120,7 @@ public abstract class DataPacket extends I2PBotePacket {
             throw new MalformedDataPacketException("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
         }
         
-        if (packet.getProtocolVersion() != I2PBote.PROTOCOL_VERSION)
+        if (!packet.isProtocolVersionOk())
             throw new MalformedDataPacketException("Incorrect protocol version: " + packet.getProtocolVersion() + ", packet: " + packet);
         
         return packet;
