@@ -323,7 +323,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
         BanList banList = BanList.getInstance();
-        banList.update(sender, packet.getProtocolVersion());
+        banList.update(sender, packet);
         if (!banList.isBanned(sender))
             // any type of incoming packet updates the peer's record in the bucket/sibling list, or adds the peer to the bucket/sibling list
             addOrUpdate(new KademliaPeer(sender));

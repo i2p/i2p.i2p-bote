@@ -120,6 +120,15 @@ public abstract class I2PBotePacket {
         return null;
     }
 
+    /**
+     * Returns <code>true</code> if the packet uses a protocol version that is compatible
+     * with this I2P-Bote version, <code>false</code> otherwise.
+     */
+    public boolean isProtocolVersionOk() {
+        // everything above 4 is backwards compatible, everything below 4 is incompatible
+        return getProtocolVersion() >= 4;
+    }
+    
     @Override
     public String toString() {
         return "Type=" + getClass().getSimpleName() + ", code=<" + getPacketTypeCode() + ">, sizeBytes=" + getSize();

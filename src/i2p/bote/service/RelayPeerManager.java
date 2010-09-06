@@ -278,7 +278,7 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
         BanList banList = BanList.getInstance();
-        banList.update(sender, packet.getProtocolVersion());
+        banList.update(sender, packet);
         synchronized(peers) {
             if (banList.isBanned(sender)) {
                 peers.remove(sender);

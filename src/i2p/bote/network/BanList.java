@@ -22,7 +22,7 @@
 package i2p.bote.network;
 
 import static i2p.bote.Util._;
-import i2p.bote.I2PBote;
+import i2p.bote.packet.I2PBotePacket;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,10 +69,14 @@ public class BanList {
         return peerCollection;
     }
     
-    public void update(Destination peer, int protocolVersion) {
-        if (protocolVersion != I2PBote.PROTOCOL_VERSION)
-            ban(peer, _("Wrong protocol version:") + " " + protocolVersion);
-        else
+    /**
+     * @param peer
+     * @param packet A packet received from a peer
+     */
+    public void update(Destination peer, I2PBotePacket packet) {
+        if (packet.isProtocolVersionOk())
             unban(peer);
+        else
+            ban(peer, _("Wrong protocol version:") + " " + packet.getProtocolVersion());
     }
 }
