@@ -104,7 +104,7 @@ public class I2PPacketDispatcher implements I2PSessionMuxedListener {
                 logPacket(packet, sender);
                 firePacketReceivedEvent(packet, sender);
             } catch (MalformedCommunicationPacketException e) {
-                log.debug("Ignoring unparseable packet.", e);
+                log.warn("Ignoring unparseable packet.", e);
                 firePacketReceivedEvent(new MalformedCommunicationPacket(), sender);
             }
         }

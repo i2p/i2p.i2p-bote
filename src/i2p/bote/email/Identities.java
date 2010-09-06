@@ -112,7 +112,7 @@ public class Identities implements Iterable<EmailIdentity> {
     private EmailIdentity parse(String emailIdentityString) {
         String[] fields = emailIdentityString.split("\\t", 4);
         if (fields.length < 2) {
-            log.debug("Unparseable email identity: <" + emailIdentityString + ">");
+            log.error("Unparseable email identity: <" + emailIdentityString + ">");
             return null;
         }
         try {
@@ -126,10 +126,10 @@ public class Identities implements Iterable<EmailIdentity> {
             return identity;
         }
         catch (PatternSyntaxException e) {
-            log.debug("Unparseable email identity: <" + emailIdentityString + ">");
+            log.error("Unparseable email identity: <" + emailIdentityString + ">");
             return null;
         } catch (GeneralSecurityException e) {
-            log.debug("Invalid email identity: <" + fields[0] + ">");
+            log.error("Invalid email identity: <" + fields[0] + ">");
             return null;
         }
     }
