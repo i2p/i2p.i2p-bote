@@ -41,7 +41,8 @@ import com.nettgryppa.security.HashCash;
 /**
  * A <code>RelayRequest</code> tells the receiver to communicate with a peer, or peers,
  * on behalf of the sender.<br/>
- * It contains an encrypted {@link RelayDataPacket} or {@link i2p.bote.packet.dht.DhtStorablePacket}.
+ * It contains an encrypted {@link RelayDataPacket} or {@link i2p.bote.packet.dht.DhtStorablePacket},
+ * and a {@link ReturnChain} which can be empty.
  */
 @TypeCode('Y')
 public class RelayRequest extends CommunicationPacket {
@@ -49,6 +50,7 @@ public class RelayRequest extends CommunicationPacket {
     
     private Log log = new Log(RelayRequest.class);
     private HashCash hashCash;
+    private ReturnChain returnChain;
     private byte[] payload;   // an encrypted DataPacket
 
     /**
@@ -62,6 +64,17 @@ public class RelayRequest extends CommunicationPacket {
         } catch (NoSuchAlgorithmException e) {
             log.error("Cannot create HashCash.", e);
         }
+        returnChain = new ReturnChain();
+        this.payload = encrypt(payload, destination);
+    }
+    
+    public RelayRequest(DataPacket payload, Destination destination, ReturnChain returnChain) {
+        try {
+            hashCash = HashCash.mintCash("", 1);   // TODO
+        } catch (NoSuchAlgorithmException e) {
+            log.error("Cannot create HashCash.", e);
+        }
+        this.returnChain = returnChain;
         this.payload = encrypt(payload, destination);
     }
     
@@ -77,6 +90,8 @@ public class RelayRequest extends CommunicationPacket {
         } catch (NoSuchAlgorithmException e) {
             log.error("Cannot create HashCash.", e);
         }
+        
+        returnChain = new ReturnChain(buffer);
         
         int payloadLength = buffer.getShort();
         payload = new byte[payloadLength];
@@ -110,6 +125,8 @@ public class RelayRequest extends CommunicationPacket {
             String hashCashString = hashCash.toString();
             dataStream.writeShort(hashCashString.length());
             dataStream.write(hashCashString.getBytes());
+            
+            returnChain.writeTo(dataStream);
             
             dataStream.writeShort(payload.length);
             dataStream.write(payload);
