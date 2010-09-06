@@ -50,9 +50,41 @@ public class EmailFolderTest {
         folderDir1 = new File(testDir, "folder1");
         folderDir2 = new File(testDir, "folder2");
         email1 = new Email(true);
-        email1.setText("asdfasdf");
+        email1.setText("Und nun lag die Entscheidung schon nahe vor ihm, es\n" +
+            "war alles klar geworden. Die Kunst war eine schöne Sache,\n" +
+            "aber sie war keine Göttin und kein Ziel, für ihn nicht, nicht\n" +
+            "der Kunst hatte er zu folgen, nur dem Ruf der Mutter. Was\n" +
+            "konnte es nutzen, seine Finger noch immer geschickter zu\n" +
+            "machen? Am Meister Niklaus konnte man sehen, wohin\n" +
+            "das führte. Es führte zu Ruhm und Namen, zu Geld und\n" +
+            "seßhaftem Leben, und zu einer Verdorrung und Verküm-\n" +
+            "merung jener inneren Sinne, denen allein das Geheimnis\n" +
+            "zugänglich ist. Es führte zum Herstellen hübscher kostba-\n" +
+            "rer Spielwaren, zu allerlei reichen Altären und Kanzeln,\n" +
+            "heiligen Sebastianen und hübsch gelockten Engels-\n" +
+            "köpfchen, das Stück zu vier Talern. Oh, das Gold im Aug’\n" +
+            "eines Karpfens und der süße dünne Silberflaum am Rand\n" +
+            "eines Schmetterlingsflügels war unendlich viel schöner,\n" +
+            "lebendiger, köstlicher als ein ganzer Saal voll von jenen\n" +
+            "Kunstwerken.");
         email2 = new Email(false);
-        email2.setText("asdfasdf");
+        email2.setText("\"And when the trial continued,\" he said in a weeping whisper, \"they asked Prak a most unfortunate thing.\n" +
+            "They asked him,\" he paused and shivered, \"to tell the Truth, the Whole Truth and Nothing but the Truth.\n" +
+            "Only, don't you see?\"\n" +
+            "He suddenly hoisted himself up on to his elbows again and shouted at them.\n" +
+            "\"They'd given him much too much of the drug!\"\n" +
+            "He collapsed again, moaning quietly. \"Much too much too much too much too ...\"\n" +
+            "The group gathered round his bedside glanced at each other. There were goose pimples on backs.\n" +
+            "\"What happened?\" said Zaphod at last.\n" +
+            "\"Oh, he told it all right,\" said the man savagely, \"for all I know he's still telling it now. Strange, terrible\n" +
+            "things ... terrible, terrible!\" he screamed.\n" +
+            "They tried to calm him, but he struggled to his elbows again.\n" +
+            "\"Terrible things, incomprehensible things,\" he shouted, \"things that would drive a man mad!\"\n" +
+            "He stared wildly at them.\n" +
+            "\"Or in my case,\" he said, \"half-mad. I'm a journalist.\"\n" +
+            "\"You mean,\" said Arthur quietly, \"that you are used to confronting the truth?\"\n" +
+            "\"No,\" said the man with a puzzled frown. \"I mean that I made an excuse and left early.\"\n" +
+            "He collapsed into a coma from which he recovered only once and briefly.");
         folder1 = new EmailFolder(folderDir1);
         folder2 = new EmailFolder(folderDir2);
     }
