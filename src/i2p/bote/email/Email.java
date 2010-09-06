@@ -636,7 +636,7 @@ public class Email extends MimeMessage {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(uncompressedArray);
         ByteArrayOutputStream compressedStream = new ByteArrayOutputStream();
         Encoder lzmaEncoder = new Encoder();
-        lzmaEncoder.SetDictionarySize(24);   // dictionary size = 2^24 = 16m
+        lzmaEncoder.SetDictionarySize(1<<24);   // dictionary size = 16 MBytes
         lzmaEncoder.SetEndMarkerMode(true);   // by using an end marker, the uncompressed size doesn't need to be stored with the compressed data
         lzmaEncoder.WriteCoderProperties(compressedStream);
         lzmaEncoder.Code(inputStream, compressedStream, -1, -1, null);
