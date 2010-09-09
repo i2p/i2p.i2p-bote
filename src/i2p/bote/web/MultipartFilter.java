@@ -34,10 +34,13 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.BodyPart;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimePartDataSource;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -119,7 +122,33 @@ public class MultipartFilter implements Filter {
         Map<String, String[]> nonFileParameters = new HashMap<String, String[]>();
         
         try {
-            MimeMultipart multipart = new MimeMultipart(dataSource);
+            // <nasty hack>
+            // JavaMail assumes ISO-8859-1 for text parts when parsing multipart data.
+            // There seems to be no easy way to override this behavior, or to change the
+            // content type of a BodyPart. Since the ISO-8859-1 encoding will mess up
+            // non-ascii UTF-8 characters, we change all "text/plain" parts to
+            // "text/plain; charset=UTF-8" to keep JavaMail from using the ISO-8859-1
+            // default.
+            // See also com.sun.mail.handlers.text_plain.getCharset(String)
+            MimeMultipart multipart = new MimeMultipart(dataSource) {
+                @Override
+                public BodyPart getBodyPart(int index) throws MessagingException {
+                    BodyPart part = super.getBodyPart(index);
+                    part.setDataHandler(new DataHandler(new MimePartDataSource((MimeBodyPart)part) {
+                        @Override
+                        public String getContentType() {
+                            String contentType = super.getContentType();
+                            if ("text/plain".equals(contentType))
+                                return "text/plain; charset=UTF-8";
+                            else
+                                return contentType;
+                        }
+                    }));
+                    return part;
+                }
+            };
+            // </nasty hack>
+            
             for (int i=0; i<multipart.getCount(); i++) {
                 BodyPart bodyPart = multipart.getBodyPart(i);
                 String origFilename = bodyPart.getFileName();
