@@ -201,22 +201,26 @@ public class CheckEmailTask implements Callable<Boolean> {
                 DhtStorablePacket packet = results.getPacket(peer);
                 if (packet instanceof EncryptedEmailPacket) {
                     EncryptedEmailPacket emailPacket = (EncryptedEmailPacket)packet;
-                    try {
-                        UnencryptedEmailPacket decryptedPacket = emailPacket.decrypt(identity);
-                        if (validPacket == null) {
-                            emailCompleted = incompleteEmailFolder.addEmailPacket(decryptedPacket);
-                            validPacket = emailPacket;
-                            // successfully decrypted the email packet, add to delete requests
-                            synchronized(indexPacketDeleteRequest) {
-                                indexPacketDeleteRequest.put(emailPacketKey, decryptedPacket.getDeleteAuthorization());
+                    // if the hash does not match the DHT key, throw the packet away
+                    if (emailPacket.verifyPacketHash())
+                        try {
+                            UnencryptedEmailPacket decryptedPacket = emailPacket.decrypt(identity);
+                            if (validPacket == null) {
+                                emailCompleted = incompleteEmailFolder.addEmailPacket(decryptedPacket);
+                                validPacket = emailPacket;
+                                // successfully decrypted the email packet, add to delete requests
+                                synchronized(indexPacketDeleteRequest) {
+                                    indexPacketDeleteRequest.put(emailPacketKey, decryptedPacket.getDeleteAuthorization());
+                                }
                             }
+                            UniqueId delAuthorization = decryptedPacket.getDeleteAuthorization();
+                            sendDeleteRequest(emailPacketKey, delAuthorization, peer);
                         }
-                        UniqueId delAuthorization = decryptedPacket.getDeleteAuthorization();
-                        sendDeleteRequest(emailPacketKey, delAuthorization, peer);
-                    }
-                    catch (Exception e) {
-                        log.error("Can't decrypt email packet: " + emailPacket, e);
-                    }
+                        catch (Exception e) {
+                            log.error("Can't decrypt email packet: " + emailPacket, e);
+                        }
+                    else
+                        log.error("Invalid hash for email packet: " + emailPacket + " Sender: " + peer.calculateHash().toBase64());
                 }
                 else
                     if (packet != null)
