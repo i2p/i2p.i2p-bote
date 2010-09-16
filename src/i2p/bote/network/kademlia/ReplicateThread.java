@@ -139,15 +139,28 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
         // 
         // For now, method (2) is used because it is easier to implement than (3).
         // 
+        int numReplicated = 0;
+        int numSkipped = 0;
+        boolean shouldCount = true;
         for (Destination node: closestNodes) {
+            // note that upToDateKeys always contains all DhtStorageHandlers
             for (DhtStorageHandler dhtStore: upToDateKeys.keySet()) {
+                
+                Set<Hash> keysToSkip = upToDateKeys.get(dhtStore);
                 Iterator<? extends DhtStorablePacket> packetIterator = dhtStore.individualPackets();
                 while (packetIterator.hasNext()) {
                     DhtStorablePacket packet = packetIterator.next();
-                    StoreRequest request = new StoreRequest(hashCash, packet);
-                    sendQueue.send(request, node);
+                    if (!keysToSkip.contains(packet.getDhtKey())) {
+                        StoreRequest request = new StoreRequest(hashCash, packet);
+                        sendQueue.send(request, node);
+                        if (shouldCount)
+                            numReplicated++;
+                    }
+                    else if (shouldCount)
+                        numSkipped++;
                 }
             }
+            // wait for responses
             TimeUnit.SECONDS.sleep(WAIT_TIME_SECONDS);
             
             DeleteRequest delRequest = receivedDeleteRequests.get(node);
@@ -155,13 +168,16 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
                 // send the delete request to all other nodes
                 for (Destination otherNode: closestNodes)
                     sendQueue.send(delRequest, otherNode);
+            
+            // avoid double counting of packets, only count on the first closestNodes iteration
+            shouldCount = false;
         }
         
         for (DhtStorageHandler dhtStore: upToDateKeys.keySet())
             upToDateKeys.get(dhtStore).clear();
         receivedDeleteRequests = null;
         
-        log.debug("Replication finished.");
+        log.debug("Replication finished. Replicated " + numReplicated + " packets, skipped: " + numSkipped);
     }
     
     /**
