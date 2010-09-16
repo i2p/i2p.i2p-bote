@@ -321,7 +321,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         PacketBatch batch = new PacketBatch();
         for (Destination node: closeNodes)
             if (localDestination.equals(node))
-                storeLocally(packet);
+                storeLocally(packet, null);
             else {
                 StoreRequest storeRequest = new StoreRequest(hashCash, packet);   // use a separate packet id for each request
                 batch.putPacket(storeRequest, node);
@@ -570,16 +570,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             sendPeerList((FindClosePeersPacket)packet, sender);
         else if (packet instanceof StoreRequest) {
             DhtStorablePacket packetToStore = ((StoreRequest)packet).getPacketToStore();
-            // If another peer is trying to store a packet that we know has been deleted, let them know and don't store the packet.
-            DhtStorageHandler storageHandler = storageHandlers.get(packetToStore.getClass());
-            if (storageHandler instanceof DeletionAwareDhtFolder<?>) {
-                DeletionAwareDhtFolder<?> folder = (DeletionAwareDhtFolder<?>)storageHandler;
-                DeleteRequest delRequest = folder.storeAndCreateDeleteRequest(packetToStore);
-                if (delRequest != null)
-                    sendQueue.send(delRequest, sender);
-            }
-            else
-                storeLocally(packetToStore);
+            storeLocally(packetToStore, sender);
         }
         else if (packet instanceof RetrieveRequest) {
             RetrieveRequest retrieveRequest = (RetrieveRequest)packet;
@@ -609,11 +600,24 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         bucketManager.packetReceived(packet, sender, receiveTime);
     }
     
-    private void storeLocally(DhtStorablePacket packetToStore) {
+    /**
+     * Stores a DHT packet locally. The folder the packet is stored in depends on the packet type.
+     * @param packetToStore
+     * @param sender The peer that sent the store request; can be <code>null</code> for the local node
+     */
+    private void storeLocally(DhtStorablePacket packetToStore, Destination sender) {
         if (packetToStore != null) {
             DhtStorageHandler storageHandler = storageHandlers.get(packetToStore.getClass());
             if (storageHandler != null) {
-                storageHandler.store(packetToStore);
+                // If another peer is trying to store a packet that we know has been deleted, let them know and don't store the packet.
+                if (storageHandler instanceof DeletionAwareDhtFolder<?> && sender!=null) {
+                    DeletionAwareDhtFolder<?> folder = (DeletionAwareDhtFolder<?>)storageHandler;
+                    DeleteRequest delRequest = folder.storeAndCreateDeleteRequest(packetToStore);
+                    if (delRequest != null)
+                        sendQueue.send(delRequest, sender);
+                }
+                else
+                    storageHandler.store(packetToStore);
                 replicateThread.packetStored(storageHandler, packetToStore);
             }
             else
