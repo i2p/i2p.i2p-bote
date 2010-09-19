@@ -34,6 +34,7 @@ import i2p.bote.packet.dht.StoreRequest;
 import i2p.bote.service.I2PBoteThread;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -70,7 +71,8 @@ import com.nettgryppa.security.HashCash;
  * </ol>
  */
 public class ReplicateThread extends I2PBoteThread implements PacketListener {
-    private static final int WAIT_TIME_SECONDS = 5;   // amount of time to wait after sending <number of nodes> store requests
+    private static final int SEND_TIMEOUT_MINUTES = 5;   // the maximum amount of time to wait for a store request to be sent
+    private static final int WAIT_TIME_SECONDS = 5;   // amount of time to wait after sending a store request
     
     private final Log log = new Log(ReplicateThread.class);
     private Destination localDestination;
@@ -79,8 +81,11 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
     private BucketManager bucketManager;
     private Random rng;
     private long nextReplicationTime;
-    private Map<DhtStorageHandler, Set<Hash>> upToDateKeys;   // all DHT keys that have been re-stored since the last replication
-    private Map<Destination, DeleteRequest> receivedDeleteRequests;   // null when not replicating
+    private Set<DhtStorageHandler> dhtStores;
+    private Set<Hash> keysToSkip;   // all DHT keys that have been re-stored since the last replication
+    private Map<Hash, DeleteRequest> receivedDeleteRequests;   // Matching keys in this Map cause the delete request
+                                                               // to be replicated instead of the DHT item.
+    private volatile boolean replicationRunning;   // true when replication is active
 
     public ReplicateThread(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager) {
         super("ReplicateThd");
@@ -89,11 +94,13 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
         this.i2pReceiver = i2pReceiver;
         this.bucketManager = bucketManager;
         rng = new Random();
-        upToDateKeys = new ConcurrentHashMap<DhtStorageHandler, Set<Hash>>();
+        dhtStores = new ConcurrentHashSet<DhtStorageHandler>();
+        keysToSkip = new ConcurrentHashSet<Hash>();
+        receivedDeleteRequests = new ConcurrentHashMap<Hash, DeleteRequest>();
     }
     
     void addDhtStoreToReplicate(DhtStorageHandler dhtStore) {
-        upToDateKeys.put(dhtStore, new ConcurrentHashSet<Hash>());
+        dhtStores.add(dhtStore);
     }
     
     private long randomTime(long min, long max) {
@@ -106,7 +113,8 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
     private void replicate() throws InterruptedException {
         log.debug("Replicating DHT data...");
         
-        // refresh peers close to the local dest (essentially a refresh of the s-bucket)
+        replicationRunning = true;
+        // refresh peers close to the local destination
         ClosestNodesLookupTask lookupTask = new ClosestNodesLookupTask(localDestination.calculateHash(), sendQueue, i2pReceiver, bucketManager);
         lookupTask.run();
         List<Destination> closestNodes = lookupTask.getResults();
@@ -121,63 +129,56 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
             return;
         }
         
-        receivedDeleteRequests = new ConcurrentHashMap<Destination, DeleteRequest>();
-        
-        // 3 possible ways of sending out the store requests:
-        // 
-        // 1. Send the first store request to all k nodes, send the next store request to all k nodes, etc.
-        //    Downside: If the first node responds with a delete request, all other store requests are sent unnecessarily;
-        //    this can be fixed by waiting after each request, but replication will take much longer
-        //    (numNodes*numPackets*waitTime).
-        // 2. Send all packets to the first node, wait for responses, send all packets to the second node, wait, etc.
-        //    Downside: Nodes are bombarded with packets
-        // 3. Send packet 0 to node 0, send packet 1 to node 1, etc. until packet k-1 is sent to node k-1. Wait for
-        //    responses, then send packet 0 to node 1, send packet 1 to node 2, etc. until packet k-1 is sent to node k.
-        //    If the node index would exceed the number of nodes, subtract the number of nodes.
-        //    Repeat [number of nodes] times.
-        //    This method avoids the downsides of (1) and (2).
-        // 
-        // For now, method (2) is used because it is easier to implement than (3).
-        // 
         int numReplicated = 0;
         int numSkipped = 0;
-        boolean shouldCount = true;
-        for (Destination node: closestNodes) {
-            // note that upToDateKeys always contains all DhtStorageHandlers
-            for (DhtStorageHandler dhtStore: upToDateKeys.keySet()) {
-                
-                Set<Hash> keysToSkip = upToDateKeys.get(dhtStore);
-                Iterator<? extends DhtStorablePacket> packetIterator = dhtStore.individualPackets();
-                while (packetIterator.hasNext()) {
-                    DhtStorablePacket packet = packetIterator.next();
-                    if (!keysToSkip.contains(packet.getDhtKey())) {
-                        StoreRequest request = new StoreRequest(hashCash, packet);
-                        sendQueue.send(request, node);
-                        if (shouldCount)
-                            numReplicated++;
+
+        // Replicate all packets except keysToSkip, onto the known peers closest to the packet.
+        // If a peer responds with a delete request, replicate the delete request instead.
+        for (DhtStorageHandler dhtStore: dhtStores)
+            for (Iterator<? extends DhtStorablePacket> packetIterator=dhtStore.individualPackets(); packetIterator.hasNext(); ) {
+                DhtStorablePacket packet = packetIterator.next();
+                Hash dhtKey = packet.getDhtKey();
+                if (!keysToSkip.contains(dhtKey)) {
+                    StoreRequest request = new StoreRequest(hashCash, packet);
+                    List<Destination> closestPeers = bucketManager.getClosestPeers(dhtKey, KademliaConstants.K);
+                    for (Destination peer: closestPeers) {
+                        // Send the store request and give the peer time to respond with a delete request
+                        sendQueue.send(request, peer).await(SEND_TIMEOUT_MINUTES, TimeUnit.MINUTES);
+                        TimeUnit.SECONDS.sleep(WAIT_TIME_SECONDS);
+                        
+                        // If we received a delete request for the DHT item, notify the other close peers
+                        DeleteRequest delRequest = receivedDeleteRequests.get(dhtKey);
+                        if (delRequest != null) {
+                            // KademliaDHT handles the delete request for local data, but we forward the
+                            // request to the other nodes close to the DHT key.
+                            // Note that the delete request contains only one entry, see packetReceived()
+                            sendDeleteRequest(delRequest, closestPeers, peer);
+                            break;
+                        }
                     }
-                    else if (shouldCount)
-                        numSkipped++;
+                    numReplicated++;
                 }
+                else
+                    numSkipped++;
             }
-            // wait for responses
-            TimeUnit.SECONDS.sleep(WAIT_TIME_SECONDS);
-            
-            DeleteRequest delRequest = receivedDeleteRequests.get(node);
-            if (delRequest != null)
-                // send the delete request to all other nodes
-                for (Destination otherNode: closestNodes)
-                    sendQueue.send(delRequest, otherNode);
-            
-            // avoid double counting of packets, only count on the first closestNodes iteration
-            shouldCount = false;
-        }
         
-        for (DhtStorageHandler dhtStore: upToDateKeys.keySet())
-            upToDateKeys.get(dhtStore).clear();
-        receivedDeleteRequests = null;
+        keysToSkip.clear();
+        replicationRunning = false;
+        receivedDeleteRequests.clear();
         
         log.debug("Replication finished. Replicated " + numReplicated + " packets, skipped: " + numSkipped);
+    }
+    
+    /**
+     * Sends a delete request to a number of peers. Does not send a request to <code>except</code>.
+     * @param delRequest
+     * @param peers
+     * @param except
+     */
+    private void sendDeleteRequest(DeleteRequest delRequest, Collection<Destination> peers, Destination except) {
+        for (Destination peer: peers)
+            if (peer != except)
+                sendQueue.send(delRequest, peer);
     }
     
     /**
@@ -186,8 +187,7 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
      * @param packet
      */
     public void packetStored(DhtStorageHandler folder, DhtStorablePacket packet) {
-        Set<Hash> keys = upToDateKeys.get(folder);
-        keys.add(packet.getDhtKey());
+        keysToSkip.add(packet.getDhtKey());
     }
     
     @Override
@@ -204,10 +204,21 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
         awaitShutdownRequest(waitTime, TimeUnit.SECONDS);
     }
 
-    // PacketListener implementation
+    /**
+     * PacketListener implementation.<br/>
+     * Listens for delete requests and adds them to <code>receivedDeleteRequests</code> if a replication
+     * is running. If not, this method does nothing.
+     */
     @Override
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
-        if (packet instanceof DeleteRequest && receivedDeleteRequests!=null)
-            receivedDeleteRequests.put(sender, (DeleteRequest)packet);
+        if (packet instanceof DeleteRequest && replicationRunning) {
+            DeleteRequest delRequest = (DeleteRequest)packet;
+            Collection<Hash> dhtKeys = delRequest.getDhtKeys();
+            // create a DHT key - delete request mapping for each DHT key in the delete request
+            for (Hash dhtKey: dhtKeys) {
+                DeleteRequest indivRequest = delRequest.getIndividualRequest(dhtKey);
+                receivedDeleteRequests.put(dhtKey, indivRequest);
+            }
+        }
     }
 }

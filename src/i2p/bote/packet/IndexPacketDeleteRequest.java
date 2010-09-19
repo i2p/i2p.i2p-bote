@@ -27,9 +27,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 import net.i2p.data.DataFormatException;
@@ -45,7 +45,7 @@ import net.i2p.util.Log;
 public class IndexPacketDeleteRequest extends DeleteRequest {
     private Log log = new Log(IndexPacketDeleteRequest.class);
     private Hash emailDestHash;
-    private Map<Hash, UniqueId> entries;
+    private Map<Hash, UniqueId> entries;   // maps DHT keys to delete authorizations
 
     public IndexPacketDeleteRequest(Hash emailDestHash) {
         this.emailDestHash = emailDestHash;
@@ -81,10 +81,6 @@ public class IndexPacketDeleteRequest extends DeleteRequest {
         return emailDestHash;
     }
     
-    public Set<Hash> getDhtKeys() {
-        return entries.keySet();
-    }
-
     public UniqueId getDeleteAuthorization(Hash dhtKey) {
         return entries.get(dhtKey);
     }
@@ -122,6 +118,22 @@ public class IndexPacketDeleteRequest extends DeleteRequest {
     @Override
     public Class<? extends I2PBotePacket> getDataType() {
         return IndexPacket.class;
+    }
+
+    @Override
+    public Collection<Hash> getDhtKeys() {
+        return entries.keySet();
+    }
+    
+    @Override
+    public DeleteRequest getIndividualRequest(Hash dhtKey) {
+        UniqueId delAuthorization = entries.get(dhtKey);
+        if (delAuthorization == null)
+            return null;
+        
+        IndexPacketDeleteRequest indivRequest = new IndexPacketDeleteRequest(emailDestHash);
+        indivRequest.put(dhtKey, delAuthorization);
+        return indivRequest;
     }
 
     @Override

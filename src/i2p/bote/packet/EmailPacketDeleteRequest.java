@@ -26,6 +26,8 @@ import i2p.bote.UniqueId;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Collection;
+import java.util.Collections;
 
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -82,6 +84,22 @@ public class EmailPacketDeleteRequest extends DeleteRequest {
     @Override
     public Class<? extends I2PBotePacket> getDataType() {
         return EncryptedEmailPacket.class;
+    }
+ 
+    @Override
+    public Collection<Hash> getDhtKeys() {
+        return Collections.singleton(dhtKey);
+    }
+    
+    @Override
+    public DeleteRequest getIndividualRequest(Hash dhtKey) {
+        if (this.dhtKey.equals(dhtKey))
+            return this;
+        else
+            return null;
+    }
+    public Collection<? extends DeleteRequest> toIndividualRequests() {
+        return Collections.singleton(this);
     }
     
     @Override
