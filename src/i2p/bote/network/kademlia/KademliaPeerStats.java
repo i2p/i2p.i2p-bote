@@ -23,6 +23,7 @@ package i2p.bote.network.kademlia;
 
 import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
+import i2p.bote.Util;
 import i2p.bote.network.DhtPeerStats;
 
 import java.math.BigInteger;
@@ -59,7 +60,7 @@ public class KademliaPeerStats implements DhtPeerStats {
         for (KademliaPeer peer: bucket) {
             List<String> row = new ArrayList<String>();
             row.add(String.valueOf(data.size() + 1));
-            row.add(peer.calculateHash().toBase64());
+            row.add(Util.toBase32(peer));
             row.add(getBucketPrefix(bucket));
             BigInteger distance = KademliaUtil.getDistance(localDestinationHash, peer.calculateHash());
             row.add(distance.shiftRight((Hash.HASH_LENGTH-2)*8).toString());   // show the 2 most significant bytes

@@ -223,7 +223,7 @@ public class I2PBote implements NetworkStatusSource {
         i2pSession = socketManager.getSession();
         Destination localDestination = i2pSession.getMyDestination();
         log.info("Local destination key = " + localDestination.toBase64());
-        log.info("Local destination hash = " + localDestination.calculateHash().toBase64());
+        log.info("Local destination hash = " + Util.toBase32(localDestination));
     }
     
     /**

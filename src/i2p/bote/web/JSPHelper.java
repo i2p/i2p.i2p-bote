@@ -82,7 +82,7 @@ public class JSPHelper {
     public String getLocalDestination() {
         Destination dest = I2PBote.getInstance().getLocalDestination();
         if (dest != null)
-            return I2PBote.getInstance().getLocalDestination().calculateHash().toBase64();
+            return Util.toBase32(dest);
         return "Not set.";
     }
     

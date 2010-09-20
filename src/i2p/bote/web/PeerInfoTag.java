@@ -23,6 +23,7 @@ package i2p.bote.web;
 
 import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
+import i2p.bote.Util;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.RelayPeer;
@@ -89,7 +90,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                 for (RelayPeer peer: relayPeers) {
                     out.println("<tr>");
                     out.println("<td>" + i + "</td>");
-                    out.println("<td>" + peer.calculateHash().toBase64() + "</td>");
+                    out.println("<td>" + Util.toBase32(peer) + "</td>");
                     out.println("<td>" + peer.getReachability() + "</td>");
                     out.println("</tr>");
                     i++;
@@ -114,7 +115,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                 for (BannedPeer peer: bannedPeers) {
                     out.println("<tr>");
                     out.println("<td>" + peerIndex++ + "</td>");
-                    out.println("<td>" + peer.getDestination().calculateHash().toBase64() + "</td>");
+                    out.println("<td>" + Util.toBase32(peer.getDestination()) + "</td>");
                     out.println("<td>" + (peer.getBanReason()==null?"":peer.getBanReason()) + "</td>");
                     out.println("</tr>");
                 }
