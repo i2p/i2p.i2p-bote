@@ -89,18 +89,16 @@ public class OutboxProcessor extends I2PBoteThread {
         
         if (networkStatusSource.isConnected()) {
             log.debug("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
-            for (Email email: outbox)
-                // only send emails whose status has not been set and which have not been set to "old"
-                if (!outbox.isStatusSet(email) && email.isNew()) {
-                    log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
-                    try {
-                        sendEmail(email);
-                        fireOutboxListeners(email);
-                    }
-                    catch (Exception e) {
-                        log.error("Error sending email.", e);
-                    }
+            for (Email email: outbox) {
+                log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
+                try {
+                    sendEmail(email);
+                    fireOutboxListeners(email);
                 }
+                catch (Exception e) {
+                    log.error("Error sending email.", e);
+                }
+            }
         }
         
         try {

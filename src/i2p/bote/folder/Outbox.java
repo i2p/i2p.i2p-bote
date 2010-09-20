@@ -105,11 +105,4 @@ public class Outbox extends EmailFolder {
         else
             return getStatus(messageId);
     }
-    
-    public boolean isStatusSet(Email email) {
-        if (email == null)
-            return false;
-        else
-            return statusMap.containsKey(email.getMessageID());
-    }
 }
