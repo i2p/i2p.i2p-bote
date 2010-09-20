@@ -184,6 +184,9 @@
                         <ib:message key="Add another attachment" var="linkTitle"/>
                         <td><button type="submit" name="action" value="attach" title="${linkTitle}"><ib:message key="Attach"/></button></td>
                     </tr>
+                    <tr>
+                        <td colspan="2"><div style="font-size: 0.8em;"><ib:message key="Is is recommended to keep attachments below 500 kBytes."/></div></td>
+                    </tr>
                 </table></td>
             </tr>
             
