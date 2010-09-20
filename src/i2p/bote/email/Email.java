@@ -162,7 +162,7 @@ public class Email extends MimeMessage {
     
     /**
      * Reads attachments from files and adds them to a {@link Multipart}.<br/>
-     * Attachments are not encoded in Base64 (because doesn't compress well),
+     * Attachments are not encoded in Base64 (because it doesn't compress well),
      * but in 8 bit encoding.
      * @param multiPart
      * @param attachments

@@ -39,7 +39,9 @@ import net.i2p.util.Log;
  * A <code>DhtPacketFolder</code> that keeps a record of DHT keys that have been deleted,
  * along with delete authorization keys.<br/>
  * For this reason, elements of this folder are only deleted via {@link process(DeleteRequest)},
- * not {@link delete(Hash)}.
+ * not {@link delete(Hash)}.<br/>
+ * Subclasses retain DHT keys of deleted packets in a {@link DeletionInfoPacket} file whose
+ * name starts with <code>DEL_</code>.
  * @param <T>
  */
 public abstract class DeletionAwareDhtFolder<T extends DhtStorablePacket> extends DhtPacketFolder<T> {

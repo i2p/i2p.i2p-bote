@@ -40,7 +40,7 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 /**
- * A subclass of {@link DhtPacketFolder} that stores email packets and deletes them
+ * A subclass of {@link DeletionAwareDhtFolder} that stores email packets and deletes them
  * upon {@link EmailPacketDeleteRequest}s.<br/>
  * When a packet is deleted, its DHT key is added to a {@link DeletionInfoPacket} file
  * whose file name starts with <code>DEL_</code>.

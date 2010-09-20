@@ -43,13 +43,8 @@ import net.i2p.util.Log;
 
 /**
  * This class uses Email Destination hashes for DHT keys.<br/>
- * It differs from {@link DhtPacketFolder} in the following ways:
- * <ul>
- *   <li/>It doesn't overwrite an existing packet when a new packet is stored under the same key,
- *        but merges the packets.
- *   <li/>It retains DHT keys of deleted packets in a {@link DeletionInfoPacket} file named
- *        <code>DEL_<dht_key>.pkt</code>, where <dht_key> is the DHT key of the index packet.
- * </ul>
+ * It differs from {@link DeletionAwareDhtFolder} in that it doesn't overwrite an existing
+ * packet when a new packet is stored under the same key, but adds the new packet.
  */
 public class IndexPacketFolder extends DeletionAwareDhtFolder<IndexPacket> implements PacketListener, ExpirationListener {
     private final Log log = new Log(IndexPacketFolder.class);

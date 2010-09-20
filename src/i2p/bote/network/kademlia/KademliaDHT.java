@@ -591,9 +591,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         else if (packet instanceof DeleteRequest) {
             DeleteRequest delRequest = (DeleteRequest)packet;
             DhtStorageHandler storageHandler = storageHandlers.get(delRequest.getDataType());
-            if (storageHandler instanceof DeletionAwareDhtFolder<?>) {
+            if (storageHandler instanceof DeletionAwareDhtFolder<?>)
                 ((DeletionAwareDhtFolder<?>)storageHandler).process(delRequest);
-            }
         }
         
         // bucketManager is not registered as a PacketListener, so notify it here
