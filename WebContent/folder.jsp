@@ -114,7 +114,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
             </th>
-            <th style="width: 100px;">
+            <th style="width: 120px;">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${DATE}"/>
                 <c:if test="${sortcolumn eq DATE}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -163,7 +163,12 @@
             <td><div${class} style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></div></td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
-            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}"><ib:printDate date="${email.sentDate}" timeStyle="short"/></a></div></td>
+            <td>
+	            <span${class} style="display: block;">
+	                <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: left"><ib:printDate date="${email.sentDate}" timeStyle="short"/></a>
+	                <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: right"><ib:printTime time="${email.sentDate}" timeStyle="short"/></a>
+	            </span>
+            </td>
             <td>
                 <div${class}>
                 <a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}">
