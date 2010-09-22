@@ -21,6 +21,7 @@
 
 package i2p.bote.network.kademlia;
 
+import i2p.bote.Util;
 import i2p.bote.network.BanList;
 import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.PacketListener;
@@ -84,7 +85,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         int numBuckets = kBuckets.size();
         int numPeers = getAllPeers().size();
         int numSiblings = sBucket.size();
-        log.debug("Peer " + destHash.toBase64() + " added/updated. Peers=" + numPeers + " sib=" + numSiblings + " buk=" + numBuckets + " (not counting the sibling bucket)");
+        log.debug("Peer " + Util.toBase32(destHash) + " added/updated. Peers=" + numPeers + " sib=" + numSiblings + " buk=" + numBuckets + " (not counting the sibling bucket)");
     }
 
     /**
@@ -140,7 +141,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
                 refillSiblings();
         }
         else
-            log.debug("Can't remove peer because no bucket contains it: " + peer.calculateHash().toBase64());
+            log.debug("Can't remove peer because no bucket contains it: " + Util.toBase32(peer));
     }
     
     /**

@@ -22,6 +22,7 @@
 package i2p.bote.network;
 
 import i2p.bote.UniqueId;
+import i2p.bote.Util;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.EmptyResponse;
@@ -231,7 +232,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         CommunicationPacket i2pBotePacket = scheduledPacket.data;
         PacketBatch batch = scheduledPacket.batch;
         boolean isBatchPacket = batch != null;
-        log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to " + scheduledPacket.destination.calculateHash().toBase64());
+        log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to " + Util.toShortenedBase32(scheduledPacket.destination));
             
         byte[] replyableDatagram = datagramMaker.makeI2PDatagram(i2pBotePacket.toByteArray());
         try {

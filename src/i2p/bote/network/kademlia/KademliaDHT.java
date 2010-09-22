@@ -382,7 +382,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                     bootstrapNode.setFirstSeen(System.currentTimeMillis());   // Set the "first seen" time to the current time before every bootstrap attempt
                     bootstrapNode.responseReceived();   // unlock the peer so ClosestNodesLookupTask will give it a chance
                     bucketManager.addOrUpdate(bootstrapNode);
-                    log.info("Trying " + bootstrapNode.calculateHash().toBase64() + " bootstrapping.");
+                    log.info("Trying " + Util.toBase32(bootstrapNode) + " for bootstrapping.");
                     Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
                     
                     if (closestNodes.isEmpty()) {
@@ -390,11 +390,11 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                         bucketManager.remove(bootstrapNode);
                     }
                     else {
-                        log.info("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + bootstrapNode.calculateHash().toBase64());
+                        log.info("Response from bootstrap node received, refreshing all buckets. Bootstrap node = " + Util.toBase32(bootstrapNode));
                         refreshAll();
                         log.info("Bootstrapping finished. Number of peers = " + bucketManager.getPeerCount());
                         for (Destination peer: bucketManager.getAllPeers())
-                            log.debug("  Peer: " + peer.calculateHash().toBase64());
+                            log.debug("  Peer: " + Util.toBase32(peer));
                         break outerLoop;
                     }
                 }

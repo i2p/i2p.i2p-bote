@@ -275,6 +275,10 @@ public class Util {
         return Base32.encode(destination.calculateHash().toByteArray());
     }
 
+    public static String toShortenedBase32(Destination destination) {
+        return toBase32(destination).substring(0, 8) + "...";
+    }
+
     /**
      * Makes a file readable and writable only by the current OS user,
      * if the operating system supports it. Errors are ignored.

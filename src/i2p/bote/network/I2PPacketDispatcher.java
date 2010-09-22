@@ -21,6 +21,7 @@
 
 package i2p.bote.network;
 
+import i2p.bote.Util;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.MalformedCommunicationPacket;
@@ -120,7 +121,7 @@ public class I2PPacketDispatcher implements I2PSessionMuxedListener {
     }
 
     private void logPacket(I2PBotePacket packet, Destination sender) {
-        String senderHash = sender.calculateHash().toBase64().substring(0, 8) + "...";
+        String senderHash = Util.toShortenedBase32(sender);
         log.debug("I2P packet received: [" + packet + "] Sender: [" + senderHash + "], notifying " + packetListeners.size() + " PacketListeners.");
     }
     

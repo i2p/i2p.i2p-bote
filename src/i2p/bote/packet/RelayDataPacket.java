@@ -114,11 +114,11 @@ public class RelayDataPacket extends DataPacket {
         if (log.shouldLog(Log.DEBUG)) {
             StringBuilder debugMsg = new StringBuilder("Creating relay chain: [");
             for (int i=relayPeers.size()-1; i>=0; i--) {
-                debugMsg.append(relayPeers.get(i).calculateHash().toBase64().substring(0, 8));
+                debugMsg.append(Util.toShortenedBase32(relayPeers.get(i)));
                 if (i > 0)
-                    debugMsg.append("... --> ");
+                    debugMsg.append(" --> ");
             }
-            debugMsg.append("...]");
+            debugMsg.append("]");
             log.debug(debugMsg.toString());
         }
         

@@ -70,11 +70,11 @@ public class RelayPacketHandler implements PacketListener {
                 dataPacket = relayRequest.getStoredPacket(i2pSession);
             }
             catch (DataFormatException e) {
-                log.error("Invalid RelayDataPacket received from peer " + sender.toBase64(), e);
+                log.error("Invalid RelayDataPacket received from peer " + Util.toBase32(sender), e);
                 return;
             }
             catch (MalformedDataPacketException e) {
-                log.error("Invalid RelayDataPacket received from peer " + sender.toBase64(), e);
+                log.error("Invalid RelayDataPacket received from peer " + Util.toBase32(sender), e);
                 return;
             }
             log.debug("Received a relay request, payload: " + dataPacket);

@@ -220,7 +220,7 @@ public class CheckEmailTask implements Callable<Boolean> {
                             log.error("Can't decrypt email packet: " + emailPacket, e);
                         }
                     else
-                        log.error("Invalid hash for email packet: " + emailPacket + " Sender: " + peer.calculateHash().toBase64());
+                        log.error("Invalid hash for email packet: " + emailPacket + " Sender: " + Util.toShortenedBase32(peer));
                 }
                 else
                     if (packet != null)

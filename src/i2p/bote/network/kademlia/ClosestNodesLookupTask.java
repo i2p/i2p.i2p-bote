@@ -128,7 +128,7 @@ public class ClosestNodesLookupTask implements Runnable {
                 for (Map.Entry<Destination, FindClosePeersPacket> request: pendingRequests.entrySet())
                     if (hasTimedOut(request.getValue(), REQUEST_TIMEOUT)) {
                         Destination peer = request.getKey();
-                        log.debug("FindCloseNodes request to peer " + peer.calculateHash().toBase64() + " timed out.");
+                        log.debug("FindCloseNodes request to peer " + Util.toShortenedBase32(peer) + " timed out.");
                         bucketManager.noResponse(peer);
                         pendingRequests.remove(peer);
                     }
@@ -141,7 +141,7 @@ public class ClosestNodesLookupTask implements Runnable {
             } while (!isDone());
             log.debug("Node lookup for " + key + " found " + responses.size() + " nodes (may include local node).");
             for (Destination node: responses)
-                log.debug("  Node: " + node.calculateHash().toBase64());
+                log.debug("  Node: " + Util.toBase32(node));
         }
         finally {
             i2pReceiver.removePacketListener(packetListener);
@@ -267,7 +267,7 @@ public class ClosestNodesLookupTask implements Runnable {
                     
                     // if the packet is in response to a pending request, update responses + notQueriedYet + pendingRequests
                     if (request != null) {
-                        log.debug("Response to FindCloseNodesPacket received from " + sender.calculateHash().toBase64());
+                        log.debug("Response to FindCloseNodesPacket received from " + Util.toShortenedBase32(sender));
                         responses.add(sender);
                         DataPacket payload = responsePacket.getPayload();
                         if (payload instanceof PeerList)
@@ -289,7 +289,7 @@ public class ClosestNodesLookupTask implements Runnable {
          * @param receiveTime
          */
         private void updatePeers(PeerList peerListPacket, Destination sender, long receiveTime) {
-            log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ sender.calculateHash().toBase64());
+            log.debug("Peer List Packet received: #peers=" + peerListPacket.getPeers().size() + ", sender="+ Util.toShortenedBase32(sender));
 
             // update the list of peers to query
             Collection<Destination> peersReceived = peerListPacket.getPeers();

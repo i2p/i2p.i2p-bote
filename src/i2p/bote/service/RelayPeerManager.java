@@ -235,7 +235,7 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
             peer.addReachabilitySample(didRespond);
             if (log.shouldLog(Log.DEBUG)) {
                 StringBuilder logMessage = new StringBuilder("  ");
-                logMessage.append(peer.calculateHash().toBase64());
+                logMessage.append(Util.toBase32(peer));
                 logMessage.append(" ");
                 for (boolean responded: peer.getAllSamples())
                     logMessage.append(responded?'*':'.');
@@ -292,7 +292,7 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
                 peersToSend.addAll(getGoodPeers());
                 peersToSend.remove(sender);
                 PeerList response = new PeerList(peersToSend);
-                log.debug("Sending a PeerList containing " + peersToSend.size() + " peers in response to a PeerListRequest from " + sender.calculateHash().toBase64());
+                log.debug("Sending a PeerList containing " + peersToSend.size() + " peers in response to a PeerListRequest from " + Util.toShortenedBase32(sender));
                 sendQueue.sendResponse(response, sender, packet.getPacketId());
             }
             
