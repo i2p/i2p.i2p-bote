@@ -50,6 +50,12 @@
     <div id="inboxFlag"></div>
 </c:if>
 
+<%-- Don't show signature info in the sent folder because sent emails are saved without a signature --%>
+<c:set var="showSignatureColumn" value="true"/>
+<c:if test="${folderName eq 'Sent'}">
+    <c:set var="showSignatureColumn" value="false"/>
+</c:if>
+
 <c:set var="sortcolumn" value="${DATE}"/>
 <c:if test="${!empty param.sortcolumn}">
     <c:set var="sortcolumn" value="${param.sortcolumn}"/>
@@ -97,7 +103,9 @@
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
             <th style="width: 30px; text-align: center;"><ib:message key="Unkn."/></th>
-            <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
+            <c:if test="${showSignatureColumn}">
+                <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
+            </c:if>
             <th style="width: 100px;">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${TO}"/>
                 <c:if test="${sortcolumn eq TO}">
@@ -160,7 +168,9 @@
             <tr>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
             <td><div${class} style="text-align: center;">${!ib:isKnown(email.sender) ? '&#10007' : '&nbsp;'}</div></td>
-            <td><div${class} style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></div></td>
+            <c:if test="${showSignatureColumn}">
+                <td><div${class} style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></div></td>
+            </c:if>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
             <td>
