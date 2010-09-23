@@ -102,7 +102,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
-            <th style="width: 30px; text-align: center;"><ib:message key="Unkn."/></th>
+            <th style="width: 30px; text-align: center;"><ib:message key="Know"/></th>
             <c:if test="${showSignatureColumn}">
                 <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
             </c:if>
@@ -167,7 +167,7 @@
             
             <tr>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
-            <td><div${class} style="text-align: center;">${!ib:isKnown(email.sender) ? '&#10007' : '&nbsp;'}</div></td>
+            <td><div${class} style="text-align: center;">${ib:isKnown(email.sender) ? '&#10004;' : '&nbsp;'}</div></td>
             <c:if test="${showSignatureColumn}">
                 <td><div${class} style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></div></td>
             </c:if>
