@@ -100,6 +100,12 @@
             <td valign="top"><strong><ib:message key="Attachments:"/></strong></td>
             <td><ib:showAttachments email="${email}" folder="${param.folder}"/></td>
         </tr>
+        <c:if test="${param.folder eq 'Outbox'}">
+	        <tr>
+	            <td valign="top"><strong><ib:message key="Status:"/></strong></td>
+	            <td>${ib:getEmailStatus(email)}</td>
+	        </tr>
+        </c:if>
         <tr>
             <td colspan="2">
                 <table><tr>
