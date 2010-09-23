@@ -88,8 +88,8 @@ public class Configuration {
     private static final boolean DEFAULT_INCLUDE_SENT_TIME = true;
     private static final int DEFAULT_MESSAGE_ID_CACHE_SIZE = 1000;   // the maximum number of message IDs to cache
     private static final int DEFAULT_RELAY_REDUNDANCY = 5;   // lower than the DHT redundancy because only the highest-uptime peers are used for relaying
-    private static final int DEFAULT_RELAY_MIN_DELAY = 120;   // in minutes
-    private static final int DEFAULT_RELAY_MAX_DELAY = 600;   // in minutes
+    private static final int DEFAULT_RELAY_MIN_DELAY = 5;   // in minutes
+    private static final int DEFAULT_RELAY_MAX_DELAY = 40;   // in minutes
     private static final int DEFAULT_NUM_STORE_HOPS = 0;
     private static final String DEFAULT_GATEWAY_DESTINATION = "";
     private static final boolean DEFAULT_GATEWAY_ENABLED = true;
