@@ -31,22 +31,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.regex.PatternSyntaxException;
 
 import net.i2p.util.Log;
 
 /**
- * Represents a set of <code>EmailIdentities</code>.
+ * Holds a set of {@link EmailIdentity} objects that are sorted by name.
  */
 public class Identities implements Iterable<EmailIdentity> {
     private Log log = new Log(Identities.class);
     private File identitiesFile;
-    private List<EmailIdentity> identities;
+    private SortedSet<EmailIdentity> identities;
 
     /**
      * Constructs <code>Identities</code> from a text file. Each identity is defined
@@ -62,7 +62,7 @@ public class Identities implements Iterable<EmailIdentity> {
      */
     public Identities(File identitiesFile) {
         this.identitiesFile = identitiesFile;
-        identities = Collections.synchronizedList(new ArrayList<EmailIdentity>());
+        identities = new TreeSet<EmailIdentity>(new NameComparator());
         String defaultIdentityString = null;
         
         if (!identitiesFile.exists()) {
@@ -94,7 +94,7 @@ public class Identities implements Iterable<EmailIdentity> {
             if (defaultIdentity != null)
                 defaultIdentity.setDefault(true);
             else if (!identities.isEmpty())
-                identities.get(0).setDefault(true);
+                identities.iterator().next().setDefault(true);
         } catch (Exception e) {
             log.error("Error reading the identities file.", e);
         }
@@ -194,7 +194,7 @@ public class Identities implements Iterable<EmailIdentity> {
             
             // if we deleted the default identity, set a new default
             if (identity.isDefault() && !identities.isEmpty())
-                identities.get(0).setDefault(true);
+                identities.iterator().next().setDefault(true);
         }
     }
     
@@ -221,10 +221,6 @@ public class Identities implements Iterable<EmailIdentity> {
         return null;
     }
     
-    public EmailIdentity get(int i) {
-        return identities.get(i);
-    }
-
     /**
      * Looks up an {@link EmailIdentity} that has the same public encryption key and the
      * same public signing key as a given {@link EmailDestination}.<br/>
@@ -280,5 +276,12 @@ public class Identities implements Iterable<EmailIdentity> {
     @Override
     public Iterator<EmailIdentity> iterator() {
         return identities.iterator();
+    }
+
+    private class NameComparator implements Comparator<EmailIdentity> {
+        @Override
+        public int compare(EmailIdentity identity1, EmailIdentity identity2) {
+            return String.CASE_INSENSITIVE_ORDER.compare(identity1.getPublicName(), identity2.getPublicName());
+        }
     }
 }

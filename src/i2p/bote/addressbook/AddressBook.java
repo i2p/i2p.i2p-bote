@@ -31,21 +31,21 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.i2p.util.Log;
 
 /**
- * Implements the private address book. Holds a set of {@link Contact}s.
+ * Implements the private address book. Holds a set of {@link Contact}s
+ * which are sorted by name.
  */
 public class AddressBook implements Iterable<Contact> {
     private Log log = new Log(AddressBook.class);
     private File addressFile;
-    private List<Contact> contacts;
+    private SortedSet<Contact> contacts;
 
     /**
      * Reads an <code>AddressBook</code> from a text file. Each contact is defined
@@ -55,7 +55,7 @@ public class AddressBook implements Iterable<Contact> {
      */
     public AddressBook(File addressFile) {
         this.addressFile = addressFile;
-        contacts = Collections.synchronizedList(new ArrayList<Contact>());
+        contacts = new TreeSet<Contact>(new NameComparator());
         
         if (!addressFile.exists()) {
             log.debug("Address file does not exist: <" + addressFile.getAbsolutePath() + ">");
@@ -128,10 +128,6 @@ public class AddressBook implements Iterable<Contact> {
             contacts.remove(contact);
     }
     
-    public Contact get(int i) {
-        return contacts.get(i);
-    }
-
     /**
      * Looks up an {@link Contact} by its Base64 key. If none is found,
      * <code>null</code> is returned.
@@ -162,7 +158,7 @@ public class AddressBook implements Iterable<Contact> {
         return false;
     }
     
-    public Collection<Contact> getAll() {
+    public SortedSet<Contact> getAll() {
         return contacts;
     }
     
@@ -173,5 +169,12 @@ public class AddressBook implements Iterable<Contact> {
     @Override
     public Iterator<Contact> iterator() {
         return contacts.iterator();
+    }
+
+    private class NameComparator implements Comparator<Contact> {
+        @Override
+        public int compare(Contact contact1, Contact contact2) {
+            return String.CASE_INSENSITIVE_ORDER.compare(contact1.getName(), contact2.getName());
+        }
     }
 }
