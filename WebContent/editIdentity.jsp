@@ -51,7 +51,7 @@
 </div>
 
 <div class="main">
-    <form name="form" action="saveIdentity.jsp">
+    <form name="form" method="post" action="saveIdentity.jsp">
         <table>
             <tr>
                 <td>
