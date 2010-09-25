@@ -34,6 +34,11 @@
     pageContext.setAttribute("DATE", i2p.bote.email.EmailAttribute.DATE, PageContext.PAGE_SCOPE);
 %> 
 
+<%-- The outbox is implemented in a separate JSP --%>
+<c:if test="${param.path eq 'Outbox'}">
+    <jsp:forward page="outbox.jsp"/>
+</c:if>
+
 <%-- Autorefresh inbox and sent folders --%>
 <c:if test="${param.path eq 'Inbox' or param.path eq 'Sent'}">
     <c:set var="refreshInterval" value="60" scope="request"/>
