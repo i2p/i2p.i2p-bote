@@ -38,6 +38,8 @@
     <jsp:setProperty name="configuration" property="gatewayEnabled" value="${param.gatewayEnabled eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="gatewayDestination" value="${param.gatewayDestination}"/>
     <ib:saveConfiguration/>
+    <ib:message key="Settings have been saved." var="infoMessage" scope="request"/>
+    <c:set var="infoMessage" value="${infoMessage}"/>
 </c:if>
 
 <ib:message key="Settings" var="title" scope="request"/>

@@ -97,9 +97,19 @@
 </div>
 
 <div class="infoMessage">
-    ${fn:escapeXml(param.infoMessage)}
+    <c:if test="${not empty infoMessage}">
+        ${fn:escapeXml(infoMessage)}
+    </c:if>
+    <c:if test="${empty infoMessage}">
+        ${fn:escapeXml(param.infoMessage)}
+    </c:if>
 </div>
 
 <div class="errorMessage">
-    ${fn:escapeXml(param.errorMessage)}
+    <c:if test="${not empty errorMessage}">
+        ${fn:escapeXml(errorMessage)}
+    </c:if>
+    <c:if test="${empty errorMessage}">
+        ${fn:escapeXml(param.errorMessage)}
+    </c:if>
 </div>
