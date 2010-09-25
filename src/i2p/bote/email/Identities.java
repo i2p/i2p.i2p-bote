@@ -62,7 +62,7 @@ public class Identities implements Iterable<EmailIdentity> {
      */
     public Identities(File identitiesFile) {
         this.identitiesFile = identitiesFile;
-        identities = new TreeSet<EmailIdentity>(new NameComparator());
+        identities = new TreeSet<EmailIdentity>(new IdentityComparator());
         String defaultIdentityString = null;
         
         if (!identitiesFile.exists()) {
@@ -278,10 +278,21 @@ public class Identities implements Iterable<EmailIdentity> {
         return identities.iterator();
     }
 
-    private class NameComparator implements Comparator<EmailIdentity> {
+    /**
+     * Compares two email identities by name and email destination.
+     */
+    private class IdentityComparator implements Comparator<EmailIdentity> {
         @Override
         public int compare(EmailIdentity identity1, EmailIdentity identity2) {
-            return String.CASE_INSENSITIVE_ORDER.compare(identity1.getPublicName(), identity2.getPublicName());
+            int nameComparison = String.CASE_INSENSITIVE_ORDER.compare(identity1.getPublicName(), identity2.getPublicName());
+            if (nameComparison == 0) {
+                // if the names are the same, compare destination keys
+                String key1 = identity1.getKey();
+                String key2 = identity2.getKey();
+                return key1.compareTo(key2);
+            }
+            else
+                return nameComparison;
         }
     }
 }

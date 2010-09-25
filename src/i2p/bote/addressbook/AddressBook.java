@@ -55,7 +55,7 @@ public class AddressBook implements Iterable<Contact> {
      */
     public AddressBook(File addressFile) {
         this.addressFile = addressFile;
-        contacts = new TreeSet<Contact>(new NameComparator());
+        contacts = new TreeSet<Contact>(new ContactComparator());
         
         if (!addressFile.exists()) {
             log.debug("Address file does not exist: <" + addressFile.getAbsolutePath() + ">");
@@ -171,10 +171,21 @@ public class AddressBook implements Iterable<Contact> {
         return contacts.iterator();
     }
 
-    private class NameComparator implements Comparator<Contact> {
+    /**
+     * Compares two contacts by name and email destination.
+     */
+    private class ContactComparator implements Comparator<Contact> {
         @Override
         public int compare(Contact contact1, Contact contact2) {
-            return String.CASE_INSENSITIVE_ORDER.compare(contact1.getName(), contact2.getName());
+            int nameComparison = String.CASE_INSENSITIVE_ORDER.compare(contact1.getName(), contact2.getName());
+            if (nameComparison == 0) {
+                // if the names are the same, compare destination keys
+                String key1 = contact1.getDestination().getKey();
+                String key2 = contact2.getDestination().getKey();
+                return key1.compareTo(key2);
+            }
+            else
+                return nameComparison;
         }
     }
 }
