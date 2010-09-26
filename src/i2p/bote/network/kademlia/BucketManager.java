@@ -130,7 +130,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
         if (peer != null)
             peer.noResponse();
         else
-            log.debug("Peer not found in buckets: " + destination.calculateHash());   // this happens when a peer that was not yet known is contacted and fails to respond
+            log.debug("Peer not found in buckets: " + Util.toBase32(destination));   // this happens when a peer that was not yet known is contacted and fails to respond
     }
     
     public void remove(Destination peer) {

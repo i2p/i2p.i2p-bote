@@ -386,7 +386,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                     Collection<Destination> closestNodes = getClosestNodes(localDestinationHash);
                     
                     if (closestNodes.isEmpty()) {
-                        log.info("No response from bootstrap node " + bootstrapNode.calculateHash());
+                        log.info("No response from bootstrap node " + Util.toBase32(bootstrapNode));
                         bucketManager.remove(bootstrapNode);
                     }
                     else {
@@ -580,7 +580,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
                 // if requested packet found, send it to the requester
                 ResponsePacket response = new ResponsePacket(storedPacket, StatusCode.OK, retrieveRequest.getPacketId());
                 if (storedPacket != null)
-                    log.debug("Packet found for retrieve request: [" + retrieveRequest + "], replying to sender: [" + sender.calculateHash() + "]");
+                    log.debug("Packet found for retrieve request: [" + retrieveRequest + "], replying to sender: [" + Util.toBase32(sender) + "]");
                 else
                     log.debug("No matching packet found for retrieve request: [" + retrieveRequest + "]");
                 sendQueue.send(response, sender);

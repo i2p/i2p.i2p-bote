@@ -22,6 +22,7 @@
 package i2p.bote.service;
 
 import i2p.bote.Configuration;
+import i2p.bote.Util;
 import i2p.bote.folder.ExpirationListener;
 import i2p.bote.folder.PacketFolder;
 import i2p.bote.network.I2PSendQueue;
@@ -65,7 +66,7 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
         while (iterator.hasNext()) {
             RelayDataPacket packet = iterator.next();
             if (System.currentTimeMillis() >= packet.getSendTime()) {
-                log.debug("Sending relay packet to destination " + packet.getNextDestination().calculateHash());
+                log.debug("Sending relay packet to destination " + Util.toBase32(packet.getNextDestination()));
                 try {
                     CountDownLatch sentSignal;
                     // synchronize access to lastSentPacket (which can be null, so synchronize on "this")

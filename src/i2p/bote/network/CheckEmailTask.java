@@ -244,7 +244,7 @@ public class CheckEmailTask implements Callable<Boolean> {
                 emailPacketFolder.process(request);
             }
             else {
-                log.debug("Sending an EmailPacketDeleteRequest for DHT key " + dhtKey + " to " + peer.calculateHash());
+                log.debug("Sending an EmailPacketDeleteRequest for DHT key " + dhtKey + " to " + Util.toBase32(peer));
                 sendQueue.send(request, peer);
             }
         }
