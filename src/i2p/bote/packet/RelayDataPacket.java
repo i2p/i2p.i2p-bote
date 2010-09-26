@@ -70,7 +70,7 @@ public class RelayDataPacket extends DataPacket {
         delay = buffer.getInt() * 1000L;
         nextDestination = Util.createDestination(buffer);
         
-        int requestDataLength = buffer.getShort();
+        int requestDataLength = buffer.getShort() & 0xFFFF;
         byte[] requestBytes = new byte[requestDataLength];
         buffer.get(requestBytes);
         request = new RelayRequest(requestBytes);

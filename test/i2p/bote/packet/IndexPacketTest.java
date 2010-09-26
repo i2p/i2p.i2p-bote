@@ -26,6 +26,8 @@ import static org.junit.Assert.assertEquals;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailIdentity;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 import net.i2p.client.I2PSessionException;
@@ -61,15 +63,15 @@ public class IndexPacketTest {
         indexPacket2.put(emailPacket5);
     }
 
-    private EncryptedEmailPacket makeEmailPacket(String message) throws GeneralSecurityException, I2PSessionException {
+    private EncryptedEmailPacket makeEmailPacket(String message) throws GeneralSecurityException, I2PSessionException, IOException {
         byte[] content = message.getBytes();
         
         byte[] messageIdBytes = new byte[] {6, -32, -23, 17, 55, 15, -45, -19, 91, 100, -76, -76, 118, -118, -53, -109, -108, 113, -112, 81, 117, 9, -126, 20, 0, -83, -89, 7, 48, 76, -58, 83};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         int fragmentIndex = 0;
-        int numFragments = 1;
         
-        UnencryptedEmailPacket plaintextPacket = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content);
+        UnencryptedEmailPacket plaintextPacket = new UnencryptedEmailPacket(new ByteArrayInputStream(content), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        plaintextPacket.setNumFragments(1);
         return new EncryptedEmailPacket(plaintextPacket, identity);
     }
     

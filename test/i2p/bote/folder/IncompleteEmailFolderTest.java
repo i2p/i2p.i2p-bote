@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 import i2p.bote.TestUtil;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.File;
@@ -94,7 +95,7 @@ public class IncompleteEmailFolderTest {
         email.setText(mailContent);
         
         EmailIdentity identity = new EmailIdentity("DVkhqF6R9SHB5svViGtqRYZO7oI-0-omnIFtae29fNnNtTTH2j37Fr5fWp4t6rseTjiJ8gwg08DnbA4qP72aSQcDQPSErOELOMSU5BUTtsT8hnv1-DKdhIn~1qoIjxzIFHbxT3xnR3nFI7lKd6couscilzPBCjoFDUKb5ds2u23RO29K7~EKxU1O7Ltu6sT5etXkJkhAziOcuyfZyxJXqH1caYX5e2aWIhY3D2ESfy4nMK66r5KcDVQOPTzCkJq6d1FFOmnDGrlJjN~HgHmfUCtLbO~TLugWx9FCiDGfPkBb-3ODYTDaUR1zobOj1tiffV3Nm73PsYddRt84emLKzIRsC77JJpflw~h8UIRYJ29vJDf4VQ54BhZcelmN192sIrWr2nKN8n6PpSP4LI4RAuG2UvLytnDYzFM7O9WcnFP2-Qs3t1lD9aF72JVTYTpH5PZupnB1cglSsdRg8RmtRa41Fseyx8D3EdH~DCdpMGmfupaWp9~dKpFMleqk9scRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTjDxn3wEOjCjJ4APg~2IGpqWwy2Hw728aZ3eCC5l0MP913BLdIfSUiXPbs6sN9A2");
-        Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(identity, recipient);
+        Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(identity, recipient, I2PBotePacket.MAX_DATAGRAM_SIZE);
         assertTrue("Expected " + expectedNumPackets + " email packets, got " + packets.size(), packets.size() == expectedNumPackets);
         
         assertTrue("The inbox should be empty at this point!", inbox.getElements().size() == 0);

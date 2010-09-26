@@ -25,6 +25,7 @@ import static junit.framework.Assert.assertTrue;
 
 import i2p.bote.UniqueId;
 
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -42,9 +43,9 @@ public class UnencryptedEmailPacketTest {
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         
         int fragmentIndex = 0;
-        int numFragments = 1;
 
-        packet = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content);
+        packet = new UnencryptedEmailPacket(new ByteArrayInputStream(content), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        packet.setNumFragments(1);
     }
     
     @Test

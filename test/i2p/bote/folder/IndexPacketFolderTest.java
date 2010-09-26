@@ -11,6 +11,7 @@ import i2p.bote.packet.DeleteRequest;
 import i2p.bote.packet.DeletionInfoPacket;
 import i2p.bote.packet.DeletionRecord;
 import i2p.bote.packet.EncryptedEmailPacket;
+import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.IndexPacketDeleteRequest;
 import i2p.bote.packet.IndexPacketEntry;
@@ -18,6 +19,7 @@ import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.security.GeneralSecurityException;
@@ -56,9 +58,10 @@ public class IndexPacketFolderTest {
         byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         int fragmentIndex = 0;
-        int numFragments = 1;
-        unencryptedPacket1 = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content1);
-        unencryptedPacket2 = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content2);
+        unencryptedPacket1 = new UnencryptedEmailPacket(new ByteArrayInputStream(content1), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        unencryptedPacket1.setNumFragments(1);
+        unencryptedPacket2 = new UnencryptedEmailPacket(new ByteArrayInputStream(content2), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        unencryptedPacket2.setNumFragments(1);
         
         destination1 = new EmailDestination("2XP9Ep3WWLk3-FTlMgUjgw4h8GYVBCvR6YrPyKdhP4xyQMSh8Da0VjZCmQGbD3PCeaGXAShBKbKjhJjQ7laekI");
         destination2 = new EmailDestination("m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UY");

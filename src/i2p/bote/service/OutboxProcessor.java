@@ -33,6 +33,7 @@ import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.NetworkStatusSource;
 import i2p.bote.packet.EncryptedEmailPacket;
+import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.RelayDataPacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
@@ -185,15 +186,17 @@ public class OutboxProcessor extends I2PBoteThread {
             log.info("Sending email: " + logSuffix);
             EmailDestination recipientDest = new EmailDestination(recipient);
             
-            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity, recipient);
+            int hops = configuration.getNumStoreHops();
+            int maxPacketSize = getMaxEmailPacketSize(hops);
+            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity, recipient, maxPacketSize);
             
             IndexPacket indexPacket = new IndexPacket(recipientDest);
             for (UnencryptedEmailPacket unencryptedPacket: emailPackets) {
                 EncryptedEmailPacket emailPacket = new EncryptedEmailPacket(unencryptedPacket, recipientDest);
-                send(emailPacket);
+                send(emailPacket, hops);
                 indexPacket.put(emailPacket);
             }
-            send(indexPacket);
+            send(indexPacket, hops);
         } catch (GeneralSecurityException e) {
             log.error("Invalid recipient address. " + logSuffix, e);
             outbox.setStatus(email, _("Invalid recipient address: {0}", recipient));
@@ -210,11 +213,11 @@ public class OutboxProcessor extends I2PBoteThread {
     }
     
     /**
-     * Stores a packet in the DHT directly or via relay peers. 
+     * Stores a packet in the DHT directly or via relay peers.
+     * @param hops The number of hops, or zero to store it directly in the DHT
      * @throws DhtException 
      */
-    private void send(DhtStorablePacket dhtPacket) throws DhtException {
-        int hops = configuration.getNumStoreHops();
+    private void send(DhtStorablePacket dhtPacket, int hops) throws DhtException {
         if (hops > 0) {
             long minDelay = configuration.getRelayMinDelay() * 60 * 1000;
             long maxDelay = configuration.getRelayMaxDelay() * 60 * 1000;
@@ -226,6 +229,23 @@ public class OutboxProcessor extends I2PBoteThread {
         }
         else
             dht.store(dhtPacket);
+    }
+    
+    /**
+     * Returns the maximum size an <code>UnencryptedEmailPacket</code> can be
+     * and still fit into one I2P datagram after the packet is encrypted and
+     * wrapped in relay packets.
+     * @param hops The number of layers of relay packets that the email packet will be wrapped in
+     * @return
+     */
+    private int getMaxEmailPacketSize(int hops) {
+        int maxLenEncryptedEmailPacket = I2PBotePacket.MAX_DATAGRAM_SIZE - 641;   // an EncryptedEmailPacket can be up to 641 bytes bigger than the UnencryptedEmailPacket
+        if (hops == 0)
+            return maxLenEncryptedEmailPacket;
+        int maxLenRelayPacket = maxLenEncryptedEmailPacket - 1049;
+        if (hops == 1)
+            return maxLenRelayPacket;
+        return maxLenRelayPacket - (hops-1)*1040;
     }
     
     /** Returns <code>true</code> if a given address is a regular email address. */

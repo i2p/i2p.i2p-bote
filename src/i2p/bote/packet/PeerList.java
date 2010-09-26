@@ -51,7 +51,7 @@ public class PeerList extends DataPacket {
         
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
-        int numPeers = buffer.getShort();
+        int numPeers = buffer.getShort() & 0xFFFF;
         peers = new ArrayList<Destination>();
         for (int i=0; i<numPeers; i++) {
             Destination peer = Util.createDestination(buffer);

@@ -29,6 +29,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 import net.i2p.util.Log;
 
@@ -38,6 +39,8 @@ import net.i2p.util.Log;
  */
 @TypeCode('U')
 public class UnencryptedEmailPacket extends DataPacket {
+    private final static int OVERHEAD = 72;   // total packet size minus content size
+    
     private Log log = new Log(UnencryptedEmailPacket.class);
     private UniqueId messageId;
     private UniqueId delAuthorization;   // the unencrypted (or decrypted) delete authorization key
@@ -49,16 +52,25 @@ public class UnencryptedEmailPacket extends DataPacket {
         this(Util.readBytes(inputStream));
     }
     
-    public UnencryptedEmailPacket(UniqueId messageId, int fragmentIndex, int numFragments, byte[] content) {
-       this.messageId = messageId;
-       delAuthorization = new UniqueId();
-       this.fragmentIndex = fragmentIndex;
-       this.numFragments = numFragments;
-       this.content = content;
-       
-       verify();
-    }
-    
+    /**
+     * Creates an <code>UnencryptedEmailPacket</code> using data from an <code>InputStream</code>
+     * for the content. The number of bytes read is limited so the byte array representation of the
+     * packet does not exceed <code>maxPacketSize</code>.
+     * @throws IOException 
+     */
+    public UnencryptedEmailPacket(InputStream inputStream, UniqueId messageId, int fragmentIndex, int maxPacketSize) throws IOException {
+        this.messageId = messageId;
+        delAuthorization = new UniqueId();
+        this.fragmentIndex = fragmentIndex;
+        
+        // read content
+        maxPacketSize -= OVERHEAD;
+        content = new byte[maxPacketSize];
+        int bytesRead = inputStream.read(content);
+        if (bytesRead < maxPacketSize)
+            content = Arrays.copyOf(content, bytesRead);
+     }
+     
     /**
      * Creates an <code>UnencryptedEmailPacket</code> from a <code>byte</code> array that contains MIME data.
      * @param data
@@ -70,10 +82,10 @@ public class UnencryptedEmailPacket extends DataPacket {
         
         messageId = new UniqueId(buffer);
         delAuthorization = new UniqueId(buffer);
-        fragmentIndex = buffer.getShort();
-        numFragments = buffer.getShort();
+        fragmentIndex = buffer.getShort() & 0xFFFF;
+        numFragments = buffer.getShort() & 0xFFFF;
         
-        int contentLength = buffer.getShort();
+        int contentLength = buffer.getShort() & 0xFFFF;
         content = new byte[contentLength];
         buffer.get(content);
         
@@ -92,8 +104,13 @@ public class UnencryptedEmailPacket extends DataPacket {
        return fragmentIndex;
     }
     
+    /**
+     * Sets the number of packets the email was fragmented into.
+     * @param numFragments
+     */
     public void setNumFragments(int numFragments) {
        this.numFragments = numFragments;
+       verify();
     }
     
     public int getNumFragments() {

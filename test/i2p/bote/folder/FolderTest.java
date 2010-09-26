@@ -27,8 +27,10 @@ import static org.junit.Assert.assertTrue;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.packet.EncryptedEmailPacket;
+import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -69,8 +71,8 @@ public class FolderTest {
         byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         int fragmentIndex = 0;
-        int numFragments = 1;
-        UnencryptedEmailPacket plaintextPacket = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content);
+        UnencryptedEmailPacket plaintextPacket = new UnencryptedEmailPacket(new ByteArrayInputStream(content), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        plaintextPacket.setNumFragments(1);
         
         return new EncryptedEmailPacket(plaintextPacket, dest);
     }

@@ -24,11 +24,11 @@ package i2p.bote.email;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.GeneralSecurityException;
@@ -121,7 +121,7 @@ public class EmailTest {
             
             // write the email to a byte array, make a new email from the byte array, and verify the signature
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            for (UnencryptedEmailPacket packet: email.createEmailPackets(identity, null))
+            for (UnencryptedEmailPacket packet: email.createEmailPackets(identity, null, I2PBotePacket.MAX_DATAGRAM_SIZE))
                 outputStream.write(packet.getContent());
             email = new Email(outputStream.toByteArray());
             assertTrue(email.isSignatureValid());
@@ -149,28 +149,19 @@ public class EmailTest {
         // convert an email to a byte array, convert back, and compare with the original email
         for (Email email: emails) {
             EmailIdentity identity = identities.get(email);
-            Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(identity, null);
-            assertTrue("Expected more email packets. #packets = " + packets.size(), packets.size() > email.getText().length()/getMaxBytesPerPacket()/2);   // the emails are somewhat compressible, but definitely not by 50%
+            Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(identity, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
+            assertTrue("Expected more email packets. #packets = " + packets.size(), packets.size() > email.getText().length()/I2PBotePacket.MAX_DATAGRAM_SIZE/2);   // the emails are somewhat compressible, but definitely not by 50%
             
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             for (UnencryptedEmailPacket packet: packets)
                 outputStream.write(packet.getContent());
             Email newEmail = new Email(outputStream.toByteArray());
             assertEquals(email.getContent(), newEmail.getContent());
+
+            // check packet sizes against size limit
+            for (UnencryptedEmailPacket packet: packets)
+                assertTrue("Email packet exceeds max size!", packet.toByteArray().length <= I2PBotePacket.MAX_DATAGRAM_SIZE);
         }
-    }
-    
-    /**
-     * Returns the value of the private field <code>Email.MAX_BYTES_PER_PACKET</code>.
-     * @throws NoSuchFieldException 
-     * @throws SecurityException 
-     * @throws IllegalAccessException 
-     * @throws IllegalArgumentException
-     */
-    private int getMaxBytesPerPacket() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        Field maxBytesField = Email.class.getDeclaredField("MAX_BYTES_PER_PACKET");
-        maxBytesField.setAccessible(true);
-        return (Integer)maxBytesField.get(null);
     }
     
     @Test
@@ -181,7 +172,7 @@ public class EmailTest {
         
         // verify that all BCC addresses are removed when sending to a TO: address
         EmailIdentity identity2 = identities.get(emails[2]);
-        packets = emails[2].createEmailPackets(identity2, null);
+        packets = emails[2].createEmailPackets(identity2, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
         outputStream = new ByteArrayOutputStream();
         for (UnencryptedEmailPacket packet: packets)
             outputStream.write(packet.getContent());
@@ -190,7 +181,7 @@ public class EmailTest {
         assertEquals(3, newEmail.getAllRecipients().length);
         
         // verify that the recipient is not removed if it is a BCC: addresses
-        packets = emails[2].createEmailPackets(bccIdentity, bccEmailDestination);   // use the plain email dest because that is what the Email class compares against
+        packets = emails[2].createEmailPackets(bccIdentity, bccEmailDestination, I2PBotePacket.MAX_DATAGRAM_SIZE);   // use the plain email dest because that is what the Email class compares against
         outputStream = new ByteArrayOutputStream();
         for (UnencryptedEmailPacket packet: packets)
             outputStream.write(packet.getContent());
@@ -208,7 +199,7 @@ public class EmailTest {
         
         Email newEmail = new Email(true);
         newEmail.setText(stringBuilder.toString());
-        Collection<UnencryptedEmailPacket> packets = newEmail.createEmailPackets(bccIdentity, null);
+        Collection<UnencryptedEmailPacket> packets = newEmail.createEmailPackets(bccIdentity, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
         assertEquals("The email was not compressed into one email packet.", 1, packets.size());
     }
     

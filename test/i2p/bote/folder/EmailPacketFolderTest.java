@@ -37,6 +37,7 @@ import i2p.bote.packet.MalformedDataPacketException;
 import i2p.bote.packet.TypeCode;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.security.GeneralSecurityException;
 import java.util.Iterator;
@@ -73,9 +74,10 @@ public class EmailPacketFolderTest {
         byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         int fragmentIndex = 0;
-        int numFragments = 1;
-        unencryptedPacket = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content1);
-        unencryptedPacket2 = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content2);
+        unencryptedPacket = new UnencryptedEmailPacket(new ByteArrayInputStream(content1), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        unencryptedPacket.setNumFragments(1);
+        unencryptedPacket2 = new UnencryptedEmailPacket(new ByteArrayInputStream(content2), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        unencryptedPacket.setNumFragments(1);
         
         String base64Dest = "m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UY";
         recipient = new EmailDestination(base64Dest);

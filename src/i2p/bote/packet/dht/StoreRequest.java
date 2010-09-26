@@ -54,12 +54,12 @@ public class StoreRequest extends CommunicationPacket {
         super(data);
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
-        int hashCashLength = buffer.getShort();
+        int hashCashLength = buffer.getShort() & 0xFFFF;
         byte[] hashCashData = new byte[hashCashLength];
         buffer.get(hashCashData);
         hashCash = new HashCash(new String(hashCashData));
         
-        int dataLength = buffer.getShort();
+        int dataLength = buffer.getShort() & 0xFFFF;
         byte[] storedData = new byte[dataLength];
         buffer.get(storedData);
         packetToStore = DhtStorablePacket.createPacket(storedData);

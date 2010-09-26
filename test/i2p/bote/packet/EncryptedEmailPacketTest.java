@@ -30,6 +30,7 @@ import i2p.bote.crypto.ElGamal2048_DSA1024;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
@@ -53,8 +54,8 @@ public class EncryptedEmailPacketTest {
         byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         int fragmentIndex = 0;
-        int numFragments = 1;
-        plaintextPacket = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content);
+        plaintextPacket = new UnencryptedEmailPacket(new ByteArrayInputStream(content), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        plaintextPacket.setNumFragments(1);
         
         encryptedPackets = new EncryptedEmailPacket[2];
         identities = new EmailIdentity[2];

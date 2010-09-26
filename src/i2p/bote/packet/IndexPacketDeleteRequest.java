@@ -58,7 +58,7 @@ public class IndexPacketDeleteRequest extends DeleteRequest {
 
         emailDestHash = readHash(buffer);
         entries = new HashMap<Hash, UniqueId>();
-        int numEntries = buffer.getShort();
+        int numEntries = buffer.getShort() & 0xFFFF;
         for (int i=0; i<numEntries; i++) {
             Hash dhtKey = readHash(buffer);
             UniqueId delAuthorization = new UniqueId(buffer);

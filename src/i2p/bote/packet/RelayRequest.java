@@ -82,7 +82,7 @@ public class RelayRequest extends CommunicationPacket {
         super(data);
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         
-        int hashCashLength = buffer.getShort();
+        int hashCashLength = buffer.getShort() & 0xFFFF;
         byte[] hashCashData = new byte[hashCashLength];
         buffer.get(hashCashData);
         try {
@@ -93,7 +93,7 @@ public class RelayRequest extends CommunicationPacket {
         
         returnChain = new ReturnChain(buffer);
         
-        int payloadLength = buffer.getShort();
+        int payloadLength = buffer.getShort() & 0xFFFF;
         payload = new byte[payloadLength];
         buffer.get(payload);
         

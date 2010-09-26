@@ -26,11 +26,14 @@ import static org.junit.Assert.assertTrue;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.packet.EncryptedEmailPacket;
+import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.RelayDataPacket;
 import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
@@ -67,8 +70,9 @@ public class RelayPacketFolderTest {
         byte[] messageIdBytes = new byte[] {-69, -24, -109, 1, 69, -122, -69, 113, -68, -90, 55, -28, 105, 97, 125, 70, 51, 58, 14, 2, -13, -53, 90, -29, 36, 67, 36, -94, -108, -125, 11, 123};
         UniqueId messageId = new UniqueId(messageIdBytes, 0);
         int fragmentIndex = 0;
-        int numFragments = 1;
-        UnencryptedEmailPacket unencryptedPacket = new UnencryptedEmailPacket(messageId, fragmentIndex, numFragments, content.getBytes());
+        InputStream contentStream = new ByteArrayInputStream(content.getBytes());
+        UnencryptedEmailPacket unencryptedPacket = new UnencryptedEmailPacket(contentStream, messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        unencryptedPacket.setNumFragments(1);
         String base64EmailDest = "rIbyUukqtsacD-MDJJ8KbIP9d3WQQo~t~zysc3bNcF1mSwz9PcGJnvWCNhnG2nzbdUAIDouESZjLRnBr7-mxNS";
         EmailDestination recipient = new EmailDestination(base64EmailDest);
         emailPacket = new EncryptedEmailPacket(unencryptedPacket, recipient);

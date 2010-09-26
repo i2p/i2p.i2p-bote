@@ -26,8 +26,10 @@ import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.packet.EncryptedEmailPacket;
+import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -45,7 +47,9 @@ public class StoreRequestTest {
         String base64Identity = "piYT1uJ3O8~bBPZmTvehMbp3-Zksg5enhvIlp2X8txqL25l0WdQMWwyt30UAOVQqxGdnMPTqqjh~-zoa~rCQORo~J1gRxLwCX9LlHQqaIimJilrbN-rhKy4Xlft054wbgQjLSC-WICE4W64KDfitwRzdr7lV6lz~0KFiZ8erZ-~WPMG1CgWEku9lILQUdUHyFBguPcK9oPDq7oGBuFGy8w0CvAq7ex3nmbL7zQVA~VqILtOGeGK2fidCuuofj4AQsTcXmH9O0nxZGCIJBhf~4EWmazvxu8XVB8pabNQvRDbmFu6q85JTwmxC45lCjqNw30hp8q2zoqP-zchjWOrxFUhSumpBdD0xXJR~qmhejh4WnuRnnam9j3fcxH5i~T7xWgmvIbpZEI4kyc9VEbXbLI7k-bU2A6sdP-AGt5~TjGLcxpdsPnOLRXO-Dsi7E9-3Kc84s4TmdpEJdtHn1dxYyeeT-ysVOqXjv5w5Cuk0XJpUIJG8n7aXHpNb-QLxPD3yAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWF3qnAX-p41Po~VNmOUzS-Yt~noD8-e~L3P5rZXBWf-XtB4hkloo6m1jwqphEdf1";
         EmailIdentity identity = new EmailIdentity(base64Identity);
         EmailDestination destination = new EmailDestination(identity.getKey());
-        UnencryptedEmailPacket emailPacket = new UnencryptedEmailPacket(messageId, 0, 1, emailContent);
+        int fragmentIndex = 0;
+        UnencryptedEmailPacket emailPacket = new UnencryptedEmailPacket(new ByteArrayInputStream(emailContent), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        emailPacket.setNumFragments(1);
         EncryptedEmailPacket encryptedPacket = new EncryptedEmailPacket(emailPacket, destination);
         HashCash hashCash = HashCash.mintCash("1234", 1);
         

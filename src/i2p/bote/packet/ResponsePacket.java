@@ -57,7 +57,7 @@ public class ResponsePacket extends CommunicationPacket {
 
         statusCode = StatusCode.values()[buffer.get()];
 
-        int payloadLength = buffer.getShort();
+        int payloadLength = buffer.getShort() & 0xFFFF;
         if (payloadLength > 0) {
             byte[] payloadData = new byte[payloadLength];
             buffer.get(payloadData);

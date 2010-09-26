@@ -73,7 +73,6 @@ import SevenZip.Compression.LZMA.Encoder;
 import com.nettgryppa.security.HashCash;
 
 public class Email extends MimeMessage {
-    private static final int MAX_BYTES_PER_PACKET = 30 * 1024;
     private static final String SIGNATURE_HEADER = "X-I2PBote-Signature";   // contains the sender's base64-encoded signature
     private static final String SIGNATURE_VALID_HEADER = "X-I2PBote-Sig-Valid";   // contains the string "true" or "false"
     private static final String[] HEADER_WHITELIST = new String[] {
@@ -564,10 +563,11 @@ public class Email extends MimeMessage {
      *
      * @param senderIdentity The sender's Email Identity, or <code>null</code> for anonymous emails
      * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
+     * @param maxPacketSize The size limit in bytes
      * @throws MessagingException
      * @throws GeneralSecurityException If the email cannot be signed
      */
-    public Collection<UnencryptedEmailPacket> createEmailPackets(EmailIdentity senderIdentity, String bccToKeep) throws MessagingException, GeneralSecurityException {
+    public Collection<UnencryptedEmailPacket> createEmailPackets(EmailIdentity senderIdentity, String bccToKeep, int maxPacketSize) throws MessagingException, GeneralSecurityException {
         ArrayList<UnencryptedEmailPacket> packets = new ArrayList<UnencryptedEmailPacket>();
         
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -593,27 +593,26 @@ public class Email extends MimeMessage {
                 for (String bccAddress: bccHeaders)
                     addHeader("BCC", bccAddress);
         }
-        byte[] emailArray = outputStream.toByteArray();
-        
-        // calculate packet count
-        int numPackets = (emailArray.length+MAX_BYTES_PER_PACKET-1) / MAX_BYTES_PER_PACKET;
+        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         
         int packetIndex = 0;
-        int blockStart = 0;   // the array index where the next block of data starts
-        while (true) {
-            int blockSize = Math.min(emailArray.length-blockStart, MAX_BYTES_PER_PACKET);
-            if (blockSize <= 0)
-                break;
-            else {
-                // make a new array with the right length
-                byte[] block = new byte[blockSize];
-                System.arraycopy(emailArray, blockStart, block, 0, blockSize);
-                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(messageId, packetIndex, numPackets, block);
+        try {
+            while (true) {
+                UnencryptedEmailPacket packet = new UnencryptedEmailPacket(inputStream, messageId, packetIndex, maxPacketSize);
                 packets.add(packet);
                 packetIndex++;
-                blockStart += blockSize;
+                if (inputStream.available() <= 0)
+                    break;
             }
         }
+        catch (IOException e) {
+            log.error("Can't read from ByteArrayInputStream.", e);
+        }
+        
+        // #packets has not been set yet, do it now
+        int numPackets = packetIndex;
+        for (UnencryptedEmailPacket packet: packets)
+            packet.setNumFragments(numPackets);
         
         return packets;
     }

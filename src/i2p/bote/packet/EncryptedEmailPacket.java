@@ -95,7 +95,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         delVerificationHash = readHash(buffer);
         byte cryptoImplId = buffer.get();
         cryptoImpl = CryptoFactory.getInstance(cryptoImplId);
-        int encryptedLength = buffer.getShort();   // length of the encrypted part of the packet
+        int encryptedLength = buffer.getShort() & 0xFFFF;   // length of the encrypted part of the packet
         encryptedData = new byte[encryptedLength];
         buffer.get(encryptedData);
     }
