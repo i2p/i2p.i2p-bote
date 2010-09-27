@@ -73,15 +73,6 @@
             </tr>
             <tr>
                 <td>
-                    <div style="font-weight: bold;"><ib:message key="Email Address:"/></div>
-                    <div style="font-size: 0.8em;"><ib:message key="(optional)"/></div>
-                </td>
-                <td>
-                    <input type="text" size="40" name="emailAddress" value="${param.emailAddress}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     <div style="font-weight: bold;"><ib:message key="Encryption:"/></div>
                     <c:if test="${param.new}">
                         <div style="font-size: 0.8em;"><ib:message key="(If unsure, leave the default)"/></div>
