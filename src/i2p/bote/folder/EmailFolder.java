@@ -153,6 +153,10 @@ public class EmailFolder extends Folder<Email> {
                     value1 = displayFilter.getNameAndDestination(email1.getOneRecipient());
                     value2 = displayFilter.getNameAndDestination(email2.getOneRecipient());
                     break;
+                case CREATE_TIME:
+                    value1 = email1.getCreateTime();
+                    value2 = email2.getCreateTime();
+                    break;
                 case SUBJECT:
                     value1 = email1.getSubject();
                     value2 = email2.getSubject();

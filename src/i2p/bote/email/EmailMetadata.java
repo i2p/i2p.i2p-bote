@@ -23,8 +23,11 @@ package i2p.bote.email;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Properties;
+
+import javax.mail.internet.MailDateFormat;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.data.DataHelper;
@@ -48,11 +51,14 @@ import net.i2p.util.Log;
  */
 public class EmailMetadata extends Properties {
     private static final long serialVersionUID = 9058161682262839810L;
+    private static final String PROPERTY_NEW = "new";
+    private static final String PROPERTY_CREATE_TIME = "createTime";
     
     private Log log = new Log(EmailMetadata.class);
     
     public EmailMetadata() {
         setNew(true);
+        setCreateTime(new Date());
     }
     
     public EmailMetadata(File file) throws IOException {
@@ -90,7 +96,7 @@ public class EmailMetadata extends Properties {
     }
     
     public void setNew(boolean isNew) {
-        setProperty("new", String.valueOf(isNew));
+        setProperty(PROPERTY_NEW, String.valueOf(isNew));
     }
 
     /**
@@ -99,9 +105,30 @@ public class EmailMetadata extends Properties {
      * The default is <code>true</code>.
      */
     public boolean isNew() {
-        return getProperty("new").equalsIgnoreCase("true");
+        return getProperty(PROPERTY_NEW).equalsIgnoreCase("true");
     }
 
+    public void setCreateTime(Date createTime) {
+        setProperty(PROPERTY_CREATE_TIME, new MailDateFormat().format(createTime));
+    }
+    
+    /**
+     * Returns the date and time the email was submitted by the user, or <code>null</code>
+     * if the value cannot be parsed.
+     * @return
+     */
+    public Date getCreateTime() {
+        String dateStr = getProperty(PROPERTY_CREATE_TIME);
+        Date createTime;
+        try {
+            createTime = new MailDateFormat().parse(dateStr);
+        } catch (ParseException e) {
+            log.error("Can't parse create time.", e);
+            createTime = null;
+        }
+        return createTime;
+    }
+    
     public void addPacketPendingDelivery(EmailDestination destination, Hash dhtKey, Hash delVerificationHash) {
         int destIndex = getDestinationIndex(destination);
         int packetIndex = getPacketIndex(destIndex, dhtKey);

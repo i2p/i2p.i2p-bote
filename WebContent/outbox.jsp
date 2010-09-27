@@ -31,6 +31,7 @@
     pageContext.setAttribute("FROM", i2p.bote.email.EmailAttribute.FROM, PageContext.PAGE_SCOPE);
     pageContext.setAttribute("TO", i2p.bote.email.EmailAttribute.TO, PageContext.PAGE_SCOPE);
     pageContext.setAttribute("SUBJECT", i2p.bote.email.EmailAttribute.SUBJECT, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("CREATE_TIME", i2p.bote.email.EmailAttribute.CREATE_TIME, PageContext.PAGE_SCOPE);
     pageContext.setAttribute("STATUS", i2p.bote.email.EmailAttribute.STATUS, PageContext.PAGE_SCOPE);
 %> 
 
@@ -42,7 +43,7 @@
 <c:set var="title" value="Outbox" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<c:set var="sortcolumn" value="${STATUS}"/>
+<c:set var="sortcolumn" value="${CREATE_TIME}"/>
 <c:if test="${!empty param.sortcolumn}">
     <c:set var="sortcolumn" value="${param.sortcolumn}"/>
 </c:if>
@@ -98,6 +99,14 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
             </th>
+            <th style="width: 150px;">
+                <c:set var="sortLink" value="outbox.jsp?sortcolumn=${CREATE_TIME}"/>
+                <c:if test="${sortcolumn eq CREATE_TIME}">
+                    <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
+                    <c:set var="createTimeColumnIndicator" value=" ${sortIndicator}"/>
+                </c:if>
+                <a href="${sortLink}"><ib:message key="Create Time"/>${createTimeColumnIndicator}</a>
+            </th>
             <th style="width: 100px;">
                 <c:set var="sortLink" value="outbox.jsp?sortcolumn=${STATUS}"/>
                 <c:if test="${sortcolumn eq STATUS}">
@@ -116,6 +125,8 @@
             </c:if>
             
             <c:set var="recipient" value="${ib:getNameAndDestination(email.oneRecipient)}"/>
+            
+            <c:set var="createTime" value="${ib:getNameAndDestination(email.createTime)}"/>
             
             <c:set var="subject" value="${email.subject}"/>
             <c:if test="${empty subject}">
@@ -138,6 +149,12 @@
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
+            <td>
+                <span${class} style="display: block;">
+                    <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: left"><ib:printDate date="${email.createTime}" timeStyle="short"/></a>
+                    <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: right"><ib:printTime time="${email.createTime}" timeStyle="short"/></a>
+                </span>
+            </td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${ib:getEmailStatus(email)}</a></div></td>
             <td><div${class}>
                 <a href="deleteEmail.jsp?folder=Outbox&messageID=${email.messageID}">

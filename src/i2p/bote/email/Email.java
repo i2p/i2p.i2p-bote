@@ -547,11 +547,21 @@ public class Email extends MimeMessage {
         metadata.setNew(isNew);
     }
 
-    /** @see EmailMetadata#isNew(boolean) */
+    /** @see EmailMetadata#isNew() */
     public boolean isNew() {
         return metadata.isNew();
     }
 
+    /** @see EmailMetadata#setCreateTime(Date) */
+    public void setCreateTime(Date createTime) {
+        metadata.setCreateTime(createTime);
+    }
+    
+    /** @see EmailMetadata#getCreateTime() */
+    public Date getCreateTime() {
+        return metadata.getCreateTime();
+    }
+    
     @Override
     public Date getReceivedDate() {
         return metadata.getReceivedDate();

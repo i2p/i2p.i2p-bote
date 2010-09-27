@@ -27,4 +27,4 @@ package i2p.bote.email;
  * 
  * I would have made this an inner class of Email, but Tomcat doesn't like inner classes in JSP functions.
  */
-public enum EmailAttribute {FROM, TO, SUBJECT, DATE, STATUS}
+public enum EmailAttribute {FROM, TO, SUBJECT, DATE, CREATE_TIME, STATUS}
