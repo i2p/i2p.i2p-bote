@@ -202,4 +202,9 @@ public class RelayDataPacket extends DataPacket {
         
         return arrayOutputStream.toByteArray();
     }
+    
+    @Override
+    public String toString() {
+        return super.toString() + " t=" + sendTime + " dest=" + Util.toBase32(nextDestination);
+    }
 }

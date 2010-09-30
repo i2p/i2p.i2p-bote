@@ -69,18 +69,21 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
                 log.debug("Sending relay packet to destination " + Util.toBase32(packet.getNextDestination()));
                 try {
                     CountDownLatch sentSignal;
+                    Destination nextDestination = packet.getNextDestination();
                     // synchronize access to lastSentPacket (which can be null, so synchronize on "this")
                     synchronized(this) {
                         lastSentPacket = packet.getRequest();
                         confirmationReceived = new CountDownLatch(1);
-                        sentSignal = sendQueue.send(lastSentPacket, packet.getNextDestination());
+                        sentSignal = sendQueue.send(lastSentPacket, nextDestination);
                     }
                     sentSignal.await();
                     
                     awaitShutdownRequest(2, TimeUnit.MINUTES);
                     // if confirmation has been received, delete the packet
-                    if (confirmationReceived.await(0, TimeUnit.SECONDS))
+                    if (confirmationReceived.await(0, TimeUnit.SECONDS)) {
+                        log.debug("Confirmation received from relay peer " + Util.toShortenedBase32(nextDestination) + ", deleting packet: " + packet);
                         iterator.remove();
+                    }
                 } catch (InterruptedException e) {
                     log.error("Interrupting while waiting for packet to be sent.", e);
                 } catch (Exception e) {
