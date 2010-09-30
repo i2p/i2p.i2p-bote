@@ -78,7 +78,7 @@ public class RelayPacketFolderTest {
         emailPacket = new EncryptedEmailPacket(unencryptedPacket, recipient);
         
         // make a RelayDataPacket
-        RelayRequest request = new RelayRequest(emailPacket, nextDestination);
+        RelayRequest request = new RelayRequest(emailPacket, nextDestination, 1000);
         relayDataPacket = new RelayDataPacket(nextDestination, delayMilliseconds, request);
     }
 

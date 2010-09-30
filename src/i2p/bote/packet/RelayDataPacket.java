@@ -28,7 +28,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -122,8 +121,14 @@ public class RelayDataPacket extends DataPacket {
             log.debug(debugMsg.toString());
         }
         
+        // calculate the number of pad bytes necessary to pad the payload to the maximum size possible
+        int maxSize = I2PBotePacket.MAX_DATAGRAM_SIZE - getMaxOverhead(numHops);
+        int padBytes = maxSize - payload.getSize();
+        if (padBytes < 0)
+            padBytes = 0;
+        
         DataPacket dataPacket = payload;
-        for (Iterator<Destination> iterator=relayPeers.iterator(); iterator.hasNext();) {
+        for (Destination relayPeer: relayPeers) {
             // generate a random time between minDelay and maxDelay in the future
             long delay;
             if (minDelay == maxDelay)
@@ -131,11 +136,20 @@ public class RelayDataPacket extends DataPacket {
             else
                 delay = minDelay + Math.abs(random.nextLong()) % Math.abs(maxDelay-minDelay);
 
-            Destination relayPeer = iterator.next();
-            RelayRequest request = new RelayRequest(dataPacket, relayPeer);
+            RelayRequest request = new RelayRequest(dataPacket, relayPeer, padBytes);
             dataPacket = new RelayDataPacket(relayPeer, delay, request);
+            
+            // only pad the innermost packet (the payload)
+            padBytes = 0;
         }
         return (RelayDataPacket)dataPacket;
+    }
+    
+    public static int getMaxOverhead(int numHops) {
+        if (numHops <= 0)
+            return 0;
+        else
+            return 1049 + (numHops-1)*1040;
     }
     
     public Destination getNextDestination() {

@@ -54,6 +54,8 @@ import net.i2p.util.Log;
  */
 @TypeCode('E')
 public class EncryptedEmailPacket extends DhtStorablePacket {
+    public static int MAX_OVERHEAD = 641;   // The maximum number of bytes by which EncryptedEmailPacket can be bigger than the UnencryptedEmailPacket
+
     private Log log = new Log(EncryptedEmailPacket.class);
     private Hash dhtKey;
     private long storeTime;   // in milliseconds since 1970

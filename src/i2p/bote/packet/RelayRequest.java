@@ -52,13 +52,15 @@ public class RelayRequest extends CommunicationPacket {
     private HashCash hashCash;
     private ReturnChain returnChain;
     private byte[] payload;   // an encrypted DataPacket
+    private int padBytes;
 
     /**
      * Creates a <code>RelayRequest</code> that contains an encrypted <code>DataPacket</code>.
      * @param payload
      * @param destination
+     * @param padBytes The number of zeros to add at the end of the packet
      */
-    public RelayRequest(DataPacket payload, Destination destination) {
+    public RelayRequest(DataPacket payload, Destination destination, int padBytes) {
         try {
             hashCash = HashCash.mintCash("", 1);   // TODO
         } catch (NoSuchAlgorithmException e) {
@@ -66,6 +68,7 @@ public class RelayRequest extends CommunicationPacket {
         }
         returnChain = new ReturnChain();
         this.payload = encrypt(payload, destination);
+        this.padBytes = padBytes;
     }
     
     public RelayRequest(DataPacket payload, Destination destination, ReturnChain returnChain) {
@@ -97,8 +100,8 @@ public class RelayRequest extends CommunicationPacket {
         payload = new byte[payloadLength];
         buffer.get(payload);
         
-        if (buffer.hasRemaining())
-            log.debug("Storage Request Packet has " + buffer.remaining() + " extra bytes.");
+        // read padding
+        padBytes = buffer.remaining();
     }
 
     public HashCash getHashCash() {
@@ -130,6 +133,9 @@ public class RelayRequest extends CommunicationPacket {
             
             dataStream.writeShort(payload.length);
             dataStream.write(payload);
+            
+            byte[] padding = new byte[padBytes];
+            dataStream.write(padding);
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream.", e);

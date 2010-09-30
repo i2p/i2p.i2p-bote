@@ -239,13 +239,10 @@ public class OutboxProcessor extends I2PBoteThread {
      * @return
      */
     private int getMaxEmailPacketSize(int hops) {
-        int maxLenEncryptedEmailPacket = I2PBotePacket.MAX_DATAGRAM_SIZE - 641;   // an EncryptedEmailPacket can be up to 641 bytes bigger than the UnencryptedEmailPacket
-        if (hops == 0)
-            return maxLenEncryptedEmailPacket;
-        int maxLenRelayPacket = maxLenEncryptedEmailPacket - 1049;
-        if (hops == 1)
-            return maxLenRelayPacket;
-        return maxLenRelayPacket - (hops-1)*1040;
+        int maxSize = I2PBotePacket.MAX_DATAGRAM_SIZE - EncryptedEmailPacket.MAX_OVERHEAD;
+        if (hops > 0)
+            maxSize -= RelayDataPacket.getMaxOverhead(hops);
+        return maxSize;
     }
     
     /** Returns <code>true</code> if a given address is a regular email address. */

@@ -73,7 +73,7 @@ public class RelayPacketTest {
         
         EmailDestination destination = new EmailDestination("3LbBiN2nxtQVxPXYBQL3~PjBg-xOPalsFKZ0YqobHXP1u3MiBxqthF6TJxqdPS2LWWKb90FVzaPyIIEQOT0qSb");
         indexPacket = new IndexPacket(destination);
-        relayRequest = new RelayRequest(indexPacket, nextDestination);
+        relayRequest = new RelayRequest(indexPacket, nextDestination, 1000);
         
         long delayMilliseconds = TimeUnit.MILLISECONDS.convert(123, TimeUnit.MINUTES);
         relayDataPacket = new RelayDataPacket(nextDestination, delayMilliseconds, relayRequest);
