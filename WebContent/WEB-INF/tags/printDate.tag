@@ -19,7 +19,8 @@
  along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
 --%>
 
-<%@ attribute name="date" type="java.util.Date" required="true" description="The date to display" %>
+<%@ attribute name="date" type="java.util.Date" required="true" description="The date and/or time to display" %>
+<%@ attribute name="type" required="false" description="Whether to print the date, the time, or both. See the time parameter of fmt:formatDate. The default is both." %>
 <%@ attribute name="timeStyle" required="false" description="See the timeStyle parameter of fmt:formatDate" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -28,7 +29,10 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <c:if test="${!empty date}">
-    <fmt:formatDate value="${date}" var="date" type="date" timeStyle="${timeStyle}"/>
+    <c:if test="${empty type}">
+        <c:set var="type" value="both"/>
+    </c:if>
+    <fmt:formatDate value="${date}" var="date" type="${type}" timeStyle="${timeStyle}"/>
 </c:if>
 <c:if test="${empty date}">
     <ib:message key="Unknown" var="date"/>

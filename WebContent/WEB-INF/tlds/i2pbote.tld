@@ -488,21 +488,13 @@
 
 <tag-file>
     <description>
-	    Prints a date. If the date is null, a string is printed
-	    indicating the date is unknown.
-	    timeStyle can be "short", "medium", "long", or "full".
+        Prints a date and/or time. If the date is null, a string is printed
+        indicating the date is unknown.
+        type can be "date", "time", or "both". The default is both.
+        timeStyle can be "short", "medium", "long", or "full".
     </description>
     <name>printDate</name>
     <path>/WEB-INF/tags/printDate.tag</path>
-</tag-file> 
-
-<tag-file>
-    <description>
-        Prints a time. If the time is null, nothing is printed
-        timeStyle can be "short", "medium", "long", or "full".
-    </description>
-    <name>printTime</name>
-    <path>/WEB-INF/tags/printTime.tag</path>
 </tag-file> 
 
 <tag-file>

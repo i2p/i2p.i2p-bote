@@ -151,8 +151,8 @@
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
             <td>
                 <span${class} style="display: block;">
-                    <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: left"><ib:printDate date="${email.createTime}" timeStyle="short"/></a>
-                    <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: right"><ib:printTime time="${email.createTime}" timeStyle="short"/></a>
+                    <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: left"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short"/></a>
+                    <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: right"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
                 </span>
             </td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${ib:getEmailStatus(email)}</a></div></td>
