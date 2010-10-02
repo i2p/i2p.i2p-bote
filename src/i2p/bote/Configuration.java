@@ -60,6 +60,7 @@ public class Configuration {
     private static final String PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = "maxConcurIdCheckMail";
     private static final String PARAMETER_AUTO_MAIL_CHECK = "autoMailCheckEnabled";
     private static final String PARAMETER_MAIL_CHECK_INTERVAL = "mailCheckInterval";
+    private static final String PARAMETER_OUTBOX_CHECK_INTERVAL = "outboxCheckInterval";
     private static final String PARAMETER_RELAY_SEND_PAUSE = "RelaySendPause";
     private static final String PARAMETER_HIDE_LOCALE = "hideLocale";
     private static final String PARAMETER_INCLUDE_SENT_TIME = "includeSentTime";
@@ -83,6 +84,7 @@ public class Configuration {
     private static final int DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = 10;
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
+    private static final int DEFAULT_OUTBOX_CHECK_INTERVAL = 10;   // in minutes
     private static final int DEFAULT_RELAY_SEND_PAUSE = 10;   // in minutes, see RelayPacketSender.java
     private static final boolean DEFAULT_HIDE_LOCALE = true;
     private static final boolean DEFAULT_INCLUDE_SENT_TIME = true;
@@ -273,6 +275,18 @@ public class Configuration {
      */
     public int getMailCheckInterval() {
         return getIntParameter(PARAMETER_MAIL_CHECK_INTERVAL, DEFAULT_MAIL_CHECK_INTERVAL);
+    }
+
+    public void setOutboxCheckInterval(int minutes) {
+        properties.setProperty(PARAMETER_OUTBOX_CHECK_INTERVAL, Integer.valueOf(minutes).toString());
+    }
+    
+    /**
+     * Returns the wait time, in minutes, before processing the outbox folder again.
+     * @see i2p.bote.service.OutboxProcessor
+     */
+    public int getOutboxCheckInterval() {
+        return getIntParameter(PARAMETER_OUTBOX_CHECK_INTERVAL, DEFAULT_OUTBOX_CHECK_INTERVAL);
     }
 
     public void setRelaySendPause(int minutes) {

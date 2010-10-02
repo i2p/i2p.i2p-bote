@@ -59,8 +59,6 @@ import net.i2p.util.Log;
  * A background thread that periodically checks the outbox for emails and sends them.
  */
 public class OutboxProcessor extends I2PBoteThread {
-    private static final int PAUSE = 10;   // The wait time, in minutes, before processing the folder again. Can be interrupted from the outside by calling checkForEmail().
-    
     private Log log = new Log(OutboxProcessor.class);
     private DHT dht;
     private Outbox outbox;
@@ -104,7 +102,8 @@ public class OutboxProcessor extends I2PBoteThread {
         }
         
         try {
-            wakeupSignal.await(PAUSE, TimeUnit.MINUTES);
+            int pause = configuration.getOutboxCheckInterval();
+            wakeupSignal.await(pause, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
             log.error("OutboxProcessor received an InterruptedException.", e);
         }
