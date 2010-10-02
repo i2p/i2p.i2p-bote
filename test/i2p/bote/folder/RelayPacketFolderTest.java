@@ -27,9 +27,9 @@ import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.I2PBotePacket;
-import i2p.bote.packet.RelayDataPacket;
 import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.UnencryptedEmailPacket;
+import i2p.bote.packet.dht.StoreRequest;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -49,7 +49,7 @@ public class RelayPacketFolderTest {
     private File folderDir;
     private RelayPacketFolder folder;
     private EncryptedEmailPacket emailPacket;
-    private RelayDataPacket relayDataPacket;
+    private RelayRequest relayRequest;
 
     @Before
     public void setUp() throws Exception {
@@ -77,9 +77,9 @@ public class RelayPacketFolderTest {
         EmailDestination recipient = new EmailDestination(base64EmailDest);
         emailPacket = new EncryptedEmailPacket(unencryptedPacket, recipient);
         
-        // make a RelayDataPacket
-        RelayRequest request = new RelayRequest(emailPacket, nextDestination, 1000);
-        relayDataPacket = new RelayDataPacket(nextDestination, delayMilliseconds, request);
+        // make a RelayRequest
+        StoreRequest storeRequest = new StoreRequest(emailPacket);
+        relayRequest = new RelayRequest(storeRequest, nextDestination, delayMilliseconds, 1000);
     }
 
     @After
@@ -91,19 +91,19 @@ public class RelayPacketFolderTest {
     }
     
     /**
-     * Tests {@link RelayPacketFolder#add(RelayDataPacket)} and removal of the packet from the
+     * Tests {@link RelayPacketFolder#add(RelayRequest)} and removal of the packet from the
      * folder via an <code>Iterator</code>.
      */
     @Test
     public void testAddRemove() {
-        folder.add(relayDataPacket);
-        Iterator<RelayDataPacket> iterator = folder.iterator();
+        folder.add(relayRequest);
+        Iterator<RelayRequest> iterator = folder.iterator();
         assertTrue("Folder is empty after a packet was added to it!", iterator.hasNext());
         
         // Read the stored packet, convert to a byte array, and compare.
         // This also verifies the send time which is not stored in the packet itself
-        RelayDataPacket storedPacket = iterator.next();
-        byte[] arrayA = relayDataPacket.toByteArray();
+        RelayRequest storedPacket = iterator.next();
+        byte[] arrayA = relayRequest.toByteArray();
         byte[] arrayB = storedPacket.toByteArray();
         assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
         assertFalse("Folder has more than one element!", iterator.hasNext());

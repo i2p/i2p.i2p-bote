@@ -53,7 +53,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -72,8 +71,6 @@ import net.i2p.data.Hash;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
-
-import com.nettgryppa.security.HashCash;
 
 /**
  * The main class of the Kademlia implementation. All the high-level Kademlia logic
@@ -311,19 +308,12 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             
         log.info("Storing a " + packet.getClass().getSimpleName() + " with key " + key + " on " + closeNodes.size() + " nodes");
         
-        HashCash hashCash;
-        try {
-            hashCash = HashCash.mintCash("", 1);   // TODO
-        } catch (NoSuchAlgorithmException e) {
-            throw new DhtException("Cannot mint HashCash.", e);
-        }
-        
         PacketBatch batch = new PacketBatch();
         for (Destination node: closeNodes)
             if (localDestination.equals(node))
                 storeLocally(packet, null);
             else {
-                StoreRequest storeRequest = new StoreRequest(hashCash, packet);   // use a separate packet id for each request
+                StoreRequest storeRequest = new StoreRequest(packet);   // use a separate packet id for each request
                 batch.putPacket(storeRequest, node);
             }
         sendQueue.send(batch);

@@ -25,13 +25,14 @@ import i2p.bote.UniqueId;
 import i2p.bote.email.Email;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.I2PBotePacket;
-import i2p.bote.packet.MalformedDataPacketException;
+import i2p.bote.packet.MalformedPacketException;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -162,7 +163,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
                         packets.add((UnencryptedEmailPacket)packet);
                     else
                         log.error("Non-Email Packet found in the IncompleteEmailFolder, file: <" + file.getAbsolutePath() + ">");
-                } catch (MalformedDataPacketException e) {
+                } catch (MalformedPacketException e) {
                     log.error("Cannot create packet from file: <" + file.getAbsolutePath() + ">", e);
                 }
             }
@@ -172,7 +173,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
 
     // FolderElement implementation
     @Override
-    protected UnencryptedEmailPacket createFolderElement(File file) throws Exception {
+    protected UnencryptedEmailPacket createFolderElement(File file) throws IOException, MalformedPacketException {
         FileInputStream inputStream = new FileInputStream(file);
         return new UnencryptedEmailPacket(inputStream);
     }

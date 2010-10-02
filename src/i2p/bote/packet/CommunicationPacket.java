@@ -21,13 +21,12 @@
 
 package i2p.bote.packet;
 
-import i2p.bote.I2PBote;
 import i2p.bote.UniqueId;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import net.i2p.util.Log;
 
@@ -38,9 +37,8 @@ import net.i2p.util.Log;
  * The packet Id is only used by some subclasses.
  */
 public abstract class CommunicationPacket extends I2PBotePacket {
-    protected static final int HEADER_LENGTH = 6 + UniqueId.LENGTH;   // length of the common packet header in the byte array representation; this is where subclasses start reading
     private static final byte[] PACKET_PREFIX = new byte[] {(byte)0x6D, (byte)0x30, (byte)0x52, (byte)0xE9};
-    private static Log static_log = new Log(CommunicationPacket.class);
+    protected static final int HEADER_LENGTH = PACKET_PREFIX.length + 2 + UniqueId.LENGTH;   // length of the common packet header in the byte array representation; this is where subclasses start reading
     
     private Log log = new Log(CommunicationPacket.class);
     private UniqueId packetId;
@@ -52,21 +50,24 @@ public abstract class CommunicationPacket extends I2PBotePacket {
     }
     
     protected CommunicationPacket(UniqueId packetId) {
-        super(I2PBote.PROTOCOL_VERSION);
         this.packetId = packetId;
         sentSignal = new CountDownLatch(1);
         sentTime = -1;
     }
     
     /**
-     * Creates a packet and initializes the header fields shared by all Communication Packets:<br/>
-     * packet type, protocol version, and packet id.<br/>
-     * Subclasses should start reading at byte {@link #HEADER_LENGTH} after calling this constructor.
+     * Creates a <code>CommunicationPacket</code> from raw datagram data. The packet ID
+     * is initialized from the input data.<br/>
+     * Subclasses start reading at byte {@link #HEADER_LENGTH} after calling this constructor.
      * @param data
      */
     protected CommunicationPacket(byte[] data) {
         super(data[5]);   // byte 5 is the protocol version in a communication packet
-        verifyHeader(data);
+        if (!isPrefixValid(data)) {
+            byte[] prefix = Arrays.copyOf(data, PACKET_PREFIX.length);
+            log.error("Packet prefix invalid. Expected: " + Arrays.toString(PACKET_PREFIX) + ", actual: " + Arrays.toString(prefix));
+        }
+
         checkPacketType(data[4]);
         packetId = new UniqueId(data, 6);
         sentSignal = new CountDownLatch(1);
@@ -77,13 +78,14 @@ public abstract class CommunicationPacket extends I2PBotePacket {
      * Creates a packet object from its byte array representation. If there is an error,
      * <code>null</code> is returned.
      * @param data
-     * @throws MalformedCommunicationPacketException
+     * @throws MalformedPacketException
      */
-    public static CommunicationPacket createPacket(byte[] data) throws MalformedCommunicationPacketException {
+    public static CommunicationPacket createPacket(byte[] data) throws MalformedPacketException {
         char packetTypeCode = (char)data[4];   // byte 4 of a communication packet is the packet type code
         Class<? extends I2PBotePacket> packetType = decodePacketTypeCode(packetTypeCode);
         if (packetType==null || !CommunicationPacket.class.isAssignableFrom(packetType)) {
-            static_log.error("Type code is not a CommunicationPacket type code: <" + packetTypeCode + ">");
+            Log log = new Log(CommunicationPacket.class);
+            log.error("Type code is not a CommunicationPacket type code: <" + packetTypeCode + ">");
             return null;
         }
         
@@ -92,21 +94,34 @@ public abstract class CommunicationPacket extends I2PBotePacket {
             return commPacketType.getConstructor(byte[].class).newInstance(data);
         }
         catch (Exception e) {
-            if (e instanceof MalformedCommunicationPacketException)
-                throw (MalformedCommunicationPacketException)e;
+            if (e instanceof MalformedPacketException)
+                throw (MalformedPacketException)e;
             else
-                throw new MalformedCommunicationPacketException("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
+                throw new MalformedPacketException("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
         }
     }
     
     /**
-     * Checks that the packet has the correct packet prefix.
+     * Writes the Prefix, Version, Type, and Packet Id fields of a Communication Packet to
+     * an {@link OutputStream}.
+     * @param outputStream
+     */
+    protected void writeHeader(OutputStream outputStream) throws IOException {
+        outputStream.write(PACKET_PREFIX);
+        outputStream.write((byte)getPacketTypeCode());
+        outputStream.write(getProtocolVersion());
+        outputStream.write(packetId.toByteArray());
+    }
+    
+    /**
+     * Returns <code>true</code> if the packet has the correct packet prefix; <code>false</code> otherwise.
      * @param packet
      */
-    private void verifyHeader(byte[] packet) {
+    static boolean isPrefixValid(byte[] packet) {
         for (int i=0; i<PACKET_PREFIX.length; i++)
             if (packet[i] != PACKET_PREFIX[i])
-                log.error("Packet prefix invalid at byte " + i + ". Expected = " + PACKET_PREFIX[i] + ", actual = " + packet[i]);
+                return false;
+        return true;
     }
 
     public void setPacketId(UniqueId packetId) {
@@ -126,26 +141,6 @@ public abstract class CommunicationPacket extends I2PBotePacket {
         return sentTime;
     }
 
-    public boolean hasBeenSent() {
-        return sentTime > 0;
-    }
-    
-    public boolean awaitSending(long timeout, TimeUnit unit) throws InterruptedException {
-        return sentSignal.await(timeout, unit);
-    }
-    
-    /**
-     * Writes the Prefix, Version, Type, and Packet Id fields of a Communication Packet to
-     * an {@link OutputStream}.
-     * @param outputStream
-     */
-    protected void writeHeader(OutputStream outputStream) throws IOException {
-        outputStream.write(PACKET_PREFIX);
-        outputStream.write((byte)getPacketTypeCode());
-        outputStream.write(getProtocolVersion());
-        outputStream.write(packetId.toByteArray());
-    }
-    
     @Override
     public String toString() {
         return "Type=" + getClass().getSimpleName() + ", Id=" + (packetId==null?"<null>":packetId.toString().substring(0, 8)) + "...";

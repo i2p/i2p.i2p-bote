@@ -63,7 +63,7 @@ public class ResponsePacket extends CommunicationPacket {
             buffer.get(payloadData);
             try {
                 payload = DataPacket.createPacket(payloadData);
-            } catch (MalformedDataPacketException e) {
+            } catch (MalformedPacketException e) {
                 payload = new MalformedDataPacket();
             }
         }

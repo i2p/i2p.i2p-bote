@@ -22,7 +22,7 @@
 package i2p.bote.packet.dht;
 
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.MalformedDataPacketException;
+import i2p.bote.packet.MalformedPacketException;
 import i2p.bote.packet.TypeCode;
 
 import java.io.ByteArrayOutputStream;
@@ -45,12 +45,16 @@ public class StoreRequest extends CommunicationPacket {
     private HashCash hashCash;
     private DhtStorablePacket packetToStore;
 
-    public StoreRequest(HashCash hashCash, DhtStorablePacket packetToStore) {
-        this.hashCash = hashCash;
+    public StoreRequest(DhtStorablePacket packetToStore) {
+        try {
+            hashCash = HashCash.mintCash("", 1);   // TODO
+        } catch (NoSuchAlgorithmException e) {
+            log.error("Cannot create HashCash.", e);
+        }
         this.packetToStore = packetToStore;
     }
     
-    public StoreRequest(byte[] data) throws NoSuchAlgorithmException, MalformedDataPacketException {
+    public StoreRequest(byte[] data) throws NoSuchAlgorithmException, MalformedPacketException {
         super(data);
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
         

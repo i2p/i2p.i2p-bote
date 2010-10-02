@@ -22,7 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.network.DhtStorageHandler;
-import i2p.bote.packet.MalformedDataPacketException;
+import i2p.bote.packet.MalformedPacketException;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
@@ -60,7 +60,7 @@ public class DhtPacketFolder<T extends DhtStorablePacket> extends PacketFolder<T
             try {
                 return DhtStorablePacket.createPacket(packetFile);
             }
-            catch (MalformedDataPacketException e) {
+            catch (MalformedPacketException e) {
                 log.error("Cannot create packet from file: <" + packetFile.getAbsolutePath() + ">", e);
                 return null;
             }

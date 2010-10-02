@@ -21,25 +21,25 @@
 
 package i2p.bote.network;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import i2p.bote.Util;
 import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.DataPacket;
-import i2p.bote.packet.MalformedDataPacketException;
-import i2p.bote.packet.RelayDataPacket;
+import i2p.bote.packet.MalformedPacketException;
 import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.dht.DhtStorablePacket;
+import i2p.bote.packet.dht.StoreRequest;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import net.i2p.client.I2PSession;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 
 /**
- * Receives {@link RelayDataPacket}s from other peers and forwards them
- * (for {@link RelayDataPacket} payloads) or stores them in the DHT
+ * Receives {@link RelayRequest}s from other peers and forwards them
+ * (for {@link RelayRequest} payloads) or stores them in the DHT
  * (for {@link DhtStorablePacket} payloads).
  */
 public class RelayPacketHandler implements PacketListener {
@@ -65,28 +65,27 @@ public class RelayPacketHandler implements PacketListener {
     public void packetReceived(CommunicationPacket packet, Destination sender, long receiveTime) {
         if (packet instanceof RelayRequest && dht.isReady()) {
             RelayRequest relayRequest = (RelayRequest)packet;
-            DataPacket dataPacket;
+            CommunicationPacket payload;
             try {
-                dataPacket = relayRequest.getStoredPacket(i2pSession);
+                payload = relayRequest.getStoredPacket(i2pSession);
             }
             catch (DataFormatException e) {
-                log.error("Invalid RelayDataPacket received from peer " + Util.toBase32(sender), e);
+                log.error("Invalid RelayRequest received from peer " + Util.toBase32(sender), e);
                 return;
             }
-            catch (MalformedDataPacketException e) {
-                log.error("Invalid RelayDataPacket received from peer " + Util.toBase32(sender), e);
+            catch (MalformedPacketException e) {
+                log.error("Invalid RelayRequest received from peer " + Util.toBase32(sender), e);
                 return;
             }
-            log.debug("Received a relay request, payload: " + dataPacket);
-            if (dataPacket instanceof RelayDataPacket) {
-                log.debug("Relay packet is of type " + dataPacket.getClass().getSimpleName() + ", storing it in the relay packet folder.");
-                RelayDataPacket relayDataPacket = (RelayDataPacket)dataPacket;
-                relayPacketFolder.add(relayDataPacket);
+            log.debug("Received a relay request, payload: " + payload);
+            if (payload instanceof RelayRequest) {
+                log.debug("Relay packet is of type " + payload.getClass().getSimpleName() + ", storing it in the relay packet folder.");
+                relayPacketFolder.add((RelayRequest)payload);
                 confirm(sender, relayRequest);
             }
-            else if (dataPacket instanceof DhtStorablePacket) {
-                log.debug("Relay packet is of type " + dataPacket.getClass().getSimpleName() + ", storing it in the DHT.");
-                final DhtStorablePacket dhtPacket = (DhtStorablePacket)dataPacket;
+            else if (payload instanceof StoreRequest) {
+                log.debug("Relay packet is of type " + payload.getClass().getSimpleName() + ", storing it in the DHT.");
+                final DhtStorablePacket dhtPacket = ((StoreRequest)payload).getPacketToStore();
                 // do dht.store() in a separate thread so we don't block the notifier thread
                 dhtTaskExecutor.submit(new Runnable() {
                     @Override
@@ -102,7 +101,7 @@ public class RelayPacketHandler implements PacketListener {
                 confirm(sender, relayRequest);
             }
             else
-                log.error("Don't know how to handle relay packet of type " + dataPacket.getClass());
+                log.error("Don't know how to handle relay packet of type " + payload.getClass());
         }
     }
     

@@ -22,7 +22,8 @@
 package i2p.bote.folder;
 
 import i2p.bote.Util;
-import i2p.bote.packet.DataPacket;
+import i2p.bote.packet.I2PBotePacket;
+import i2p.bote.packet.MalformedPacketException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,7 +36,7 @@ import net.i2p.util.Log;
  *
  * @param <PacketType> The type of data stored in this folder
  */
-public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketType> {
+public class PacketFolder<PacketType extends I2PBotePacket> extends Folder<PacketType> {
     protected static final String PACKET_FILE_EXTENSION = ".pkt";
     
     private Log log = new Log(PacketFolder.class);
@@ -49,7 +50,7 @@ public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketTy
      * @param packetToStore
      * @param filename The filename to store the packet under, relative to this folder's storage directory.
      */
-    protected void add(DataPacket packetToStore, String filename) {
+    protected void add(I2PBotePacket packetToStore, String filename) {
         FileOutputStream outputStream = null;
         try {
             File file = new File(storageDir, filename);
@@ -72,7 +73,7 @@ public class PacketFolder<PacketType extends DataPacket> extends Folder<PacketTy
     
     @Override
     @SuppressWarnings("unchecked")
-    protected PacketType createFolderElement(File file) throws Exception {
-        return (PacketType)DataPacket.createPacket(file);
+    protected PacketType createFolderElement(File file) throws IOException, MalformedPacketException {
+        return (PacketType)I2PBotePacket.createPacket(file);
     }
 }

@@ -35,10 +35,9 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.nettgryppa.security.HashCash;
-
 public class StoreRequestTest {
     private StoreRequest storeRequest;
+    private EncryptedEmailPacket dhtPacket;
 
     @Before
     public void setUp() throws Exception {
@@ -50,16 +49,23 @@ public class StoreRequestTest {
         int fragmentIndex = 0;
         UnencryptedEmailPacket emailPacket = new UnencryptedEmailPacket(new ByteArrayInputStream(emailContent), messageId, fragmentIndex, I2PBotePacket.MAX_DATAGRAM_SIZE);
         emailPacket.setNumFragments(1);
-        EncryptedEmailPacket encryptedPacket = new EncryptedEmailPacket(emailPacket, destination);
-        HashCash hashCash = HashCash.mintCash("1234", 1);
+        dhtPacket = new EncryptedEmailPacket(emailPacket, destination);
         
-        storeRequest = new StoreRequest(hashCash, encryptedPacket);
+        storeRequest = new StoreRequest(dhtPacket);
     }
 
     @Test
     public void toByteArrayAndBack() throws Exception {
         byte[] arrayA = storeRequest.toByteArray();
         byte[] arrayB = new StoreRequest(arrayA).toByteArray();
+        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        
+    }
+    
+    @Test
+    public void testGetPacketToStore() throws Exception {
+        byte[] arrayA = dhtPacket.toByteArray();
+        byte[] arrayB = storeRequest.getPacketToStore().toByteArray();
         assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
     }
 }

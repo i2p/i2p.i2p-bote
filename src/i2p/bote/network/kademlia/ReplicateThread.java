@@ -33,7 +33,6 @@ import i2p.bote.packet.dht.DhtStorablePacket;
 import i2p.bote.packet.dht.StoreRequest;
 import i2p.bote.service.I2PBoteThread;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -48,8 +47,6 @@ import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
-
-import com.nettgryppa.security.HashCash;
 
 /**
  * Replicates locally stored DHT data on startup and every REPLICATE_INTERVAL seconds after that.<br/>
@@ -120,15 +117,6 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
         List<Destination> closestNodes = lookupTask.getResults();
         closestNodes.remove(localDestination);
 
-        HashCash hashCash;
-        try {
-            hashCash = HashCash.mintCash("", 1);   // TODO
-        }
-        catch (NoSuchAlgorithmException e) {
-            log.error("Can't generate HashCash for replication requests, aborting replication.", e);
-            return;
-        }
-        
         int numReplicated = 0;
         int numSkipped = 0;
 
@@ -139,7 +127,7 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
                 DhtStorablePacket packet = packetIterator.next();
                 Hash dhtKey = packet.getDhtKey();
                 if (!keysToSkip.contains(dhtKey)) {
-                    StoreRequest request = new StoreRequest(hashCash, packet);
+                    StoreRequest request = new StoreRequest(packet);
                     List<Destination> closestPeers = bucketManager.getClosestPeers(dhtKey, KademliaConstants.K);
                     for (Destination peer: closestPeers) {
                         // Send the store request and give the peer time to respond with a delete request

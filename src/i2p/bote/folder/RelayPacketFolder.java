@@ -22,10 +22,12 @@
 package i2p.bote.folder;
 
 import i2p.bote.Util;
-import i2p.bote.packet.RelayDataPacket;
+import i2p.bote.packet.MalformedPacketException;
+import i2p.bote.packet.RelayRequest;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 
 import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Hash;
@@ -35,7 +37,7 @@ import net.i2p.util.Log;
  * A <code>PacketFolder</code> that uses filenames that consist of
  * the packet's scheduled send time and the SHA256 hash of the packet.
  */
-public class RelayPacketFolder extends PacketFolder<RelayDataPacket> {
+public class RelayPacketFolder extends PacketFolder<RelayRequest> {
     private final Log log = new Log(RelayPacketFolder.class);
 
     public RelayPacketFolder(File storageDir) {
@@ -43,10 +45,10 @@ public class RelayPacketFolder extends PacketFolder<RelayDataPacket> {
     }
 
     /**
-     * Stores a <code>RelayDataPacket</code> in the folder.
+     * Stores a <code>RelayRequest</code> in the folder.
      * @param packet
      */
-    public void add(RelayDataPacket packet) {
+    public void add(RelayRequest packet) {
         // make the packet's hash part of the filename and don't save if a file with the same hash exists already
         byte[] bytes = packet.toByteArray();
         Hash packetHash = SHA256Generator.getInstance().calculateHash(bytes);
@@ -71,8 +73,8 @@ public class RelayPacketFolder extends PacketFolder<RelayDataPacket> {
     }
     
     @Override
-    protected RelayDataPacket createFolderElement(File file) throws Exception {
-        RelayDataPacket packet = super.createFolderElement(file);
+    protected RelayRequest createFolderElement(File file) throws IOException, MalformedPacketException {
+        RelayRequest packet = super.createFolderElement(file);
         try {
             long sendTime = getSendTime(file.getName());
             packet.setSendTime(sendTime);

@@ -1,3 +1,24 @@
+/**
+ * Copyright (C) 2009  HungryHobo@mail.i2p
+ * 
+ * The GPG fingerprint for HungryHobo@mail.i2p is:
+ * 6DD3 EAA2 9990 29BC 4AD2 7486 1E2C 7B61 76DC DC12
+ * 
+ * This file is part of I2P-Bote.
+ * I2P-Bote is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * I2P-Bote is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package i2p.bote.folder;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +36,7 @@ import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.IndexPacket;
 import i2p.bote.packet.IndexPacketDeleteRequest;
 import i2p.bote.packet.IndexPacketEntry;
-import i2p.bote.packet.MalformedDataPacketException;
+import i2p.bote.packet.MalformedPacketException;
 import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
@@ -114,7 +135,7 @@ public class IndexPacketFolderTest {
     }
     
     @Test
-    public void testProcessDeleteRequest() throws GeneralSecurityException, MalformedDataPacketException {
+    public void testProcessDeleteRequest() throws GeneralSecurityException, MalformedPacketException {
         IndexPacketFolder folder = new IndexPacketFolder(folderDir);
         
         // create another packet with the same destination as emailPacket1
@@ -222,7 +243,7 @@ public class IndexPacketFolderTest {
          * Called by store(DhtStorablePacket)
          */
         @Override
-        protected void add(DataPacket packetToStore, String filename) {
+        protected void add(I2PBotePacket packetToStore, String filename) {
             assertTrue(packetToStore instanceof IndexPacket);
             IndexPacket indexPacket = (IndexPacket)packetToStore;
             

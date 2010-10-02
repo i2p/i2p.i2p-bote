@@ -21,14 +21,17 @@
 
 package i2p.bote.packet;
 
-public class MalformedCommunicationPacketException extends Exception {
-    private static final long serialVersionUID = 7020328715467075260L;
+/**
+ * Thown when a packet cannot be decoded from a byte array.
+ */
+public class MalformedPacketException extends Exception {
+    private static final long serialVersionUID = -600763395717614292L;
 
-    public MalformedCommunicationPacketException(String message) {
+    public MalformedPacketException(String message) {
         super(message);
     }
-    
-    public MalformedCommunicationPacketException(String message, Throwable cause) {
+
+    public MalformedPacketException(String message, Throwable cause) {
         super(message, cause);
     }
 }

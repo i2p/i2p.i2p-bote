@@ -23,7 +23,7 @@ package i2p.bote.packet.dht;
 
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.I2PBotePacket;
-import i2p.bote.packet.MalformedDataPacketException;
+import i2p.bote.packet.MalformedPacketException;
 
 import java.io.File;
 
@@ -50,9 +50,9 @@ public abstract class DhtStorablePacket extends DataPacket {
      * The type of packet depends on the packet type field in the byte array.
      * If there is an error, <code>null</code> is returned.
      * @param data
-     * @throws MalformedDataPacketException
+     * @throws MalformedPacketException
      */
-    public static DhtStorablePacket createPacket(byte[] data) throws MalformedDataPacketException {
+    public static DhtStorablePacket createPacket(byte[] data) throws MalformedPacketException {
         DataPacket packet = DataPacket.createPacket(data);
         if (packet instanceof DhtStorablePacket)
             return (DhtStorablePacket)packet;
@@ -77,9 +77,9 @@ public abstract class DhtStorablePacket extends DataPacket {
      * Returns <code>null</code> if the file doesn't exist, or if
      * an error occurred.
      * @param file
-     * @throws MalformedDataPacketException
+     * @throws MalformedPacketException
      */
-    public static DhtStorablePacket createPacket(File file) throws MalformedDataPacketException {
+    public static DhtStorablePacket createPacket(File file) throws MalformedPacketException {
         if (file==null || !file.exists())
             return null;
         

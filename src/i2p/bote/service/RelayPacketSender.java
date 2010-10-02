@@ -28,7 +28,6 @@ import i2p.bote.folder.PacketFolder;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.RelayDataPacket;
 import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
@@ -47,12 +46,12 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
     private final Log log = new Log(RelayPacketSender.class);
 
     private I2PSendQueue sendQueue;
-    private PacketFolder<RelayDataPacket> packetFolder;
+    private PacketFolder<RelayRequest> packetFolder;
     private int pause;   // the wait time, in minutes, before processing the folder again
     private RelayRequest lastSentPacket;   // last relay packet sent, or null
     private CountDownLatch confirmationReceived;   // zero if a "OK" response has been received for lastSentPacket
     
-    public RelayPacketSender(I2PSendQueue sendQueue, PacketFolder<RelayDataPacket> packetFolder, Configuration configuration) {
+    public RelayPacketSender(I2PSendQueue sendQueue, PacketFolder<RelayRequest> packetFolder, Configuration configuration) {
         super("RelayPktSndr");
         setPriority(MIN_PRIORITY);
         this.sendQueue = sendQueue;
@@ -62,9 +61,9 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
     
     @Override
     public void doStep() throws InterruptedException {
-        Iterator<RelayDataPacket> iterator = packetFolder.iterator();
+        Iterator<RelayRequest> iterator = packetFolder.iterator();
         while (iterator.hasNext()) {
-            RelayDataPacket packet = iterator.next();
+            RelayRequest packet = iterator.next();
             if (System.currentTimeMillis() >= packet.getSendTime()) {
                 log.debug("Sending relay packet to destination " + Util.toBase32(packet.getNextDestination()));
                 try {
@@ -72,7 +71,7 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
                     Destination nextDestination = packet.getNextDestination();
                     // synchronize access to lastSentPacket (which can be null, so synchronize on "this")
                     synchronized(this) {
-                        lastSentPacket = packet.getRequest();
+                        lastSentPacket = packet;
                         confirmationReceived = new CountDownLatch(1);
                         sentSignal = sendQueue.send(lastSentPacket, nextDestination);
                     }
@@ -98,8 +97,8 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
     /** Deletes relay packets that are still in the folder 100 days after the scheduled send time */
     @Override
     public void deleteExpired() {
-        for (Iterator<RelayDataPacket> iterator=packetFolder.iterator(); iterator.hasNext();) {
-            RelayDataPacket packet = iterator.next();
+        for (Iterator<RelayRequest> iterator=packetFolder.iterator(); iterator.hasNext();) {
+            RelayRequest packet = iterator.next();
             if (System.currentTimeMillis() > packet.getSendTime() + EXPIRATION_TIME_MILLISECONDS)
                 iterator.remove();
         }

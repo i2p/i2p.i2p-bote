@@ -22,10 +22,16 @@
 package i2p.bote.packet;
 
 import i2p.bote.I2PBote;
+import i2p.bote.Util;
 import i2p.bote.packet.dht.FindClosePeersPacket;
 import i2p.bote.packet.dht.RetrieveRequest;
 import i2p.bote.packet.dht.StoreRequest;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
 import net.i2p.data.Hash;
@@ -33,10 +39,12 @@ import net.i2p.util.Log;
 
 public abstract class I2PBotePacket {
     public static final int MAX_DATAGRAM_SIZE = 31 * 1024;
-    private static final Log log = new Log(I2PBotePacket.class);
+    
+    private final Log log = new Log(I2PBotePacket.class);
+    
     @SuppressWarnings("unchecked")
     private static Class<? extends I2PBotePacket>[] ALL_PACKET_TYPES = new Class[] {
-        RelayDataPacket.class, RelayRequest.class, ResponsePacket.class, RetrieveRequest.class, StoreRequest.class,
+        RelayRequest.class, ResponsePacket.class, RetrieveRequest.class, StoreRequest.class,
         FindClosePeersPacket.class, PeerListRequest.class, PeerList.class,
         EncryptedEmailPacket.class, UnencryptedEmailPacket.class, EmailPacketDeleteRequest.class,
         IndexPacket.class, IndexPacketDeleteRequest.class, DeletionInfoPacket.class
@@ -45,7 +53,7 @@ public abstract class I2PBotePacket {
     private int protocolVersion;
     
     /**
-     * Creates a new <code>I2PBotePacket</code> with the current protocol version.
+     * Creates a new <code>I2PBotePacket</code> with the latest protocol version.
      */
     protected I2PBotePacket() {
         protocolVersion = I2PBote.PROTOCOL_VERSION;
@@ -53,6 +61,56 @@ public abstract class I2PBotePacket {
     
     protected I2PBotePacket(int protocolVersion) {
         this.protocolVersion = protocolVersion;
+    }
+    
+    /**
+     * Creates an <code>I2PBotePacket</code> from a file, using the same format as the
+     * {@link #createPacket(byte[])} method.
+     * @param file
+     * @throws MalformedPacketException
+     */
+    public static I2PBotePacket createPacket(File file) throws MalformedPacketException {
+        if (file==null || !file.exists())
+            return null;
+        
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(file);
+            I2PBotePacket packet = createPacket(Util.readBytes(inputStream));
+            return packet;
+        }
+        catch (IOException e) {
+            throw new MalformedPacketException("Can't read packet file: " + file.getAbsolutePath(), e);
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (IOException e) {
+                Log log = new Log(I2PBotePacket.class);
+                log.error("Can't close stream.", e);
+            }
+        }
+    }
+    
+    /**
+     * Creates an <code>I2PBotePacket</code> from its byte array representation.<br/>
+     * The header bytes determine whether <code>DataPacket</code> or a <code>CommunicationPacket</code> is created.
+     * @param data
+     * @throws MalformedPacketException If the byte array does not contain a valid <code>I2PBotePacket</code>.
+     */
+    public static I2PBotePacket createPacket(byte[] data) throws MalformedPacketException {
+        if (CommunicationPacket.isPrefixValid(data))
+            return CommunicationPacket.createPacket(data);
+        else
+            return DataPacket.createPacket(data);
+    }
+    
+    /**
+     * Writes the packet to an <code>OutputStream</code> in binary representation.
+     */
+    public void writeTo(OutputStream outputStream) throws IOException {
+        outputStream.write(toByteArray());
     }
     
     public abstract byte[] toByteArray();
@@ -85,15 +143,11 @@ public abstract class I2PBotePacket {
      * Logs an error if the packet type of the packet instance is not correct
      * @param packetTypeCode
      */
-    protected void checkPacketType(char packetTypeCode) {
-        if (getPacketTypeCode() != packetTypeCode)
+    protected void checkPacketType(byte packetTypeCode) {
+        if (getPacketTypeCode() != (char)packetTypeCode)
             log.error("Packet type code of class " + getClass().getSimpleName() + " should be " + getPacketTypeCode() + ", is <" + packetTypeCode + ">");
     }
     
-    protected void checkPacketType(byte packetTypeCode) {
-        checkPacketType((char)packetTypeCode);
-    }
-
     /**
      * Returns the version of the I2P-Bote network protocol this packet conforms to.
      */
@@ -116,6 +170,7 @@ public abstract class I2PBotePacket {
             if (packetType.getAnnotation(TypeCode.class).value() == packetTypeCode)
                 return packetType;
         
+        Log log = new Log(I2PBotePacket.class);
         log.debug("Invalid type code for I2PBotePacket: <" + packetTypeCode + ">");
         return null;
     }

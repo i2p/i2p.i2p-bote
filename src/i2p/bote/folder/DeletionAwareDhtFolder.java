@@ -25,7 +25,7 @@ import i2p.bote.UniqueId;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.DeleteRequest;
 import i2p.bote.packet.DeletionInfoPacket;
-import i2p.bote.packet.MalformedDataPacketException;
+import i2p.bote.packet.MalformedPacketException;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
@@ -88,7 +88,7 @@ public abstract class DeletionAwareDhtFolder<T extends DhtStorablePacket> extend
                 log.error("Not a Deletion Info Packet file: <" + delFile.getAbsolutePath() + ">");
                 return null;
             }
-        } catch (MalformedDataPacketException e) {
+        } catch (MalformedPacketException e) {
             log.error("Cannot read Deletion Info Packet,: <" + delFile.getAbsolutePath() + ">", e);
             return null;
         }

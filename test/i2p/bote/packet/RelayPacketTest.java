@@ -28,6 +28,7 @@ import i2p.bote.email.EmailDestination;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.RelayPeer;
+import i2p.bote.packet.dht.StoreRequest;
 import i2p.bote.service.RelayPeerManager;
 
 import java.io.BufferedWriter;
@@ -35,11 +36,9 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Field;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-import junit.framework.Assert;
 import net.i2p.client.I2PClient;
 import net.i2p.client.I2PClientFactory;
 import net.i2p.client.I2PSession;
@@ -53,12 +52,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * A unit test for {@link RelayDataPacket} and {@link RelayRequest}.
+ * A unit test for {@link RelayRequest}.
  */
 public class RelayPacketTest {
-    private IndexPacket indexPacket;
-    private RelayDataPacket relayDataPacket;
-    private RelayRequest relayRequest;
+    private StoreRequest storeRequest;
+    private RelayRequest relayRequestSingle;   // a single RelayRequest
+    private RelayRequest relayRequestMulti;   // multiple nested RelayRequests
     private String[] destKeys;
     private RelayPeerManager peerManager;
     private File testDir;
@@ -72,11 +71,11 @@ public class RelayPacketTest {
         Destination nextDestination = new Destination("X3oKYQJ~1EAz7B1ZYGSrOTIMCW5Rnn2Svoc38dx5D9~zvz8vqiWcH-pCqQDwLgPWl9RTBzHtTmZcGRPXIv54i0XWeUfX6rTPDQGuZsnBMM0xrkH2FNLNFaJa0NgW3uKXWpNj9AI1AXUXzK-2MYTYoaZHx5SBoCaKfAGMcFJvTON1~kopxBxdBF9Q7T4~PJ3I2LeU-ycmUlehe9N9bIu7adUGyPGVl8Ka-UxwQromoJ~vSWHHl8HkwcDkW--v9Aj~wvFqxqriFkB1EeBiThi3V4XtVY~GUP4IkRj9YZGTsSBf3eS4xwXgnYWlB7IvxAGBfHY9MCg3lbAa1Dg~1IH6rhtXxsXUtGcXsz9yMZTxXHd~rGo~JrXeM1y~Vcenpr6tJcum6pxevkKzzT0qDegGPH3Zhqz7sSeeIaJEcPBUAkX89csqyFWFIjTMm6yZp2rW-QYUnVNLNTjf7vndYUAEICogAkq~btqpIzrGEpm3Pr9F23br3SpbOmdxQxg51AMmAAAA");
         
         EmailDestination destination = new EmailDestination("3LbBiN2nxtQVxPXYBQL3~PjBg-xOPalsFKZ0YqobHXP1u3MiBxqthF6TJxqdPS2LWWKb90FVzaPyIIEQOT0qSb");
-        indexPacket = new IndexPacket(destination);
-        relayRequest = new RelayRequest(indexPacket, nextDestination, 1000);
+        IndexPacket indexPacket = new IndexPacket(destination);
         
+        storeRequest = new StoreRequest(indexPacket);
         long delayMilliseconds = TimeUnit.MILLISECONDS.convert(123, TimeUnit.MINUTES);
-        relayDataPacket = new RelayDataPacket(nextDestination, delayMilliseconds, relayRequest);
+        relayRequestSingle = new RelayRequest(storeRequest, nextDestination, delayMilliseconds, 1000);
         
         // create a RelayPeerManager
         String localBase64DestKeys = "X3oKYQJ~1EAz7B1ZYGSrOTIMCW5Rnn2Svoc38dx5D9~zvz8vqiWcH-pCqQDwLgPWl9RTBzHtTmZcGRPXIv54i0XWeUfX6rTPDQGuZsnBMM0xrkH2FNLNFaJa0NgW3uKXWpNj9AI1AXUXzK-2MYTYoaZHx5SBoCaKfAGMcFJvTON1~kopxBxdBF9Q7T4~PJ3I2LeU-ycmUlehe9N9bIu7adUGyPGVl8Ka-UxwQromoJ~vSWHHl8HkwcDkW--v9Aj~wvFqxqriFkB1EeBiThi3V4XtVY~GUP4IkRj9YZGTsSBf3eS4xwXgnYWlB7IvxAGBfHY9MCg3lbAa1Dg~1IH6rhtXxsXUtGcXsz9yMZTxXHd~rGo~JrXeM1y~Vcenpr6tJcum6pxevkKzzT0qDegGPH3Zhqz7sSeeIaJEcPBUAkX89csqyFWFIjTMm6yZp2rW-QYUnVNLNTjf7vndYUAEICogAkq~btqpIzrGEpm3Pr9F23br3SpbOmdxQxg51AMmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADBrMolZp2gbXxrAef~UFJdSfiKSSSj~KcUOKndCndDipKboKQ5rcwHu0eKElE5NIS";
@@ -107,6 +106,8 @@ public class RelayPacketTest {
 
         minDelayMilliseconds = TimeUnit.MILLISECONDS.convert(120, TimeUnit.MINUTES);
         maxDelayMilliseconds = TimeUnit.MILLISECONDS.convert(600, TimeUnit.MINUTES);
+        
+        relayRequestMulti = RelayRequest.create(storeRequest, peerManager, destKeys.length, minDelayMilliseconds, maxDelayMilliseconds);
     }
 
     /** Returns the value of the private field {@link RelayPeer#MAX_SAMPLES} 
@@ -127,36 +128,34 @@ public class RelayPacketTest {
     }
     
     @Test
-    public void toByteArrayAndBack() throws DataFormatException, MalformedDataPacketException {
+    public void toByteArrayAndBack() throws DataFormatException, MalformedPacketException {
         byte[] bytes, bytes2;
         
-        // test RelayRequest
-        bytes = relayRequest.toByteArray();
+        // test one layer
+        bytes = relayRequestSingle.toByteArray();
         bytes2 = new RelayRequest(bytes).toByteArray();
         assertTrue("The two packets differ!", Arrays.equals(bytes, bytes2));
-
-        // test RelayDataPacket
-        bytes = relayDataPacket.toByteArray();
-        bytes2 = new RelayDataPacket(bytes).toByteArray();
+        
+        // test nested
+        bytes = relayRequestMulti.toByteArray();
+        bytes2 = new RelayRequest(bytes).toByteArray();
         assertTrue("The two packets differ!", Arrays.equals(bytes, bytes2));
     }
     
     @Test
-    public void testCreateAndUnwrap() throws I2PSessionException, DataFormatException, NoSuchAlgorithmException, MalformedDataPacketException {
-        DataPacket dataPacket = RelayDataPacket.create(indexPacket, peerManager, destKeys.length, minDelayMilliseconds, maxDelayMilliseconds);
-        byte[] indexPacketBytes = indexPacket.toByteArray();
-        Assert.assertNotNull(dataPacket);
+    public void testCreateAndUnwrap() throws I2PSessionException, DataFormatException, MalformedPacketException {
+        byte[] storeRequestBytes = storeRequest.toByteArray();
         
+        CommunicationPacket commPacket = relayRequestMulti;
         for (int i=0; i<destKeys.length; i++) {
-            assertTrue(dataPacket instanceof RelayDataPacket);
-            RelayDataPacket relayDataPacket = (RelayDataPacket)dataPacket;
-            RelayRequest request = relayDataPacket.getRequest();
-            dataPacket = decryptDataPacket(request, relayDataPacket.getNextDestination());
+            assertTrue(commPacket instanceof CommunicationPacket);
+            RelayRequest relayRequest = (RelayRequest)commPacket;
+            commPacket = decryptDataPacket(relayRequest, relayRequest.getNextDestination());
         }
-        assertTrue(Arrays.equals(indexPacketBytes, dataPacket.toByteArray()));
+        assertTrue(Arrays.equals(storeRequestBytes, commPacket.toByteArray()));
     }
     
-    private DataPacket decryptDataPacket(RelayRequest request, Destination destination) throws I2PSessionException, DataFormatException, NoSuchAlgorithmException, MalformedDataPacketException {
+    private CommunicationPacket decryptDataPacket(RelayRequest request, Destination destination) throws I2PSessionException, DataFormatException, MalformedPacketException {
         for (String destKey: destKeys)
             if (destKey.startsWith(destination.toBase64())) {
                 I2PSession i2pSession = i2pClient.createSession(new ByteArrayInputStream(Base64.decode(destKey)), null);
@@ -166,13 +165,13 @@ public class RelayPacketTest {
         return null;
     }
 
-    /** Tests <code>add(RelayDataPacket)</code>. */
+    /** Tests {@link RelayRequest#create(CommunicationPacket, RelayPeerManager, int, long, long)}. */
     @Test
     public void testAdd() {
         // Create a relay packet and check that a valid delay time was set. Repeat a number of times so the delays cover the [minDelay, maxDelay] interval well
         for (int i=0; i<1000; i++) {
-            RelayDataPacket relayPacket = RelayDataPacket.create(indexPacket, peerManager, destKeys.length, minDelayMilliseconds, maxDelayMilliseconds);
-            long delay = relayPacket.getDelay();
+            RelayRequest relayRequest = RelayRequest.create(storeRequest, peerManager, destKeys.length, minDelayMilliseconds, maxDelayMilliseconds);
+            long delay = relayRequest.getDelay();
             assertTrue("delay < min delay!", delay >= minDelayMilliseconds);
             assertTrue("delay > max delay!", delay <= maxDelayMilliseconds);
         }

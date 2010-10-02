@@ -35,9 +35,10 @@ import i2p.bote.network.NetworkStatusSource;
 import i2p.bote.packet.EncryptedEmailPacket;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.IndexPacket;
-import i2p.bote.packet.RelayDataPacket;
+import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.UnencryptedEmailPacket;
 import i2p.bote.packet.dht.DhtStorablePacket;
+import i2p.bote.packet.dht.StoreRequest;
 
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -221,9 +222,10 @@ public class OutboxProcessor extends I2PBoteThread {
         if (hops > 0) {
             long minDelay = configuration.getRelayMinDelay() * 60 * 1000;
             long maxDelay = configuration.getRelayMaxDelay() * 60 * 1000;
+            StoreRequest storeRequest = new StoreRequest(dhtPacket);
             for (int i=0; i<configuration.getRelayRedundancy(); i++) {
                 // TODO don't use the same relay peer twice if there are enough peers
-                RelayDataPacket packet = RelayDataPacket.create(dhtPacket, peerManager, hops, minDelay, maxDelay);
+                RelayRequest packet = RelayRequest.create(storeRequest, peerManager, hops, minDelay, maxDelay);
                 relayPacketFolder.add(packet);
             }
         }
@@ -241,7 +243,7 @@ public class OutboxProcessor extends I2PBoteThread {
     private int getMaxEmailPacketSize(int hops) {
         int maxSize = I2PBotePacket.MAX_DATAGRAM_SIZE - EncryptedEmailPacket.MAX_OVERHEAD;
         if (hops > 0)
-            maxSize -= RelayDataPacket.getMaxOverhead(hops);
+            maxSize -= RelayRequest.getMaxOverhead(hops);
         return maxSize;
     }
     

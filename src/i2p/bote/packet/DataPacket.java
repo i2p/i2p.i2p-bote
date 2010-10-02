@@ -21,13 +21,12 @@
 
 package i2p.bote.packet;
 
-import i2p.bote.I2PBote;
 import i2p.bote.Util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import net.i2p.util.Log;
@@ -43,41 +42,25 @@ public abstract class DataPacket extends I2PBotePacket {
     }
 
     /**
-     * Creates a <code>DataPacket</code> from raw datagram data. The only thing that is initialized
+     * Creates an <code>DataPacket</code> from raw datagram data. The only thing that is initialized
      * is the protocol version. The packet type code is verified.<br/>
-     * Subclasses should start reading at byte <code>HEADER_LENGTH</code> after calling this constructor.
+     * Subclasses start reading at byte <code>HEADER_LENGTH</code> after calling this constructor.
      * @param data
      */
-    public DataPacket(byte[] data) {
+    protected DataPacket(byte[] data) {
         super(data[1]);   // byte 1 is the protocol version in a data packet
+        checkPacketType(data[0]);
         if (data[0] != getPacketTypeCode())
             log.error("Wrong type code for " + getClass().getSimpleName() + ". Expected <" + getPacketTypeCode() + ">, got <" + (char)data[0] + ">");
-    }
-
-    /**
-     * Writes the packet to an <code>OutputStream</code> in binary representation.
-     */
-    public void writeTo(OutputStream outputStream) throws IOException {
-        outputStream.write(toByteArray());
-    }
-    
-    /**
-     * Writes the Type and Protocol Version fields of a Data Packet to
-     * an {@link OutputStream}.
-     * @param outputStream
-     */
-    protected void writeHeader(OutputStream outputStream) throws IOException {
-        outputStream.write((byte)getPacketTypeCode());
-        outputStream.write(getProtocolVersion());
     }
     
     /**
      * Creates a {@link #DataPacket} object from a file, using the same format as the
      * {@link #createPacket(byte[])} method.
      * @param file
-     * @throws MalformedDataPacketException
+     * @throws MalformedPacketException
      */
-    public static DataPacket createPacket(File file) throws MalformedDataPacketException {
+    public static DataPacket createPacket(File file) throws MalformedPacketException {
         if (file==null || !file.exists())
             return null;
         
@@ -88,7 +71,7 @@ public abstract class DataPacket extends I2PBotePacket {
             return packet;
         }
         catch (IOException e) {
-            throw new MalformedDataPacketException("Can't read packet file: " + file.getAbsolutePath(), e);
+            throw new MalformedPacketException("Can't read packet file: " + file.getAbsolutePath(), e);
         }
         finally {
             try {
@@ -103,13 +86,13 @@ public abstract class DataPacket extends I2PBotePacket {
     /**
      * Creates a {@link DataPacket} object from its byte array representation.<br/>
      * @param data
-     * @throws MalformedDataPacketException If the byte array does not contain a valid <code>DataPacket</code>.
+     * @throws MalformedPacketException If the byte array does not contain a valid <code>DataPacket</code>.
      */
-    public static DataPacket createPacket(byte[] data) throws MalformedDataPacketException {
+    public static DataPacket createPacket(byte[] data) throws MalformedPacketException {
         char packetTypeCode = (char)data[0];   // first byte of a data packet is the packet type code
         Class<? extends I2PBotePacket> packetType = decodePacketTypeCode(packetTypeCode);
         if (packetType==null || !DataPacket.class.isAssignableFrom(packetType))
-            throw new MalformedDataPacketException("Type code is not a DataPacket type code: <" + packetTypeCode + ">");
+            throw new MalformedPacketException("Type code is not a DataPacket type code: <" + packetTypeCode + ">");
         
         Class<? extends DataPacket> dataPacketType = packetType.asSubclass(DataPacket.class);
         DataPacket packet = null;
@@ -117,12 +100,22 @@ public abstract class DataPacket extends I2PBotePacket {
             packet = dataPacketType.getConstructor(byte[].class).newInstance(data);
         }
         catch (Exception e) {
-            throw new MalformedDataPacketException("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
+            throw new MalformedPacketException("Can't instantiate packet for type code <" + packetTypeCode + ">", e);
         }
         
         if (!packet.isProtocolVersionOk())
-            throw new MalformedDataPacketException("Incorrect protocol version: " + packet.getProtocolVersion() + ", packet: " + packet);
+            throw new MalformedPacketException("Incorrect protocol version: " + packet.getProtocolVersion() + ", packet: " + packet);
         
         return packet;
+    }
+
+    /**
+     * Writes the Type and Protocol Version fields of a Data Packet to
+     * an {@link OutputStream}.
+     * @param outputStream
+     */
+    protected void writeHeader(OutputStream outputStream) throws IOException {
+        outputStream.write((byte)getPacketTypeCode());
+        outputStream.write(getProtocolVersion());
     }
 }
