@@ -17,9 +17,9 @@ Before an email is sent, it is broken up into packets 30 kb or smaller and encry
 public key. The packets are then stored in the DHT.
 
 Email packets are stored redundantly in a Kademlia DHT (distributed hash table).
-Stored email packets are kept for at least 100 days, during which the recipient can download them.
-For relays, the guaranteed retention time is only 7 days. If a node runs out of email storage space, and
-there are no old packets that can be deleted, the node refuses storage requests.
+Stored email packets and relay packets are kept for at least 100 days, during which the recipient can
+download them. If a node runs out of email storage space, and there are no old packets that can be deleted,
+the node refuses storage requests.
 
 Below is a diagram of how an email packet is routed from a sender to a recipient:
 
@@ -148,6 +148,8 @@ for the email packet which the index packet entry points to.
 As of release 0.2.5, the protocol version is 4. It is incompatible to earlier versions.
 Version 4 clients will talk to higher versions. There will be at least one more protocol version at some point
 in the future; this version will be backwards compatible to version 4.
+All packets start with one byte for the packet type, followed by one byte for the packet version.
+Strings in packets are UTF8 encoded.
 
 3.1. Data Packets
 
@@ -219,14 +221,6 @@ in the future; this version will be backwards compatible to version 4.
                       | DAn   | 32 bytes   | Delete Authorization for KEYn
                       | TIMn  | 4 bytes    | The time the key KEYn was added
   --------------------+-------+------------+------------------------------------------------------------------
-   Relay Data Packet  |       |            | Contains an I2P destination, a delay time, and a Relay Request
-                      | TYPE  | 1 byte     | Value = 'R'
-                      | VER   | 1 byte     | Protocol version
-                      | DLY   | 4 bytes    | Delay in seconds before sending
-                      | NEXT  | 384 bytes  | Destination to forward the packet to
-                      | DLEN  | 2 bytes    | Length of the DATA field in bytes
-                      | DATA  | byte[]     | A Relay Request
-  --------------------+-------+------------+------------------------------------------------------------------
    Peer List          |       |            | Response to a Find Close Peers Request or a Peer List Request
                       | TYPE  | 1 byte     | Value = 'P'
                       | VER   | 1 byte     | Protocol version
@@ -253,54 +247,59 @@ in the future; this version will be backwards compatible to version 4.
 
   Communication packets are used for sending data between two I2P-Bote nodes.
   They contain a data packet, see 3.1.
-  All Communication Packets start with a four-byte prefix, followed by one byte for the packet type and
-  one byte for the packet version. Some have a 32-byte Correlation ID after the packet version.
-  Strings in packets are UTF8 encoded.
-
+  All Communication Packets start with a four-byte prefix, followed by one byte for the packet type,
+  one byte for the packet version, and a 32-byte Correlation ID.
+  
    Packet Type        | Field | Data Type  | Description
   --------------------+-------+------------+------------------------------------------------------------------
    Relay Request      |       |            | A packet that tells the receiver to communicate with a peer,
-                      |       |            | or peers, on behalf of the sender.
+                      |       |            | or peers, on behalf of the sender. It contains an I2P
+                      |       |            | destination, a delay time, and a Communication Packet.
                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
-                      | TYPE  | 1 byte     | Value = 'Y'
+                      | TYPE  | 1 byte     | Value = 'R'
                       | VER   | 1 byte     | Protocol version
+                      | CID   | 32 bytes   | Correlation ID, used for responses
                       | HLEN  | 2 bytes    | HashCash length
                       | HK    | byte[]     | HashCash token (HLEN bytes)
+                      | DLY   | 4 bytes    | Delay in seconds before sending
+                      | NEXT  | 384 bytes  | Destination to forward the packet to
                       | RET   | Ret. Chain | An empty or non-empty Return Chain
                       | DLEN  | 2 bytes    | Length of the DATA field in bytes
-                      | DATA  | byte[]   E | Encrypted with the recipient's public key. Can contain an
-                      |       |            | Email Packet, an Index Packet, a Relay Data Packet,
-                      |       |            | a Retrieve Request, or a Deletion Query.
+                      | DATA  | byte[]   E | Encrypted with the recipient's public key. Can contain another
+                      |       |            | Relay Request, a Store Request, or a Deletion Query.
+                      | PAD   | byte[]     | Optional padding
   --------------------+-------+------------+------------------------------------------------------------------
-   Relay Return       |       |            | Contains a "return chain" of up to 4 hops, and a payload. The
-   Request            |       |            | final destination is unknown to the sender or any of the hops.
+   Relay Return       |       |            | Contains a Return Chain and a payload. The final destination
+   Request            |       |            | is unknown to the sender or any of the hops.
    (not implemented)  |       |            | Used for responding to a relayed data packet.
                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                       | TYPE  | 1 byte     | Value = 'K'
                       | VER   | 1 byte     | Protocol version
+                      | CID   | 32 bytes   | Correlation ID, used for confirmation between two relay peers.
+                      |       |            | A new correlation ID is set at every hop.
                       | RET   | Ret. Chain | A non-empty Return Chain
                       | DLEN  | 2 bytes    | Length of the DATA field in bytes
-                      | DATA  | byte[]   E | The payload. AES256-encrypted at every hop.
+                      | DATA  | byte[]   E | The payload. AES256-encrypted at every hop in the return chain.
   --------------------+-------+------------+------------------------------------------------------------------
    Return Chain       |       |            | Not a packet itself, but part of a Relay (Return) Request
                       | RL1   | 2 bytes    | Length of RET1. Zero means an empty return chain, nothing follows.
-                      | RET1  | RL1 bytes  | Hop 1 in the return chain. Contains the hop's I2P destination
-                      |       |            | and an AES256 key to encrypt the payload with.
+                      | RET1  | RL1 bytes  | Hop 1 in the return chain. Contains a zero byte, followed by the
+                      |       |            | hop's I2P destination and an AES key to encrypt the payload with.
                       | RL2   | 2 bytes   E| Length of RET2.
-                      | RET2  | RL2 bytes E| Hop 2 in the return chain. Contains the hop's I2P destination
-                      |       |            | and an AES256 key to encrypt the payload with.
+                      | RET2  | RL2 bytes E| Hop 2 in the return chain. Contains a zero byte, followed by the
+                      |       |            | hop's I2P destination and an AES key to encrypt the payload with.
                       |       |            | This field is encrypted with the PK of hop 2.
                       | RL3   | 2 bytes   E| Length of RET3.
-                      | RET3  | RL3 bytes E| Hop 3 in the return chain. Contains the hop's I2P destination
-                      |       |            | and an AES256 key to encrypt the payload with.
+                      | RET3  | RL3 bytes E| Hop 3 in the return chain. Contains a zero byte, followed by the
+                      |       |            | hop's I2P destination and an AES key to encrypt the payload with.
                       |       |            | This field is encrypted with the PKs of hops 3 and 2.
                       | ...   | ...        | ...
                       | RLn   | 2 bytes   E| Length of RETn.
-                      | RETn  | RLn bytes E| Last hop in the return chain. Contains the hop's I2P destination
-                      |       |            | and an AES256 key to encrypt the payload with.
+                      | RETn  | RLn bytes E| Last hop in the return chain. Contains a zero byte, followed by the
+                      |       |            | hop's I2P destination and an AES key to encrypt the payload with.
                       |       |            | This field is encrypted with the PKs of hops n...2.
                       | RLn+1 | 2 bytes   E| Length of RETn+1.
-                      | RETn+1| RLn+1 byt E| Number of hops followed by all AES256 keys (one per hop)
+                      | RETn+1| RLn+1 byt E| Number of hops (>0) followed by all AES256 keys (one per hop)
                       | RLn+2 | 2 bytes    | Value=0 to indicate this is the end of the return chain
   --------------------+-------+------------+------------------------------------------------------------------
    Fetch Request      |       |            | Request to a chain end point to retrieve an Index Packet or
@@ -385,6 +384,7 @@ in the future; this version will be backwards compatible to version 4.
                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                       | TYPE  | 1 byte     | Value = 'D'
                       | VER   | 1 byte     | Protocol version
+                      | CID   | 32 bytes   | Correlation ID, used for responses
                       | KEY   | 32 bytes   | DHT key of the Email Packet to delete
                       | DA    | 32 bytes   | Delete Authorization (SHA-256 must equal DV in the email pkt)
   --------------------+-------+------------+------------------------------------------------------------------
@@ -393,6 +393,7 @@ in the future; this version will be backwards compatible to version 4.
                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                       | TYPE  | 1 byte     | Value = 'X'
                       | VER   | 1 byte     | Protocol version
+                      | CID   | 32 bytes   | Correlation ID, used for responses
                       | DH    | 32 bytes   | The Email Destination hash of the Index Packet
                       | N     | 1 byte     | Number of entries in the packet
                       | DHT1  | 32 bytes   | First DHT key to remove
@@ -428,7 +429,64 @@ in the future; this version will be backwards compatible to version 4.
   6) Rn decrypts the Relay Packet into an Email Packet.
   7) Rn sends the packet to S1,...,Sm through a Kademlia STORE
 
-4.2. Retrieving DHT items via relays (not implemented yet)
+4.2. Return Chains
+
+In order to make it impossible for two non-adjacent nodes on the return chain to identify Relay
+Return Request packets, the payload and the entire Return Chain are re-encrypted at every hop.
+A new Correlation ID is generated at every hop.
+Here is a simplified diagram of how a Relay Return Packet is sent from one hop to the next:
+
+  (A) The packet is received. HOP1 through HOP3 contain encrypted data (encrypted with the public key
+      for the receiving I2P node):
+      
+      +------------------- Relay Return Request --------------------------+
+      |                                                                   |
+      |                                .-----KEY1-----.                   |
+      |                .---KEY1---.   |  .---KEY2---.  |                  |
+      |     .-KEY1-.  |  .-KEY2-.  |  | |  .-KEY3-.  | |  .---------.     |
+      |     | HOP1 |  |  | HOP2 |  |  | |  | HOP2 |  | |  | PAYLOAD |     |
+      |     `------’  |  `------’  |  | |  `------’  | |  `---------’     |
+      |                `----------’   |  `----------’  |                  |
+      |                                `--------------’                   |
+      |                                                                   |
+      +-------------------------------------------------------------------+
+      
+      KEYx denotes a layer of encryption.
+
+  (B) The receiving node decrypts HOP1, HOP2, and HOP3. HOP1 is now in plain text. It contains the
+      destination of the next hop and an AES key.
+  
+      +------------------- Relay Return Request --------------------------+
+      |                                                                   |
+      |                                .-----KEY2-----.                   |
+      |                .---KEY2---.   |  .---KEY3---.  |                  |
+      |     .------.  |  .------.  |  | |  .------.  | |  .---------.     |
+      |     | HOP1 |  |  | HOP2 |  |  | |  | HOP2 |  | |  | PAYLOAD |     |
+      |     `------’  |  `------’  |  | |  `------’  | |  `---------’     |
+      |                `----------’   |  `----------’  |                  |
+      |                                `--------------’                   |
+      |                                                                   |
+      +-------------------------------------------------------------------+
+
+  (C) HOP1 is replaced with random data and moved to the end of the chain. The payload is encrypted with
+      the AES key from HOP1:
+  
+      +------------------- Relay Return Request --------------------------+
+      |                                                                   |
+      |                      .-----KEY2-----.                             |
+      |      .---KEY2---.   |  .---KEY3---.  |                            |
+      |     |  .------.  |  | |  .------.  | |  .------.  .---AES---.     |
+      |     |  | HOP2 |  |  | |  | HOP2 |  | |  | HOP1 |  | PAYLOAD |     |
+      |     |  `------’  |  | |  `------’  | |  `------’  `---------’     |
+      |      `----------’   |  `----------’  |                            |
+      |                      `--------------’                             |
+      |                                                                   |
+      +-------------------------------------------------------------------+
+
+  (D) The packet is sent to the next node in the chain.
+
+
+4.3. Retrieving DHT items via relays (not implemented yet)
   I2P nodes involved:
     A=Address Owner
     F=Fetcher
@@ -440,19 +498,19 @@ in the future; this version will be backwards compatible to version 4.
      as described in 4.1
   2) F queries the DHT for the DHT item
   3) F encrypts the DHT data with the public key for hop 1 of the return chain
-  4) F moves the (FIN1,HOP1) block of the return chain to the end (behind HOP5)
+  4) F moves the (RL1,RET1) block of the return chain to the end (behind RETn+1)
   5) F sends the results of steps 3) and 4) to I1
-  6) I1 decrypts all (FINx,HOPx) blocks of the return chain and finds I2 and the AES key in the first block
-  7) I1 replaces (FIN1,HOP1) with random data that is encrypted with the PK for I2
-  8) I1 moves the (FIN1,HOP1) block of the return chain to the end (behind HOP5)
+  6) I1 decrypts all (RLx,RETx) blocks of the return chain and finds I2 and the AES key in the first block
+  7) I1 replaces (RL1,RET1) with random data that is encrypted with the PK for I2
+  8) I1 moves the (RL1,RET1) block of the return chain to the end (behind RETn+1)
   9) I1 encrypts the payload with the AES key
   10) I1 sends the results of steps 7) and 8) to I2
-  11) Repeat from 6) for I2, I3, ..., until the data reaches A (when FIN=1)
-  12) A decrypts the (FIN1,HOP1) block which contains all AES keys
+  11) Repeat from 6) for I2, I3, ..., until the data reaches A (when the first byte of RET1 is non-zero)
+  12) A decrypts the (RL1,RET1) block which contains all AES keys
   13) A decrypts the payload with the AES keys, starting from the last hop's key
   14) The decrypted data contains the DHT data packet
 
-4.3. Deleting an Email Packet
+4.4. Deleting an Email Packet
 
   Every time a recipient receives an email packet directly from one or more storage nodes, it asks the
   storage node(s) to delete the packet.
@@ -470,13 +528,14 @@ in the future; this version will be backwards compatible to version 4.
   This helps reduce storage space by removing old Email Packets from nodes that weren't online at the time
   the delete request was sent initially.
   
-4.4 Deleting an Index Packet Entry
+4.5 Deleting an Index Packet Entry
 
   Similar to deleting an email packet.
 
-4.5. Replication
+4.6. Replication
 
 See comments at the beginning of src/i2p/bote/network/kademlia/ReplicateThread.java
+
 
 5. Algorithms Used By Nodes Locally
 
