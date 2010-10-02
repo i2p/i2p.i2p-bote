@@ -42,6 +42,9 @@ import net.i2p.data.Base32;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
+import net.i2p.data.PrivateKey;
+import net.i2p.data.PublicKey;
+import net.i2p.data.SessionKey;
 import net.i2p.util.Log;
 import net.i2p.util.Translate;
 
@@ -289,5 +292,21 @@ public class Util {
         file.setReadable(true, true);
         file.setWritable(false, false);
         file.setWritable(true, true);
+    }
+    
+    /** Encrypts data with an I2P public key */
+    public static byte[] encrypt(byte data[], PublicKey key) {
+        I2PAppContext appContext = I2PAppContext.getGlobalContext();
+        SessionKey sessionKey = appContext.sessionKeyManager().createSession(key);
+        return appContext.elGamalAESEngine().encrypt(data, key, sessionKey, null, null, null, 0);
+    }
+    
+    /**
+     * Decrypts data with an I2P private key 
+     * @throws DataFormatException
+     */
+    public static byte[] decrypt(byte data[], PrivateKey key) throws DataFormatException {
+        I2PAppContext appContext = I2PAppContext.getGlobalContext();
+        return appContext.elGamalAESEngine().decrypt(data, key, appContext.sessionKeyManager());
     }
 }

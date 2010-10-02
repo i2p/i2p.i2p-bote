@@ -34,7 +34,6 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
 
-import net.i2p.I2PAppContext;
 import net.i2p.client.I2PClient;
 import net.i2p.client.I2PClientFactory;
 import net.i2p.client.I2PSession;
@@ -43,7 +42,6 @@ import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.DataStructure;
 import net.i2p.data.Destination;
-import net.i2p.data.SessionKey;
 import net.i2p.data.Signature;
 import net.i2p.util.Log;
 
@@ -53,14 +51,7 @@ import net.i2p.util.Log;
  * Uses the I2P crypto routines.
  */
 public class ElGamal2048_DSA1024 implements CryptoImplementation {
-    private static final int PADDED_SIZE = 32;   // pad to the length of an AES-256 key
-    
     private Log log = new Log(ElGamal2048_DSA1024.class);
-    private I2PAppContext appContext;
-    
-    ElGamal2048_DSA1024() {
-        appContext = new I2PAppContext();
-    }
     
     @Override
     public String getName() {
@@ -208,8 +199,7 @@ public class ElGamal2048_DSA1024 implements CryptoImplementation {
     public byte[] encrypt(byte[] data, PublicKey key) throws GeneralSecurityException {
         ElGamalPublicKey elGamalKey = castToElGamal(key);
         net.i2p.data.PublicKey i2pPublicKey = elGamalKey.getI2PKey();
-        SessionKey sessionKey = appContext.sessionKeyManager().createSession(i2pPublicKey);
-        return appContext.elGamalAESEngine().encrypt(data, i2pPublicKey, sessionKey, PADDED_SIZE);
+        return Util.encrypt(data, i2pPublicKey);
     }
 
     private ElGamalPublicKey castToElGamal(PublicKey key) {
@@ -228,7 +218,7 @@ public class ElGamal2048_DSA1024 implements CryptoImplementation {
         ElGamalPrivateKey elGamalKey = castToElGamal(key);
         try {
             net.i2p.data.PrivateKey i2pPrivateKey = elGamalKey.getI2PKey();
-            return appContext.elGamalAESEngine().decrypt(data, i2pPrivateKey, appContext.sessionKeyManager());
+            return Util.decrypt(data, i2pPrivateKey);
         } catch (DataFormatException e) {
             byte[] shortenedData = data.length>10?Arrays.copyOf(data, 10):data;
             throw new KeyException("Can't decrypt data: " + Arrays.toString(shortenedData) + " (only the first 10 elements are shown).", e);

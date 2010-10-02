@@ -32,13 +32,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Random;
 
-import net.i2p.I2PAppContext;
 import net.i2p.client.I2PSession;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.data.PrivateKey;
 import net.i2p.data.PublicKey;
-import net.i2p.data.SessionKey;
 import net.i2p.util.Log;
 
 import com.nettgryppa.security.HashCash;
@@ -52,7 +50,6 @@ import com.nettgryppa.security.HashCash;
  */
 @TypeCode('R')
 public class RelayRequest extends CommunicationPacket {
-    private static final int PADDED_SIZE = 16;   // pad to the length of an AES block (not to be confused with the AES key size)
     private static Random random = new Random();
     
     private Log log = new Log(RelayRequest.class);
@@ -249,10 +246,8 @@ public class RelayRequest extends CommunicationPacket {
     
     private byte[] encrypt(CommunicationPacket packet, Destination destination) {
         PublicKey publicKey = destination.getPublicKey();
-        I2PAppContext appContext = I2PAppContext.getGlobalContext();
-        SessionKey sessionKey = appContext.sessionKeyManager().createSession(publicKey);
         byte[] data = packet.toByteArray();
-        return appContext.elGamalAESEngine().encrypt(data, publicKey, sessionKey, PADDED_SIZE);
+        return Util.encrypt(data, publicKey);
     }
 
     /**
@@ -262,8 +257,7 @@ public class RelayRequest extends CommunicationPacket {
      */
     private CommunicationPacket decrypt(I2PSession i2pSession) throws DataFormatException, MalformedPacketException {
         PrivateKey privateKey = i2pSession.getDecryptionKey();
-        I2PAppContext appContext = I2PAppContext.getGlobalContext();
-        byte[] decryptedData = appContext.elGamalAESEngine().decrypt(payload, privateKey, appContext.sessionKeyManager());
+        byte[] decryptedData = Util.decrypt(payload, privateKey);
         return CommunicationPacket.createPacket(decryptedData);
     }
 }
