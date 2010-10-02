@@ -488,8 +488,8 @@
 
 <tag-file>
     <description>
-        Prints a date and/or time. If the date is null, a string is printed
-        indicating the date is unknown.
+        Prints a date and/or time. If the date is null and printUnknown is true,
+        a string is printed indicating the date is unknown.
         type can be "date", "time", or "both". The default is both.
         timeStyle can be "short", "medium", "long", or "full".
     </description>

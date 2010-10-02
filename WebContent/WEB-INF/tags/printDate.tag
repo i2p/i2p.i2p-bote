@@ -22,6 +22,7 @@
 <%@ attribute name="date" type="java.util.Date" required="true" description="The date and/or time to display" %>
 <%@ attribute name="type" required="false" description="Whether to print the date, the time, or both. See the time parameter of fmt:formatDate. The default is both." %>
 <%@ attribute name="timeStyle" required="false" description="See the timeStyle parameter of fmt:formatDate" %>
+<%@ attribute name="printUnknown" type="java.lang.Boolean" required="false" description="Whether to substitute 'unknown' for an empty date. If this is false, nothing is printed." %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -34,7 +35,7 @@
     </c:if>
     <fmt:formatDate value="${date}" var="date" type="${type}" timeStyle="${timeStyle}"/>
 </c:if>
-<c:if test="${empty date}">
+<c:if test="${empty date and printUnknown eq true}">
     <ib:message key="Unknown" var="date"/>
 </c:if>
 ${fn:escapeXml(date)}
