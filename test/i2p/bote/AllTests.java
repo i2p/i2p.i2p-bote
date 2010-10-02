@@ -40,6 +40,7 @@ import i2p.bote.packet.IndexPacketTest;
 import i2p.bote.packet.PeerListTest;
 import i2p.bote.packet.RelayPacketTest;
 import i2p.bote.packet.ResponsePacketTest;
+import i2p.bote.packet.ReturnChainTest;
 import i2p.bote.packet.UnencryptedEmailPacketTest;
 import i2p.bote.packet.dht.FindClosePeersPacketTest;
 import i2p.bote.packet.dht.StoreRequestTest;
@@ -63,6 +64,7 @@ import org.junit.runners.Suite;
     PeerListTest.class,
     IndexPacketDeleteRequestTest.class,
     RelayPacketTest.class,
+    ReturnChainTest.class,
     
     // Folders
     FolderTest.class,
