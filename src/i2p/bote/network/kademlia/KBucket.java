@@ -58,7 +58,6 @@ class KBucket extends AbstractBucket {
     private volatile int depth;
     private volatile long lastLookupTime;
 
-    // capacity - The maximum number of peers the bucket can hold
     KBucket(BigInteger startId, BigInteger endId, int depth) {
         super(KademliaConstants.K);
         this.startId = startId;
@@ -181,10 +180,11 @@ class KBucket extends AbstractBucket {
     }
     
     /**
-     * Splits the bucket in two equal halves (in terms of ID ranges) and moves peers
-     * to the new bucket if necessary.
+     * Splits the bucket in two equal halves (only in terms of ID range, the number
+     * of elements in the two buckets may differ) and moves peers to the new bucket
+     * if necessary.<br/>
      * The existing bucket retains the lower IDs; the new bucket will contain the
-     * higher IDs.
+     * higher IDs.<br/>
      * In other words, the bucket is split into two sub-branches in the Kademlia
      * tree, with the old bucket representing the left branch and the new bucket
      * representing the right branch.
