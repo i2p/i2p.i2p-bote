@@ -441,11 +441,10 @@ public class JSPHelper {
         while ((newAddresses.hasNext()))
             mergedAddresses.add(new RecipientAddress("to", newAddresses.next()));
             
-        // Make sure there is a blank recipient field at the end so all non-empty fields have a remove button next to them
-        if (mergedAddresses.isEmpty() || !mergedAddresses.get(mergedAddresses.size()-1).getAddress().isEmpty())
-            mergedAddresses.add(new RecipientAddress("to", ""));
-        
         if ("addRecipientField".equalsIgnoreCase(action))
+            mergedAddresses.add(new RecipientAddress("to", ""));
+        // Make sure there is a blank recipient field at the end so all non-empty fields have a remove button next to them
+        else if (mergedAddresses.isEmpty() || !mergedAddresses.get(mergedAddresses.size()-1).getAddress().isEmpty())
             mergedAddresses.add(new RecipientAddress("to", ""));
         
         return mergedAddresses;
