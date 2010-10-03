@@ -21,7 +21,6 @@
 
 package i2p.bote.folder;
 
-import i2p.bote.Util;
 import i2p.bote.packet.MalformedPacketException;
 import i2p.bote.packet.RelayRequest;
 
@@ -52,20 +51,20 @@ public class RelayPacketFolder extends PacketFolder<RelayRequest> {
         // make the packet's hash part of the filename and don't save if a file with the same hash exists already
         byte[] bytes = packet.toByteArray();
         Hash packetHash = SHA256Generator.getInstance().calculateHash(bytes);
-        String base32Hash = Util.toBase32(packetHash);
-        if (!fileExistsForHash(base32Hash)) {
+        String base64Hash = packetHash.toBase64();
+        if (!fileExistsForHash(base64Hash)) {
             long sendTime = System.currentTimeMillis() + packet.getDelay();
-            String filename = sendTime + "_" + base32Hash + PACKET_FILE_EXTENSION;
+            String filename = sendTime + "_" + base64Hash + PACKET_FILE_EXTENSION;
             add(packet, filename);
             return;
         }
     }
     
-    private boolean fileExistsForHash(final String base32Hash) {
+    private boolean fileExistsForHash(final String base64Hash) {
         File[] files = storageDir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.contains(base32Hash);
+                return name.contains(base64Hash);
             }
         });
         
