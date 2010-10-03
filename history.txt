@@ -1,6 +1,22 @@
 I2P-Bote Version History
 ------------------------
 
+0.2.5 (Released on Oct 04, 2010)
+  * Email attachments
+  * Seedless peer exchange
+  * Russian translation by suhr
+  * All generated files are now read/writable by the owner only
+  * I2P-Bote always uses the router console language (if translation available)
+  * The network page now shows peers in b32 for I2P compatibility
+  * Address book and identities are now sorted alphabetically
+  * The "unknown" column has been inverted to a "known" column
+  * Signatures for sent emails are not shown because signatures are not saved
+  * Emails, including attachments, are compressed before sending
+  * Protocol version 4
+  * Improvements and fixes to relaying
+  * Fix for a bug that sometimes made emails to ECC destinations disappear
+  * Many more bugfixes and improvements. Thanks to mixxy and others for testing!
+
 0.2.4 (Released on Jun 14, 2010)
   * Elliptic curve encryption
   * Email can be sent via relays for added anonymity
