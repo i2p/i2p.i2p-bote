@@ -80,9 +80,11 @@
             </div>
             <c:if test="${ib:newMailReceived()}">
                 <script language="Javascript">
-                // If inbox is being displayed, reload so the new email(s) show
-                if (parent.document.getElementById('inboxFlag'))
-                    parent.location.href = 'folder.jsp?path=Inbox';
+                    // refresh folder list to update the new message count
+                    parent.frames[1].location.href = 'folders.jsp';
+                    // If inbox is being displayed, reload so the new email(s) show
+                    if (parent.document.getElementById('inboxFlag'))
+                        parent.location.href = 'folder.jsp?path=Inbox';
                 </script>
             </c:if>
         </c:if>
