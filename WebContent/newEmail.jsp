@@ -113,7 +113,7 @@
                         <option value="replyto"${replytoSelected}><ib:message key="Reply To:"/></option>
                     </select>
                 </td><td>
-                    <input type="text" size="80" name="${recipientField}" value="${ib:escapeQuotes(recipient.address)}"/>
+                    <input type="text" size="70" name="${recipientField}" value="${ib:escapeQuotes(recipient.address)}"/>
                     <c:choose>
                         <c:when test="${status.last}">
                             <input type="hidden" name="destparamname" value="${recipientField}"/>
@@ -135,7 +135,7 @@
             </tr>
             <tr>
                 <td valign="top"><br/><ib:message key="Subject:"/></td>
-                <td><input class="widetextfield" type="text" size="80" name="subject" value="${ib:escapeQuotes(param.subject)}"/></td>
+                <td><input class="widetextfield" type="text" size="70" name="subject" value="${ib:escapeQuotes(param.subject)}"/></td>
             </tr>
             
             <%-- Attachments --%>
@@ -194,7 +194,7 @@
             <tr>
                 <td valign="top"><br/><ib:message key="Message:"/></td>
                 <td>
-                    <textarea rows="30" cols="80" name="message"><c:if test="${!empty param.quoteMsgId}">
+                    <textarea rows="30" cols="70" name="message"><c:if test="${!empty param.quoteMsgId}">
 <%-- The following lines are not indented because the indentation would show up as blank chars on the textarea --%>
 <c:set var="origEmail" value="${ib:getEmail(param.quoteMsgFolder, param.quoteMsgId)}"/>
 <ib:message key="{0} wrote:" hide="true">
