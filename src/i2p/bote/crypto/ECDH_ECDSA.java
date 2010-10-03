@@ -320,6 +320,8 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
         byte[] sharedSecret = keyAgreement.generateSecret();
         MessageDigest hashAlg = MessageDigest.getInstance("SHA-256");
         byte[] secretHash = hashAlg.digest(sharedSecret);
+        if (sharedSecret.length < secretHash.length)
+            log.warn("Not enough data in shared secret!");
         
         // encrypt the data using the hash of the shared secret as an AES key
         SessionKey aesKey = new SessionKey(secretHash);
