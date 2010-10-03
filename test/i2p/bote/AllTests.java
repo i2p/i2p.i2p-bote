@@ -32,6 +32,7 @@ import i2p.bote.folder.IncompleteEmailFolderTest;
 import i2p.bote.folder.IndexPacketFolderTest;
 import i2p.bote.folder.RelayPacketFolderTest;
 import i2p.bote.network.kademlia.BucketManagerTest;
+import i2p.bote.network.kademlia.KBucketTest;
 import i2p.bote.packet.EmailPacketDeleteRequestTest;
 import i2p.bote.packet.EncryptedEmailPacketTest;
 import i2p.bote.packet.I2PBotePacketTest;
@@ -78,6 +79,7 @@ import org.junit.runners.Suite;
     EmailTest.class,
     EmailMetadataTest.class,
     EmailIdentityTest.class,
+    KBucketTest.class,
     BucketManagerTest.class,
     CryptoImplementationTest.class
 })

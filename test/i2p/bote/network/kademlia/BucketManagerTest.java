@@ -28,7 +28,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
@@ -373,7 +372,7 @@ public class BucketManagerTest {
         // all peers in a bucket at depth d should have the same value at the d-th highest bit
         // TODO and all bits above it
         for (KBucket bucket: bucketManager) {
-            int depth = getDepth(bucket);
+            int depth = KademliaTestUtil.getDepth(bucket);
             int bitIndex = Hash.HASH_LENGTH*8 - depth;
             Boolean previousBit = null;
             for (KademliaPeer peer: bucket) {
@@ -425,13 +424,6 @@ public class BucketManagerTest {
             for (KademliaPeer peer: bucket)
                 peers.add(peer);
         return peers;
-    }
-    
-    // returns the value of the private field depth
-    private int getDepth(KBucket bucket) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        Field depthField = KBucket.class.getDeclaredField("depth");
-        depthField.setAccessible(true);
-        return depthField.getInt(bucket);
     }
     
     // calls the private method getKBucket
