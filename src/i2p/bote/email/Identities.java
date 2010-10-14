@@ -273,6 +273,21 @@ public class Identities implements Iterable<EmailIdentity> {
         return identities.size();
     }
     
+    /**
+     * Looks for a Base64-encoded Email Destination in a string and returns
+     * the identity that matches the Email Destination. If no Email Destination
+     * is found, or if it doesn't match any Email Identity, <code>null</code>
+     * is returned.
+     * @param address
+     */
+    public EmailIdentity extractIdentity(String address) {
+        String destinationStr = EmailDestination.extractBase64Dest(address);
+        if (destinationStr != null)
+            return get(destinationStr);
+        else
+            return null;
+    }
+    
     @Override
     public Iterator<EmailIdentity> iterator() {
         return identities.iterator();

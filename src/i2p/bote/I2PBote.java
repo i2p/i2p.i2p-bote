@@ -21,8 +21,10 @@
 
 package i2p.bote;
 
+import static i2p.bote.Util._;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.email.Email;
+import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.EmailPacketFolder;
@@ -72,6 +74,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import javax.mail.MessagingException;
 
 import net.i2p.I2PAppContext;
 import net.i2p.I2PException;
@@ -394,6 +398,13 @@ public class I2PBote implements NetworkStatusSource {
     
     public void sendEmail(Email email) throws Exception {
         email.checkAddresses();
+        
+        String sender = email.getSender().toString();
+        EmailIdentity senderIdentity = identities.extractIdentity(sender);
+        if (senderIdentity == null)
+            throw new MessagingException(_("No identity matches the sender/from field: " + sender));
+        email.sign(senderIdentity);
+        
         outbox.add(email);
         if (outboxProcessor != null)
             outboxProcessor.checkForEmail();

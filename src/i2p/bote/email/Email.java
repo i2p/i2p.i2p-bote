@@ -295,16 +295,17 @@ public class Email extends MimeMessage {
     /**
      * Creates a digital signature of the email and stores it in the
      * <code>SIGNATURE_HEADER</code> header field. It also removes the
-     * <code>SIGNATURE_VALID_HEADER</code> header.
+     * <code>SIGNATURE_VALID_HEADER</code> header. If there is a signature
+     * already, it is replaced.<br/>
      * The signature is computed over the stream representation of the
-     * email, minus the signature header if it is present.
+     * email, minus the signature header if it is present.<br/>
      * The signature includes the ID number of the {@link CryptoImplementation}
      * used (signature lengths can be different for the same algorithm).
      * @param senderIdentity
      * @throws MessagingException
      * @throws GeneralSecurityException 
      */
-    private void sign(EmailIdentity senderIdentity) throws MessagingException, GeneralSecurityException {
+    public void sign(EmailIdentity senderIdentity) throws MessagingException, GeneralSecurityException {
         removeHeader(SIGNATURE_HEADER);   // make sure there is no existing signature which would make the new signature invalid
         removeHeader(SIGNATURE_VALID_HEADER);   // remove the signature validity flag before signing
         CryptoImplementation cryptoImpl = senderIdentity.getCryptoImpl();
