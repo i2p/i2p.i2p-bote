@@ -74,12 +74,13 @@ public abstract class DataPacket extends I2PBotePacket {
             throw new MalformedPacketException("Can't read packet file: " + file.getAbsolutePath(), e);
         }
         finally {
-            try {
-                inputStream.close();
-            }
-            catch (IOException e) {
-                log.error("Can't close stream.", e);
-            }
+            if (inputStream != null)
+                try {
+                    inputStream.close();
+                }
+                catch (IOException e) {
+                    log.error("Can't close stream.", e);
+                }
         }
     }
     
