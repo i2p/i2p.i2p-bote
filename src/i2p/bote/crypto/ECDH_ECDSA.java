@@ -342,7 +342,7 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     }
     
     /**
-     * Signs a block of data using the following steps:
+     * Decrypts a block of data using the following steps:
      * <ol>
      *   <li/>Read the ephemeral public key from the message.<br/>
      *   <li/>Use that public key together with your recipient key to generate a secret using ECDH.<br/>
