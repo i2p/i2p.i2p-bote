@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-02 18:47+0000\n"
-"PO-Revision-Date: 2010-11-11 18:08+0100\n"
+"PO-Revision-Date: 2010-11-14 11:50+0100\n"
 "Last-Translator: mixxy <m1xxy@mail.i2p>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -518,7 +518,7 @@ msgstr "I2P-Bote"
 
 #: WebContent/header.jsp
 msgid "Secure Distributed Email"
-msgstr "Correo Electrónico Decentralizado y Seguro"
+msgstr "Correo Electrónico Descentralizado y Seguro"
 
 #: WebContent/header.jsp
 msgid "Addresses"
