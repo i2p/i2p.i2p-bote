@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-02 18:47+0000\n"
-"PO-Revision-Date: 2010-11-14 11:50+0100\n"
+"PO-Revision-Date: 2010-12-01 18:01+0100\n"
 "Last-Translator: mixxy <m1xxy@mail.i2p>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "Dirección no válida: {0}"
 
 #: src/i2p/bote/email/Email.java:436
 msgid "Address doesn't contain an Email Destination or an external address: {0}"
-msgstr "La dirección ni es una Destinación de correo electrónico ni una dirección externa: {0}"
+msgstr "La dirección ni es un Destino de correo electrónico ni una dirección externa: {0}"
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -133,7 +133,7 @@ msgstr "Pares Relegados:"
 
 #: src/i2p/bote/web/PeerInfoTag.java:110
 msgid "Destination Hash"
-msgstr "Hash de la Destinación I2P"
+msgstr "Hash del Destino I2P"
 
 #: src/i2p/bote/web/PeerInfoTag.java:111
 msgid "Ban Reason"
@@ -154,7 +154,7 @@ msgstr "Error al enviar el correo: {0}"
 
 #: WebContent/editContact.jsp
 msgid "Please fill in the Destination field."
-msgstr "Por favor, ¡rellena el campo \"Destinatario\"!"
+msgstr "Por favor, ¡rellena el campo \"Destino\"!"
 
 #: WebContent/editContact.jsp
 msgid "Please fill in the Name field."
@@ -182,7 +182,7 @@ msgstr "Guardar"
 
 #: WebContent/editContact.jsp
 msgid "Email Destination:"
-msgstr "Destinación de correo:"
+msgstr "Destino de correo:"
 
 #: WebContent/editContact.jsp
 msgid "(required field)"
@@ -230,7 +230,7 @@ msgstr "Cifrado:"
 
 #: WebContent/editIdentity.jsp
 msgid "(If unsure, leave the default)"
-msgstr "(En caso de duda, garder le choix par defaut)"
+msgstr "(En caso de duda, deja lo preconfigurado)"
 
 #: WebContent/editIdentity.jsp
 msgid "Default Identity:"
@@ -266,7 +266,7 @@ msgstr "Dirección de correo electrónico"
 
 #: WebContent/identities.jsp
 msgid "Email Destination"
-msgstr "Destinación de correo"
+msgstr "Destino de correo"
 
 #: WebContent/identities.jsp
 msgid "Delete"
@@ -582,15 +582,15 @@ msgstr "minutos"
 
 #: WebContent/settings.jsp
 msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "Usar una puerta de enlace para enviar correos que van hacia fuera de I2P-Bote"
+msgstr "Usar una puerta de enlace para enviar correos que van hacia fuera de la red I2P-Bote"
 
 #: WebContent/settings.jsp
 msgid "Email Destination of the gateway:"
-msgstr "Destinación de la puerta de enlace:"
+msgstr "Destino de la puerta de enlace:"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Mantener en inglés addiciones en los correos que se envíen („Re:“, „wrote:“ etc.)"
+msgstr "Mantener en inglés adiciones en los correos que se envíen („Re:“, „wrote:“ etc.)"
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -626,7 +626,7 @@ msgstr "Para poder recibir correos de otras personas, primero tienes que crear u
 
 #: WebContent/noIdentities.jsp
 msgid "Every email identity is associated with an email destination. Anybody can send email to the email destination, but only the identity holder can read it."
-msgstr "Cada identidad de correo I2P-Bote está asociada a una \"Destinación de correo I2P-Bote\". Cualquiera puede mandar correos a esta Destinación, pero tan sólo el poseedor de la identidad los puede leer."
+msgstr "Cada identidad de correo I2P-Bote está asociada a un \"Destino de correo I2P-Bote\". Cualquiera puede mandar correos a este Destino, pero tan sólo el poseedor de la identidad los puede leer."
 
 #: WebContent/noIdentities.jsp
 msgid "In a sense, email identities are the equivalent to traditional email accounts - except that there is no provider that can read all your email because I2P-Bote stores all emails encrypted on the network."
@@ -638,7 +638,7 @@ msgstr "I2P-Bote descifra los correos que se te envian, utilizando la identidad 
 
 #: WebContent/noIdentities.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr "¡Da tu Destinación de correo a los demás para que te puedan contactar!"
+msgstr "¡Da tu Destino de correo a los demás para que te puedan contactar!"
 
 #: WebContent/noIdentities.jsp
 msgid "It is easy to create multiple identities for different purposes, or different contacts."
@@ -646,7 +646,7 @@ msgstr "Es fácil crear varias identidades para fines o contactos diferentes."
 
 #: WebContent/noIdentities.jsp
 msgid "When you create a new email identity, you can choose the type of encryption that will be used by the email identity. While all encryption algorithms offered by I2P-Bote provide a high level of privacy, the length of an email destination depends on the encryption used. The higher the number of bits, the longer the email destination."
-msgstr "Al crear una nueva identidad de correo I2P-Bote puedes elegir la manera del cifrado que se empleará para esta identidad. Todos los cifrados ofrecidos por I2P-Bote brindan un alto nivel de privacidad. La longitutd de la Destinación depende del cifrado utilizado: Cuanto más alto el número de bits de la clave, más larga resulta la Destinación de correo."
+msgstr "Al crear una nueva identidad de correo I2P-Bote puedes elegir la manera del cifrado que se empleará para esta identidad. Todos los cifrados ofrecidos por I2P-Bote brindan un alto nivel de privacidad. La longitutd del Destino depende del cifrado utilizado: Cuanto más alto el número de bits de la clave, más larga resulta el Destino de correo."
 
 #: WebContent/noIdentities.jsp
 msgid "Note that the same is not true for encryption strength. 256-bit elliptic curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit elliptic curve is equivalent to 15360-bit ElGamal."
@@ -670,7 +670,7 @@ msgstr "No hay disponible información sobre la red, dado que I2P-Bote aún no e
 
 #: WebContent/network.jsp
 msgid "Local destination:"
-msgstr "Destinación I2P local:"
+msgstr "Destino I2P local:"
 
 #: WebContent/statusFrame.jsp
 msgid "Not Started"
@@ -698,7 +698,7 @@ msgstr "Estado desconocido"
 
 #: WebContent/WEB-INF/tags/address.tag
 msgid "Email Destination: "
-msgstr "Destinación de correo:"
+msgstr "Destino de correo:"
 
 #: WebContent/WEB-INF/tags/address.tag
 msgid "Add to Address Book"
