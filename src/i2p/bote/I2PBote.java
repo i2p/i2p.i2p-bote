@@ -306,6 +306,8 @@ public class I2PBote implements NetworkStatusSource {
         }
         else
             log.info("Seedless NOT found.");
+            // TO-DO: start a task that checks for seedless and adds it in the future
+            // This is needed if seedless comes up late, or is installed after bote.
     }
 
     /**
