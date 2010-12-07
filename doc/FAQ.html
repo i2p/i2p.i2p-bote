@@ -1,17 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Frequently Asked Questions</title></head><body>
-
-
-	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"><title></title><meta name="GENERATOR" content="OpenOffice.org 3.2  (Unix)">
-	
-	
-	<style type="text/css">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Frequently Asked Questions</title><meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"><meta name="GENERATOR" content="OpenOffice.org 3.2  (Unix)"><style type="text/css">
 	<!--
 		@page { margin: 2cm }
 		P { margin-bottom: 0.21cm }
 		A:link { so-language: zxx }
 	-->
-	</style>
+	</style></head><body>
+
+
+	
+	
+	
+	
 
 
 
@@ -29,7 +30,7 @@ and it is planned to guarantee additional anonymity by providing a
 high-latency transport option. All bote-mails are automatically
 end-to-end encrypted, so that there's no need to set up e-mail
 encryption (though the option does exist), and bote-mails will be
-authenticated automatically (authentication not yet implemented). As
+authenticated automatically <span style="color: red;">[authentication not yet implemented]</span>. As
 it is decentralized, there is no e-mail server that could link
 different e-mail identities as communicating with each other
 (profiling): Even the nodes relaying the mails will not know the
@@ -247,12 +248,12 @@ was lacking a decentralized e-mail service and HungryHobo is an I2P
 user.</font></p>
 <p style="line-height: 150%;">  <font face="Arial, sans-serif">2) I2P
 offers very good anonymity, is mature and incorporates years of
-experience.<br>      So being on top of it, kind of represents an
-anonymity fall-back even if there were<br>      some crucial bugs in
+experience.<br>&nbsp;&nbsp;&nbsp; So being on top of it, kind of represents an
+anonymity fall-back even if there were<br>&nbsp;&nbsp;&nbsp; some crucial bugs in
 I2P-Bote.</font></p>
 <p style="line-height: 150%;">  <font face="Arial, sans-serif">3)
 Flexibility: We want to offer an easy way to anonymous low-latency
-e-mail<br>      communication as well, with still a high level of
+e-mail<br>&nbsp;&nbsp;&nbsp; communication as well, with still a high level of
 protection.</font></p>
 <p style="line-height: 150%;">  <font face="Arial, sans-serif">4) I2P
 traffic blends with I2P-Bote traffic.</font></p>
@@ -284,32 +285,36 @@ I2P-Bote mails paranoidly anonymous.</span></font></font></p>
 is a bote dest?</b></font></p>
 <p style="line-height: 150%;"><font face="Arial, sans-serif">There is
 the I2P-Bote mail identity and an I2P-Bote router id.</font></p>
+
+
+
+
 <p style="line-height: 150%;"><font face="Arial, sans-serif">The mail
 identities consist of public and private keys. The public key is the
 key others use in order to encrypt mails they send to you and in
 order to verify your signature. It is save to give away that one to
 anybody you want to get e-mails from. At the same time this public
 key is a pseudonymous identity. One real user can have more than one
-of those identities.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">It's 
+of those identities.<br>
+It's 
 your address, and therefore it is referred to as a &#8220;destination&#8221;
-or short &#8220;dest&#8221;</font></p>
-
-<p style="line-height: 150%;"><br><font face="Arial, sans-serif">It is
-important to distinguish between the mail dest and the router id!</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">If you
-have problems with your and it should be necessary, you can tell your
-I2P-Bote router id in irc2p, I2P's IRC channels, though until now
+or short &#8220;dest&#8221;<br>
+It is
+important to distinguish between the mail dest and the router id!<br>
+If you
+have problems with your I2P-Bote and in the highly unlikely case it should be necessary, you can tell your
+I2P-Bote router id in irc2p, I2P's IRC channels, or the forum, though until now
 this has never been necessary. It is not directly linked to your ip. </font>
 </p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">But
-nonetheless do NOT relate your I2P-Bote router id with your I2P-Bote
+<p style="line-height: 150%;"><font face="Arial, sans-serif">Nonetheless do NOT relate your I2P-Bote router id with your I2P-Bote
 mail dests!</font></p>
 
 
 <p style="line-height: 150%;"><br><br>
 <font face="Arial, sans-serif"><b>Why
 are the e-mail addresses so long?</b></font></p>
+
+
 <p style="line-height: 150%;"><font face="Arial, sans-serif">In
 I2P-Bote every mail is encrypted. In order not to require you to
 exchange an e-mail address _and_ a long key, we simply made that key
@@ -317,12 +322,10 @@ the address. This comes with two additional benefits: You won't have
 to worry if an e-mail address is already taken or not (at least not
 if you do not send or receive e-mails to or from the internet) and
 you don't need a key management app apart, for taking care of your
-keys. </font>
-</p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">It is
+keys.<br>
+It is
 safe to give away this key, as it is only the public key which
-everybody may know about without compromising your e-mails' <font color="#000000">secrecy.</font></font></p>
-<p style="line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif">Using
+everybody may know about without compromising your e-mails' <font color="#000000">secrecy.</font></font></p><p style="line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif">Using
 the ECC encryption as option will yield shorter e-mail destination
 keys.</font></font></p>
 
@@ -397,7 +400,7 @@ can I do to be more anonymous?</b></font></p>
 	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">use
 	a long local delay for own packets,</font></p>
 	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">use
-	a big check interval randomization. [not yet implemented]</font></p>
+	a big check interval randomization. <span style="color: red;">[not yet implemented]</span></font></p>
 	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">suppress
 	the sending of date and time in the e-mails' header,</font></p>
 	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">suppress
@@ -419,7 +422,7 @@ I not send my timestamps?</b></font></p>
 settings and disable sending of timestamps. This will have the effect
 that your mail will not contain a date or time of sending.</font></p>
 <p style="line-height: 150%;"><font face="Arial, sans-serif">(When
-using mailroutes, the timestamps are automatically disabled.)</font></p>
+using mailroutes, the timestamps are automatically disabled.) </font><font face="Arial, sans-serif"><span style="color: red;">[not yet implemented]</span></font></p>
 
 
 <p style="line-height: 150%;"><br>
@@ -477,7 +480,7 @@ I2P-Bote. His destination key is:</font></p>
 <p style="line-height: 150%;"><br><br><br>
 <br>
 <br>
-<font face="Arial, sans-serif">Credits:</font></p>
+<font style="font-weight: bold;" face="Arial, sans-serif">Credits:</font></p>
 
 <p style="line-height: 150%;"><br><font face="Arial, sans-serif">Idea &amp;
 technical concept: HungryHobo, Mixxy</font></p>
@@ -496,5 +499,9 @@ translation: albat, Redzara, Mixxy</font></p>
 <p style="line-height: 150%;"><font face="Arial, sans-serif">Spanish
 translation: Mixxy</font></p>
 <p style="line-height: 150%;"><font face="Arial, sans-serif">Alpha
-testing: HungryHobo, Mixxy, Returning Novice, sponge, and many others</font></p>
+testing: HungryHobo, Mixxy, Returning Novice, sponge, and many others<br>
+</font></p>
+<p style="line-height: 150%;"><font face="Arial, sans-serif"><br>
+</font></p>
+
 </body></html>
