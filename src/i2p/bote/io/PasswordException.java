@@ -19,19 +19,13 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.folder;
-
-import i2p.bote.io.PasswordHolder;
-
-import java.io.File;
+package i2p.bote.io;
 
 /**
- * Subclassed for distinction between folders that move emails to
- * the trash, and the trash folder which deletes them permanently.
+ * This exception is thrown when a password is invalid or missing.
+ * It extends <code>RuntimeException</code> so it can be thrown in
+ * iterators.
  */
-public class TrashFolder extends EmailFolder {
-
-    public TrashFolder(File storageDir, PasswordHolder passwordHolder) {
-        super(storageDir, passwordHolder);
-    }
+public class PasswordException extends RuntimeException {
+    private static final long serialVersionUID = 9105407855443550137L;
 }

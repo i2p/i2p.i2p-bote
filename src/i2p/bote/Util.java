@@ -309,4 +309,10 @@ public class Util {
         I2PAppContext appContext = I2PAppContext.getGlobalContext();
         return appContext.elGamalAESEngine().decrypt(data, key, appContext.sessionKeyManager());
     }
+    
+    /** Overwrites a <code>char</code> array with zeros */
+    public static void zeroOut(char[] array) {
+        for (int i=0; i<array.length; i++)
+            array[i] = 0;
+    }
 }

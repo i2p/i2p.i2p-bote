@@ -26,6 +26,9 @@ import i2p.bote.UniqueId;
 import i2p.bote.Util;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
+import i2p.bote.io.EncryptedInputStream;
+import i2p.bote.io.PasswordHolder;
+import i2p.bote.io.PasswordException;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
 import java.io.BufferedInputStream;
@@ -38,7 +41,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -103,11 +108,15 @@ public class Email extends MimeMessage {
      * empty.
      * @param emailFile
      * @param metadataFile
+     * @param passwordHolder
      * @throws MessagingException
      * @throws IOException
+     * @throws InvalidKeySpecException 
+     * @throws NoSuchAlgorithmException 
+     * @throws PasswordException 
      */
-    public Email(File emailFile, File metadataFile) throws MessagingException, IOException {
-        this(new FileInputStream(emailFile), false);
+    public Email(File emailFile, File metadataFile, PasswordHolder passwordHolder) throws MessagingException, IOException, NoSuchAlgorithmException, InvalidKeySpecException, PasswordException {
+        this(new BufferedInputStream(new EncryptedInputStream(new FileInputStream(emailFile), passwordHolder)), false);
         if (metadataFile.exists())
             metadata = new EmailMetadata(metadataFile);
         else

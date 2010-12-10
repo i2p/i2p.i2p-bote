@@ -68,6 +68,7 @@
 <ib:message key="New Email" var="title"scope="request"/>
 <jsp:include page="header.jsp"/>
 
+<ib:requirePassword forwardUrl="newEmail.jsp">
 <div class="main">
     <form action="newEmail.jsp" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
         <table>
@@ -78,7 +79,8 @@
                 <td>
                     <select name="sender">
                         <option value="anonymous"><ib:message key="Anonymous"/></option>
-                        <c:forEach items="${ib:getIdentities().all}" var="identity">
+                        <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+                        <c:forEach items="${jspHelperBean.identities.all}" var="identity">
                             <c:set var="selected" value=""/>
                             <c:if test="${fn:contains(param.sender, identity.key)}">
                                 <c:set var="selected" value=" selected"/>
@@ -211,5 +213,6 @@
         </table>
     </form>
 </div>
+</ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

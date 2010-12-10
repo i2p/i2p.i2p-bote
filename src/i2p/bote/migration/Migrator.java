@@ -19,19 +19,18 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.folder;
+package i2p.bote.migration;
 
-import i2p.bote.io.PasswordHolder;
+import i2p.bote.Configuration;
 
-import java.io.File;
+public class Migrator {
+    private Configuration configuration;
 
-/**
- * Subclassed for distinction between folders that move emails to
- * the trash, and the trash folder which deletes them permanently.
- */
-public class TrashFolder extends EmailFolder {
-
-    public TrashFolder(File storageDir, PasswordHolder passwordHolder) {
-        super(storageDir, passwordHolder);
+    public Migrator(Configuration configuration) {
+        this.configuration = configuration;
+    }
+    
+    public void migrateIfNeeded() {
+        new MigrateTo026().migrateIfNeeded(configuration);
     }
 }

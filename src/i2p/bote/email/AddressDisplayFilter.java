@@ -23,6 +23,7 @@ package i2p.bote.email;
 
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.addressbook.Contact;
+import i2p.bote.io.PasswordException;
 
 /**
  * This class is used for adding/replacing names in email addresses with
@@ -47,8 +48,9 @@ public class AddressDisplayFilter {
      * <code>address</code> does not contain a valid Email Destination,
      * <code>address</code> is returned.
      * @param address A Base64-encoded Email Destination, and optionally a name
+     * @throws PasswordException 
      */
-    public String getNameAndDestination(String address) {
+    public String getNameAndDestination(String address) throws PasswordException {
         String base64dest = EmailDestination.extractBase64Dest(address);
         if (base64dest != null) {
             // try the address book

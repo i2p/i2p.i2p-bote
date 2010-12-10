@@ -29,6 +29,7 @@ import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.RelayPacketFolder;
+import i2p.bote.io.PasswordException;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.NetworkStatusSource;
@@ -131,8 +132,9 @@ public class OutboxProcessor extends I2PBoteThread {
      * @throws MessagingException 
      * @throws DhtException 
      * @throws GeneralSecurityException 
+     * @throws PasswordException 
      */
-    private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException {
+    private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException {
         EmailIdentity senderIdentity = null;
         if (!email.isAnonymous()) {
             String sender = email.getSender().toString();

@@ -28,6 +28,7 @@ import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailPacketFolder;
 import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
+import i2p.bote.io.PasswordException;
 import i2p.bote.network.CheckEmailTask;
 import i2p.bote.network.DHT;
 import i2p.bote.network.I2PSendQueue;
@@ -91,7 +92,7 @@ public class EmailChecker extends I2PBoteThread {
         interval = TimeUnit.MINUTES.toMillis(interval);
     }
 
-    public synchronized void checkForMail() {
+    public synchronized void checkForMail() throws PasswordException {
         if (!isCheckingForMail()) {
             if (identities.size() <= 0)
                 log.info("Not checking for mail because no identities are defined.");
@@ -155,7 +156,11 @@ public class EmailChecker extends I2PBoteThread {
             awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
         else {
             if (configuration.isAutoMailCheckEnabled())
-                checkForMail();
+                try {
+                    checkForMail();
+                } catch (PasswordException e) {
+                    log.debug("Can't auto-check for email because a password is set.");
+                }
             awaitShutdownRequest(1, TimeUnit.MINUTES);
         }
     }

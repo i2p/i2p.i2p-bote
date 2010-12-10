@@ -22,6 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.Util;
+import i2p.bote.io.PasswordException;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -115,14 +116,14 @@ public abstract class Folder<T> implements Iterable<T> {
             File currentFile;   // the last file read in findNextElement()
 
             @Override
-            public boolean hasNext() {
+            public boolean hasNext() throws PasswordException {
                 if (nextElement == null)
                     findNextElement();
                 return nextElement != null;
             }
 
             @Override
-            public T next() {
+            public T next() throws PasswordException {
                 if (nextElement == null)
                     findNextElement();
                 if (nextElement == null)
@@ -141,8 +142,9 @@ public abstract class Folder<T> implements Iterable<T> {
              * <p/>
              * <code>currentFile</code> is set to the last file read.
              * @param updateCurrentFile
+             * @throws PasswordException
              */
-            void findNextElement() {
+            void findNextElement() throws PasswordException {
                 while (fileIterator.hasNext()) {
                     currentFile = fileIterator.next();
                     String filePath = currentFile.getAbsolutePath();
@@ -150,6 +152,9 @@ public abstract class Folder<T> implements Iterable<T> {
                     try {
                         nextElement = createFolderElement(currentFile);
                         return;
+                    }
+                    catch (PasswordException e) {
+                        throw e;
                     }
                     catch (Exception e) {
                         log.error("Can't create a FolderElement from file: " + filePath, e);

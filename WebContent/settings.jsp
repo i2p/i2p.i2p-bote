@@ -110,6 +110,9 @@
         <p/>
         <button type="submit"><ib:message key="Save"/></button>
     </form> 
+
+    <p><br/></p>
+    <p><a href="setPassword.jsp"><ib:message key="Change Password"/></a></p>
 </div>
 
 <jsp:include page="footer.jsp"/>

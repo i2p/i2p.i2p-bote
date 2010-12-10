@@ -27,11 +27,19 @@ import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.EmailMetadata;
+import i2p.bote.io.EncryptedOutputStream;
+import i2p.bote.io.FileEncryptionUtil;
+import i2p.bote.io.PasswordException;
+import i2p.bote.io.PasswordHolder;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -51,9 +59,11 @@ public class EmailFolder extends Folder<Email> {
     protected static final String METADATA_FILE_EXTENSION = ".meta";
     
     private Log log = new Log(EmailFolder.class);
+    private PasswordHolder passwordHolder;
     
-    public EmailFolder(File storageDir) {
+    public EmailFolder(File storageDir, PasswordHolder passwordHolder) {
         super(storageDir, EMAIL_FILE_EXTENSION);
+        this.passwordHolder = passwordHolder;
     }
 
     /**
@@ -62,8 +72,9 @@ public class EmailFolder extends Folder<Email> {
      * @param email
      * @throws IOException
      * @throws MessagingException
+     * @throws PasswordException 
      */
-    public void add(Email email) throws IOException, MessagingException {
+    public void add(Email email) throws IOException, MessagingException, PasswordException {
         // check if an email exists already with that message id
         if (getEmailFile(email.getMessageID()).exists()) {
             log.debug("Not storing email because there is an existing one with the same message ID: <" + email.getMessageID()+ ">");
@@ -73,20 +84,13 @@ public class EmailFolder extends Folder<Email> {
         // write out the email file
         File emailFile = getEmailFile(email);
         log.info("Mail folder <" + storageDir + ">: storing email file: <" + emailFile.getAbsolutePath() + ">");
-        OutputStream emailOutputStream = null;
+        OutputStream emailOutputStream = new BufferedOutputStream(new EncryptedOutputStream(new FileOutputStream(emailFile), passwordHolder));
         try {
-            emailOutputStream = new FileOutputStream(emailFile);
             email.writeTo(emailOutputStream);
             Util.makePrivate(emailFile);
         }
         finally {
-            if (emailOutputStream != null)
-                try {
-                    emailOutputStream.close();
-                }
-                catch (IOException e) {
-                    log.error("Can't close file: <" + emailFile + ">", e);
-                }
+            emailOutputStream.close();
         }
         
         // write out the metadata
@@ -99,6 +103,11 @@ public class EmailFolder extends Folder<Email> {
         catch (IOException e) {
             log.error("Can't write metadata.", e);
         }
+    }
+    
+    public void changePassword(char[] oldPassword, char[] newPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
+        for (File emailFile: getFilenames())
+            FileEncryptionUtil.changePassword(emailFile, oldPassword, newPassword);
     }
     
     /**
@@ -168,7 +177,10 @@ public class EmailFolder extends Folder<Email> {
                 return nullSafeCompare(value1, value2);
             }
             catch (MessagingException e) {
-                log.error("Can't read the " + attribute + " attribute from an email", e);
+                log.error("Can't read the " + attribute + " attribute from an email.", e);
+                return 0;
+            } catch (PasswordException e) {
+                log.error("Can't compare emails because the password is not available.", e);
                 return 0;
             }
         }
@@ -200,13 +212,17 @@ public class EmailFolder extends Folder<Email> {
      * The <code>messageId</code> parameter must be a 44-character base64-encoded
      * {@link UniqueId}.
      * @param messageId
+     * @throws PasswordException
      */
-    public Email getEmail(String messageId) {
+    public Email getEmail(String messageId) throws PasswordException {
         File file = getEmailFile(messageId);
         if (!file.exists())
             return null;
         try {
             return createFolderElement(file);
+        }
+        catch (PasswordException e) {
+            throw e;
         }
         catch (Exception e) {
             log.error("Can't read email from file: <" + file.getAbsolutePath() + ">", e);
@@ -219,14 +235,14 @@ public class EmailFolder extends Folder<Email> {
      * the metadata file are moved.<br/>
      * This method may not work if the two folders are on different
      * filesystems, or if a file with the same name exists already.
-     * @param email
+     * @param messageId
      * @param newFolder
      * @return <code>true</code> if successful, <code>false</code> if not
      */
-    public boolean move(Email email, EmailFolder newFolder) {
-        File oldEmailFile = getEmailFile(email);
+    public boolean move(String messageId, EmailFolder newFolder) {
+        File oldEmailFile = getEmailFile(messageId);
         if (!oldEmailFile.exists()) {
-            log.error("Cannot move email [" + email + "] to folder [" + newFolder + "]: email file doesn't exist.");
+            log.error("Cannot move email with message ID " + messageId + " to folder [" + newFolder + "]: email file doesn't exist in directory <" + getStorageDirectory() + ">.");
             return false;
         }
         File newEmailFile = new File(newFolder.getStorageDirectory(), oldEmailFile.getName());
@@ -246,15 +262,9 @@ public class EmailFolder extends Folder<Email> {
         return success;
     }
     
-    /** @see #move(Email, EmailFolder) */
-    public boolean move(String messageId, EmailFolder newFolder) {
-        Email email = getEmail(messageId);
-        if (email == null) {
-            log.error("Cannot move email: Email with message ID " + messageId + " not found in folder <" + getStorageDirectory() + ">.");
-            return false;
-        }
-        else
-            return move(email, newFolder);
+    /** @see #move(String, EmailFolder) */
+    public boolean move(Email email, EmailFolder newFolder) {
+        return move(email.getMessageID(), newFolder);
     }
     
     private File getEmailFile(Email email) {
@@ -374,7 +384,7 @@ public class EmailFolder extends Folder<Email> {
     @Override
     protected Email createFolderElement(File emailFile) throws Exception {
         File metadataFile = getMetadataFile(emailFile);
-        Email email = new Email(emailFile, metadataFile);
+        Email email = new Email(emailFile, metadataFile, passwordHolder);
         
         String messageIdString = emailFile.getName().substring(0, 44);
         email.setMessageID(messageIdString);

@@ -22,9 +22,11 @@
 package i2p.bote.folder;
 
 import static org.junit.Assert.assertTrue;
+import i2p.bote.TestPasswordCache;
 import i2p.bote.TestUtil;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.io.PasswordCache;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.UnencryptedEmailPacket;
 
@@ -53,7 +55,8 @@ public class IncompleteEmailFolderTest {
         testDir = new File(tempDir, "IncompleteEmailFolderTest-" + System.currentTimeMillis());
         
         inboxDir = new File(testDir, "inbox");
-        inbox = new EmailFolder(inboxDir);
+        PasswordCache passwordCache = TestPasswordCache.createPasswordCache();
+        inbox = new EmailFolder(inboxDir, passwordCache);
         
         File incompleteDir = new File(testDir, "incomplete");
         MessageIdCache messageIdCache = new MessageIdCache(new File(testDir, MSG_ID_CACHE_DIR), 1000);

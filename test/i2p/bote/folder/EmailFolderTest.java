@@ -24,6 +24,8 @@ package i2p.bote.folder;
 import static org.junit.Assert.assertEquals;
 import i2p.bote.TestUtil;
 import i2p.bote.email.Email;
+import i2p.bote.io.PasswordCache;
+import i2p.bote.io.PasswordException;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,8 +87,14 @@ public class EmailFolderTest {
             "\"You mean,\" said Arthur quietly, \"that you are used to confronting the truth?\"\n" +
             "\"No,\" said the man with a puzzled frown. \"I mean that I made an excuse and left early.\"\n" +
             "He collapsed into a coma from which he recovered only once and briefly.");
-        folder1 = new EmailFolder(folderDir1);
-        folder2 = new EmailFolder(folderDir2);
+        
+        // We can get away with passing a null Configuration because we set a non-null password and don't start
+        // the PasswordCache thread, which means the password is never removed from the cache.
+        PasswordCache passwordCache = new PasswordCache(null);
+        passwordCache.setPassword("test password 12345".toCharArray());
+        
+        folder1 = new EmailFolder(folderDir1, passwordCache);
+        folder2 = new EmailFolder(folderDir2, passwordCache);
     }
     
     @After
@@ -103,7 +111,7 @@ public class EmailFolderTest {
     }
     
     @Test
-    public void testAdd() throws IOException, MessagingException {
+    public void testAdd() throws IOException, MessagingException, PasswordException {
         assertEquals(0, folderDir1.list().length);
         folder1.add(email1);
         assertEquals(2, folderDir1.list().length);
@@ -119,7 +127,7 @@ public class EmailFolderTest {
     }
     
     @Test
-    public void testMove() throws IOException, MessagingException {
+    public void testMove() throws IOException, MessagingException, PasswordException {
         folder1.add(email1);
         folder1.move(email1, folder2);
         assertEquals("Source folder is not empty!", 0, folderDir1.list().length);
@@ -128,14 +136,14 @@ public class EmailFolderTest {
     }
 
     @Test
-    public void testDelete() throws IOException, MessagingException {
+    public void testDelete() throws IOException, MessagingException, PasswordException {
         folder1.add(email1);
         folder1.delete(email1.getMessageID());
         assertEquals("The email file and/or the metadata were not deleted!", 0, folderDir1.list().length);
     }
     
     @Test
-    public void testSetNew() throws IOException, MessagingException {
+    public void testSetNew() throws IOException, MessagingException, PasswordException {
         folder1.add(email1);
         Email emailFromFolder = folder1.iterator().next();
         assertEquals("\"new\" flag is false after adding email to folder!", emailFromFolder.isNew(), true);

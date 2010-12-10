@@ -25,6 +25,7 @@ import static i2p.bote.Util._;
 import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
+import i2p.bote.io.PasswordHolder;
 
 import java.io.File;
 import java.util.Collections;
@@ -45,8 +46,8 @@ public class Outbox extends EmailFolder {
     
     private Map<String, String> statusMap;   // maps message IDs to status strings
     
-    public Outbox(File storageDir) {
-        super(storageDir);
+    public Outbox(File storageDir, PasswordHolder passwordHolder) {
+        super(storageDir, passwordHolder);
         statusMap = new ConcurrentHashMap<String, String>();
     }
 

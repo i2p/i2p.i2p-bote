@@ -35,10 +35,11 @@
     pageContext.setAttribute("STATUS", i2p.bote.email.EmailAttribute.STATUS, PageContext.PAGE_SCOPE);
 %> 
 
+<ib:requirePassword forwardUrl="${refreshUrl}">
 <%-- Refresh page if there are mails in the outbox --%>
+<c:set var="refreshUrl" value="outbox.jsp?sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
 <c:if test="${ib:getMailFolder('Outbox').numElements gt 0}">
     <c:set var="refreshInterval" value="20" scope="request"/>
-    <c:set var="refreshUrl" value="outbox.jsp?sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
 </c:if>
 <c:set var="title" value="Outbox" scope="request"/>
 <jsp:include page="header.jsp"/>
@@ -126,7 +127,7 @@
             
             <c:set var="recipient" value="${ib:getNameAndDestination(email.oneRecipient)}"/>
             
-            <c:set var="createTime" value="${ib:getNameAndDestination(email.createTime)}"/>
+            <c:set var="createTime" value="${email.createTime}"/>
             
             <c:set var="subject" value="${email.subject}"/>
             <c:if test="${empty subject}">
@@ -165,5 +166,6 @@
     </table>
 </div>
 </div>
+</ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

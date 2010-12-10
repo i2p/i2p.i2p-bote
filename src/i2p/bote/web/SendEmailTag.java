@@ -25,6 +25,7 @@ import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
+import i2p.bote.io.PasswordException;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class SendEmailTag extends BodyTagSupport {
     }
     
     @Override
-    public int doEndTag() {
+    public int doEndTag() throws PasswordException {
         JspWriter out = pageContext.getOut();
 
         Email email = new Email(includeSentTime);
@@ -93,6 +94,9 @@ public class SendEmailTag extends BodyTagSupport {
                 }
                 
                 statusMessage = _("The email has been queued for sending.");
+            }
+            catch (PasswordException e) {
+                throw e;
             }
             catch (Exception e) {
                 statusMessage = _("Error sending email: {0}", e.getLocalizedMessage());

@@ -36,7 +36,7 @@ import net.i2p.util.Log;
  *
  * @param <PacketType> The type of data stored in this folder
  */
-public class PacketFolder<PacketType extends I2PBotePacket> extends Folder<PacketType> {
+public class PacketFolder<PacketType extends I2PBotePacket> extends Folder<PacketType> implements Iterable<PacketType> {
     protected static final String PACKET_FILE_EXTENSION = ".pkt";
     
     private Log log = new Log(PacketFolder.class);

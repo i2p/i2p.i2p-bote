@@ -19,19 +19,24 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.folder;
+package i2p.bote;
 
-import i2p.bote.io.PasswordHolder;
-
-import java.io.File;
+import i2p.bote.io.PasswordCache;
 
 /**
- * Subclassed for distinction between folders that move emails to
- * the trash, and the trash folder which deletes them permanently.
+ * A {@link PasswordCache} for unit tests. It doesn't need a {@link Configuration},
+ * but it can't be started as a thread which means it never expires the password.
  */
-public class TrashFolder extends EmailFolder {
+public class TestPasswordCache {
 
-    public TrashFolder(File storageDir, PasswordHolder passwordHolder) {
-        super(storageDir, passwordHolder);
+    private TestPasswordCache() {
+    }
+    
+    public static PasswordCache createPasswordCache() {
+        // We can get away with passing a null Configuration because we set a non-null password and don't start
+        // the PasswordCache thread, which means the password is never removed from the cache.
+        PasswordCache passwordCache = new PasswordCache(null);
+        passwordCache.setPassword("test password 12345".toCharArray());
+        return passwordCache;
     }
 }

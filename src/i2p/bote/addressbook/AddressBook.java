@@ -23,14 +23,26 @@ package i2p.bote.addressbook;
 
 import i2p.bote.Util;
 import i2p.bote.email.EmailDestination;
+import i2p.bote.io.EncryptedInputStream;
+import i2p.bote.io.EncryptedOutputStream;
+import i2p.bote.io.FileEncryptionUtil;
+import i2p.bote.io.PasswordException;
+import i2p.bote.io.PasswordHolder;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -40,32 +52,51 @@ import net.i2p.util.Log;
 
 /**
  * Implements the private address book. Holds a set of {@link Contact}s
- * which are sorted by name.
+ * which are sorted by name.<br/>
+ * Contacts can be written to, and read from, a password-encrypted file.
  */
 public class AddressBook implements Iterable<Contact> {
     private Log log = new Log(AddressBook.class);
     private File addressFile;
+    private PasswordHolder passwordHolder;
     private SortedSet<Contact> contacts;
 
     /**
-     * Reads an <code>AddressBook</code> from a text file. Each contact is defined
-     * by one line that contains an Email Destination and a name, separated by a
-     * tab character.
+     * Constructs a new empty <code>AddressBook</code>.
      * @param addressFile
+     * @param passwordHolder
      */
-    public AddressBook(File addressFile) {
+    public AddressBook(File addressFile, PasswordHolder passwordHolder) {
         this.addressFile = addressFile;
-        contacts = new TreeSet<Contact>(new ContactComparator());
-        
+        this.passwordHolder = passwordHolder;
+    }
+ 
+    private void initializeIfNeeded() throws PasswordException {
+        if (contacts == null)
+            readContacts();
+    }
+    
+    /**
+     * Reads an <code>AddressBook</code> from the encrypted address book file.
+     * Each contact is defined by one line that contains an Email Destination
+     * and a name, separated by a tab character.
+     * @throws PasswordException 
+     */
+    private void readContacts() throws PasswordException {
         if (!addressFile.exists()) {
             log.debug("Address file does not exist: <" + addressFile.getAbsolutePath() + ">");
+            contacts = new TreeSet<Contact>(new ContactComparator());
             return;
         }
         
         log.debug("Reading address book from <" + addressFile.getAbsolutePath() + ">");
         BufferedReader input = null;
         try {
-            input = new BufferedReader(new FileReader(addressFile));
+            InputStream encryptedStream = new EncryptedInputStream(new FileInputStream(addressFile), passwordHolder);
+            input = new BufferedReader(new InputStreamReader(encryptedStream));
+            
+            // No PasswordException occurred, so parse the input stream
+            contacts = new TreeSet<Contact>(new ContactComparator());
             
             while (true) {
                 String line = input.readLine();
@@ -84,7 +115,9 @@ public class AddressBook implements Iterable<Contact> {
                     log.error("Not a valid Email Destination: <" + fields[0] + ">", e);
                 }
             }
-        } catch (IOException e) {
+        } catch (PasswordException e) {
+            throw e;
+        } catch (Exception e) {
             log.error("Can't read address book.", e);
         }
         finally {
@@ -97,9 +130,12 @@ public class AddressBook implements Iterable<Contact> {
                 }
         }
     }
- 
-    public void save() throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(addressFile));
+    
+    public void save() throws IOException, PasswordException {
+        initializeIfNeeded();
+        
+        OutputStream encryptedStream = new EncryptedOutputStream(new FileOutputStream(addressFile), passwordHolder);
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(encryptedStream));
         try {
             for (Contact contact: contacts) {
                 writer.write(contact.toBase64());
@@ -118,14 +154,21 @@ public class AddressBook implements Iterable<Contact> {
         }
     }
     
-    public void add(Contact contact) {
+    public void add(Contact contact) throws PasswordException {
+        initializeIfNeeded();
         contacts.add(contact);
     }
     
-    public void remove(String destination) {
+    public void remove(String destination) throws PasswordException {
+        initializeIfNeeded();
         Contact contact = get(destination);
         if (contact != null)
             contacts.remove(contact);
+    }
+    
+    public void changePassword(char[] oldPassword, char[] newPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
+        if (addressFile.exists())
+            FileEncryptionUtil.changePassword(addressFile, oldPassword, newPassword);
     }
     
     /**
@@ -133,8 +176,10 @@ public class AddressBook implements Iterable<Contact> {
      * <code>null</code> is returned.
      * @param destination
      */
-    public Contact get(String destination) {
-        if (destination==null || destination.isEmpty())
+    public Contact get(String destination) throws PasswordException {
+        initializeIfNeeded();
+        
+       if (contacts==null || destination==null || destination.isEmpty())
             return null;
         
         for (Contact contact: contacts)
@@ -148,7 +193,9 @@ public class AddressBook implements Iterable<Contact> {
      * is in the address book.
      * @param base64dest
      */
-    public boolean contains(String base64dest) {
+    public boolean contains(String base64dest) throws PasswordException {
+        initializeIfNeeded();
+        
         if (base64dest == null)
             return false;
         
@@ -158,16 +205,19 @@ public class AddressBook implements Iterable<Contact> {
         return false;
     }
     
-    public SortedSet<Contact> getAll() {
+    public SortedSet<Contact> getAll() throws PasswordException {
+        initializeIfNeeded();
         return contacts;
     }
     
-    public int size() {
-        return contacts.size();
+    public int size() throws PasswordException {
+        initializeIfNeeded();
+       return contacts.size();
     }
     
     @Override
-    public Iterator<Contact> iterator() {
+    public Iterator<Contact> iterator() throws PasswordException {
+        initializeIfNeeded();
         return contacts.iterator();
     }
 

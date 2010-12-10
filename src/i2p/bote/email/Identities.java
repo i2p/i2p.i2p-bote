@@ -22,15 +22,26 @@
 package i2p.bote.email;
 
 import i2p.bote.Util;
+import i2p.bote.io.EncryptedInputStream;
+import i2p.bote.io.EncryptedOutputStream;
+import i2p.bote.io.FileEncryptionUtil;
+import i2p.bote.io.PasswordException;
+import i2p.bote.io.PasswordHolder;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Writer;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -41,40 +52,62 @@ import java.util.regex.PatternSyntaxException;
 import net.i2p.util.Log;
 
 /**
- * Holds a set of {@link EmailIdentity} objects that are sorted by name.
+ * Holds a set of {@link EmailIdentity} objects that are sorted by name.<br/>
+ * The Email Identities can be written to, and read from, a password-encrypted file.
  */
 public class Identities implements Iterable<EmailIdentity> {
     private Log log = new Log(Identities.class);
     private File identitiesFile;
-    private SortedSet<EmailIdentity> identities;
+    private PasswordHolder passwordHolder;
+    private SortedSet<EmailIdentity> identities;   // null until file has been read successfully
 
     /**
-     * Constructs <code>Identities</code> from a text file. Each identity is defined
-     * by one line that contains two to four tab-separated fields:<br/>
-     * Email Destination key, Public Name, Description, and Email Address.
-     * The first two are mandatory, the last two are optional.
-     * <p/>
-     * Additionally, the file can set a default Email Destination by including a
-     * line that starts with "Default ", followed by an Email Destination key.<br/>
-     * The destination key must match one of the Email Destinations defined in
-     * the file.
+     * Constructs a new empty <code>Identities</code> object.
      * @param identitiesFile
+     * @param passwordHolder
      */
-    public Identities(File identitiesFile) {
+    public Identities(File identitiesFile, PasswordHolder passwordHolder) {
         this.identitiesFile = identitiesFile;
-        identities = new TreeSet<EmailIdentity>(new IdentityComparator());
-        String defaultIdentityString = null;
+        this.passwordHolder = passwordHolder;
+    }
+
+    private void initializeIfNeeded() throws PasswordException {
+        if (identities == null)
+            readIdentities();
+    }
+    
+    /**
+     * Reads <code>Identities</code> from the encrypted identities file. Each identity
+     * is defined by one line that contains two to four tab-separated fields:<br/>
+     * Email Identity key, Public Name, Description, and Email Address.
+     * The first two are mandatory, the last two are optional.<br/>
+     * <p/>
+     * Additionally, the file can set a default Email Identity by including a
+     * line that starts with "Default ", followed by an Email Destination key.<br/>
+     * The destination key must match one of the Email Identities defined in
+     * the file.
+     * <p/>
+     * An Email Identity key consists of two public keys and two private keys, whereas
+     * an Email Destination consists only of two public keys.
+     * @throws PasswordException 
+     */
+    private void readIdentities() throws PasswordException {
+        log.debug("Reading identities file: <" + identitiesFile.getAbsolutePath() + ">");
         
         if (!identitiesFile.exists()) {
             log.debug("Identities file does not exist: <" + identitiesFile.getAbsolutePath() + ">");
+            identities = new TreeSet<EmailIdentity>(new IdentityComparator());
             return;
         }
         
-        log.debug("Reading identities file: <" + identitiesFile.getAbsolutePath() + ">");
         BufferedReader input = null;
         try {
-            input = new BufferedReader(new FileReader(identitiesFile));
+            InputStream encryptedStream = new EncryptedInputStream(new FileInputStream(identitiesFile), passwordHolder);
+            input = new BufferedReader(new InputStreamReader(encryptedStream));
             
+            // No PasswordException occurred, so parse the input stream
+            identities = new TreeSet<EmailIdentity>(new IdentityComparator());
+            String defaultIdentityString = null;
             while (true) {
                 String line = input.readLine();
                 if (line == null)   // EOF
@@ -95,6 +128,8 @@ public class Identities implements Iterable<EmailIdentity> {
                 defaultIdentity.setDefault(true);
             else if (!identities.isEmpty())
                 identities.iterator().next().setDefault(true);
+        } catch (PasswordException e) {
+            throw e;
         } catch (Exception e) {
             log.error("Error reading the identities file.", e);
         }
@@ -108,7 +143,7 @@ public class Identities implements Iterable<EmailIdentity> {
                 }
         }
     }
- 
+
     private EmailIdentity parse(String emailIdentityString) {
         String[] fields = emailIdentityString.split("\\t", 4);
         if (fields.length < 2) {
@@ -155,16 +190,22 @@ public class Identities implements Iterable<EmailIdentity> {
         return string.toString();
     }
     
-    public void save() throws IOException, GeneralSecurityException {
-        String newLine = System.getProperty("line.separator");
-        Writer writer = new BufferedWriter(new FileWriter(identitiesFile));
+    public void save() throws IOException, GeneralSecurityException, PasswordException {
+        initializeIfNeeded();
+            
+        OutputStream encryptedStream = new EncryptedOutputStream(new FileOutputStream(identitiesFile), passwordHolder);
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(encryptedStream));
         try {
             EmailIdentity defaultIdentity = getDefault();
-            if (defaultIdentity != null)
-                writer.write("Default " + defaultIdentity.getKey() + newLine);
+            if (defaultIdentity != null) {
+                writer.write("Default " + defaultIdentity.getKey());
+                writer.newLine();
+            }
             
-            for (EmailIdentity identity: identities)
-                writer.write(toFileFormat(identity) + newLine);
+            for (EmailIdentity identity: identities) {
+                writer.write(toFileFormat(identity));
+                writer.newLine();
+            }
             
             Util.makePrivate(identitiesFile);
         }
@@ -181,13 +222,17 @@ public class Identities implements Iterable<EmailIdentity> {
         }
     }
     
-    public void add(EmailIdentity identity) {
+    public void add(EmailIdentity identity) throws PasswordException {
+        initializeIfNeeded();
+        
         if (identities.isEmpty())
             identity.setDefault(true);
         identities.add(identity);
     }
     
-    public void remove(String key) {
+    public void remove(String key) throws PasswordException {
+        initializeIfNeeded();
+        
         EmailIdentity identity = get(key);
         if (identity != null) {
             identities.remove(identity);
@@ -195,14 +240,25 @@ public class Identities implements Iterable<EmailIdentity> {
             // if we deleted the default identity, set a new default
             if (identity.isDefault() && !identities.isEmpty())
                 identities.iterator().next().setDefault(true);
+            
+            // when the last identity is deleted, remove the file; see isEmpty()
+            if (identities.isEmpty() && !identitiesFile.delete())
+                log.error("Can't delete file: " + identitiesFile.getAbsolutePath());
         }
+    }
+    
+    public void changePassword(char[] oldPassword, char[] newPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
+        if (identitiesFile.exists())
+            FileEncryptionUtil.changePassword(identitiesFile, oldPassword, newPassword);
     }
     
     /**
      * Sets the default identity. Assumes this <code>Identities</code> already
      * contains <code>defaultIdentity</code>.
      */
-    public void setDefault(EmailIdentity defaultIdentity) {
+    public void setDefault(EmailIdentity defaultIdentity) throws PasswordException {
+        initializeIfNeeded();
+        
         // clear the old default
         for (EmailIdentity identity: identities)
             identity.setDefault(false);
@@ -213,7 +269,9 @@ public class Identities implements Iterable<EmailIdentity> {
     /**
      * Returns the default identity, or <code>null</code> if no default is set.
      */
-    public EmailIdentity getDefault() {
+    public EmailIdentity getDefault() throws PasswordException {
+        initializeIfNeeded();
+        
         for (EmailIdentity identity: identities)
             if (identity.isDefault())
                 return identity;
@@ -226,8 +284,14 @@ public class Identities implements Iterable<EmailIdentity> {
      * same public signing key as a given {@link EmailDestination}.<br/>
      * Returns <code>null</code> if nothing is found.
      * @param destination
+     * @throws PasswordException
      */
-    public EmailIdentity get(EmailDestination destination) {
+    public EmailIdentity get(EmailDestination destination) throws PasswordException {
+        initializeIfNeeded();
+        
+        if (identities == null)
+            return null;
+        
         for (EmailIdentity identity: identities)
             if (identity.getPublicEncryptionKey().equals(destination.getPublicEncryptionKey())
                     && identity.getPublicSigningKey().equals(destination.getPublicSigningKey()))
@@ -240,16 +304,33 @@ public class Identities implements Iterable<EmailIdentity> {
      * more precise).<br/>
      * Returns An <code>EmailIdentity</code>, or <code>null</code> if nothing is found.
      * @param key
+     * @throws PasswordException
      */
-    public EmailIdentity get(String key) {
+    public EmailIdentity get(String key) throws PasswordException {
+        initializeIfNeeded();
+        
         for (EmailIdentity identity: identities)
             if (identity.getKey().equals(key))
                 return identity;
         return null;
     }
     
-    public Collection<EmailIdentity> getAll() {
+    public Collection<EmailIdentity> getAll() throws PasswordException {
+        initializeIfNeeded();
         return identities;
+    }
+    
+    /**
+     * This method relies on the fact that the identities file only exists when
+     * there is at least one identity. It does not attempt to read the file and
+     * does not throw {@link PasswordException}.
+     * @return <code>true</code> if there are no identities, <code>false</code> otherwise
+     */
+    public boolean isNone() {
+        if (identities != null)
+            return identities.isEmpty();
+        else
+            return !identitiesFile.exists();
     }
     
     /**
@@ -257,8 +338,11 @@ public class Identities implements Iterable<EmailIdentity> {
      * the two public keys of a given {@link EmailDestination}
      * (Note that an <code>EmailIdentity</code> is an <code>EmailDestination</code>).
      * @param base64Dest A base64-encoded Email Destination
+     * @throws PasswordException
      */
-    public boolean contains(String base64Dest) {
+    public boolean contains(String base64Dest) throws PasswordException {
+        initializeIfNeeded();
+        
         if (base64Dest == null)
             return false;
         
@@ -269,7 +353,8 @@ public class Identities implements Iterable<EmailIdentity> {
         return false;
     }
     
-    public int size() {
+    public int size() throws PasswordException {
+        initializeIfNeeded();
         return identities.size();
     }
     
@@ -279,8 +364,11 @@ public class Identities implements Iterable<EmailIdentity> {
      * is found, or if it doesn't match any Email Identity, <code>null</code>
      * is returned.
      * @param address
+     * @throws PasswordException
      */
-    public EmailIdentity extractIdentity(String address) {
+    public EmailIdentity extractIdentity(String address) throws PasswordException {
+        initializeIfNeeded();
+        
         String destinationStr = EmailDestination.extractBase64Dest(address);
         if (destinationStr != null)
             return get(destinationStr);
@@ -288,8 +376,8 @@ public class Identities implements Iterable<EmailIdentity> {
             return null;
     }
     
-    @Override
-    public Iterator<EmailIdentity> iterator() {
+    public Iterator<EmailIdentity> iterator() throws PasswordException {
+        initializeIfNeeded();
         return identities.iterator();
     }
 

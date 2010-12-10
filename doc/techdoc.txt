@@ -570,11 +570,33 @@ See comments at the beginning of src/i2p/bote/network/kademlia/ReplicateThread.j
 
 6. Files
 
-6.1. Identities file
+6.1. Encryption
+
+The identities file, the address book, and all email files are encrypted with AES-256.
+PBKDF2 with SHA1 is used to generate the AES key from the password.
+The file format is:
+
+   Field | #bytes | Description
+  -------+--------+------------------------------------------------------------------
+   SOF   | 4      | Start of file, contains the characters "IBef"
+   VER   | 1      | Format version, must be 1
+   ITER  | 4      | Number of PBKDF2 iterations
+   SALT  | 32     | Salt for PBKDF2
+   IV    | 32     | IV for AES
+   DATA  |        | The encrypted data
+
+6.2. Identities file
 
   Stores all email identities the local user has created. One line per entry.
   Format:
     <base64 key><tab><public name>[<tab><description>][<tab><email address>]
+  
+  The base64 key contains two public keys (encryption+signing) and two private
+  keys.
+  The identities file can optionally contain a line that contains the string
+  "Default", a space, and an Email Destination (i.e. two public keys). If the
+  Email Destination matches one of the identities, that identity is used as
+  the default.
 
 
 7. Glossary of Terms

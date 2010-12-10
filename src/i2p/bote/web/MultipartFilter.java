@@ -32,7 +32,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -195,7 +197,7 @@ public class MultipartFilter implements Filter {
      * Returns the name of the HTTP request parameter from which a given <code>BodyPart</code>
      * was constructed. This method relies on the <code>name=...</code> field being
      * present in the <code>Content-Disposition</code> header.<br/>
-     * That field it optional according to RFC2388, so it is generally not safe to
+     * That field is optional according to RFC2388, so it is generally not safe to
      * assume it is there. But JavaMail includes the name field, so it shouldn't be an
      * issue.
      * @param bodyPart
@@ -246,21 +248,49 @@ public class MultipartFilter implements Filter {
      */
     private static HttpServletRequest wrapRequest(HttpServletRequest request, final Map<String, String[]> parameterMap) {
         return new HttpServletRequestWrapper(request) {
+            // merge with the super parameters so parameters added in <jsp:forward> don't get lost
+            @SuppressWarnings("unchecked")
             public Map<String, String[]> getParameterMap() {
-                return parameterMap;
+                return merge(parameterMap, super.getParameterMap());
             }
             
             public String[] getParameterValues(String name) {
-                return parameterMap.get(name);
+                return getParameterMap().get(name);
             }
             
             public String getParameter(String name) {
                 String[] params = getParameterValues(name);
-                return params != null && params.length > 0 ? params[0] : super.getParameter(name);
+                return params != null && params.length > 0 ? params[0] : null;
             }
             
             public Enumeration<String> getParameterNames() {
-                return Collections.enumeration(parameterMap.keySet());
+                return Collections.enumeration(getParameterMap().keySet());
+            }
+            
+            private Map<String, String[]> merge(Map<String, String[]> map1, Map<String, String[]> map2) {
+                Map<String, Set<String>> mergedMap = new HashMap<String, Set<String>>();
+                
+                for (String key: map1.keySet())
+                    addAll(mergedMap, key, map1.get(key));
+                for (String key: map2.keySet())
+                    addAll(mergedMap, key, map2.get(key));
+                
+                // convert Set<String> to String[]
+                Map<String, String[]> arrayMap = new HashMap<String, String[]>();
+                for (String key: mergedMap.keySet()) {
+                    String[] value = mergedMap.get(key).toArray(new String[0]);
+                    arrayMap.put(key, value);
+                }
+                
+                return arrayMap;
+            }
+            
+            private void addAll(Map<String, Set<String>> map, String key, String[] valuesToAdd) {
+                Set<String> values = map.get(key);
+                if (values == null)
+                    values = new HashSet<String>();
+                values.addAll(Arrays.asList(valuesToAdd));
+                map.put(key, values);
             }
             
             // Do not pass the call through to the underlying request because it
