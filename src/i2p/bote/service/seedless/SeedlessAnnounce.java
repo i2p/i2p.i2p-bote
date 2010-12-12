@@ -43,13 +43,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import net.i2p.I2PAppContext;
 import net.i2p.I2PException;
 import net.i2p.client.streaming.I2PSocket;
 import net.i2p.client.streaming.I2PSocketManager;
 import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
-import net.i2p.i2ptunnel.I2PTunnel;
 import net.i2p.util.Log;
 
 /**
@@ -120,9 +120,11 @@ public class SeedlessAnnounce extends I2PBoteThread {
             String b32 = it.next();
             Destination dest = null;
             I2P = null;
+
             try {
                 lastSeedlessAnnounce = System.currentTimeMillis();
-                dest = I2PTunnel.destFromName(b32);
+                // deprecated dest = I2PTunnel.destFromName(b32);
+                dest = I2PAppContext.getGlobalContext().namingService().lookup(b32);
                 lastSeedlessAnnounce = System.currentTimeMillis();
                 if (dest == null) {
                     log.debug("Could not find the destination: <" + b32 + ">");
