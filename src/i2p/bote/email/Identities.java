@@ -22,6 +22,7 @@
 package i2p.bote.email;
 
 import i2p.bote.Util;
+import i2p.bote.io.DerivedKey;
 import i2p.bote.io.EncryptedInputStream;
 import i2p.bote.io.EncryptedOutputStream;
 import i2p.bote.io.FileEncryptionUtil;
@@ -247,9 +248,9 @@ public class Identities implements Iterable<EmailIdentity> {
         }
     }
     
-    public void changePassword(char[] oldPassword, char[] newPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
+    public void changePassword(char[] oldPassword, DerivedKey newKey) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
         if (identitiesFile.exists())
-            FileEncryptionUtil.changePassword(identitiesFile, oldPassword, newPassword);
+            FileEncryptionUtil.changePassword(identitiesFile, oldPassword, newKey);
     }
     
     /**

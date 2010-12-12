@@ -60,18 +60,19 @@ public class EncryptedInputStream extends FilterInputStream {
         char[] password = passwordHolder.getPassword();
         if (password == null)
             throw new PasswordException();
-        decryptedData = new ByteArrayInputStream(readInputStream(upstream, password));
+        DerivedKey cachedKey = passwordHolder.getKey();
+        decryptedData = new ByteArrayInputStream(readInputStream(upstream, password, cachedKey));
     }
     
     public EncryptedInputStream(InputStream upstream, char[] password) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         super(upstream);
-        byte[] bytes = readInputStream(upstream, password);
+        byte[] bytes = readInputStream(upstream, password, null);
         if (bytes == null)
             bytes = new byte[0];
         decryptedData = new ByteArrayInputStream(bytes);
     }
     
-    private byte[] readInputStream(InputStream inputStream, char[] password) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+    private byte[] readInputStream(InputStream inputStream, char[] password, DerivedKey cachedKey) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         byte[] startOfFile = new byte[START_OF_FILE.length];
         inputStream.read(startOfFile);
         if (!Arrays.equals(START_OF_FILE, startOfFile))
@@ -86,7 +87,14 @@ public class EncryptedInputStream extends FilterInputStream {
         int numIterations = ByteBuffer.wrap(numIterationsArray).getInt();
         byte[] salt = new byte[SALT_LENGTH];
         inputStream.read(salt);
-        byte[] keyBytes = FileEncryptionUtil.getEncryptionKey(password, salt, numIterations);
+        
+        // use the cached key if it is suitable, otherwise compute the key
+        byte[] keyBytes;
+        if (cachedKey!=null && Arrays.equals(salt, cachedKey.salt) && numIterations==cachedKey.numIterations)
+            keyBytes = cachedKey.key;
+        else
+            keyBytes = FileEncryptionUtil.getEncryptionKey(password, salt, numIterations);
+        
         byte iv[] = new byte[BLOCK_SIZE];
         inputStream.read(iv);
         byte[] encryptedData = Util.readBytes(inputStream);

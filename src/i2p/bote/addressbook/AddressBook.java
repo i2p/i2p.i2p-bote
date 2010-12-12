@@ -23,6 +23,7 @@ package i2p.bote.addressbook;
 
 import i2p.bote.Util;
 import i2p.bote.email.EmailDestination;
+import i2p.bote.io.DerivedKey;
 import i2p.bote.io.EncryptedInputStream;
 import i2p.bote.io.EncryptedOutputStream;
 import i2p.bote.io.FileEncryptionUtil;
@@ -166,9 +167,9 @@ public class AddressBook implements Iterable<Contact> {
             contacts.remove(contact);
     }
     
-    public void changePassword(char[] oldPassword, char[] newPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
+    public void changePassword(char[] oldPassword, DerivedKey newKey) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
         if (addressFile.exists())
-            FileEncryptionUtil.changePassword(addressFile, oldPassword, newPassword);
+            FileEncryptionUtil.changePassword(addressFile, oldPassword, newKey);
     }
     
     /**

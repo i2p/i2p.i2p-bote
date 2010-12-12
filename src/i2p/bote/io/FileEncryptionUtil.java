@@ -93,11 +93,12 @@ public class FileEncryptionUtil {
     /**
      * Encrypts the array {@link FileEncryptionConstants#PASSWORD_FILE_PLAIN_TEXT} with a
      * password and writes the encrypted data to a file.
-     * @param password
      * @param passwordFile
+     * @param password
+     * @param newKey
      * @throws IOException
      */
-    public static void writePasswordFile(char[] password, File passwordFile) throws IOException {
+    public static void writePasswordFile(File passwordFile, char[] password, DerivedKey newKey) throws IOException {
         if (password==null || password.length==0) {
             if (!passwordFile.delete())
                 new Log(FileEncryptionUtil.class).error("Can't delete file: " + passwordFile.getAbsolutePath());
@@ -106,7 +107,7 @@ public class FileEncryptionUtil {
         
         EncryptedOutputStream outputStream = null;
         try {
-            outputStream = new EncryptedOutputStream(new FileOutputStream(passwordFile), password);
+            outputStream = new EncryptedOutputStream(new FileOutputStream(passwordFile), newKey);
             outputStream.write(PASSWORD_FILE_PLAIN_TEXT);
         } catch (IOException e) {
             new Log(FileEncryptionUtil.class).error("Can't write password file <" + passwordFile.getAbsolutePath() + ">", e);
@@ -119,15 +120,18 @@ public class FileEncryptionUtil {
     }
     
     /**
-     * Encrypts a file with a new password. No verification of the old password is done.
+     * Encrypts a file with a new password. No verification of the old password is done.<br/>
+     * The new password is implicitly given by <code>newKey</code> which also specifies the
+     * salt. This is done so the salt vector and hence the encryption key can be reused,
+     * avoiding expensive recomputation.
      * @param file
      * @param oldPassword
-     * @param newPassword
+     * @param newKey
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      * @throws IOException
      */
-    public static void changePassword(File file, char[] oldPassword, char[] newPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    public static void changePassword(File file, char[] oldPassword, DerivedKey newKey) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         InputStream inputStream = null;
         byte[] decryptedData = null;
         try {
@@ -140,7 +144,7 @@ public class FileEncryptionUtil {
         }
         OutputStream outputStream = null;
         try {
-            outputStream = new EncryptedOutputStream(new FileOutputStream(file), newPassword);
+            outputStream = new EncryptedOutputStream(new FileOutputStream(file), newKey);
             outputStream.write(decryptedData);
         }
         finally {

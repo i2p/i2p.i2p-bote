@@ -310,6 +310,12 @@ public class Util {
         return appContext.elGamalAESEngine().decrypt(data, key, appContext.sessionKeyManager());
     }
     
+    /** Overwrites a <code>byte</code> array with zeros */
+    public static void zeroOut(byte[] array) {
+        for (int i=0; i<array.length; i++)
+            array[i] = 0;
+    }
+    
     /** Overwrites a <code>char</code> array with zeros */
     public static void zeroOut(char[] array) {
         for (int i=0; i<array.length; i++)

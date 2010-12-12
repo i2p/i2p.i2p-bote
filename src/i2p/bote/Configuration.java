@@ -40,6 +40,7 @@ public class Configuration {
     private static final String ADDRESS_BOOK_FILE_NAME = "addressBook";
     private static final String MESSAGE_ID_CACHE_FILE = "msgidcache.txt";
     private static final String PASSWORD_FILE = "password";
+    private static final String KEY_DERIVATION_PARAMETERS_FILE = "derivparams";
     private static final String OUTBOX_DIR = "outbox";              // relative to I2P_BOTE_SUBDIR
     private static final String RELAY_PKT_SUBDIR = "relay_pkt";     // relative to I2P_BOTE_SUBDIR
     private static final String INCOMPLETE_SUBDIR = "incomplete";   // relative to I2P_BOTE_SUBDIR
@@ -168,6 +169,14 @@ public class Configuration {
      */
     public File getPasswordFile() {
         return new File(i2pBoteDir, PASSWORD_FILE);
+    }
+    
+    /**
+     * Returns the file that caches the parameters needed for generating a
+     * file encryption key from a password.
+     */
+    public File getKeyDerivationParametersFile() {
+        return new File(i2pBoteDir, KEY_DERIVATION_PARAMETERS_FILE);
     }
     
     public File getOutboxDir() {

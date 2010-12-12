@@ -34,6 +34,7 @@ import i2p.bote.folder.MessageIdCache;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.folder.TrashFolder;
+import i2p.bote.io.DerivedKey;
 import i2p.bote.io.FileEncryptionUtil;
 import i2p.bote.io.PasswordCache;
 import i2p.bote.io.PasswordException;
@@ -67,7 +68,6 @@ import i2p.bote.service.seedless.SeedlessScrapeServers;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -475,7 +475,6 @@ public class I2PBote implements NetworkStatusSource {
      * @param confirmNewPassword
      * @return An error message if the two new passwords don't match, <code>null</code> otherwise
      * @throws IOException 
-     * @throws FileNotFoundException 
      * @throws InvalidKeySpecException 
      * @throws NoSuchAlgorithmException 
      */
@@ -487,17 +486,22 @@ public class I2PBote implements NetworkStatusSource {
         if (!Arrays.equals(newPassword, confirmNewPassword))
             return _("The new password and the confirmation password do not match.");
         
-        // synchronize so no files are encrypted with the old password while the password is being changed
-        synchronized(passwordCache) {
-            identities.changePassword(oldPassword, newPassword);
-            addressBook.changePassword(oldPassword, newPassword);
+        // lock so no files are encrypted with the old password while the password is being changed
+        passwordCache.lockPassword();
+        try {
+            passwordCache.setPassword(newPassword);
+            DerivedKey newKey = passwordCache.getKey();
+            identities.changePassword(oldPassword, newKey);
+            addressBook.changePassword(oldPassword, newKey);
             for (EmailFolder folder: getEmailFolders())
-                folder.changePassword(oldPassword, newPassword);
+                folder.changePassword(oldPassword, newKey);
             
-            FileEncryptionUtil.writePasswordFile(newPassword, passwordFile);
+            FileEncryptionUtil.writePasswordFile(passwordFile, passwordCache.getPassword(), newKey);
+        }
+        finally {
+            passwordCache.unlockPassword();
         }
         
-        passwordCache.setPassword(newPassword);
         return null;
     }
     

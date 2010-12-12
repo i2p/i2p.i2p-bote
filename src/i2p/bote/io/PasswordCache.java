@@ -21,19 +21,37 @@
 
 package i2p.bote.io;
 
+import static i2p.bote.io.FileEncryptionConstants.NUM_ITERATIONS;
+import static i2p.bote.io.FileEncryptionConstants.SALT_LENGTH;
 import i2p.bote.Configuration;
 import i2p.bote.Util;
 import i2p.bote.service.I2PBoteThread;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import net.i2p.I2PAppContext;
 
 /**
  * Stores a password in memory so the user doesn't have to re-enter it.
+ * Also caches key derivation parameters (salt and #iterations) so the
+ * key derivation function only needs to run once.
  */
 public class PasswordCache extends I2PBoteThread implements PasswordHolder {
     private char[] password;
+    private DerivedKey derivedKey;
     private long lastReset;
     private Configuration configuration;
+    private Lock passwordLock = new ReentrantLock();
     
     /**
      * Creates a new <code>PasswordCache</code>.
@@ -49,7 +67,67 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
      * @param password
      */
     public synchronized void setPassword(char[] password) {
+        // wait until the lock is released
+        lockPassword();
         this.password = password;
+        // clear the old key
+        if (derivedKey != null) {
+            derivedKey.clear();
+            derivedKey = null;
+        }
+        unlockPassword();
+    }
+    
+    /**
+     * Reads salt and number of iterations from the cache file, or chooses a new
+     * salt array if the file doesn't exist. The encryption key is then computed
+     * and the variable <code>derivedKey</code> is populated.
+     * @throws InvalidKeySpecException 
+     * @throws NoSuchAlgorithmException 
+     * @throws IOException 
+     */
+    private void createDerivedKey() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+        byte[] salt = null;
+        int numIterations;
+        derivedKey = null;
+        
+        // read salt + numIterations from file if available
+        File derivParamFile = configuration.getKeyDerivationParametersFile();
+        if (derivParamFile.exists()) {
+            DataInputStream inputStream = null;
+            try {
+                inputStream = new DataInputStream(new FileInputStream(derivParamFile));
+                salt = new byte[FileEncryptionConstants.SALT_LENGTH];
+                inputStream.read(salt);
+                numIterations = inputStream.readInt();
+                byte[] key = FileEncryptionUtil.getEncryptionKey(password, salt, numIterations);
+                derivedKey = new DerivedKey(salt, numIterations, key);
+            }
+            finally {
+                if (inputStream != null)
+                    inputStream.close();
+            }
+        }
+        
+        // if necessary, create a new salt and key and write the derivation parameters to the cache file
+        if (derivedKey==null || derivedKey.numIterations!=NUM_ITERATIONS) {
+            I2PAppContext appContext = I2PAppContext.getGlobalContext();
+            salt = new byte[SALT_LENGTH];
+            appContext.random().nextBytes(salt);
+            
+            DataOutputStream outputStream = null;
+            try {
+                byte[] key = FileEncryptionUtil.getEncryptionKey(password, salt, NUM_ITERATIONS);
+                derivedKey = new DerivedKey(salt, NUM_ITERATIONS, key);
+                outputStream = new DataOutputStream(new FileOutputStream(derivParamFile));
+                outputStream.write(salt);
+                outputStream.writeInt(NUM_ITERATIONS);
+            }
+            finally {
+                if (outputStream != null)
+                    outputStream.close();
+            }
+        }
     }
     
     /**
@@ -65,6 +143,23 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
             return password;
     }
     
+    @Override
+    public synchronized DerivedKey getKey() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+        if (derivedKey == null)
+            createDerivedKey();
+        return derivedKey;
+    }
+
+    /** Acquires a lock that prevents the password from expiring or being changed. */
+    public void lockPassword() {
+        passwordLock.lock();
+    }
+    
+    /** The counterpart to {@link #lockPassword()} */
+    public void unlockPassword() {
+        passwordLock.unlock();
+    }
+    
     private void resetExpiration() {
         lastReset = System.currentTimeMillis();
     }
@@ -76,13 +171,17 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
     @Override
     protected void doStep() throws InterruptedException {
         awaitShutdownRequest(1, TimeUnit.MINUTES);
-        long durationMilliseconds = TimeUnit.MILLISECONDS.convert(configuration.getPasswordCacheDuration(), TimeUnit.MINUTES);
-        synchronized(this) {
+        lockPassword();
+        try {
+            long durationMilliseconds = TimeUnit.MILLISECONDS.convert(configuration.getPasswordCacheDuration(), TimeUnit.MINUTES);
             boolean isEmpty = password==null || password.length==0;
             if (System.currentTimeMillis()>lastReset+durationMilliseconds && !isEmpty) {   // cache empty passwords forever
                 Util.zeroOut(password);
                 password = null;
             }
+        }
+        finally {
+            unlockPassword();
         }
     }
 }

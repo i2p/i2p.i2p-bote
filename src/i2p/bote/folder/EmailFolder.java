@@ -27,6 +27,7 @@ import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.EmailMetadata;
+import i2p.bote.io.DerivedKey;
 import i2p.bote.io.EncryptedOutputStream;
 import i2p.bote.io.FileEncryptionUtil;
 import i2p.bote.io.PasswordException;
@@ -105,9 +106,9 @@ public class EmailFolder extends Folder<Email> {
         }
     }
     
-    public void changePassword(char[] oldPassword, char[] newPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
+    public void changePassword(char[] oldPassword, DerivedKey newKey) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
         for (File emailFile: getFilenames())
-            FileEncryptionUtil.changePassword(emailFile, oldPassword, newPassword);
+            FileEncryptionUtil.changePassword(emailFile, oldPassword, newKey);
     }
     
     /**
