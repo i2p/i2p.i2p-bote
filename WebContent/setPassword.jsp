@@ -43,7 +43,7 @@
     <ib:message key="If you have not set a password, leave the old password blank."/>
     </p>
     
-    <form action="setPassword.jsp" method="POST">
+    <form name="form" action="setPassword.jsp" method="POST">
         <input type="hidden" name="action" value="set"/>
         <table>
             <tr>
@@ -60,6 +60,10 @@
         <ib:message key="OK" var="ok"/>
         <input type="submit" value="${ok}"/>
     </form>
+
+    <script type="text/javascript" language="JavaScript">
+        document.forms['form'].elements['old'].focus();
+    </script>
 </div>
 
 <jsp:include page="footer.jsp"/>
