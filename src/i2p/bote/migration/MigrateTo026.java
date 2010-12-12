@@ -31,6 +31,7 @@ import i2p.bote.io.PasswordException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -84,7 +85,17 @@ public class MigrateTo026 {
     }
     
     private void migrateEmailsIfNeeded(File directory) throws IOException, PasswordException {
-        for (File file: directory.listFiles())
+        if (!directory.exists())
+            return;
+        
+        FilenameFilter filter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".mail");
+            }
+        };
+        
+        for (File file: directory.listFiles(filter))
             if (!isEncrypted(file)) {
                 log.debug("Migrating email file: <" + file + ">");
                 encrypt(file, file);
