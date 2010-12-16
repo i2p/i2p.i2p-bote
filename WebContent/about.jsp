@@ -48,13 +48,19 @@
     </tr><tr>
         <td><strong><ib:message key="Contributors:"/></strong></td>
     </tr><tr>
-        <td></td><td>Mixxy</td>
+        <td></td><td>Mixxy</td><td><font color="#555"><ib:message key="Translation, QA, usability, technical feedback"/></font></td>
     </tr><tr>
         <td></td><td>zzz</td>
     </tr><tr>
-        <td></td><td>sponge</td>
+        <td></td><td>sponge</td><td><font color="#555"><ib:message key="Seedless"/></font></td>
     </tr><tr>
-        <td></td><td>suhr</td>
+        <td></td><td>suhr</td><td><font color="#555"><ib:message key="Russian translation"/></font></td>
+    </tr><tr>
+        <td></td><td>albat</td><td><font color="#555"><ib:message key="French translation"/></font></td>
+    </tr><tr>
+        <td></td><td>redzara</td><td><font color="#555"><ib:message key="French translation"/></font></td>
+    </tr><tr>
+        <td></td><td>KwukDuck</td><td><font color="#555"><ib:message key="Dutch translation"/></font></td>
     </tr></table>
 </div>
 
