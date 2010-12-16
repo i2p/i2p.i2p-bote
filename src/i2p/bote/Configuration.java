@@ -30,7 +30,6 @@ import net.i2p.data.DataHelper;
 import net.i2p.util.Log;
 
 public class Configuration {
-    private static final long serialVersionUID = -6318245413106186095L;
     private static final String I2P_BOTE_SUBDIR = "i2pbote";       // relative to the I2P app dir
     private static final String CONFIG_FILE_NAME = "i2pbote.config";
     private static final String DEST_KEY_FILE_NAME = "local_dest.key";
