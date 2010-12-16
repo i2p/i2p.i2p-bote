@@ -290,7 +290,7 @@ public class I2PBote implements NetworkStatusSource {
             @Override
             public void emailSent(Email email) {
                 try {
-                    outbox.setNew(email, false);   // this prevents OutboxProcessor from sending the email again if it can't be moved for some reason
+                    outbox.setNew(email, false);
                     log.debug("Moving email [" + email + "] to the \"sent\" folder.");
                     outbox.move(email, sentFolder);
                 }
