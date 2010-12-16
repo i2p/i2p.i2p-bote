@@ -35,10 +35,9 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import net.i2p.util.Log;
-
-import org.apache.catalina.tribes.util.Arrays;
 
 /**
  * Migrates the address book, email identities, and all emails to the encrypted format.
