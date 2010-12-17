@@ -40,10 +40,10 @@ public class EmailFolderTest {
     private File testDir;
     private File folderDir1;
     private File folderDir2;
-    Email email1;
-    Email email2;
-    EmailFolder folder1;
-    EmailFolder folder2;
+    private Email email1;
+    private Email email2;
+    private EmailFolder folder1;
+    private EmailFolder folder2;
     
     @Before
     public void setUp() throws Exception {
@@ -88,10 +88,7 @@ public class EmailFolderTest {
             "\"No,\" said the man with a puzzled frown. \"I mean that I made an excuse and left early.\"\n" +
             "He collapsed into a coma from which he recovered only once and briefly.");
         
-        // We can get away with passing a null Configuration because we set a non-null password and don't start
-        // the PasswordCache thread, which means the password is never removed from the cache.
-        PasswordCache passwordCache = new PasswordCache(null);
-        passwordCache.setPassword("test password 12345".toCharArray());
+        PasswordCache passwordCache = TestUtil.createPasswordCache(testDir);
         
         folder1 = new EmailFolder(folderDir1, passwordCache);
         folder2 = new EmailFolder(folderDir2, passwordCache);

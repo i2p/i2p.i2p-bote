@@ -61,33 +61,34 @@ public class FileEncryptionUtilTest {
     @Test
     public void testPasswordFile() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         File passwordFile = new File(testDir, "password");
-        FileEncryptionUtil.writePasswordFile(password, passwordFile);
+        FileEncryptionUtil.writePasswordFile(passwordFile, password, FileEncryptionTestUtil.deriveKey(password));
         assertTrue(passwordFile.exists());
         
         assertTrue(FileEncryptionUtil.isPasswordCorrect(password, passwordFile));
         assertFalse(FileEncryptionUtil.isPasswordCorrect("this is the wrong password".toCharArray(), passwordFile));
         
         // setting an empty password should delete the password file
-        FileEncryptionUtil.writePasswordFile(new char[0], passwordFile);
+        char[] emptyPassword = new char[0];
+        FileEncryptionUtil.writePasswordFile(passwordFile, emptyPassword, FileEncryptionTestUtil.deriveKey(emptyPassword));
         assertTrue(FileEncryptionUtil.isPasswordCorrect("random string adfsasdfafsd".toCharArray(), passwordFile));
         assertFalse(passwordFile.exists());
         
         // same for a null password
-        FileEncryptionUtil.writePasswordFile(password, passwordFile);
+        FileEncryptionUtil.writePasswordFile(passwordFile, password, FileEncryptionTestUtil.deriveKey(password));
         assertTrue(passwordFile.exists());
-        FileEncryptionUtil.writePasswordFile(null, passwordFile);
+        FileEncryptionUtil.writePasswordFile(passwordFile, null, FileEncryptionTestUtil.deriveKey(null));
         assertFalse(passwordFile.exists());
     }
     
     @Test
     public void testChangePassword() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         File encryptedFile = new File(testDir, "encrypted");
-        OutputStream outputStream = new EncryptedOutputStream(new FileOutputStream(encryptedFile), password);
+        OutputStream outputStream = new EncryptedOutputStream(new FileOutputStream(encryptedFile), FileEncryptionTestUtil.deriveKey(password));
         outputStream.write(plainText);
         outputStream.close();
         
         char[] newPassword = "new password".toCharArray();
-        FileEncryptionUtil.changePassword(encryptedFile, password, newPassword);
+        FileEncryptionUtil.changePassword(encryptedFile, password, FileEncryptionTestUtil.deriveKey(newPassword));
         InputStream inputStream = new EncryptedInputStream(new FileInputStream(encryptedFile), newPassword);
         byte[] decryptedText = Util.readBytes(inputStream);
         assertTrue(Arrays.equals(plainText, decryptedText));

@@ -22,7 +22,6 @@
 package i2p.bote.io;
 
 import static org.junit.Assert.assertEquals;
-
 import i2p.bote.Util;
 
 import java.io.ByteArrayInputStream;
@@ -38,9 +37,10 @@ public class EncryptedStreamTest {
         String plainText = "Kräht der Hahn hoch auf dem Mist, ändert sich das Wetter, oder es bleibt wie's ist.";
         
         char[] password = "xyz12345".toCharArray();
+        DerivedKey derivedKey = FileEncryptionTestUtil.deriveKey(password);
         
         ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-        OutputStream encryptedOutputStream = new EncryptedOutputStream(byteOutputStream, password);
+        OutputStream encryptedOutputStream = new EncryptedOutputStream(byteOutputStream, derivedKey);
         encryptedOutputStream.write(plainText.getBytes());
         encryptedOutputStream.close();
         
