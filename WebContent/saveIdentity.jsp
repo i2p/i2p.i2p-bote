@@ -30,6 +30,7 @@
     <jsp:forward page="identities.jsp"/>
 </c:if>
 
+<ib:requirePassword forwardUrl="saveIdentity.jsp">
 <c:choose>
     <c:when test="${empty param.publicName}">
         <ib:message key="Please fill in the Public Name field." var="errorMessage"/>
@@ -50,3 +51,4 @@
         <jsp:param name="errorMessage" value="${errorMessage}"/>
     </jsp:forward>
 </c:if>
+</ib:requirePassword>

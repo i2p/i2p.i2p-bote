@@ -36,10 +36,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import net.i2p.I2PAppContext;
 import net.i2p.data.Base64;
-import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
-import net.i2p.i2ptunnel.I2PTunnel;
 import net.i2p.util.Log;
 
 /**
@@ -139,13 +138,16 @@ public class SeedlessScrapePeers extends I2PBoteThread {
     
     /** Returns <code>null</code> if the peer was not found. */
     private Destination lookup(String b32Peer) {
-        Destination destination;
+        Destination destination = I2PAppContext.getGlobalContext().namingService().lookup(b32Peer);
+        /* depreciated
+         Destination destination;
         try {
-            destination = I2PTunnel.destFromName(b32Peer);
+             destination = I2PTunnel.destFromName(b32Peer);
         } catch (DataFormatException e) {
             log.error("Cannot look up B32 destination: <" + b32Peer + ">", e);
             return null;
         }
+         */
         if (destination == null)
             log.warn ("Can't find peer in floodfill: " + b32Peer);
         return destination;

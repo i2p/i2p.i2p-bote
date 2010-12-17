@@ -40,6 +40,7 @@
                     book, and the "name" parameter is ignored.
 --%>
 
+<ib:requirePassword forwardUrl="editContact.jsp">
 <c:if test="${param.action eq 'cancel'}">
     <c:set var="backUrl" value="${param.backUrl}"/>
     <c:if test="${empty backUrl}">
@@ -127,7 +128,7 @@
             </tr>
         </table>
         <button name="action" value="save">${submitButtonText}</button>
-        <button name="action" value="cancel"/><ib:message key="Cancel"/></button>
+        <button name="action" value="cancel"><ib:message key="Cancel"/></button>
     </form>
 
     <script type="text/javascript" language="JavaScript">
@@ -137,5 +138,6 @@
             document.forms['form'].elements['name'].focus();
     </script>
 </div>
+</ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

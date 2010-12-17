@@ -84,7 +84,8 @@ public abstract class I2PBotePacket {
         }
         finally {
             try {
-                inputStream.close();
+                if (inputStream != null)
+                    inputStream.close();
             }
             catch (IOException e) {
                 Log log = new Log(I2PBotePacket.class);

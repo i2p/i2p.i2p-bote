@@ -34,6 +34,10 @@
         title           - The page title to set
         refreshInterval - If this parameter is set, do an HTTP refresh every refreshInterval seconds
         refreshUrl      - If refreshInterval is set, load this URL when refreshing
+        infoMessage     - Display an informational message
+        errorMessage    - Display an error message
+        
+    infoMessage and errorMessage can also be passed in as an HTTP parameter.
 --%>
 
 <fmt:requestEncoding value="UTF-8"/>

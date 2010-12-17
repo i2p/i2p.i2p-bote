@@ -29,12 +29,15 @@
 <c:set var="title" value="Identities" scope="request"/>
 <jsp:include page="header.jsp"/>
 
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 <div class="main">
     <h2>
         <ib:message key="Email Identities"/>
     </h2>
 
-    <c:set var="identities" value="${ib:getIdentities().all}"/>
+    <ib:requirePassword forwardUrl="identities.jsp">
+        <c:set var="identities" value="${jspHelperBean.identities.all}"/>
+    </ib:requirePassword>
     <c:if test="${empty identities}">
         <ib:message key="No email identities are defined."/>
     </c:if>
@@ -66,8 +69,7 @@
         </td>
         <td style="width: 100px;">
             <div${class}>
-                <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-                    <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
+                <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
                 <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&new=false&key=${identity.key}&cryptoImpl=${identity.cryptoImpl}&publicName=${ib:escapeQuotes(identity.publicName)}&description=${ib:escapeQuotes(identity.description)}&emailAddress=${ib:escapeQuotes(identity.emailAddress)}&isDefault=${identity.default}">
                     ${identity.publicName}
                 </a>

@@ -24,12 +24,18 @@ package i2p.bote;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import i2p.bote.email.Email;
+import i2p.bote.io.PasswordCache;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
 import javax.mail.MessagingException;
+
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.lib.legacy.ClassImposteriser;
 
 public class TestUtil {
     
@@ -52,5 +58,29 @@ public class TestUtil {
         email2.writeTo(byteStream2);
         
         return Arrays.equals(byteStream1.toByteArray(), byteStream2.toByteArray());
+    }
+    
+    /**
+     * Creates a {@link PasswordCache} with a mock {@link Configuration}.
+     * @param testDir
+     * @return
+     */
+    public static PasswordCache createPasswordCache(File testDir) {
+        Mockery mockery = new Mockery() {{
+            setImposteriser(ClassImposteriser.INSTANCE);
+        }};
+        final Configuration configuration = mockery.mock(Configuration.class);
+        
+        final File derivParametersFile = new File(testDir, "derivparams");
+        mockery.checking(new Expectations() {{
+            oneOf(configuration).getKeyDerivationParametersFile(); will(returnValue(derivParametersFile));
+        }});
+        
+        final File passwordFile = new File(testDir, "password");
+        mockery.checking(new Expectations() {{
+            atLeast(1).of(configuration).getPasswordFile(); will(returnValue(passwordFile));
+        }});
+        
+        return new PasswordCache(configuration);
     }
 }

@@ -27,6 +27,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<ib:requirePassword forwardUrl="editIdentity.jsp">
 <c:choose>
     <c:when test="${param.new}">
         <ib:message key="New Email Identity" var="title" scope="request"/>
@@ -137,5 +138,6 @@
         document.forms['form'].elements['publicName'].focus();
     </script>
 </div>
+</ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

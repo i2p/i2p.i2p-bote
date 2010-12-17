@@ -25,23 +25,41 @@
 --%>
 
 <%@ attribute name="paramsToCopy" required="true" description="Comma-separated parameter names" %>
+<%@ attribute name="paramsToExclude" required="false" description="Comma-separated parameter names to exclude" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<c:set var="paramArray" value="${fn:split(paramsToCopy, ',')}"/>
+<c:set var="excludedArray" value="${fn:split(paramsToExclude, ',')}"/>
+
 <c:forEach var="parameter" items="${param}">
+    <%-- Test if the parameter matches one of the excluded params --%>
     <c:set var="exactMatch" value="false"/>
     <c:set var="prefixMatch" value="false"/>
-    <c:forEach var="paramToCopy" items="${fn:split(paramsToCopy, ',')}">
-        <c:if test="${parameter.key eq paramToCopy}">
+    <c:set var="isExcluded" value="false"/>
+    <c:forEach var="paramToExclude" items="${excludedArray}">
+        <c:if test="${parameter.key eq paramToExclude}">
             <c:set var="exactMatch" value="true"/>
         </c:if>
-        <c:if test="${fn:endsWith(paramToCopy, '*') and fn:startsWith(parameter.key, fn:substringBefore(paramToCopy, '*'))}">
+        <c:if test="${fn:endsWith(paramToExclude, '*') and fn:startsWith(parameter.key, fn:substringBefore(paramToExclude, '*'))}">
             <c:set var="prefixMatch" value="true"/>
         </c:if>
     </c:forEach>
-    <c:if test="${exactMatch or prefixMatch}">
-        <input type="hidden" name="${parameter.key}" value="${ib:escapeQuotes(parameter.value)}"/>
+
+    <%-- If not excluded, test for a match with paramArray --%>
+    <c:if test="${not exactMatch and not prefixMatch}">
+        <c:forEach var="paramToCopy" items="${paramArray}">
+            <c:if test="${parameter.key eq paramToCopy}">
+                <c:set var="exactMatch" value="true"/>
+            </c:if>
+            <c:if test="${fn:endsWith(paramToCopy, '*') and fn:startsWith(parameter.key, fn:substringBefore(paramToCopy, '*'))}">
+                <c:set var="prefixMatch" value="true"/>
+            </c:if>
+        </c:forEach>
+        <c:if test="${exactMatch or prefixMatch}">
+            <input type="hidden" name="${parameter.key}" value="${ib:escapeQuotes(parameter.value)}"/>
+        </c:if>
     </c:if>
 </c:forEach>

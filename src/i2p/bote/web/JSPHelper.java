@@ -36,8 +36,11 @@ import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.TrashFolder;
+import i2p.bote.io.FileEncryptionUtil;
+import i2p.bote.io.PasswordException;
 import i2p.bote.network.NetworkStatus;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -59,7 +62,8 @@ import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 
 /**
- * Implements the JSP functions defined in the <code>i2pbote.tld</code> file.
+ * Implements the JSP functions defined in the <code>i2pbote.tld</code> file,
+ * and serves as a bean for JSPs.
  */
 public class JSPHelper {
     private static AddressDisplayFilter addressDisplayFilter;
@@ -71,11 +75,11 @@ public class JSPHelper {
         return I2PBote.getInstance().getNetworkStatus();
     }
     
-    public static Identities getIdentities() {
+    public Identities getIdentities() throws PasswordException {
         return I2PBote.getInstance().getIdentities();
     }
     
-    public static AddressBook getAddressBook() {
+    public static AddressBook getAddressBook() throws PasswordException {
         return I2PBote.getInstance().getAddressBook();
     }
     
@@ -97,10 +101,11 @@ public class JSPHelper {
      * @param emailAddress
      * @param setDefault If this is <code>true</code>, the identity becomes the new default identity. Otherwise, the default stays the same.
      * @return null if sucessful, or an error message if an error occured
+     * @throws PasswordException 
      */
-    public static String saveIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) {
+    public static String saveIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) throws PasswordException {
         Log log = new Log(JSPHelper.class);
-        Identities identities = getIdentities();
+        Identities identities = I2PBote.getInstance().getIdentities();
         EmailIdentity identity = identities.get(key);
         
         if (createNew) {
@@ -145,9 +150,10 @@ public class JSPHelper {
      * Deletes an email identity.
      * @param key A base64-encoded email identity key
      * @return null if sucessful, or an error message if an error occured
+     * @throws PasswordException 
      */
-    public static String deleteIdentity(String key) {
-        Identities identities = getIdentities();
+    public static String deleteIdentity(String key) throws PasswordException {
+        Identities identities = I2PBote.getInstance().getIdentities();
         identities.remove(key);
 
         try {
@@ -159,8 +165,8 @@ public class JSPHelper {
         }
     }
     
-    public static EmailIdentity getIdentity(String key) {
-        return getIdentities().get(key);
+    public static EmailIdentity getIdentity(String key) throws PasswordException {
+        return I2PBote.getInstance().getIdentities().get(key);
     }
     
     public static CryptoImplementation getCryptoImplementation(int id) {
@@ -177,8 +183,9 @@ public class JSPHelper {
      * @param destinationString A base64-encoded Email Destination key
      * @param name
      * @return null if sucessful, or an error message if an error occured
+     * @throws PasswordException
      */
-    public static String saveContact(String destinationString, String name) {
+    public static String saveContact(String destinationString, String name) throws PasswordException {
         destinationString = Util.fixAddress(destinationString);
         
         AddressBook addressBook = getAddressBook();
@@ -234,10 +241,6 @@ public class JSPHelper {
             return contact.getName();
     }
     
-    public static void checkForMail() {
-        I2PBote.getInstance().checkForMail();
-    }
-
     public static boolean isCheckingForMail() {
         return I2PBote.getInstance().isCheckingForMail();
     }
@@ -259,7 +262,7 @@ public class JSPHelper {
             return null;
     }
     
-    public static Email getEmail(String folderName, String messageId) {
+    public static Email getEmail(String folderName, String messageId) throws PasswordException {
         EmailFolder folder = getMailFolder(folderName);
         if (folder == null)
             return null;
@@ -267,7 +270,7 @@ public class JSPHelper {
             return folder.getEmail(messageId);
     }
 
-    public static List<Email> getEmails(EmailFolder folder, EmailAttribute sortColumn, boolean descending) {
+    public static List<Email> getEmails(EmailFolder folder, EmailAttribute sortColumn, boolean descending) throws PasswordException {
         return folder.getElements(getAddressDisplayFilter(), sortColumn, descending);
     }
 
@@ -296,8 +299,9 @@ public class JSPHelper {
      * If the email contains no recipients at all, or if an error occurred,
      * <code>null</code> is returned.
      * @param email
+     * @throws PasswordException 
      */
-    public static Address getOneLocalRecipient(Email email) {
+    public static Address getOneLocalRecipient(Email email) throws PasswordException {
         Address[] recipients;
         try {
             recipients = email.getAllRecipients();
@@ -308,7 +312,7 @@ public class JSPHelper {
         if (recipients == null)
             return null;
         
-        Identities identities = getIdentities();
+        Identities identities = I2PBote.getInstance().getIdentities();
         for (EmailDestination localDestination: identities) {
             String base64Dest = localDestination.toBase64();
             for (Address recipient: recipients)
@@ -473,23 +477,25 @@ public class JSPHelper {
      * email destination that is either in the address book or among the local
      * email identities.
      * @param address
+     * @throws PasswordException 
      */
-    public static boolean isKnown(String address) {
+    public static boolean isKnown(String address) throws PasswordException {
         String destination = extractEmailDestination(address);
         if (destination == null)
             return false;
         else if (getAddressBook().contains(destination))
             return true;
-        else return getIdentities().contains(destination);
+        else return I2PBote.getInstance().getIdentities().contains(destination);
     }
     
-    public static String getNameAndDestination(String address) {
+    public static String getNameAndDestination(String address) throws PasswordException {
         return getAddressDisplayFilter().getNameAndDestination(address);
     }
     
     private static AddressDisplayFilter getAddressDisplayFilter() {
+        Identities identities = I2PBote.getInstance().getIdentities();
         if (addressDisplayFilter == null)
-            addressDisplayFilter = new AddressDisplayFilter(getIdentities(), getAddressBook());
+            addressDisplayFilter = new AddressDisplayFilter(identities, getAddressBook());
         return addressDisplayFilter;
     }
     
@@ -539,5 +545,25 @@ public class JSPHelper {
     
     public long getRandomNumber() {
         return RandomSource.getInstance().nextLong();
+    }
+    
+    public static boolean tryPassword(String password) throws Exception {
+        char[] passwordChars = password.toCharArray();
+        File passwordFile = I2PBote.getInstance().getConfiguration().getPasswordFile();
+        boolean correct = FileEncryptionUtil.isPasswordCorrect(passwordChars, passwordFile);
+        if (correct)
+            I2PBote.getInstance().getPasswordCache().setPassword(passwordChars);
+        return correct;
+    }
+    
+    public static String changePassword(String oldPassword, String newPassword, String confirmNewPassword) throws Exception {
+        try {
+            return I2PBote.getInstance().changePassword(oldPassword.toCharArray(), newPassword.toCharArray(), confirmNewPassword.toCharArray());
+        }
+        catch (Exception e) {
+            Log log = new Log(JSPHelper.class);
+            log.error("Error while changing password", e);
+            return e.getLocalizedMessage();
+        }
     }
 }

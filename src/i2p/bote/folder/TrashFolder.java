@@ -21,6 +21,8 @@
 
 package i2p.bote.folder;
 
+import i2p.bote.io.PasswordHolder;
+
 import java.io.File;
 
 /**
@@ -29,7 +31,7 @@ import java.io.File;
  */
 public class TrashFolder extends EmailFolder {
 
-    public TrashFolder(File storageDir) {
-        super(storageDir);
+    public TrashFolder(File storageDir, PasswordHolder passwordHolder) {
+        super(storageDir, passwordHolder);
     }
 }

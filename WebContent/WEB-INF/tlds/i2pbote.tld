@@ -223,19 +223,28 @@
     <body-content>empty</body-content>
 </tag>
 
+<tag>
+    <name>requirePassword</name>
+    <info>
+        Forwards the current page to the password entry page
+        if the tag body throws a PasswordException.
+        When the user enters the correct password, the page
+        pointed to by the forwardTo parameter is loaded.
+    </info>
+    <tag-class>i2p.bote.web.RequirePasswordTag</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+        <name>forwardUrl</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+</tag>
+
 <function>
     <name>getNetworkStatus</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         i2p.bote.network.NetworkStatus getNetworkStatus()
-    </function-signature>
-</function>
-
-<function>
-    <name>getIdentities</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
-    <function-signature>
-        i2p.bote.email.Identities getIdentities()
     </function-signature>
 </function>
 
@@ -468,6 +477,32 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         java.lang.String escapeQuotes(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>tryPassword</name>
+    <description>
+        Tests whether a password is correct. If it is, it is
+        stored in the password cache and true is returned.
+        Otherwise, the password is not stored and false is
+        returned.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        boolean tryPassword(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>changePassword</name>
+    <description>
+        Sets a new password. Returns a localized error message,
+        or null if the password change was sucessful.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String changePassword(java.lang.String, java.lang.String, java.lang.String)
     </function-signature>
 </function>
 

@@ -34,6 +34,7 @@
 <ib:message key="Address Book" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
+<ib:requirePassword forwardUrl="addressBook.jsp">
 <div class="main">
     <c:set var="contacts" value="${ib:getAddressBook().all}"/>
     
@@ -47,7 +48,7 @@
     </c:if>
     
     <c:if test="${param.select}">
-        <form action="${forwardUrl}" method="POST">
+        <form action="${param.forwardUrl}" method="POST">
         <ib:copyParams paramsToCopy="${param.paramsToCopy}"/>
     </c:if>
     
@@ -123,5 +124,6 @@
     </c:if>
     
 </div>
+</ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

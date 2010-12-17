@@ -58,7 +58,8 @@ public class EmailIdentity extends EmailDestination {
 
     /**
      * Creates a <code>EmailIdentity</code> from a Base64-encoded string.
-     * The format can be any format supported by one of the {@link CryptoImplementation}s.
+     * The format can be any format supported by one of the {@link CryptoImplementation}s;
+     * the length of the string must match {@link CryptoImplementation#getBase64CompleteKeySetLength()}.
      * @param base64Key
      * @throws GeneralSecurityException 
      */

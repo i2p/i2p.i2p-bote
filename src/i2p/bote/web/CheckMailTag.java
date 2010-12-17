@@ -21,11 +21,13 @@
 
 package i2p.bote.web;
 
+import i2p.bote.I2PBote;
+
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 public class CheckMailTag extends SimpleTagSupport {
 
     public void doTag() {
-        JSPHelper.checkForMail();
+        I2PBote.getInstance().checkForMail();
     }
 }

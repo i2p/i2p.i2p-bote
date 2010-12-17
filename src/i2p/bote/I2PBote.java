@@ -34,6 +34,11 @@ import i2p.bote.folder.MessageIdCache;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.folder.TrashFolder;
+import i2p.bote.io.DerivedKey;
+import i2p.bote.io.FileEncryptionUtil;
+import i2p.bote.io.PasswordCache;
+import i2p.bote.io.PasswordException;
+import i2p.bote.migration.Migrator;
 import i2p.bote.network.BanList;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
@@ -67,7 +72,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.Thread.State;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Properties;
@@ -129,6 +137,7 @@ public class I2PBote implements NetworkStatusSource {
     private SeedlessScrapePeers seedlessScrapePeers;
     private SeedlessScrapeServers seedlessScrapeServers;
     private RelayPeerManager peerManager;
+    private PasswordCache passwordCache;
     private ConnectTask connectTask;
 
     /**
@@ -149,19 +158,23 @@ public class I2PBote implements NetworkStatusSource {
         i2pClient = I2PClientFactory.createClient();
         configuration = new Configuration();
         
-        identities = new Identities(configuration.getIdentitiesFile());
-        addressBook = new AddressBook(configuration.getAddressBookFile());
-        initializeFolderAccess();
+        new Migrator(configuration).migrateIfNeeded();
+        
+        passwordCache = new PasswordCache(configuration);
+        identities = new Identities(configuration.getIdentitiesFile(), passwordCache);
+        addressBook = new AddressBook(configuration.getAddressBookFile(), passwordCache);
+        initializeFolderAccess(passwordCache);
     }
 
     /**
      * Initializes objects for accessing emails and packet files on the filesystem.
+     * @param passwordCache
      */
-    private void initializeFolderAccess() {
-        inbox = new EmailFolder(configuration.getInboxDir());
-        outbox = new Outbox(configuration.getOutboxDir());
-        sentFolder = new EmailFolder(configuration.getSentFolderDir());
-        trashFolder = new TrashFolder(configuration.getTrashFolderDir());
+    private void initializeFolderAccess(PasswordCache passwordCache) {
+        inbox = new EmailFolder(configuration.getInboxDir(), passwordCache);
+        outbox = new Outbox(configuration.getOutboxDir(), passwordCache);
+        sentFolder = new EmailFolder(configuration.getSentFolderDir(), passwordCache);
+        trashFolder = new TrashFolder(configuration.getTrashFolderDir(), passwordCache);
         relayPacketFolder = new RelayPacketFolder(configuration.getRelayPacketDir());
         MessageIdCache messageIdCache = new MessageIdCache(configuration.getMessageIdCacheFile(), configuration.getMessageIdCacheSize());
         incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), messageIdCache, inbox);
@@ -239,6 +252,7 @@ public class I2PBote implements NetworkStatusSource {
 
         i2pSession.addMuxedSessionListener(dispatcher, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_ANY);
         
+        backgroundThreads.add(passwordCache);
 /*        smtpService = new SMTPService();
         backgroundThreads.add(smtpService);
         pop3Service = new POP3Service();
@@ -276,7 +290,7 @@ public class I2PBote implements NetworkStatusSource {
             @Override
             public void emailSent(Email email) {
                 try {
-                    outbox.setNew(email, false);   // this prevents OutboxProcessor from sending the email again if it can't be moved for some reason
+                    outbox.setNew(email, false);
                     log.debug("Moving email [" + email + "] to the \"sent\" folder.");
                     outbox.move(email, sentFolder);
                 }
@@ -306,6 +320,8 @@ public class I2PBote implements NetworkStatusSource {
         }
         else
             log.info("Seedless NOT found.");
+            // TO-DO: start a task that checks for seedless and adds it in the future
+            // This is needed if seedless comes up late, or is installed after bote.
     }
 
     /**
@@ -410,7 +426,7 @@ public class I2PBote implements NetworkStatusSource {
             outboxProcessor.checkForEmail();
     }
 
-    public synchronized void checkForMail() {
+    public synchronized void checkForMail() throws PasswordException {
         emailChecker.checkForMail();
     }
 
@@ -454,6 +470,56 @@ public class I2PBote implements NetworkStatusSource {
         return sourceFolder.move(messageId, trashFolder);
     }
     
+    /**
+     * Reencrypts all encrypted files with a new password
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmNewPassword
+     * @return An error message if the two new passwords don't match, <code>null</code> otherwise
+     * @throws IOException 
+     * @throws InvalidKeySpecException 
+     * @throws NoSuchAlgorithmException 
+     */
+    public String changePassword(char[] oldPassword, char[] newPassword, char[] confirmNewPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+        File passwordFile = configuration.getPasswordFile();
+        
+        if (!FileEncryptionUtil.isPasswordCorrect(oldPassword, passwordFile))
+            return _("The old password is not correct.");
+        if (!Arrays.equals(newPassword, confirmNewPassword))
+            return _("The new password and the confirmation password do not match.");
+        
+        // lock so no files are encrypted with the old password while the password is being changed
+        passwordCache.lockPassword();
+        try {
+            passwordCache.setPassword(newPassword);
+            DerivedKey newKey = passwordCache.getKey();
+            identities.changePassword(oldPassword, newKey);
+            addressBook.changePassword(oldPassword, newKey);
+            for (EmailFolder folder: getEmailFolders())
+                folder.changePassword(oldPassword, newKey);
+            
+            FileEncryptionUtil.writePasswordFile(passwordFile, passwordCache.getPassword(), newKey);
+        }
+        finally {
+            passwordCache.unlockPassword();
+        }
+        
+        return null;
+    }
+    
+    public PasswordCache getPasswordCache() {
+        return passwordCache;
+    }
+    
+    private Collection<EmailFolder> getEmailFolders() {
+        ArrayList<EmailFolder> folders = new ArrayList<EmailFolder>();
+        folders.add(outbox);
+        folders.add(inbox);
+        folders.add(sentFolder);
+        folders.add(trashFolder);
+        return folders;
+    }
+    
     public int getNumDhtPeers() {
         if (dht == null)
             return 0;
@@ -476,7 +542,7 @@ public class I2PBote implements NetworkStatusSource {
         return BanList.getInstance().getAll();
     }
 
-   private void startAllServices() {
+    private void startAllServices() {
         for (I2PBoteThread thread: backgroundThreads)
             if (thread!=null && thread.getState()==State.NEW)   // the check for State.NEW is only there for ConnectTask
                 thread.start();

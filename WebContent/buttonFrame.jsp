@@ -58,8 +58,9 @@
         </c:if>
         <c:if test="${!checkingForMail}">
             <div class="checkmail">
+                <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
                 <c:choose>
-                    <c:when test="${empty ib:getIdentities().all}">
+                    <c:when test="${jspHelperBean.identities.none}">
                         <c:set var="url" value="noIdentities.jsp"/>
                         <c:set var="frame" value="target=&quot;_parent&quot;"/>
                     </c:when>
@@ -71,10 +72,10 @@
                 
                 <form action="${url}" ${frame} method="GET">
                     <input type="hidden" name="checkMail" value="1"/>
-					<c:set var="disable" value=""/>
-					<c:if test="${connStatus == DELAY}">
-					    <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
-					</c:if>
+                    <c:set var="disable" value=""/>
+                    <c:if test="${connStatus == DELAY}">
+                        <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
+                    </c:if>
                     <button type="submit" value="Check Mail/>" ${disable}><ib:message key="Check Mail"/></button>
                 </form>
             </div>

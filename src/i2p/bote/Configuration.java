@@ -30,15 +30,16 @@ import net.i2p.data.DataHelper;
 import net.i2p.util.Log;
 
 public class Configuration {
-    private static final long serialVersionUID = -6318245413106186095L;
     private static final String I2P_BOTE_SUBDIR = "i2pbote";       // relative to the I2P app dir
     private static final String CONFIG_FILE_NAME = "i2pbote.config";
     private static final String DEST_KEY_FILE_NAME = "local_dest.key";
     private static final String DHT_PEER_FILE_NAME = "dht_peers.txt";
     private static final String RELAY_PEER_FILE_NAME = "relay_peers.txt";
-    private static final String IDENTITIES_FILE_NAME = "identities.txt";
-    private static final String ADDRESS_BOOK_FILE_NAME = "addressBook.txt";
+    private static final String IDENTITIES_FILE_NAME = "identities";
+    private static final String ADDRESS_BOOK_FILE_NAME = "addressBook";
     private static final String MESSAGE_ID_CACHE_FILE = "msgidcache.txt";
+    private static final String PASSWORD_FILE = "password";
+    private static final String KEY_DERIVATION_PARAMETERS_FILE = "derivparams";
     private static final String OUTBOX_DIR = "outbox";              // relative to I2P_BOTE_SUBDIR
     private static final String RELAY_PKT_SUBDIR = "relay_pkt";     // relative to I2P_BOTE_SUBDIR
     private static final String INCOMPLETE_SUBDIR = "incomplete";   // relative to I2P_BOTE_SUBDIR
@@ -49,7 +50,6 @@ public class Configuration {
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
 
     // Parameter names in the config file
-    private static final String PARAMETER_REDUNDANCY = "redundancy";
     private static final String PARAMETER_STORAGE_SPACE_INBOX = "storageSpaceInbox";
     private static final String PARAMETER_STORAGE_SPACE_RELAY = "storageSpaceRelay";
     private static final String PARAMETER_STORAGE_TIME = "storageTime";
@@ -71,9 +71,9 @@ public class Configuration {
     private static final String PARAMETER_NUM_STORE_HOPS = "numSendHops";
     private static final String PARAMETER_GATEWAY_DESTINATION = "gatewayDestination";
     private static final String PARAMETER_GATEWAY_ENABLED = "gatewayEnabled";
+    private static final String PARAMETER_PASSWORD_CACHE_DURATION = "passwordCacheDuration";
     
     // Defaults for each parameter
-    private static final int DEFAULT_REDUNDANCY = 2;
     private static final int DEFAULT_STORAGE_SPACE_INBOX = 1024 * 1024 * 1024;
     private static final int DEFAULT_STORAGE_SPACE_RELAY = 100 * 1024 * 1024;
     private static final int DEFAULT_STORAGE_TIME = 31;   // in days
@@ -95,6 +95,7 @@ public class Configuration {
     private static final int DEFAULT_NUM_STORE_HOPS = 0;
     private static final String DEFAULT_GATEWAY_DESTINATION = "";
     private static final boolean DEFAULT_GATEWAY_ENABLED = true;
+    private static final int DEFAULT_PASSWORD_CACHE_DURATION = 10;   // in minutes
     
     private Log log = new Log(Configuration.class);
     private Properties properties;
@@ -159,6 +160,24 @@ public class Configuration {
         return new File(i2pBoteDir, MESSAGE_ID_CACHE_FILE);
     }
     
+    /**
+     * The file returned by this method does not contain the user's password,
+     * but a known string that is encrypted with the password. The purpose
+     * of this file is for checking if a password entered by the user is
+     * correct.
+     */
+    public File getPasswordFile() {
+        return new File(i2pBoteDir, PASSWORD_FILE);
+    }
+    
+    /**
+     * Returns the file that caches the parameters needed for generating a
+     * file encryption key from a password.
+     */
+    public File getKeyDerivationParametersFile() {
+        return new File(i2pBoteDir, KEY_DERIVATION_PARAMETERS_FILE);
+    }
+    
     public File getOutboxDir() {
         return new File(i2pBoteDir, OUTBOX_DIR);        
     }
@@ -209,14 +228,6 @@ public class Configuration {
         } catch (IOException e) {
             log.error("Cannot save configuration to file <" + configFile.getAbsolutePath() + ">", e);
         }
-    }
-
-    /**
-     * Returns the number of relays to use for sending and receiving email.
-     * @return A non-negative number
-     */
-    public int getRedundancy() {
-        return getIntParameter(PARAMETER_REDUNDANCY, DEFAULT_REDUNDANCY);
     }
 
     /**
@@ -387,6 +398,17 @@ public class Configuration {
 
     public boolean isGatewayEnabled() {
         return getBooleanParameter(PARAMETER_GATEWAY_ENABLED, DEFAULT_GATEWAY_ENABLED);
+    }
+
+    public void setPasswordCacheDuration(int duration) {
+        properties.setProperty(PARAMETER_PASSWORD_CACHE_DURATION, Integer.valueOf(duration).toString());
+    }
+    
+    /**
+     * Returns the number of minutes the password is kept in memory
+     */
+    public int getPasswordCacheDuration() {
+        return getIntParameter(PARAMETER_PASSWORD_CACHE_DURATION, DEFAULT_PASSWORD_CACHE_DURATION);
     }
     
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
