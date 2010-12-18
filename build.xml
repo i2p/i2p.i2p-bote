@@ -27,6 +27,13 @@
         <pathelement location="${lib}/mailapi.jar" />
         <pathelement location="${lib}/bcprov-ecc-jdk16-145.jar" />
     </path>
+    <property name="junit.filename" value="junit-4.8.1.jar"/>
+    <property name="junit.url" value="http://sourceforge.net/projects/junit/files/junit/4.8.1/junit-4.8.1.jar/download"/>
+    <!-- Just the main jMock .jar, the .zip contains this and dependencies -->
+    <property name="jmock.filename" value="jmock-2.5.1.jar"/>
+    <property name="jmock.archive" value="jmock-2.5.1-jars.zip"/>
+    <property name="jmockcp" value="${lib}/jmock-2.5.1.jar:${lib}/hamcrest-core-1.1.jar:${lib}/hamcrest-library-1.1.jar:${lib}/jmock-legacy-2.5.1.jar:${lib}/cglib-nodep-2.1_3.jar:${lib}/objenesis-1.0.jar"/>
+    <property name="jmock.url" value="http://www.jmock.org/dist/${jmock.archive}"/>
 
     <target name="help">
         <echo message="Useful targets:" />
@@ -242,10 +249,14 @@
     </target>
 
     <target name="junit" depends="compile">
-        <property environment="env"/>
-        <fail unless="env.JUNITJAR" message="The JUNITJAR environment variable is not set.${line.separator}It must point to a JUnit4 .jar, for example /usr/share/java/junit4.jar."/>
+        <available property="junitexists" file="${lib}/${junit.filename}" type="file"/>
+        <ant target="downloadjunit"/>
+        <available property="jmockexists" file="${lib}/${jmock.filename}" type="file"/>
+        <ant target="downloadjmock"/>
+        
         <path id="junitcp">
-            <pathelement location="${env.JUNITJAR}"/>
+            <pathelement location="${lib}/${junit.filename}"/>
+            <pathelement path="${jmockcp}"/>
             <pathelement location="./ant_build/classes"/>
             <path refid="cp"/>
         </path>
@@ -275,6 +286,33 @@
         </condition>
         <echo message="${result}"/>
         <echo message="For details, see ant_build/TEST*"/>
+    </target>
+
+    <target name="downloadjunit" unless="junitexists">
+        <input message="JUnit not found, download now?" validargs="y,n" addproperty="userinput.junit"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.junit}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${junit.url}" verbose="true" dest="${lib}/${junit.filename}"/>
+    </target>
+
+    <target name="downloadjmock" unless="jmockexists">
+        <input message="jMock not found, download now?" validargs="y,n" addproperty="userinput.jmock"/>
+        <fail message="OK, aborting build." >
+            <condition>
+                <equals arg1="${userinput.jmock}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${jmock.url}" verbose="true" dest="${lib}/${jmock.archive}"/>
+        <unzip src="${lib}/${jmock.archive}" dest="${lib}">
+            <patternset includes="**/*.jar"/>
+            <mapper>
+                <flattenmapper/>
+            </mapper>
+        </unzip>
+        <delete file="${lib}/${jmock.archive}"/>
     </target>
 
     <!-- Write the app version into ${version} -->
