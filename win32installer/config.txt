@@ -1,0 +1,5 @@
+;!@Install@!UTF-8!
+Title="I2P + I2P-Bote Installer"
+BeginPrompt="Do you want to install I2P?"
+RunProgram="launcher-Win32.exe"
+;!@InstallEnd@!

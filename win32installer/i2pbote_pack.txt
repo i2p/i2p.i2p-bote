@@ -1,0 +1,6 @@
+        <pack name="I2P-Bote" required="no">
+            <description>The I2P-Bote email plugin</description>
+            <fileset dir="plugins" includes="**/*" targetdir="$USER_HOME/.i2p/plugins" os="unix" />
+            <fileset dir="plugins" includes="**/*" targetdir="$USER_HOME/.i2p/plugins" os="mac" />
+            <fileset dir="plugins" includes="**/*" targetdir="${ENV[APPDATA]}/I2P/plugins" os="windows" />
+        </pack>
