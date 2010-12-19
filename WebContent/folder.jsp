@@ -39,9 +39,9 @@
     <jsp:forward page="outbox.jsp"/>
 </c:if>
 
+<c:set var="refreshUrl" value="folder.jsp?path=${param.path}&sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
 <ib:requirePassword forwardUrl="${refreshUrl}">
 <%-- Autorefresh inbox and sent folders --%>
-<c:set var="refreshUrl" value="folder.jsp?path=${param.path}&sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
 <c:if test="${param.path eq 'Inbox' or param.path eq 'Sent'}">
     <c:set var="refreshInterval" value="60" scope="request"/>
 </c:if>
