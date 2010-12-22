@@ -66,6 +66,18 @@ public class TestUtil {
      * @return
      */
     public static PasswordCache createPasswordCache(File testDir) {
+        final Configuration configuration = createConfiguration(testDir);
+        
+        return new PasswordCache(configuration);
+    }
+    
+    /**
+     * Creates a mock {@link Configuration} whose getKeyDerivationParametersFile() and
+     * getPasswordFile() methods must be called at least once each.
+     * The <code>getPasswordCacheDuration</code> method returns 1 (one minute).
+     * @param testDir
+     */
+    public static Configuration createConfiguration(File testDir) {
         Mockery mockery = new Mockery() {{
             setImposteriser(ClassImposteriser.INSTANCE);
         }};
@@ -73,7 +85,7 @@ public class TestUtil {
         
         final File derivParametersFile = new File(testDir, "derivparams");
         mockery.checking(new Expectations() {{
-            oneOf(configuration).getKeyDerivationParametersFile(); will(returnValue(derivParametersFile));
+            atLeast(1).of(configuration).getKeyDerivationParametersFile(); will(returnValue(derivParametersFile));
         }});
         
         final File passwordFile = new File(testDir, "password");
@@ -81,6 +93,10 @@ public class TestUtil {
             atLeast(1).of(configuration).getPasswordFile(); will(returnValue(passwordFile));
         }});
         
-        return new PasswordCache(configuration);
+        mockery.checking(new Expectations() {{
+            allowing(configuration).getPasswordCacheDuration(); will(returnValue(1));
+        }});
+        
+        return configuration;
     }
 }
