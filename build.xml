@@ -34,6 +34,11 @@
     <property name="jmock.archive" value="jmock-2.5.1-jars.zip"/>
     <property name="jmockcp" value="${lib}/jmock-2.5.1.jar:${lib}/hamcrest-core-1.1.jar:${lib}/hamcrest-library-1.1.jar:${lib}/jmock-legacy-2.5.1.jar:${lib}/cglib-nodep-2.1_3.jar:${lib}/objenesis-1.0.jar"/>
     <property name="jmock.url" value="http://www.jmock.org/dist/${jmock.archive}"/>
+    <!-- the following are only used by win32installer -->
+    <property name="i2p.mtn" value="../i2p.mtn"/>
+    <property name="win32launcherurl" value="http://dist.codehaus.org/izpack/native-launcher/izpack-launcher-1.3.zip"/>
+    <property name="win32jreurl" value="http://javadl.sun.com/webapps/download/AutoDL?BundleId=42732"/>
+        
 
     <target name="help">
         <echo message="Useful targets:" />
@@ -42,6 +47,9 @@
         <echo message="            Requires the i2p.scripts branch to be checked out" />
         <echo message="            alongside this directory (for makeplugin.sh)." />
         <echo message="  all:      src + war + plugin" />
+        <echo message="  win32installer: Makes a Windows-only installer that installs" />
+        <echo message="            I2P, I2P-Bote, and optionally a JRE. Needs 7z and" />
+        <echo message="            mtn on the path, and a mtn DB containing i2p.i2p." />
         <echo message="  poupdate: Updates the messages_*.po files from the source code," />
         <echo message="            adding any untranslated strings. Depends on additional" />
         <echo message="            software, see bundle-messages.sh." />
@@ -220,7 +228,87 @@
         </exec>
     </target>
 
-    <target name="poupdate" depends="compilejspstrings">
+    <!-- depends on compileantclasses for SearchAndInsert.class -->
+    <target name="win32installer" depends="pluginwar, compileantclasses">
+        <property name="installerdir" value="ant_build/win32installer"/>
+        <property name="installerresources" value="${installerdir}/resources"/>
+        <property name="i2pinstallerdir" value="${installerdir}/i2p.i2p/installer"/>
+        <property name="i2pinstallerplugindir" value="${installerdir}/i2p.i2p/plugins/i2pbote"/>
+        <mkdir dir="${installerdir}"/>
+        
+        <!-- get 7z_extra.7z and extract 7zS.sfx -->
+        <get src="http://sourceforge.net/projects/sevenzip/files/7-Zip/9.19/7z919_extra.7z/download" dest="${installerdir}/7z_extra.7z" skipexisting="true"/>
+        <exec executable="7z" dir="${installerdir}">
+            <arg value="e"/>
+            <arg value="-y"/>
+            <arg value="7z_extra.7z"/>
+            <arg value="7zS.sfx"/>
+        </exec>
+
+        <!-- check out i2p.i2p from mtn, add i2pbote, and build install.jar -->
+        <delete dir="${installerdir}/i2p.i2p" />
+        <exec executable="mtn" dir="${installerdir}" failonerror="true">
+            <arg value="--db" />
+            <arg value="../../${i2p.mtn}" />
+            <arg value="--branch" />
+            <arg value="i2p.i2p" />
+            <arg value="co" />
+        </exec>
+        <!-- add I2P-Bote to install.xml -->
+        <java classname="i2p.bote.ant.SearchAndInsert" classpathref="cp" classpath="./ant_build/classes" failonerror="true">
+            <arg value="-before"/>
+            <arg value="${i2pinstallerdir}/install.xml"/>
+            <arg value="${i2pinstallerdir}/install.xml.new"/>
+            <arg value="TargetPanel"/>
+            <arg value="win32installer/packspanel.txt"/>
+        </java>
+        <java classname="i2p.bote.ant.SearchAndInsert" classpathref="cp" classpath="./ant_build/classes" failonerror="true">
+            <arg value="-before"/>
+            <arg value="${i2pinstallerdir}/install.xml.new"/>
+            <arg value="${i2pinstallerdir}/install.xml"/>
+            <arg value="&lt;/packs&gt;"/>
+            <arg value="win32installer/i2pbote_pack.txt"/>
+        </java>
+        <!-- make the plugins dir -->
+        <mkdir dir="${i2pinstallerplugindir}/console/webapps"/>
+        <mkdir dir="${i2pinstallerplugindir}/lib"/>
+        <copy file="plugin/plugin.config" todir="${i2pinstallerplugindir}"/>
+        <copy file="i2pbote-plugin.war" tofile="${i2pinstallerplugindir}/console/webapps/i2pbote.war"/>
+        <copy file="plugin/webapps.config" todir="${i2pinstallerplugindir}/console"/>
+        <copy file="${lib}/mailapi.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/bcprov-ecc-jdk16-145.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <!-- build the I2P + I2P-Bote install.jar -->
+        <ant antfile="${installerdir}/i2p.i2p/build.xml" target="installer" inheritAll="false"/>
+        <copy file="${installerdir}/i2p.i2p/install.jar" todir="${installerresources}"/>
+
+        <!-- download Windows JRE -->
+        <get src="${win32jreurl}" verbose="true" dest="${installerresources}/jre.exe" skipexisting="true"/>
+        <copy file="win32installer/jreinstall.bat" todir="${installerresources}"/>
+        <copy file="win32installer/launcher.ini" todir="${installerresources}"/>
+        <copy file="win32installer/config.txt" todir="${installerdir}"/>
+
+        <!-- download the launcher .zip and unzip dist/* to resources/ -->
+        <get src="${win32launcherurl}" verbose="true" dest="${installerdir}/izpack-launcher.zip" skipexisting="true"/>
+        <unzip src="${installerdir}/izpack-launcher.zip" dest="${installerresources}">
+            <patternset>
+                <include name="*/dist/*"/>
+            </patternset>
+            <flattenmapper/>
+        </unzip>
+
+        <exec executable="7z" dir="${installerresources}" failonerror="true">
+            <arg value="a"/>
+            <arg value="../files.7z"/>
+            <arg value="*"/>
+        </exec>
+
+        <concat destfile="i2pinstall.exe" binary="true">
+            <fileset dir="${installerdir}" includes="7zS.sfx, config.txt, files.7z"/>
+        </concat>
+    </target>
+
+    <!-- depends on compileantclasses for JspStrings.class -->
+    <target name="poupdate" depends="compileantclasses">
         <!-- Update the messages_*.po files.  -->
         <exec executable="sh" osfamily="unix" failonerror="true" >
             <arg value="./bundle-messages.sh" />
@@ -237,7 +325,8 @@
         </exec>
     </target>
 
-    <target name="compilejspstrings" depends="compile">
+    <!-- compiles the Java code in the ant directory -->
+    <target name="compileantclasses" depends="compile">
         <javac
             srcdir="./ant"
             debug="true"
@@ -427,6 +516,7 @@
         <delete file="i2pbote.xpi2p" />
         <delete file="i2pbote-update.xpi2p" />
         <delete file="src.zip" />
+        <delete file="i2pinstall.exe" />
         <delete dir="javadoc" />
     </target>
 </project>
