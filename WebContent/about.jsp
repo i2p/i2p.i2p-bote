@@ -61,6 +61,10 @@
         <td></td><td>redzara</td><td><font color="#555"><ib:message key="French translation"/></font></td>
     </tr><tr>
         <td></td><td>KwukDuck</td><td><font color="#555"><ib:message key="Dutch translation"/></font></td>
+    </tr><tr>
+        <td></td><td>nej</td><td><font color="#555"><ib:message key="Norwegian translation"/></font></td>
+    </tr><tr>
+        <td></td><td>hottuna</td><td><font color="#555"><ib:message key="Swedish translation"/></font></td>
     </tr></table>
 </div>
 
