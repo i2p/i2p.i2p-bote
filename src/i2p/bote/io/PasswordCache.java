@@ -69,6 +69,7 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
     public synchronized void setPassword(char[] password) {
         // wait until the lock is released
         lockPassword();
+        resetExpiration();
         this.password = password;
         // clear the old key
         if (derivedKey != null) {
@@ -178,6 +179,8 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
             if (System.currentTimeMillis()>lastReset+durationMilliseconds && !isEmpty) {   // cache empty passwords forever
                 Util.zeroOut(password);
                 password = null;
+                derivedKey.clear();
+                derivedKey = null;
             }
         }
         finally {

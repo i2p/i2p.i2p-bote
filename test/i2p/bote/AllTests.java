@@ -33,6 +33,7 @@ import i2p.bote.folder.IndexPacketFolderTest;
 import i2p.bote.folder.RelayPacketFolderTest;
 import i2p.bote.io.EncryptedStreamTest;
 import i2p.bote.io.FileEncryptionUtilTest;
+import i2p.bote.io.PasswordCacheTest;
 import i2p.bote.network.kademlia.BucketManagerTest;
 import i2p.bote.network.kademlia.KBucketTest;
 import i2p.bote.packet.EmailPacketDeleteRequestTest;
@@ -85,7 +86,8 @@ import org.junit.runners.Suite;
     BucketManagerTest.class,
     CryptoImplementationTest.class,
     EncryptedStreamTest.class,
-    FileEncryptionUtilTest.class
+    FileEncryptionUtilTest.class,
+    PasswordCacheTest.class
 })
 public class AllTests {
 
