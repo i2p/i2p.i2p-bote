@@ -53,7 +53,6 @@ public class Configuration {
     private static final String PARAMETER_STORAGE_SPACE_INBOX = "storageSpaceInbox";
     private static final String PARAMETER_STORAGE_SPACE_RELAY = "storageSpaceRelay";
     private static final String PARAMETER_STORAGE_TIME = "storageTime";
-    private static final String PARAMETER_MAX_FRAGMENT_SIZE = "maxFragmentSize";
     private static final String PARAMETER_HASHCASH_STRENGTH = "hashCashStrength";
     private static final String PARAMETER_SMTP_PORT = "smtpPort";
     private static final String PARAMETER_POP3_PORT = "pop3Port";
@@ -77,7 +76,6 @@ public class Configuration {
     private static final int DEFAULT_STORAGE_SPACE_INBOX = 1024 * 1024 * 1024;
     private static final int DEFAULT_STORAGE_SPACE_RELAY = 100 * 1024 * 1024;
     private static final int DEFAULT_STORAGE_TIME = 31;   // in days
-    private static final int DEFAULT_MAX_FRAGMENT_SIZE = 10 * 1024 * 1024;   // the maximum size one email fragment can be, in bytes
     private static final int DEFAULT_HASHCASH_STRENGTH = 10;
     private static final int DEFAULT_SMTP_PORT = 7661;
     private static final int DEFAULT_POP3_PORT = 7662;
@@ -251,10 +249,6 @@ public class Configuration {
         return 24L * 3600 * 1000 * getIntParameter(PARAMETER_STORAGE_TIME, DEFAULT_STORAGE_TIME);
     }
 
-    public int getMaxFragmentSize() {
-        return getIntParameter(PARAMETER_MAX_FRAGMENT_SIZE, DEFAULT_MAX_FRAGMENT_SIZE);
-    }
-    
     public int getHashCashStrength() {
         return getIntParameter(PARAMETER_HASHCASH_STRENGTH, DEFAULT_HASHCASH_STRENGTH);
     }
