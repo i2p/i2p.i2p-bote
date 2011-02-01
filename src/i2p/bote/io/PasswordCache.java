@@ -179,8 +179,10 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
             if (System.currentTimeMillis()>lastReset+durationMilliseconds && !isEmpty) {   // cache empty passwords forever
                 Util.zeroOut(password);
                 password = null;
-                derivedKey.clear();
-                derivedKey = null;
+                if (derivedKey != null) {
+                    derivedKey.clear();
+                    derivedKey = null;
+                }
             }
         }
         finally {
