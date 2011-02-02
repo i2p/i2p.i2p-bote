@@ -67,7 +67,7 @@ import org.bouncycastle.jce.provider.asymmetric.ec.Signature.ecDSA256;
 import org.bouncycastle.jce.spec.ECNamedCurveSpec;
 
 /**
- * Abstract class for ECDH and ECDSA.
+ * Abstract base class for ECDH and ECDSA.
  * <p/>
  * The key length used for ECDH and ECDSA depends on the concrete subclass.
  * Symmetric encryption is always AES-256, which for shorter ECDH keys wastes a few
@@ -303,7 +303,6 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
      */
     @Override
     public byte[] encrypt(byte[] data, PublicKey encryptionKey) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
-        
         // pad the data
         int unpaddedLength = data.length;
         data = Arrays.copyOf(data, unpaddedLength + BLOCK_SIZE - unpaddedLength%BLOCK_SIZE);  // make data.length a multiple of BLOCK_SIZE; if the length is a multiple of BLOCK_LENGTH, add a block of zeros
@@ -345,7 +344,7 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
      * Decrypts a block of data using the following steps:
      * <ol>
      *   <li/>Read the ephemeral public key from the message.<br/>
-     *   <li/>Use that public key together with your recipient key to generate a secret using ECDH.<br/>
+     *   <li/>Use that public key together with the recipient's key to generate a secret using ECDH.<br/>
      *   <li/>Use that secret as a key to decrypt the message with AES.<br/>
      * </ol>
      * @throws NoSuchAlgorithmException 
@@ -459,7 +458,10 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
         }
     }
     
-    /** This class exposes the protected <code>engine*</code> methods in {@link Signature.ecDSA256} */
+    /**
+     * This class exposes the protected <code>engine*</code> methods in {@link Signature.ecDSA256}.
+     * Note that the number 256 refers to the SHA length, not the ECC key length.
+     */
     private class BouncyECDSASigner extends ecDSA256 {
         
         public final void initSign(PrivateKey privateKey) throws InvalidKeyException {
