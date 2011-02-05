@@ -71,6 +71,10 @@ public class Configuration {
     private static final String PARAMETER_GATEWAY_DESTINATION = "gatewayDestination";
     private static final String PARAMETER_GATEWAY_ENABLED = "gatewayEnabled";
     private static final String PARAMETER_PASSWORD_CACHE_DURATION = "passwordCacheDuration";
+    private static final String PARAMETER_EEPROXY_HOST = "eeproxyHost";
+    private static final String PARAMETER_EEPROXY_PORT = "eeproxyPort";
+    private static final String PARAMETER_UPDATE_URL = "updateUrl";
+    private static final String PARAMETER_UPDATE_CHECK_INTERVAL = "updateCheckInterval";
     
     // Defaults for each parameter
     private static final int DEFAULT_STORAGE_SPACE_INBOX = 1024 * 1024 * 1024;
@@ -94,6 +98,10 @@ public class Configuration {
     private static final String DEFAULT_GATEWAY_DESTINATION = "";
     private static final boolean DEFAULT_GATEWAY_ENABLED = true;
     private static final int DEFAULT_PASSWORD_CACHE_DURATION = 10;   // in minutes
+    private static final String DEFAULT_EEPROXY_HOST = "localhost";
+    private static final int DEFAULT_EEPROXY_PORT = 4444;
+    private static final String DEFAULT_UPDATE_URL = "http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote-update.xpi2p";
+    private static final int DEFAULT_UPDATE_CHECK_INTERVAL = 60;   // in minutes
     
     private Log log = new Log(Configuration.class);
     private Properties properties;
@@ -405,6 +413,28 @@ public class Configuration {
         return getIntParameter(PARAMETER_PASSWORD_CACHE_DURATION, DEFAULT_PASSWORD_CACHE_DURATION);
     }
     
+    public String getEeproxyHost() {
+        return properties.getProperty(PARAMETER_EEPROXY_HOST, DEFAULT_EEPROXY_HOST);
+    }
+    
+    public int getEeproxyPort() {
+        return getIntParameter(PARAMETER_EEPROXY_PORT, DEFAULT_EEPROXY_PORT);
+    }
+    
+    /**
+     * Returns an HTTP URL pointing to the .xpi2p update file.
+     */
+    public String getUpdateUrl() {
+        return properties.getProperty(PARAMETER_UPDATE_URL, DEFAULT_UPDATE_URL);
+    }
+    
+    /**
+     * Returns the number of minutes to wait after checking for a new plugin version.
+     */
+    public int getUpdateCheckInterval() {
+        return getIntParameter(PARAMETER_UPDATE_CHECK_INTERVAL, DEFAULT_UPDATE_CHECK_INTERVAL);
+    }
+
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
         String stringValue = properties.getProperty(parameterName);
         if ("true".equalsIgnoreCase(stringValue) || "yes".equalsIgnoreCase(stringValue) || "on".equalsIgnoreCase(stringValue) || "1".equals(stringValue))

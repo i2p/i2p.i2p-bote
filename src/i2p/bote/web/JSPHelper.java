@@ -566,4 +566,8 @@ public class JSPHelper {
             return e.getLocalizedMessage();
         }
     }
+    
+    public boolean isUpdateAvailable() {
+        return I2PBote.getInstance().isUpdateAvailable();
+    }
 }

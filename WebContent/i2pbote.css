@@ -45,6 +45,18 @@ body {
     color: #555;
 }
 
+.updateMessage {
+    margin: 0px 0px 5px 15px;
+    text-align: left;
+    width: 190px;
+    float: left;
+}
+
+.updateMessage a:link, a:visited {
+    color: #0b4;
+    font-weight: bold;
+}
+
 .menubox {
     float: left;
     width: 175px;

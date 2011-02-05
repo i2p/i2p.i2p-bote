@@ -59,6 +59,7 @@ import i2p.bote.service.POP3Service;
 import i2p.bote.service.RelayPacketSender;
 import i2p.bote.service.RelayPeerManager;
 import i2p.bote.service.SMTPService;
+import i2p.bote.service.UpdateChecker;
 import i2p.bote.service.seedless.SeedlessAnnounce;
 import i2p.bote.service.seedless.SeedlessParameters;
 import i2p.bote.service.seedless.SeedlessRequestPeers;
@@ -129,6 +130,7 @@ public class I2PBote implements NetworkStatusSource {
     private POP3Service pop3Service;
     private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
     private EmailChecker emailChecker;
+    private UpdateChecker updateChecker;
     private ExpirationThread expirationThread;
     private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
     private KademliaDHT dht;
@@ -305,6 +307,9 @@ public class I2PBote implements NetworkStatusSource {
         emailChecker = new EmailChecker(identities, configuration, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder, this, sendQueue, dht, peerManager);
         backgroundThreads.add(emailChecker);
         
+        updateChecker = new UpdateChecker(this, configuration);
+        backgroundThreads.add(updateChecker);
+        
         SeedlessParameters seedlessParameters = SeedlessParameters.getInstance();
         // the following call may take some time waiting for Seedless to start up
         // but that is not a problem because this method runs on the ConnectTask thread.
@@ -431,6 +436,14 @@ public class I2PBote implements NetworkStatusSource {
         emailChecker.checkForMail();
     }
 
+    /** Returns <code>true</code> if I2P-Bote can be updated to a newer version */
+    public boolean isUpdateAvailable() {
+        if (updateChecker == null)
+            return false;
+        else
+            return updateChecker.isUpdateAvailable();
+    }
+    
     /**
      * @see EmailChecker#isCheckingForMail()
      */
