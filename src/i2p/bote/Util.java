@@ -53,18 +53,16 @@ public class Util {
     
     private Util() { }
     
+    /** Reads all data from an <code>InputStream</code> */
     public static byte[] readBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[32*1024];
-        while (true) {
-            int bytesToRead = Math.min(inputStream.available(), buffer.length);
-            if (bytesToRead <= 0)
-                break;
-            else {
-                int bytesRead = inputStream.read(buffer, 0, bytesToRead);
+        int bytesRead;
+        do {
+            bytesRead = inputStream.read(buffer, 0, buffer.length);
+            if (bytesRead > 0)
                 byteStream.write(buffer, 0, bytesRead);
-            }
-        }
+        } while (bytesRead > 0);
         return byteStream.toByteArray();
     }
 

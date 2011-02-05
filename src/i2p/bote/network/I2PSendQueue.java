@@ -30,6 +30,8 @@ import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
 import i2p.bote.service.I2PBoteThread;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,15 +40,19 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import net.i2p.I2PException;
 import net.i2p.client.I2PSession;
 import net.i2p.client.I2PSessionException;
 import net.i2p.client.datagram.I2PDatagramMaker;
+import net.i2p.client.streaming.I2PSocket;
+import net.i2p.client.streaming.I2PSocketManager;
 import net.i2p.data.Destination;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.Log;
 
 /**
- * All outgoing I2P traffic goes through this class.<br/>
+ * All outgoing traffic to I2P-Bote peers goes through this class.<br/>
+ * Smaller packets are sent as datagrams; larger ones are sent as streams.
  * Packets are sent at a rate no greater than specified by the
  * <CODE>maxBandwidth</CODE> property.
  * <p/>
@@ -55,21 +61,26 @@ import net.i2p.util.Log;
  * to be sent.
  */
 public class I2PSendQueue extends I2PBoteThread implements PacketListener {
+    private static final int MAX_DATAGRAM_SIZE = 5000;   // everything bigger than this is sent as a stream
+    
     private Log log = new Log(I2PSendQueue.class);
     private I2PSession i2pSession;
     private I2PDatagramMaker datagramMaker;
+    private I2PSocketManager socketManager;
     private PacketQueue packetQueue;
     private Set<PacketBatch> runningBatches;
     private int maxBandwidth;
 
     /**
      * @param i2pSession
+     * @param socketManager
      * @param i2pReceiver
      */
-    public I2PSendQueue(I2PSession i2pSession, I2PPacketDispatcher i2pReceiver) {
+    public I2PSendQueue(I2PSession i2pSession, I2PSocketManager socketManager, I2PPacketDispatcher i2pReceiver) {
         super("I2PSendQueue");
         
         this.i2pSession = i2pSession;
+        this.socketManager = socketManager;
         i2pReceiver.addPacketListener(this);
         packetQueue = new PacketQueue();
         runningBatches = new ConcurrentHashSet<PacketBatch>();
@@ -193,7 +204,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         ScheduledPacket scheduledPacket = packetQueue.take();
         if (scheduledPacket != null) {
             doPacketDelay(scheduledPacket);
-            send(scheduledPacket, datagramMaker);
+            send(scheduledPacket);
         }
     }
     
@@ -202,7 +213,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         while (!packetQueue.isEmpty()) {
             ScheduledPacket scheduledPacket = packetQueue.take();
             if (scheduledPacket != null)
-                send(scheduledPacket, datagramMaker);
+                send(scheduledPacket);
         }
     }
     
@@ -228,15 +239,21 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         }
     }
     
-    private void send(ScheduledPacket scheduledPacket, I2PDatagramMaker datagramMaker) {
+    /** This method actually sends a packet via the router */
+    private void send(ScheduledPacket scheduledPacket) {
         CommunicationPacket i2pBotePacket = scheduledPacket.data;
+        byte[] bytes = i2pBotePacket.toByteArray();
+        boolean useStream = bytes.length > MAX_DATAGRAM_SIZE;
+        
         PacketBatch batch = scheduledPacket.batch;
         boolean isBatchPacket = batch != null;
-        log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to " + Util.toShortenedBase32(scheduledPacket.destination));
-            
-        byte[] replyableDatagram = datagramMaker.makeI2PDatagram(i2pBotePacket.toByteArray());
+        log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet as a " + (useStream?"stream":"datagram") + ": [" + i2pBotePacket + "] to " + Util.toShortenedBase32(scheduledPacket.destination));
+        
         try {
-            i2pSession.sendMessage(scheduledPacket.destination, replyableDatagram, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_UNSPECIFIED, I2PSession.PORT_UNSPECIFIED);
+            if (useStream)
+                sendStream(bytes, scheduledPacket.destination);
+            else
+                sendDatagram(bytes, scheduledPacket.destination);
             
             // set sentTime, update queue and sentLatch, fire packet listeners
             scheduledPacket.data.setSentTime(System.currentTimeMillis());
@@ -244,8 +261,8 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
                 batch.decrementSentLatch();
             scheduledPacket.decrementSentLatch();
         }
-        catch (I2PSessionException sessExc) {
-            log.error("Can't send packet.", sessExc);
+        catch (Exception exc) {
+            log.error("Can't send packet.", exc);
             // pause to avoid CPU hogging if the error doesn't go away
             try {
                 TimeUnit.SECONDS.sleep(1);
@@ -253,6 +270,24 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             catch (InterruptedException intrExc) {
                 log.error("Interrupted while sleeping after a send error.", intrExc);
             }
+        }
+    }
+    
+    private void sendDatagram(byte[] data, Destination destination) throws I2PSessionException {
+        byte[] replyableDatagram = datagramMaker.makeI2PDatagram(data);
+        i2pSession.sendMessage(destination, replyableDatagram, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_UNSPECIFIED, I2PSession.PORT_UNSPECIFIED);
+    }
+    
+    private void sendStream(byte[] data, Destination destination) throws I2PException, IOException {
+        I2PSocket socket = null;
+        try {
+            socket = socketManager.connect(destination);
+            OutputStream outputStream = socket.getOutputStream();
+            outputStream.write(data);
+        }
+        finally {
+            if (socket != null)
+                socket.close();
         }
     }
     
