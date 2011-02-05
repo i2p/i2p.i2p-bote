@@ -39,7 +39,11 @@ import net.i2p.data.SessionKey;
 
 /**
  * Encrypts data with a password and writes it to an underlying {@link OutputStream}.<br/>
- * Nothing is actually written until {@link #flush()} or {@link #close()} are called.<br/>
+ * Nothing is actually written until {@link #close()} is called.<br/>
+ * Nothing is written when <code>flush</code> is called, either, because if more data were
+ * written after a <code>flush</code>, it would cause data corruption because the stream
+ * would be encrypted two separate pieces.
+ * <p/>
  * A header is written before the encrypted data. The header fields are:<br/>
  * <code>start of file, format version, #iterations, salt, iv, encrypted data</code>.<br/>
  */
@@ -47,7 +51,6 @@ public class EncryptedOutputStream extends FilterOutputStream {
     private OutputStream downstream;
     private DerivedKey derivedKey;
     private ByteArrayOutputStream outputBuffer;
-    private boolean isFlushed;
     
     /**
      * Creates an <code>EncryptedOutputStream</code> that encrypts data with a password obtained
@@ -62,7 +65,7 @@ public class EncryptedOutputStream extends FilterOutputStream {
         if (password == null)
             throw new PasswordException();
         try {
-            // make a copy in case PasswordCache zeros out the password before flush() is called
+            // make a copy in case PasswordCache zeros out the password before close() is called
             derivedKey = passwordHolder.getKey().clone();
         } catch (NoSuchAlgorithmException e) {
             throw new IOException(e);
@@ -92,7 +95,7 @@ public class EncryptedOutputStream extends FilterOutputStream {
     @Override
     public void close() throws IOException {
         try {
-            flush();
+            encryptAndWrite();
         }
         finally {
             // erase the copy of the key
@@ -103,11 +106,12 @@ public class EncryptedOutputStream extends FilterOutputStream {
         }
     }
     
-    @Override
-    public void flush() throws IOException {
-        if (isFlushed)
-            return;
-        
+    /**
+     * Writes the header, then encrypts the internal buffer and writes the encrypted
+     * data to the underlying <code>OutputStream</code>.
+     * @throws IOException
+     */
+    private void encryptAndWrite() throws IOException {
         downstream.write(START_OF_FILE);
         downstream.write(FORMAT_VERSION);
         byte[] numIterations = ByteBuffer.allocate(4).putInt(NUM_ITERATIONS).array();
@@ -124,8 +128,5 @@ public class EncryptedOutputStream extends FilterOutputStream {
         SessionKey key = new SessionKey(derivedKey.key);
         byte[] encryptedData = appContext.aes().safeEncrypt(data, key, iv, 0);
         downstream.write(encryptedData);
-        
-        downstream.flush();
-        isFlushed = true;
     }
 }
