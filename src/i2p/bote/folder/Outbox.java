@@ -42,8 +42,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * about the sending progress.
  */
 public class Outbox extends EmailFolder {
-    private static final String DEFAULT_STATUS = "Queued";
-    
     private Map<String, String> statusMap;   // maps message IDs to status strings
     
     public Outbox(File storageDir, PasswordHolder passwordHolder) {
@@ -82,28 +80,38 @@ public class Outbox extends EmailFolder {
     /**
      * Returns the status of an email with a given message ID.
      * If no email exists under the message ID, or if no status is set,
-     * <code>DEFAULT_STATUS</code> is returned.
+     * the default status is returned.
      * @param messageId The message ID of the email
      * @return
+     * @see #getDefaultStatus()
      */
     private String getStatus(String messageId) {
         if (statusMap.containsKey(messageId))
             return statusMap.get(messageId);
         else
-            return _(DEFAULT_STATUS);
+            return getDefaultStatus();
     }
     
     /**
      * Returns the status of an {@link Email}.
      * If the email doesn't exist in the outbox, or if no status is set,
-     * <code>DEFAULT_STATUS</code> is returned.
+     * the default status is returned.
      * @param email
+     * @see #getDefaultStatus()
      */
     public String getStatus(Email email) {
         String messageId = email.getMessageID();
         if (messageId == null)
-            return _(DEFAULT_STATUS);
+            return getDefaultStatus();
         else
             return getStatus(messageId);
+    }
+    
+    /**
+     * This is a method rather than a static String so GNU gettext
+     * recognizes the String.
+     */
+    private String getDefaultStatus() {
+        return _("Queued");
     }
 }
