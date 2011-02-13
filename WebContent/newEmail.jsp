@@ -65,7 +65,17 @@
     </c:when>
 </c:choose>
 
+<%--
+    The newAttachment request attribute contains a UploadedFile object, see MultipartFilter.java.
+    When action='attach', originalAttachmentFilename contains the name of the file selected by the user.
+--%>
+<c:set var="originalAttachmentFilename" value="${requestScope['newAttachment'].originalFilename}"/>
+
 <ib:message key="New Email" var="title"scope="request"/>
+<c:if test="${param.action eq 'attach' and empty originalAttachmentFilename}">
+    <ib:message key="Please select a file to attach and try again." var="noAttachmentMsg"/>
+    <c:set var="errorMessage" value="${noAttachmentMsg}" scope="request"/>
+</c:if>
 <jsp:include page="header.jsp"/>
 
 <ib:requirePassword forwardUrl="newEmail.jsp">
@@ -168,10 +178,9 @@
                         </c:if>
                     </c:forEach>
                     
-                    <c:if test="${param.action eq 'attach'}">
+                    <c:if test="${param.action eq 'attach' and not empty originalAttachmentFilename}">
                         <tr><td>
-                            <%-- the newAttachment request attribute contains a UploadedFile object, see MultipartFilter.java --%>
-                            ${requestScope['newAttachment'].originalFilename}
+                            ${originalAttachmentFilename}
                             <c:set var="maxAttachmentIndex" value="${maxAttachmentIndex + 1}"/>
                             <input type="hidden" name="attachmentNameOrig${maxAttachmentIndex}" value="${requestScope['newAttachment'].originalFilename}"/>
                             <input type="hidden" name="attachmentNameTemp${maxAttachmentIndex}" value="${requestScope['newAttachment'].tempFilename}"/>
