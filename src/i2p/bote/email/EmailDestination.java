@@ -60,12 +60,12 @@ public class EmailDestination {
         
         // find the crypto implementation for this key length
         for (CryptoImplementation cryptoImpl: CryptoFactory.getInstances()) {
-            int base64Length = cryptoImpl.getBase64PublicKeyPairLength();   // length of an email identity that uses this CryptoImplementation
+            int base64Length = cryptoImpl.getBase64PublicKeyPairLength();   // length of an email destination that uses this CryptoImplementation
             if (base64Key.length() == base64Length)
                 this.cryptoImpl = cryptoImpl;
         }
         if (cryptoImpl == null)
-            throw new InvalidKeyException("Not a valid Email Identity: <" + base64Key + ">");
+            throw new InvalidKeyException("Not a valid Email Destination: <" + base64Key + ">");
         
         PublicKeyPair keyPair = cryptoImpl.createPublicKeyPair(base64Key);
         publicEncryptionKey = keyPair.encryptionKey;
@@ -75,12 +75,12 @@ public class EmailDestination {
     public EmailDestination(byte[] bytes) throws GeneralSecurityException {
         // find the crypto implementation for this key length
         for (CryptoImplementation cryptoImpl: CryptoFactory.getInstances()) {
-            int byteArrayLength = cryptoImpl.getByteArrayPublicKeyPairLength();   // length of an email identity that uses this CryptoImplementation
+            int byteArrayLength = cryptoImpl.getByteArrayPublicKeyPairLength();   // length of an email destination that uses this CryptoImplementation
             if (bytes.length == byteArrayLength)
                 this.cryptoImpl = cryptoImpl;
         }
         if (cryptoImpl == null)
-            throw new InvalidKeyException("Not a valid Email Identity: " + Arrays.toString(bytes));
+            throw new InvalidKeyException("Not a valid Email Destination: " + Arrays.toString(bytes));
         
         PublicKeyPair keyPair = cryptoImpl.createPublicKeyPair(bytes);
         publicEncryptionKey = keyPair.encryptionKey;
