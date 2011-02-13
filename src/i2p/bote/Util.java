@@ -285,10 +285,6 @@ public class Util {
         return address;
     }
     
-    public static UniqueId zeroId() {
-        return new UniqueId(new byte[UniqueId.LENGTH], 0);
-    }
-    
     public static String toBase32(Hash hash) {
         return Base32.encode(hash.toByteArray());
     }
