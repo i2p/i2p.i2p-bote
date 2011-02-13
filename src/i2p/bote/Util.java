@@ -25,12 +25,14 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -162,6 +164,25 @@ public class Util {
             output.write(buffer, 0, bytesRead);
     }
     
+    public static void copy(File from, File to) throws IOException {
+        if (!to.exists())
+            to.createNewFile();
+    
+        FileChannel fromChan = null;
+        FileChannel toChan = null;
+        try {
+            fromChan = new FileInputStream(from).getChannel();
+            toChan = new FileOutputStream(to).getChannel();
+            toChan.transferFrom(fromChan, 0, fromChan.size());
+        }
+        finally {
+            if (fromChan != null)
+                fromChan.close();
+            if (toChan != null)
+                toChan.close();
+        }
+    }
+
     /**
      * Creates an I2P destination with a null certificate from 384 bytes that
      * are read from a <code>ByteBuffer</code>.

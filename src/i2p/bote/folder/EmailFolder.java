@@ -258,9 +258,19 @@ public class EmailFolder extends Folder<Email> {
     
     private boolean move(File from, File to) {
         boolean success = from.renameTo(to);
+        
+        // renameTo doesn't always work, even when "from" and "to" are on the same partition,
+        // so in those cases do copy+delete
         if (!success)
-            log.error("Cannot move <" + from.getAbsolutePath() + "> to <" + to.getAbsolutePath() + ">");
-        return success;
+            try {
+                Util.copy(from, to);
+                from.delete();
+            }
+            catch (IOException e) {
+                log.error("Cannot move <" + from.getAbsolutePath() + "> to <" + to.getAbsolutePath() + ">", e);
+                return false;
+            }
+        return true;
     }
     
     /** @see #move(String, EmailFolder) */
