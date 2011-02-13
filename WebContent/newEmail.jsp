@@ -89,7 +89,7 @@
                                 <c:set var="selected" value=" selected"/>
                             </c:if>
                             <option value="${identity.publicName} &lt;${identity.key}&gt;"${selected}>
-                                ${identity.publicName}
+                                ${identity.publicName} &lt;${fn:substring(identity.key, 0, 10)}...&gt;
                                 <c:if test="${!empty identity.description}"> - ${identity.description}</c:if>
                             </option>
                         </c:forEach>
