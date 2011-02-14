@@ -33,11 +33,16 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ThreadFactory;
+
+import javax.mail.MessagingException;
+import javax.mail.Part;
 
 import net.i2p.I2PAppContext;
 import net.i2p.data.Base32;
@@ -68,6 +73,49 @@ public class Util {
         return byteStream.toByteArray();
     }
 
+    public static String getHumanReadableSize(File file) {
+        long size = file.length();
+        return getHumanReadableSize(size);
+    }
+    
+    /** Returns the size of an email attachment in a user-friendly format 
+     * @throws MessagingException 
+     * @throws IOException */
+    public static String getHumanReadableSize(Part part) throws IOException, MessagingException {
+        // find size in bytes
+        InputStream inputStream = part.getInputStream();
+        byte[] buffer = new byte[32*1024];
+        long totalBytes = 0;
+        int bytesRead;
+        do {
+            bytesRead = inputStream.read(buffer, 0, buffer.length);
+            if (bytesRead > 0)
+                totalBytes += bytesRead;
+        } while (bytesRead > 0);
+        
+        // format to a string
+        return getHumanReadableSize(totalBytes);
+    }
+    
+    public static String getHumanReadableSize(long numBytes) {
+        String language = Translate.getLanguage(I2PAppContext.getGlobalContext());
+        int unit = (63-Long.numberOfLeadingZeros(numBytes)) / 10;   // 0 if totalBytes<1K, 1 if 1K<=totalBytes<1M, etc.
+        double value = (double)numBytes / (1<<(10*unit));
+        String messageKey;
+        switch (unit) {
+        case 0: messageKey = "{0} Bytes"; break;
+        case 1: messageKey = "{0} KBytes"; break;
+        case 2: messageKey = "{0} MBytes"; break;
+        default: messageKey = "{0} GBytes";
+        }
+        NumberFormat formatter = NumberFormat.getInstance(new Locale(language));
+        if (value < 100)
+            formatter.setMaximumFractionDigits(1);
+        else
+            formatter.setMaximumFractionDigits(0);
+        return _(messageKey, formatter.format(value));
+    }
+    
     /**
      * Opens a <code>URL</code> and reads one line at a time.
      * Returns the lines as a <code>List</code> of <code>String</code>s,

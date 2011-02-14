@@ -570,4 +570,8 @@ public class JSPHelper {
     public boolean isUpdateAvailable() {
         return I2PBote.getInstance().isUpdateAvailable();
     }
+    
+    public static String getFileSize(String filename) {
+        return Util.getHumanReadableSize(new File(filename));
+    }
 }

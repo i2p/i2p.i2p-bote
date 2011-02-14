@@ -506,6 +506,17 @@
     </function-signature>
 </function>
 
+<function>
+    <name>getFileSize</name>
+    <description>
+        Returns the size of a file in a human-readable format.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getFileSize(java.lang.String)
+    </function-signature>
+</function>
+
 <tag-file>
     <name>printWithLineBreaks</name>
     <path>/WEB-INF/tags/printWithLineBreaks.tag</path>

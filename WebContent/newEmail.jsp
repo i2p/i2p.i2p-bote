@@ -166,10 +166,11 @@
 	                            </c:if>
 	                            <tr>
 	                                <td>
-	                                    ${parameter.value}
+                                        <c:set var="tempFileParamName" value="attachmentNameTemp${attachmentIndex}"/>
+                                        <c:set var="tempAttachmentFilename" value="${param[tempFileParamName]}"/>
+	                                    ${parameter.value} (${ib:getFileSize(tempAttachmentFilename)})
 	                                    <input type="hidden" name="attachmentNameOrig${attachmentIndex}" value="${parameter.value}"/>
-	                                    <c:set var="tempFileParamName" value="attachmentNameTemp${attachmentIndex}"/>
-	                                    <input type="hidden" name="attachmentNameTemp${attachmentIndex}" value="${param[tempFileParamName]}"/>
+	                                    <input type="hidden" name="attachmentNameTemp${attachmentIndex}" value="${tempAttachmentFilename}"/>
 	                                </td>
 	                                <ib:message key="Remove this attachment" var="linkTitle"/>
 	                                <td><button type="submit" name="action" value="removeAttachment${attachmentIndex}" title="${linkTitle}">-</button></td>
@@ -180,10 +181,11 @@
                     
                     <c:if test="${param.action eq 'attach' and not empty originalAttachmentFilename}">
                         <tr><td>
-                            ${originalAttachmentFilename}
+                            <c:set var="tempAttachmentFilename" value="${requestScope['newAttachment'].tempFilename}"/>
+                            ${originalAttachmentFilename} (${ib:getFileSize(tempAttachmentFilename)})
                             <c:set var="maxAttachmentIndex" value="${maxAttachmentIndex + 1}"/>
                             <input type="hidden" name="attachmentNameOrig${maxAttachmentIndex}" value="${requestScope['newAttachment'].originalFilename}"/>
-                            <input type="hidden" name="attachmentNameTemp${maxAttachmentIndex}" value="${requestScope['newAttachment'].tempFilename}"/>
+                            <input type="hidden" name="attachmentNameTemp${maxAttachmentIndex}" value="${tempAttachmentFilename}"/>
                             <c:remove var="newAttachment" scope="request"/>
                         </td><td>
                             <button type="submit" name="action" value="removeAttachment${maxAttachmentIndex}">-</button>

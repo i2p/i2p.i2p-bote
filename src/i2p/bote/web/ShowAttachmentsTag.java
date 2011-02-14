@@ -21,6 +21,7 @@
 
 package i2p.bote.web;
 
+import i2p.bote.Util;
 import i2p.bote.email.Email;
 
 import java.io.IOException;
@@ -49,7 +50,8 @@ public class ShowAttachmentsTag extends SimpleTagSupport {
                 Part part = parts.get(partIndex);
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
                     String filename = part.getFileName();
-                    out.println("<a href=\"showAttachment?messageID=" + email.getMessageID() + "&folder=" + folder + "&part=" + partIndex + "\">" + filename + "</a><br/>");
+                    out.println("<a href=\"showAttachment?messageID=" + email.getMessageID() + "&folder=" + folder + "&part=" + partIndex + "\">" +
+                            filename + "</a> (" + Util.getHumanReadableSize(part) + ") <br/>");
                 }
             }
         } catch (MessagingException e) {
