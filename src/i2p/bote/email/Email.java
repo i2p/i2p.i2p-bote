@@ -43,6 +43,7 @@ import java.net.URLConnection;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -318,8 +319,9 @@ public class Email extends MimeMessage {
         removeHeader(SIGNATURE_HEADER);   // make sure there is no existing signature which would make the new signature invalid
         removeHeader(SIGNATURE_VALID_HEADER);   // remove the signature validity flag before signing
         CryptoImplementation cryptoImpl = senderIdentity.getCryptoImpl();
-        PrivateKey signingKey = senderIdentity.getPrivateSigningKey();
-        byte[] signature = cryptoImpl.sign(toByteArray(), signingKey);
+        PublicKey publicSigningKey = senderIdentity.getPublicSigningKey();
+        PrivateKey privateSigningKey = senderIdentity.getPrivateSigningKey();
+        byte[] signature = cryptoImpl.sign(toByteArray(), publicSigningKey, privateSigningKey);
         setHeader(SIGNATURE_HEADER, cryptoImpl.getId() + "_" + Base64.encode(signature));
     }
     

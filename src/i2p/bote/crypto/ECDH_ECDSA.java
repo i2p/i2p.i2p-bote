@@ -347,13 +347,14 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
      *   <li/>Use that public key together with the recipient's key to generate a secret using ECDH.<br/>
      *   <li/>Use that secret as a key to decrypt the message with AES.<br/>
      * </ol>
+     * The public key is not used.
      * @throws NoSuchAlgorithmException 
      * @throws InvalidKeyException 
      * @throws InvalidKeySpecException 
      * @throws InvalidCipherTextException 
      */
     @Override
-    public byte[] decrypt(byte[] data, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, InvalidCipherTextException {
+    public byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, InvalidCipherTextException {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
         try {
             // read the ephemeral public key
@@ -364,7 +365,7 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
         
             // reconstruct the shared secret
             ECDHKeyAgreement keyAgreement = new ECDHKeyAgreement();
-            keyAgreement.init(key);
+            keyAgreement.init(privateKey);
             keyAgreement.doPhase(ephPublicKey, true);
             byte[] sharedSecret = keyAgreement.generateSecret();
             MessageDigest hashAlg = MessageDigest.getInstance("SHA-256");
@@ -397,9 +398,9 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     protected abstract ECPublicKeySpec createPublicKeySpec(byte[] encodedKey) throws InvalidKeySpecException, NoSuchAlgorithmException;
     
     @Override
-    public byte[] sign(byte[] data, PrivateKey key) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+    public byte[] sign(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         BouncyECDSASigner signatureAlg = new BouncyECDSASigner();
-        signatureAlg.initSign(key);
+        signatureAlg.initSign(privateKey);
         signatureAlg.update(data);
         byte[] signature = signatureAlg.sign();
         

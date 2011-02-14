@@ -163,7 +163,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
         if (cryptoImpl != identity.getCryptoImpl())
             throw new IllegalArgumentException("CryptoImplementations don't match. Email Packet: <" + cryptoImpl.getName() + ">, Email Identity: <" + identity.getCryptoImpl().getName() + ">.");
         
-        byte[] decryptedData = cryptoImpl.decrypt(encryptedData, identity.getPrivateEncryptionKey());
+        byte[] decryptedData = cryptoImpl.decrypt(encryptedData, identity.getPublicEncryptionKey(), identity.getPrivateEncryptionKey());
         return new UnencryptedEmailPacket(decryptedData);
     }
 

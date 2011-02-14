@@ -209,13 +209,13 @@ public class ElGamal2048_DSA1024 implements CryptoImplementation {
             throw new IllegalArgumentException("<key> must be a " + ElGamalPublicKey.class.getName());
     }
 
-    /** Only accepts <code>ElGamalPrivateKey</code>s. */
+    /** Only accepts <code>ElGamalPrivateKey</code>s. The public key is not used. */
     @Override
-    public byte[] decrypt(byte[] data, PrivateKey key) throws GeneralSecurityException {
+    public byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws GeneralSecurityException {
         if (data == null)
             return null;
         
-        ElGamalPrivateKey elGamalKey = castToElGamal(key);
+        ElGamalPrivateKey elGamalKey = castToElGamal(privateKey);
         try {
             net.i2p.data.PrivateKey i2pPrivateKey = elGamalKey.getI2PKey();
             return Util.decrypt(data, i2pPrivateKey);
@@ -234,8 +234,8 @@ public class ElGamal2048_DSA1024 implements CryptoImplementation {
 
     /** Only accepts <code>DSAPrivateKey</code>s. */
     @Override
-    public byte[] sign(byte[] data, PrivateKey key) throws GeneralSecurityException {
-        DSAPrivateKey dsaKey = castToDSA(key);
+    public byte[] sign(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws GeneralSecurityException {
+        DSAPrivateKey dsaKey = castToDSA(privateKey);
         Signature signature = DSAEngine.getInstance().sign(data, dsaKey.getI2PKey());
         return signature.toByteArray();
     }

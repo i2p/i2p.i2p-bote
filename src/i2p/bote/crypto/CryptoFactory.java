@@ -58,5 +58,6 @@ public class CryptoFactory {
             Log log = new Log(CryptoFactory.class);
             log.error("Error creating ECDH256_ECDSA256 or ECDH521_ECDSA521.", e);
         }
+        instances.add(new NTRUEncrypt1087_NTRUSign349());
     }
 }
