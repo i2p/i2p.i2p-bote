@@ -25,9 +25,9 @@ import i2p.bote.Util;
 import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.MalformedPacketException;
-import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.dht.DhtStorablePacket;
 import i2p.bote.packet.dht.StoreRequest;
+import i2p.bote.packet.relay.RelayRequest;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

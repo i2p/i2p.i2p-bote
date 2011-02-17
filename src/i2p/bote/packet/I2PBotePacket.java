@@ -23,9 +23,17 @@ package i2p.bote.packet;
 
 import i2p.bote.I2PBote;
 import i2p.bote.Util;
+import i2p.bote.packet.dht.DeletionInfoPacket;
+import i2p.bote.packet.dht.EmailPacketDeleteRequest;
+import i2p.bote.packet.dht.EncryptedEmailPacket;
 import i2p.bote.packet.dht.FindClosePeersPacket;
+import i2p.bote.packet.dht.IndexPacket;
+import i2p.bote.packet.dht.IndexPacketDeleteRequest;
 import i2p.bote.packet.dht.RetrieveRequest;
 import i2p.bote.packet.dht.StoreRequest;
+import i2p.bote.packet.dht.UnencryptedEmailPacket;
+import i2p.bote.packet.relay.PeerListRequest;
+import i2p.bote.packet.relay.RelayRequest;
 
 import java.io.File;
 import java.io.FileInputStream;

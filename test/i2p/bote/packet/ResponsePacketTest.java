@@ -24,6 +24,8 @@ package i2p.bote.packet;
 import static junit.framework.Assert.assertTrue;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
+import i2p.bote.packet.dht.EncryptedEmailPacket;
+import i2p.bote.packet.dht.UnencryptedEmailPacket;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

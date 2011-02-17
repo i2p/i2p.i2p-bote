@@ -23,10 +23,10 @@ package i2p.bote.migration;
 
 import i2p.bote.Configuration;
 import i2p.bote.Util;
-import i2p.bote.io.EncryptedOutputStream;
-import i2p.bote.io.FileEncryptionConstants;
-import i2p.bote.io.PasswordCache;
-import i2p.bote.io.PasswordException;
+import i2p.bote.fileencryption.EncryptedOutputStream;
+import i2p.bote.fileencryption.FileEncryptionConstants;
+import i2p.bote.fileencryption.PasswordCache;
+import i2p.bote.fileencryption.PasswordException;
 
 import java.io.File;
 import java.io.FileInputStream;

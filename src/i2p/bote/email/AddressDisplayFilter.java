@@ -23,7 +23,7 @@ package i2p.bote.email;
 
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.addressbook.Contact;
-import i2p.bote.io.PasswordException;
+import i2p.bote.fileencryption.PasswordException;
 
 /**
  * This class is used for adding/replacing names in email addresses with

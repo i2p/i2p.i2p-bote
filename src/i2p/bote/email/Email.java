@@ -26,10 +26,10 @@ import i2p.bote.UniqueId;
 import i2p.bote.Util;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
-import i2p.bote.io.EncryptedInputStream;
-import i2p.bote.io.PasswordHolder;
-import i2p.bote.io.PasswordException;
-import i2p.bote.packet.UnencryptedEmailPacket;
+import i2p.bote.fileencryption.EncryptedInputStream;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.fileencryption.PasswordHolder;
+import i2p.bote.packet.dht.UnencryptedEmailPacket;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;

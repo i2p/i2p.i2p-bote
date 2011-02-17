@@ -21,7 +21,7 @@
 
 package i2p.bote.web;
 
-import i2p.bote.io.PasswordException;
+import i2p.bote.fileencryption.PasswordException;
 
 import javax.servlet.jsp.el.ELException;
 import javax.servlet.jsp.tagext.BodyTagSupport;

@@ -22,7 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.Util;
-import i2p.bote.io.PasswordException;
+import i2p.bote.fileencryption.PasswordException;
 
 import java.io.File;
 import java.io.FilenameFilter;

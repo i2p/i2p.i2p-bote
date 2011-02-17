@@ -25,29 +25,29 @@ import i2p.bote.crypto.CryptoImplementationTest;
 import i2p.bote.email.EmailIdentityTest;
 import i2p.bote.email.EmailMetadataTest;
 import i2p.bote.email.EmailTest;
+import i2p.bote.fileencryption.EncryptedStreamTest;
+import i2p.bote.fileencryption.FileEncryptionUtilTest;
+import i2p.bote.fileencryption.PasswordCacheTest;
 import i2p.bote.folder.EmailFolderTest;
 import i2p.bote.folder.EmailPacketFolderTest;
 import i2p.bote.folder.FolderTest;
 import i2p.bote.folder.IncompleteEmailFolderTest;
 import i2p.bote.folder.IndexPacketFolderTest;
 import i2p.bote.folder.RelayPacketFolderTest;
-import i2p.bote.io.EncryptedStreamTest;
-import i2p.bote.io.FileEncryptionUtilTest;
-import i2p.bote.io.PasswordCacheTest;
 import i2p.bote.network.kademlia.BucketManagerTest;
 import i2p.bote.network.kademlia.KBucketTest;
-import i2p.bote.packet.EmailPacketDeleteRequestTest;
-import i2p.bote.packet.EncryptedEmailPacketTest;
 import i2p.bote.packet.I2PBotePacketTest;
-import i2p.bote.packet.IndexPacketDeleteRequestTest;
-import i2p.bote.packet.IndexPacketTest;
 import i2p.bote.packet.PeerListTest;
-import i2p.bote.packet.RelayPacketTest;
 import i2p.bote.packet.ResponsePacketTest;
-import i2p.bote.packet.ReturnChainTest;
-import i2p.bote.packet.UnencryptedEmailPacketTest;
+import i2p.bote.packet.dht.EmailPacketDeleteRequestTest;
+import i2p.bote.packet.dht.EncryptedEmailPacketTest;
 import i2p.bote.packet.dht.FindClosePeersPacketTest;
+import i2p.bote.packet.dht.IndexPacketDeleteRequestTest;
+import i2p.bote.packet.dht.IndexPacketTest;
 import i2p.bote.packet.dht.StoreRequestTest;
+import i2p.bote.packet.dht.UnencryptedEmailPacketTest;
+import i2p.bote.packet.relay.RelayRequestTest;
+import i2p.bote.packet.relay.ReturnChainTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -67,7 +67,7 @@ import org.junit.runners.Suite;
     IndexPacketTest.class,
     PeerListTest.class,
     IndexPacketDeleteRequestTest.class,
-    RelayPacketTest.class,
+    RelayRequestTest.class,
     ReturnChainTest.class,
     
     // Folders

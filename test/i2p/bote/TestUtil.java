@@ -24,7 +24,7 @@ package i2p.bote;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import i2p.bote.email.Email;
-import i2p.bote.io.PasswordCache;
+import i2p.bote.fileencryption.PasswordCache;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

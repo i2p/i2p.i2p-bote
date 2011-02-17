@@ -26,7 +26,7 @@ import i2p.bote.email.Email;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.MalformedPacketException;
-import i2p.bote.packet.UnencryptedEmailPacket;
+import i2p.bote.packet.dht.UnencryptedEmailPacket;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

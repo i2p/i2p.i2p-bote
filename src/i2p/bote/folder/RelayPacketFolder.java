@@ -22,7 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.packet.MalformedPacketException;
-import i2p.bote.packet.RelayRequest;
+import i2p.bote.packet.relay.RelayRequest;
 
 import java.io.File;
 import java.io.FilenameFilter;

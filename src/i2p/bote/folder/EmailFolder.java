@@ -27,11 +27,11 @@ import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.EmailMetadata;
-import i2p.bote.io.DerivedKey;
-import i2p.bote.io.EncryptedOutputStream;
-import i2p.bote.io.FileEncryptionUtil;
-import i2p.bote.io.PasswordException;
-import i2p.bote.io.PasswordHolder;
+import i2p.bote.fileencryption.DerivedKey;
+import i2p.bote.fileencryption.EncryptedOutputStream;
+import i2p.bote.fileencryption.FileEncryptionUtil;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.fileencryption.PasswordHolder;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

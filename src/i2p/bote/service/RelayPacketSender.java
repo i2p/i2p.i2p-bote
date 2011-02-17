@@ -28,9 +28,9 @@ import i2p.bote.folder.PacketFolder;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.RelayRequest;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
+import i2p.bote.packet.relay.RelayRequest;
 
 import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;

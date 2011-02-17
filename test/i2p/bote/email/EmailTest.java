@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.packet.I2PBotePacket;
-import i2p.bote.packet.UnencryptedEmailPacket;
+import i2p.bote.packet.dht.UnencryptedEmailPacket;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

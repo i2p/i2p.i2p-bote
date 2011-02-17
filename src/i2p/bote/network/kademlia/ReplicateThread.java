@@ -28,7 +28,7 @@ import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.DeleteRequest;
+import i2p.bote.packet.dht.DeleteRequest;
 import i2p.bote.packet.dht.DhtStorablePacket;
 import i2p.bote.packet.dht.StoreRequest;
 import i2p.bote.service.I2PBoteThread;

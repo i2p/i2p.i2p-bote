@@ -24,8 +24,8 @@ package i2p.bote.folder;
 import static org.junit.Assert.assertEquals;
 import i2p.bote.TestUtil;
 import i2p.bote.email.Email;
-import i2p.bote.io.PasswordCache;
-import i2p.bote.io.PasswordException;
+import i2p.bote.fileencryption.PasswordCache;
+import i2p.bote.fileencryption.PasswordException;
 
 import java.io.File;
 import java.io.IOException;

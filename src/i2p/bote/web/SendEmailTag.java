@@ -25,7 +25,7 @@ import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
-import i2p.bote.io.PasswordException;
+import i2p.bote.fileencryption.PasswordException;
 
 import java.io.File;
 import java.io.IOException;

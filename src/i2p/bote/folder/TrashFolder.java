@@ -21,7 +21,7 @@
 
 package i2p.bote.folder;
 
-import i2p.bote.io.PasswordHolder;
+import i2p.bote.fileencryption.PasswordHolder;
 
 import java.io.File;
 

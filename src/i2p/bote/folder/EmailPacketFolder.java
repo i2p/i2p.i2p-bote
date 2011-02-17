@@ -24,12 +24,12 @@ package i2p.bote.folder;
 import i2p.bote.UniqueId;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
-import i2p.bote.packet.DeleteRequest;
-import i2p.bote.packet.DeletionInfoPacket;
-import i2p.bote.packet.DeletionRecord;
-import i2p.bote.packet.EmailPacketDeleteRequest;
-import i2p.bote.packet.EncryptedEmailPacket;
+import i2p.bote.packet.dht.DeleteRequest;
+import i2p.bote.packet.dht.DeletionInfoPacket;
+import i2p.bote.packet.dht.DeletionRecord;
 import i2p.bote.packet.dht.DhtStorablePacket;
+import i2p.bote.packet.dht.EmailPacketDeleteRequest;
+import i2p.bote.packet.dht.EncryptedEmailPacket;
 
 import java.io.File;
 import java.util.Iterator;

@@ -23,9 +23,9 @@ package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
 import i2p.bote.packet.DataPacket;
-import i2p.bote.packet.DeleteRequest;
-import i2p.bote.packet.DeletionInfoPacket;
 import i2p.bote.packet.MalformedPacketException;
+import i2p.bote.packet.dht.DeleteRequest;
+import i2p.bote.packet.dht.DeletionInfoPacket;
 import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;

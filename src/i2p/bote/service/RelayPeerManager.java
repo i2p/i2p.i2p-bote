@@ -31,7 +31,7 @@ import i2p.bote.network.RelayPeer;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.PeerList;
-import i2p.bote.packet.PeerListRequest;
+import i2p.bote.packet.relay.PeerListRequest;
 
 import java.io.BufferedWriter;
 import java.io.File;

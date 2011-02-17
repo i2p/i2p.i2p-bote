@@ -34,10 +34,10 @@ import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
+import i2p.bote.fileencryption.FileEncryptionUtil;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.TrashFolder;
-import i2p.bote.io.FileEncryptionUtil;
-import i2p.bote.io.PasswordException;
 import i2p.bote.network.NetworkStatus;
 
 import java.io.File;
