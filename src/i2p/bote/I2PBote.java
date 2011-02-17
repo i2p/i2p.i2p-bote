@@ -422,11 +422,14 @@ public class I2PBote implements NetworkStatusSource {
     public void sendEmail(Email email) throws Exception {
         email.checkAddresses();
         
-        String sender = email.getSender().toString();
-        EmailIdentity senderIdentity = identities.extractIdentity(sender);
-        if (senderIdentity == null)
-            throw new MessagingException(_("No identity matches the sender/from field: " + sender));
-        email.sign(senderIdentity);
+        // sign email unless sender is anonymous
+        if (!email.isAnonymous()) {
+            String sender = email.getSender().toString();
+            EmailIdentity senderIdentity = identities.extractIdentity(sender);
+            if (senderIdentity == null)
+                throw new MessagingException(_("No identity matches the sender/from field: " + sender));
+            email.sign(senderIdentity);
+        }
         
         outbox.add(email);
         if (outboxProcessor != null)
