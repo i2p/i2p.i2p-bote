@@ -42,6 +42,9 @@ import i2p.bote.network.NetworkStatus;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -573,5 +576,23 @@ public class JSPHelper {
     
     public static String getFileSize(String filename) {
         return Util.getHumanReadableSize(new File(filename));
+    }
+    
+    public static String urlEncode(String input) {
+        try {
+            return URLEncoder.encode(input, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            new Log(JSPHelper.class).error("UTF-8 not supported!", e);
+            return input;
+        }
+    }
+    
+    public static String urlDecode(String input) {
+        try {
+            return URLDecoder.decode(input, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            new Log(JSPHelper.class).error("UTF-8 not supported!", e);
+            return input;
+        }
     }
 }

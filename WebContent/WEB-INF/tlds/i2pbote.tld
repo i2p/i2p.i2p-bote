@@ -517,6 +517,28 @@
     </function-signature>
 </function>
 
+<function>
+    <name>urlEncode</name>
+    <description>
+        URL-encodes a UTF-8 string.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String urlEncode(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>urlDecode</name>
+    <description>
+        URL-decodes a string.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String urlDecode(java.lang.String)
+    </function-signature>
+</function>
+
 <tag-file>
     <name>printWithLineBreaks</name>
     <path>/WEB-INF/tags/printWithLineBreaks.tag</path>
