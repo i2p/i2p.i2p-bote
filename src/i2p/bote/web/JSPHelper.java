@@ -144,6 +144,9 @@ public class JSPHelper {
             identities.save();
             return null;
         }
+        catch (PasswordException e) {
+            throw e;
+        }
         catch (Exception e) {
             return e.getLocalizedMessage();
         }
@@ -162,6 +165,9 @@ public class JSPHelper {
         try {
             identities.save();
             return null;
+        }
+        catch (PasswordException e) {
+            throw e;
         }
         catch (Exception e) {
             return e.getLocalizedMessage();
