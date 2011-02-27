@@ -74,8 +74,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.Thread.State;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -495,10 +494,9 @@ public class I2PBote implements NetworkStatusSource {
      * @param confirmNewPassword
      * @return An error message if the two new passwords don't match, <code>null</code> otherwise
      * @throws IOException 
-     * @throws InvalidKeySpecException 
-     * @throws NoSuchAlgorithmException 
+     * @throws GeneralSecurityException 
      */
-    public String changePassword(char[] oldPassword, char[] newPassword, char[] confirmNewPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    public String changePassword(byte[] oldPassword, byte[] newPassword, byte[] confirmNewPassword) throws IOException, GeneralSecurityException {
         File passwordFile = configuration.getPasswordFile();
         
         if (!FileEncryptionUtil.isPasswordCorrect(oldPassword, passwordFile))

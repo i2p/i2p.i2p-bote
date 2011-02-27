@@ -35,6 +35,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
 import net.i2p.util.Log;
@@ -51,7 +52,7 @@ public class MigrateTo026 {
         
         passwordCache = new PasswordCache(configuration);
         // encrypt with the default password
-        passwordCache.setPassword(new char[0]);
+        passwordCache.setPassword(new byte[0]);
 
         try {
             // convert the identities file
@@ -83,7 +84,7 @@ public class MigrateTo026 {
         }
     }
     
-    private void migrateEmailsIfNeeded(File directory) throws IOException, PasswordException {
+    private void migrateEmailsIfNeeded(File directory) throws IOException, PasswordException, GeneralSecurityException {
         if (!directory.exists())
             return;
         
@@ -115,7 +116,7 @@ public class MigrateTo026 {
         }
     }
     
-    private void encrypt(File oldFile, File newFile) throws IOException, PasswordException {
+    private void encrypt(File oldFile, File newFile) throws IOException, PasswordException, GeneralSecurityException {
         InputStream inputStream = null;
         byte[] contents = null;
         try {

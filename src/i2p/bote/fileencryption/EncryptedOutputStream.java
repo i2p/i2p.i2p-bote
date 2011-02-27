@@ -23,14 +23,13 @@ package i2p.bote.fileencryption;
 
 import static i2p.bote.fileencryption.FileEncryptionConstants.BLOCK_SIZE;
 import static i2p.bote.fileencryption.FileEncryptionConstants.FORMAT_VERSION;
-import static i2p.bote.fileencryption.FileEncryptionConstants.NUM_ITERATIONS;
 import static i2p.bote.fileencryption.FileEncryptionConstants.START_OF_FILE;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
+import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
@@ -57,11 +56,12 @@ public class EncryptedOutputStream extends FilterOutputStream {
      * from a <code>PasswordHolder</code>.
      * @throws PasswordException 
      * @throws IOException 
+     * @throws GeneralSecurityException 
      */
-    public EncryptedOutputStream(OutputStream downstream, PasswordHolder passwordHolder) throws PasswordException, IOException {
+    public EncryptedOutputStream(OutputStream downstream, PasswordHolder passwordHolder) throws PasswordException, IOException, GeneralSecurityException {
         super(downstream);
         this.downstream = downstream;
-        char[] password = passwordHolder.getPassword();
+        byte[] password = passwordHolder.getPassword();
         if (password == null)
             throw new PasswordException();
         try {
@@ -114,8 +114,7 @@ public class EncryptedOutputStream extends FilterOutputStream {
     private void encryptAndWrite() throws IOException {
         downstream.write(START_OF_FILE);
         downstream.write(FORMAT_VERSION);
-        byte[] numIterations = ByteBuffer.allocate(4).putInt(NUM_ITERATIONS).array();
-        downstream.write(numIterations);
+        FileEncryptionConstants.KDF_PARAMETERS.writeTo(downstream);
         
         downstream.write(derivedKey.salt);
         

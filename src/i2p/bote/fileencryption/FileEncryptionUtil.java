@@ -32,15 +32,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-
 import net.i2p.util.Log;
+
+import com.lambdaworks.crypto.SCrypt;
 
 public class FileEncryptionUtil {
 
@@ -49,18 +46,15 @@ public class FileEncryptionUtil {
      * A given set of input parameters will always produce the same key.
      * @param password
      * @param salt
-     * @param numIterations Number of key strengthening iterations
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
+     * @param sCryptParams Parameters for scrypt: CPU cost, memory cost, and parallelization factor
+     * @throws GeneralSecurityException 
      */
-    static byte[] getEncryptionKey(char[] password, byte[] salt, int numIterations) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    static byte[] getEncryptionKey(byte[] password, byte[] salt, SCryptParameters sCryptParams) throws GeneralSecurityException {
         if (password==null || password.length<=0)
             password = DEFAULT_PASSWORD;
-        
-        KeySpec spec = new PBEKeySpec(password, salt, numIterations, KEY_LENGTH);
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] hash = keyFactory.generateSecret(spec).getEncoded();
-        return hash;
+       
+        byte[] key = SCrypt.scryptJ(password, salt, sCryptParams.N, sCryptParams.r, sCryptParams.p, KEY_LENGTH);
+        return key;
     }
     
     /**
@@ -70,11 +64,10 @@ public class FileEncryptionUtil {
      * @param password
      * @param passwordFile
      * @return
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
      * @throws IOException
+     * @throws GeneralSecurityException 
      */
-    public static boolean isPasswordCorrect(char[] password, File passwordFile) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    public static boolean isPasswordCorrect(byte[] password, File passwordFile) throws IOException, GeneralSecurityException {
         if (!passwordFile.exists())
             return true;
         
@@ -98,7 +91,7 @@ public class FileEncryptionUtil {
      * @param newKey
      * @throws IOException
      */
-    public static void writePasswordFile(File passwordFile, char[] password, DerivedKey newKey) throws IOException {
+    public static void writePasswordFile(File passwordFile, byte[] password, DerivedKey newKey) throws IOException {
         if (password==null || password.length==0) {
             if (!passwordFile.delete())
                 new Log(FileEncryptionUtil.class).error("Can't delete file: " + passwordFile.getAbsolutePath());
@@ -127,11 +120,10 @@ public class FileEncryptionUtil {
      * @param file
      * @param oldPassword
      * @param newKey
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
      * @throws IOException
+     * @throws GeneralSecurityException 
      */
-    public static void changePassword(File file, char[] oldPassword, DerivedKey newKey) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    public static void changePassword(File file, byte[] oldPassword, DerivedKey newKey) throws IOException, GeneralSecurityException {
         InputStream inputStream = null;
         byte[] decryptedData = null;
         try {

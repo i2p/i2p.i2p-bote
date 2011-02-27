@@ -41,10 +41,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLConnection;
 import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -112,11 +110,10 @@ public class Email extends MimeMessage {
      * @param passwordHolder
      * @throws MessagingException
      * @throws IOException
-     * @throws InvalidKeySpecException 
-     * @throws NoSuchAlgorithmException 
      * @throws PasswordException 
+     * @throws GeneralSecurityException 
      */
-    public Email(File emailFile, File metadataFile, PasswordHolder passwordHolder) throws MessagingException, IOException, NoSuchAlgorithmException, InvalidKeySpecException, PasswordException {
+    public Email(File emailFile, File metadataFile, PasswordHolder passwordHolder) throws MessagingException, IOException, PasswordException, GeneralSecurityException {
         this(new BufferedInputStream(new EncryptedInputStream(new FileInputStream(emailFile), passwordHolder)), false);
         if (metadataFile.exists())
             metadata = new EmailMetadata(metadataFile);

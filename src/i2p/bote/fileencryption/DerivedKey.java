@@ -26,28 +26,27 @@ import i2p.bote.Util;
 /**
  * Contains a symmetric encryption key derived from a password,
  * and the parameters involved in deriving the key (i.e. salt and
- * the number of iterations).
+ * <code>scrypt</code> parameters).
  */
 public class DerivedKey {
     byte[] salt;
-    int numIterations;
+    SCryptParameters scryptParams;
     byte[] key;
     
-    DerivedKey(byte[] salt, int numIterations, byte[] key) {
+    DerivedKey(byte[] salt, SCryptParameters scryptParams, byte[] key) {
         this.salt = salt;
-        this.numIterations = numIterations;
+        this.scryptParams = scryptParams;
         this.key = key;
     }
     
     void clear() {
         Util.zeroOut(salt);
-        numIterations = 0;
         Util.zeroOut(key);
     }
     
     /** Makes a deep copy */
     @Override
     public DerivedKey clone() {
-        return new DerivedKey(salt.clone(), numIterations, key.clone());
+        return new DerivedKey(salt.clone(), scryptParams, key.clone());
     }
 }

@@ -31,9 +31,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
 import net.i2p.I2PAppContext;
@@ -51,20 +49,19 @@ public class EncryptedInputStream extends FilterInputStream {
      * @param upstream
      * @param passwordHolder
      * @throws IOException
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
      * @throws PasswordException 
+     * @throws GeneralSecurityException 
      */
-    public EncryptedInputStream(InputStream upstream, PasswordHolder passwordHolder) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, PasswordException {
+    public EncryptedInputStream(InputStream upstream, PasswordHolder passwordHolder) throws IOException, PasswordException, GeneralSecurityException {
         super(upstream);
-        char[] password = passwordHolder.getPassword();
+        byte[] password = passwordHolder.getPassword();
         if (password == null)
             throw new PasswordException();
         DerivedKey cachedKey = passwordHolder.getKey();
         decryptedData = new ByteArrayInputStream(readInputStream(upstream, password, cachedKey));
     }
     
-    public EncryptedInputStream(InputStream upstream, char[] password) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public EncryptedInputStream(InputStream upstream, byte[] password) throws IOException, GeneralSecurityException {
         super(upstream);
         byte[] bytes = readInputStream(upstream, password, null);
         if (bytes == null)
@@ -72,7 +69,7 @@ public class EncryptedInputStream extends FilterInputStream {
         decryptedData = new ByteArrayInputStream(bytes);
     }
     
-    private byte[] readInputStream(InputStream inputStream, char[] password, DerivedKey cachedKey) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+    private byte[] readInputStream(InputStream inputStream, byte[] password, DerivedKey cachedKey) throws IOException, GeneralSecurityException {
         byte[] startOfFile = new byte[START_OF_FILE.length];
         inputStream.read(startOfFile);
         if (!Arrays.equals(START_OF_FILE, startOfFile))
@@ -82,18 +79,16 @@ public class EncryptedInputStream extends FilterInputStream {
         if (format != FORMAT_VERSION)
             throw new IOException("Invalid file format identifier: " + format + ", expected: " + FORMAT_VERSION);
         
-        byte[] numIterationsArray = new byte[4];
-        inputStream.read(numIterationsArray);
-        int numIterations = ByteBuffer.wrap(numIterationsArray).getInt();
+        SCryptParameters scryptParams = new SCryptParameters(inputStream);
         byte[] salt = new byte[SALT_LENGTH];
         inputStream.read(salt);
         
         // use the cached key if it is suitable, otherwise compute the key
         byte[] keyBytes;
-        if (cachedKey!=null && Arrays.equals(salt, cachedKey.salt) && numIterations==cachedKey.numIterations)
+        if (cachedKey!=null && Arrays.equals(salt, cachedKey.salt) && scryptParams==cachedKey.scryptParams)
             keyBytes = cachedKey.key;
         else
-            keyBytes = FileEncryptionUtil.getEncryptionKey(password, salt, numIterations);
+            keyBytes = FileEncryptionUtil.getEncryptionKey(password, salt, scryptParams);
         
         byte iv[] = new byte[BLOCK_SIZE];
         inputStream.read(iv);

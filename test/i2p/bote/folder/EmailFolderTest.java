@@ -29,6 +29,7 @@ import i2p.bote.fileencryption.PasswordException;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 import javax.mail.MessagingException;
 
@@ -108,7 +109,7 @@ public class EmailFolderTest {
     }
     
     @Test
-    public void testAdd() throws IOException, MessagingException, PasswordException {
+    public void testAdd() throws IOException, MessagingException, PasswordException, GeneralSecurityException {
         assertEquals(0, folderDir1.list().length);
         folder1.add(email1);
         assertEquals(2, folderDir1.list().length);
@@ -124,7 +125,7 @@ public class EmailFolderTest {
     }
     
     @Test
-    public void testMove() throws IOException, MessagingException, PasswordException {
+    public void testMove() throws IOException, MessagingException, PasswordException, GeneralSecurityException {
         folder1.add(email1);
         folder1.move(email1, folder2);
         assertEquals("Source folder is not empty!", 0, folderDir1.list().length);
@@ -133,14 +134,14 @@ public class EmailFolderTest {
     }
 
     @Test
-    public void testDelete() throws IOException, MessagingException, PasswordException {
+    public void testDelete() throws IOException, MessagingException, PasswordException, GeneralSecurityException {
         folder1.add(email1);
         folder1.delete(email1.getMessageID());
         assertEquals("The email file and/or the metadata were not deleted!", 0, folderDir1.list().length);
     }
     
     @Test
-    public void testSetNew() throws IOException, MessagingException, PasswordException {
+    public void testSetNew() throws IOException, MessagingException, PasswordException, GeneralSecurityException {
         folder1.add(email1);
         Email emailFromFolder = folder1.iterator().next();
         assertEquals("\"new\" flag is false after adding email to folder!", emailFromFolder.isNew(), true);

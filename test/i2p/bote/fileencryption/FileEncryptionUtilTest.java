@@ -23,11 +23,7 @@ package i2p.bote.fileencryption;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import i2p.bote.Util;
-import i2p.bote.fileencryption.EncryptedInputStream;
-import i2p.bote.fileencryption.EncryptedOutputStream;
-import i2p.bote.fileencryption.FileEncryptionUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,8 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
 import org.junit.After;
@@ -45,7 +40,7 @@ import org.junit.Test;
 
 public class FileEncryptionUtilTest {
     private File testDir;
-    private char[] password = "secret password %&§§%&+ü#".toCharArray();
+    private byte[] password = "secret password %&§§%&+ü#".getBytes();
     private byte[] plainText = "this is the unencrypted text".getBytes();
     
     @Before
@@ -62,18 +57,18 @@ public class FileEncryptionUtilTest {
     
     /** Tests writePasswordFile() and isPasswordCorrect() */
     @Test
-    public void testPasswordFile() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    public void testPasswordFile() throws IOException, GeneralSecurityException {
         File passwordFile = new File(testDir, "password");
         FileEncryptionUtil.writePasswordFile(passwordFile, password, FileEncryptionTestUtil.deriveKey(password));
         assertTrue(passwordFile.exists());
         
         assertTrue(FileEncryptionUtil.isPasswordCorrect(password, passwordFile));
-        assertFalse(FileEncryptionUtil.isPasswordCorrect("this is the wrong password".toCharArray(), passwordFile));
+        assertFalse(FileEncryptionUtil.isPasswordCorrect("this is the wrong password".getBytes(), passwordFile));
         
         // setting an empty password should delete the password file
-        char[] emptyPassword = new char[0];
+        byte[] emptyPassword = new byte[0];
         FileEncryptionUtil.writePasswordFile(passwordFile, emptyPassword, FileEncryptionTestUtil.deriveKey(emptyPassword));
-        assertTrue(FileEncryptionUtil.isPasswordCorrect("random string adfsasdfafsd".toCharArray(), passwordFile));
+        assertTrue(FileEncryptionUtil.isPasswordCorrect("random string adfsasdfafsd".getBytes(), passwordFile));
         assertFalse(passwordFile.exists());
         
         // same for a null password
@@ -84,13 +79,13 @@ public class FileEncryptionUtilTest {
     }
     
     @Test
-    public void testChangePassword() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    public void testChangePassword() throws IOException, GeneralSecurityException {
         File encryptedFile = new File(testDir, "encrypted");
         OutputStream outputStream = new EncryptedOutputStream(new FileOutputStream(encryptedFile), FileEncryptionTestUtil.deriveKey(password));
         outputStream.write(plainText);
         outputStream.close();
         
-        char[] newPassword = "new password".toCharArray();
+        byte[] newPassword = "new password".getBytes();
         FileEncryptionUtil.changePassword(encryptedFile, password, FileEncryptionTestUtil.deriveKey(newPassword));
         InputStream inputStream = new EncryptedInputStream(new FileInputStream(encryptedFile), newPassword);
         byte[] decryptedText = Util.readBytes(inputStream);

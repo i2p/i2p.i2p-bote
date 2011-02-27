@@ -21,20 +21,15 @@
 
 package i2p.bote.fileencryption;
 
-import i2p.bote.fileencryption.DerivedKey;
-import i2p.bote.fileencryption.FileEncryptionConstants;
-import i2p.bote.fileencryption.FileEncryptionUtil;
-
-import java.security.NoSuchAlgorithmException;
+import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
 
 public class FileEncryptionTestUtil {
     
-    public static DerivedKey deriveKey(char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static DerivedKey deriveKey(byte[] password) throws GeneralSecurityException {
         byte[] salt = new byte[FileEncryptionConstants.SALT_LENGTH];
         new SecureRandom().nextBytes(salt);
-        byte[] keyBytes = FileEncryptionUtil.getEncryptionKey(password, salt, FileEncryptionConstants.NUM_ITERATIONS);
-        return new DerivedKey(salt, FileEncryptionConstants.NUM_ITERATIONS, keyBytes);
+        byte[] keyBytes = FileEncryptionUtil.getEncryptionKey(password, salt, FileEncryptionConstants.KDF_PARAMETERS);
+        return new DerivedKey(salt, FileEncryptionConstants.KDF_PARAMETERS, keyBytes);
     }
 }

@@ -22,12 +22,11 @@
 package i2p.bote.fileencryption;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.security.GeneralSecurityException;
 
 public interface PasswordHolder {
     
-    char[] getPassword();
+    byte[] getPassword();
     
-    DerivedKey getKey() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException;
+    DerivedKey getKey() throws IOException, GeneralSecurityException;
 }

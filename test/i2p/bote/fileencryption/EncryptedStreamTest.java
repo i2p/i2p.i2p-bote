@@ -39,7 +39,7 @@ public class EncryptedStreamTest {
     public void testEncryptionDecryption() throws Exception {
         String plainText = "Kräht der Hahn hoch auf dem Mist, ändert sich das Wetter, oder es bleibt wie's ist.";
         
-        char[] password = "xyz12345".toCharArray();
+        byte[] password = "xyz12345".getBytes();
         DerivedKey derivedKey = FileEncryptionTestUtil.deriveKey(password);
         
         ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();

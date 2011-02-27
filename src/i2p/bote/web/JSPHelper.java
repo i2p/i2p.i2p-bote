@@ -181,8 +181,9 @@ public class JSPHelper {
      * @param name
      * @return null if sucessful, or an error message if an error occured
      * @throws PasswordException
+     * @throws GeneralSecurityException 
      */
-    public static String saveContact(String destinationString, String name) throws PasswordException {
+    public static String saveContact(String destinationString, String name) throws PasswordException, GeneralSecurityException {
         destinationString = Util.fixAddress(destinationString);
         
         AddressBook addressBook = getAddressBook();
@@ -216,8 +217,10 @@ public class JSPHelper {
      * Deletes a contact from the address book.
      * @param destination A base64-encoded email destination
      * @return null if sucessful, or an error message if an error occured
+     * @throws GeneralSecurityException 
+     * @throws PasswordException 
      */
-    public static String deleteContact(String destination) {
+    public static String deleteContact(String destination) throws PasswordException, GeneralSecurityException {
         AddressBook addressBook = getAddressBook();
         addressBook.remove(destination);
 
@@ -545,17 +548,17 @@ public class JSPHelper {
     }
     
     public static boolean tryPassword(String password) throws Exception {
-        char[] passwordChars = password.toCharArray();
+        byte[] passwordBytes = password.getBytes();
         File passwordFile = I2PBote.getInstance().getConfiguration().getPasswordFile();
-        boolean correct = FileEncryptionUtil.isPasswordCorrect(passwordChars, passwordFile);
+        boolean correct = FileEncryptionUtil.isPasswordCorrect(passwordBytes, passwordFile);
         if (correct)
-            I2PBote.getInstance().getPasswordCache().setPassword(passwordChars);
+            I2PBote.getInstance().getPasswordCache().setPassword(passwordBytes);
         return correct;
     }
     
     public static String changePassword(String oldPassword, String newPassword, String confirmNewPassword) throws Exception {
         try {
-            return I2PBote.getInstance().changePassword(oldPassword.toCharArray(), newPassword.toCharArray(), confirmNewPassword.toCharArray());
+            return I2PBote.getInstance().changePassword(oldPassword.getBytes(), newPassword.getBytes(), confirmNewPassword.getBytes());
         }
         catch (Exception e) {
             Log log = new Log(JSPHelper.class);

@@ -41,8 +41,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -248,7 +246,7 @@ public class Identities implements Iterable<EmailIdentity> {
         }
     }
     
-    public void changePassword(char[] oldPassword, DerivedKey newKey) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
+    public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException {
         if (identitiesFile.exists())
             FileEncryptionUtil.changePassword(identitiesFile, oldPassword, newKey);
     }

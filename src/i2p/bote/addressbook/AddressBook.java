@@ -42,8 +42,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -132,7 +130,7 @@ public class AddressBook implements Iterable<Contact> {
         }
     }
     
-    public void save() throws IOException, PasswordException {
+    public void save() throws IOException, PasswordException, GeneralSecurityException {
         initializeIfNeeded();
         
         OutputStream encryptedStream = new EncryptedOutputStream(new FileOutputStream(addressFile), passwordHolder);
@@ -167,7 +165,7 @@ public class AddressBook implements Iterable<Contact> {
             contacts.remove(contact);
     }
     
-    public void changePassword(char[] oldPassword, DerivedKey newKey) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
+    public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException {
         if (addressFile.exists())
             FileEncryptionUtil.changePassword(addressFile, oldPassword, newKey);
     }

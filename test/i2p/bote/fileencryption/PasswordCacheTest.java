@@ -35,6 +35,7 @@ import i2p.bote.fileencryption.PasswordCache;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
@@ -45,7 +46,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PasswordCacheTest {
-    private static final char[] PASSWORD = "MySecretPassword12345".toCharArray();
+    private static final byte[] PASSWORD = "MySecretPassword12345".getBytes();
     
     private File testDir;
     private PasswordCache passwordCache;
@@ -65,11 +66,11 @@ public class PasswordCacheTest {
     }
     
     @Test
-    public void testGetKey() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    public void testGetKey() throws IOException, GeneralSecurityException {
         passwordCache.setPassword(PASSWORD);
         DerivedKey derivedKey = passwordCache.getKey();
-        assertEquals(derivedKey.numIterations, FileEncryptionConstants.NUM_ITERATIONS);
-        byte[] expectedKey = FileEncryptionUtil.getEncryptionKey(PASSWORD, derivedKey.salt, derivedKey.numIterations);
+        assertEquals(derivedKey.scryptParams, FileEncryptionConstants.KDF_PARAMETERS);
+        byte[] expectedKey = FileEncryptionUtil.getEncryptionKey(PASSWORD, derivedKey.salt, derivedKey.scryptParams);
         assertTrue(Arrays.equals(expectedKey, derivedKey.key));
         
         // verify that the salt was cached in a file and is reused
@@ -155,10 +156,10 @@ public class PasswordCacheTest {
      * @throws IllegalArgumentException
      * @throws IllegalAccessException
      */
-    private char[] getPassword(PasswordCache passwordCache) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    private byte[] getPassword(PasswordCache passwordCache) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field passwordField = PasswordCache.class.getDeclaredField("password");
         passwordField.setAccessible(true);
-        return (char[])passwordField.get(passwordCache);
+        return (byte[])passwordField.get(passwordCache);
     }
     
     private Thread createSetPasswordThread() {

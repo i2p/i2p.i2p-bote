@@ -39,8 +39,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -74,8 +73,9 @@ public class EmailFolder extends Folder<Email> {
      * @throws IOException
      * @throws MessagingException
      * @throws PasswordException 
+     * @throws GeneralSecurityException 
      */
-    public void add(Email email) throws IOException, MessagingException, PasswordException {
+    public void add(Email email) throws IOException, MessagingException, PasswordException, GeneralSecurityException {
         // check if an email exists already with that message id
         if (getEmailFile(email.getMessageID()).exists()) {
             log.debug("Not storing email because there is an existing one with the same message ID: <" + email.getMessageID()+ ">");
@@ -106,7 +106,7 @@ public class EmailFolder extends Folder<Email> {
         }
     }
     
-    public void changePassword(char[] oldPassword, DerivedKey newKey) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, IOException {
+    public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException {
         for (File emailFile: getFilenames())
             FileEncryptionUtil.changePassword(emailFile, oldPassword, newKey);
     }
