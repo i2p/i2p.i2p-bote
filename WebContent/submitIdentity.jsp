@@ -36,7 +36,6 @@
     <jsp:forward page="identities.jsp"/>
 </c:if>
 
-<ib:requirePassword forwardUrl="saveIdentity.jsp">
 <c:if test="${empty keygenCounter}">
     <c:set var="keygenCounter" value="0"/>
 </c:if>
@@ -46,7 +45,7 @@
     </c:when>
     <%-- If cryptoImpl=4 and a new identity is to be generated, show the wait page --%>
     <c:when test="${param.new eq 'true' and param.cryptoImpl eq 4 and param.action ne 'wait' and empty param.counter}">
-        <jsp:forward page="saveIdentity.jsp">
+        <jsp:forward page="submitIdentity.jsp">
             <jsp:param name="action" value="wait"/>
         </jsp:forward>
     </c:when>
@@ -57,9 +56,9 @@
     --%>
     <c:when test="${param.action eq 'wait'}">
         <c:set var="counterParam" value="${keygenCounter+1}"/>
-        <c:set var="refreshInterval" value="0" scope="request"/>
         <%-- The double URL encoding prevents GET from breaking special chars --%>
-        <c:set var="refreshUrl" value="saveIdentity.jsp?counter=${counterParam}&new=${param.new}&cryptoImpl=${param.cryptoImpl}&publicName=${ib:urlEncode(ib:urlEncode(param.publicName))}&description=${param.description}&emailAddress=${param.emailAddress}&isDefault=${param.isDefault}" scope="request"/>
+        <c:set var="refreshUrl" value="submitIdentity.jsp?counter=${counterParam}&new=${param.new}&cryptoImpl=${param.cryptoImpl}&publicName=${ib:urlEncode(ib:urlEncode(param.publicName))}&description=${param.description}&emailAddress=${param.emailAddress}&isDefault=${param.isDefault}" scope="request"/>
+        <c:set var="refreshInterval" value="0" scope="request"/>
         <jsp:include page="header.jsp"/>
         <div class="main">
             <h2><ib:message key="Please wait..."/></h2>
@@ -73,26 +72,32 @@
         <c:if test="${not empty param.counter}">
             <c:set var="publicName" value="${ib:urlDecode(publicName)}"/>
         </c:if>
-        <c:if test="${not empty param.counter}">
-            <c:set var="keygenCounter" value="${param.counter}" scope="session"/>
+        
+        <%-- after password entry, go to the wait page if a new "slow" identity is being generated --%>
+        <c:if test="${param.new eq 'true' and param.cryptoImpl eq 4}">
+            <c:set var="actionParam" value="action=wait&"/>
         </c:if>
-        <c:set var="errorMessage" value="${ib:saveIdentity(param.new, param.cryptoImpl, param.key, publicName, param.description, param.emailAddress, param.isDefault=='on')}"/>
-        <c:if test="${empty errorMessage}">
-            <ib:message key="The email identity has been saved." var="infoMessage"/>
-            <jsp:forward page="identities.jsp">
-                <jsp:param name="infoMessage" value="${infoMessage}"/>
-            </jsp:forward>
-        </c:if>
-        <c:if test="${!empty errorMessage}">
-            <jsp:forward page="editIdentity.jsp">
-                <jsp:param name="errorMessage" value="${errorMessage}"/>
-            </jsp:forward>
-        </c:if>
+        <c:set var="forwardUrl" value="submitIdentity.jsp?${actionParam}counter=${param.counter}&new=${param.new}&cryptoImpl=${param.cryptoImpl}&publicName=${param.publicName}&description=${param.description}&emailAddress=${param.emailAddress}&isDefault=${param.isDefault}"/>
+        <ib:requirePassword forwardUrl="${forwardUrl}">
+            <c:set var="errorMessage" value="${ib:createOrModifyIdentity(param.new, param.cryptoImpl, param.key, publicName, param.description, param.emailAddress, param.isDefault=='on')}"/>
+            <c:if test="${not empty param.counter}">
+                <c:set var="keygenCounter" value="${param.counter}" scope="session"/>
+            </c:if>
+            <c:if test="${empty errorMessage}">
+                <ib:message key="The email identity has been saved." var="infoMessage"/>
+                <jsp:forward page="saveIdentities.jsp">
+                    <jsp:param name="infoMessage" value="${infoMessage}"/>
+                </jsp:forward>
+            </c:if>
+            <c:if test="${!empty errorMessage}">
+                <jsp:forward page="editIdentity.jsp">
+                    <jsp:param name="errorMessage" value="${errorMessage}"/>
+                </jsp:forward>
+            </c:if>
+        </ib:requirePassword>
     </c:when>
     <%-- If the user reloads after an identity has been generated and the wait mechanism was used, just show the identities page --%>
     <c:when test="${empty param.counter or param.counter le keygenCounter}">
         <jsp:forward page="identities.jsp"/>
     </c:when>
 </c:choose>
-
-</ib:requirePassword>

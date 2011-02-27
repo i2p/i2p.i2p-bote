@@ -52,7 +52,7 @@
 </div>
 
 <div class="main">
-    <form name="form" method="post" action="saveIdentity.jsp">
+    <form name="form" method="post" action="submitIdentity.jsp">
         <table>
             <tr>
                 <td>

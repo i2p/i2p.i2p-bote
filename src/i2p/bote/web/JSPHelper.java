@@ -103,10 +103,9 @@ public class JSPHelper {
      * @param publicName
      * @param emailAddress
      * @param setDefault If this is <code>true</code>, the identity becomes the new default identity. Otherwise, the default stays the same.
-     * @return null if sucessful, or an error message if an error occured
-     * @throws PasswordException 
+     * @throws GeneralSecurityException 
      */
-    public static String saveIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) throws PasswordException {
+    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException {
         Log log = new Log(JSPHelper.class);
         Identities identities = I2PBote.getInstance().getIdentities();
         EmailIdentity identity = identities.get(key);
@@ -114,16 +113,16 @@ public class JSPHelper {
         if (createNew) {
             CryptoImplementation cryptoImpl = CryptoFactory.getInstance(cryptoImplId);
             if (cryptoImpl == null) {
-                String errorMsg = "Invalid ID number for CryptoImplementation: " + cryptoImplId;
+                String errorMsg = Util._("Invalid ID number for CryptoImplementation: " + cryptoImplId);
                 log.error(errorMsg);
-                return errorMsg;
+                throw new IllegalArgumentException(errorMsg);
             }
                 
             try {
                 identity = new EmailIdentity(cryptoImpl);
             } catch (GeneralSecurityException e) {
                 log.error("Can't create email identity from base64 string: <" + key + ">", e);
-                return Util._("Error creating the Email Identity.");
+                throw e;
             }
             identity.setPublicName(publicName);
             identity.setDescription(description);
@@ -139,17 +138,6 @@ public class JSPHelper {
         // update the default identity
         if (setDefault)
             identities.setDefault(identity);
-        
-        try {
-            identities.save();
-            return null;
-        }
-        catch (PasswordException e) {
-            throw e;
-        }
-        catch (Exception e) {
-            return e.getLocalizedMessage();
-        }
     }
 
     /**
