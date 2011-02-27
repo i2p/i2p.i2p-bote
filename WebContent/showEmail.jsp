@@ -27,7 +27,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<ib:requirePassword forwardUrl="showEmail.jsp">
+<ib:requirePassword>
 <c:set var="email" value="${ib:getEmail(param.folder, param.messageID)}"/>
 
 <c:if test="${fn:toLowerCase(param.folder) ne 'outbox'}">

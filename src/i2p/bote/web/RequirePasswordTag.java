@@ -23,6 +23,8 @@ package i2p.bote.web;
 
 import i2p.bote.fileencryption.PasswordException;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.el.ELException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TryCatchFinally;
@@ -47,9 +49,22 @@ public class RequirePasswordTag extends BodyTagSupport implements TryCatchFinall
         isPasswordException |= t instanceof ELException && ((ELException)t).getRootCause() instanceof PasswordException;
         
         if (isPasswordException) {
-            String url = "password.jsp";
+            String url;
             if (forwardUrl != null)
-                url += "?passwordJspForwardUrl=" + forwardUrl;
+                url = forwardUrl;
+            else {
+                // if no forwardUrl is given, use the original URL
+                ServletRequest request = pageContext.getRequest();
+                if (!(request instanceof HttpServletRequest))
+                    throw new IllegalStateException("Servlet request ist not an HttpServletRequest: " + request.getClass());
+                HttpServletRequest httpRequest = (HttpServletRequest)request;
+                String params = httpRequest.getQueryString();
+                url = httpRequest.getRequestURI();
+                if (params != null)
+                    url += "?" + params;
+                url = url.substring("/i2pbote/".length());
+            }
+            url = "password.jsp?passwordJspForwardUrl=" + url;
             pageContext.forward(url);
         }
         else

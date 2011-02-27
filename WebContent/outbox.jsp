@@ -35,9 +35,9 @@
     pageContext.setAttribute("STATUS", i2p.bote.email.EmailAttribute.STATUS, PageContext.PAGE_SCOPE);
 %> 
 
+<c:set var="refreshUrl" value="outbox.jsp?sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
 <ib:requirePassword forwardUrl="${refreshUrl}">
 <%-- Refresh page if there are mails in the outbox --%>
-<c:set var="refreshUrl" value="outbox.jsp?sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
 <c:if test="${ib:getMailFolder('Outbox').numElements gt 0}">
     <c:set var="refreshInterval" value="20" scope="request"/>
 </c:if>

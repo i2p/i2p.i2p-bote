@@ -40,7 +40,7 @@
                     book, and the "name" parameter is ignored.
 --%>
 
-<ib:requirePassword forwardUrl="editContact.jsp">
+<ib:requirePassword>
 <c:if test="${param.action eq 'cancel'}">
     <c:set var="backUrl" value="${param.backUrl}"/>
     <c:if test="${empty backUrl}">

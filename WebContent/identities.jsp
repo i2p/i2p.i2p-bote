@@ -35,7 +35,7 @@
         <ib:message key="Email Identities"/>
     </h2>
 
-    <ib:requirePassword forwardUrl="identities.jsp">
+    <ib:requirePassword>
         <c:set var="identities" value="${jspHelperBean.identities.all}"/>
     </ib:requirePassword>
     <c:if test="${empty identities}">

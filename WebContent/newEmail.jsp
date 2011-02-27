@@ -78,7 +78,7 @@
 </c:if>
 <jsp:include page="header.jsp"/>
 
-<ib:requirePassword forwardUrl="newEmail.jsp">
+<ib:requirePassword>
 <div class="main">
     <form action="newEmail.jsp" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
         <table>

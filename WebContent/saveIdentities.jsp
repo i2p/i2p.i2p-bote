@@ -27,7 +27,7 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <c:catch var="e">
-    <ib:requirePassword forwardUrl="saveIdentities.jsp">
+    <ib:requirePassword>
         <ib:saveIdentities/>
         <jsp:forward page="identities.jsp"/>
     </ib:requirePassword>

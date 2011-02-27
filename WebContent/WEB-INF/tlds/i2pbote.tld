@@ -236,6 +236,8 @@
         if the tag body throws a PasswordException.
         When the user enters the correct password, the page
         pointed to by the forwardTo parameter is loaded.
+        If forwardTo is not given, the original page is used instead;
+        all parameters in the query string are lost in this case.
     </info>
     <tag-class>i2p.bote.web.RequirePasswordTag</tag-class>
     <body-content>JSP</body-content>

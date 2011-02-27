@@ -27,7 +27,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<ib:requirePassword forwardUrl="editIdentity.jsp">
+<ib:requirePassword>
 <c:choose>
     <c:when test="${param.new}">
         <ib:message key="New Email Identity" var="title" scope="request"/>

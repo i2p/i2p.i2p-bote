@@ -34,7 +34,7 @@
 <ib:message key="Address Book" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<ib:requirePassword forwardUrl="addressBook.jsp">
+<ib:requirePassword>
 <div class="main">
     <c:set var="contacts" value="${ib:getAddressBook().all}"/>
     

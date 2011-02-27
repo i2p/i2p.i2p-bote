@@ -26,7 +26,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<ib:requirePassword forwardUrl="deleteContact.jsp">
+<ib:requirePassword>
 <c:set var="errorMessage" value="${ib:deleteContact(param.destination)}"/>
 
 <c:if test="${empty errorMessage}">
