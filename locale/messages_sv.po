@@ -2,23 +2,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-01 21:54+0000\n"
+"POT-Creation-Date: 2011-02-27 04:32+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: hottuna <personal@robertfoss.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: src/i2p/bote/I2PBote.java:421 src/i2p/bote/service/OutboxProcessor.java:144
+#: src/i2p/bote/I2PBote.java:430 src/i2p/bote/service/OutboxProcessor.java:144
 msgid "No identity matches the sender/from field: "
 msgstr "Ingen identitet överensstämmer med avsändare/från fältet"
 
-#: src/i2p/bote/I2PBote.java:487
+#: src/i2p/bote/I2PBote.java:505
 msgid "The old password is not correct."
 msgstr "Det gamla lösenordet är inte korrekt."
 
-#: src/i2p/bote/I2PBote.java:489
+#: src/i2p/bote/I2PBote.java:507
 msgid "The new password and the confirmation password do not match."
 msgstr "Det nya lösenordet och lösenordsbekräftelse överensstämmer inte."
 
@@ -34,15 +35,24 @@ msgstr "521-bitars Elliptisk kurv kryptografi"
 msgid "2048-bit ElGamal Encryption"
 msgstr "2048-bit ElGamal kryptering"
 
-#: src/i2p/bote/email/Email.java:440
+#: src/i2p/bote/crypto/NTRUEncrypt1087_NTRUSign349.java:75
+#, fuzzy
+msgid "NTRU-1087 Encryption"
+msgstr "Kryptering:"
+
+#: src/i2p/bote/email/Email.java:442
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Ogiltig adress: {0}"
 
-#: src/i2p/bote/email/Email.java:446
+#: src/i2p/bote/email/Email.java:448
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Adressen innehåller ingen email destination eller extern adress: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:115
+msgid "Queued"
+msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -122,7 +132,7 @@ msgstr "Ett fel inträffad under email-packet skickningen: {0}"
 msgid "Error while sending email: {0}"
 msgstr "Ett fel har inträffat under skickningen av email: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:123
+#: src/i2p/bote/web/JSPHelper.java:126
 msgid "Error creating the Email Identity."
 msgstr "Ett fel har inträffat under skapning av email-identitet"
 
@@ -206,6 +216,16 @@ msgstr "Fransk översättning"
 #: WebContent/about.jsp
 msgid "Dutch translation"
 msgstr "Nederländsk översättning"
+
+#: WebContent/about.jsp
+#, fuzzy
+msgid "Norwegian translation"
+msgstr "Fransk översättning"
+
+#: WebContent/about.jsp
+#, fuzzy
+msgid "Swedish translation"
+msgstr "Fransk översättning"
 
 #: WebContent/addressBook.jsp
 msgid "Address Book"
@@ -432,6 +452,10 @@ msgid "Secure Distributed Email"
 msgstr "Säker distribuerad email"
 
 #: WebContent/header.jsp
+msgid "A new version is available. Click here for the configuration page."
+msgstr ""
+
+#: WebContent/header.jsp
 msgid "Addresses"
 msgstr "Adresser"
 
@@ -501,8 +525,11 @@ msgstr "Nätverk"
 
 #: WebContent/network.jsp
 msgid ""
-"Network information is not available because I2P-Bote hasn't started connecting to the network yet."
-msgstr "Nätverksinformation är inte tillgänglig då I2P-Bote inte har börjat ansluta till nätverket än."
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr ""
+"Nätverksinformation är inte tillgänglig då I2P-Bote inte har börjat ansluta "
+"till nätverket än."
 
 #: WebContent/network.jsp
 msgid "Local destination:"
@@ -511,6 +538,10 @@ msgstr "Lokal destination:"
 #: WebContent/newEmail.jsp
 msgid "New Email"
 msgstr "Nytt email"
+
+#: WebContent/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr ""
 
 #: WebContent/newEmail.jsp
 msgid "From:"
@@ -534,7 +565,7 @@ msgstr "Svar till:"
 
 #: WebContent/newEmail.jsp
 msgid "Addr. Book..."
-msgstr "Adressbok...""
+msgstr "Adressbok..."
 
 #: WebContent/newEmail.jsp
 msgid "Subject:"
@@ -573,20 +604,39 @@ msgid "Send"
 msgstr "Skicka"
 
 #: WebContent/noIdentities.jsp
-msgid "In order to receive email from other people, you need to create an email identity first."
-msgstr "För att kunna ta emot email från andra personer behöver du ska en email-identitet."
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr ""
+"För att kunna ta emot email från andra personer behöver du ska en email-"
+"identitet."
 
 #: WebContent/noIdentities.jsp
-msgid "Every email identity is associated with an email destination. Anybody can send email to the email destination, but only the identity holder can read it."
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
 msgstr "Varje email är associerat med en email-destination."
 
 #: WebContent/noIdentities.jsp
-msgid "In a sense, email identities are the equivalent to traditional email accounts - except that there is no provider that can read all your email because I2P-Bote stores all emails encrypted on the network."
-msgstr "Email-identiteter är motsvarande vanliga email-konton - med det undantag att det inte finns en leverantör som kan läsa alla dina email. Detta på grund av att I2P-Bota lagrar alla email krypterat på nätverket."
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+"Email-identiteter är motsvarande vanliga email-konton - med det undantag att "
+"det inte finns en leverantör som kan läsa alla dina email. Detta på grund av "
+"att I2P-Bota lagrar alla email krypterat på nätverket."
 
 #: WebContent/noIdentities.jsp
-msgid "I2P-Bote automatically decrypts emails sent to you, using the email identity you created. Email identities are stored in a file named identities.txt; never give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-bote krypterar autoatiskt alla email som skickas till dig, m.h.a. email-identiteten du skapat. Email-identiteterna sparas i en kalla identities.txt; ge aldrig bort filen till någon annars kan de läsa dina email."
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities.txt; "
+"never give this file to anyone or they will be able to read all your emails."
+msgstr ""
+"I2P-bote krypterar autoatiskt alla email som skickas till dig, m.h.a. email-"
+"identiteten du skapat. Email-identiteterna sparas i en kalla identities.txt; "
+"ge aldrig bort filen till någon annars kan de läsa dina email."
 
 #: WebContent/noIdentities.jsp
 msgid "Do give out the email destination so others can contact you."
@@ -596,7 +646,8 @@ msgstr "Ge ut email-destinationen så att andra kan kontakta dig."
 msgid ""
 "It is easy to create multiple identities for different purposes, or "
 "different contacts."
-msgstr "Det är lätt att skapa flera identiteter för olika ändamål eller kontakter."
+msgstr ""
+"Det är lätt att skapa flera identiteter för olika ändamål eller kontakter."
 
 #: WebContent/noIdentities.jsp
 msgid ""
@@ -605,14 +656,22 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The higher the number of bits, "
 "the longer the email destination."
-msgstr "När du skapar en ny email-identitet, kan du välja vilken kryptering som ska användas för den. Då alla krypteringsalternativ som I2P-Bote erbjuder en hög säkerhetsstandard, kommer email-destinationens längd bero på krypteringsalternativet som valts. Ett större bit-antal ger en längre destination."
+msgstr ""
+"När du skapar en ny email-identitet, kan du välja vilken kryptering som ska "
+"användas för den. Då alla krypteringsalternativ som I2P-Bote erbjuder en hög "
+"säkerhetsstandard, kommer email-destinationens längd bero på "
+"krypteringsalternativet som valts. Ett större bit-antal ger en längre "
+"destination."
 
 #: WebContent/noIdentities.jsp
 msgid ""
 "Note that the same is not true for encryption strength. 256-bit elliptic "
 "curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
 "elliptic curve is equivalent to 15360-bit ElGamal."
-msgstr "Lägg märke till att detsamma inte är sant för krypteringsstyrka. 256-bitars ellipsisk kurv kryptografi mostvarar 3072-bit ElGamal. 521-bitars elliptisk kurbv kryptografi mostsvarar 15360-bitars ElGamal-kryptering."
+msgstr ""
+"Lägg märke till att detsamma inte är sant för krypteringsstyrka. 256-bitars "
+"ellipsisk kurv kryptografi mostvarar 3072-bit ElGamal. 521-bitars elliptisk "
+"kurbv kryptografi mostsvarar 15360-bitars ElGamal-kryptering."
 
 #: WebContent/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -652,7 +711,16 @@ msgstr "OK"
 
 #: WebContent/saveIdentity.jsp
 msgid "Please fill in the Public Name field."
-msgstr "Var god fyll i "Offentligt namn"-fältet"
+msgstr "Var god fyll i \"Offentligt namn\"-fältet"
+
+#: WebContent/saveIdentity.jsp
+msgid "Please wait..."
+msgstr ""
+
+#: WebContent/saveIdentity.jsp
+#, fuzzy
+msgid "The Email Identity is being generated."
+msgstr "Email-identiteten har sparats."
 
 #: WebContent/saveIdentity.jsp
 msgid "The email identity has been saved."
@@ -776,7 +844,7 @@ msgstr "Väntar 3 minuter..."
 
 #: WebContent/statusFrame.jsp
 msgid "Connect Now"
-msgstr "Anslut nu
+msgstr "Anslut nu"
 
 #: WebContent/statusFrame.jsp
 msgid "Connecting..."

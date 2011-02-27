@@ -2,25 +2,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-19 22:35+0000\n"
-"PO-Revision-Date: 2010-12-05 20:01+0100\n"
-"Last-Translator: mixxy <m1xxy@mail.i2p>\n"
+"POT-Creation-Date: 2011-02-27 04:31+0000\n"
+"PO-Revision-Date: 2011-02-22 01:14+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: src/i2p/bote/I2PBote.java:421 src/i2p/bote/service/OutboxProcessor.java:144
+#: src/i2p/bote/I2PBote.java:430 src/i2p/bote/service/OutboxProcessor.java:144
 msgid "No identity matches the sender/from field: "
 msgstr ""
+"Ninguna identidad encontrada para la entrada en la casilla remitiente/de:"
 
-#: src/i2p/bote/I2PBote.java:487
+#: src/i2p/bote/I2PBote.java:505
 msgid "The old password is not correct."
-msgstr ""
+msgstr "La antigua contraseña no está correcta."
 
-#: src/i2p/bote/I2PBote.java:489
+#: src/i2p/bote/I2PBote.java:507
 msgid "The new password and the confirmation password do not match."
-msgstr ""
+msgstr "La supuesta nueva contraseña y la confirmación de ella no coinciden."
 
 #: src/i2p/bote/crypto/ECDH256_ECDSA256.java:49
 msgid "256-bit Elliptic Curve Encryption"
@@ -34,17 +36,25 @@ msgstr "Cifrado de Curva Elíptica de 512 bits"
 msgid "2048-bit ElGamal Encryption"
 msgstr "Cifrado ElGamal de 2048 bits"
 
-#: src/i2p/bote/email/Email.java:440
+#: src/i2p/bote/crypto/NTRUEncrypt1087_NTRUSign349.java:75
+msgid "NTRU-1087 Encryption"
+msgstr "Cifrado NTRU-1087"
+
+#: src/i2p/bote/email/Email.java:442
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Dirección no válida: {0}"
 
-#: src/i2p/bote/email/Email.java:446
+#: src/i2p/bote/email/Email.java:448
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
 "La dirección ni es un Destino de correo electrónico ni una dirección "
 "externa: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:115
+msgid "Queued"
+msgstr "en la cola"
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -94,7 +104,7 @@ msgstr "(S)"
 
 #: src/i2p/bote/service/OutboxProcessor.java:149
 msgid "Sending"
-msgstr "Enviando"
+msgstr "enviando"
 
 #: src/i2p/bote/service/OutboxProcessor.java:158
 #, java-format
@@ -124,7 +134,7 @@ msgstr "Error al crear paquetes: {0}"
 msgid "Error while sending email: {0}"
 msgstr "Error al enviar el correo: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:123
+#: src/i2p/bote/web/JSPHelper.java:126
 msgid "Error creating the Email Identity."
 msgstr "Error al crear la identidad de correo "
 
@@ -158,7 +168,7 @@ msgstr "Error: ¡Introduce por lo menos un destinatario!"
 
 #: src/i2p/bote/web/SendEmailTag.java:96
 msgid "The email has been queued for sending."
-msgstr "El corrreo ha sido encolado para ser enviado."
+msgstr "El corrreo ha sido puesto en la cola para ser enviado."
 
 #: src/i2p/bote/web/SendEmailTag.java:102
 #, java-format
@@ -191,23 +201,31 @@ msgstr "Contribuciones por:"
 
 #: WebContent/about.jsp
 msgid "Translation, QA, usability, technical feedback"
-msgstr ""
+msgstr "Traducción, aseguramiento de calidad, usabilidad, consultas técnicas"
 
 #: WebContent/about.jsp
 msgid "Seedless"
-msgstr ""
+msgstr "Seedless"
 
 #: WebContent/about.jsp
 msgid "Russian translation"
-msgstr ""
+msgstr "Traducción al ruso"
 
 #: WebContent/about.jsp
 msgid "French translation"
-msgstr ""
+msgstr "Traducción al francés"
 
 #: WebContent/about.jsp
 msgid "Dutch translation"
-msgstr ""
+msgstr "Traducción al neerlandés"
+
+#: WebContent/about.jsp
+msgid "Norwegian translation"
+msgstr "Traducción al noruego"
+
+#: WebContent/about.jsp
+msgid "Swedish translation"
+msgstr "Traducción al sueco"
 
 #: WebContent/addressBook.jsp
 msgid "Address Book"
@@ -434,6 +452,12 @@ msgid "Secure Distributed Email"
 msgstr "Correo Electrónico Descentralizado y Seguro"
 
 #: WebContent/header.jsp
+msgid "A new version is available. Click here for the configuration page."
+msgstr ""
+"Está disponible una nueva versión. Pincha aquí para acceder a la página de "
+"configuración"
+
+#: WebContent/header.jsp
 msgid "Addresses"
 msgstr "Direcciones"
 
@@ -518,6 +542,10 @@ msgid "New Email"
 msgstr "Nuevo correo"
 
 #: WebContent/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "¡Selecciona un archivo para adjuntar e intenta de nuevo!"
+
+#: WebContent/newEmail.jsp
 msgid "From:"
 msgstr "De:"
 
@@ -562,7 +590,6 @@ msgid "Attach"
 msgstr "Adjuntar"
 
 #: WebContent/newEmail.jsp
-#, fuzzy
 msgid "It is recommended to keep attachments below 500 kBytes."
 msgstr "Se recomienda mantener los archivos adjuntos menor de 500 KB."
 
@@ -671,27 +698,35 @@ msgstr "Estado"
 
 #: WebContent/password.jsp
 msgid "Password Required"
-msgstr ""
+msgstr "Contraseña requerida"
 
 #: WebContent/password.jsp
 msgid "Wrong password. Try again."
-msgstr ""
+msgstr "Contraseña errónea, ¡Intenta otra vez!"
 
 #: WebContent/password.jsp
 msgid "Password required"
-msgstr ""
+msgstr "Constraseña requerida"
 
 #: WebContent/password.jsp
 msgid "Password:"
-msgstr ""
+msgstr "Contraseña"
 
 #: WebContent/password.jsp
 msgid "OK"
-msgstr ""
+msgstr "¡Adelante!"
 
 #: WebContent/saveIdentity.jsp
 msgid "Please fill in the Public Name field."
 msgstr "Por favor, ¡rellena el campo \"Nombre Público\"!"
+
+#: WebContent/saveIdentity.jsp
+msgid "Please wait..."
+msgstr "Por favor, ¡espera!"
+
+#: WebContent/saveIdentity.jsp
+msgid "The Email Identity is being generated."
+msgstr "La identidad está siendo generada."
 
 #: WebContent/saveIdentity.jsp
 msgid "The email identity has been saved."
@@ -699,32 +734,32 @@ msgstr "Identidad ha sido guardada."
 
 #: WebContent/setPassword.jsp
 msgid "Set Password"
-msgstr ""
+msgstr "Fijar contraseña"
 
 #: WebContent/setPassword.jsp
-#, fuzzy
 msgid "The password has been changed."
-msgstr "El contacto ha sido guardado."
+msgstr "La contraseña ha sido cambiada."
 
 #: WebContent/setPassword.jsp
 msgid "Set a new Password"
-msgstr ""
+msgstr "Poner nueva contraseña"
 
 #: WebContent/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
 msgstr ""
+"Si no has definido contraseña, ¡deja libre la casilla 'Antigua contraseña'!"
 
 #: WebContent/setPassword.jsp
 msgid "Old password:"
-msgstr ""
+msgstr "Antigua contraseña"
 
 #: WebContent/setPassword.jsp
 msgid "New password:"
-msgstr ""
+msgstr "Nueva contraseña:"
 
 #: WebContent/setPassword.jsp
 msgid "Confirm:"
-msgstr ""
+msgstr "Confirmar:"
 
 #: WebContent/settings.jsp
 msgid "Settings have been saved."
@@ -776,7 +811,7 @@ msgstr "Incluir la hora del envío en correos salientes"
 
 #: WebContent/settings.jsp
 msgid "Change Password"
-msgstr ""
+msgstr "Cambiar contraseña"
 
 #: WebContent/showEmail.jsp
 msgid "Signature:"
