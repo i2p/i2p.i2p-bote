@@ -56,6 +56,12 @@
     <div id="inboxFlag"></div>
 </c:if>
 
+<c:set var="showFlags" value="true"/>
+<c:if test="${folderName == 'Sent'}">
+    <%-- Don't show the "known" and "signature" columns in the sent folder --%>
+    <c:set var="showFlags" value="false"/>
+</c:if>
+
 <c:set var="sortcolumn" value="${DATE}"/>
 <c:if test="${!empty param.sortcolumn}">
     <c:set var="sortcolumn" value="${param.sortcolumn}"/>
@@ -102,8 +108,10 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
-            <th style="width: 30px; text-align: center;"><ib:message key="Know"/></th>
-            <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
+            <c:if test="${showFlags}">
+                <th style="width: 30px; text-align: center;"><ib:message key="Know"/></th>
+                <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
+            </c:if>
             <th style="width: 100px;">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${TO}"/>
                 <c:if test="${sortcolumn eq TO}">
@@ -165,8 +173,10 @@
             
             <tr>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
-            <td><div${class} style="text-align: center;">${ib:isKnown(email.sender) ? '&#10004;' : '&nbsp;'}</div></td>
-            <td><div${class} style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></div></td>
+            <c:if test="${showFlags}">
+                <td><div${class} style="text-align: center;">${ib:isKnown(email.sender) ? '&#10004;' : '&nbsp;'}</div></td>
+                <td><div${class} style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></div></td>
+            </c:if>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
             <td>
