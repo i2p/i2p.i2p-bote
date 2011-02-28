@@ -145,7 +145,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      */
     private void addPeers(List<String> peerFileEntries) {
         for (String line: peerFileEntries) {
-            if (!line.startsWith("#"))
+            if (!line.trim().isEmpty() && !line.startsWith("#"))
                 try {
                     Destination destination = new Destination(line);
                     
