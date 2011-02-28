@@ -22,6 +22,15 @@ then
 	POUPDATE=1
 fi
 
+# on windows, one must specify the path of commnad find
+# since windows has its own retarded version of find.
+if which find|grep -q -i windows ; then
+	export PATH=.:/bin:/usr/local/bin:$PATH
+fi
+# Fast mode - update ondemond
+echo setting the environment variable LG2={LangCode}
+echo will limit .po file update to the language specified by {LangCode}.
+
 # add ../java/ so the refs will work in the po file
 JPATHS="src"
 JSPPATHS="WebContent"
@@ -30,6 +39,11 @@ do
 	# get language
 	LG=${i#locale/messages_}
 	LG=${LG%.po}
+
+	# skip, if specified
+	if [ $LG2 ]; then
+		[ $LG != $LG2 ] && continue || echo INFO: Language update is set to [$LG2] only.
+	fi
 
 	if [ "$POUPDATE" = "1" ]
 	then
