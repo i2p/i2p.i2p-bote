@@ -3,30 +3,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-19 23:04+0000\n"
+"POT-Creation-Date: 2011-02-27 04:31+0000\n"
 "PO-Revision-Date: 2011-02-15 19:09+0000\n"
 "Last-Translator: hamada <hamada@mail.i2p>\n"
 "Language-Team: hamada@mail.i2p\n"
-"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Virtaal 0.6.1\n"
 
-#: src/i2p/bote/I2PBote.java:421
-#: src/i2p/bote/service/OutboxProcessor.java:144
+#: src/i2p/bote/I2PBote.java:430 src/i2p/bote/service/OutboxProcessor.java:144
 msgid "No identity matches the sender/from field: "
 msgstr "Aucune identité ne correspond à l'envoyeur/du champs:"
 
-#: src/i2p/bote/I2PBote.java:487
+#: src/i2p/bote/I2PBote.java:505
 msgid "The old password is not correct."
 msgstr "L'ancien mot de passe n'est pas correct."
 
-#: src/i2p/bote/I2PBote.java:489
+#: src/i2p/bote/I2PBote.java:507
 msgid "The new password and the confirmation password do not match."
-msgstr "Le nouveau mot de passe et le mot de passe de confirmation ne correspondent pas."
+msgstr ""
+"Le nouveau mot de passe et le mot de passe de confirmation ne correspondent "
+"pas."
 
 #: src/i2p/bote/crypto/ECDH256_ECDSA256.java:49
 msgid "256-bit Elliptic Curve Encryption"
@@ -40,14 +41,25 @@ msgstr "Cryptage sur les courbes elliptiques sur 521 Bit"
 msgid "2048-bit ElGamal Encryption"
 msgstr "Cryptage ElGamal sur 2048 Bit"
 
-#: src/i2p/bote/email/Email.java:440
+#: src/i2p/bote/crypto/NTRUEncrypt1087_NTRUSign349.java:75
+#, fuzzy
+msgid "NTRU-1087 Encryption"
+msgstr "نوع التشفير:"
+
+#: src/i2p/bote/email/Email.java:442
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Adresse invalide: {0}"
 
-#: src/i2p/bote/email/Email.java:446
-msgid "Address doesn't contain an Email Destination or an external address: {0}"
-msgstr "L'adresse ne contient pas de Destination courrier ou d'adresse externe: {0}"
+#: src/i2p/bote/email/Email.java:448
+msgid ""
+"Address doesn't contain an Email Destination or an external address: {0}"
+msgstr ""
+"L'adresse ne contient pas de Destination courrier ou d'adresse externe: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:115
+msgid "Queued"
+msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -75,8 +87,7 @@ msgid "Locked?"
 msgstr "مقفل؟"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:84
-#: src/i2p/bote/web/PeerInfoTag.java:109
+#: src/i2p/bote/web/PeerInfoTag.java:84 src/i2p/bote/web/PeerInfoTag.java:109
 msgid "Peer"
 msgstr "نظير"
 
@@ -105,8 +116,7 @@ msgstr "جاري ارسال"
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Envoyé vers {0} des {1} destinataires"
 
-#: src/i2p/bote/service/OutboxProcessor.java:165
-#: WebContent/folder.jsp
+#: src/i2p/bote/service/OutboxProcessor.java:165 WebContent/folder.jsp
 msgid "Sent"
 msgstr "أرسل"
 
@@ -129,7 +139,7 @@ msgstr "Erreur à la création des paquets email: {0}"
 msgid "Error while sending email: {0}"
 msgstr "Erreur lors de l'envoi du courrier: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:123
+#: src/i2p/bote/web/JSPHelper.java:126
 msgid "Error creating the Email Identity."
 msgstr "Erreur lors de la création de l'identité courrier "
 
@@ -214,6 +224,16 @@ msgstr "ترجمة فرنسية"
 #: WebContent/about.jsp
 msgid "Dutch translation"
 msgstr "ترجمة هولاندية"
+
+#: WebContent/about.jsp
+#, fuzzy
+msgid "Norwegian translation"
+msgstr "ترجمة فرنسية"
+
+#: WebContent/about.jsp
+#, fuzzy
+msgid "Swedish translation"
+msgstr "ترجمة فرنسية"
 
 #: WebContent/addressBook.jsp
 msgid "Address Book"
@@ -440,6 +460,10 @@ msgid "Secure Distributed Email"
 msgstr "بريد الكتروني آمن وغير ممركز"
 
 #: WebContent/header.jsp
+msgid "A new version is available. Click here for the configuration page."
+msgstr ""
+
+#: WebContent/header.jsp
 msgid "Addresses"
 msgstr "عناوين"
 
@@ -508,8 +532,12 @@ msgid "Network"
 msgstr "شبكة"
 
 #: WebContent/network.jsp
-msgid "Network information is not available because I2P-Bote hasn't started connecting to the network yet."
-msgstr "Les informations réseau ne sont pas disponibles car I2P-Bote n'est pas encore connecté."
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr ""
+"Les informations réseau ne sont pas disponibles car I2P-Bote n'est pas "
+"encore connecté."
 
 #: WebContent/network.jsp
 msgid "Local destination:"
@@ -518,6 +546,10 @@ msgstr "Destination locale:"
 #: WebContent/newEmail.jsp
 msgid "New Email"
 msgstr "رسالة جديدة"
+
+#: WebContent/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr ""
 
 #: WebContent/newEmail.jsp
 msgid "From:"
@@ -580,47 +612,67 @@ msgid "Send"
 msgstr "أرسل"
 
 #: WebContent/noIdentities.jsp
-msgid "In order to receive email from other people, you need to create an email identity first."
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
 msgstr ""
 "للتوصل ببريد الكتروني من مستخدمين آخرين، يجب انشاء هوية الكترونية جديدة."
 
 #: WebContent/noIdentities.jsp
-msgid "Every email identity is associated with an email destination. Anybody can send email to the email destination, but only the identity holder can read it."
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
 msgstr ""
 "كل هوية مرتبطة بعنوان الكتروني. الجميع يمكنه ارسال بريد الى عنوانك، لكن فقط "
 "صاحب الهوية هو من يمكنه قرائته."
 
 #: WebContent/noIdentities.jsp
-msgid "In a sense, email identities are the equivalent to traditional email accounts - except that there is no provider that can read all your email because I2P-Bote stores all emails encrypted on the network."
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
 msgstr ""
 "بطريقة أخرى، الهويات الالكترونية هي مثل البريد الالكتروني التقليدي - الا انه "
 "لا توجد شركة تقوم باستضافة البريد وبالتالي لها امكانية قرائته لأن I2P-Bote "
 "يقوم بتخزين البريد مشفرا على الشبكة."
 
 #: WebContent/noIdentities.jsp
-msgid "I2P-Bote automatically decrypts emails sent to you, using the email identity you created. Email identities are stored in a file named identities.txt; never give this file to anyone or they will be able to read all your emails."
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities.txt; "
+"never give this file to anyone or they will be able to read all your emails."
 msgstr ""
 "يقوم I2P-Bote بفك تشفير تلقائيا للبريد المرسل اليك، باستعمال الهوية "
-"الالكترونية التي استعملتها. الهوية الالكترونية مسجل في ملف اسمه "
-"identities.txt. لا تقم بارسال هذا الملف لاحد وإلا سيتمكن من قراءة جميع "
-"مراسلاتك."
+"الالكترونية التي استعملتها. الهوية الالكترونية مسجل في ملف اسمه identities."
+"txt. لا تقم بارسال هذا الملف لاحد وإلا سيتمكن من قراءة جميع مراسلاتك."
 
 #: WebContent/noIdentities.jsp
 msgid "Do give out the email destination so others can contact you."
 msgstr "فم بإعطاء عنوانك ليتمكن الآخرون من مراسلتك."
 
 #: WebContent/noIdentities.jsp
-msgid "It is easy to create multiple identities for different purposes, or different contacts."
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
 msgstr "من السهل انشاء عدة هويات لاستخدامها في عدة أغراض."
 
 #: WebContent/noIdentities.jsp
-msgid "When you create a new email identity, you can choose the type of encryption that will be used by the email identity. While all encryption algorithms offered by I2P-Bote provide a high level of privacy, the length of an email destination depends on the encryption used. The higher the number of bits, the longer the email destination."
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The higher the number of bits, "
+"the longer the email destination."
 msgstr ""
 "يمكنك اختيار نوع التشفير عند انشاء هوية جديدة. طول عنوان الهوية مرتبط بعدد "
 "البايت المستعمل في خوارزمية التشفير. كلما ارتفع العدد كلما طال عنوان البريد."
 
 #: WebContent/noIdentities.jsp
-msgid "Note that the same is not true for encryption strength. 256-bit elliptic curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit elliptic curve is equivalent to 15360-bit ElGamal."
+msgid ""
+"Note that the same is not true for encryption strength. 256-bit elliptic "
+"curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
+"elliptic curve is equivalent to 15360-bit ElGamal."
 msgstr ""
 
 #: WebContent/noIdentities.jsp
@@ -663,6 +715,15 @@ msgstr "موافق"
 #: WebContent/saveIdentity.jsp
 msgid "Please fill in the Public Name field."
 msgstr "املئ حقل الإسم."
+
+#: WebContent/saveIdentity.jsp
+msgid "Please wait..."
+msgstr ""
+
+#: WebContent/saveIdentity.jsp
+#, fuzzy
+msgid "The Email Identity is being generated."
+msgstr "تم تسجيل هذه الهوية."
 
 #: WebContent/saveIdentity.jsp
 msgid "The email identity has been saved."
@@ -734,7 +795,9 @@ msgstr "Destination Email de la passerelle:"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Utiliser l'anglais pour le texte ajouté aux Emails sortants ('Re', 'wrote', etc.)"
+msgstr ""
+"Utiliser l'anglais pour le texte ajouté aux Emails sortants ('Re', 'wrote', "
+"etc.)"
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"

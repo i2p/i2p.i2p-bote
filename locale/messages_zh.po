@@ -2,24 +2,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-16 17:11+0000\n"
+"POT-Creation-Date: 2011-02-27 04:32+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: src/i2p/bote/I2PBote.java:421
-#: src/i2p/bote/service/OutboxProcessor.java:144
+#: src/i2p/bote/I2PBote.java:430 src/i2p/bote/service/OutboxProcessor.java:144
 msgid "No identity matches the sender/from field: "
 msgstr "没有身份密钥与寄件者/收件人相匹配: "
 
-#: src/i2p/bote/I2PBote.java:487
+#: src/i2p/bote/I2PBote.java:505
 msgid "The old password is not correct."
 msgstr "旧密码不正确。"
 
-#: src/i2p/bote/I2PBote.java:489
+#: src/i2p/bote/I2PBote.java:507
 msgid "The new password and the confirmation password do not match."
 msgstr "新密码与确认密码字段输入相符。"
 
@@ -35,14 +35,24 @@ msgstr "512位 EllipticCurve 加密"
 msgid "2048-bit ElGamal Encryption"
 msgstr "2048位 El-Gamal 加密"
 
-#: src/i2p/bote/email/Email.java:440
+#: src/i2p/bote/crypto/NTRUEncrypt1087_NTRUSign349.java:75
+#, fuzzy
+msgid "NTRU-1087 Encryption"
+msgstr "算法:"
+
+#: src/i2p/bote/email/Email.java:442
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "无效地址: {0}"
 
-#: src/i2p/bote/email/Email.java:446
-msgid "Address doesn't contain an Email Destination or an external address: {0}"
+#: src/i2p/bote/email/Email.java:448
+msgid ""
+"Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "地址中缺少Bote邮件地址或外部的公网邮件地址: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:115
+msgid "Queued"
+msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -70,8 +80,7 @@ msgid "Locked?"
 msgstr "是否锁定?"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:84
-#: src/i2p/bote/web/PeerInfoTag.java:109
+#: src/i2p/bote/web/PeerInfoTag.java:84 src/i2p/bote/web/PeerInfoTag.java:109
 msgid "Peer"
 msgstr "节点"
 
@@ -100,8 +109,7 @@ msgstr "正在发送"
 msgid "Sent to {0} out of {1} recipients"
 msgstr "已发送至{0}位收件人(共{1}位)"
 
-#: src/i2p/bote/service/OutboxProcessor.java:165
-#: WebContent/folder.jsp
+#: src/i2p/bote/service/OutboxProcessor.java:165 WebContent/folder.jsp
 msgid "Sent"
 msgstr "已发送"
 
@@ -124,7 +132,7 @@ msgstr "重建邮件数据包时发生错误: {0}"
 msgid "Error while sending email: {0}"
 msgstr "发送邮件时发生错误: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:123
+#: src/i2p/bote/web/JSPHelper.java:126
 msgid "Error creating the Email Identity."
 msgstr "创建邮箱地址时发生错误。"
 
@@ -208,6 +216,16 @@ msgstr "法语翻译"
 #: WebContent/about.jsp
 msgid "Dutch translation"
 msgstr "荷兰语翻译"
+
+#: WebContent/about.jsp
+#, fuzzy
+msgid "Norwegian translation"
+msgstr "法语翻译"
+
+#: WebContent/about.jsp
+#, fuzzy
+msgid "Swedish translation"
+msgstr "法语翻译"
 
 #: WebContent/addressBook.jsp
 msgid "Address Book"
@@ -358,8 +376,9 @@ msgid "(If unsure, leave the default)"
 msgstr "(如果不清楚，可使用默认设置)"
 
 #: WebContent/editIdentity.jsp
+#, fuzzy
 msgid "Default Identity:"
-msgstr "Standaard Identiteit:"
+msgstr "默認身份:"
 
 #: WebContent/folder.jsp
 msgid "From"
@@ -434,6 +453,10 @@ msgid "Secure Distributed Email"
 msgstr "分布式安全邮"
 
 #: WebContent/header.jsp
+msgid "A new version is available. Click here for the configuration page."
+msgstr ""
+
+#: WebContent/header.jsp
 msgid "Addresses"
 msgstr "地址"
 
@@ -502,7 +525,9 @@ msgid "Network"
 msgstr "网络"
 
 #: WebContent/network.jsp
-msgid "Network information is not available because I2P-Bote hasn't started connecting to the network yet."
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
 msgstr "由于I2P-Bot尚未连接网络，网络信息目前不可用。"
 
 #: WebContent/network.jsp
@@ -512,6 +537,10 @@ msgstr "我的地址:"
 #: WebContent/newEmail.jsp
 msgid "New Email"
 msgstr "新邮件"
+
+#: WebContent/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr ""
 
 #: WebContent/newEmail.jsp
 msgid "From:"
@@ -574,36 +603,70 @@ msgid "Send"
 msgstr "发送"
 
 #: WebContent/noIdentities.jsp
-msgid "In order to receive email from other people, you need to create an email identity first."
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
 msgstr "为了能收到邮件，您必须先创建自己的邮箱身份。"
 
 #: WebContent/noIdentities.jsp
-msgid "Every email identity is associated with an email destination. Anybody can send email to the email destination, but only the identity holder can read it."
-msgstr "每个邮箱身份都与一个邮箱地址相关联。人人都可以向已知的邮箱地址发信，但只有身份密钥的持有者能够阅读这些邮件。"
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr ""
+"每个邮箱身份都与一个邮箱地址相关联。人人都可以向已知的邮箱地址发信，但只有身"
+"份密钥的持有者能够阅读这些邮件。"
 
 #: WebContent/noIdentities.jsp
-msgid "In a sense, email identities are the equivalent to traditional email accounts - except that there is no provider that can read all your email because I2P-Bote stores all emails encrypted on the network."
-msgstr "某种程度上，邮箱身份等同于普通意义上的邮箱账户 - 唯一的不同是您不需要邮件服务提供商，邮件提供商可以看到您的所有邮件，而I2P-Bote将您的邮件加密存放在网络中。"
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+"某种程度上，邮箱身份等同于普通意义上的邮箱账户 - 唯一的不同是您不需要邮件服务"
+"提供商，邮件提供商可以看到您的所有邮件，而I2P-Bote将您的邮件加密存放在网络"
+"中。"
 
 #: WebContent/noIdentities.jsp
-msgid "I2P-Bote automatically decrypts emails sent to you, using the email identity you created. Email identities are stored in a file named identities.txt; never give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote 利用您创建的邮箱身份密钥自动解密收到的邮件。邮箱身份密钥保存于文件identities.txt中，如果此文件不慎落入他人手中，别人将可以阅读您的所有邮件。"
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities.txt; "
+"never give this file to anyone or they will be able to read all your emails."
+msgstr ""
+"I2P-Bote 利用您创建的邮箱身份密钥自动解密收到的邮件。邮箱身份密钥保存于文件"
+"identities.txt中，如果此文件不慎落入他人手中，别人将可以阅读您的所有邮件。"
 
 #: WebContent/noIdentities.jsp
 msgid "Do give out the email destination so others can contact you."
 msgstr "请知会他人您的邮件地址，以便他人联系您。"
 
 #: WebContent/noIdentities.jsp
-msgid "It is easy to create multiple identities for different purposes, or different contacts."
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
 msgstr "您可以出于不同的目的或跟不同的联系人联系时，创建多个不同的身份。"
 
 #: WebContent/noIdentities.jsp
-msgid "When you create a new email identity, you can choose the type of encryption that will be used by the email identity. While all encryption algorithms offered by I2P-Bote provide a high level of privacy, the length of an email destination depends on the encryption used. The higher the number of bits, the longer the email destination."
-msgstr "创建新邮箱身份时，您可以选择身份密钥所使用的加密算法。尽管 I2P-Bote 所提供的各种算法都能很好的保护隐私，您邮箱地址的长度取决于您所选择的加密算法。所选算法位数越多，生成的邮箱地址越也就长。"
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The higher the number of bits, "
+"the longer the email destination."
+msgstr ""
+"创建新邮箱身份时，您可以选择身份密钥所使用的加密算法。尽管 I2P-Bote 所提供的"
+"各种算法都能很好的保护隐私，您邮箱地址的长度取决于您所选择的加密算法。所选算"
+"法位数越多，生成的邮箱地址越也就长。"
 
 #: WebContent/noIdentities.jsp
-msgid "Note that the same is not true for encryption strength. 256-bit elliptic curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit elliptic curve is equivalent to 15360-bit ElGamal."
-msgstr "但请注意，加密算法强度与位数并不完全相同:256位的 Elliptc Curve 算法强度相当于 3072位的 ElGamal 算法。512位的 Elliptic Curve 算法强度相当于 15360位的 ElGamal 算法。"
+msgid ""
+"Note that the same is not true for encryption strength. 256-bit elliptic "
+"curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
+"elliptic curve is equivalent to 15360-bit ElGamal."
+msgstr ""
+"但请注意，加密算法强度与位数并不完全相同:256位的 Elliptc Curve 算法强度相当"
+"于 3072位的 ElGamal 算法。512位的 Elliptic Curve 算法强度相当于 15360位的 "
+"ElGamal 算法。"
 
 #: WebContent/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -644,6 +707,15 @@ msgstr "确认"
 #: WebContent/saveIdentity.jsp
 msgid "Please fill in the Public Name field."
 msgstr "请输入公开身份名称"
+
+#: WebContent/saveIdentity.jsp
+msgid "Please wait..."
+msgstr ""
+
+#: WebContent/saveIdentity.jsp
+#, fuzzy
+msgid "The Email Identity is being generated."
+msgstr "邮箱身份已保存。"
 
 #: WebContent/saveIdentity.jsp
 msgid "The email identity has been saved."
@@ -795,26 +867,36 @@ msgstr "未知"
 
 #~ msgid "Email Address:"
 #~ msgstr "Email adres:"
+
 #~ msgid "(optional)"
 #~ msgstr "(Optioneel)"
+
 #~ msgid "Unkn."
 #~ msgstr "onbek."
+
 #~ msgid "Language:"
 #~ msgstr "Taal:"
+
 #~ msgid "Default"
 #~ msgstr "Standaard"
+
 #~ msgid "Up %"
 #~ msgstr "Bereikbaarheid"
+
 #~ msgid "(required field, must be 512 characters)"
 #~ msgstr "(verplicht veld, de lengte dient 512 karakters te zijn)"
+
 #~ msgid "0 (off)"
 #~ msgstr "0 (uit)"
+
 #~ msgid "No sender found in email."
 #~ msgstr "Geen afzender gevonden in de email."
+
 #~ msgid "Invalid"
 #~ msgstr "Ongeldig"
+
 #~ msgid "Active Since"
 #~ msgstr "Actief sinds"
+
 #~ msgid "Key"
 #~ msgstr "Identiteit"
-

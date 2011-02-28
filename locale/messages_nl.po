@@ -2,24 +2,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-16 17:11+0000\n"
+"POT-Creation-Date: 2011-02-27 04:32+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: mixxy <m1xxy@mail.i2p>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: src/i2p/bote/I2PBote.java:421
-#: src/i2p/bote/service/OutboxProcessor.java:144
+#: src/i2p/bote/I2PBote.java:430 src/i2p/bote/service/OutboxProcessor.java:144
 msgid "No identity matches the sender/from field: "
 msgstr "Geen identiteit komt overeen met het afzender/van veld: "
 
-#: src/i2p/bote/I2PBote.java:487
+#: src/i2p/bote/I2PBote.java:505
 msgid "The old password is not correct."
 msgstr "Het oude wachtwoord is onjuist."
 
-#: src/i2p/bote/I2PBote.java:489
+#: src/i2p/bote/I2PBote.java:507
 msgid "The new password and the confirmation password do not match."
 msgstr "Het nieuwe wachtwoord en de bevestiging komen niet overeen."
 
@@ -35,14 +35,24 @@ msgstr "Elliptische kromme encryptie, 512 Bit"
 msgid "2048-bit ElGamal Encryption"
 msgstr "El-Gamal encryptie, 2048 Bit"
 
-#: src/i2p/bote/email/Email.java:440
+#: src/i2p/bote/crypto/NTRUEncrypt1087_NTRUSign349.java:75
+#, fuzzy
+msgid "NTRU-1087 Encryption"
+msgstr "Encryptie:"
+
+#: src/i2p/bote/email/Email.java:442
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Ongeldig adres: {0}"
 
-#: src/i2p/bote/email/Email.java:446
-msgid "Address doesn't contain an Email Destination or an external address: {0}"
+#: src/i2p/bote/email/Email.java:448
+msgid ""
+"Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Het adres bevat geen mail bestemming of extern adres.: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:115
+msgid "Queued"
+msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -70,8 +80,7 @@ msgid "Locked?"
 msgstr "Locked?"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:84
-#: src/i2p/bote/web/PeerInfoTag.java:109
+#: src/i2p/bote/web/PeerInfoTag.java:84 src/i2p/bote/web/PeerInfoTag.java:109
 msgid "Peer"
 msgstr "Peer"
 
@@ -100,8 +109,7 @@ msgstr "Verzenden"
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Verzonden aan {0} van de {1} ontvangers"
 
-#: src/i2p/bote/service/OutboxProcessor.java:165
-#: WebContent/folder.jsp
+#: src/i2p/bote/service/OutboxProcessor.java:165 WebContent/folder.jsp
 msgid "Sent"
 msgstr "Verzonden"
 
@@ -124,7 +132,7 @@ msgstr "Fout bij het maken van email pakketten: {0}"
 msgid "Error while sending email: {0}"
 msgstr "Fout tijdens het verzenden van email: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:123
+#: src/i2p/bote/web/JSPHelper.java:126
 msgid "Error creating the Email Identity."
 msgstr "Fout bij het aanmaken van email identiteit"
 
@@ -208,6 +216,16 @@ msgstr "Franse vertaling"
 #: WebContent/about.jsp
 msgid "Dutch translation"
 msgstr "Nederlandse vertaling"
+
+#: WebContent/about.jsp
+#, fuzzy
+msgid "Norwegian translation"
+msgstr "Franse vertaling"
+
+#: WebContent/about.jsp
+#, fuzzy
+msgid "Swedish translation"
+msgstr "Franse vertaling"
 
 #: WebContent/addressBook.jsp
 msgid "Address Book"
@@ -434,6 +452,10 @@ msgid "Secure Distributed Email"
 msgstr "Beveiligde gedecentraliseerde email"
 
 #: WebContent/header.jsp
+msgid "A new version is available. Click here for the configuration page."
+msgstr ""
+
+#: WebContent/header.jsp
 msgid "Addresses"
 msgstr "Adressen"
 
@@ -502,8 +524,12 @@ msgid "Network"
 msgstr "Netwerk"
 
 #: WebContent/network.jsp
-msgid "Network information is not available because I2P-Bote hasn't started connecting to the network yet."
-msgstr "Er is geen netwerk informatie beschikbaar omdat I2P-Bote nog niet met het netwerk verbonden is."
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr ""
+"Er is geen netwerk informatie beschikbaar omdat I2P-Bote nog niet met het "
+"netwerk verbonden is."
 
 #: WebContent/network.jsp
 msgid "Local destination:"
@@ -512,6 +538,10 @@ msgstr "Lokale bestemming:"
 #: WebContent/newEmail.jsp
 msgid "New Email"
 msgstr "Nieuwe Email"
+
+#: WebContent/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr ""
 
 #: WebContent/newEmail.jsp
 msgid "From:"
@@ -574,36 +604,81 @@ msgid "Send"
 msgstr "Verzenden"
 
 #: WebContent/noIdentities.jsp
-msgid "In order to receive email from other people, you need to create an email identity first."
-msgstr "Om emails van anderen te kunnen ontvangen dient u eerst een email identiteit aan te maken."
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr ""
+"Om emails van anderen te kunnen ontvangen dient u eerst een email identiteit "
+"aan te maken."
 
 #: WebContent/noIdentities.jsp
-msgid "Every email identity is associated with an email destination. Anybody can send email to the email destination, but only the identity holder can read it."
-msgstr "Elke email identiteit is geassocieerd met een email bestemming. Iedereen kan email versturen naar deze email bestemming, maar alleen de eigenaar van de identiteit kan deze lezen."
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr ""
+"Elke email identiteit is geassocieerd met een email bestemming. Iedereen kan "
+"email versturen naar deze email bestemming, maar alleen de eigenaar van de "
+"identiteit kan deze lezen."
 
 #: WebContent/noIdentities.jsp
-msgid "In a sense, email identities are the equivalent to traditional email accounts - except that there is no provider that can read all your email because I2P-Bote stores all emails encrypted on the network."
-msgstr "In zekere zin, zijn email identiteiten gelijkwaardig aan een traditioneel email account - behalve dat er geen provider is die alle email kan lezen, dit omdat I2P-Bote alle email encrypted opslaat op het netwerk."
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+"In zekere zin, zijn email identiteiten gelijkwaardig aan een traditioneel "
+"email account - behalve dat er geen provider is die alle email kan lezen, "
+"dit omdat I2P-Bote alle email encrypted opslaat op het netwerk."
 
 #: WebContent/noIdentities.jsp
-msgid "I2P-Bote automatically decrypts emails sent to you, using the email identity you created. Email identities are stored in a file named identities.txt; never give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote decrypt automatisch ontvangen emails middels de aangemaakte email identiteit. Email identiteiten zijn opgeslagen in het bestand 'identities.txt'; geef dit bestand nooit aan iemand anders, hiermee kunnen zij al uw email lezen."
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities.txt; "
+"never give this file to anyone or they will be able to read all your emails."
+msgstr ""
+"I2P-Bote decrypt automatisch ontvangen emails middels de aangemaakte email "
+"identiteit. Email identiteiten zijn opgeslagen in het bestand 'identities."
+"txt'; geef dit bestand nooit aan iemand anders, hiermee kunnen zij al uw "
+"email lezen."
 
 #: WebContent/noIdentities.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr "De email bestemming daarentegen dient u aan anderen te geven zodat zij contact met u op kunnen nemen."
+msgstr ""
+"De email bestemming daarentegen dient u aan anderen te geven zodat zij "
+"contact met u op kunnen nemen."
 
 #: WebContent/noIdentities.jsp
-msgid "It is easy to create multiple identities for different purposes, or different contacts."
-msgstr "Het is eenvoudig meerdere identiteiten te creëeren voor verschillende doeleinden of verschillende contactpersonen."
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr ""
+"Het is eenvoudig meerdere identiteiten te creëeren voor verschillende "
+"doeleinden of verschillende contactpersonen."
 
 #: WebContent/noIdentities.jsp
-msgid "When you create a new email identity, you can choose the type of encryption that will be used by the email identity. While all encryption algorithms offered by I2P-Bote provide a high level of privacy, the length of an email destination depends on the encryption used. The higher the number of bits, the longer the email destination."
-msgstr "Bij het aanmaken van een nieuwe email identiteit, kan het type encryptie gekozen worden dat bij deze identiteit gebruikt zal worden. Alle encryptie algorithmen die I2P-Bote bied leveren een hoog niveau van beveiliging en privacy, de lengte van de email bestemming is afhankelijk van het gekozen algorithme. Hoe hoger het aantal bits, hoe langer de email bestemming."
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The higher the number of bits, "
+"the longer the email destination."
+msgstr ""
+"Bij het aanmaken van een nieuwe email identiteit, kan het type encryptie "
+"gekozen worden dat bij deze identiteit gebruikt zal worden. Alle encryptie "
+"algorithmen die I2P-Bote bied leveren een hoog niveau van beveiliging en "
+"privacy, de lengte van de email bestemming is afhankelijk van het gekozen "
+"algorithme. Hoe hoger het aantal bits, hoe langer de email bestemming."
 
 #: WebContent/noIdentities.jsp
-msgid "Note that the same is not true for encryption strength. 256-bit elliptic curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit elliptic curve is equivalent to 15360-bit ElGamal."
-msgstr "Dit geld niet voor encryptie sterkte. 256-Bit elliptische kromme encryptie is gelijkwaardig in sterkte aan 3072-bit ElGamal. 512-bit elliptische kromme encryptie is gelijkwaardig in sterkte aan 15360-bit ElGamal."
+msgid ""
+"Note that the same is not true for encryption strength. 256-bit elliptic "
+"curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
+"elliptic curve is equivalent to 15360-bit ElGamal."
+msgstr ""
+"Dit geld niet voor encryptie sterkte. 256-Bit elliptische kromme encryptie "
+"is gelijkwaardig in sterkte aan 3072-bit ElGamal. 512-bit elliptische kromme "
+"encryptie is gelijkwaardig in sterkte aan 15360-bit ElGamal."
 
 #: WebContent/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -644,6 +719,15 @@ msgstr "OK"
 #: WebContent/saveIdentity.jsp
 msgid "Please fill in the Public Name field."
 msgstr "U dient het veld Publieke Naam in te vullen."
+
+#: WebContent/saveIdentity.jsp
+msgid "Please wait..."
+msgstr ""
+
+#: WebContent/saveIdentity.jsp
+#, fuzzy
+msgid "The Email Identity is being generated."
+msgstr "De email identiteit is opgeslagen."
 
 #: WebContent/saveIdentity.jsp
 msgid "The email identity has been saved."
@@ -715,7 +799,9 @@ msgstr "Email bestemming van de gateway:"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Gebruik Engels als taal om toe te voegen aan uitgaande email ('Re:', 'wrote:' etc.)"
+msgstr ""
+"Gebruik Engels als taal om toe te voegen aan uitgaande email ('Re:', "
+"'wrote:' etc.)"
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -795,26 +881,36 @@ msgstr "Onbekend"
 
 #~ msgid "Email Address:"
 #~ msgstr "Email adres:"
+
 #~ msgid "(optional)"
 #~ msgstr "(Optioneel)"
+
 #~ msgid "Unkn."
 #~ msgstr "onbek."
+
 #~ msgid "Language:"
 #~ msgstr "Taal:"
+
 #~ msgid "Default"
 #~ msgstr "Standaard"
+
 #~ msgid "Up %"
 #~ msgstr "Bereikbaarheid"
+
 #~ msgid "(required field, must be 512 characters)"
 #~ msgstr "(verplicht veld, de lengte dient 512 karakters te zijn)"
+
 #~ msgid "0 (off)"
 #~ msgstr "0 (uit)"
+
 #~ msgid "No sender found in email."
 #~ msgstr "Geen afzender gevonden in de email."
+
 #~ msgid "Invalid"
 #~ msgstr "Ongeldig"
+
 #~ msgid "Active Since"
 #~ msgstr "Actief sinds"
+
 #~ msgid "Key"
 #~ msgstr "Identiteit"
-
