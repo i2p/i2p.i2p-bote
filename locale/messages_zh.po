@@ -376,8 +376,9 @@ msgid "(If unsure, leave the default)"
 msgstr "(如果不清楚，可使用默认设置)"
 
 #: WebContent/editIdentity.jsp
+#, fuzzy
 msgid "Default Identity:"
-msgstr "Standaard Identiteit:"
+msgstr "默認身份:"
 
 #: WebContent/folder.jsp
 msgid "From"
