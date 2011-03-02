@@ -85,7 +85,7 @@ public class EncryptedInputStream extends FilterInputStream {
         
         // use the cached key if it is suitable, otherwise compute the key
         byte[] keyBytes;
-        if (cachedKey!=null && Arrays.equals(salt, cachedKey.salt) && scryptParams==cachedKey.scryptParams)
+        if (cachedKey!=null && Arrays.equals(salt, cachedKey.salt) && scryptParams.equals(cachedKey.scryptParams))
             keyBytes = cachedKey.key;
         else
             keyBytes = FileEncryptionUtil.getEncryptionKey(password, salt, scryptParams);

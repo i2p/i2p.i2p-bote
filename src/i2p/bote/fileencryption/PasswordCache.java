@@ -108,7 +108,7 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
         }
         
         // if necessary, create a new salt and key and write the derivation parameters to the cache file
-        if (derivedKey==null || derivedKey.scryptParams.equals(KDF_PARAMETERS)) {
+        if (derivedKey==null || !derivedKey.scryptParams.equals(KDF_PARAMETERS)) {
             I2PAppContext appContext = I2PAppContext.getGlobalContext();
             salt = new byte[SALT_LENGTH];
             appContext.random().nextBytes(salt);
