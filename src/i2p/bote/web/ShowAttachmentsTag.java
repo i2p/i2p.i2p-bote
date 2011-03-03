@@ -39,6 +39,7 @@ public class ShowAttachmentsTag extends SimpleTagSupport {
     private Email email;
     private String folder;
     
+    @Override
     public void doTag() throws IOException, JspException {
         PageContext pageContext = (PageContext)getJspContext();
         JspWriter out = pageContext.getOut();

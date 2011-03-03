@@ -40,6 +40,7 @@ public class FormatPlainTextTag extends SimpleTagSupport {
     private Log log = new Log(FormatPlainTextTag.class);
     private String text;
 
+    @Override
     public void doTag() {
         PageContext pageContext = (PageContext)getJspContext();
         JspWriter out = pageContext.getOut();
