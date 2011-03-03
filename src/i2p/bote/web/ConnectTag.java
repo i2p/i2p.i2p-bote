@@ -27,6 +27,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 public class ConnectTag extends SimpleTagSupport {
 
+    @Override
     public void doTag() {
         I2PBote.getInstance().connectNow();
     }

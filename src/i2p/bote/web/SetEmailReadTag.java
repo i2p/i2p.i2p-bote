@@ -30,6 +30,7 @@ public class SetEmailReadTag extends SimpleTagSupport {
     private String messageId;
     private boolean read;
 
+    @Override
     public void doTag() {
         folder.setNew(messageId, !read);
     }

@@ -41,6 +41,7 @@ import net.i2p.util.Log;
 public class PeerInfoTag extends SimpleTagSupport {
     private Log log = new Log(PeerInfoTag.class);
 
+    @Override
     public void doTag() {
         PageContext pageContext = (PageContext) getJspContext();
         JspWriter out = pageContext.getOut();

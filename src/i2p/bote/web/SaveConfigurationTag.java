@@ -27,6 +27,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 public class SaveConfigurationTag extends SimpleTagSupport {
 
+    @Override
     public void doTag() {
         I2PBote.getInstance().getConfiguration().save();
     }

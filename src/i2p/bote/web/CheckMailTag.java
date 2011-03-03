@@ -27,6 +27,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 public class CheckMailTag extends SimpleTagSupport {
 
+    @Override
     public void doTag() {
         I2PBote.getInstance().checkForMail();
     }

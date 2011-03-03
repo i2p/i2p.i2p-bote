@@ -1,5 +1,5 @@
-I2P-Bote Ver. 0.1
------------------
+I2P-Bote Technical Documentation
+--------------------------------
 
 1) Introduction
 
@@ -534,14 +534,14 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
 
 4.6. Replication
 
-See comments at the beginning of src/i2p/bote/network/kademlia/ReplicateThread.java
+  See comments at the beginning of src/i2p/bote/network/kademlia/ReplicateThread.java
 
 
 5. Algorithms Used By Nodes Locally
 
 5.1. Retrieving Email via relays
 
-   see also http://forum.i2p/viewtopic.php?p=19927#19927 ff.
+   See also http://forum.i2p/viewtopic.php?p=19927#19927 ff.
    
    1) Randomly choose a set of n relay nodes,  R1...Rn (outgoing chain for request)
    2) Randomly choose a set of m relay nodes, S1...Sm. (return chain / inbound mail chain)
@@ -573,15 +573,17 @@ See comments at the beginning of src/i2p/bote/network/kademlia/ReplicateThread.j
 6.1. Encryption
 
 The identities file, the address book, and all email files are encrypted with AES-256.
-PBKDF2 with SHA1 is used to generate the AES key from the password.
+To generate the AES key from the password, scrypt (http://www.tarsnap.com/scrypt.html) is used.
 The file format is:
 
    Field | #bytes | Description
   -------+--------+------------------------------------------------------------------
    SOF   | 4      | Start of file, contains the characters "IBef"
    VER   | 1      | Format version, must be 1
-   ITER  | 4      | Number of PBKDF2 iterations
-   SALT  | 32     | Salt for PBKDF2
+   N     | 4      | scrypt CPU cost parameter
+   r     | 4      | scrypt memory cost parameter
+   p     | 4      | scrypt parallelization parameter
+   SALT  | 32     | Salt for scrypt
    IV    | 32     | IV for AES
    DATA  |        | The encrypted data
 
@@ -597,6 +599,15 @@ The file format is:
   "Default", a space, and an Email Destination (i.e. two public keys). If the
   Email Destination matches one of the identities, that identity is used as
   the default.
+
+6.3. Included .jar files and third-party source code
+
+  bcprov-ecc-jdk16-145.jar      A stripped down version of the BouncyCastle library,
+                                containing only the classes needed for ECC.
+  mailapi.jar                   Part of JavaMail
+  src/SevenZip/                 An LZMA implementation from http://www.7-zip.org/sdk.html
+  src/net/sf/ntru               An NTRU implementation from http://sf.net/projects/ntru/
+  src/com/lambdaworks/crypto/   An scrypt implementation from https://github.com/wg/scrypt/
 
 
 7. Glossary of Terms
