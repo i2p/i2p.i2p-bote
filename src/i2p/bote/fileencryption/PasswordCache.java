@@ -42,8 +42,8 @@ import net.i2p.I2PAppContext;
 
 /**
  * Stores a password in memory so the user doesn't have to re-enter it.
- * Also caches key derivation parameters (salt and #iterations) so the
- * key derivation function only needs to run once.
+ * Also caches key derivation parameters (salt and <code>scrypt</code> parameters)
+ * so the key derivation function only needs to run once.
  */
 public class PasswordCache extends I2PBoteThread implements PasswordHolder {
     private byte[] password;
@@ -79,8 +79,8 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
     }
     
     /**
-     * Reads salt and number of iterations from the cache file, or chooses a new
-     * salt array if the file doesn't exist. The encryption key is then computed
+     * Reads salt and <code>scrypt</code> parameters from the cache file, or chooses
+     * a new salt array if the file doesn't exist. The encryption key is then computed
      * and the variable <code>derivedKey</code> is populated.
      * @throws IOException 
      * @throws GeneralSecurityException 
@@ -89,7 +89,7 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
         byte[] salt = null;
         derivedKey = null;
         
-        // read salt + numIterations from file if available
+        // read salt + scrypt parameters from file if available
         File derivParamFile = configuration.getKeyDerivationParametersFile();
         if (derivParamFile.exists()) {
             DataInputStream inputStream = null;
