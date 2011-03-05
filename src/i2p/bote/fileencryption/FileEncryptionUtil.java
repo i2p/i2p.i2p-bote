@@ -26,6 +26,7 @@ import static i2p.bote.fileencryption.FileEncryptionConstants.KEY_LENGTH;
 import static i2p.bote.fileencryption.FileEncryptionConstants.PASSWORD_FILE_PLAIN_TEXT;
 import i2p.bote.Util;
 
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -57,6 +58,23 @@ public class FileEncryptionUtil {
         return key;
     }
     
+    static DerivedKey getEncryptionKey(byte[] password, File derivParamFile) throws GeneralSecurityException, IOException {
+        DataInputStream inputStream = null;
+        try {
+            inputStream = new DataInputStream(new FileInputStream(derivParamFile));
+            byte[] salt = new byte[FileEncryptionConstants.SALT_LENGTH];
+            inputStream.read(salt);
+            SCryptParameters scryptParams = new SCryptParameters(inputStream);
+            byte[] key = FileEncryptionUtil.getEncryptionKey(password, salt, scryptParams);
+            DerivedKey derivedKey = new DerivedKey(salt, scryptParams, key);
+            return derivedKey;
+        }
+        finally {
+            if (inputStream != null)
+                inputStream.close();
+        }
+    }
+    
     /**
      * Decrypts a file with a given password and returns <code>true</code> if the decrypted
      * text is {@link FileEncryptionConstants#PASSWORD_FILE_PLAIN_TEXT}; <code>false</code>
@@ -76,6 +94,9 @@ public class FileEncryptionUtil {
             inputStream = new EncryptedInputStream(new FileInputStream(passwordFile), password);
             byte[] decryptedText = Util.readBytes(inputStream);
             return Arrays.equals(PASSWORD_FILE_PLAIN_TEXT, decryptedText);
+        }
+        catch (PasswordException e) {
+            return false;
         }
         finally {
             if (inputStream != null)
@@ -122,8 +143,9 @@ public class FileEncryptionUtil {
      * @param newKey
      * @throws IOException
      * @throws GeneralSecurityException 
+     * @throws PasswordException 
      */
-    public static void changePassword(File file, byte[] oldPassword, DerivedKey newKey) throws IOException, GeneralSecurityException {
+    public static void changePassword(File file, byte[] oldPassword, DerivedKey newKey) throws IOException, GeneralSecurityException, PasswordException {
         InputStream inputStream = null;
         byte[] decryptedData = null;
         try {

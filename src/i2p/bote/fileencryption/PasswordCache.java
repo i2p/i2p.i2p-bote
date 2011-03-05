@@ -27,10 +27,8 @@ import i2p.bote.Configuration;
 import i2p.bote.Util;
 import i2p.bote.service.I2PBoteThread;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -91,21 +89,8 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
         
         // read salt + scrypt parameters from file if available
         File derivParamFile = configuration.getKeyDerivationParametersFile();
-        if (derivParamFile.exists()) {
-            DataInputStream inputStream = null;
-            try {
-                inputStream = new DataInputStream(new FileInputStream(derivParamFile));
-                salt = new byte[FileEncryptionConstants.SALT_LENGTH];
-                inputStream.read(salt);
-                SCryptParameters scryptParams = new SCryptParameters(inputStream);
-                byte[] key = FileEncryptionUtil.getEncryptionKey(password, salt, scryptParams);
-                derivedKey = new DerivedKey(salt, scryptParams, key);
-            }
-            finally {
-                if (inputStream != null)
-                    inputStream.close();
-            }
-        }
+        if (derivParamFile.exists())
+            derivedKey = FileEncryptionUtil.getEncryptionKey(password, derivParamFile);
         
         // if necessary, create a new salt and key and write the derivation parameters to the cache file
         if (derivedKey==null || !derivedKey.scryptParams.equals(KDF_PARAMETERS)) {

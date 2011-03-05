@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -231,6 +232,23 @@ public class Util {
         }
     }
 
+    /**
+     * Tests if a directory contains a file with a given name.
+     * @param directory
+     * @param filename
+     * @return
+     */
+    public static boolean contains(File directory, final String filename) {
+        String[] matches = directory.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.equals(filename);
+            }
+        });
+        
+        return matches!=null && matches.length>0;
+    }
+    
     /**
      * Creates an I2P destination with a null certificate from 384 bytes that
      * are read from a <code>ByteBuffer</code>.

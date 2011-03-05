@@ -49,23 +49,23 @@ public class EncryptedInputStream extends FilterInputStream {
      * @param upstream
      * @param passwordHolder
      * @throws IOException
-     * @throws PasswordException 
      * @throws GeneralSecurityException 
+     * @throws PasswordException 
      */
-    public EncryptedInputStream(InputStream upstream, PasswordHolder passwordHolder) throws IOException, PasswordException, GeneralSecurityException {
+    public EncryptedInputStream(InputStream upstream, PasswordHolder passwordHolder) throws IOException, GeneralSecurityException, PasswordException {
         super(upstream);
         byte[] password = passwordHolder.getPassword();
         if (password == null)
             throw new PasswordException();
+        
         DerivedKey cachedKey = passwordHolder.getKey();
-        decryptedData = new ByteArrayInputStream(readInputStream(upstream, password, cachedKey));
+        byte[] bytes = readInputStream(upstream, password, cachedKey);
+        decryptedData = new ByteArrayInputStream(bytes);
     }
     
-    public EncryptedInputStream(InputStream upstream, byte[] password) throws IOException, GeneralSecurityException {
+    public EncryptedInputStream(InputStream upstream, byte[] password) throws IOException, GeneralSecurityException, PasswordException {
         super(upstream);
         byte[] bytes = readInputStream(upstream, password, null);
-        if (bytes == null)
-            bytes = new byte[0];
         decryptedData = new ByteArrayInputStream(bytes);
     }
     
@@ -98,6 +98,9 @@ public class EncryptedInputStream extends FilterInputStream {
         I2PAppContext appContext = I2PAppContext.getGlobalContext();
         
         byte[] decryptedData = appContext.aes().safeDecrypt(encryptedData, key, iv);
+        // null from safeDecrypt() means failure
+        if (decryptedData == null)
+            throw new PasswordException();
         
         return decryptedData;
     }
