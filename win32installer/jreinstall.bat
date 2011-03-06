@@ -1,3 +1,3 @@
-:: The /passive option has the nice side effect of
+:: The /s option has the nice side effect of
 :: disabling the Yahoo toolbar annoyance
-jre /passive
+jre /s
