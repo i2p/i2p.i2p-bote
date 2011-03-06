@@ -50,7 +50,7 @@
     </tr><tr>
         <td></td><td>Mixxy</td><td><font color="#555"><ib:message key="Translation, QA, usability, technical feedback"/></font></td>
     </tr><tr>
-        <td></td><td>zzz</td>
+        <td></td><td>zzz</td><td><font color="#555"><ib:message key="Pluginization, technical feedback"/></font></td>
     </tr><tr>
         <td></td><td>sponge</td><td><font color="#555"><ib:message key="Seedless"/></font></td>
     </tr><tr>
