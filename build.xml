@@ -66,6 +66,7 @@
         <fail unless="i2pbase" message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p."/>
     </target>
 
+    <!-- compiles everything under src/, but not test/ or ant/ -->
     <target name="compile" depends="checki2pbase">
         <mkdir dir="./ant_build" />
         <mkdir dir="./ant_build/classes" />
@@ -112,15 +113,15 @@
         </replace>
     </target>
 
-    <target name="war" depends="compile,precompilejsp,bundle"> 
+    <target name="war" depends="jar"> 
         <mkdir dir="ant_build" />
         <war destfile="i2pbote.war" webxml="ant_build/web.xml">
-            <classes dir="ant_build/classes" includes="**/*.class" />
-            <classes dir="src" includes="i2p/bote/network/built-in-peers.txt" />
+            <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
             <fileset dir="WebContent" includes="index.html"/>
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
+            <lib file="${lib}/i2pbote.jar"/>
             <lib file="${lib}/mailapi.jar"/>
             <lib file="${lib}/bcprov-ecc-jdk16-145.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
@@ -130,6 +131,14 @@
         <exec executable="sha256sum">
             <arg value="i2pbote.war"/>
         </exec>
+    </target>
+    
+    <target name="jar" depends="compile,precompilejsp,bundle"> 
+        <mkdir dir="ant_build" />
+        <jar destfile="${lib}/i2pbote.jar">
+            <fileset dir="ant_build/classes" excludes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/** **/*Test.class"/>
+            <fileset dir="src" includes="i2p/bote/network/built-in-peers.txt"/>
+        </jar>
     </target>
     
     <!--
@@ -144,7 +153,7 @@
         <mkdir dir="plugin/plugin.tmp/console/webapps" />
         <copy file="plugin/webapps.config" todir="plugin/plugin.tmp/console/" />
 
-        <!-- run i2pbote-plugin.war through pack200 -->
+        <!-- run i2pbote-plugin.war, bcprov...jar, and i2pbote.jar through pack200 -->
         <move file="i2pbote-plugin.war" tofile="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
         <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
@@ -154,7 +163,13 @@
             <arg value="plugin/plugin.tmp/console/webapps/i2pbote.jar"/>
         </exec>
         <delete file="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
-        <!-- run bcprov-ecc-jdk16-145.jar through pack200 -->
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/i2pbote.jar.pack"/>
+            <arg value="${lib}/i2pbote.jar"/>
+        </exec>
         <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
             <arg value="--effort=9"/>
@@ -162,6 +177,9 @@
             <arg value="plugin/plugin.tmp/lib/bcprov-ecc-jdk16-145.jar.pack"/>
             <arg value="${lib}/bcprov-ecc-jdk16-145.jar"/>
         </exec>
+
+        <copy file="WebContent/WEB-INF/lib/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
+        <copy file="WebContent/WEB-INF/lib/decrypt.sh" todir="plugin/plugin.tmp/lib"/>
 
         <delete file="plugin/plugin.tmp/lib/mailapi.jar" />
         <delete file="plugin/plugin.tmp/lib/mailapi.jar.pack" />
@@ -203,8 +221,7 @@
     <target name="pluginwar" depends="compile,precompilejsp,bundle"> 
         <mkdir dir="ant_build" />
         <war destfile="i2pbote-plugin.war" webxml="ant_build/web.xml">
-            <classes dir="ant_build/classes" includes="**/*.class" />
-            <classes dir="src" includes="i2p/bote/network/built-in-peers.txt" />
+            <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
             <fileset dir="WebContent" includes="index.html"/>
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
@@ -274,6 +291,7 @@
         <copy file="plugin/plugin.config" todir="${i2pinstallerplugindir}"/>
         <copy file="i2pbote-plugin.war" tofile="${i2pinstallerplugindir}/console/webapps/i2pbote.war"/>
         <copy file="plugin/webapps.config" todir="${i2pinstallerplugindir}/console"/>
+        <copy file="${lib}/i2pbote.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/mailapi.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/bcprov-ecc-jdk16-145.jar" todir="${i2pinstallerplugindir}/lib"/>
         <!-- build the I2P + I2P-Bote install.jar -->
