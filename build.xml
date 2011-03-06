@@ -37,7 +37,7 @@
     <!-- the following are only used by win32installer -->
     <property name="i2p.mtn" value="../i2p.mtn"/>
     <property name="win32launcherurl" value="http://dist.codehaus.org/izpack/native-launcher/izpack-launcher-1.3.zip"/>
-    <property name="win32jreurl" value="http://javadl.sun.com/webapps/download/AutoDL?BundleId=42732"/>
+    <property name="win32jreurl" value="http://javadl.sun.com/webapps/download/AutoDL?BundleId=47363"/>
         
 
     <target name="help">
