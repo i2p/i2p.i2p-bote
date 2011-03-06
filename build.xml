@@ -180,6 +180,8 @@
 
         <copy file="WebContent/WEB-INF/lib/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
         <copy file="WebContent/WEB-INF/lib/decrypt.sh" todir="plugin/plugin.tmp/lib"/>
+        <copy file="WebContent/WEB-INF/lib/encrypt.bat" todir="plugin/plugin.tmp/lib"/>
+        <copy file="WebContent/WEB-INF/lib/decrypt.bat" todir="plugin/plugin.tmp/lib"/>
 
         <delete file="plugin/plugin.tmp/lib/mailapi.jar" />
         <delete file="plugin/plugin.tmp/lib/mailapi.jar.pack" />
