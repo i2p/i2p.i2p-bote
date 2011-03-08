@@ -126,8 +126,18 @@
                     <input type="checkbox" name="isDefault" ${checked}/>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div style="font-weight: bold;"><ib:message key="Private keys:"/></div>
+                    <div class="warning"style="font-size: 0.8em;"><ib:message key="(Never reveal to anyone!)"/></div>
+                </td>
+                <td>
+                    <a href="showFullIdentity.jsp?key=${key}"><ib:message key="Show"/></a>
+                </td>
+            </tr>
             </c:if>
         </table>
+        <p/>
         <input type="hidden" name="new" value="${param.new}"/>
         <input type="hidden" name="key" value="${param.key}"/>
         <button name="action" value="${commitAction}">${commitAction}</button>

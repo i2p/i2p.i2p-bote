@@ -147,6 +147,10 @@ body {
     color: red;
 }
     
+.warning {
+    color: red;
+}
+    
 img {
     border: none;
 }
