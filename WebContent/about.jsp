@@ -56,6 +56,8 @@
     </tr><tr>
         <td></td><td>suhr</td><td><font color="#555"><ib:message key="Russian translation"/></font></td>
     </tr><tr>
+        <td></td><td>hiddenz</td><td><font color="#555"><ib:message key="Russian translation"/></font></td>
+    </tr><tr>
         <td></td><td>albat</td><td><font color="#555"><ib:message key="French translation"/></font></td>
     </tr><tr>
         <td></td><td>redzara</td><td><font color="#555"><ib:message key="French translation"/></font></td>
