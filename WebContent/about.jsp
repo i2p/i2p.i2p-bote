@@ -68,6 +68,8 @@
     </tr><tr>
         <td></td><td>hottuna</td><td><font color="#555"><ib:message key="Swedish translation"/></font></td>
     </tr><tr>
+        <td></td><td>walking</td><td><font color="#555"><ib:message key="Chinese translation"/></font></td>
+    </tr><tr>
         <td></td><td>hamada</td><td><font color="#555"><ib:message key="Arabic translation"/></font></td>
     </tr></table>
 </div>
