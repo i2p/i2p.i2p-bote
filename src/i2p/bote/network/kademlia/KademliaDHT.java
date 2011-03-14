@@ -25,6 +25,7 @@ import i2p.bote.Util;
 import i2p.bote.folder.DeletionAwareDhtFolder;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
+import i2p.bote.network.DhtPeerSource;
 import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.DhtResults;
 import i2p.bote.network.DhtStorageHandler;
@@ -45,7 +46,6 @@ import i2p.bote.packet.dht.FindClosePeersPacket;
 import i2p.bote.packet.dht.RetrieveRequest;
 import i2p.bote.packet.dht.StoreRequest;
 import i2p.bote.service.I2PBoteThread;
-import i2p.bote.service.seedless.SeedlessScrapePeers;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -94,7 +94,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     private I2PSendQueue sendQueue;
     private I2PPacketDispatcher i2pReceiver;
     private File peerFile;
-    private SeedlessScrapePeers seedlessScrapePeers;
+    private DhtPeerSource externalPeerSource;
     private ReplicateThread replicateThread;   // is notified of <code>store</code> calls
     private CountDownLatch readySignal;   // switches to 0 when bootstrapping is done
     private Destination localDestination;
@@ -108,15 +108,15 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * @param sendQueue
      * @param i2pReceiver
      * @param peerFile
-     * @param seedlessScrapePeers
+     * @param externalPeerSource Provides seedless peers
      */
-    public KademliaDHT(I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile, SeedlessScrapePeers seedlessScrapePeers) {
+    public KademliaDHT(I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, File peerFile, DhtPeerSource externalPeerSource) {
         super("Kademlia");
         
         this.sendQueue = sendQueue;
         this.i2pReceiver = i2pReceiver;
         this.peerFile = peerFile;
-        this.seedlessScrapePeers = seedlessScrapePeers;
+        this.externalPeerSource = externalPeerSource;
         
         readySignal = new CountDownLatch(1);
         localDestination = sendQueue.getLocalDestination();
@@ -362,11 +362,8 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         outerLoop:
             while (!shutdownRequested()) {
                 // add any known seedless peers
-                if (seedlessScrapePeers != null) {
-                    List<Destination> seedlessPeers = seedlessScrapePeers.getPeers();
-                    for (Destination destination: seedlessPeers)
-                        initialPeers.add(new KademliaPeer(destination));
-                }
+                for (Destination destination: externalPeerSource.getPeers())
+                    initialPeers.add(new KademliaPeer(destination));
                 
                 for (KademliaPeer bootstrapNode: initialPeers) {
                     bootstrapNode.setFirstSeen(System.currentTimeMillis());   // Set the "first seen" time to the current time before every bootstrap attempt

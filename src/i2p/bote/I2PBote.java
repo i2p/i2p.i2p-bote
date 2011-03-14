@@ -61,11 +61,7 @@ import i2p.bote.service.RelayPacketSender;
 import i2p.bote.service.RelayPeerManager;
 import i2p.bote.service.SMTPService;
 import i2p.bote.service.UpdateChecker;
-import i2p.bote.service.seedless.SeedlessAnnounce;
-import i2p.bote.service.seedless.SeedlessParameters;
-import i2p.bote.service.seedless.SeedlessRequestPeers;
-import i2p.bote.service.seedless.SeedlessScrapePeers;
-import i2p.bote.service.seedless.SeedlessScrapeServers;
+import i2p.bote.service.seedless.SeedlessInitializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -134,10 +130,6 @@ public class I2PBote implements NetworkStatusSource {
     private ExpirationThread expirationThread;
     private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
     private KademliaDHT dht;
-    private SeedlessAnnounce seedlessAnnounce;
-    private SeedlessRequestPeers seedlessRequestPeers;
-    private SeedlessScrapePeers seedlessScrapePeers;
-    private SeedlessScrapeServers seedlessScrapeServers;
     private RelayPeerManager peerManager;
     private PasswordCache passwordCache;
     private ConnectTask connectTask;
@@ -265,7 +257,10 @@ public class I2PBote implements NetworkStatusSource {
         relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, configuration);
         backgroundThreads.add(relayPacketSender);
         
-        dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile(), seedlessScrapePeers);
+        SeedlessInitializer seedless = new SeedlessInitializer(socketManager);
+        backgroundThreads.add(seedless);
+        
+        dht = new KademliaDHT(sendQueue, dispatcher, configuration.getDhtPeerFile(), seedless);
         backgroundThreads.add(dht);
         
         dht.setStorageHandler(EncryptedEmailPacket.class, emailDhtStorageFolder);
@@ -309,25 +304,6 @@ public class I2PBote implements NetworkStatusSource {
         
         updateChecker = new UpdateChecker(this, configuration);
         backgroundThreads.add(updateChecker);
-        
-        SeedlessParameters seedlessParameters = SeedlessParameters.getInstance();
-        // the following call may take some time waiting for Seedless to start up
-        // but that is not a problem because this method runs on the ConnectTask thread.
-        if (seedlessParameters.isSeedlessAvailable()) {
-            log.info("Seedless found.");
-            seedlessRequestPeers = new SeedlessRequestPeers(seedlessParameters, 60);
-            backgroundThreads.add(seedlessRequestPeers);
-            seedlessScrapePeers = new SeedlessScrapePeers(seedlessParameters, 10);
-            backgroundThreads.add(seedlessScrapePeers);
-            seedlessScrapeServers = new SeedlessScrapeServers(seedlessParameters, 10);
-            backgroundThreads.add(seedlessScrapeServers);
-            seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 60);
-            backgroundThreads.add(seedlessAnnounce);
-        }
-        else
-            log.info("Seedless NOT found.");
-            // TO-DO: start a task that checks for seedless and adds it in the future
-            // This is needed if seedless comes up late, or is installed after bote.
     }
 
     /**
