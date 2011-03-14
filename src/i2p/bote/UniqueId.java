@@ -22,21 +22,18 @@
 package i2p.bote;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import net.i2p.data.Base64;
-import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
 
 public class UniqueId implements Comparable<UniqueId> {
     public static final byte LENGTH = 32;
 
-    private Log log = new Log(UniqueId.class);
-    protected byte[] bytes;
+    private byte[] bytes;
 
     /**
      * Create a random <code>UniqueId</code>.
@@ -63,17 +60,6 @@ public class UniqueId implements Comparable<UniqueId> {
     public UniqueId(ByteBuffer buffer) {
         bytes = new byte[LENGTH];
         buffer.get(bytes);
-    }
-    
-    /**
-     * Creates a <code>UniqueId</code> using data read from a {@link InputStream}.
-     * @param inputStream
-     * @throws IOException
-     */
-    public UniqueId(InputStream inputStream) throws IOException {
-        bytes = new byte[LENGTH];
-        if (inputStream.read(bytes) < 0)
-            log.error("Cannot read " + LENGTH + " bytes: Unexpected end of stream.");
     }
     
     /**
