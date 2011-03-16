@@ -161,6 +161,8 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
     public void clear() {
         lockPassword();
         try {
+            if (password == null)
+                return;
             Util.zeroOut(password);
             password = null;
             if (derivedKey != null) {
