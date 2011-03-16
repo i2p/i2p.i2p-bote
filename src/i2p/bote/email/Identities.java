@@ -271,6 +271,9 @@ public class Identities implements Iterable<EmailIdentity> {
     public EmailIdentity getDefault() throws PasswordException {
         initializeIfNeeded();
         
+        if (identities == null)
+            return null;
+        
         for (EmailIdentity identity: identities)
             if (identity.isDefault())
                 return identity;
@@ -308,6 +311,9 @@ public class Identities implements Iterable<EmailIdentity> {
     public EmailIdentity get(String key) throws PasswordException {
         initializeIfNeeded();
         
+        if (identities == null)
+            return null;
+        
         for (EmailIdentity identity: identities)
             if (identity.getKey().equals(key))
                 return identity;
@@ -342,7 +348,7 @@ public class Identities implements Iterable<EmailIdentity> {
     public boolean contains(String base64Dest) throws PasswordException {
         initializeIfNeeded();
         
-        if (base64Dest == null)
+        if (identities==null || base64Dest==null)
             return false;
         
         for (EmailIdentity identity: identities)
@@ -377,6 +383,8 @@ public class Identities implements Iterable<EmailIdentity> {
     
     public Iterator<EmailIdentity> iterator() throws PasswordException {
         initializeIfNeeded();
+        if (identities == null)
+            return null;
         return identities.iterator();
     }
 
