@@ -114,6 +114,11 @@ public class I2PPacketDispatcher extends I2PBoteThread implements I2PSessionMuxe
         } catch (I2PSessionException e) {
             log.error("Can't get new message from I2PSession.", e);
         }
+        if (msg == null) {
+            log.error("I2PSession returned a null message: msgId=" + msgId + ", size=" + size + ", " + session);
+            return;
+        }
+        
         I2PDatagramDissector datagramDissector = new I2PDatagramDissector();
         try {
             datagramDissector.loadI2PDatagram(msg);
