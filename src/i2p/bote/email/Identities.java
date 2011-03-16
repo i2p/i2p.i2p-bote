@@ -251,6 +251,11 @@ public class Identities implements Iterable<EmailIdentity> {
             FileEncryptionUtil.changePassword(identitiesFile, oldPassword, newKey);
     }
     
+    public void clearPasswordProtectedData() {
+        // TODO overwrite private keys
+        identities = null;
+    }
+    
     /**
      * Sets the default identity. Assumes this <code>Identities</code> already
      * contains <code>defaultIdentity</code>.

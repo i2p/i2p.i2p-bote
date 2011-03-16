@@ -34,8 +34,6 @@ import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
-import i2p.bote.fileencryption.FileEncryptionUtil;
-import i2p.bote.fileencryption.PasswordCache;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.TrashFolder;
@@ -548,16 +546,18 @@ public class JSPHelper {
         return RandomSource.getInstance().nextLong();
     }
     
-    public static boolean tryPassword(String password) throws Exception {
+    public static boolean tryPassword(String password) throws IOException, GeneralSecurityException {
         byte[] passwordBytes = password.getBytes();
-        File passwordFile = I2PBote.getInstance().getConfiguration().getPasswordFile();
-        boolean correct = FileEncryptionUtil.isPasswordCorrect(passwordBytes, passwordFile);
-        if (correct)
-            I2PBote.getInstance().getPasswordCache().setPassword(passwordBytes);
-        return correct;
+        try {
+            I2PBote.getInstance().tryPassword(passwordBytes);
+            return true;
+        }
+        catch (PasswordException e) {
+            return false;
+        }
     }
     
-    public static String changePassword(String oldPassword, String newPassword, String confirmNewPassword) throws Exception {
+    public static String changePassword(String oldPassword, String newPassword, String confirmNewPassword) {
         try {
             return I2PBote.getInstance().changePassword(oldPassword.getBytes(), newPassword.getBytes(), confirmNewPassword.getBytes());
         }
@@ -568,18 +568,12 @@ public class JSPHelper {
         }
     }
     
-    /**
-     * @see {@link PasswordCache#isPasswordInCache()}
-     */
     public boolean isPasswordInCache() {
-        return I2PBote.getInstance().getPasswordCache().isPasswordInCache();
+        return I2PBote.getInstance().isPasswordInCache();
     }
     
-    /**
-     * @see {@link PasswordCache#clear()}
-     */
     public static void clearPassword() {
-        I2PBote.getInstance().getPasswordCache().clear();
+        I2PBote.getInstance().clearPassword();
     }
     
     public boolean isUpdateAvailable() {

@@ -29,6 +29,6 @@ public class ClearPasswordCacheTag extends SimpleTagSupport {
     
     @Override
     public void doTag() {
-        I2PBote.getInstance().getPasswordCache().clear();
+        I2PBote.getInstance().clearPassword();
     }
 }

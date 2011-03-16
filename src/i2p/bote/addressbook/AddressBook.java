@@ -170,6 +170,10 @@ public class AddressBook implements Iterable<Contact> {
             FileEncryptionUtil.changePassword(addressFile, oldPassword, newKey);
     }
     
+    public void clearPasswordProtectedData() {
+        contacts = null;
+    }
+    
     /**
      * Looks up an {@link Contact} by its Base64 key. If none is found,
      * <code>null</code> is returned.

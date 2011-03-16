@@ -147,10 +147,7 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
         lastReset = System.currentTimeMillis();
     }
     
-    /**
-     * Returns <code>true</code> if the password is being cached
-     * @return
-     */
+    /** Returns <code>true</code> if the password is currently cached. */
     public boolean isPasswordInCache() {
         return password != null;
     }

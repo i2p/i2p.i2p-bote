@@ -496,8 +496,33 @@ public class I2PBote implements NetworkStatusSource {
         return null;
     }
     
-    public PasswordCache getPasswordCache() {
-        return passwordCache;
+    /**
+     * Tests if a password is correct and stores it in the cache if it is.
+     * If the password is not correct, a <code>PasswordException</code> is thrown.
+     * @param password
+     * @throws IOException
+     * @throws GeneralSecurityException
+     * @throws PasswordException
+     */
+    public void tryPassword(byte[] password) throws IOException, GeneralSecurityException, PasswordException  {
+        File passwordFile = I2PBote.getInstance().getConfiguration().getPasswordFile();
+        boolean correct = FileEncryptionUtil.isPasswordCorrect(password, passwordFile);
+        if (correct)
+            passwordCache.setPassword(password);
+        else
+            throw new PasswordException();
+    }
+    
+    /** Returns <code>true</code> if the password is currently cached. */
+    public boolean isPasswordInCache() {
+        return passwordCache.isPasswordInCache();
+    }
+    
+    /** Removes the password from the password cache. If there is no password in the cache, nothing happens. */
+    public void clearPassword() {
+        passwordCache.clear();
+        identities.clearPasswordProtectedData();
+        addressBook.clearPasswordProtectedData();
     }
     
     private Collection<EmailFolder> getEmailFolders() {
