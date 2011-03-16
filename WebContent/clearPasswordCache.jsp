@@ -27,12 +27,7 @@
 <ib:clearPasswordCache/>
 
 <ib:message key="Password Cleared" var="title" scope="request"/>
+<ib:message key="The password has been cleared from the cache." var="infoMessage" scope="request"/>
 <jsp:include page="header.jsp"/>
-
-<div class="main">
-    <div class="infoMessage">
-        <ib:message key="The password has been cleared from the cache." var="title" scope="request"/>
-    </div>
-</div>
 
 <jsp:include page="footer.jsp"/>
