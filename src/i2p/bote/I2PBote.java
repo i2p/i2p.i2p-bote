@@ -111,7 +111,6 @@ public class I2PBote implements NetworkStatusSource {
     private Configuration configuration;
     private Identities identities;
     private AddressBook addressBook;
-    private I2PSendQueue sendQueue;
     private Outbox outbox;   // stores outgoing emails for all local users
     private EmailFolder inbox;   // stores incoming emails for all local users
     private EmailFolder sentFolder;
@@ -127,8 +126,6 @@ public class I2PBote implements NetworkStatusSource {
     private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
     private EmailChecker emailChecker;
     private UpdateChecker updateChecker;
-    private ExpirationThread expirationThread;
-    private RelayPacketSender relayPacketSender;   // reads packets stored in the relayPacketFolder and sends them
     private KademliaDHT dht;
     private RelayPeerManager peerManager;
     private PasswordCache passwordCache;
@@ -252,9 +249,9 @@ public class I2PBote implements NetworkStatusSource {
         backgroundThreads.add(smtpService);
         pop3Service = new POP3Service();
         backgroundThreads.add(pop3Service);*/
-        sendQueue = new I2PSendQueue(i2pSession, socketManager, dispatcher);
+        I2PSendQueue sendQueue = new I2PSendQueue(i2pSession, socketManager, dispatcher);
         backgroundThreads.add(sendQueue);
-        relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, configuration);
+        RelayPacketSender relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, configuration);   // reads packets stored in the relayPacketFolder and sends them
         backgroundThreads.add(relayPacketSender);
         
         SeedlessInitializer seedless = new SeedlessInitializer(socketManager);
@@ -276,7 +273,7 @@ public class I2PBote implements NetworkStatusSource {
         dispatcher.addPacketListener(peerManager);
         dispatcher.addPacketListener(relayPacketSender);
         
-        expirationThread = new ExpirationThread();
+        ExpirationThread expirationThread = new ExpirationThread();
         expirationThread.addExpirationListener(emailDhtStorageFolder);
         expirationThread.addExpirationListener(indexPacketDhtStorageFolder);
         expirationThread.addExpirationListener(relayPacketSender);
