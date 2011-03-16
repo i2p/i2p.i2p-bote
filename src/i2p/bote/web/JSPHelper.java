@@ -35,6 +35,7 @@ import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.FileEncryptionUtil;
+import i2p.bote.fileencryption.PasswordCache;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.TrashFolder;
@@ -565,6 +566,20 @@ public class JSPHelper {
             log.error("Error while changing password", e);
             return e.getLocalizedMessage();
         }
+    }
+    
+    /**
+     * @see {@link PasswordCache#isPasswordInCache()}
+     */
+    public boolean isPasswordInCache() {
+        return I2PBote.getInstance().getPasswordCache().isPasswordInCache();
+    }
+    
+    /**
+     * @see {@link PasswordCache#clear()}
+     */
+    public static void clearPassword() {
+        I2PBote.getInstance().getPasswordCache().clear();
     }
     
     public boolean isUpdateAvailable() {

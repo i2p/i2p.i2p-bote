@@ -64,6 +64,12 @@
 <body>
 
 <div class="titlebar" style="cursor:pointer" onclick="document.location='.'">
+    <c:if test="${jspHelperBean.passwordInCache}">
+        <div class="password">
+            <ib:message key="Password is cached. Click to clear the password cache." var="linkTitle"/>
+            <a href="clearPasswordCache.jsp" title="${linkTitle}"><img src="images/clear_password.png"/></a>
+        </div>
+    </c:if>
     <div class="title"><ib:message key="I2P-Bote"/></div>
     <br/>
     <div class="subtitle"><ib:message key="Secure Distributed Email"/></div>

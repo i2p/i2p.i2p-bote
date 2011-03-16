@@ -45,6 +45,11 @@ body {
     color: #555;
 }
 
+.password {
+	float: right;
+	margin: 5px;
+}
+
 .updateMessage {
     margin: 0px 0px 5px 15px;
     text-align: left;

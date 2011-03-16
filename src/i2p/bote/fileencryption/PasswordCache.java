@@ -148,27 +148,41 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
     }
     
     /**
+     * Returns <code>true</code> if the password is being cached
+     * @return
+     */
+    public boolean isPasswordInCache() {
+        return password != null;
+    }
+    
+    /**
+     * Clears the password if it is in the cache.
+     */
+    public void clear() {
+        lockPassword();
+        try {
+            Util.zeroOut(password);
+            password = null;
+            if (derivedKey != null) {
+                derivedKey.clear();
+                derivedKey = null;
+            }
+        }
+        finally {
+            unlockPassword();
+        }
+    }
+    
+    /**
      * Clears the password after a certain time if {@link #getPassword()} hasn't been called.
      * @see Configuration#getPasswordCacheDuration()
      */
     @Override
     protected void doStep() throws InterruptedException {
         awaitShutdownRequest(1, TimeUnit.MINUTES);
-        lockPassword();
-        try {
-            long durationMilliseconds = TimeUnit.MILLISECONDS.convert(configuration.getPasswordCacheDuration(), TimeUnit.MINUTES);
-            boolean isEmpty = password==null || password.length==0;
-            if (System.currentTimeMillis()>lastReset+durationMilliseconds && !isEmpty) {   // cache empty passwords forever
-                Util.zeroOut(password);
-                password = null;
-                if (derivedKey != null) {
-                    derivedKey.clear();
-                    derivedKey = null;
-                }
-            }
-        }
-        finally {
-            unlockPassword();
-        }
+        long durationMilliseconds = TimeUnit.MILLISECONDS.convert(configuration.getPasswordCacheDuration(), TimeUnit.MINUTES);
+        boolean isEmpty = password==null || password.length==0;
+        if (System.currentTimeMillis()>lastReset+durationMilliseconds && !isEmpty)   // cache empty passwords forever
+            clear();
     }
 }
