@@ -98,7 +98,7 @@ public class Util {
         return getHumanReadableSize(totalBytes);
     }
     
-    public static String getHumanReadableSize(long numBytes) {
+    private static String getHumanReadableSize(long numBytes) {
         String language = Translate.getLanguage(I2PAppContext.getGlobalContext());
         int unit = (63-Long.numberOfLeadingZeros(numBytes)) / 10;   // 0 if totalBytes<1K, 1 if 1K<=totalBytes<1M, etc.
         double value = (double)numBytes / (1<<(10*unit));

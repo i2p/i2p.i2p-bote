@@ -35,7 +35,7 @@ import java.net.PasswordAuthentication;
  *
  * @author sponge
  */
-public class ProxyRequest {
+class ProxyRequest {
 
     private URLConnection c = null;
     private HttpURLConnection h = null;
@@ -43,7 +43,7 @@ public class ProxyRequest {
     /**
      * Instance
      */
-    public ProxyRequest() {
+    ProxyRequest() {
     }
 
     /**
@@ -56,17 +56,13 @@ public class ProxyRequest {
      * @param iProxyPort  An integer that indicates the proxy port or -1 to indicate the default port for the protocol.
      * @return HTTPURLConnection or null
      */
-    public HttpURLConnection doURLRequest(String strURL, String header, String strProxy, int iProxyPort, String user, String pass) {
+    HttpURLConnection doURLRequest(String strURL, String header, String strProxy, int iProxyPort, String user, String pass) {
         try {
             URL url = null;
             // System.out.println("HTTP Request: " + strURL);
             URL urlOriginal = new URL(strURL);
             if((null != strProxy) && (0 < strProxy.length())) {
                 URL urlProxy = new URL(urlOriginal.getProtocol(), strProxy, iProxyPort, strURL); // The original URL is passed as "the file on the host".
-                //System.out.println("Using Proxy: " + strProxy);
-                //if(-1 != iProxyPort) {
-                //    System.out.println("Using Proxy Port: " + iProxyPort);
-                //}
                 url = urlProxy;
             } else {
                 url = urlOriginal;

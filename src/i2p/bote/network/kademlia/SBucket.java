@@ -33,12 +33,12 @@ import net.i2p.util.Log;
  * from the local destination.<br/>
  * The closest peer is at index 0, the most distant peer is at index <code>n-1</code>.
  */
-public class SBucket extends AbstractBucket {
+class SBucket extends AbstractBucket {
     private Log log = new Log(SBucket.class);
     private PeerDistanceComparator distanceComparator;
     private BucketSection[] sections;   // used for refreshing the s-bucket
     
-    public SBucket(Hash localDestinationHash) {
+    SBucket(Hash localDestinationHash) {
         super(KademliaConstants.S);
         distanceComparator = new PeerDistanceComparator(localDestinationHash);
         
@@ -148,7 +148,7 @@ public class SBucket extends AbstractBucket {
         private BigInteger end;
         private long lastLookupTime;
         
-        public BucketSection(BigInteger start, BigInteger end, long lastLookupTime) {
+        private BucketSection(BigInteger start, BigInteger end, long lastLookupTime) {
             this.start = start;
             this.end = end;
             this.lastLookupTime = lastLookupTime;
@@ -166,7 +166,7 @@ public class SBucket extends AbstractBucket {
             return end;
         }
         
-        public boolean contains(Hash key) {
+        private boolean contains(Hash key) {
             BigInteger keyValue = new BigInteger(1, key.getData());
             return (start.compareTo(keyValue)<=0 && keyValue.compareTo(end)<0);
         }

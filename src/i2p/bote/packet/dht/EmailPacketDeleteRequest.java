@@ -100,9 +100,6 @@ public class EmailPacketDeleteRequest extends DeleteRequest {
         else
             return null;
     }
-    public Collection<? extends DeleteRequest> toIndividualRequests() {
-        return Collections.singleton(this);
-    }
     
     @Override
     public String toString() {

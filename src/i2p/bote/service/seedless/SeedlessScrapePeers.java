@@ -45,7 +45,7 @@ import net.i2p.util.Log;
  * 
  * @author sponge
  */
-public class SeedlessScrapePeers extends I2PBoteThread {
+class SeedlessScrapePeers extends I2PBoteThread {
     private Log log = new Log(SeedlessScrapePeers.class);
     private SeedlessParameters seedlessParameters;
     private long interval;   // in milliseconds
@@ -58,7 +58,7 @@ public class SeedlessScrapePeers extends I2PBoteThread {
      *
      * @param interval In minutes
      */
-    public SeedlessScrapePeers(SeedlessParameters seedlessParameters, int interval) {
+    SeedlessScrapePeers(SeedlessParameters seedlessParameters, int interval) {
         super("SeedlsScpPrs");
         this.seedlessParameters = seedlessParameters;
         this.interval = TimeUnit.MINUTES.toMillis(interval);
@@ -66,8 +66,8 @@ public class SeedlessScrapePeers extends I2PBoteThread {
     }
 
     @Override
-    public void doStep() {
-        lastTime = getlastSeedlessScrapePeers();
+    protected void doStep() {
+        lastTime = lastSeedlessScrapePeers;
         timeSinceLastCheck = System.currentTimeMillis() - lastTime;
         if (lastTime == 0 || timeSinceLastCheck > this.interval) {
             doSeedlessScrapePeers();
@@ -75,15 +75,8 @@ public class SeedlessScrapePeers extends I2PBoteThread {
             awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
         }
     }
-    public long getInterval() {
-        return interval;
-    }
-
-    public synchronized long getlastSeedlessScrapePeers() {
-        return lastSeedlessScrapePeers;
-    }
-
-    public synchronized void doSeedlessScrapePeers() {
+    
+    private synchronized void doSeedlessScrapePeers() {
         HttpURLConnection h;
         int i;
         String foo;
@@ -128,32 +121,19 @@ public class SeedlessScrapePeers extends I2PBoteThread {
                 }
         }
         
- //       BotePeers = ip32s;
         log.debug("doSeedlessScrapePeers Done.");
-/*        BotePeers = dht.injectPeers(BotePeers);
-        peerManager.injectPeers(BotePeers);
-        BotePeers = null; // garbage now.*/
         lastSeedlessScrapePeers = System.currentTimeMillis();
     }
     
     /** Returns <code>null</code> if the peer was not found. */
     private Destination lookup(String b32Peer) {
         Destination destination = I2PAppContext.getGlobalContext().namingService().lookup(b32Peer);
-        /* depreciated
-         Destination destination;
-        try {
-             destination = I2PTunnel.destFromName(b32Peer);
-        } catch (DataFormatException e) {
-            log.error("Cannot look up B32 destination: <" + b32Peer + ">", e);
-            return null;
-        }
-         */
         if (destination == null)
             log.warn ("Can't find peer in floodfill: " + b32Peer);
         return destination;
     }
 
-    public synchronized List<Destination> getPeers() {
+    synchronized List<Destination> getPeers() {
         return peers;
     }
 }

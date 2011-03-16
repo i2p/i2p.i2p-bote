@@ -45,7 +45,7 @@ import net.i2p.util.Log;
  *
  * @author sponge
  */
-public class SeedlessScrapeServers extends I2PBoteThread {
+class SeedlessScrapeServers extends I2PBoteThread {
     private Log log = new Log(SeedlessScrapeServers.class);
     private SeedlessParameters seedlessParameters;
     private long interval;   // in milliseconds
@@ -58,14 +58,14 @@ public class SeedlessScrapeServers extends I2PBoteThread {
      * @param seedlessParameters
      * @param interval In minutes
      */
-    public SeedlessScrapeServers(SeedlessParameters seedlessParameters, int interval) {
+    SeedlessScrapeServers(SeedlessParameters seedlessParameters, int interval) {
         super("SeedlsScpSvr");
         this.seedlessParameters = seedlessParameters;
         this.interval = TimeUnit.MINUTES.toMillis(interval);
     }
 
     @Override
-    public void doStep() {
+    protected void doStep() {
         lastTime = lastSeedlessScrapeServers;
         timeSinceLastCheck = System.currentTimeMillis() - lastTime;
         if (lastTime == 0 || timeSinceLastCheck > this.interval) {
@@ -75,7 +75,7 @@ public class SeedlessScrapeServers extends I2PBoteThread {
         }
     }
 
-    public synchronized void doSeedlessScrapeServers() {
+    private synchronized void doSeedlessScrapeServers() {
         HttpURLConnection h;
         int i;
         String foo;
@@ -117,7 +117,7 @@ public class SeedlessScrapeServers extends I2PBoteThread {
         lastSeedlessScrapeServers = System.currentTimeMillis();
     }
     
-    public synchronized List<String> getSeedlessServers() {
+    synchronized List<String> getSeedlessServers() {
         return seedlessServers;
     }
 }

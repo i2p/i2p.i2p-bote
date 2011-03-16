@@ -55,8 +55,8 @@ import net.i2p.util.Log;
  * <code>&lt;message ID&gt;.meta</code>.
  */
 public class EmailFolder extends Folder<Email> {
-    protected static final String EMAIL_FILE_EXTENSION = ".mail";
-    protected static final String METADATA_FILE_EXTENSION = ".meta";
+    private static final String EMAIL_FILE_EXTENSION = ".mail";
+    private static final String METADATA_FILE_EXTENSION = ".meta";
     
     private Log log = new Log(EmailFolder.class);
     private PasswordHolder passwordHolder;

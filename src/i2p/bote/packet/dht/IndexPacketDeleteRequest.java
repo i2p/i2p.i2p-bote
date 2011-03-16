@@ -87,10 +87,6 @@ public class IndexPacketDeleteRequest extends DeleteRequest {
         return entries.get(dhtKey);
     }
     
-    public void remove(Hash dhtKey) {
-        entries.remove(dhtKey);
-    }
-    
     public int getNumEntries() {
         return entries.size();
     }

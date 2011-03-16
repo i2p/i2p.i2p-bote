@@ -36,7 +36,7 @@ import net.i2p.router.RouterContext;
 import net.i2p.router.startup.ClientAppConfig;
 import net.i2p.util.Log;
 
-public class SeedlessParameters {
+class SeedlessParameters {
     private static final String DEFAULT_HOST = "localhost";
     private static final String DEFAULT_PORT = "7657";
     private static SeedlessParameters instance;
@@ -53,13 +53,13 @@ public class SeedlessParameters {
     private SeedlessParameters() {
     }
     
-    public static SeedlessParameters getInstance() {
+    static SeedlessParameters getInstance() {
         if (instance == null)
             instance = new SeedlessParameters();
         return instance;
     }
     
-    public boolean isSeedlessAvailable() {
+    boolean isSeedlessAvailable() {
         if (!ready)
             init();
         return ready;
@@ -199,23 +199,23 @@ public class SeedlessParameters {
         }
     }
     
-    public String getSeedlessUrl() {
+    String getSeedlessUrl() {
         return svcURL;
     }
     
-    public String getPeersRequestHeader() {
+    String getPeersRequestHeader() {
         return peersReqHeader;
     }
     
-    public String getPeersLocateHeader() {
+    String getPeersLocateHeader() {
         return peersLocHeader;
     }
     
-    public String getServersLocateHeader() {
+    String getServersLocateHeader() {
         return serversLocHeader;
     }
     
-    public String getConsolePassword() {
+    String getConsolePassword() {
         return cpass;
     }
     

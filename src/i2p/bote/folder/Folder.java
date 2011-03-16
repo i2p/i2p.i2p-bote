@@ -40,9 +40,10 @@ import net.i2p.util.Log;
  * @param <T> The type of objects the folder can store.
  */
 public abstract class Folder<T> implements Iterable<T> {
-    private Log log = new Log(Folder.class);
     protected File storageDir;
-    protected String fileExtension;
+    
+    private Log log = new Log(Folder.class);
+    private String fileExtension;
 
     protected Folder(File storageDir, String fileExtension) {
         this.storageDir = storageDir;

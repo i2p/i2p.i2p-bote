@@ -67,7 +67,7 @@ import net.i2p.util.Log;
  *   </ol>  
  * </ol>
  */
-public class ReplicateThread extends I2PBoteThread implements PacketListener {
+class ReplicateThread extends I2PBoteThread implements PacketListener {
     private static final int SEND_TIMEOUT_MINUTES = 5;   // the maximum amount of time to wait for a store request to be sent
     private static final int WAIT_TIME_SECONDS = 5;   // amount of time to wait after sending a store request
     
@@ -84,7 +84,7 @@ public class ReplicateThread extends I2PBoteThread implements PacketListener {
                                                                // to be replicated instead of the DHT item.
     private volatile boolean replicationRunning;   // true when replication is active
 
-    public ReplicateThread(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager) {
+    ReplicateThread(Destination localDestination, I2PSendQueue sendQueue, I2PPacketDispatcher i2pReceiver, BucketManager bucketManager) {
         super("ReplicateThd");
         this.localDestination = localDestination;
         this.sendQueue = sendQueue;

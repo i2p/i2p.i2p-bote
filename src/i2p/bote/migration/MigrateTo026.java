@@ -43,11 +43,11 @@ import net.i2p.util.Log;
 /**
  * Migrates the address book, email identities, and all emails to the encrypted format.
  */
-public class MigrateTo026 {
+class MigrateTo026 {
     private Log log = new Log(MigrateTo026.class);
     private PasswordCache passwordCache;
     
-    public void migrateIfNeeded(Configuration configuration) {
+    void migrateIfNeeded(Configuration configuration) {
         log.debug("Migrating any pre-0.2.6 files...");
         
         passwordCache = new PasswordCache(configuration);

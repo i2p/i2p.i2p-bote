@@ -39,7 +39,7 @@ import net.i2p.data.Hash;
  * Stores information on Kademlia peers.
  * @see DhtPeerStats
  */
-public class KademliaPeerStats implements DhtPeerStats {
+class KademliaPeerStats implements DhtPeerStats {
     private List<String> header;
     private List<List<String>> data;
     

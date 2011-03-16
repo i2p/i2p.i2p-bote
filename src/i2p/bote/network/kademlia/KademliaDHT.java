@@ -412,7 +412,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
      * "refresh all k-buckets further away than the closest neighbor. This refresh is just a
      * lookup of a random key that is within that k-bucket range."
      */
-    public void refreshAll() {
+    private void refreshAll() {
         for (KBucket bucket: Util.synchronizedCopy(bucketManager))
             refresh(bucket);
     }
@@ -639,11 +639,6 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         i2pReceiver.removePacketListener(this);
     }
 
-    @Override
-    public void awaitShutdown(long timeout) throws InterruptedException {
-        join(timeout);
-    }
-    
     @Override
     public void requestShutdown() {
         super.requestShutdown();

@@ -147,12 +147,6 @@ class KBucket extends AbstractBucket {
             peers.add(0, peer);
     }
     
-    void noResponse(KademliaPeer peer) {
-        if (!replacementCache.isEmpty())
-            if (peers.remove(peer))
-                peers.add(replacementCache.remove(0));
-    }
-    
     /**
      * Adds a peer to the head of the replacement cache, or makes
      * it the head if it exists in the replacement cache.

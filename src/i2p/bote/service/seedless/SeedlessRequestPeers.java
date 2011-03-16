@@ -36,7 +36,7 @@ import net.i2p.util.Log;
  *
  * @author sponge
  */
-public class SeedlessRequestPeers extends I2PBoteThread {
+class SeedlessRequestPeers extends I2PBoteThread {
     private Log log = new Log(SeedlessRequestPeers.class);
     private SeedlessParameters seedlessParameters;
     private long interval;   // in milliseconds
@@ -48,15 +48,15 @@ public class SeedlessRequestPeers extends I2PBoteThread {
      *
      * @param interval In minutes
      */
-    public SeedlessRequestPeers(SeedlessParameters seedlessParameters, int interval) {
+    SeedlessRequestPeers(SeedlessParameters seedlessParameters, int interval) {
         super("SeedlsReqPrs");
         this.seedlessParameters = seedlessParameters;
         this.interval = TimeUnit.MINUTES.toMillis(interval);
     }
 
     @Override
-    public void doStep() {
-        lastTime = getlastSeedlessRequestPeers();
+    protected void doStep() {
+        lastTime = lastSeedlessRequestPeers;
         timeSinceLastCheck = System.currentTimeMillis() - lastTime;
         if (lastTime == 0 || timeSinceLastCheck > this.interval) {
             doSeedlessRequestPeers();
@@ -65,15 +65,7 @@ public class SeedlessRequestPeers extends I2PBoteThread {
         }
     }
     
-    public long getInterval() {
-        return interval;
-    }
-
-    public synchronized long getlastSeedlessRequestPeers() {
-        return lastSeedlessRequestPeers;
-    }
-
-    public synchronized void doSeedlessRequestPeers() {
+    private synchronized void doSeedlessRequestPeers() {
         HttpURLConnection h;
         log.debug("doSeedlessRequestPeers");
         try {

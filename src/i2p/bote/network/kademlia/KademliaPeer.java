@@ -26,14 +26,14 @@ import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
-public class KademliaPeer extends Destination {
+class KademliaPeer extends Destination {
     private Log log = new Log(KademliaPeer.class);
     private Hash destinationHash;
     private long firstSeen;
     private volatile int consecutiveTimeouts;
     private long lockedUntil;
     
-    public KademliaPeer(Destination destination, long lastReception) {
+    KademliaPeer(Destination destination, long lastReception) {
         // initialize the Destination part of the KademliaPeer
         setCertificate(destination.getCertificate());
         setSigningPublicKey(destination.getSigningPublicKey());
@@ -47,11 +47,11 @@ public class KademliaPeer extends Destination {
         firstSeen = lastReception;
     }
     
-    public KademliaPeer(Destination destination) {
+    KademliaPeer(Destination destination) {
         this(destination, System.currentTimeMillis());
     }
     
-    public KademliaPeer(String peerFileEntry) throws DataFormatException {
+    KademliaPeer(String peerFileEntry) throws DataFormatException {
         this(new Destination(peerFileEntry));
     }
     
@@ -73,10 +73,6 @@ public class KademliaPeer extends Destination {
 
     public int getConsecTimeouts() {
         return consecutiveTimeouts;
-    }
-    
-    long getLockedUntil() {
-        return lockedUntil;
     }
     
     boolean isLocked() {

@@ -27,7 +27,7 @@ import java.util.Comparator;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 
-public class PeerDistanceComparator implements Comparator<Destination> {
+class PeerDistanceComparator implements Comparator<Destination> {
     private Hash reference;
     
     PeerDistanceComparator(Hash reference) {

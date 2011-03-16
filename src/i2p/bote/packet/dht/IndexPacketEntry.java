@@ -28,19 +28,20 @@ import net.i2p.data.Hash;
  */
 public class IndexPacketEntry {
     public Hash emailPacketKey;
-    public Hash delVerificationHash;
     public long storeTime;   // milliseconds since 1-1-1970
+    
+    Hash delVerificationHash;
     
     /**
      * Constructs an <code>IndexPacketEntry</code> with a time stamp of 0.
      * @param emailPacketKey
      * @param delVerificationHash
      */
-    public IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash) {
+    IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash) {
         this(emailPacketKey, delVerificationHash, 0);
     }
     
-    public IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash, long storeTime) {
+    IndexPacketEntry(Hash emailPacketKey, Hash delVerificationHash, long storeTime) {
         this.emailPacketKey = emailPacketKey;
         this.delVerificationHash = delVerificationHash;
         this.storeTime = storeTime;

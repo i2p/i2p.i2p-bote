@@ -55,16 +55,4 @@ public interface DHT {
     int getNumPeers();
     
     DhtPeerStats getPeerStats();
-    
-    void start();
-    
-    void requestShutdown();
-
-    /**
-     * Waits <code>timeout</code> milliseconds for the DHT engine to exit
-     * after {@link #requestShutdown()} has been called.
-     * @param timeout
-     * @throws InterruptedException
-     */
-    void awaitShutdown(long timeout) throws InterruptedException;
 }

@@ -108,7 +108,7 @@ public abstract class I2PBotePacket {
      * @param data
      * @throws MalformedPacketException If the byte array does not contain a valid <code>I2PBotePacket</code>.
      */
-    public static I2PBotePacket createPacket(byte[] data) throws MalformedPacketException {
+    private static I2PBotePacket createPacket(byte[] data) throws MalformedPacketException {
         if (CommunicationPacket.isPrefixValid(data))
             return CommunicationPacket.createPacket(data);
         else

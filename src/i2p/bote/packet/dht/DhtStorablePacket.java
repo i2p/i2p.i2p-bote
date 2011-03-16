@@ -33,13 +33,13 @@ import net.i2p.util.Log;
 public abstract class DhtStorablePacket extends DataPacket {
     private static Log log = new Log(DhtStorablePacket.class);
 
-    public DhtStorablePacket() {
+    protected DhtStorablePacket() {
     }
 
     /**
      * @see i2p.bote.packet.DataPacket#DataPacket(byte[])
      */
-    public DhtStorablePacket(byte[] data) {
+    protected DhtStorablePacket(byte[] data) {
         super(data);
     }
 

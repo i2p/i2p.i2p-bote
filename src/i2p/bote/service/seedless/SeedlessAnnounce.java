@@ -56,7 +56,7 @@ import net.i2p.util.Log;
  *
  * @author sponge
  */
-public class SeedlessAnnounce extends I2PBoteThread {
+class SeedlessAnnounce extends I2PBoteThread {
     private Log log = new Log(SeedlessAnnounce.class);
     private long interval;   // in milliseconds
     private long lastSeedlessAnnounce = 0;
@@ -72,7 +72,7 @@ public class SeedlessAnnounce extends I2PBoteThread {
      * @param seedlessScrapeServers
      * @param interval In minutes
      */
-    public SeedlessAnnounce(I2PSocketManager socketManager, SeedlessScrapeServers seedlessScrapeServers, int interval) {
+    SeedlessAnnounce(I2PSocketManager socketManager, SeedlessScrapeServers seedlessScrapeServers, int interval) {
         super("SeedlsAnounc");
         this.socketManager = socketManager;
         this.seedlessScrapeServers = seedlessScrapeServers;
@@ -80,7 +80,7 @@ public class SeedlessAnnounce extends I2PBoteThread {
     }
 
     @Override
-    public void doStep() {
+    protected void doStep() {
         lastTime = lastSeedlessAnnounce;
         timeSinceLastCheck = System.currentTimeMillis() - lastTime;
         if (lastTime == 0 || timeSinceLastCheck > this.interval) {
@@ -90,16 +90,12 @@ public class SeedlessAnnounce extends I2PBoteThread {
         }
     }
 
-    public long getInterval() {
-        return interval;
-    }
-
     private synchronized void doSeedlessAnnounce() {
         List<String> seedlessServers = seedlessScrapeServers.getSeedlessServers();
         if(seedlessServers.isEmpty()) {
             // try again in a minute.
             log.error("SeedlessServers.isEmpty, will retry shortly.");
-            lastSeedlessAnnounce = System.currentTimeMillis() - (getInterval() - TimeUnit.MINUTES.toMillis(1));
+            lastSeedlessAnnounce = System.currentTimeMillis() - (interval - TimeUnit.MINUTES.toMillis(1));
             return;
         }
         // Announce to 10 servers.
@@ -181,7 +177,7 @@ public class SeedlessAnnounce extends I2PBoteThread {
         }
         if(!didsomething) {
             // try again in 1 minute.
-            lastSeedlessAnnounce = System.currentTimeMillis() - (getInterval() - TimeUnit.MINUTES.toMillis(1));
+            lastSeedlessAnnounce = System.currentTimeMillis() - (interval - TimeUnit.MINUTES.toMillis(1));
             return;
         }
 
