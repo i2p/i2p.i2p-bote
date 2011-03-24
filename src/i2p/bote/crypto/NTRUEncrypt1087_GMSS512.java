@@ -22,11 +22,15 @@
 package i2p.bote.crypto;
 
 import i2p.bote.Util;
+import i2p.bote.fileencryption.PasswordException;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.GeneralSecurityException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyException;
 import java.security.KeyPair;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -40,34 +44,70 @@ import net.sf.ntru.EncryptionParameters;
 import net.sf.ntru.EncryptionPrivateKey;
 import net.sf.ntru.EncryptionPublicKey;
 import net.sf.ntru.NtruEncrypt;
-import net.sf.ntru.NtruSign;
-import net.sf.ntru.SignatureKeyPair;
-import net.sf.ntru.SignatureParameters;
-import net.sf.ntru.SignaturePrivateKey;
-import net.sf.ntru.SignaturePublicKey;
+import de.flexiprovider.api.exceptions.InvalidKeySpecException;
+import de.flexiprovider.api.keys.KeySpec;
+import de.flexiprovider.pki.PKCS8EncodedKeySpec;
+import de.flexiprovider.pqc.hbc.gmss.GMSSKeyFactory;
+import de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator;
+import de.flexiprovider.pqc.hbc.gmss.GMSSParameterSpec;
+import de.flexiprovider.pqc.hbc.gmss.GMSSParameterset;
+import de.flexiprovider.pqc.hbc.gmss.GMSSPublicKeySpec;
+import de.flexiprovider.pqc.hbc.gmss.GMSSSignature;
 
 /**
- * NTRUEncrypt with N=1087 and NTRUSign with N=349.
+ * NTRUEncrypt with N=1087 and GMSS with SHA512.
  * <p/>
- * Both algorithms provide 256 bits (???) of security and are considered safe from
+ * Both algorithms provide 256 bits of security and are considered safe from
  * quantum computer attacks.<br/>
- * NTRU uses public keys that are shorter than ElGamal keys (at the same security
- * level) but longer than ECC keys.
+ * NTRUEncrypt uses public keys that are shorter than ElGamal keys (at the same
+ * security level) but longer than ECC keys. GMSS public keys are roughly the
+ * same length as ECC keys.
+ * <p/>
+ * Key generation with this <code>CryptoImplementation</code> takes some time,
+ * almost all of which is spent on GMSS key generation. On fast computers, it
+ * takes a minute or less; on slower machines, it takes several minutes.
+ * <p/>
+ * One GMSS key can only create <code>2^(Σ HEIGHTS)</code> signatures.
+ * Since <code>HEIGHTS</code> is <code>[6, 6, 5, 5]</code>, a single email
+ * identity can be used to send 100 emails a day to 10 recipients each for 167
+ * years before the email identity is used up.
+ * <p/>
+ * GMSS is a key-evolving signature scheme, meaning the private key changes
+ * after every signature. This affects the length of the private key. The
+ * maximum amount by which the key can grow can be calculated using Lemma 7 in
+ * <a href=http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1374&rep=rep1&type=pdf>
+ * <i>Merkle Signatures with Virtually Unlimited Signature Capacity</i></a>.
+ * Because the private key is variable in length, it is padded to the maximum
+ * length so the <code>CryptoImplementation</code> can be assigned a key length
+ * that identifies it.
+ * <p/>
+ * GMSS signatures are much longer than ElGamal or ECC signatures. GMSS allows
+ * a trade-off between signature size, private key size, and key generation
+ * time. Parameters for this <code>CryptoImplementation</code> were chosen to
+ * keep signature size and key generation time low at the expense of private
+ * key size. Signatures are 13712 bytes and private keys are 71584 bytes
+ * (including padding).
  */
-public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
+public class NTRUEncrypt1087_GMSS512 implements CryptoImplementation {
     private static final EncryptionParameters NTRUENCRYPT_PARAMETERS = EncryptionParameters.EES1087EP2;
-    private static final SignatureParameters NTRUSIGN_PARAMETERS = SignatureParameters.T349;
+    private static final int[] HEIGHTS = new int[] {6, 6, 5, 5};   // GMSS tree heights
+    private static final int[] WINTERNITZ = new int[] {12, 11, 11, 11};   // Winternitz parameters for GMSS
+    private static final int[] AUTH_PATH_PARAMETERS = new int[] {2, 2, 3, 3};   // the parameter K in GMSS
+    private static final GMSSParameterset GMSS_PARAMETERS = new GMSSParameterset(HEIGHTS.length, HEIGHTS, WINTERNITZ, AUTH_PATH_PARAMETERS);
+    private static final int BASE64_PRIVATE_KEY_PAIR_LENGTH = 95734;
     private static final int PUBLIC_ENCRYPTION_KEY_BYTES = 1495;
-    private static final int PUBLIC_SIGNING_KEY_BYTES = 393;
+    private static final int PUBLIC_SIGNING_KEY_BYTES = 64;
     private static final int PRIVATE_ENCRYPTION_KEY_BYTES = 216;
-    private static final int PRIVATE_SIGNING_KEY_BYTES = 673;
+    private static final int PRIVATE_SIGNING_KEY_BYTES = 57180 + 4 + 14400;   // ASN1-encoded private key + 4 length bytes + padding
     private static final int ENCRYPTED_LENGTH_BYTES = PUBLIC_ENCRYPTION_KEY_BYTES;   // length of an NTRU-encrypted message (no AES)
     private static final int BLOCK_SIZE = 16;   // length of the AES initialization vector; also the AES block size for padding. Not to be confused with the AES key size.
     
     private I2PAppContext appContext;
+    private GMSSKeyFactory gmssKeyFactory;
 
-    NTRUEncrypt1087_NTRUSign349() {
+    public NTRUEncrypt1087_GMSS512() {
         appContext = new I2PAppContext();
+        gmssKeyFactory = new GMSSKeyFactory();
     }
     
     @Override
@@ -82,14 +122,12 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
 
     @Override
     public int getBase64PublicKeyPairLength() {
-        // #base64 chars = ceil(#bytes*8/6)
-        return (getByteArrayPublicKeyPairLength()*8+5) / 6;
+        return 2079;
     }
     
     @Override
     public int getBase64CompleteKeySetLength() {
-        int privateKeyPairLength = ((PRIVATE_ENCRYPTION_KEY_BYTES+PRIVATE_SIGNING_KEY_BYTES)*8+5) / 6;
-        return getBase64PublicKeyPairLength() + privateKeyPairLength;
+        return getBase64PublicKeyPairLength() + BASE64_PRIVATE_KEY_PAIR_LENGTH;
     }
     
     @Override
@@ -98,27 +136,27 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
     }
     
     @Override
-    public PublicKeyPair createPublicKeyPair(byte[] bytes) {
+    public PublicKeyPair createPublicKeyPair(byte[] bytes) throws InvalidKeySpecException {
         PublicKeyPair keyPair = new PublicKeyPair();
         
         byte[] encryptionKeyBytes = Arrays.copyOf(bytes, PUBLIC_ENCRYPTION_KEY_BYTES);
         keyPair.encryptionKey = new NtruEncrypt1087PublicKey(encryptionKeyBytes);
         
-        byte[] signingKeyBytes = Arrays.copyOfRange(bytes, PUBLIC_ENCRYPTION_KEY_BYTES, PUBLIC_ENCRYPTION_KEY_BYTES+PUBLIC_ENCRYPTION_KEY_BYTES);
-        keyPair.signingKey = new NtruSign349PublicKey(signingKeyBytes);
+        byte[] signingKeyBytes = Arrays.copyOfRange(bytes, PUBLIC_ENCRYPTION_KEY_BYTES, PUBLIC_ENCRYPTION_KEY_BYTES+PUBLIC_SIGNING_KEY_BYTES);
+        keyPair.signingKey = new Gmss512PublicKey(signingKeyBytes);
         
         return keyPair;
     }
     
     @Override
-    public PrivateKeyPair createPrivateKeyPair(byte[] bytes) {
+    public PrivateKeyPair createPrivateKeyPair(byte[] bytes) throws InvalidKeySpecException {
         PrivateKeyPair keyPair = new PrivateKeyPair();
         
         byte[] encryptionKeyBytes = Arrays.copyOf(bytes, PRIVATE_ENCRYPTION_KEY_BYTES);
         keyPair.encryptionKey = new NtruEncrypt1087PrivateKey(encryptionKeyBytes);
         
         byte[] signingKeyBytes = Arrays.copyOfRange(bytes, PRIVATE_ENCRYPTION_KEY_BYTES, bytes.length);
-        keyPair.signingKey = new NtruSign349PrivateKey(signingKeyBytes);
+        keyPair.signingKey = new Gmss512PrivateKey(signingKeyBytes);
         
         return keyPair;
     }
@@ -126,21 +164,21 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
     @Override
     public String toBase64(PublicKeyPair keyPair) {
         String base64 = Base64.encode(toByteArray(keyPair));
-        // the last two chars are always '==', so drop them
-        return base64.substring(0, base64.length()-2);
+        // the last char is always '=', so drop it
+        return base64.substring(0, base64.length()-1);
     }
 
     @Override
     public String toBase64(PrivateKeyPair keyPair) {
         String base64 = Base64.encode(toByteArray(keyPair));
-        // the last two chars are always '==', so drop them
+        // the last two chars are always "==", so drop them
         return base64.substring(0, base64.length()-2);
     }
 
     @Override
     public PublicKeyPair createPublicKeyPair(String base64) throws GeneralSecurityException {
-        // append the "==" that is omitted in the encoding
-        base64 += "==";
+        // append the '=' that is omitted in the encoding
+        base64 += '=';
         byte[] keyBytes = Base64.decode(base64);
         return createPublicKeyPair(keyBytes);
     }
@@ -166,7 +204,9 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
     @Override
     public byte[] toByteArray(PrivateKeyPair keyPair) {
         byte[] encKey = keyPair.encryptionKey.getEncoded();
+        
         byte[] sigKey = keyPair.signingKey.getEncoded();
+        
         byte[] encodedKeys = new byte[encKey.length + sigKey.length];
         System.arraycopy(encKey, 0, encodedKeys, 0, encKey.length);
         System.arraycopy(sigKey, 0, encodedKeys, encKey.length, sigKey.length);
@@ -183,14 +223,16 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
     }
     
     @Override
-    public KeyPair generateSigningKeyPair() throws KeyException {
-        SignatureKeyPair sigKeyPair = NtruSign.generateKeyPair(NTRUSIGN_PARAMETERS);
-        PublicKey publicKey = new NtruSign349PublicKey(sigKeyPair.pub);
-        PrivateKey privateKey = new NtruSign349PrivateKey(sigKeyPair.priv);
+    public KeyPair generateSigningKeyPair() throws KeyException, InvalidAlgorithmParameterException, InvalidKeySpecException {
+        GMSSKeyPairGenerator gmssKeyPairGenerator = new GMSSKeyPairGenerator.GMSSwithSHA512();
+        gmssKeyPairGenerator.initialize(new GMSSParameterSpec(GMSS_PARAMETERS), appContext.random());
         
+        de.flexiprovider.api.keys.KeyPair flexiKeyPair = gmssKeyPairGenerator.genKeyPair();
+        Gmss512PublicKey publicKey = new Gmss512PublicKey(flexiKeyPair.getPublic());
+        Gmss512PrivateKey privateKey = new Gmss512PrivateKey(flexiKeyPair.getPrivate());
         return new KeyPair(publicKey, privateKey);
     }
-    
+
     /**
      * Only accepts <code>Ntru1087PublicKey</code>s. 
      * @throws NoSuchAlgorithmException
@@ -255,35 +297,46 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
             throw new IllegalArgumentException("<key> must be a " + NtruEncrypt1087PrivateKey.class.getName());
     }
 
-    /** Only accepts <code>NtruSign349PublicKey</code>s and <code>NtruSign349PrivateKey</code>s. */
+    /** Only accepts <code>Gmss512PrivateKey</code>s. */
     @Override
-    public byte[] sign(byte[] data, PublicKey publicKey, PrivateKey privateKey) {
-        NtruSign349PublicKey publicNtruKey = castToNtruSignKey(publicKey);
-        NtruSign349PrivateKey privateNtruKey = castToNtruSignKey(privateKey);
-        return NtruSign.sign(data, privateNtruKey.key, publicNtruKey.key, NTRUSIGN_PARAMETERS);
+    public byte[] sign(byte[] data, PrivateKey key, KeyUpdateHandler keyUpdateHandler) throws GeneralSecurityException, PasswordException {
+        Gmss512PrivateKey gmssKey = castToGMSS(key);
+        GMSSSignature signer = new GMSSSignature.GMSSwithSHA512();
+        signer.initSign(gmssKey.key);
+        signer.update(data);
+        byte[] signature = signer.sign();
+        try {
+            keyUpdateHandler.updateKey();
+        } catch (IOException e) {
+            throw new KeyStoreException("Error updating GMSS key after signing.", e);
+        }
+        return signature;
     }
 
-    private NtruSign349PublicKey castToNtruSignKey(PublicKey key) {
-        if (key instanceof NtruSign349PublicKey)
-            return (NtruSign349PublicKey)key;
+    private Gmss512PrivateKey castToGMSS(PrivateKey key) {
+        if (key instanceof Gmss512PrivateKey)
+            return (Gmss512PrivateKey)key;
         else
-            throw new IllegalArgumentException("<key> must be a " + NtruSign349PublicKey.class.getName());
+            throw new IllegalArgumentException("<key> must be a " + Gmss512PrivateKey.class.getName());
     }
 
-    private NtruSign349PrivateKey castToNtruSignKey(PrivateKey key) {
-        if (key instanceof NtruSign349PrivateKey)
-            return (NtruSign349PrivateKey)key;
-        else
-            throw new IllegalArgumentException("<key> must be a " + NtruSign349PrivateKey.class.getName());
-    }
-
-    /** Only accepts <code>NtruSign349PublicKey</code>s. */
+    /** Only accepts <code>Gmss512PublicKey</code>s. */
     @Override
-    public boolean verify(byte[] data, byte[] signature, PublicKey key) {
-        NtruSign349PublicKey publicNtruKey = castToNtruSignKey(key);
-        return NtruSign.verify(data, signature, publicNtruKey.key, NTRUSIGN_PARAMETERS);
+    public boolean verify(byte[] data, byte[] signature, PublicKey key) throws GeneralSecurityException {
+        Gmss512PublicKey gmssKey = castToGMSS(key);
+        GMSSSignature signer = new GMSSSignature.GMSSwithSHA512();
+        signer.initVerify(gmssKey.key);
+        signer.update(data);
+        return signer.verify(signature);
     }
     
+    private Gmss512PublicKey castToGMSS(PublicKey key) {
+        if (key instanceof Gmss512PublicKey)
+            return (Gmss512PublicKey)key;
+        else
+            throw new IllegalArgumentException("<key> must be a " + Gmss512PublicKey.class.getName());
+    }
+
     private class NtruEncrypt1087PublicKey implements PublicKey {
         private static final long serialVersionUID = 8103999492335873827L;
         
@@ -310,6 +363,15 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
         @Override
         public byte[] getEncoded() {
             return key.getEncoded();
+        }
+        
+        @Override
+        public boolean equals(Object anotherObj) {
+            if (anotherObj==null || !NtruEncrypt1087PublicKey.class.equals(anotherObj.getClass()))
+                return false;
+            
+            NtruEncrypt1087PublicKey otherKey = (NtruEncrypt1087PublicKey)anotherObj;
+            return Arrays.equals(getEncoded(), otherKey.getEncoded());
         }
     }
     
@@ -340,24 +402,34 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
         public byte[] getEncoded() {
             return key.getEncoded();
         }
+        
+        @Override
+        public boolean equals(Object anotherObj) {
+            if (anotherObj==null || !NtruEncrypt1087PrivateKey.class.equals(anotherObj.getClass()))
+                return false;
+            
+            NtruEncrypt1087PrivateKey otherKey = (NtruEncrypt1087PrivateKey)anotherObj;
+            return Arrays.equals(getEncoded(), otherKey.getEncoded());
+        }
     }
-
-    private class NtruSign349PublicKey implements PublicKey {
-        private static final long serialVersionUID = 8103999492335873827L;
+    
+    private class Gmss512PublicKey implements PublicKey {
+        private static final long serialVersionUID = 6542076074673466836L;
         
-        private SignaturePublicKey key;
+        private de.flexiprovider.api.keys.PublicKey key;
         
-        public NtruSign349PublicKey(SignaturePublicKey key) {
+        public Gmss512PublicKey(de.flexiprovider.api.keys.PublicKey key) throws InvalidKeySpecException {
             this.key = key;
         }
 
-        public NtruSign349PublicKey(byte[] keyBytes) {
-            key = new SignaturePublicKey(keyBytes, NTRUSIGN_PARAMETERS);
+        public Gmss512PublicKey(byte[] keyBytes) throws InvalidKeySpecException {
+            GMSSPublicKeySpec keySpec = new GMSSPublicKeySpec(keyBytes, GMSS_PARAMETERS);
+            key = gmssKeyFactory.generatePublic(keySpec);
         }
 
         @Override
         public String getAlgorithm() {
-            return "NTRUSign-349";
+            return "GMSS-512";
         }
 
         @Override
@@ -367,26 +439,41 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
         
         @Override
         public byte[] getEncoded() {
-            return key.getEncoded();
+            byte[] encodedKey = key.getEncoded();
+            return Arrays.copyOfRange(encodedKey, 27, 91);   // strip everything but the key itself
+        }
+        
+        @Override
+        public boolean equals(Object anotherObj) {
+            if (anotherObj==null || !Gmss512PublicKey.class.equals(anotherObj.getClass()))
+                return false;
+            
+            Gmss512PublicKey otherKey = (Gmss512PublicKey)anotherObj;
+            return Arrays.equals(getEncoded(), otherKey.getEncoded());
         }
     }
-
-    private class NtruSign349PrivateKey implements PrivateKey {
-        private static final long serialVersionUID = 8103999492335873827L;
+    
+    private class Gmss512PrivateKey implements PrivateKey {
+        private static final long serialVersionUID = -8488638051563793833L;
         
-        private SignaturePrivateKey key;
+        private de.flexiprovider.api.keys.PrivateKey key;
         
-        public NtruSign349PrivateKey(SignaturePrivateKey key) {
+        public Gmss512PrivateKey(de.flexiprovider.api.keys.PrivateKey key) {
             this.key = key;
         }
-
-        public NtruSign349PrivateKey(byte[] keyBytes) {
-            key = new SignaturePrivateKey(keyBytes, NTRUSIGN_PARAMETERS);
+        
+        public Gmss512PrivateKey(byte[] keyBytes) throws InvalidKeySpecException {
+            ByteBuffer paddedSigningKey = ByteBuffer.wrap(keyBytes);
+            int sigKeySize = paddedSigningKey.getInt();
+            byte[] signingKeyBytes = new byte[sigKeySize];
+            paddedSigningKey.get(signingKeyBytes);
+            KeySpec signingKeySpec = new PKCS8EncodedKeySpec(signingKeyBytes);
+            key = gmssKeyFactory.generatePrivate(signingKeySpec);
         }
 
         @Override
         public String getAlgorithm() {
-            return "NTRUSign-349";
+            return "GMSS-512";
         }
 
         @Override
@@ -396,7 +483,22 @@ public class NTRUEncrypt1087_NTRUSign349 implements CryptoImplementation {
         
         @Override
         public byte[] getEncoded() {
-            return key.getEncoded();
+            byte[] encodedKey = key.getEncoded();
+            ByteBuffer paddedSigKey = ByteBuffer.allocate(4 + encodedKey.length);
+            paddedSigKey.putInt(encodedKey.length);
+            paddedSigKey.put(encodedKey);
+            encodedKey = paddedSigKey.array();
+            encodedKey = Arrays.copyOf(encodedKey, PRIVATE_SIGNING_KEY_BYTES);
+            return encodedKey;
+        }
+        
+        @Override
+        public boolean equals(Object anotherObj) {
+            if (anotherObj==null || !Gmss512PrivateKey.class.equals(anotherObj.getClass()))
+                return false;
+            
+            Gmss512PrivateKey otherKey = (Gmss512PrivateKey)anotherObj;
+            return Arrays.equals(getEncoded(), otherKey.getEncoded());
         }
     }
 }

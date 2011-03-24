@@ -234,7 +234,7 @@ public class ElGamal2048_DSA1024 implements CryptoImplementation {
 
     /** Only accepts <code>DSAPrivateKey</code>s. */
     @Override
-    public byte[] sign(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws GeneralSecurityException {
+    public byte[] sign(byte[] data, PrivateKey privateKey, KeyUpdateHandler keyupdateHandler) throws GeneralSecurityException {
         DSAPrivateKey dsaKey = castToDSA(privateKey);
         Signature signature = DSAEngine.getInstance().sign(data, dsaKey.getI2PKey());
         return signature.toByteArray();

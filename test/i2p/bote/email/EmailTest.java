@@ -24,13 +24,14 @@ package i2p.bote.email;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import i2p.bote.TestUtil;
+import i2p.bote.crypto.KeyUpdateHandler;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.dht.UnencryptedEmailPacket;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -116,40 +117,26 @@ public class EmailTest {
                 continue;
             
             // sign and verify signature
-            sign(email, identity);
+            email.sign(identity, TestUtil.createDummyKeyUpdateHandler());
             assertTrue(email.isSignatureValid());
             
             // write the email to a byte array, make a new email from the byte array, and verify the signature
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            for (UnencryptedEmailPacket packet: email.createEmailPackets(identity, null, I2PBotePacket.MAX_DATAGRAM_SIZE))
+            KeyUpdateHandler keyUpdateHandler = TestUtil.createDummyKeyUpdateHandler();
+            for (UnencryptedEmailPacket packet: email.createEmailPackets(identity, keyUpdateHandler, null, I2PBotePacket.MAX_DATAGRAM_SIZE))
                 outputStream.write(packet.getContent());
             email = new Email(outputStream.toByteArray());
             assertTrue(email.isSignatureValid());
         }
     }
 
-    /**
-     * Calls the private method {link Email.sign(EmailIdentity)}.
-     * @param email
-     * @param identity
-     * @throws NoSuchMethodException 
-     * @throws SecurityException 
-     * @throws InvocationTargetException 
-     * @throws IllegalAccessException 
-     * @throws IllegalArgumentException 
-     */
-    private void sign(Email email, EmailIdentity identity) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-        Method signMethod = Email.class.getDeclaredMethod("sign", EmailIdentity.class);
-        signMethod.setAccessible(true);
-        signMethod.invoke(email, identity);
-    }
-    
     @Test
     public void testCreateEmailPackets() throws MessagingException, IOException, GeneralSecurityException, SecurityException, IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
         // convert an email to a byte array, convert back, and compare with the original email
         for (Email email: emails) {
             EmailIdentity identity = identities.get(email);
-            Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(identity, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
+            KeyUpdateHandler keyUpdateHandler = TestUtil.createDummyKeyUpdateHandler();
+            Collection<UnencryptedEmailPacket> packets = email.createEmailPackets(identity, keyUpdateHandler, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
             assertTrue("Expected more email packets. #packets = " + packets.size(), packets.size() > email.getText().length()/I2PBotePacket.MAX_DATAGRAM_SIZE/2);   // the emails are somewhat compressible, but definitely not by 50%
             
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -169,10 +156,11 @@ public class EmailTest {
         Email newEmail;
         Collection<UnencryptedEmailPacket> packets;
         ByteArrayOutputStream outputStream;
+        KeyUpdateHandler keyUpdateHandler = TestUtil.createDummyKeyUpdateHandler();
         
         // verify that all BCC addresses are removed when sending to a TO: address
         EmailIdentity identity2 = identities.get(emails[2]);
-        packets = emails[2].createEmailPackets(identity2, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        packets = emails[2].createEmailPackets(identity2, keyUpdateHandler, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
         outputStream = new ByteArrayOutputStream();
         for (UnencryptedEmailPacket packet: packets)
             outputStream.write(packet.getContent());
@@ -181,7 +169,7 @@ public class EmailTest {
         assertEquals(3, newEmail.getAllRecipients().length);
         
         // verify that the recipient is not removed if it is a BCC: addresses
-        packets = emails[2].createEmailPackets(bccIdentity, bccEmailDestination, I2PBotePacket.MAX_DATAGRAM_SIZE);   // use the plain email dest because that is what the Email class compares against
+        packets = emails[2].createEmailPackets(bccIdentity, keyUpdateHandler, bccEmailDestination, I2PBotePacket.MAX_DATAGRAM_SIZE);   // use the plain email dest because that is what the Email class compares against
         outputStream = new ByteArrayOutputStream();
         for (UnencryptedEmailPacket packet: packets)
             outputStream.write(packet.getContent());
@@ -199,7 +187,8 @@ public class EmailTest {
         
         Email newEmail = new Email(true);
         newEmail.setText(stringBuilder.toString());
-        Collection<UnencryptedEmailPacket> packets = newEmail.createEmailPackets(bccIdentity, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
+        KeyUpdateHandler keyUpdateHandler = TestUtil.createDummyKeyUpdateHandler();
+        Collection<UnencryptedEmailPacket> packets = newEmail.createEmailPackets(bccIdentity, keyUpdateHandler, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
         assertEquals("The email was not compressed into one email packet.", 1, packets.size());
     }
     

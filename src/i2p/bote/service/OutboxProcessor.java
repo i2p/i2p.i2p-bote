@@ -23,10 +23,10 @@ package i2p.bote.service;
 
 import static i2p.bote.Util._;
 import i2p.bote.Configuration;
-import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.RelayPacketFolder;
@@ -65,17 +65,19 @@ public class OutboxProcessor extends I2PBoteThread {
     private Outbox outbox;
     private RelayPeerManager peerManager;
     private RelayPacketFolder relayPacketFolder;
+    private Identities identities;
     private Configuration configuration;
     private NetworkStatusSource networkStatusSource;
     private CountDownLatch wakeupSignal;   // tells the thread to interrupt the current wait and resume the loop
     private List<OutboxListener> outboxListeners;
     
-    public OutboxProcessor(DHT dht, Outbox outbox, RelayPeerManager peerManager, RelayPacketFolder relayPacketFolder, Configuration configuration, NetworkStatusSource networkStatusSource) {
+    public OutboxProcessor(DHT dht, Outbox outbox, RelayPeerManager peerManager, RelayPacketFolder relayPacketFolder, Identities identities, Configuration configuration, NetworkStatusSource networkStatusSource) {
         super("OutboxProcsr");
         this.dht = dht;
         this.outbox = outbox;
         this.peerManager = peerManager;
         this.relayPacketFolder = relayPacketFolder;
+        this.identities = identities;
         this.configuration = configuration;
         this.networkStatusSource = networkStatusSource;
         wakeupSignal = new CountDownLatch(1);
@@ -138,7 +140,7 @@ public class OutboxProcessor extends I2PBoteThread {
         EmailIdentity senderIdentity = null;
         if (!email.isAnonymous()) {
             String sender = email.getSender().toString();
-            senderIdentity = I2PBote.getInstance().getIdentities().extractIdentity(sender);
+            senderIdentity = identities.extractIdentity(sender);
             if (senderIdentity == null) {
                 log.error("No identity matches the sender/from field: " + sender + " in email: " + email);
                 outbox.setStatus(email, _("No identity matches the sender/from field: " + sender));
@@ -189,7 +191,7 @@ public class OutboxProcessor extends I2PBoteThread {
             
             int hops = configuration.getNumStoreHops();
             int maxPacketSize = getMaxEmailPacketSize(hops);
-            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity, recipient, maxPacketSize);
+            Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity, identities, recipient, maxPacketSize);
             
             IndexPacket indexPacket = new IndexPacket(recipientDest);
             for (UnencryptedEmailPacket unencryptedPacket: emailPackets) {

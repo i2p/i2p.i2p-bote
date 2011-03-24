@@ -22,6 +22,7 @@
 package i2p.bote.email;
 
 import i2p.bote.Util;
+import i2p.bote.crypto.KeyUpdateHandler;
 import i2p.bote.fileencryption.DerivedKey;
 import i2p.bote.fileencryption.EncryptedInputStream;
 import i2p.bote.fileencryption.EncryptedOutputStream;
@@ -54,14 +55,15 @@ import net.i2p.util.Log;
  * Holds a set of {@link EmailIdentity} objects that are sorted by name.<br/>
  * The Email Identities can be written to, and read from, a password-encrypted file.
  */
-public class Identities implements Iterable<EmailIdentity> {
+public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
     private Log log = new Log(Identities.class);
     private File identitiesFile;
     private PasswordHolder passwordHolder;
     private SortedSet<EmailIdentity> identities;   // null until file has been read successfully
 
     /**
-     * Constructs a new empty <code>Identities</code> object.
+     * Constructs a new empty <code>Identities</code> object. The <code>identitiesFile</code>
+     * is lazy-loaded.
      * @param identitiesFile
      * @param passwordHolder
      */
@@ -160,10 +162,10 @@ public class Identities implements Iterable<EmailIdentity> {
             return identity;
         }
         catch (PatternSyntaxException e) {
-            log.error("Unparseable email identity: <" + emailIdentityString + ">");
+            log.error("Unparseable email identity: <" + emailIdentityString + ">", e);
             return null;
         } catch (GeneralSecurityException e) {
-            log.error("Invalid email identity: <" + fields[0] + ">");
+            log.error("Invalid email identity: <" + fields[0] + ">", e);
             return null;
         }
     }
@@ -399,7 +401,7 @@ public class Identities implements Iterable<EmailIdentity> {
     private class IdentityComparator implements Comparator<EmailIdentity> {
         @Override
         public int compare(EmailIdentity identity1, EmailIdentity identity2) {
-            int nameComparison = String.CASE_INSENSITIVE_ORDER.compare(identity1.getPublicName(), identity2.getPublicName());
+            int nameComparison = compareNames(identity1, identity2);
             if (nameComparison == 0) {
                 // if the names are the same, compare destination keys
                 String key1 = identity1.getKey();
@@ -409,5 +411,22 @@ public class Identities implements Iterable<EmailIdentity> {
             else
                 return nameComparison;
         }
+        
+        /** Null-safe comparison of public names */
+        private int compareNames(EmailIdentity identity1, EmailIdentity identity2) {
+            String name1 = identity1.getPublicName();
+            String name2 = identity2.getPublicName();
+            if (name1 == null)
+                return name2==null ? 0 : -1;
+            else if (name2 == null)
+                return 1;
+            else
+                return name1.compareToIgnoreCase(name2);
+        }
+    }
+
+    @Override
+    public void updateKey() throws GeneralSecurityException, PasswordException, IOException {
+        save();
     }
 }

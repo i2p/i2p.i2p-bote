@@ -25,6 +25,7 @@ import i2p.bote.crypto.CryptoImplementationTest;
 import i2p.bote.email.EmailIdentityTest;
 import i2p.bote.email.EmailMetadataTest;
 import i2p.bote.email.EmailTest;
+import i2p.bote.email.IdentitiesTest;
 import i2p.bote.fileencryption.EncryptedStreamTest;
 import i2p.bote.fileencryption.FileEncryptionUtilTest;
 import i2p.bote.fileencryption.PasswordCacheTest;
@@ -82,6 +83,7 @@ import org.junit.runners.Suite;
     EmailTest.class,
     EmailMetadataTest.class,
     EmailIdentityTest.class,
+    IdentitiesTest.class,
     KBucketTest.class,
     BucketManagerTest.class,
     CryptoImplementationTest.class,

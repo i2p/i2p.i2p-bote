@@ -398,7 +398,7 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     protected abstract ECPublicKeySpec createPublicKeySpec(byte[] encodedKey) throws InvalidKeySpecException, NoSuchAlgorithmException;
     
     @Override
-    public byte[] sign(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+    public byte[] sign(byte[] data, PrivateKey privateKey, KeyUpdateHandler keyupdateHandler) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         BouncyECDSASigner signatureAlg = new BouncyECDSASigner();
         signatureAlg.initSign(privateKey);
         signatureAlg.update(data);

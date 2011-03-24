@@ -124,6 +124,7 @@
             <lib file="${lib}/i2pbote.jar"/>
             <lib file="${lib}/mailapi.jar"/>
             <lib file="${lib}/bcprov-ecc-jdk16-145.jar"/>
+            <lib file="ant_build/lib/flexi-gmss-1.7p1.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
         </war>
 
@@ -133,10 +134,17 @@
         </exec>
     </target>
     
-    <target name="jar" depends="compile,precompilejsp,bundle"> 
+    <target name="flexijar" depends="compile">
+        <mkdir dir="ant_build/lib"/>
+        <jar destfile="ant_build/lib/flexi-gmss-1.7p1.jar">
+            <fileset dir="ant_build/classes" includes="de/flexiprovider/** codec/**"/>
+        </jar>
+    </target>
+    
+    <target name="jar" depends="compile,flexijar,precompilejsp,bundle"> 
         <mkdir dir="ant_build" />
         <jar destfile="${lib}/i2pbote.jar">
-            <fileset dir="ant_build/classes" excludes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/** **/*Test.class"/>
+            <fileset dir="ant_build/classes" excludes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/** de/flexiprovider/** codec/** **/*Test.class"/>
             <fileset dir="src" includes="i2p/bote/network/built-in-peers.txt"/>
         </jar>
     </target>
@@ -176,6 +184,13 @@
             <arg value="--modification-time=latest"/>
             <arg value="plugin/plugin.tmp/lib/bcprov-ecc-jdk16-145.jar.pack"/>
             <arg value="${lib}/bcprov-ecc-jdk16-145.jar"/>
+        </exec>
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/flexi-gmss-1.7p1.jar.pack"/>
+            <arg value="ant_build/lib/flexi-gmss-1.7p1.jar"/>
         </exec>
 
         <copy file="WebContent/WEB-INF/lib/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
@@ -220,7 +235,7 @@
     </target>
 
     <!-- same as war but without the library jars -->
-    <target name="pluginwar" depends="compile,precompilejsp,bundle"> 
+    <target name="pluginwar" depends="compile,flexijar,precompilejsp,bundle"> 
         <mkdir dir="ant_build" />
         <war destfile="i2pbote-plugin.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />

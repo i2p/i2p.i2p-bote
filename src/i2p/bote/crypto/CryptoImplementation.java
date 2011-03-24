@@ -127,8 +127,14 @@ public interface CryptoImplementation {
     /** This method takes a public key in addition to the private key because some algorithms need the public key for decryption. */
     byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws GeneralSecurityException, InvalidCipherTextException;
     
-    /** This method takes a public key in addition to the private key because some algorithms need the public key for signing. */
-    byte[] sign(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws GeneralSecurityException;
+    /**
+     * @param data
+     * @param privateKey
+     * @param keyUpdateHandler Called if the signature algorithm alters the private key
+     * @return
+     * @throws GeneralSecurityException
+     */
+    byte[] sign(byte[] data, PrivateKey privateKey, KeyUpdateHandler keyUpdateHandler) throws GeneralSecurityException;
     
     boolean verify(byte[] data, byte[] signature, PublicKey key) throws GeneralSecurityException;
 }

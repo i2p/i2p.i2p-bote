@@ -279,7 +279,7 @@ public class I2PBote implements NetworkStatusSource {
         expirationThread.addExpirationListener(relayPacketSender);
         backgroundThreads.add(expirationThread);
         
-        outboxProcessor = new OutboxProcessor(dht, outbox, peerManager, relayPacketFolder, configuration, this);
+        outboxProcessor = new OutboxProcessor(dht, outbox, peerManager, relayPacketFolder, identities, configuration, this);
         outboxProcessor.addOutboxListener(new OutboxListener() {
             /** Moves sent emails to the "sent" folder */
             @Override
@@ -400,7 +400,7 @@ public class I2PBote implements NetworkStatusSource {
             EmailIdentity senderIdentity = identities.extractIdentity(sender);
             if (senderIdentity == null)
                 throw new MessagingException(_("No identity matches the sender/from field: " + sender));
-            email.sign(senderIdentity);
+            email.sign(senderIdentity, identities);
         }
         
         outbox.add(email);

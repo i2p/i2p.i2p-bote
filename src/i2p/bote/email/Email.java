@@ -26,6 +26,7 @@ import i2p.bote.UniqueId;
 import i2p.bote.Util;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
+import i2p.bote.crypto.KeyUpdateHandler;
 import i2p.bote.fileencryption.EncryptedInputStream;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
@@ -42,7 +43,6 @@ import java.io.OutputStream;
 import java.net.URLConnection;
 import java.security.GeneralSecurityException;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -309,16 +309,16 @@ public class Email extends MimeMessage {
      * The signature includes the ID number of the {@link CryptoImplementation}
      * used (signature lengths can be different for the same algorithm).
      * @param senderIdentity
+     * @param keyUpdateHandler Needed for updating the signature key after signing (see {@link CryptoImplementation#sign(byte[], PrivateKey, KeyUpdateHandler)})
      * @throws MessagingException
      * @throws GeneralSecurityException 
      */
-    public void sign(EmailIdentity senderIdentity) throws MessagingException, GeneralSecurityException {
+    public void sign(EmailIdentity senderIdentity, KeyUpdateHandler keyUpdateHandler) throws MessagingException, GeneralSecurityException {
         removeHeader(SIGNATURE_HEADER);   // make sure there is no existing signature which would make the new signature invalid
         removeHeader(SIGNATURE_VALID_HEADER);   // remove the signature validity flag before signing
         CryptoImplementation cryptoImpl = senderIdentity.getCryptoImpl();
-        PublicKey publicSigningKey = senderIdentity.getPublicSigningKey();
         PrivateKey privateSigningKey = senderIdentity.getPrivateSigningKey();
-        byte[] signature = cryptoImpl.sign(toByteArray(), publicSigningKey, privateSigningKey);
+        byte[] signature = cryptoImpl.sign(toByteArray(), privateSigningKey, keyUpdateHandler);
         setHeader(SIGNATURE_HEADER, cryptoImpl.getId() + "_" + Base64.encode(signature));
     }
     
@@ -581,12 +581,13 @@ public class Email extends MimeMessage {
      * If an error occurs, an empty <code>Collection</code> is returned.
      *
      * @param senderIdentity The sender's Email Identity, or <code>null</code> for anonymous emails
+     * @param keyUpdateHandler Needed for updating the signature key after signing (see {@link CryptoImplementation#sign(byte[], PrivateKey, KeyUpdateHandler)})
      * @param bccToKeep All BCC fields in the header section of the email are removed, except this field. If this parameter is <code>null</code>, all BCC fields are written.
      * @param maxPacketSize The size limit in bytes
      * @throws MessagingException
      * @throws GeneralSecurityException If the email cannot be signed
      */
-    public Collection<UnencryptedEmailPacket> createEmailPackets(EmailIdentity senderIdentity, String bccToKeep, int maxPacketSize) throws MessagingException, GeneralSecurityException {
+    public Collection<UnencryptedEmailPacket> createEmailPackets(EmailIdentity senderIdentity, KeyUpdateHandler keyUpdateHandler, String bccToKeep, int maxPacketSize) throws MessagingException, GeneralSecurityException {
         ArrayList<UnencryptedEmailPacket> packets = new ArrayList<UnencryptedEmailPacket>();
         
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -599,7 +600,7 @@ public class Email extends MimeMessage {
             else
                 removeHeader("BCC");
             if (!isAnonymous())
-                sign(senderIdentity);
+                sign(senderIdentity, keyUpdateHandler);
             compressTo(outputStream);
         } catch (IOException e) {
             throw new MessagingException("Can't write the email to an OutputStream.", e);

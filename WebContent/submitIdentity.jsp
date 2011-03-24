@@ -63,7 +63,7 @@
         <div class="main">
             <h2><ib:message key="Please wait..."/></h2>
             <img src="images/wait.gif"/>
-            <ib:message key="The Email Identity is being generated."/>
+            <ib:message key="The Email Identity is being generated. This can take several minutes."/>
         </div>
     </c:when>
     <%-- This is where the actual identity generation takes place --%>

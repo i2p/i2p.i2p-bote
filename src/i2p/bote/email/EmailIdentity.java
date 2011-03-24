@@ -73,7 +73,7 @@ public class EmailIdentity extends EmailDestination {
             }
         }
         if (cryptoImpl == null)
-            throw new InvalidKeyException("Not a valid Email Identity: <" + base64Key + ">"); 
+            throw new InvalidKeyException("Not a valid Email Identity: <" + base64Key + ">");
             
         PublicKeyPair publicKeys = cryptoImpl.createPublicKeyPair(base64Key);
         String base64PrivateKeys = base64Key.substring(cryptoImpl.getBase64PublicKeyPairLength());   // the two private keys start after the two public keys
