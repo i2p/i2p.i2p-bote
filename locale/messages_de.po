@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-03 17:43+0000\n"
+"POT-Creation-Date: 2011-03-21 23:40+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -10,6 +10,169 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
+
+#: src/i2p/bote/I2PBote.java:402
+#: src/i2p/bote/service/OutboxProcessor.java:146
+msgid "No identity matches the sender/from field: "
+msgstr "Keine Mailidentität stimmt mit diesem Absenderfeld (\"Von\") überein:"
+
+#: src/i2p/bote/I2PBote.java:476
+msgid "The old password is not correct."
+msgstr "Das alte Passwort ist leider nicht korrekt."
+
+#: src/i2p/bote/I2PBote.java:478
+msgid "The new password and the confirmation password do not match."
+msgstr "Das neue Passwort und die Passwortbestätigung stimmen nicht überein."
+
+#: src/i2p/bote/crypto/ECDH256_ECDSA256.java:49
+msgid "256-bit Elliptic Curve Encryption"
+msgstr "Elliptische-Kurven-Verschlüsselung, 256 Bit"
+
+#: src/i2p/bote/crypto/ECDH521_ECDSA521.java:54
+msgid "521-bit Elliptic Curve Encryption"
+msgstr "Elliptische-Kurven-Verschlüsselung, 512 Bit"
+
+#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
+msgid "2048-bit ElGamal Encryption"
+msgstr "El-Gamal-Verschlüsselung, 2048 Bit"
+
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:103
+msgid "NTRU-1087 Encryption"
+msgstr "NTRU-1087 Verschlüsselung"
+
+#: src/i2p/bote/email/Email.java:439
+#, java-format
+msgid "Invalid address: {0}"
+msgstr "Ungültige Adresse: {0}"
+
+#: src/i2p/bote/email/Email.java:445
+msgid "Address doesn't contain an Email Destination or an external address: {0}"
+msgstr "Die Adresse enthält weder eine Bote-Adresse, noch eine externe Mailadresse: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:115
+msgid "Queued"
+msgstr "in Warteschlange"
+
+#: src/i2p/bote/network/BanList.java:80
+msgid "Wrong protocol version:"
+msgstr "Falsche Protokollversion:"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "BktPfx"
+msgstr "K-Buck."
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "Distance"
+msgstr "Entfernung"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "First Seen"
+msgstr "Erster Empfang"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/i2p/bote/web/PeerInfoTag.java:86
+msgid "I2P Destination"
+msgstr "I2P-Adresse"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "Locked?"
+msgstr "Gesperrt?"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/i2p/bote/web/PeerInfoTag.java:85
+#: src/i2p/bote/web/PeerInfoTag.java:110
+msgid "Peer"
+msgstr "Gegenstelle"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:67
+msgid "No"
+msgstr "Nein"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:67
+msgid "Yes"
+msgstr "Ja"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:84
+msgid "(None)"
+msgstr "-"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:89
+msgid "(S)"
+msgstr "(S)"
+
+#: src/i2p/bote/service/OutboxProcessor.java:151
+msgid "Sending"
+msgstr "Senden"
+
+#: src/i2p/bote/service/OutboxProcessor.java:160
+#, java-format
+msgid "Sent to {0} out of {1} recipients"
+msgstr "An {0} von {1} Empfängern gesendet"
+
+#: src/i2p/bote/service/OutboxProcessor.java:167
+#: WebContent/folder.jsp
+msgid "Sent"
+msgstr "Absendezeit"
+
+#: src/i2p/bote/service/OutboxProcessor.java:170
+msgid "Gateway disabled"
+msgstr "Durchleitung deaktiviert"
+
+#: src/i2p/bote/service/OutboxProcessor.java:205
+#, java-format
+msgid "Invalid recipient address: {0}"
+msgstr "Ungültige Empfängeradresse: {0}"
+
+#: src/i2p/bote/service/OutboxProcessor.java:209
+#, java-format
+msgid "Error creating email packets: {0}"
+msgstr "Fehler beim Erstellen der Mailpakete: {0}"
+
+#: src/i2p/bote/service/OutboxProcessor.java:213
+#, java-format
+msgid "Error while sending email: {0}"
+msgstr "Fehler beim Senden der Mail: {0}"
+
+#: src/i2p/bote/web/JSPHelper.java:115
+msgid "Invalid ID number for CryptoImplementation: "
+msgstr "üngültige ident für CryptoImplementation:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:56
+msgid "Kademlia Peers:"
+msgstr "Kademlia-Gegenstellen:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:81
+msgid "Relay Peers:"
+msgstr "Verfügbare Zwischenstationen:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:87
+msgid "Reachability %"
+msgstr "Erreichbarkeit in %"
+
+#: src/i2p/bote/web/PeerInfoTag.java:106
+msgid "Banned Peers:"
+msgstr "Verbannte Gegenstellen:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:111
+msgid "Destination Hash"
+msgstr "I2P-Adresse (SHA256-Summe)"
+
+#: src/i2p/bote/web/PeerInfoTag.java:112
+msgid "Ban Reason"
+msgstr "Verbannungsgrund"
+
+#: src/i2p/bote/web/SendEmailTag.java:73
+msgid "Error: Please add at least one recipient."
+msgstr "Fehler: Bitte mindestens einen Empfänger angeben."
+
+#: src/i2p/bote/web/SendEmailTag.java:96
+msgid "The email has been queued for sending."
+msgstr "Die Mail wurde in die Sendeschlange eingestellt."
+
+#: src/i2p/bote/web/SendEmailTag.java:102
+#, java-format
+msgid "Error sending email: {0}"
+msgstr "Fehler beim Senden der Mail: {0}"
 
 #: WebContent/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -312,8 +475,8 @@ msgid "Please wait..."
 msgstr "Bitte warten ..."
 
 #: WebContent/submitIdentity.jsp
-msgid "The Email Identity is being generated."
-msgstr "Die Mail-Identität wird erzeugt."
+msgid "The Email Identity is being generated. This can take several minutes."
+msgstr "Die Mailidentität wird erzeugt. Dies kann mehrere Minuten dauern."
 
 #: WebContent/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -619,10 +782,6 @@ msgstr "Bek."
 msgid "Sig"
 msgstr "Sig"
 
-#: WebContent/folder.jsp
-msgid "Sent"
-msgstr "Absendezeit"
-
 #: WebContent/noIdentities.jsp
 msgid "In order to receive email from other people, you need to create an email identity first."
 msgstr "Um Mails empfangen zu können, müssen Sie zuerst eine Identität anlegen."
@@ -710,110 +869,4 @@ msgstr "Zum Adressbuch hinzufügen"
 #: WebContent/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Unbekannt"
-
-#~ msgid "No identity matches the sender/from field: "
-#~ msgstr ""
-#~ "Keine Mailidentität stimmt mit diesem Absenderfeld (\"Von\") überein:"
-#~ msgid "The old password is not correct."
-#~ msgstr "Das alte Passwort ist leider nicht korrekt."
-#~ msgid "The new password and the confirmation password do not match."
-#~ msgstr ""
-#~ "Das neue Passwort und die Passwortbestätigung stimmen nicht überein."
-#~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "Elliptische-Kurven-Verschlüsselung, 256 Bit"
-#~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "Elliptische-Kurven-Verschlüsselung, 512 Bit"
-#~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "El-Gamal-Verschlüsselung, 2048 Bit"
-#~ msgid "NTRU-1087 Encryption"
-#~ msgstr "NTRU-1087 Verschlüsselung"
-#~ msgid "Invalid address: {0}"
-#~ msgstr "Ungültige Adresse: {0}"
-#~ msgid ""
-#~ "Address doesn't contain an Email Destination or an external address: {0}"
-#~ msgstr ""
-#~ "Die Adresse enthält weder eine Bote-Adresse, noch eine externe "
-#~ "Mailadresse: {0}"
-#~ msgid "Queued"
-#~ msgstr "in Warteschlange"
-#~ msgid "Wrong protocol version:"
-#~ msgstr "Falsche Protokollversion:"
-#~ msgid "BktPfx"
-#~ msgstr "K-Buck."
-#~ msgid "Distance"
-#~ msgstr "Entfernung"
-#~ msgid "First Seen"
-#~ msgstr "Erster Empfang"
-#~ msgid "I2P Destination"
-#~ msgstr "I2P-Adresse"
-#~ msgid "Locked?"
-#~ msgstr "Gesperrt?"
-#~ msgid "Peer"
-#~ msgstr "Gegenstelle"
-#~ msgid "No"
-#~ msgstr "Nein"
-#~ msgid "Yes"
-#~ msgstr "Ja"
-#~ msgid "(None)"
-#~ msgstr "-"
-#~ msgid "(S)"
-#~ msgstr "(S)"
-#~ msgid "Sending"
-#~ msgstr "Senden"
-#~ msgid "Sent to {0} out of {1} recipients"
-#~ msgstr "An {0} von {1} Empfängern gesendet"
-#~ msgid "Gateway disabled"
-#~ msgstr "Durchleitung deaktiviert"
-#~ msgid "Invalid recipient address: {0}"
-#~ msgstr "Ungültige Empfängeradresse: {0}"
-#~ msgid "Error creating email packets: {0}"
-#~ msgstr "Fehler beim Erstellen der Mailpakete: {0}"
-#~ msgid "Error while sending email: {0}"
-#~ msgstr "Fehler beim Senden der Mail: {0}"
-#~ msgid "Invalid ID number for CryptoImplementation: "
-#~ msgstr "üngültige ident für CryptoImplementation:"
-#~ msgid "Kademlia Peers:"
-#~ msgstr "Kademlia-Gegenstellen:"
-#~ msgid "Relay Peers:"
-#~ msgstr "Verfügbare Zwischenstationen:"
-#~ msgid "Reachability %"
-#~ msgstr "Erreichbarkeit in %"
-#~ msgid "Banned Peers:"
-#~ msgstr "Verbannte Gegenstellen:"
-#~ msgid "Destination Hash"
-#~ msgstr "I2P-Adresse (SHA256-Summe)"
-#~ msgid "Ban Reason"
-#~ msgstr "Verbannungsgrund"
-#~ msgid "Error: Please add at least one recipient."
-#~ msgstr "Fehler: Bitte mindestens einen Empfänger angeben."
-#~ msgid "The email has been queued for sending."
-#~ msgstr "Die Mail wurde in die Sendeschlange eingestellt."
-#~ msgid "Error sending email: {0}"
-#~ msgstr "Fehler beim Senden der Mail: {0}"
-#~ msgid "Error creating the Email Identity."
-#~ msgstr "Fehler beim Erstellen der Mailidentität"
-#~ msgid "Email Address:"
-#~ msgstr "Mailadresse:"
-#~ msgid "(optional)"
-#~ msgstr "(Optional)"
-#~ msgid "Unkn."
-#~ msgstr "Unbek."
-#~ msgid "Language:"
-#~ msgstr "Sprache:"
-#~ msgid "Default"
-#~ msgstr "Voreinstellung"
-#~ msgid "Up %"
-#~ msgstr "Erreichbarkeit"
-#~ msgid "(required field, must be 512 characters)"
-#~ msgstr "(Pflichtfeld; die Länge muss 512 Zeichen betragen)"
-#~ msgid "0 (off)"
-#~ msgstr "0 (aus)"
-#~ msgid "No sender found in email."
-#~ msgstr "Die Mail enthält keine Senderangabe."
-#~ msgid "Invalid"
-#~ msgstr "Ungültig"
-#~ msgid "Active Since"
-#~ msgstr "Aktiv seit"
-#~ msgid "Key"
-#~ msgstr "Identität"
 
