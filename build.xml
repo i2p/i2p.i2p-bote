@@ -50,6 +50,7 @@
         <echo message="  win32installer: Makes a Windows-only installer that installs" />
         <echo message="            I2P, I2P-Bote, and optionally a JRE. Needs 7z and" />
         <echo message="            mtn on the path, and a mtn DB containing i2p.i2p." />
+        <echo message="            Requires Ant 1.8.0 or higher." />
         <echo message="  poupdate: Updates the messages_*.po files from the source code," />
         <echo message="            adding any untranslated strings. Depends on additional" />
         <echo message="            software, see bundle-messages.sh." />
@@ -292,16 +293,10 @@
             <arg value="-before"/>
             <arg value="${i2pinstallerdir}/install.xml"/>
             <arg value="${i2pinstallerdir}/install.xml.new"/>
-            <arg value="TargetPanel"/>
-            <arg value="win32installer/packspanel.txt"/>
-        </java>
-        <java classname="i2p.bote.ant.SearchAndInsert" classpathref="cp" classpath="./ant_build/classes" failonerror="true">
-            <arg value="-before"/>
-            <arg value="${i2pinstallerdir}/install.xml.new"/>
-            <arg value="${i2pinstallerdir}/install.xml"/>
             <arg value="&lt;/packs&gt;"/>
             <arg value="win32installer/i2pbote_pack.txt"/>
         </java>
+        <move file="${i2pinstallerdir}/install.xml.new" tofile="${i2pinstallerdir}/install.xml"/>
         <!-- make the plugins dir -->
         <mkdir dir="${i2pinstallerplugindir}/console/webapps"/>
         <mkdir dir="${i2pinstallerplugindir}/lib"/>
@@ -311,6 +306,7 @@
         <copy file="${lib}/i2pbote.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/mailapi.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/bcprov-ecc-jdk16-145.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="ant_build/lib/flexi-gmss-1.7p1.jar" todir="${i2pinstallerplugindir}/lib"/>
         <!-- build the I2P + I2P-Bote install.jar -->
         <ant antfile="${installerdir}/i2p.i2p/build.xml" target="installer" inheritAll="false"/>
         <copy file="${installerdir}/i2p.i2p/install.jar" todir="${installerresources}"/>
