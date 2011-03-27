@@ -82,7 +82,7 @@ public class UpdateChecker extends I2PBoteThread {
                 updateAvailable = true;
         }
         catch (IOException e) {
-            log.error("Can't compare plugin versions.", e);
+            log.error("Can't compare plugin versions: " + e.getLocalizedMessage());
         }
     }
 
