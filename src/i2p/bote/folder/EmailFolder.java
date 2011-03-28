@@ -232,10 +232,8 @@ public class EmailFolder extends Folder<Email> {
     }
 
     /**
-     * Moves an email from this folder to another. The email file and
-     * the metadata file are moved.<br/>
-     * This method may not work if the two folders are on different
-     * filesystems, or if a file with the same name exists already.
+     * Moves an email from this folder to another. First the email file is
+     * moved; if a metadata file exists, it is moved as well.
      * @param messageId
      * @param newFolder
      * @return <code>true</code> if successful, <code>false</code> if not
@@ -247,30 +245,48 @@ public class EmailFolder extends Folder<Email> {
             return false;
         }
         File newEmailFile = new File(newFolder.getStorageDirectory(), oldEmailFile.getName());
-        boolean emailFileSuccess = move(oldEmailFile, newEmailFile);
+        boolean success;
+        try {
+            success = move(oldEmailFile, newEmailFile);
+        }
+        catch (IOException e) {
+            log.error("Cannot move email file <" + oldEmailFile.getAbsolutePath() + "> to <" + newEmailFile.getAbsolutePath() + ">", e);
+            success = false;
+        }
         
         File oldMetaFile = getMetadataFile(oldEmailFile);
-        File newMetaFile = getMetadataFile(newEmailFile);
-        boolean metaFileSuccess = move(oldMetaFile, newMetaFile);
+        if (oldMetaFile.exists()) {
+            File newMetaFile = getMetadataFile(newEmailFile);
+            try {
+                success &= move(oldMetaFile, newMetaFile);
+            }
+            catch (IOException e) {
+                log.error("Cannot move metadata file <" + oldMetaFile.getAbsolutePath() + "> to <" + newMetaFile.getAbsolutePath() + ">", e);
+                success = false;
+            }
+        }
 
-        return emailFileSuccess && metaFileSuccess;
+        return success;
     }
     
-    private boolean move(File from, File to) {
+    /**
+     * Moves a file.
+     * @param from
+     * @param to
+     * @return <code>true</code> on success, <code>false</code> if the file can't be moved
+     * @throws IOException
+     */
+    private boolean move(File from, File to) throws IOException {
         boolean success = from.renameTo(to);
         
         // renameTo doesn't always work, even when "from" and "to" are on the same partition,
         // so in those cases do copy+delete
-        if (!success)
-            try {
-                Util.copy(from, to);
-                from.delete();
-            }
-            catch (IOException e) {
-                log.error("Cannot move <" + from.getAbsolutePath() + "> to <" + to.getAbsolutePath() + ">", e);
-                return false;
-            }
-        return true;
+        if (success)
+            return true;
+        else {
+            Util.copy(from, to);
+            return from.delete();
+        }
     }
     
     /** @see #move(String, EmailFolder) */
