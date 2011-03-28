@@ -229,6 +229,9 @@ public class Util {
                 fromChan.close();
             if (toChan != null)
                 toChan.close();
+            
+            // This is needed on Windows so a file can be deleted after copying it.
+            System.gc();
         }
     }
 
