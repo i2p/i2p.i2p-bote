@@ -41,7 +41,7 @@
     </p><p>
     <textarea cols="64" rows="9" readonly="yes" wrap="soft" class="destinationtextarea">${identity.fullKey}</textarea>
     </p>
-    <div class="warning"><b>Do not show the above information to anyone! It contains your private keys.</b></div>
+    <div class="warning"><b><ib:message key="Do not show the above information to anyone! It contains your private keys."/></b></div>
     <p>
     <form action="editIdentity.jsp">
         <input type="hidden" name="key" value="${key}"/>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-21 23:40+0000\n"
+"POT-Creation-Date: 2011-03-28 06:30+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -36,7 +36,7 @@ msgstr "Elliptische-Kurven-Verschlüsselung, 512 Bit"
 msgid "2048-bit ElGamal Encryption"
 msgstr "El-Gamal-Verschlüsselung, 2048 Bit"
 
-#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:103
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 Verschlüsselung"
 
@@ -773,6 +773,10 @@ msgstr "Komplette Identität"
 #: WebContent/showFullIdentity.jsp
 msgid "Full Email Identity for {0}:"
 msgstr "Vollständige Mailidentität von {0}:"
+
+#: WebContent/showFullIdentity.jsp
+msgid "Do not show the above information to anyone! It contains your private keys."
+msgstr "Obige Information stets geheimhalten! Es sind darin die Privatschlüssel enthalten."
 
 #: WebContent/folder.jsp
 msgid "Know"
