@@ -83,7 +83,7 @@ href="http://t5qds7twb7eyyvp2fchhbn74tgdzv774rlru5guit5jkn4a6do7a.b32.i2p/contac
 			
 			<p>
 			<strong>Pourquoi ce nom d'I2P-Bote?</strong><br>
-			Bote est le mot allemand pour dire messenger.
+			Bote est le mot allemand pour dire "messager".
 			</p>
 			<div class="date"></div>
 
@@ -107,7 +107,7 @@ href="http://t5qds7twb7eyyvp2fchhbn74tgdzv774rlru5guit5jkn4a6do7a.b32.i2p/contac
 			
 			<p>
 			<strong>Que se passe-t-il quand je clique sur "Envoyer"?</strong><br>
-			Le message est crypté et stocké sur des ordinateurs d'autres utlisateurs d'I2P-Bote.
+			Le message est crypté et stocké sur des ordinateurs d'autres utilisateurs d'I2P-Bote.
 			À partir de là, il est expédié au destinataire quand il relève son courrier.
 			</p>
 			<div class="date"></div>
@@ -139,7 +139,7 @@ href="http://t5qds7twb7eyyvp2fchhbn74tgdzv774rlru5guit5jkn4a6do7a.b32.i2p/contac
 			Vous vous baladez à poil dans la rue, vous?<br>Bon, après tout c'est possible. Mais il 
 			faut quand même noter qu'il peut parfois vous arriver d'avoir des correspondance 
 			épistolaires secrètes et intraçables, et ne pas faire savoir au monde entier que vous 
-			dites ceci ou celà et à qui vous le dites.<br>
+			dites ceci ou cela et à qui vous le dites.<br>
 			Parfois, vous pouvez aussi vouloir communiquer de façon entièrement anonyme avec 
 			un tiers.<br>I2P-Bote est alors le moyen idéal, qui vous donne une protection d'enfer 
 			tout en restant très facile à utiliser.<br>
@@ -204,13 +204,14 @@ d'intérêt&hellip;) et que l'administrateur du serveur dispose de trop de moyen
 			<strong>Comment mon identité est-elle protégée quand j'échange du courrier?</strong><br>
 			Jamais votre adresse IP ni même votre destination I2P n'est inclue dans les messages que vous 
 			envoyez.<br>
-			The high-latency transport counters timing attacks.<br>
-			End-to-end encryption, per-hop encryption, relaying packets for other
- nodes, one single packet size* (padding), a constant rate of sending (test and dummy messages)*, and a rather 
-balanced incoming/outgoing ratio* counter traffic analysis attacks, and in combination with per-hop delays, 
-I2P-Bote offers good means against intersection attacks.<br>
-			The open source nature of I2P-Bote guarantees that you yourself can 
-see the implementation and check it for bugs.
+			Les compteurs de transports à haute latence protègent les attaques de timing.<br>
+			Le cryptage de bout en bout et par saut, le relayage des paquets pour d'autres nœuds, les 
+			paquets à taille unique* (bourrage/padding), le débit d'envoi constant (messages de test 
+			bidons/dummy)*, et un rapport assez équilibré des taux d'envoi/réception* protègent des 
+			attaques d'analyse de trafic, et en combinaison avec les delais par saut, I2P-Bote offre de 
+			bons moyens de prévention des attaques d'intersection.<br>
+			La nature open source d'I2P-Bote garantit que vous pouvez vous-même voir la mise en œuvre et 
+			la vérifier pour y chercher ou trouver des bogues.
 			<br>*[<font color="#ff0000">pas encore implémenté</font>]</p>
 			<div class="date"></div>
 
@@ -250,11 +251,11 @@ Exemple: <tt><b>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6t
 
 			<p>
 			<strong>Qu'est qu'une destination? Et l'adresse mail?</strong><br>
-			Les destinations ont entre 86 et 512 cararactères de long, suivant le type de cryptage. 
+			Les destinations ont entre 86 et 512 caractères de long, suivant le type de cryptage. 
 			La prise en charge d'adresse faciles à mémoriser et choisies par l'utilisateur sont au 
 			programme d'un futur proche.<br> Les identités sont une paire de clés privée et publique, 
 			et d'un nom que l'utilisateur lui attribue. La clé publique est la destination, 
-			votre identité pseudonymique. Et un utlisateur réel peut en avoir plusieurs. Elles servent à 
+			votre identité pseudonymique. Et un utilisateur réel peut en avoir plusieurs. Elles servent à 
 			envoyer des messages à certains utilisateurs – donc appelés des “destinations” – tout comme 
 			pour crypter les messages qui leur sont&hellip; destinés. Votre destination est donc pour les 
 			autre aussi la clé qu'ils utilisent pour crypter les messages qu'ils vous envoient et pour 
@@ -262,151 +263,137 @@ Exemple: <tt><b>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6t
 			Il est sans danger (et indispensable) de donner votre destination à toute personne de laquelle 
 			vous voulez recevoir du courrier.<br> Il est important de faire la distinction entre votre 
 			destination de messagerie et la destination de votre routeur I2P! Votre identité de messagerie 
-			n'a rien à voir avec l'dentité de votre nœud/routeur I2P-Bote qui est utilisée pour permettre 
+			n'a rien à voir avec l'identité de votre nœud/routeur I2P-Bote qui est utilisée pour permettre 
 			aux nœuds I2P-Bote de se contacter les uns les autres pour constituer le réseau Bote.<br>
-	<!-- "commented out by magma":		Si vous avez des problèmes avec l'application I2P-Bote – dans le cas très improbable où ça 
-			serait nécessaire – vous pouvez indiquer votre n tell your I2P-Bote router id 
-in irc2p, I2P's IRC channels, or the forum or manually add other peer's 
-id's in 				order to connect, though until now this has never been 
-necessary. <br>It is <b>not linked to your ip</b>. 				Nonetheless, do 
-not relate your I2P-Bote router id with your I2P-Bote mail dests since 
-this might destroy the 				additional anonymity I2P-Bote itself 
-generates!  -->
+<!-- "commented out by magma": Si vous avez des problèmes avec l'application I2P-Bote – dans le cas très 
+			improbable où ça serait nécessaire – vous pouvez indiquer votre n tell your I2P-Bote router id 
+			in irc2p, I2P's IRC channels, or the forum or manually add other peer's id's in order to 
+			connect, though until now this has never been necessary.<br>It is <b>not linked to your ip</b>. 
+			Nonetheless, do not relate your I2P-Bote router id with your I2P-Bote mail dests since this 
+			might destroy the additional anonymity I2P-Bote itself generates!  -->
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>Why are the e-mail addresses so long?</strong><br>
-			In I2P-Bote every mail is (automatically) encrypted. In order not to 
-require you to exchange an e-mail address 				<b>and</b> a long key, we 
-simply made that key the address. This comes with two additional 
-benefits: You won't have
-			to worry if an e-mail address is already taken or not (at least not 
-if you do not send or receive e-mails to or from 				the internet) and 
-you don't need a key management app apart, for taking care of your keys.<br>
-			It is safe to give away this key, as it is only the public key which 
-everybody may know about without compromising 				your e-mails' secrecy.<br>
-			Using the ECC encryption as option will yield shorter e-mail 
-destination keys.
+			<strong>Pourquoi les adresses sont-elles si longues?</strong><br>
+			Dans I2P-Bote chaque message est (automatiquement) crypté. Pour vous éviter d'avoir à échanger 
+			votre adresse <b>ET</b> de très longues clés publiques, on a simplement fait de ces clés les 
+			adresses. Ceci ajoute deux autres avantages: vous n'avez pas à vous soucier de la préexistence 
+			de votre adresse (au moins tant que vous ne recevez ni n'envoyez ni de courrier vers 
+			l'Internet normal), et vous n'avez pas à avoir un système de gestion de clés séparé pour 
+			s'occuper de vos clés.<br>
+			Il est sans danger (et indispensable) de donner cette clé, car elle n'est que la clé publique, 
+			que tout le monde tout le monde peut avoir à connaître sans compromettre la confidentialité de 
+			vos messages.<br>
+			L'utilisation du cryptage ECC conduit à des clés plus courtes.
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>But I cannot remember those long destinations …</strong><br>
-			That's what the integrated addressbook is there. Once you have become
- more acquainted qith I2P-Bote, you will 				appreciate the built-in 
-encrpytion and authentication, which can only be achieved using 
-cryptographic keys.
-			<br>Again, the alternatove would be to have short and easy addresses <b>plus</b>
- a long key for encryption and 			authentication, <b>and</b> to rely on 
-some authority to map the e-mail addresses to some anonymous recipient.
+			<strong>Mais je n'arrive pas à mémoriser de si longues destinations&hellip;</strong><br>
+			Le carnet d'adresses est là pour ça. Une fois convaincu par le principe d'I2P-Bote, vous 
+			apprécierez le cryptage et l'authentification intégrés, qui ne peuvent être atteints que par 
+			l'utilisation de clés cryptographiques.
+			<br>Encore une fois, l'alternative serait d'avoir des adresses courtes et simples <b>plus</b> 
+			de longues clés de cryptage et authentification, <b>ET</b> de se reposer sur quelqu'autorité 
+			pour faire la relation entre l'adresse et un destinataire anonyme.
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>What's the point of using multiple mail identities?</strong><br>
-			I2P-Bote is not an instant messenger, so you can have several 
-identities without having to keep many tunnels open. 				Only for 
-fetching requests you'd use up more resources but at the same time 
-provide more cover for others.<br>
-			Now, imagine you communicate with your friends unobservedly (see: 
-data retention laws) via I2P-Bote, and want to 				quickly send out a 
-mail that you'll be meeting each other in a different location tonight.
-			Then, you need no super-anonymity and can renounce mail routes and 
-delays. Your friends, on the other hand, would 				want to have a 
-shorter check interval, so they will receive the mail in time. Yet you 
-still want super high 				anonymity for some of your other 
-communications ‧ that's where a different mail identity with mail 
-routes, 				delays and long check intervals comes in handy.
+			<strong>Quel est l'intérêt d'utiliser de multiples identités?</strong><br>
+			I2P-Bote n'est pas une messagerie instantanée, donc vous pouvez avoir plusieurs identités sans 
+			avoir à tenir plusieurs tunnels ouverts en même temps. Vous utiliserez seulement un peu plus de 
+			ressources au moment de la relève mais en même temps vous fournirez une meilleure couverture 
+			aux autres.<br>
+			Maintenant, imaginez que vous communiquez incognito avec des amis (voir: lois sur le stockage 
+			de données) via I2P-Bote, et que vous voulez envoyer rapidement un message pour vous retrouver 
+			ce soir ailleurs qu'à l'habituel Café des Arts. Vous n'avez pas besoin d'un super-anonymat et 
+			pouvez renoncer aux relayages et délais de mails. Vos amis, d'autre part, devraient raccourcir 
+			leur intervalle de vérification pour recevoir le message à temps. Mais pour d'autres types de 
+			communications, vous avez besoin d'un super niveau d'anonymat, et c'est là qu'une autre 
+			identité avec un relayage et des délais différents peut être utile.
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>Which encryption type is best?</strong><br>
-			256-bits <a 
-href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a> 
-produces short and handy Email 				Destinations, and it is considered 
-stronger than 2048-bits ElGamal.<br>
-			521-bits <a 
-href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a> 
-is stronger than 256-bit ECC, but 				it makes Email Destinations 
-longer.<br>
-			2048-bits <a href="http://en.wikipedia.org/wiki/ElGamal">ElGamal</a> 
-produces even longer Email Destinations, and it 				is the 
-cryptographically weakest of the three options. However, ElGamal is 
-better researched than ECC, which makes 				it less likely that there is
- an unknown weakness in ElGamal than in ECC.
-			<br>
+			<strong>Quel est le meilleur cryptage?</strong><br>
+			<a href="http://fr.wikipedia.org/wiki/Cryptographie_sur_les_courbes_elliptiques">ECC</a> à 256 
+			bits produit des adresses destinations courtes et maniables, et est considéré comme plus solide 
+			que l'ElGamal à 2048 bits.<br>
+			<a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a> à 521 bits est plus 
+			solide que sa version à 256 bits, mais il génère des destinations (clés) très longues.<br>
+			<a href="http://fr.wikipedia.org/wiki/Cryptosyst%C3%A8me_de_ElGamal">ElGamal</a> à 2048 bits 
+			génère des clés encore plus longues, et il est le plus faible des trois algorithmes. Cependant, 
+			ElGamal fait l'objet de plus recherches que ECC, ce qui rend moins probable qu'une faiblesse de 
+			cet algorithme passe inaperçue pendant plus longtemps que dans ECC.<br>
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>What algorithms are used for symmetric encryption, and for 
-hashing?</strong><br>
-			<a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a>
- in
-			<a 
-href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">CBC</a>
- mode 				and <a href="http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.
+		    <strong>Quels algorithmes sont-ils utilisés pour le cryptage symétrique et le hachage?</strong><br>
+			<a href="http://fr.wikipedia.org/wiki/Advanced_Encryption_Standard_process">AES</a>-
+			<a href="http://fr.wikipedia.org/wiki/Advanced_Encryption_Standard">256</a> en mode 
+<a href="http://fr.wikipedia.org/wiki/Mode_d%27op%C3%A9ration_%28cryptographie%29#Encha.C3.AEnement_des_blocs_:_.C2.AB_
+Cipher_Block_Chaining_.C2.BB_.28CBC.29">CBC</a> et 
+			<a href="http://http://fr.wikipedia.org/wiki/Secure_Hash_Algorithm">SHA-256</a>.
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>Are there any anti-spam measures?</strong><br>
-			I2P-Bote does no active spam filtering, but the fact that mass emails
- have to be sent individually should discourage 				spammers. Another 
-line of defense is <a href="http://www.hashcash.org/">HashCash</a> which
- is supported at the 				protocol level and may be implemented in a 
-future version if spam becomes a problem.
+			<strong>Y a-t-il des protections anti-spam?</strong><br>
+			I2P-Bote ne filtre pas le spam, mais le fait que l'envoi en masse doive être fait 
+			individuellement devrait décourager les spammers. Un autre moyen de défense repose sur des 
+			pénalités (<a href="http://www.hashcash.org/">HashCash</a>) qui sont un mécanisme supporté au 
+			niveau du protocole, et qui pourrait être implémenté dans une version ultérieure si le spam 
+			devenait un problème.
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>How about HTML or styled text?</strong><br>
-			The webinterface does not render html.
+			<strong>Deux mot sur HTML et le formatage de texte?</strong><br>
+			L'interface web ne restitue pas la mise en forme HTML.
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>How long are emails kept around?</strong><br>
-			Emails are available for 100 days after they have been sent. Emails 
-that have not been downloaded by then are 				deleted.<br>
-			Emails you have received stay on your local machine until you delete 
-them.
+			<strong>Pendant combien de temps les messages restent-ils dans la nature?</strong><br>
+			Ils restent disponibles 100 jours après l'émission. Les messages n'ayant pas été relevés 
+			au-delà de cette période sont supprimés.<br>
+			Les messages relevés restent sur votre ordinateur jusqu'à ce que vous les supprimiez.</p>
+			<div class="date"></div>
+			<p>
+			<strong>Quand les identités expirent-elle?</strong><br>
+			Jamais. Mais la votre peut devenir inutilisable si vous perdez le contenu de votre disque dur. 
+			Vous seriez alors amené à en créer une ou plusieurs autres en remplacement, et en informer vos 
+			correspondants habituels.
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>When do Email Identities expire?</strong><br>
-			Never.
-			</p>
-			<div class="date"></div>
-
-			<p>
-			<strong>Can I send email to, and receive email from normal internet 
-email servers?</strong><br>
-			No, but this is being worked on.
+			<strong>Puis-je recevoir et envoyer des messages de/vers des serveurs de l'Internet normal?
+					</strong><br>
+			Non, mais on y travaille.
                    <!-- Yes. You can both send and receive mails to/from ordinary internet e-mail accounts -->
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>Can I send email to, and receive email from postman's 
-traditional I2P mail accounts?</strong><br>
-			No, but this too is being worked on.
+			<strong>Et de/vers les comptes traditionnels de postman?</strong><br>
+			Non plus, mais on y travaille aussi.
                         <!-- Yes. You can both send and receive mails to/from some_name@mail.i2p addresses -->
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>What does it mean when Know is x'ed for a mail in my inbox?</strong><br>
+			<strong>Que signifient les coches dans la colonne "Connu" de la boîte de réception?</strong><br>
 			When the sender's destination is not known locally the mail is marked
  by an x in the “Know” column
 			<!--or by putting &#8220;[UNK]&#8221; before the sender's address in POP3-->.<br>
 			This means that you have no proof this user is really who he claims 
-to be, in his user name. Of course, if the 				signature is valid, you 
+to be, in his user name. Of course, if the signature is valid, you 
 know he possesses the destination key with which the mail was signed, 
-and that the mail 			content is from that person. But you cannot rely on
+and that the mail content is from that person. But you cannot rely on
  the short name here. In case you had gotten a mail from a user 				with
  this name before, you cannot be sure it is the same user this time, 
 even if the signature is valid. In this
