@@ -1,507 +1,462 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html><head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Frequently Asked Questions</title><meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"><meta name="GENERATOR" content="OpenOffice.org 3.2  (Unix)"><style type="text/css">
-	<!--
-		@page { margin: 2cm }
-		P { margin-bottom: 0.21cm }
-		A:link { so-language: zxx }
-	-->
-	</style></head><body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Frequently Asked Questions</title>
+	<meta http-equiv="Content-Language" content="English" />
+	<meta name="Robots" content="index,follow" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+</head>
+<body>
 
+<div id="wrap">
 
+	<div id="top">
+				<div class="rights">	</div>
+				<div id="search">
+						
+					</div>
+				<div class="lefts">
+					<h1>I2P-Bote</h1>
+					<h2>Secure Distributed Email</h2>
+				</div>
+	</div>
+	
+	<div id="topmenu">
+				<div class="rights"></div>
+				<div class="lefts"><ul>
+				<li><a href="index.html" title="Home">HOME</a></li>
+				<li><a href="download.html" title="Download I2P-Bote">DOWNLOAD</a></li>
+				<li><a href="screenshots.html" title="Screenshots">SCREENSHOTS</a></li>
+				<li><a href="userguide.html" title="User Guide">USER GUIDE</a></li>
+				<li><a href="faq.html" title="Frequently Asked Questions">FAQ</a></li>
+				<li><a href="http://forum.i2p/viewforum.php?f=35" title="Forum">FORUM</a></li>
+				<li><a href="contact.html" title="Contact">CONTACT</a></li>
+				
+				</ul></div>
+	</div>
+	
+	<div style="text-align: justify;" id="main">
+		<div id="leftside">
+			<p>
+			<h2>Frequently Asked Questions</h2>
+			</p>
+			<p>
+			<div class="date"></div>
+			</p><p>
+			<strong>What is I2P-Bote?</strong><br/>
+			A peer-to-peer email program designed to protect your privacy.<br/>
+			I2P-Bote is an end-to-end encrypted, network-internal, fully decentralized
+			(serverless) e-mail system. It supports different identities and does
+			not expose e-mail headers. Currently, it is still alpha software and
+			can only by accessed via web console. It soon will have POP3 support,
+			and it is planned to guarantee additional anonymity by providing a
+			high-latency transport option. All bote-mails are automatically
+			end-to-end encrypted, so that there's no need to set up e-mail
+			encryption (though the option does exist), and bote-mails will be
+			authenticated automatically. As
+			it is decentralized, there is no e-mail server that could link
+			different e-mail identities as communicating with each other
+			(profiling): Even the nodes relaying the mails will not know the
+			sender and apart from sender and receiver, only the end of the
+			high-latency mail tunnel and the storing nodes will know to whom
+			(anonymous identity) the mail is destined. The original sender can
+			have gone offline, long before the mail becomes available on the
+			other side. This adds on the degree of anonymity that can be reached
+			with I2P-Bote. For those who do not want high delays: All these
+			settings are be user-adjustable, so each user decides on how much
+			anonymity he wants.
+			</p>
+			<div class="date"></div>
+			
+			<p>
+			<strong>Why is it named I2P-Bote?</strong><br/>
+			Bote is the German word for messenger.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Why I2P-Bote?</strong><br/>
+			Because it's cool.
+			And because I2P was lacking a decentralized e-mail service, and seeing
+			the creation of such as an opportunity to improve on neglected
+			anonymity aspects, it was decided to add an optional high-latency
+			transport. You can use a normal e-mail account and end-to-end encrypt your mails, but
+			they are still not anonymous. You can use anonymous server-bound e-mails, yet they are not automatically
+			end-to-end encrypted.<br>
+			Or you can use I2P-Bote in which your mails
+			are anonymous and <i>automatically</i> end-to-end-encrypted.<br>In contrast
+			to standard e-mail systems there is no need to setup an additional
+			key management application. Everything you need is already there. <br/>But
+			despite it being simple and easy to use, it still offers military
+			grade encryption and options for extremely strong anonymity.
+			</p>
+			<div class="date"></div>
+			
+			<p>
+			<strong>What happens with an email after I click "Send"?</strong><br/>
+			It is encrypted and stored on other I2P-Bote participants' computers. From there, it is delivered to the recipient 				when they check their email.
+			</p>
+			<div class="date"></div>
+			
+			<p>
+			<strong>Wait a minute, all email I send is saved on some random person's hard drive? That sounds like a really dumb 				idea!</strong><br/>
+			All they see is garbage data because it is encrypted with "military-grade" encryption. Only you and the recipient 				know what is in the email. Additionally, if you send the email with relays enabled, it is not even possible to tell 				who sent it.<br/>
+			Between this and using an email account with a 
+			<a href="http://www.theregister.co.uk/2009/12/07/schmidt_on_privacy/">company that doesn't respect your privacy</a>, 				over an internet line that <a href="http://www.eff.org/issues/nsa-spying">is being spied on by shady agencies</a>, 				which would you say is more trustworthy?
+			</p>
+			<div class="date"></div>
+			
+			<p>
+			<strong>How does it work exactly?</strong><br/>
+			&#8211; see the section &#8220;Concept&#8221; of the Manual &#8211;<br/>In short:
+			I2P-Bote nodes form a p2p-network, relaying mail packets for one another and storing them into a DHT.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Why would I use it? I have nothing to hide &hellip;</strong><br/>
+			Because you wouldn't go out to the street naked either, would you?<br/>Well, maybe you would. But the point is, 			sometimes you want private e-mail communication to be secret and untraceable and not let the whole world know when 				you say what to whom.<br/>
+			And sometimes you simply want to communicate fully anonymously with others.<br/>Therefor I2P-Bote is the ideal tool, 				giving you a hell lot of protection while preserving a great deal of flexibility.<br/>
+			It aims at providing professional military grade security and n00b-proof usability:<br/>
+			You can have really paranoid settings, where it takes a mail an eternity to arrive; or have faster communication and 				still enjoy very high anonymity.<br/>
+			You decide &#8211; easily with a click of your mouse.</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What about <a href="http://www.pgp.com/">PGP</a> and <a href="http://gnupg.org/">GPG</a>?</strong><br/>
+			PGP and GPG let you encrypt email and send it through your existing email account. They offer strong encryption, but 				they only encrypt the email text, not the headers, which means the subject line, your computer name, and other 				information is not secure.<br/>
+			Another privacy issue is that PGP/GPG cannot prevent anybody from finding out who is talking to whom.<br/>
+			I2P-Bote, in contrast, encrypts everything but the recipient's Email Destination. (In fact even the recipient's 			destination is only visible to nodes who do not know who the sender of the mail was.) It also has the ability to 				send an email through several relays (similar to <a href="http://mixmaster.sourceforge.net/">Mixmaster</a>), so 			nobody can find out who is sending email to whom.
+			<br/>
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Can I still use GPG/PGP with I2P-Bote?</strong><br/>
+			Of course. Either have GPG encrypt your e-mail's text before pasting it into the I2P-Bote mail composition field, or 				use a mail app with GPG support. [<font color="#ff0000">POP3 support not implemented</font>]
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How does it compare to Susimail?</strong><br/>
+			I2P-Bote is better because it has a higher version number. Just kidding.<br/>
+			I2P-Bote offers more privacy, but Susimail has some features I2P-Bote doesn't have yet (see below), and Susimail is 				more bandwidth-efficient because it doesn't store emails redundantly.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Why is I2P-Bote better?</strong><br/>
+			<i>We</i> think it's better for <i>us</i> (and maybe for you, too; decide yourself!), than &#8230; <ul><li><p 				style="line-height: 150%;"><font face="Arial, sans-serif">mixminion as it is easy to use and as n00b-proof as we 				could get it.</font></p>
+			</li><li><p style="line-height: 150%;"><font face="Arial, sans-serif">anonymous e-mail services not based on 				destination key routing: as those do not deliver built-in end-to-end encryption.</font></p>
+			</li><li><p style="line-height: 150%;"><font face="Arial, sans-serif">centralized services, as the server could go 				down (due to attacks, legal problems, lack of funding or interest, &#8230;) and the server admin has too many means 				to do profiling.</font></p>
+			</li></ul></p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How is my identity kept safe when I exchange mail with someone?</strong><br/>
+			Never is your ip number or even your I2P-destination included in any e-mail you send.<br/>
+			The high-latency transport counters timing attacks.<br/>
+			End-to-end encryption, per-hop encryption, relaying packets for other nodes, one single packet size* (padding), a 				constant rate of sending (test and dummy messages)*, and a rather balanced incoming/outgoing ratio* counter traffic 				analysis attacks, and in combination with per-hop delays, I2P-Bote offers good means against intersection 				attacks.<br/>
+			The open source nature of I2P-Bote guarantees that you yourself can see the implementation and check it for bugs.
+			<br/>*[<font color="#ff0000">not yet implemented</font>]</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How do I use it?</strong><br/>
+			Read the manual or see the other questions and answers here!<br>
+			If you still have unanswered questions, ask on the forum: 
+			<a href="http://forum.i2p/viewforum.php?f=35">http://forum.i2p/viewforum.php?f=35</a>
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Can I use an email program like Thunderbird?</strong><br/>
+			No, but it is on the roadmap.
+<!--Yes, you can use the e-mail client of your choice, as long as it supports POP3 and SMTP<br/>[<font color="#ff0000">POP3 and SMTP not yet implemented</font>]-->
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Can I send attachments, and what limits are there?</strong><br/>
+			Yes, attachments are supported as of release 0.2.5.<br/>The overall size of attached files should be kept small, 				preferably below 500kB.</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How do I create an email account?</strong><br/>
+			I2P-Bote calls them Email Identities. You can create one in the I2P-Bote web interface under the "Identities" link. 				The reason why it's not called an account is that there is no provider like GMail or GMX. You alone hold the 				(cryptographic) keys to the Email Identity.<br/>
+			When you create an Email Identity, I2P-Bote generates a string of numbers and letters called an Email Destination. 				This is the address you can be reached at.<br/>
+			Example: <tt><b>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6tDWwjPHYEuoKyWqwxplSdix</b></tt>
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What's an Email Destination? What about email addresses?</strong><br/>
+			Email destinations (aka bote dests) are between 86 and 512 characters long, depending on the type of encryption. 				Support for easy-to-remember, user-chosen addresses is planned for the near future.<br/>
+			The e-mail identities consist of public and private keys, as well as a name the user chooses for it. The public part 				is your e-mail destination, your pseudonymous identity. And one real user can have more than one of those 				identities. They serve for addressing mails to certain users &#8211;therefore it is referred to as a 				&#8220;destination&#8221 or short &#8220;dest&#8221; &#8211; as well as for encrypting the mails for them.
+			Hence, your e-mail destination is the key others use in order to encrypt mails which they send to you, and in
+			order to verify the authenticity and integrity of mails they receive from you.<br/>
+			It is save to give your e-mail destination to anybody you want to get e-mails from.<br/>
+			It is important to distinguish between the mail dest and the router id! Your I2P-Bote mail identity is not related 				to your I2P-Bote router/node id, which is used for I2P-Bote nodes to contact each other and this way for the Bote 				network.<br>
+			If you have problems with your I2P-Bote app &#8211; in the highly unlikely case it should be necessary &#8211; you 				can tell your I2P-Bote router id in irc2p, I2P's IRC channels, or the forum or manually add other peer's id's in 				order to connect, though until now this has never been necessary. <br>It is <b>not linked to your ip</b>. 				Nonetheless, do not relate your I2P-Bote router id with your I2P-Bote mail dests since this might destroy the 				additional anonymity I2P-Bote itself generates!
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Why are the e-mail addresses so long?</strong><br/>
+			In I2P-Bote every mail is (automatically) encrypted. In order not to require you to exchange an e-mail address 				<b>and</b> a long key, we simply made that key the address. This comes with two additional benefits: You won't have
+			to worry if an e-mail address is already taken or not (at least not if you do not send or receive e-mails to or from 				the internet) and you don't need a key management app apart, for taking care of your keys.<br>
+			It is safe to give away this key, as it is only the public key which everybody may know about without compromising 				your e-mails' secrecy.<br/>
+			Using the ECC encryption as option will yield shorter e-mail destination keys.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>But I cannot remember those long destinations &#8230;</strong><br/>
+			That's what the integrated addressbook is there. Once you have become more acquainted qith I2P-Bote, you will 				appreciate the built-in encrpytion and authentication, which can only be achieved using cryptographic keys.
+			<br/>Again, the alternatove would be to have short and easy addresses <b>plus</b> a long key for encryption and 			authentication, <b>and</b> to rely on some authority to map the e-mail addresses to some anonymous recipient.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What's the point of using multiple mail identities?</strong><br/>
+			I2P-Bote is not an instant messenger, so you can have several identities without having to keep many tunnels open. 				Only for fetching requests you'd use up more resources but at the same time provide more cover for others.<br/>
+			Now, imagine you communicate with your friends unobservedly (see: data retention laws) via I2P-Bote, and want to 				quickly send out a mail that you'll be meeting each other in a different location tonight.
+			Then, you need no super-anonymity and can renounce mail routes and delays. Your friends, on the other hand, would 				want to have a shorter check interval, so they will receive the mail in time. Yet you still want super high 				anonymity for some of your other communications &#8231; that's where a different mail identity with mail routes, 				delays and long check intervals comes in handy.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Which encryption type is best?</strong><br/>
+			256-bit <a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a> produces short and handy Email 				Destinations, and it is considered stronger than 2048-bit ElGamal.<br/>
+			521-bit <a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a> is stronger than 256-bit ECC, but 				it makes Email Destinations longer.<br/>
+			2048-bit <a href="http://en.wikipedia.org/wiki/ElGamal">ElGamal</a> produces even longer Email Destinations, and it 				is the cryptographically weakest of the three options. However, ElGamal is better researched than ECC, which makes 				it less likely that there is an unknown weakness in ElGamal than in ECC.
+			<br>
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What algorithms are used for symmetric encryption, and for hashing?</strong><br/>
+			<a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a> in
+			<a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">CBC</a> mode 				and <a href="http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Are there any anti-spam measures?</strong><br/>
+			I2P-Bote does no active spam filtering, but the fact that mass emails have to be sent individually should discourage 				spammers. Another line of defense is <a href="http://www.hashcash.org/">HashCash</a> which is supported at the 				protocol level and may be implemented in a future version if spam becomes a problem.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How about HTML or styled text?</strong><br/>
+			The webinterface does not render html.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How long are emails kept around?</strong><br/>
+			Emails are available for 100 days after they have been sent. Emails that have not been downloaded by then are 				deleted.<br/>
+			Emails you have received stay on your local machine until you delete them.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>When do Email Identities expire?</strong><br/>
+			Never.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Can I send email to, and receive email from normal internet email servers?</strong><br/>
+			No, but this is being worked on.
+                        <!-- Yes. You can both send and receive mails to/from ordinary internet e-mail accounts -->
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Can I send email to, and receive email from postman's traditional I2P mail accounts?</strong><br/>
+			No, but this too is being worked on.
+                        <!-- Yes. You can both send and receive mails to/from some_name@mail.i2p addresses -->
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What does it mean when Know is x'ed for a mail in my inbox?</strong><br/>
+			When the sender's destination is not known locally the mail is marked by an x in the &#8220;Know&#8221; column
+			<!--or by putting &#8220;[UNK]&#8221; before the sender's address in POP3-->.<br/>
+			This means that you have no proof this user is really who he claims to be, in his user name. Of course, if the 				signature is valid, you know he possesses the destination key with which the mail was signed, and that the mail 			content is from that person. But you cannot rely on the short name here. In case you had gotten a mail from a user 				with this name before, you cannot be sure it is the same user this time, even if the signature is valid. In this
+			case you must compare the destination keys or add them to your addressbook. A user not locally known, is not 				necessarily evil, but you shouldn't trust it's the user you might think it is. But, if verified against locally 			stored keys, you know it's the same user when you receive another mail from him and &#8220;Know&#8221; has a green 				check.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What do &#8220;BktPfx&#8221;, &#8220;Distance&#8221; and &#8220;Locked?&#8221; mean?</strong><br/>
+			&nbsp; &bull; &nbsp; BktPfx = BucketPrefix<br>
+			&nbsp; &bull; &nbsp; Distance: the distance of an I2P-Bote node to your own node in keyspace<br>
+			&nbsp; &bull; &nbsp; Locked: If a node is not reachable for whatever reason, it is marked as locked, plus the time 				it has been found unreachable.<br>
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What can I do to be more anonymous?</strong><br/>
+			<ul>
+			<li><p>Don't send identifying information about you! (name, address, photos, geographic location, time zone, 				age, sex, websites, login names, I2P router id, I2P-Bote id, Files that contain author information about you, 				&#8230;)</p></li>
+			<li><p>don't send personal information or information that only you can possess,</p></li>
+			<li><p>leave I2P-Bote running 24/7,</p></li>
+			<li><p>use mailroutes with randomized per-hop delays and/or per-hop fixed send times, <font color="#ff0000">[not yet 				fully implemented]</font></p></li>
+			<li><p>use a long check interval,</p></li>
+			<li><p>use a long local delay for own packets,</p></li>
+			<li><p>use a big check interval randomization. <span style="color: red;">[not yet implemented]</span></p></li>
+			<li><p>suppress the sending of date and time in the e-mails' header,</p></li>
+			<li><p>suppress translation of markers like &#8220;Re:&#8221; into another language,</p></li>
+			<li><p>watch your language and writing style,</p></li>
+			<li><p>use different e-mail identities,</p></li>
+			<li><p>consider discarding e-mail identities after longer periods of usage,</p></li>
+			<li><p>...</p></li>
+			</ul>
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How do I not send timestamps?</strong><br/>
+			Go to settings and disable sending of timestamps. This will have the effect that your mail will not contain a date 				or time of sending.
+<!-- <br/>(When using mailroutes, the timestamps are automatically disabled.) <span style="color: red;">[not yet implemented]</span></p> -->
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How do I migrate my settings and data to another computer, or back them up?</strong><br/>
+			I2P-Bote stores all email and other data in the <tt>i2pbote</tt> folder. On Windows, that folder can be found at
+			<tt>%APPDATA%\I2P\i2pbote</tt>; on Linux, it is <tt>$HOME/.i2p/i2pbote</tt>.<br/>
+			To back up or migrate everything, just copy the whole <tt>i2pbote</tt> folder.<br/>
+			If you are only interested in your Email Identities, copy the file <tt>identities.txt</tt>. For the address book, 				copy <tt>addressBook.txt</tt>.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What is a <i>mail route?</i></strong><br/>
+			see: What does high-latency transport mean?<br/>
+<!-- (When using mail routes, the timestamps are automatically disabled.) [yet to be implemented] -->
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What does high-latency transport mean?</strong><br/>
+			It means that you can enable an option where e-mail packets are not sent directly to storing nodes, but are relayed 				(forwarded) by other peers (who cannot read the e-mails, as they are encrypted with several layers and ripped into 				small parts), who do not send them on immediately but wait a user-specified time &#8211; in case of sending
+			specified by the sender, in case of receiving specified by recipient.<br/>
+			Therefore it takes the mail some time to arrive. Thus an attacker cannot simply run stats on node uptimes (who was 				connected when) and times a message was received to be stored (which in a low-latency environment would be about the 				time it was sent), in order to uncover the real life identities behind I2P-Bote e-mail identities.
+			</p>			
+			<div class="date"></div>
+
+			<p>
+			<strong>What latencies are there, and how can they be controlled (if at all)?</strong><br/>
+			I2P-Bote is distributed and running on top of the I2P network, so it takes some time. Speed is not our strength, but 				we compare well with other anon mail systems. Without mail routes enabled it takes 3 to 10 minutes from hitting the
+			&#8220;Send&#8221; button to being displayed in the receiver's inbox.<br/>
+			If speed is what you want, fully disable mail routes or set them to the minimum number of hops and minimum per-hop 				delay you can live with.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>If I2P-Bote generates its own anonymity, why does it need I2P?</strong><br/>
+			I2P-Bote is built on top of I2P mainly for five reasons:<br/>
+			&nbsp; &bull; &nbsp; I2P was lacking a decentralized e-mail service and HungryHobo is an I2P user.<br/>
+			&nbsp; &bull; &nbsp; I2P offers very good anonymity, is mature and incorporates years of 				experience.<br>
+			&nbsp; &bull; &nbsp; So being on top of it, kind of represents an anonymity fall-back even if there were some 				crucial bugs in I2P-Bote.<br/>
+			&nbsp; &bull; &nbsp; Flexibility: We want to offer an easy way to anonymous low-latency e-mail communication as 			well, with still a high level of protection.<br/>
+			&nbsp; &bull; &nbsp; I2P with it the many other apps running on top of it creates a lot of traffic that blends with 				I2P-Bote traffic.<br/>
+			&nbsp; &bull; &nbsp; Even I2P-Bote relays are thus location-hidden.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How anonymous/secure is I2P-Bote without mail routes?</strong><br/>
+			Pretty anonymous and very secure.<br/>
+			It then basically enjoys the same anonymity other apps have on I2P, the anonymity provided by the I2P router &#8211; 				which is rather strong anonymity already. However, I2P is a low-latency network, with all the shortcomings a 
+			low-latency network comes with by its very nature. There are attacks against which I2P cannot protect you or not 				protect you very reliably. I2P-Bote does its best to augment I2P anonymity with its high-latency transport option, 				which make &#8211; if enabled &#8211;
+			I2P-Bote mails <i>paranoidly</i> anonymous.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Is I2P-Bote open source?</strong><br/>
+			Of course!<br/>&#8220; <i>
+			This software is licensed under the GPL version 3 (see licenses/GPLv3.txt), except for bcprov-ecc-jdk16-145.jar 			which is licensed under the Bouncy Castle License 
+			(see licenses/BouncyCastle.txt).</i>&#8221; <br>(Both of which are free open source licences.)
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>Who made I2P-Bote?</strong><br/>
+			(See also Credits!)<br>
+			Conception, technical design, implementation and web user interface were/are done by HungryHobo, an anonymous 				developer. For feedback or if you want to offer help, you can contact him using I2P-Bote. His destination key is: 				<br><b>hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n</b>
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What languages are available?</strong><br/>
+			English, German, Russian, French, Spanish, Portuguese, Dutch, Norwegian, Swedish, Chinese, and Arabic.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How can I help translate I2P-Bote into my language?</strong><br/>
+			Translations are done the same way as the rest of I2P. If you would like to help and have questions, please 
+			<a href=contact.html>contact the author.</a>
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>How does it work on a technical level?</strong><br/>
+			Have a look at the file <tt>doc/techdoc.txt</tt> in the source code.
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<strong>What are some other ways I can help?</strong><br/><br/>
+			&nbsp; &bull; &nbsp; Use I2P-Bote and give feedback<br/><br/>
+                        &nbsp; &bull; &nbsp; Tell your friends, family, collegues et al. about I2P-Bote and lend them a hand<br/><br/>
+                        &nbsp; &bull; &nbsp; Mention I2P-Bote on your blog, eepsite or website<br/><br/>
+			&nbsp; &bull; &nbsp; Write a user's guide or improve the technical documentation<br/><br/>
+			&nbsp; &bull; &nbsp; Add features or fix bugs (<a href=contact.html>contact the author first</a>)<br/><br/>
+			</p>
+			<div class="date"></div>
+
+			<p>
+			<br/><br/><br/><br/><br/><br/><br/>
+			<strong>Credits:</strong><br/><br/>
+			Idea &amp; technical concept: <i>HungryHobo</i>, <i>Mixxy</i><br/><br/>
+			Implementation: <i>HungryHobo</i><br/><br/>
+			Plugin support: <i>zzz</i>, <i>HungryHobo</i><br/><br/>
+			User interface: <i>HungryHobo</i><br/><br/>
+			Seedless integration: <i>sponge</i><br/><br/>
+			German translation: <i>HungryHobo</i><br/><br/>
+			Russian translation: <i>suhr</i><br/><br/>
+			French translation: <i>albat</i>, <i>Redzara</i>, <i>Mixxy</i><br/><br/>
+			Spanish translation: <i>Mixxy</i><br/><br/>
+			Portuguese translation: <i>Mixxy</i><br/><br/>
+			Dutch translation: <i>KwukDuck</i><br/><br/>
+			Norwegian translation: <i>hej</i><br/><br/>
+			Swedish translation: <i>hottuna</i><br/><br/>
+			Chinese translation: <i>walking</i><br/><br/>
+			Arabic translation: <i>hamada</i><br/><br/>
+			Alpha testing: <i>HungryHobo</i>, <i>Mixxy</i>, <i>Returning Novice</i>, <i>sponge</i>, and many others<br><br/>
+			Manual: <i>Mixxy</i><br/><br/>
+			<br><br/>
+			</p>
+
+			<div class="date"></div>
+		</div>
+	</div>
+	
+	<div id="footer">
+	<div class="rside">CSS: <a href="http://www.free-css-templates.com" title="Design by David Herreman">David Herreman</a></div>
+	<p>
+	<a href="http://validator.w3.org/check?uri=referer" title="Validate">XHTML</a> - <a href="http://jigsaw.w3.org/css-validator/check/referer" title="Validate">CSS</a>
+	</p>
+	</div>
+</div>
 	
 	
-	
-	
-
-
-
-
-
-<p style="line-height: 150%; text-align: center;"><font face="Arial, sans-serif"><b>FAQ</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><br><b>What
-is I2P-Bote?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">I2P-Bote
-is an end-to-end encrypted, network-internal, fully decentralized
-(serverless) e-mail system. It supports different identities and does
-not expose e-mail headers. Currently, it is still alpha software and
-can only by accessed via web console. It soon will have POP3 support,
-and it is planned to guarantee additional anonymity by providing a
-high-latency transport option. All bote-mails are automatically
-end-to-end encrypted, so that there's no need to set up e-mail
-encryption (though the option does exist), and bote-mails will be
-authenticated automatically <span style="color: red;">[authentication not yet implemented]</span>. As
-it is decentralized, there is no e-mail server that could link
-different e-mail identities as communicating with each other
-(profiling): Even the nodes relaying the mails will not know the
-sender and apart from sender and receiver, only the end of the
-high-latency mail tunnel and the storing nodes will know to whom
-(anonymous identity) the mail is destined. The original sender can
-have gone offline, long before the mail becomes available on the
-other side. This adds on the degree of anonymity that can be reached
-with I2P-Bote. For those who do not want high delays: All these
-settings are be user-adjustable, so each user decides on how much
-anonymity he wants.</font></p>
-
-
-<p style="line-height: 150%;"><br><font face="Arial, sans-serif"><b>Why
-I2P-Bote?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Because
-it's cool.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">And
-because I2P was lacking a decentralized e-mail service, and seeing
-the creation of such as an opportunity to improve on neglected
-anonymity aspects, it was decided to add an optional high-latency
-transport.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">You can
-use a normal e-mail account and end-to-end encrypt your mails, but
-they are still not anonymous. </font>
-</p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">You can
-use anonymous server-bound e-mails, yet they are not automatically
-end-to-end encrypted.<br>Or you can use I2P-Bote in which your mails
-are anonymous and AUTOMATICALLY end-to-end-encrypted.<br>In contrast
-to standard e-mail systems there is no need to setup an additional
-key management application. Everything you need is already there. </font>
-</p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">But
-despite it being simple and easy to use, it still offers military
-grade encryption and options for extremely strong anonymity.</font></p>
-
-
-<p style="line-height: 150%;"><br><font face="Arial, sans-serif"><b>How
-does it work?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">-- see
-the section &#8220;Concept&#8221; of the Manual &#8211;</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">In short:
-I2P-Bote nodes form a p2p-network, relaying mail packets for one
-another and storing them into a DHT.</font></p>
-
-
-<p style="line-height: 150%;"><br><font face="Arial, sans-serif"><b>Why
-should I use it?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Because
-you wouldn't go out to the street naked either.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">But what
-do you have to hide? ...</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Well
-maybe you would. But the point is, sometimes you want private e-mail
-communication to be secret and untraceable. Or you want to
-communicate fully anonymously with others.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Therefore
-I2P-Bote is the ideal tool, giving you a lot of flexibility.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">It aims
-to providing professional military grad security and n00b-proof
-usability:</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">You can
-have really paranoid settings, where it takes a mail an eternity to
-arrive; or have faster communication and still enjoy very high
-anonymity.  </font>
-</p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">You
-decide &#8211; easily with a mouse click.</font></p>
-
-
-<p style="line-height: 150%;"><br><font face="Arial, sans-serif"><b>How is
-it better?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">WE think
-it's better for US (and maybe for you; decide yourself!), than &#8230;</font></p>
-<ul><li><p style="line-height: 150%;"><font face="Arial, sans-serif">mixminion
-	as it is easy to use and as n00b-proof as we could get it.</font></p>
-	</li><li><p style="line-height: 150%;"><font face="Arial, sans-serif">anonymous
-	e-mail services not based on destination key routing: as those do
-	not deliver built-in end-to-end encryption.</font></p>
-	</li><li><p style="line-height: 150%;"><font face="Arial, sans-serif">centralized
-	services, as the server could go down (due to attacks, legal
-	problems, lack of funding or interest, &#8230;) and the server admin has
-	too many means to do profiling.</font></p>
-</li></ul>
-
-
-<p style="line-height: 150%;"><br>
-<font face="Arial, sans-serif"><b>How is
-my identity kept safe when I exchange mail with someone?</b></font></p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Never is
-your ip number or even your I2P-destination included in any e-mail
-you send.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">The
-high-latency transport counters timing attacks.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><font color="#000000">End-to-end
-encryption, per-hop encryption, rela</font>ying packets for other
-nodes, one single packet size* (padding), a constant rate of sending
-(test and dummy messages)*, and a rather balanced incoming/outgoing
-ratio* counter traffic analysis attacks<font color="#000000">, and in
-combination with per-hop delays, I2P-Bote offers good means against
-intersection attacks.</font> </font>
-</p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">The open
-source nature of I2P-Bote guarantees that you yourself can see the
-implementation and check it for bugs.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">*[<font color="#ff0000">not
-yet implemented</font>]</font></p>
-<p style="line-height: 150%;"><br>
-</p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><b>How do
-I use it?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Read the
-manual. If you have questions, ask on the forum:</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><a href="http://forum.i2p/viewforum.php?f=35">http://forum.i2p/viewforum.php?f=35</a></font></p>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>Can I
-use I2P-Bote with Thunderbird, Evolution, Kmail or &#8230; ?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Yes, you
-can use the e-mail client of your choice, as long as it supports POP3
-and SMTP.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">[<font color="#ff0000">POP3
-not yet implemented</font>]</font></p>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>Does
-it handle file attachments, and what limits are there?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">[<font color="#ff0000">not
-yet implemented</font>]</font></p>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>Can I
-use GPG with I2P-Bote?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Of
-course. Either make GPG encrypt your e-mail's text before pasting it
-into the I2P-Bote mail composition field, or use a mail app with GPG
-support. [<font color="#ff0000">POP3 support not implemented</font>]</font></p>
-<p style="line-height: 150%;"><br><br>
-</p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><b>How
-about HTML or styled text?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">...</font></p>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>Can it
-send and receive mail to/from normal internet email servers?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">It will
-very soon.</font></p>
-<p style="line-height: 150%;"><br><br>
-</p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><b>Can I
-send mail to postman's traditional I2P mail accounts?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Yes. You
-can both send and receive mails &#8211; very soon.</font></p>
-<p style="line-height: 150%;"><br><br>
-</p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><b>What
-is a mail route?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">-- <span style="font-weight: normal;">see:
-What does high-latency transport mean?</span></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><span style="font-weight: normal;">(</span>When
-using mail routes, the timestamps are automatically disabled.)</font></p>
-<p style="line-height: 150%;"><br><br>
-</p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><b>What
-does high-latency transport mean?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">It means
-that you can enable an option where e-mail packets are not sent
-directly to storing nodes, but are relayed (forwarded) by other peers
-(who cannot read the e-mails, as they are encrypted with several
-layers and ripped into small parts), who do not send them on
-immediately but wait a user-specified time &#8211; in case of sending
-specified by the sender, in case of receiving specified by recipient.
-</font>
-</p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Therefore
-it takes the mail some time to arrive. Thus an attacker cannot simply
-run stats on node uptimes (who was connected when) and times a
-message was received to be stored (which in a low-latency environment
-would be about the time it was sent), in order to uncover the real
-life identities behind I2P-Bote e-mail identities.</font></p>
-<p style="line-height: 150%;"><br><br>
-</p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><b>What
-latencies are there, and how can they be controlled (if at all)?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">It's
-distributed and on top of i2p, so it takes some time. Speed is not
-our strength, but we compare well with other anon mail systems.
-Without mail routes enabled it takes 3 to 10 minutes from hitting the
-&#8220;Send&#8221; button to being displayed in the receiver's inbox.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">If speed
-is what you want, fully disable mail routes or set them to the
-minimum number of hops and minimum per-hop delay you can  live with.</font></p>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>If
-I2P-Bote generates its own anonymity, why does it need i2p?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">I2P-Bote
-is built on top of i2p mainly for five reasons:</font></p>
-<p style="line-height: 150%;">  <font face="Arial, sans-serif">1) I2P
-was lacking a decentralized e-mail service and HungryHobo is an I2P
-user.</font></p>
-<p style="line-height: 150%;">  <font face="Arial, sans-serif">2) I2P
-offers very good anonymity, is mature and incorporates years of
-experience.<br>&nbsp;&nbsp;&nbsp; So being on top of it, kind of represents an
-anonymity fall-back even if there were<br>&nbsp;&nbsp;&nbsp; some crucial bugs in
-I2P-Bote.</font></p>
-<p style="line-height: 150%;">  <font face="Arial, sans-serif">3)
-Flexibility: We want to offer an easy way to anonymous low-latency
-e-mail<br>&nbsp;&nbsp;&nbsp; communication as well, with still a high level of
-protection.</font></p>
-<p style="line-height: 150%;">  <font face="Arial, sans-serif">4) I2P
-traffic blends with I2P-Bote traffic.</font></p>
-<p style="line-height: 150%;">  <font face="Arial, sans-serif">5) Even
-I2P-Bote relays are thus location-hidden. </font>
-</p>
-<p style="line-height: 150%;"><br><br>
-</p>
-
-<p style="line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif"><b>How
-anonymous/secure is I2P-Bote without mail routes?</b></font></font></p>
-<p style="font-weight: normal; line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif">Pretty
-anonymous and very secure.</font></font></p>
-<p style="font-weight: normal; line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif">It
-then basically enjoys the anonymity provided by I2P &#8211; which is
-rather strong anonymity already. </font></font>
-</p>
-<p style="font-weight: normal; line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif">However,
-I2P is a low-latency network, with all the shortcomings a low-latency
-network comes with by its very nature. <span style="text-decoration: none;">There
-are attacks against which I2P cannot protect you or not protect you
-very reliably. I2P-Bote does its best to augment I2P anonymity with
-its high-latency transport option, which make &#8211; if enabled &#8211;
-I2P-Bote mails paranoidly anonymous.</span></font></font></p>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>What
-is a bote dest?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">There is
-the I2P-Bote mail identity and an I2P-Bote router id.</font></p>
-
-
-
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif">The mail
-identities consist of public and private keys. The public key is the
-key others use in order to encrypt mails they send to you and in
-order to verify your signature. It is save to give away that one to
-anybody you want to get e-mails from. At the same time this public
-key is a pseudonymous identity. One real user can have more than one
-of those identities.<br>
-It's 
-your address, and therefore it is referred to as a &#8220;destination&#8221;
-or short &#8220;dest&#8221;<br>
-It is
-important to distinguish between the mail dest and the router id!<br>
-If you
-have problems with your I2P-Bote and in the highly unlikely case it should be necessary, you can tell your
-I2P-Bote router id in irc2p, I2P's IRC channels, or the forum, though until now
-this has never been necessary. It is not directly linked to your ip. </font>
-</p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Nonetheless do NOT relate your I2P-Bote router id with your I2P-Bote
-mail dests!</font></p>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>Why
-are the e-mail addresses so long?</b></font></p>
-
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif">In
-I2P-Bote every mail is encrypted. In order not to require you to
-exchange an e-mail address _and_ a long key, we simply made that key
-the address. This comes with two additional benefits: You won't have
-to worry if an e-mail address is already taken or not (at least not
-if you do not send or receive e-mails to or from the internet) and
-you don't need a key management app apart, for taking care of your
-keys.<br>
-It is
-safe to give away this key, as it is only the public key which
-everybody may know about without compromising your e-mails' <font color="#000000">secrecy.</font></font></p><p style="line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif">Using
-the ECC encryption as option will yield shorter e-mail destination
-keys.</font></font></p>
-
-
-<p style="margin-bottom: 0cm; line-height: 150%;"><br>
-<br>
-</p>
-<p style="margin-bottom: 0cm; line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif"><b>What's
-the point of multiple mail identities?</b></font></font></p>
-
-<p style="line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif">I2P-Bote
-is not an instant messenger, so you can have several identities
-without having to keep many tunnels open. Only for fetching requests
-you'd use up more resources but at the same time provide more cover
-for others.</font></font></p>
-<p style="line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif">Or
-imagine you communicate with your friends unobservedly (see: data
-retention laws) via I2P-Bote, and want to quickly send out a mail
-that you'll be meeting each other in a different location tonight.
-Then, you need no super-anonymity and can renounce mail routes and
-delays. Your friends, on the other hand, would want to have a shorter
-check interval, so they will receive the mail in time. Yet still you
-want super high anonymity for  some of your other communications,
-that's why you have a different identity with mail routes, delays and
-long check intervals.</font></font></p>
-<p style="line-height: 150%;"><br><br>
-</p>
-
-<p style="line-height: 150%;"><font color="#000000"><font face="Arial, sans-serif"><b>What
-does it mean when Know is x'ed for a mail in my inbox?</b></font></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">When the
-sender's destination is not known locally the mail is marked by an x
-in the &#8220;Know&#8221; column or by putting &#8220;[UNK]&#8221; before the
-sender's address in POP3.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">This
-means that you have no proof this user is really who he claims to be,
-in his user name. Of course, if the signature is valid, you know he
-possesses the destination key with which the mail was signed, and
-that the mail content is from that person. But you cannot rely on the
-short name here. In case you had gotten a mail from a user with this
-name before, you cannot be sure it is the same user this time, even
-if signature is ok. </font>
-</p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">In this
-case you must compare the destination keys or add them to your
-addressbook.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">So user
-not locally known, are not intrinsically bad or evil, but you
-shouldn't trust it's the user you might think it is. But, if verified
-against locally stored keys, you know it's the same user when you
-receive another mail from him and &#8220;Know&#8221; has a green check. </font>
-</p>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>What
-can I do to be more anonymous?</b></font></p>
-<ul><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">Don't
-	send identifying information about you! (name, address, photos,
-	geographic location, time zone, age, sex, websites, login names, I2P
-	router id, I2P-Bote id, Files that contain author information about
-	you, &#8230;)</font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">don't
-	send personal information or information that only you can possess,</font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">leave
-	I2P-Bote running 24/7,</font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">use
-	mailroutes with randomized per-hop delays and/or per-hop fixed send
-	times, <font color="#ff0000">[not yet fully implemented]</font></font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">use
-	a long check interval,</font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">use
-	a long local delay for own packets,</font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">use
-	a big check interval randomization. <span style="color: red;">[not yet implemented]</span></font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">suppress
-	the sending of date and time in the e-mails' header,</font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">suppress
-	translation of markers like &#8220;Re:&#8221; into another language,</font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">watch
-	your language and writing style,</font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">use
-	different e-mail identities,</font></p>
-	</li><li><p style="font-weight: normal; line-height: 150%;"><font face="Arial, sans-serif">Consider
-	discarding e-mail identities after longer periods of usage,</font></p>
-	</li><li><p style="line-height: 150%;"><font face="Arial, sans-serif"><b>...</b></font></p>
-</li></ul>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>How do
-I not send my timestamps?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Go to
-settings and disable sending of timestamps. This will have the effect
-that your mail will not contain a date or time of sending.</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">(When
-using mailroutes, the timestamps are automatically disabled.) </font><font face="Arial, sans-serif"><span style="color: red;">[not yet implemented]</span></font></p>
-
-
-<p style="line-height: 150%;"><br>
-<br>
-</p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><b>Is
-I2P-Bote open source?</b></font></p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Of
-course!</font></p>
-<p style="line-height: 150%;">&#8220;<font face="Arial, sans-serif">This
-software is licensed under the GPL version 3 (see
-licenses/GPLv3.txt),</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">except
-for bcprov-ecc-jdk16-145.jar which is licensed under the</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Bouncy
-Castle License (see licenses/BouncyCastle.txt).&#8221;</font></p>
-<p style="line-height: 150%;"><br><br>
-</p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><b>What
-do &#8220;BktPfx&#8221;, &#8220;Distance&#8221; and &#8220;Locked?&#8221; mean?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">-
-BktPfx=BucketPrefix</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">-
-Distance: the distance of an I2P-Bote node to your own node in
-keyspace</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">- Locked:
-If a node is not reachable for whatever reason, it is marked as
-locked, plus the time it has been found unreachable.</font></p>
-
-
-<p style="line-height: 150%;"><br><br>
-<font face="Arial, sans-serif"><b>Who
-made I2P-Bote?</b></font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">(See also Credits!)</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Conception,
-technical design, implementation and web user interface were/are done
-by HungryHobo, an anonymous developer.</font></p>
-
-<p style="line-height: 150%;"><font face="Arial, sans-serif">For
-feedback or if you want to offer help, you can contact him using
-I2P-Bote. His destination key is:</font></p>
-<p style="line-height: 150%;"><font face="Courier 10 Pitch">hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n</font></p>
-
-
-
-
-
-
-
-
-
-
-<p style="line-height: 150%;"><br><br><br>
-<br>
-<br>
-<font style="font-weight: bold;" face="Arial, sans-serif">Credits:</font></p>
-
-<p style="line-height: 150%;"><br><font face="Arial, sans-serif">Idea &amp;
-technical concept: HungryHobo, Mixxy</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Implementation:
-HungryHobo</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Plugin
-support: zzz, HungryHobo</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">User
-interface: HungryHobo</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Seedless
-integration: sponge</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">German
-translation: HungryHobo</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">French
-translation: albat, Redzara, Mixxy</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Spanish
-translation: Mixxy</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif">Alpha
-testing: HungryHobo, Mixxy, Returning Novice, sponge, and many others<br>
-</font></p>
-<p style="line-height: 150%;"><font face="Arial, sans-serif"><br>
-</font></p>
-
-</body></html>
+</body>
+</html>
