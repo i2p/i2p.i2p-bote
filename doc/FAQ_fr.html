@@ -186,102 +186,92 @@ href="http://gnupg.org/">GPG</a>?</strong><br>
 			<div class="date"></div>
 
 			<p>
-			<strong>Why is I2P-Bote better?</strong><br>
-			<i>We</i> think it's better for <i>us</i> (and maybe for you, too; 
-decide yourself!), than … </p><ul><li><p style="line-height: 150%;"><font
- face="Arial, sans-serif">mixminion as it is easy to use and as 
-n00b-proof as we 				could get it.</font></p>
-			</li><li><p style="line-height: 150%;"><font face="Arial, sans-serif">anonymous
- e-mail services not based on 				destination key routing: as those do 
-not deliver built-in end-to-end encryption.</font></p>
-			</li><li><p style="line-height: 150%;"><font face="Arial, sans-serif">centralized
- services, as the server could go 				down (due to attacks, legal 
-problems, lack of funding or interest, …) and the server admin has too 
-many means 				to do profiling.</font></p>
+			<strong>Pourquoi I2P-Bote est-il meilleur?</strong><br>
+			<i>Nous</i> pensons qu'il est meilleur&hellip; <i>pour nous</i> (et peut-être pour vous, aussi; 
+décidez vous-même!), que&hellip;</p><ul><li><p style="line-height: 150%;"><font
+ face="Arial, sans-serif">mixminion car il est facile à utiliser et aussi simple à prendre en main que nous avons pu.
+</font></p>
+			</li><li><p style="line-height: 150%;"><font face="Arial, sans-serif">les services de mail 
+anonymes n'utilisant pas le routage basé sur des clés de destination: car ils ne permettent pas le cryptage de bout en 
+bout.</font></p>
+			</li><li><p style="line-height: 150%;"><font face="Arial, sans-serif">les services centralisés, 
+en tant que le serveur pourrait s'arrêter (à cause d'attaques, de problèmes légaux, manque de financement ou 
+d'intérêt&hellip;) et que l'administrateur du serveur dispose de trop de moyens pour faire de l'espionnage.</font></p>
 			</li></ul>
 			<div class="date"></div>
 
 			<p>
-			<strong>How is my identity kept safe when I exchange mail with 
-someone?</strong><br>
-			Never is your ip number or even your I2P-destination included in any 
-e-mail you send.<br>
+			<strong>Comment mon identité est-elle protégée quand j'échange du courrier?</strong><br>
+			Jamais votre adresse IP ni même votre destination I2P n'est inclue dans les messages que vous 
+			envoyez.<br>
 			The high-latency transport counters timing attacks.<br>
 			End-to-end encryption, per-hop encryption, relaying packets for other
- nodes, one single packet size* (padding), a 				constant rate of 
-sending (test and dummy messages)*, and a rather balanced 
-incoming/outgoing ratio* counter traffic 				analysis attacks, and in 
-combination with per-hop delays, I2P-Bote offers good means against 
-intersection 				attacks.<br>
+ nodes, one single packet size* (padding), a constant rate of sending (test and dummy messages)*, and a rather 
+balanced incoming/outgoing ratio* counter traffic analysis attacks, and in combination with per-hop delays, 
+I2P-Bote offers good means against intersection attacks.<br>
 			The open source nature of I2P-Bote guarantees that you yourself can 
 see the implementation and check it for bugs.
-			<br>*[<font color="#ff0000">not yet implemented</font>]</p>
+			<br>*[<font color="#ff0000">pas encore implémenté</font>]</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>How do I use it?</strong><br>
-			Read the manual or see the other questions and answers here!<br>
-			If you still have unanswered questions, ask on the forum: 
+			<strong>Comment faire pour l'utiliser?</strong><br>
+			Lisez le Guide ou les autres questions/réponses ici!<br>
+			Si vous avez toujours des questions,  posez-les sur le forum: 
 			<a href="http://forum.i2p/viewforum.php?f=35">http://forum.i2p/viewforum.php?f=35</a>
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>Can I use an email program like Thunderbird?</strong><br>
-			No, but it is on the roadmap.
+			<strong>Puis-je utiliser un programme comme Thunderbird?</strong><br>
+			Non, mais c'est sur la feuille de route.
 <!--Yes, you can use the e-mail client of your choice, as long as it supports POP3 and 
 SMTP<br/>[<font color="#ff0000">POP3 and SMTP not yet implemented</font>]-->
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>Can I send attachments, and what limits are there?</strong><br>
-			Yes, attachments are supported as of release 0.2.5.<br>The overall 
-size of attached files should be kept small, 				preferably below 500kB.</p>
+			<strong>Puis-je envoyer des pièce-jointes, et quelles sont les limites?</strong><br>
+			Oui, depuis la version 0.2.5.<br>La taille cumulée des pièces jointes devrait être petite et de 
+			préférence limitée 500ko.</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>How do I create an email account?</strong><br>
-			I2P-Bote calls them Email Identities. You can create one in the 
-I2P-Bote web interface under the "Identities" link. 				The reason why 
-it's not called an account is that there is no provider like GMail or 
-GMX. You alone hold the 				(cryptographic) keys to the Email Identity.<br>
-			When you create an Email Identity, I2P-Bote generates a string of 
-numbers and letters called an Email Destination. 				This is the address
- you can be reached at.<br>
-Example: <tt><b>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6tDWwjPHYEuoKyWqwxplSdix</b></tt>
+			<strong>Comment créer un compte de messagerie?</strong><br>
+			I2P-Bote les appelle "Identités". Vous pouvez en créer une dans l'interface web d'I2P-Bote 
+			via le lien "Identités". La raison pour laquelle on ne les appelle pas des "comptes" est qu'il 
+			n'y a pas de fournisseur comme GMail ou autre. Vous êtes le seul dépositaire des clés 
+			(cryptographiques) de l'identité.<br>Quand vous la créez, I2P-bote génère une chaîne de 
+			chiffres et de lettres appelée "Destination". C'est l'adresse à laquelle on peut vous joindre. 
+			<br>
+Exemple: <tt><b>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6tDWwjPHYEuoKyWqwxplSdix</b></tt>
 			</p>
 			<div class="date"></div>
 
 			<p>
-			<strong>What's an Email Destination? What about email addresses?</strong><br>
-			Email destinations (aka bote dests) are between 86 and 512 characters
- long, depending on the type of encryption. 				Support for 
-easy-to-remember, user-chosen addresses is planned for the near future.<br>
-			The e-mail identities consist of public and private keys, as well as a
- name the user chooses for it. The public part 				is your e-mail 
-destination, your pseudonymous identity. And one real user can have more
- than one of those 				identities. They serve for addressing mails to 
-certain users –therefore it is referred to as a 				“destination” or 
-short “dest” – as well as for encrypting the mails for them.
-			Hence, your e-mail destination is the key others use in order to 
-encrypt mails which they send to you, and in
-			order to verify the authenticity and integrity of mails they receive 
-from you.<br>
-			It is save to give your e-mail destination to anybody you want to get
- e-mails from.<br>
-			It is important to distinguish between the mail dest and the router 
-id! Your I2P-Bote mail identity is not related 				to your I2P-Bote 
-router/node id, which is used for I2P-Bote nodes to contact each other 
-and this way for the Bote 				network.<br>
-			If you have problems with your I2P-Bote app – in the highly unlikely 
-case it should be necessary – you 				can tell your I2P-Bote router id 
+			<strong>Qu'est qu'une destination? Et l'adresse mail?</strong><br>
+			Les destinations ont entre 86 et 512 cararactères de long, suivant le type de cryptage. 
+			La prise en charge d'adresse faciles à mémoriser et choisies par l'utilisateur sont au 
+			programme d'un futur proche.<br> Les identités sont une paire de clés privée et publique, 
+			et d'un nom que l'utilisateur lui attribue. La clé publique est la destination, 
+			votre identité pseudonymique. Et un utlisateur réel peut en avoir plusieurs. Elles servent à 
+			envoyer des messages à certains utilisateurs – donc appelés des “destinations” – tout comme 
+			pour crypter les messages qui leur sont&hellip; destinés. Votre destination est donc pour les 
+			autre aussi la clé qu'ils utilisent pour crypter les messages qu'ils vous envoient et pour 
+			pour vérifier l'intégrité et l'authenticité de ceux qu'il reçoivent&hellip; de vous.<br>
+			Il est sans danger (et indispensable) de donner votre destination à toute personne de laquelle 
+			vous voulez recevoir du courrier.<br> Il est important de faire la distinction entre votre 
+			destination de messagerie et la destination de votre routeur I2P! Votre identité de messagerie 
+			n'a rien à voir avec l'dentité de votre nœud/routeur I2P-Bote qui est utilisée pour permettre 
+			aux nœuds I2P-Bote de se contacter les uns les autres pour constituer le réseau Bote.<br>
+	<!-- "commented out by magma":		Si vous avez des problèmes avec l'application I2P-Bote – dans le cas très improbable où ça 
+			serait nécessaire – vous pouvez indiquer votre n tell your I2P-Bote router id 
 in irc2p, I2P's IRC channels, or the forum or manually add other peer's 
 id's in 				order to connect, though until now this has never been 
 necessary. <br>It is <b>not linked to your ip</b>. 				Nonetheless, do 
 not relate your I2P-Bote router id with your I2P-Bote mail dests since 
 this might destroy the 				additional anonymity I2P-Bote itself 
-generates!
+generates!  -->
 			</p>
 			<div class="date"></div>
 
