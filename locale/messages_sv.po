@@ -1,62 +1,64 @@
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-27 04:32+0000\n"
-"PO-Revision-Date: \n"
-"Last-Translator: hottuna <personal@robertfoss.se>\n"
-"Language-Team: \n"
+"Project-Id-Version: I2P\n"
+"Report-Msgid-Bugs-To: https://trac.i2p2.de/\n"
+"POT-Creation-Date: 2011-02-28 05:57+0000\n"
+"PO-Revision-Date: 2011-03-30 19:45+0000\n"
+"Last-Translator: hottuna <i2p@robertfoss.se>\n"
+"Language-Team: Swedish (Sweden) <>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/i2p/bote/I2PBote.java:430 src/i2p/bote/service/OutboxProcessor.java:144
 msgid "No identity matches the sender/from field: "
-msgstr "Ingen identitet överensstämmer med avsändare/från fältet"
+msgstr "Ingen identitet överensstämmer med avsändare/från fältet:"
 
 #: src/i2p/bote/I2PBote.java:505
 msgid "The old password is not correct."
-msgstr "Det gamla lösenordet är inte korrekt."
+msgstr "Det gamla lösenordet är inte rätt."
 
 #: src/i2p/bote/I2PBote.java:507
 msgid "The new password and the confirmation password do not match."
-msgstr "Det nya lösenordet och lösenordsbekräftelse överensstämmer inte."
+msgstr "Det nya lösenordet och bekräftelselösenordet matchar inte."
 
 #: src/i2p/bote/crypto/ECDH256_ECDSA256.java:49
 msgid "256-bit Elliptic Curve Encryption"
-msgstr "256-bitars Elliptisk kurv kryptografi"
+msgstr "256-bitars Elliptisk kurv kryptering"
 
 #: src/i2p/bote/crypto/ECDH521_ECDSA521.java:54
 msgid "521-bit Elliptic Curve Encryption"
-msgstr "521-bitars Elliptisk kurv kryptografi"
+msgstr "521-bitars Elliptisk kurv kryptering"
 
 #: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
 msgid "2048-bit ElGamal Encryption"
-msgstr "2048-bit ElGamal kryptering"
+msgstr "2048-bitars ElGamal kryptering"
 
 #: src/i2p/bote/crypto/NTRUEncrypt1087_NTRUSign349.java:75
-#, fuzzy
 msgid "NTRU-1087 Encryption"
-msgstr "Kryptering:"
+msgstr "NTRU-1087 kryptering"
 
 #: src/i2p/bote/email/Email.java:442
 #, java-format
 msgid "Invalid address: {0}"
-msgstr "Ogiltig adress: {0}"
+msgstr "Ogiltig address: {0}"
 
 #: src/i2p/bote/email/Email.java:448
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
-msgstr "Adressen innehåller ingen email destination eller extern adress: {0}"
+msgstr ""
+"Adressen innehåller inte en epost-destination eller en extern adress: {0}"
 
 #: src/i2p/bote/folder/Outbox.java:115
 msgid "Queued"
-msgstr ""
+msgstr "Köad"
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
-msgstr "Fel protokollversion:"
+msgstr "Fel protokollversion"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "BktPfx"
@@ -68,7 +70,7 @@ msgstr "Avstånd"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "First Seen"
-msgstr "Först iaktagen"
+msgstr "Först sedd"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 #: src/i2p/bote/web/PeerInfoTag.java:85
@@ -94,7 +96,7 @@ msgstr "Ja"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:84
 msgid "(None)"
-msgstr "(Ingen)"
+msgstr "(Inga)"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:89
 msgid "(S)"
@@ -109,7 +111,7 @@ msgstr "Skickar"
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Skickat till {0} av {1} mottagare"
 
-#: src/i2p/bote/service/OutboxProcessor.java:165 WebContent/folder.jsp
+#: src/i2p/bote/service/OutboxProcessor.java:165 WebContent\folder.jsp
 msgid "Sent"
 msgstr "Skickat"
 
@@ -120,29 +122,29 @@ msgstr "Gateway avslagen"
 #: src/i2p/bote/service/OutboxProcessor.java:203
 #, java-format
 msgid "Invalid recipient address: {0}"
-msgstr "Ogiltig mottagaradress: {0}"
+msgstr "Ogiltig mottagaradress"
 
 #: src/i2p/bote/service/OutboxProcessor.java:207
 #, java-format
 msgid "Error creating email packets: {0}"
-msgstr "Ett fel inträffad under email-packet skickningen: {0}"
+msgstr "Fel när epost-paket skapades: {0}"
 
 #: src/i2p/bote/service/OutboxProcessor.java:211
 #, java-format
 msgid "Error while sending email: {0}"
-msgstr "Ett fel har inträffat under skickningen av email: {0}"
+msgstr "Fel när epost skickades: {0}"
 
 #: src/i2p/bote/web/JSPHelper.java:126
 msgid "Error creating the Email Identity."
-msgstr "Ett fel har inträffat under skapning av email-identitet"
+msgstr "Fel när epost-identitet skapas"
 
 #: src/i2p/bote/web/PeerInfoTag.java:55
 msgid "Kademlia Peers:"
-msgstr "Kademlia Peers:"
+msgstr "Kademlia peers:"
 
 #: src/i2p/bote/web/PeerInfoTag.java:80
 msgid "Relay Peers:"
-msgstr "Vidarebefodrings Peers:"
+msgstr "Vidarebefodringande peers:"
 
 #: src/i2p/bote/web/PeerInfoTag.java:86
 msgid "Reachability %"
@@ -150,15 +152,15 @@ msgstr "Nåbarhet %"
 
 #: src/i2p/bote/web/PeerInfoTag.java:105
 msgid "Banned Peers:"
-msgstr "Bannade Peers:"
+msgstr "Bannade peers:"
 
 #: src/i2p/bote/web/PeerInfoTag.java:110
 msgid "Destination Hash"
-msgstr "Destination Hash"
+msgstr "Mottagarhash"
 
 #: src/i2p/bote/web/PeerInfoTag.java:111
 msgid "Ban Reason"
-msgstr "Bannings anledning"
+msgstr "Anledning för ban"
 
 #: src/i2p/bote/web/SendEmailTag.java:73
 msgid "Error: Please add at least one recipient."
@@ -166,490 +168,371 @@ msgstr "Fel: Var god lägg till minst en mottagare"
 
 #: src/i2p/bote/web/SendEmailTag.java:96
 msgid "The email has been queued for sending."
-msgstr "Emailet har lagts i kö för sändning."
+msgstr "Eposten har köats för sändning."
 
 #: src/i2p/bote/web/SendEmailTag.java:102
 #, java-format
 msgid "Error sending email: {0}"
-msgstr "Ett fel inträffade under sändningen av email: {0}"
+msgstr "Fel vid sändning av epost: {0}"
 
-#: WebContent/about.jsp
-msgid "About I2P-Bote"
-msgstr "Om I2P-Bote"
-
-#: WebContent/about.jsp
-msgid "I2P-Bote Version {0}"
-msgstr "I2P-Bote Version {0}"
-
-#: WebContent/about.jsp
-msgid "Author:"
-msgstr "Författare:"
-
-#: WebContent/about.jsp
-msgid "Click to send an email"
-msgstr "Klicka för att skicka ett email"
-
-#: WebContent/about.jsp
-msgid "Feedback on I2P-Bote"
-msgstr "Feedback angående I2P-Bote"
-
-#: WebContent/about.jsp
-msgid "Contributors:"
-msgstr "Bidragare:"
-
-#: WebContent/about.jsp
-msgid "Translation, QA, usability, technical feedback"
-msgstr "Översättning, frågorl och svar, användbarhet, teknisk feedback"
-
-#: WebContent/about.jsp
-msgid "Seedless"
-msgstr "Seed free"
-
-#: WebContent/about.jsp
-msgid "Russian translation"
-msgstr "Rysk översättning"
-
-#: WebContent/about.jsp
-msgid "French translation"
-msgstr "Fransk översättning"
-
-#: WebContent/about.jsp
-msgid "Dutch translation"
-msgstr "Nederländsk översättning"
-
-#: WebContent/about.jsp
-#, fuzzy
-msgid "Norwegian translation"
-msgstr "Fransk översättning"
-
-#: WebContent/about.jsp
-#, fuzzy
-msgid "Swedish translation"
-msgstr "Fransk översättning"
-
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "Address Book"
 msgstr "Adressbok"
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "Private Address Book"
-msgstr "Privat Adressbok"
+msgstr "Privat adressbok"
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "Select One or More Entries"
-msgstr "Välj en eller fler noteringar"
+msgstr "Välj en eller flera poster"
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "The address book is empty."
 msgstr "Adressboken är tom."
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "Name"
 msgstr "Namn"
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "Email Destination"
-msgstr "Email destination"
+msgstr "Epost-destination"
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "Delete"
 msgstr "Ta bort"
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "Delete this contact"
 msgstr "Ta bort denhär kontakten"
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "New Contact"
 msgstr "Ny kontakt"
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "Add Recipients"
 msgstr "Lägg till mottagare"
 
-#: WebContent/addressBook.jsp
+#: WebContent\addressBook.jsp
 msgid "Return"
-msgstr "Tilbaka"
+msgstr "Återgå"
 
-#: WebContent/buttonFrame.jsp
+#: WebContent\buttonFrame.jsp
 msgid "Checking for mail..."
-msgstr "Kontrollerar email..."
+msgstr "Kollar efter nya brev..."
 
-#: WebContent/buttonFrame.jsp
+#: WebContent\buttonFrame.jsp
 msgid "Check Mail"
-msgstr "Kontrollera email"
+msgstr "Kolla efter nya brev"
 
-#: WebContent/buttonFrame.jsp
+#: WebContent\buttonFrame.jsp
 msgid "New"
-msgstr "Ny"
+msgstr "Nytt"
 
-#: WebContent/deleteContact.jsp
+#: WebContent\deleteContact.jsp
 msgid "The contact has been deleted from the address book."
-msgstr "Kontakten har blivit borttagen från adressboken."
+msgstr "Kontakten har tagits bort från adressboken"
 
-#: WebContent/deleteContact.jsp
+#: WebContent\deleteContact.jsp
 msgid "Error"
 msgstr "Fel"
 
-#: WebContent/deleteEmail.jsp
+#: WebContent\deleteEmail.jsp
 msgid "Error: Couldn't delete email."
-msgstr "Fel: Kunne inte ta bort email."
+msgstr "Fel: Kunde inte ta bort epost."
 
-#: WebContent/deleteIdentity.jsp
+#: WebContent\deleteIdentity.jsp
 msgid "Error:"
 msgstr "Fel:"
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "Please fill in the Destination field."
-msgstr "Var god fyll i destination-fältet"
+msgstr "Var god fyll i destinationsfältet."
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "Please fill in the Name field."
-msgstr "Var god fyll i namn-fältet."
+msgstr "Var god fyll i namnfältet."
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "The contact has been saved."
-msgstr "Kontakten har sparats"
+msgstr "Kontakten har sparats."
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "Add"
 msgstr "Lägg till"
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "Edit Contact"
-msgstr "Redigera kontakt"
+msgstr "Redigera"
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "Save"
 msgstr "Spara"
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "Email Destination:"
-msgstr "Email destination"
+msgstr "Epost-destination:"
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "(required field)"
-msgstr "(måste ifyllas)"
+msgstr "(nödvändigt fält)"
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "Name:"
 msgstr "Namn:"
 
-#: WebContent/editContact.jsp
+#: WebContent\editContact.jsp
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "New Email Identity"
-msgstr "Ny email identitet"
+msgstr "Ny epostidentitet"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "Create"
 msgstr "Skapa"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "Edit Email Identity"
-msgstr "Redigera email-identitet"
+msgstr "Redigera epostidentitet"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "Public Name:"
-msgstr "Offentligt namn:"
+msgstr "Publikt namn:"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "(required field, shown to recipients)"
-msgstr "(måste ifyllas, visas för mottagare)"
+msgstr "(nödvändigt fält, visas för mottagare)"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "Description:"
-msgstr "Beskrivning"
+msgstr "Beskrivning:"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "(optional, kept private)"
-msgstr "(valfritt, hålls privat)"
+msgstr "(frivilligt, behålls privat)"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "Encryption:"
-msgstr "Kryptering:"
+msgstr "Kryptering"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "(If unsure, leave the default)"
-msgstr "(Om osäker, låt vara)"
+msgstr "(Om osäker, låt vara standard)"
 
-#: WebContent/editIdentity.jsp
+#: WebContent\editIdentity.jsp
 msgid "Default Identity:"
-msgstr "Standard identitet"
+msgstr "Standardidentitet"
 
-#: WebContent/folder.jsp
+#: WebContent\folder.jsp
 msgid "From"
 msgstr "Från"
 
-#: WebContent/folder.jsp
+#: WebContent\folder.jsp
 msgid "Know"
-msgstr "Vet"
+msgstr "Känner du"
 
-#: WebContent/folder.jsp
+#: WebContent\folder.jsp
 msgid "Sig"
-msgstr "Sig"
+msgstr "Signatur"
 
-#: WebContent/folder.jsp
+#: WebContent\folder.jsp
 msgid "To"
 msgstr "Till"
 
-#: WebContent/folder.jsp
+#: WebContent\folder.jsp
 msgid "Subject"
-msgstr "Subject"
+msgstr "Ämne"
 
-#: WebContent/folder.jsp
+#: WebContent\folder.jsp
 msgid "Anonymous"
-msgstr "Anonym"
+msgstr "Anonymt"
 
-#: WebContent/folder.jsp
+#: WebContent\folder.jsp
 msgid "(No subject)"
-msgstr "(Inget subject)"
+msgstr "(Inget ämne)"
 
-#: WebContent/folder.jsp
+#: WebContent\folder.jsp
 msgid "Delete this email"
-msgstr "Ta bort dethär mailet"
+msgstr "Ta bort dethär ebrevet"
 
-#: WebContent/folders.jsp
+#: WebContent\folders.jsp
 msgid "Folders"
 msgstr "Mappar"
 
-#: WebContent/folders.jsp
+#: WebContent\folders.jsp
 msgid "Inbox"
-msgstr "Inlåda"
+msgstr "Inkorg"
 
-#: WebContent/folders.jsp
+#: WebContent\folders.jsp
 msgid "Outbox"
-msgstr "Utlåda"
+msgstr "Utkorg"
 
-#: WebContent/folders.jsp
+#: WebContent\folders.jsp
 msgid "Sent Emails"
-msgstr "Skickade brev"
+msgstr "Skickade epost"
 
-#: WebContent/folders.jsp
+#: WebContent\folders.jsp
 msgid "Drafts"
 msgstr "Utkast"
 
-#: WebContent/folders.jsp
+#: WebContent\folders.jsp
 msgid "Trash"
 msgstr "Skräp"
 
-#: WebContent/folders.jsp
+#: WebContent\folders.jsp
 msgid "Manage Folders"
 msgstr "Administrera mappar"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "- I2P-Bote"
 msgstr "- I2P-Bote"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "I2P-Bote"
 msgstr "I2P-Bote"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "Secure Distributed Email"
-msgstr "Säker distribuerad email"
+msgstr "Säker distribuerad epost"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "A new version is available. Click here for the configuration page."
-msgstr ""
+msgstr "En ny version är tillgänglig. Klicka här för konfigurationssidan"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "Addresses"
 msgstr "Adresser"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "Identities"
 msgstr "Identiteter"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "Settings"
 msgstr "Inställningar"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "Network Status"
-msgstr "Nätverksstatus"
+msgstr "Nätverkstatus"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "Help"
 msgstr "Hjälp"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "User Guide"
-msgstr "Användarmanual"
+msgstr "Användarguide"
 
-#: WebContent/header.jsp
+#: WebContent\header.jsp
 msgid "About"
 msgstr "Om"
 
-#: WebContent/identities.jsp
+#: WebContent\identities.jsp
 msgid "Email Identities"
-msgstr "Email identiteter"
+msgstr "Epostidentiteter"
 
-#: WebContent/identities.jsp
+#: WebContent\identities.jsp
 msgid "No email identities are defined."
-msgstr "Inga emailidentiteter är angivna."
+msgstr "Inga epostidentiteter är definierade"
 
-#: WebContent/identities.jsp
+#: WebContent\identities.jsp
 msgid "Def."
 msgstr "Def."
 
-#: WebContent/identities.jsp
+#: WebContent\identities.jsp
 msgid "Public Name"
-msgstr "Offentligt namn"
+msgstr "Publikt namn"
 
-#: WebContent/identities.jsp
+#: WebContent\identities.jsp
 msgid "Description"
-msgstr "Beskrvining"
+msgstr "Beskrivning"
 
-#: WebContent/identities.jsp
+#: WebContent\identities.jsp
 msgid "Email Address"
-msgstr "Emailadress"
+msgstr "Epostadress"
 
-#: WebContent/identities.jsp
+#: WebContent\identities.jsp
 msgid "Delete this identity"
 msgstr "Ta bort denhär identiteten"
 
-#: WebContent/identities.jsp
+#: WebContent\identities.jsp
 msgid "New Identity"
 msgstr "Ny identitet"
 
-#: WebContent/network.jsp
+#: WebContent\network.jsp
 msgid "Network"
 msgstr "Nätverk"
 
-#: WebContent/network.jsp
+#: WebContent\network.jsp
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
 msgstr ""
-"Nätverksinformation är inte tillgänglig då I2P-Bote inte har börjat ansluta "
-"till nätverket än."
+"Nätverksinformation är inte tillgänglig för I2P-Bote inte har börjat ansluta"
+" till nätverket än."
 
-#: WebContent/network.jsp
+#: WebContent\network.jsp
 msgid "Local destination:"
 msgstr "Lokal destination:"
 
-#: WebContent/newEmail.jsp
-msgid "New Email"
-msgstr "Nytt email"
-
-#: WebContent/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr ""
-
-#: WebContent/newEmail.jsp
-msgid "From:"
-msgstr "Från"
-
-#: WebContent/newEmail.jsp
-msgid "To:"
-msgstr "Till"
-
-#: WebContent/newEmail.jsp
-msgid "CC:"
-msgstr "CC:"
-
-#: WebContent/newEmail.jsp
-msgid "BCC:"
-msgstr "BCC:"
-
-#: WebContent/newEmail.jsp
-msgid "Reply To:"
-msgstr "Svar till:"
-
-#: WebContent/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Adressbok..."
-
-#: WebContent/newEmail.jsp
-msgid "Subject:"
-msgstr "Subject:"
-
-#: WebContent/newEmail.jsp
-msgid "Attachments:"
-msgstr "Tillägg:"
-
-#: WebContent/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "Ta bort dethär tillägget"
-
-#: WebContent/newEmail.jsp
-msgid "Add another attachment"
-msgstr "Lägg till ett nytt tillägg"
-
-#: WebContent/newEmail.jsp
-msgid "Attach"
-msgstr "Lägg till"
-
-#: WebContent/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "Det rekommenderas att låta tillägg vara mindre än 500 kB."
-
-#: WebContent/newEmail.jsp
-msgid "Message:"
-msgstr "Meddelande:"
-
-#: WebContent/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} skrev:"
-
-#: WebContent/newEmail.jsp
-msgid "Send"
-msgstr "Skicka"
-
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
 msgstr ""
-"För att kunna ta emot email från andra personer behöver du ska en email-"
-"identitet."
+"För att kunna ta emot epost från andra personer måste du skapa en "
+"epostidentitet först."
 
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr "Varje email är associerat med en email-destination."
+msgstr ""
+"Varje epostidentitet är förknippad med en e-destination. Vem som helst kan "
+"skicka e-post till e-destination, men endast identitetsägaren kan läsa den."
 
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
 msgstr ""
-"Email-identiteter är motsvarande vanliga email-konton - med det undantag att "
-"det inte finns en leverantör som kan läsa alla dina email. Detta på grund av "
-"att I2P-Bota lagrar alla email krypterat på nätverket."
+"På ett sätt är epostidentiteter likvärdiga med traditionella epostkonton - "
+"förutom att det inte finns någon leverantör som kan läsa alla dina e-post "
+"eftersom I2P-Bote lagrar all epost krypterat på nätet."
 
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities.txt; "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities.txt; "
 "never give this file to anyone or they will be able to read all your emails."
 msgstr ""
-"I2P-bote krypterar autoatiskt alla email som skickas till dig, m.h.a. email-"
-"identiteten du skapat. Email-identiteterna sparas i en kalla identities.txt; "
-"ge aldrig bort filen till någon annars kan de läsa dina email."
+"I2P-Bote dekrypterar automatiskt epost, med hjälp av epostidentitet du "
+"skapat. Epostidentiteter lagras i en fil som heter identities.txt, ge aldrig"
+" den här filen till någon för de kan då läsa all epost avsedd för dig."
 
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr "Ge ut email-destinationen så att andra kan kontakta dig."
+msgstr "Vill ge ut epostdestination så att andra kan kontakta dig."
 
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid ""
 "It is easy to create multiple identities for different purposes, or "
 "different contacts."
 msgstr ""
-"Det är lätt att skapa flera identiteter för olika ändamål eller kontakter."
+"Det är lätt att skapa flera identiteter för olika ändamål, eller olika "
+"kontakter."
 
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid ""
 "When you create a new email identity, you can choose the type of encryption "
 "that will be used by the email identity. While all encryption algorithms "
@@ -657,215 +540,376 @@ msgid ""
 "destination depends on the encryption used. The higher the number of bits, "
 "the longer the email destination."
 msgstr ""
-"När du skapar en ny email-identitet, kan du välja vilken kryptering som ska "
-"användas för den. Då alla krypteringsalternativ som I2P-Bote erbjuder en hög "
-"säkerhetsstandard, kommer email-destinationens längd bero på "
-"krypteringsalternativet som valts. Ett större bit-antal ger en längre "
-"destination."
+"När du skapar ett nytt epostidentitet kan du välja den typ av kryptering som"
+" ska användas av e-post identitet. Alla krypteringsalgoritmer som erbjuds av"
+" I2P-Bote ger en hög säkerhet. Längden på ett epostdestination beror på den "
+"använda kryptering. Ju högre antal bitar, desto längre är destination."
 
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid ""
 "Note that the same is not true for encryption strength. 256-bit elliptic "
 "curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
 "elliptic curve is equivalent to 15360-bit ElGamal."
 msgstr ""
-"Lägg märke till att detsamma inte är sant för krypteringsstyrka. 256-bitars "
-"ellipsisk kurv kryptografi mostvarar 3072-bit ElGamal. 521-bitars elliptisk "
-"kurbv kryptografi mostsvarar 15360-bitars ElGamal-kryptering."
+"Observera att detsamma inte är sant för kryptering styrka. 256-bitars "
+"elliptisk kurva kryptering motsvarar i säkerhet 3072-bitars ElGamal. "
+"521-bitars elliptisk kurva motsvarar 15360-bitars ElGamal."
 
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid "No Email Identity Defined"
-msgstr "Ingen email-identitet definierad"
+msgstr "Ingen epostidentitet definierad"
 
-#: WebContent/noIdentities.jsp
+#: WebContent\noIdentities.jsp
 msgid "Create a New Email Identity"
-msgstr "Skapa en ny email-identitet"
+msgstr "Skapa en ny epostidentitet"
 
-#: WebContent/outbox.jsp
+#: WebContent\outbox.jsp
 msgid "Create Time"
-msgstr "Skapa tid"
+msgstr "Skapad"
 
-#: WebContent/outbox.jsp
+#: WebContent\outbox.jsp
 msgid "Status"
 msgstr "Status"
 
-#: WebContent/password.jsp
+#: WebContent\password.jsp
 msgid "Password Required"
-msgstr "Passord krävs"
+msgstr "Lösenord krävs"
 
-#: WebContent/password.jsp
+#: WebContent\password.jsp
 msgid "Wrong password. Try again."
 msgstr "Fel lösenord. Försök igen."
 
-#: WebContent/password.jsp
+#: WebContent\password.jsp
 msgid "Password required"
-msgstr "Passord kävs"
+msgstr "Lösenord krävs"
 
-#: WebContent/password.jsp
+#: WebContent\password.jsp
 msgid "Password:"
 msgstr "Lösenord:"
 
-#: WebContent/password.jsp
+#: WebContent\password.jsp
 msgid "OK"
-msgstr "OK"
+msgstr "Ok"
 
-#: WebContent/saveIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "Var god fyll i \"Offentligt namn\"-fältet"
+#: WebContent\sendEmail.jsp
+msgid "New Email"
+msgstr "Nytt ebrev"
 
-#: WebContent/saveIdentity.jsp
-msgid "Please wait..."
-msgstr ""
-
-#: WebContent/saveIdentity.jsp
-#, fuzzy
-msgid "The Email Identity is being generated."
-msgstr "Email-identiteten har sparats."
-
-#: WebContent/saveIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "Email-identiteten har sparats."
-
-#: WebContent/setPassword.jsp
+#: WebContent\setPassword.jsp
 msgid "Set Password"
-msgstr "Välj lösenord"
+msgstr "Bestäm lösenord"
 
-#: WebContent/setPassword.jsp
+#: WebContent\setPassword.jsp
 msgid "The password has been changed."
-msgstr "Lösenordet har ändrats."
+msgstr "Lösenordet har bytits"
 
-#: WebContent/setPassword.jsp
+#: WebContent\setPassword.jsp
 msgid "Set a new Password"
-msgstr "Välj ett nytt lösenord"
+msgstr "Bestäm ett nytt lösenord"
 
-#: WebContent/setPassword.jsp
+#: WebContent\setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
-msgstr "Om du inte har valt ett lösenord, lämna lösenords-fältet tomt."
+msgstr ""
+"Om du inte har bestämt ett lösenord, låt det gamla lösenordet vara tomt."
 
-#: WebContent/setPassword.jsp
+#: WebContent\setPassword.jsp
 msgid "Old password:"
 msgstr "Gammalt lösenord:"
 
-#: WebContent/setPassword.jsp
+#: WebContent\setPassword.jsp
 msgid "New password:"
 msgstr "Nytt lösenord:"
 
-#: WebContent/setPassword.jsp
+#: WebContent\setPassword.jsp
 msgid "Confirm:"
 msgstr "Bekräfta:"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "Settings have been saved."
-msgstr "Inställningar har sparats."
+msgstr "Inställningar har sparats"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "Check for mail every {0} minutes"
-msgstr "Kontrollera efter email var {0}de minut"
+msgstr "Kolla efter ny epost var {0} minut"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "Use relays when sending mail:"
-msgstr "Använd vidarebefodrare vid skickning av email:"
+msgstr "Använd vidarebefodrare när brev skickas:"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "None"
 msgstr "Inga"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "Delay per relay hop: Between"
-msgstr "Försening per vidarebefodrare: Mellan"
+msgstr "Försening för var vidarebefodrare: Mellan"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "and"
 msgstr "och"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "minutes"
 msgstr "minuter"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "Använd en gateway när icke I2P email-adress skickas till"
+msgstr "Använd en gateway när epost skickas till icke-I2P adresser"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "Email Destination of the gateway:"
-msgstr "Email destination av gateway"
+msgstr "Epost-destination för gateway:en"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Använd engelsk text för utgående epost ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Använd engelska till text som läggs till utgående epost ('Re:','wrote:', "
+"osv.)"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "Include send time in outgoing emails"
-msgstr "Inkludera sändningstid i utgående epost"
+msgstr "Inkludera avsändningstidpunkt i utgående epost"
 
-#: WebContent/settings.jsp
+#: WebContent\settings.jsp
 msgid "Change Password"
-msgstr "Ändra lösenord"
+msgstr "Byt lösenord"
 
-#: WebContent/showEmail.jsp
+#: WebContent\showEmail.jsp
+msgid "From:"
+msgstr "Från:"
+
+#: WebContent\showEmail.jsp
 msgid "Signature:"
 msgstr "Signatur:"
 
-#: WebContent/showEmail.jsp
+#: WebContent\showEmail.jsp
 msgid "Valid"
-msgstr "Gilltig"
+msgstr "Giltig"
 
-#: WebContent/showEmail.jsp
+#: WebContent\showEmail.jsp
 msgid "Invalid or missing"
-msgstr "Ogiltig eller saknad"
+msgstr "Ogiltig eller saknas"
 
-#: WebContent/showEmail.jsp
+#: WebContent\showEmail.jsp
+msgid "Reply To:"
+msgstr "Svara till:"
+
+#: WebContent\showEmail.jsp
+msgid "To:"
+msgstr "Till:"
+
+#: WebContent\showEmail.jsp
+msgid "CC:"
+msgstr "Kopia:"
+
+#: WebContent\showEmail.jsp
+msgid "BCC:"
+msgstr "Dold kopia:"
+
+#: WebContent\showEmail.jsp
 msgid "Sent:"
 msgstr "Skickat:"
 
-#: WebContent/showEmail.jsp
+#: WebContent\showEmail.jsp
 msgid "Received:"
-msgstr "Motagit:"
+msgstr "Mottagit:"
 
-#: WebContent/showEmail.jsp
+#: WebContent\showEmail.jsp
+msgid "Subject:"
+msgstr "Ämne:"
+
+#: WebContent\showEmail.jsp
+msgid "Message:"
+msgstr "Meddelande:"
+
+#: WebContent\showEmail.jsp
+msgid "Attachments:"
+msgstr "Bifogningar:"
+
+#: WebContent\showEmail.jsp
 msgid "Status:"
 msgstr "Status:"
 
-#: WebContent/showEmail.jsp
+#: WebContent\showEmail.jsp
 msgid "Reply"
 msgstr "Svara"
 
-#: WebContent/showEmail.jsp
+#: WebContent\showEmail.jsp
 msgid "Re:"
-msgstr "Re:"
+msgstr "Åter:"
 
-#: WebContent/statusFrame.jsp
+#: WebContent\statusFrame.jsp
 msgid "Not Started"
 msgstr "Inte startad"
 
-#: WebContent/statusFrame.jsp
+#: WebContent\statusFrame.jsp
 msgid "Waiting 3 Minutes..."
-msgstr "Väntar 3 minuter..."
+msgstr "Väntar 3 mintuer..."
 
-#: WebContent/statusFrame.jsp
+#: WebContent\statusFrame.jsp
 msgid "Connect Now"
 msgstr "Anslut nu"
 
-#: WebContent/statusFrame.jsp
+#: WebContent\statusFrame.jsp
 msgid "Connecting..."
 msgstr "Ansluter..."
 
-#: WebContent/statusFrame.jsp
+#: WebContent\statusFrame.jsp
 msgid "Connected"
 msgstr "Ansluten"
 
-#: WebContent/statusFrame.jsp
+#: WebContent\statusFrame.jsp
 msgid "Unknown Status"
 msgstr "Okänd status"
 
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Email Destination: "
-msgstr "Email destination: "
+#: WebContent\about.jsp
+msgid "About I2P-Bote"
+msgstr "Om I2P-Bote"
 
-#: WebContent/WEB-INF/tags/address.tag
+#: WebContent\about.jsp
+msgid "I2P-Bote Version {0}"
+msgstr "I2P-Bote Version {0}"
+
+#: WebContent\about.jsp
+msgid "Author:"
+msgstr "Författare:"
+
+#: WebContent\about.jsp
+msgid "Click to send an email"
+msgstr "Klicka för att skicka epost"
+
+#: WebContent\about.jsp
+msgid "Feedback on I2P-Bote"
+msgstr "Feedback om I2P-Bote"
+
+#: WebContent\about.jsp
+msgid "Contributors:"
+msgstr "Bidragare:"
+
+#: WebContent\about.jsp
+msgid "Translation, QA, usability, technical feedback"
+msgstr "Översättning, kvalitetsförsäkring. teknisk feedback"
+
+#: WebContent\about.jsp
+msgid "Seedless"
+msgstr "Seedlös"
+
+#: WebContent\about.jsp
+msgid "Russian translation"
+msgstr "Rysk översättning"
+
+#: WebContent\about.jsp
+msgid "French translation"
+msgstr "Fransk översättning"
+
+#: WebContent\about.jsp
+msgid "Dutch translation"
+msgstr "Nederländsk översättning"
+
+#: WebContent\about.jsp
+msgid "Norwegian translation"
+msgstr "Norsk översättning"
+
+#: WebContent\about.jsp
+msgid "Swedish translation"
+msgstr "Svensk översättning"
+
+#: WebContent\about.jsp
+msgid "Arabic translation"
+msgstr "Arabisk översättning"
+
+#: WebContent\newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "Välj en fil att bifoga och försök igen."
+
+#: WebContent\newEmail.jsp
+msgid "Addr. Book..."
+msgstr "Adressbok"
+
+#: WebContent\newEmail.jsp
+msgid "Remove this attachment"
+msgstr "Ta bort denhär bifogningen"
+
+#: WebContent\newEmail.jsp
+msgid "Add another attachment"
+msgstr "Lägg till en bifogning till"
+
+#: WebContent\newEmail.jsp
+msgid "Attach"
+msgstr "Bifoga"
+
+#: WebContent\newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "Det rekomenderas att bifogningar är mindre än 500kB."
+
+#: WebContent\newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} skrev:"
+
+#: WebContent\newEmail.jsp
+msgid "Send"
+msgstr "Skicka"
+
+#: WebContent\saveIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "Fyll vänligen i 'Publikt namn' fältet."
+
+#: WebContent\saveIdentity.jsp
+msgid "Please wait..."
+msgstr "Var god vänta..."
+
+#: WebContent\saveIdentity.jsp
+msgid "The Email Identity is being generated."
+msgstr "Epostidentiteten genereras."
+
+#: WebContent\saveIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "Epostidentiteten has sparats."
+
+#: WebContent\WEB-INF\tags\address.tag
+msgid "Email Destination: "
+msgstr "Epost-destinationen:"
+
+#: WebContent\WEB-INF\tags\address.tag
 msgid "Add to Address Book"
 msgstr "Lägg till i adressbok"
 
-#: WebContent/WEB-INF/tags/printDate.tag
+#: WebContent\WEB-INF\tags\printDate.tag
 msgid "Unknown"
 msgstr "Okänd"
+
+#~ msgid "Email Address:"
+#~ msgstr "Epostadress"
+
+#~ msgid "(optional)"
+#~ msgstr "(frivillig)"
+
+#~ msgid "Unkn."
+#~ msgstr "Okänd"
+
+#~ msgid "Language:"
+#~ msgstr "Språk"
+
+#~ msgid "Default"
+#~ msgstr "Standard"
+
+#~ msgid "Up %"
+#~ msgstr "Upp &"
+
+#~ msgid "(required field, must be 512 characters)"
+#~ msgstr "(nödvändigt fält, måste vara 512 tecken)"
+
+#~ msgid "0 (off)"
+#~ msgstr "0 (av)"
+
+#~ msgid "No sender found in email."
+#~ msgstr "Ingen avsändare funnen i ebrevet."
+
+#~ msgid "Invalid"
+#~ msgstr "Ogiltig"
+
+#~ msgid "Active Since"
+#~ msgstr "Aktiv sedan"
+
+#~ msgid "Key"
+#~ msgstr "Nyckel"
