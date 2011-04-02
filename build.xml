@@ -122,7 +122,7 @@
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
-            <lib file="${lib}/i2pbote.jar"/>
+            <lib file="ant_build/lib/i2pbote.jar"/>
             <lib file="${lib}/mailapi.jar"/>
             <lib file="${lib}/bcprov-ecc-jdk16-145.jar"/>
             <lib file="ant_build/lib/flexi-gmss-1.7p1.jar"/>
@@ -144,7 +144,7 @@
     
     <target name="jar" depends="compile,flexijar,precompilejsp,bundle"> 
         <mkdir dir="ant_build" />
-        <jar destfile="${lib}/i2pbote.jar">
+        <jar destfile="ant_build/lib/i2pbote.jar">
             <fileset dir="ant_build/classes" excludes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/** de/flexiprovider/** codec/** **/*Test.class"/>
             <fileset dir="src" includes="i2p/bote/network/built-in-peers.txt"/>
         </jar>
@@ -177,7 +177,7 @@
             <arg value="--effort=9"/>
             <arg value="--modification-time=latest"/>
             <arg value="plugin/plugin.tmp/lib/i2pbote.jar.pack"/>
-            <arg value="${lib}/i2pbote.jar"/>
+            <arg value="ant_build/lib/i2pbote.jar"/>
         </exec>
         <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
@@ -303,7 +303,7 @@
         <copy file="plugin/plugin.config" todir="${i2pinstallerplugindir}"/>
         <copy file="i2pbote-plugin.war" tofile="${i2pinstallerplugindir}/console/webapps/i2pbote.war"/>
         <copy file="plugin/webapps.config" todir="${i2pinstallerplugindir}/console"/>
-        <copy file="${lib}/i2pbote.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="ant_build/lib/i2pbote.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/mailapi.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/bcprov-ecc-jdk16-145.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="ant_build/lib/flexi-gmss-1.7p1.jar" todir="${i2pinstallerplugindir}/lib"/>
