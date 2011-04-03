@@ -25,7 +25,7 @@
         <pathelement location="${i2plib}/jstl.jar" />
         <pathelement location="${i2plib}/standard.jar" />
         <pathelement location="${lib}/mailapi.jar" />
-        <pathelement location="${lib}/bcprov-ecc-jdk16-145.jar" />
+        <pathelement location="${lib}/bcprov-ecc-jdk16-146.jar" />
     </path>
     <property name="junit.filename" value="junit-4.8.1.jar"/>
     <property name="junit.url" value="http://sourceforge.net/projects/junit/files/junit/4.8.1/junit-4.8.1.jar/download"/>
@@ -124,7 +124,7 @@
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
             <lib file="${lib}/i2pbote.jar"/>
             <lib file="${lib}/mailapi.jar"/>
-            <lib file="${lib}/bcprov-ecc-jdk16-145.jar"/>
+            <lib file="${lib}/bcprov-ecc-jdk16-146.jar"/>
             <lib file="ant_build/lib/flexi-gmss-1.7p1.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
         </war>
@@ -183,8 +183,8 @@
             <arg value="--no-gzip"/>
             <arg value="--effort=9"/>
             <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/bcprov-ecc-jdk16-145.jar.pack"/>
-            <arg value="${lib}/bcprov-ecc-jdk16-145.jar"/>
+            <arg value="plugin/plugin.tmp/lib/bcprov-ecc-jdk16-146.jar.pack"/>
+            <arg value="${lib}/bcprov-ecc-jdk16-146.jar"/>
         </exec>
         <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
@@ -305,7 +305,7 @@
         <copy file="plugin/webapps.config" todir="${i2pinstallerplugindir}/console"/>
         <copy file="${lib}/i2pbote.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/mailapi.jar" todir="${i2pinstallerplugindir}/lib"/>
-        <copy file="${lib}/bcprov-ecc-jdk16-145.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/bcprov-ecc-jdk16-146.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="ant_build/lib/flexi-gmss-1.7p1.jar" todir="${i2pinstallerplugindir}/lib"/>
         <!-- build the I2P + I2P-Bote install.jar -->
         <ant antfile="${installerdir}/i2p.i2p/build.xml" target="installer" inheritAll="false"/>

@@ -602,7 +602,7 @@ The file format is:
 
 6.3. Included .jar files and third-party source code
 
-  bcprov-ecc-jdk16-145.jar      A stripped down version of the BouncyCastle library,
+  bcprov-ecc-jdk16-146.jar      A stripped down version of the BouncyCastle library,
                                 containing only the classes needed for ECC.
   mailapi.jar                   Part of JavaMail
   src/SevenZip/                 An LZMA implementation from http://www.7-zip.org/sdk.html
