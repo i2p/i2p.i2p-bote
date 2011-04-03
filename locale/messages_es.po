@@ -5,11 +5,12 @@ msgstr ""
 "POT-Creation-Date: 2011-03-29 19:24+0000\n"
 "PO-Revision-Date: 2011-04-03 02:08+0100\n"
 "Last-Translator: mixxy <m1xxy@mail.i2p>\n"
-"Language-Team: \n"
-"Language: \n"
+"Language-Team: Spanish (Castilian) <None>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/i2p/bote/I2PBote.java:402
 #: src/i2p/bote/service/OutboxProcessor.java:146
