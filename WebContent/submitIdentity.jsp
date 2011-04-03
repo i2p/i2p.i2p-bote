@@ -35,6 +35,9 @@
 <c:if test="${param.action == 'cancel'}">
     <jsp:forward page="identities.jsp"/>
 </c:if>
+<c:if test="${param.action == 'delete'}">
+    <jsp:forward page="deleteIdentity.jsp"/>
+</c:if>
 
 <c:if test="${empty keygenCounter}">
     <c:set var="keygenCounter" value="0"/>

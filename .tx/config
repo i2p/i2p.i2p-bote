@@ -1,0 +1,16 @@
+[I2P.plugin_i2pbote]
+source_file = locale/messages_en.po
+source_lang = en
+trans.ar = locale/messages_ar.po
+trans.de = locale/messages_de.po
+trans.es = locale/messages_es.po
+trans.fr = locale/messages_fr.po
+trans.nl = locale/messages_nl.po
+trans.no = locale/messages_no.po
+trans.pt = locale/messages_pt.po
+trans.ru = locale/messages_ru.po
+trans.sv_SE = locale/messages_sv.po
+trans.zh_CN = locale/messages_zh.po
+
+[main]
+host = http://www.transifex.net
