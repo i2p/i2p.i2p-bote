@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-03-28 06:30+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
+"Last-Translator: mixxy <m1xxy@mail.i2p>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -748,7 +748,7 @@ msgstr "Neues Passwort setzen"
 
 #: WebContent/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
-msgstr "Wurde noch kein Passwort erstellt, bitte das Feld \"altes Passwort\" freilassen."
+msgstr "Wurde noch kein Passwort erstellt, bitte das Feld \"altes Passwort\" frei lassen."
 
 #: WebContent/setPassword.jsp
 msgid "Old password:"
