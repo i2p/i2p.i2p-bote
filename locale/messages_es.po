@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-03-29 19:24+0000\n"
-"PO-Revision-Date: 2011-03-30 21:29+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2011-04-03 01:52+0100\n"
+"Last-Translator: mixxy <m1xxy@mail.i2p>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -552,7 +552,7 @@ msgstr "Ninguno"
 
 #: WebContent/settings.jsp
 msgid "Delay per relay hop: Between"
-msgstr "Tiempo de espera por cada redireccionador anónimo: Entre"
+msgstr "Tiempo de espera (detención) por cada redireccionador anónimo: Entre"
 
 #: WebContent/settings.jsp
 msgid "and"
@@ -560,7 +560,7 @@ msgstr "y"
 
 #: WebContent/settings.jsp
 msgid "minutes"
-msgstr "minutos"
+msgstr "minutos."
 
 #: WebContent/settings.jsp
 msgid "Use a gateway when sending to non-I2P email addresses"
