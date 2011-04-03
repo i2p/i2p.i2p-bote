@@ -46,10 +46,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import net.i2p.I2PAppContext;
 import net.i2p.data.Base64;
 import net.i2p.data.SessionKey;
@@ -293,16 +289,11 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
      *   <li/>Use that secret as a key to encrypt the message with AES.<br/>
      *   <li/>Return the encrypted message and the ephemeral public key generated in step 1.<br/>
      * </ol>
-     * TODO Replace AESEngine.encrypt() with AESEngine.safeEncrypt(), remove padding code
-     * @throws NoSuchProviderException 
-     * @throws NoSuchAlgorithmException 
      * @throws InvalidKeyException 
-     * @throws NoSuchPaddingException 
-     * @throws BadPaddingException 
-     * @throws IllegalBlockSizeException 
+     * @throws NoSuchAlgorithmException 
      */
     @Override
-    public byte[] encrypt(byte[] data, PublicKey encryptionKey) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+    public byte[] encrypt(byte[] data, PublicKey encryptionKey) throws InvalidKeyException, NoSuchAlgorithmException {
         // pad the data
         int unpaddedLength = data.length;
         data = Arrays.copyOf(data, unpaddedLength + BLOCK_SIZE - unpaddedLength%BLOCK_SIZE);  // make data.length a multiple of BLOCK_SIZE; if the length is a multiple of BLOCK_LENGTH, add a block of zeros

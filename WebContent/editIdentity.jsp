@@ -142,6 +142,9 @@
         <input type="hidden" name="key" value="${param.key}"/>
         <button name="action" value="${commitAction}">${commitAction}</button>
         <button name="action" value="cancel"/><ib:message key="Cancel"/></button>
+        <c:if test="${not param.new}">
+            <button name="action" value="delete" title="<ib:message key='Delete this identity'/>" id="deleteIdentityBtn"/><ib:message key="Delete"/></button>
+        </c:if>
     </form>
 
     <script type="text/javascript" language="JavaScript">

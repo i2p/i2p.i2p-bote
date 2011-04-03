@@ -31,7 +31,7 @@
 
 <c:if test="${empty errorMessage}">
     <jsp:forward page="identities.jsp">
-        <jsp:param name="message" value="The email identity has been deleted."/>
+        <jsp:param name="infoMessage" value="The email identity has been deleted."/>
     </jsp:forward>
 </c:if>
 <c:if test="${!empty errorMessage}">

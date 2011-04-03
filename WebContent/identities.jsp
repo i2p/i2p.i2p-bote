@@ -50,7 +50,6 @@
             <th><ib:message key="Description"/></th>
             <th><ib:message key="Email Address"/></th>
             <th><ib:message key="Email Destination"/></th>
-            <th style="width: 20px"></th>
         </tr>
     </c:if>
     <c:forEach items="${identities}" var="identity" varStatus="loopStatus">
@@ -89,9 +88,6 @@
             <div${class}>
                 ${identity.key}
             </div>
-        </td>
-        <td>
-            <a href="deleteIdentity.jsp?key=${identity.key}"><img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this identity'/>"/></a>
         </td>
         </tr>
     </c:forEach>

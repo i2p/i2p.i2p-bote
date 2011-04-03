@@ -383,4 +383,8 @@ select {
     padding: 3px;
 }
 
+#deleteIdentityBtn {
+	margin: 0px 5px 0px 500px;
+}
+
 wbr:after { content: "\00200B" }   /* For Opera */
