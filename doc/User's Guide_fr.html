@@ -5,7 +5,7 @@
 	<TITLE>User's Guide</TITLE>
 	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
 	<META NAME="CREATED" CONTENT="0;0">
-	<META NAME="CHANGED" CONTENT="20110405;14215400">
+	<META NAME="CHANGED" CONTENT="20110405;19132700">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 2cm }
@@ -293,159 +293,169 @@ anonymat)</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
 <P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><U>2.2.3
-Local Address Book</U></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">If
-you have the I2P-Bote e-mail key from somebody you want to write to
-more frequently, it is handy to store that key locally into your
-address book (link on the left), specify a name of your own choosing
-for this contact and paste his mail destination in the corresponding
-line, </FONT><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">then
-save.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">You
-should normally save destinations to your addressbook, so that next
-time you get a mail from the same sender it will be shown to be from
-the same, locally known sender (“Loc” is checked) and a mail sent
-by someone else who is just using the same user name will be marked
-as NOT known locally (an x in web-UI's 'Know' column or [UNK] before
-the sender address in POP3), so you know it's a new/different one. </FONT></FONT>
+Carnet d'adresses local</U></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Si
+vous avez la clé de destination I2P-Bote de quelqu'un à qui vous
+voulez écrire souvent, il est commode de l'enregistrer dans votre
+carnet d'adresses local (lien sur la gauche)&nbsp;: choisissez un nom
+(de façon complètement arbitraire), collez la clé dans le champ
+idoine et sauvegardez.</FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">C'est
+normalement ce que vous devriez faire, en sorte que le prochain
+message de ce destinataire soit marqué comme «&nbsp;Connu&nbsp;»,
+alors qu'un message d'un autre expéditeur de même nom serait marqué
+d'un «&nbsp;x&nbsp;» (ou préfixé [UNK] dans un client de
+messagerie), vous prévenant ainsi qu'il provient de quelqu'un
+d'autre. </FONT></FONT>
 </P>
 <P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>2.2.4
-Settings (and what they mean)</U></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Under
-settings you can choose the I2P-Bote interface's </FONT><FONT FACE="Arial, sans-serif"><I>language</I></FONT>
-<FONT FACE="Arial, sans-serif">(currently English or German) and
-decide whether even with a non-English language setting everything
-that will be automatically added to an e-mail when replying will
-nonetheless stay in English, so that the recipient does not know your
-I2P-Bote is set to a different language.<BR>Otherwise the recipient
-could guess about your nationality which would decrease your
-anonymity. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Here you
-can also adjust the interval for <I>automatic checking</I> of e-mails
-and decide whether or not to send any <I>time stamp</I> with your
-mails, indicating date and time when the mail was sent. The time
-stamps are always in UTC.</FONT></P>
-<P STYLE="font-style: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">(When
-using mail routes, the timestamps are automatically disabled.) [<FONT COLOR="#ff0000">not
-yet implemented</FONT>]</FONT></P>
+Les préférences de réglages (et ce qu'elles signifient)</U></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Dans
+les préférences vous pouvez choisir la langue de l'interface
+d'I2P-Bote et décider que même si vous choisissez une autre langue,
+tout ce qui sera automatiquement ajouté comme titres d'en-têtes
+restera cependant en anglais pour ne pas dévoiler votre langue (et
+par là même, peut-être en déduire votre nationalité et
+compromettre votre anonymat – à ce sujet, la FAQ I2P-Bote et le
+chapitre 3 de ce manuel donnent d'autres conseils).</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
+pouvez aussi régler l'intervalle de relève automatique, et
+l'inclusion ou l'exclusion des horodatages pour vos messages (les
+horodatages sont toujours en UTC).</FONT></P>
+<P STYLE="font-style: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">(Quand
+vous utilisez les routes de messages, les horodatages sont
+automatiquement désactivés [<FONT COLOR="#ff0000">pas encore
+implémenté</FONT>]).</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>automatic
-checking for e-mails:</I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">For more
-comfort there is the “Check for mail every XX minutes“ option. </FONT>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>Relève
+automatique:</I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Pour le
+confort d'utilisation, cochez «&nbsp;Relever le courrier toutes les
+XX minutes&nbsp;:&nbsp;» et saisissez la valeur de l'intervalle. </FONT>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Here you
-can specify how often your I2P-Bote app should try to fetch unread
-mails for your identities. This can be set on a per-identity basis
-[<FONT COLOR="#ff0000">not yet implemented</FONT>]</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">If you
-specify a random offset, then it will not check _exactly_ every XX
-minutes, but rather every (XX+-offset*XX)minutes, i.e. after a
-randomly chosen time between (1-offset)XX minutes and (1+offset)XX
-minutes. [<FONT COLOR="#ff0000">not yet implemented</FONT>]</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">You can
-also totally disable the automatic checking for a given identity.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(If you
-are not sure about these settings, the defaults should be ok for
-you.)</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><I>Mail
-routes</I></FONT> <FONT FACE="Arial, sans-serif">are chains of
-I2P-Bote nodes acting as relays/routers for other peers and obeying
-to per-hop delays, thus providing the high-latency transport for
-increased anonymity. </FONT>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Ceci
+définit la fréquence de tentatives de téléchargement de nouveaux
+messages pour vos identités. Ça peut être différentié par
+identité [<FONT COLOR="#ff0000">pas encore implémenté</FONT>].</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Si vous
+définissez un décalage aléatoire, la relève n'aura pas lieu
+exactement toutes les XX minutes, mais toutes les
+(XX+/-décalage*XX)minutes, c'est à dire après un temps aléatoire
+compris entre (1-décalage)*XX minutes et (1+décalage)*XX minutes
+[<FONT COLOR="#ff0000">pas encore implémenté</FONT>].</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
+pouvez également désactiver complètement la relève automatique
+pour une identité donnée.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(Si vous
+n'êtes pas à l'aise avec ces réglages, les valeurs par défaut
+vous conviendront très bien)</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif">Les
+</FONT><FONT FACE="Arial, sans-serif"><I>Routes de messagerie </I></FONT><FONT FACE="Arial, sans-serif">sont
+des chînes de nœuds I2P-Bote agissant en tant que routeurs relais
+pour le compte d'autres pairs et obéissant à des délais par saut
+définis par l'expéditeur, fournissant ainsi le transport à haute
+latence garant d'un anonymat plus élevé. </FONT>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">You can
-specify the number of nodes (here called hops) that should be chained
-to form a mail route. Then each of the e-mail packets sent by the
-identity that has mail routes enabled will go through a mail route of
-n hops before being stored. You can set a delay for each hop
-individually, as no hop should know the time a packet will wait at
-the next hop, making the timing unpredictable. [<FONT COLOR="#ff0000">individual
-per-hop and per-identity setting of delays not yet implemented</FONT>]</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">As delay
-you can specify a time frame (e.g. 60-600 minutes) – then a random
-wait time between the two values will be chosen for the packet at
-that hop – or a fix time, then the packet will be forwarded at that
-fix time, e. g. noon UTC, no matter when it arrived. [<FONT COLOR="#ff0000">fix
-time not yet implemented</FONT>] </FONT>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
+pouvez spécifier le nombre de nœuds (sauts) nécessaires à la
+constitution d'une route de messagerie. Ensuite, chacun des paquets
+de message envoyés par l'identité qui a activé la fonction routes
+de messagerie passera par une route de n sauts avant d'être stocké.
+Vous pouvez définir un délai pour chaque saut individuel, pour
+qu'aucun saut ne puisse savoir combien de temps le paquet attendra au
+niveau du saut suivant, ce qui rend la prédiction horaire impossible
+[<FONT COLOR="#ff0000">les définitions des retards par saut et par
+identité ne sont pas encore implémentées</FONT>].</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
+pouvez définir une tranche de temps (p.e. 60-600 minutes) – puis
+un retard aléatoire entre ces deux valeurs sera choisi pour le
+paquet au niveau de tel saut  – ou une heure  fixe à laquelle le
+paquet sera transféré, p.e. cet après-midi UTC, indépendamment du
+moment où il est arrivé [<FONT COLOR="#ff0000">heure fixe pas
+encore implémentée</FONT>]. </FONT>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(When
-using mail routes, the timestamps are automatically disabled. [<FONT COLOR="#ff0000">not
-yet implemented</FONT>])</FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Under
-“</FONT><FONT FACE="Arial, sans-serif"><I>m?imo en el bote</I></FONT>”
-<FONT FACE="Arial, sans-serif">(minimum threshold number of relay
-packets that will be sent) you can specify a threshold. As your node
-can only act reliably as a mix, if there are enough foreign packets
-to mix and to blend own packets with, it will accumulate messages
-who's delay time is over until reaching this lower limit. Only when
-it is surpassed, your node starts sending them out in random order.
-[</FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif">Not yet
-implemented</FONT></FONT><FONT FACE="Arial, sans-serif">]</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>exclude
-identity from global checking</I> [<FONT COLOR="#ff0000">Not yet
-implemented</FONT>]</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">If you
-enable this option for one of your identities, then this one will not
-be affected by the global manual checking for mails nor by any global
-automatic mail checking.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(Quand
+vous utilisez les routes de messagerie, les horodatages sont
+automatiquement désactivés [<FONT COLOR="#ff0000">pas encore
+implémenté</FONT>]).</FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Sous
+«&nbsp; </FONT><FONT FACE="Arial, sans-serif"><I>Minimum dans la
+messagerie</I></FONT><FONT FACE="Arial, sans-serif">&nbsp;» (nombre
+minimum de paquets relayés à envoyer), vous pouvez indiquer un
+seuil. Comme votre instance I2P-Bote peut fonctionner comme un relais
+mélangeur, s'il y a suffisamment de paquets étrangers à mélanger
+et avec lesquels camoufler les vôtres, elle va accumuler les
+messages pour lesquels le retard demandé n'est pas échu jusqu'à
+atteindre ce seuil. Une fois atteint, votre bote commence à les
+transférer aléatoirement [</FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif">pas
+encore implémenté</FONT></FONT><FONT FACE="Arial, sans-serif">].</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>Exclure
+l'identité de la relève globale</I> [<FONT COLOR="#ff0000">pas
+encore implémenté</FONT>].</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Si vous
+activez cette option pour une de vos identités, elle ne sera pas
+prise en compte  ni par la fonction de relève globale automatique
+planifiée, ni par la relève manuelle globale.</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>2.2.5
-E-mails to and from the Internet</U><SPAN STYLE="text-decoration: none">
+E-mails de et vers l'Internet</U><SPAN STYLE="text-decoration: none">
 [</SPAN><FONT COLOR="#ff0000"><SPAN STYLE="text-decoration: none">NOT
 YET FULLY IMPLEMENTED!</SPAN></FONT><SPAN STYLE="text-decoration: none">]</SPAN></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">In
-order to be able to send bote mails to the internet and to receive
-e-mails from the internet with your I2P-Bote application, you must
-first register with an appropriate mail gateway. Currently there is
-only one: postman. </FONT>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Pour
+pouvoir envoyer des messages bote vers l'Internet et recevoir des
+e-mails venant de l'Internet dans l'application I2P-Bote, vous devez
+d'abord vous enregistrer auprès d'une passerelle de messagerie. Il
+n'y en a actuellement qu'une seule&nbsp;: postman. </FONT>
 </P>
 <P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">1)
-First, go to: <A HREF="http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?page_id=16</A>
-and register an account. If you already have an account or if you
-have just created one as described, proceed with #2.</FONT></P>
+D'abord, allez sur : <A HREF="http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?page_id=16</A>
+et créez un compte. Si vous en avez déjà un, ou si vous venez de
+le créer, passer à l'étape 2).</FONT></P>
 <P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">2)
-For an existing account you can add your I2P-Bote mail destination,
-so that e-mails coming from the internet are forwarded to your
-I2P-Bote app. To do so go to: <A HREF="http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</A>
-and provide the requested information.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Now all
-e-mails sent to that address (<A HREF="mailto:name@i2pmail.org">name@i2pmail.org</A>
-from the outer internet or <A HREF="mailto:name@mail.i2p">name@mail.i2p</A>
-for mails from other postman subscribers) will be forwarded via the
-I2P-Bote network to your I2P-Bote app.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(N.B.
-When using the <A HREF="mailto:name@mail.i2p">name@mail.i2p</A> or
-<A HREF="mailto:name@i2pmail.org">name@i2pmail.org</A> addresses
-instead of the long addresses, e-mails are no longer end-to-end
-encrypted. Therefore, it is recommended to exchange the I2P-Bote mail
-destination keys for communicating within the network. Postman has
-offered high quality services in I2P for quite a while already, but
-be aware that it's a centralized point that might go offline one day,
-or worse be taken over by an evildoer that will manipulate mails. As
-for network-internal e-mail communication, I2P-Bote makes sure that
-if you use the address keys, nobody can tamper with the mails you
-send or receive.)</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">If you
-want not only to receive e-mails from the internet, but also enable
-sending e-mails from I2P-Bote to the internet, you must provide your
-I2P-Bote client with the gateway's mail destination key, so that your
-I2P-Bote knows where to send those mails to.<BR>You can do this under
-“settings”. This gateway will allow I2P-Bote users to communicate
-with the standard e-mail users on the internet as well as with users
-of postman's classical i2pmail service (@mail.i2p).</FONT><BR><FONT FACE="Arial, sans-serif"><BR>In
-order to fight abuse, there will be a limitation of the number of
-e-mails you can send out to the internet; just like for normal
-postman mail service users: If an I2P-Bote user exceeds the quota
-with outgoing e-mails, the additional e-mails will be sent back as
-bounce.</FONT></P>
+Pour un compte donné, vous pouvez ajouter votre clé de destination
+de messagerie, pour que les messages arrivant d'Internet puissent
+être transférés vers votre application  I2P-Bote. Pour ce faire
+allez sur : <A HREF="http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</A>
+et indiquez les informations demandées.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Maintenant,
+tous les e-mails envoyés à cette adresse (<A HREF="mailto:name@i2pmail.org">nom@i2pmail.org</A>
+depuis l'Internet externe ou depuis <A HREF="mailto:name@mail.i2p">blaze@mail.i2p</A>
+pour les messages d'autres comptes postman) seront transférés par
+le réseau I2P-Bote à votre application I2P-Bote.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(N.B. En
+utilisant les adresses <A HREF="mailto:name@mail.i2p">nom@mail.i2p</A>
+ou <A HREF="mailto:name@i2pmail.org">nom@i2pmail.org</A> au lieu des
+longues clés de destination, les messages ne sont plus cryptés de
+bout en bout. En conséquence, il est recommandé d'échanger les
+clés I2P-Bote pour la communication intra réseau. Postman offre des
+services de haute qualité sur I2P depuis déjà un bon moment, mais
+soyez conscient qu'il s'agit d'un point centralisé qui pourrait un
+jour cesser de fonctionner, ou pire, tomber sous le contrôle d'un
+nuisible qui pourrait manipuler les courriers. Comme pour la
+messagerie intra réseau, I2P-Bote vous assure que si vous utilisez
+des clés de destination, personne ne peut bricoler les messages que
+vous recevez ou envoyez.)</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Si voulez
+non seulement recevoir des messages d'internet, mais aussi pouvoir en
+envoyer vers Internet depuis I2P-Bote, vous devez indiquer à votre
+application cliente I2P-Bote la clé de destination de la passerelle
+de messagerie, pour que votre I2P-Bote sache où envoyer les
+messages.<BR>Ceci se fait dans les «&nbsp;Préférences&nbsp;».
+Cette passerelle permet aux utilisateurs d'I2P-Bote de communiquer
+avec les utilisateurs de messagerie standard sur l'Internet classique
+et avec ceux qui utilisent le service i2pmail de postman
+(@mail.i2p).</FONT><BR><FONT FACE="Arial, sans-serif"><BR>Pour
+combattre les abus, il y a une limitation au nombre de messages que
+vous pouvez envoyer vers Internet, comme avec le service normal de
+postman&nbsp;:  si un utilisateur d'I2P-Bote dépasse le quota de
+messages envoyés, les messages supplémentaires sont retournés à
+l'envoyeur.</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR><BR>
 </P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>3.
-Considerations about Anonymity</B></FONT></P>
+Considérations sur l'anonymat</B></FONT></P>
 <P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Don't
 send identifying information about you (name, address, geographic
 location, time zone, age, websites you have just visited or blogged
@@ -462,15 +472,15 @@ possible, </FONT>
 	I2P-Bote running 24/7,</FONT></P>
 	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">use
 	mailroutes with randomized per-hop delays and/or per-hop fixed send
-	times, [<FONT COLOR="#ff0000">not yet </FONT><FONT COLOR="#ff0000"><I>fully</I></FONT><FONT COLOR="#ff0000">
-	implemented</FONT>]</FONT></P>
+	times [<FONT COLOR="#ff0000">pas encore </FONT><FONT COLOR="#ff0000"><I>complètement</I></FONT><FONT COLOR="#ff0000">
+	implémenté</FONT>].</FONT></P>
 	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">use
 	a long check interval,</FONT></P>
 	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">use
 	a long local delay for own packets,</FONT></P>
 	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">use
-	a big check interval randomization. [<FONT COLOR="#ff0000">not yet
-	implemented</FONT>]</FONT></P>
+	a big check interval randomization [<FONT COLOR="#ff0000">pas encore
+	implémenté</FONT>].</FONT></P>
 </UL>
 <P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">You
 can suppress the sending of date and time in the e-mails' header.</FONT></P>
@@ -552,7 +562,7 @@ that can be deleted, the node refuses storage requests.</FONT></FONT></P>
 I2P-Bote sanitizes the mail headers and does not allow any unneeded
 information to be transmitted, thus allowing the use of e-mail
 clients without prior checks of what this client sends in the mail
-headers. [<FONT COLOR="#ff0000">POP3 not yet implemented</FONT>]</FONT></P>
+headers [<FONT COLOR="#ff0000">POP3 pas encore implémenté</FONT>].</FONT></P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">All the
 encryption, path choosing and profiling is done locally so that there
 is no trusted party involved.</FONT></P>
@@ -631,8 +641,8 @@ I2P-Bote </U></FONT><FONT FACE="Arial, sans-serif"><I><U>can hide</U></I></FONT>
 <P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif">-
 If mail routes are use, the time a bote mail is sent</FONT></P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- If mail
-routes are used, the time a bote mail is fetched. [<FONT COLOR="#ff0000">not
-yet implemented</FONT>]</FONT></P>
+routes are used, the time a bote mail is fetched [<FONT COLOR="#ff0000">pas
+encore implémenté</FONT>].</FONT></P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- If the
 sender suppresses timestamps only the sender himself will know when
 he sent a<BR>mail.</FONT></P>
@@ -698,7 +708,7 @@ addresses in I2P-Bote are shortcuts for e-mail destinations.</FONT></P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The
 e-mail address &lt;--&gt; e-mail destination mappings are stored in
 two places: the local address book and the distributed address
-directory [<FONT COLOR="#ff0000">the latter not yet implemented</FONT>].</FONT></P>
+directory [<FONT COLOR="#ff0000">the latter pas encore implémenté</FONT>].</FONT></P>
 <P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I><U>I2P-Bote
 e-mail identity:</U></I></FONT></P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The
@@ -742,30 +752,52 @@ too soon. It will, of course, take longer – up to several days!</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><B>6.&nbsp;
-Credits</B></I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Idea &amp;
-technical concept: HungryHobo, Mixxy</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Implementation:
-HungryHobo</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Plugin
-support: zzz, HungryHobo</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">User
-interface: HungryHobo</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Seedless
-integration: sponge</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">German
-translation: HungryHobo</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">French
-translation: albat, Redzara, Mixxy</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Spanish
-translation: Mixxy</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Alpha
-testing: HungryHobo, Mixxy, Returning Novice, sponge, and many others</FONT></P>
+Remerciements</B></I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Idée &amp;
+conception technique : HungryHobo, Mixxy</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Implémentation
+: HungryHobo</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Maintenance
+du greffon : zzz, HungryHobo</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Interface
+utilisateur : HungryHobo</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Intégration
+de Seedless : sponge</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+allemande : HungryHobo</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+russe : suhr</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+française : albat, Redzara, Mixxy, magma</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+espagnole : Mixxy</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+portugaise : Mixxy</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+hollandaise : KwukDuck</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+norvégienne : hej</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+suédoise : hottuna</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+chinoise : walking</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
+arabe : hamada</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Testeurs
+versions Alpha : HungryHobo, Mixxy, Returning Novice, sponge, et de
+nombreux autres.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Manuel :
+Mixxy</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Testeurs
+versions Alpha : HungryHobo, Mixxy, Returning Novice, sponge, and
+many others</FONT></P>
+<P STYLE="line-height: 150%">Traduction française du manuel&nbsp;:
+magma (avril 2011)</P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>7.
-Technical Details</B></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">-- see
+Details techniques</B></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">-- voir
 techdoc.txt --</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
