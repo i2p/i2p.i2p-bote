@@ -1,0 +1,762 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>User's Guide</TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Fabrice ">
+	<META NAME="CHANGED" CONTENT="20110405;9221300">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		P { margin-bottom: 0.21cm }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="fr-FR" DIR="LTR">
+<P ALIGN=CENTER STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>Guide
+de l'utilisateur I2P-Bote</B></FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>1.
+Introduction</B></FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif">I2P-Bote
+est une application de messagerie sécurisée pour I2P, à anonymat 
+élevé et simple à utiliser. C'est un système sans serveur,
+entièrement décentralisé, qui constitue et génère un réseau
+pairs à pairs sur le réseau d'anonymisation I2P, lui-même conçu
+selon les règles de l'art ; l'adjonction optionnelle d'un transport
+à la façon de Mixminion le débarrasse des faiblesses intrinsèques
+des réseaux à basse latence.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">I2P-Bote
+tire donc le meilleur de l'anonymat fourni par I2P, à quoi il
+apporte son propre niveau supplémentaire d'anonymat par l'ajout
+d'une autre couche d'anonymisation (sur-réseau).</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Ce
+concept d'anonymat étagé est ce rend I2P-Bote si souple :</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
+pouvez le configurer pour être extrêmement anonyme et lent, ou
+moins anonyme mais plus rapide et efficace. Dans tous les cas,
+I2P-Bote<FONT COLOR="#000000"> procure toujours un très bon anonymat
+à l'expéditeur et au destinataire, ainsi qu'un cryptage de bout en
+bout*. </FONT></FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">I2P-Bote
+permet de rendre vos communications encore plus anonymes, en activant
+les routes à haute latence – au prix d'une baisse de performance,
+cependant. Les utilisateurs qui souhaitent que leurs messages
+arrivent au plus vite peuvent désactiver les routes de messages et
+utiliser l'envoi «&nbsp;direct&nbsp;» sur I2P. Ils sont ainsi
+assurés de bénéficier au minimum de l'anonymat d'origine des
+connexions I2P. </FONT></FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><FONT COLOR="#000000">Pour
+atteindre une ergonomie élevée, nous l'avons conçu pour qu'il
+puisse fonctionner avec les logiciels clients de messagerie standards
+tels que Thunderbird, Evolution ou Kmail, sans avoir à se préoccuper
+des informations supplémentaires que ces applications envoient dans
+leurs en-têtes [</FONT><FONT COLOR="#ff0000">PAS ENCORE IMPLÉMENTÉ</FONT><FONT COLOR="#000000">].
+De plus, il y a une interface web qui vous permet d'envoyer et de
+recevoir des messages, et de gérer vos préférences  et vos
+identités.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">I2P-Bote
+est facile à utiliser : si vous n'utilisez pas déjà I2P, installez
+le depuis  <A HREF="http://www.i2p2.de/">http://www.i2p2.de</A> puis
+installez le greffon I2P-Bote comme expliqué dans ce manuel.  Sinon,
+continuez la lecture!**</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>La
+version actuelle est la 0.2.5.</I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">*Sauf si
+vous recevez ou envoyez des messages de/vers l'Internet classique,
+TOUS les messages – le corps, les pièces jointes et les en-têtes
+à part l'adresse du destinataire (objet, date et heure,
+expéditeur,...) sont automatiquement cryptés de bout en bout de
+façon transparente. L'adresse du destinataire n'est visible que par
+le dernier nœud de la route qui stocke les paquets dans le réseau
+kad, ainsi que par les nœuds de stockage, mais ils ne peuvent pas
+lire les messages, ni qui l'a envoyé, ni qui le relèvera.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">**Bien
+sûr, vous pouvez aussi le compiler à partir des sources.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>2.
+Howto</B></FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>2.1.
+Installation</U></FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">In order
+to install I2P-Bote, go to the bottom of the I2P Client Configuration
+page at </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><A HREF="http://localhost:7657/configclients.jsp">http://localhost:7657/configclients.jsp</A>
+</FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">and
+enter:</FONT></P>
+<P STYLE="line-height: 150%"><A HREF="http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote.xpi2p"><FONT FACE="Arial, sans-serif">http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote.xpi2p</FONT></A></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(
+<A HREF="http://i2pbote.i2p/i2pbote.xpi2p">http://i2pbote.i2p/i2pbote.xpi2p</A>
+might work, too, if you have i2pbote.i2p in your address book or a
+subscription )</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">in the
+“Plugin Installation Download Url” line, then hit “Install
+Plugin”. Wait until your sidebar says plugin installed and started.
+</FONT>
+</P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">In order
+to update your I2P-Bote instance, click 'Update' under I2P-Bote on
+the I2P Client Configuration page at
+<A HREF="http://localhost:7657/configclients.jsp">http://localhost:7657/configclients.jsp</A></FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>2.2.
+Using I2P-Bote</U></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">On
+your router console <A HREF="http://127.0.0.1:7657/">http://127.0.0.1:7657/</A>
+click on </FONT><FONT FACE="Arial, sans-serif"><I>SecureMail</I></FONT><FONT FACE="Arial, sans-serif">
+on the upper left (in the sidebar). Now you are on I2P-Bote's web
+interface.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">After
+starting I2P-Bote (by default it is set to start automatically when
+your I2P router starts up) it takes a bit more than three minutes for
+everything to be up and running. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">So have a
+look at 'Network Status' on the left. It should state 'Connected'.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">If you
+want to use I2P-Bote for yourself, you first need to create an
+identity.</FONT> 
+</P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>2.2.1
+Creating an Identity</U></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Click
+on 'Identities' on the left, then hit the “New Identity” button.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Enter at
+least a 'Public Name' and hit 'Create'. That's all that's needed to
+create an identity.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The
+public name is the name you see for this identity (useful in case you
+have different identities for different sets of users you communicate
+with or different purposes) and it will be sent as “sender's name”
+to the mail's recipient. There is no need for Public Name to be
+unique. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(As you
+can choose any name here – anyone could call himself HungryHobo
+there – it is not suited to be used by the recipient for telling if
+two mails come from the same sender. This is why the name saved in
+the local addressbook (there can only by one name per destination
+key) is displayed, if there is any, and you will see a green mark in
+the “Know” column, stating it is the locally known name. If there
+is no entry for a destination in local addressbook, the name
+specified by the sender will be displayed with a prefixed [UNK] in
+the mail clients). [<FONT COLOR="#ff0000">POP3 NOT YET IMPLEMENTED</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">You
+can also fill out the other fields, if you like:</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Description
+– this field is kept locally. It's just for your convenience: If
+you want to add some additional information for yourself about that
+identity, you can enter it here. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Email
+Address – this field is not used yet.</FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif"><BR></FONT></FONT><BR><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Choose
+from one of the given encryption algorithms. If in doubt, stick to
+the defaults.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">You click
+on the name of one of your identities and copy the long key displayed
+under 'Email Destination'. This is your I2P-Bote e-mail address. If
+you want anybody to be able to send you a bote mail, he need to be
+given this long key.</FONT><BR><BR><FONT FACE="Arial, sans-serif">Now
+you can send and receive I2P-Bote mails.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">But you
+should also have a look at your I2P-Bote settings and see if they fit
+your needs.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(You can
+also create various identities and assign different settings to each
+of them.)</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U><BR>2.2.2
+Sending and Receiving E-Mails</U></FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">You need
+to have the I2P-Bote e-mail destination key of the user you to whom
+you want to send a bote mail. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">In order
+to send a message, click on 'New', choose your own sender identity or
+'Anonymous' under “From” and enter the recipient's e-mail
+destination key or alternatively an address in the “To:” line.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Alternatively,
+you can hit the “Addr. Book” button right under this very line,
+in order to chose from e-mail dests stored locally in your address
+book: Mark the user(s) to which you want your mail to be sent and hit
+the “Add Recipients” button.)</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">You can
+add several recipients and change the 'To:' to 'CC:' or 'BCC:'.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The “+”
+button adds additional recipient lines.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Now write
+your bote mail and hit 'Send' for sending it, or 'Save' in order to
+store it as a draft into your 'drafts' folder or any user-defined
+folder. [<FONT COLOR="#ff0000">not yet implemented</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Hitting
+“Send” will place your e-mail into the Outbox folder and you can
+go on using I2P-Bote, e.g. writing another e-mail, or simply do other
+things. I2P-Bote is now sending your e-mail. Once it is sent, it's
+automatically removed from Outbox and stored into your Sent folder.
+This means, your mail is entirely on the way to its destination
+(unless you have set a delay time, which is disabled by default).</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">In
+I2P-Bote e-mails are automatically signed (unless send without any
+sender identity).<BR>You can also send e-mails without specifying <I>any
+</I><SPAN STYLE="font-style: normal">sender
+identity/destination/address, just select “Anonymous” in the
+scroll-down menu “From:”.</SPAN></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">In
+the default settings I2P-Bote will automatically check for new mails,
+and all you need to do in order to see if you got e-mails is look
+into your Inbox (link 'Inbox' on the left).<BR>You can force a manual
+check by clicking the 'Check Mail' button. This is a global checking,
+that tries to fetch new mails for all of your identities, except for
+those you have excluded from global checking. [</FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif">not
+yet implemented</FONT></FONT><FONT FACE="Arial, sans-serif">]</FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">The
+number of unread e-mails is shown in parenthesis next to the folder's
+name in the sidebar. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Click on
+“<SPAN STYLE="font-style: normal">Inbox”</SPAN> to have a list of
+received e-mails displayed. You will see two columns with x's or
+green checks. Those show you if a mail contains a valid signature and
+is thus authentic (Sig) and if the sender's e-mail destination key is
+locally known, i.e. in your addressbook (Know). Hence, two green
+checks next to a mail entry mean that you already know that e-mail
+identity and that the mail is signed by that identity. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">If you
+have a certain name in your address book and you get a mail from an
+identity with that name, yet Know is <I><U>not</U></I> <SPAN STYLE="font-style: normal">displaying
+a green check, then it is a </SPAN><I><U>different</U></I>
+<SPAN STYLE="font-style: normal">destination that sent and signed
+this mail; he simply has chosen the same name you have chosen for one
+of your contacts.</SPAN></FONT></P>
+<P STYLE="font-style: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">Is
+there a green check mark for “Sig”, then the mail is correctly
+signed by the sender and you may add it to your addressbook under a
+different name, which now will be displayed as the sender.</FONT></P>
+<P STYLE="font-style: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">Of
+course, a mail without sender destination (“Anonymous” is
+displayed as sender) will have two x's.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Clicking
+one of the e-mails displayed in your inbox will open the mail. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The same
+applies to all other folders.</FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">(Due
+to the distributed nature of I2P-Bote, sending as well as checking
+for and retrieving e-mails takes a few minutes. With mail routes
+activated respectively more. But you need not keep the browser open
+for that, simply leave I2P-Bote running as a background process –
+this is also benefits your anonymity)</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><U>2.2.3
+Local Address Book</U></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">If
+you have the I2P-Bote e-mail key from somebody you want to write to
+more frequently, it is handy to store that key locally into your
+address book (link on the left), specify a name of your own choosing
+for this contact and paste his mail destination in the corresponding
+line, </FONT><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">then
+save.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">You
+should normally save destinations to your addressbook, so that next
+time you get a mail from the same sender it will be shown to be from
+the same, locally known sender (“Loc” is checked) and a mail sent
+by someone else who is just using the same user name will be marked
+as NOT known locally (an x in web-UI's 'Know' column or [UNK] before
+the sender address in POP3), so you know it's a new/different one. </FONT></FONT>
+</P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>2.2.4
+Settings (and what they mean)</U></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Under
+settings you can choose the I2P-Bote interface's </FONT><FONT FACE="Arial, sans-serif"><I>language</I></FONT><FONT FACE="Arial, sans-serif">
+(currently English or German) and decide whether even with a
+non-English language setting everything that will be automatically
+added to an e-mail when replying will nonetheless stay in English, so
+that the recipient does not know your I2P-Bote is set to a different
+language.<BR>Otherwise the recipient could guess about your
+nationality which would decrease your anonymity. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Here you
+can also adjust the interval for <I>automatic checking</I> of e-mails
+and decide whether or not to send any <I>time stamp</I> with your
+mails, indicating date and time when the mail was sent. The time
+stamps are always in UTC.</FONT></P>
+<P STYLE="font-style: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">(When
+using mail routes, the timestamps are automatically disabled.) [<FONT COLOR="#ff0000">not
+yet implemented</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>automatic
+checking for e-mails:</I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">For more
+comfort there is the “Check for mail every XX minutes“ option. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Here you
+can specify how often your I2P-Bote app should try to fetch unread
+mails for your identities. This can be set on a per-identity basis
+[<FONT COLOR="#ff0000">not yet implemented</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">If you
+specify a random offset, then it will not check _exactly_ every XX
+minutes, but rather every (XX+-offset*XX)minutes, i.e. after a
+randomly chosen time between (1-offset)XX minutes and (1+offset)XX
+minutes. [<FONT COLOR="#ff0000">not yet implemented</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">You can
+also totally disable the automatic checking for a given identity.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(If you
+are not sure about these settings, the defaults should be ok for
+you.)</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><I>Mail
+routes</I></FONT><FONT FACE="Arial, sans-serif"> are chains of
+I2P-Bote nodes acting as relays/routers for other peers and obeying
+to per-hop delays, thus providing the high-latency transport for
+increased anonymity. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">You can
+specify the number of nodes (here called hops) that should be chained
+to form a mail route. Then each of the e-mail packets sent by the
+identity that has mail routes enabled will go through a mail route of
+n hops before being stored. You can set a delay for each hop
+individually, as no hop should know the time a packet will wait at
+the next hop, making the timing unpredictable. [<FONT COLOR="#ff0000">individual
+per-hop and per-identity setting of delays not yet implemented</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">As delay
+you can specify a time frame (e.g. 60-600 minutes) – then a random
+wait time between the two values will be chosen for the packet at
+that hop – or a fix time, then the packet will be forwarded at that
+fix time, e. g. noon UTC, no matter when it arrived. [<FONT COLOR="#ff0000">fix
+time not yet implemented</FONT>] </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(When
+using mail routes, the timestamps are automatically disabled. [<FONT COLOR="#ff0000">not
+yet implemented</FONT>])</FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Under
+“</FONT><FONT FACE="Arial, sans-serif"><I>m?imo en el bote</I></FONT><FONT FACE="Arial, sans-serif">”
+(minimum threshold number of relay packets that will be sent) you can
+specify a threshold. As your node can only act reliably as a mix, if
+there are enough foreign packets to mix and to blend own packets
+with, it will accumulate messages who's delay time is over until
+reaching this lower limit. Only when it is surpassed, your node
+starts sending them out in random order. [</FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif">Not
+yet implemented</FONT></FONT><FONT FACE="Arial, sans-serif">]</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>exclude
+identity from global checking</I> [<FONT COLOR="#ff0000">Not yet
+implemented</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">If you
+enable this option for one of your identities, then this one will not
+be affected by the global manual checking for mails nor by any global
+automatic mail checking.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>2.2.5
+E-mails to and from the Internet</U><SPAN STYLE="text-decoration: none">
+[</SPAN><FONT COLOR="#ff0000"><SPAN STYLE="text-decoration: none">NOT
+YET FULLY IMPLEMENTED!</SPAN></FONT><SPAN STYLE="text-decoration: none">]</SPAN></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">In
+order to be able to send bote mails to the internet and to receive
+e-mails from the internet with your I2P-Bote application, you must
+first register with an appropriate mail gateway. Currently there is
+only one: postman. </FONT>
+</P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">1)
+First, go to: <A HREF="http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?page_id=16</A>
+and register an account. If you already have an account or if you
+have just created one as described, proceed with #2.</FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">2)
+For an existing account you can add your I2P-Bote mail destination,
+so that e-mails coming from the internet are forwarded to your
+I2P-Bote app. To do so go to: <A HREF="http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</A>
+and provide the requested information.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Now all
+e-mails sent to that address (<A HREF="mailto:name@i2pmail.org">name@i2pmail.org</A>
+from the outer internet or <A HREF="mailto:name@mail.i2p">name@mail.i2p</A>
+for mails from other postman subscribers) will be forwarded via the
+I2P-Bote network to your I2P-Bote app.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(N.B.
+When using the <A HREF="mailto:name@mail.i2p">name@mail.i2p</A> or
+<A HREF="mailto:name@i2pmail.org">name@i2pmail.org</A> addresses
+instead of the long addresses, e-mails are no longer end-to-end
+encrypted. Therefore, it is recommended to exchange the I2P-Bote mail
+destination keys for communicating within the network. Postman has
+offered high quality services in I2P for quite a while already, but
+be aware that it's a centralized point that might go offline one day,
+or worse be taken over by an evildoer that will manipulate mails. As
+for network-internal e-mail communication, I2P-Bote makes sure that
+if you use the address keys, nobody can tamper with the mails you
+send or receive.)</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">If you
+want not only to receive e-mails from the internet, but also enable
+sending e-mails from I2P-Bote to the internet, you must provide your
+I2P-Bote client with the gateway's mail destination key, so that your
+I2P-Bote knows where to send those mails to.<BR>You can do this under
+“settings”. This gateway will allow I2P-Bote users to communicate
+with the standard e-mail users on the internet as well as with users
+of postman's classical i2pmail service (@mail.i2p).</FONT><BR><FONT FACE="Arial, sans-serif"><BR>In
+order to fight abuse, there will be a limitation of the number of
+e-mails you can send out to the internet; just like for normal
+postman mail service users: If an I2P-Bote user exceeds the quota
+with outgoing e-mails, the additional e-mails will be sent back as
+bounce.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>3.
+Considerations about Anonymity</B></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Don't
+send identifying information about you (name, address, geographic
+location, time zone, age, websites you have just visited or blogged
+about, user names, ip numbers, I2P router id, I2P-Bote id, social
+security number, credit card number, …, copies of your passport,
+driver's license, home rental contract, photos – nude or with
+clothes –, documents that contain your username in author's
+settings, and many many more)!</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>If
+possible, </FONT>
+</P>
+<UL>
+	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">leave
+	I2P-Bote running 24/7,</FONT></P>
+	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">use
+	mailroutes with randomized per-hop delays and/or per-hop fixed send
+	times, [<FONT COLOR="#ff0000">not yet </FONT><FONT COLOR="#ff0000"><I>fully</I></FONT><FONT COLOR="#ff0000">
+	implemented</FONT>]</FONT></P>
+	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">use
+	a long check interval,</FONT></P>
+	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">use
+	a long local delay for own packets,</FONT></P>
+	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">use
+	a big check interval randomization. [<FONT COLOR="#ff0000">not yet
+	implemented</FONT>]</FONT></P>
+</UL>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">You
+can suppress the sending of date and time in the e-mails' header.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">When you
+reply to an e-mail, certain markers, such as “Re: [subject of the
+mail you're replying to]” or “[username] wrote:”. Those are
+different for the languages you can chose from in your language
+settings. However, if you don't want the recipient to know what
+language you have set, you can suppress translation of these markers,
+so that they will be in English, no matter what you language setting
+is. In order to do so, mark “Use English for text added to outgoing
+email ('Re:', 'wrote:', etc.) “</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Be
+careful with the contents you send! Don't include personal
+information or information that only you can possess. Don't write I'm
+going to bed now, it's late when including time stamps.<BR>The
+language in which your write your e-mails, your style and
+formulations can also be of interest for an attacker.</FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">I2P-Bote
+also offers the possibility to use different e-mail
+identities.<BR>Suppose one of you contacts learns about your
+identity, as you forgot to erase identifying information in a secret
+document you have sent to him. Now if this e-mail's recipient was to
+collaborate with others you are in contact with, he could tell them
+the real world identity belonging to the Bote address he knows from
+you. Thusly, if you communicate with those others using the same Bote
+address, they will know who you are.<BR>Not so, if you used a
+different address for sending mails to them.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><B>4.
+Technical Concept</B></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">I2P-Bote
+is an end-to-end encrypted, network-internal, fully decentralized
+(i.e. serverless) e-mail system. It supports different identities and
+does not expose e-mail headers. Currently, it is still alpha software
+and can only by accessed via web console. It soon will have POP3
+support, and it is planned to guarantee additional anonymity by
+providing a high-latency transport option. All bote-mails are
+automatically end-to-end encrypted, so that there's no need to set up
+extra e-mail encryption (though you can do that), and bote-mails will
+be authenticated automatically. As it is decentralized, there is no
+e-mail server that could link different e-mail identities as
+communicating with each other (</FONT><FONT FACE="Arial, sans-serif"><I>profiling</I></FONT><FONT FACE="Arial, sans-serif">):
+Even the nodes relaying the mails will not know the sender and apart
+from sender and receiver, only the end of the high-latency mail
+tunnel and the storing nodes will know to whom (anonymous identity)
+the mail is destined. The original sender can have gone offline, long
+before the mail becomes available on the other side. This adds on the
+degree of anonymity that can be reached with I2P-Bote. For those who
+do not want high delays: All these settings are be user-adjustable,
+so each user decides on how much anonymity he wants.</FONT></P>
+<P><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><BR>I2P-Bote
+nodes store encrypted e-mails into a Kademlia DHT. Therefore, an
+e-mail can be sent through a number of other nodes (relays) for
+increased security, or directly to a set of storage nodes for faster
+delivery. The same applies to retrieving email.<BR>(When using mail
+routes, timestamps are automatically disabled.)<BR>[Retrieving via
+relays not yet implemented]</FONT></FONT> 
+</P>
+<P><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">All
+nodes are created equal: There are no &quot;supernodes&quot; or
+designated relay/storage nodes. Everybody acts as a potential relay
+and storage node. The maximum amount of disk space used for
+relayed/stored email packets can be configured by the user.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Before
+an email is sent to a relay, it is broken up into packets and
+encrypted with the recipient's public key. These packets are stored
+redundantly in a distributed hash table (DHT).</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">They
+are kept for at least 100 days, during which the recipient can
+download them.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Relay
+packets also expire after 100 days or more.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">If
+a node runs out of email storage space, and there are no old packets
+that can be deleted, the node refuses storage requests.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Furthermore,
+I2P-Bote sanitizes the mail headers and does not allow any unneeded
+information to be transmitted, thus allowing the use of e-mail
+clients without prior checks of what this client sends in the mail
+headers. [<FONT COLOR="#ff0000">POP3 not yet implemented</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">All the
+encryption, path choosing and profiling is done locally so that there
+is no trusted party involved.</FONT></P>
+<P STYLE="font-weight: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">Using
+I2P-Bote appropriately, that means keeping in mind the considerations
+given above and showing some common sense, nobody will be able to
+find out who or where you are. And if you are already being observed
+and your internet connection sniffed, the observer will not be able
+to find out what you send or receive or to whom you are sending to or
+receiving from or where your contacts are located.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>Let's
+go a bit more into detail:</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>What
+I2P-Bote <I>does hide</I>:</U></FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I>I2P-Bote
+hides</I></FONT><FONT FACE="Arial, sans-serif"> both, the identity
+and location of sender and receiver, as well as those of intermediary
+nodes (relays and storing nodes), the content of your mails, their
+size, the number of mails you send.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Only the
+recipient can know the sender's bote mail destination, and if he
+choses not to send his destination, not even the recipient will know
+it.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Even if
+you send time stamps, your time zone will not be disclosed.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Furthermore,
+I2P-Bote hides ...</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
+the fact that you run I2P-Bote</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
+the fact that you send a mail</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
+the fact that you receive a mail</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">and
+hence</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
+the time you send a mail</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
+the time you receive a mail</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">and</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
+the upper limit of number of mails an unknown user receives, - nota
+bene: an abstract <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user, no
+concrete one, just concluding its existence from the existence of the
+mail identity<BR>&nbsp;&nbsp;&nbsp; - as he could always have more
+than one e-mail identity; and the lower limit as an <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+identity also sends out test and dummy messages</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>What
+I2P-Bote <I>hides partially</I>: </U></FONT>
+</P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">The
+I2P-Bote address of the recipient will only be known to sender and
+recipient(s). </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">In case
+of multiple recipients, each one will see all other recipients that
+the mail was addressed to via “To:” or “CC:”. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">All
+entries that were under “BCC:” will only be visible to the sender
+and this very recipient. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The time
+an sent time will, if at all, only be visible to sender and
+recipient.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>What
+I2P-Bote </U></FONT><FONT FACE="Arial, sans-serif"><I><U>can hide</U></I></FONT><FONT FACE="Arial, sans-serif"><U>
+optionally: </U></FONT>
+</P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif">-
+If mail routes are use, the time a bote mail is sent</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- If mail
+routes are used, the time a bote mail is fetched. [<FONT COLOR="#ff0000">not
+yet implemented</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- If the
+sender suppresses timestamps only the sender himself will know when
+he sent a<BR>mail.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>What
+I2P-Bote </U></FONT><FONT FACE="Arial, sans-serif"><I><U>cannot hide</U></I></FONT><FONT FACE="Arial, sans-serif"><U>:
+</U></FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>I2P-Bote
+cannot hide the frequency a given identity checks for new mails nor
+the number of mails a given identity receives.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>Not
+even for bootstrapping I2P-Bote depends on a central node, as it uses
+Seedless.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>5
+Terminology/Glossary of Terms:</B></FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><U>I2P-Bote
+(router/node) id</U>:</I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">This is
+the id an I2P-Bote router is known as. It is used for contacting this
+router, for storing, relaying and fetching mails, but also used in
+the hop-to-hop encryption and for simply contacting it via I2P, as it
+is at the same the I2P-Bote router's I2P tunnel destination. It is
+displayed to represent an I2P-Bote node in the stats.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">So the
+router id corresponds to the I2P destination (the address of an
+I2P-Bote node on the I2P network - there is no need to know it unless
+you are having problems connecting to other I2P-Bote nodes.)</FONT></P>
+<P STYLE="font-weight: normal; line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I><U>I2P-Bote
+e-mail destination:</U></I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The
+I2P-Bote e-mail destination (key) is an identifier by which somebody
+can be reached via I2P-Bote, so as the name states: an e-mail
+destination. Thus it is for I2P-Bote what an e-mail address is for
+standard e-mail system: The e-mail destination is the actual address
+for sending e-mails, for storing them into and for fetching them from
+the DHT. <BR>At the same time it used for the end-to-end encryption
+of e-mails, header information and attachments. </FONT>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">An
+I2P-Bote e-mail destination is a Base64 string containing a public
+encryption key and a signature verification key. Example:</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">-nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>I2P-Bote
+router/node id and I2P-Bote e-mail destinations look similar, but are
+completely independent of each other.</FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I><U>E-mail
+address:</U></I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">E-mail
+addresses in I2P-Bote are shortcuts for e-mail destinations.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The
+e-mail address &lt;--&gt; e-mail destination mappings are stored in
+two places: the local address book and the distributed address
+directory [<FONT COLOR="#ff0000">the latter not yet implemented</FONT>].</FONT></P>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I><U>I2P-Bote
+e-mail identity:</U></I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The
+I2P-Bote e-mail identity is a set of an I2P-Bote e-mail destination
+key, the corresponding private keys and a name given to it by the
+user. This name will be sent with the destination key if you do not
+suppress sending information about the sender.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">However
+it will only be displayed for the recipient in case he does not have
+a name for this destination in his local address book.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">So
+technically speaking, an e-mail identity consists of four things:</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">* an
+e-mail destination (i.e. two public keys)</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">* two
+private keys for the e-mail destination</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">* a
+public name which can be shown to other people in e-mails</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">* a
+description which is not shown to anybody but you.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(It helps
+you remember which e-mail identity you use for which purpose.)</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">An e-mail
+identity is not required for sending emails (although then only
+&quot;Anonymous&quot; can be selected for the &quot;sender&quot;
+field).</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><U>Mail
+routes</U></I>:</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Mail
+routes are an additional high-latency transport for I2P-Bote. For
+this, a chain of I2P-Bote nodes is built, acting as relays/routers
+for packets and obeying to individual per-hop delays; [<FONT COLOR="#ff0000">still
+no individual setting for delays implemented</FONT>]</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B><BR>BEWARE!</B></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">If you
+choose this option - especially with many hops and / or long delay
+times, don't be surprised if your mail does not reach its destination
+too soon. It will, of course, take longer – up to several days!</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><B>6.&nbsp;
+Credits</B></I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Idea &amp;
+technical concept: HungryHobo, Mixxy</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Implementation:
+HungryHobo</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Plugin
+support: zzz, HungryHobo</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">User
+interface: HungryHobo</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Seedless
+integration: sponge</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">German
+translation: HungryHobo</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">French
+translation: albat, Redzara, Mixxy</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Spanish
+translation: Mixxy</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Alpha
+testing: HungryHobo, Mixxy, Returning Novice, sponge, and many others</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>7.
+Technical Details</B></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">-- see
+techdoc.txt --</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><B>ENJOY
+THE BOTE FEELING!!</B></I></FONT></P>
+</BODY>
+</HTML>
