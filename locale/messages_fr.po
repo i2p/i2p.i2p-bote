@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-04-02 11:00+0000\n"
-"PO-Revision-Date: 2011-04-05 13:01+0100\n"
+"PO-Revision-Date: 2011-04-05 20:16+0100\n"
 "Last-Translator: magma <magma@mail.i2p>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -704,7 +704,7 @@ msgstr "Destination de courrier de la passerelle:"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Utiliser l'anglais pour les étiquettes d'en-têtes de messages sortants ('Re', 'wrote', etc.)"
+msgstr "Utiliser l'anglais pour les titres d'en-têtes de messages sortants ('Re', 'wrote', etc.)"
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"
