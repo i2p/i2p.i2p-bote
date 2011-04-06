@@ -5,7 +5,7 @@
 	<TITLE>User's Guide</TITLE>
 	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
 	<META NAME="CREATED" CONTENT="0;0">
-	<META NAME="CHANGED" CONTENT="20110405;20401500">
+	<META NAME="CHANGED" CONTENT="20110406;9240900">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 2cm }
@@ -520,170 +520,183 @@ vous adresser à eux.</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><B>4.
 Concept technique</B></FONT></P>
 <P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">I2P-Bote
-is an end-to-end encrypted, network-internal, fully decentralized
-(i.e. serverless) e-mail system. It supports different identities and
-does not expose e-mail headers. Currently, it is still alpha software
-and can only by accessed via web console. It soon will have POP3
-support, and it is planned to guarantee additional anonymity by
-providing a high-latency transport option. All bote-mails are
-automatically end-to-end encrypted, so that there's no need to set up
-extra e-mail encryption (though you can do that), and bote-mails will
-be authenticated automatically. As it is decentralized, there is no
-e-mail server that could link different e-mail identities as
-communicating with each other (</FONT><FONT FACE="Arial, sans-serif"><I>profiling</I></FONT><FONT FACE="Arial, sans-serif">):
-Even the nodes relaying the mails will not know the sender and apart
-from sender and receiver, only the end of the high-latency mail
-tunnel and the storing nodes will know to whom (anonymous identity)
-the mail is destined. The original sender can have gone offline, long
-before the mail becomes available on the other side. This adds on the
-degree of anonymity that can be reached with I2P-Bote. For those who
-do not want high delays: All these settings are be user-adjustable,
-so each user decides on how much anonymity he wants.</FONT></P>
-<P><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><BR>I2P-Bote
-nodes store encrypted e-mails into a Kademlia DHT. Therefore, an
-e-mail can be sent through a number of other nodes (relays) for
-increased security, or directly to a set of storage nodes for faster
-delivery. The same applies to retrieving email.<BR>(When using mail
-routes, timestamps are automatically disabled.)<BR>[Retrieving via
-relays not yet implemented]</FONT></FONT> 
-</P>
+est un système de messagerie totalement décentralisé (sans
+serveur) intra réseau crypté de bout en bout. Il supporte
+l'utilisation d'identités multiples et n'expose pas les en-têtes de
+messages. Il est actuellement encore en version alpha et ne peut être
+ utilisé que par son interface web intégré à la console du
+routeur I2P. Il disposera bientôt du support de POP3, et il est
+prévu qu'il garantisse un niveau d'anonymat supplémentaire  via une
+option de transport à haute latence. Tous les messages bote sont
+cryptés automatiquement de bout en bout, de telle sorte qu'il ne
+soit pas nécessaire d'utiliser un autre système de cryptage (bien
+que ça soit possible), et les messages sont automatiquement
+authentifiés. Comme il est décentralisé, il n'y a pas de serveur
+de messagerie qui puisse établir de relation entre différentes
+identités en tant qu'elles communiqueraient les unes avec les autres
+(profilage) : même les nœuds relayant les messages ne connaissent
+pas l'expéditeur, et hormis l'expéditeur et le destinataire, seuls
+le point terminal du tunnel de messages à haute latence et les nœuds
+de stockage savent à qui (identité anonyme) le message est destiné.
+L'expéditeur peut être passé hors ligne depuis longtemps lorsque
+le message devient disponible côté destinataire. Ceci améliore la
+classe d'anonymat qui peut être atteinte par I2P-Bote. Pour ceux qui
+ne veulent pas de longs retards, tous ces réglages sont accessibles
+à l'utilisateur et chacun peut ainsi ajuster le niveau d'anonymat à
+ses désirs.</FONT></P>
+<P><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><BR>Les
+nœudsI2P-Bote stockent les messages cryptés dans une table de
+hachage décentralisée (DHT) Kademlia. En conséquence, un message
+peut être envoyé via de nombreux autres nœuds (relais) pour
+augmenter la sécurité, ou directement sur un groupe de nœuds de
+stockage pour une livraison plus rapide. Le même scenario s'applique
+aussi à le relève des messages.<BR>(L'utilisation des routes de
+message désactive automatiquement les tampons horaires)<BR>[</FONT></FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif">La
+relève via les relais n'est pas encore implémentée</FONT></FONT><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">].</FONT></FONT></P>
 <P><BR><BR>
 </P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">All
-nodes are created equal: There are no &quot;supernodes&quot; or
-designated relay/storage nodes. Everybody acts as a potential relay
-and storage node. The maximum amount of disk space used for
-relayed/stored email packets can be configured by the user.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Before
-an email is sent to a relay, it is broken up into packets and
-encrypted with the recipient's public key. These packets are stored
-redundantly in a distributed hash table (DHT).</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">They
-are kept for at least 100 days, during which the recipient can
-download them.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Relay
-packets also expire after 100 days or more.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">If
-a node runs out of email storage space, and there are no old packets
-that can be deleted, the node refuses storage requests.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Furthermore,
-I2P-Bote sanitizes the mail headers and does not allow any unneeded
-information to be transmitted, thus allowing the use of e-mail
-clients without prior checks of what this client sends in the mail
-headers [<FONT COLOR="#ff0000">POP3 pas encore implémenté</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">All the
-encryption, path choosing and profiling is done locally so that there
-is no trusted party involved.</FONT></P>
-<P STYLE="font-weight: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">Using
-I2P-Bote appropriately, that means keeping in mind the considerations
-given above and showing some common sense, nobody will be able to
-find out who or where you are. And if you are already being observed
-and your internet connection sniffed, the observer will not be able
-to find out what you send or receive or to whom you are sending to or
-receiving from or where your contacts are located.</FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Tous
+les nœuds sont créés égaux : il n'y a pas de «&nbsp;super-nœuds&nbsp;»
+ni de nœuds désignés comme relais ou stockeurs. Tout le monde agit
+en tant que relais et stockage potentiels. L'utilisation d'espace
+disque est configurable par l'utilisateur.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Avant
+qu'un message ne soit envoyé à un relais, il est découpé en
+paquets et crypté avec la clé publique du destinataire. Ces paquets
+sont stockés de façon redondante dans la DHT.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Il
+sont conservés au moins 100 jours, pendant lesquels le destinataire
+peut les télécharger.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Les
+paquets relayés expirent aussi après 100 jours ou plus.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Si
+un nœud manque d'espace de stockage et qu'il n'y a pas de vieux
+paquets à supprimer, ce nœud refuse les requêtes de stockage.</FONT></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">De plus,
+I2P-Bote nettoie les en-têtes de messages en n'autorisant que les
+informations indispensables à la transmission, permettant ainsi
+l'utilisation de clients de messagerie sans vérification préalable
+de ce qu'ils ajoutent comme en-têtes bavardes [<FONT COLOR="#ff0000">POP3
+pas encore implémenté</FONT>].</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Tout le
+cryptage, le choix des chemins et le profilage sont effectués
+localement en sorte qu'aucune tierce partie de confiance ne soit mise
+à contribution.</FONT></P>
+<P STYLE="font-weight: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">Par
+une utilisation appropriée d'I2P-Bote, c'est à dire en gardant à
+l'esprit les considérations signalées plus haut relatives au bon
+sens, personne ne saura qui vous êtes ni où vous vous trouvez. Et
+si vous êtes déjà surveillé et que votre connexion Internet est
+sur écoutes, le nuisible ne pourra pas savoir ce que vous envoyez ou
+recevez, ni avec qui vous communiquez et où sont situés vos
+correspondants.</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>Let's
-go a bit more into detail:</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>Rentrons
+un peu dans les détails&nbsp;:</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>What
-I2P-Bote <I>does hide</I>:</U></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>Ce
+qu'I2P-Bote <I>cache</I><I> </I>:</U></FONT></P>
 <P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I>I2P-Bote
-hides</I></FONT> <FONT FACE="Arial, sans-serif">both, the identity
-and location of sender and receiver, as well as those of intermediary
-nodes (relays and storing nodes), the content of your mails, their
-size, the number of mails you send.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Only the
-recipient can know the sender's bote mail destination, and if he
-choses not to send his destination, not even the recipient will know
-it.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Even if
-you send time stamps, your time zone will not be disclosed.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Furthermore,
-I2P-Bote hides ...</FONT></P>
+cache à la fois, l'identité et la situation de l'expéditeur et du
+ou destinataires, celles des nœuds intermédiaires (relais et
+stockage), le contenu des messages, leur taille, le nombre que vous
+envoyez.</I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Seul le
+destinataire peut connaître l'adresse de l'expéditeur du message
+bote, et si ce dernier l'a décidé, même le destinataire peut être
+tenu dans l'ignorance de cette donnée.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Même si
+envoyez des horodatages, votre fuseau horaire ne sera pas dévoilé.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">De plus,
+I2P-Bote masque ...</FONT></P>
 <P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-the fact that you run I2P-Bote</FONT></P>
+le fait que vous utilisez... I2P-Bote</FONT></P>
 <P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-the fact that you send a mail</FONT></P>
+le fait que vous envoyez un message</FONT></P>
 <P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-the fact that you receive a mail</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">and
-hence</FONT></P>
+le fait que vous recevez un message</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">et
+donc</FONT></P>
 <P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-the time you send a mail</FONT></P>
+le moment d'envoi d'un message</FONT></P>
 <P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-the time you receive a mail</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">and</FONT></P>
+le moment de réception d'un message</FONT></P>
+<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">ainsi
+que</FONT></P>
 <P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-the upper limit of number of mails an unknown user receives, - nota
-bene: an abstract <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user, no
-concrete one, just concluding its existence from the existence of the
-mail identity<BR>&nbsp;&nbsp;&nbsp; - as he could always have more
-than one e-mail identity; and the lower limit as an <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-identity also sends out test and dummy messages</FONT></P>
+la limite supérieure du nombre de messages qu'un utilisateur inconnu
+reçoit, - nota bene : un utilisateur abstrait, pas un concret,
+extrapolant simplement son existence de celle de la destination de
+messagerie<BR>&nbsp;&nbsp;&nbsp; - car il pourrait toujours avoir
+plus d'une identité ; et la limite basse, car une identité envoie
+également des messages de test et des messages leurres/«&nbsp;bidons&nbsp;»</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>What
-I2P-Bote <I>hides partially</I>: </U></FONT>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>Ce
+qu'I2P-Bote <I>masque partiellement</I><I> </I>: </U></FONT>
 </P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">The
-I2P-Bote address of the recipient will only be known to sender and
-recipient(s). </FONT>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">L'adresse
+I2P-Bote du destinataire n'est connue que par l'expéditeur et le(s)
+destinataire(s). </FONT>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">In case
-of multiple recipients, each one will see all other recipients that
-the mail was addressed to via “To:” or “CC:”. </FONT>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">En cas de
+destinataires multiples, chacun verra tous les autres destinataires
+dont les adresses ont été indiquées en «&nbsp;A&nbsp;:» OU
+«&nbsp;Cc&nbsp;:&nbsp;».</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Toutes
+les entrées «&nbsp;Cci&nbsp;:&nbsp;» ne sont visibles qu'à
+l'expéditeur et au destinataire spécifique. </FONT>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">All
-entries that were under “BCC:” will only be visible to the sender
-and this very recipient. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The time
-an sent time will, if at all, only be visible to sender and
-recipient.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>What
-I2P-Bote </U></FONT><FONT FACE="Arial, sans-serif"><I><U>can hide</U></I></FONT><U>
-</U><FONT FACE="Arial, sans-serif"><U>optionally: </U></FONT>
-</P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif">-
-If mail routes are use, the time a bote mail is sent</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- If mail
-routes are used, the time a bote mail is fetched [<FONT COLOR="#ff0000">pas
-encore implémenté</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- If the
-sender suppresses timestamps only the sender himself will know when
-he sent a<BR>mail.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>What
-I2P-Bote </U></FONT><FONT FACE="Arial, sans-serif"><I><U>cannot hide</U></I></FONT><FONT FACE="Arial, sans-serif"><U>:
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Le moment
+de l'envoi, s'il est précisé, n'est visible que par l'expéditeur
+et le destinataire.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>Ce
+qu'I2P-Bote </U></FONT><FONT FACE="Arial, sans-serif"><I><U>peut
+masquer optionnellement </U></I></FONT><FONT FACE="Arial, sans-serif"><U>:
 </U></FONT>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>I2P-Bote
-cannot hide the frequency a given identity checks for new mails nor
-the number of mails a given identity receives.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
+<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">- Si
+les routes de messagerie sont utilisées, le moment de l'envoi d'un
+message</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- Si les
+routes de messagerie sont utilisées, le moment de relève d'un
+message [<FONT COLOR="#ff0000">pas encore implémenté</FONT>].</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- Si
+l'expéditeur supprime les horodatages, seul l'expéditeur sait quand
+il a envoyé un message.</FONT></P>
+<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>Ce
+qu'I2P-Bote </U></FONT><FONT FACE="Arial, sans-serif"><I><U>ne peut
+pas cacher </U></I></FONT><FONT FACE="Arial, sans-serif"><U>: </U></FONT>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>Not
-even for bootstrapping I2P-Bote depends on a central node, as it uses
-Seedless.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>I2P-Bote
+ne peut pas masquer la fréquence à laquelle une identité donnée
+relève les nouveaux messages, ni ne nombre de messages reçus par
+une identité donnée.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>Pour
+son démarrage, I2P-Bote ne dépend pas non-plus d'un nœud central
+car il utilise Seedless.</FONT></P>
 <P STYLE="line-height: 150%"><BR><BR><BR>
 </P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>5
-Terminology/Glossary of Terms:</B></FONT></P>
+Terminologie/Glossaire:</B></FONT></P>
 <P STYLE="line-height: 150%"><BR><BR>
 </P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><U>I2P-Bote
-(router/node) id</U>:</I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">This is
-the id an I2P-Bote router is known as. It is used for contacting this
-router, for storing, relaying and fetching mails, but also used in
-the hop-to-hop encryption and for simply contacting it via I2P, as it
-is at the same the I2P-Bote router's I2P tunnel destination. It is
-displayed to represent an I2P-Bote node in the stats.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">So the
-router id corresponds to the I2P destination (the address of an
-I2P-Bote node on the I2P network - there is no need to know it unless
-you are having problems connecting to other I2P-Bote nodes.)</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><U>Identité
+du routeur/nœud I2P-Bote </U>:</I></FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">C'est
+l'identité par laquelle le routeur I2P-Bote est connu. Elle est
+utilisée pour contacter ce routeur, pour stocker, relayer et relever
+les messages, mais aussi pour le cryptage par saut et le contacter
+via I2P, car c'est celle là même de la destination du tunnel I2P.
+Elle est affichée pour représenter le nœud I2P-Bote dans les
+statistiques.</FONT></P>
+<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Ainsi
+donc, l'identité du routeur (I2P-Bote) correspond à la destination
+I2P (l'adresse d'un nœud I2P-Bote sur le réseau I2P – il n'y a
+pas de nécessité de la connaître, sauf en cas de problèmes de
+connexion aux autres nœuds I2P-Bote).</FONT></P>
 <P STYLE="font-weight: normal; line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I><U>I2P-Bote
 e-mail destination:</U></I></FONT></P>
 <P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">The
