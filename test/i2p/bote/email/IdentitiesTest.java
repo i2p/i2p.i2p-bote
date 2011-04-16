@@ -54,7 +54,7 @@ public class IdentitiesTest {
         testDir = new File(tmpDir, "IdentitiesTest-" + System.currentTimeMillis());
         identitiesFile = new File(testDir, "identities");
         assertTrue("Can't create directory: " + testDir.getAbsolutePath(), testDir.mkdir());
-        passwordHolder = TestUtil.createPasswordCache(tmpDir);
+        passwordHolder = TestUtil.createPasswordCache(testDir);
         
         identities = new Identities(identitiesFile, passwordHolder);
         for (TestIdentity identity: TestUtil.createTestIdentities())
@@ -64,6 +64,8 @@ public class IdentitiesTest {
     @After
     public void tearDown() throws Exception {
         assertTrue("Can't delete file: " + identitiesFile.getAbsolutePath(), identitiesFile.delete());
+        File derivParamsFile = TestUtil.createConfiguration(testDir).getKeyDerivationParametersFile();
+        assertTrue("Can't delete file: " + derivParamsFile, derivParamsFile.delete());
         assertTrue("Can't delete directory: " + testDir.getAbsolutePath(), testDir.delete());
     }
     
