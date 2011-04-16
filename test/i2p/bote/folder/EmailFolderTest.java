@@ -130,7 +130,8 @@ public class EmailFolderTest {
         folder1.move(email1, folder2);
         assertEquals("Source folder is not empty!", 0, folderDir1.list().length);
         assertEquals("Target folder does not contain two files!", 2, folderDir2.list().length);
-        TestUtil.assertEquals("Email differs from the original!", email1, folder2.iterator().next());
+        FolderIterator<Email> iterator = folder2.iterate();
+        TestUtil.assertEquals("Email differs from the original!", email1, iterator.next());
     }
 
     @Test
@@ -143,7 +144,8 @@ public class EmailFolderTest {
     @Test
     public void testSetNew() throws IOException, MessagingException, PasswordException, GeneralSecurityException {
         folder1.add(email1);
-        Email emailFromFolder = folder1.iterator().next();
+        FolderIterator<Email> iterator = folder1.iterate();
+        Email emailFromFolder = iterator.next();
         assertEquals("\"new\" flag is false after adding email to folder!", emailFromFolder.isNew(), true);
         folder1.setNew(email1.getMessageID(), false);
     }

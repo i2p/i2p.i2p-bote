@@ -28,6 +28,7 @@ import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.folder.FolderIterator;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.network.DHT;
@@ -41,6 +42,7 @@ import i2p.bote.packet.dht.StoreRequest;
 import i2p.bote.packet.dht.UnencryptedEmailPacket;
 import i2p.bote.packet.relay.RelayRequest;
 
+import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -92,15 +94,22 @@ public class OutboxProcessor extends I2PBoteThread {
         
         if (networkStatusSource.isConnected()) {
             log.debug("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
-            for (Email email: outbox) {
-                log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
-                try {
-                    sendEmail(email);
-                    fireOutboxListeners(email);
+            FolderIterator<Email> iterator = outbox.iterate();
+            try {
+                while (iterator.hasNext()) {
+                    Email email = iterator.next();
+                    log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
+                    try {
+                        sendEmail(email);
+                        fireOutboxListeners(email);
+                    }
+                    catch (Exception e) {
+                        log.error("Error sending email.", e);
+                    }
                 }
-                catch (Exception e) {
-                    log.error("Error sending email.", e);
-                }
+            }
+            catch (PasswordException e) {
+                log.error("Can't scan outbox.", e);
             }
         }
         
@@ -135,8 +144,9 @@ public class OutboxProcessor extends I2PBoteThread {
      * @throws DhtException 
      * @throws GeneralSecurityException 
      * @throws PasswordException 
+     * @throws IOException 
      */
-    private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException {
+    private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException, IOException {
         EmailIdentity senderIdentity = null;
         if (!email.isAnonymous()) {
             String sender = email.getSender().toString();
@@ -181,8 +191,9 @@ public class OutboxProcessor extends I2PBoteThread {
      * @throws MessagingException 
      * @throws DhtException 
      * @throws GeneralSecurityException 
+     * @throws PasswordException 
      */
-    private void sendToOne(EmailIdentity senderIdentity, String recipient, Email email) throws MessagingException, DhtException, GeneralSecurityException {
+    private void sendToOne(EmailIdentity senderIdentity, String recipient, Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException {
         String logSuffix = null;   // only used for logging
         try {
             logSuffix = "Recipient = '" + recipient + "' Message ID = '" + email.getMessageID() + "'";

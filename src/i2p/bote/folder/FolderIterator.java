@@ -19,21 +19,20 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.web;
+package i2p.bote.folder;
 
-import i2p.bote.I2PBote;
+import i2p.bote.fileencryption.PasswordException;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
-
-public class CheckMailTag extends SimpleTagSupport {
-
-    @Override
-    public void doTag() throws JspException {
-        try {
-            I2PBote.getInstance().checkForMail();
-        } catch (Exception e) {
-            throw new JspException(e);
-        }
-    }
+/**
+ * Same as {@link java.util.Iterator}, except <code>hasNext()</code> and
+ * </code>next()</code> can throw a <code>PasswordException</code>.
+ * @param <T>
+ */
+public interface FolderIterator<T> {
+    
+    boolean hasNext() throws PasswordException;
+    
+    T next() throws PasswordException;
+    
+    void remove();
 }

@@ -27,13 +27,16 @@ import i2p.bote.TestUtil;
 import i2p.bote.TestUtil.TestIdentity;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.crypto.NTRUEncrypt1087_GMSS512;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -66,10 +69,12 @@ public class IdentitiesTest {
     
     /** Checks that the private signing key is updated on disk if the <code>CryptoImplementation</code> requires it */
     @Test
-    public void testUpdateKey() throws GeneralSecurityException {
+    public void testUpdateKey() throws GeneralSecurityException, PasswordException, IOException {
         byte[] message = "Hopfen und Malz, Gott erhalt's!".getBytes();
         
-        for (EmailIdentity identity: identities) {
+        Iterator<EmailIdentity> iterator = identities.iterator();
+        while (iterator.hasNext()) {
+            EmailIdentity identity = iterator.next();
             PublicKey publicKey = identity.getPublicSigningKey();
             PrivateKey privateKey = identity.getPrivateSigningKey();
             

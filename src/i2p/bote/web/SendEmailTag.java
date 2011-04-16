@@ -64,7 +64,7 @@ public class SendEmailTag extends BodyTagSupport {
     }
     
     @Override
-    public int doEndTag() throws PasswordException {
+    public int doEndTag() throws JspException {
         JspWriter out = pageContext.getOut();
 
         Email email = new Email(includeSentTime);
@@ -96,7 +96,7 @@ public class SendEmailTag extends BodyTagSupport {
                 statusMessage = _("The email has been queued for sending.");
             }
             catch (PasswordException e) {
-                throw e;
+                throw new JspException(e);
             }
             catch (Exception e) {
                 statusMessage = _("Error sending email: {0}", e.getLocalizedMessage());

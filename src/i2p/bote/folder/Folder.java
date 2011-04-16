@@ -39,7 +39,7 @@ import net.i2p.util.Log;
  * 
  * @param <T> The type of objects the folder can store.
  */
-public abstract class Folder<T> implements Iterable<T> {
+public abstract class Folder<T> {
     protected File storageDir;
     
     private Log log = new Log(Folder.class);
@@ -92,10 +92,11 @@ public abstract class Folder<T> implements Iterable<T> {
         return files;
     }
     
-    /** Returns all folder elements as a {@link List}. */
-    public List<T> getElements() {
+    /** Returns all folder elements as a {@link List}. 
+     * @throws PasswordException */
+    public List<T> getElements() throws PasswordException {
         List<T> elements = new ArrayList<T>();
-        Iterator<T> iterator = iterator();
+        FolderIterator<T> iterator = iterate();
         while (iterator.hasNext())
             elements.add(iterator.next());
         return elements;
@@ -105,12 +106,11 @@ public abstract class Folder<T> implements Iterable<T> {
       * An {@link Iterator} implementation that loads one file into memory at a time.<br/>
       * Files that cannot be read or contain invalid data are skipped.
       */
-    @Override
-    public final Iterator<T> iterator() {
+    public final FolderIterator<T> iterate() {
         final File[] files = getFilenames();
         log.debug(files.length + " files with the extension '" + fileExtension + "' found in '" + storageDir + "'.");
 
-        return new Iterator<T>() {
+        return new FolderIterator<T>() {
             Iterator<File> fileIterator = Arrays.asList(files).iterator();
             T nextElement;   // the next value to return
             File lastFile;   // the file that corresponds to the last element returned by next()

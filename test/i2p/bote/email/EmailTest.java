@@ -26,6 +26,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.TestUtil;
 import i2p.bote.crypto.KeyUpdateHandler;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.dht.UnencryptedEmailPacket;
 
@@ -108,7 +109,7 @@ public class EmailTest {
     }
 
     @Test
-    public void testSign() throws MessagingException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, GeneralSecurityException {
+    public void testSign() throws MessagingException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, GeneralSecurityException, PasswordException {
         assertEquals(emails.length-1, identities.size());
         
         for (Email email: emails) {
@@ -131,7 +132,7 @@ public class EmailTest {
     }
 
     @Test
-    public void testCreateEmailPackets() throws MessagingException, IOException, GeneralSecurityException, SecurityException, IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
+    public void testCreateEmailPackets() throws MessagingException, IOException, GeneralSecurityException, SecurityException, IllegalArgumentException, NoSuchFieldException, IllegalAccessException, PasswordException {
         // convert an email to a byte array, convert back, and compare with the original email
         for (Email email: emails) {
             EmailIdentity identity = identities.get(email);
@@ -152,7 +153,7 @@ public class EmailTest {
     }
     
     @Test
-    public void testHeaderRemoval() throws MessagingException, IOException, GeneralSecurityException {
+    public void testHeaderRemoval() throws MessagingException, IOException, GeneralSecurityException, PasswordException {
         Email newEmail;
         Collection<UnencryptedEmailPacket> packets;
         ByteArrayOutputStream outputStream;
@@ -179,7 +180,7 @@ public class EmailTest {
     }
     
     @Test
-    public void testCompression() throws MessagingException, GeneralSecurityException {
+    public void testCompression() throws MessagingException, GeneralSecurityException, PasswordException {
         // create a 500,000-char string that should compress to one packet
         StringBuilder stringBuilder = new StringBuilder();
         for (int i=0; i<50000; i++)

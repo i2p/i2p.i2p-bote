@@ -55,7 +55,7 @@ import net.i2p.util.Log;
  * Holds a set of {@link EmailIdentity} objects that are sorted by name.<br/>
  * The Email Identities can be written to, and read from, a password-encrypted file.
  */
-public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
+public class Identities implements KeyUpdateHandler {
     private Log log = new Log(Identities.class);
     private File identitiesFile;
     private PasswordHolder passwordHolder;
@@ -72,7 +72,7 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
         this.passwordHolder = passwordHolder;
     }
 
-    private void initializeIfNeeded() throws PasswordException {
+    private void initializeIfNeeded() throws PasswordException, IOException, GeneralSecurityException {
         if (identities == null)
             readIdentities();
     }
@@ -91,8 +91,10 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
      * An Email Identity key consists of two public keys and two private keys, whereas
      * an Email Destination consists only of two public keys.
      * @throws PasswordException 
+     * @throws IOException 
+     * @throws GeneralSecurityException 
      */
-    private void readIdentities() throws PasswordException {
+    private void readIdentities() throws PasswordException, IOException, GeneralSecurityException {
         log.debug("Reading identities file: <" + identitiesFile.getAbsolutePath() + ">");
         
         if (!identitiesFile.exists()) {
@@ -129,10 +131,6 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
                 defaultIdentity.setDefault(true);
             else if (!identities.isEmpty())
                 identities.iterator().next().setDefault(true);
-        } catch (PasswordException e) {
-            throw e;
-        } catch (Exception e) {
-            log.error("Error reading the identities file.", e);
         }
         finally {
             if (input != null)
@@ -223,7 +221,7 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
         }
     }
     
-    public void add(EmailIdentity identity) throws PasswordException {
+    public void add(EmailIdentity identity) throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         
         if (identities.isEmpty())
@@ -231,7 +229,7 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
         identities.add(identity);
     }
     
-    public void remove(String key) throws PasswordException {
+    public void remove(String key) throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         
         EmailIdentity identity = get(key);
@@ -248,7 +246,7 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
         }
     }
     
-    public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException {
+    public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
         if (identitiesFile.exists())
             FileEncryptionUtil.changePassword(identitiesFile, oldPassword, newKey);
     }
@@ -261,8 +259,10 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
     /**
      * Sets the default identity. Assumes this <code>Identities</code> already
      * contains <code>defaultIdentity</code>.
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public void setDefault(EmailIdentity defaultIdentity) throws PasswordException {
+    public void setDefault(EmailIdentity defaultIdentity) throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         
         // clear the old default
@@ -274,8 +274,10 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
     
     /**
      * Returns the default identity, or <code>null</code> if no default is set.
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public EmailIdentity getDefault() throws PasswordException {
+    public EmailIdentity getDefault() throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         
         if (identities == null)
@@ -294,8 +296,10 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
      * Returns <code>null</code> if nothing is found.
      * @param destination
      * @throws PasswordException
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public EmailIdentity get(EmailDestination destination) throws PasswordException {
+    public EmailIdentity get(EmailDestination destination) throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         
         if (identities == null)
@@ -314,8 +318,10 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
      * Returns An <code>EmailIdentity</code>, or <code>null</code> if nothing is found.
      * @param key
      * @throws PasswordException
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public EmailIdentity get(String key) throws PasswordException {
+    public EmailIdentity get(String key) throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         
         if (identities == null)
@@ -327,7 +333,7 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
         return null;
     }
     
-    public Collection<EmailIdentity> getAll() throws PasswordException {
+    public Collection<EmailIdentity> getAll() throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         return identities;
     }
@@ -351,8 +357,10 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
      * (Note that an <code>EmailIdentity</code> is an <code>EmailDestination</code>).
      * @param base64Dest A base64-encoded Email Destination
      * @throws PasswordException
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public boolean contains(String base64Dest) throws PasswordException {
+    public boolean contains(String base64Dest) throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         
         if (identities==null || base64Dest==null)
@@ -365,7 +373,7 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
         return false;
     }
     
-    public int size() throws PasswordException {
+    public int size() throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         return identities.size();
     }
@@ -377,8 +385,10 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
      * is returned.
      * @param address
      * @throws PasswordException
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public EmailIdentity extractIdentity(String address) throws PasswordException {
+    public EmailIdentity extractIdentity(String address) throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         
         String destinationStr = EmailDestination.extractBase64Dest(address);
@@ -388,7 +398,7 @@ public class Identities implements Iterable<EmailIdentity>, KeyUpdateHandler {
             return null;
     }
     
-    public Iterator<EmailIdentity> iterator() throws PasswordException {
+    public Iterator<EmailIdentity> iterator() throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
         if (identities == null)
             return null;

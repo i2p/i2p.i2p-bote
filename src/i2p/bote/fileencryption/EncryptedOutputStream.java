@@ -44,7 +44,7 @@ import net.i2p.data.SessionKey;
  * would be encrypted two separate pieces.
  * <p/>
  * A header is written before the encrypted data. The header fields are:<br/>
- * <code>start of file, format version, #iterations, salt, iv, encrypted data</code>.<br/>
+ * <code>start of file, format version, scrypt parameters (N, r, p), salt, iv, encrypted data</code>.
  */
 public class EncryptedOutputStream extends FilterOutputStream {
     private OutputStream downstream;

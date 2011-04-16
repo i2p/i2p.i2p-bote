@@ -22,18 +22,21 @@
 package i2p.bote.folder;
 
 import i2p.bote.Util;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.MalformedPacketException;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 
 import net.i2p.util.Log;
 
 /**
- * This class stores new files under a random file name with the .pkt extension.
- *
+ * This class stores new files under a random file name with the .pkt extension.<br/>
+ * Unlike {@link Folder}, it is not password-protected and does not throw
+ * <code>PasswordException</code>, which is why it can implement <code>Iterable<code>.
  * @param <PacketType> The type of data stored in this folder
  */
 public class PacketFolder<PacketType extends I2PBotePacket> extends Folder<PacketType> implements Iterable<PacketType> {
@@ -75,5 +78,37 @@ public class PacketFolder<PacketType extends I2PBotePacket> extends Folder<Packe
     @SuppressWarnings("unchecked")
     protected PacketType createFolderElement(File file) throws IOException, MalformedPacketException {
         return (PacketType)I2PBotePacket.createPacket(file);
+    }
+
+    @Override
+    public Iterator<PacketType> iterator() {
+        return new Iterator<PacketType>() {
+            FolderIterator<PacketType> folderIterator = iterate();
+
+            @Override
+            public boolean hasNext() {
+                try {
+                    return folderIterator.hasNext();
+                } catch (PasswordException e) {
+                    log.error("Password-encrypted file encountered in a PacketFolder.", e);
+                    return false;
+                }
+            }
+
+            @Override
+            public PacketType next() {
+                try {
+                    return folderIterator.next();
+                } catch (PasswordException e) {
+                    log.error("Password-encrypted file encountered in a PacketFolder.", e);
+                    return null;
+                }
+            }
+
+            @Override
+            public void remove() {
+                folderIterator.remove();
+            }
+        };
     }
 }

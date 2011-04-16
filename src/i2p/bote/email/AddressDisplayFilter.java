@@ -21,6 +21,9 @@
 
 package i2p.bote.email;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.addressbook.Contact;
 import i2p.bote.fileencryption.PasswordException;
@@ -49,8 +52,10 @@ public class AddressDisplayFilter {
      * <code>address</code> is returned.
      * @param address A Base64-encoded Email Destination, and optionally a name
      * @throws PasswordException 
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public String getNameAndDestination(String address) throws PasswordException {
+    public String getNameAndDestination(String address) throws PasswordException, IOException, GeneralSecurityException {
         String base64dest = EmailDestination.extractBase64Dest(address);
         if (base64dest != null) {
             // try the address book

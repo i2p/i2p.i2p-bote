@@ -22,7 +22,6 @@
 package i2p.bote.web;
 
 import i2p.bote.I2PBote;
-import i2p.bote.fileencryption.PasswordException;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -30,12 +29,9 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 public class SaveIdentitiesTag extends SimpleTagSupport {
     
     @Override
-    public void doTag() throws JspException, PasswordException {
+    public void doTag() throws JspException {
         try {
             I2PBote.getInstance().getIdentities().save();
-        }
-        catch (PasswordException e) {
-            throw e;
         }
         catch (Exception e) {
             throw new JspException(e);

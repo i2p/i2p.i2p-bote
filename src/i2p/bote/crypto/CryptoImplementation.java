@@ -21,6 +21,8 @@
 
 package i2p.bote.crypto;
 
+import i2p.bote.fileencryption.PasswordException;
+
 import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
@@ -134,7 +136,7 @@ public interface CryptoImplementation {
      * @return
      * @throws GeneralSecurityException
      */
-    byte[] sign(byte[] data, PrivateKey privateKey, KeyUpdateHandler keyUpdateHandler) throws GeneralSecurityException;
+    byte[] sign(byte[] data, PrivateKey privateKey, KeyUpdateHandler keyUpdateHandler) throws GeneralSecurityException, PasswordException;
     
     boolean verify(byte[] data, byte[] signature, PublicKey key) throws GeneralSecurityException;
 }

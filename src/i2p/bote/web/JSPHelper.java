@@ -103,8 +103,10 @@ public class JSPHelper {
      * @param emailAddress
      * @param setDefault If this is <code>true</code>, the identity becomes the new default identity. Otherwise, the default stays the same.
      * @throws GeneralSecurityException 
+     * @throws PasswordException 
+     * @throws IOException 
      */
-    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException {
+    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException {
         Log log = new Log(JSPHelper.class);
         Identities identities = I2PBote.getInstance().getIdentities();
         EmailIdentity identity = identities.get(key);
@@ -144,8 +146,10 @@ public class JSPHelper {
      * @param key A base64-encoded email identity key
      * @return null if sucessful, or an error message if an error occured
      * @throws PasswordException 
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public static String deleteIdentity(String key) throws PasswordException {
+    public static String deleteIdentity(String key) throws PasswordException, IOException, GeneralSecurityException {
         Identities identities = I2PBote.getInstance().getIdentities();
         identities.remove(key);
 
@@ -161,7 +165,7 @@ public class JSPHelper {
         }
     }
     
-    public static EmailIdentity getIdentity(String key) throws PasswordException {
+    public static EmailIdentity getIdentity(String key) throws PasswordException, IOException, GeneralSecurityException {
         return I2PBote.getInstance().getIdentities().get(key);
     }
     
@@ -232,7 +236,7 @@ public class JSPHelper {
         }
     }
     
-    public static String getContactName(String destination) {
+    public static String getContactName(String destination) throws PasswordException {
         Contact contact = getAddressBook().get(destination);
         if (contact == null)
             return null;
@@ -299,8 +303,10 @@ public class JSPHelper {
      * <code>null</code> is returned.
      * @param email
      * @throws PasswordException 
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public static Address getOneLocalRecipient(Email email) throws PasswordException {
+    public static Address getOneLocalRecipient(Email email) throws PasswordException, IOException, GeneralSecurityException {
         Address[] recipients;
         try {
             recipients = email.getAllRecipients();
@@ -312,7 +318,11 @@ public class JSPHelper {
             return null;
         
         Identities identities = I2PBote.getInstance().getIdentities();
-        for (EmailDestination localDestination: identities) {
+        Iterator<EmailIdentity> iterator = identities.iterator();
+        if (iterator == null)
+            return null;
+        while (iterator.hasNext()) {
+            EmailDestination localDestination = iterator.next();
             String base64Dest = localDestination.toBase64();
             for (Address recipient: recipients)
                 if (recipient.toString().contains(base64Dest))
@@ -477,8 +487,10 @@ public class JSPHelper {
      * email identities.
      * @param address
      * @throws PasswordException 
+     * @throws GeneralSecurityException 
+     * @throws IOException 
      */
-    public static boolean isKnown(String address) throws PasswordException {
+    public static boolean isKnown(String address) throws PasswordException, IOException, GeneralSecurityException {
         String destination = extractEmailDestination(address);
         if (destination == null)
             return false;
@@ -487,11 +499,11 @@ public class JSPHelper {
         else return I2PBote.getInstance().getIdentities().contains(destination);
     }
     
-    public static String getNameAndDestination(String address) throws PasswordException {
+    public static String getNameAndDestination(String address) throws PasswordException, IOException, GeneralSecurityException {
         return getAddressDisplayFilter().getNameAndDestination(address);
     }
     
-    private static AddressDisplayFilter getAddressDisplayFilter() {
+    private static AddressDisplayFilter getAddressDisplayFilter() throws PasswordException {
         Identities identities = I2PBote.getInstance().getIdentities();
         if (addressDisplayFilter == null)
             addressDisplayFilter = new AddressDisplayFilter(identities, getAddressBook());

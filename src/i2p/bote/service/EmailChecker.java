@@ -34,9 +34,12 @@ import i2p.bote.network.DHT;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.NetworkStatusSource;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -92,7 +95,7 @@ public class EmailChecker extends I2PBoteThread {
         interval = TimeUnit.MINUTES.toMillis(interval);
     }
 
-    public synchronized void checkForMail() throws PasswordException {
+    public synchronized void checkForMail() throws PasswordException, IOException, GeneralSecurityException {
         if (!isCheckingForMail()) {
             if (identities.size() <= 0)
                 log.info("Not checking for mail because no identities are defined.");
@@ -102,10 +105,14 @@ public class EmailChecker extends I2PBoteThread {
             lastMailCheckTime = System.currentTimeMillis();
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
-            for (EmailIdentity identity: identities) {
-                Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder);
-                Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
-                pendingMailCheckTasks.add(task);
+            Iterator<EmailIdentity> iterator = identities.iterator();
+            if (iterator != null) {
+                while (iterator.hasNext()) {
+                    EmailIdentity identity = iterator.next();
+                    Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder);
+                    Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
+                    pendingMailCheckTasks.add(task);
+                }
             }
             mailCheckExecutor.shutdown();   // finish all tasks, then shut down
         }
@@ -160,6 +167,8 @@ public class EmailChecker extends I2PBoteThread {
                     checkForMail();
                 } catch (PasswordException e) {
                     log.debug("Can't auto-check for email because a password is set.");
+                } catch (Exception e) {
+                    log.debug("Can't auto-check for email.", e);
                 }
             awaitShutdownRequest(1, TimeUnit.MINUTES);
         }

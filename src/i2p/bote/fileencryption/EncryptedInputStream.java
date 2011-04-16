@@ -69,7 +69,18 @@ public class EncryptedInputStream extends FilterInputStream {
         decryptedData = new ByteArrayInputStream(bytes);
     }
     
-    private byte[] readInputStream(InputStream inputStream, byte[] password, DerivedKey cachedKey) throws IOException, GeneralSecurityException {
+    /**
+     * If <code>cachedKey</code> is not <code>null</code>, this method assumes the
+     * key has been generated from a valid password.
+     * @param inputStream
+     * @param password
+     * @param cachedKey
+     * @return
+     * @throws IOException
+     * @throws GeneralSecurityException
+     * @throws PasswordException 
+     */
+    private byte[] readInputStream(InputStream inputStream, byte[] password, DerivedKey cachedKey) throws IOException, GeneralSecurityException, PasswordException {
         byte[] startOfFile = new byte[START_OF_FILE.length];
         inputStream.read(startOfFile);
         if (!Arrays.equals(START_OF_FILE, startOfFile))
@@ -100,7 +111,14 @@ public class EncryptedInputStream extends FilterInputStream {
         byte[] decryptedData = appContext.aes().safeDecrypt(encryptedData, key, iv);
         // null from safeDecrypt() means failure
         if (decryptedData == null)
-            throw new PasswordException();
+            if (cachedKey == null)
+                throw new PasswordException();
+            else
+                // If a derived key was supplied but decryption failed, the encrypted
+                // data is corrupt or it was encrypted with a different password than
+                // the key corresponds to, so don't throw a PasswordException because
+                // we're assuming password and key are correct.
+                throw new GeneralSecurityException("Can't decrypt using cached key.");
         
         return decryptedData;
     }

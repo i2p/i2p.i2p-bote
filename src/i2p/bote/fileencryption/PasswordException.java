@@ -23,9 +23,7 @@ package i2p.bote.fileencryption;
 
 /**
  * This exception is thrown when a password is invalid or missing.
- * It extends <code>RuntimeException</code> so it can be thrown in
- * iterators.
  */
-public class PasswordException extends RuntimeException {
+public class PasswordException extends Exception {
     private static final long serialVersionUID = 9105407855443550137L;
 }

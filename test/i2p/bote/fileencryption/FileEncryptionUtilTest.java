@@ -79,7 +79,7 @@ public class FileEncryptionUtilTest {
     }
     
     @Test
-    public void testChangePassword() throws IOException, GeneralSecurityException {
+    public void testChangePassword() throws IOException, GeneralSecurityException, PasswordException {
         File encryptedFile = new File(testDir, "encrypted");
         OutputStream outputStream = new EncryptedOutputStream(new FileOutputStream(encryptedFile), FileEncryptionTestUtil.deriveKey(password));
         outputStream.write(plainText);

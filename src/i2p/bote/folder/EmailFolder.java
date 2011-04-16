@@ -106,15 +106,16 @@ public class EmailFolder extends Folder<Email> {
         }
     }
     
-    public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException {
+    public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
         for (File emailFile: getFilenames())
             FileEncryptionUtil.changePassword(emailFile, oldPassword, newKey);
     }
     
     /**
      * Returns all emails in the folder, in the order specified by <code>sortColumn</code>.
+     * @throws PasswordException 
      */
-    public List<Email> getElements(AddressDisplayFilter displayFilter, EmailAttribute sortColumn, boolean descending) {
+    public List<Email> getElements(AddressDisplayFilter displayFilter, EmailAttribute sortColumn, boolean descending) throws PasswordException {
         Comparator<Email> comparator = new EmailComparator(sortColumn, displayFilter);
         if (descending)
             comparator = Collections.reverseOrder(comparator);
@@ -182,6 +183,12 @@ public class EmailFolder extends Folder<Email> {
                 return 0;
             } catch (PasswordException e) {
                 log.error("Can't compare emails because the password is not available.", e);
+                return 0;
+            } catch (IOException e) {
+                log.error("Can't compare emails.", e);
+                return 0;
+            } catch (GeneralSecurityException e) {
+                log.error("Can't compare emails.", e);
                 return 0;
             }
         }

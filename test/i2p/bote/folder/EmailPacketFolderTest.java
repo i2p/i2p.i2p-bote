@@ -26,6 +26,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.MalformedPacketException;
@@ -96,7 +97,7 @@ public class EmailPacketFolderTest {
 
     /** Tests processing of one valid and one invalid {@link EmailPacketDeleteRequest}. */
     @Test
-    public void testPacketReceived() {
+    public void testPacketReceived() throws PasswordException {
         packetFolder.store(emailPacket);
         assertEquals(1, packetFolder.getElements().size());
         EmailPacketDeleteRequest delRequest;
@@ -120,7 +121,7 @@ public class EmailPacketFolderTest {
      * and matching them against email packets.
      */
     @Test
-    public void testProcessDeleteRequest() throws GeneralSecurityException, InvalidCipherTextException, MalformedPacketException {
+    public void testProcessDeleteRequest() throws GeneralSecurityException, InvalidCipherTextException, MalformedPacketException, PasswordException {
         // create two packets whose base64 DHT keys start with the same two characters
         byte[] emailPkt1Data = Base64.decode("RQTAJHelC-wnxq-OUAnfgqgN84zTCimrfUKw7AgDPHblcwAAAADUk24QY3EPEzk0UmB5PYQxwnEVIWGZkWJ-5ERh30l95QMA0gIs-itszDaiCa4ucekxDL6pZCVMTnI~S0nBx2FQ5Fl4-T50bNojkgJiQZNFB-vwQ4ChB~hxYIomMtbN6tiNDVwYRKjeZHbL3MAffKcwxwF3iPMl8aLLBaU6LxQ~3r7tgTiccHE39Ozm88~Hrf7H-5hWXzTXwm7j1pNJA7hc-wCL3BwngRl8KUsqsII2-PTMI34-a3RfpzMf2cKlY0NVayoW1UxC4dLvtSz-HoLYPMGIMf5zQghPS2PuZaRAKa5oa3PdYJrhvNXCJWpYCL~FynwShQ==");
         byte[] emailPkt2Data = Base64.decode("RQTAJPXENHAvW18uRITLC8n~D0Npd0RwI1e~9IR8QN~BSwAAAAAD9RT-PXacKIest9~E2SzsR5dAlaoh-ZZVcFNcsQbGQwECkgCFnuT5N210f4SbS4pjPeh~hk9hvpEGCEXzOmPfSEeSWhrE5oiQuJI6fet1zrwZfbA6Iqvl-PoLgv5nKU~I7Nlu1f9UXuve2cvQOmTGDlHdzpwd3nTyJCR2bqG4SFPlnaDpa7yDOmH~e8LKBw1YTYSHSyVun7XuijyCcWGKRbSm3tFU382JSSqUQ2APwbHPtPG6akYO5iSq7XMvlBSyLsDHM5wDbaptxEUmnW20x3fVsK-0BNsIXFK-JJVQ12NApVanGaOsyDRh8l-geRWBcYpX7J~RI1A3ZKRBRJj2wgBc6TdAG0-jiI4OfpKZMr2NZ-ugg2-phU9OgY5ZbtBZjlbtADDYlxT~GHvXkCQLwRg4fsxTk9HoshfoWea-4RE1YmwRT96uKRy0SjcUduOPCsI6nEwm1p-5lzGFzcVTTXZyARRzRrhvtAJw616o3RoAj7vGHY~1POJ26m3UBUIXjh2fA7b5HTFARw9VfZYuz9zzT7UjtuPVIgBu-HyX5zBgSrCDhykGqggaVbURCaS2B6BZt8ikU0ponchHkVZzqX2UeT4T1Pd3fyc1fXp1xVInrYWUZvjSoBcJaiqlhvTMMsjzLbiG~a~HoJz67Dvl6GGtcBad1hjhSzwKN9vLpM-sFMqDCBDHDssVZEXk5EXQYltUZVvfaFJYimDfdiM~F23x0Wz2tM5LQXJ86-nn7d5DA-CspMg1xqkAr1iMkgYacOL~2u2PL1ImI1SMZGmY839ekgQlr1gWWU1evQQTUdHH6Bszs0vSW6wymbSTziJopMqv86f2y6SHDEq8qZzYdKhAFQbjFtvNwn7gEJqlhzzI1bO8zjG3xZTiaCpSrmE98L8PZhEIfXvN3PUADSuzsbHmuHQ=");
@@ -174,7 +175,7 @@ public class EmailPacketFolderTest {
     }
     
     @Test
-    public void testCheckExpiration() throws GeneralSecurityException, InterruptedException {
+    public void testCheckExpiration() throws GeneralSecurityException, InterruptedException, PasswordException {
         final long cutoffTime = System.currentTimeMillis() - ExpirationListener.EXPIRATION_TIME_MILLISECONDS;
 
         // store a packet that expired 10 seconds ago

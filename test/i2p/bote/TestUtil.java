@@ -124,7 +124,7 @@ public class TestUtil {
     }
     
     /** Returns a <code>KeyUpdateHandler</code> that must be called exactly <code>numExpectedCalls</code> times */
-    public static KeyUpdateHandler createVerifyingKeyUpdateHandler(final int numExpectedCalls) throws GeneralSecurityException, IOException {
+    public static KeyUpdateHandler createVerifyingKeyUpdateHandler(final int numExpectedCalls) throws GeneralSecurityException, IOException, PasswordException {
         Mockery mockery = new Mockery();
         final KeyUpdateHandler keyUpdateHandler = mockery.mock(KeyUpdateHandler.class);
         mockery.checking(new Expectations() {{

@@ -408,7 +408,7 @@ public class I2PBote implements NetworkStatusSource {
             outboxProcessor.checkForEmail();
     }
 
-    public synchronized void checkForMail() throws PasswordException {
+    public synchronized void checkForMail() throws PasswordException, IOException, GeneralSecurityException {
         emailChecker.checkForMail();
     }
 
@@ -468,8 +468,9 @@ public class I2PBote implements NetworkStatusSource {
      * @return An error message if the two new passwords don't match, <code>null</code> otherwise
      * @throws IOException 
      * @throws GeneralSecurityException 
+     * @throws PasswordException 
      */
-    public String changePassword(byte[] oldPassword, byte[] newPassword, byte[] confirmNewPassword) throws IOException, GeneralSecurityException {
+    public String changePassword(byte[] oldPassword, byte[] newPassword, byte[] confirmNewPassword) throws IOException, GeneralSecurityException, PasswordException {
         File passwordFile = configuration.getPasswordFile();
         
         if (!FileEncryptionUtil.isPasswordCorrect(oldPassword, passwordFile))

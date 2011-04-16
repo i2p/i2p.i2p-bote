@@ -43,7 +43,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -54,7 +53,7 @@ import net.i2p.util.Log;
  * which are sorted by name.<br/>
  * Contacts can be written to, and read from, a password-encrypted file.
  */
-public class AddressBook implements Iterable<Contact> {
+public class AddressBook {
     private Log log = new Log(AddressBook.class);
     private File addressFile;
     private PasswordHolder passwordHolder;
@@ -165,7 +164,7 @@ public class AddressBook implements Iterable<Contact> {
             contacts.remove(contact);
     }
     
-    public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException {
+    public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
         if (addressFile.exists())
             FileEncryptionUtil.changePassword(addressFile, oldPassword, newKey);
     }
@@ -218,12 +217,6 @@ public class AddressBook implements Iterable<Contact> {
        return contacts.size();
     }
     
-    @Override
-    public Iterator<Contact> iterator() throws PasswordException {
-        initializeIfNeeded();
-        return contacts.iterator();
-    }
-
     /**
      * Compares two contacts by name and email destination.
      */

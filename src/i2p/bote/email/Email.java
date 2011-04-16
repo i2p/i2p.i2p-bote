@@ -312,8 +312,9 @@ public class Email extends MimeMessage {
      * @param keyUpdateHandler Needed for updating the signature key after signing (see {@link CryptoImplementation#sign(byte[], PrivateKey, KeyUpdateHandler)})
      * @throws MessagingException
      * @throws GeneralSecurityException 
+     * @throws PasswordException 
      */
-    public void sign(EmailIdentity senderIdentity, KeyUpdateHandler keyUpdateHandler) throws MessagingException, GeneralSecurityException {
+    public void sign(EmailIdentity senderIdentity, KeyUpdateHandler keyUpdateHandler) throws MessagingException, GeneralSecurityException, PasswordException {
         removeHeader(SIGNATURE_HEADER);   // make sure there is no existing signature which would make the new signature invalid
         removeHeader(SIGNATURE_VALID_HEADER);   // remove the signature validity flag before signing
         CryptoImplementation cryptoImpl = senderIdentity.getCryptoImpl();
@@ -586,8 +587,9 @@ public class Email extends MimeMessage {
      * @param maxPacketSize The size limit in bytes
      * @throws MessagingException
      * @throws GeneralSecurityException If the email cannot be signed
+     * @throws PasswordException If the private signing key cannot be updated
      */
-    public Collection<UnencryptedEmailPacket> createEmailPackets(EmailIdentity senderIdentity, KeyUpdateHandler keyUpdateHandler, String bccToKeep, int maxPacketSize) throws MessagingException, GeneralSecurityException {
+    public Collection<UnencryptedEmailPacket> createEmailPackets(EmailIdentity senderIdentity, KeyUpdateHandler keyUpdateHandler, String bccToKeep, int maxPacketSize) throws MessagingException, GeneralSecurityException, PasswordException {
         ArrayList<UnencryptedEmailPacket> packets = new ArrayList<UnencryptedEmailPacket>();
         
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

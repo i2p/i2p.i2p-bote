@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.TestUtil;
 import i2p.bote.TestUtil.TestIdentity;
+import i2p.bote.fileencryption.PasswordException;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -112,7 +113,7 @@ public class CryptoImplementationTest {
     }
 
     @Test
-    public void signAndVerify() throws GeneralSecurityException, IOException {
+    public void signAndVerify() throws GeneralSecurityException, IOException, PasswordException {
         for (TestIdentity testIdentity: testIdentities) {
             KeyUpdateHandler keyUpdateHandler;
             if (testIdentity.cryptoImpl instanceof NTRUEncrypt1087_GMSS512)

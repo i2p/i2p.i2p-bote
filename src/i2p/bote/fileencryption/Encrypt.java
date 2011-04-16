@@ -97,9 +97,6 @@ public class Encrypt {
         } catch (GeneralSecurityException e) {
             System.err.println("Error: " + e.getLocalizedMessage());
             System.exit(1);
-        } catch (PasswordException e) {
-            System.err.println("Wrong password.");
-            System.exit(1);
         } finally {
             if (input != null)
                 try {

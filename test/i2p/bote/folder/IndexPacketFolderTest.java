@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.MalformedPacketException;
@@ -93,7 +94,7 @@ public class IndexPacketFolderTest {
     }
 
     @Test
-    public void testCheckExpiration() throws GeneralSecurityException, InterruptedException {
+    public void testCheckExpiration() throws GeneralSecurityException, InterruptedException, PasswordException {
         long cutoffTime = System.currentTimeMillis() - ExpirationListener.EXPIRATION_TIME_MILLISECONDS;
         
         // store a packet that expired 3 seconds ago
@@ -135,7 +136,7 @@ public class IndexPacketFolderTest {
     }
     
     @Test
-    public void testProcessDeleteRequest() throws GeneralSecurityException, MalformedPacketException {
+    public void testProcessDeleteRequest() throws GeneralSecurityException, MalformedPacketException, PasswordException {
         IndexPacketFolder folder = new IndexPacketFolder(folderDir);
         
         // create another packet with the same destination as emailPacket1

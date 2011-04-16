@@ -25,6 +25,7 @@ import static i2p.bote.Util._;
 import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
 
 import java.io.File;
@@ -51,9 +52,10 @@ public class Outbox extends EmailFolder {
 
     /**
      * Overridden to handle the <code>STATUS</code> attribute.
+     * @throws PasswordException 
      */
     @Override
-    public List<Email> getElements(AddressDisplayFilter displayFilter, EmailAttribute sortColumn, boolean descending) {
+    public List<Email> getElements(AddressDisplayFilter displayFilter, EmailAttribute sortColumn, boolean descending) throws PasswordException {
         if (!EmailAttribute.STATUS.equals(sortColumn))
             return super.getElements(displayFilter, sortColumn, descending);
             

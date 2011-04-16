@@ -22,6 +22,7 @@
 package i2p.bote.web;
 
 import i2p.bote.email.Email;
+import i2p.bote.fileencryption.PasswordException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +55,12 @@ public class ShowAttachment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String folderName = request.getParameter("folder");
         String messageID = request.getParameter("messageID");
-        Email email = JSPHelper.getEmail(folderName, messageID);
+        Email email;
+        try {
+            email = JSPHelper.getEmail(folderName, messageID);
+        } catch (PasswordException e) {
+            throw new ServletException(e);
+        }
         if (email == null)
             throw new ServletException("Message ID <" + messageID + "> not found in folder <" + folderName + ">.");
         
