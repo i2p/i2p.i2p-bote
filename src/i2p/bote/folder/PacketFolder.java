@@ -55,8 +55,8 @@ public class PacketFolder<PacketType extends I2PBotePacket> extends Folder<Packe
      */
     protected void add(I2PBotePacket packetToStore, String filename) {
         FileOutputStream outputStream = null;
+        File file = new File(storageDir, filename);
         try {
-            File file = new File(storageDir, filename);
             outputStream = new FileOutputStream(file);
             packetToStore.writeTo(outputStream);
             Util.makePrivate(file);
@@ -64,13 +64,18 @@ public class PacketFolder<PacketType extends I2PBotePacket> extends Folder<Packe
             log.error("Can't save packet to file: <" + filename + ">", e);
         }
         finally {
-            if (outputStream != null)
+            if (outputStream != null) {
                 try {
                     outputStream.close();
                 }
                 catch (IOException e) {
                     log.error("Can't close file: <" + filename + ">", e);
                 }
+                if (file.length() == 0) {
+                    log.error("Nothing was written, deleting empty file: <" + file.getAbsolutePath() + ">");
+                    file.delete();
+                }
+            }
         }
     }
     
