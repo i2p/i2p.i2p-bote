@@ -60,6 +60,7 @@ import org.bouncycastle.jce.provider.asymmetric.ec.KeyFactory;
 import org.bouncycastle.jce.provider.asymmetric.ec.KeyPairGenerator;
 import org.bouncycastle.jce.provider.asymmetric.ec.Signature;
 import org.bouncycastle.jce.provider.asymmetric.ec.Signature.ecDSA256;
+import org.bouncycastle.jce.provider.asymmetric.ec.Signature.ecDSA512;
 import org.bouncycastle.jce.spec.ECNamedCurveSpec;
 
 /**
@@ -390,7 +391,8 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     
     @Override
     public byte[] sign(byte[] data, PrivateKey privateKey, KeyUpdateHandler keyupdateHandler) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        BouncyECDSASigner signatureAlg = new BouncyECDSASigner();
+//        BouncyECDSASignerSHA512 signatureAlg = new BouncyECDSASignerSHA512();
+        BouncyECDSASigner signatureAlg = getSigner();
         signatureAlg.initSign(privateKey);
         signatureAlg.update(data);
         byte[] signature = signatureAlg.sign();
@@ -398,14 +400,27 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
         return signature;
     }
 
+    /**
+     * Returns the signature algorithm to use for signing (not verifying!).
+     * @return
+     */
+    protected abstract BouncyECDSASigner getSigner();
+    
+    /**
+     * Returns <code>true</code> if the signature is valid either for ECDSA with SHA-256 or
+     * ECDSA with SHA-512. This will change in a future version; ECDSA-521 will be SHA-512 only.
+     */
     @Override
     public boolean verify(byte[] data, byte[] signature, PublicKey key) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException {
-        BouncyECDSASigner signatureAlg = new BouncyECDSASigner();
-        signatureAlg.initVerify(key);
-        signatureAlg.update(data);
-        boolean valid = signatureAlg.verify(signature);
-        
-        return valid;
+        BouncyECDSASigner[] signatureAlgs = new BouncyECDSASigner[] {new BouncyECDSASignerSHA512(), new BouncyECDSASignerSHA256()};
+        for (BouncyECDSASigner signatureAlg: signatureAlgs) {
+            signatureAlg.initVerify(key);
+            signatureAlg.update(data);
+            boolean valid = signatureAlg.verify(signature);
+            if (valid)
+                return true;
+        }
+        return false;
     }
     
     /** This class exposes the protected <code>engine*</code> methods in {@link KeyAgreement.DH} */
@@ -450,11 +465,51 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
         }
     }
     
+    protected interface BouncyECDSASigner {
+        
+        void initSign(PrivateKey privateKey) throws InvalidKeyException;
+        
+        void initVerify(PublicKey publicKey) throws InvalidKeyException;
+        
+        void update(byte[] data) throws SignatureException;
+        
+        byte[] sign() throws SignatureException;
+        
+        boolean verify(byte[] signature) throws SignatureException;
+    }
+    
     /**
-     * This class exposes the protected <code>engine*</code> methods in {@link Signature.ecDSA256}.
-     * Note that the number 256 refers to the SHA length, not the ECC key length.
+     * This class exposes the protected <code>engine*</code> methods in {@link Signature.ecDSA256}
+     * which implements ECDSA with SHA-256.
      */
-    private class BouncyECDSASigner extends ecDSA256 {
+    protected class BouncyECDSASignerSHA256 extends ecDSA256 implements BouncyECDSASigner {
+        
+        public final void initSign(PrivateKey privateKey) throws InvalidKeyException {
+            engineInitSign(privateKey);
+        }
+        
+        public final void initVerify(PublicKey publicKey) throws InvalidKeyException {
+            engineInitVerify(publicKey);
+        }
+        
+        public final void update(byte[] data) throws SignatureException {
+            engineUpdate(data, 0, data.length);
+        }
+        
+        public final byte[] sign() throws SignatureException {
+            return engineSign();
+        }
+        
+        public final boolean verify(byte[] signature) throws SignatureException {
+            return engineVerify(signature);
+        }
+    }
+    
+    /**
+     * This class exposes the protected <code>engine*</code> methods in {@link Signature.ecDSA512}
+     * which implements ECDSA with SHA-512.
+     */
+    protected class BouncyECDSASignerSHA512 extends ecDSA512 implements BouncyECDSASigner {
         
         public final void initSign(PrivateKey privateKey) throws InvalidKeyException {
             engineInitSign(privateKey);

@@ -92,4 +92,9 @@ public class ECDH256_ECDSA256 extends ECDH_ECDSA {
         System.arraycopy(sigKeyBytes, 0, bytes, encrKeyBytes.length, sigKeyBytes.length);
         return createPrivateKeyPair(bytes);
     }
+    
+    @Override
+    protected BouncyECDSASigner getSigner() {
+        return new BouncyECDSASignerSHA256();
+    }
 }

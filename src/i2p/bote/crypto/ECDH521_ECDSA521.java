@@ -107,4 +107,9 @@ public class ECDH521_ECDSA521 extends ECDH_ECDSA {
         byte[] bytes = Base64.decode(base64);
         return createPrivateKeyPair(bytes);
     }
+    
+    @Override
+    protected BouncyECDSASigner getSigner() {
+        return new BouncyECDSASignerSHA512();
+    }
 }
