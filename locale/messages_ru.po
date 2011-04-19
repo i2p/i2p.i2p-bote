@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-07 18:03+0000\n"
+"POT-Creation-Date: 2011-04-18 16:09+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Hidden Z <hiddenz@mail.i2p>\n"
 "Language-Team: \n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/i2p/bote/I2PBote.java:429
-#: src/i2p/bote/service/OutboxProcessor.java:144
+#: src/i2p/bote/I2PBote.java:402
+#: src/i2p/bote/service/OutboxProcessor.java:156
 msgid "No identity matches the sender/from field: "
 msgstr "Нет соответствующего набора ключей для такого отправителя: "
 
-#: src/i2p/bote/I2PBote.java:503
+#: src/i2p/bote/I2PBote.java:477
 msgid "The old password is not correct."
 msgstr "Старый пароль не верен."
 
-#: src/i2p/bote/I2PBote.java:505
+#: src/i2p/bote/I2PBote.java:479
 msgid "The new password and the confirmation password do not match."
 msgstr "Новый пароль и пароль для подтверждения не совпадают."
 
@@ -36,20 +36,20 @@ msgstr "521-битное шифрование эллиптическими кр�
 msgid "2048-bit ElGamal Encryption"
 msgstr "2048-битное шифрование Эль-Гамаля"
 
-#: src/i2p/bote/crypto/NTRUEncrypt1087_NTRUSign349.java:75
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
 msgid "NTRU-1087 Encryption"
 msgstr "Шифрование NTRU-1087"
 
-#: src/i2p/bote/email/Email.java:439
+#: src/i2p/bote/email/Email.java:440
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Некорректный адрес: {0}"
 
-#: src/i2p/bote/email/Email.java:445
+#: src/i2p/bote/email/Email.java:446
 msgid "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Адрес не содержит ни Bote-адреса, ни внешнего адреса: {0}"
 
-#: src/i2p/bote/folder/Outbox.java:115
+#: src/i2p/bote/folder/Outbox.java:117
 msgid "Queued"
 msgstr "Поставлено в очередь"
 
@@ -100,40 +100,40 @@ msgstr "-"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/i2p/bote/service/OutboxProcessor.java:149
+#: src/i2p/bote/service/OutboxProcessor.java:161
 msgid "Sending"
 msgstr "Отправка"
 
-#: src/i2p/bote/service/OutboxProcessor.java:158
+#: src/i2p/bote/service/OutboxProcessor.java:170
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Отправленно {0} из {1} получателей"
 
-#: src/i2p/bote/service/OutboxProcessor.java:165
+#: src/i2p/bote/service/OutboxProcessor.java:177
 #: WebContent/folder.jsp
 msgid "Sent"
 msgstr "Отправленно"
 
-#: src/i2p/bote/service/OutboxProcessor.java:168
+#: src/i2p/bote/service/OutboxProcessor.java:180
 msgid "Gateway disabled"
 msgstr "Шлюз отключён"
 
-#: src/i2p/bote/service/OutboxProcessor.java:203
+#: src/i2p/bote/service/OutboxProcessor.java:216
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Неправильный адрес получателя: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:207
+#: src/i2p/bote/service/OutboxProcessor.java:220
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Ошибка создания пакетов электронной почты: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:211
+#: src/i2p/bote/service/OutboxProcessor.java:224
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Ошибка при отправке почты: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:116
+#: src/i2p/bote/web/JSPHelper.java:117
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Неверный идентификатор для CryptoImplementation: "
 
@@ -442,9 +442,21 @@ msgstr "{0} писал:"
 msgid "Send"
 msgstr "Отправить"
 
+#: WebContent/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "Пароль удалён"
+
+#: WebContent/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "Пароль был удалён из кэша."
+
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
 msgstr "- I2P-Bote"
+
+#: WebContent/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr "Пароль закэширован. Кликните для очистки кэша паролей."
 
 #: WebContent/header.jsp
 msgid "I2P-Bote"
@@ -654,6 +666,22 @@ msgstr "(оставьте по-умолчанию, если не уверены)
 msgid "Default Identity:"
 msgstr "Набор ключей по-умолчанию:"
 
+#: WebContent/editIdentity.jsp
+msgid "Private keys:"
+msgstr "Приватные ключи:"
+
+#: WebContent/editIdentity.jsp
+msgid "(Never reveal to anyone!)"
+msgstr "(Никогда никому не показывайте!)"
+
+#: WebContent/editIdentity.jsp
+msgid "Show"
+msgstr "Показать"
+
+#: WebContent/editIdentity.jsp
+msgid "Delete this identity"
+msgstr "Удалить этот набор"
+
 #: WebContent/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
 msgstr "Ошибка: невозможно удалить письмо."
@@ -711,12 +739,26 @@ msgid "Email Destination"
 msgstr "Bote-адрес"
 
 #: WebContent/identities.jsp
-msgid "Delete this identity"
-msgstr "Удалить этот набор"
-
-#: WebContent/identities.jsp
 msgid "New Identity"
 msgstr "Новый набор ключей"
+
+#: WebContent/showFullIdentity.jsp
+#, fuzzy
+msgid "Full Identity"
+msgstr "Полный набор ключей:"
+
+#: WebContent/showFullIdentity.jsp
+#, fuzzy
+msgid "Full Email Identity for {0}:"
+msgstr "Полный набор ключей для {0}:"
+
+#: WebContent/showFullIdentity.jsp
+msgid "Do not show the above information to anyone! It contains your private keys."
+msgstr "Не показывайте эту информацию никому! Она содержит ваши приватные ключи."
+
+#: WebContent/showFullIdentity.jsp
+msgid "Return"
+msgstr "Возврат"
 
 #: WebContent/addressBook.jsp
 msgid "Private Address Book"
@@ -742,10 +784,6 @@ msgstr "Удалить этот контакт"
 msgid "Add Recipients"
 msgstr "Добавить получателей"
 
-#: WebContent/addressBook.jsp
-msgid "Return"
-msgstr "Возврат"
-
 #: WebContent/submitIdentity.jsp
 msgid "Please fill in the Public Name field."
 msgstr "Пожалуйста, заполните поле «Отображаемое имя»."
@@ -755,8 +793,8 @@ msgid "Please wait..."
 msgstr "Пожалуйста подождите..."
 
 #: WebContent/submitIdentity.jsp
-msgid "The Email Identity is being generated."
-msgstr "Набор ключей генерируется."
+msgid "The Email Identity is being generated. This can take several minutes."
+msgstr "Набор ключей генерируется. Это может занять несколько минут."
 
 #: WebContent/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -819,6 +857,10 @@ msgstr "Норвежский перевод"
 #: WebContent/about.jsp
 msgid "Swedish translation"
 msgstr "Шведский перевод"
+
+#: WebContent/about.jsp
+msgid "Chinese translation"
+msgstr "Китайский перевод"
 
 #: WebContent/about.jsp
 msgid "Arabic translation"
