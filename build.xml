@@ -71,6 +71,16 @@
     <target name="compile" depends="checki2pbase">
         <mkdir dir="./ant_build" />
         <mkdir dir="./ant_build/classes" />
+        <!-- compile flexiprovider separately to avoid warnings about character encoding -->
+        <javac
+            srcdir="./src"
+            includes="de/flexiprovider/**"
+            encoding="ISO-8859-1"
+            debug="true"
+            deprecation="on"
+            destdir="./ant_build/classes"
+            classpathref="cp"
+            failonerror="true" />
         <javac
             srcdir="./src"
             debug="true"
