@@ -158,7 +158,8 @@ Strings in packets are UTF8 encoded.
   Supported encryption and signature algorithms:
     ALG=1: ElGamal-2048 / DSA-1024 / AES-256 / SHA-256 (same as the I2P router uses)
     ALG=2: ECDH-256 / ECDSA-256 / AES-256 / SHA-256
-    ALG=3: ECDH-521 / ECDSA-521 / AES-256 / SHA-256
+    ALG=3: ECDH-521 / ECDSA-521 / AES-256 / SHA-512
+    ALG=4: NTRUEncrypt-1087 / GMSS-512 / AES-256 / SHA-512
 
    Packet Type        | Field | Data Type  | Description
   --------------------+-------+------------+------------------------------------------------------------------
@@ -570,7 +571,7 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
 
 6. Files
 
-6.1. Encryption
+6.1. Password Encryption
 
 The identities file, the address book, and all email files are encrypted with AES-256.
 To generate the AES key from the password, scrypt (http://www.tarsnap.com/scrypt.html) is used.
@@ -611,7 +612,8 @@ The file format is:
                                 sources (http://www.flexiprovider.de/), containing only the
                                 classes needed for GMSS.
                                 The patch consists of a modified de.flexiprovider.core.CoreRegistry
-                                so there are no dependencies on classes not related to GMSS.
+                                and de.flexiprovider.api.Registry and its purpose is to
+                                reduce dependencies on classes not related to GMSS.
   src/com/lambdaworks/crypto/   An scrypt implementation from https://github.com/wg/scrypt/
 
 
