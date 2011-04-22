@@ -28,8 +28,10 @@
 
 <jsp:include page="getStatus.jsp"/>
 
-<c:if test="${param.checkMail == 1}">
-    <ib:checkForMail/>
+<c:if test="${param.checkMail eq 1}">
+    <ib:requirePassword forwardUrl="checkMail.jsp">
+        <ib:checkForMail/>
+    </ib:requirePassword>
 </c:if>
 
 <c:if test="${ib:isCheckingForMail()}">
@@ -59,14 +61,24 @@
         <c:if test="${!checkingForMail}">
             <div class="checkmail">
                 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+                <c:set var="frame" value=""/>
                 <c:choose>
                     <c:when test="${jspHelperBean.identities.none}">
                         <c:set var="url" value="noIdentities.jsp"/>
-                        <c:set var="frame" value="target=&quot;_parent&quot;"/>
+                        <c:set var="frame" value='target="_parent"'/>
                     </c:when>
                     <c:otherwise>
-                        <c:set var="link" value="buttonFrame.jsp"/>
-                        <c:set var="frame" value=""/>
+                        <%--
+                            If the user needs to enter a password to check mails, take them
+                            to checkMail.jsp and use the entire browser window
+                        --%>
+                        <c:if test="${jspHelperBean.passwordRequired}">
+                            <c:set var="frame" value='target="_parent"'/>
+                            <c:set var="url" value="checkMail.jsp"/>
+                        </c:if>
+                        <c:if test="${not jspHelperBean.passwordRequired}">
+                            <c:set var="url" value="buttonFrame.jsp"/>
+                        </c:if>
                     </c:otherwise>
                 </c:choose>
                 

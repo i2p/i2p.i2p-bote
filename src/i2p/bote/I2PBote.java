@@ -519,6 +519,14 @@ public class I2PBote implements NetworkStatusSource {
         return passwordCache.isPasswordInCache();
     }
     
+    /**
+     * Returns <code>false</code> if a password is set but is not currently cached;
+     * <code>true</code> otherwise.
+     */
+    public boolean isPasswordRequired() {
+        return passwordCache.getPassword() == null;
+    }
+    
     /** Removes the password from the password cache. If there is no password in the cache, nothing happens. */
     public void clearPassword() {
         passwordCache.clear();

@@ -584,6 +584,10 @@ public class JSPHelper {
         return I2PBote.getInstance().isPasswordInCache();
     }
     
+    public boolean isPasswordRequired() {
+        return I2PBote.getInstance().isPasswordRequired();
+    }
+    
     public static void clearPassword() {
         I2PBote.getInstance().clearPassword();
     }
