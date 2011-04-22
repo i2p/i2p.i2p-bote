@@ -84,6 +84,7 @@ public class Email extends MimeMessage {
         "Content-Transfer-Encoding", "In-Reply-To", "X-HashCash", "X-Priority", SIGNATURE_HEADER
     };
     private static final String[] ADDRESS_HEADERS = new String[] {"From", "Sender", "To", "CC", "BCC", "Reply-To"};
+    private static final int MAX_HEADER_LENGTH = 998;   // Maximum length of a header line, see RFC 5322
     private enum CompressionAlgorithm {UNCOMPRESSED, LZMA};   // The first byte in a compressed email
     
     private Log log = new Log(Email.class);
@@ -320,7 +321,38 @@ public class Email extends MimeMessage {
         CryptoImplementation cryptoImpl = senderIdentity.getCryptoImpl();
         PrivateKey privateSigningKey = senderIdentity.getPrivateSigningKey();
         byte[] signature = cryptoImpl.sign(toByteArray(), privateSigningKey, keyUpdateHandler);
-        setHeader(SIGNATURE_HEADER, cryptoImpl.getId() + "_" + Base64.encode(signature));
+        String foldedSignature = foldSignature(cryptoImpl.getId() + "_" + Base64.encode(signature));
+        setHeader(SIGNATURE_HEADER, foldedSignature);
+    }
+    
+    /**
+     * Breaks up a signature into pieces no longer than <code>MAX_HEADER_LENGTH</code>.
+     * Unlike {@link javax.mail.internet.MimeUtility#fold(int, String)}, this method
+     * doesn't require the string to contain whitespace.
+     * @param signature
+     * @return
+     */
+    private String foldSignature(String signature) {
+        StringBuilder folded = new StringBuilder();
+        int used = SIGNATURE_HEADER.length() + 2;   // account for header name and ": " between name and value
+        while (used+signature.length() > MAX_HEADER_LENGTH) {
+            folded.append(signature.substring(0, MAX_HEADER_LENGTH));
+            signature = signature.substring(MAX_HEADER_LENGTH);
+            if (!signature.isEmpty())
+                folded.append("\r\n ");
+            used = 0;
+        }
+        if (!signature.isEmpty())
+            folded.append(signature);
+        return folded.toString();
+    }
+    
+    /**
+     * The counterpart to {@link #foldSignature(String)}: Reassembles a signature string
+     * by removing newlines and spaces.
+     */
+    private String unfoldSignature(String folded) {
+        return folded.replaceAll("\r\n ", "");
     }
     
     /**
@@ -378,12 +410,13 @@ public class Email extends MimeMessage {
         if (signatureHeaders==null || signatureHeaders.length<=0)
             return false;
         String signatureHeader = signatureHeaders[0];
+        String unfoldedSignatureHeader = unfoldSignature(signatureHeader);
         
         // the crypto implementation ID is the number before the underscore
-        int _index = signatureHeader.indexOf('_');
+        int _index = unfoldedSignatureHeader.indexOf('_');
         if (_index < 0)
             return false;
-        String cryptoImplIdString = signatureHeader.substring(0, _index);
+        String cryptoImplIdString = unfoldedSignatureHeader.substring(0, _index);
         int cryptoImplId = 0;
         try {
             cryptoImplId = Integer.valueOf(cryptoImplIdString);
@@ -394,7 +427,7 @@ public class Email extends MimeMessage {
         CryptoImplementation cryptoImpl = CryptoFactory.getInstance(cryptoImplId);
         
         // the actual signature is everything after the underscore
-        String base64Signature = signatureHeader.substring(_index + 1);
+        String base64Signature = unfoldedSignatureHeader.substring(_index + 1);
         try {
             removeHeader(SIGNATURE_HEADER);   // remove the signature before verifying
             byte[] signature = Base64.decode(base64Signature);
