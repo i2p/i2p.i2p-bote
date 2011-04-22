@@ -139,7 +139,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
                     outputStream.write(packet.getContent());
                 Email email = new Email(outputStream.toByteArray());
                 email.setMessageID(packets[0].getMessageId());   // all packets in the array have the same message ID
-                email.setSignatureFlag();
+                email.setSignatureFlag();   // incoming emails have no signature flag, so set it now; if it exists, don't trust but overwrite
                 email.getMetadata().setReceivedDate(new Date());
                 inbox.add(email);
                 

@@ -44,7 +44,7 @@ public class RequirePasswordTag extends BodyTagSupport implements TryCatchFinall
     public void doCatch(Throwable t) throws Throwable {
         boolean isPasswordException = t instanceof PasswordException || t.getCause() instanceof PasswordException;
         // Special handling of javax.servlet.jsp.el.ELException thrown by Jetty (version 5.1.15, at least):
-        // This exception has a a separate method named getRootCause() which returns the PasswordException
+        // This exception has a separate method named getRootCause() which returns the PasswordException
         // while the regular getCause() method returns null.
         isPasswordException |= t instanceof ELException && ((ELException)t).getRootCause() instanceof PasswordException;
         

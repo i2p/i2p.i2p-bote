@@ -36,7 +36,7 @@ import org.bouncycastle.crypto.InvalidCipherTextException;
  * key objects.
  * <p/>
  * This interface does not define symmetric encryption, which is always AES-256,
- * nor a hash algorithm, which is always SHA-256.
+ * nor a hash algorithm, which is SHA-256 or SHA-512.
  */
 public interface CryptoImplementation {
     
