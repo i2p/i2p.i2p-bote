@@ -403,6 +403,7 @@ public class I2PBote implements NetworkStatusSource {
             email.sign(senderIdentity, identities);
         }
         
+        email.setSignatureFlag();   // set the signature flag so the signature isn't reverified every time the email is loaded
         outbox.add(email);
         if (outboxProcessor != null)
             outboxProcessor.checkForEmail();

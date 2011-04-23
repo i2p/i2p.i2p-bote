@@ -99,6 +99,7 @@ public class OutboxProcessor extends I2PBoteThread {
                 while (iterator.hasNext()) {
                     Email email = iterator.next();
                     log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
+                    email.removeSignatureFlag();   // signature flag only makes sense locally
                     try {
                         sendEmail(email);
                         fireOutboxListeners(email);

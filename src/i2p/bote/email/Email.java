@@ -369,6 +369,14 @@ public class Email extends MimeMessage {
         }
     }
     
+    public void removeSignatureFlag() {
+        try {
+            removeHeader(SIGNATURE_VALID_HEADER);
+        } catch (MessagingException e) {
+            log.error("Cannot remove header field: " + SIGNATURE_VALID_HEADER, e);
+        }
+    }
+    
     /**
      * Verifies that the email contains a valid signature.<br/>
      * If the <code>SIGNATURE_VALID_HEADER</code> is present, its value is
