@@ -72,7 +72,7 @@ import net.i2p.util.Translate;
  * and serves as a bean for JSPs.
  */
 public class JSPHelper {
-    private static AddressDisplayFilter addressDisplayFilter;
+    private static AddressDisplayFilter ADDRESS_DISPLAY_FILTER;
 
     public JSPHelper() {
     }
@@ -509,9 +509,9 @@ public class JSPHelper {
     
     private static AddressDisplayFilter getAddressDisplayFilter() throws PasswordException {
         Identities identities = I2PBote.getInstance().getIdentities();
-        if (addressDisplayFilter == null)
-            addressDisplayFilter = new AddressDisplayFilter(identities, getAddressBook());
-        return addressDisplayFilter;
+        if (ADDRESS_DISPLAY_FILTER == null)
+            ADDRESS_DISPLAY_FILTER = new AddressDisplayFilter(identities, getAddressBook());
+        return ADDRESS_DISPLAY_FILTER;
     }
     
     public Configuration getConfiguration() {
