@@ -128,7 +128,7 @@
         <mkdir dir="ant_build" />
         <war destfile="i2pbote.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
-            <fileset dir="WebContent" includes="index.html"/>
+            <fileset dir="WebContent" includes="*.html"/>
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
@@ -250,7 +250,7 @@
         <mkdir dir="ant_build" />
         <war destfile="i2pbote-plugin.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
-            <fileset dir="WebContent" includes="index.html"/>
+            <fileset dir="WebContent" includes="*.html"/>
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>

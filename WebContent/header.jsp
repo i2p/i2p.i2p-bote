@@ -108,7 +108,8 @@
 
 <div class="menubox">
     <h2><ib:message key="Help"/></h2>
-    <ib:message key="User Guide"/><br/>
+    <a href="${ib:getLocalizedFilename('User\'s Guide.html', pageContext.servletContext)}"><ib:message key="User Guide"/></a><br/>
+    <a href="${ib:getLocalizedFilename('FAQ.html', pageContext.servletContext)}"><ib:message key="FAQ"/></a><br/>
     <a href="about.jsp"><ib:message key="About"/></a><br/>
 </div>
 

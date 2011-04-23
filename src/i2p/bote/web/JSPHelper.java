@@ -42,6 +42,7 @@ import i2p.bote.network.NetworkStatus;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
@@ -57,11 +58,14 @@ import java.util.regex.Pattern;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 
+import net.i2p.I2PAppContext;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
+import net.i2p.util.Translate;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file,
@@ -615,6 +619,40 @@ public class JSPHelper {
         } catch (UnsupportedEncodingException e) {
             new Log(JSPHelper.class).error("UTF-8 not supported!", e);
             return input;
+        }
+    }
+    
+    /**
+     * Inserts the current locale (<code>de</code>, <code>fr</code>, etc.) into a filename
+     * if the locale is not <code>en</code>. For example, <code>FAQ.html</code> becomes
+     * <code>FAQ_fr.html</code> in the French locale.
+     * @param baseName The filename for the <code>en</code> locale
+     * @param context To find out if a localized file exists
+     * @return The name of the localized file, or <code>baseName</code> if no localized version exists
+     */
+    public static String getLocalizedFilename(String baseName, ServletContext context) {
+        String language = Translate.getLanguage(I2PAppContext.getGlobalContext());
+        
+        if (language.equals("en"))
+            return baseName;
+        else {
+            String localizedName;
+            if (baseName.contains(".")) {
+                int dotIndex = baseName.lastIndexOf('.');
+                localizedName = baseName.substring(0, dotIndex) + "_" + language + baseName.substring(dotIndex);
+            }
+            else
+                localizedName = baseName + "_" + language;
+            
+            try {
+                if (context.getResource("/" + localizedName) != null)
+                    return localizedName;
+                else
+                    return baseName;
+            } catch (MalformedURLException e) {
+                new Log(JSPHelper.class).error("Invalid URL: </" + localizedName + ">", e);
+                return baseName;
+            }
         }
     }
 }
