@@ -50,6 +50,10 @@ public class RecipientTag extends BodyTagSupport {
         return EVAL_PAGE;
     }
 
+    /**
+     * Sets the type of recipient.
+     * @param type Can be any of the {@link javax.mail.Message.RecipientType} values (TO, CC, or BCC).
+     */
     public void setType(String type) {
         if (RecipientType.TO.toString().equalsIgnoreCase(type))
             this.type = RecipientType.TO;

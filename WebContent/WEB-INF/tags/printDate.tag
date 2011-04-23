@@ -19,6 +19,13 @@
  along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
 --%>
 
+<%--
+  Prints a date and/or time. If the date is null and printUnknown is true,
+  a string is printed indicating the date is unknown.
+  type can be "date", "time", or "both". The default is both.
+  timeStyle can be "short", "medium", "long", or "full".
+--%>
+
 <%@ attribute name="date" type="java.util.Date" required="true" description="The date and/or time to display" %>
 <%@ attribute name="type" required="false" description="Whether to print the date, the time, or both. See the time parameter of fmt:formatDate. The default is both." %>
 <%@ attribute name="timeStyle" required="false" description="See the timeStyle parameter of fmt:formatDate" %>

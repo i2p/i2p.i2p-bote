@@ -40,10 +40,6 @@
     <body-content>scriptless</body-content>
     <attribute>
         <name>type</name>
-        <description>
-            Can be any of the javax.mail.Message.RecipientType values
-            (TO, CC, or BCC).
-        </description>
         <rtexprvalue>true</rtexprvalue>
         <required>true</required>
     </attribute>
@@ -63,19 +59,11 @@
     <body-content>scriptless</body-content>
     <attribute>
         <name>origFilename</name>
-        <description>
-            The name of the file when the sender attached it to the email.
-            Also the name under which the attachment appears on the recipient's side.
-        </description>
         <rtexprvalue>true</rtexprvalue>
         <required>true</required>
     </attribute>
     <attribute>
         <name>tempFilename</name>
-        <description>
-            The name of the file after it is uploaded to the I2P-Bote server (which is
-            usually the same machine).
-        </description>
         <rtexprvalue>true</rtexprvalue>
         <required>true</required>
     </attribute>
@@ -197,10 +185,6 @@
     </attribute>
     <attribute>
         <name>hide</name>
-        <description>
-            If this parameter is set to true, and the user has chosen to hide
-            the UI language from email recipients, the message is not translated.
-        </description>
         <rtexprvalue>true</rtexprvalue>
         <required>false</required>
     </attribute>
@@ -577,12 +561,6 @@
 </tag-file> 
 
 <tag-file>
-    <description>
-        Prints a date and/or time. If the date is null and printUnknown is true,
-        a string is printed indicating the date is unknown.
-        type can be "date", "time", or "both". The default is both.
-        timeStyle can be "short", "medium", "long", or "full".
-    </description>
     <name>printDate</name>
     <path>/WEB-INF/tags/printDate.tag</path>
 </tag-file> 

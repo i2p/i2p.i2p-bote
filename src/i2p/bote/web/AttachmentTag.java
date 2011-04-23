@@ -47,6 +47,11 @@ public class AttachmentTag extends BodyTagSupport {
         return EVAL_PAGE;
     }
 
+    /**
+     * Sets the name of the file when the sender attached it to the email.
+     * Also the name under which the attachment appears on the recipient's side.
+     * @param origFilename
+     */
     public void setOrigFilename(String origFilename) {
         this.origFilename = origFilename;
     }
@@ -55,6 +60,11 @@ public class AttachmentTag extends BodyTagSupport {
         return origFilename;
     }
 
+    /**
+     * Sets the name of the file after it is uploaded to the I2P-Bote server (which is
+     * usually the same machine).
+     * @param tempFilename
+     */
     public void setTempFilename(String tempFilename) {
         this.tempFilename = tempFilename;
     }
