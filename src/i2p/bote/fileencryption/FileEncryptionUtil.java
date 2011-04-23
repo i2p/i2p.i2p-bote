@@ -62,9 +62,9 @@ public class FileEncryptionUtil {
         DataInputStream inputStream = null;
         try {
             inputStream = new DataInputStream(new FileInputStream(derivParamFile));
+            SCryptParameters scryptParams = new SCryptParameters(inputStream);
             byte[] salt = new byte[FileEncryptionConstants.SALT_LENGTH];
             inputStream.read(salt);
-            SCryptParameters scryptParams = new SCryptParameters(inputStream);
             byte[] key = FileEncryptionUtil.getEncryptionKey(password, salt, scryptParams);
             DerivedKey derivedKey = new DerivedKey(salt, scryptParams, key);
             return derivedKey;

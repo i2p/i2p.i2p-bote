@@ -103,8 +103,8 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
                 byte[] key = FileEncryptionUtil.getEncryptionKey(password, salt, KDF_PARAMETERS);
                 derivedKey = new DerivedKey(salt, KDF_PARAMETERS, key);
                 outputStream = new DataOutputStream(new FileOutputStream(derivParamFile));
-                outputStream.write(salt);
                 KDF_PARAMETERS.writeTo(outputStream);
+                outputStream.write(salt);
             }
             finally {
                 if (outputStream != null)
