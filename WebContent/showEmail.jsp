@@ -116,6 +116,7 @@
                         <button type="submit"${replyDisabled}><ib:message key="Reply"/></button>
                         <input type="hidden" name="sender" value="${ib:escapeQuotes(ib:getOneLocalRecipient(email))}"/>
                         <input type="hidden" name="recipient0" value="${ib:escapeQuotes(email.sender)}"/>
+                        <input type="hidden" name="recipientType0" value="to"/>
                         
                         <ib:message key="Re:" var="responsePrefix" hide="true"/>
                         <c:set var="responsePrefix" value="${responsePrefix} "/>
