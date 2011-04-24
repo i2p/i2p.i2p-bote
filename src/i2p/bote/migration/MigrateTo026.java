@@ -41,47 +41,48 @@ import java.util.Arrays;
 import net.i2p.util.Log;
 
 /**
- * Migrates the address book, email identities, and all emails to the encrypted format.
+ * Migrates the address book, email identities, and all emails to the encrypted file format.<br/>
  */
 class MigrateTo026 {
     private Log log = new Log(MigrateTo026.class);
     private PasswordCache passwordCache;
     
-    void migrateIfNeeded(Configuration configuration) {
+    /**
+     * This method won't corrupt any data if the data has already been migrated to the latest version,
+     * because only unencrypted files are converted.
+     * @param configuration
+     * @throws Exception
+     */
+    void migrateIfNeeded(Configuration configuration) throws Exception {
         log.debug("Migrating any pre-0.2.6 files...");
         
         passwordCache = new PasswordCache(configuration);
         // encrypt with the default password
         passwordCache.setPassword(new byte[0]);
 
-        try {
-            // convert the identities file
-            File oldIdentitiesFile = new File(configuration.getIdentitiesFile().getParentFile(), "identities.txt");
-            if (oldIdentitiesFile.exists()) {
-                log.debug("Migrating identities file: <" + oldIdentitiesFile + ">");
-                File newIdentitiesFile = configuration.getIdentitiesFile();
-                encrypt(oldIdentitiesFile, newIdentitiesFile);
-                oldIdentitiesFile.delete();
-            }
-            
-            // convert the address book
-            File oldAddrBookFile = new File(configuration.getAddressBookFile().getParentFile(), "addressBook.txt");
-            if (oldAddrBookFile.exists()) {
-                log.debug("Migrating address book: <" + oldIdentitiesFile + ">");
-                File newAddrBookFile = configuration.getAddressBookFile();
-                encrypt(oldAddrBookFile, newAddrBookFile);
-                oldAddrBookFile.delete();
-            }
-            
-            // convert email folders
-            migrateEmailsIfNeeded(configuration.getInboxDir());
-            migrateEmailsIfNeeded(configuration.getOutboxDir());
-            migrateEmailsIfNeeded(configuration.getSentFolderDir());
-            migrateEmailsIfNeeded(configuration.getTrashFolderDir());
+        // convert the identities file
+        File oldIdentitiesFile = new File(configuration.getIdentitiesFile().getParentFile(), "identities.txt");
+        if (oldIdentitiesFile.exists()) {
+            log.debug("Migrating identities file: <" + oldIdentitiesFile + ">");
+            File newIdentitiesFile = configuration.getIdentitiesFile();
+            encrypt(oldIdentitiesFile, newIdentitiesFile);
+            oldIdentitiesFile.delete();
         }
-        catch (Exception e) {
-            log.error("Error migrating pre-0.2.6 data to 0.2.6", e);
+        
+        // convert the address book
+        File oldAddrBookFile = new File(configuration.getAddressBookFile().getParentFile(), "addressBook.txt");
+        if (oldAddrBookFile.exists()) {
+            log.debug("Migrating address book: <" + oldIdentitiesFile + ">");
+            File newAddrBookFile = configuration.getAddressBookFile();
+            encrypt(oldAddrBookFile, newAddrBookFile);
+            oldAddrBookFile.delete();
         }
+        
+        // convert email folders
+        migrateEmailsIfNeeded(configuration.getInboxDir());
+        migrateEmailsIfNeeded(configuration.getOutboxDir());
+        migrateEmailsIfNeeded(configuration.getSentFolderDir());
+        migrateEmailsIfNeeded(configuration.getTrashFolderDir());
     }
     
     private void migrateEmailsIfNeeded(File directory) throws IOException, PasswordException, GeneralSecurityException {

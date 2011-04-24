@@ -22,15 +22,79 @@
 package i2p.bote.migration;
 
 import i2p.bote.Configuration;
+import i2p.bote.Util;
+
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import net.i2p.util.Log;
 
 public class Migrator {
+    private Log log = new Log(Migrator.class);
     private Configuration configuration;
+    private String currentVersion;
 
-    public Migrator(Configuration configuration) {
+    public Migrator(Configuration configuration, String currentVersion) {
         this.configuration = configuration;
+        this.currentVersion = currentVersion;
     }
     
     public void migrateIfNeeded() {
-        new MigrateTo026().migrateIfNeeded(configuration);
+        String lastMigrationVersion = getLastSuccessfulMigration();
+        log.debug("Last migration was to version <" + lastMigrationVersion + ">. Current version is <" + currentVersion + ">.");
+        
+        if (lastMigrationVersion.compareTo(currentVersion) >= 0) {
+            log.debug("No migration needed.");
+            return;
+        }
+        
+        try {
+            new MigrateTo026().migrateIfNeeded(configuration);
+            
+            log.debug("Migration successful, setting last successful migration to <" + currentVersion + ">.");
+            setLastSuccessfulMigration(currentVersion);
+        }
+        catch (Exception e) {
+            log.error("Error migrating to the latest version.", e);
+        }
+    }
+    
+    /**
+     * Returns the version to which the I2P-Bote data directory was last migrated to.
+     * If there has never been a migration, zero is returned.
+     * @return
+     */
+    private String getLastSuccessfulMigration() {
+        File versionFile = configuration.getMigrationVersionFile();
+        if (!versionFile.exists())
+            return "0";
+        
+        List<String> lines = Util.readLines(versionFile);
+        if (lines.isEmpty())
+            return "0";
+        
+        return lines.get(0);
+    }
+    
+    /**
+     * Writes the version to which the I2P-Bote data directory was last migrated to,
+     * to a file.
+     * @param version
+     * @throws IOException
+     */
+    private void setLastSuccessfulMigration(String version) throws IOException {
+        File versionFile = configuration.getMigrationVersionFile();
+        DataOutputStream outputStream = null;
+        try {
+            outputStream = new DataOutputStream(new FileOutputStream(versionFile));
+            outputStream.writeUTF(version);
+        }
+        finally {
+            if (outputStream != null)
+                outputStream.close();
+        }
     }
 }

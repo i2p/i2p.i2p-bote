@@ -149,7 +149,7 @@ public class I2PBote implements NetworkStatusSource {
         i2pClient = I2PClientFactory.createClient();
         configuration = new Configuration();
         
-        new Migrator(configuration).migrateIfNeeded();
+        new Migrator(configuration, APP_VERSION).migrateIfNeeded();
         
         passwordCache = new PasswordCache(configuration);
         identities = new Identities(configuration.getIdentitiesFile(), passwordCache);

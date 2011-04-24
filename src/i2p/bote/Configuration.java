@@ -49,6 +49,7 @@ public class Configuration {
     private static final String INBOX_SUBDIR = "inbox";             // relative to I2P_BOTE_SUBDIR
     private static final String SENT_FOLDER_DIR = "sent";           // relative to I2P_BOTE_SUBDIR
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
+    private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
 
     // Parameter names in the config file
     private static final String PARAMETER_STORAGE_SPACE_INBOX = "storageSpaceInbox";
@@ -436,6 +437,14 @@ public class Configuration {
         return getIntParameter(PARAMETER_UPDATE_CHECK_INTERVAL, DEFAULT_UPDATE_CHECK_INTERVAL);
     }
 
+    /**
+     * Returns the File that contains the version the I2P-Bote data directory was last
+     * successfully migrated to.
+     */
+    public File getMigrationVersionFile() {
+        return new File(i2pBoteDir, MIGRATION_VERSION_FILE);
+    }
+    
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
         String stringValue = properties.getProperty(parameterName);
         if ("true".equalsIgnoreCase(stringValue) || "yes".equalsIgnoreCase(stringValue) || "on".equalsIgnoreCase(stringValue) || "1".equals(stringValue))
