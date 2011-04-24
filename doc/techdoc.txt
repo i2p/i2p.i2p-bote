@@ -104,7 +104,7 @@ relays, the diagram looks like this:
 
 
 I2P-Bote uses base64 strings for addresses. They are called email destinations and can be between 86 and 512
-characters long, depending on the type of encryption the user chooses.
+characters long, depending on the type of encryption the user chooses (see 7.1)
 
 The code is licensed under the GPL. The author can be reached via I2PMail at HungryHobo@mail.i2p,
 or via I2P-Bote at:
@@ -155,11 +155,7 @@ Strings in packets are UTF8 encoded.
 
   These are always sent wrapped in a Communication Packet (see 3.1).
   E denotes an encrypted field.
-  Supported encryption and signature algorithms:
-    ALG=1: ElGamal-2048 / DSA-1024 / AES-256 / SHA-256 (same as the I2P router uses)
-    ALG=2: ECDH-256 / ECDSA-256 / AES-256 / SHA-256
-    ALG=3: ECDH-521 / ECDSA-521 / AES-256 / SHA-512
-    ALG=4: NTRUEncrypt-1087 / GMSS-512 / AES-256 / SHA-512
+  For supported encryption and signature algorithms, see 7.1
 
    Packet Type        | Field | Data Type  | Description
   --------------------+-------+------------+------------------------------------------------------------------
@@ -170,7 +166,7 @@ Strings in packets are UTF8 encoded.
                       | KEY   | 32 bytes   | DHT key of the packet, SHA-256 hash of LEN+DATA
                       | TIM   | 4 bytes    | The time the packet was stored on a storage node
                       | DV    | 32 bytes   | Delete verification hash, SHA-256 hash of DA
-                      | ALG   | 1 byte     | Encryption algorithm used
+                      | ALG   | 1 byte     | ID number of the encryption algorithm used
                       | LEN   | 2 bytes    | Length of DA+DATA together
                       | DA    | 32 bytes E | Delete authorization key, randomly generated
                       | DATA  | byte[]   E | An Unencrypted Email Packet
@@ -571,24 +567,7 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
 
 6. Files
 
-6.1. Password Encryption
-
-The identities file, the address book, and all email files are encrypted with AES-256.
-To generate the AES key from the password, scrypt (http://www.tarsnap.com/scrypt.html) is used.
-The file format is:
-
-   Field | #bytes | Description
-  -------+--------+------------------------------------------------------------------
-   SOF   | 4      | Start of file, contains the characters "IBef"
-   VER   | 1      | Format version, must be 1
-   N     | 4      | scrypt CPU cost parameter
-   r     | 4      | scrypt memory cost parameter
-   p     | 4      | scrypt parallelization parameter
-   SALT  | 32     | Salt for scrypt
-   IV    | 32     | IV for AES
-   DATA  |        | The encrypted data
-
-6.2. Identities file
+6.1. Identities file
 
   Stores all email identities the local user has created. One line per entry.
   Format:
@@ -601,7 +580,7 @@ The file format is:
   Email Destination matches one of the identities, that identity is used as
   the default.
 
-6.3. Included .jar files and third-party source code
+6.2. Included .jar files and third-party source code
 
   bcprov-ecc-jdk16-146.jar      A stripped down version of the BouncyCastle library,
                                 containing only the classes needed for ECC.
@@ -617,12 +596,44 @@ The file format is:
   src/com/lambdaworks/crypto/   An scrypt implementation from https://github.com/wg/scrypt/
 
 
-7. Glossary of Terms
+7. Cryptography
+
+7.1. Asymmetric encryption and signing
+
+  Supported encryption and signature algorithms:
+    ALG=1: ElGamal-2048 / DSA-1024 / AES-256 / SHA-256 (same as the I2P router uses)
+    ALG=2: ECDH-256 / ECDSA-256 / AES-256 / SHA-256
+    ALG=3: ECDH-521 / ECDSA-521 / AES-256 / SHA-512
+    ALG=4: NTRUEncrypt-1087 / GMSS-512 / AES-256 / SHA-512
+
+7.2. Password Encryption
+
+  The identities file, the address book, and all email files are encrypted with AES-256.
+  To generate the AES key from the password, scrypt (http://www.tarsnap.com/scrypt.html) is used.
+  The file format is:
+
+     Field | #bytes | Description
+    -------+--------+------------------------------------------------------------------
+     SOF   | 4      | Start of file, contains the characters "IBef"
+     VER   | 1      | Format version, must be 1
+     N     | 4      | scrypt CPU cost parameter
+     r     | 4      | scrypt memory cost parameter
+     p     | 4      | scrypt parallelization parameter
+     SALT  | 32     | Salt for scrypt
+     IV    | 32     | IV for AES
+     DATA  |        | The encrypted data
+   
+  Parameters N through SALT are cached in a file named derivparams so all encrypted files
+  can use the same key derivation parameters. This makes decryption much faster because
+  the key only needs to be derived once per session.
+
+
+8. Glossary of Terms
 
 Email Destination
   As the name implies, an Email Destination is an identifier by which somebody can be reached via I2P-Bote.
   An Email Destination is a Base64 string containing a public encryption key and a signature verification key.
-  Example of a 512-character Email Destination (ElGamal-2048/DSA-2048):
+  Example of a 512-character Email Destination (ElGamal-2048/DSA-1024):
   
   uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
   In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
@@ -655,46 +666,3 @@ Email Identity
 I2P destination
   The address of a I2P-Bote node on the I2P network. There is normally no need to know it.
   I2P destinations and Email Destinations look similar, but are completely independent of each other.
-
-
-8. To Do / Ideas
-
-  * If multiple Delete Verification Hashes and multiple encrypted AES session keys could be put into an
-    email packet, it wouldn't be necessary to store one email packet per recipient
-  * Keep email identities in a keystore (JKS)
-  * Deletion of emails after they have been sent: Sender knows the
-    delVerificationHashes of the packets and can delete the packets from the DHT.
-  * Once SMTP/POP3 is supported, allow a @host to be appended to email
-    destinations so email clients that insist on it, like Thunderbird, don't complain.
-  * Expire DHT items sooner (currently, expiration time = 100 days) and require
-    that senders resend emails before they expire, until the email has been picked up
-  * For each email in the "sent" folder, keep a list of email package keys
-    and periodically check to see if they have been deleted from the DHT.
-    When they are all deleted, show "email delivered" in the sent folder.
-  * ignore store requests for existing packets so malicious index nodes cannot replace email packets on other index nodes
-  * instead of republishing after T seconds, pick a random time from the interval [T-a, T+a];
-    the probability should be low at T-a and then increase
-  * Cache email dest - closest node mappings for faster Kademlia lookups
-  * Externally synchronize ArrayLists?
-  * identities: "publish to distributed address book" button, asks for an email address
-  * b32 email destinations in the distributed address book? could also be useful for getting around the address size limit in POP/SMTP
-  * <jsp:useBean> instead of zero-param JSP functions
-  * button to delete all packets with an invalid protocol version
-  * auto-refresh network.jsp
-  * show remaining time for the 3-min delay at startup
-  * Automatically create a different sender address for each recipient
-  * test relays and storage nodes periodically, ban nodes that break the contract
-  * optionally pad all packets to a system-wide fixed size
-  * Always use the same amount of bandwidth, testing nodes or sending dummy messages if necessary.
-  * Always keep incoming bandwidth the same as outgoing bandwidth (can this be done?)
-  * Pad packets before encrypting to prevent tagging attacks (only relay packets?)
-  * delivery confirmation to sender
-  * Turnkey outproxy feature?
-  * select different set of hops for each packet
-  * make minimum reachability configurable (currently 80%)
-  * mention that min/max delay = earliest/latest send time (explain that there is no guarantee for the send time being between min and max, it can be after max)
-  * On first run, offer to create a new email identity
-  * Folder structure on disk should reflect folders in app. All email folders visible to the user have the same root directory: [app dir]/folders.
-  * ask user for confirmation before deleting an email identity
-  * use a key store for email identities so they are not locally readable?
-  * prioritize packets in I2PSendQueue? Should PeerListRequests get higher priority than relay packets etc.?
