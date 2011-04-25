@@ -1,6 +1,26 @@
 I2P-Bote Version History
 ------------------------
 
+0.2.6 (Released on Apr 26, 2011)
+  * Password encryption of mail folders, identities, and contacts
+  * New translations (in chronological order):
+     o Spanish by user
+     o Dutch by KwukDuck
+     o Portuguese by user
+     o French by magma
+     o Norwegian by nej
+     o Swedish by hottuna
+     o Chinese by walking
+     o Arabic by hamada
+  * In-app user guide and FAQ in English (by mixxy) and French (by magma)
+  * Availability of updates now displayed in I2P-Bote itself
+  * NTRU encryption / GMSS signatures
+  * Big packets are now sent as streams (see http://trac.i2p2.de/ticket/346)
+  * Fix: Email files not deleted on Windows
+  * Fix: Emails in sent folder and outbox not signed
+  * Fix: Seedless not used if I2P-Bote is ready before Seedless
+  * Minor fixes and enhancements
+
 0.2.5 (Released on Oct 04, 2010)
   * Email attachments
   * Seedless peer exchange
