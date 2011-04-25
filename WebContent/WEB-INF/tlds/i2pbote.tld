@@ -381,6 +381,14 @@
 </function>
 
 <function>
+    <name>getReplyAddress</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getReplyAddress(i2p.bote.email.Email, i2p.bote.email.Identities)
+    </function-signature>
+</function>
+
+<function>
     <name>getEmailStatus</name>
     <description>
         Returns the status of an email in the outbox. See OutboxProcessor.java.

@@ -506,13 +506,42 @@ public class Email extends MimeMessage {
     }
     
     /**
-     * Returns all "Reply To" addresses (usually zero or one).
+     * Returns the values of all "Reply-To" headers (usually zero or one).
      * Unlike {@link #getReplyTo()}, this method does not return
-     * the "From" address if there is no "Reply To" address.
+     * the "From" address if there is no "Reply To" address.<br/>
+     * Not to be confused with {@link #getReplyAddress()}.
      * @throws MessagingException
      */
     public String[] getReplyToAddresses() throws MessagingException {
         return getHeader("Reply-To");
+    }
+    
+    /**
+     * Returns the address replies to this email should be sent to.
+     * If a <code>Reply-To</code> header exists, its value is returned.
+     * Otherwise, if the recipient is a local identity (i.e. the email
+     * was sent by somebody else), the sender is used; if the recipient
+     * is not a local identity (sender was us), the recipient is used.
+     * <br/>
+     * Not to be confused with {@link #getReplyToAddresses()}.
+     * @param identities
+     * @throws MessagingException
+     * @throws GeneralSecurityException 
+     * @throws IOException 
+     * @throws PasswordException 
+     */
+    public String getReplyAddress(Identities identities) throws MessagingException, PasswordException, IOException, GeneralSecurityException {
+        String[] replyTo = getReplyToAddresses();
+        if (replyTo!=null && replyTo.length>0)
+            return replyTo[0];
+        else {
+            String sender = getSender().toString();
+            EmailIdentity senderIdentity = identities.extractIdentity(sender);
+            if (senderIdentity != null)
+                return getOneRecipient();   // sent by local user, so reply to recipient
+            else
+                return sender;   // sent by other party, so reply to sender
+        }
     }
     
     public Address[] getToAddresses() throws MessagingException {

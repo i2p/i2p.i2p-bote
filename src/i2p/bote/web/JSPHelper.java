@@ -339,6 +339,19 @@ public class JSPHelper {
             return null;
     }
     
+    public static String getReplyAddress(Email email, Identities identities) throws PasswordException {
+        try {
+            return email.getReplyAddress(identities);
+        }
+        catch (PasswordException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            new Log(JSPHelper.class).error("Can't get address to reply to.", e);
+            return null;
+        }
+    }
+    
     public static String getEmailStatus(Email email) {
         return I2PBote.getInstance().getOutbox().getStatus(email);
     }
