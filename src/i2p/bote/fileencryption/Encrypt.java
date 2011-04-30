@@ -173,7 +173,7 @@ public class Encrypt {
     private DerivedKey getDerivedKey(byte[] password, File inputFile) throws GeneralSecurityException {
         if (derivParamsFile == null) {
             // the derivation parameters file is in the I2P-Bote root dir, so search all parent directories
-            File parentDir = inputFile.getParentFile();
+            File parentDir = inputFile.getAbsoluteFile().getParentFile();
             while (derivParamsFile==null && parentDir!=null) {
                 boolean paramsFileFound = Util.contains(parentDir, Configuration.KEY_DERIVATION_PARAMETERS_FILE);
                 if (paramsFileFound)
