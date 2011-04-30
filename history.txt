@@ -4,9 +4,9 @@ I2P-Bote Version History
 0.2.6 (Released on Apr 26, 2011)
   * Password encryption of mail folders, identities, and contacts
   * New translations (in chronological order):
-     o Spanish by user
+     o Spanish by mixxy
      o Dutch by KwukDuck
-     o Portuguese by user
+     o Portuguese by mixxy
      o French by magma
      o Norwegian by nej
      o Swedish by hottuna
