@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-04-03 00:27+0000\n"
-"PO-Revision-Date: 2011-04-03 04:16+0100\n"
+"PO-Revision-Date: 2011-04-27 05:14+0100\n"
 "Last-Translator: mixxy <m1xxy@mail.i2p>\n"
 "Language-Team: Spanish (Castilian) <None>\n"
 "MIME-Version: 1.0\n"
@@ -397,7 +397,7 @@ msgstr "Claves privadas"
 
 #: WebContent/editIdentity.jsp
 msgid "(Never reveal to anyone!)"
-msgstr "(¡No revelarla a nadie!)"
+msgstr "(¡Nunca revelarlas a nadie!)"
 
 #: WebContent/editIdentity.jsp
 msgid "Show"
