@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-03 00:27+0000\n"
-"PO-Revision-Date: 2011-04-27 05:14+0100\n"
+"POT-Creation-Date: 2011-06-02 18:34+0000\n"
+"PO-Revision-Date: 2011-06-02 20:45+0100\n"
 "Last-Translator: mixxy <m1xxy@mail.i2p>\n"
 "Language-Team: Spanish (Castilian) <None>\n"
 "MIME-Version: 1.0\n"
@@ -13,15 +13,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/i2p/bote/I2PBote.java:402
-#: src/i2p/bote/service/OutboxProcessor.java:146
+#: src/i2p/bote/service/OutboxProcessor.java:157
 msgid "No identity matches the sender/from field: "
 msgstr "Ninguna identidad encontrada para la entrada en la casilla remitiente/de:"
 
-#: src/i2p/bote/I2PBote.java:476
+#: src/i2p/bote/I2PBote.java:478
 msgid "The old password is not correct."
 msgstr "La antigua contraseña no está correcta."
 
-#: src/i2p/bote/I2PBote.java:478
+#: src/i2p/bote/I2PBote.java:480
 msgid "The new password and the confirmation password do not match."
 msgstr "La supuesta nueva contraseña y la confirmación de ella no coinciden."
 
@@ -41,16 +41,16 @@ msgstr "Cifrado ElGamal de 2048 bits"
 msgid "NTRU-1087 Encryption"
 msgstr "Cifrado NTRU-1087"
 
-#: src/i2p/bote/email/Email.java:439
+#: src/i2p/bote/email/Email.java:481
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Dirección no válida: {0}"
 
-#: src/i2p/bote/email/Email.java:445
+#: src/i2p/bote/email/Email.java:487
 msgid "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "La dirección ni es un Destino de correo electrónico ni una dirección externa: {0}"
 
-#: src/i2p/bote/folder/Outbox.java:115
+#: src/i2p/bote/folder/Outbox.java:117
 msgid "Queued"
 msgstr "en la cola"
 
@@ -101,40 +101,40 @@ msgstr "(Ninguno)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/i2p/bote/service/OutboxProcessor.java:151
+#: src/i2p/bote/service/OutboxProcessor.java:162
 msgid "Sending"
 msgstr "enviando"
 
-#: src/i2p/bote/service/OutboxProcessor.java:160
+#: src/i2p/bote/service/OutboxProcessor.java:171
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Enviado a {0} de {1} destinatarios"
 
-#: src/i2p/bote/service/OutboxProcessor.java:167
+#: src/i2p/bote/service/OutboxProcessor.java:178
 #: WebContent/folder.jsp
 msgid "Sent"
 msgstr "Hora del Envío"
 
-#: src/i2p/bote/service/OutboxProcessor.java:170
+#: src/i2p/bote/service/OutboxProcessor.java:181
 msgid "Gateway disabled"
 msgstr "Puerta de enlace desactivada"
 
-#: src/i2p/bote/service/OutboxProcessor.java:205
+#: src/i2p/bote/service/OutboxProcessor.java:217
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Dirección del destinatario no válida: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:209
+#: src/i2p/bote/service/OutboxProcessor.java:221
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Error al crear paquetes: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:213
+#: src/i2p/bote/service/OutboxProcessor.java:225
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Error al enviar el correo: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:115
+#: src/i2p/bote/web/JSPHelper.java:121
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Número inválido de ImplementacióńCripto:"
 
@@ -403,6 +403,10 @@ msgstr "(¡Nunca revelarlas a nadie!)"
 msgid "Show"
 msgstr "Mostrar"
 
+#: WebContent/editIdentity.jsp
+msgid "Delete this identity"
+msgstr "Borrar esta identidad"
+
 #: WebContent/folder.jsp
 msgid "From"
 msgstr "De"
@@ -512,6 +516,10 @@ msgid "User Guide"
 msgstr "Manual del Usuario"
 
 #: WebContent/header.jsp
+msgid "FAQ"
+msgstr "Preguntas Frecuentes"
+
+#: WebContent/header.jsp
 msgid "About"
 msgstr "Acerca de ..."
 
@@ -538,10 +546,6 @@ msgstr "Descripción"
 #: WebContent/identities.jsp
 msgid "Email Address"
 msgstr "Dirección de correo electrónico"
-
-#: WebContent/identities.jsp
-msgid "Delete this identity"
-msgstr "Borrar esta identidad"
 
 #: WebContent/identities.jsp
 msgid "New Identity"
