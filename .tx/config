@@ -12,6 +12,7 @@ trans.pt = locale/messages_pt.po
 trans.ru = locale/messages_ru.po
 trans.sv_SE = locale/messages_sv.po
 trans.uk_UA = locale/messages_uk.po
+trans.vi = locale/messages_vi.po
 trans.zh_CN = locale/messages_zh.po
 
 [main]
