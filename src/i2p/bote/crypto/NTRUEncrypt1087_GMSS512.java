@@ -106,7 +106,7 @@ public class NTRUEncrypt1087_GMSS512 implements CryptoImplementation {
     private GMSSKeyFactory gmssKeyFactory;
 
     public NTRUEncrypt1087_GMSS512() {
-        appContext = new I2PAppContext();
+        appContext = I2PAppContext.getGlobalContext();
         gmssKeyFactory = new GMSSKeyFactory();
     }
     

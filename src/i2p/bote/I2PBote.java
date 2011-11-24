@@ -139,7 +139,7 @@ public class I2PBote implements NetworkStatusSource {
     private I2PBote() {
         Thread.currentThread().setName("I2PBoteMain");
         
-        I2PAppContext appContext = new I2PAppContext();
+        I2PAppContext appContext = I2PAppContext.getGlobalContext();
         appContext.addShutdownTask(new Runnable() {
             @Override
             public void run() {

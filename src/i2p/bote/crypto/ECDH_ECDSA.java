@@ -113,7 +113,7 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
         ecdhKeyFactory = new BouncyECDHKeyFactory();
         ecdsaKeyFactory = new BouncyECDSAKeyFactory();
         
-        appContext = new I2PAppContext();
+        appContext = I2PAppContext.getGlobalContext();
     }
     
     @Override
