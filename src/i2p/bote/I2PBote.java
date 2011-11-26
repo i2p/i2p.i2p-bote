@@ -322,8 +322,12 @@ public class I2PBote implements NetworkStatusSource {
                 log.error("Cannot create destination key file: <" + keyFile.getAbsolutePath() + ">");
         
         FileWriter fileWriter = new FileWriter(keyFile);
-        fileWriter.write(Base64.encode(localDestinationArray));
-        fileWriter.close();
+        try {
+            fileWriter.write(Base64.encode(localDestinationArray));
+        }
+        finally {
+            fileWriter.close();
+        }
         Util.makePrivate(keyFile);
     }
     
