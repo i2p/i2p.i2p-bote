@@ -194,28 +194,6 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
     }
 
     @Override
-    public byte[] toByteArray(PublicKeyPair keyPair) {
-        byte[] encKey = keyPair.encryptionKey.getEncoded();
-        byte[] sigKey = keyPair.signingKey.getEncoded();
-        byte[] encodedKeys = new byte[encKey.length + sigKey.length];
-        System.arraycopy(encKey, 0, encodedKeys, 0, encKey.length);
-        System.arraycopy(sigKey, 0, encodedKeys, encKey.length, sigKey.length);
-        return encodedKeys;
-    }
-
-    @Override
-    public byte[] toByteArray(PrivateKeyPair keyPair) {
-        byte[] encKey = keyPair.encryptionKey.getEncoded();
-        
-        byte[] sigKey = keyPair.signingKey.getEncoded();
-        
-        byte[] encodedKeys = new byte[encKey.length + sigKey.length];
-        System.arraycopy(encKey, 0, encodedKeys, 0, encKey.length);
-        System.arraycopy(sigKey, 0, encodedKeys, encKey.length, sigKey.length);
-        return encodedKeys;
-    }
-
-    @Override
     public KeyPair generateEncryptionKeyPair() throws KeyException {
         EncryptionKeyPair encKeyPair = NtruEncrypt.generateKeyPair(NTRUENCRYPT_PARAMETERS);
         PublicKey publicKey = new NtruEncrypt1087PublicKey(encKeyPair.pub);

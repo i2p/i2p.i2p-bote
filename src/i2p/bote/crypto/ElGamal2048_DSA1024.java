@@ -25,7 +25,6 @@ import i2p.bote.Util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.KeyException;
@@ -43,15 +42,13 @@ import net.i2p.data.DataFormatException;
 import net.i2p.data.DataStructure;
 import net.i2p.data.Destination;
 import net.i2p.data.Signature;
-import net.i2p.util.Log;
 
 /**
  * 2048-bit ElGamal / 1024-bit DSA.
  * 
  * Uses the I2P crypto routines.
  */
-public class ElGamal2048_DSA1024 implements CryptoImplementation {
-    private Log log = new Log(ElGamal2048_DSA1024.class);
+public class ElGamal2048_DSA1024 extends AbstractCryptoImplementation {
     
     @Override
     public String getName() {
@@ -170,30 +167,6 @@ public class ElGamal2048_DSA1024 implements CryptoImplementation {
         }
     }
     
-    @Override
-    public byte[] toByteArray(PublicKeyPair keyPair) {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        try {
-            byteStream.write(keyPair.encryptionKey.getEncoded());
-            byteStream.write(keyPair.signingKey.getEncoded());
-        } catch (IOException e) {
-            log.error("Can't write to ByteArrayOutputStream.", e);
-        }
-        return byteStream.toByteArray();
-    }
-    
-    @Override
-    public byte[] toByteArray(PrivateKeyPair keyPair) {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        try {
-            byteStream.write(keyPair.encryptionKey.getEncoded());
-            byteStream.write(keyPair.signingKey.getEncoded());
-        } catch (IOException e) {
-            log.error("Can't write to ByteArrayOutputStream.", e);
-        }
-        return byteStream.toByteArray();
-    }
-
     /** Only accepts <code>ElGamalPublicKey</code>s. */
     @Override
     public byte[] encrypt(byte[] data, PublicKey key) throws GeneralSecurityException {

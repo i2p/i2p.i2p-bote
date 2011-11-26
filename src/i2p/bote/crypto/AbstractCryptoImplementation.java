@@ -31,8 +31,8 @@ import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.paddings.PKCS7Padding;
 
 /**
- * Implements none of the <code>CryptoImplementation</code> methods but provides
- * methods for AES encryption and decryption.
+ * Implements {@link #toByteArray(PublicKeyPair)} and {@link #toByteArray(PrivateKeyPair)},
+ * and provides methods for AES encryption and decryption.
  */
 public abstract class AbstractCryptoImplementation implements CryptoImplementation {
     private static final int BLOCK_SIZE = 16;   // the AES block size for padding. Not to be confused with the AES key size.
@@ -44,6 +44,28 @@ public abstract class AbstractCryptoImplementation implements CryptoImplementati
         appContext = I2PAppContext.getGlobalContext();
     }
     
+    @Override
+    public byte[] toByteArray(PublicKeyPair keyPair) {
+        byte[] encKey = keyPair.encryptionKey.getEncoded();
+        byte[] sigKey = keyPair.signingKey.getEncoded();
+        byte[] encodedKeys = new byte[encKey.length + sigKey.length];
+        System.arraycopy(encKey, 0, encodedKeys, 0, encKey.length);
+        System.arraycopy(sigKey, 0, encodedKeys, encKey.length, sigKey.length);
+        return encodedKeys;
+    }
+    
+    @Override
+    public byte[] toByteArray(PrivateKeyPair keyPair) {
+        byte[] encKey = keyPair.encryptionKey.getEncoded();
+        
+        byte[] sigKey = keyPair.signingKey.getEncoded();
+        
+        byte[] encodedKeys = new byte[encKey.length + sigKey.length];
+        System.arraycopy(encKey, 0, encodedKeys, 0, encKey.length);
+        System.arraycopy(sigKey, 0, encodedKeys, encKey.length, sigKey.length);
+        return encodedKeys;
+    }
+
     protected byte[] encryptAes(byte[] data, byte[] key, byte[] iv) {
         // pad the data
         int unpaddedLength = data.length;
