@@ -356,7 +356,7 @@ public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
             return decryptedData;
         }
         catch (IOException e) {
-            log.debug("Can't read from ByteArrayOutputStream.", e);
+            log.debug("Can't read from ByteArrayInputStream.", e);
             return null;
         }
     }
