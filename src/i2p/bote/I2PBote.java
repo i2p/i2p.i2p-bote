@@ -179,6 +179,7 @@ public class I2PBote implements NetworkStatusSource {
      */
     private void initializeSession() {
         Properties sessionProperties = new Properties();
+        // set tunnel names
         sessionProperties.setProperty("inbound.nickname", "I2P-Bote");
         sessionProperties.setProperty("outbound.nickname", "I2P-Bote");
         // According to sponge, muxed depends on gzip, so leave gzip enabled
