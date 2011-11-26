@@ -46,15 +46,12 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
 
-import net.i2p.I2PAppContext;
 import net.i2p.data.Base64;
-import net.i2p.data.SessionKey;
 import net.i2p.util.Log;
 
 import org.bouncycastle.asn1.nist.NISTNamedCurves;
 import org.bouncycastle.asn1.x9.X9ECParameters;
 import org.bouncycastle.crypto.InvalidCipherTextException;
-import org.bouncycastle.crypto.paddings.PKCS7Padding;
 import org.bouncycastle.jce.provider.asymmetric.ec.KeyAgreement;
 import org.bouncycastle.jce.provider.asymmetric.ec.KeyFactory;
 import org.bouncycastle.jce.provider.asymmetric.ec.KeyPairGenerator;
@@ -80,8 +77,8 @@ import org.bouncycastle.jce.spec.ECNamedCurveSpec;
  * base64-encoded. The leading A is omitted, which saves two bytes in email destinations
  * (see the {@link #toBase64(PublicKey)} and {@link #toBase64(PrivateKey)} methods).
  */
-public abstract class ECDH_ECDSA implements CryptoImplementation {
-    private static final int BLOCK_SIZE = 16;   // length of the AES initialization vector; also the AES block size for padding. Not to be confused with the AES key size.
+public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
+    private static final int IV_SIZE = 16;   // length of the AES initialization vector
     
     protected int keyLengthBytes;
     protected ECNamedCurveSpec ecParameterSpec;
@@ -89,7 +86,6 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
     private KeyPairGenerator.ECDSA signingKeyPairGenerator;
     private BouncyECDHKeyFactory ecdhKeyFactory;
     private BouncyECDSAKeyFactory ecdsaKeyFactory;
-    private I2PAppContext appContext;
     private Log log = new Log(ECDH_ECDSA.class);
     
     /**
@@ -112,8 +108,6 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
         
         ecdhKeyFactory = new BouncyECDHKeyFactory();
         ecdsaKeyFactory = new BouncyECDSAKeyFactory();
-        
-        appContext = I2PAppContext.getGlobalContext();
     }
     
     @Override
@@ -295,14 +289,6 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
      */
     @Override
     public byte[] encrypt(byte[] data, PublicKey encryptionKey) throws InvalidKeyException, NoSuchAlgorithmException {
-        // pad the data
-        int unpaddedLength = data.length;
-        data = Arrays.copyOf(data, unpaddedLength + BLOCK_SIZE - unpaddedLength%BLOCK_SIZE);  // make data.length a multiple of BLOCK_SIZE; if the length is a multiple of BLOCK_LENGTH, add a block of zeros
-        PKCS7Padding padding = new PKCS7Padding();
-        int numAdded = padding.addPadding(data, unpaddedLength);
-        if (log.shouldLog(Log.DEBUG) && numAdded != BLOCK_SIZE-unpaddedLength%BLOCK_SIZE)
-            log.error("Error: " + numAdded + " pad bytes added, expected: " + (BLOCK_SIZE-unpaddedLength%BLOCK_SIZE));
-
         // generate an ephemeral EC key and a shared secret
         KeyPair ephKeyPair = encryptionKeyPairGenerator.generateKeyPair();
         ECDHKeyAgreement keyAgreement = new ECDHKeyAgreement();
@@ -315,11 +301,9 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
             log.warn("Not enough data in shared secret!");
         
         // encrypt the data using the hash of the shared secret as an AES key
-        SessionKey aesKey = new SessionKey(secretHash);
-        byte iv[] = new byte[BLOCK_SIZE];
+        byte iv[] = new byte[IV_SIZE];
         appContext.random().nextBytes(iv);
-        byte[] encryptedData = new byte[data.length];
-        appContext.aes().encrypt(data, 0, encryptedData, 0, aesKey, iv, data.length);   // this method also checks that data.length is divisible by 16
+        byte[] encryptedData = encryptAes(data, secretHash, iv);
         
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         try {
@@ -364,20 +348,10 @@ public abstract class ECDH_ECDSA implements CryptoImplementation {
             byte[] secretHash = hashAlg.digest(sharedSecret);
         
             // decrypt using the shared secret as an AES key
-            byte[] iv = new byte[BLOCK_SIZE];
+            byte[] iv = new byte[IV_SIZE];
             byteStream.read(iv);
             byte[] encryptedData = Util.readBytes(byteStream);
-            SessionKey aesKey = new SessionKey(secretHash);
-            byte[] decryptedData = new byte[encryptedData.length];
-            if (encryptedData.length%16 != 0)
-                log.error("Length of encrypted data is not divisible by " + BLOCK_SIZE + ". Length=" + decryptedData.length);
-            appContext.aes().decrypt(encryptedData, 0, decryptedData, 0, aesKey, iv, decryptedData.length);
-            
-            // unpad the decrypted data
-            byte[] lastBlock = Arrays.copyOfRange(decryptedData, decryptedData.length-BLOCK_SIZE, decryptedData.length);
-            PKCS7Padding padding = new PKCS7Padding();
-            int padCount = padding.padCount(lastBlock);
-            decryptedData = Arrays.copyOf(decryptedData, decryptedData.length-padCount);
+            byte[] decryptedData = decryptAes(encryptedData, secretHash, iv);
             
             return decryptedData;
         }

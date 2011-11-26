@@ -38,12 +38,14 @@ import java.util.Arrays;
 
 import net.i2p.I2PAppContext;
 import net.i2p.data.Base64;
-import net.i2p.data.SessionKey;
 import net.sf.ntru.EncryptionKeyPair;
 import net.sf.ntru.EncryptionParameters;
 import net.sf.ntru.EncryptionPrivateKey;
 import net.sf.ntru.EncryptionPublicKey;
 import net.sf.ntru.NtruEncrypt;
+
+import org.bouncycastle.crypto.InvalidCipherTextException;
+
 import de.flexiprovider.api.exceptions.InvalidKeySpecException;
 import de.flexiprovider.api.keys.KeySpec;
 import de.flexiprovider.pki.PKCS8EncodedKeySpec;
@@ -88,7 +90,7 @@ import de.flexiprovider.pqc.hbc.gmss.GMSSSignature;
  * key size. Signatures are 13712 bytes and private keys are 71584 bytes
  * (including padding).
  */
-public class NTRUEncrypt1087_GMSS512 implements CryptoImplementation {
+public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
     private static final EncryptionParameters NTRUENCRYPT_PARAMETERS = EncryptionParameters.EES1087EP2;
     private static final int[] HEIGHTS = new int[] {6, 6, 5, 5};   // GMSS tree heights
     private static final int[] WINTERNITZ = new int[] {12, 11, 11, 11};   // Winternitz parameters for GMSS
@@ -234,18 +236,17 @@ public class NTRUEncrypt1087_GMSS512 implements CryptoImplementation {
     }
 
     /**
-     * Only accepts <code>Ntru1087PublicKey</code>s. 
+     * Only accepts <code>NtruEncrypt1087PublicKey</code>s. 
      * @throws NoSuchAlgorithmException
      */
     @Override
     public byte[] encrypt(byte[] data, PublicKey key) throws NoSuchAlgorithmException {
         byte[] symmKey = new byte[32];
         appContext.random().nextBytes(symmKey);
-        SessionKey sessionKey = new SessionKey(symmKey);
         
         byte iv[] = new byte[BLOCK_SIZE];
         appContext.random().nextBytes(iv);
-        byte[] encryptedData = appContext.aes().safeEncrypt(data, sessionKey, iv, 0);
+        byte[] encryptedData = encryptAes(data, symmKey, iv);
         
         NtruEncrypt1087PublicKey ntruKey = castToNtruEncryptKey(key);
         byte[] encryptedSymmKey = NtruEncrypt.encrypt(symmKey, ntruKey.key, NTRUENCRYPT_PARAMETERS);
@@ -265,11 +266,12 @@ public class NTRUEncrypt1087_GMSS512 implements CryptoImplementation {
     }
 
     /**
-     * Only accepts <code>Ntru1087PublicKey</code>s and <code>Ntru1087PrivateKey</code>s.
+     * Only accepts <code>NtruEncrypt1087PublicKey</code>s and <code>Ntru1087PrivateKey</code>s.
      * @throws NoSuchAlgorithmException 
+     * @throws InvalidCipherTextException 
      */
     @Override
-    public byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws NoSuchAlgorithmException {
+    public byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidCipherTextException {
         if (data == null)
             return null;
         
@@ -281,12 +283,11 @@ public class NTRUEncrypt1087_GMSS512 implements CryptoImplementation {
         EncryptionKeyPair keyPair = new EncryptionKeyPair(privateNtruKey.key, publicNtruKey.key);
         byte[] symmKey = NtruEncrypt.decrypt(encryptedSymmKey, keyPair, NTRUENCRYPT_PARAMETERS);
         
-        SessionKey sessionKey = new SessionKey(symmKey);
         byte[] iv = new byte[BLOCK_SIZE];
         inputBuffer.get(iv);
         byte[] encryptedData = new byte[inputBuffer.remaining()];
         inputBuffer.get(encryptedData);
-        byte[] decryptedData = appContext.aes().safeDecrypt(encryptedData, sessionKey, iv);
+        byte[] decryptedData = decryptAes(encryptedData, symmKey, iv);
         return decryptedData;
     }
 
