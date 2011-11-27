@@ -33,4 +33,5 @@
     pageContext.setAttribute("CONNECTED", i2p.bote.network.NetworkStatus.CONNECTED, PageContext.REQUEST_SCOPE);
     pageContext.setAttribute("ERROR", i2p.bote.network.NetworkStatus.ERROR, PageContext.REQUEST_SCOPE);
 %> 
-<c:set var="connStatus" value="${ib:getNetworkStatus()}" scope="request"/>
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+<c:set var="connStatus" value="${jspHelperBean.networkStatus}" scope="request"/>

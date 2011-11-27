@@ -34,7 +34,8 @@
     </ib:requirePassword>
 </c:if>
 
-<c:if test="${ib:isCheckingForMail()}">
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+<c:if test="${jspHelperBean.checkingForMail}">
     <c:set var="checkingForMail" value="true"/>
 </c:if>
 
@@ -60,7 +61,6 @@
         </c:if>
         <c:if test="${!checkingForMail}">
             <div class="checkmail">
-                <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
                 <c:set var="frame" value=""/>
                 <c:choose>
                     <c:when test="${jspHelperBean.identities.none}">
@@ -91,7 +91,7 @@
                     <button type="submit" value="Check Mail/>" ${disable}><ib:message key="Check Mail"/></button>
                 </form>
             </div>
-            <c:if test="${ib:newMailReceived()}">
+            <c:if test="${jspHelperBean.newMailReceived}">
                 <script language="Javascript">
                     // refresh folder list to update the new message count
                     parent.frames[1].location.href = 'folders.jsp';

@@ -73,11 +73,18 @@ import net.i2p.util.Translate;
  */
 public class JSPHelper {
     private static AddressDisplayFilter ADDRESS_DISPLAY_FILTER;
+    private static JSPHelper instance;
 
     public JSPHelper() {
     }
     
-    public static NetworkStatus getNetworkStatus() {
+    private static JSPHelper getInstance() {
+        if (instance == null)
+            instance = new JSPHelper();
+        return instance;
+    }
+    
+    public NetworkStatus getNetworkStatus() {
         return I2PBote.getInstance().getNetworkStatus();
     }
     
@@ -85,7 +92,7 @@ public class JSPHelper {
         return I2PBote.getInstance().getIdentities();
     }
     
-    public static AddressBook getAddressBook() throws PasswordException {
+    public AddressBook getAddressBook() throws PasswordException {
         return I2PBote.getInstance().getAddressBook();
     }
     
@@ -193,7 +200,7 @@ public class JSPHelper {
     public static String saveContact(String destinationString, String name) throws PasswordException, GeneralSecurityException {
         destinationString = Util.fixAddress(destinationString);
         
-        AddressBook addressBook = getAddressBook();
+        AddressBook addressBook = getInstance().getAddressBook();
         Contact contact = addressBook.get(destinationString);
         
         if (contact != null)
@@ -228,7 +235,7 @@ public class JSPHelper {
      * @throws PasswordException 
      */
     public static String deleteContact(String destination) throws PasswordException, GeneralSecurityException {
-        AddressBook addressBook = getAddressBook();
+        AddressBook addressBook = getInstance().getAddressBook();
         addressBook.remove(destination);
 
         try {
@@ -241,18 +248,18 @@ public class JSPHelper {
     }
     
     public static String getContactName(String destination) throws PasswordException {
-        Contact contact = getAddressBook().get(destination);
+        Contact contact = getInstance().getAddressBook().get(destination);
         if (contact == null)
             return null;
         else
             return contact.getName();
     }
     
-    public static boolean isCheckingForMail() {
+    public boolean isCheckingForMail() {
         return I2PBote.getInstance().isCheckingForMail();
     }
  
-    public static boolean newMailReceived() {
+    public boolean isNewMailReceived() {
         return I2PBote.getInstance().newMailReceived();
     }
     
@@ -511,7 +518,7 @@ public class JSPHelper {
         String destination = extractEmailDestination(address);
         if (destination == null)
             return false;
-        else if (getAddressBook().contains(destination))
+        else if (getInstance().getAddressBook().contains(destination))
             return true;
         else return I2PBote.getInstance().getIdentities().contains(destination);
     }
@@ -523,7 +530,7 @@ public class JSPHelper {
     private static AddressDisplayFilter getAddressDisplayFilter() throws PasswordException {
         Identities identities = I2PBote.getInstance().getIdentities();
         if (ADDRESS_DISPLAY_FILTER == null)
-            ADDRESS_DISPLAY_FILTER = new AddressDisplayFilter(identities, getAddressBook());
+            ADDRESS_DISPLAY_FILTER = new AddressDisplayFilter(identities, getInstance().getAddressBook());
         return ADDRESS_DISPLAY_FILTER;
     }
     

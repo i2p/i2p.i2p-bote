@@ -36,7 +36,8 @@
 
 <ib:requirePassword>
 <div class="main">
-    <c:set var="contacts" value="${ib:getAddressBook().all}"/>
+    <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+    <c:set var="contacts" value="${jspHelperBean.addressBook.all}"/>
     
     <h2>
         <c:if test="${!param.select}"><ib:message key="Private Address Book"/></c:if>
@@ -76,7 +77,6 @@
         
         <td><div${class}>
             <c:if test="${!param.select}">
-                <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
                 <%-- Insert a random number into the request string so others can't see contacts using the CSS history hack --%>
                 <a href="editContact.jsp?rnd=${jspHelperBean.randomNumber}&new=false&destination=${contact.destination}">
             </c:if>

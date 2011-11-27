@@ -239,14 +239,6 @@
 </tag>
 
 <function>
-    <name>getNetworkStatus</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
-    <function-signature>
-        i2p.bote.network.NetworkStatus getNetworkStatus()
-    </function-signature>
-</function>
-
-<function>
     <name>createOrModifyIdentity</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
@@ -285,14 +277,6 @@
 </function>
 
 <function>
-    <name>getAddressBook</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
-    <function-signature>
-        i2p.bote.addressbook.AddressBook getAddressBook()
-    </function-signature>
-</function>
-
-<function>
     <name>saveContact</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
@@ -318,22 +302,6 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         java.lang.String getContactName(java.lang.String)
-    </function-signature>
-</function>
-
-<function>
-    <name>isCheckingForMail</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
-    <function-signature>
-        boolean isCheckingForMail()
-    </function-signature>
-</function>
-
-<function>
-    <name>newMailReceived</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
-    <function-signature>
-        boolean newMailReceived()
     </function-signature>
 </function>
 
