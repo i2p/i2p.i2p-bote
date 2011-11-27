@@ -29,7 +29,11 @@
 <c:set var="numEmails" value="${ib:getMailFolder(dirName).numElements}"/>
 <c:set var="numNew" value="${ib:getMailFolder(dirName).numNewEmails}"/>
 
-<a href="folder.jsp?path=${dirName}" target="_parent" title="${numEmails} emails total, ${numNew} new">
+<ib:message key="{0} emails total, {1} new" var="linkTitle">
+    <ib:param value="${numEmails}"/>
+    <ib:param value="${numNew}"/>
+</ib:message>
+<a href="folder.jsp?path=${dirName}" target="_parent" title="${linkTitle}">
     <img src="images/folder.png"/>${displayName}
 </a>
 

@@ -878,3 +878,7 @@ msgstr "Zum Adressbuch hinzufügen"
 msgid "Unknown"
 msgstr "Unbekannt"
 
+#: src/i2p/bote/web/JSPHelper.java:103
+msgid "Not set."
+msgstr "Nicht vorhanden"
+
