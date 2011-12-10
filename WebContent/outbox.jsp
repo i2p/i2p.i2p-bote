@@ -73,10 +73,10 @@
 
 <div class="main">
 <div class="folder">
-    <table class="table">
+    <table>
         <c:set var="folder" value="${ib:getMailFolder('Outbox')}"/>
         <tr>
-            <th style="width: 100px;">
+            <th class="header-column-from">
                 <c:set var="sortLink" value="outbox.jsp?sortcolumn=${FROM}"/>
                 <c:if test="${sortcolumn eq FROM}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -84,7 +84,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
-            <th style="width: 100px;">
+            <th class="header-column-to">
                 <c:set var="sortLink" value="outbox.jsp?sortcolumn=${TO}"/>
                 <c:if test="${sortcolumn eq TO}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -92,7 +92,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="To"/>${toColumnIndicator}</a>
             </th>
-            <th style="width: 150px;">
+            <th class="header-column-subject">
                 <c:set var="sortLink" value="outbox.jsp?sortcolumn=${SUBJECT}"/>
                 <c:if test="${sortcolumn eq SUBJECT}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -100,7 +100,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
             </th>
-            <th style="width: 150px;">
+            <th class="header-column-date">
                 <c:set var="sortLink" value="outbox.jsp?sortcolumn=${CREATE_TIME}"/>
                 <c:if test="${sortcolumn eq CREATE_TIME}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -116,7 +116,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Status"/>${statusColumnIndicator}</a>
             </th>
-            <th style="width: 20px;"></th>
+            <th class="header-column-trash"></th>
         </tr>
         
         <c:forEach items="${ib:getEmails(folder, sortcolumn, descending)}" var="email" varStatus="status">
@@ -137,29 +137,27 @@
             <c:set var="mailUrl" value="showEmail.jsp?folder=Outbox&messageID=${email.messageID}"/>
             
             <c:choose>
-                <c:when test="${email.new}"><c:set var="fontWeight" value="bold"/></c:when>
-                <c:otherwise><c:set var="fontWeight" value="normal"/></c:otherwise>
+                <c:when test="${email.new}"><c:set var="textClass" value="folder-item-new"/></c:when>
+                <c:otherwise><c:set var="textClass" value="folder-item-old"/></c:otherwise>
             </c:choose>
             
-            <c:set var="class" value=""/>
+            <c:set var="backgroundClass" value="even-table-cell"/>
             <c:if test="${status.index%2 != 0}">
-                <c:set var="class" value=" class=\"alttablecell\""/>
+                <c:set var="backgroundClass" value="odd-table-cell"/>
             </c:if>
             
-            <tr>
-            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
-            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
-            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
+            <tr class="${textClass} ${backgroundClass}">
+            <td><a href="${mailUrl}">${fn:escapeXml(sender)}</a></td>
+            <td><a href="${mailUrl}">${fn:escapeXml(recipient)}</a></td>
+            <td><a href="${mailUrl}">${fn:escapeXml(subject)}</a></td>
             <td>
-                <span${class} style="display: block;">
-                    <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: left"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
-                    <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: right"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
-                </span>
+                <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
+                <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
             </td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${ib:getEmailStatus(email)}</a></div></td>
-            <td><div${class}>
+            <td>
                 <a href="deleteEmail.jsp?folder=Outbox&messageID=${email.messageID}">
-                <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a></div>
+                <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
             </td>
             </tr>
         </c:forEach>

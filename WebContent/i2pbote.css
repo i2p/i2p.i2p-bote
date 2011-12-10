@@ -9,8 +9,36 @@ body {
     font: 9pt/130% "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
 }
 
+iframe {
+	border: none;
+}
+
+.iframe-body {
+    background-color: transparent;
+    border: none;
+    margin: 0px;
+}
+
+.button-frame {
+	width: 100%;
+	height: 35px;
+}
+
+.folders-frame {
+    width: 100%;
+    height: 280px;
+}
+
+.status-frame {
+    width: 100%;
+    height: 40px;
+}
+
+.status-frame-connect {
+	text-align: center;
+}
+
 .titlebar {
-    width: 800px;
     margin: 0px 20px 20px 240px;
     background-color: #fff;
     color: #310;
@@ -24,6 +52,7 @@ body {
     white-space: normal;
     background: #ddf url('images/lightbluetile.png');
     opacity: 1.0;
+    cursor: pointer;
 }
 
 .title {
@@ -42,7 +71,8 @@ body {
 
 .checkmail {
     font: bold 8pt "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
-    color: #555;
+    float: left;
+    width: 50%;
 }
 
 .password {
@@ -109,7 +139,6 @@ body {
 }
 
 .main {
-    width: 800px;
     margin: 0px 20px 20px 240px;
     padding: 0 15px 15px 25px;
     background: #eef;
@@ -125,7 +154,6 @@ body {
 }
 
 .emailtext {
-    width: 800px;
     margin: 0px 20px 20px 240px;
     padding: 0 15px 15px 25px;
     background: #eef;
@@ -151,7 +179,11 @@ body {
     text-align: left;
     color: red;
 }
-    
+
+.subheading {
+    font-weight: bold;
+}
+
 .warning {
     color: red;
 }
@@ -315,16 +347,6 @@ textarea {
     border: 1px solid #001;
 }
 
-.destinationtextarea {
-    width: 100%;
-    background: #eef;
-    background-color: transparent;
-    color: #003;
-    border: none;
-    font: 8pt "Lucida Console", "DejaVu Sans Mono", Courier, mono;
-    min-height: 100px;
-}
-
 submit {
     background: #f00;
     color: #eef;
@@ -349,30 +371,25 @@ select {
     text-align: left !important;
 }
 
-.table {
+table {
     table-layout: fixed;
-    width: 800px;
+	width: 100%;
 }
 
-.table td, th {
+table td, th {
     padding-left: 10px;
+    padding-top: 3px;
     background: url('images/lightbluetile.png');
     white-space: nowrap;
     overflow-x: hidden;
 }
 
-.table td:first-child, th:first-child {
-    padding-left: 0px;
+.even-table-cell td {
     background: url('images/lightbluetile.png');
-    white-space: nowrap;
-    overflow-x: hidden;
 }
 
-.alttablecell
-{
+.odd-table-cell td {
     background: url('images/lightbluetile-alt.png');
-    white-space: nowrap;
-    overflow-x: hidden;
 }
 
 #address form span {
@@ -383,8 +400,261 @@ select {
     padding: 3px;
 }
 
-#deleteIdentityBtn {
-	margin: 0px 5px 0px 500px;
+.deleteIdentityBtn {
+	text-align: right;
+}
+
+.addtl-text {
+	font-weight: normal;
+    font-size: 0.8em;
+}
+
+.field-label {
+    font-weight: bold;
+}
+
+.field-label-multiline {
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.destination {
+    color: #003;
+    font: 8pt "Lucida Console", "DejaVu Sans Mono", Courier, mono;
+    word-wrap: break-word;
+}
+
+.identity-form-label {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.identity-form-value {
+    top: 0px;
+    margin-left: 220px;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+
+.identity-form-checkbox {
+    top: 0px;
+    margin-left: 220px;
+    margin-right: 5px;
+    margin-top: 7px;
+}
+
+.identity-buttons {
+	position: absolute;
+}
+	
+.identity-delete {
+	text-align: right;
+}
+    
+.full-identity {
+	margin-right: 10px;
+}
+
+.contact-form-label {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.contact-form-value {
+    top: 0px;
+    margin-left: 120px;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+
+.header-column-from {
+	width: 18%;
+}
+
+.header-column-known {
+    width: 4%;
+    text-align: center;
+}
+
+.header-column-sig {
+    width: 4%;
+    text-align: center;
+}
+
+.header-column-to {
+    width: 18%;
+}
+
+.header-column-subject {
+    width: 30%;
+}
+
+.header-column-date {
+    width: 23%;
+}
+
+.header-column-trash {
+    width: 30px;
+}
+
+.header-column-default {
+    width: 8%;
+}
+
+.data-column-default {
+    text-align: center;
+}
+
+.header-column-public-name {
+    width: 30%;
+}
+
+.header-column-description {
+    width: 35%;
+}
+
+.header-column-id-email-dest {
+    width: 27%;
+}
+
+.header-column-check {
+    width: 3%;
+}
+
+.header-column-name {
+    width: 30%;
+}
+
+.header-column-addr-email-dest {
+    width: 72%;
+}
+
+.sig-valid {
+	color: green;
+	text-align: center;
+}
+
+.sig-invalid {
+    color: red;
+    text-align: center;
+}
+
+.sender-known {
+    text-align: center;
+}
+
+.folder-item-new a {
+	font-weight: bold;
+}
+
+.folder-item-old a {
+    font-weight: normal;
+}
+
+.email-form-button-row {
+	top: 0px;
+	margin-left: 120px;
+    text-align: right;
+	width: 585px;
+	white-space: nowrap;
+}
+
+.email-form-label {
+	position: absolute;
+	padding-top: 10px;
+	padding-left: 5px;
+	font-weight: bold;
+}
+
+.email-form-recipient-label {
+    position: absolute;
+}
+
+.email-form-recipient-value {
+	top: 0px;
+	margin-left: 120px;
+	max-width: 600px;
+	white-space: nowrap;
+}
+
+.email-form-recipient-field {
+	width: 475px;
+}
+
+.email-form-value {
+	top: 0px;
+	margin-left: 120px;
+	margin-right: 5px;
+}
+
+.email-form-subject-field {
+	margin-right: 5px;
+	width: 567px;
+}
+
+.email-form-attach-label {
+	position: absolute;
+	padding-left: 5px;
+}
+
+.email-form-attach-files {
+	padding-left: 5px;
+	padding-bottom: 3px;
+	white-space: nowrap;
+}
+
+.email-form-attach-item {
+	position: absolute;
+	width: 300px;
+	overflow-x: hidden;
+}
+
+.email-form-attach-size {
+	color: #777;
+}
+
+.email-form-attach-remove {
+	margin-left: 305px;
+}
+
+.email-form-attach-small {
+    font-size: 0.8em;
+    padding-left: 5px;
+}
+
+.show-email-value {
+    margin-left: 120px;
+    margin-right: 5px;
+    padding-top: 10px;
+    min-height: 1em;
+}
+
+.password-label {
+	position: absolute;
+    padding-top: 5px;
+}
+
+.password-field {
+    margin-left: 115px;
+}
+
+.contributor-category {
+	font-weight: bold;
+}
+
+.contributor-name {
+    margin-left: 100px;
+    position: absolute;
+}
+
+.contributor-role {
+	color: #555;
+    margin-left: 250px;
+    margin-top: 3px;
 }
 
 wbr:after { content: "\00200B" }   /* For Opera */

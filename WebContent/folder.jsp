@@ -96,11 +96,10 @@
 </c:if>
 
 <div class="main">
-<div class="folder">
-    <table class="table">
+    <table>
         <c:set var="folder" value="${ib:getMailFolder(folderName)}"/>
         <tr>
-            <th style="width: 100px;">
+            <th class="header-column-from">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${FROM}"/>
                 <c:if test="${sortcolumn eq FROM}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -109,10 +108,10 @@
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
             <c:if test="${showFlags}">
-                <th style="width: 30px; text-align: center;"><ib:message key="Know"/></th>
-                <th style="width: 20px; text-align: center;"><ib:message key="Sig"/></th>
+                <th class="header-column-known"><ib:message key="Know"/></th>
+                <th class="header-column-sig"><ib:message key="Sig"/></th>
             </c:if>
-            <th style="width: 100px;">
+            <th class="header-column-to">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${TO}"/>
                 <c:if test="${sortcolumn eq TO}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -120,7 +119,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="To"/>${toColumnIndicator}</a>
             </th>
-            <th style="width: 150px;">
+            <th class="header-column-subject">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${SUBJECT}"/>
                 <c:if test="${sortcolumn eq SUBJECT}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -128,7 +127,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
             </th>
-            <th style="width: 120px;">
+            <th class="header-column-date">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${DATE}"/>
                 <c:if test="${sortcolumn eq DATE}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -136,7 +135,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Sent"/>${dateColumnIndicator}</a>
             </th>
-            <th style="width: 20px;"></th>
+            <th class="header-column-trash"></th>
         </tr>
         
         <c:forEach items="${ib:getEmails(folder, sortcolumn, descending)}" var="email" varStatus="status">
@@ -145,11 +144,14 @@
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
             
-            <c:if test="${email.signatureValid}">
-                <c:set var="signature" value="<div style='color: green;'>&#10004;</div>"/>
-            </c:if>
+            <c:set var="signature" value="<div class='sig-valid'>&#10004;</div>"/>
             <c:if test="${!email.signatureValid}">
-                <c:set var="signature" value="<div style='color: red;'>&#10008;</div>"/>
+                <c:set var="signature" value="<div class='sig-invalid'>&#10008;</div>"/>
+            </c:if>
+            
+            <c:set var="known" value=""/>
+            <c:if test="${ib:isKnown(email.sender)}">
+                <c:set var="known" value="<div class='sender-known'>&#10004;</div>"/>
             </c:if>
             
             <c:set var="recipient" value="${ib:getNameAndDestination(ib:getOneLocalRecipient(email))}"/>
@@ -162,39 +164,34 @@
             <c:set var="mailUrl" value="showEmail.jsp?folder=${folderName}&messageID=${email.messageID}"/>
             
             <c:choose>
-                <c:when test="${email.new}"><c:set var="fontWeight" value="bold"/></c:when>
-                <c:otherwise><c:set var="fontWeight" value="normal"/></c:otherwise>
+                <c:when test="${email.new}"><c:set var="textClass" value="folder-item-new"/></c:when>
+                <c:otherwise><c:set var="textClass" value="folder-item-old"/></c:otherwise>
             </c:choose>
             
-            <c:set var="class" value=""/>
+            <c:set var="backgroundClass" value="even-table-cell"/>
             <c:if test="${status.index%2 != 0}">
-                <c:set var="class" value=" class=\"alttablecell\""/>
+                <c:set var="backgroundClass" value="odd-table-cell"/>
             </c:if>
             
-            <tr>
-            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(sender)}</a></div></td>
+            <tr class="${textClass} ${backgroundClass}">
+            <td><a href="${mailUrl}">${fn:escapeXml(sender)}</a></td>
             <c:if test="${showFlags}">
-                <td><div${class} style="text-align: center;">${ib:isKnown(email.sender) ? '&#10004;' : '&nbsp;'}</div></td>
-                <td><div${class} style="text-align: center;"><c:out value="${signature}" escapeXml="false"/></div></td>
+                <td><c:out value="${known}" escapeXml="false"/></td>
+                <td><c:out value="${signature}" escapeXml="false"/></td>
             </c:if>
-            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(recipient)}</a></div></td>
-            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${fn:escapeXml(subject)}</a></div></td>
+            <td><a href="${mailUrl}">${fn:escapeXml(recipient)}</a></td>
+            <td><a href="${mailUrl}">${fn:escapeXml(subject)}</a></td>
             <td>
-	            <span${class} style="display: block;">
-	                <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: left"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
-	                <a href="${mailUrl}" style="font-weight: ${fontWeight}; float: right"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
-	            </span>
+                <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
+                <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
             </td>
             <td>
-                <div${class}>
                 <a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}">
                 <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
-                </div>
             </td>
             </tr>
         </c:forEach>
     </table>
-</div>
 </div>
 </ib:requirePassword>
 

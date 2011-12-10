@@ -45,18 +45,17 @@
     
     <form name="form" action="setPassword.jsp" method="POST">
         <input type="hidden" name="action" value="set"/>
-        <table>
-            <tr>
-                <td><ib:message key="Old password:"/></td>
-                <td><input type="password" name="old"/></td>
-            </tr><tr>
-                <td><ib:message key="New password:"/></td>
-                <td><input type="password" name="new"/></td>
-            </tr><tr>
-                <td><ib:message key="Confirm:"/></td>
-                <td><input type="password" name="confirm"/></td>
-            </tr>
-        </table>
+        
+        <div class="password-label"><ib:message key="Old password:"/></div>
+        <div class="password-field"><input type="password" name="old"/></div>
+        
+        <div class="password-label"><ib:message key="New password:"/></div>
+        <div class="password-field"><input type="password" name="new"/></div>
+        
+        <div class="password-label"><ib:message key="Confirm:"/></div>
+        <div class="password-field"><input type="password" name="confirm"/></div>
+        
+        <p/>
         <ib:message key="OK" var="ok"/>
         <input type="submit" value="${ok}"/>
     </form>

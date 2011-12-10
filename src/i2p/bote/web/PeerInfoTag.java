@@ -53,9 +53,9 @@ public class PeerInfoTag extends SimpleTagSupport {
                 return;
             
             int numDhtPeers = dhtStats.getData().size();
-            out.println("<strong>" + _("Kademlia Peers:") + " " + numDhtPeers + "</strong>");
+            out.println("<span class=\"subheading\">" + _("Kademlia Peers:") + " " + numDhtPeers + "</span>");
             if (numDhtPeers > 0) {
-                out.println("<table class=\"table\">");
+                out.println("<table");
                 
                 // header
                 out.println("<tr>");
@@ -78,9 +78,9 @@ public class PeerInfoTag extends SimpleTagSupport {
             
             // Print relay peer info
             Collection<RelayPeer> relayPeers = I2PBote.getInstance().getRelayPeers();
-            out.println("<strong>" + _("Relay Peers:") + " " + relayPeers.size() + "</strong>");
+            out.println("<span class=\"subheading\">" + _("Relay Peers:") + " " + relayPeers.size() + "</span>");
             if (relayPeers.size() > 0) {
-                out.println("<table class=\"table\">");
+                out.println("<table");
                 out.println("<tr>");
                 out.println("<th>" + _("Peer") + "</th>");
                 out.println("<th>" + _("I2P Destination") + "</th>");
@@ -103,7 +103,7 @@ public class PeerInfoTag extends SimpleTagSupport {
             
             // List banned peers
             Collection<BannedPeer> bannedPeers = I2PBote.getInstance().getBannedPeers();
-            out.println("<strong>" + _("Banned Peers:") + " " + bannedPeers.size() + "</strong>");
+            out.println("<span class=\"subheading\">" + _("Banned Peers:") + " " + bannedPeers.size() + "</span>");
             if (bannedPeers.size() > 0) {
                 out.println("<table>");
                 out.println("<tr>");

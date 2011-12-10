@@ -42,53 +42,35 @@
         <ib:message key="No email identities are defined."/>
     </c:if>
     
-    <table class="table">
+    <table>
     <c:if test="${!empty identities}">
         <tr>
-            <th style="width: 20px;"><ib:message key="Def."/></th>
-            <th><ib:message key="Public Name"/></th>
-            <th><ib:message key="Description"/></th>
-            <th><ib:message key="Email Address"/></th>
-            <th><ib:message key="Email Destination"/></th>
+            <th class="header-column-default"><ib:message key="Def."/></th>
+            <th class="header-column-public-name"><ib:message key="Public Name"/></th>
+            <th class="header-column-description"><ib:message key="Description"/></th>
+            <th class="header-column-id-email-dest"><ib:message key="Email Destination"/></th>
         </tr>
     </c:if>
-    <c:forEach items="${identities}" var="identity" varStatus="loopStatus">
-        <c:set var="class" value=""/>
-        <c:if test="${loopStatus.index%2 != 0}">
-            <c:set var="class" value=" class=\"alttablecell\""/>
+    <c:forEach items="${identities}" var="identity" varStatus="status">
+        <c:set var="backgroundClass" value="even-table-cell"/>
+        <c:if test="${status.index%2 != 0}">
+            <c:set var="backgroundClass" value="odd-table-cell"/>
         </c:if>
         
-        <tr>
-        <td style="width: 20px; text-align: right;">
-            <div${class}>
+        <tr class="${backgroundClass}">
+        <td class="data-column-default">
             <c:if test="${identity.default}">
                 <img src="images/asterisk.png"/>
             </c:if>
-            </div>
         </td>
-        <td style="width: 100px;">
-            <div${class}>
-                <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
-                <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&new=false&key=${identity.key}&cryptoImpl=${identity.cryptoImpl}&publicName=${ib:escapeQuotes(identity.publicName)}&description=${ib:escapeQuotes(identity.description)}&emailAddress=${ib:escapeQuotes(identity.emailAddress)}&isDefault=${identity.default}">
-                    ${identity.publicName}
-                </a>
-            </div>
+        <td>
+            <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
+            <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&new=false&key=${identity.key}&cryptoImpl=${identity.cryptoImpl}&publicName=${ib:escapeQuotes(identity.publicName)}&description=${ib:escapeQuotes(identity.description)}&emailAddress=${ib:escapeQuotes(identity.emailAddress)}&isDefault=${identity.default}">
+                ${identity.publicName}
+            </a>
         </td>
-        <td style="width: 150px;">
-            <div${class}>
-                ${identity.description}
-            </div>
-        </td>
-        <td style="width: 150px;">
-            <div${class}>
-                ${identity.emailAddress}
-            </div>
-        </td>
-        <td style="width: 100px;">
-            <div${class}>
-                ${identity.key}
-            </div>
-        </td>
+        <td>${identity.description}</td>
+        <td>${identity.key}</td>
         </tr>
     </c:forEach>
     </table>

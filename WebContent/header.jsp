@@ -63,7 +63,7 @@
 
 <body>
 
-<div class="titlebar" style="cursor:pointer" onclick="document.location='.'">
+<div class="titlebar" onclick="document.location='.'">
     <c:if test="${jspHelperBean.passwordInCache}">
         <div class="password">
             <ib:message key="Password is cached. Click to clear the password cache." var="linkTitle"/>
@@ -82,11 +82,11 @@
 </c:if>
 
 <div class="menubox">
-    <iframe src="buttonFrame.jsp" width="100%" height="40px" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+    <iframe src="buttonFrame.jsp" class="button-frame"></iframe>
 </div>
 
 <div class="menubox">
-    <iframe src="folders.jsp" width="100%" height="250px" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+    <iframe src="folders.jsp" class="folders-frame"></iframe>
 </div>
 
 <div class="menubox">
@@ -103,7 +103,7 @@
 
 <div class="menubox">
     <h2><a href="network.jsp"><ib:message key="Network Status"/></a></h2>
-    <iframe src="statusFrame.jsp" width="100%" height="40px" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+    <iframe src="statusFrame.jsp" class="status-frame"></iframe>
 </div>
 
 <div class="menubox">

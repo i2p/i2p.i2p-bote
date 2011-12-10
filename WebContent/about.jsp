@@ -37,41 +37,63 @@
     </h2>
     <br/>
     
-    <table><tr>
-        <td><strong><ib:message key="Author:"/></strong></td>
-    </tr><tr>
-        <td></td><td>
-            <ib:message key="Click to send an email" var="linkTitle"/>
-            <ib:message key="Feedback on I2P-Bote" var="subject"/>
-            <a href="newEmail.jsp?recipient0=hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n&recipientType0=to&subject=${subject}" title="${linkTitle}">HungryHobo</a>
-        </td>
-    </tr><tr>
-        <td><strong><ib:message key="Contributors:"/></strong></td>
-    </tr><tr>
-        <td></td><td>Mixxy</td><td><font color="#555"><ib:message key="Translation, QA, usability, technical feedback"/></font></td>
-    </tr><tr>
-        <td></td><td>zzz</td><td><font color="#555"><ib:message key="Pluginization, technical feedback"/></font></td>
-    </tr><tr>
-        <td></td><td>sponge</td><td><font color="#555"><ib:message key="Seedless"/></font></td>
-    </tr><tr>
-        <td></td><td>suhr</td><td><font color="#555"><ib:message key="Russian translation"/></font></td>
-    </tr><tr>
-        <td></td><td>hiddenz</td><td><font color="#555"><ib:message key="Russian translation"/></font></td>
-    </tr><tr>
-        <td></td><td>albat</td><td><font color="#555"><ib:message key="French translation"/></font></td>
-    </tr><tr>
-        <td></td><td>redzara</td><td><font color="#555"><ib:message key="French translation"/></font></td>
-    </tr><tr>
-        <td></td><td>KwukDuck</td><td><font color="#555"><ib:message key="Dutch translation"/></font></td>
-    </tr><tr>
-        <td></td><td>nej</td><td><font color="#555"><ib:message key="Norwegian translation"/></font></td>
-    </tr><tr>
-        <td></td><td>hottuna</td><td><font color="#555"><ib:message key="Swedish translation"/></font></td>
-    </tr><tr>
-        <td></td><td>walking</td><td><font color="#555"><ib:message key="Chinese translation"/></font></td>
-    </tr><tr>
-        <td></td><td>hamada</td><td><font color="#555"><ib:message key="Arabic translation"/></font></td>
-    </tr></table>
+    <div class="contributor-category"><ib:message key="Author:"/></div>
+    <div class="contributor-name">
+        <ib:message key="Click to send an email" var="linkTitle"/>
+        <ib:message key="Feedback on I2P-Bote" var="subject"/>
+        <a href="newEmail.jsp?recipient0=hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n&recipientType0=to&subject=${subject}" title="${linkTitle}">HungryHobo</a>
+    </div>
+    <br/>
+    
+    <div class="contributor-category"><ib:message key="Contributors:"/></div>
+    <div>
+        <div class="contributor-name">Mixxy</div>
+        <div class="contributor-role"><ib:message key="Translation, QA, usability, technical feedback"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">zzz</div>
+        <div class="contributor-role"><ib:message key="Pluginization, technical feedback"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">sponge</div>
+        <div class="contributor-role"><ib:message key="Seedless"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">suhr</div>
+        <div class="contributor-role"><ib:message key="Russian translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">hiddenz</div>
+        <div class="contributor-role"><ib:message key="Russian translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">albat</div>
+        <div class="contributor-role"><ib:message key="French translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">redzara</div>
+        <div class="contributor-role"><ib:message key="French translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">KwukDuck</div>
+        <div class="contributor-role"><ib:message key="Dutch translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">nej</div>
+        <div class="contributor-role"><ib:message key="Norwegian translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">hottuna</div>
+        <div class="contributor-role"><ib:message key="Swedish translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">walking</div>
+        <div class="contributor-role"><ib:message key="Chinese translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">hamada</div>
+        <div class="contributor-role"><ib:message key="Arabic translation"/></div>
+    </div>
 </div>
 
 <jsp:include page="footer.jsp"/>

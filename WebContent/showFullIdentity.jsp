@@ -38,11 +38,14 @@
     <ib:message key="Full Email Identity for {0}:">
         <ib:param value="${publicName}"/>
     </ib:message>
-    </p><p>
-    <textarea cols="64" rows="9" readonly="yes" wrap="soft" class="destinationtextarea">${identity.fullKey}</textarea>
     </p>
+    <div class="full-identity">
+        <textarea cols="64" rows="9" readonly="readonly">${identity.fullKey}</textarea>
+    </div>
+    <p/>
     <div class="warning"><b><ib:message key="Do not show the above information to anyone! It contains your private keys."/></b></div>
-    <p>
+    <p/>
+    </p>
     <form action="editIdentity.jsp">
         <input type="hidden" name="key" value="${key}"/>
         <button type="submit"><ib:message key="Return"/></button>

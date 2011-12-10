@@ -34,11 +34,14 @@
 <div class="main">
     <c:choose>
         <c:when test="${connStatus==NOT_STARTED || connStatus==DELAY}">
-            <strong><ib:message key="Network information is not available because I2P-Bote hasn't started connecting to the network yet."/></strong>
+            <span class="subheading">
+                <ib:message key="Network information is not available because I2P-Bote hasn't started connecting to the network yet."/>
+            </span>
         </c:when>
         <c:otherwise>
             <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-            <strong><ib:message key="Local destination:"/> </strong>${jspHelperBean.localDestination}<p/><br/>
+            <span class="subheading"><ib:message key="Local destination:"/></span>
+            ${jspHelperBean.localDestination}<p/><br/>
             <ib:peerInfo/>
         </c:otherwise>
     </c:choose>

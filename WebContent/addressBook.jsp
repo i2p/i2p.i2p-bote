@@ -53,29 +53,29 @@
         <ib:copyParams paramsToCopy="${param.paramsToCopy}"/>
     </c:if>
     
-    <table class="table">
+    <table>
     <c:if test="${!empty contacts}">
         <tr>
-            <c:if test="${param.select}"><th style="width: 20px;"></th></c:if>
-            <th><ib:message key="Name"/></th>
-            <th><ib:message key="Email Destination"/></th>
-            <c:if test="${not param.select}"><th style="width: 20px"></th></c:if>
+            <c:if test="${param.select}"><th class="header-column-check"></th></c:if>
+            <th class="header-column-name"><ib:message key="Name"/></th>
+            <th class="header-column-addr-email-dest"><ib:message key="Email Destination"/></th>
+            <c:if test="${not param.select}"><th class="header-column-trash"></th></c:if>
         </tr>
     </c:if>
-    <c:forEach items="${contacts}" var="contact" varStatus="loopStatus">
-        <c:set var="class" value=""/>
-        <c:if test="${loopStatus.index%2 != 0}">
-            <c:set var="class" value=" class=\"alttablecell\""/>
+    <c:forEach items="${contacts}" var="contact" varStatus="status">
+        <c:set var="backgroundClass" value="even-table-cell"/>
+        <c:if test="${status.index%2 != 0}">
+            <c:set var="backgroundClass" value="odd-table-cell"/>
         </c:if>
         
-        <tr>
+        <tr class="${backgroundClass}">
         <c:if test="${param.select}">
-            <td><div${class}>
+            <td>
                 <input type="checkbox" name="selectedContact" value="${ib:escapeQuotes(contact.name)} &lt;${contact.destination}&gt;"/>
-            </div></td>
+            </td>
         </c:if>
         
-        <td><div${class}>
+        <td>
             <c:if test="${!param.select}">
                 <%-- Insert a random number into the request string so others can't see contacts using the CSS history hack --%>
                 <a href="editContact.jsp?rnd=${jspHelperBean.randomNumber}&new=false&destination=${contact.destination}">
@@ -84,14 +84,14 @@
             <c:if test="${!param.select}">
                 </a>
             </c:if>
-        </div></td>
-        <td><div${class}>
+        </td>
+        <td>
             ${contact.destination}
-        </div></td>
+        </td>
         <c:if test="${!param.select}">
-            <td><div${class}>
+            <td>
                 <a href="deleteContact.jsp?destination=${contact.destination}"><img src="images/delete.png" alt="<ib:message key='Delete'/>" title='<ib:message key='Delete this contact'/>'/></a>
-            </div></td>
+            </td>
         </c:if>
         </tr>
     </c:forEach>

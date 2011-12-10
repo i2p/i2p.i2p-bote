@@ -53,97 +53,89 @@
 
 <div class="main">
     <form name="form" method="post" action="submitIdentity.jsp">
-        <table>
-            <tr>
-                <td>
-                    <div style="font-weight: bold;"><ib:message key="Public Name:"/></div>
-                    <div style="font-size: 0.8em;"><ib:message key="(required field, shown to recipients)"/></div>
-                </td>
-                <td>
-                    <input type="text" size="40" name="publicName" value="${publicName}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="font-weight: bold;"><ib:message key="Description:"/></div>
-                    <div style="font-size: 0.8em;"><ib:message key="(optional, kept private)"/></div>
-                </td>
-                <td>
-                    <input type="text" size="40" name="description" value="${description}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="font-weight: bold;"><ib:message key="Encryption:"/></div>
-                    <c:if test="${param.new}">
-                        <div style="font-size: 0.8em;"><ib:message key="(If unsure, leave the default)"/></div>
-                    </c:if>
-                </td>
-                <c:if test="${param.new}">
-                <td>
-                    <c:set var="selectedCryptoImplId" value="${param.cryptoImpl}"/>
-                    <c:if test="${empty param.cryptoImpl}">
-                        <c:set var="selectedCryptoImplId" value="2"/>
-                    </c:if>
-                    <select name="cryptoImpl">
-                        <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-                        <c:forEach items="${jspHelperBean.cryptoImplementations}" var="cryptoImpl">
-                            <c:set var="selected" value=""/>
-                            <c:if test="${selectedCryptoImplId eq cryptoImpl.id}">
-                                <c:set var="selected" value=" selected"/>
-                            </c:if>
-                            <option value="${cryptoImpl.id}"${selected}>
-                                ${cryptoImpl.name}
-                            </option>
-                        </c:forEach>
-                    </select>
-                </td>
-                </c:if>
-                <c:if test="${not param.new}">
-                <td>
-                    <c:set var="cryptoImpl" value="${ib:getCryptoImplementation(identity.cryptoImpl.id)}"/>
-                    ${cryptoImpl.name}
-                </td>
-                </c:if>
-            </tr>
-            <c:if test="${!param.new}">
-            <tr>
-                <td style="font-weight: bold; vertical-align: top;">
-                    <ib:message key="Email Destination:"/>
-                </td>
-                <td>
-                    <textarea cols="64" rows="9" readonly="yes" wrap="soft" class="destinationtextarea">${param.key}</textarea>
-                </td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold; vertical-align: top;">
-                    <ib:message key="Default Identity:"/>
-                </td>
-                <td>
-                    <c:if test="${param.isDefault}">
-                        <c:set var="checked" value="checked"/>
-                    </c:if>
-                    <input type="checkbox" name="isDefault" ${checked}/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="font-weight: bold;"><ib:message key="Private keys:"/></div>
-                    <div class="warning"style="font-size: 0.8em;"><ib:message key="(Never reveal to anyone!)"/></div>
-                </td>
-                <td>
-                    <a href="showFullIdentity.jsp?key=${key}"><ib:message key="Show"/></a>
-                </td>
-            </tr>
+        <div class="identity-form-label">
+            <div class="field-label"><ib:message key="Public Name:"/></div>
+            <div class="addtl-text"><ib:message key="(required field, shown to recipients)"/></div>
+        </div>
+        <div class="identity-form-value">
+            <input type="text" size="40" name="publicName" value="${publicName}"/>
+        </div>
+    
+        <div class="identity-form-label">
+            <div class="field-label"><ib:message key="Description:"/></div>
+            <div class="addtl-text"><ib:message key="(optional, kept private)"/></div>
+        </div>
+        <div class="identity-form-value">
+            <input type="text" size="40" name="description" value="${description}"/>
+        </div>
+    
+        <div class="identity-form-label">
+            <div class="field-label"><ib:message key="Encryption:"/></div>
+            <c:if test="${param.new}">
+                <div class="addtl-text"><ib:message key="(If unsure, leave the default)"/></div>
             </c:if>
-        </table>
-        <p/>
-        <input type="hidden" name="new" value="${param.new}"/>
-        <input type="hidden" name="key" value="${param.key}"/>
-        <button name="action" value="${commitAction}">${commitAction}</button>
-        <button name="action" value="cancel"/><ib:message key="Cancel"/></button>
+        </div>
+        <div class="identity-form-value">
+            <c:if test="${param.new}">
+                <c:set var="selectedCryptoImplId" value="${param.cryptoImpl}"/>
+                <c:if test="${empty param.cryptoImpl}">
+                    <c:set var="selectedCryptoImplId" value="2"/>
+                </c:if>
+                <select name="cryptoImpl">
+                    <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+                    <c:forEach items="${jspHelperBean.cryptoImplementations}" var="cryptoImpl">
+                        <c:set var="selected" value=""/>
+                        <c:if test="${selectedCryptoImplId eq cryptoImpl.id}">
+                            <c:set var="selected" value=" selected"/>
+                        </c:if>
+                        <option value="${cryptoImpl.id}"${selected}>
+                            ${cryptoImpl.name}
+                        </option>
+                    </c:forEach>
+                </select>
+            </c:if>
+            <c:if test="${not param.new}">
+                <c:set var="cryptoImpl" value="${ib:getCryptoImplementation(identity.cryptoImpl.id)}"/>
+                ${cryptoImpl.name}
+            </c:if>
+        </div>
+    
+        <div class="identity-form-label">
+            <ib:message key="Email Destination:"/>
+        </div>
+        <div class="identity-form-value">
+            <div class="destination">${param.key}</div>
+        </div>
+    
+        <div class="identity-form-label">
+            <ib:message key="Default Identity:"/>
+        </div>
+        <div class="identity-form-checkbox">
+            <c:if test="${param.isDefault}">
+                <c:set var="checked" value="checked"/>
+            </c:if>
+            <input type="checkbox" name="isDefault" ${checked}/>
+        </div>
+        
+        <div class="identity-form-label">
+            <div class="field-label"><ib:message key="Private keys:"/></div>
+            <div class="warning addtl-text"><ib:message key="(Never reveal to anyone!)"/></div>
+        </div>
+        <div class="identity-form-value">
+            <a href="showFullIdentity.jsp?key=${key}"><ib:message key="Show"/></a>
+        </div>
+        
+        <p><br/></p>
+        <div class="identity-buttons">
+            <input type="hidden" name="new" value="${param.new}"/>
+            <input type="hidden" name="key" value="${param.key}"/>
+            <button name="action" value="${commitAction}">${commitAction}</button>
+            <button name="action" value="cancel"/><ib:message key="Cancel"/></button>
+        </div>
         <c:if test="${not param.new}">
-            <button name="action" value="delete" title="<ib:message key='Delete this identity'/>" id="deleteIdentityBtn"/><ib:message key="Delete"/></button>
+            <div class="identity-delete">
+                <button name="action" value="delete" title="<ib:message key='Delete this identity'/>"/><ib:message key="Delete"/></button>
+            </div>
         </c:if>
     </form>
 

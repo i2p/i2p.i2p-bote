@@ -103,30 +103,27 @@
     <form name="form" action="editContact.jsp" method="post">
         <ib:copyParams paramsToCopy="${param.paramsToCopy}"/>
         
-        <table>
-            <tr>
-                <td>
-                    <div style="font-weight: bold;"><ib:message key="Email Destination:"/></div>
-                    <c:if test="${empty param.destination}">
-                        <div style="font-size: 0.8em;"><ib:message key="(required field)"/></div>
-                    </c:if>
-                </td>
-                <td>
-                    <input type="text" size="80" name="destination" value="${ib:escapeQuotes(param.destination)}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="font-weight: bold;"><ib:message key="Name:"/></div>
-                    <c:if test="${empty param.destination}">
-                        <div style="font-size: 0.8em;"><ib:message key="(required field)"/></div>
-                    </c:if>
-                </td>
-                <td>
-                    <input type="text" size="40" name="name" value="${ib:escapeQuotes(name)}"/>
-                </td>
-            </tr>
-        </table>
+        <div class="contact-form-label">
+            <div><ib:message key="Email Destination:"/></div>
+            <c:if test="${empty param.destination}">
+                <div class="addtl-text"><ib:message key="(required field)"/></div>
+            </c:if>
+        </div>
+        <div class="contact-form-value">
+            <input type="text" size="60" name="destination" value="${ib:escapeQuotes(param.destination)}"/>
+        </div>
+                    
+        <div class="contact-form-label">
+            <div class="field-label"><ib:message key="Name:"/></div>
+            <c:if test="${empty param.destination}">
+                <div class="addtl-text"><ib:message key="(required field)"/></div>
+            </c:if>
+        </div>
+        <div class="contact-form-value">
+            <input type="text" size="40" name="name" value="${ib:escapeQuotes(name)}"/>
+        </div>
+        
+        <p/>
         <button name="action" value="save">${submitButtonText}</button>
         <button name="action" value="cancel"><ib:message key="Cancel"/></button>
     </form>

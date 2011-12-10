@@ -37,7 +37,7 @@
     <meta http-equiv="refresh" content="${refreshInterval}" />
 </head>
 
-<body style="background-color: transparent; margin: 0px;">
+<body class="iframe-body">
 
 <div class="folderbox">
     <h2><ib:message key="Folders"/></h2>

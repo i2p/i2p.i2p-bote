@@ -52,62 +52,57 @@
 
 <body style="background-color: transparent; margin: 0px;">
 
-<table><tr>
-    <td>
-        <c:if test="${checkingForMail}">
-            <div class="checkmail">
-                <img src="images/wait.gif"/><ib:message key="Checking for mail..."/>
-            </div>
-        </c:if>
-        <c:if test="${!checkingForMail}">
-            <div class="checkmail">
-                <c:set var="frame" value=""/>
-                <c:choose>
-                    <c:when test="${jspHelperBean.identities.none}">
-                        <c:set var="url" value="noIdentities.jsp"/>
-                        <c:set var="frame" value='target="_parent"'/>
-                    </c:when>
-                    <c:otherwise>
-                        <%--
-                            If the user needs to enter a password to check mails, take them
-                            to checkMail.jsp and use the entire browser window
-                        --%>
-                        <c:if test="${jspHelperBean.passwordRequired}">
-                            <c:set var="frame" value='target="_parent"'/>
-                            <c:set var="url" value="checkMail.jsp"/>
-                        </c:if>
-                        <c:if test="${not jspHelperBean.passwordRequired}">
-                            <c:set var="url" value="buttonFrame.jsp"/>
-                        </c:if>
-                    </c:otherwise>
-                </c:choose>
-                
-                <form action="${url}" ${frame} method="GET">
-                    <input type="hidden" name="checkMail" value="1"/>
-                    <c:set var="disable" value=""/>
-                    <c:if test="${connStatus == DELAY}">
-                        <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
-                    </c:if>
-                    <button type="submit" value="Check Mail/>" ${disable}><ib:message key="Check Mail"/></button>
-                </form>
-            </div>
-            <c:if test="${jspHelperBean.newMailReceived}">
-                <script language="Javascript">
-                    // refresh folder list to update the new message count
-                    parent.frames[1].location.href = 'folders.jsp';
-                    // If inbox is being displayed, reload so the new email(s) show
-                    if (parent.document.getElementById('inboxFlag'))
-                        parent.location.href = 'folder.jsp?path=Inbox';
-                </script>
+<c:if test="${checkingForMail}">
+    <div class="checkmail">
+        <img src="images/wait.gif"/><ib:message key="Checking for mail..."/>
+    </div>
+</c:if>
+<c:if test="${!checkingForMail}">
+    <div class="checkmail">
+        <c:set var="frame" value=""/>
+        <c:choose>
+            <c:when test="${jspHelperBean.identities.none}">
+                <c:set var="url" value="noIdentities.jsp"/>
+                <c:set var="frame" value='target="_parent"'/>
+            </c:when>
+            <c:otherwise>
+                <%--
+                    If the user needs to enter a password to check mails, take them
+                    to checkMail.jsp and use the entire browser window
+                --%>
+                <c:if test="${jspHelperBean.passwordRequired}">
+                    <c:set var="frame" value='target="_parent"'/>
+                    <c:set var="url" value="checkMail.jsp"/>
+                </c:if>
+                <c:if test="${not jspHelperBean.passwordRequired}">
+                    <c:set var="url" value="buttonFrame.jsp"/>
+                </c:if>
+            </c:otherwise>
+        </c:choose>
+        
+        <form action="${url}" ${frame} method="GET">
+            <input type="hidden" name="checkMail" value="1"/>
+            <c:set var="disable" value=""/>
+            <c:if test="${connStatus == DELAY}">
+                <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
             </c:if>
-        </c:if>
-    </td>
-    <td>
-        <form action="newEmail.jsp" target="_top" method="GET">
-            <button type="submit" value="New"><ib:message key="New"/></button>
+            <button type="submit" value="Check Mail/>" ${disable}><ib:message key="Check Mail"/></button>
         </form>
-    </td>
-</tr></table>
+    </div>
+    <c:if test="${jspHelperBean.newMailReceived}">
+        <script language="Javascript">
+            // refresh folder list to update the new message count
+            parent.frames[1].location.href = 'folders.jsp';
+            // If inbox is being displayed, reload so the new email(s) show
+            if (parent.document.getElementById('inboxFlag'))
+                parent.location.href = 'folder.jsp?path=Inbox';
+        </script>
+    </c:if>
+</c:if>
+
+<form action="newEmail.jsp" target="_top" method="GET">
+    <button type="submit" value="New"><ib:message key="New"/></button>
+</form>
 
 </body>
 </html>

@@ -156,7 +156,7 @@ public class MessageTag extends BodyTagSupport {
     }
 
     /**
-     * If <code>hide</code> is to <code>true</code>, and the user has chosen to
+     * If <code>hide</code> is <code>true</code>, and the user has chosen to
      * hide the UI language from email recipients, the message is not translated.
      * @param hide
      */
