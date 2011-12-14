@@ -37,6 +37,7 @@
     <jsp:setProperty name="configuration" property="relayMaxDelay" value="${param.maxDelay}"/>
     <jsp:setProperty name="configuration" property="gatewayEnabled" value="${param.gatewayEnabled eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="gatewayDestination" value="${param.gatewayDestination}"/>
+    <jsp:setProperty name="configuration" property="themeUrl" value="${param.theme}"/>
     <ib:saveConfiguration/>
     <ib:message key="Settings have been saved." var="infoMessage" scope="request"/>
     <c:set var="infoMessage" value="${infoMessage}"/>
@@ -106,6 +107,21 @@
         <c:set var="checked" value="${configuration.includeSentTime ? ' checked' : ''}"/>
         <input type="checkbox"${checked} name="includeSentTime"/>
         <ib:message key="Include send time in outgoing emails"/>
+        <br/>
+        
+        <%-- UI theme --%>
+        <ib:message key="Theme:"/>
+        <select name="theme">
+            <c:set var="currentTheme" value="${configuration.theme}"/>
+            <c:forEach items="${configuration.themes}" var="theme">
+                <c:set var="selected" value=""/>
+                <c:if test="${theme eq currentTheme}">
+                    <c:set var="selected" value=" selected"/>
+                </c:if>
+                <option value="${theme}"${selected}>${theme}</option>
+            </c:forEach>
+        </select>
+        <br/>
         
         <p/>
         <button type="submit"><ib:message key="Save"/></button>

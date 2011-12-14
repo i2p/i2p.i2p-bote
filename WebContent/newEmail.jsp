@@ -127,7 +127,7 @@
                 <c:choose>
                     <c:when test="${status.last}">
                         <input type="hidden" name="destparamname" value="${recipientField}"/>
-                        <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="images/addressbook.gif"/></button>
+                        <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="${themeDir}/images/addressbook.gif"/></button>
                     </c:when>
                     <c:otherwise>
                         <button type="submit" name="action" value="removeRecipient${status.index}">-</button>

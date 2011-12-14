@@ -157,7 +157,7 @@
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${ib:getEmailStatus(email)}</a></div></td>
             <td>
                 <a href="deleteEmail.jsp?folder=Outbox&messageID=${email.messageID}">
-                <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
+                <img src="${themeDir}/images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
             </td>
             </tr>
         </c:forEach>

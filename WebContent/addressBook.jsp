@@ -90,7 +90,7 @@
         </td>
         <c:if test="${!param.select}">
             <td>
-                <a href="deleteContact.jsp?destination=${contact.destination}"><img src="images/delete.png" alt="<ib:message key='Delete'/>" title='<ib:message key='Delete this contact'/>'/></a>
+                <a href="deleteContact.jsp?destination=${contact.destination}"><img src="${themeDir}/images/delete.png" alt="<ib:message key='Delete'/>" title='<ib:message key='Delete this contact'/>'/></a>
             </td>
         </c:if>
         </tr>

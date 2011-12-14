@@ -26,6 +26,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+
 <c:set var="numEmails" value="${ib:getMailFolder(dirName).numElements}"/>
 <c:set var="numNew" value="${ib:getMailFolder(dirName).numNewEmails}"/>
 
@@ -34,7 +36,7 @@
     <ib:param value="${numNew}"/>
 </ib:message>
 <a href="folder.jsp?path=${dirName}" target="_parent" title="${linkTitle}">
-    <img src="images/folder.png"/>${displayName}
+    <img src="themes/${jspHelperBean.configuration.theme}/images/folder.png"/>${displayName}
 </a>
 
 <c:if test="${numNew>0}">(${numNew})</c:if>

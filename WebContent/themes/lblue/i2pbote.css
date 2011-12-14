@@ -50,7 +50,7 @@ iframe {
     text-align: center;
     -moz-box-shadow: inset 0px 0px 1px 0px #002;
     white-space: normal;
-    background: #ddf url('images/lightbluetile.png');
+    background: #ddf url('images/background.png');
     opacity: 1.0;
     cursor: pointer;
 }
@@ -99,7 +99,7 @@ iframe {
     padding: 10px;
     text-align: left;
     border: 1px solid #000033;
-    background: #ddf url('images/lightbluetile.png');
+    background: #ddf url('images/background.png');
     color: #000;
     font-size: 8pt;
     clear: left;
@@ -141,12 +141,11 @@ iframe {
 .main {
     margin: 0px 20px 20px 240px;
     padding: 0 15px 15px 25px;
-    background: #eef;
+    background: #ddf url('images/background.png');
+    color: #001;
     font: 9pt/130% "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
     text-align: left;
-    color: #001;
     border: 1px solid #000033;
-    background: #ddf url('images/lightbluetile.png');
     -moz-border-radius: 4px;
     -khtml-border-radius: 4px;
     border-radius: 4px;
@@ -156,12 +155,11 @@ iframe {
 .emailtext {
     margin: 0px 20px 20px 240px;
     padding: 0 15px 15px 25px;
-    background: #eef;
+    background: #cce2ff;
+    color: #001;
     font: 9pt/130% "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
     text-align: left;
-    color: #001;
     border: 1px solid #000033;
-    background: #cce2ff;
     -moz-border-radius: 4px;
     -khtml-border-radius: 4px;
     border-radius: 4px;
@@ -318,17 +316,6 @@ input[type=text] {
     text-decoration: none;
 }
 
-.widetextfield {
-    width: 100%;
-    background: #eef;
-    color: #001;
-    margin: 5px;
-    padding: 5px;
-    font: bold 8pt "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
-    border: 1px solid #001;
-    text-decoration: none;
-}
-
 input checkbox {
     border: 0 !important;
 }
@@ -379,17 +366,17 @@ table {
 table td, th {
     padding-left: 10px;
     padding-top: 3px;
-    background: url('images/lightbluetile.png');
+    background: url('images/background.png');
     white-space: nowrap;
     overflow-x: hidden;
 }
 
 .even-table-cell td {
-    background: url('images/lightbluetile.png');
+    background: url('images/background.png');
 }
 
 .odd-table-cell td {
-    background: url('images/lightbluetile-alt.png');
+    background: url('images/background-alt.png');
 }
 
 #address form span {

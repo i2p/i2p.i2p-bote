@@ -26,12 +26,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+<c:set var="themeDir" value="themes/${jspHelperBean.configuration.theme}" scope="request"/>
 <jsp:include page="getStatus.jsp"/>
 
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="i2pbote.css" />
+    <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css" />
     <c:if test="${connStatus ne CONNECTED and connStatus ne ERROR}">
         <meta http-equiv="refresh" content="20" />
     </c:if>
@@ -41,8 +43,8 @@
 
 <div class="statusbox">
     <c:choose>
-        <c:when test="${connStatus == NOT_STARTED}"><img src="images/redsquare.png"/> <ib:message key="Not Started"/></c:when>
-        <c:when test="${connStatus == DELAY}"><img src="images/yellowsquare.png"/> <ib:message key="Waiting 3 Minutes..."/><br/>
+        <c:when test="${connStatus == NOT_STARTED}"><img src="${themeDir}/images/connect_error.png"/> <ib:message key="Not Started"/></c:when>
+        <c:when test="${connStatus == DELAY}"><img src="${themeDir}/images/connecting.png"/> <ib:message key="Waiting 3 Minutes..."/><br/>
             <div class="status-frame-connect">
                 <%-- When the connect button is clicked, refresh the entire page so the buttons in buttonFrame.jsp are enabled --%>
                 <form action="connect.jsp" target="_top" method="GET">
@@ -50,9 +52,9 @@
                 </form>
             </div>
         </c:when>
-        <c:when test="${connStatus == CONNECTING}"><img src="images/yellowsquare.png"/> <ib:message key="Connecting..."/></c:when>
-        <c:when test="${connStatus == CONNECTED}"><img src="images/greensquare.png"/> <ib:message key="Connected"/></c:when>
-        <c:when test="${connStatus == ERROR}"><img src="images/redsquare.png"/> <ib:message key="Error"/></c:when>
+        <c:when test="${connStatus == CONNECTING}"><img src="${themeDir}/images/connecting.png"/> <ib:message key="Connecting..."/></c:when>
+        <c:when test="${connStatus == CONNECTED}"><img src="${themeDir}/images/connected.png"/> <ib:message key="Connected"/></c:when>
+        <c:when test="${connStatus == ERROR}"><img src="${themeDir}/images/connect_error.png"/> <ib:message key="Error"/></c:when>
         <c:otherwise> <ib:message key="Unknown Status"/></c:otherwise>
     </c:choose>
 </div>

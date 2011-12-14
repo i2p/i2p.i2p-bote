@@ -21,8 +21,12 @@
 
 package i2p.bote;
 
+import static i2p.bote.Util._;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import net.i2p.I2PAppContext;
@@ -50,6 +54,7 @@ public class Configuration {
     private static final String SENT_FOLDER_DIR = "sent";           // relative to I2P_BOTE_SUBDIR
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
+    private static final String[] BUILT_IN_THEMES = new String[] {_("lblue"), _("vanilla")};   // theme directories in the .war
 
     // Parameter names in the config file
     private static final String PARAMETER_STORAGE_SPACE_INBOX = "storageSpaceInbox";
@@ -77,6 +82,7 @@ public class Configuration {
     private static final String PARAMETER_EEPROXY_PORT = "eeproxyPort";
     private static final String PARAMETER_UPDATE_URL = "updateUrl";
     private static final String PARAMETER_UPDATE_CHECK_INTERVAL = "updateCheckInterval";
+    private static final String PARAMETER_THEME = "theme";
     
     // Defaults for each parameter
     private static final int DEFAULT_STORAGE_SPACE_INBOX = 1024 * 1024 * 1024;
@@ -104,6 +110,7 @@ public class Configuration {
     private static final int DEFAULT_EEPROXY_PORT = 4444;
     private static final String DEFAULT_UPDATE_URL = "http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote-update.xpi2p";
     private static final int DEFAULT_UPDATE_CHECK_INTERVAL = 60;   // in minutes
+    private static final String DEFAULT_THEME = "lblue";
     
     private Log log = new Log(Configuration.class);
     private Properties properties;
@@ -437,6 +444,24 @@ public class Configuration {
         return getIntParameter(PARAMETER_UPDATE_CHECK_INTERVAL, DEFAULT_UPDATE_CHECK_INTERVAL);
     }
 
+    public void setThemeUrl(String url) {
+        properties.setProperty(PARAMETER_THEME, url);
+    }
+    
+    /**
+     * Returns the name of the current UI theme.
+     */
+    public String getTheme() {
+        return properties.getProperty(PARAMETER_THEME, DEFAULT_THEME);
+    }
+    
+    /**
+     * Returns a list of all available UI themes.
+     */
+    public List<String> getThemes() {
+        return Arrays.asList(BUILT_IN_THEMES);
+    }
+    
     /**
      * Returns the File that contains the version the I2P-Bote data directory was last
      * successfully migrated to.

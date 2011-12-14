@@ -26,10 +26,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+<c:set var="themeDir" value="themes/${jspHelperBean.configuration.theme}" scope="request"/>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="i2pbote.css" />
+    <link rel="stylesheet" href="${themeDir}/i2pbote.css" />
     <c:set var="refreshInterval" value="120"/>
     <c:if test="${ib:getMailFolder('Outbox').numElements gt 0}">
         <c:set var="refreshInterval" value="20"/>
@@ -44,12 +47,12 @@
     <ib:message key="Inbox" var="displayName"/><ib:folderLink dirName="Inbox" displayName="${displayName}"/><br/>
     <ib:message key="Outbox" var="displayName"/><ib:folderLink dirName="Outbox" displayName="${displayName}"/><br/>
     <ib:message key="Sent Emails" var="displayName"/><ib:folderLink dirName="Sent" displayName="${displayName}"/><br/>
-    <img src="images/folder.png"/><ib:message key="Drafts"/><br/>
+    <img src="${themeDir}/images/folder.png"/><ib:message key="Drafts"/><br/>
     <ib:message key="Trash" var="displayName"/><ib:folderLink dirName="Trash" displayName="${displayName}"/><br/>
     <hr/>
-    <img src="images/folder.png"/>User_created_Folder_1<br/>
-    <img src="images/folder.png"/>User_created_Folder_2<br/>
-    <img src="images/folder.png"/>User_created_Folder_3<br/>
+    <img src="${themeDir}/images/folder.png"/>User_created_Folder_1<br/>
+    <img src="${themeDir}/images/folder.png"/>User_created_Folder_2<br/>
+    <img src="${themeDir}/images/folder.png"/>User_created_Folder_3<br/>
     <hr/>
     <ib:message key="Manage Folders"/>
 </div>

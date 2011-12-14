@@ -65,7 +65,7 @@
         <jsp:include page="header.jsp"/>
         <div class="main">
             <h2><ib:message key="Please wait..."/></h2>
-            <img src="images/wait.gif"/>
+            <img src="${themeDir}/images/wait.gif"/>
             <ib:message key="The Email Identity is being generated. This can take several minutes."/>
         </div>
     </c:when>

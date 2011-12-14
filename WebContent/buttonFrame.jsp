@@ -35,6 +35,7 @@
 </c:if>
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+<c:set var="themeDir" value="themes/${jspHelperBean.configuration.theme}" scope="request"/>
 <c:if test="${jspHelperBean.checkingForMail}">
     <c:set var="checkingForMail" value="true"/>
 </c:if>
@@ -42,7 +43,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="i2pbote.css" />
+    <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css" />
     
     <%-- Refresh until the Check Mail button becomes ungreyed --%>
     <c:if test="${checkingForMail or connStatus eq NOT_STARTED or connStatus eq DELAY}">
@@ -50,11 +51,11 @@
     </c:if>
 </head>
 
-<body style="background-color: transparent; margin: 0px;">
+<body class="iframe-body">
 
 <c:if test="${checkingForMail}">
     <div class="checkmail">
-        <img src="images/wait.gif"/><ib:message key="Checking for mail..."/>
+        <img src="${themeDir}/images/wait.gif"/><ib:message key="Checking for mail..."/>
     </div>
 </c:if>
 <c:if test="${!checkingForMail}">

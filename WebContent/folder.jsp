@@ -187,7 +187,7 @@
             </td>
             <td>
                 <a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}">
-                <img src="images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
+                <img src="${themeDir}/images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
             </td>
             </tr>
         </c:forEach>

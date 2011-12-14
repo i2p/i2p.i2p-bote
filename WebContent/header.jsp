@@ -43,6 +43,7 @@
 <fmt:requestEncoding value="UTF-8"/>
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+<c:set var="themeDir" value="themes/${jspHelperBean.configuration.theme}" scope="request"/>
 <fmt:setLocale value="${jspHelperBean.language}" scope="request"/>
 
 <html>
@@ -54,8 +55,8 @@
         <meta http-equiv="refresh" content="${refreshInterval};url=${refreshUrl}" />
     </c:if>
     
-    <link rel="stylesheet" href="i2pbote.css" />
-    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css" />
+    <link rel="icon" type="image/png" href="${themeDir}/images/favicon.png" />
     <c:if test="${!empty title}">
         <title>${title} <ib:message key="- I2P-Bote"/></title>
     </c:if>
@@ -67,7 +68,7 @@
     <c:if test="${jspHelperBean.passwordInCache}">
         <div class="password">
             <ib:message key="Password is cached. Click to clear the password cache." var="linkTitle"/>
-            <a href="clearPasswordCache.jsp" title="${linkTitle}"><img src="images/clear_password.png"/></a>
+            <a href="clearPasswordCache.jsp" title="${linkTitle}"><img src="${themeDir}/images/clear_password.png"/></a>
         </div>
     </c:if>
     <div class="title"><ib:message key="I2P-Bote"/></div>

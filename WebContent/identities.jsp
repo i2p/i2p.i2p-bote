@@ -60,7 +60,7 @@
         <tr class="${backgroundClass}">
         <td class="data-column-default">
             <c:if test="${identity.default}">
-                <img src="images/asterisk.png"/>
+                <img src="${themeDir}/images/default.png"/>
             </c:if>
         </td>
         <td>
