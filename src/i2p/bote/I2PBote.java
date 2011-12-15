@@ -155,6 +155,7 @@ public class I2PBote implements NetworkStatusSource {
         identities = new Identities(configuration.getIdentitiesFile(), passwordCache);
         addressBook = new AddressBook(configuration.getAddressBookFile(), passwordCache);
         initializeFolderAccess(passwordCache);
+        initializeExternalThemeDir();
     }
 
     /**
@@ -173,6 +174,13 @@ public class I2PBote implements NetworkStatusSource {
         indexPacketDhtStorageFolder = new IndexPacketFolder(configuration.getIndexPacketDhtStorageDir());
     }
 
+    /** Creates the external themes directory if it doesn't exist */
+    private void initializeExternalThemeDir() {
+        File dir = configuration.getExternalThemeDir();
+        if (!dir.exists() && !dir.mkdirs())
+            log.error("Can't create directory: <" + dir.getAbsolutePath() + ">");
+    }
+    
     /**
      * Sets up a {@link I2PSession}, using the I2P destination stored on disk or creating a new I2P
      * destination if no key file exists.

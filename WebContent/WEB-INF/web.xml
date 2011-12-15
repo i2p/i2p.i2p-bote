@@ -22,12 +22,23 @@
         </init-param>
     </filter>
 	<filter>
-	   <description>
-	       Makes parameters in a multipart/form-data request accessible to JSP/Servlet code.
-	   </description>
-	   <filter-name>MultipartFilter</filter-name>
-	   <filter-class>i2p.bote.web.MultipartFilter</filter-class>
+	    <description>
+	        Makes parameters in a multipart/form-data request accessible to JSP/Servlet code.
+	    </description>
+	    <filter-name>MultipartFilter</filter-name>
+	    <filter-class>i2p.bote.web.MultipartFilter</filter-class>
 	</filter>
+    <filter>
+        <description>
+            Redirects requests for themes not included in the .war, to ThemeServlet
+        </description>
+        <filter-name>ThemeFilter</filter-name>
+        <filter-class>i2p.bote.web.ThemeFilter</filter-class>
+        <init-param>
+            <param-name>themeServletPath</param-name>
+            <param-value>externalThemes</param-value>
+        </init-param>
+    </filter>
 
     <filter-mapping>
         <filter-name>CharsetFilter</filter-name>
@@ -37,13 +48,26 @@
         <filter-name>MultipartFilter</filter-name>
         <url-pattern>/newEmail.jsp</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>ThemeFilter</filter-name>
+        <url-pattern>/themes/*</url-pattern>
+    </filter-mapping>
     
     <servlet>
         <servlet-name>ShowAttachment</servlet-name>
         <servlet-class>i2p.bote.web.ShowAttachment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ThemeServlet</servlet-name>
+        <servlet-class>i2p.bote.web.ThemeServlet</servlet-class>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>ShowAttachment</servlet-name>
         <url-pattern>/showAttachment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ThemeServlet</servlet-name>
+        <url-pattern>/externalThemes/*</url-pattern>
     </servlet-mapping>
 </web-app>

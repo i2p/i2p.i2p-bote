@@ -24,7 +24,9 @@ package i2p.bote;
 import static i2p.bote.Util._;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -55,6 +57,7 @@ public class Configuration {
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
     private static final String[] BUILT_IN_THEMES = new String[] {_("lblue"), _("vanilla")};   // theme directories in the .war
+    private static final String THEME_SUBDIR = "themes";   // relative to I2P_BOTE_SUBDIR
 
     // Parameter names in the config file
     private static final String PARAMETER_STORAGE_SPACE_INBOX = "storageSpaceInbox";
@@ -459,7 +462,39 @@ public class Configuration {
      * Returns a list of all available UI themes.
      */
     public List<String> getThemes() {
+        List<String> themes = new ArrayList<String>();
+        themes.addAll(getBuiltInThemes());
+        themes.addAll(getExternalThemes());
+        return themes;
+    }
+    
+    /**
+     * Returns only the UI themes that are included in the application.
+     */
+    public List<String> getBuiltInThemes() {
         return Arrays.asList(BUILT_IN_THEMES);
+    }
+    
+    /**
+     * Returns the directory where the application looks for additional UI themes.
+     */
+    public File getExternalThemeDir() {
+        return new File(i2pBoteDir, THEME_SUBDIR);
+    }
+    
+    private List<String> getExternalThemes() {
+        File[] dirs = new File(i2pBoteDir, THEME_SUBDIR).listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.isDirectory();
+            }
+        });
+        
+        List<String> themeNames = new ArrayList<String>();
+        if (dirs != null)
+            for (File dir: dirs)
+                themeNames.add(dir.getName());
+        return themeNames;
     }
     
     /**
