@@ -137,6 +137,7 @@
             <lib file="${lib}/bcprov-ecc-jdk16-146.jar"/>
             <lib file="ant_build/lib/flexi-gmss-1.7p1.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
+          <zipfileset dir="WebContent/themes" prefix="themes"/>
         </war>
 
         <echo message="SHA256 sum:"/>
@@ -257,6 +258,7 @@
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
+          <zipfileset dir="WebContent/themes" prefix="themes"/>
         </war>
     </target>
     
