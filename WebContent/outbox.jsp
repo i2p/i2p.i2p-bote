@@ -35,7 +35,7 @@
     pageContext.setAttribute("STATUS", i2p.bote.email.EmailAttribute.STATUS, PageContext.PAGE_SCOPE);
 %> 
 
-<c:set var="refreshUrl" value="outbox.jsp?sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
+<c:set var="refreshUrl" value="outbox.jsp?sortcolumn=${param.sortcolumn}&amp;descending=${param.descending}" scope="request"/>
 <ib:requirePassword forwardUrl="${refreshUrl}">
 <%-- Refresh page if there are mails in the outbox --%>
 <c:if test="${ib:getMailFolder('Outbox').numElements gt 0}">
@@ -64,11 +64,11 @@
 
 <c:if test="${!descending}">
     <c:set var="sortIndicator" value="&#x25b4;"/>
-    <c:set var="reverseSortOrder" value="&descending=true"/>
+    <c:set var="reverseSortOrder" value="&amp;descending=true"/>
 </c:if>
 <c:if test="${descending}">
     <c:set var="sortIndicator" value="&#x25be;"/>
-    <c:set var="reverseSortOrder" value="&descending=false"/>
+    <c:set var="reverseSortOrder" value="&amp;descending=false"/>
 </c:if>
 
 <div class="main">
@@ -134,7 +134,7 @@
                 <ib:message key="(No subject)" var="subject"/>
             </c:if>
             
-            <c:set var="mailUrl" value="showEmail.jsp?folder=Outbox&messageID=${email.messageID}"/>
+            <c:set var="mailUrl" value="showEmail.jsp?folder=Outbox&amp;messageID=${email.messageID}"/>
             
             <c:choose>
                 <c:when test="${email.new}"><c:set var="textClass" value="folder-item-new"/></c:when>
@@ -156,7 +156,7 @@
             </td>
             <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${ib:getEmailStatus(email)}</a></div></td>
             <td>
-                <a href="deleteEmail.jsp?folder=Outbox&messageID=${email.messageID}">
+                <a href="deleteEmail.jsp?folder=Outbox&amp;messageID=${email.messageID}">
                 <img src="${themeDir}/images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
             </td>
             </tr>

@@ -78,7 +78,7 @@
         <td>
             <c:if test="${!param.select}">
                 <%-- Insert a random number into the request string so others can't see contacts using the CSS history hack --%>
-                <a href="editContact.jsp?rnd=${jspHelperBean.randomNumber}&new=false&destination=${contact.destination}">
+                <a href="editContact.jsp?rnd=${jspHelperBean.randomNumber}&amp;new=false&amp;destination=${contact.destination}">
             </c:if>
                 ${contact.name}
             <c:if test="${!param.select}">

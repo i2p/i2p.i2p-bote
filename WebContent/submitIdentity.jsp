@@ -60,7 +60,7 @@
     <c:when test="${param.action eq 'wait'}">
         <c:set var="counterParam" value="${keygenCounter+1}"/>
         <%-- The double URL encoding prevents GET from breaking special chars --%>
-        <c:set var="refreshUrl" value="submitIdentity.jsp?counter=${counterParam}&new=${param.new}&cryptoImpl=${param.cryptoImpl}&publicName=${ib:urlEncode(ib:urlEncode(param.publicName))}&description=${param.description}&emailAddress=${param.emailAddress}&isDefault=${param.isDefault}" scope="request"/>
+        <c:set var="refreshUrl" value="submitIdentity.jsp?counter=${counterParam}&amp;new=${param.new}&amp;cryptoImpl=${param.cryptoImpl}&amp;publicName=${ib:urlEncode(ib:urlEncode(param.publicName))}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;isDefault=${param.isDefault}" scope="request"/>
         <c:set var="refreshInterval" value="0" scope="request"/>
         <jsp:include page="header.jsp"/>
         <div class="main">
@@ -78,9 +78,9 @@
         
         <%-- after password entry, go to the wait page if a new "slow" identity is being generated --%>
         <c:if test="${param.new eq 'true' and param.cryptoImpl eq 4}">
-            <c:set var="actionParam" value="action=wait&"/>
+            <c:set var="actionParam" value="action=wait&amp;"/>
         </c:if>
-        <c:set var="forwardUrl" value="submitIdentity.jsp?${actionParam}counter=${param.counter}&new=${param.new}&cryptoImpl=${param.cryptoImpl}&publicName=${param.publicName}&description=${param.description}&emailAddress=${param.emailAddress}&isDefault=${param.isDefault}"/>
+        <c:set var="forwardUrl" value="submitIdentity.jsp?${actionParam}counter=${param.counter}&amp;new=${param.new}&amp;cryptoImpl=${param.cryptoImpl}&amp;publicName=${param.publicName}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;isDefault=${param.isDefault}"/>
         <ib:requirePassword forwardUrl="${forwardUrl}">
             <c:set var="errorMessage" value="${ib:createOrModifyIdentity(param.new, param.cryptoImpl, param.key, publicName, param.description, param.emailAddress, param.isDefault=='on')}"/>
             <c:if test="${not empty param.counter}">

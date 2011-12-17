@@ -39,7 +39,7 @@
     <jsp:forward page="outbox.jsp"/>
 </c:if>
 
-<c:set var="refreshUrl" value="folder.jsp?path=${param.path}&sortcolumn=${param.sortcolumn}&descending=${param.descending}" scope="request"/>
+<c:set var="refreshUrl" value="folder.jsp?path=${param.path}&amp;sortcolumn=${param.sortcolumn}&amp;descending=${param.descending}" scope="request"/>
 <ib:requirePassword forwardUrl="${refreshUrl}">
 <%-- Autorefresh inbox and sent folders --%>
 <c:if test="${param.path eq 'Inbox' or param.path eq 'Sent'}">
@@ -88,11 +88,11 @@
 
 <c:if test="${!descending}">
     <c:set var="sortIndicator" value="&#x25b4;"/>
-    <c:set var="reverseSortOrder" value="&descending=true"/>
+    <c:set var="reverseSortOrder" value="&amp;descending=true"/>
 </c:if>
 <c:if test="${descending}">
     <c:set var="sortIndicator" value="&#x25be;"/>
-    <c:set var="reverseSortOrder" value="&descending=false"/>
+    <c:set var="reverseSortOrder" value="&amp;descending=false"/>
 </c:if>
 
 <div class="main">
@@ -100,7 +100,7 @@
         <c:set var="folder" value="${ib:getMailFolder(folderName)}"/>
         <tr>
             <th class="header-column-from">
-                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${FROM}"/>
+                <c:set var="sortLink" value="folder.jsp?path=${param.path}&amp;sortcolumn=${FROM}"/>
                 <c:if test="${sortcolumn eq FROM}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="fromColumnIndicator" value=" ${sortIndicator}"/>
@@ -112,7 +112,7 @@
                 <th class="header-column-sig"><ib:message key="Sig"/></th>
             </c:if>
             <th class="header-column-to">
-                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${TO}"/>
+                <c:set var="sortLink" value="folder.jsp?path=${param.path}&amp;sortcolumn=${TO}"/>
                 <c:if test="${sortcolumn eq TO}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="toColumnIndicator" value=" ${sortIndicator}"/>
@@ -120,7 +120,7 @@
                 <a href="${sortLink}"><ib:message key="To"/>${toColumnIndicator}</a>
             </th>
             <th class="header-column-subject">
-                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${SUBJECT}"/>
+                <c:set var="sortLink" value="folder.jsp?path=${param.path}&amp;sortcolumn=${SUBJECT}"/>
                 <c:if test="${sortcolumn eq SUBJECT}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="subjectColumnIndicator" value=" ${sortIndicator}"/>
@@ -128,7 +128,7 @@
                 <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
             </th>
             <th class="header-column-date">
-                <c:set var="sortLink" value="folder.jsp?path=${param.path}&sortcolumn=${DATE}"/>
+                <c:set var="sortLink" value="folder.jsp?path=${param.path}&amp;sortcolumn=${DATE}"/>
                 <c:if test="${sortcolumn eq DATE}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="dateColumnIndicator" value=" ${sortIndicator}"/>
@@ -161,7 +161,7 @@
                 <ib:message key="(No subject)" var="subject"/>
             </c:if>
             
-            <c:set var="mailUrl" value="showEmail.jsp?folder=${folderName}&messageID=${email.messageID}"/>
+            <c:set var="mailUrl" value="showEmail.jsp?folder=${folderName}&amp;messageID=${email.messageID}"/>
             
             <c:choose>
                 <c:when test="${email.new}"><c:set var="textClass" value="folder-item-new"/></c:when>
@@ -186,7 +186,7 @@
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
             </td>
             <td>
-                <a href="deleteEmail.jsp?folder=${folderName}&messageID=${email.messageID}">
+                <a href="deleteEmail.jsp?folder=${folderName}&amp;messageID=${email.messageID}">
                 <img src="${themeDir}/images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>
             </td>
             </tr>

@@ -41,7 +41,7 @@
     <div class="contributor-name">
         <ib:message key="Click to send an email" var="linkTitle"/>
         <ib:message key="Feedback on I2P-Bote" var="subject"/>
-        <a href="newEmail.jsp?recipient0=hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n&recipientType0=to&subject=${subject}" title="${linkTitle}">HungryHobo</a>
+        <a href="newEmail.jsp?recipient0=hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n&amp;recipientType0=to&amp;subject=${subject}" title="${linkTitle}">HungryHobo</a>
     </div>
     <br/>
     
