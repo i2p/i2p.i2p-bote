@@ -176,7 +176,7 @@ msgstr "Ошибка отправки email-а: {0}"
 
 #: WebContent/noIdentities.jsp
 msgid "In order to receive email from other people, you need to create an email identity first."
-msgstr "Чтобы получать письма отдругих людей, необходимо сначала создать набор ключей."
+msgstr "Чтобы получать письма от других людей, необходимо сначала создать набор ключей."
 
 #: WebContent/noIdentities.jsp
 msgid "Every email identity is associated with an email destination. Anybody can send email to the email destination, but only the identity holder can read it."
@@ -515,8 +515,12 @@ msgid "Check Mail"
 msgstr "Проверить почту"
 
 #: WebContent/buttonFrame.jsp
-msgid "New"
-msgstr "Создать письмо"
+msgid "Compose"
+msgstr "Написать письмо"
+
+#: WebContent/buttonFrame.jsp
+msgid "Last checked:"
+msgstr "Последняя проверка:"
 
 #: WebContent/settings.jsp
 msgid "Settings have been saved."
@@ -844,7 +848,7 @@ msgstr "Русский перевод"
 
 #: WebContent/about.jsp
 msgid "French translation"
-msgstr "Французкий"
+msgstr "Французкий перевод"
 
 #: WebContent/about.jsp
 msgid "Dutch translation"
@@ -865,6 +869,34 @@ msgstr "Китайский перевод"
 #: WebContent/about.jsp
 msgid "Arabic translation"
 msgstr "Арабский перевод"
+
+#: WebContent/about.jsp
+msgid "Czech translation"
+msgstr "Чешский перевод"
+
+#: WebContent/about.jsp
+msgid "German translation"
+msgstr "Немецкий перевод"
+
+#: WebContent/about.jsp
+msgid "Polish translation"
+msgstr "Польский перевод"
+
+#: WebContent/about.jsp
+msgid "Italian translation"
+msgstr "Итальянский перевод"
+
+#: WebContent/about.jsp
+msgid "Ukrainian translation"
+msgstr "Украинский перевод"
+
+#: WebContent/about.jsp
+msgid "Hungarian translation"
+msgstr "Венгерский перевод"
+
+#: WebContent/about.jsp
+msgid "Code fixes, translation updates from tx"
+msgstr "Правки кода, обновления переводов от tx"
 
 #: WebContent/WEB-INF/tags/printDate.tag
 msgid "Unknown"

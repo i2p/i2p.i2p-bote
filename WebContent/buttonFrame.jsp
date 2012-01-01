@@ -87,7 +87,7 @@
             <c:if test="${connStatus == DELAY}">
                 <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
             </c:if>
-            <button type="submit" value="Check Mail/>" ${disable}><ib:message key="Check Mail"/></button>
+            <button type="submit" value="Check Mail" ${disable}><ib:message key="Check Mail"/></button>
         </form>
     </div>
     <c:if test="${jspHelperBean.newMailReceived}">
@@ -101,12 +101,14 @@
     </c:if>
 </c:if>
 
-<form action="newEmail.jsp" target="_top" method="GET">
-    <button type="submit" value="New"><ib:message key="Compose"/></button>
-</form>
+<div class="compose">
+    <form action="newEmail.jsp" target="_top" method="GET">
+        <button type="submit" value="New"><ib:message key="Compose"/></button>
+    </form>
+</div>
 
 <div class="lastcheck">
-    <ib:message key="Last checked: "/>
+    <ib:message key="Last checked:"/>
     <c:set var="lastCheck" value="${jspHelperBean.lastMailCheckTime}" scope="request"/>
     <ib:printDate date="${lastCheck}" type="time" timeStyle="short" printUnknown="true"/>
 </div>

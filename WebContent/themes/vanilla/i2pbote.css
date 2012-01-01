@@ -76,6 +76,12 @@ iframe {
     width: 50%;
 }
 
+.compose {
+    font: bold 8pt "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
+    float: right;
+    width: 50%;
+}
+
 .lastcheck {
     margin: 7px 0px 0px 0px;
     font: bold 8pt "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
