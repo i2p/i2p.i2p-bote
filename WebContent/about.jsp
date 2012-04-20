@@ -20,7 +20,6 @@
  --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
@@ -75,6 +74,10 @@
         <div class="contributor-role"><ib:message key="French translation"/></div>
     </div>
     <div>
+        <div class="contributor-name">Jrnr601</div>
+        <div class="contributor-role"><ib:message key="Dutch translation"/></div>
+    </div>
+    <div>
         <div class="contributor-name">KwukDuck</div>
         <div class="contributor-role"><ib:message key="Dutch translation"/></div>
     </div>
@@ -93,6 +96,30 @@
     <div>
         <div class="contributor-name">hamada</div>
         <div class="contributor-role"><ib:message key="Arabic translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">Waseihou Watashi</div>
+        <div class="contributor-role"><ib:message key="Czech translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">D.A. Loader</div>
+        <div class="contributor-role"><ib:message key="German translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">Warton</div>
+        <div class="contributor-role"><ib:message key="Polish translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">digitalmannen</div>
+        <div class="contributor-role"><ib:message key="Swedish translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">mkkid</div>
+        <div class="contributor-role"><ib:message key="Italian translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">gringoire</div>
+        <div class="contributor-role"><ib:message key="Ukrainian translation"/></div>
     </div>
 </div>
 
