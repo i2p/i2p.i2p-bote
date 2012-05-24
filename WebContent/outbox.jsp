@@ -147,9 +147,9 @@
             </c:if>
             
             <tr class="${textClass} ${backgroundClass}">
-            <td><a href="${mailUrl}">${fn:escapeXml(sender)}</a></td>
-            <td><a href="${mailUrl}">${fn:escapeXml(recipient)}</a></td>
-            <td><a href="${mailUrl}">${fn:escapeXml(subject)}</a></td>
+            <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(sender)}</a></td>
+            <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(recipient)}</a></td>
+            <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(subject)}</a></td>
             <td>
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>

@@ -99,13 +99,15 @@
                 ${cryptoImpl.name}
             </c:if>
         </div>
-    
-        <div class="identity-form-label">
-            <ib:message key="Email Destination:"/>
-        </div>
-        <div class="identity-form-value">
-            <div class="destination">${param.key}</div>
-        </div>
+
+        <c:if test="${not empty param.key}">
+            <div class="identity-form-label">
+                <ib:message key="Email Destination:"/>
+            </div>
+            <div class="identity-form-value">
+                <div class="destination">${param.key}</div>
+            </div>
+        </c:if>
     
         <div class="identity-form-label">
             <ib:message key="Default Identity:"/>

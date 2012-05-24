@@ -85,7 +85,7 @@
                 </a>
             </c:if>
         </td>
-        <td>
+        <td class="ellipsis">
             ${contact.destination}
         </td>
         <c:if test="${!param.select}">

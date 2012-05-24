@@ -70,7 +70,7 @@
             </a>
         </td>
         <td>${identity.description}</td>
-        <td>${identity.key}</td>
+        <td class="ellipsis">${identity.key}</td>
         </tr>
     </c:forEach>
     </table>
