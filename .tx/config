@@ -6,6 +6,7 @@ trans.cs = locale/messages_cs.po
 trans.de = locale/messages_de.po
 trans.es = locale/messages_es.po
 trans.fr = locale/messages_fr.po
+trans.hu = locale/messages_hu.po
 trans.it = locale/messages_it.po
 trans.nl = locale/messages_nl.po
 trans.no = locale/messages_no.po

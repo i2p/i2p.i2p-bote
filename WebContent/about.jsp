@@ -121,6 +121,10 @@
         <div class="contributor-name">gringoire</div>
         <div class="contributor-role"><ib:message key="Ukrainian translation"/></div>
     </div>
+    <div>
+        <div class="contributor-name">AdminLMH</div>
+        <div class="contributor-role"><ib:message key="Hungarian translation"/></div>
+    </div>
 </div>
 
 <jsp:include page="footer.jsp"/>
