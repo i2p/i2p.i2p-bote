@@ -95,7 +95,7 @@ iframe {
 
 .menubox {
     float: left;
-    width: 175px;
+    width: 180px;
     margin: 0px 0px 10px 10px;
     padding: 10px;
     text-align: left;
@@ -303,7 +303,8 @@ input[type=text] {
     text-decoration: none;
 }
 
-input checkbox {
+input[type=checkbox] {
+    min-width: 10px;   /* for Chrome */
     border: 0 !important;
 }
 
@@ -420,13 +421,18 @@ table td, th {
 }
 
 .identity-buttons {
-	position: absolute;
-}
-	
-.identity-delete {
-	text-align: right;
+    text-align: left;
 }
     
+.identity-delete {
+    text-align: right;
+}
+    
+.identity-buttons, .identity-delete {
+    display: inline-block;
+    width: 250px;
+}
+	
 .full-identity {
 	margin-right: 10px;
 }
@@ -633,3 +639,10 @@ table td, th {
 }
 
 wbr:after { content: "\00200B" }   /* For Opera */
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}

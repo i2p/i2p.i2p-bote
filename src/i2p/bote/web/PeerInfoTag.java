@@ -67,7 +67,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                 for (List<String> row: dhtStats.getData()) {
                     out.println("<tr>");
                     for (String cellData: row)
-                        out.println("<td>" + cellData + "</td>");
+                        out.println("<td class=\"ellipsis\">" + cellData + "</td>");
                     out.println("</tr>");
                 }
                 
@@ -91,7 +91,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                 for (RelayPeer peer: relayPeers) {
                     out.println("<tr>");
                     out.println("<td>" + i + "</td>");
-                    out.println("<td>" + Util.toBase32(peer) + "</td>");
+                    out.println("<td class=\"ellipsis\">" + Util.toBase32(peer) + "</td>");
                     out.println("<td>" + peer.getReachability() + "</td>");
                     out.println("</tr>");
                     i++;
@@ -116,7 +116,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                 for (BannedPeer peer: bannedPeers) {
                     out.println("<tr>");
                     out.println("<td>" + peerIndex++ + "</td>");
-                    out.println("<td>" + Util.toBase32(peer.getDestination()) + "</td>");
+                    out.println("<td class=\"ellipsis\">" + Util.toBase32(peer.getDestination()) + "</td>");
                     out.println("<td>" + (peer.getBanReason()==null?"":peer.getBanReason()) + "</td>");
                     out.println("</tr>");
                 }

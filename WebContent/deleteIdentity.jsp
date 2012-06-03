@@ -30,8 +30,9 @@
 <c:set var="errorMessage" value="${ib:deleteIdentity(param.key)}"/>
 
 <c:if test="${empty errorMessage}">
+    <ib:message key="The email identity has been deleted." var="deleteMsg"/>
     <jsp:forward page="identities.jsp">
-        <jsp:param name="infoMessage" value="The email identity has been deleted."/>
+        <jsp:param name="infoMessage" value="${deleteMsg}"/>
     </jsp:forward>
 </c:if>
 <c:if test="${!empty errorMessage}">
