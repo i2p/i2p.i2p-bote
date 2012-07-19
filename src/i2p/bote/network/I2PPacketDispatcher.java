@@ -204,7 +204,7 @@ public class I2PPacketDispatcher extends I2PBoteThread implements I2PSessionMuxe
                 if (data.length > 0)
                     dispatchPacket(data, clientSocket.getPeerDestination());
             } catch (IOException e) {
-                log.error("Can't read from I2P socket", e);
+                log.warn("Can't read from I2P socket", e);
             }
             finally {
                 if (clientSocket != null)
