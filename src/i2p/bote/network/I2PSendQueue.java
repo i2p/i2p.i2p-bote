@@ -61,7 +61,7 @@ import net.i2p.util.Log;
  * to be sent.
  */
 public class I2PSendQueue extends I2PBoteThread implements PacketListener {
-    private static final int MAX_DATAGRAM_SIZE = 5000;   // everything bigger than this is sent as a stream
+    private static final int MAX_DATAGRAM_SIZE = Integer.MAX_VALUE;   // never send packets as streams, always use datagrams
     
     private Log log = new Log(I2PSendQueue.class);
     private I2PSession i2pSession;
