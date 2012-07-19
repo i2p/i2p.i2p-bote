@@ -126,8 +126,13 @@ public class CheckEmailTask implements Callable<Boolean> {
         executor.shutdown();   // end all EmailPacketTask threads when tasks are finished
         
         // wait until all EmailPacketTasks are done
-        for (Future<?> result: futureResults)
-            result.get(1, TimeUnit.HOURS);
+        try {
+            for (Future<?> result: futureResults)
+                result.get(1, TimeUnit.HOURS);
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            throw new InterruptedException("EmailPacketTask interrupted");
+        }
         
         // delete index packets if all EmailPacketTasks finished without throwing an exception
         Set<Destination> indexPacketPeers = indexPacketResults.getPeers();
@@ -194,7 +199,14 @@ public class CheckEmailTask implements Callable<Boolean> {
             boolean emailCompleted = false;
             // Use findAll rather than findOne because after we receive an email packet, we want
             // to send delete requests to as many of the storage nodes as possible.
-            DhtResults results = dht.findAll(emailPacketKey, EncryptedEmailPacket.class);
+            DhtResults results = null;
+            try {
+                results = dht.findAll(emailPacketKey, EncryptedEmailPacket.class);
+            } catch (InterruptedException e) {
+                log.debug("Interrupted during DHT.findAll()", e);
+                Thread.currentThread().interrupt();
+                return;
+            }
             
             EncryptedEmailPacket validPacket = null;   // stays null until a valid packet is found in the loop below
             for (Destination peer: results.getPeers()) {

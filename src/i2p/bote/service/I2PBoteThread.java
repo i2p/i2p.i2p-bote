@@ -46,13 +46,19 @@ public abstract class I2PBoteThread extends I2PAppThread {
         shutdownSignal.countDown();
     }
     
+    /**
+     * Waits for another thread to call {@link #requestShutdown()} or to {@link #interrupt()} this thread.
+     * @param timeout
+     * @param unit
+     * @return <code>true</code> if the timeout was reached; <code>false</code> if a shutdown was requested or the thread was interrupted
+     */
     public boolean awaitShutdownRequest(long timeout, TimeUnit unit) {
         try {
             return shutdownSignal.await(timeout, unit);
         } catch (InterruptedException e) {
             log.error("Interrupted in thread <" + getName() + ">", e);
             shutdownSignal.countDown();
-            return true;
+            return false;
         }
     }
     
@@ -114,5 +120,5 @@ public abstract class I2PBoteThread extends I2PAppThread {
     /**
      * @see #run()
      */
-    protected void preShutdown() throws InterruptedException { }
+    protected void preShutdown() { }
 }

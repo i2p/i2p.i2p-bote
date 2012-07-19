@@ -208,15 +208,6 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         }
     }
     
-    @Override
-    protected void preShutdown() throws InterruptedException {
-        while (!packetQueue.isEmpty()) {
-            ScheduledPacket scheduledPacket = packetQueue.take();
-            if (scheduledPacket != null)
-                send(scheduledPacket);
-        }
-    }
-    
     /**
      * Waits for an amount of time that is long enough to keep the sending rate below <code>maxBandwidth<code>,
      * and until the current time is past <code>earliestSendTime</code>.

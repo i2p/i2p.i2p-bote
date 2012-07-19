@@ -137,6 +137,8 @@ public class ClosestNodesLookupTask implements Runnable {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
                     log.warn("Interrupted while doing a closest nodes lookup.", e);
+                    Thread.currentThread().interrupt();
+                    break;
                 }
             } while (!isDone());
             log.debug("Node lookup for " + key + " found " + responses.size() + " nodes (may include local node).");

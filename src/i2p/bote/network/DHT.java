@@ -31,9 +31,9 @@ public interface DHT {
 
     void store(DhtStorablePacket packet) throws DhtException;
     
-    DhtResults findOne(Hash key, Class<? extends DhtStorablePacket> dataType);
+    DhtResults findOne(Hash key, Class<? extends DhtStorablePacket> dataType) throws InterruptedException;
 
-    DhtResults findAll(Hash key, Class<? extends DhtStorablePacket> dataType);
+    DhtResults findAll(Hash key, Class<? extends DhtStorablePacket> dataType) throws InterruptedException;
 
     /**
      * Registers a <code>DhtStorageHandler</code> that handles incoming storage requests of a certain

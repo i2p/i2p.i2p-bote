@@ -175,12 +175,12 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
 
     @Override
-    public DhtResults findOne(Hash key, Class<? extends DhtStorablePacket> dataType) {
+    public DhtResults findOne(Hash key, Class<? extends DhtStorablePacket> dataType) throws InterruptedException {
         return find(key, dataType, false);
     }
 
     @Override
-    public DhtResults findAll(Hash key, Class<? extends DhtStorablePacket> dataType) {
+    public DhtResults findAll(Hash key, Class<? extends DhtStorablePacket> dataType) throws InterruptedException {
         return find(key, dataType, true);
     }
 
@@ -215,7 +215,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
         return bucketManager.getPeerStats();
     }
     
-    private DhtResults find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) {
+    private DhtResults find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) throws InterruptedException {
         final Collection<Destination> closeNodes = getClosestNodes(key);
         log.info("Querying localhost + " + closeNodes.size() + " peers for data type " + dataType.getSimpleName() + ", Kademlia key " + key);
         
@@ -234,12 +234,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
             if (!localDestination.equals(node))   // local has already been taken care of
                 batch.putPacket(new RetrieveRequest(key, dataType), node);
         sendQueue.send(batch);
-        try {
-            batch.awaitSendCompletion();
-        }
-        catch (InterruptedException e) {
-            log.warn("Interrupted while waiting for Retrieve Requests to be sent.", e);
-        }
+        batch.awaitSendCompletion();
 
         // wait for replies
         try {
@@ -618,7 +613,7 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     }
     
     @Override
-    public void doStep() throws InterruptedException {
+    public void doStep() {
         if (bucketManager.getUnlockedPeerCount() == 0) {
             log.info("All peers are gone. Re-bootstrapping.");
             bootstrap();
@@ -643,5 +638,11 @@ public class KademliaDHT extends I2PBoteThread implements DHT, PacketListener {
     public void requestShutdown() {
         super.requestShutdown();
         replicateThread.requestShutdown();
+    }
+    
+    @Override
+    public void interrupt() {
+        replicateThread.interrupt();
+        super.interrupt();
     }
 }
