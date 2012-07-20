@@ -189,10 +189,6 @@ public class CheckEmailTask implements Callable<Boolean> {
             this.emailPacketKey = emailPacketKey;
         }
         
-        /**
-         * Returns <code>true</code> if a new email was created in the inbox as a result
-         * of receiving an email packet.
-         */
         @Override
         public void run() {
             log.debug("Querying the DHT for email packets with key " + emailPacketKey.toBase64());
