@@ -36,7 +36,7 @@
     </h2>
     <br/>
     
-    <div class="contributor-category"><ib:message key="Author:"/></div>
+    <div class="contributor-category"><ib:message key="Main Developer:"/></div>
     <div class="contributor-name">
         <ib:message key="Click to send an email" var="linkTitle"/>
         <ib:message key="Feedback on I2P-Bote" var="subject"/>
@@ -124,6 +124,10 @@
     <div>
         <div class="contributor-name">AdminLMH</div>
         <div class="contributor-role"><ib:message key="Hungarian translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">KillYourTV</div>
+        <div class="contributor-role"><ib:message key="Code fixes, translation updates from tx"/></div>
     </div>
 </div>
 
