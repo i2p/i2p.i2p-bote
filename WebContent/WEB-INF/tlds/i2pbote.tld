@@ -156,6 +156,17 @@
 </tag>
 
 <tag>
+    <name>printException</name>
+    <tag-class>i2p.bote.web.PrintExceptionTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>exception</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+</tag>
+
+<tag>
     <name>message</name>
     <info>
         Same as fmt:message, except that message keys in

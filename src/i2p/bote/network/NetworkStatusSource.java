@@ -29,6 +29,11 @@ public interface NetworkStatusSource {
     NetworkStatus getNetworkStatus();
     
     /**
+     * Returns an error that occurred during startup, or <code>null</code> for no error.
+     */
+    Exception getConnectError();
+    
+    /**
      * Returns <code>true</code> if the application has sucessfully
      * connected to I2P and the DHT.
      */

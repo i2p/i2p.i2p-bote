@@ -47,7 +47,9 @@
         <c:when test="${connStatus == DELAY}"><img src="${themeDir}/images/connecting.png"/> <ib:message key="Waiting 3 Minutes..."/><br/></c:when>
         <c:when test="${connStatus == CONNECTING}"><img src="${themeDir}/images/connecting.png"/> <ib:message key="Connecting..."/></c:when>
         <c:when test="${connStatus == CONNECTED}"><img src="${themeDir}/images/connected.png"/> <ib:message key="Connected"/></c:when>
-        <c:when test="${connStatus == ERROR}"><img src="${themeDir}/images/connect_error.png"/> <ib:message key="Error"/></c:when>
+        <c:when test="${connStatus == ERROR}"><img src="${themeDir}/images/connect_error.png"/>
+            <a href="connectError.jsp" target="_parent"><ib:message key="Error"/></a>
+        </c:when>
         <c:otherwise> <ib:message key="Unknown Status"/></c:otherwise>
     </c:choose>
     

@@ -88,6 +88,10 @@ public class JSPHelper {
         return I2PBote.getInstance().getNetworkStatus();
     }
     
+    public Exception getConnectError() {
+        return I2PBote.getInstance().getConnectError();
+    }
+    
     public Identities getIdentities() throws PasswordException {
         return I2PBote.getInstance().getIdentities();
     }

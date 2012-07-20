@@ -647,6 +647,11 @@ public class I2PBote implements NetworkStatusSource {
     }
     
     @Override
+    public Exception getConnectError() {
+        return connectTask.getError();
+    }
+    
+    @Override
     public boolean isConnected() {
         return getNetworkStatus() == NetworkStatus.CONNECTED;
     }
@@ -658,6 +663,7 @@ public class I2PBote implements NetworkStatusSource {
      */
     private class ConnectTask extends I2PBoteThread {
         volatile NetworkStatus status = NetworkStatus.NOT_STARTED;
+        volatile Exception error;
         CountDownLatch startSignal = new CountDownLatch(1);
         CountDownLatch doneSignal = new CountDownLatch(1);
         
@@ -668,6 +674,10 @@ public class I2PBote implements NetworkStatusSource {
 
         public NetworkStatus getNetworkStatus() {
             return status;
+        }
+        
+        public Exception getError() {
+            return error;
         }
         
         public boolean isDone() {
@@ -696,6 +706,7 @@ public class I2PBote implements NetworkStatusSource {
                 doneSignal.countDown();
             } catch (Exception e) {
                 status = NetworkStatus.ERROR;
+                error = e;
                 log.error("Can't initialize the application.", e);
             }
             requestShutdown();
