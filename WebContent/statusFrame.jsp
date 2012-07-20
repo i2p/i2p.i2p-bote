@@ -44,19 +44,29 @@
 <div class="statusbox">
     <c:choose>
         <c:when test="${connStatus == NOT_STARTED}"><img src="${themeDir}/images/connect_error.png"/> <ib:message key="Not Started"/></c:when>
-        <c:when test="${connStatus == DELAY}"><img src="${themeDir}/images/connecting.png"/> <ib:message key="Waiting 3 Minutes..."/><br/>
-            <div class="status-frame-connect">
-                <%-- When the connect button is clicked, refresh the entire page so the buttons in buttonFrame.jsp are enabled --%>
-                <form action="connect.jsp" target="_top" method="GET">
-                    <button type="submit"><ib:message key="Connect Now"/></button>
-                </form>
-            </div>
-        </c:when>
+        <c:when test="${connStatus == DELAY}"><img src="${themeDir}/images/connecting.png"/> <ib:message key="Waiting 3 Minutes..."/><br/></c:when>
         <c:when test="${connStatus == CONNECTING}"><img src="${themeDir}/images/connecting.png"/> <ib:message key="Connecting..."/></c:when>
         <c:when test="${connStatus == CONNECTED}"><img src="${themeDir}/images/connected.png"/> <ib:message key="Connected"/></c:when>
         <c:when test="${connStatus == ERROR}"><img src="${themeDir}/images/connect_error.png"/> <ib:message key="Error"/></c:when>
         <c:otherwise> <ib:message key="Unknown Status"/></c:otherwise>
     </c:choose>
+    
+    <c:if test="${connStatus == DELAY or connStatus == ERROR}">
+        <%-- Show the connect button --%>
+        <div class="status-frame-connect">
+            <%-- When the connect button is clicked, refresh the entire page so the buttons in buttonFrame.jsp are enabled --%>
+            <form action="connect.jsp" target="_top" method="GET">
+                <button type="submit">
+                    <c:if test="${connStatus eq ERROR}">
+                        <ib:message key="Retry Connecting"/>
+                    </c:if>
+                    <c:if test="${connStatus ne ERROR}">
+                        <ib:message key="Connect Now"/>
+                    </c:if>
+                </button>
+            </form>
+        </div>
+    </c:if>
 </div>
 
 </body>
