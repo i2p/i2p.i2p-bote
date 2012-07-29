@@ -1,34 +1,43 @@
-# 
+#
 # Translators:
 #   <blabla@trash-mail.com>, 2011, 2012.
 # Carlos Diaz <cedpren@gmail.com>, 2011.
 # ducki2p <ducki2p@gmail.com>, 2011.
 #   <killyourtv@i2pmail.org>, 2012.
-#   <punkibastardo@gmail.com>, 2011.
+#   <punkibastardo@gmail.com>, 2011, 2012.
 # walking <walking@i2pmail.org>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
-"Report-Msgid-Bugs-To: https://trac.i2p2.de/\n"
-"POT-Creation-Date: 2011-09-23 19:19+0000\n"
-"PO-Revision-Date: 2012-06-04 14:30+0000\n"
-"Last-Translator: blabla <blabla@trash-mail.com>\n"
-"Language-Team: Spanish (Castilian) (http://www.transifex.net/projects/p/I2P/language/es/)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-29 10:02+0000\n"
+"PO-Revision-Date: 2012-07-29 10:00+0000\n"
+"Last-Translator: kytv <killyourtv@i2pmail.org>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/I2P/language/"
+"es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: src/i2p/bote/I2PBote.java:402 src/i2p/bote/service/OutboxProcessor.java:157
+#: src/i2p/bote/Configuration.java:59
+msgid "lblue"
+msgstr ""
+
+#: src/i2p/bote/Configuration.java:59
+msgid "vanilla"
+msgstr ""
+
+#: src/i2p/bote/I2PBote.java:415 src/i2p/bote/service/OutboxProcessor.java:157
 msgid "No identity matches the sender/from field: "
-msgstr ""
+msgstr "Ninguna identidad concuerda con el campo de remitente:"
 
-#: src/i2p/bote/I2PBote.java:478
+#: src/i2p/bote/I2PBote.java:491
 msgid "The old password is not correct."
-msgstr ""
+msgstr "La contraseña antigua no es correcta."
 
-#: src/i2p/bote/I2PBote.java:480
+#: src/i2p/bote/I2PBote.java:493
 msgid "The new password and the confirmation password do not match."
 msgstr "La supuesta nueva contraseña y la confirmación de ella no coinciden."
 
@@ -40,11 +49,11 @@ msgstr "Cifrado de Curva Elíptica de 256 bits"
 msgid "521-bit Elliptic Curve Encryption"
 msgstr "Cifrado de Curva Elíptica de 521 bits"
 
-#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
+#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:55
 msgid "2048-bit ElGamal Encryption"
 msgstr "Cifrado ElGamal de 2048 bits"
 
-#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:117
 msgid "NTRU-1087 Encryption"
 msgstr "Cifrado NTRU-1087"
 
@@ -56,7 +65,9 @@ msgstr "Dirección no válida: {0}"
 #: src/i2p/bote/email/Email.java:487
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
-msgstr "La dirección ni es un Destino de correo electrónico ni una dirección externa: {0}"
+msgstr ""
+"La dirección ni es un Destino de correo electrónico ni una dirección "
+"externa: {0}"
 
 #: src/i2p/bote/folder/Outbox.java:117
 msgid "Queued"
@@ -119,7 +130,7 @@ msgstr "Enviado a {0} de {1} destinatarios"
 
 #: src/i2p/bote/service/OutboxProcessor.java:178 WebContent/folder.jsp
 msgid "Sent"
-msgstr "Hora del Envío"
+msgstr "Hora del envío"
 
 #: src/i2p/bote/service/OutboxProcessor.java:181
 msgid "Gateway disabled"
@@ -140,7 +151,11 @@ msgstr "Error al crear paquetes: {0}"
 msgid "Error while sending email: {0}"
 msgstr "Error al enviar el correo: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:121
+#: src/i2p/bote/web/JSPHelper.java:107
+msgid "Not set."
+msgstr ""
+
+#: src/i2p/bote/web/JSPHelper.java:132
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Número inválido de ImplementacióńCripto:"
 
@@ -158,7 +173,7 @@ msgstr "Disponibilidad en %"
 
 #: src/i2p/bote/web/PeerInfoTag.java:106
 msgid "Banned Peers:"
-msgstr "Pares Relegados:"
+msgstr "Pares relegados:"
 
 #: src/i2p/bote/web/PeerInfoTag.java:111
 msgid "Destination Hash"
@@ -166,7 +181,7 @@ msgstr "Hash del Destino I2P"
 
 #: src/i2p/bote/web/PeerInfoTag.java:112
 msgid "Ban Reason"
-msgstr "Razón del Relegado"
+msgstr "Razón del relegado"
 
 #: src/i2p/bote/web/SendEmailTag.java:73
 msgid "Error: Please add at least one recipient."
@@ -226,8 +241,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote, Versión {0}"
 
 #: WebContent/about.jsp
-msgid "Author:"
-msgstr "Autor:"
+msgid "Main Developer:"
+msgstr ""
 
 #: WebContent/about.jsp
 msgid "Click to send an email"
@@ -235,7 +250,7 @@ msgstr "Pulsa para enviar el correo"
 
 #: WebContent/about.jsp
 msgid "Feedback on I2P-Bote"
-msgstr ""
+msgstr "Sugerencias sobre I2P-Bote"
 
 #: WebContent/about.jsp
 msgid "Contributors:"
@@ -281,6 +296,34 @@ msgstr "Traducción al chino"
 msgid "Arabic translation"
 msgstr "Traducción al árabe"
 
+#: WebContent/about.jsp
+msgid "Czech translation"
+msgstr ""
+
+#: WebContent/about.jsp
+msgid "German translation"
+msgstr ""
+
+#: WebContent/about.jsp
+msgid "Polish translation"
+msgstr ""
+
+#: WebContent/about.jsp
+msgid "Italian translation"
+msgstr ""
+
+#: WebContent/about.jsp
+msgid "Ukrainian translation"
+msgstr ""
+
+#: WebContent/about.jsp
+msgid "Hungarian translation"
+msgstr ""
+
+#: WebContent/about.jsp
+msgid "Code fixes, translation updates from tx"
+msgstr ""
+
 #: WebContent/network.jsp
 msgid "Network"
 msgstr "Red"
@@ -289,11 +332,17 @@ msgstr "Red"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr "No hay disponible información sobre la red, dado que I2P-Bote aún no está conectado."
+msgstr ""
+"No hay disponible información sobre la red, dado que I2P-Bote aún no está "
+"conectado."
 
 #: WebContent/network.jsp
 msgid "Local destination:"
 msgstr "Destino I2P local:"
+
+#: WebContent/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr ""
 
 #: WebContent/deleteIdentity.jsp
 msgid "Error:"
@@ -318,10 +367,6 @@ msgstr "Nombre Público"
 #: WebContent/identities.jsp
 msgid "Description"
 msgstr "Descripción"
-
-#: WebContent/identities.jsp
-msgid "Email Address"
-msgstr "Dirección de correo electrónico"
 
 #: WebContent/identities.jsp
 msgid "Email Destination"
@@ -493,7 +538,8 @@ msgstr "Poner nueva contraseña"
 
 #: WebContent/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
-msgstr "Si no has definido contraseña, ¡deja libre la casilla 'Antigua contraseña'!"
+msgstr ""
+"Si no has definido contraseña, ¡deja libre la casilla 'Antigua contraseña'!"
 
 #: WebContent/setPassword.jsp
 msgid "Old password:"
@@ -529,7 +575,9 @@ msgstr "Correo Electrónico Descentralizado y Seguro"
 
 #: WebContent/header.jsp
 msgid "A new version is available. Click here for the configuration page."
-msgstr "Está disponible una nueva versión. Pincha aquí para acceder a la página de configuración"
+msgstr ""
+"Está disponible una nueva versión. Pincha aquí para acceder a la página de "
+"configuración"
 
 #: WebContent/header.jsp
 msgid "Addresses"
@@ -640,10 +688,6 @@ msgid "Waiting 3 Minutes..."
 msgstr "Esperando 3 minutos ..."
 
 #: WebContent/statusFrame.jsp
-msgid "Connect Now"
-msgstr "Conectarse ahora"
-
-#: WebContent/statusFrame.jsp
 msgid "Connecting..."
 msgstr "Conectando . . ."
 
@@ -654,6 +698,18 @@ msgstr "Conectado"
 #: WebContent/statusFrame.jsp
 msgid "Unknown Status"
 msgstr "Estado desconocido"
+
+#: WebContent/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Connect Now"
+msgstr "Conectarse ahora"
+
+#: WebContent/connectError.jsp
+msgid "Error Details"
+msgstr ""
 
 #: WebContent/showEmail.jsp
 msgid "Signature:"
@@ -726,7 +782,9 @@ msgstr "Identidad completa para {0}:"
 #: WebContent/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr "¡No muestres la información aquí encima a nadie!, dado que contiene tus claves privadas."
+msgstr ""
+"¡No muestres la información aquí encima a nadie!, dado que contiene tus "
+"claves privadas."
 
 #: WebContent/submitIdentity.jsp
 msgid "Please fill in the Public Name field."
@@ -738,7 +796,8 @@ msgstr "Por favor, ¡espera!"
 
 #: WebContent/submitIdentity.jsp
 msgid "The Email Identity is being generated. This can take several minutes."
-msgstr "La identidad está siendo generada. Esto puede llevar hasta varios minutos."
+msgstr ""
+"La identidad está siendo generada. Esto puede llevar hasta varios minutos."
 
 #: WebContent/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -782,7 +841,9 @@ msgstr "minutos."
 
 #: WebContent/settings.jsp
 msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "Usar una puerta de enlace para enviar correos que van hacia fuera de la red I2P-Bote"
+msgstr ""
+"Usar una puerta de enlace para enviar correos que van hacia fuera de la red "
+"I2P-Bote"
 
 #: WebContent/settings.jsp
 msgid "Email Destination of the gateway:"
@@ -790,11 +851,17 @@ msgstr "Destino de la puerta de enlace:"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Mantener en inglés adiciones en los correos que se envíen („Re:“, „wrote:“ etc.)"
+msgstr ""
+"Mantener en inglés adiciones en los correos que se envíen („Re:“, „wrote:“ "
+"etc.)"
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"
 msgstr "Incluir la hora del envío en correos salientes"
+
+#: WebContent/settings.jsp
+msgid "Theme:"
+msgstr ""
 
 #: WebContent/settings.jsp
 msgid "Change Password"
@@ -840,28 +907,41 @@ msgstr "Redactar"
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr "Para poder recibir correos de otras personas, primero tienes que crear una identidad de correo."
+msgstr ""
+"Para poder recibir correos de otras personas, primero tienes que crear una "
+"identidad de correo."
 
 #: WebContent/noIdentities.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr "Cada identidad de correo I2P-Bote está asociada a un \"Destino de correo I2P-Bote\". Cualquiera puede mandar correos a este Destino, pero tan sólo el poseedor de la identidad los puede leer."
+msgstr ""
+"Cada identidad de correo I2P-Bote está asociada a un \"Destino de correo I2P-"
+"Bote\". Cualquiera puede mandar correos a este Destino, pero tan sólo el "
+"poseedor de la identidad los puede leer."
 
 #: WebContent/noIdentities.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr "De alguna manera, las identidades de correo I2P-Bote son equivalentes a las cuentas de correo electrónico tradicional - con la importante excepción de que no hay proveedor de servicios que pueda leer tus correos, dado que I2P-Bote guarda todos los correos de manera cifrada en los nodos I2P-Bote."
+msgstr ""
+"De alguna manera, las identidades de correo I2P-Bote son equivalentes a las "
+"cuentas de correo electrónico tradicional - con la importante excepción de "
+"que no hay proveedor de servicios que pueda leer tus correos, dado que I2P-"
+"Bote guarda todos los correos de manera cifrada en los nodos I2P-Bote."
 
 #: WebContent/noIdentities.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities.txt; "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities.txt; "
 "never give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote descifra los correos que se te envian, utilizando la identidad de correo creada por ti. Las identidades de correo se guardan en el fichero identities.txt; ¡no lo des nunca a nadie!, de lo contrario él/ella y posiblemente otras personas podrán leer todos los correos enviados a ti."
+msgstr ""
+"I2P-Bote descifra los correos que se te envian, utilizando la identidad de "
+"correo creada por ti. Las identidades de correo se guardan en el fichero "
+"identities.txt; ¡no lo des nunca a nadie!, de lo contrario él/ella y "
+"posiblemente otras personas podrán leer todos los correos enviados a ti."
 
 #: WebContent/noIdentities.jsp
 msgid "Do give out the email destination so others can contact you."
@@ -880,14 +960,23 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The higher the number of bits, "
 "the longer the email destination."
-msgstr "Al crear una nueva identidad de correo I2P-Bote puedes elegir la manera del cifrado que se empleará para esta identidad. Todos los cifrados ofrecidos por I2P-Bote brindan un alto nivel de privacidad. La longitutd del Destino depende del cifrado utilizado: Cuanto más alto el número de bits de la clave, más larga resulta el Destino de correo."
+msgstr ""
+"Al crear una nueva identidad de correo I2P-Bote puedes elegir la manera del "
+"cifrado que se empleará para esta identidad. Todos los cifrados ofrecidos "
+"por I2P-Bote brindan un alto nivel de privacidad. La longitutd del Destino "
+"depende del cifrado utilizado: Cuanto más alto el número de bits de la "
+"clave, más larga resulta el Destino de correo."
 
 #: WebContent/noIdentities.jsp
 msgid ""
 "Note that the same is not true for encryption strength. 256-bit elliptic "
 "curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
 "elliptic curve is equivalent to 15360-bit ElGamal."
-msgstr "Recuerda que esto no se aplica necesariamente a la fuerza del cifrado. El cifrado de curva elíptica de 256 bits es equivalente en la fuerza al cifrado ElGamal de 3072 bits, el cifrado de curva elíptica de 521 bits equivalente a ElGamal de 15360 bits."
+msgstr ""
+"Recuerda que esto no se aplica necesariamente a la fuerza del cifrado. El "
+"cifrado de curva elíptica de 256 bits es equivalente en la fuerza al cifrado "
+"ElGamal de 3072 bits, el cifrado de curva elíptica de 521 bits equivalente a "
+"ElGamal de 15360 bits."
 
 #: WebContent/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -908,3 +997,7 @@ msgstr "Añadir a la libreta de direcciones"
 #: WebContent/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Desconocido"
+
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total, {1} new"
+msgstr ""
