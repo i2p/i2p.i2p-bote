@@ -126,6 +126,10 @@
         <div class="contributor-role"><ib:message key="Hungarian translation"/></div>
     </div>
     <div>
+        <div class="contributor-name">Voulnet</div>
+        <div class="contributor-role"><ib:message key="Arabic translation"/></div>
+    </div>
+    <div>
         <div class="contributor-name">KillYourTV</div>
         <div class="contributor-role"><ib:message key="Code fixes, translation updates from tx"/></div>
     </div>

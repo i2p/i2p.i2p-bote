@@ -1,29 +1,39 @@
+#
+# Translators:
 # hamada <hamada@mail.i2p>, 2011.
+# Mohammed ALDOUB <voulnet@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-23 19:07+0000\n"
-"PO-Revision-Date: 2011-06-11 10:21-0000\n"
-"Last-Translator: hamada <hamada@mail.i2p>\n"
-"Language-Team: hamada@mail.i2p\n"
+"POT-Creation-Date: 2012-08-09 13:52+0000\n"
+"PO-Revision-Date: 2012-08-09 00:37+0000\n"
+"Last-Translator: Mohammed ALDOUB <voulnet@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/I2P/language/ar/)\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Virtaal 0.6.1\n"
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5\n"
 
-#: src/i2p/bote/I2PBote.java:402 src/i2p/bote/service/OutboxProcessor.java:157
+#: src/i2p/bote/Configuration.java:59
+msgid "lblue"
+msgstr "أزرق"
+
+#: src/i2p/bote/Configuration.java:59
+msgid "vanilla"
+msgstr "فانيلا"
+
+#: src/i2p/bote/I2PBote.java:415 src/i2p/bote/service/OutboxProcessor.java:157
 msgid "No identity matches the sender/from field: "
 msgstr "لا توجد هوية متوافقة مع المرسل:"
 
-#: src/i2p/bote/I2PBote.java:478
+#: src/i2p/bote/I2PBote.java:491
 msgid "The old password is not correct."
 msgstr "كلمة المرور القديمة غير صحيحة."
 
-#: src/i2p/bote/I2PBote.java:480
+#: src/i2p/bote/I2PBote.java:493
 msgid "The new password and the confirmation password do not match."
 msgstr "كلمة المرور الجديدة والتأكيد غير صالحة."
 
@@ -35,11 +45,11 @@ msgstr "256-bit Elliptic Curve تشفير نوع"
 msgid "521-bit Elliptic Curve Encryption"
 msgstr "521-bit Elliptic تشفير نوع"
 
-#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
+#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:55
 msgid "2048-bit ElGamal Encryption"
 msgstr "تشفير نوع ElGamal sur 2048 Bit"
 
-#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:117
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 تشفير"
 
@@ -135,7 +145,11 @@ msgstr "خطأ في ارسال البريد: {0}"
 msgid "Error while sending email: {0}"
 msgstr "خطأ في ارسال البريد: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:121
+#: src/i2p/bote/web/JSPHelper.java:107
+msgid "Not set."
+msgstr " غير مدخل"
+
+#: src/i2p/bote/web/JSPHelper.java:132
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Invalid ID number for CryptoImplementation: "
 
@@ -221,8 +235,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "اصدار  {0} I2P-Bote"
 
 #: WebContent/about.jsp
-msgid "Author:"
-msgstr "المؤلف:"
+msgid "Main Developer:"
+msgstr "المطور الرئيسي:"
 
 #: WebContent/about.jsp
 msgid "Click to send an email"
@@ -276,6 +290,34 @@ msgstr "ترجمة صينية"
 msgid "Arabic translation"
 msgstr "ترجمة عربية"
 
+#: WebContent/about.jsp
+msgid "Czech translation"
+msgstr "الترجمة التشيكية"
+
+#: WebContent/about.jsp
+msgid "German translation"
+msgstr "الترجمة الألمانية"
+
+#: WebContent/about.jsp
+msgid "Polish translation"
+msgstr "الترجمة البولندية"
+
+#: WebContent/about.jsp
+msgid "Italian translation"
+msgstr "الترجمة الايطالية"
+
+#: WebContent/about.jsp
+msgid "Ukrainian translation"
+msgstr "الترجمة الاوكرانية"
+
+#: WebContent/about.jsp
+msgid "Hungarian translation"
+msgstr "الترجمة الهنجارية"
+
+#: WebContent/about.jsp
+msgid "Code fixes, translation updates from tx"
+msgstr "اصلاحات بالكود و ترجمة من tx"
+
 #: WebContent/network.jsp
 msgid "Network"
 msgstr "شبكة"
@@ -289,6 +331,10 @@ msgstr "المعلومات حول الشبكة غير متوفرة لأن I2P-Bo
 #: WebContent/network.jsp
 msgid "Local destination:"
 msgstr "مستقبل محلي:"
+
+#: WebContent/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr "هوية الايميل تم مسحها"
 
 #: WebContent/deleteIdentity.jsp
 msgid "Error:"
@@ -313,10 +359,6 @@ msgstr "اسم"
 #: WebContent/identities.jsp
 msgid "Description"
 msgstr "وصف"
-
-#: WebContent/identities.jsp
-msgid "Email Address"
-msgstr "عنوان البريد"
 
 #: WebContent/identities.jsp
 msgid "Email Destination"
@@ -560,7 +602,7 @@ msgstr "دليل المستخدم"
 
 #: WebContent/header.jsp
 msgid "FAQ"
-msgstr "اسئلة شائعة"
+msgstr "الأسئلة المكررة"
 
 #: WebContent/header.jsp
 msgid "About"
@@ -635,10 +677,6 @@ msgid "Waiting 3 Minutes..."
 msgstr "إنتظر 3 دقائق ..."
 
 #: WebContent/statusFrame.jsp
-msgid "Connect Now"
-msgstr "إتصل الآن"
-
-#: WebContent/statusFrame.jsp
 msgid "Connecting..."
 msgstr "جاري الإتصال ..."
 
@@ -649,6 +687,18 @@ msgstr "متصل"
 #: WebContent/statusFrame.jsp
 msgid "Unknown Status"
 msgstr "حالة غير معروفة"
+
+#: WebContent/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr "إعادة الاتصال"
+
+#: WebContent/statusFrame.jsp
+msgid "Connect Now"
+msgstr "إتصل الآن"
+
+#: WebContent/connectError.jsp
+msgid "Error Details"
+msgstr "تفاصيل الخطأ"
 
 #: WebContent/showEmail.jsp
 msgid "Signature:"
@@ -792,6 +842,10 @@ msgid "Include send time in outgoing emails"
 msgstr "اضافة تاريخ ارسال البريد الالكتروني"
 
 #: WebContent/settings.jsp
+msgid "Theme:"
+msgstr "القالب:"
+
+#: WebContent/settings.jsp
 msgid "Change Password"
 msgstr "غير كلمة السر"
 
@@ -917,41 +971,6 @@ msgstr "أضف الى دفتر العناوين"
 msgid "Unknown"
 msgstr "غير معروف"
 
-#~ msgid "Error creating the Email Identity."
-#~ msgstr "خطأ في انشاء هوية البريد"
-
-#~ msgid "Email Address:"
-#~ msgstr "Adresse Email:"
-
-#~ msgid "(optional)"
-#~ msgstr "(Optionelle)"
-
-#~ msgid "Unkn."
-#~ msgstr "Inconnu"
-
-#~ msgid "Language:"
-#~ msgstr "Langue:"
-
-#~ msgid "Default"
-#~ msgstr "Défaut"
-
-#~ msgid "Up %"
-#~ msgstr "Erreichbarkeit"
-
-#~ msgid "(required field, must be 512 characters)"
-#~ msgstr "(le champ est requis, il doit être de 512 caractères)"
-
-#~ msgid "0 (off)"
-#~ msgstr "0 (off)"
-
-#~ msgid "No sender found in email."
-#~ msgstr "Aucun expéditeur trouvé dans le courrier."
-
-#~ msgid "Invalid"
-#~ msgstr "Invalide"
-
-#~ msgid "Active Since"
-#~ msgstr "Actif depuis"
-
-#~ msgid "Key"
-#~ msgstr "Clé"
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total, {1} new"
+msgstr "{0} مجموع الايميلات, {1} جديد/جديدة"
