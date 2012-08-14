@@ -102,7 +102,7 @@
 </c:if>
 
 <form action="newEmail.jsp" target="_top" method="GET">
-    <button type="submit" value="New"><ib:message key="New"/></button>
+    <button type="submit" value="New"><ib:message key="Compose"/></button>
 </form>
 
 <div class="lastcheck">
