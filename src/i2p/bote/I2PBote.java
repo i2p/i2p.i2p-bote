@@ -74,6 +74,7 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
@@ -444,6 +445,18 @@ public class I2PBote implements NetworkStatusSource {
             return emailChecker.isCheckingForMail();
     }
 
+    /**
+     * @see EmailChecker#getLastMailCheckTime()
+     */
+    public Date getLastMailCheckTime() {
+        if (emailChecker == null)
+            return null;
+        else {
+            long time = emailChecker.getLastMailCheckTime();
+            return time==0 ? null : new Date(time);
+        }
+    }
+    
     /**
      * @see EmailChecker#newMailReceived()
      */

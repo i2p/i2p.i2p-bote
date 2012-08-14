@@ -105,5 +105,11 @@
     <button type="submit" value="New"><ib:message key="New"/></button>
 </form>
 
+<div class="lastcheck">
+    <ib:message key="Last checked: "/>
+    <c:set var="lastCheck" value="${jspHelperBean.lastMailCheckTime}" scope="request"/>
+    <ib:printDate date="${lastCheck}" type="time" timeStyle="short" printUnknown="true"/>
+</div>
+
 </body>
 </html>

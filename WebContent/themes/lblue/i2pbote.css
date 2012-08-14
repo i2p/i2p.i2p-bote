@@ -21,7 +21,7 @@ iframe {
 
 .button-frame {
 	width: 100%;
-	height: 35px;
+	height: 55px;
 }
 
 .folders-frame {
@@ -73,6 +73,11 @@ iframe {
     font: bold 8pt "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
     float: left;
     width: 50%;
+}
+
+.lastcheck {
+    font: bold 8pt "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
+    float: left;
 }
 
 .password {

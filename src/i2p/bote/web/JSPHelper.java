@@ -48,6 +48,7 @@ import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -262,7 +263,14 @@ public class JSPHelper {
     public boolean isCheckingForMail() {
         return I2PBote.getInstance().isCheckingForMail();
     }
- 
+
+    /**
+     * @see EmailChecker#getLastMailCheckTime()
+     */
+    public Date getLastMailCheckTime() {
+        return I2PBote.getInstance().getLastMailCheckTime();
+    }
+    
     public boolean isNewMailReceived() {
         return I2PBote.getInstance().newMailReceived();
     }

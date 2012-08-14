@@ -63,7 +63,8 @@ public class EmailChecker extends I2PBoteThread {
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
     private Collection<Future<Boolean>> pendingMailCheckTasks;
-    private long lastMailCheckTime;
+    private volatile long lastMailCheckTime;   // the time when the last mail check started (completed or not)
+    private volatile long previousMailCheckTime;   // the time when the last completed mail check started
     private long interval;   // in milliseconds
     
     /**
@@ -102,6 +103,7 @@ public class EmailChecker extends I2PBoteThread {
             else
                 log.info("Checking mail for " + identities.size() + " Email Identities...");
             
+            previousMailCheckTime = lastMailCheckTime;
             lastMailCheckTime = System.currentTimeMillis();
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
@@ -125,6 +127,17 @@ public class EmailChecker extends I2PBoteThread {
             return false;
         
         return !mailCheckExecutor.isTerminated();
+    }
+    
+    /**
+     * Returns time at which the last completed email check was started.
+     * @return a time value in milliseconds since 1/1/1970, or zero if mail hasn't been checked yet
+     */
+    public long getLastMailCheckTime() {
+        if (isCheckingForMail())
+            return previousMailCheckTime;
+        else
+            return lastMailCheckTime;
     }
     
     /**
