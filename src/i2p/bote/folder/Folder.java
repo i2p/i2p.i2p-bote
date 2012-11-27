@@ -36,8 +36,10 @@ import java.util.NoSuchElementException;
 import net.i2p.util.Log;
 
 /**
- * 
+ * Reads files from a directory and returns them as objects of type <code>T</code>.<br/>
  * @param <T> The type of objects the folder can store.
+ * @see PacketFolder
+ * @see EmailFolder
  */
 public abstract class Folder<T> {
     protected File storageDir;
@@ -45,6 +47,11 @@ public abstract class Folder<T> {
     private Log log = new Log(Folder.class);
     private String fileExtension;
 
+    /**
+     * Creates a new <code>Folder</code> that handles files with a given extension.
+     * @param storageDir
+     * @param fileExtension
+     */
     protected Folder(File storageDir, String fileExtension) {
         this.storageDir = storageDir;
         this.fileExtension = fileExtension;
@@ -92,8 +99,10 @@ public abstract class Folder<T> {
         return files;
     }
     
-    /** Returns all folder elements as a {@link List}. 
-     * @throws PasswordException */
+    /**
+     * Returns all folder elements as a {@link List}.
+     * @throws PasswordException
+     */
     public List<T> getElements() throws PasswordException {
         List<T> elements = new ArrayList<T>();
         FolderIterator<T> iterator = iterate();
@@ -103,9 +112,9 @@ public abstract class Folder<T> {
     }
     
     /**
-      * An {@link Iterator} implementation that loads one file into memory at a time.<br/>
-      * Files that cannot be read or contain invalid data are skipped.
-      */
+     * An {@link Iterator} implementation that loads one file into memory at a time.<br/>
+     * Files that cannot be read or contain invalid data are skipped.
+     */
     public final FolderIterator<T> iterate() {
         final File[] files = getFilenames();
         log.debug(files.length + " files with the extension '" + fileExtension + "' found in '" + storageDir + "'.");
@@ -174,6 +183,11 @@ public abstract class Folder<T> {
         };
     }
     
+    /**
+     * Reads a file from the filesystem and returns it as an object of type <code>T</code>.
+     * @param file
+     * @throws Exception
+     */
     protected abstract T createFolderElement(File file) throws Exception;
     
     @Override
