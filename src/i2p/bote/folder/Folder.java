@@ -158,7 +158,7 @@ public abstract class Folder<T> {
                         throw e;
                     }
                     catch (Exception e) {
-                        log.error("Can't create a FolderElement from file: " + filePath, e);
+                        log.error("Can't create a FolderElement from file: " + filePath + " (file size=" + currentFile.length() + ")", e);
                     }
                 }
                 nextElement = null;
