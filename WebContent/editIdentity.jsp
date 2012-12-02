@@ -52,6 +52,10 @@
 </div>
 
 <div class="main">
+    <h2>${title}</h2>
+    <c:if test="${param.new}">
+        <ib:message>An Email Identity lets you receive email from other I2P-Bote users.</ib:message>
+    </c:if>
     <form name="form" method="post" action="submitIdentity.jsp">
         <div class="identity-form-label">
             <div class="field-label"><ib:message key="Public Name:"/></div>
