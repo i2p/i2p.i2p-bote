@@ -8,25 +8,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-29 10:02+0000\n"
-"PO-Revision-Date: 2012-07-29 10:00+0000\n"
-"Last-Translator: kytv <killyourtv@i2pmail.org>\n"
-"Language-Team: German (http://www.transifex.com/projects/p/I2P/language/"
-"de/)\n"
-"Language: de\n"
+"Report-Msgid-Bugs-To: https://trac.i2p2.de/\n"
+"POT-Creation-Date: 2012-07-29 09:59+0000\n"
+"PO-Revision-Date: 2012-12-30 13:58+0100\n"
+"Last-Translator: \n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: src/i2p/bote/Configuration.java:59
 msgid "lblue"
-msgstr ""
+msgstr "hellblau"
 
 #: src/i2p/bote/Configuration.java:59
 msgid "vanilla"
-msgstr ""
+msgstr "vanille"
 
 #: src/i2p/bote/I2PBote.java:415 src/i2p/bote/service/OutboxProcessor.java:157
 msgid "No identity matches the sender/from field: "
@@ -34,11 +34,11 @@ msgstr "Keine Mailidentität stimmt mit diesem Absenderfeld (\"Von\") überein:"
 
 #: src/i2p/bote/I2PBote.java:491
 msgid "The old password is not correct."
-msgstr "Das alte Passwort ist leider nicht korrekt."
+msgstr "Das alte Kennwort ist leider nicht korrekt."
 
 #: src/i2p/bote/I2PBote.java:493
 msgid "The new password and the confirmation password do not match."
-msgstr "Das neue Passwort und die Passwortbestätigung stimmen nicht überein."
+msgstr "Das neue Kennwort und die Kennwortbestätigung stimmen nicht überein."
 
 #: src/i2p/bote/crypto/ECDH256_ECDSA256.java:49
 msgid "256-bit Elliptic Curve Encryption"
@@ -46,7 +46,7 @@ msgstr "Elliptische-Kurven-Verschlüsselung, 256 Bit"
 
 #: src/i2p/bote/crypto/ECDH521_ECDSA521.java:54
 msgid "521-bit Elliptic Curve Encryption"
-msgstr "Elliptische-Kurven-Verschlüsselung, 512 Bit"
+msgstr "Elliptische-Kurven-Verschlüsselung, 521 Bit"
 
 #: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:55
 msgid "2048-bit ElGamal Encryption"
@@ -152,7 +152,7 @@ msgstr "Fehler beim Senden der Mail: {0}"
 
 #: src/i2p/bote/web/JSPHelper.java:107
 msgid "Not set."
-msgstr ""
+msgstr "nicht festgelegt"
 
 #: src/i2p/bote/web/JSPHelper.java:132
 msgid "Invalid ID number for CryptoImplementation: "
@@ -241,7 +241,7 @@ msgstr "I2P-Bote, Version {0}"
 
 #: WebContent/about.jsp
 msgid "Main Developer:"
-msgstr ""
+msgstr "Hauptentwickler:"
 
 #: WebContent/about.jsp
 msgid "Click to send an email"
@@ -299,31 +299,31 @@ msgstr "Übersetzung ins Arabische"
 
 #: WebContent/about.jsp
 msgid "Czech translation"
-msgstr ""
+msgstr "Übersetzung ins Tschechische"
 
 #: WebContent/about.jsp
 msgid "German translation"
-msgstr ""
+msgstr "Übersetzung ins Deutsche"
 
 #: WebContent/about.jsp
 msgid "Polish translation"
-msgstr ""
+msgstr "Übersetzung ins Polnische"
 
 #: WebContent/about.jsp
 msgid "Italian translation"
-msgstr ""
+msgstr "Übersetzung ins Italienische"
 
 #: WebContent/about.jsp
 msgid "Ukrainian translation"
-msgstr ""
+msgstr "Übersetzung ins Ukrainische"
 
 #: WebContent/about.jsp
 msgid "Hungarian translation"
-msgstr ""
+msgstr "Übersetzung ins Ungarische"
 
 #: WebContent/about.jsp
 msgid "Code fixes, translation updates from tx"
-msgstr ""
+msgstr "Fehlerbehebungen, Aktualisierungen der Übersetzungen aus Transifex"
 
 #: WebContent/network.jsp
 msgid "Network"
@@ -334,8 +334,8 @@ msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
 msgstr ""
-"Es sind keine Netzwerkinformationen verfügbar, da I2P-Bote noch nicht mit "
-"dem Netzwerk verbunden ist."
+"Es sind keine Netzwerkinformationen verfügbar, da I2P-Bote noch nicht mit dem "
+"Netzwerk verbunden ist."
 
 #: WebContent/network.jsp
 msgid "Local destination:"
@@ -343,7 +343,7 @@ msgstr "Eigene I2P-Kennung:"
 
 #: WebContent/deleteIdentity.jsp
 msgid "The email identity has been deleted."
-msgstr ""
+msgstr "Die Identität wurde gelöscht."
 
 #: WebContent/deleteIdentity.jsp
 msgid "Error:"
@@ -527,29 +527,29 @@ msgstr "Fehler: Die Mail konnte nicht gelöscht werden."
 
 #: WebContent/setPassword.jsp
 msgid "Set Password"
-msgstr "Passwort setzen"
+msgstr "Kennwort setzen"
 
 #: WebContent/setPassword.jsp
 msgid "The password has been changed."
-msgstr "Das Passwort wurde geändert."
+msgstr "Das Kennwort wurde geändert."
 
 #: WebContent/setPassword.jsp
 msgid "Set a new Password"
-msgstr "Neues Passwort setzen"
+msgstr "Neues Kennwort setzen"
 
 #: WebContent/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
 msgstr ""
-"Wurde noch kein Passwort erstellt, bitte das Feld \"altes Passwort\" "
+"Wurde noch kein Kennwort erstellt, bitte das Feld \"altes Kennwort\" "
 "freilassen."
 
 #: WebContent/setPassword.jsp
 msgid "Old password:"
-msgstr "altes Passwort"
+msgstr "altes Kennwort"
 
 #: WebContent/setPassword.jsp
 msgid "New password:"
-msgstr "neues Passwort:"
+msgstr "neues Kennwort:"
 
 #: WebContent/setPassword.jsp
 msgid "Confirm:"
@@ -566,7 +566,7 @@ msgstr "- I2P-Bote"
 #: WebContent/header.jsp
 msgid "Password is cached. Click to clear the password cache."
 msgstr ""
-"Das Passwort ist im Zwischenspeicher. Hier klicken, um den Zwischenspeicher "
+"Das Kennwort ist im Zwischenspeicher. Hier klicken, um den Zwischenspeicher "
 "zu leeren."
 
 #: WebContent/header.jsp
@@ -705,7 +705,7 @@ msgstr "Unbek. Status"
 
 #: WebContent/statusFrame.jsp
 msgid "Retry Connecting"
-msgstr ""
+msgstr "erneuter Verbindungsversuch"
 
 #: WebContent/statusFrame.jsp
 msgid "Connect Now"
@@ -713,7 +713,7 @@ msgstr "Jetzt verbinden"
 
 #: WebContent/connectError.jsp
 msgid "Error Details"
-msgstr ""
+msgstr "Fehlerdetails"
 
 #: WebContent/showEmail.jsp
 msgid "Signature:"
@@ -853,8 +853,7 @@ msgstr "Bote-Adresse des Durchleitungsdienstes:"
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
 msgstr ""
-"Hinzufügungen in zu sendenden Mails auf Englisch halten („Re:“, „wrote:“ "
-"usw.)"
+"Hinzufügungen in zu sendenden Mails auf Englisch halten („Re:“, „wrote:“ usw.)"
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -862,35 +861,35 @@ msgstr "Absendezeit mitschicken"
 
 #: WebContent/settings.jsp
 msgid "Theme:"
-msgstr ""
+msgstr "Oberfläche:"
 
 #: WebContent/settings.jsp
 msgid "Change Password"
-msgstr "Passwort ändern"
+msgstr "Kennwort ändern"
 
 #: WebContent/password.jsp
 msgid "Password Required"
-msgstr "Passwort erforderlich"
+msgstr "Kennwort erforderlich"
 
 #: WebContent/password.jsp
 msgid "Wrong password. Try again."
-msgstr "Falsches Passwort - bitte erneut versuchen!"
+msgstr "Falsches Kennwort - bitte erneut versuchen!"
 
 #: WebContent/password.jsp
 msgid "Password required"
-msgstr "Passwort erforderlich"
+msgstr "Kennwort erforderlich"
 
 #: WebContent/password.jsp
 msgid "Password:"
-msgstr "Passwort:"
+msgstr "Kennwort:"
 
 #: WebContent/clearPasswordCache.jsp
 msgid "Password Cleared"
-msgstr "Passwortspeicher geleert"
+msgstr "Kennwortspeicher geleert"
 
 #: WebContent/clearPasswordCache.jsp
 msgid "The password has been cleared from the cache."
-msgstr "Das Passwort wurde aus dem Zwischenspeicher gelöscht."
+msgstr "Das Kennwort wurde aus dem Zwischenspeicher gelöscht."
 
 #: WebContent/buttonFrame.jsp
 msgid "Checking for mail..."
@@ -925,13 +924,13 @@ msgid ""
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
 msgstr ""
-"(Mail-)Identitäten entsprechen ungefähr herkömmlichen Mailkonten, nur dass "
-"es bei I2P-Bote keinen Mailanbieter gibt, der den Mailverkehr mitesen könnte."
+"(Mail-)Identitäten entsprechen ungefähr herkömmlichen Mailkonten, nur dass es "
+"bei I2P-Bote keinen Mailanbieter gibt, der den Mailverkehr mitesen könnte."
 
 #: WebContent/noIdentities.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities.txt; "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities.txt; "
 "never give this file to anyone or they will be able to read all your emails."
 msgstr ""
 "I2P-Bote entschlüsselt empfangene Mails automatisch mit Hilfe der jeweiligen "
@@ -974,9 +973,9 @@ msgid ""
 "elliptic curve is equivalent to 15360-bit ElGamal."
 msgstr ""
 "Eine längere Adresse bedeutet allerdings nicht immer eine stärkere "
-"Verschlüsselung: Die Elliptische-Kurven-Verschlüsselung mit 256 Bit und El-"
-"Gamal mit 3072 Bit sind kryptographisch gleichwertig. Gleiches gilt für die "
-"Elliptische-Kurven-Verschlüsselung mit 521 Bit und El-Gamal mit 15360 Bit."
+"Verschlüsselung: Die Elliptische-Kurven-Verschlüsselung mit 256 Bit und "
+"El-Gamal mit 3072 Bit sind kryptographisch gleichwertig. Gleiches gilt für "
+"die Elliptische-Kurven-Verschlüsselung mit 521 Bit und El-Gamal mit 15360 Bit."
 
 #: WebContent/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1000,4 +999,5 @@ msgstr "unbekannt"
 
 #: WebContent/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total, {1} new"
-msgstr ""
+msgstr "{0} E-Mails insgesamt, {1} neu"
+
