@@ -31,12 +31,14 @@ import java.net.URLConnection;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 
+import net.i2p.util.Log;
+
 /**
  *
  * @author sponge
  */
 class ProxyRequest {
-
+    private Log log = new Log(ProxyRequest.class);
     private URLConnection c = null;
     private HttpURLConnection h = null;
 
@@ -93,8 +95,9 @@ class ProxyRequest {
             }
             return null;
         } catch(MalformedURLException ex) {
+            log.debug("Can't get URL \"" + strURL + "\"", ex);
         } catch(IOException ex) {
-            System.out.println(ex.toString());
+            log.debug("Can't get URL \"" + strURL + "\"", ex);
         }
         return null;
     }
