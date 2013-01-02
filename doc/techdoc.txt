@@ -153,8 +153,8 @@ Strings in packets are UTF8 encoded.
 
 3.1. Data Packets
 
-  These are always sent wrapped in a Communication Packet (see 3.1).
-  E denotes an encrypted field.
+  These are always sent wrapped in a Communication Packet (see 3.2).
+  E denotes encrypted data.
   For supported encryption and signature algorithms, see 7.1
 
    Packet Type        | Field | Data Type  | Description
@@ -628,7 +628,36 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
   the key only needs to be derived once per session.
 
 
-8. Glossary of Terms
+8. Setting Up a Development Environment
+
+8.1. Eclipse
+
+  Rough steps, may not be complete:
+  
+  * Import the I2P-Bote sources as a new Eclipse project
+  * Add the I2P .jar dependencies
+  * Install Tomcat 6 if you don't have it yet.
+    (I didn't have any luck with Jetty 6 + the Jetty WTP Adaptor from
+    http://download.eclipse.org/jetty/updates/jetty-wtp/development)
+  * In the Servers view, click New -> Server, add a Tomcat 6 server and add I2P-Bote
+    to the list of webapps
+  * Make a few more servers containing I2P-Bote (don't forget to use different ports)
+    so you can run a small I2P-Bote network for testing
+  * Make a work dir for each server. I used the port numbers for the dir names.
+  * Comment out all lines in built-in-peers.txt and disable seedless so you get a closed network
+  * Start and stop all servers, then go to Debug Configurations (or Run Configurations)
+    and add the following to Arguments -> VM arumgents:
+      -Di2p.dir.config="/path/to/<work_dir>/" -Di2p.dir.app="/path/to/<work_dir>"
+    where <work_dir> is the name you gave that work dir. Repeat for the other servers.
+  * Edit built-in-peers.txt and add the I2P destination from the first test server
+  * Create a file named logger.config in each work dir with the following contents:
+      logger.record.i2p.bote=DEBUG
+      logger.minimumOnScreenLevel=DEBUG
+  * Start two or more servers, go to http://localhost:<port>/i2p.i2p-bote/, and click "connect".
+    After a minute, it should say "connected" and you should see the other server(s) on network.jsp.
+
+
+9. Glossary of Terms
 
 Email Destination
   As the name implies, an Email Destination is an identifier by which somebody can be reached via I2P-Bote.
