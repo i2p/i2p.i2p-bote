@@ -38,6 +38,7 @@ import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.TrashFolder;
 import i2p.bote.network.NetworkStatus;
+import i2p.bote.service.EmailChecker;
 
 import java.io.File;
 import java.io.IOException;
