@@ -50,7 +50,7 @@
     </p><p>
     <ib:message>
         I2P-Bote automatically decrypts emails sent to you, using the email identity you
-        created. Email identities are stored in a file named identities.txt; never give
+        created. Email identities are stored in a file named identities; never give
         this file to anyone or they will be able to read all your emails.
     </ib:message>
     <br/>
@@ -67,14 +67,14 @@
         When you create a new email identity, you can choose the type of encryption that
         will be used by the email identity. While all encryption algorithms offered by
         I2P-Bote provide a high level of privacy, the length of an email destination
-        depends on the encryption used. The higher the number of bits, the longer the
-        email destination.
+        depends on the encryption used. The choice of encryption also determines what
+        signing algorithm is used. 
     </ib:message>
     <br/>
     <ib:message>
-        Note that the same is not true for encryption strength. 256-bit elliptic curve
-        encryption is equivalent in strength to 3072-bit ElGamal. 521-bit elliptic curve
-        is equivalent to 15360-bit ElGamal.
+        It is generally recommended to choose 256-bit elliptic curve encryption because
+        it produces the shortest email destinations (86 characters) while still being
+        highly secure.
     </ib:message>
     <form action="editIdentity.jsp?new=true" method="POST">
         <button type="submit" value="New"><ib:message key="Create a New Email Identity"/></button>
