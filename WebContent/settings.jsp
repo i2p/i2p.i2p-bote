@@ -115,10 +115,10 @@
             <c:set var="currentTheme" value="${configuration.theme}"/>
             <c:forEach items="${configuration.themes}" var="theme">
                 <c:set var="selected" value=""/>
-                <c:if test="${theme eq currentTheme}">
+                <c:if test="${theme.id eq currentTheme}">
                     <c:set var="selected" value=" selected"/>
                 </c:if>
-                <option value="${theme}"${selected}>${theme}</option>
+                <option value="${theme.id}"${selected}>${theme.displayName}</option>
             </c:forEach>
         </select>
         <br/>

@@ -21,6 +21,7 @@
 
 package i2p.bote.web;
 
+import i2p.bote.Configuration.Theme;
 import i2p.bote.I2PBote;
 
 import java.io.IOException;
@@ -74,9 +75,9 @@ public class ThemeFilter implements Filter {
             if (path.indexOf('/') < 1)
                 throw new ServletException("No theme specified! Resource path: <" + path + ">");
             String theme = path.substring(0, path.indexOf('/'));
-            List<String> builtInThemes = I2PBote.getInstance().getConfiguration().getBuiltInThemes();
+            List<Theme> builtInThemes = I2PBote.getInstance().getConfiguration().getBuiltInThemes();
             // if theme is external, redirect to ThemeServlet
-            if (!builtInThemes.contains(theme)) {
+            if (!containsThemeId(builtInThemes, theme)) {
                 String newUrl = httpRequest.getRequestURI().replace(themesDir, themeServletPath);
                 httpResponse.sendRedirect(newUrl);
             }
@@ -87,6 +88,14 @@ public class ThemeFilter implements Filter {
             chain.doFilter(request, response);
     }
 
+    /** Returns <code>true</code> if a list of Themes contains a theme with given ID */
+    private boolean containsThemeId(List<Theme> themes, String themeId) {
+        for (Theme theme: themes)
+            if (theme.getId().equals(themeId))
+                return true;
+        return false;
+    }
+    
     @Override
     public void destroy() { }
 }

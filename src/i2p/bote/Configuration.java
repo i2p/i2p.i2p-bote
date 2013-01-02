@@ -56,7 +56,10 @@ public class Configuration {
     private static final String SENT_FOLDER_DIR = "sent";           // relative to I2P_BOTE_SUBDIR
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
-    private static final String[] BUILT_IN_THEMES = new String[] {_("lblue"), _("vanilla")};   // theme directories in the .war
+    private static final List<Theme> BUILT_IN_THEMES = Arrays.asList(new Theme[] {   // theme IDs correspond to a theme directory in the .war
+        new Theme("lblue", _("lblue")),
+        new Theme("vanilla", _("vanilla"))
+    });
     private static final String THEME_SUBDIR = "themes";   // relative to I2P_BOTE_SUBDIR
 
     // Parameter names in the config file
@@ -461,8 +464,8 @@ public class Configuration {
     /**
      * Returns a list of all available UI themes.
      */
-    public List<String> getThemes() {
-        List<String> themes = new ArrayList<String>();
+    public List<Theme> getThemes() {
+        List<Theme> themes = new ArrayList<Theme>();
         themes.addAll(getBuiltInThemes());
         themes.addAll(getExternalThemes());
         return themes;
@@ -471,8 +474,8 @@ public class Configuration {
     /**
      * Returns only the UI themes that are included in the application.
      */
-    public List<String> getBuiltInThemes() {
-        return Arrays.asList(BUILT_IN_THEMES);
+    public List<Theme> getBuiltInThemes() {
+        return BUILT_IN_THEMES;
     }
     
     /**
@@ -482,7 +485,7 @@ public class Configuration {
         return new File(i2pBoteDir, THEME_SUBDIR);
     }
     
-    private List<String> getExternalThemes() {
+    private List<Theme> getExternalThemes() {
         File[] dirs = new File(i2pBoteDir, THEME_SUBDIR).listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -490,11 +493,14 @@ public class Configuration {
             }
         });
         
-        List<String> themeNames = new ArrayList<String>();
+        List<Theme> themes = new ArrayList<Theme>();
         if (dirs != null)
-            for (File dir: dirs)
-                themeNames.add(dir.getName());
-        return themeNames;
+            for (File dir: dirs) {
+                String themeId = dir.getName();
+                Theme theme = new Theme(themeId, themeId);
+                themes.add(theme);
+            }
+        return themes;
     }
     
     /**
@@ -531,5 +537,49 @@ public class Configuration {
                 log.warn("Can't convert value <" + stringValue + "> for parameter <" + parameterName + "> to int, using default.");
                 return defaultValue;
             }
+    }
+    
+    /** Simple class that represents a UI theme */
+    public static class Theme {
+        private String id;
+        private String displayName;
+        
+        private Theme(String id, String displayName) {
+            this.id = id;
+            this.displayName = displayName;
+        }
+        
+        public String getId() {
+            return id;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((id == null) ? 0 : id.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Theme other = (Theme) obj;
+            if (id == null) {
+                if (other.id != null)
+                    return false;
+            } else if (!id.equals(other.id))
+                return false;
+            return true;
+        }
     }
 }
