@@ -62,7 +62,8 @@ import net.i2p.util.Log;
  * </ul>
  */
 public class RelayPeerManager extends I2PBoteThread implements PacketListener {
-    private static final int MAX_PEERS = 50;   // maximum number of peers
+    private static final int MAX_PEERS = 50;   // maximum number of peers to keep track of
+    private static final int MAX_PEERS_TO_SEND = 20;   // maximum number of peers to send in a peer list (the bigger a datagram, the less chance of it getting through)
     private static final int MIN_REACHABILITY = 80;   // percentage of requests sent to a peer / responses received back
     private static final int UPDATE_INTERVAL_SHORT = 2;   // time in minutes between updating peers if no high-reachability peers are known
     private static final int UPDATE_INTERVAL_LONG = 60;   // time in minutes between updating peers if at least one high-reachability peer is known
@@ -207,6 +208,14 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
         return goodPeers;
     }
     
+    /** Returns up to <code>num</code> high-reachability peers */
+    private List<Destination> getGoodPeers(int num) {
+        List<Destination> goodPeers = getGoodPeers();
+        while (goodPeers.size() > num)
+            goodPeers.remove(0);
+        return goodPeers;
+    }
+    
     public Set<RelayPeer> getAllPeers() {
         return peers;
     }
@@ -292,9 +301,9 @@ public class RelayPeerManager extends I2PBoteThread implements PacketListener {
             
             // respond to PeerListRequests
             if (packet instanceof PeerListRequest) {
-                // send all high-reachability peers minus the sender itself
+                // send up to MAX_PEERS_TO_SEND high-reachability peers minus the sender itself
                 List<Destination> peersToSend = new ArrayList<Destination>();
-                peersToSend.addAll(getGoodPeers());
+                peersToSend.addAll(getGoodPeers(MAX_PEERS_TO_SEND));
                 peersToSend.remove(sender);
                 PeerList response = new PeerList(peersToSend);
                 log.debug("Sending a PeerList containing " + peersToSend.size() + " peers in response to a PeerListRequest from " + Util.toShortenedBase32(sender));
