@@ -61,7 +61,7 @@ import org.bouncycastle.jce.provider.asymmetric.ec.Signature.ecDSA512;
 import org.bouncycastle.jce.spec.ECNamedCurveSpec;
 
 /**
- * Abstract base class for ECDH and ECDSA.
+ * Abstract base class for ECC (ECDH and ECDSA).
  * <p/>
  * The key length used for ECDH and ECDSA depends on the concrete subclass.
  * Symmetric encryption is always AES-256, which for shorter ECDH keys wastes a few
