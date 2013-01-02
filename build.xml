@@ -78,6 +78,8 @@
             encoding="ISO-8859-1"
             debug="true"
             deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
             destdir="./ant_build/classes"
             classpathref="cp"
             failonerror="true" />
@@ -85,6 +87,8 @@
             srcdir="./src"
             debug="true"
             deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
             destdir="./ant_build/classes"
             classpathref="cp"
             failonerror="true" />
@@ -112,6 +116,8 @@
         <javac
             debug="true"
             deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
             destdir="ant_build/classes"
             srcdir="./ant_build/jspjava"
             includes="**/*.java"
@@ -374,6 +380,8 @@
             srcdir="./ant"
             debug="true"
             deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
             destdir="./ant_build/classes"
             classpathref="cp"
             classpath="./ant_build/classes"
@@ -397,6 +405,8 @@
             srcdir="./test"
             debug="true"
             deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
             destdir="./ant_build/classes"
             classpathref="junitcp"
             failonerror="true" />
@@ -454,6 +464,8 @@
             srcdir="./ant"
             debug="true"
             deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
             destdir="./ant_build/classes"
             classpathref="cp"
             classpath="./ant_build/classes"
