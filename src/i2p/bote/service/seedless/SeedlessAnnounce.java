@@ -25,7 +25,6 @@
 package i2p.bote.service.seedless;
 
 import i2p.bote.I2PBote;
-import i2p.bote.service.I2PBoteThread;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -50,13 +49,14 @@ import net.i2p.client.streaming.I2PSocketManager;
 import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
  *
  * @author sponge
  */
-class SeedlessAnnounce extends I2PBoteThread {
+class SeedlessAnnounce extends I2PAppThread {
     private Log log = new Log(SeedlessAnnounce.class);
     private long interval;   // in milliseconds
     private long lastSeedlessAnnounce = 0;
@@ -80,14 +80,23 @@ class SeedlessAnnounce extends I2PBoteThread {
     }
 
     @Override
-    protected void doStep() {
-        lastTime = lastSeedlessAnnounce;
-        timeSinceLastCheck = System.currentTimeMillis() - lastTime;
-        if (lastTime == 0 || timeSinceLastCheck > this.interval) {
-            doSeedlessAnnounce();
-        } else {
-            awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
-        }
+    public void run() {
+        while (!Thread.interrupted())
+            try {
+                lastTime = lastSeedlessAnnounce;
+                timeSinceLastCheck = System.currentTimeMillis() - lastTime;
+                if (lastTime == 0 || timeSinceLastCheck > this.interval) {
+                    doSeedlessAnnounce();
+                } else {
+                    TimeUnit.MILLISECONDS.sleep(interval - timeSinceLastCheck);
+                }
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in SeedlessAnnounce loop", e);
+            }
+        
+        log.debug("SeedlessAnnounce thread exiting.");
     }
 
     private synchronized void doSeedlessAnnounce() {

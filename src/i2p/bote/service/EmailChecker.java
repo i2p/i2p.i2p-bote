@@ -47,9 +47,10 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
-public class EmailChecker extends I2PBoteThread {
+public class EmailChecker extends I2PAppThread {
     private Log log = new Log(EmailChecker.class);
     private Identities identities;
     private Configuration configuration;
@@ -158,8 +159,9 @@ public class EmailChecker extends I2PBoteThread {
                     pendingMailCheckTasks = null;
                     return true;
                 }
-        }
-        catch (Exception e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (Exception e) {
             log.error("Error while checking whether new mail has arrived.", e);
         }
         
@@ -168,36 +170,36 @@ public class EmailChecker extends I2PBoteThread {
     }
     
     @Override
-    public void doStep() {
-        long timeSinceLastCheck = System.currentTimeMillis() - lastMailCheckTime;
-        if (!networkStatusSource.isConnected())   // if not connected, use a shorter wait interval
-            awaitShutdownRequest(1, TimeUnit.MINUTES);
-        else if (timeSinceLastCheck < interval)
-            awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
-        else {
-            if (configuration.isAutoMailCheckEnabled())
-                try {
-                    checkForMail();
-                } catch (PasswordException e) {
-                    log.debug("Can't auto-check for email because a password is set.");
-                } catch (Exception e) {
-                    log.debug("Can't auto-check for email.", e);
+    public void run() {
+        while (!Thread.interrupted()) {
+            try {
+                long timeSinceLastCheck = System.currentTimeMillis() - lastMailCheckTime;
+                if (!networkStatusSource.isConnected())   // if not connected, use a shorter wait interval
+                    TimeUnit.MINUTES.sleep(1);
+                else if (timeSinceLastCheck < interval)
+                    TimeUnit.MILLISECONDS.sleep(interval - timeSinceLastCheck);
+                else {
+                    if (configuration.isAutoMailCheckEnabled())
+                        try {
+                            checkForMail();
+                        } catch (PasswordException e) {
+                            log.debug("Can't auto-check for email because a password is set.");
+                        } catch (IOException e) {
+                            log.debug("Can't auto-check for email.", e);
+                        } catch (GeneralSecurityException e) {
+                            log.debug("Can't auto-check for email.", e);
+                        }
+                    TimeUnit.MINUTES.sleep(1);
                 }
-            awaitShutdownRequest(1, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in EmailChecker loop", e);
+            }
         }
-    }
-    
-    @Override
-    public void requestShutdown() {
-        if (mailCheckExecutor != null) mailCheckExecutor.shutdownNow();
-        super.requestShutdown();
-    }
-    
-    @Override
-    public synchronized void interrupt() {
-        if (pendingMailCheckTasks != null)
-            for (Future<Boolean> task: pendingMailCheckTasks)
-                task.cancel(true);
-        super.interrupt();
+        
+        if (mailCheckExecutor != null)
+            mailCheckExecutor.shutdownNow();
+        log.debug("EmailChecker interrupted, thread exiting.");
     }
 }

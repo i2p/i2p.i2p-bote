@@ -24,19 +24,18 @@
 
 package i2p.bote.service.seedless;
 
-import i2p.bote.service.I2PBoteThread;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.concurrent.TimeUnit;
 
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
  *
  * @author sponge
  */
-class SeedlessRequestPeers extends I2PBoteThread {
+class SeedlessRequestPeers extends I2PAppThread {
     private Log log = new Log(SeedlessRequestPeers.class);
     private SeedlessParameters seedlessParameters;
     private long interval;   // in milliseconds
@@ -55,14 +54,23 @@ class SeedlessRequestPeers extends I2PBoteThread {
     }
 
     @Override
-    protected void doStep() {
-        lastTime = lastSeedlessRequestPeers;
-        timeSinceLastCheck = System.currentTimeMillis() - lastTime;
-        if (lastTime == 0 || timeSinceLastCheck > this.interval) {
-            doSeedlessRequestPeers();
-        } else {
-            awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
-        }
+    public void run() {
+        while (!Thread.interrupted())
+            try {
+                lastTime = lastSeedlessRequestPeers;
+                timeSinceLastCheck = System.currentTimeMillis() - lastTime;
+                if (lastTime == 0 || timeSinceLastCheck > this.interval) {
+                    doSeedlessRequestPeers();
+                } else {
+                    TimeUnit.MILLISECONDS.sleep(interval - timeSinceLastCheck);
+                }
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in SeedlessRequestPeers loop", e);
+            }
+        
+        log.debug("SeedlessRequestPeers thread exiting.");
     }
     
     private synchronized void doSeedlessRequestPeers() {

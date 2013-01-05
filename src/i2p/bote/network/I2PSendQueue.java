@@ -28,7 +28,6 @@ import i2p.bote.packet.DataPacket;
 import i2p.bote.packet.EmptyResponse;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
-import i2p.bote.service.I2PBoteThread;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -48,6 +47,7 @@ import net.i2p.client.streaming.I2PSocket;
 import net.i2p.client.streaming.I2PSocketManager;
 import net.i2p.data.Destination;
 import net.i2p.util.ConcurrentHashSet;
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
@@ -60,7 +60,7 @@ import net.i2p.util.Log;
  * The packet with the highest index in the queue is always the next
  * to be sent.
  */
-public class I2PSendQueue extends I2PBoteThread implements PacketListener {
+public class I2PSendQueue extends I2PAppThread implements PacketListener {
     private static final int MAX_DATAGRAM_SIZE = Integer.MAX_VALUE;   // never send packets as streams, always use datagrams
     
     private Log log = new Log(I2PSendQueue.class);
@@ -84,6 +84,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         i2pReceiver.addPacketListener(this);
         packetQueue = new PacketQueue();
         runningBatches = new ConcurrentHashSet<PacketBatch>();
+        datagramMaker = new I2PDatagramMaker(i2pSession);
     }
 
     /**
@@ -195,17 +196,21 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     }
     
     @Override
-    public void postStartup() {
-        datagramMaker = new I2PDatagramMaker(i2pSession);
-    }
-    
-    @Override
-    public void doStep() throws InterruptedException {
-        ScheduledPacket scheduledPacket = packetQueue.take();
-        if (scheduledPacket != null) {
-            doPacketDelay(scheduledPacket);
-            send(scheduledPacket);
-        }
+    public void run() {
+        while (!Thread.interrupted())
+            try {
+                ScheduledPacket scheduledPacket = packetQueue.take();
+                if (scheduledPacket != null) {
+                    doPacketDelay(scheduledPacket);
+                    send(scheduledPacket);
+                }
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in I2PSendQueue loop", e);
+            }
+        
+        log.debug("I2PSendQueue thread exiting.");
     }
     
     /**
@@ -213,7 +218,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
      * and until the current time is past <code>earliestSendTime</code>.
      * @param scheduledPacket
      */
-    private void doPacketDelay(ScheduledPacket scheduledPacket) {
+    private void doPacketDelay(ScheduledPacket scheduledPacket) throws InterruptedException {
         if (maxBandwidth > 0) {
             CommunicationPacket i2pBotePacket = scheduledPacket.data;
             int packetSizeBits = i2pBotePacket.getSize() * 8;
@@ -221,17 +226,12 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
             long waitTimeMsecs = 1000L * packetSizeBits / maxBWBitsPerSecond;
             if (System.currentTimeMillis()+waitTimeMsecs < scheduledPacket.earliestSendTime)
                 waitTimeMsecs = scheduledPacket.earliestSendTime;
-            try {
-                TimeUnit.MILLISECONDS.sleep(waitTimeMsecs);
-            }
-            catch (InterruptedException e) {
-                log.warn("Interrupted while waiting to send packet.", e);
-            }
+            TimeUnit.MILLISECONDS.sleep(waitTimeMsecs);
         }
     }
     
     /** This method actually sends a packet via the router */
-    private void send(ScheduledPacket scheduledPacket) {
+    private void send(ScheduledPacket scheduledPacket) throws InterruptedException {
         CommunicationPacket i2pBotePacket = scheduledPacket.data;
         byte[] bytes = i2pBotePacket.toByteArray();
         boolean useStream = bytes.length > MAX_DATAGRAM_SIZE;
@@ -255,12 +255,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         catch (Exception exc) {
             log.error("Can't send packet.", exc);
             // pause to avoid CPU hogging if the error doesn't go away
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            }
-            catch (InterruptedException intrExc) {
-                log.error("Interrupted while sleeping after a send error.", intrExc);
-            }
+            TimeUnit.SECONDS.sleep(1);
         }
     }
     
@@ -285,7 +280,8 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
     /**
      * Keeps packets sorted by <code>earliestSendTime</code>.
      */
-    private class PacketQueue {
+    private static class PacketQueue {
+        private Log log = new Log(PacketQueue.class);
         private List<ScheduledPacket> queue;
         private Comparator<ScheduledPacket> comparator;
         
@@ -319,7 +315,7 @@ public class I2PSendQueue extends I2PBoteThread implements PacketListener {
         }
 
         public ScheduledPacket take() throws InterruptedException {
-            while (queue.isEmpty() && !shutdownRequested())
+            while (queue.isEmpty() && !Thread.currentThread().isInterrupted())
                 TimeUnit.SECONDS.sleep(1);
             synchronized(this) {
                 if (queue.isEmpty())

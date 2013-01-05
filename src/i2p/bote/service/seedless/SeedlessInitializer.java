@@ -21,16 +21,17 @@
 
 package i2p.bote.service.seedless;
 
+import i2p.bote.I2PBote;
+import i2p.bote.network.DhtPeerSource;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.client.streaming.I2PSocketManager;
 import net.i2p.data.Destination;
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
-import i2p.bote.I2PBote;
-import i2p.bote.network.DhtPeerSource;
-import i2p.bote.service.I2PBoteThread;
 
 /**
  * Waits for Seedless to become available and then starts the other Seedless
@@ -42,7 +43,7 @@ import i2p.bote.service.I2PBoteThread;
  * <code>Runnable</code> is so it can be handled the same way as all the other
  * background threads (see {@link I2PBote}).
  */
-public class SeedlessInitializer extends I2PBoteThread implements DhtPeerSource {
+public class SeedlessInitializer extends I2PAppThread implements DhtPeerSource {
     private Log log = new Log(SeedlessInitializer.class);
     private I2PSocketManager socketManager;
     private SeedlessAnnounce seedlessAnnounce;
@@ -56,40 +57,35 @@ public class SeedlessInitializer extends I2PBoteThread implements DhtPeerSource 
     }
     
     @Override
-    protected void doStep() throws InterruptedException {
+    public void run() {
         SeedlessParameters seedlessParameters = SeedlessParameters.getInstance();
-        // the following call may take some time
-        if (seedlessParameters.isSeedlessAvailable()) {
-            log.info("Seedless found.");
-            seedlessRequestPeers = new SeedlessRequestPeers(seedlessParameters, 60);
-            seedlessRequestPeers.start();
-            seedlessScrapePeers = new SeedlessScrapePeers(seedlessParameters, 10);
-            seedlessScrapePeers.start();
-            seedlessScrapeServers = new SeedlessScrapeServers(seedlessParameters, 10);
-            seedlessScrapeServers.start();
-            seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 60);
-            seedlessAnnounce.start();
-            super.requestShutdown();
-        }
-        else
-            log.info("Seedless NOT found. Trying again shortly.");
         
-        awaitShutdownRequest(1, TimeUnit.MINUTES);
+        while (!Thread.interrupted()) {
+            try {
+                // the following call may take some time
+                if (seedlessParameters.isSeedlessAvailable()) {
+                    log.info("Seedless found.");
+                    seedlessRequestPeers = new SeedlessRequestPeers(seedlessParameters, 60);
+                    seedlessRequestPeers.start();
+                    seedlessScrapePeers = new SeedlessScrapePeers(seedlessParameters, 10);
+                    seedlessScrapePeers.start();
+                    seedlessScrapeServers = new SeedlessScrapeServers(seedlessParameters, 10);
+                    seedlessScrapeServers.start();
+                    seedlessAnnounce = new SeedlessAnnounce(socketManager, seedlessScrapeServers, 60);
+                    seedlessAnnounce.start();
+                    break;
+                }
+                else
+                    log.info("Seedless NOT found. Trying again shortly.");
+                
+                TimeUnit.MINUTES.sleep(1);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
     }
 
-    @Override
-    public void requestShutdown() {
-        if (seedlessAnnounce != null)
-            seedlessAnnounce.requestShutdown();
-        if (seedlessRequestPeers != null)
-            seedlessRequestPeers.requestShutdown();
-        if (seedlessScrapePeers != null)
-            seedlessScrapePeers.requestShutdown();
-        if (seedlessScrapeServers != null)
-            seedlessScrapeServers.requestShutdown();
-        super.requestShutdown();
-    }
-    
+    /** Interrupts this and all other Seedless threads */
     @Override
     public void interrupt() {
         if (seedlessAnnounce != null)

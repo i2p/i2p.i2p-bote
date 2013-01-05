@@ -53,7 +53,6 @@ import i2p.bote.packet.dht.EncryptedEmailPacket;
 import i2p.bote.packet.dht.IndexPacket;
 import i2p.bote.service.EmailChecker;
 import i2p.bote.service.ExpirationThread;
-import i2p.bote.service.I2PBoteThread;
 import i2p.bote.service.OutboxListener;
 import i2p.bote.service.OutboxProcessor;
 import i2p.bote.service.POP3Service;
@@ -94,6 +93,7 @@ import net.i2p.client.streaming.I2PSocketManagerFactory;
 import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
@@ -121,7 +121,7 @@ public class I2PBote implements NetworkStatusSource {
     private EmailPacketFolder emailDhtStorageFolder;   // stores email packets for other peers
     private IndexPacketFolder indexPacketDhtStorageFolder;   // stores index packets
 //TODO    private PacketFolder<> addressDhtStorageFolder;   // stores email address-destination mappings
-    private Collection<I2PBoteThread> backgroundThreads;
+    private Collection<I2PAppThread> backgroundThreads;
     private SMTPService smtpService;
     private POP3Service pop3Service;
     private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
@@ -346,7 +346,7 @@ public class I2PBote implements NetworkStatusSource {
      * by this method.
      */
     public void startUp() {
-        backgroundThreads = new ArrayList<I2PBoteThread>();
+        backgroundThreads = new ArrayList<I2PAppThread>();
         connectTask = new ConnectTask();
         backgroundThreads.add(connectTask);
         connectTask.start();
@@ -593,21 +593,14 @@ public class I2PBote implements NetworkStatusSource {
     }
 
     private void startAllServices() {
-        for (I2PBoteThread thread: backgroundThreads)
+        for (I2PAppThread thread: backgroundThreads)
             if (thread!=null && thread.getState()==State.NEW)   // the check for State.NEW is only there for ConnectTask
                 thread.start();
     }
 
     private void stopAllServices() {
-        // first ask threads nicely to shut down
-        for (I2PBoteThread thread: backgroundThreads)
-            if (thread != null)
-                thread.requestShutdown();
-        awaitShutdown(backgroundThreads, 60 * 1000);
-        printRunningThreads("Threads still running after requestShutdown():");
-
-        // interrupt all threads that are still running
-        for (I2PBoteThread thread: backgroundThreads)
+        // interrupt all threads
+        for (I2PAppThread thread: backgroundThreads)
             if (thread!=null && thread.isAlive())
                 thread.interrupt();
         awaitShutdown(backgroundThreads, 5 * 1000);
@@ -626,18 +619,19 @@ public class I2PBote implements NetworkStatusSource {
      * @param threads
      * @param timeout In milliseconds
      */
-    private void awaitShutdown(Collection<I2PBoteThread> threads, long timeout) {
+    private void awaitShutdown(Collection<I2PAppThread> threads, long timeout) {
         long deadline = System.currentTimeMillis() + timeout;   // the time at which any background threads that are still running are interrupted
 
-        for (I2PBoteThread thread: backgroundThreads)
+        for (I2PAppThread thread: backgroundThreads)
             if (thread != null)
                 try {
-                    long remainingTime = System.currentTimeMillis() - deadline;   // the time until the original timeout
+                    long remainingTime = deadline - System.currentTimeMillis();   // the time until the original timeout
                     if (remainingTime < 0)
                         return;
                     thread.join(remainingTime);
                 } catch (InterruptedException e) {
                     log.error("Interrupted while waiting for thread <" + thread.getName() + "> to exit", e);
+                    return;
                 }
     }
     
@@ -674,7 +668,7 @@ public class I2PBote implements NetworkStatusSource {
      * is triggered from outside this class, then sets up an I2P session and everything
      * that depends on it.
      */
-    private class ConnectTask extends I2PBoteThread {
+    private class ConnectTask extends I2PAppThread {
         volatile NetworkStatus status = NetworkStatus.NOT_STARTED;
         volatile Exception error;
         CountDownLatch startSignal = new CountDownLatch(1);
@@ -697,18 +691,13 @@ public class I2PBote implements NetworkStatusSource {
             try {
                 return doneSignal.await(0, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 return false;
             }
         }
         
         @Override
-        public void requestShutdown() {
-            super.requestShutdown();
-            startSignal.countDown();
-        }
-        
-        @Override
-        public void doStep() {
+        public void run() {
             status = NetworkStatus.DELAY;
             try {
                 startSignal.await(STARTUP_DELAY, TimeUnit.MINUTES);
@@ -717,12 +706,13 @@ public class I2PBote implements NetworkStatusSource {
                 initializeServices();
                 startAllServices();
                 doneSignal.countDown();
+            } catch (InterruptedException e) {
+                log.debug("ConnectTask interrupted, exiting");
             } catch (Exception e) {
                 status = NetworkStatus.ERROR;
                 error = e;
                 log.error("Can't initialize the application.", e);
             }
-            requestShutdown();
         }
     }
 }

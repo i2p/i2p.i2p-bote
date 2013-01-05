@@ -25,7 +25,6 @@ import static i2p.bote.fileencryption.FileEncryptionConstants.KDF_PARAMETERS;
 import static i2p.bote.fileencryption.FileEncryptionConstants.SALT_LENGTH;
 import i2p.bote.Configuration;
 import i2p.bote.Util;
-import i2p.bote.service.I2PBoteThread;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -37,13 +36,16 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.i2p.I2PAppContext;
+import net.i2p.util.I2PAppThread;
+import net.i2p.util.Log;
 
 /**
  * Stores a password in memory so the user doesn't have to re-enter it.
  * Also caches key derivation parameters (salt and <code>scrypt</code> parameters)
  * so the key derivation function only needs to run once.
  */
-public class PasswordCache extends I2PBoteThread implements PasswordHolder {
+public class PasswordCache extends I2PAppThread implements PasswordHolder {
+    private Log log = new Log(PasswordCache.class);
     private byte[] password;
     private DerivedKey derivedKey;
     private long lastReset;
@@ -177,11 +179,24 @@ public class PasswordCache extends I2PBoteThread implements PasswordHolder {
      * @see Configuration#getPasswordCacheDuration()
      */
     @Override
-    protected void doStep() throws InterruptedException {
-        awaitShutdownRequest(1, TimeUnit.MINUTES);
-        long durationMilliseconds = TimeUnit.MILLISECONDS.convert(configuration.getPasswordCacheDuration(), TimeUnit.MINUTES);
-        boolean isEmpty = password==null || password.length==0;
-        if (System.currentTimeMillis()>lastReset+durationMilliseconds && !isEmpty)   // cache empty passwords forever
-            clear();
+    public void run() {
+        while (!Thread.interrupted()) {
+            try {
+                TimeUnit.MINUTES.sleep(1);
+            } catch (InterruptedException e) {
+                break;
+            }
+            
+            try {
+                long durationMilliseconds = TimeUnit.MILLISECONDS.convert(configuration.getPasswordCacheDuration(), TimeUnit.MINUTES);
+                boolean isEmpty = password==null || password.length==0;
+                if (System.currentTimeMillis()>lastReset+durationMilliseconds && !isEmpty)   // cache empty passwords forever
+                    clear();
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in PasswordCache loop", e);
+            }
+        }
+        
+        log.debug("PasswordCache thread exiting.");
     }
 }

@@ -131,6 +131,7 @@ public class CheckEmailTask implements Callable<Boolean> {
                 result.get(1, TimeUnit.HOURS);
         } catch (InterruptedException e) {
             executor.shutdownNow();
+            Thread.currentThread().interrupt();
             throw new InterruptedException("EmailPacketTask interrupted");
         }
         

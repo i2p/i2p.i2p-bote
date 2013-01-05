@@ -37,12 +37,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.Destination;
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
  * A background thread that sends packets in the relay outbox to the I2P network.
  */
-public class RelayPacketSender extends I2PBoteThread implements ExpirationListener, PacketListener {
+public class RelayPacketSender extends I2PAppThread implements ExpirationListener, PacketListener {
     private final Log log = new Log(RelayPacketSender.class);
 
     private I2PSendQueue sendQueue;
@@ -60,38 +61,42 @@ public class RelayPacketSender extends I2PBoteThread implements ExpirationListen
     }
     
     @Override
-    public void doStep() throws InterruptedException {
-        Iterator<RelayRequest> iterator = packetFolder.iterator();
-        while (iterator.hasNext()) {
-            RelayRequest packet = iterator.next();
-            if (System.currentTimeMillis() >= packet.getSendTime()) {
-                log.debug("Sending relay packet to destination " + Util.toBase32(packet.getNextDestination()));
-                try {
-                    CountDownLatch sentSignal;
-                    Destination nextDestination = packet.getNextDestination();
-                    // synchronize access to lastSentPacket (which can be null, so synchronize on "this")
-                    synchronized(this) {
-                        lastSentPacket = packet;
-                        confirmationReceived = new CountDownLatch(1);
-                        sentSignal = sendQueue.send(lastSentPacket, nextDestination);
+    public void run() {
+        while (!Thread.interrupted()) {
+            try {
+                Iterator<RelayRequest> iterator = packetFolder.iterator();
+                while (iterator.hasNext()) {
+                    RelayRequest packet = iterator.next();
+                    if (System.currentTimeMillis() >= packet.getSendTime()) {
+                        log.debug("Sending relay packet to destination " + Util.toBase32(packet.getNextDestination()));
+                        CountDownLatch sentSignal;
+                        Destination nextDestination = packet.getNextDestination();
+                        // synchronize access to lastSentPacket (which can be null, so synchronize on "this")
+                        synchronized(this) {
+                            lastSentPacket = packet;
+                            confirmationReceived = new CountDownLatch(1);
+                            sentSignal = sendQueue.send(lastSentPacket, nextDestination);
+                        }
+                        sentSignal.await();
+                        
+                        TimeUnit.MINUTES.sleep(2);
+                        // if confirmation has been received, delete the packet
+                        if (confirmationReceived.await(0, TimeUnit.SECONDS)) {
+                            log.debug("Confirmation received from relay peer " + Util.toShortenedBase32(nextDestination) + ", deleting packet: " + packet);
+                            iterator.remove();
+                        }
                     }
-                    sentSignal.await();
-                    
-                    awaitShutdownRequest(2, TimeUnit.MINUTES);
-                    // if confirmation has been received, delete the packet
-                    if (confirmationReceived.await(0, TimeUnit.SECONDS)) {
-                        log.debug("Confirmation received from relay peer " + Util.toShortenedBase32(nextDestination) + ", deleting packet: " + packet);
-                        iterator.remove();
-                    }
-                } catch (InterruptedException e) {
-                    log.error("Interrupting while waiting for packet to be sent.", e);
-                } catch (Exception e) {
-                    log.error("Error sending packet.", e);
                 }
+                
+                TimeUnit.MINUTES.sleep(pause);
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in RelayPacketSender loop", e);
             }
         }
         
-        awaitShutdownRequest(pause, TimeUnit.MINUTES);
+        log.debug("RelayPacketSender thread interrupted, exiting.");
     }
     
     /** Deletes relay packets that are still in the folder 100 days after the scheduled send time */

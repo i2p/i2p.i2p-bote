@@ -21,13 +21,15 @@
 
 package i2p.bote.service;
 
-public class POP3Service extends I2PBoteThread {
+import net.i2p.util.I2PAppThread;
+
+public class POP3Service extends I2PAppThread {
 
     public POP3Service() {
         super("POP3Service");
     }
 
     @Override
-    protected void doStep() throws InterruptedException {
+    public void run() {
     }
 }

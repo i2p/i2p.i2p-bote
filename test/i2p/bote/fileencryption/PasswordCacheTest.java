@@ -116,7 +116,7 @@ public class PasswordCacheTest {
             assertNull("Password was not cleared!", getPassword(passwordCache));
         }
         finally {
-            passwordCache.requestShutdown();
+            passwordCache.interrupt();
             passwordCacheThread.join(2000);
             assertFalse("Password cache thread is still running!", passwordCacheThread.isAlive());
         }

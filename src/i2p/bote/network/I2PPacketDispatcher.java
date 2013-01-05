@@ -26,7 +26,6 @@ import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.MalformedCommunicationPacket;
 import i2p.bote.packet.MalformedPacketException;
-import i2p.bote.service.I2PBoteThread;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,13 +46,14 @@ import net.i2p.client.streaming.I2PServerSocket;
 import net.i2p.client.streaming.I2PSocket;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
  * An {@link I2PSessionMuxedListener} that receives packets from the I2P network, either as
  * datagrams or streams, and notifies {@link PacketListener}s.
  */
-public class I2PPacketDispatcher extends I2PBoteThread implements I2PSessionMuxedListener {
+public class I2PPacketDispatcher extends I2PAppThread implements I2PSessionMuxedListener {
     private static final int MAX_CONCURRENT_STREAMING_TASKS = 20;   // max number of incoming streams
     private static final int THREAD_STACK_SIZE = 256 * 1024;
     
@@ -88,12 +88,6 @@ public class I2PPacketDispatcher extends I2PBoteThread implements I2PSessionMuxe
         }
     }
     
-    @Override
-    public void requestShutdown() {
-        streamTaskExecutor.shutdown();
-        super.requestShutdown();
-    }
-
     // I2PSessionMuxedListener implementation follows
     
     @Override
@@ -172,20 +166,31 @@ public class I2PPacketDispatcher extends I2PBoteThread implements I2PSessionMuxe
     }
 
     @Override
-    protected void doStep() throws InterruptedException {
-        try {
-            I2PSocket clientSocket = serverSocket.accept();
-            if (clientSocket != null)
-                streamTaskExecutor.submit(new StreamReceiveTask(clientSocket));
-        } catch (SocketTimeoutException e) {
-            log.error("Timeout while waiting for client to connect", e);
-        } catch (I2PException e) {
-            log.error("I2P error while waiting for client to connect", e);
-            Thread.sleep(1000);
-        } catch (ConnectException e) {
-            log.error("Can't connect", e);
-            Thread.sleep(1000);
-        }
+    public void run() {
+        while (!Thread.interrupted())
+            try {
+                try {
+                    I2PSocket clientSocket = serverSocket.accept();
+                    if (clientSocket != null)
+                        streamTaskExecutor.submit(new StreamReceiveTask(clientSocket));
+                } catch (SocketTimeoutException e) {
+                    log.error("Timeout while waiting for client to connect", e);
+                } catch (I2PException e) {
+                    log.error("I2P error while waiting for client to connect", e);
+                    Thread.sleep(1000);
+                } catch (ConnectException e) {
+                    log.error("Can't connect", e);
+                    Thread.sleep(1000);
+                } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                    log.error("Exception caught in I2PPacketDispatcher loop", e);
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException e) {
+                break;
+            }
+        
+        streamTaskExecutor.shutdownNow();
+        log.debug("I2PPacketDispatcher thread interrupted, exiting.");
     }
     
     private class StreamReceiveTask implements Runnable {

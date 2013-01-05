@@ -28,7 +28,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ExpirationThread extends I2PBoteThread {
+import net.i2p.util.I2PAppThread;
+import net.i2p.util.Log;
+
+public class ExpirationThread extends I2PAppThread {
+    private Log log = new Log(ExpirationThread.class);
     private List<ExpirationListener> expirationListeners;
 
     public ExpirationThread() {
@@ -42,9 +46,19 @@ public class ExpirationThread extends I2PBoteThread {
     }
     
     @Override
-    public void doStep() {
-        for (ExpirationListener listener: expirationListeners)
-            listener.deleteExpired();
-        awaitShutdownRequest(1, TimeUnit.DAYS);
+    public void run() {
+        while (!Thread.interrupted()) {
+            try {
+                for (ExpirationListener listener: expirationListeners)
+                    listener.deleteExpired();
+                TimeUnit.DAYS.sleep(1);
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in ExpirationThread loop", e);
+            }
+        }
+        
+        log.debug("ExpirationThread interrupted, thread exiting.");
     }
 }

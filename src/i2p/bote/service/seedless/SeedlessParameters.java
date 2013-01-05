@@ -163,6 +163,8 @@ class SeedlessParameters {
                         Thread.sleep(2000); // sleep for 2 seconds
                     } catch(InterruptedException ex) {
                         ready = false;
+                        Thread.currentThread().interrupt();
+                        return;
                     }
                 }
 

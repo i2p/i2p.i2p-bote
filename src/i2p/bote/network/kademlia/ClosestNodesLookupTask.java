@@ -33,7 +33,6 @@ import i2p.bote.packet.MalformedCommunicationPacket;
 import i2p.bote.packet.PeerList;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.dht.FindClosePeersPacket;
-import i2p.bote.service.I2PBoteThread;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -60,7 +60,7 @@ import net.i2p.util.Log;
  * According to the <code>infocom-2006-kad.pdf</code> paper (see
  * {@link i2p.bote.network.kademlia.KademliaDHT}), this is the most efficient.
  */
-public class ClosestNodesLookupTask implements Runnable {
+public class ClosestNodesLookupTask implements Callable<List<Destination>> {
     private static final int REQUEST_TIMEOUT = 30 * 1000;
     private static final int CLOSEST_NODES_LOOKUP_TIMEOUT = 5 * 60 * 1000;   // the maximum amount of time a FIND_CLOSEST_NODES can take
     
@@ -95,8 +95,7 @@ public class ClosestNodesLookupTask implements Runnable {
         pendingRequests = new ConcurrentHashMap<Destination, FindClosePeersPacket>();   // outstanding queries
     }
     
-    @Override
-    public void run() {
+    public List<Destination> call() throws InterruptedException {
         log.debug("Looking up nodes closest to " + key);
         
         PacketListener packetListener = new IncomingPacketHandler();
@@ -133,13 +132,7 @@ public class ClosestNodesLookupTask implements Runnable {
                         pendingRequests.remove(peer);
                     }
                 
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    log.warn("Interrupted while doing a closest nodes lookup.", e);
-                    Thread.currentThread().interrupt();
-                    break;
-                }
+                TimeUnit.SECONDS.sleep(1);
             } while (!isDone());
             log.debug("Node lookup for " + key + " found " + responses.size() + " nodes (may include local node).");
             for (Destination node: responses)
@@ -148,6 +141,8 @@ public class ClosestNodesLookupTask implements Runnable {
         finally {
             i2pReceiver.removePacketListener(packetListener);
         }
+        
+        return getResults();
     }
     
     private void logStatus() {
@@ -181,9 +176,8 @@ public class ClosestNodesLookupTask implements Runnable {
             return true;
         }
         
-        // If a shutdown has been initiated, exit immediately
-        Thread currentThread = Thread.currentThread();
-        if (currentThread instanceof I2PBoteThread && ((I2PBoteThread)currentThread).shutdownRequested())
+        // Check for thread interruption
+        if (Thread.currentThread().isInterrupted())
             return true;
         
         return false;
@@ -209,7 +203,7 @@ public class ClosestNodesLookupTask implements Runnable {
      * closest.<br/>
      * If no peers were found, an empty <code>List</code> is returned.
      */
-    public List<Destination> getResults() {
+    private List<Destination> getResults() {
         List<Destination> resultsList = new ArrayList<Destination>();
         for (Destination destination: responses) {
             resultsList.add(destination);

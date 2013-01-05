@@ -56,12 +56,13 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
  * A background thread that periodically checks the outbox for emails and sends them.
  */
-public class OutboxProcessor extends I2PBoteThread {
+public class OutboxProcessor extends I2PAppThread {
     private Log log = new Log(OutboxProcessor.class);
     private DHT dht;
     private Outbox outbox;
@@ -87,39 +88,47 @@ public class OutboxProcessor extends I2PBoteThread {
     }
     
     @Override
-    public void doStep() {
-        synchronized(this) {
-            wakeupSignal = new CountDownLatch(1);
-        }
-        
-        if (networkStatusSource.isConnected()) {
-            log.debug("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
-            FolderIterator<Email> iterator = outbox.iterate();
+    public void run() {
+        while (!Thread.interrupted()) {
             try {
-                while (iterator.hasNext()) {
-                    Email email = iterator.next();
-                    log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
-                    email.removeSignatureFlag();   // signature flag only makes sense locally
+                synchronized(this) {
+                    wakeupSignal = new CountDownLatch(1);
+                }
+                
+                if (networkStatusSource.isConnected()) {
+                    log.debug("Processing outgoing emails in directory '" + outbox.getStorageDirectory() + "'.");
+                    FolderIterator<Email> iterator = outbox.iterate();
                     try {
-                        sendEmail(email);
-                        fireOutboxListeners(email);
+                        while (iterator.hasNext()) {
+                            Email email = iterator.next();
+                            log.info("Processing email with message Id: '" + email.getMessageID() + "'.");
+                            email.removeSignatureFlag();   // signature flag only makes sense locally
+                            try {
+                                sendEmail(email);
+                                fireOutboxListeners(email);
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt();
+                                throw e;
+                            } catch (Exception e) {
+                                log.error("Error sending email.", e);
+                            }
+                        }
                     }
-                    catch (Exception e) {
-                        log.error("Error sending email.", e);
+                    catch (PasswordException e) {
+                        log.error("Can't scan outbox.", e);
                     }
                 }
-            }
-            catch (PasswordException e) {
-                log.error("Can't scan outbox.", e);
+                
+                int pause = configuration.getOutboxCheckInterval();
+                wakeupSignal.await(pause, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in OutboxProcessor loop", e);
             }
         }
         
-        try {
-            int pause = configuration.getOutboxCheckInterval();
-            wakeupSignal.await(pause, TimeUnit.MINUTES);
-        } catch (InterruptedException e) {
-            log.error("OutboxProcessor received an InterruptedException.", e);
-        }
+        log.debug("OutboxProcessor thread exiting.");
     }
     
     /**
@@ -129,15 +138,6 @@ public class OutboxProcessor extends I2PBoteThread {
         wakeupSignal.countDown();
     }
 
-    @Override
-    public void requestShutdown() {
-        super.requestShutdown();
-        synchronized(this) {
-            if (wakeupSignal != null)
-                wakeupSignal.countDown();
-        }
-    }
-    
     /**
      * Sends an {@link Email} to all recipients specified in the header.
      * @param email
@@ -146,8 +146,9 @@ public class OutboxProcessor extends I2PBoteThread {
      * @throws GeneralSecurityException 
      * @throws PasswordException 
      * @throws IOException 
+     * @throws InterruptedException 
      */
-    private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException, IOException {
+    private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException, IOException, InterruptedException {
         EmailIdentity senderIdentity = null;
         if (!email.isAnonymous()) {
             String sender = email.getSender().toString();
@@ -193,8 +194,9 @@ public class OutboxProcessor extends I2PBoteThread {
      * @throws DhtException 
      * @throws GeneralSecurityException 
      * @throws PasswordException 
+     * @throws InterruptedException 
      */
-    private void sendToOne(EmailIdentity senderIdentity, String recipient, Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException {
+    private void sendToOne(EmailIdentity senderIdentity, String recipient, Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException, InterruptedException {
         String logSuffix = null;   // only used for logging
         try {
             logSuffix = "Recipient = '" + recipient + "' Message ID = '" + email.getMessageID() + "'";
@@ -231,8 +233,9 @@ public class OutboxProcessor extends I2PBoteThread {
      * Stores a packet in the DHT directly or via relay peers.
      * @param hops The number of hops, or zero to store it directly in the DHT
      * @throws DhtException 
+     * @throws InterruptedException 
      */
-    private void send(DhtStorablePacket dhtPacket, int hops) throws DhtException {
+    private void send(DhtStorablePacket dhtPacket, int hops) throws DhtException, InterruptedException {
         if (hops > 0) {
             long minDelay = configuration.getRelayMinDelay() * 60 * 1000;
             long maxDelay = configuration.getRelayMaxDelay() * 60 * 1000;

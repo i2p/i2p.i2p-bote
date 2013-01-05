@@ -24,8 +24,6 @@
 
 package i2p.bote.service.seedless;
 
-import i2p.bote.service.I2PBoteThread;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,13 +37,14 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.data.Base64;
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
  *
  * @author sponge
  */
-class SeedlessScrapeServers extends I2PBoteThread {
+class SeedlessScrapeServers extends I2PAppThread {
     private Log log = new Log(SeedlessScrapeServers.class);
     private SeedlessParameters seedlessParameters;
     private long interval;   // in milliseconds
@@ -65,15 +64,24 @@ class SeedlessScrapeServers extends I2PBoteThread {
     }
 
     @Override
-    protected void doStep() {
-        lastTime = lastSeedlessScrapeServers;
-        timeSinceLastCheck = System.currentTimeMillis() - lastTime;
-        if (lastTime == 0 || timeSinceLastCheck > this.interval) {
-            doSeedlessScrapeServers();
-        } else {
-            awaitShutdownRequest(interval - timeSinceLastCheck, TimeUnit.MILLISECONDS);
-        }
-    }
+    public void run() {
+        while (!Thread.interrupted())
+            try {
+                lastTime = lastSeedlessScrapeServers;
+                timeSinceLastCheck = System.currentTimeMillis() - lastTime;
+                if (lastTime == 0 || timeSinceLastCheck > this.interval) {
+                    doSeedlessScrapeServers();
+                } else {
+                    TimeUnit.MILLISECONDS.sleep(interval - timeSinceLastCheck);
+                }
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in SeedlessScrapeServers loop", e);
+            }
+        
+        log.debug("SeedlessScrapeServers thread exiting.");
+   }
 
     private synchronized void doSeedlessScrapeServers() {
         HttpURLConnection h;

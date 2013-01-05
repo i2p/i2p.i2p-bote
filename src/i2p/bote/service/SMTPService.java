@@ -21,13 +21,15 @@
 
 package i2p.bote.service;
 
-public class SMTPService extends I2PBoteThread {
+import net.i2p.util.I2PAppThread;
+
+public class SMTPService extends I2PAppThread {
 
     public SMTPService() {
         super("SMTPService");
     }
 
     @Override
-    protected void doStep() throws InterruptedException {
+    public void run() {
     }
 }

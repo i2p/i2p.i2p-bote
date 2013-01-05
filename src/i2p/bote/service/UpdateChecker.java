@@ -34,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 import net.i2p.I2PAppContext;
 import net.i2p.crypto.TrustedUpdate;
 import net.i2p.data.DataHelper;
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 import net.i2p.util.PartialEepGet;
 
@@ -42,7 +43,7 @@ import net.i2p.util.PartialEepGet;
  * It may be worth moving this code into the router so other plugins
  * can use it.
  */
-public class UpdateChecker extends I2PBoteThread {
+public class UpdateChecker extends I2PAppThread {
     private static final int XPI2P_HEADER_LENGTH = 56;
     private static final String PLUGIN_CONFIG_PATH = "plugins/i2pbote/plugin.config";   // relative to the I2P config dir
     
@@ -99,12 +100,22 @@ public class UpdateChecker extends I2PBoteThread {
     }
 
     @Override
-    public void doStep() {
-        if (!networkStatusSource.isConnected())   // if not connected, use a shorter wait interval
-            awaitShutdownRequest(1, TimeUnit.MINUTES);
-        else {
-            checkForUpdate();
-            awaitShutdownRequest(configuration.getUpdateCheckInterval(), TimeUnit.MINUTES);
+    public void run() {
+        while (!Thread.interrupted()) {
+            try {
+                if (!networkStatusSource.isConnected())   // if not connected, use a shorter wait interval
+                    TimeUnit.MINUTES.sleep(1);
+                else {
+                    checkForUpdate();
+                    TimeUnit.MINUTES.sleep(configuration.getUpdateCheckInterval());
+                }
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.error("Exception caught in UpdateChecker loop", e);
+            }
         }
+        
+        log.debug("UpdateChecker thread exiting.");
     }
 }

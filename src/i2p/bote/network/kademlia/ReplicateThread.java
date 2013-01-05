@@ -31,7 +31,6 @@ import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.dht.DeleteRequest;
 import i2p.bote.packet.dht.DhtStorablePacket;
 import i2p.bote.packet.dht.StoreRequest;
-import i2p.bote.service.I2PBoteThread;
 
 import java.util.Collection;
 import java.util.Date;
@@ -46,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.ConcurrentHashSet;
+import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
 /**
@@ -67,7 +67,7 @@ import net.i2p.util.Log;
  *   </ol>  
  * </ol>
  */
-class ReplicateThread extends I2PBoteThread implements PacketListener {
+class ReplicateThread extends I2PAppThread implements PacketListener {
     private static final int SEND_TIMEOUT_MINUTES = 5;   // the maximum amount of time to wait for a store request to be sent
     private static final int WAIT_TIME_SECONDS = 5;   // amount of time to wait after sending a store request
     
@@ -113,8 +113,7 @@ class ReplicateThread extends I2PBoteThread implements PacketListener {
         replicationRunning = true;
         // refresh peers close to the local destination
         ClosestNodesLookupTask lookupTask = new ClosestNodesLookupTask(localDestination.calculateHash(), sendQueue, i2pReceiver, bucketManager);
-        lookupTask.run();
-        List<Destination> closestNodes = lookupTask.getResults();
+        List<Destination> closestNodes = lookupTask.call();
         closestNodes.remove(localDestination);
 
         int numReplicated = 0;
@@ -179,17 +178,24 @@ class ReplicateThread extends I2PBoteThread implements PacketListener {
     }
     
     @Override
-    public void postStartup() {
+    public void run() {
         nextReplicationTime = System.currentTimeMillis();
-    }
-    
-    @Override
-    public void doStep() throws InterruptedException {
-        replicate();
-        long waitTime = randomTime(REPLICATE_INTERVAL-REPLICATE_VARIANCE, REPLICATE_INTERVAL+REPLICATE_VARIANCE);
-        nextReplicationTime += waitTime;
-        log.debug("Next replication at " + new Date(nextReplicationTime));
-        awaitShutdownRequest(waitTime, TimeUnit.SECONDS);
+        
+        while (!Thread.interrupted()) {
+            try {
+                replicate();
+                long waitTime = randomTime(REPLICATE_INTERVAL-REPLICATE_VARIANCE, REPLICATE_INTERVAL+REPLICATE_VARIANCE);
+                nextReplicationTime += waitTime;
+                log.debug("Next replication at " + new Date(nextReplicationTime));
+                TimeUnit.SECONDS.sleep(waitTime);
+            } catch (InterruptedException e) {
+                break;
+            } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
+                log.debug("Exception caught in ReplicateThread loop", e);
+            }
+        }
+        
+        log.debug("ReplicateThread interrupted, exiting.");
     }
 
     /**

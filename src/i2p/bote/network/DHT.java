@@ -29,7 +29,7 @@ import net.i2p.data.Hash;
 
 public interface DHT {
 
-    void store(DhtStorablePacket packet) throws DhtException;
+    void store(DhtStorablePacket packet) throws DhtException, InterruptedException;
     
     DhtResults findOne(Hash key, Class<? extends DhtStorablePacket> dataType) throws InterruptedException;
 

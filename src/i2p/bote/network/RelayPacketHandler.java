@@ -93,6 +93,8 @@ public class RelayPacketHandler implements PacketListener {
                         try {
                             dht.store(dhtPacket);
                             log.debug("Finished storing DHT packet: " + dhtPacket);
+                        } catch (InterruptedException e) {
+                            log.debug("Interrupted while storing packet in the DHT.");
                         } catch (DhtException e) {
                             log.error("Error storing packet in the DHT: " + dhtPacket, e);
                         }
