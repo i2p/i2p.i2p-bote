@@ -324,10 +324,6 @@ public class I2PSendQueue extends I2PAppThread implements PacketListener {
                     return queue.remove(queue.size()-1);
             }
         }
-        
-        public synchronized boolean isEmpty() {
-            return queue.isEmpty();
-        }
     }
 
     private static class ScheduledPacket {
