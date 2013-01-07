@@ -29,7 +29,9 @@ import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.RelayPeer;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.jsp.JspWriter;
@@ -76,10 +78,18 @@ public class PeerInfoTag extends SimpleTagSupport {
             
             out.println("<p/><br/>");
             
+            // Get a sorted list of relay peers
+            RelayPeer[] relayPeers = I2PBote.getInstance().getRelayPeers().toArray(new RelayPeer[0]);
+            Arrays.sort(relayPeers, new Comparator<RelayPeer>() {
+                @Override
+                public int compare(RelayPeer peer1, RelayPeer peer2) {
+                    return peer2.getReachability() - peer1.getReachability();
+                }
+            });
+            
             // Print relay peer info
-            Collection<RelayPeer> relayPeers = I2PBote.getInstance().getRelayPeers();
-            out.println("<span class=\"subheading\">" + _("Relay Peers:") + " " + relayPeers.size() + "</span>");
-            if (relayPeers.size() > 0) {
+            out.println("<span class=\"subheading\">" + _("Relay Peers:") + " " + relayPeers.length + "</span>");
+            if (relayPeers.length > 0) {
                 out.println("<table");
                 out.println("<tr>");
                 out.println("<th>" + _("Peer") + "</th>");
