@@ -93,10 +93,9 @@ public class PasswordCacheTest {
     
     @Test
     public void testExpiration() throws InterruptedException, NoSuchAlgorithmException, InvalidKeySpecException, IOException, SecurityException, IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
-        Thread passwordCacheThread = new Thread(passwordCache);
         passwordCache.setPassword(PASSWORD);
         TimeUnit.SECONDS.sleep(1);   // delay the PasswordCache thread so the password expires a little less than a minute after the thread is started (it loops every minute)
-        passwordCacheThread.start();
+        passwordCache.start();
         
         try {
             // Verify that the password expires 60 seconds after it is set
@@ -117,8 +116,8 @@ public class PasswordCacheTest {
         }
         finally {
             passwordCache.interrupt();
-            passwordCacheThread.join(2000);
-            assertFalse("Password cache thread is still running!", passwordCacheThread.isAlive());
+            passwordCache.join(2000);
+            assertFalse("Password cache thread is still running!", passwordCache.isAlive());
         }
     }
     
