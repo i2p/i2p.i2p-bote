@@ -142,8 +142,8 @@ public class EmailFolder extends Folder<Email> {
         
         @Override
         public int compare(Email email1, Email email2) {
-            @SuppressWarnings("unchecked") Comparable value1 = 0;
-            @SuppressWarnings("unchecked") Comparable value2 = 0;
+            Comparable<?> value1 = 0;
+            Comparable<?> value2 = 0;
             
             try {
                 switch(attribute) {
