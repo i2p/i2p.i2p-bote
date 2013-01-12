@@ -21,6 +21,7 @@
 
 package i2p.bote.crypto;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +55,7 @@ public class CryptoFactory {
             instances.add(new ECDH256_ECDSA256());
             instances.add(new ECDH521_ECDSA521());
         }
-        catch (Exception e) {
+        catch (GeneralSecurityException e) {
             Log log = new Log(CryptoFactory.class);
             log.error("Error creating ECDH256_ECDSA256 or ECDH521_ECDSA521.", e);
         }
