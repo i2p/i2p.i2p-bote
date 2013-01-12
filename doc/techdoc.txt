@@ -582,18 +582,19 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
 
 6.2. Included .jar files and third-party source code
 
-  bcprov-ecc-jdk16-146.jar      A stripped down version of the BouncyCastle library,
-                                containing only the classes needed for ECC.
-  mailapi.jar                   Part of JavaMail
-  src/SevenZip/                 An LZMA implementation from http://www.7-zip.org/sdk.html
-  src/net/sf/ntru               An NTRU implementation from http://sf.net/projects/ntru/
-  de/flexiprovider and codec/   A stripped down and patched version of the FlexiProvider
-                                sources (http://www.flexiprovider.de/), containing only the
-                                classes needed for GMSS.
-                                The patch consists of a modified de.flexiprovider.core.CoreRegistry
-                                and de.flexiprovider.api.Registry and its purpose is to
-                                reduce dependencies on classes not related to GMSS.
-  src/com/lambdaworks/crypto/   An scrypt implementation from https://github.com/wg/scrypt/
+  bcprov-ecc-jdk16-146.jar   A stripped down version of the BouncyCastle library,
+                             containing only the classes needed for ECC.
+  mailapi.jar                Part of JavaMail
+  lzma-9.20.jar              An LZMA implementation from http://www.7-zip.org/sdk.html
+  ntruenc-1.2.jar            An NTRU implementation from http://sf.net/projects/ntru/
+                             (only the NTRUEncrypt part, not NTRUSign)
+  flexi-gmss-1.7p1.jar       A stripped down and patched version of the FlexiProvider
+                             sources (http://www.flexiprovider.de/), containing only the
+                             classes needed for GMSS.
+                             The patch consists of a modified de.flexiprovider.core.CoreRegistry
+                             and de.flexiprovider.api.Registry and its purpose is to
+                             reduce dependencies on classes not related to GMSS.
+  scrypt-1.3.3.jar           An scrypt implementation from https://github.com/wg/scrypt/
 
 
 7. Cryptography

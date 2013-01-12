@@ -27,6 +27,9 @@
         <pathelement location="${lib}/mailapi.jar" />
         <pathelement location="${lib}/bcprov-ecc-jdk16-146.jar" />
         <pathelement location="${lib}/ntruenc-1.2.jar" />
+        <pathelement location="${lib}/scrypt-1.3.3.jar" />
+        <pathelement location="${lib}/lzma-9.20.jar" />
+        <pathelement location="${lib}/flexi-gmss-1.7p1.jar" />
     </path>
     <property name="junit.filename" value="junit-4.8.1.jar"/>
     <property name="junit.url" value="http://sourceforge.net/projects/junit/files/junit/4.8.1/junit-4.8.1.jar/download"/>
@@ -72,18 +75,6 @@
     <target name="compile" depends="checki2pbase">
         <mkdir dir="./ant_build" />
         <mkdir dir="./ant_build/classes" />
-        <!-- compile flexiprovider separately to avoid warnings about character encoding -->
-        <javac
-            srcdir="./src"
-            includes="de/flexiprovider/**"
-            encoding="ISO-8859-1"
-            debug="true"
-            deprecation="on"
-            source="1.6" target="1.6" 
-            includeAntRuntime="false"
-            destdir="./ant_build/classes"
-            classpathref="cp"
-            failonerror="true" />
         <javac
             srcdir="./src"
             debug="true"
@@ -143,7 +134,9 @@
             <lib file="${lib}/mailapi.jar"/>
             <lib file="${lib}/bcprov-ecc-jdk16-146.jar"/>
             <lib file="${lib}/ntruenc-1.2.jar"/>
-            <lib file="ant_build/lib/flexi-gmss-1.7p1.jar"/>
+            <lib file="${lib}/scrypt-1.3.3.jar"/>
+            <lib file="${lib}/lzma-9.20.jar"/>
+            <lib file="${lib}/flexi-gmss-1.7p1.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
           <zipfileset dir="WebContent/themes" prefix="themes"/>
         </war>
@@ -154,17 +147,10 @@
         </exec>
     </target>
     
-    <target name="flexijar" depends="compile">
-        <mkdir dir="ant_build/lib"/>
-        <jar destfile="ant_build/lib/flexi-gmss-1.7p1.jar">
-            <fileset dir="ant_build/classes" includes="de/flexiprovider/** codec/**"/>
-        </jar>
-    </target>
-    
-    <target name="jar" depends="compile,flexijar,precompilejsp,bundle"> 
+    <target name="jar" depends="compile,precompilejsp,bundle"> 
         <mkdir dir="ant_build" />
         <jar destfile="${lib}/i2pbote.jar">
-            <fileset dir="ant_build/classes" excludes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/** de/flexiprovider/** codec/** **/*Test.class"/>
+            <fileset dir="ant_build/classes" excludes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/** codec/** **/*Test.class"/>
             <fileset dir="src" includes="i2p/bote/network/built-in-peers.txt"/>
         </jar>
     </target>
@@ -216,8 +202,22 @@
             <arg value="--no-gzip"/>
             <arg value="--effort=9"/>
             <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/scrypt-1.3.3.jar.pack"/>
+            <arg value="${lib}/scrypt-1.3.3.jar"/>
+        </exec>
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/lzma-9.20.jar.pack"/>
+            <arg value="${lib}/lzma-9.20.jar"/>
+        </exec>
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
             <arg value="plugin/plugin.tmp/lib/flexi-gmss-1.7p1.jar.pack"/>
-            <arg value="ant_build/lib/flexi-gmss-1.7p1.jar"/>
+            <arg value="${lib}/flexi-gmss-1.7p1.jar"/>
         </exec>
 
         <copy file="WebContent/WEB-INF/lib/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
@@ -336,7 +336,9 @@
         <copy file="${lib}/mailapi.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/bcprov-ecc-jdk16-146.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/ntruenc-1.2.jar" todir="${i2pinstallerplugindir}/lib"/>
-        <copy file="ant_build/lib/flexi-gmss-1.7p1.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/scrypt-1.3.3.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/lzma-9.20.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/flexi-gmss-1.7p1.jar" todir="${i2pinstallerplugindir}/lib"/>
         <!-- build the I2P + I2P-Bote install.jar -->
         <ant antfile="${installerdir}/i2p.i2p/build.xml" target="installer" inheritAll="false"/>
         <copy file="${installerdir}/i2p.i2p/install.jar" todir="${installerresources}"/>
