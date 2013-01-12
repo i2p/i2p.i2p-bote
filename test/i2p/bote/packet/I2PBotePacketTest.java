@@ -49,7 +49,6 @@ public class I2PBotePacketTest {
         
         for (Class<? extends I2PBotePacket> packetType: allPacketTypes) {
             TypeCode typeCode = packetType.getAnnotation(TypeCode.class);
-            System.out.println("Testing decodePacketTypeCode on " + packetType);
             assertTrue(I2PBotePacket.decodePacketTypeCode(typeCode.value()).equals(packetType));
         }
     }
