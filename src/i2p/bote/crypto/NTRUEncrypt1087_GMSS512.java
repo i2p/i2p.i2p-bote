@@ -38,11 +38,11 @@ import java.util.Arrays;
 
 import net.i2p.I2PAppContext;
 import net.i2p.data.Base64;
-import net.sf.ntru.EncryptionKeyPair;
-import net.sf.ntru.EncryptionParameters;
-import net.sf.ntru.EncryptionPrivateKey;
-import net.sf.ntru.EncryptionPublicKey;
-import net.sf.ntru.NtruEncrypt;
+import net.sf.ntru.encrypt.EncryptionKeyPair;
+import net.sf.ntru.encrypt.EncryptionParameters;
+import net.sf.ntru.encrypt.EncryptionPrivateKey;
+import net.sf.ntru.encrypt.EncryptionPublicKey;
+import net.sf.ntru.encrypt.NtruEncrypt;
 
 import org.bouncycastle.crypto.InvalidCipherTextException;
 
@@ -106,10 +106,12 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
     
     private I2PAppContext appContext;
     private GMSSKeyFactory gmssKeyFactory;
+    private NtruEncrypt ntruEngine;
 
     public NTRUEncrypt1087_GMSS512() {
         appContext = I2PAppContext.getGlobalContext();
         gmssKeyFactory = new GMSSKeyFactory();
+        ntruEngine = new NtruEncrypt(NTRUENCRYPT_PARAMETERS);
     }
     
     @Override
@@ -195,9 +197,9 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
 
     @Override
     public KeyPair generateEncryptionKeyPair() throws KeyException {
-        EncryptionKeyPair encKeyPair = NtruEncrypt.generateKeyPair(NTRUENCRYPT_PARAMETERS);
-        PublicKey publicKey = new NtruEncrypt1087PublicKey(encKeyPair.pub);
-        PrivateKey privateKey = new NtruEncrypt1087PrivateKey(encKeyPair.priv);
+        EncryptionKeyPair encKeyPair = ntruEngine.generateKeyPair();
+        PublicKey publicKey = new NtruEncrypt1087PublicKey(encKeyPair.getPublic());
+        PrivateKey privateKey = new NtruEncrypt1087PrivateKey(encKeyPair.getPrivate());
         
         return new KeyPair(publicKey, privateKey);
     }
@@ -227,7 +229,7 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
         byte[] encryptedData = encryptAes(data, symmKey, iv);
         
         NtruEncrypt1087PublicKey ntruKey = castToNtruEncryptKey(key);
-        byte[] encryptedSymmKey = NtruEncrypt.encrypt(symmKey, ntruKey.key, NTRUENCRYPT_PARAMETERS);
+        byte[] encryptedSymmKey = ntruEngine.encrypt(symmKey, ntruKey.key);
         
         ByteBuffer output = ByteBuffer.allocate(encryptedSymmKey.length + iv.length + encryptedData.length);
         output.put(encryptedSymmKey);
@@ -259,7 +261,7 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
         NtruEncrypt1087PublicKey publicNtruKey = castToNtruEncryptKey(publicKey);
         NtruEncrypt1087PrivateKey privateNtruKey = castToNtruEncryptKey(privateKey);
         EncryptionKeyPair keyPair = new EncryptionKeyPair(privateNtruKey.key, publicNtruKey.key);
-        byte[] symmKey = NtruEncrypt.decrypt(encryptedSymmKey, keyPair, NTRUENCRYPT_PARAMETERS);
+        byte[] symmKey = ntruEngine.decrypt(encryptedSymmKey, keyPair);
         
         byte[] iv = new byte[BLOCK_SIZE];
         inputBuffer.get(iv);
@@ -326,7 +328,12 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
         }
 
         public NtruEncrypt1087PublicKey(byte[] keyBytes) {
-            key = new EncryptionPublicKey(keyBytes, NTRUENCRYPT_PARAMETERS);
+            // NTRU expects the values N and q before the actual key
+            ByteBuffer buffer = ByteBuffer.allocate(keyBytes.length + 4);
+            buffer.putShort((short)NTRUENCRYPT_PARAMETERS.N);
+            buffer.putShort((short)NTRUENCRYPT_PARAMETERS.q);
+            buffer.put(keyBytes);
+            key = new EncryptionPublicKey(buffer.array());
         }
 
         @Override
@@ -341,7 +348,10 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
         
         @Override
         public byte[] getEncoded() {
-            return key.getEncoded();
+            byte[] keyBytes = key.getEncoded();
+            // strip the N and q parameters which are not part of the raw key
+            keyBytes = Arrays.copyOfRange(keyBytes, 4, keyBytes.length);
+            return keyBytes;
         }
         
         @Override
@@ -364,7 +374,13 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
         }
 
         public NtruEncrypt1087PrivateKey(byte[] keyBytes) {
-            key = new EncryptionPrivateKey(keyBytes, NTRUENCRYPT_PARAMETERS);
+            // NTRU expects the values N, q, and flags before the actual key
+            ByteBuffer buffer = ByteBuffer.allocate(keyBytes.length + 5);
+            buffer.putShort((short)NTRUENCRYPT_PARAMETERS.N);
+            buffer.putShort((short)NTRUENCRYPT_PARAMETERS.q);
+            buffer.put((byte)1);   // the flags byte as calculated in EncryptionPrivateKey.getEncoded()
+            buffer.put(keyBytes);
+            key = new EncryptionPrivateKey(buffer.array());
         }
 
         @Override
@@ -379,7 +395,10 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
         
         @Override
         public byte[] getEncoded() {
-            return key.getEncoded();
+            byte[] keyBytes = key.getEncoded();
+            // strip the N, q, and flags parameters which are not part of the raw key
+            keyBytes = Arrays.copyOfRange(keyBytes, 5, keyBytes.length);
+            return keyBytes;
         }
         
         @Override

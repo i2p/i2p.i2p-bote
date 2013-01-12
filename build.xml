@@ -26,6 +26,7 @@
         <pathelement location="${i2plib}/standard.jar" />
         <pathelement location="${lib}/mailapi.jar" />
         <pathelement location="${lib}/bcprov-ecc-jdk16-146.jar" />
+        <pathelement location="${lib}/ntruenc-1.2.jar" />
     </path>
     <property name="junit.filename" value="junit-4.8.1.jar"/>
     <property name="junit.url" value="http://sourceforge.net/projects/junit/files/junit/4.8.1/junit-4.8.1.jar/download"/>
@@ -141,6 +142,7 @@
             <lib file="${lib}/i2pbote.jar"/>
             <lib file="${lib}/mailapi.jar"/>
             <lib file="${lib}/bcprov-ecc-jdk16-146.jar"/>
+            <lib file="${lib}/ntruenc-1.2.jar"/>
             <lib file="ant_build/lib/flexi-gmss-1.7p1.jar"/>
           <zipfileset dir="WebContent/images" prefix="images"/>
           <zipfileset dir="WebContent/themes" prefix="themes"/>
@@ -179,7 +181,7 @@
         <mkdir dir="plugin/plugin.tmp/console/webapps" />
         <copy file="plugin/webapps.config" todir="plugin/plugin.tmp/console/" />
 
-        <!-- run i2pbote-plugin.war, bcprov...jar, and i2pbote.jar through pack200 -->
+        <!-- run all .jars and i2pbote-plugin.war through pack200 -->
         <move file="i2pbote-plugin.war" tofile="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
         <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
@@ -202,6 +204,13 @@
             <arg value="--modification-time=latest"/>
             <arg value="plugin/plugin.tmp/lib/bcprov-ecc-jdk16-146.jar.pack"/>
             <arg value="${lib}/bcprov-ecc-jdk16-146.jar"/>
+        </exec>
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/ntruenc-1.2.jar.pack"/>
+            <arg value="${lib}/ntruenc-1.2.jar"/>
         </exec>
         <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
@@ -326,6 +335,7 @@
         <copy file="${lib}/i2pbote.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/mailapi.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/bcprov-ecc-jdk16-146.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/ntruenc-1.2.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="ant_build/lib/flexi-gmss-1.7p1.jar" todir="${i2pinstallerplugindir}/lib"/>
         <!-- build the I2P + I2P-Bote install.jar -->
         <ant antfile="${installerdir}/i2p.i2p/build.xml" target="installer" inheritAll="false"/>
