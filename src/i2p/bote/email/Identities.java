@@ -378,6 +378,10 @@ public class Identities implements KeyUpdateHandler {
         return identities.size();
     }
     
+    public int getSize() throws PasswordException, IOException, GeneralSecurityException {
+        return size();
+    }
+    
     /**
      * Looks for a Base64-encoded Email Destination in a string and returns
      * the identity that matches the Email Destination. If no Email Destination

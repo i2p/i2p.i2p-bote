@@ -28,6 +28,8 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <ib:requirePassword>
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+
 <c:choose>
     <c:when test="${param.new}">
         <ib:message key="New Email Identity" var="title" scope="request"/>
@@ -86,7 +88,6 @@
                     <c:set var="selectedCryptoImplId" value="2"/>
                 </c:if>
                 <select name="cryptoImpl">
-                    <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
                     <c:forEach items="${jspHelperBean.cryptoImplementations}" var="cryptoImpl">
                         <c:set var="selected" value=""/>
                         <c:if test="${selectedCryptoImplId eq cryptoImpl.id}">
@@ -117,10 +118,13 @@
             <ib:message key="Default Identity:"/>
         </div>
         <div class="identity-form-checkbox">
-            <c:if test="${param.isDefault}">
-                <c:set var="checked" value="checked"/>
+            <c:if test="${jspHelperBean.identities.size le 1}">
+                <c:set var="disabled" value="disabled='disabled'"/>
             </c:if>
-            <input type="checkbox" name="isDefault" ${checked}/>
+            <c:if test="${param.isDefault or not empty disabled}">
+                <c:set var="checked" value="checked='checked'"/>
+            </c:if>
+            <input type="checkbox" name="isDefault" ${disabled} ${checked}/>
         </div>
         
         <c:if test="${not empty param.key}">
