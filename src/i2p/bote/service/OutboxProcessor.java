@@ -26,6 +26,7 @@ import i2p.bote.Configuration;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.EmailMetadata;
 import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.FolderIterator;
@@ -208,12 +209,15 @@ public class OutboxProcessor extends I2PAppThread {
             Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity, identities, recipient, maxPacketSize);
             
             IndexPacket indexPacket = new IndexPacket(recipientDest);
+            EmailMetadata metadata = email.getMetadata();
             for (UnencryptedEmailPacket unencryptedPacket: emailPackets) {
                 EncryptedEmailPacket emailPacket = new EncryptedEmailPacket(unencryptedPacket, recipientDest);
                 send(emailPacket, hops);
                 indexPacket.put(emailPacket);
+                metadata.addPacketInfo(recipientDest, emailPacket.getDhtKey(), emailPacket.getDeleteVerificationHash());
             }
             send(indexPacket, hops);
+            outbox.saveMetadata(email);
         } catch (GeneralSecurityException e) {
             log.error("Invalid recipient address. " + logSuffix, e);
             outbox.setStatus(email, _("Invalid recipient address: {0}", recipient));

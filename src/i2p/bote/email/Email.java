@@ -637,6 +637,16 @@ public class Email extends MimeMessage {
         metadata.setCreateTime(createTime);
     }
     
+    /** @see EmailMetadata#isDelivered() */
+    public boolean isDelivered() {
+        return metadata.isDelivered();
+    }
+
+    /** @see EmailMetadata#getDeliveryPercentage() */
+    public int getDeliveryPercentage() {
+        return metadata.getDeliveryPercentage();
+    }
+    
     /** @see EmailMetadata#getCreateTime() */
     public Date getCreateTime() {
         return metadata.getCreateTime();

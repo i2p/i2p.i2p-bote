@@ -21,6 +21,8 @@
 
 package i2p.bote;
 
+import i2p.bote.packet.dht.EncryptedEmailPacket;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -46,6 +48,7 @@ import javax.mail.MessagingException;
 import javax.mail.Part;
 
 import net.i2p.I2PAppContext;
+import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Base32;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
@@ -365,7 +368,20 @@ public class Util {
     public static String toShortenedBase32(Destination destination) {
         return toBase32(destination).substring(0, 8) + "...";
     }
+    
+    /** Thin wrapper around {@link Hash#fromBase64()}. */
+    public static Hash createHash(String hashStr) throws DataFormatException {
+        Hash hash = new Hash();
+        hash.fromBase64(hashStr);
+        return hash;
+    }
 
+    public static boolean isDeleteAuthorizationValid(Hash verificationHash, UniqueId delAuthorization) {
+        Hash expectedVerificationHash = SHA256Generator.getInstance().calculateHash(delAuthorization.toByteArray());
+        boolean valid = expectedVerificationHash.equals(verificationHash);
+        return valid;
+    }
+    
     /**
      * Makes a file readable and writable only by the current OS user,
      * if the operating system supports it. Errors are ignored.

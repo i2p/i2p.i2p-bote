@@ -94,16 +94,7 @@ public class EmailFolder extends Folder<Email> {
             emailOutputStream.close();
         }
         
-        // write out the metadata
-        File metaFile = getMetadataFile(emailFile);
-        log.info("Mail folder <" + storageDir + ">: storing metadata file: <" + metaFile.getAbsolutePath() + ">");
-        try {
-            email.getMetadata().writeTo(metaFile);
-            Util.makePrivate(metaFile);
-        }
-        catch (IOException e) {
-            log.error("Can't write metadata.", e);
-        }
+        saveMetadata(email);
     }
     
     public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
@@ -171,6 +162,10 @@ public class EmailFolder extends Folder<Email> {
                 case SUBJECT:
                     value1 = email1.getSubject();
                     value2 = email2.getSubject();
+                    break;
+                case DELIVERED:
+                    value1 = email1.getDeliveryPercentage();
+                    value2 = email2.getDeliveryPercentage();
                     break;
                 default:
                     log.error("Unknown email attribute type: " + attribute);
@@ -387,13 +382,15 @@ public class EmailFolder extends Folder<Email> {
         saveMetadata(email);
     }
     
-    private void saveMetadata(Email email) {
+    public void saveMetadata(Email email) {
         EmailMetadata metadata = email.getMetadata();
-        File metadataFile = getMetadataFile(email.getMessageID());
+        File metaFile = getMetadataFile(email.getMessageID());
+        log.info("Mail folder <" + storageDir + ">: storing metadata file: <" + metaFile.getAbsolutePath() + ">");
         try {
-            metadata.writeTo(metadataFile);
+            metadata.writeTo(metaFile);
+            Util.makePrivate(metaFile);
         } catch (IOException e) {
-            log.error("Can't write metadata to file <" + metadataFile + ">", e);
+            log.error("Can't write metadata to file <" + metaFile.getAbsolutePath() + ">", e);
         }
     }
     

@@ -51,6 +51,7 @@ import i2p.bote.network.RelayPeer;
 import i2p.bote.network.kademlia.KademliaDHT;
 import i2p.bote.packet.dht.EncryptedEmailPacket;
 import i2p.bote.packet.dht.IndexPacket;
+import i2p.bote.service.DeliveryChecker;
 import i2p.bote.service.EmailChecker;
 import i2p.bote.service.ExpirationThread;
 import i2p.bote.service.OutboxListener;
@@ -126,6 +127,7 @@ public class I2PBote implements NetworkStatusSource {
     private POP3Service pop3Service;
     private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
     private EmailChecker emailChecker;
+    private DeliveryChecker deliveryChecker;
     private UpdateChecker updateChecker;
     private KademliaDHT dht;
     private RelayPeerManager peerManager;
@@ -308,6 +310,9 @@ public class I2PBote implements NetworkStatusSource {
         
         emailChecker = new EmailChecker(identities, configuration, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder, this, sendQueue, dht, peerManager);
         backgroundThreads.add(emailChecker);
+        
+        deliveryChecker = new DeliveryChecker(dht, sentFolder, configuration);
+        backgroundThreads.add(deliveryChecker);
         
         updateChecker = new UpdateChecker(this, configuration);
         backgroundThreads.add(updateChecker);

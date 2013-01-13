@@ -21,6 +21,7 @@
 
 package i2p.bote.network.kademlia;
 
+import i2p.bote.UniqueId;
 import i2p.bote.Util;
 import i2p.bote.folder.DeletionAwareDhtFolder;
 import i2p.bote.network.DHT;
@@ -41,7 +42,11 @@ import i2p.bote.packet.PeerList;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
 import i2p.bote.packet.dht.DeleteRequest;
+import i2p.bote.packet.dht.DeletionInfoPacket;
+import i2p.bote.packet.dht.DeletionQuery;
+import i2p.bote.packet.dht.DeletionRecord;
 import i2p.bote.packet.dht.DhtStorablePacket;
+import i2p.bote.packet.dht.EncryptedEmailPacket;
 import i2p.bote.packet.dht.FindClosePeersPacket;
 import i2p.bote.packet.dht.RetrieveRequest;
 import i2p.bote.packet.dht.StoreRequest;
@@ -183,6 +188,49 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
         return find(key, dataType, true);
     }
 
+    @Override
+    public UniqueId findDeleteAuthorizationKey(Hash dhtKey, Hash verificationHash) throws InterruptedException {
+        final Collection<Destination> closeNodes = getClosestNodes(dhtKey);
+        log.info("Querying " + closeNodes.size() + " peers with DeletionQueries for Kademlia key " + dhtKey);
+        
+        DhtStorageHandler storageHandler = storageHandlers.get(EncryptedEmailPacket.class);
+        if (storageHandler instanceof DeletionAwareDhtFolder) {
+            DeletionAwareDhtFolder<?> folder = (DeletionAwareDhtFolder<?>)storageHandler;
+            UniqueId delAuthorization = folder.getDeleteAuthorization(dhtKey);
+            if (delAuthorization != null)
+                return delAuthorization;
+        }
+        else
+            log.error("StorageHandler for EncryptedEmailPackets is not a DeletionAwareDhtFolder!");
+        
+        // Send the DeletionQueries
+        PacketBatch batch = new PacketBatch();
+        for (Destination node: closeNodes)
+            if (!localDestination.equals(node))   // local has already been taken care of
+                batch.putPacket(new DeletionQuery(dhtKey), node);
+        sendQueue.send(batch);
+        batch.awaitSendCompletion();
+
+        // wait for replies
+        batch.awaitFirstReply(RESPONSE_TIMEOUT, TimeUnit.SECONDS);
+        log.info(batch.getResponses().size() + " response packets received for deletion query for hash " + dhtKey);
+        
+        sendQueue.remove(batch);
+        
+        Map<Destination, DataPacket> responses = batch.getResponses();
+        for (DataPacket response: responses.values())
+            if (response instanceof DeletionInfoPacket) {
+                DeletionInfoPacket delInfo = (DeletionInfoPacket)response;
+                DeletionRecord delRecord = delInfo.getEntry(dhtKey);
+                if (delRecord != null) {
+                    boolean valid = Util.isDeleteAuthorizationValid(verificationHash, delRecord.delAuthorization);
+                    if (valid)
+                        return delRecord.delAuthorization;
+                }
+            }
+        return null;
+    }
+    
     @Override
     public void setStorageHandler(Class<? extends DhtStorablePacket> packetType, DhtStorageHandler storageHandler) {
         storageHandlers.put(packetType, storageHandler);
@@ -570,6 +618,20 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
             DhtStorageHandler storageHandler = storageHandlers.get(delRequest.getDataType());
             if (storageHandler instanceof DeletionAwareDhtFolder<?>)
                 ((DeletionAwareDhtFolder<?>)storageHandler).process(delRequest);
+        }
+        else if (packet instanceof DeletionQuery) {
+            DhtStorageHandler storageHandler = storageHandlers.get(EncryptedEmailPacket.class);
+            if (storageHandler instanceof DeletionAwareDhtFolder) {
+                Hash dhtKey = ((DeletionQuery)packet).getDhtKey();
+                UniqueId delAuthorization = ((DeletionAwareDhtFolder<?>)storageHandler).getDeleteAuthorization(dhtKey);
+                // If we know the Delete Authorization for the DHT key, send it to the peer
+                if (delAuthorization != null) {
+                    DeletionInfoPacket delInfo = new DeletionInfoPacket();
+                    delInfo.put(dhtKey, delAuthorization);
+                    ResponsePacket response = new ResponsePacket(delInfo, StatusCode.OK, packet.getPacketId());
+                    sendQueue.send(response, sender);
+                }
+            }
         }
         
         // bucketManager is not registered as a PacketListener, so notify it here

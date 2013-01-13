@@ -40,8 +40,9 @@ import net.i2p.util.Log;
 /**
  * Contains information about deleted DHT items, which
  * can be Email Packets or Index Packet entries.<br/>
- * Objects of this class are not sent over the network,
- * they are only used locally.
+ * Objects of this class are used locally to keep track
+ * of deleted packets, and they are sent to peers in
+ * response to <code>DeletionQueries</code>.
  * <p/>
  * This class is not thread-safe.
  */

@@ -95,6 +95,14 @@ public abstract class DeletionAwareDhtFolder<T extends DhtStorablePacket> extend
     }
     
     /**
+     * Returns a Delete Authorization for a given DHT key, or <code>null<code>
+     * if the packet has never been deleted from this folder.
+     * @param dhtKey
+     * @return a {@link Hash}
+     */
+    public abstract UniqueId getDeleteAuthorization(Hash dhtKey);
+    
+    /**
      * Stores a packet and returns a <code>DeleteRequest</code> if the packet, or entries in the
      * packet, have been deleted.<br/>
      * The <code>DeleteRequest</code> contains a Delete Authorization key (or keys) and can be

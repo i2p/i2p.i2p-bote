@@ -22,6 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
+import i2p.bote.Util;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.dht.DeleteRequest;
@@ -36,7 +37,6 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -158,6 +158,11 @@ public class IndexPacketFolder extends DeletionAwareDhtFolder<IndexPacket> imple
     }
 
     @Override
+    public UniqueId getDeleteAuthorization(Hash dhtKey) {
+        throw new UnsupportedOperationException();
+    }
+    
+    @Override
     public DeleteRequest storeAndCreateDeleteRequest(DhtStorablePacket packetToStore) {
         if (!(packetToStore instanceof IndexPacket))
             throw new IllegalArgumentException("Invalid packet type: " + packetToStore.getClass().getSimpleName() + "; this folder only stores packets of type " + IndexPacket.class.getSimpleName() + ".");
@@ -239,17 +244,16 @@ public class IndexPacketFolder extends DeletionAwareDhtFolder<IndexPacket> imple
             
             for (Hash keyToDelete: keysToDelete) {
                 // verify
-                Hash expectedVerificationHash = indexPacket.getDeleteVerificationHash(keyToDelete);
-                if (expectedVerificationHash == null)
+                Hash verificationHash = indexPacket.getDeleteVerificationHash(keyToDelete);
+                if (verificationHash == null)
                     log.debug("Email packet key " + keyToDelete + " from IndexPacketDeleteRequest not found in index packet for destination " + destHash);
                 else {
                     UniqueId delAuthorization = indexPacketDelRequest.getDeleteAuthorization(keyToDelete);
-                    Hash actualVerificationHash = SHA256Generator.getInstance().calculateHash(delAuthorization.toByteArray());
-                    boolean valid = expectedVerificationHash.equals(actualVerificationHash);
+                    boolean valid = Util.isDeleteAuthorizationValid(verificationHash, delAuthorization);
                     if (valid)
                         remove(indexPacket, keyToDelete, delAuthorization);
                     else
-                        log.debug("Invalid delete verification hash in IndexPacketDeleteRequest. Should be: <" + expectedVerificationHash.toBase64() + ">, is <" + actualVerificationHash.toBase64() +">");
+                        log.debug("Invalid delete verification hash in IndexPacketDeleteRequest. Should be: <" + verificationHash.toBase64() + ">");
                 }
             }
         }

@@ -24,6 +24,7 @@ package i2p.bote.packet;
 import i2p.bote.I2PBote;
 import i2p.bote.Util;
 import i2p.bote.packet.dht.DeletionInfoPacket;
+import i2p.bote.packet.dht.DeletionQuery;
 import i2p.bote.packet.dht.EmailPacketDeleteRequest;
 import i2p.bote.packet.dht.EncryptedEmailPacket;
 import i2p.bote.packet.dht.FindClosePeersPacket;
@@ -55,7 +56,7 @@ public abstract class I2PBotePacket {
         RelayRequest.class, ResponsePacket.class, RetrieveRequest.class, StoreRequest.class,
         FindClosePeersPacket.class, PeerListRequest.class, PeerList.class,
         EncryptedEmailPacket.class, UnencryptedEmailPacket.class, EmailPacketDeleteRequest.class,
-        IndexPacket.class, IndexPacketDeleteRequest.class, DeletionInfoPacket.class
+        IndexPacket.class, IndexPacketDeleteRequest.class, DeletionInfoPacket.class, DeletionQuery.class
     };
     
     private int protocolVersion;

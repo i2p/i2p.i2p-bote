@@ -22,6 +22,7 @@
 package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
+import i2p.bote.Util;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
 import i2p.bote.packet.dht.DeleteRequest;
@@ -34,7 +35,6 @@ import i2p.bote.packet.dht.EncryptedEmailPacket;
 import java.io.File;
 import java.util.Iterator;
 
-import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -112,15 +112,14 @@ public class EmailPacketFolder extends DeletionAwareDhtFolder<EncryptedEmailPack
         DhtStorablePacket storedPacket = retrieve(dhtKey);
         if (storedPacket instanceof EncryptedEmailPacket) {
             // verify
-            Hash expectedHash = ((EncryptedEmailPacket)storedPacket).getDeleteVerificationHash();
+            Hash verificationHash = ((EncryptedEmailPacket)storedPacket).getDeleteVerificationHash();
             UniqueId delAuthorization = emailPacketDelRequest.getAuthorization();
-            Hash actualHash = SHA256Generator.getInstance().calculateHash(delAuthorization.toByteArray());
-            boolean valid = actualHash.equals(expectedHash);
+            boolean valid = Util.isDeleteAuthorizationValid(verificationHash, delAuthorization);
         
             if (valid)
                 delete(dhtKey, delAuthorization);
             else
-                log.debug("Invalid Delete Authorization in EmailPacketDeleteRequest. Should be: <" + expectedHash.toBase64() + ">, is <" + actualHash.toBase64() +">");
+                log.debug("Invalid Delete Authorization in EmailPacketDeleteRequest. Should be: <" + verificationHash.toBase64() + ">");
         }
         else if (storedPacket != null)
             log.debug("EncryptedEmailPacket expected for DHT key <" + dhtKey + ">, found " + storedPacket.getClass().getSimpleName());
@@ -154,6 +153,18 @@ public class EmailPacketFolder extends DeletionAwareDhtFolder<EncryptedEmailPack
         return DEL_FILE_PREFIX + dhtKey.toBase64().substring(0, 2) + PACKET_FILE_EXTENSION;
     }
 
+    @Override
+    public UniqueId getDeleteAuthorization(Hash dhtKey) {
+        String delFileName = getDeletionFileName(dhtKey);
+        DeletionInfoPacket delInfo = createDelInfoPacket(delFileName);
+        if (delInfo != null) {
+            DeletionRecord delRecord = delInfo.getEntry(dhtKey);
+            if (delRecord != null)
+                return delRecord.delAuthorization;
+        }
+        return null;
+    }
+    
     @Override
     public DeleteRequest storeAndCreateDeleteRequest(DhtStorablePacket packetToStore) {
         if (!(packetToStore instanceof EncryptedEmailPacket))

@@ -353,16 +353,12 @@ Strings in packets are UTF8 encoded.
                       | KEY   | 32 bytes   | DHT key to look up
   --------------------+-------+------------+------------------------------------------------------------------
    Deletion Query     |       |            | A request to a peer to return a Deletion Info Packet for a given
-   (Not implemented)  |       |            | DHT key and data type. No response is expected if the DHT item
-                      |       |            | is not known to be deleted.
+                      |       |            | Email Packet DHT key. If the Email Packet is not known to be
+                      |       |            | deleted, no response is expected back.
                       | PFX   | 4 bytes    | Packet prefix, must be 0x6D 0x30 0x52 0xE9
                       | TYPE  | 1 byte     | Value = 'L'
                       | VER   | 1 byte     | Protocol version
                       | CID   | 32 bytes   | Correlation ID, used for responses
-                      | DTYP  | 1 byte     | Type of data to query for:
-                      |       |            |   'I' = Index Packet
-                      |       |            |   'E' = Email Packet
-                      |       |            |   'M' = Directory Entry
                       | KEY   | 32 bytes   | DHT key to look up
   --------------------+-------+------------+------------------------------------------------------------------
    Store Request      |       |            | DHT Store Request

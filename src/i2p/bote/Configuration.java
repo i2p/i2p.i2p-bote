@@ -73,6 +73,7 @@ public class Configuration {
     private static final String PARAMETER_AUTO_MAIL_CHECK = "autoMailCheckEnabled";
     private static final String PARAMETER_MAIL_CHECK_INTERVAL = "mailCheckInterval";
     private static final String PARAMETER_OUTBOX_CHECK_INTERVAL = "outboxCheckInterval";
+    private static final String PARAMETER_DELIVERY_CHECK_INTERVAL = "deliveryCheckInterval";
     private static final String PARAMETER_RELAY_SEND_PAUSE = "RelaySendPause";
     private static final String PARAMETER_HIDE_LOCALE = "hideLocale";
     private static final String PARAMETER_INCLUDE_SENT_TIME = "includeSentTime";
@@ -101,6 +102,7 @@ public class Configuration {
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
     private static final int DEFAULT_OUTBOX_CHECK_INTERVAL = 10;   // in minutes
+    private static final int DEFAULT_DELIVERY_CHECK_INTERVAL = 60;   // in minutes
     private static final int DEFAULT_RELAY_SEND_PAUSE = 10;   // in minutes, see RelayPacketSender.java
     private static final boolean DEFAULT_HIDE_LOCALE = true;
     private static final boolean DEFAULT_INCLUDE_SENT_TIME = true;
@@ -315,6 +317,18 @@ public class Configuration {
      */
     public int getOutboxCheckInterval() {
         return getIntParameter(PARAMETER_OUTBOX_CHECK_INTERVAL, DEFAULT_OUTBOX_CHECK_INTERVAL);
+    }
+
+    public void getDeliveryCheckInterval(int minutes) {
+        properties.setProperty(PARAMETER_DELIVERY_CHECK_INTERVAL, Integer.valueOf(minutes).toString());
+    }
+    
+    /**
+     * Returns the wait time, in minutes, between checking the delivery status of sent emails.
+     * @see i2p.bote.service.DeliveryChecker
+     */
+    public int getDeliveryCheckInterval() {
+        return getIntParameter(PARAMETER_DELIVERY_CHECK_INTERVAL, DEFAULT_DELIVERY_CHECK_INTERVAL);
     }
 
     public void setRelaySendPause(int minutes) {

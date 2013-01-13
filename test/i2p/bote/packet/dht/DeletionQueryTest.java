@@ -19,12 +19,31 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.email;
+package i2p.bote.packet.dht;
 
-/**
- * A email header field such as "To" or "Subject".
- * <code>STATUS</code> is special. It is not a header field, and it is only used by {@link i2p.bote.folder.Outbox}.
- * 
- * I would have made this an inner class of Email, but Tomcat doesn't like inner classes in JSP functions.
- */
-public enum EmailAttribute {FROM, TO, SUBJECT, DATE, CREATE_TIME, DELIVERED, STATUS}
+import static junit.framework.Assert.assertTrue;
+
+import java.util.Arrays;
+
+import net.i2p.data.Hash;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class DeletionQueryTest {
+    private DeletionQuery delQuery;
+
+    @Before
+    public void setUp() throws Exception {
+        Hash dhtKey = new Hash(new byte[] {-48, 78, 66, 58, -79, 87, 38, -103, -60, -27, 108, 55, 117, 37, -99, 93, -23, -102, -83, 20, 44, -80, 65, 89, -68, -73, 69, 51, 115, 79, 24, 127});
+        delQuery = new DeletionQuery(dhtKey);
+    }
+
+    @Test
+    public void toByteArrayAndBack() {
+        byte[] arrayA = delQuery.toByteArray();
+        byte[] arrayB;
+        arrayB = new DeletionQuery(arrayA).toByteArray();
+        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+    }
+}

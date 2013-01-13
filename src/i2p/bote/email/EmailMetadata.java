@@ -21,9 +21,13 @@
 
 package i2p.bote.email;
 
+import i2p.bote.Util;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Properties;
 
@@ -53,6 +57,12 @@ public class EmailMetadata extends Properties {
     private static final long serialVersionUID = 9058161682262839810L;
     private static final String PROPERTY_NEW = "new";
     private static final String PROPERTY_CREATE_TIME = "createTime";
+    private static final String PROPERTY_RECEIVED_DATE = "receivedDate";
+    private static final String PROPERTY_DESTINATION = "destination";
+    private static final String PACKET = "packet";
+    private static final String DHT_KEY = "dhtKey";
+    private static final String DELETE_VERIFICATION_HASH = "delVerifHash";
+    private static final String DELETED_FROM_DHT = "deletedFromDht";
     
     private Log log = new Log(EmailMetadata.class);
     
@@ -72,7 +82,7 @@ public class EmailMetadata extends Properties {
      */
     public void setReceivedDate(Date receivedDate) {
         String dateStr = String.valueOf(receivedDate.getTime());
-        setProperty("receivedDate", dateStr);
+        setProperty(PROPERTY_RECEIVED_DATE, dateStr);
     }
     
     /**
@@ -80,7 +90,7 @@ public class EmailMetadata extends Properties {
      * date has been set, or if it is invalid, <code>null</code> is returned.
      */
     public Date getReceivedDate() {
-        String dateStr = getProperty("receivedDate");
+        String dateStr = getProperty(PROPERTY_RECEIVED_DATE);
         if (dateStr == null)
             return null;
         else {
@@ -129,19 +139,27 @@ public class EmailMetadata extends Properties {
         return createTime;
     }
     
-    public void addPacketPendingDelivery(EmailDestination destination, Hash dhtKey, Hash delVerificationHash) {
+    /**
+     * Adds metadata about an email packet that has been stored in the DHT
+     * and is waiting to be picked up and deleted.
+     * @param destination
+     * @param dhtKey
+     * @param delVerificationHash
+     */
+    public void addPacketInfo(EmailDestination destination, Hash dhtKey, Hash delVerificationHash) {
         int destIndex = getDestinationIndex(destination);
         int packetIndex = getPacketIndex(destIndex, dhtKey);
-        setProperty("destination" + destIndex, destination.toBase64());
-        setProperty("destination" + destIndex + ".packet" + packetIndex, dhtKey.toBase64());
-        setProperty("destination" + destIndex + ".delVerifHash" + packetIndex, delVerificationHash.toBase64());
-        setProperty("destination" + destIndex + ".deletedFromDht" + packetIndex, "false");
+        setProperty(PROPERTY_DESTINATION + destIndex, destination.toBase64());
+        String packetProperty = PROPERTY_DESTINATION + destIndex + "." + PACKET + packetIndex + ".";
+        setProperty(packetProperty + DHT_KEY, dhtKey.toBase64());
+        setProperty(packetProperty + DELETE_VERIFICATION_HASH, delVerificationHash.toBase64());
+        setProperty(packetProperty + DELETED_FROM_DHT, "false");
     }
     
     private int getDestinationIndex(EmailDestination destination) {
         int destIndex = 0;
         while (true) {
-            String value = getProperty("destination" + destIndex);
+            String value = getProperty(PROPERTY_DESTINATION + destIndex);
             if (value==null || destination.toBase64().equals(value))
                 return destIndex;
             destIndex++;
@@ -151,7 +169,7 @@ public class EmailMetadata extends Properties {
     private int getPacketIndex(int destIndex, Hash dhtKey) {
         int pktIndex = 0;
         while (true) {
-            String value = getProperty("destination" + destIndex + ".packet" + pktIndex);
+            String value = getProperty(PROPERTY_DESTINATION + destIndex + "." + PACKET + pktIndex + "." + DHT_KEY);
             if (value==null || dhtKey.toBase64().equals(value))
                 return pktIndex;
             pktIndex++;
@@ -161,11 +179,9 @@ public class EmailMetadata extends Properties {
     public Hash getDeleteVerificationHash(EmailDestination destination, Hash dhtKey) {
         int destIndex = getDestinationIndex(destination);
         int packetIndex = getPacketIndex(destIndex, dhtKey);
-        String hashStr = getProperty("destination" + destIndex + ".delVerifHash" + packetIndex);
-        Hash hash = new Hash();
+        String hashStr = getProperty(PROPERTY_DESTINATION + destIndex + "." + PACKET + packetIndex + "." + DELETE_VERIFICATION_HASH);
         try {
-            hash.fromBase64(hashStr);
-            return hash;
+            return Util.createHash(hashStr);
         }
         catch (DataFormatException e) {
             log.error("Invalid delete verification hash: <" + hashStr + ">", e);
@@ -173,17 +189,60 @@ public class EmailMetadata extends Properties {
         }
     }
 
-    public void setPacketDelivered(EmailDestination destination, Hash dhtKey, boolean delivered) {
-        int destIndex = getDestinationIndex(destination);
-        int packetIndex = getPacketIndex(destIndex, dhtKey);
-        setProperty("destination" + destIndex + ".deletedFromDht" + packetIndex, "true");
+    public void setPacketDelivered(Hash dhtKey, boolean delivered) {
+        String dhtKeyStr = dhtKey.toBase64();
+        
+        for (Object property: keySet())
+            if (property instanceof String) {
+                String propertyStr = (String)property;
+                if (propertyStr.matches(PROPERTY_DESTINATION + ".*" + DHT_KEY) && dhtKeyStr.equals(getProperty(propertyStr))) {
+                    String deletedProperty = propertyStr.replace(DHT_KEY, DELETED_FROM_DHT);
+                    setProperty(deletedProperty, delivered ? "true" : "false");
+                }
+            }
     }
     
+    public boolean isDelivered() {
+        return getNumUndeliveredRecipients() == 0;
+    }
+    
+    public int getDeliveryPercentage() {
+        int numPackets = getNumPackets();
+        if (numPackets == 0)
+            return 0;
+        else
+            return 100 * getNumDeliveredPackets() / numPackets;
+    }
+    
+    private int getNumDeliveredPackets() {
+        int numUndelivered = 0;
+        for (Object property: keySet())
+            if (property instanceof String) {
+                String delFlagProperty = (String)property;
+                if (delFlagProperty.matches(PROPERTY_DESTINATION + ".*" + DELETED_FROM_DHT) && "true".equals(getProperty(delFlagProperty)))
+                    numUndelivered++;
+            }
+        return numUndelivered;
+    }
+    
+    /** Returns the number of email packets for the email. */
+    private int getNumPackets() {
+        int numPackets = 0;
+        for (Object property: keySet())
+            if (property instanceof String) {
+                String delFlagProperty = (String)property;
+                if (delFlagProperty.matches(PROPERTY_DESTINATION + ".*" + DELETED_FROM_DHT))
+                    numPackets++;
+            }
+        return numPackets;
+    }
+    
+    /** Returns the number of recipients who haven't picked up all email packets. */
     public int getNumUndeliveredRecipients() {
         int destIndex = 0;
         int numUndelivered = 0;
         while (true) {
-            String value = getProperty("destination" + destIndex);
+            String value = getProperty(PROPERTY_DESTINATION + destIndex);
             if (value == null)
                 break;
             if (!isDelivered(destIndex))
@@ -193,10 +252,14 @@ public class EmailMetadata extends Properties {
         return numUndelivered;
     }
     
+    /**
+     * Tests if the email has been delivered to a given destination.
+     * @param destIndex the destination index in the property key, e.g. 5 for "destination5"
+     */
     private boolean isDelivered(int destIndex) {
         int packetIndex = 0;
         while (true) {
-            String packetDeliveredStr = getProperty("destination" + destIndex + ".deletedFromDht" + packetIndex);
+            String packetDeliveredStr = getProperty(PROPERTY_DESTINATION + destIndex + "." + PACKET + packetIndex + "." + DELETED_FROM_DHT);
             if (packetDeliveredStr == null)
                 return true;
             boolean packetDelivered = "true".equalsIgnoreCase(packetDeliveredStr);
@@ -207,12 +270,49 @@ public class EmailMetadata extends Properties {
         }
     }
     
+    /** Returns the DHT keys of all email packets which haven't been deleted from the DHT */
+    public Collection<PacketInfo> getUndeliveredPacketKeys() {
+        Collection<PacketInfo> packets = new ArrayList<PacketInfo>();
+        for (Object property: keySet())
+            if (property instanceof String) {
+                String delFlagProperty = (String)property;
+                if (delFlagProperty.matches(PROPERTY_DESTINATION + ".*" + DELETED_FROM_DHT) && "false".equals(getProperty(delFlagProperty))) {
+                    String baseProperty = delFlagProperty.replace(DELETED_FROM_DHT, "");
+                    String dhtKeyProperty = baseProperty + DHT_KEY;
+                    String dhtKeyStr = getProperty(dhtKeyProperty);
+                    String delVerifProperty = baseProperty + DELETE_VERIFICATION_HASH;
+                    String delVerifStr = getProperty(delVerifProperty);
+                    try {
+                        Hash dhtKey = Util.createHash(dhtKeyStr);
+                        Hash delVerifHash = Util.createHash(delVerifStr);
+                        packets.add(new PacketInfo(dhtKey, delVerifHash));
+                    }
+                    catch (DataFormatException e) {
+                        log.error("Invalid DHT key or verification hash in email metadata for property key " + baseProperty, e);
+                    }
+                }
+            }
+        
+        return packets;
+    }
+    
     public void writeTo(File file) throws IOException {
         try {
             DataHelper.storeProps(this, file);
         }
         catch (IOException e) {
             log.error("Can't write metadata to file: <" + file + ">", e);
+        }
+    }
+    
+    /** Contains a DHT key and a verification hash for an email packet. */
+    public class PacketInfo {
+        public Hash dhtKey;
+        public Hash delVerificationHash;
+        
+        private PacketInfo(Hash dhtKey, Hash delVerificationHash) {
+            this.dhtKey = dhtKey;
+            this.delVerificationHash = delVerificationHash;
         }
     }
 }

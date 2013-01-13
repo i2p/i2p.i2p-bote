@@ -32,6 +32,7 @@
     pageContext.setAttribute("TO", i2p.bote.email.EmailAttribute.TO, PageContext.PAGE_SCOPE);
     pageContext.setAttribute("SUBJECT", i2p.bote.email.EmailAttribute.SUBJECT, PageContext.PAGE_SCOPE);
     pageContext.setAttribute("DATE", i2p.bote.email.EmailAttribute.DATE, PageContext.PAGE_SCOPE);
+    pageContext.setAttribute("DELIVERED", i2p.bote.email.EmailAttribute.DELIVERED, PageContext.PAGE_SCOPE);
 %> 
 
 <%-- The outbox is implemented in a separate JSP --%>
@@ -56,10 +57,9 @@
     <div id="inboxFlag"></div>
 </c:if>
 
-<c:set var="showFlags" value="true"/>
+<c:set var="isSentFolder" value="false"/>
 <c:if test="${folderName == 'Sent'}">
-    <%-- Don't show the "known" and "signature" columns in the sent folder --%>
-    <c:set var="showFlags" value="false"/>
+    <c:set var="isSentFolder" value="true"/>
 </c:if>
 
 <c:set var="sortcolumn" value="${DATE}"/>
@@ -107,7 +107,8 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
-            <c:if test="${showFlags}">
+            <%-- Don't show the "known" and "signature" columns in the sent folder --%>
+            <c:if test="${not isSentFolder}">
                 <th class="header-column-known"><ib:message key="Know"/></th>
                 <th class="header-column-sig"><ib:message key="Sig"/></th>
             </c:if>
@@ -135,6 +136,17 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Sent"/>${dateColumnIndicator}</a>
             </th>
+            <%-- Show the "delivered" column only in the sent folder --%>
+            <c:if test="${isSentFolder}">
+                <th class="header-column-delivery">
+                    <c:set var="sortLink" value="folder.jsp?path=${param.path}&amp;sortcolumn=${DELIVERED}"/>
+                    <c:if test="${sortcolumn eq DELIVERED}">
+                        <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
+                        <c:set var="deliveryColumnIndicator" value=" ${sortIndicator}"/>
+                    </c:if>
+                    <a href="${sortLink}"><ib:message key="Delivered"/>${deliveryColumnIndicator}</a>
+                </th>
+            </c:if>
             <th class="header-column-trash"></th>
         </tr>
         
@@ -152,6 +164,14 @@
             <c:set var="known" value=""/>
             <c:if test="${ib:isKnown(email.sender)}">
                 <c:set var="known" value="<div class='sender-known'>&#10004;</div>"/>
+            </c:if>
+            
+            <c:if test="${isSentFolder}">
+                <c:set var="delivered" value="<div class='deliveryComplete'>&#10004;</div>"/>
+                <c:set var="deliveryPercentage" value="${email.deliveryPercentage}"/>
+                <c:if test="${not email.delivered}">
+                    <c:set var="delivered" value="<div class='deliveryIncomplete' title='${deliveryPercentage}%'><meter max='100' value='${deliveryPercentage}'>${deliveryPercentage}</meter></div>"/>
+                </c:if>
             </c:if>
             
             <c:set var="recipient" value="${ib:getNameAndDestination(ib:getOneLocalRecipient(email))}"/>
@@ -175,7 +195,8 @@
             
             <tr class="${textClass} ${backgroundClass}">
             <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(sender)}</a></td>
-            <c:if test="${showFlags}">
+            <%-- Don't show the "known" and "signature" columns in the sent folder --%>
+            <c:if test="${not isSentFolder}">
                 <td><c:out value="${known}" escapeXml="false"/></td>
                 <td><c:out value="${signature}" escapeXml="false"/></td>
             </c:if>
@@ -185,6 +206,10 @@
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
             </td>
+            <%-- Show the "delivered" column only in the sent folder --%>
+            <c:if test="${isSentFolder}">
+                <td>${delivered}</td>
+            </c:if>
             <td>
                 <a href="deleteEmail.jsp?folder=${folderName}&amp;messageID=${email.messageID}">
                 <img src="${themeDir}/images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>

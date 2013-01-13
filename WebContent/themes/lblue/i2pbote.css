@@ -493,6 +493,11 @@ table td, th {
     text-align: center;
 }
 
+.header-column-delivery {
+    width: 8%;
+    text-align: center;
+}
+
 .header-column-to {
     width: 18%;
 }
@@ -552,6 +557,16 @@ table td, th {
 }
 
 .sender-known {
+    text-align: center;
+}
+
+.deliveryComplete {
+    color: green;
+    text-align: center;
+}
+
+.deliveryIncomplete {
+    color: black;
     text-align: center;
 }
 

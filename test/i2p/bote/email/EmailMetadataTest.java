@@ -52,10 +52,10 @@ public class EmailMetadataTest {
         assertEquals(null, metadata.getDeleteVerificationHash(destination1, dhtKey3));
         assertEquals(null, metadata.getDeleteVerificationHash(destination2, dhtKey4));
 
-        metadata.addPacketPendingDelivery(destination1, dhtKey1, delVerificationHash1);
-        metadata.addPacketPendingDelivery(destination1, dhtKey2, delVerificationHash2);
-        metadata.addPacketPendingDelivery(destination1, dhtKey3, delVerificationHash3);
-        metadata.addPacketPendingDelivery(destination2, dhtKey4, delVerificationHash4);
+        metadata.addPacketInfo(destination1, dhtKey1, delVerificationHash1);
+        metadata.addPacketInfo(destination1, dhtKey2, delVerificationHash2);
+        metadata.addPacketInfo(destination1, dhtKey3, delVerificationHash3);
+        metadata.addPacketInfo(destination2, dhtKey4, delVerificationHash4);
         
         assertEquals(2, metadata.getNumUndeliveredRecipients());
         assertEquals(delVerificationHash1, metadata.getDeleteVerificationHash(destination1, dhtKey1));
@@ -66,13 +66,13 @@ public class EmailMetadataTest {
         assertEquals(null, metadata.getDeleteVerificationHash(destination2, dhtKey3));
         
         assertEquals(2, metadata.getNumUndeliveredRecipients());
-        metadata.setPacketDelivered(destination1, dhtKey1, true);
+        metadata.setPacketDelivered(dhtKey1, true);
         assertEquals(2, metadata.getNumUndeliveredRecipients());
-        metadata.setPacketDelivered(destination1, dhtKey2, true);
+        metadata.setPacketDelivered(dhtKey2, true);
         assertEquals(2, metadata.getNumUndeliveredRecipients());
-        metadata.setPacketDelivered(destination1, dhtKey3, true);
+        metadata.setPacketDelivered(dhtKey3, true);
         assertEquals(1, metadata.getNumUndeliveredRecipients());
-        metadata.setPacketDelivered(destination2, dhtKey4, true);
+        metadata.setPacketDelivered(dhtKey4, true);
         assertEquals(0, metadata.getNumUndeliveredRecipients());
     }
 }
