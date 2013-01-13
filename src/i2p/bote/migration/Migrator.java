@@ -90,7 +90,7 @@ public class Migrator {
         DataOutputStream outputStream = null;
         try {
             outputStream = new DataOutputStream(new FileOutputStream(versionFile));
-            outputStream.writeUTF(version);
+            outputStream.writeBytes(version);
         }
         finally {
             if (outputStream != null)
