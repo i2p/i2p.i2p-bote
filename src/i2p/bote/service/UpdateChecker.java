@@ -56,7 +56,7 @@ public class UpdateChecker extends I2PAppThread {
      * @param configuration
      */
     public UpdateChecker(NetworkStatusSource networkStatusSource, Configuration configuration) {
-        super("UpdateChecker");
+        super("UpdateCheckr");
         this.networkStatusSource = networkStatusSource;
         this.configuration = configuration;
     }
