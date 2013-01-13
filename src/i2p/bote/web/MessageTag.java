@@ -152,7 +152,7 @@ public class MessageTag extends BodyTagSupport {
     }
 
     public String getScope() {
-        return Integer.valueOf(scope).toString();
+        return String.valueOf(scope);
     }
 
     /**

@@ -286,7 +286,7 @@ public class Configuration {
     }
     
     public void setAutoMailCheckEnabled(boolean enabled) {
-        properties.setProperty(PARAMETER_AUTO_MAIL_CHECK, new Boolean(enabled).toString());
+        properties.setProperty(PARAMETER_AUTO_MAIL_CHECK, String.valueOf(enabled));
     }
     
     public boolean isAutoMailCheckEnabled() {
@@ -294,7 +294,7 @@ public class Configuration {
     }
     
     public void setMailCheckInterval(int minutes) {
-        properties.setProperty(PARAMETER_MAIL_CHECK_INTERVAL, Integer.valueOf(minutes).toString());
+        properties.setProperty(PARAMETER_MAIL_CHECK_INTERVAL, String.valueOf(minutes));
     }
     
     /**
@@ -308,7 +308,7 @@ public class Configuration {
     }
 
     public void setOutboxCheckInterval(int minutes) {
-        properties.setProperty(PARAMETER_OUTBOX_CHECK_INTERVAL, Integer.valueOf(minutes).toString());
+        properties.setProperty(PARAMETER_OUTBOX_CHECK_INTERVAL, String.valueOf(minutes));
     }
     
     /**
@@ -320,7 +320,7 @@ public class Configuration {
     }
 
     public void getDeliveryCheckInterval(int minutes) {
-        properties.setProperty(PARAMETER_DELIVERY_CHECK_INTERVAL, Integer.valueOf(minutes).toString());
+        properties.setProperty(PARAMETER_DELIVERY_CHECK_INTERVAL, String.valueOf(minutes));
     }
     
     /**
@@ -332,7 +332,7 @@ public class Configuration {
     }
 
     public void setRelaySendPause(int minutes) {
-        properties.setProperty(PARAMETER_RELAY_SEND_PAUSE, Integer.valueOf(minutes).toString());
+        properties.setProperty(PARAMETER_RELAY_SEND_PAUSE, String.valueOf(minutes));
     }
     
     /**
@@ -351,7 +351,7 @@ public class Configuration {
      * @param hideLocale
      */
     public void setHideLocale(boolean hideLocale) {
-        properties.setProperty(PARAMETER_HIDE_LOCALE, Boolean.valueOf(hideLocale).toString());
+        properties.setProperty(PARAMETER_HIDE_LOCALE, String.valueOf(hideLocale));
     }
     
     public boolean getHideLocale() {
@@ -363,7 +363,7 @@ public class Configuration {
      * @param includeSentTime
      */
     public void setIncludeSentTime(boolean includeSentTime) {
-        properties.setProperty(PARAMETER_INCLUDE_SENT_TIME, Boolean.valueOf(includeSentTime).toString());
+        properties.setProperty(PARAMETER_INCLUDE_SENT_TIME, String.valueOf(includeSentTime));
     }
     
     public boolean getIncludeSentTime() {
@@ -382,7 +382,7 @@ public class Configuration {
     }
     
     public void setRelayMinDelay(int minDelay) {
-        properties.setProperty(PARAMETER_RELAY_MIN_DELAY, Integer.valueOf(minDelay).toString());
+        properties.setProperty(PARAMETER_RELAY_MIN_DELAY, String.valueOf(minDelay));
     }
     
     /**
@@ -393,7 +393,7 @@ public class Configuration {
     }
     
     public void setRelayMaxDelay(int maxDelay) {
-        properties.setProperty(PARAMETER_RELAY_MAX_DELAY, Integer.valueOf(maxDelay).toString());
+        properties.setProperty(PARAMETER_RELAY_MAX_DELAY, String.valueOf(maxDelay));
     }
     
     /**
@@ -404,7 +404,7 @@ public class Configuration {
     }
     
     public void setNumStoreHops(int numHops) {
-        properties.setProperty(PARAMETER_NUM_STORE_HOPS, Integer.valueOf(numHops).toString());
+        properties.setProperty(PARAMETER_NUM_STORE_HOPS, String.valueOf(numHops));
     }
     
     /**
@@ -424,7 +424,7 @@ public class Configuration {
     }
     
     public void setGatewayEnabled(boolean enable) {
-        properties.setProperty(PARAMETER_GATEWAY_ENABLED, Boolean.valueOf(enable).toString());
+        properties.setProperty(PARAMETER_GATEWAY_ENABLED, String.valueOf(enable));
     }
 
     public boolean isGatewayEnabled() {
@@ -432,7 +432,7 @@ public class Configuration {
     }
 
     public void setPasswordCacheDuration(int duration) {
-        properties.setProperty(PARAMETER_PASSWORD_CACHE_DURATION, Integer.valueOf(duration).toString());
+        properties.setProperty(PARAMETER_PASSWORD_CACHE_DURATION, String.valueOf(duration));
     }
     
     /**

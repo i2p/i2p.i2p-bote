@@ -363,7 +363,7 @@ public class Email extends MimeMessage {
         try {
             removeHeader(SIGNATURE_VALID_HEADER);   // remove the signature validity flag before verifying
             boolean valid = verifySignature();
-            setHeader(SIGNATURE_VALID_HEADER, Boolean.valueOf(valid).toString());
+            setHeader(SIGNATURE_VALID_HEADER, String.valueOf(valid));
         } catch (MessagingException e) {
             log.error("Cannot get header field: " + SIGNATURE_VALID_HEADER, e);
         }
