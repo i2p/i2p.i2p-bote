@@ -148,8 +148,8 @@ public class TestUtil {
         identities.add(ecdh256);
         
         String ecdh521PublicKeyPair = "m-5~1dZ0MrGdyAWu-C2ecNAB5LCCsHQpeSfjn-r~mqMfNvroR98~BRmReUDmb0la-r-pBHLMtflrJE7aTrGwDTBm5~AJFEm-9SJPZnyGs-ed5pOj4Db65yJml1y1n77qr1~mM4GITl6KuIoxg8YwvPrCIlXe2hiiDCoC-uY9-np9UY";
-        String ecdh521PrivatePublicKeyPair = "YujtjOOwCqXPH9PIbcZeFRkegbOxw5G6I7M4-TZBFbxYDtaew6HX9hnQEGWHkaapq2kTTB3Hmv0Uyo64jvcfMmSRcPng3J1Ho5mHgnzsH0qxQemnBcw7Lfc9fU8xRz858uyiQ8J8XH3T8S7k2~8L7awSgaT7uHQgpV~Rs0p1ofJ70g";
-        TestIdentity ecdh521 = new TestIdentity(ecdh521PublicKeyPair, ecdh521PrivatePublicKeyPair, new ECDH521_ECDSA521());
+        String ecdh521PrivateKeyPair = "YujtjOOwCqXPH9PIbcZeFRkegbOxw5G6I7M4-TZBFbxYDtaew6HX9hnQEGWHkaapq2kTTB3Hmv0Uyo64jvcfMmSRcPng3J1Ho5mHgnzsH0qxQemnBcw7Lfc9fU8xRz858uyiQ8J8XH3T8S7k2~8L7awSgaT7uHQgpV~Rs0p1ofJ70g";
+        TestIdentity ecdh521 = new TestIdentity(ecdh521PublicKeyPair, ecdh521PrivateKeyPair, new ECDH521_ECDSA521());
         identities.add(ecdh521);
 
         String ntru1087PublicKeyPair = "juw8Y8g3vMZGfFQBCiLYuKfObHRjmoizVIFcrXoEx35BBEF3VQiRsEz6CeRJD7c5lwYwQpcxkn1GRHoc0DOfMAmNo1zdO7gXI5y27muEKvqgB8CuoUkEDgWx16hUCBKsLzHu-Tzu9aaFOyvDCtWOIJKO2JJEE4cRPa28xzEP4uC4bXehjq-UOGMZvP6~jVbmaFslDo6M269lhoZQi~bHFePXPZTscZEjtNuW-UAJtx5a9p-0CSDzphZtqHOXxXjdTHQKb60jKO~kOZH4mYTqT63sh2lrRQUI4-7R1eNhqwvdj-bQOUWEvkAMvH5TM7k-sewgOHjIjqnjw8vN0KN9IPtCr0StBtuTZnF9gOmOxJehn8MuP41OT05Ulf8tG~m999QUIsTBadmzoyfrXxYZr9rgH-O6uc-DfzOjeBMgwH6D9tr4YHt8-UxlP8UIk2iQNL32y6Upd89fEwlAQ8F2hXt1uchZ1IPlDGScnqUU9u7CszOJvOyh84iBhfXjbv0bMFzD9B5WKiQmMbj4M1~Vf3Q2qaCntIh6Ja3JhrkhI0ACt-65Su5Hs8n5nRy3HT2kNM3Wtde0EVAcGvnkU7bLcrd3IBsjunVxPuMZAiTYHVW5MXfkmylNQoB7nN0xyqh3qsyXq2yGtPmtaiNp3b2DQKlehEyRObcOLVc3I~oM16V88sigBpbHiWECdJ1HZg6SXkMqHYYB8ZbSLcIqKvZOEzMaVhVv~wD6lM2vjs54lwokNz2wLRcXelg1P4U0mSeK-Gl0Tf8aOrDKcnWE1y3BIY76t~EAvUDMoogEM1s3cOBfNcDD9bbXlxm2Vz3h~2F-CqPe1OedmSC3OpNxT3r29g87omkMzLGh1yp72zoLmXArVnVushWR1PwzABPSImB9qU4QO2x7Rt~-wtToqM3DrSJNZZ9-mo9YHkcy3ow8tYDoP-RDkBLeo1R7rRIgWxzwi96mceipE7JaCjFcS3pxzDThtoF6IysNm46w18ibCi29" +
