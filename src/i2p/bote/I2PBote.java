@@ -575,13 +575,6 @@ public class I2PBote implements NetworkStatusSource {
         return folders;
     }
     
-    public int getNumDhtPeers() {
-        if (dht == null)
-            return 0;
-        else
-            return dht.getNumPeers();
-    }
-    
     public DhtPeerStats getDhtStats() {
         if (dht == null)
             return null;

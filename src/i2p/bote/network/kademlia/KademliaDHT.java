@@ -253,11 +253,6 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
     }
 
     @Override
-    public int getNumPeers() {
-        return bucketManager.getPeerCount();
-    }
-    
-    @Override
     public DhtPeerStats getPeerStats() {
         return bucketManager.getPeerStats();
     }

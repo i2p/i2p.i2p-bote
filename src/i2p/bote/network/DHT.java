@@ -58,10 +58,5 @@ public interface DHT {
     /** Returns <code>true</code> if a connection to the DHT has been established. */
     boolean isReady();
 
-    /**
-     * Returns the current number of known active peers.
-     */
-    int getNumPeers();
-    
     DhtPeerStats getPeerStats();
 }
