@@ -123,13 +123,15 @@
             <input type="checkbox" name="isDefault" ${checked}/>
         </div>
         
-        <div class="identity-form-label">
-            <div class="field-label"><ib:message key="Private keys:"/></div>
-            <div class="warning addtl-text"><ib:message key="(Never reveal to anyone!)"/></div>
-        </div>
-        <div class="identity-form-value">
-            <a href="showFullIdentity.jsp?key=${key}"><ib:message key="Show"/></a>
-        </div>
+        <c:if test="${not empty param.key}">
+            <div class="identity-form-label">
+                <div class="field-label"><ib:message key="Private keys:"/></div>
+                <div class="warning addtl-text"><ib:message key="(Never reveal to anyone!)"/></div>
+            </div>
+            <div class="identity-form-value">
+                <a href="showFullIdentity.jsp?key=${key}"><ib:message key="Show"/></a>
+            </div>
+        </c:if>
         
         <p><br/></p>
         <div class="identity-buttons">
