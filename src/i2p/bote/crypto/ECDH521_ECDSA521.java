@@ -85,6 +85,7 @@ public class ECDH521_ECDSA521 extends ECDH_ECDSA {
         return compressedKey;
     }
     
+    @Override
     protected ECPublicKeySpec createPublicKeySpec(byte[] encodedKey) throws InvalidKeySpecException, NoSuchAlgorithmException {
         // convert the key to the format used by BouncyCastle, which adds one byte
         byte[] bouncyCompressedKey = new byte[keyLengthBytes+1];

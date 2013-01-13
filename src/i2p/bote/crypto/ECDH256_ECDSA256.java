@@ -70,6 +70,7 @@ public class ECDH256_ECDSA256 extends ECDH_ECDSA {
         return EC5Util.convertPoint(ecKey.getParams(), ecKey.getW(), true).getEncoded();
     }
     
+    @Override
     protected ECPublicKeySpec createPublicKeySpec(byte[] encodedKey) throws InvalidKeySpecException, NoSuchAlgorithmException {
         // decompress into an EC point
         ECPoint w = ECPointUtil.decodePoint(ecParameterSpec.getCurve(), encodedKey);
