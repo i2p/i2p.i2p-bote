@@ -41,7 +41,12 @@
     
     <p>
     <ib:message key="If you have not set a password, leave the old password blank."/>
-    </p>
+    </p><p>
+    <ib:message>
+        Please note that if a password is set, emails cannot be checked automatically
+        but only when the Check Mail button is clicked.
+    </ib:message>
+    </p><br/>
     
     <form name="form" action="setPassword.jsp" method="POST">
         <input type="hidden" name="action" value="set"/>
