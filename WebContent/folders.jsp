@@ -49,12 +49,6 @@
     <ib:message key="Sent Emails" var="displayName"/><ib:folderLink dirName="Sent" displayName="${displayName}"/><br/>
     <img src="${themeDir}/images/folder.png"/><ib:message key="Drafts"/><br/>
     <ib:message key="Trash" var="displayName"/><ib:folderLink dirName="Trash" displayName="${displayName}"/><br/>
-    <hr/>
-    <img src="${themeDir}/images/folder.png"/>User_created_Folder_1<br/>
-    <img src="${themeDir}/images/folder.png"/>User_created_Folder_2<br/>
-    <img src="${themeDir}/images/folder.png"/>User_created_Folder_3<br/>
-    <hr/>
-    <ib:message key="Manage Folders"/>
 </div>
 
 </body>
