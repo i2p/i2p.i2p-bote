@@ -41,7 +41,7 @@
 <c:if test="${ib:getMailFolder('Outbox').numElements gt 0}">
     <c:set var="refreshInterval" value="20" scope="request"/>
 </c:if>
-<c:set var="title" value="Outbox" scope="request"/>
+<ib:message key="Outbox" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <c:set var="sortcolumn" value="${CREATE_TIME}"/>

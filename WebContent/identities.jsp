@@ -26,7 +26,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<c:set var="title" value="Identities" scope="request"/>
+<ib:message key="Identities" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>

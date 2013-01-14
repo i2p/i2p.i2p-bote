@@ -46,7 +46,7 @@
 <c:if test="${param.path eq 'Inbox' or param.path eq 'Sent'}">
     <c:set var="refreshInterval" value="60" scope="request"/>
 </c:if>
-<c:set var="title" value="${param.path}" scope="request"/>
+<ib:message key="${param.path}" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <c:set var="folderName" value="${param.path}"/>
