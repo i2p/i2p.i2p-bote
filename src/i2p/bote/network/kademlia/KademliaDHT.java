@@ -423,7 +423,7 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
             i2pReceiver.removePacketListener(this);
             readySignal.countDown();
                 
-            log.info("BootstrapTask exiting.");
+            log.debug("BootstrapTask exiting.");
         }
 
         /**
