@@ -31,7 +31,7 @@ import net.i2p.util.Log;
 public class CryptoFactory {
     private static List<CryptoImplementation> instances;
 
-    public static CryptoImplementation getInstance(int id) {
+    public synchronized static CryptoImplementation getInstance(int id) {
         if (instances == null)
             init();
         
