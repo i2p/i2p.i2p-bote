@@ -116,7 +116,7 @@ public class OutboxProcessor extends I2PAppThread {
                         }
                     }
                     catch (PasswordException e) {
-                        log.error("Can't scan outbox.", e);
+                        log.debug("Can't scan outbox because a password is set and the application is locked.");
                     }
                 }
                 
