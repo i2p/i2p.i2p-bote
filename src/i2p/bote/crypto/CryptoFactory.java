@@ -41,7 +41,7 @@ public class CryptoFactory {
         return null;
     }
     
-    public static List<CryptoImplementation> getInstances() {
+    public synchronized static List<CryptoImplementation> getInstances() {
         if (instances == null)
             init();
         
