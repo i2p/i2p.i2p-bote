@@ -29,8 +29,6 @@ import i2p.bote.packet.EmptyResponse;
 import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,12 +37,9 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import net.i2p.I2PException;
 import net.i2p.client.I2PSession;
 import net.i2p.client.I2PSessionException;
 import net.i2p.client.datagram.I2PDatagramMaker;
-import net.i2p.client.streaming.I2PSocket;
-import net.i2p.client.streaming.I2PSocketManager;
 import net.i2p.data.Destination;
 import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.I2PAppThread;
@@ -52,7 +47,7 @@ import net.i2p.util.Log;
 
 /**
  * All outgoing traffic to I2P-Bote peers goes through this class.<br/>
- * Smaller packets are sent as datagrams; larger ones are sent as streams.
+ * All packets are sent as I2P datagrams.
  * Packets are sent at a rate no greater than specified by the
  * <CODE>maxBandwidth</CODE> property.
  * <p/>
@@ -61,12 +56,9 @@ import net.i2p.util.Log;
  * to be sent.
  */
 public class I2PSendQueue extends I2PAppThread implements PacketListener {
-    private static final int MAX_DATAGRAM_SIZE = Integer.MAX_VALUE;   // never send packets as streams, always use datagrams
-    
     private Log log = new Log(I2PSendQueue.class);
     private I2PSession i2pSession;
     private I2PDatagramMaker datagramMaker;
-    private I2PSocketManager socketManager;
     private PacketQueue packetQueue;
     private Set<PacketBatch> runningBatches;
     private int maxBandwidth;
@@ -76,11 +68,10 @@ public class I2PSendQueue extends I2PAppThread implements PacketListener {
      * @param socketManager
      * @param i2pReceiver
      */
-    public I2PSendQueue(I2PSession i2pSession, I2PSocketManager socketManager, I2PPacketDispatcher i2pReceiver) {
+    public I2PSendQueue(I2PSession i2pSession, I2PPacketDispatcher i2pReceiver) {
         super("I2PSendQueue");
         
         this.i2pSession = i2pSession;
-        this.socketManager = socketManager;
         i2pReceiver.addPacketListener(this);
         packetQueue = new PacketQueue();
         runningBatches = new ConcurrentHashSet<PacketBatch>();
@@ -234,17 +225,13 @@ public class I2PSendQueue extends I2PAppThread implements PacketListener {
     private void send(ScheduledPacket scheduledPacket) throws InterruptedException {
         CommunicationPacket i2pBotePacket = scheduledPacket.data;
         byte[] bytes = i2pBotePacket.toByteArray();
-        boolean useStream = bytes.length > MAX_DATAGRAM_SIZE;
         
         PacketBatch batch = scheduledPacket.batch;
         boolean isBatchPacket = batch != null;
-        log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet as a " + (useStream?"stream":"datagram") + ": [" + i2pBotePacket + "] to " + Util.toShortenedBase32(scheduledPacket.destination));
+        log.debug("Sending " + (isBatchPacket?"":"non-") + "batch packet: [" + i2pBotePacket + "] to " + Util.toShortenedBase32(scheduledPacket.destination));
         
         try {
-            if (useStream)
-                sendStream(bytes, scheduledPacket.destination);
-            else
-                sendDatagram(bytes, scheduledPacket.destination);
+            sendDatagram(bytes, scheduledPacket.destination);
             
             // set sentTime, update queue and sentLatch, fire packet listeners
             scheduledPacket.data.setSentTime(System.currentTimeMillis());
@@ -262,19 +249,6 @@ public class I2PSendQueue extends I2PAppThread implements PacketListener {
     private void sendDatagram(byte[] data, Destination destination) throws I2PSessionException {
         byte[] replyableDatagram = datagramMaker.makeI2PDatagram(data);
         i2pSession.sendMessage(destination, replyableDatagram, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_UNSPECIFIED, I2PSession.PORT_UNSPECIFIED);
-    }
-    
-    private void sendStream(byte[] data, Destination destination) throws I2PException, IOException {
-        I2PSocket socket = null;
-        try {
-            socket = socketManager.connect(destination);
-            OutputStream outputStream = socket.getOutputStream();
-            outputStream.write(data);
-        }
-        finally {
-            if (socket != null)
-                socket.close();
-        }
     }
     
     /**

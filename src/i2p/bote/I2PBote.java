@@ -251,9 +251,7 @@ public class I2PBote implements NetworkStatusSource {
      * Initializes daemon threads, doesn't start them yet.
      */
     private void initializeServices() {
-        I2PPacketDispatcher dispatcher = new I2PPacketDispatcher(socketManager.getServerSocket());
-        backgroundThreads.add(dispatcher);
-
+        I2PPacketDispatcher dispatcher = new I2PPacketDispatcher();
         i2pSession.addMuxedSessionListener(dispatcher, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_ANY);
         
         backgroundThreads.add(passwordCache);
@@ -261,7 +259,7 @@ public class I2PBote implements NetworkStatusSource {
         backgroundThreads.add(smtpService);
         pop3Service = new POP3Service();
         backgroundThreads.add(pop3Service);*/
-        I2PSendQueue sendQueue = new I2PSendQueue(i2pSession, socketManager, dispatcher);
+        I2PSendQueue sendQueue = new I2PSendQueue(i2pSession, dispatcher);
         backgroundThreads.add(sendQueue);
         RelayPacketSender relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, configuration);   // reads packets stored in the relayPacketFolder and sends them
         backgroundThreads.add(relayPacketSender);
