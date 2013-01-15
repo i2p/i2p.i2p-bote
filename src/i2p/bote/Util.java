@@ -21,8 +21,6 @@
 
 package i2p.bote;
 
-import i2p.bote.packet.dht.EncryptedEmailPacket;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
