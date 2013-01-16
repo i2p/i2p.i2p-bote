@@ -52,7 +52,9 @@ public class Migrator {
         }
         
         try {
-            new MigrateTo026().migrateIfNeeded(configuration);
+            if (lastMigrationVersion.compareTo("0.2.6") < 0)
+                new MigrateTo026().migrateIfNeeded(configuration);
+            new MigrateTo027().migrateIfNeeded(configuration);
             
             log.debug("Migration successful, setting last successful migration to <" + currentVersion + ">.");
             setLastSuccessfulMigration(currentVersion);
