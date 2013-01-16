@@ -44,7 +44,8 @@
 </c:if>
 <c:choose>
     <c:when test="${empty param.publicName}">
-        <ib:message key="Please fill in the Public Name field." var="errorMessage"/>
+        <ib:message key="Please fill in the Public Name field." var="errorMessage" scope="request"/>
+        <jsp:forward page="editIdentity.jsp?new=true"/>
     </c:when>
     <%-- If cryptoImpl=4 and a new identity is to be generated, show the wait page --%>
     <c:when test="${param.new eq 'true' and param.cryptoImpl eq 4 and param.action ne 'wait' and empty param.counter}">
