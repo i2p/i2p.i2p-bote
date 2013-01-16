@@ -23,6 +23,7 @@ package i2p.bote.web;
 
 import i2p.bote.folder.EmailFolder;
 
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 public class SetEmailReadTag extends SimpleTagSupport {
@@ -31,8 +32,12 @@ public class SetEmailReadTag extends SimpleTagSupport {
     private boolean read;
 
     @Override
-    public void doTag() {
-        folder.setNew(messageId, !read);
+    public void doTag() throws JspException {
+        try {
+            folder.setNew(messageId, !read);
+        } catch (Exception e) {
+            throw new JspException(e);
+        }
     }
 
     public void setFolder(EmailFolder folder) {

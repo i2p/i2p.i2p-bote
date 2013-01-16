@@ -92,7 +92,11 @@ public class DeliveryChecker extends I2PAppThread {
                     metadata.setPacketDelivered(packet.dhtKey, true);
             }
             
-            sentFolder.saveMetadata(email);
+            try {
+                sentFolder.saveMetadata(email);
+            } catch (Exception e) {
+                log.error("Can't save email metadata.", e);
+            }
         }
     }
 }

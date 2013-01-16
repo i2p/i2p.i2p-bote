@@ -23,8 +23,9 @@ package i2p.bote.email;
 
 import i2p.bote.Util;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +35,6 @@ import java.util.Properties;
 import javax.mail.internet.MailDateFormat;
 
 import net.i2p.data.DataFormatException;
-import net.i2p.data.DataHelper;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
@@ -71,9 +71,9 @@ public class EmailMetadata extends Properties {
         setCreateTime(new Date());
     }
     
-    public EmailMetadata(File file) throws IOException {
+    public EmailMetadata(InputStream inputStream) throws IOException {
         this();
-        DataHelper.loadProps(this, file);
+        load(inputStream);
     }
     
     /**
@@ -296,13 +296,8 @@ public class EmailMetadata extends Properties {
         return packets;
     }
     
-    public void writeTo(File file) throws IOException {
-        try {
-            DataHelper.storeProps(this, file);
-        }
-        catch (IOException e) {
-            log.error("Can't write metadata to file: <" + file + ">", e);
-        }
+    public void writeTo(OutputStream stream) throws IOException {
+        store(stream, null);
     }
     
     /** Contains a DHT key and a verification hash for an email packet. */

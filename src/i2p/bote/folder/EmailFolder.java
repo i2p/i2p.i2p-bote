@@ -28,16 +28,20 @@ import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.EmailMetadata;
 import i2p.bote.fileencryption.DerivedKey;
+import i2p.bote.fileencryption.EncryptedInputStream;
 import i2p.bote.fileencryption.EncryptedOutputStream;
 import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
@@ -98,8 +102,10 @@ public class EmailFolder extends Folder<Email> {
     }
     
     public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
-        for (File emailFile: getFilenames())
+        for (File emailFile: getFilenames()) {   // getFilenames() only returns email files but not metadata files
             FileEncryptionUtil.changePassword(emailFile, oldPassword, newKey);
+            FileEncryptionUtil.changePassword(getMetadataFile(emailFile), oldPassword, newKey);
+        }
     }
     
     /**
@@ -324,30 +330,41 @@ public class EmailFolder extends Folder<Email> {
      * Returns the metadata for an email. If the metadata file doesn't exist or cannot be read,
      * an empty {@link EmailMetadata} object is returned. This method never returns <code>null</code>.<br/>
      * The returned metadata object is not connected to the 
+     * @throws PasswordException 
+     * @throws GeneralSecurityException 
      */
-    private EmailMetadata getMetadata(String messageId) {
+    private EmailMetadata getMetadata(String messageId) throws GeneralSecurityException, PasswordException {
         File file = getMetadataFile(messageId);
         if (!file.exists())
             return new EmailMetadata();
         try {
-            return new EmailMetadata(file);
+            return getMetadata(file);
         } catch (IOException e) {
             log.error("Can't read metadata file: <" + file.getAbsolutePath() + ">", e);
             return new EmailMetadata();
         }
     }
 
+    private EmailMetadata getMetadata(File file) throws IOException, GeneralSecurityException, PasswordException {
+        InputStream metadataStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(file), passwordHolder));
+        EmailMetadata metadata = new EmailMetadata(metadataStream);
+        return metadata;
+    }
+    
     /**
      * Returns the number of <strong>new</strong> emails in the folder.
+     * @throws PasswordException 
+     * @throws GeneralSecurityException 
      * @see i2p.bote.folder.Folder#getNumElements()
      */
-    public int getNumNewEmails() {
+    public int getNumNewEmails() throws GeneralSecurityException, PasswordException {
         int numNew = 0;
         for (File emailFile: getFilenames()) {
+            // getFilenames() only returns email files but not metadata files
             File metaFile = getMetadataFile(emailFile);
             if (metaFile.exists())
                 try {
-                    EmailMetadata metadata = new EmailMetadata(metaFile);
+                    EmailMetadata metadata = getMetadata(metaFile);
                     if (metadata.isNew())
                         numNew++;
                 } catch (IOException e) {
@@ -365,32 +382,43 @@ public class EmailFolder extends Folder<Email> {
      * "old" (if <code>isNew</code> is <code>false</code>).
      * @param messageId
      * @param isNew
+     * @throws GeneralSecurityException 
+     * @throws PasswordException 
      */
-    public void setNew(String messageId, boolean isNew) {
+    public void setNew(String messageId, boolean isNew) throws PasswordException, GeneralSecurityException {
         EmailMetadata metadata = getMetadata(messageId);
         metadata.setNew(isNew);
         try {
-            metadata.writeTo(getMetadataFile(messageId));
+            saveMetadata(metadata, getMetadataFile(messageId));
         } catch (IOException e) {
             log.error("Can't read metadata file for message ID <" + messageId + ">", e);
         }
     }
     
-    public void setNew(Email email, boolean isNew) {
+    public void setNew(Email email, boolean isNew) throws PasswordException, FileNotFoundException, IOException, GeneralSecurityException {
         EmailMetadata metadata = email.getMetadata();
         metadata.setNew(isNew);
         saveMetadata(email);
     }
     
-    public void saveMetadata(Email email) {
+    public void saveMetadata(Email email) throws PasswordException, FileNotFoundException, IOException, GeneralSecurityException {
         EmailMetadata metadata = email.getMetadata();
         File metaFile = getMetadataFile(email.getMessageID());
-        log.info("Mail folder <" + storageDir + ">: storing metadata file: <" + metaFile.getAbsolutePath() + ">");
+        saveMetadata(metadata, metaFile);
+    }
+    
+    private void saveMetadata(EmailMetadata metadata, File file) throws PasswordException, FileNotFoundException, IOException, GeneralSecurityException {
+        log.info("Mail folder <" + storageDir + ">: storing metadata file: <" + file.getAbsolutePath() + ">");
+        OutputStream emailOutputStream = new BufferedOutputStream(new EncryptedOutputStream(new FileOutputStream(file), passwordHolder));
         try {
-            metadata.writeTo(metaFile);
-            Util.makePrivate(metaFile);
+            metadata.writeTo(emailOutputStream);
+            Util.makePrivate(file);
         } catch (IOException e) {
-            log.error("Can't write metadata to file <" + metaFile.getAbsolutePath() + ">", e);
+            log.error("Can't write metadata to file <" + file.getAbsolutePath() + ">", e);
+            throw e;
+        } finally {
+            if (emailOutputStream != null)
+                emailOutputStream.close();
         }
     }
     
@@ -414,8 +442,10 @@ public class EmailFolder extends Folder<Email> {
     
     @Override
     protected Email createFolderElement(File emailFile) throws Exception {
+        InputStream emailStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(emailFile), passwordHolder));
         File metadataFile = getMetadataFile(emailFile);
-        Email email = new Email(emailFile, metadataFile, passwordHolder);
+        InputStream metadataStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(metadataFile), passwordHolder));
+        Email email = new Email(emailStream, metadataStream, passwordHolder);
         
         String messageIdString = emailFile.getName().substring(0, 44);
         email.setMessageID(messageIdString);

@@ -230,6 +230,9 @@ public class OutboxProcessor extends I2PAppThread {
             log.error("Can't store email packet on the DHT. " + logSuffix, e);
             outbox.setStatus(email, _("Error while sending email: {0}", e.getLocalizedMessage()));
             throw e;
+        } catch (IOException e) {
+            log.error("Can't save metadata. " + logSuffix, e);
+            outbox.setStatus(email, _("Error saving email metadata: {0}", e.getLocalizedMessage()));
         }
     }
     

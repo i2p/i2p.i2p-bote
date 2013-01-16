@@ -27,7 +27,6 @@ import i2p.bote.Util;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.crypto.KeyUpdateHandler;
-import i2p.bote.fileencryption.EncryptedInputStream;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
 import i2p.bote.packet.dht.UnencryptedEmailPacket;
@@ -35,7 +34,6 @@ import i2p.bote.packet.dht.UnencryptedEmailPacket;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -103,21 +101,36 @@ public class Email extends MimeMessage {
     }
 
     /**
-     * Creates an <code>Email</code> from a file containing an <strong>uncompressed</strong> MIME email
-     * and another file containing metadata. If the metadata file doesn't exist, the metadata will be
-     * empty.
-     * @param emailFile
-     * @param metadataFile
+     * Creates an <code>Email</code> with no metadata from a file containing an
+     * <strong>uncompressed</strong> MIME email.
+     * @param emailStream
+     * @param metadataStream
      * @param passwordHolder
      * @throws MessagingException
      * @throws IOException
      * @throws PasswordException 
      * @throws GeneralSecurityException 
      */
-    public Email(File emailFile, File metadataFile, PasswordHolder passwordHolder) throws MessagingException, IOException, PasswordException, GeneralSecurityException {
-        this(new BufferedInputStream(new EncryptedInputStream(new FileInputStream(emailFile), passwordHolder)), false);
-        if (metadataFile.exists())
-            metadata = new EmailMetadata(metadataFile);
+    public Email(InputStream emailStream, PasswordHolder passwordHolder) throws MessagingException, IOException, PasswordException, GeneralSecurityException {
+        this(emailStream, null, passwordHolder);
+    }
+    
+    /**
+     * Creates an <code>Email</code> from a file containing an <strong>uncompressed</strong> MIME email
+     * and another file containing metadata. If the metadata file doesn't exist, the metadata will be
+     * empty.
+     * @param emailStream
+     * @param metadataStream
+     * @param passwordHolder
+     * @throws MessagingException
+     * @throws IOException
+     * @throws PasswordException 
+     * @throws GeneralSecurityException 
+     */
+    public Email(InputStream emailStream, InputStream metadataStream, PasswordHolder passwordHolder) throws MessagingException, IOException, PasswordException, GeneralSecurityException {
+        this(emailStream, false);
+        if (metadataStream != null)
+            metadata = new EmailMetadata(metadataStream);
         else
             metadata = new EmailMetadata();
     }
