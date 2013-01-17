@@ -70,7 +70,7 @@
     </c:forEach>
     
     <c:forEach var="bccAddress" varStatus="status" items="${email.BCCAddresses}">
-        <div class="email-form-label"><ib:message key="BCC:"/><</div>
+        <div class="email-form-label"><ib:message key="BCC:"/></div>
         <div class="show-email-value"><ib:address address="${bccAddress}"/></div>
     </c:forEach>
     
