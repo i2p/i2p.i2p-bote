@@ -52,8 +52,20 @@
         </c:if>
     </c:forEach>
 </ib:sendEmail>
+
+<c:if test="${not empty param.quoteMsgId}">
+    <p/><br/><p/>
+    <form action="deleteEmail.jsp" method="post">
+        Delete original email?
+        <input type="hidden" name="folder" value="${param.quoteMsgFolder}"/>
+        <input type="hidden" name="messageID" value="${param.quoteMsgId}"/>
+        <button type="submit" name="action" value="Delete">Delete</button>
+    </form>
+</c:if>
 </ib:requirePassword>
 
+<p/>
+<a href="."><ib:message key="Go to inbox"/></a>
 </div>
 
 <jsp:include page="footer.jsp"/>

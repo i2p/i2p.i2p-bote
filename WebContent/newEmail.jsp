@@ -221,6 +221,11 @@
 <ib:param value="${ib:getShortSenderName(origEmail.sender, 50)}"></ib:param>
 </ib:message><ib:quote text="${fn:escapeXml(origEmail.text)}"/></c:if><c:if test="${empty param.quoteMsgId}">${fn:escapeXml(param.message)}</c:if></textarea>
         </div>
+        <c:if test="${!empty param.quoteMsgId}">
+            <%-- Parameters needed by sendEmail if the user clicks delete after sending a reply --%>
+            <input type="hidden" name="quoteMsgFolder" value="${param.quoteMsgFolder}"/>
+            <input type="hidden" name="quoteMsgId" value="${param.quoteMsgId}"/>
+        </c:if>
         
         <div class="email-form-value">
             <button type="submit" name="action" value="send"><ib:message key="Send"/></button>
