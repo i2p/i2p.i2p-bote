@@ -1,29 +1,38 @@
 # 
 # Translators:
 #   <businesshehe@yahoo.com>, 2012.
+#   <polacco@i2pmail.org>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: https://trac.i2p2.de/\n"
-"POT-Creation-Date: 2011-09-23 19:19+0000\n"
-"PO-Revision-Date: 2012-01-21 03:35+0000\n"
-"Last-Translator: Warton <businesshehe@yahoo.com>\n"
-"Language-Team: Polish (http://www.transifex.net/projects/p/I2P/language/pl/)\n"
+"POT-Creation-Date: 2012-07-29 09:59+0000\n"
+"PO-Revision-Date: 2012-11-22 17:51+0000\n"
+"Last-Translator: polacco <polacco@i2pmail.org>\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/I2P/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/i2p/bote/I2PBote.java:402 src/i2p/bote/service/OutboxProcessor.java:157
+#: src/i2p/bote/Configuration.java:59
+msgid "lblue"
+msgstr ""
+
+#: src/i2p/bote/Configuration.java:59
+msgid "vanilla"
+msgstr ""
+
+#: src/i2p/bote/I2PBote.java:415 src/i2p/bote/service/OutboxProcessor.java:157
 msgid "No identity matches the sender/from field: "
 msgstr ""
 
-#: src/i2p/bote/I2PBote.java:478
+#: src/i2p/bote/I2PBote.java:491
 msgid "The old password is not correct."
-msgstr ""
+msgstr "Stare hało jest nieprawodłowe."
 
-#: src/i2p/bote/I2PBote.java:480
+#: src/i2p/bote/I2PBote.java:493
 msgid "The new password and the confirmation password do not match."
 msgstr ""
 
@@ -35,11 +44,11 @@ msgstr ""
 msgid "521-bit Elliptic Curve Encryption"
 msgstr ""
 
-#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
+#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:55
 msgid "2048-bit ElGamal Encryption"
 msgstr ""
 
-#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:117
 msgid "NTRU-1087 Encryption"
 msgstr ""
 
@@ -55,11 +64,11 @@ msgstr ""
 
 #: src/i2p/bote/folder/Outbox.java:117
 msgid "Queued"
-msgstr ""
+msgstr "Zakolejkowano"
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
-msgstr ""
+msgstr "Błędna wersja protokołu"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "BktPfx"
@@ -67,16 +76,16 @@ msgstr ""
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "Distance"
-msgstr ""
+msgstr "Odległość"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "First Seen"
-msgstr ""
+msgstr "Widzany pierwszy"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 #: src/i2p/bote/web/PeerInfoTag.java:86
 msgid "I2P Destination"
-msgstr ""
+msgstr "Cel I2P"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "Locked?"
@@ -97,7 +106,7 @@ msgstr "Tak"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:84
 msgid "(None)"
-msgstr ""
+msgstr "(brak)"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:89
 msgid "(S)"
@@ -105,7 +114,7 @@ msgstr ""
 
 #: src/i2p/bote/service/OutboxProcessor.java:162
 msgid "Sending"
-msgstr ""
+msgstr "Wysyłanie"
 
 #: src/i2p/bote/service/OutboxProcessor.java:171
 #, java-format
@@ -114,7 +123,7 @@ msgstr ""
 
 #: src/i2p/bote/service/OutboxProcessor.java:178 WebContent/folder.jsp
 msgid "Sent"
-msgstr ""
+msgstr "Wysłane"
 
 #: src/i2p/bote/service/OutboxProcessor.java:181
 msgid "Gateway disabled"
@@ -135,7 +144,11 @@ msgstr ""
 msgid "Error while sending email: {0}"
 msgstr ""
 
-#: src/i2p/bote/web/JSPHelper.java:121
+#: src/i2p/bote/web/JSPHelper.java:107
+msgid "Not set."
+msgstr ""
+
+#: src/i2p/bote/web/JSPHelper.java:132
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr ""
 
@@ -178,11 +191,11 @@ msgstr ""
 
 #: WebContent/folder.jsp
 msgid "From"
-msgstr ""
+msgstr "Od"
 
 #: WebContent/folder.jsp
 msgid "Know"
-msgstr ""
+msgstr "Znany"
 
 #: WebContent/folder.jsp
 msgid "Sig"
@@ -190,15 +203,15 @@ msgstr ""
 
 #: WebContent/folder.jsp
 msgid "To"
-msgstr ""
+msgstr "Do"
 
 #: WebContent/folder.jsp
 msgid "Subject"
-msgstr ""
+msgstr "Temat"
 
 #: WebContent/folder.jsp
 msgid "Anonymous"
-msgstr ""
+msgstr "Anonimowy"
 
 #: WebContent/folder.jsp
 msgid "(No subject)"
@@ -210,7 +223,7 @@ msgstr "Usuń"
 
 #: WebContent/folder.jsp
 msgid "Delete this email"
-msgstr ""
+msgstr "Usuń ten email"
 
 #: WebContent/about.jsp
 msgid "About I2P-Bote"
@@ -221,12 +234,12 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote Wersja {0}"
 
 #: WebContent/about.jsp
-msgid "Author:"
-msgstr "Autor:"
+msgid "Main Developer:"
+msgstr ""
 
 #: WebContent/about.jsp
 msgid "Click to send an email"
-msgstr ""
+msgstr "Kliknij by wysłać email"
 
 #: WebContent/about.jsp
 msgid "Feedback on I2P-Bote"
@@ -246,39 +259,67 @@ msgstr ""
 
 #: WebContent/about.jsp
 msgid "Seedless"
-msgstr ""
+msgstr "Seedless"
 
 #: WebContent/about.jsp
 msgid "Russian translation"
-msgstr ""
+msgstr "Rosyjskie tłumaczenie"
 
 #: WebContent/about.jsp
 msgid "French translation"
-msgstr ""
+msgstr "Francuskie tłumaczenie"
 
 #: WebContent/about.jsp
 msgid "Dutch translation"
-msgstr ""
+msgstr "Duńskie tłumaczenie"
 
 #: WebContent/about.jsp
 msgid "Norwegian translation"
-msgstr ""
+msgstr "Norweskie tłumaczenie"
 
 #: WebContent/about.jsp
 msgid "Swedish translation"
-msgstr ""
+msgstr "Szwedzkie tłumaczenie"
 
 #: WebContent/about.jsp
 msgid "Chinese translation"
-msgstr ""
+msgstr "Chińskie tłumaczenie"
 
 #: WebContent/about.jsp
 msgid "Arabic translation"
+msgstr "Arabskie tłumaczenie"
+
+#: WebContent/about.jsp
+msgid "Czech translation"
+msgstr "Czeskie tłumaczenie"
+
+#: WebContent/about.jsp
+msgid "German translation"
+msgstr "Niemieckie tłumaczenie"
+
+#: WebContent/about.jsp
+msgid "Polish translation"
+msgstr "Polskie tłumaczenie"
+
+#: WebContent/about.jsp
+msgid "Italian translation"
+msgstr "Włoskie tłumaczenie"
+
+#: WebContent/about.jsp
+msgid "Ukrainian translation"
+msgstr "Ukraińskie tłumaczenie"
+
+#: WebContent/about.jsp
+msgid "Hungarian translation"
+msgstr "Węgierskie tłumaczenie"
+
+#: WebContent/about.jsp
+msgid "Code fixes, translation updates from tx"
 msgstr ""
 
 #: WebContent/network.jsp
 msgid "Network"
-msgstr ""
+msgstr "Sieć"
 
 #: WebContent/network.jsp
 msgid ""
@@ -288,6 +329,10 @@ msgstr ""
 
 #: WebContent/network.jsp
 msgid "Local destination:"
+msgstr ""
+
+#: WebContent/deleteIdentity.jsp
+msgid "The email identity has been deleted."
 msgstr ""
 
 #: WebContent/deleteIdentity.jsp
@@ -315,10 +360,6 @@ msgid "Description"
 msgstr ""
 
 #: WebContent/identities.jsp
-msgid "Email Address"
-msgstr "Adres Email"
-
-#: WebContent/identities.jsp
 msgid "Email Destination"
 msgstr ""
 
@@ -328,7 +369,7 @@ msgstr ""
 
 #: WebContent/newEmail.jsp
 msgid "New Email"
-msgstr ""
+msgstr "Nowy email"
 
 #: WebContent/newEmail.jsp
 msgid "Please select a file to attach and try again."
@@ -336,23 +377,23 @@ msgstr ""
 
 #: WebContent/newEmail.jsp
 msgid "From:"
-msgstr ""
+msgstr "Od:"
 
 #: WebContent/newEmail.jsp
 msgid "To:"
-msgstr ""
+msgstr "Do:"
 
 #: WebContent/newEmail.jsp
 msgid "CC:"
-msgstr ""
+msgstr "DW:"
 
 #: WebContent/newEmail.jsp
 msgid "BCC:"
-msgstr ""
+msgstr "UDW:"
 
 #: WebContent/newEmail.jsp
 msgid "Reply To:"
-msgstr ""
+msgstr "Odpowiedz do:"
 
 #: WebContent/newEmail.jsp
 msgid "Addr. Book..."
@@ -376,7 +417,7 @@ msgstr "Dodaj kolejny załącznik"
 
 #: WebContent/newEmail.jsp
 msgid "Attach"
-msgstr ""
+msgstr "Załącz"
 
 #: WebContent/newEmail.jsp
 msgid "It is recommended to keep attachments below 500 kBytes."
@@ -404,7 +445,7 @@ msgstr ""
 
 #: WebContent/editIdentity.jsp
 msgid "Create"
-msgstr ""
+msgstr "Utwórz"
 
 #: WebContent/editIdentity.jsp
 msgid "Edit Email Identity"
@@ -412,7 +453,7 @@ msgstr ""
 
 #: WebContent/editIdentity.jsp
 msgid "Public Name:"
-msgstr ""
+msgstr "Nazwa publiczna"
 
 #: WebContent/editIdentity.jsp
 msgid "(required field, shown to recipients)"
@@ -472,15 +513,15 @@ msgstr "Błąd"
 
 #: WebContent/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
-msgstr ""
+msgstr "Błąd: nie można usunąć emaila"
 
 #: WebContent/setPassword.jsp
 msgid "Set Password"
-msgstr ""
+msgstr "Ustaw hasło"
 
 #: WebContent/setPassword.jsp
 msgid "The password has been changed."
-msgstr ""
+msgstr "Hasło zostało zmienione"
 
 #: WebContent/setPassword.jsp
 msgid "Set a new Password"
@@ -492,7 +533,7 @@ msgstr ""
 
 #: WebContent/setPassword.jsp
 msgid "Old password:"
-msgstr ""
+msgstr "Stare hasło:"
 
 #: WebContent/setPassword.jsp
 msgid "New password:"
@@ -500,11 +541,11 @@ msgstr "Nowe hasło:"
 
 #: WebContent/setPassword.jsp
 msgid "Confirm:"
-msgstr ""
+msgstr "Potwierdź:"
 
 #: WebContent/setPassword.jsp
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
@@ -548,7 +589,7 @@ msgstr "Ustawienia"
 
 #: WebContent/header.jsp
 msgid "Network Status"
-msgstr ""
+msgstr "Stan sieci"
 
 #: WebContent/header.jsp
 msgid "Help"
@@ -596,7 +637,7 @@ msgstr "(obowiązkowe pole)"
 
 #: WebContent/editContact.jsp
 msgid "Name:"
-msgstr ""
+msgstr "Nazwa:"
 
 #: WebContent/folders.jsp
 msgid "Folders"
@@ -608,15 +649,15 @@ msgstr "Odebrane"
 
 #: WebContent/folders.jsp
 msgid "Outbox"
-msgstr ""
+msgstr "Wychodzące"
 
 #: WebContent/folders.jsp
 msgid "Sent Emails"
-msgstr ""
+msgstr "Wysłane"
 
 #: WebContent/folders.jsp
 msgid "Drafts"
-msgstr ""
+msgstr "Szkice"
 
 #: WebContent/folders.jsp
 msgid "Trash"
@@ -624,7 +665,7 @@ msgstr "Kosz"
 
 #: WebContent/folders.jsp
 msgid "Manage Folders"
-msgstr ""
+msgstr "Zarządzaj folderami"
 
 #: WebContent/statusFrame.jsp
 msgid "Not Started"
@@ -632,11 +673,7 @@ msgstr ""
 
 #: WebContent/statusFrame.jsp
 msgid "Waiting 3 Minutes..."
-msgstr ""
-
-#: WebContent/statusFrame.jsp
-msgid "Connect Now"
-msgstr "Połącz teraz"
+msgstr "Czekanie 3 minuty..."
 
 #: WebContent/statusFrame.jsp
 msgid "Connecting..."
@@ -650,9 +687,21 @@ msgstr "Połączony"
 msgid "Unknown Status"
 msgstr "Nieznany status"
 
+#: WebContent/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Connect Now"
+msgstr "Połącz teraz"
+
+#: WebContent/connectError.jsp
+msgid "Error Details"
+msgstr ""
+
 #: WebContent/showEmail.jsp
 msgid "Signature:"
-msgstr ""
+msgstr "Podpis:"
 
 #: WebContent/showEmail.jsp
 msgid "Valid"
@@ -672,7 +721,7 @@ msgstr ""
 
 #: WebContent/showEmail.jsp
 msgid "Status:"
-msgstr ""
+msgstr "Stan:"
 
 #: WebContent/showEmail.jsp
 msgid "Reply"
@@ -684,7 +733,7 @@ msgstr "Re:"
 
 #: WebContent/addressBook.jsp
 msgid "Private Address Book"
-msgstr ""
+msgstr "Prywatna książka adresowa"
 
 #: WebContent/addressBook.jsp
 msgid "Select One or More Entries"
@@ -692,11 +741,11 @@ msgstr ""
 
 #: WebContent/addressBook.jsp
 msgid "The address book is empty."
-msgstr ""
+msgstr "Książka adresowa jest pusta"
 
 #: WebContent/addressBook.jsp
 msgid "Name"
-msgstr ""
+msgstr "Nazwa"
 
 #: WebContent/addressBook.jsp
 msgid "Delete this contact"
@@ -708,7 +757,7 @@ msgstr "Dodaj odbiorców"
 
 #: WebContent/addressBook.jsp
 msgid "Return"
-msgstr ""
+msgstr "Powrót"
 
 #: WebContent/showFullIdentity.jsp
 msgid "Full Identity"
@@ -745,7 +794,7 @@ msgstr ""
 
 #: WebContent/outbox.jsp
 msgid "Status"
-msgstr ""
+msgstr "Stan"
 
 #: WebContent/settings.jsp
 msgid "Settings have been saved."
@@ -753,7 +802,7 @@ msgstr "Ustawienia zapisane."
 
 #: WebContent/settings.jsp
 msgid "Check for mail every {0} minutes"
-msgstr ""
+msgstr "Sprawdź pocztę co {0} minut"
 
 #: WebContent/settings.jsp
 msgid "Use relays when sending mail:"
@@ -769,7 +818,7 @@ msgstr ""
 
 #: WebContent/settings.jsp
 msgid "and"
-msgstr ""
+msgstr "i"
 
 #: WebContent/settings.jsp
 msgid "minutes"
@@ -792,24 +841,28 @@ msgid "Include send time in outgoing emails"
 msgstr ""
 
 #: WebContent/settings.jsp
+msgid "Theme:"
+msgstr ""
+
+#: WebContent/settings.jsp
 msgid "Change Password"
 msgstr "Zmień hasło"
 
 #: WebContent/password.jsp
 msgid "Password Required"
-msgstr ""
+msgstr "Wymagane hasło"
 
 #: WebContent/password.jsp
 msgid "Wrong password. Try again."
-msgstr ""
+msgstr "Nieprawidłowe hasło. Spróbuj ponownie."
 
 #: WebContent/password.jsp
 msgid "Password required"
-msgstr ""
+msgstr "Wymagane hasło"
 
 #: WebContent/password.jsp
 msgid "Password:"
-msgstr ""
+msgstr "Hasło:"
 
 #: WebContent/clearPasswordCache.jsp
 msgid "Password Cleared"
@@ -821,11 +874,11 @@ msgstr ""
 
 #: WebContent/buttonFrame.jsp
 msgid "Checking for mail..."
-msgstr ""
+msgstr "Sprawdzanie poczty"
 
 #: WebContent/buttonFrame.jsp
 msgid "Check Mail"
-msgstr "Sprawdź pocztę. "
+msgstr "Sprawdź pocztę"
 
 #: WebContent/buttonFrame.jsp
 msgid "New"
@@ -902,4 +955,8 @@ msgstr "Dodaj do książki adresowej"
 
 #: WebContent/WEB-INF/tags/printDate.tag
 msgid "Unknown"
+msgstr ""
+
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total, {1} new"
 msgstr ""
