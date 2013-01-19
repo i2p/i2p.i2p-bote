@@ -163,6 +163,10 @@ iframe {
     -moz-box-shadow: inset 0px 0px 1px 0px #002;
 }
 
+.foldermain {
+    padding: 0 15px 15px 15px;
+}
+
 .emailtext {
     margin: 0px 20px 20px 240px;
     padding: 0 15px 15px 25px;
@@ -477,6 +481,10 @@ table td, th {
     margin-left: 120px;
     margin-right: 5px;
     margin-top: 10px;
+}
+
+.header-column-replied {
+    width: 8px;
 }
 
 .header-column-from {

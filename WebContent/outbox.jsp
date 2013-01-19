@@ -71,8 +71,7 @@
     <c:set var="reverseSortOrder" value="&amp;descending=false"/>
 </c:if>
 
-<div class="main">
-<div class="folder">
+<div class="main foldermain">
     <table>
         <c:set var="folder" value="${ib:getMailFolder('Outbox')}"/>
         <tr>
@@ -162,7 +161,6 @@
             </tr>
         </c:forEach>
     </table>
-</div>
 </div>
 </ib:requirePassword>
 

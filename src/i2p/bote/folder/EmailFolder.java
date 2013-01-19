@@ -401,6 +401,16 @@ public class EmailFolder extends Folder<Email> {
         saveMetadata(email);
     }
     
+    public void setReplied(String messageId, boolean replied) throws PasswordException, GeneralSecurityException {
+        EmailMetadata metadata = getMetadata(messageId);
+        metadata.setReplied(replied);
+        try {
+            saveMetadata(metadata, getMetadataFile(messageId));
+        } catch (IOException e) {
+            log.error("Can't read metadata file for message ID <" + messageId + ">", e);
+        }
+    }
+    
     public void saveMetadata(Email email) throws PasswordException, FileNotFoundException, IOException, GeneralSecurityException {
         EmailMetadata metadata = email.getMetadata();
         File metaFile = getMetadataFile(email.getMessageID());

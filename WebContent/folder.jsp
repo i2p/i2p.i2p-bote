@@ -95,10 +95,11 @@
     <c:set var="reverseSortOrder" value="&amp;descending=false"/>
 </c:if>
 
-<div class="main">
+<div class="main foldermain">
     <table>
         <c:set var="folder" value="${ib:getMailFolder(folderName)}"/>
         <tr>
+            <th class="header-column-replied"/>
             <th class="header-column-from">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&amp;sortcolumn=${FROM}"/>
                 <c:if test="${sortcolumn eq FROM}">
@@ -194,6 +195,9 @@
             </c:if>
             
             <tr class="${textClass} ${backgroundClass}">
+            <td class="header-column-replied">
+                <c:if test="${email.replied}">&#10550;</c:if>
+            </td>
             <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(sender)}</a></td>
             <%-- Don't show the "known" and "signature" columns in the sent folder --%>
             <c:if test="${not isSentFolder}">

@@ -54,6 +54,8 @@
 </ib:sendEmail>
 
 <c:if test="${not empty param.quoteMsgId}">
+    <ib:setEmailReplied messageId="${param.quoteMsgId}" folder="${ib:getMailFolder(param.quoteMsgFolder)}" replied="true"/>
+    
     <p/><br/><p/>
     <form action="deleteEmail.jsp" method="post">
         Delete original email?

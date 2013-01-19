@@ -127,6 +127,27 @@
 </tag>
 
 <tag>
+    <name>setEmailReplied</name>
+    <tag-class>i2p.bote.web.SetEmailRepliedTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>folder</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>messageId</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>replied</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+</tag>
+
+<tag>
     <name>quote</name>
     <tag-class>i2p.bote.web.QuoteTag</tag-class>
     <body-content>empty</body-content>

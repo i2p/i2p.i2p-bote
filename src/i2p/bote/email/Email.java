@@ -655,6 +655,11 @@ public class Email extends MimeMessage {
         return metadata.isDelivered();
     }
 
+    /** @see EmailMetadata#isReplied() */
+    public boolean isReplied() {
+        return metadata.isReplied();
+    }
+
     /** @see EmailMetadata#getDeliveryPercentage() */
     public int getDeliveryPercentage() {
         return metadata.getDeliveryPercentage();

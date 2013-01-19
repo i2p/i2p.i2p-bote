@@ -165,6 +165,10 @@ iframe {
     -moz-box-shadow: inset 0px 0px 1px 0px #002;
 }
 
+.foldermain {
+    padding: 0 15px 15px 15px;
+}
+
 .infoMessage {
     margin: 0px 20px 5px 240px;
     text-align: left;
@@ -465,6 +469,11 @@ table td, th {
     margin-left: 120px;
     margin-right: 5px;
     margin-top: 10px;
+}
+
+.header-column-replied {
+    color: grey;
+    width: 8px;
 }
 
 .header-column-from {
