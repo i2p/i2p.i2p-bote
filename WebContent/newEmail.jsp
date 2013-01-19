@@ -229,7 +229,6 @@
         
         <div class="email-form-value">
             <button type="submit" name="action" value="send"><ib:message key="Send"/></button>
-            <button type="submit" name="action" disabled="disabled"><ib:message key="Save"/></button>
         </div>
     </form>
 </div>
