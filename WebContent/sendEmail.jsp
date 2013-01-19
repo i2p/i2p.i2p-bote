@@ -35,6 +35,7 @@
 <ib:requirePassword>
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 <c:set var="configuration" value="${jspHelperBean.configuration}"/>
+<div class="subheading">
 <ib:sendEmail sender="${param.sender}" subject="${param.subject}" message="${param.message}" includeSentTime="${configuration.includeSentTime}">
     <c:forEach var="parameter" items="${ib:getSortedRecipientParams(param)}">
         <c:set var="recipientIndex" value="${fn:substringAfter(parameter.key, 'recipient')}"/>
@@ -52,11 +53,12 @@
         </c:if>
     </c:forEach>
 </ib:sendEmail>
+</div>
 
 <c:if test="${not empty param.quoteMsgId}">
     <ib:setEmailReplied messageId="${param.quoteMsgId}" folder="${ib:getMailFolder(param.quoteMsgFolder)}" replied="true"/>
     
-    <p/><br/><p/>
+    <br/><p/>
     <form action="deleteEmail.jsp" method="post">
         Delete original email?
         <input type="hidden" name="folder" value="${param.quoteMsgFolder}"/>
