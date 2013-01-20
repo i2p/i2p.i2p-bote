@@ -72,11 +72,11 @@ public class DeliveryChecker extends I2PAppThread {
             try {
                 log.debug("Processing sent emails in directory '" + sentFolder.getStorageDirectory() + "'.");
                 FolderIterator<Email> iterator = sentFolder.iterate();
-                    while (iterator.hasNext()) {
-                        Email email = iterator.next();
-                        if (!email.getMetadata().isDelivered())
-                            checkDelivery(email);
-                    }
+                while (iterator.hasNext()) {
+                    Email email = iterator.next();
+                    if (!email.getMetadata().isDelivered())
+                        checkDelivery(email);
+                }
                 TimeUnit.MINUTES.sleep(configuration.getDeliveryCheckInterval());
             } catch (InterruptedException e) {
                 break;
@@ -96,17 +96,23 @@ public class DeliveryChecker extends I2PAppThread {
         EmailMetadata metadata = email.getMetadata();
         Collection<PacketInfo> packets = metadata.getUndeliveredPacketKeys();
         synchronized(sentFolder) {
+            boolean updateMetadata = false;
+            
             for (PacketInfo packet: packets) {
                 UniqueId delAuth = dht.findDeleteAuthorizationKey(packet.dhtKey, packet.delVerificationHash);
-                if (delAuth != null)
+                if (delAuth != null) {
                     metadata.setPacketDelivered(packet.dhtKey, true);
+                    updateMetadata = true;
+                    log.debug("Delivery of email packet with DHT key " + packet.dhtKey + " confirmed.");
+                }
             }
             
-            try {
-                sentFolder.saveMetadata(email);
-            } catch (Exception e) {
-                log.error("Can't save email metadata.", e);
-            }
+            if (updateMetadata)
+                try {
+                    sentFolder.saveMetadata(email);
+                } catch (Exception e) {
+                    log.error("Can't save email metadata.", e);
+                }
         }
     }
 }
