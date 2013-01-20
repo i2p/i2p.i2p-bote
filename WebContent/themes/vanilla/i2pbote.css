@@ -419,6 +419,11 @@ table td, th {
     word-wrap: break-word;
 }
 
+.hidden-text {
+    display: none;
+    outline: none;
+}
+
 .identity-form-label {
     position: absolute;
     margin-top: 10px;
