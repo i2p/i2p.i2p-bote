@@ -592,4 +592,9 @@
     <path>/WEB-INF/tags/copyParams.tag</path>
 </tag-file> 
 
+<tag-file>
+    <name>expandable</name>
+    <path>/WEB-INF/tags/expandable.tag</path>
+</tag-file> 
+
 </taglib>
