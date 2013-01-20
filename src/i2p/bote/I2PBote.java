@@ -309,7 +309,7 @@ public class I2PBote implements NetworkStatusSource {
         emailChecker = new EmailChecker(identities, configuration, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder, this, sendQueue, dht, peerManager);
         backgroundThreads.add(emailChecker);
         
-        deliveryChecker = new DeliveryChecker(dht, sentFolder, configuration);
+        deliveryChecker = new DeliveryChecker(dht, sentFolder, configuration, this);
         backgroundThreads.add(deliveryChecker);
         
         updateChecker = new UpdateChecker(this, configuration);

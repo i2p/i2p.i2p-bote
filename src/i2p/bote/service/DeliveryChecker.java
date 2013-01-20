@@ -30,6 +30,7 @@ import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.FolderIterator;
 import i2p.bote.network.DHT;
+import i2p.bote.network.NetworkStatusSource;
 
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -47,17 +48,26 @@ public class DeliveryChecker extends I2PAppThread {
     private DHT dht;
     private EmailFolder sentFolder;
     private Configuration configuration;
+    private NetworkStatusSource networkStatusSource;
     
-    public DeliveryChecker(DHT dht, EmailFolder sentFolder, Configuration configuration) {
+    public DeliveryChecker(DHT dht, EmailFolder sentFolder, Configuration configuration, NetworkStatusSource networkStatusSource) {
         super("DeliveryChkr");
         this.dht = dht;
         this.sentFolder = sentFolder;
         this.configuration = configuration;
+        this.networkStatusSource = networkStatusSource;
         setPriority(MIN_PRIORITY);
     }
     
     @Override
     public void run() {
+        try {
+            while (!networkStatusSource.isConnected())
+                TimeUnit.MINUTES.sleep(1);
+        } catch (InterruptedException e) {
+            return;
+        }
+        
         while (!Thread.interrupted())
             try {
                 log.debug("Processing sent emails in directory '" + sentFolder.getStorageDirectory() + "'.");
