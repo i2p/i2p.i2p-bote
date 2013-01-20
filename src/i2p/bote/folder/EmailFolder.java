@@ -139,8 +139,8 @@ public class EmailFolder extends Folder<Email> {
         
         @Override
         public int compare(Email email1, Email email2) {
-            Comparable<?> value1 = 0;
-            Comparable<?> value2 = 0;
+            Comparable<?> value1;
+            Object value2;
             
             try {
                 switch(attribute) {
@@ -175,9 +175,12 @@ public class EmailFolder extends Folder<Email> {
                     break;
                 default:
                     log.error("Unknown email attribute type: " + attribute);
+                    return 0;
                 }
                 
-                return nullSafeCompare(value1, value2);
+                @SuppressWarnings("unchecked")
+                int comp = nullSafeCompare((Comparable<Object>)value1, value2);
+                return comp;
             }
             catch (MessagingException e) {
                 log.error("Can't read the " + attribute + " attribute from an email.", e);
@@ -194,8 +197,7 @@ public class EmailFolder extends Folder<Email> {
             }
         }
         
-        @SuppressWarnings("unchecked")
-        private int nullSafeCompare(Comparable value1, Comparable value2) {
+        private <T> int nullSafeCompare(Comparable<T> value1, T value2) {
             if (value1 == null) {
                 if (value2 == null)
                     return 0;
