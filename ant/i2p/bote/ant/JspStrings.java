@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Extracts strings from <ib:message> tags and prints them
+ * A command line program that extracts strings from <ib:message> tags and prints them
  * to stdout in .po format (the .po header is not printed).
  */
 public class JspStrings {
@@ -51,8 +51,8 @@ public class JspStrings {
         List<PoEntry> poEntries = processDirectory(new File(args[0]));
         removeDuplicates(poEntries);
         
-    for (PoEntry poEntry: poEntries)
-        print(poEntry);
+        for (PoEntry poEntry: poEntries)
+            print(poEntry);
     }
     
     static void removeDuplicates(List<PoEntry> poEntries) {
@@ -114,64 +114,70 @@ public class JspStrings {
         inputStream.close();
         String fileContents = strBuilder.toString();
 
+        String[] tags = fileContents.split("<ib:message");
+        
+        List<String> msgKeys = new ArrayList<String>();
+        for (int i=1; i<tags.length; i++) {
+            String key = extract(tags[i]);
+            if (key != null)
+                msgKeys.add(key);
+        }
+        
         List<PoEntry> entries = new ArrayList<PoEntry>();
-        // Process all tags of the format <ib:message>foobar</ib:message>
-        String[] noAttributeTags = fileContents.split("<ib:message>");
-        List<String> msgKeys = (extractFromTagBody(noAttributeTags));
-        entries.addAll(PoEntry.create(msgKeys, file));
-        // Process all tags of the format <ib:message key="foobar".../>, as well as
-        // <ib:message key="foo {0}"><ib:param value="bar"/></ib:message>
-        String[] attributeTags = fileContents.split("<ib:message ");
-        msgKeys = extractFromKeyAttribute(attributeTags);
         entries.addAll(PoEntry.create(msgKeys, file));
         
         return entries;
     }
     
-    /** Extracts the text between each pair of <ib:message> and </ib:message> tags */
-    static List<String> extractFromTagBody(String[] strings) {
-        List<String> keys = new ArrayList<String>();
-        for (int i=1; i<strings.length; i++) {
-            String element = strings[i];
-            int endIdx = element.indexOf("</ib:message");
-            if (endIdx < 0) {
-                System.err.println("No \"</ib:message\" end tag in string: <" + element + ">");
-                continue;
-            }
-            String str = element.substring(0, endIdx);
-            // convert multiple whitespaces in a row to a single space, remove leading and trailing whitespace
-            str = Util.removeExtraWhitespace(str);
-            keys.add(str);
-        }
-        return keys;
+    /**
+     * Extracts a message key from a ib:message tag
+     * @param tag a ib:message tag minus the &lt;ib:message part at the beginning
+     * @return
+     */
+    static String extract(String tag) {
+        if (tag.contains(" key="))   // format is <ib:message key="foobar" .../> ...
+            return extractFromKeyAttribute(tag);
+        else   // format is <ib:message ...>foobar</ib:message> ...
+            return extractFromTagBody(tag);
     }
     
-    /** Extracts the values of all "key" attributes */
-    static List<String> extractFromKeyAttribute(String[] strings) {
+    /**
+     * Extracts the text between <ib:message> and </ib:message>
+     * @param tag a ib:message tag minus the &lt;ib:message part at the beginning
+     */
+    static String extractFromTagBody(String tag) {
+        int gtIndex = tag.indexOf(">");
+        tag = tag.substring(gtIndex + 1);
+        int endIdx = tag.indexOf("</ib:message");
+        if (endIdx < 0) {
+            System.err.println("No \"</ib:message\" end tag in string: <" + tag + ">");
+            return null;
+        }
+        String str = tag.substring(0, endIdx);
+        // convert multiple whitespaces in a row to a single space, remove leading and trailing whitespace
+        str = Util.removeExtraWhitespace(str);
+        return str;
+    }
+    
+    /** Extracts the values of the "key" attribute */
+    static String extractFromKeyAttribute(String string) {
         String keyAttrSQ = "key='";
         String keyAttrDQ = "key=\"";
         int keyAttrLen = keyAttrDQ.length();
         
-        List<String> keys = new ArrayList<String>();
-        for (int i=1; i<strings.length; i++) {
-            String element = strings[i];
-            int startIdxSQ = element.indexOf(keyAttrSQ);
-            int endIdxSQ = element.indexOf("'", startIdxSQ+keyAttrLen);
-            int startIdxDQ = element.indexOf(keyAttrDQ);
-            int endIdxDQ = element.indexOf("\"", startIdxDQ+keyAttrLen);
-            
-            String message;
-            if (startIdxSQ>=0 && (startIdxSQ<startIdxDQ || startIdxDQ<0) && endIdxSQ>=0)
-                message = element.substring(startIdxSQ+keyAttrLen, endIdxSQ);
-            else if (startIdxDQ>=0 && (startIdxDQ<startIdxSQ || startIdxSQ<0) && endIdxDQ>=0)
-                message = element.substring(startIdxDQ+keyAttrLen, endIdxDQ);
-            else {
-                System.err.println("Expected a string containing key=\"...\" or key='...', got " + element);
-                continue;
-            }
-            keys.add(message);
+        int startIdxSQ = string.indexOf(keyAttrSQ);
+        int endIdxSQ = string.indexOf("'", startIdxSQ+keyAttrLen);
+        int startIdxDQ = string.indexOf(keyAttrDQ);
+        int endIdxDQ = string.indexOf("\"", startIdxDQ+keyAttrLen);
+        
+        if (startIdxSQ>=0 && (startIdxSQ<startIdxDQ || startIdxDQ<0) && endIdxSQ>=0)
+            return string.substring(startIdxSQ+keyAttrLen, endIdxSQ);
+        else if (startIdxDQ>=0 && (startIdxDQ<startIdxSQ || startIdxSQ<0) && endIdxDQ>=0)
+            return string.substring(startIdxDQ+keyAttrLen, endIdxDQ);
+        else {
+            System.err.println("Expected a string containing key=\"...\" or key='...', got " + string);
+            return null;
         }
-        return keys;
     }
     
     static class PoEntry {
