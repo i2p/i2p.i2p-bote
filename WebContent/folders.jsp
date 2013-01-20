@@ -46,7 +46,7 @@
     <h2><ib:message key="Folders"/></h2>
     <ib:message key="Inbox" var="displayName"/><ib:folderLink dirName="Inbox" displayName="${displayName}"/><br/>
     <ib:message key="Outbox" var="displayName"/><ib:folderLink dirName="Outbox" displayName="${displayName}"/><br/>
-    <ib:message key="Sent Emails" var="displayName"/><ib:folderLink dirName="Sent" displayName="${displayName}"/><br/>
+    <ib:message key="Sent" var="displayName"/><ib:folderLink dirName="Sent" displayName="${displayName}"/><br/>
     <ib:message key="Trash" var="displayName"/><ib:folderLink dirName="Trash" displayName="${displayName}"/><br/>
 </div>
 

@@ -135,7 +135,7 @@
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
                     <c:set var="dateColumnIndicator" value=" ${sortIndicator}"/>
                 </c:if>
-                <a href="${sortLink}"><ib:message key="Sent"/>${dateColumnIndicator}</a>
+                <a href="${sortLink}"><ib:message key="Sent Time"/>${dateColumnIndicator}</a>
             </th>
             <%-- Show the "delivered" column only in the sent folder --%>
             <c:if test="${isSentFolder}">

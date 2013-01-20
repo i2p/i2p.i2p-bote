@@ -20,7 +20,7 @@
  --%>
 
 <%@ attribute name="dirName" required="true" description="The directory used by the folder" %>
-<%@ attribute name="displayName" required="true" description="The display name for the folder" %>
+<%@ attribute name="displayName" required="true" description="The display name for the folder; must match the translation for dirName or the page title won't be translated." %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>

@@ -177,7 +177,7 @@ public class OutboxProcessor extends I2PAppThread {
         if (containsExternalRecipients) {
             if (configuration.isGatewayEnabled()) {
                 sendToOne(senderIdentity, configuration.getGatewayDestination(), email);
-                outbox.setStatus(email, _("Sent"));
+                outbox.setStatus(email, _("Email sent"));
             }
             else {
                 outbox.setStatus(email, _("Gateway disabled"));
