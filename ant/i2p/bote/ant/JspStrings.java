@@ -118,9 +118,12 @@ public class JspStrings {
         
         List<String> msgKeys = new ArrayList<String>();
         for (int i=1; i<tags.length; i++) {
-            String key = extract(tags[i]);
-            if (key != null)
-                msgKeys.add(key);
+            String tag = tags[i];
+            if (!shouldSkip(tag)) {
+                String key = extract(tag);
+                if (key != null)
+                    msgKeys.add(key);
+            }
         }
         
         List<PoEntry> entries = new ArrayList<PoEntry>();
@@ -178,6 +181,12 @@ public class JspStrings {
             System.err.println("Expected a string containing key=\"...\" or key='...', got " + string);
             return null;
         }
+    }
+    
+    /** Returns <code>true</code> if a ib:message tag has the noextract attribute set to <code>true</code>. */
+    static boolean shouldSkip(String tag) {
+        tag = tag.replaceAll("\\s+", "");
+        return tag.contains("noextract=\"true\"") || tag.contains("noextract='true'");
     }
     
     static class PoEntry {

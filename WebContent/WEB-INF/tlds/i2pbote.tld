@@ -192,6 +192,7 @@
     <info>
         Same as fmt:message, except that message keys in
         the "en" locale translate to the message key itself.
+        The noextract attribute is only used by the JspStrings util.
     </info>
     <tag-class>i2p.bote.web.MessageTag</tag-class>
     <body-content>JSP</body-content>
@@ -217,6 +218,11 @@
     </attribute>
     <attribute>
         <name>hide</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+    <attribute>
+        <name>noextract</name>
         <rtexprvalue>true</rtexprvalue>
         <required>false</required>
     </attribute>

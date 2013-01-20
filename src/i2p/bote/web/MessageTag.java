@@ -168,6 +168,18 @@ public class MessageTag extends BodyTagSupport {
         return hide;
     }
 
+    /**
+     * Does nothing. Only there because the attribute is defined in the .tld
+     * and the JSP compiler expects a setter and getter.
+     */
+    public void setNoextract(boolean noextract) {
+    }
+
+    /** See {@link #setNoextract}. */
+    public boolean isNoextract() {
+        return false;
+    }
+
     void addParameter(String param) {
         parameters.add(param);
     }

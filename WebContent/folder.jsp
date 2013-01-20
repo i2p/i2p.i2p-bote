@@ -46,7 +46,7 @@
 <c:if test="${param.path eq 'Inbox' or param.path eq 'Sent'}">
     <c:set var="refreshInterval" value="60" scope="request"/>
 </c:if>
-<ib:message key="${param.path}" var="title" scope="request"/>
+<ib:message key="${param.path}" var="title" scope="request" noextract="true"/>   <%-- Translation strings are extracted from folders.jsp --%>
 <jsp:include page="header.jsp"/>
 
 <c:set var="folderName" value="${param.path}"/>
