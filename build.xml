@@ -536,13 +536,13 @@
         <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
             <arg value="-o"/>
             <arg value="${pkglistdir}/jdk/package-list"/>
-            <arg value="http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/api/package-list"/>
+            <arg value="http://docs.oracle.com/javase/6/docs/api/package-list"/>
         </java>
         <mkdir dir="${pkglistdir}/servlet"/>
         <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
             <arg value="-o"/>
             <arg value="${pkglistdir}/servlet/package-list"/>
-            <arg value="http://download.oracle.com/docs/cd/E17477_01/javaee/1.4/api/package-list"/>
+            <arg value="http://docs.oracle.com/javaee/1.4/api/package-list"/>
         </java>
         <mkdir dir="${pkglistdir}/javamail"/>
         <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
