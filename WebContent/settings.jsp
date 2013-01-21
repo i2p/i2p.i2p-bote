@@ -30,6 +30,7 @@
 <c:if test="${param.action eq 'save'}">
     <jsp:setProperty name="configuration" property="autoMailCheckEnabled" value="${param.autoMailCheckEnabled eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="mailCheckInterval" value="${param.mailCheckInterval}"/>
+    <jsp:setProperty name="configuration" property="deliveryCheckEnabled" value="${param.deliveryCheckEnabled eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="hideLocale" value="${param.hideLocale eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="includeSentTime" value="${param.includeSentTime eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="numStoreHops" value="${param.numStoreHops}"/>
@@ -55,12 +56,16 @@
     <form action="settings.jsp" method="post">
         <input type="hidden" name="action" value="save"/>
         
-        <%-- Auto mail checking --%>
+        <%-- Auto mail checking and delivery checking --%>
         <c:set var="checked" value="${configuration.autoMailCheckEnabled ? ' checked' : ''}"/>
         <input type="checkbox"${checked} name="autoMailCheckEnabled"/>
         <ib:message key="Check for mail every {0} minutes">
             <ib:param><input type="text" name="mailCheckInterval" size="3" value="${configuration.mailCheckInterval}"/></ib:param>
         </ib:message>
+        <br/>
+        <c:set var="checked" value="${configuration.deliveryCheckEnabled ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="deliveryCheckEnabled"/>
+        <ib:message key="Check delivery status of sent emails"/>
         <br/>
         
         <%-- Relays --%>

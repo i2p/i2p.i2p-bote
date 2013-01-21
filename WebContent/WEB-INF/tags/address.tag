@@ -29,7 +29,7 @@
 
 <c:set var="address" value="${ib:getNameAndDestination(address)}"/>
 
-<div id="address">
+<div>
     <c:set var="emailDestination" value="${ib:extractEmailDestination(address)}"/>
     <c:set var="name" value="${ib:extractName(address)}"/>
     
@@ -52,23 +52,23 @@
 	        <c:if test="${!empty name}">
 	            <c:set var="shortAdr" value="${shortAdr}&gt;"/>
 	        </c:if>
-	        ${shortAdr}<br/>
+	        ${shortAdr}
 	        
 	        <%-- Print the full email destination and the button only when expanded --%>
-	        <span>
-	            <%-- put wbr tags in the address so the lines don't get too long --%>
-	            <c:set var="wbrDest" value=""/>
-	            <c:forEach begin="0" end="${fn:length(emailDestination)-1}" step="5" var="i">
-	                <c:set var="wbrDest" value="${wbrDest}${fn:substring(emailDestination, i, i+5)}<wbr/>"/>
-	            </c:forEach>
-	
-	            <strong><ib:message key="Email Destination: "/></strong> ${wbrDest}
-	            <c:if test="${!empty emailDestination}">
-	                <c:set var="disabled" value="${ib:isKnown(emailDestination) ? 'disabled=&quot; disabled&quot; title=&quot;The Email Destination already exists in the address book.&quot;' : ''}"/>
-	                <br/>
-	                <button type="submit"${disabled}><ib:message key="Add to Address Book"/></button>
-	            </c:if>
-	        </span>
+            <ib:expandable>
+                <%-- put wbr tags in the address so the lines don't get too long --%>
+                <c:set var="wbrDest" value=""/>
+                <c:forEach begin="0" end="${fn:length(emailDestination)-1}" step="5" var="i">
+                    <c:set var="wbrDest" value="${wbrDest}${fn:substring(emailDestination, i, i+5)}<wbr/>"/>
+                </c:forEach>
+    
+                <strong><ib:message key="Email Destination: "/></strong> ${wbrDest}
+                <c:if test="${!empty emailDestination}">
+                    <c:set var="disabled" value="${ib:isKnown(emailDestination) ? 'disabled=&quot; disabled&quot; title=&quot;The Email Destination already exists in the address book.&quot;' : ''}"/>
+                    <br/>
+                    <button type="submit"${disabled}><ib:message key="Add to Address Book"/></button>
+                </c:if>
+            </ib:expandable>
         </c:if>
     </form>
 </div>

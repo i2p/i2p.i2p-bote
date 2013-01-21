@@ -29,30 +29,6 @@
 
 <ib:message key="More..." var="moreText"/>
 <ib:message key="Less..." var="lessText"/>
-<script language="javascript">
-// Expands / collapses the help text
-function toggle(textId, linkId) {
-    var text = document.getElementById(textId);
-    var link = document.getElementById(linkId);
-    if(text.style.display == "block") {
-        text.style.display = "none";
-        link.innerHTML = "${moreText}";
-    }
-    else {
-        text.style.display = "block";
-        link.innerHTML = "${lessText}";
-    }
-    link.blur();
-}
-
-// fills in the link text
-function insertToggleLink() {
-    var toggleLink = document.getElementById('toggle-link');
-    toggleLink.innerHTML = "${moreText}";
-}
-
-window.onload = insertToggleLink;
-</script>
 
 <ib:requirePassword>
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
@@ -84,14 +60,9 @@ window.onload = insertToggleLink;
     <h2>${title}</h2>
     <c:if test="${param.new}">
         <ib:message>An Email Identity lets you receive email from other I2P-Bote users.</ib:message>
-        <div id="hidden-text" class="hidden-text">
-            <p/>
+        <ib:expandable>
             <jsp:include page="identitiesHelp.jsp"/>
-        </div>
-        <a href="#" id="toggle-link" onclick="toggle('hidden-text', 'toggle-link')"></a>
-        <noscript>
-            <jsp:include page="identitiesHelp.jsp"/>
-        </noscript>
+        </ib:expandable>
     </c:if>
     <form name="form" method="post" action="submitIdentity.jsp">
         <div class="identity-form-label">

@@ -71,6 +71,7 @@ public class Configuration {
     private static final String PARAMETER_POP3_PORT = "pop3Port";
     private static final String PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = "maxConcurIdCheckMail";
     private static final String PARAMETER_AUTO_MAIL_CHECK = "autoMailCheckEnabled";
+    private static final String PARAMETER_DELIVERY_CHECK = "deliveryCheckEnabled";
     private static final String PARAMETER_MAIL_CHECK_INTERVAL = "mailCheckInterval";
     private static final String PARAMETER_OUTBOX_CHECK_INTERVAL = "outboxCheckInterval";
     private static final String PARAMETER_DELIVERY_CHECK_INTERVAL = "deliveryCheckInterval";
@@ -102,6 +103,7 @@ public class Configuration {
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
     private static final int DEFAULT_OUTBOX_CHECK_INTERVAL = 10;   // in minutes
+    private static final boolean DEFAULT_DELIVERY_CHECK = true;
     private static final int DEFAULT_DELIVERY_CHECK_INTERVAL = 60;   // in minutes
     private static final int DEFAULT_RELAY_SEND_PAUSE = 10;   // in minutes, see RelayPacketSender.java
     private static final boolean DEFAULT_HIDE_LOCALE = true;
@@ -291,6 +293,14 @@ public class Configuration {
     
     public boolean isAutoMailCheckEnabled() {
         return getBooleanParameter(PARAMETER_AUTO_MAIL_CHECK, DEFAULT_AUTO_MAIL_CHECK);
+    }
+    
+    public void setDeliveryCheckEnabled(boolean enabled) {
+        properties.setProperty(PARAMETER_DELIVERY_CHECK, String.valueOf(enabled));
+    }
+    
+    public boolean isDeliveryCheckEnabled() {
+        return getBooleanParameter(PARAMETER_DELIVERY_CHECK, DEFAULT_DELIVERY_CHECK);
     }
     
     public void setMailCheckInterval(int minutes) {

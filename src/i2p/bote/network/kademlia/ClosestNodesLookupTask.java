@@ -172,7 +172,7 @@ public class ClosestNodesLookupTask implements Callable<List<Destination>> {
         }
         
         if (hasTimedOut(startTime, CLOSEST_NODES_LOOKUP_TIMEOUT)) {
-            log.warn("Lookup for closest nodes timed out.");
+            log.debug("Lookup for closest nodes timed out.");
             return true;
         }
         

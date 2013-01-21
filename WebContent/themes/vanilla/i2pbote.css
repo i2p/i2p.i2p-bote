@@ -387,14 +387,6 @@ table td, th {
     background: url('images/background-alt.png');
 }
 
-#address form span {
-    display: none;
-}
-#address form:hover span {
-    display: block;
-    padding: 3px;
-}
-
 .deleteIdentityBtn {
 	text-align: right;
 }
