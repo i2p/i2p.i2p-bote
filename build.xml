@@ -571,7 +571,7 @@
             <link href="http://download.oracle.com/docs/cd/E17477_01/javaee/1.4/api/" offline="true" packagelistloc="${pkglistdir}/servlet"/>
             <link href="http://java.sun.com/products/javamail/javadocs/" offline="true" packagelistloc="${pkglistdir}/javamail"/>
             <link href="http://bouncycastle.org/docs/docs1.6/" offline="true" packagelistloc="${pkglistdir}/bouncycastle"/>
-            <link href="http://bob.i2p/javadoc/"/>
+            <link href="http://i2p-javadocs.i2p/"/>
         </javadoc>
     </target>
 
