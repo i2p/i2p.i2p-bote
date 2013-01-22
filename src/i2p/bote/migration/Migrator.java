@@ -67,7 +67,6 @@ public class Migrator {
     /**
      * Returns the version to which the I2P-Bote data directory was last migrated to.
      * If there has never been a migration, zero is returned.
-     * @return
      */
     private String getLastSuccessfulMigration() {
         File versionFile = configuration.getMigrationVersionFile();

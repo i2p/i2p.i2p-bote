@@ -104,7 +104,6 @@ public class Email extends MimeMessage {
      * Creates an <code>Email</code> with no metadata from a file containing an
      * <strong>uncompressed</strong> MIME email.
      * @param emailStream
-     * @param metadataStream
      * @param passwordHolder
      * @throws MessagingException
      * @throws IOException
@@ -218,7 +217,6 @@ public class Email extends MimeMessage {
      * It might be worthwhile to use the mime-util library which does a much better job:
      * {@link http://sourceforge.net/projects/mime-util/files/}.
      * @param attachment
-     * @return
      */
     private String getMimeType(Attachment attachment) {
         MimetypesFileTypeMap mimeTypeMap = new MimetypesFileTypeMap();
@@ -291,7 +289,7 @@ public class Email extends MimeMessage {
     /**
      * Removes all headers that are not on the whitelist, and initializes some
      * basic header fields.<br/>
-     * Called by {@link saveChanges()}, see JavaMail JavaDoc.
+     * Called by {@link #saveChanges()}, see JavaMail JavaDoc.
      * @throws MessagingException
      */
     @Override
@@ -343,7 +341,6 @@ public class Email extends MimeMessage {
      * Unlike {@link javax.mail.internet.MimeUtility#fold(int, String)}, this method
      * doesn't require the string to contain whitespace.
      * @param signature
-     * @return
      */
     private String foldSignature(String signature) {
         StringBuilder folded = new StringBuilder();
@@ -522,7 +519,7 @@ public class Email extends MimeMessage {
      * Returns the values of all "Reply-To" headers (usually zero or one).
      * Unlike {@link #getReplyTo()}, this method does not return
      * the "From" address if there is no "Reply To" address.<br/>
-     * Not to be confused with {@link #getReplyAddress()}.
+     * Not to be confused with {@link #getReplyAddress(Identities)}.
      * @throws MessagingException
      */
     public String[] getReplyToAddresses() throws MessagingException {
@@ -740,7 +737,6 @@ public class Email extends MimeMessage {
     /**
      * Like {@link writeTo(OutputStream)}, but compresses the data if it reduces the size.
      * @param input
-     * @return
      * @throws IOException 
      * @throws MessagingException 
      * @see Encoder
@@ -777,7 +773,6 @@ public class Email extends MimeMessage {
      * it as a new <code>InputStream</code>.<br/>
      * (Kind of a poor man's <code>FilterInputStream</code>)
      * @param inputStream
-     * @return
      * @throws IOException
      */
     private static InputStream decompress(InputStream inputStream) throws IOException {
@@ -811,7 +806,6 @@ public class Email extends MimeMessage {
     /**
      * Tests if <code>address</code> is a BCC address.
      * @param address
-     * @return
      * @throws MessagingException
      */
     private boolean isBCC(String address) throws MessagingException {
@@ -884,7 +878,6 @@ public class Email extends MimeMessage {
      * Returns a <code>List</code> that contains a <code>Part</code>
      * for each descendent of a given <code>Part</code>.
      * @param part
-     * @return
      * @throws MessagingException
      * @throws IOException
      * @see Part

@@ -65,7 +65,6 @@ public class I2PSendQueue extends I2PAppThread implements PacketListener {
 
     /**
      * @param i2pSession
-     * @param socketManager
      * @param i2pReceiver
      */
     public I2PSendQueue(I2PSession i2pSession, I2PPacketDispatcher i2pReceiver) {

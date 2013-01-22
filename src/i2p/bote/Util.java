@@ -180,8 +180,7 @@ public class Util {
      * Returns the lines as a <code>List</code> of <code>String</code>s.
      * or an empty <code>List</code> if an error occurred.
      * @param url
-     * @return
-     * @see readLines(URL)
+     * @see #readLines(URL)
      */
     private static List<String> readLines(InputStream inputStream) throws IOException {
         Log log = new Log(Util.class);
@@ -240,7 +239,6 @@ public class Util {
      * Tests if a directory contains a file with a given name.
      * @param directory
      * @param filename
-     * @return
      */
     public static boolean contains(File directory, final String filename) {
         String[] matches = directory.list(new FilenameFilter() {
@@ -367,7 +365,7 @@ public class Util {
         return toBase32(destination).substring(0, 8) + "...";
     }
     
-    /** Thin wrapper around {@link Hash#fromBase64()}. */
+    /** Thin wrapper around {@link Hash#fromBase64(String)}. */
     public static Hash createHash(String hashStr) throws DataFormatException {
         Hash hash = new Hash();
         hash.fromBase64(hashStr);

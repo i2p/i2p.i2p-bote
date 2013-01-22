@@ -374,10 +374,7 @@ public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
         return signature;
     }
 
-    /**
-     * Returns the signature algorithm to use for signing (not verifying!).
-     * @return
-     */
+    /** Returns the signature algorithm to use for signing (not verifying!). */
     protected abstract BouncyECDSASigner getSigner();
     
     /**
@@ -453,7 +450,7 @@ public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
     }
     
     /**
-     * This class exposes the protected <code>engine*</code> methods in {@link Signature.ecDSA256}
+     * This class exposes the protected <code>engine*</code> methods in {@link ecDSA256}
      * which implements ECDSA with SHA-256.
      */
     protected class BouncyECDSASignerSHA256 extends ecDSA256 implements BouncyECDSASigner {
@@ -480,7 +477,7 @@ public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
     }
     
     /**
-     * This class exposes the protected <code>engine*</code> methods in {@link Signature.ecDSA512}
+     * This class exposes the protected <code>engine*</code> methods in {@link ecDSA512}
      * which implements ECDSA with SHA-512.
      */
     protected class BouncyECDSASignerSHA512 extends ecDSA512 implements BouncyECDSASigner {

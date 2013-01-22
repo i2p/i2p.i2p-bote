@@ -59,7 +59,7 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
      * Stores an <code>UnencryptedEmailPacket</code> in the folder and returns <code>true</code>
      * if an email was completed as a result of adding the packet.
      * @param packetToStore
-     * @see i2p.bote.folder.PacketFolder#add(DataPacket, String)
+     * @see i2p.bote.folder.PacketFolder#add(I2PBotePacket, String)
      */
     public synchronized boolean addEmailPacket(UnencryptedEmailPacket packetToStore) {
         UniqueId messageId = packetToStore.getMessageId();
@@ -97,7 +97,6 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
      * Returns all filenames that match a given message ID. Not to be confused with
      * the {@link #retrieve(net.i2p.data.Hash)} method, which takes a DHT key.
      * @param messageId
-     * @return
      */
     private File[] getAllMatchingFiles(UniqueId messageId) {
         final String base64Id = messageId.toBase64();

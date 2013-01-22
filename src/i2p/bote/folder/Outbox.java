@@ -84,7 +84,6 @@ public class Outbox extends EmailFolder {
      * If no email exists under the message ID, or if no status is set,
      * the default status is returned.
      * @param messageId The message ID of the email
-     * @return
      * @see #getDefaultStatus()
      */
     private String getStatus(String messageId) {

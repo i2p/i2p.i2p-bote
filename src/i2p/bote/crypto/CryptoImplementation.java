@@ -133,7 +133,7 @@ public interface CryptoImplementation {
      * @param data
      * @param privateKey
      * @param keyUpdateHandler Called if the signature algorithm alters the private key
-     * @return
+     * @return a signature
      * @throws GeneralSecurityException
      */
     byte[] sign(byte[] data, PrivateKey privateKey, KeyUpdateHandler keyUpdateHandler) throws GeneralSecurityException, PasswordException;

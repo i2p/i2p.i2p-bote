@@ -67,7 +67,7 @@ public abstract class Folder<T> {
 
     /**
      * Returns the number of elements in the folder, which is the size
-     * of the array returned by {@link getFilenames()}. This number may
+     * of the array returned by {@link #getFilenames()}. This number may
      * differ from the total number of files in the folder.
      */
     public int getNumElements() {
@@ -75,7 +75,8 @@ public abstract class Folder<T> {
     }
     
     /**
-     * Returns the names of all files in the folder that end in {@link fileExtension}.<br/>
+     * Returns the names of all files in the folder that end in the <code>fileExtension</code>
+     * value provided via the constructor.<br/>
      * If there are no such files, an empty array is returned.
      */
     protected File[] getFilenames() {

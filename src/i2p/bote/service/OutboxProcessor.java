@@ -262,7 +262,7 @@ public class OutboxProcessor extends I2PAppThread {
      * and still fit into one I2P datagram after the packet is encrypted and
      * wrapped in relay packets.
      * @param hops The number of layers of relay packets that the email packet will be wrapped in
-     * @return
+     * @return the maximum size in bytes
      */
     private int getMaxEmailPacketSize(int hops) {
         int maxSize = I2PBotePacket.MAX_DATAGRAM_SIZE - EncryptedEmailPacket.MAX_OVERHEAD;

@@ -90,7 +90,7 @@ public class MultipartFilter implements Filter {
      * All other request parameters are passed down the filter chain as a
      * new request.
      * @param request
-     * @return
+     * @return a new <code>HttpServletRequest</code>
      * @throws IOException
      * @throws ServletException
      */
@@ -201,7 +201,6 @@ public class MultipartFilter implements Filter {
      * assume it is there. But JavaMail includes the name field, so it shouldn't be an
      * issue.
      * @param bodyPart
-     * @return
      * @throws MessagingException
      */
     private String getParamName(BodyPart bodyPart) throws MessagingException {

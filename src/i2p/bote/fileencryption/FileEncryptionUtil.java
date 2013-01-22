@@ -81,7 +81,6 @@ public class FileEncryptionUtil {
      * otherwise.
      * @param password
      * @param passwordFile
-     * @return
      * @throws IOException
      * @throws GeneralSecurityException 
      */

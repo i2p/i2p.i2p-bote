@@ -218,7 +218,7 @@ public class ClosestNodesLookupTask implements Callable<List<Destination>> {
      * This has the the same effect as sending a <code>FindClosePeersPacket</code> to the local destination,
      * but without the network round-trip.
      * @param key
-     * @see IncomingPacketHandler.packetReceived(CommunicationPacket, Destination, long)
+     * @see IncomingPacketHandler#packetReceived(CommunicationPacket, Destination, long)
      */
     private void addLocalResults(Hash key) {
         log.debug("Adding local results for key " + key.toBase64());

@@ -126,7 +126,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
     /**
      * Returns <code>true</code> if the DHT key stored in the packet matches
      * the computed (from the encrypted data) DHT key.
-     * @see getDhtKey
+     * @see #getDhtKey()
      */
     public boolean verifyPacketHash() {
         return getDhtKey().equals(dhtKey);

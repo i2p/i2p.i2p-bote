@@ -75,7 +75,7 @@ public class EncryptedInputStream extends FilterInputStream {
      * @param inputStream
      * @param password
      * @param cachedKey
-     * @return
+     * @return the decrypted data
      * @throws IOException
      * @throws GeneralSecurityException
      * @throws PasswordException 

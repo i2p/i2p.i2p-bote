@@ -172,7 +172,6 @@ public class Identities implements KeyUpdateHandler {
      * This is the counterpart of the <code>parse</code> method. It encodes a {@link EmailIdentity} into
      * an entry for the identities file.
      * @param identity
-     * @return
      * @throws GeneralSecurityException 
      */
     private String toFileFormat(EmailIdentity identity) throws GeneralSecurityException {

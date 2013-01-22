@@ -562,7 +562,6 @@ public class JSPHelper {
     /**
      * Tests whether a given string can be converted to an integer.
      * @param str
-     * @return
      */
     private static boolean isNumeric(String str) {
         return Pattern.matches("\\d+", str);

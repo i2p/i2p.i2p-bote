@@ -57,8 +57,7 @@ public class DeletionQuery extends CommunicationPacket {
     }
     
     /**
-     * Returns the DHT key of the email packet
-     * @return
+     * Returns the DHT key of the email packet.
      */
     public Hash getDhtKey() {
         return dhtKey;

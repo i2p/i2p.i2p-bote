@@ -126,7 +126,6 @@ public class EmailMetadata extends Properties {
     /**
      * Returns the date and time the email was submitted by the user, or <code>null</code>
      * if the value cannot be parsed.
-     * @return
      */
     public Date getCreateTime() {
         String dateStr = getProperty(PROPERTY_CREATE_TIME);

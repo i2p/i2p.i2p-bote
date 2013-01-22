@@ -122,7 +122,6 @@ public class RelayPeerManager extends I2PAppThread implements PacketListener {
      * followed by "requests sent" and "responses received" numbers.
      * Returns <code>null</code> if the entry cannot be parsed.
      * @param line
-     * @return
      */
     private RelayPeer parsePeerFileEntry(String line) {
         String[] fields = line.split("\\t");

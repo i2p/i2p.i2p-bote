@@ -303,7 +303,6 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
      * plus <code>localResult</code> if it is non-<code>null</code>.
      * @param batch
      * @param localResult
-     * @return
      */
     private DhtResults getDhtResults(PacketBatch batch, DhtStorablePacket localResult) {
         Map<Destination, DataPacket> responses = batch.getResponses();
@@ -361,7 +360,6 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
      * @param key
      * @param destination
      * @param peers
-     * @return
      */
     private boolean isCloser(Destination dest1, Destination dest2, Hash key) {
         return new PeerDistanceComparator(key).compare(dest1, dest2) < 0;
@@ -493,7 +491,6 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
      * Returns a random value <code>r</code> such that <code>min &lt;= r &lt; max</code>.
      * @param min
      * @param max
-     * @return
      */
     private Hash createRandomHash(BigInteger min, BigInteger max) {
         BigInteger hashValue;
