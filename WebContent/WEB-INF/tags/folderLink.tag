@@ -29,12 +29,19 @@
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 
 <c:set var="numEmails" value="${ib:getMailFolder(dirName).numElements}"/>
-<c:set var="numNew" value="${ib:getMailFolder(dirName).numNewEmails}"/>
+<c:if test="${jspHelperBean.passwordRequired}">
+    <ib:message key="{0} emails total" var="linkTitle">
+        <ib:param value="${numEmails}"/>
+    </ib:message>
+</c:if>
+<c:if test="${not jspHelperBean.passwordRequired}">
+    <c:set var="numNew" value="${ib:getMailFolder(dirName).numNewEmails}"/>
+    <ib:message key="{0} emails total, {1} new" var="linkTitle">
+        <ib:param value="${numEmails}"/>
+        <ib:param value="${numNew}"/>
+    </ib:message>
+</c:if>
 
-<ib:message key="{0} emails total, {1} new" var="linkTitle">
-    <ib:param value="${numEmails}"/>
-    <ib:param value="${numNew}"/>
-</ib:message>
 <a href="folder.jsp?path=${dirName}" target="_parent" title="${linkTitle}">
     <img src="themes/${jspHelperBean.configuration.theme}/images/folder.png"/>${displayName}
 </a>
