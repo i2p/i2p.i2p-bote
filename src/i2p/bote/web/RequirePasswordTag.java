@@ -62,7 +62,9 @@ public class RequirePasswordTag extends BodyTagSupport implements TryCatchFinall
                 url = httpRequest.getRequestURI();
                 if (params != null)
                     url += "?" + params;
-                url = url.substring("/i2pbote/".length());
+                // strip the context path (usually /i2pbote)
+                int contextPathLength = httpRequest.getContextPath().length();
+                url = url.substring(contextPathLength + 1);   // add one because the context path has no slash at the end
             }
             url = "password.jsp?passwordJspForwardUrl=" + url;
             pageContext.forward(url);
