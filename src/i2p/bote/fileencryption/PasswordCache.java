@@ -31,6 +31,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -51,6 +53,7 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
     private long lastReset;
     private Configuration configuration;
     private Lock passwordLock = new ReentrantLock();
+    private Collection<PasswordCacheListener> cacheListeners;
     
     /**
      * Creates a new <code>PasswordCache</code>.
@@ -59,6 +62,7 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
     public PasswordCache(Configuration configuration) {
         super("PasswordCache");
         this.configuration = configuration;
+        cacheListeners = new ArrayList<PasswordCacheListener>();
     }
     
     /**
@@ -155,7 +159,8 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
     }
     
     /**
-     * Clears the password if it is in the cache.
+     * Clears the password if it is in the cache,
+     * and fires {@link PasswordCacheListener}s.
      */
     public void clear() {
         lockPassword();
@@ -172,6 +177,13 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
         finally {
             unlockPassword();
         }
+        
+        for (PasswordCacheListener listener: cacheListeners)
+            listener.passwordCleared();
+    }
+    
+    public void addPasswordCacheListener(PasswordCacheListener listener) {
+        cacheListeners.add(listener);
     }
     
     /**

@@ -29,6 +29,7 @@ import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.DerivedKey;
 import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordCache;
+import i2p.bote.fileencryption.PasswordCacheListener;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.EmailPacketFolder;
@@ -155,6 +156,14 @@ public class I2PBote implements NetworkStatusSource {
         new Migrator(configuration, APP_VERSION).migrateIfNeeded();
         
         passwordCache = new PasswordCache(configuration);
+        // purge identities and addresses from memory when the password is cleared
+        passwordCache.addPasswordCacheListener(new PasswordCacheListener() {
+            @Override
+            public void passwordCleared() {
+                identities.clearPasswordProtectedData();
+                addressBook.clearPasswordProtectedData();
+            }
+        });
         identities = new Identities(configuration.getIdentitiesFile(), passwordCache);
         addressBook = new AddressBook(configuration.getAddressBookFile(), passwordCache);
         initializeFolderAccess(passwordCache);
@@ -560,8 +569,6 @@ public class I2PBote implements NetworkStatusSource {
     /** Removes the password from the password cache. If there is no password in the cache, nothing happens. */
     public void clearPassword() {
         passwordCache.clear();
-        identities.clearPasswordProtectedData();
-        addressBook.clearPasswordProtectedData();
     }
     
     private Collection<EmailFolder> getEmailFolders() {
