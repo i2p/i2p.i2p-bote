@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import net.i2p.I2PAppContext;
 import net.i2p.client.I2PClient;
@@ -39,9 +40,9 @@ import net.i2p.client.I2PSessionListener;
 import net.i2p.data.Destination;
 
 public class Ping {
-    private static final int PING_INTERVAL = 1000;   // in milliseconds
     private static final int DEFAULT_NUM_BYTES = 10000;
     private static final int DEFAULT_NUM_PINGS = 10;
+    private static final int DEFAULT_INTERVAL = 1;   // in seconds
     
     private I2PSession i2pSession;
     
@@ -102,7 +103,7 @@ public class Ping {
         new CountDownLatch(1).await();   // wait forever
     }
     
-    private void doPing(String b32Destination, int numBytes, int numPings) throws Exception {
+    private void doPing(String b32Destination, int numBytes, int numPings, int interval) throws Exception {
         if (!b32Destination.endsWith(".b32.i2p"))
             b32Destination += ".b32.i2p";
         Destination destination = I2PAppContext.getGlobalContext().namingService().lookup(b32Destination);
@@ -117,10 +118,10 @@ public class Ping {
         byte[] datagram = Arrays.copyOf(b32Bytes, numBytes);
         System.arraycopy(padBytes, 0, datagram, b32Bytes.length, padBytes.length);
         
-        System.out.println("Pinging " + b32Destination + " " + numPings + " times with " + numBytes + " bytes");
+        System.out.println("Pinging " + b32Destination + " " + numPings + " times with " + numBytes + " bytes at " + interval + "-second intervals");
         for (int i=0; i<numPings; i++) {
             if (i > 0)
-                Thread.sleep(PING_INTERVAL);
+                TimeUnit.SECONDS.sleep(interval);
             i2pSession.sendMessage(destination, datagram, I2PSession.PROTO_DATAGRAM, I2PSession.PORT_UNSPECIFIED, I2PSession.PORT_UNSPECIFIED);
             System.out.print(".");
         }
@@ -133,11 +134,11 @@ public class Ping {
         System.out.println("Syntax:");
         System.out.println("  Ping listen");
         System.out.println("Or:");
-        System.out.println(" Ping <b32> [numBytes] [numPings]");
+        System.out.println(" Ping <b32> [numBytes] [numPings] [interval]");
         System.out.println();
         System.out.println("When invoked with the parameter \"listen\", it generates an I2P destination, prints the .b32 address,");
         System.out.println("and receives datagrams until Ctrl-C is pressed.");
-        System.out.println("In the second mode, it sends datagrams to a b32 destination. By default, " + DEFAULT_NUM_PINGS + " datagrams of " + DEFAULT_NUM_BYTES + " bytes are sent.");
+        System.out.println("In the second mode, it sends datagrams to a b32 destination. By default, " + DEFAULT_NUM_PINGS + " datagrams of " + DEFAULT_NUM_BYTES + " bytes are sent at one-second intervals");
     }
     
     public static void main(String[] args) throws Exception {
@@ -151,7 +152,8 @@ public class Ping {
         else {
             int numBytes = args.length>=2 ? Integer.valueOf(args[1]) : DEFAULT_NUM_BYTES;
             int numPings = args.length>=3 ? Integer.valueOf(args[2]) : DEFAULT_NUM_PINGS;
-            ping.doPing(args[0], numBytes, numPings);
+            int interval = args.length>=4 ? Integer.valueOf(args[3]) : DEFAULT_INTERVAL;
+            ping.doPing(args[0], numBytes, numPings, interval);
         }
     }
 }
