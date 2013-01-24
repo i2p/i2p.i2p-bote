@@ -298,21 +298,6 @@ public class Util {
         }
     }
 
-    /**
-     * Returns the <code>i</code>-th element of a <code>Collection</code>'s <code>Iterator</code>.
-     * @param <E>
-     * @param collection
-     * @param i
-     */
-    public static <E> E get(Collection<E> collection, int i) {
-        for (E element: collection) {
-            if (i == 0)
-                return element;
-            i--;
-        }
-        return null;
-    }
-    
     public static String _(String messageKey) {
         return Translate.getString(messageKey, I2PAppContext.getGlobalContext(), BUNDLE_NAME);
     }

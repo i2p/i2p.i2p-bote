@@ -157,8 +157,10 @@ public class ClosestNodesLookupTask implements Callable<List<Destination>> {
         // if we have received responses from the k closest peers, we're also finished
         Destination kthClosestResult = null;
         synchronized(responses) {
-            if (responses.size() >= K)
-                kthClosestResult = Util.get(responses, K-1);
+            if (responses.size() >= K) {
+                Destination[] responsesArr = responses.toArray(new Destination[0]);
+                kthClosestResult = responsesArr[K-1];
+            }
         }
         if (kthClosestResult != null) {
             Destination closestUnqueriedPeer = null;
