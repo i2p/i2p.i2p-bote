@@ -81,11 +81,11 @@ public class IncompleteEmailFolderTest {
     
     @Test
     public void testAddThreePacketEmail() throws Exception {
-        // Create a 80,000-char string. Use random data (more or less, because it has to be
+        // Create a 29,000-char string. Use random data (more or less, because it has to be
         // US ASCII chars) so it doesn't get compressed into less than 3 packets.
         Random rng = new Random();
         rng.setSeed(0);
-        byte[] message = new byte[80000];
+        byte[] message = new byte[29000];
         for (int i=0; i<message.length; i++)
             message[i] = (byte)(32 + rng.nextInt(127-32));
         

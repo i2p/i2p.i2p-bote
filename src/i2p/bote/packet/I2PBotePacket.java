@@ -47,7 +47,7 @@ import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 public abstract class I2PBotePacket {
-    public static final int MAX_DATAGRAM_SIZE = 31 * 1024;
+    public static final int MAX_DATAGRAM_SIZE = 10 * 1024;
     
     private final Log log = new Log(I2PBotePacket.class);
     
