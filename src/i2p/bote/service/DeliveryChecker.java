@@ -70,20 +70,23 @@ public class DeliveryChecker extends I2PAppThread {
         
         while (!Thread.interrupted())
             try {
-                if (configuration.isDeliveryCheckEnabled()) {
-                    log.debug("Processing sent emails in directory '" + sentFolder.getStorageDirectory() + "'.");
-                    FolderIterator<Email> iterator = sentFolder.iterate();
-                    while (iterator.hasNext()) {
-                        Email email = iterator.next();
-                        if (!email.getMetadata().isDelivered())
-                            checkDelivery(email);
+                try {
+                    if (configuration.isDeliveryCheckEnabled()) {
+                        log.debug("Processing sent emails in directory '" + sentFolder.getStorageDirectory() + "'.");
+                        FolderIterator<Email> iterator = sentFolder.iterate();
+                        while (iterator.hasNext()) {
+                            Email email = iterator.next();
+                            if (!email.getMetadata().isDelivered())
+                                checkDelivery(email);
+                        }
                     }
+                } finally {
+                    TimeUnit.MINUTES.sleep(configuration.getDeliveryCheckInterval());
                 }
-                TimeUnit.MINUTES.sleep(configuration.getDeliveryCheckInterval());
             } catch (InterruptedException e) {
                 break;
             } catch (PasswordException e) {
-                log.error("Can't scan sent folder.", e);
+                log.debug("Can't scan sent folder because password is not cached.");
             } catch (RuntimeException e) {   // catch unexpected exceptions to keep the thread running
                 log.error("Exception caught in DeliveryChecker loop", e);
             }
