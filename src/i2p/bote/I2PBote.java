@@ -81,6 +81,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
@@ -634,14 +635,17 @@ public class I2PBote implements NetworkStatusSource {
             if (thread!=null && thread.isAlive())
                 thread.interrupt();
         awaitShutdown(backgroundThreads, 5 * 1000);
-        printRunningThreads("Threads still running 5 seconds after interrupt():");
+        printRunningThreads();
     }
 
-    private void printRunningThreads(String caption) {
-        log.debug(caption);
+    private void printRunningThreads() {
+        List<Thread> runningThreads = new ArrayList<Thread>();
         for (Thread thread: backgroundThreads)
             if (thread.isAlive())
-                log.debug("  " + thread.getName());
+                runningThreads.add(thread);
+        log.debug(runningThreads.size() + " threads still running 5 seconds after interrupt()" + (runningThreads.isEmpty()?'.':':'));
+        for (Thread thread: runningThreads)
+            log.debug("  " + thread.getName());
     }
     
     /**
