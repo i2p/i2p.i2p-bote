@@ -22,6 +22,7 @@
 package i2p.bote;
 
 import static i2p.bote.Util._;
+import i2p.bote.packet.dht.Contact;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -52,6 +53,7 @@ public class Configuration {
     private static final String INCOMPLETE_SUBDIR = "incomplete";   // relative to I2P_BOTE_SUBDIR
     private static final String EMAIL_DHT_SUBDIR = "dht_email_pkt";    // relative to I2P_BOTE_SUBDIR
     private static final String INDEX_PACKET_DHT_SUBDIR = "dht_index_pkt";    // relative to I2P_BOTE_SUBDIR
+    private static final String DIRECTORY_ENTRY_DHT_SUBDIR = "dht_directory_pkt";    // relative to I2P_BOTE_SUBDIR
     private static final String INBOX_SUBDIR = "inbox";             // relative to I2P_BOTE_SUBDIR
     private static final String SENT_FOLDER_DIR = "sent";           // relative to I2P_BOTE_SUBDIR
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
@@ -115,7 +117,7 @@ public class Configuration {
     private static final int DEFAULT_NUM_STORE_HOPS = 0;
     private static final String DEFAULT_GATEWAY_DESTINATION = "";
     private static final boolean DEFAULT_GATEWAY_ENABLED = true;
-    private static final int DEFAULT_PASSWORD_CACHE_DURATION = 10;   // in minutes
+    private static final int DEFAULT_PASSWORD_CACHE_DURATION = 1;   // in minutes
     private static final String DEFAULT_EEPROXY_HOST = "localhost";
     private static final int DEFAULT_EEPROXY_PORT = 4444;
     private static final String DEFAULT_UPDATE_URL = "http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote-update.xpi2p";
@@ -233,6 +235,11 @@ public class Configuration {
     
     public File getIndexPacketDhtStorageDir() {
         return new File(i2pBoteDir, INDEX_PACKET_DHT_SUBDIR);
+    }
+
+    /** Returns the directory where DHT packets of type {@link Contact} are stored. */
+    public File getDirectoryEntryDhtStorageDir() {
+        return new File(i2pBoteDir, DIRECTORY_ENTRY_DHT_SUBDIR);
     }
     
     private static File getI2PBoteDirectory() {

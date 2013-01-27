@@ -1,0 +1,85 @@
+<%--
+ Copyright (C) 2009  HungryHobo@mail.i2p
+ 
+ The GPG fingerprint for HungryHobo@mail.i2p is:
+ 6DD3 EAA2 9990 29BC 4AD2 7486 1E2C 7B61 76DC DC12
+ 
+ This file is part of I2P-Bote.
+ I2P-Bote is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ I2P-Bote is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
+ --%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="ib" uri="I2pBoteTags" %>
+
+<ib:message key="Address Directory Lookup" var="title" scope="request"/>
+<jsp:include page="header.jsp"/>
+
+<div class="main">
+    <c:set var="result" value="${ib:lookupInDirectory(param.name)}"/>
+    <c:if test="${empty result}">
+        <ib:message key="The name &quot;{0}&quot; was not found in the directory." var="errorMessage" scope="request">
+            <ib:param value="${param.name}"/>
+        </ib:message>
+        <jsp:forward page="addressBook.jsp"/>
+    </c:if>
+    
+    <c:if test="${not empty result}">
+        <c:if test="${param.confirm eq true}">
+        <ib:requirePassword>
+            <c:set var="errorMessage" value="${ib:saveContact(result.destination, param.name)}"/>
+            <c:if test="${empty errorMessage}">
+                <ib:message key="The name has been imported to the address book." var="infoMessage" scope="request"/>
+            </c:if>
+            <jsp:forward page="addressBook.jsp"/>
+        </ib:requirePassword>
+        </c:if>
+        
+        <c:if test="${param.confirm ne true}">
+            <h2><ib:message key="Import Contact"/></h2>
+            <ib:message>
+                A matching record was found in the address directory. Note that the address directory is
+                not secure against manipulation, so do not click &quot;import&quot; unless you trust
+                that it is the right email destination.
+            </ib:message>
+            <p/>
+            <div class="contact-detail-container">
+                <div class="contact-detail-left">
+                    <img src="data:${result.pictureType};base64,${result.pictureBase64}"/><br/>
+                    ${fn:escapeXml(param.name)}
+                </div>
+                <div class="contact-detail-text">${fn:escapeXml(result.text)}</div>
+            </div>
+            <div class="contact-detail-dest">
+                <b><ib:message key="Email Destination: "/></b>
+                ${result.destination}
+            </div>
+            <form action="importContact.jsp" method="post">
+                <input type="hidden" name="confirm" value="true"/>
+                <input type="hidden" name="name" value="${param.name}"/>
+                <input type="hidden" name="destination" value="${result.destination}"/>
+                <input type="hidden" name="picture" value="${result.pictureBase64}"/>
+                <input type="hidden" name="text" value="${fn:escapeXml(result.text)}"/>
+                <ib:message key="Import" var="import" scope="request"/>
+                <input type="submit" value="${import}"/>
+            </form>
+        </c:if>
+    </c:if>
+</div>
+
+<jsp:include page="footer.jsp"/>

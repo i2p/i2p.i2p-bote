@@ -148,11 +148,17 @@
             <input type="hidden" name="new" value="${param.new}"/>
             <input type="hidden" name="key" value="${param.key}"/>
             <button name="action" value="${commitAction}">${commitAction}</button>
-            <button name="action" value="cancel"/><ib:message key="Cancel"/></button>
+            <button name="action" value="cancel"><ib:message key="Cancel"/></button>
         </div>
         <c:if test="${not param.new}">
             <div class="identity-delete">
-                <button name="action" value="delete" title="<ib:message key='Delete this identity'/>"/><ib:message key="Delete"/></button>
+                <jsp:include page="getStatus.jsp"/>
+                <c:if test="${connStatus ne CONNECTED}">
+                    <ib:message var="publishTooltip" key="Cannot publish until connected."/>
+                    <c:set var="publishDisabled" value=" disabled='disabled' title='${publishTooltip}'"/>
+                </c:if>
+                <button name="action" value="publish"${publishDisabled}><ib:message key="Publish"/></button>
+                <button name="action" value="delete" title="<ib:message key='Delete this identity'/>"><ib:message key="Delete"/></button>
             </div>
         </c:if>
     </form>

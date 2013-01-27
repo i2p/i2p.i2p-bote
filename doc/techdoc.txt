@@ -228,14 +228,14 @@ Strings in packets are UTF8 encoded.
                       | Pn    | 384 bytes  | Destination key
   --------------------+-------+------------+------------------------------------------------------------------
    Directory Entry    |       |            | A name/Email Destination mapping
-                      | TYPE  | 1 byte     | Value = 'M'
+                      | TYPE  | 1 byte     | Value = 'C'
                       | VER   | 1 byte     | Protocol version
-                      | NLEN  | 2 bytes    | Length of the NAME field, max 50
-                      | NAME  | byte[]     | Name in UTF8
+                      | KEY   | 32 bytes   | DHT key (SHA-256 hash of the UTF8-encoded name in lower case)
                       | DLEN  | 2 bytes    | Length of the DEST field
                       | DEST  | byte[]     | Email destination, 8 bit encoded (not base64)
-                      | PLEN  | 2 bytes    | Length of PIC, max 25,000
+                      | PLEN  | 2 bytes    | Length of PIC, max 7500
                       | PIC   | byte[]     | User picture in a browser-compatible format (JPG, PNG, GIF)
+                      | COMP  | 1 byte     | Compression type for TEXT
                       | TLEN  | 2 bytes    | Length of the TEXT field, max 2000
                       | TEXT  | byte[]     | User defined text in UTF8
   --------------------+-------+------------+------------------------------------------------------------------

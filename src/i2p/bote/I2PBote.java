@@ -31,6 +31,7 @@ import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordCache;
 import i2p.bote.fileencryption.PasswordCacheListener;
 import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.folder.DirectoryEntryFolder;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.EmailPacketFolder;
 import i2p.bote.folder.IncompleteEmailFolder;
@@ -42,7 +43,9 @@ import i2p.bote.folder.TrashFolder;
 import i2p.bote.migration.Migrator;
 import i2p.bote.network.BanList;
 import i2p.bote.network.BannedPeer;
+import i2p.bote.network.DhtException;
 import i2p.bote.network.DhtPeerStats;
+import i2p.bote.network.DhtResults;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.NetworkStatus;
@@ -50,6 +53,8 @@ import i2p.bote.network.NetworkStatusSource;
 import i2p.bote.network.RelayPacketHandler;
 import i2p.bote.network.RelayPeer;
 import i2p.bote.network.kademlia.KademliaDHT;
+import i2p.bote.packet.dht.Contact;
+import i2p.bote.packet.dht.DhtStorablePacket;
 import i2p.bote.packet.dht.EncryptedEmailPacket;
 import i2p.bote.packet.dht.IndexPacket;
 import i2p.bote.service.DeliveryChecker;
@@ -95,6 +100,7 @@ import net.i2p.client.streaming.I2PSocketManagerFactory;
 import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
+import net.i2p.data.Hash;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
@@ -122,7 +128,7 @@ public class I2PBote implements NetworkStatusSource {
     private IncompleteEmailFolder incompleteEmailFolder;   // stores email packets addressed to a local user
     private EmailPacketFolder emailDhtStorageFolder;   // stores email packets for other peers
     private IndexPacketFolder indexPacketDhtStorageFolder;   // stores index packets
-//TODO    private PacketFolder<> addressDhtStorageFolder;   // stores email address-destination mappings
+    private DirectoryEntryFolder directoryDhtFolder;   // stores entries for the distributed address directory
     private Collection<I2PAppThread> backgroundThreads;
     private SMTPService smtpService;
     private POP3Service pop3Service;
@@ -184,6 +190,7 @@ public class I2PBote implements NetworkStatusSource {
         incompleteEmailFolder = new IncompleteEmailFolder(configuration.getIncompleteDir(), messageIdCache, inbox);
         emailDhtStorageFolder = new EmailPacketFolder(configuration.getEmailDhtStorageDir());
         indexPacketDhtStorageFolder = new IndexPacketFolder(configuration.getIndexPacketDhtStorageDir());
+        directoryDhtFolder = new DirectoryEntryFolder(configuration.getDirectoryEntryDhtStorageDir());
     }
 
     /** Creates the external themes directory if it doesn't exist */
@@ -281,7 +288,7 @@ public class I2PBote implements NetworkStatusSource {
         
         dht.setStorageHandler(EncryptedEmailPacket.class, emailDhtStorageFolder);
         dht.setStorageHandler(IndexPacket.class, indexPacketDhtStorageFolder);
-//TODO        dht.setStorageHandler(AddressPacket.class, );
+        dht.setStorageHandler(Contact.class, directoryDhtFolder);
         
         peerManager = new RelayPeerManager(sendQueue, getLocalDestination(), configuration.getRelayPeerFile());
         backgroundThreads.add(peerManager);
@@ -408,6 +415,26 @@ public class I2PBote implements NetworkStatusSource {
     
     public AddressBook getAddressBook() {
         return addressBook;
+    }
+    
+    /** Publishes an email destination in the address directory. */
+    public void publishDestination(String destination, byte[] picture, String text) throws PasswordException, IOException, GeneralSecurityException, DhtException, InterruptedException {
+        EmailIdentity identity = identities.get(destination);
+        if (identity != null) {
+            Contact entry = new Contact(identity, picture, text);
+            dht.store(entry);
+        }
+    }
+    
+    public Contact lookupInDirectory(String name) throws InterruptedException {
+        Hash key = Contact.calculateHash(name);
+        DhtResults results = dht.findOne(key, Contact.class);
+        if (!results.isEmpty()) {
+            DhtStorablePacket packet = results.getPackets().iterator().next();
+            if (packet instanceof Contact)
+                return (Contact)packet;
+        }
+        return null;
     }
     
     public Destination getLocalDestination() {

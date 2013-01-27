@@ -19,39 +19,16 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.addressbook;
+package i2p.bote.folder;
 
-import i2p.bote.email.EmailDestination;
+import i2p.bote.packet.dht.Contact;
 
-/**
- * Represents an address book entry.
- */
-public class Contact {
-    private EmailDestination destination;
-    private String name;
-    
-    public Contact(EmailDestination destination, String name) {
-        this.destination = destination;
-        this.name = name;
-    }
-    
-    public void setDestination(EmailDestination destination) {
-        this.destination = destination;
-    }
-    
-    public EmailDestination getDestination() {
-        return destination;
-    }
+import java.io.File;
 
-    public String toBase64() {
-        return destination.toBase64();
-    }
+/** Stores DHT packets of type {@link Contact}. */
+public class DirectoryEntryFolder extends DhtPacketFolder<Contact> {
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+    public DirectoryEntryFolder(File storageDir) {
+        super(storageDir);
     }
 }

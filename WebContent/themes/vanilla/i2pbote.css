@@ -454,6 +454,63 @@ table td, th {
 	margin-right: 10px;
 }
 
+.publish-form-label {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.publish-form-value {
+    top: 0px;
+    margin-left: 180px;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+
+.publish-form-value textarea {
+    width: 600px;
+}
+
+.contact-detail-container {
+    margin: 0px auto;
+    overflow: hidden;
+}
+
+.contact-detail-left {
+    width: 100px;
+    float: left;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+
+.contact-detail-left img {
+    width: 100%;
+    padding-bottom: 5px;
+}
+
+.contact-detail-text
+{
+    width: 100%;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    white-space: pre;
+    font-family: monospace;
+    white-space: -pre-wrap;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.contact-detail-dest
+{
+    width: 100%;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    word-wrap: break-word;
+}
+
 .contact-form-label {
     position: absolute;
     margin-top: 10px;

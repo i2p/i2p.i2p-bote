@@ -25,7 +25,6 @@ import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
 import i2p.bote.Util;
 import i2p.bote.addressbook.AddressBook;
-import i2p.bote.addressbook.Contact;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.email.AddressDisplayFilter;
@@ -37,7 +36,9 @@ import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.TrashFolder;
+import i2p.bote.network.DhtException;
 import i2p.bote.network.NetworkStatus;
+import i2p.bote.packet.dht.Contact;
 import i2p.bote.service.EmailChecker;
 
 import java.io.File;
@@ -186,6 +187,14 @@ public class JSPHelper {
         return I2PBote.getInstance().getIdentities().get(key);
     }
     
+    public static void publishDestination(String destination, byte[] picture, String text) throws PasswordException, IOException, GeneralSecurityException, DhtException, InterruptedException {
+        I2PBote.getInstance().publishDestination(destination, picture, text);
+    }
+    
+    public static Contact lookupInDirectory(String name) throws InterruptedException {
+        return I2PBote.getInstance().lookupInDirectory(name);
+    }
+    
     public static CryptoImplementation getCryptoImplementation(int id) {
         return CryptoFactory.getInstance(id);
     }
@@ -195,7 +204,7 @@ public class JSPHelper {
     }
     
     /**
-     * Updates acontact in the address book if the Destination <code>destinationString</code> exists,
+     * Updates a contact in the address book if the Destination <code>destinationString</code> exists,
      * or adds a new contact to the address book.
      * @param destinationString A base64-encoded Email Destination key
      * @param name
@@ -220,7 +229,7 @@ public class JSPHelper {
                 log.error("Can't save contact to address book.", e);
                 return e.getLocalizedMessage();
             }
-            contact = new Contact(destination, name);
+            contact = new Contact(name, destination);
             addressBook.add(contact);
         }
 

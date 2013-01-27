@@ -29,6 +29,7 @@ import i2p.bote.fileencryption.EncryptedOutputStream;
 import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
+import i2p.bote.packet.dht.Contact;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -107,7 +108,7 @@ public class AddressBook {
                     String name = null;
                     if (fields.length > 1)
                         name = fields[1];
-                    contacts.add(new Contact(destination, name));
+                    contacts.add(new Contact(name, destination));
                 }
                 catch (GeneralSecurityException e) {
                     log.error("Not a valid Email Destination: <" + fields[0] + ">", e);
@@ -136,7 +137,7 @@ public class AddressBook {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(encryptedStream));
         try {
             for (Contact contact: contacts) {
-                writer.write(contact.toBase64());
+                writer.write(contact.getBase64Dest());
                 writer.write("\t");
                 writer.write(contact.getName());
                 writer.newLine();
@@ -185,7 +186,7 @@ public class AddressBook {
             return null;
         
         for (Contact contact: contacts)
-            if (destination.equals(contact.toBase64()))
+            if (destination.equals(contact.getBase64Dest()))
                 return contact;
         return null;
     }
@@ -202,7 +203,7 @@ public class AddressBook {
             return false;
         
         for (Contact contact: contacts)
-            if (base64dest.equals(contact.toBase64()))
+            if (base64dest.equals(contact.getBase64Dest()))
                 return true;
         return false;
     }

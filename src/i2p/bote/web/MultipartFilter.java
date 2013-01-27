@@ -58,7 +58,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * Sets a request attribute of type {@link UploadedFile} containing the
  * original filename and the path to the temporary file (the uploaded file).
  * The name of the request attribute is the parameter name of the uploaded
- * file (i.e. <code>"newAttachment"</code>, see <code>newEmail.jsp</code>).
+ * file (e.g. <code>"newAttachment"</code> for <code>newEmail.jsp</code>).
  * <p/>
  * Non-multipart requests are just passed through the filter.
  */

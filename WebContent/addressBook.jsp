@@ -123,6 +123,16 @@
         </form>
     </c:if>
     
+    <c:if test="${not param.select}">
+        <p/><br/>
+        <b><ib:message key="Import from the public address directory"/></b><br/>
+        <form action="importContact.jsp" method="POST">
+            <ib:message key="Name:"/>
+            <input type="text" name="name"/>
+            <button type="submit"><ib:message key="Lookup"/></button>
+        </form><br/>
+        Note that only exact matches are found.
+    </c:if>
 </div>
 </ib:requirePassword>
 

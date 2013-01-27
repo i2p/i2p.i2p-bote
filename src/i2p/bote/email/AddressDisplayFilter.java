@@ -21,12 +21,12 @@
 
 package i2p.bote.email;
 
+import i2p.bote.addressbook.AddressBook;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.packet.dht.Contact;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-
-import i2p.bote.addressbook.AddressBook;
-import i2p.bote.addressbook.Contact;
-import i2p.bote.fileencryption.PasswordException;
 
 /**
  * This class is used for adding/replacing names in email addresses with
@@ -61,7 +61,7 @@ public class AddressDisplayFilter {
             // try the address book
             Contact contact = addressBook.get(base64dest);
             if (contact != null)
-                return contact.getName() + " <" + contact.toBase64() + ">";
+                return contact.getName() + " <" + contact.getBase64Dest() + ">";
             
             // if no address book entry, try the email identities
             EmailIdentity identity = identities.get(base64dest);

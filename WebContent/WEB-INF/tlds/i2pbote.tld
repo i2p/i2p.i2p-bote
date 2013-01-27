@@ -165,6 +165,27 @@
 </tag>
 
 <tag>
+    <name>publishDestination</name>
+    <tag-class>i2p.bote.web.PublishDestinationTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>destination</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>pictureFilename</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+    <attribute>
+        <name>text</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+</tag>
+
+<tag>
     <name>connect</name>
     <tag-class>i2p.bote.web.ConnectTag</tag-class>
     <body-content>empty</body-content>
@@ -564,6 +585,14 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         java.lang.String getLocalizedThemeName(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>lookupInDirectory</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        i2p.bote.packet.dht.Contact lookupInDirectory(java.lang.String)
     </function-signature>
 </function>
 
