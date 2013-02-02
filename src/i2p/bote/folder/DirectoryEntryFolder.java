@@ -22,13 +22,26 @@
 package i2p.bote.folder;
 
 import i2p.bote.packet.dht.Contact;
+import i2p.bote.packet.dht.DhtStorablePacket;
 
 import java.io.File;
 
+import net.i2p.util.Log;
+
 /** Stores DHT packets of type {@link Contact}. */
 public class DirectoryEntryFolder extends DhtPacketFolder<Contact> {
-
+    private Log log = new Log(DirectoryEntryFolder.class);
+    
     public DirectoryEntryFolder(File storageDir) {
         super(storageDir);
+    }
+    
+    @Override
+    public void store(DhtStorablePacket packetToStore) {
+        File packetFile = findPacketFile(packetToStore.getDhtKey());
+        if (packetFile == null)
+            super.store(packetToStore);
+        else
+            log.debug("Not storing directory packet with DHT key " + packetToStore.getDhtKey() + " because file exists.");
     }
 }
