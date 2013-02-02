@@ -175,9 +175,13 @@ public class Contact extends DhtStorablePacket {
             dataStream.writeShort(destBytes.length);
             dataStream.write(destBytes);
             
+            if (picture == null)
+                picture = new byte[0];
             dataStream.writeShort(picture.length);
             dataStream.write(picture);
             
+            if (text == null)
+                text = "";
             byte[] utf8Text = text.getBytes(UTF8);
             dataStream.write(0);   // TODO compression type
             dataStream.writeShort(utf8Text.length);
