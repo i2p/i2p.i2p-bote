@@ -75,7 +75,8 @@ public class TestUtil {
     }
     
     /**
-     * Creates a {@link PasswordCache} with a mock {@link Configuration}.
+     * Creates a {@link PasswordCache} with a mock {@link Configuration}.<br/>
+     * Creates a file named derivparams in <code>testDir</code>.
      * @param testDir
      * @return
      */
@@ -87,7 +88,8 @@ public class TestUtil {
     
     /**
      * Creates a mock {@link Configuration} whose getKeyDerivationParametersFile() and
-     * getPasswordFile() methods must be called at least once each.
+     * getPasswordFile() methods must be called at least once each.<br/>
+     * Creates a file named derivparams in <code>testDir</code>.<br/>
      * The <code>getPasswordCacheDuration</code> method returns 1 (one minute).
      * @param testDir
      */
@@ -112,6 +114,12 @@ public class TestUtil {
         }});
         
         return configuration;
+    }
+    
+    /** Deletes files created by {@link #createPasswordCache(File)} or {@link #createConfiguration(File)}. */
+    public static void deleteGeneratedFiles(File testDir) {
+        new File(testDir, "derivparams").delete();
+        new File(testDir, "password").delete();
     }
     
     /** Returns a <code>KeyUpdateHandler</code> that does nothing */

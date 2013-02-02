@@ -71,7 +71,9 @@ public class IncompleteEmailFolderTest {
         inboxDir.delete();
         incompleteFolder.getStorageDirectory().delete();
         new File(testDir, MSG_ID_CACHE_DIR).delete();
+        TestUtil.deleteGeneratedFiles(testDir);
         testDir.delete();
+        assertTrue(!testDir.exists());
     }
     
     @Test

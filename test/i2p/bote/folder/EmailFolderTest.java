@@ -22,6 +22,7 @@
 package i2p.bote.folder;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import i2p.bote.TestUtil;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordCache;
@@ -99,12 +100,14 @@ public class EmailFolderTest {
     public void tearDown() throws Exception {
         deleteFolder(folderDir1);
         deleteFolder(folderDir2);
+        assertTrue(!testDir.exists());
     }
 
     private void deleteFolder(File folderDir) {
         for (File file: folderDir.listFiles())
             file.delete();
         folderDir.delete();
+        TestUtil.deleteGeneratedFiles(testDir);
         testDir.delete();
     }
     
