@@ -68,6 +68,10 @@ public class DhtPacketFolder<T extends DhtStorablePacket> extends PacketFolder<T
             return null;
     }
 
+    /**
+     * Returns the file a packet is stored in, or <code>null</code> if the file doesn't exist.
+     * @param dhtKey a packet key
+     */
     protected File findPacketFile(Hash dhtKey) {
         final String base64Key = dhtKey.toBase64();
         
