@@ -306,6 +306,14 @@
 </function>
 
 <function>
+    <name>modifyIdentity</name>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        boolean modifyIdentity(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
+    </function-signature>
+</function>
+
+<function>
     <name>deleteIdentity</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>

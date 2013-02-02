@@ -36,7 +36,9 @@
     <jsp:forward page="identities.jsp"/>
 </c:if>
 <c:if test="${param.action == 'publish'}">
-    <jsp:forward page="publishDestination.jsp"/>
+    <jsp:forward page="publishDestination.jsp">
+        <jsp:param name="action" value="start"/>
+    </jsp:forward>
 </c:if>
 <c:if test="${param.action == 'delete'}">
     <jsp:forward page="deleteIdentity.jsp"/>

@@ -159,6 +159,10 @@ public class JSPHelper {
             identities.setDefault(identity);
     }
 
+    public static void modifyIdentity(String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException {
+        createOrModifyIdentity(false, -1, key, publicName, description, emailAddress, setDefault);
+    }
+    
     /**
      * Deletes an email identity.
      * @param key A base64-encoded email identity key

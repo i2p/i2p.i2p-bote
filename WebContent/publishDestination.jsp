@@ -26,20 +26,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<%--
+    Valid actions:
+        start - Check if the name is taken
+        step2 - Add a picture and text
+        store - Store in DHT
+    
+    Other parameters:
+        key         - The email destination
+        description - New value for the private description field (publish does save first)
+        publicName  - New value for the public name field
+        text        - Text to include in the DHT record
+--%>
+
 <ib:message key="Add Email Destination to Directory" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <div class="main">
-    <c:if test="${param.confirm eq 'true'}">
-        <c:set var="picFilename" value="${requestScope['picture'].tempFilename}"/>
-        <ib:publishDestination destination="${param.destination}" pictureFilename="${picFilename}" text="${param.text}"/>
-        <ib:message var="infoMessage" scope="request" key="The identity has been added to the address directory."/>
-        <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-        <jsp:forward page="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&new=false&key=${param.destination}"/>
+    <c:if test="${param.action eq 'start'}">
+        <%-- If the user changed the Public Name to try a new name that isn't taken, update it so they don't have to click save first --%>
+        <ib:requirePassword>
+            ${ib:modifyIdentity(param.key, param.publicName, param.description, param.emailAddress, false)}
+        </ib:requirePassword>
+        <c:set var="result" value="${ib:lookupInDirectory(param.publicName)}"/>
+        <c:if test="${not empty result}">
+            <ib:message key="The name exists already. Please choose a different Public Name." var="errorMessage" scope="request"/>
+            <jsp:forward page="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&amp;new=false&amp;key=${identity.destination}"/>
+        </c:if>
+        <c:if test="${empty result}">
+            <jsp:forward page="publishDestination.jsp">
+                <jsp:param name="action" value="step2"/>
+                <jsp:param name="text" value="${param.text}"/>
+                <jsp:param name="key" value="${param.key}"/>
+            </jsp:forward>
+        </c:if>
     </c:if>
-    <c:if test="${param.confirm ne 'true'}">
+    <c:if test="${param.action eq 'step2'}">
         <h2><ib:message key="Publish to the Address Directory"/></h2>
-        <form action="publishDestination.jsp?confirm=true" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+        <form action="publishDestination.jsp?action=store" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+            <input type="hidden" name="name" value="${param.publicName}"/>
             <input type="hidden" name="destination" value="${param.key}"/>
             <div class="publish-form-label">
                 <ib:message key="Picture to upload:"/>
@@ -57,6 +82,13 @@
             </div>
             <button type="submit"><ib:message key="Publish"/></button>
         </form>
+    </c:if>
+    <c:if test="${param.action eq 'store'}">
+        <c:set var="picFilename" value="${requestScope['picture'].tempFilename}"/>
+        <ib:publishDestination destination="${param.destination}" pictureFilename="${picFilename}" text="${param.text}"/>
+        <ib:message var="infoMessage" scope="request" key="The identity has been added to the address directory."/>
+        <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+        <jsp:forward page="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&new=false&key=${param.destination}"/>
     </c:if>
 </div>
 
