@@ -54,7 +54,7 @@ public class FileEncryptionUtil {
         if (password==null || password.length<=0)
             password = DEFAULT_PASSWORD;
        
-        byte[] key = SCrypt.scryptJ(password, salt, sCryptParams.N, sCryptParams.r, sCryptParams.p, KEY_LENGTH);
+        byte[] key = SCrypt.scrypt(password, salt, sCryptParams.N, sCryptParams.r, sCryptParams.p, KEY_LENGTH);
         return key;
     }
     
