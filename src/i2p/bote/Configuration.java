@@ -117,7 +117,7 @@ public class Configuration {
     private static final int DEFAULT_NUM_STORE_HOPS = 0;
     private static final String DEFAULT_GATEWAY_DESTINATION = "";
     private static final boolean DEFAULT_GATEWAY_ENABLED = true;
-    private static final int DEFAULT_PASSWORD_CACHE_DURATION = 1;   // in minutes
+    private static final int DEFAULT_PASSWORD_CACHE_DURATION = 10;   // in minutes
     private static final String DEFAULT_EEPROXY_HOST = "localhost";
     private static final int DEFAULT_EEPROXY_PORT = 4444;
     private static final String DEFAULT_UPDATE_URL = "http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote-update.xpi2p";
