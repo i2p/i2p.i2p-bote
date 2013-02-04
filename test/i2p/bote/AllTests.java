@@ -41,7 +41,7 @@ import i2p.bote.packet.I2PBotePacketTest;
 import i2p.bote.packet.PeerListTest;
 import i2p.bote.packet.ResponsePacketTest;
 import i2p.bote.packet.dht.DeletionQueryTest;
-import i2p.bote.packet.dht.DirectoryEntryTest;
+import i2p.bote.packet.dht.ContactTest;
 import i2p.bote.packet.dht.EmailPacketDeleteRequestTest;
 import i2p.bote.packet.dht.EncryptedEmailPacketTest;
 import i2p.bote.packet.dht.FindClosePeersPacketTest;
@@ -73,7 +73,7 @@ import org.junit.runners.Suite;
     RelayRequestTest.class,
     ReturnChainTest.class,
     DeletionQueryTest.class,
-    DirectoryEntryTest.class,
+    ContactTest.class,
     
     // Folders
     FolderTest.class,

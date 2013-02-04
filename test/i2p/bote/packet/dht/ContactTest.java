@@ -33,8 +33,8 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DirectoryEntryTest {
-    private Contact directoryEntry;
+public class ContactTest {
+    private Contact contact;
 
     @Before
     public void setUp() throws Exception {
@@ -74,12 +74,12 @@ public class DirectoryEntryTest {
                 "Und nimmt sie sorglich sehr in acht.\n";
         InputStream inputStream = getClass().getResourceAsStream("Struwwelpeter.jpg");
         byte[] picture = Util.readBytes(inputStream);
-        directoryEntry = new Contact(identity, picture, text);
+        contact = new Contact(identity, picture, text);
     }
 
     @Test
     public void toByteArrayAndBack() throws IOException, GeneralSecurityException {
-        byte[] arrayA = directoryEntry.toByteArray();
+        byte[] arrayA = contact.toByteArray();
         byte[] arrayB = new Contact(arrayA).toByteArray();
         assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
     }
