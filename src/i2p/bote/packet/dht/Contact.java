@@ -22,8 +22,11 @@
 package i2p.bote.packet.dht;
 
 import i2p.bote.Util;
+import i2p.bote.crypto.CryptoImplementation;
+import i2p.bote.crypto.KeyUpdateHandler;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.SCryptParameters;
 import i2p.bote.packet.TypeCode;
 
@@ -36,6 +39,9 @@ import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.util.Arrays;
 
 import net.i2p.I2PAppContext;
 import net.i2p.crypto.SHA256Generator;
@@ -53,7 +59,8 @@ import com.lambdaworks.crypto.SCrypt;
 public class Contact extends DhtStorablePacket {
     private final static Charset UTF8 = Charset.forName("UTF-8");
     private final static SCryptParameters SCRYPT_PARAMETERS = new SCryptParameters(1<<14, 8, 1);
-    private final static int NUM_WORDS_IN_FINGERPRINT = 7;
+    private final static int NUM_FINGERPRINT_BYTES = 32;   // length of the raw fingerprint
+    private final static int NUM_WORDS_IN_FINGERPRINT = 7;   // #words generated from the raw fingerprint
     private final static int NUM_WORDS_IN_LIST = 1 << 13;   // must be a power of 2
     private final static int NUM_SALT_BYTES = 4;
     
@@ -64,18 +71,23 @@ public class Contact extends DhtStorablePacket {
     private byte[] salt;
     private byte[] picture;
     private String text;
+    private byte[] signature;
 
     /**
-     * Creates a new <code>Contact</code>. Calculates a salt value which takes some time.
-     * @param name A name chosen by the user who created the directory entry
-     * @param emailDestination The email destination associated with the name
+     * Creates a new <code>Contact</code>. Calculates a salt value which takes some time;
+     * also creates a signature.
+     * 
+     * @param identity The email identity associated with the name
+     * @param keyUpdateHandler For signing the packet
      * @param picture A browser-renderable picture
      * @param text
-     * @throws GeneralSecurityException thrown by {@link SCrypt}
+     * @throws GeneralSecurityException
+     * @throws PasswordException 
      */
-    public Contact(EmailIdentity identity, byte[] picture, String text) throws GeneralSecurityException {
+    public Contact(EmailIdentity identity, KeyUpdateHandler keyUpdateHandler, byte[] picture, String text) throws GeneralSecurityException, PasswordException {
         this(calculateHash(identity.getPublicName()), identity, picture, text);
         generateSalt();
+        sign(identity, keyUpdateHandler);
     }
     
     public Contact(Hash nameHash, EmailDestination destination, byte[] picture, String text) {
@@ -85,6 +97,10 @@ public class Contact extends DhtStorablePacket {
         this.text = text;
     }
     
+    /**
+     * @param name A name chosen by the user who created the directory entry
+     * @param destination
+     */
     public Contact(String name, EmailDestination destination) {
         this.name = name;
         nameHash = calculateHash(name);
@@ -116,6 +132,10 @@ public class Contact extends DhtStorablePacket {
             byte[] utf8Bytes = new byte[tLen];
             buffer.get(utf8Bytes);
             text = new String(utf8Bytes, UTF8);
+            
+            int sigLen = buffer.getShort();
+            signature = new byte[sigLen];
+            buffer.get(signature);
         }
         catch (BufferUnderflowException e) {
             log.error("Not enough bytes in packet.", e);
@@ -140,22 +160,33 @@ public class Contact extends DhtStorablePacket {
         while (true) {
             salt = new byte[NUM_SALT_BYTES];
             randomSource.nextBytes(salt);
-            byte[] fingerprint = SCrypt.scrypt(input, salt, SCRYPT_PARAMETERS.N, SCRYPT_PARAMETERS.r, SCRYPT_PARAMETERS.p, 32);
+            byte[] fingerprint = SCrypt.scrypt(input, salt, SCRYPT_PARAMETERS.N, SCRYPT_PARAMETERS.r, SCRYPT_PARAMETERS.p, NUM_FINGERPRINT_BYTES);
             if (fingerprint[31] == 0)
                 return;
         }
     }
     
     /**
+     * Returns a byte array of length <code>NUM_FINGERPRINT_BYTES</code>.
+     * @return
+     * @throws GeneralSecurityException
+     */
+    private byte[] getRawFingerprint() throws GeneralSecurityException {
+        byte[] input = Util.concat(nameHash.toByteArray(), destination.toByteArray());
+        byte[] fingerprint = SCrypt.scrypt(input, salt, SCRYPT_PARAMETERS.N, SCRYPT_PARAMETERS.r, SCRYPT_PARAMETERS.p, NUM_FINGERPRINT_BYTES);
+        return fingerprint;
+    }
+    
+    /**
      * Returns the fingerprint for this <code>Contact</code> based on a word list.<br/>
-     * Throws a <code>NullPointerException</code> if salt is not initialized.
+     * Throws a <code>NullPointerException</code> if salt is not initialized.<br/>
+     * This fingerprint doesn't contain the full <code>NUM_FINGERPRINT_BYTES</code> bytes
+     * worth of information from the raw fingerprint, but it is more recognizable to users.
      * @param wordList a word list for some locale
      * @throws GeneralSecurityException
      */
     public String getFingerprint(String[] wordList) throws GeneralSecurityException {
-        byte[] input = Util.concat(nameHash.toByteArray(), destination.toByteArray());
-        byte[] fingerprintBytes = SCrypt.scrypt(input, salt, SCRYPT_PARAMETERS.N, SCRYPT_PARAMETERS.r, SCRYPT_PARAMETERS.p, 32);
-        
+        byte[] fingerprintBytes = getRawFingerprint();
         ByteBuffer fingerprintBuffer = ByteBuffer.wrap(fingerprintBytes);
         StringBuilder fingerprintWords = new StringBuilder();
         for (int i=0; i<NUM_WORDS_IN_FINGERPRINT; i++) {
@@ -169,8 +200,44 @@ public class Contact extends DhtStorablePacket {
         return fingerprintWords.toString();
     }
     
+    /**
+     * Creates a signature over the byte array representation of the packet
+     * @param identity An email identity that matches the destination field
+     * @param keyUpdateHandler
+     * @throws PasswordException 
+     * @throws GeneralSecurityException 
+     */
+    private void sign(EmailIdentity identity, KeyUpdateHandler keyUpdateHandler) throws GeneralSecurityException, PasswordException {
+        byte[] data = getDataToSign();
+        CryptoImplementation cryptoImpl = identity.getCryptoImpl();
+        PrivateKey privateSigningKey = identity.getPrivateSigningKey();
+        signature = cryptoImpl.sign(data, privateSigningKey, keyUpdateHandler);
+    }
+    
+    /**
+     * Verifies the signature and checks that the 31th byte of the fingerprint is zero.
+     * @return
+     * @throws GeneralSecurityException 
+     */
+    public boolean verify() throws GeneralSecurityException {
+        CryptoImplementation cryptoImpl = destination.getCryptoImpl();
+        PublicKey key = destination.getPublicSigningKey();
+        boolean valid = cryptoImpl.verify(getDataToSign(), signature, key);
+        
+        valid &= getRawFingerprint()[NUM_FINGERPRINT_BYTES-1] == 0;
+        return valid;
+    }
+    
+    private byte[] getDataToSign() {
+        byte[] data = toByteArray();
+        int sigLen = signature==null ? 2 : signature.length+2;   // the sig length and the 2 length bytes
+        data = Arrays.copyOf(data, data.length-sigLen);
+        return data;
+    }
+    
     public void setName(String name) {
         this.name = name;
+        nameHash = calculateHash(name);
     }
 
     public String getName() {
@@ -240,6 +307,13 @@ public class Contact extends DhtStorablePacket {
             dataStream.write(0);   // TODO compression type
             dataStream.writeShort(utf8Text.length);
             dataStream.write(utf8Text);
+            
+            if (signature == null)
+                dataStream.writeShort(0);
+            else {
+                dataStream.writeShort(signature.length);
+                dataStream.write(signature);
+            }
         }
         catch (IOException e) {
             log.error("Can't write to ByteArrayOutputStream/DataOutputStream.", e);

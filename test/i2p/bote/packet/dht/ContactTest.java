@@ -24,12 +24,15 @@ package i2p.bote.packet.dht;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import i2p.bote.TestUtil;
 import i2p.bote.Util;
+import i2p.bote.crypto.KeyUpdateHandler;
 import i2p.bote.crypto.wordlist.WordListAnchor;
 import i2p.bote.email.EmailIdentity;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
@@ -38,11 +41,12 @@ import org.junit.Test;
 
 public class ContactTest {
     private Contact contact;
+    private String contactName = "Test 123";
 
     @Before
     public void setUp() throws Exception {
         EmailIdentity identity = new EmailIdentity("0FXoqTc2bakNPiNZWD7rwT4Q465bFnF66yV7p5emCl6s9shuU3pdTBExBgLf7Pn6KswQ2hn8amqJKepFW7RgUYFncf-UXH~IWrD0E3VAR94WVuSzpqK33LA1aS7By4juHOSDDmDTL0sMBESQADS0NLLp7y7nrNUD93loexkO63DF");
-        identity.setPublicName("Test 123");
+        identity.setPublicName(contactName);
         String text = "Der Friederich, der Friederich,\n" +
                 "Das war ein arger Wüterich!\n" +
                 "Er fing die Fliegen in dem Haus\n" +
@@ -77,7 +81,8 @@ public class ContactTest {
                 "Und nimmt sie sorglich sehr in acht.\n";
         InputStream inputStream = getClass().getResourceAsStream("Struwwelpeter.jpg");
         byte[] picture = Util.readBytes(inputStream);
-        contact = new Contact(identity, picture, text);
+        KeyUpdateHandler keyUpdateHandler = TestUtil.createVerifyingKeyUpdateHandler(1);
+        contact = new Contact(identity, keyUpdateHandler, picture, text);
     }
 
     @Test
@@ -97,5 +102,29 @@ public class ContactTest {
         assertEquals(contact.getPictureBase64(), contact2.getPictureBase64());
         byte[] arrayB = contact2.toByteArray();
         assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+    }
+    
+    @Test
+    public void testSignatureAndFingerprint() throws GeneralSecurityException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        assertTrue(contact.verify());
+        
+        // change the name
+        char[] chars = contactName.toCharArray();
+        chars[0]++;
+        String alteredName = new String(chars);
+        contact.setName(alteredName);
+        assertFalse(contact.verify());
+        
+        // restore the original name and make the salt invalid
+        contact.setName(contactName);
+        Field saltField = Contact.class.getDeclaredField("salt");
+        saltField.setAccessible(true);
+        byte[] salt = (byte[])saltField.get(contact);
+        salt[2]++;
+        assertFalse(contact.verify());
+        
+        // restore salt
+        salt[2]--;
+        assertTrue(contact.verify());
     }
 }

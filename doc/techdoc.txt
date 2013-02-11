@@ -239,6 +239,8 @@ Strings in packets are UTF8 encoded.
                       | COMP  | 1 byte     | Compression type for TEXT
                       | TLEN  | 2 bytes    | Length of the TEXT field, max 2000
                       | TEXT  | byte[]     | User defined text in UTF8
+                      | SLEN  | 2 bytes    | Length of SIG
+                      | SIG   | byte[]     | A signature over the [TYPE, ..., TEXT] fields by DEST
   --------------------+-------+------------+------------------------------------------------------------------
 
 3.2. Communication Packets

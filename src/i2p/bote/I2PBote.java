@@ -428,7 +428,7 @@ public class I2PBote implements NetworkStatusSource {
     public void publishDestination(String destination, byte[] picture, String text) throws PasswordException, IOException, GeneralSecurityException, DhtException, InterruptedException {
         EmailIdentity identity = identities.get(destination);
         if (identity != null) {
-            Contact entry = new Contact(identity, picture, text);
+            Contact entry = new Contact(identity, identities, picture, text);
             dht.store(entry);
         }
     }
@@ -438,8 +438,15 @@ public class I2PBote implements NetworkStatusSource {
         DhtResults results = dht.findOne(key, Contact.class);
         if (!results.isEmpty()) {
             DhtStorablePacket packet = results.getPackets().iterator().next();
-            if (packet instanceof Contact)
-                return (Contact)packet;
+            if (packet instanceof Contact) {
+                Contact contact = (Contact)packet;
+                try {
+                    if (contact.verify())
+                        return contact;
+                } catch (GeneralSecurityException e) {
+                    log.error("Can't verify Contact", e);
+                }
+            }
         }
         return null;
     }
