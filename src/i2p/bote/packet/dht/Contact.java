@@ -147,6 +147,7 @@ public class Contact extends DhtStorablePacket {
 
     /** Returns the DHT key */
     public static Hash calculateHash(String name) {
+        name = name.trim();
         if (name.endsWith("@bote.i2p"))
             name = name.substring(0, name.length()-"@bote.i2p".length());
         byte[] nameBytes = name.toLowerCase().getBytes(UTF8);
