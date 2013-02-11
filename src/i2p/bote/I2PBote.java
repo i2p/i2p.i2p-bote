@@ -23,6 +23,7 @@ package i2p.bote;
 
 import static i2p.bote.Util._;
 import i2p.bote.addressbook.AddressBook;
+import i2p.bote.crypto.wordlist.WordListAnchor;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
@@ -75,7 +76,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.Thread.State;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -130,6 +133,7 @@ public class I2PBote implements NetworkStatusSource {
     private EmailPacketFolder emailDhtStorageFolder;   // stores email packets for other peers
     private IndexPacketFolder indexPacketDhtStorageFolder;   // stores index packets
     private DirectoryEntryFolder directoryDhtFolder;   // stores entries for the distributed address directory
+    private WordListAnchor wordLists;
     private Collection<I2PAppThread> backgroundThreads;
     private SMTPService smtpService;
     private POP3Service pop3Service;
@@ -175,6 +179,8 @@ public class I2PBote implements NetworkStatusSource {
         addressBook = new AddressBook(configuration.getAddressBookFile(), passwordCache);
         initializeFolderAccess(passwordCache);
         initializeExternalThemeDir();
+        
+        wordLists = new WordListAnchor();
     }
 
     /**
@@ -436,6 +442,15 @@ public class I2PBote implements NetworkStatusSource {
                 return (Contact)packet;
         }
         return null;
+    }
+    
+    public String[] getWordList(String localeCode) {
+        return wordLists.getWordList(localeCode);
+    }
+    
+    /** Returns all locale codes for which a word list exists. */
+    public List<String> getWordListLocales() throws UnsupportedEncodingException, IOException, URISyntaxException {
+        return wordLists.getLocaleCodes();
     }
     
     public Destination getLocalDestination() {

@@ -152,6 +152,7 @@
         <jar destfile="${lib}/i2pbote.jar">
             <fileset dir="ant_build/classes" excludes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/** codec/** **/*Test.class"/>
             <fileset dir="src" includes="i2p/bote/network/built-in-peers.txt"/>
+            <fileset dir="src" includes="i2p/bote/crypto/wordlist/"/>
         </jar>
     </target>
     

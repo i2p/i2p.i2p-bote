@@ -333,6 +333,17 @@
 </function>
 
 <function>
+    <name>getFingerprint</name>
+    <description>
+        Returns the fingerprint of a Contact in a given locale.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getFingerprint(i2p.bote.packet.dht.Contact, java.lang.String)
+    </function-signature>
+</function>
+
+<function>
     <name>getCryptoImplementation</name>
     <description>
         Looks up a CryptoImplementation by ID number.

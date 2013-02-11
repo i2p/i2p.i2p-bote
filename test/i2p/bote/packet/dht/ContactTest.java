@@ -21,8 +21,11 @@
 
 package i2p.bote.packet.dht;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import i2p.bote.Util;
+import i2p.bote.crypto.wordlist.WordListAnchor;
 import i2p.bote.email.EmailIdentity;
 
 import java.io.IOException;
@@ -79,8 +82,20 @@ public class ContactTest {
 
     @Test
     public void toByteArrayAndBack() throws IOException, GeneralSecurityException {
+        WordListAnchor wordLists = new WordListAnchor();
+        String[] wordListEN = wordLists.getWordList("en");
+        String[] wordListDE = wordLists.getWordList("de");
+        
         byte[] arrayA = contact.toByteArray();
-        byte[] arrayB = new Contact(arrayA).toByteArray();
+        Contact contact2 = new Contact(arrayA);
+        assertEquals(contact.getName(), contact2.getName());
+        assertEquals(contact.getDestination().toBase64(), contact2.getDestination().toBase64());
+        assertEquals(contact.getText(), contact2.getText());
+        assertEquals(contact.getFingerprint(wordListDE), contact2.getFingerprint(wordListDE));
+        assertEquals(contact.getFingerprint(wordListEN), contact2.getFingerprint(wordListEN));
+        assertFalse(contact.getFingerprint(wordListEN).equals(contact2.getFingerprint(wordListDE)));
+        assertEquals(contact.getPictureBase64(), contact2.getPictureBase64());
+        byte[] arrayB = contact2.toByteArray();
         assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
     }
 }

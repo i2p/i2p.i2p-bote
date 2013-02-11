@@ -228,11 +228,12 @@ Strings in packets are UTF8 encoded.
                       | Pn    | 384 bytes  | Destination key
   --------------------+-------+------------+------------------------------------------------------------------
    Directory Entry    |       |            | A name/Email Destination mapping
-                      | TYPE  | 1 byte     | Value = 'C'
+   (Contact.java)     | TYPE  | 1 byte     | Value = 'C'
                       | VER   | 1 byte     | Protocol version
                       | KEY   | 32 bytes   | DHT key (SHA-256 hash of the UTF8-encoded name in lower case)
                       | DLEN  | 2 bytes    | Length of the DEST field
                       | DEST  | byte[]     | Email destination, 8 bit encoded (not base64)
+                      | SALT  | 4 bytes    | A value such that scrypt(KEY|DEST|SALT) ends with a zero byte
                       | PLEN  | 2 bytes    | Length of PIC, max 7500
                       | PIC   | byte[]     | User picture in a browser-compatible format (JPG, PNG, GIF)
                       | COMP  | 1 byte     | Compression type for TEXT

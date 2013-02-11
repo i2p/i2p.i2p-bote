@@ -36,6 +36,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -401,5 +402,11 @@ public class Util {
     public static void zeroOut(char[] array) {
         for (int i=0; i<array.length; i++)
             array[i] = 0;
+    }
+    
+    public static byte[] concat(byte[] arr1, byte[]arr2) {
+        byte[] arr3 = Arrays.copyOf(arr1, arr1.length + arr2.length);
+        System.arraycopy(arr2, 0, arr3, arr1.length, arr2.length);
+        return arr3;
     }
 }

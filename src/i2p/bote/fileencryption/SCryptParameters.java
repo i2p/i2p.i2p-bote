@@ -31,33 +31,33 @@ import java.io.OutputStream;
  * Contains parameters specific to the <code>scrypt</code> key derivation function.
  * @see FileEncryptionUtil
  */
-class SCryptParameters {
-    final int N;
-    final int r;
-    final int p;
+public class SCryptParameters {
+    public final int N;
+    public final int r;
+    public final int p;
 
     /**
      * @param N CPU cost parameter
      * @param r Memory cost parameter
      * @param p Parallelization parameter
      */
-    SCryptParameters(int N, int r, int p) {
+    public SCryptParameters(int N, int r, int p) {
         this.N = N;
         this.r = r;
         this.p = p;
     }
 
-    SCryptParameters(InputStream input) throws IOException {
+    public SCryptParameters(InputStream input) throws IOException {
         this(new DataInputStream(input));
     }
     
-    SCryptParameters(DataInputStream input) throws IOException {
+    public SCryptParameters(DataInputStream input) throws IOException {
         N = input.readInt();
         r = input.readInt();
         p = input.readInt();
     }
     
-    void writeTo(OutputStream output) throws IOException {
+    public void writeTo(OutputStream output) throws IOException {
         DataOutputStream dataStream = new DataOutputStream(output);
         dataStream.writeInt(N);
         dataStream.writeInt(r);

@@ -27,6 +27,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
+
 <ib:message key="Address Directory Lookup" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
@@ -52,11 +54,26 @@
         
         <c:if test="${param.confirm ne true}">
             <h2><ib:message key="Import Contact"/></h2>
+            <p>
             <ib:message>
                 A matching record was found in the address directory. Note that the address directory is
                 not secure against manipulation, so do not click &quot;import&quot; unless you trust
                 that it is the right email destination.
             </ib:message>
+            </p>
+            
+            <%-- fingerprint --%>
+            <c:set var="uiLocaleCode" value="${jspHelperBean.language}"/>
+            <b><ib:message key="Fingerprint: "/></b> ${ib:getFingerprint(result, uiLocaleCode)}
+            <ib:expandable>
+                <c:forEach items="${jspHelperBean.wordListLocales}" var="localeCode">
+                    <c:if test="${localeCode ne uiLocaleCode}">
+                        &nbsp;&nbsp;<b>${localeCode}</b>: ${ib:getFingerprint(result, localeCode)}<br/>
+                    </c:if>
+                </c:forEach>
+            </ib:expandable>
+            
+            <%-- image, name, text --%>
             <p/>
             <div class="contact-detail-container">
                 <div class="contact-detail-left">
@@ -69,6 +86,7 @@
                 <b><ib:message key="Email Destination: "/></b>
                 ${result.destination}
             </div>
+            
             <form action="importContact.jsp" method="post">
                 <input type="hidden" name="confirm" value="true"/>
                 <input type="hidden" name="name" value="${param.name}"/>

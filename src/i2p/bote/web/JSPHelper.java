@@ -27,6 +27,7 @@ import i2p.bote.Util;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
+import i2p.bote.crypto.wordlist.WordListAnchor;
 import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
@@ -45,6 +46,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
@@ -185,6 +187,16 @@ public class JSPHelper {
         catch (Exception e) {
             return e.getLocalizedMessage();
         }
+    }
+    
+    public static String getFingerprint(Contact contact, String localeCode) throws GeneralSecurityException {
+        String[] wordList = I2PBote.getInstance().getWordList(localeCode);
+        return contact.getFingerprint(wordList);
+    }
+    
+    /** @see {@link I2PBote#getWordListLocales() */
+    public List<String> getWordListLocales() throws UnsupportedEncodingException, IOException, URISyntaxException {
+        return I2PBote.getInstance().getWordListLocales();
     }
     
     public static EmailIdentity getIdentity(String key) throws PasswordException, IOException, GeneralSecurityException {
