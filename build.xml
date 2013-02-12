@@ -423,6 +423,9 @@
             destdir="./ant_build/classes"
             classpathref="junitcp"
             failonerror="true" />
+        <copy file="test/i2p/bote/packet/dht/Struwwelpeter.jpg" tofile="ant_build/classes/i2p/bote/packet/dht/Struwwelpeter.jpg"/>
+        <copy file="src/i2p/bote/crypto/wordlist/words_de.txt" tofile="ant_build/classes/i2p/bote/crypto/wordlist/words_de.txt"/>
+        <copy file="src/i2p/bote/crypto/wordlist/words_en.txt" tofile="ant_build/classes/i2p/bote/crypto/wordlist/words_en.txt"/>
 
         <echo message="Running JUnit tests..."/>
         <junit printsummary="off" failureproperty="failed">
