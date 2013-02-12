@@ -29,6 +29,7 @@ import i2p.bote.email.IdentitiesTest;
 import i2p.bote.fileencryption.EncryptedStreamTest;
 import i2p.bote.fileencryption.FileEncryptionUtilTest;
 import i2p.bote.fileencryption.PasswordCacheTest;
+import i2p.bote.folder.DirectoryEntryFolderTest;
 import i2p.bote.folder.EmailFolderTest;
 import i2p.bote.folder.EmailPacketFolderTest;
 import i2p.bote.folder.FolderTest;
@@ -40,8 +41,8 @@ import i2p.bote.network.kademlia.KBucketTest;
 import i2p.bote.packet.I2PBotePacketTest;
 import i2p.bote.packet.PeerListTest;
 import i2p.bote.packet.ResponsePacketTest;
-import i2p.bote.packet.dht.DeletionQueryTest;
 import i2p.bote.packet.dht.ContactTest;
+import i2p.bote.packet.dht.DeletionQueryTest;
 import i2p.bote.packet.dht.EmailPacketDeleteRequestTest;
 import i2p.bote.packet.dht.EncryptedEmailPacketTest;
 import i2p.bote.packet.dht.FindClosePeersPacketTest;
@@ -76,6 +77,7 @@ import org.junit.runners.Suite;
     ContactTest.class,
     
     // Folders
+    DirectoryEntryFolderTest.class,
     FolderTest.class,
     EmailFolderTest.class,
     EmailPacketFolderTest.class,
