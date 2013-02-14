@@ -1,6 +1,16 @@
 I2P-Bote Version History
 ------------------------
 
+0.2.7 (Released on Feb 13, 2013)
+  * Delivery confirmations
+  * Basic distributed address directory
+  * Datagram-only communication, streams no longer used;
+    smaller datagrams for better reliability
+  * More translations
+  * UI Themes
+  * Misc. UI improvements
+  * Bug fixes
+
 0.2.6 (Released on Apr 26, 2011)
   * Password encryption of mail folders, identities, and contacts
   * New translations (in chronological order):
