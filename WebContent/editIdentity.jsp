@@ -82,6 +82,32 @@
         </div>
     
         <div class="identity-form-label">
+            <div class="field-label"><ib:message key="Picture:"/></div>
+            <div class="addtl-text"><ib:message key="(published to the address directory)"/></div>
+        </div>
+        <div class="identity-form-picture">
+            <c:if test="${not empty identity.picture}">
+                <img src="data:${identity.pictureType};base64,${identity.pictureBase64}"/>
+            </c:if>
+            <c:if test="${empty identity.picture}">
+                &nbsp;
+            </c:if>
+        </div>
+    
+        <div class="identity-form-label">
+            <div class="field-label"><ib:message key="Text:"/></div>
+            <div class="addtl-text"><ib:message key="(published to the address directory)"/></div>
+        </div>
+        <div class="identity-form-text">
+            <c:if test="${not empty identity.text}">
+                ${fn:escapeXml(identity.text)}
+            </c:if>
+            <c:if test="${empty identity.text}">
+                &nbsp;
+            </c:if>
+        </div>
+    
+        <div class="identity-form-label">
             <div class="field-label"><ib:message key="Encryption:"/></div>
             <c:if test="${param.new}">
                 <div class="addtl-text"><ib:message key="(If unsure, leave the default)"/></div>

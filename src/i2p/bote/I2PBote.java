@@ -164,11 +164,17 @@ public class I2PBote implements NetworkStatusSource {
         i2pClient = I2PClientFactory.createClient();
         configuration = new Configuration();
         
-        new Migrator(configuration, APP_VERSION).migrateIfNeeded();
+        final Migrator migrator = new Migrator(configuration, APP_VERSION);
+        migrator.migrateNonPasswordedDataIfNeeded();
         
         passwordCache = new PasswordCache(configuration);
         // purge identities and addresses from memory when the password is cleared
         passwordCache.addPasswordCacheListener(new PasswordCacheListener() {
+            @Override
+            public void passwordProvided() {
+                migrator.migratePasswordedDataIfNeeded(passwordCache);
+            }
+            
             @Override
             public void passwordCleared() {
                 identities.clearPasswordProtectedData();
@@ -428,6 +434,9 @@ public class I2PBote implements NetworkStatusSource {
     public void publishDestination(String destination, byte[] picture, String text) throws PasswordException, IOException, GeneralSecurityException, DhtException, InterruptedException {
         EmailIdentity identity = identities.get(destination);
         if (identity != null) {
+            identity.setPicture(picture);
+            identity.setText(text);
+            identities.save();
             Contact entry = new Contact(identity, identities, picture, text);
             dht.store(entry);
         }

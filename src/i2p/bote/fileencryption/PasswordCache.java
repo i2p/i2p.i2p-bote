@@ -66,7 +66,8 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
     }
     
     /**
-     * Sets the password.
+     * Sets the password and calls <code>passwordProvided</code>
+     * on all {@link PasswordCacheListener}s.
      * @param password
      */
     public synchronized void setPassword(byte[] password) {
@@ -80,6 +81,9 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
             derivedKey = null;
         }
         unlockPassword();
+        
+        for (PasswordCacheListener listener: cacheListeners)
+            listener.passwordProvided();
     }
     
     /**

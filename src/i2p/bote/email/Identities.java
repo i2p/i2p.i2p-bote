@@ -31,7 +31,6 @@ import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,16 +39,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.regex.PatternSyntaxException;
 
 import net.i2p.util.Log;
+
+import com.lambdaworks.codec.Base64;
 
 /**
  * Holds a set of {@link EmailIdentity} objects that are sorted by name.<br/>
@@ -60,6 +63,7 @@ public class Identities implements KeyUpdateHandler {
     private File identitiesFile;
     private PasswordHolder passwordHolder;
     private SortedSet<EmailIdentity> identities;   // null until file has been read successfully
+    private EmailIdentity defaultIdentity;
 
     /**
      * Constructs a new empty <code>Identities</code> object. The <code>identitiesFile</code>
@@ -108,29 +112,44 @@ public class Identities implements KeyUpdateHandler {
             InputStream encryptedStream = new EncryptedInputStream(new FileInputStream(identitiesFile), passwordHolder);
             input = new BufferedReader(new InputStreamReader(encryptedStream));
             
-            // No PasswordException occurred, so parse the input stream
-            identities = new TreeSet<EmailIdentity>(new IdentityComparator());
-            String defaultIdentityString = null;
-            while (true) {
-                String line = input.readLine();
-                if (line == null)   // EOF
-                    break;
+            // No PasswordException occurred, so read the input stream
+            List<String> lines = Util.readLines(encryptedStream);
+            
+            if (lines.isEmpty())
+                identities = new TreeSet<EmailIdentity>(new IdentityComparator());
+            else {
+                // Convert List items to Properties
+                Properties properties = new Properties();
+                for (String line: lines) {
+                    String[] split = line.split("=", 2);
+                    if (split.length > 1)
+                        properties.setProperty(split[0], split[1]);
+                }
                 
-                if (line.toLowerCase().startsWith("default"))
-                    defaultIdentityString = line.substring("default ".length());
-                else {
-                    EmailIdentity identity = parse(line);
-                    if (identity != null)
-                        identities.add(identity);
+                String defaultIdentityStr = properties.getProperty("default");
+                identities = new TreeSet<EmailIdentity>(new IdentityComparator());
+                int index = 0;
+                while (true) {
+                    String prefix = "identity" + index + ".";
+                    String key = properties.getProperty(prefix + "key");
+                    if (key == null)
+                        break;
+                    
+                    EmailIdentity identity = new EmailIdentity(key);
+                    identity.setDescription(properties.getProperty(prefix + "description"));
+                    String pictureBase64 = properties.getProperty(prefix + "picture");
+                    identity.setPicture(pictureBase64==null ? null : Base64.decode(pictureBase64.toCharArray()));
+                    identity.setText(properties.getProperty(prefix + "text"));
+                    identity.setPublished("true".equalsIgnoreCase(properties.getProperty(prefix + "published")));
+                    identity.setPublicName(properties.getProperty(prefix + "publicName"));
+                    identities.add(identity);
+                    
+                    if (key.equals(defaultIdentityStr))
+                        defaultIdentity = identity;
+                    
+                    index++;
                 }
             }
-            
-            // set the default identity; if none defined, make the first one the default
-            EmailIdentity defaultIdentity = get(defaultIdentityString);
-            if (defaultIdentity != null)
-                defaultIdentity.setDefault(true);
-            else if (!identities.isEmpty())
-                identities.iterator().next().setDefault(true);
         }
         finally {
             if (input != null)
@@ -143,81 +162,43 @@ public class Identities implements KeyUpdateHandler {
         }
     }
 
-    private EmailIdentity parse(String emailIdentityString) {
-        String[] fields = emailIdentityString.split("\\t", 4);
-        if (fields.length < 2) {
-            log.error("Unparseable email identity: <" + emailIdentityString + ">");
-            return null;
-        }
-        try {
-            EmailIdentity identity = new EmailIdentity(fields[0]);
-            if (fields.length > 1)
-                identity.setPublicName(fields[1]);
-            if (fields.length > 2)
-                identity.setDescription(fields[2]);
-            if (fields.length > 3)
-                identity.setEmailAddress(fields[3]);
-            return identity;
-        }
-        catch (PatternSyntaxException e) {
-            log.error("Unparseable email identity: <" + emailIdentityString + ">", e);
-            return null;
-        } catch (GeneralSecurityException e) {
-            log.error("Invalid email identity: <" + fields[0] + ">", e);
-            return null;
-        }
-    }
-    
-    /**
-     * This is the counterpart of the <code>parse</code> method. It encodes a {@link EmailIdentity} into
-     * an entry for the identities file.
-     * @param identity
-     * @throws GeneralSecurityException 
-     */
-    private String toFileFormat(EmailIdentity identity) throws GeneralSecurityException {
-        StringBuilder string = new StringBuilder();
-        string = string.append(identity.getFullKey());
-        string = string.append("\t");
-        string = string.append(identity.getPublicName());
-        string = string.append("\t");
-        if (identity.getDescription() != null)
-            string = string.append(identity.getDescription());
-        string = string.append("\t");
-        if (identity.getEmailAddress() != null)
-            string = string.append(identity.getEmailAddress());
-        return string.toString();
-    }
-    
+    /** Saves all identities to file. */
     public void save() throws IOException, GeneralSecurityException, PasswordException {
         initializeIfNeeded();
             
         OutputStream encryptedStream = new EncryptedOutputStream(new FileOutputStream(identitiesFile), passwordHolder);
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(encryptedStream));
+        SortedProperties properties = new SortedProperties();
         try {
-            EmailIdentity defaultIdentity = getDefault();
-            if (defaultIdentity != null) {
-                writer.write("Default " + defaultIdentity.getKey());
-                writer.newLine();
-            }
-            
+            int index = 0;
+            int defaultIndex = -1;   // index of the default identity
             for (EmailIdentity identity: identities) {
-                writer.write(toFileFormat(identity));
-                writer.newLine();
+                if (identity == defaultIdentity)
+                    defaultIndex = index;
+                
+                String prefix = "identity" + index + ".";
+                properties.setProperty(prefix + "publicName", identity.getPublicName());
+                properties.setProperty(prefix + "key", identity.getFullKey());
+                String description = identity.getDescription();
+                properties.setProperty(prefix + "description", (description==null ? "" : description));
+                byte[] picture = identity.getPicture();
+                properties.setProperty(prefix + "picture", (picture==null ? "" : new String(Base64.encode(picture))));
+                String text = identity.getText();
+                properties.setProperty(prefix + "text", (text==null ? "" : text));
+                properties.setProperty(prefix + "published", identity.isPublished() ? "true" : "false");
+                properties.store(encryptedStream, null);
+                
+                index++;
             }
             
-            Util.makePrivate(identitiesFile);
-        }
-        catch (IOException e) {
+            if (defaultIndex >= 0)
+                properties.setProperty("default", String.valueOf(defaultIndex));
+        } catch (IOException e) {
             log.error("Can't save email identities to file <" + identitiesFile.getAbsolutePath() + ">.", e);
             throw e;
+        } finally {
+            encryptedStream.close();
         }
-        catch (GeneralSecurityException e) {
-            log.error("Can't save email identities to file <" + identitiesFile.getAbsolutePath() + ">.", e);
-            throw e;
-        }
-        finally {
-            writer.close();
-        }
+        Util.makePrivate(identitiesFile);
     }
     
     public void add(EmailIdentity identity) throws PasswordException, IOException, GeneralSecurityException {
@@ -411,7 +392,7 @@ public class Identities implements KeyUpdateHandler {
     /**
      * Compares two email identities by name and email destination.
      */
-    private class IdentityComparator implements Comparator<EmailIdentity> {
+    public static class IdentityComparator implements Comparator<EmailIdentity> {
         @Override
         public int compare(EmailIdentity identity1, EmailIdentity identity2) {
             int nameComparison = compareNames(identity1, identity2);
@@ -441,5 +422,36 @@ public class Identities implements KeyUpdateHandler {
     @Override
     public void updateKey() throws GeneralSecurityException, PasswordException, IOException {
         save();
+    }
+    
+    /**
+     * Same as <code>java.util.Properties</code> but writes properties
+     * sorted by key. Relies on an implementation detail, so it may
+     * not work on JVMs other than OpenJDK, or future versions.
+     */
+    private static class SortedProperties extends Properties {
+        private static final long serialVersionUID = -3663917284130106235L;
+
+        @Override
+        public synchronized Enumeration<Object> keys() {
+            Enumeration<Object> unsorted = super.keys();
+            List<Object> list = Collections.list(unsorted);
+            Collections.sort(list, new Comparator<Object>() {
+
+                @Override
+                public int compare(Object o1, Object o2) {
+                    if (o1==null && o2==null)
+                        return 0;
+                    else if (o1 == null)
+                        return -1;
+                    else if (o2 == null)
+                        return 1;
+                    else
+                        return o1.toString().compareTo(o2.toString());
+                }
+            });
+            Enumeration<Object> sorted = Collections.enumeration(list);
+            return sorted;
+        }
     }
 }

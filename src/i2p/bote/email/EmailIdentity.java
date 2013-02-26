@@ -21,6 +21,7 @@
 
 package i2p.bote.email;
 
+import i2p.bote.Util;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.crypto.PrivateKeyPair;
@@ -31,12 +32,17 @@ import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 
+import com.lambdaworks.codec.Base64;
+
 public class EmailIdentity extends EmailDestination {
     private PrivateKey privateEncryptionKey;
     private PrivateKey privateSigningKey;
     private String publicName;
     private String description;   // optional
     private String emailAddress;   // optional
+    private byte[] picture;
+    private String text;
+    private boolean published;
     private boolean isDefault;
 
     /**
@@ -101,8 +107,8 @@ public class EmailIdentity extends EmailDestination {
         return publicName;
     }
 
-    public void setDescription(String name) {
-        this.description = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDescription() {
@@ -115,6 +121,41 @@ public class EmailIdentity extends EmailDestination {
 
     public String getEmailAddress() {
         return emailAddress;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+    
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+    
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public String getPictureBase64() {
+        if (picture == null)
+            return null;
+        return new String(Base64.encode(picture));
+    }
+
+    /** @see Util#getPictureType(byte[]) */
+    public String getPictureType() {
+        return Util.getPictureType(picture);
+    }
+    
+    public void setText(String text) {
+        this.text = text;
+    }
+    
+    public String getText() {
+        return text;
     }
 
     public void setDefault(boolean isDefault) {

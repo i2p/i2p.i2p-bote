@@ -437,6 +437,26 @@ table td, th {
     margin-top: 7px;
 }
 
+.identity-form-picture img {
+    top: 0px;
+    margin-left: 220px;
+    margin-right: 5px;
+    margin-top: 10px;
+    width: 100px;
+}
+
+.identity-form-text {
+    top: 0px;
+    margin-left: 220px;
+    margin-right: 5px;
+    margin-top: 10px;
+    white-space: pre;
+    font-family: monospace;
+    white-space: -pre-wrap;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .identity-buttons {
     text-align: left;
 }

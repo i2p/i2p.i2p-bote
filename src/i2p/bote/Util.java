@@ -22,6 +22,7 @@
 package i2p.bote;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,6 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.text.NumberFormat;
@@ -183,7 +185,7 @@ public class Util {
      * @param url
      * @see #readLines(URL)
      */
-    private static List<String> readLines(InputStream inputStream) throws IOException {
+    public static List<String> readLines(InputStream inputStream) throws IOException {
         Log log = new Log(Util.class);
         
         BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(inputStream));
@@ -408,5 +410,16 @@ public class Util {
         byte[] arr3 = Arrays.copyOf(arr1, arr1.length + arr2.length);
         System.arraycopy(arr2, 0, arr3, arr1.length, arr2.length);
         return arr3;
+    }
+
+    /** Returns the MIME type of the picture, for example <code>image/jpeg</code>. */
+    public static String getPictureType(byte[] picture) {
+        ByteArrayInputStream stream = new ByteArrayInputStream(picture);
+        try {
+            return URLConnection.guessContentTypeFromStream(stream);
+        } catch (IOException e) {
+            new Log(Util.class).error("Can't read from ByteArrayInputStream", e);
+            return null;
+        }
     }
 }
