@@ -358,7 +358,7 @@
     <name>saveContact</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
-        boolean saveContact(java.lang.String, java.lang.String)
+        boolean saveContact(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
     </function-signature>
 </function>
 
@@ -371,15 +371,13 @@
 </function>
 
 <function>
-    <name>getContactName</name>
+    <name>getContact</name>
     <description>
-        Looks up a name for an Email Destination in the address book.
-        If the Email Destination does not exist in the address book,
-        an empty string is returned.
+        Looks up a Contact in the address book by its Email Destination.
     </description>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
-        java.lang.String getContactName(java.lang.String)
+        java.lang.String getContact(java.lang.String)
     </function-signature>
 </function>
 

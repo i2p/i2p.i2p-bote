@@ -30,9 +30,9 @@ import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
 import i2p.bote.packet.dht.Contact;
+import i2p.bote.util.SortedProperties;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,9 +41,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Properties;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -95,23 +96,41 @@ public class AddressBook {
             input = new BufferedReader(new InputStreamReader(encryptedStream));
             
             // No PasswordException occurred, so parse the input stream
-            contacts = new TreeSet<Contact>(new ContactComparator());
-            
-            while (true) {
-                String line = input.readLine();
-                if (line == null)   // EOF
-                    break;
-                
-                String[] fields = line.split("\\t", 2);
-                try {
-                    EmailDestination destination = new EmailDestination(fields[0]);
-                    String name = null;
-                    if (fields.length > 1)
-                        name = fields[1];
-                    contacts.add(new Contact(name, destination));
+            List<String> lines = Util.readLines(encryptedStream);
+            if (lines.isEmpty())
+                contacts = new TreeSet<Contact>(new ContactComparator());
+            else {
+                // Convert List items to Properties
+                Properties properties = new Properties();
+                for (String line: lines) {
+                    String[] split = line.split("=", 2);
+                    if (split.length > 1)
+                        properties.setProperty(split[0], split[1]);
                 }
-                catch (GeneralSecurityException e) {
-                    log.error("Not a valid Email Destination: <" + fields[0] + ">", e);
+                
+                contacts = new TreeSet<Contact>(new ContactComparator());
+                int index = 0;
+                while (true) {
+                    String prefix = "contact" + index + ".";
+                    String name = properties.getProperty(prefix + "name");
+                    if (name == null)
+                        break;
+                    
+                    String destBase64 = properties.getProperty(prefix + "destination");
+                    if (destBase64 == null)
+                        continue;
+                    try {
+                        EmailDestination destination = new EmailDestination(destBase64);
+                        String pictureBase64 = properties.getProperty(prefix + "picture");
+                        String text = properties.getProperty(prefix + "text");
+                        Contact contact = new Contact(name, destination, pictureBase64, text);
+                        contacts.add(contact);
+                    }
+                    catch (GeneralSecurityException e) {
+                        log.error("Not a valid Email Destination: <" + destBase64 + ">", e);
+                    }
+                    
+                    index++;
                 }
             }
         } catch (PasswordException e) {
@@ -134,22 +153,27 @@ public class AddressBook {
         initializeIfNeeded();
         
         OutputStream encryptedStream = new EncryptedOutputStream(new FileOutputStream(addressFile), passwordHolder);
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(encryptedStream));
+        SortedProperties properties = new SortedProperties();
         try {
+            int index = 0;
             for (Contact contact: contacts) {
-                writer.write(contact.getBase64Dest());
-                writer.write("\t");
-                writer.write(contact.getName());
-                writer.newLine();
+                String prefix = "contact" + index + ".";
+                properties.setProperty(prefix + "name", contact.getName());
+                String base64Dest = contact.getDestination().toBase64();
+                properties.setProperty(prefix + "destination", base64Dest);
+                String pictureBase64 = contact.getPictureBase64();
+                properties.setProperty(prefix + "picture", (pictureBase64==null ? "" : pictureBase64));
+                String text = contact.getText();
+                properties.setProperty(prefix + "text", (text==null ? "" : text));
+                properties.store(encryptedStream, null);
+                index++;
             }
             Util.makePrivate(addressFile);
-        }
-        catch (IOException e) {
-            log.error("Can't save address book to file <" + addressFile.getAbsolutePath() + ">.", e);
+        } catch (IOException e) {
+            log.error("Can't save email identities to file <" + addressFile.getAbsolutePath() + ">.", e);
             throw e;
-        }
-        finally {
-            writer.close();
+        } finally {
+            encryptedStream.close();
         }
     }
     

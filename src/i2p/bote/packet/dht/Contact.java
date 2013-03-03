@@ -30,11 +30,9 @@ import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.SCryptParameters;
 import i2p.bote.packet.TypeCode;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.URLConnection;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -107,6 +105,13 @@ public class Contact extends DhtStorablePacket {
         this.destination = destination;
     }
     
+    public Contact(String name, EmailDestination destination, String pictureBase64, String text) {
+        this.name = name;
+        this.destination = destination;
+        setPictureBase64(pictureBase64);
+        this.text = text;
+    }
+
     public Contact(byte[] data) throws GeneralSecurityException {
         super(data);
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
@@ -258,23 +263,30 @@ public class Contact extends DhtStorablePacket {
         return destination;
     }
     
+    public void setPictureBase64(String pictureBase64) {
+        if (pictureBase64 == null)
+            picture = null;
+        else
+            picture = Base64.decode(pictureBase64.toCharArray());
+    }
+    
     /**
      * Returns the picture in <b>standard</b> base64 encoding
      * (not the modified I2P encoding so the browser understands it).
      */
     public String getPictureBase64() {
+        if (picture == null)
+            return null;
         return new String(Base64.encode(picture));
     }
     
-    /** Returns the MIME type of the picture, for example <code>image/jpeg</code>. */
+    /** @see Util#getPictureType(byte[]) */
     public String getPictureType() {
-        ByteArrayInputStream stream = new ByteArrayInputStream(picture);
-        try {
-            return URLConnection.guessContentTypeFromStream(stream);
-        } catch (IOException e) {
-            log.error("Can't read from ByteArrayInputStream", e);
-            return null;
-        }
+        return Util.getPictureType(picture);
+    }
+    
+    public void setText(String text) {
+        this.text = text;
     }
     
     /** Returns the text included with the directory entry. */

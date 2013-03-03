@@ -556,6 +556,26 @@ table td, th {
     margin-top: 10px;
 }
 
+.contact-form-picture img {
+    top: 0px;
+    margin-left: 120px;
+    margin-right: 5px;
+    margin-top: 10px;
+    width: 100px;
+}
+
+.contact-form-text {
+    top: 0px;
+    margin-left: 120px;
+    margin-right: 5px;
+    margin-top: 10px;
+    white-space: pre;
+    font-family: monospace;
+    white-space: -pre-wrap;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .header-column-replied {
     width: 8px;
 }

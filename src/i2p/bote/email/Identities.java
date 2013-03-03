@@ -29,6 +29,7 @@ import i2p.bote.fileencryption.EncryptedOutputStream;
 import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
+import i2p.bote.util.SortedProperties;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,9 +42,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -422,36 +421,5 @@ public class Identities implements KeyUpdateHandler {
     @Override
     public void updateKey() throws GeneralSecurityException, PasswordException, IOException {
         save();
-    }
-    
-    /**
-     * Same as <code>java.util.Properties</code> but writes properties
-     * sorted by key. Relies on an implementation detail, so it may
-     * not work on JVMs other than OpenJDK, or future versions.
-     */
-    private static class SortedProperties extends Properties {
-        private static final long serialVersionUID = -3663917284130106235L;
-
-        @Override
-        public synchronized Enumeration<Object> keys() {
-            Enumeration<Object> unsorted = super.keys();
-            List<Object> list = Collections.list(unsorted);
-            Collections.sort(list, new Comparator<Object>() {
-
-                @Override
-                public int compare(Object o1, Object o2) {
-                    if (o1==null && o2==null)
-                        return 0;
-                    else if (o1 == null)
-                        return -1;
-                    else if (o2 == null)
-                        return 1;
-                    else
-                        return o1.toString().compareTo(o2.toString());
-                }
-            });
-            Enumeration<Object> sorted = Collections.enumeration(list);
-            return sorted;
-        }
     }
 }

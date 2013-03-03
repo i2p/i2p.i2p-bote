@@ -24,6 +24,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <%--
@@ -60,7 +61,7 @@
             <ib:message key="Please fill in the Name field." var="errorMessage"/>
         </c:when>
         <c:otherwise>
-            <c:set var="errorMessage" value="${ib:saveContact(param.destination, param.name)}"/>
+            <c:set var="errorMessage" value="${ib:saveContact(param.destination, param.name, param.picture, param.text)}"/>
         </c:otherwise>
     </c:choose>
 
@@ -94,7 +95,8 @@
         <ib:message key="Edit Contact" var="title"/>
         <c:set var="title" value="${title}" scope="request"/>
         <ib:message key="Save" var="submitButtonText"/>
-        <c:set var="name" value="${ib:getContactName(param.destination)}"/>
+        <c:set var="contact" value="${ib:getContact(param.destination)}"/>
+        <c:set var="name" value="${contact.name}"/>
     </c:otherwise>
 </c:choose>
 <jsp:include page="header.jsp"/>
@@ -122,6 +124,20 @@
         <div class="contact-form-value">
             <input type="text" size="40" name="name" value="${ib:escapeQuotes(name)}"/>
         </div>
+        
+        <div class="contact-form-label">
+            <div class="field-label"><ib:message key="Picture:"/></div>
+        </div>
+        <div class="contact-form-picture">
+            <img src="data:${contact.pictureType};base64,${contact.pictureBase64}"/>
+            <input type="hidden" name="picture" value="${contact.pictureBase64}"/>
+        </div>
+        
+        <div class="contact-form-label">
+            <div class="field-label"><ib:message key="Text:"/></div>
+        </div>
+        <div class="contact-form-text">${fn:escapeXml(contact.text)}</div>
+        <input type="hidden" name="text" value="${contact.text}"/>
         
         <p/>
         <button name="action" value="save">${submitButtonText}</button>

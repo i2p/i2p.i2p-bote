@@ -44,7 +44,7 @@
     <c:if test="${not empty result}">
         <c:if test="${param.confirm eq true}">
         <ib:requirePassword>
-            <c:set var="errorMessage" value="${ib:saveContact(result.destination, param.name)}"/>
+            <c:set var="errorMessage" value="${ib:saveContact(result.destination, param.name, result.pictureBase64, result.text)}"/>
             <c:if test="${empty errorMessage}">
                 <ib:message key="The name has been imported to the address book." var="infoMessage" scope="request"/>
             </c:if>

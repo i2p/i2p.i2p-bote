@@ -27,7 +27,6 @@ import i2p.bote.Util;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
-import i2p.bote.crypto.wordlist.WordListAnchor;
 import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
@@ -224,18 +223,23 @@ public class JSPHelper {
      * or adds a new contact to the address book.
      * @param destinationString A base64-encoded Email Destination key
      * @param name
+     * @param pictureBase64
+     * @param text
      * @return null if sucessful, or an error message if an error occured
      * @throws PasswordException
      * @throws GeneralSecurityException 
      */
-    public static String saveContact(String destinationString, String name) throws PasswordException, GeneralSecurityException {
+    public static String saveContact(String destinationString, String name, String pictureBase64, String text) throws PasswordException, GeneralSecurityException {
         destinationString = Util.fixAddress(destinationString);
         
         AddressBook addressBook = getInstance().getAddressBook();
         Contact contact = addressBook.get(destinationString);
         
-        if (contact != null)
+        if (contact != null) {
             contact.setName(name);
+            contact.setPictureBase64(pictureBase64);
+            contact.setText(text);
+        }
         else {
             EmailDestination destination;
             try {
@@ -245,7 +249,7 @@ public class JSPHelper {
                 log.error("Can't save contact to address book.", e);
                 return e.getLocalizedMessage();
             }
-            contact = new Contact(name, destination);
+            contact = new Contact(name, destination, pictureBase64, text);
             addressBook.add(contact);
         }
 
@@ -278,12 +282,8 @@ public class JSPHelper {
         }
     }
     
-    public static String getContactName(String destination) throws PasswordException {
-        Contact contact = getInstance().getAddressBook().get(destination);
-        if (contact == null)
-            return null;
-        else
-            return contact.getName();
+    public static Contact getContact(String destination) throws PasswordException {
+        return getInstance().getAddressBook().get(destination);
     }
     
     public boolean isCheckingForMail() {

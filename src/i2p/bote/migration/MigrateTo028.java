@@ -23,12 +23,15 @@ package i2p.bote.migration;
 
 import i2p.bote.Configuration;
 import i2p.bote.Util;
+import i2p.bote.addressbook.AddressBook;
+import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
 import i2p.bote.email.Identities.IdentityComparator;
 import i2p.bote.fileencryption.EncryptedInputStream;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
+import i2p.bote.packet.dht.Contact;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,7 +50,7 @@ import java.util.regex.PatternSyntaxException;
 import net.i2p.util.Log;
 
 /**
- * Migrates the identities file to the 0.2.8 format.<br/>
+ * Migrates the identities file and the address book to the 0.2.8 format.<br/>
  * It cannot be called at startup like {@link MigrateTo026} and
  * {@link MigrateTo027} because it operates on password-protected data.
  */
@@ -55,6 +58,11 @@ class MigrateTo028 {
     private Log log = new Log(MigrateTo028.class);
     
     public void migrateIfNeeded(Configuration configuration, PasswordHolder passwordHolder) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
+        migrateIdentitiesIfNeeded(configuration, passwordHolder);
+        migrateAddressBookIfNeeded(configuration, passwordHolder);
+    }
+    
+    private void migrateIdentitiesIfNeeded(Configuration configuration, PasswordHolder passwordHolder) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
         File identitiesFile = configuration.getIdentitiesFile();
         
         BufferedReader input = null;
@@ -64,7 +72,7 @@ class MigrateTo028 {
             
             // No PasswordException occurred, so read the input stream and call migrateIdentities() if needed
             List<String> lines = Util.readLines(encryptedStream);
-            if (!isMigrated(lines))
+            if (!isIdentitiesFileMigrated(lines))
                 migrateIdentities(lines, configuration, passwordHolder);
         } finally {
             if (input != null)
@@ -76,7 +84,7 @@ class MigrateTo028 {
      * Returns <code>true</code> if the identities file is in the 0.2.8 format.
      * @param lines Contents of the identities file
      */
-    private boolean isMigrated(List<String> lines) {
+    private boolean isIdentitiesFileMigrated(List<String> lines) {
         if (lines.isEmpty())
             return true;
         String firstLine = lines.get(0);
@@ -96,7 +104,7 @@ class MigrateTo028 {
      * @throws IOException 
      * @throws Exception
      */
-    public void migrateIdentities(List<String> lines, Configuration configuration, PasswordHolder passwordHolder) throws IOException, GeneralSecurityException, PasswordException {
+    private void migrateIdentities(List<String> lines, Configuration configuration, PasswordHolder passwordHolder) throws IOException, GeneralSecurityException, PasswordException {
         SortedSet<EmailIdentity> identitiesSet = new TreeSet<EmailIdentity>(new IdentityComparator());
         String defaultIdentityString = null;
         for (String line: lines) {
@@ -152,5 +160,55 @@ class MigrateTo028 {
             log.error("Invalid email identity: <" + fields[0] + ">", e);
             return null;
         }
+    }
+    
+    private boolean isAddressBookFileMigrated(List<String> lines) {
+        if (lines.isEmpty())
+            return true;
+        String firstLine = lines.get(0);
+        if (firstLine.startsWith("#")) {
+            if (lines.size() > 1)
+                firstLine = lines.get(1);
+            else
+                return true;
+        }
+        return firstLine.startsWith("contact0.");
+    }
+    
+    private void migrateAddressBookIfNeeded(Configuration configuration, PasswordHolder passwordHolder) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
+        File addressBookFile = configuration.getAddressBookFile();
+        
+        BufferedReader input = null;
+        try {
+            InputStream encryptedStream = new EncryptedInputStream(new FileInputStream(addressBookFile), passwordHolder);
+            input = new BufferedReader(new InputStreamReader(encryptedStream));
+            
+            // No PasswordException occurred, so read the input stream and call migrateAddressBook() if needed
+            List<String> lines = Util.readLines(encryptedStream);
+            if (!isAddressBookFileMigrated(lines))
+                migrateAddressBook(lines, configuration, passwordHolder);
+        } finally {
+            if (input != null)
+                input.close();
+        }
+    }
+    
+    private void migrateAddressBook(List<String> lines, Configuration configuration, PasswordHolder passwordHolder) throws IOException, GeneralSecurityException, PasswordException {
+        AddressBook addressBook = new AddressBook(configuration.getAddressBookFile(), passwordHolder);
+        for (String line: lines) {
+            String[] fields = line.split("\\t", 2);
+            try {
+                EmailDestination destination = new EmailDestination(fields[0]);
+                String name = null;
+                if (fields.length > 1)
+                    name = fields[1];
+                Contact contact = new Contact(name, destination);
+                addressBook.add(contact);
+            }
+            catch (GeneralSecurityException e) {
+                log.error("Not a valid Email Destination: <" + fields[0] + ">", e);
+            }
+        }
+        addressBook.save();
     }
 }
