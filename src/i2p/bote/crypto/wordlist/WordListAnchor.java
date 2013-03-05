@@ -110,14 +110,19 @@ public class WordListAnchor {
     
     private synchronized String[] getList(String localeCode) {
         if (!lists.containsKey(localeCode)) {
-            URL wordListUrl = WordListAnchor.class.getResource("words_" + localeCode + ".txt");
+            URL wordListUrl = getWordListUrl(localeCode);
+            if (wordListUrl == null)
+                wordListUrl = getWordListUrl("en");
             List<String> wordList = Util.readLines(wordListUrl);
-            if (wordList.isEmpty())
-                return getList("en");
             String[] wordArr = wordList.toArray(new String[0]);
             lists.put(localeCode, wordArr);
             return wordArr;
         }
         return lists.get(localeCode);
+    }
+    
+    private URL getWordListUrl(String localeCode) {
+        URL wordListUrl = WordListAnchor.class.getResource("words_" + localeCode + ".txt");
+        return wordListUrl;
     }
 }
