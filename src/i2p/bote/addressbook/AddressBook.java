@@ -41,9 +41,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Properties;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -96,42 +96,32 @@ public class AddressBook {
             input = new BufferedReader(new InputStreamReader(encryptedStream));
             
             // No PasswordException occurred, so parse the input stream
-            List<String> lines = Util.readLines(encryptedStream);
-            if (lines.isEmpty())
-                contacts = new TreeSet<Contact>(new ContactComparator());
-            else {
-                // Convert List items to Properties
-                Properties properties = new Properties();
-                for (String line: lines) {
-                    String[] split = line.split("=", 2);
-                    if (split.length > 1)
-                        properties.setProperty(split[0], split[1]);
+            Properties properties = new Properties();
+            properties.load(new InputStreamReader(encryptedStream));
+            
+            contacts = new TreeSet<Contact>(new ContactComparator());
+            int index = 0;
+            while (true) {
+                String prefix = "contact" + index + ".";
+                String name = properties.getProperty(prefix + "name");
+                if (name == null)
+                    break;
+                
+                String destBase64 = properties.getProperty(prefix + "destination");
+                if (destBase64 == null)
+                    continue;
+                try {
+                    EmailDestination destination = new EmailDestination(destBase64);
+                    String pictureBase64 = properties.getProperty(prefix + "picture");
+                    String text = properties.getProperty(prefix + "text");
+                    Contact contact = new Contact(name, destination, pictureBase64, text);
+                    contacts.add(contact);
+                }
+                catch (GeneralSecurityException e) {
+                    log.error("Not a valid Email Destination: <" + destBase64 + ">", e);
                 }
                 
-                contacts = new TreeSet<Contact>(new ContactComparator());
-                int index = 0;
-                while (true) {
-                    String prefix = "contact" + index + ".";
-                    String name = properties.getProperty(prefix + "name");
-                    if (name == null)
-                        break;
-                    
-                    String destBase64 = properties.getProperty(prefix + "destination");
-                    if (destBase64 == null)
-                        continue;
-                    try {
-                        EmailDestination destination = new EmailDestination(destBase64);
-                        String pictureBase64 = properties.getProperty(prefix + "picture");
-                        String text = properties.getProperty(prefix + "text");
-                        Contact contact = new Contact(name, destination, pictureBase64, text);
-                        contacts.add(contact);
-                    }
-                    catch (GeneralSecurityException e) {
-                        log.error("Not a valid Email Destination: <" + destBase64 + ">", e);
-                    }
-                    
-                    index++;
-                }
+                index++;
             }
         } catch (PasswordException e) {
             throw e;
@@ -165,9 +155,9 @@ public class AddressBook {
                 properties.setProperty(prefix + "picture", (pictureBase64==null ? "" : pictureBase64));
                 String text = contact.getText();
                 properties.setProperty(prefix + "text", (text==null ? "" : text));
-                properties.store(encryptedStream, null);
                 index++;
             }
+            properties.store(new OutputStreamWriter(encryptedStream, "UTF-8"), null);
             Util.makePrivate(addressFile);
         } catch (IOException e) {
             log.error("Can't save email identities to file <" + addressFile.getAbsolutePath() + ">.", e);
