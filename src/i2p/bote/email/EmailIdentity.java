@@ -27,14 +27,20 @@ import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.crypto.PrivateKeyPair;
 import i2p.bote.crypto.PublicKeyPair;
 
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 
+import net.i2p.crypto.SHA256Generator;
+import net.i2p.data.Hash;
+
 import com.lambdaworks.codec.Base64;
 
 public class EmailIdentity extends EmailDestination {
+    private final static Charset UTF8 = Charset.forName("UTF-8");
+    
     private PrivateKey privateEncryptionKey;
     private PrivateKey privateSigningKey;
     private String publicName;
@@ -42,6 +48,7 @@ public class EmailIdentity extends EmailDestination {
     private String emailAddress;   // optional
     private byte[] picture;
     private String text;
+    private Fingerprint fingerprint;
     private boolean published;
     private boolean isDefault;
 
@@ -158,6 +165,26 @@ public class EmailIdentity extends EmailDestination {
         return text;
     }
 
+    public void generateFingerprint() throws GeneralSecurityException {
+        fingerprint = Fingerprint.generate(this);
+    }
+
+    public void setFingerprint(Fingerprint fingerprint) {
+        this.fingerprint = fingerprint;
+    }
+    
+    public Fingerprint getFingerprint() throws GeneralSecurityException {
+        return fingerprint;
+    }
+    
+    public static Hash calculateHash(String name) {
+        name = name.trim();
+        if (name.endsWith("@bote.i2p"))
+            name = name.substring(0, name.length()-"@bote.i2p".length());
+        byte[] nameBytes = name.toLowerCase().getBytes(UTF8);
+        return SHA256Generator.getInstance().calculateHash(nameBytes);
+    }
+    
     public void setDefault(boolean isDefault) {
         this.isDefault = isDefault;
     }

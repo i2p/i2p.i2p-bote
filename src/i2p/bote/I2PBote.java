@@ -436,14 +436,16 @@ public class I2PBote implements NetworkStatusSource {
         if (identity != null) {
             identity.setPicture(picture);
             identity.setText(text);
+            if (identity.getFingerprint() == null)
+                identity.generateFingerprint();   // if no fingerprint exists, generate one and save it in the next step
             identities.save();
-            Contact entry = new Contact(identity, identities, picture, text);
+            Contact entry = new Contact(identity, identities, picture, text, identity.getFingerprint());
             dht.store(entry);
         }
     }
     
     public Contact lookupInDirectory(String name) throws InterruptedException {
-        Hash key = Contact.calculateHash(name);
+        Hash key = EmailIdentity.calculateHash(name);
         DhtResults results = dht.findOne(key, Contact.class);
         if (!results.isEmpty()) {
             DhtStorablePacket packet = results.getPackets().iterator().next();

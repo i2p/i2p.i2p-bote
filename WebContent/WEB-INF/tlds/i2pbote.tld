@@ -333,13 +333,24 @@
 </function>
 
 <function>
-    <name>getFingerprint</name>
+    <name>getContactFingerprint</name>
     <description>
         Returns the fingerprint of a Contact in a given locale.
     </description>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         java.lang.String getFingerprint(i2p.bote.packet.dht.Contact, java.lang.String)
+    </function-signature>
+</function>
+
+<function>
+    <name>getIdentityFingerprint</name>
+    <description>
+        Returns the fingerprint of an EmailIdentity in a given locale.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getFingerprint(i2p.bote.email.EmailIdentity, java.lang.String)
     </function-signature>
 </function>
 

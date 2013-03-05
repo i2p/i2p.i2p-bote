@@ -49,6 +49,7 @@ import java.util.Properties;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.i2p.data.Hash;
 import net.i2p.util.Log;
 
 import com.lambdaworks.codec.Base64;
@@ -140,7 +141,14 @@ public class Identities implements KeyUpdateHandler {
                     identity.setPicture(pictureBase64==null ? null : Base64.decode(pictureBase64.toCharArray()));
                     identity.setText(properties.getProperty(prefix + "text"));
                     identity.setPublished("true".equalsIgnoreCase(properties.getProperty(prefix + "published")));
-                    identity.setPublicName(properties.getProperty(prefix + "publicName"));
+                    String name = properties.getProperty(prefix + "publicName");
+                    identity.setPublicName(name);
+                    String salt = properties.getProperty(prefix + "salt");
+                    if (salt != null) {
+                        Hash nameHash = EmailIdentity.calculateHash(name);
+                        Fingerprint fingerprint = new Fingerprint(nameHash, identity, Base64.decode(salt.toCharArray()));
+                        identity.setFingerprint(fingerprint);
+                    }
                     identities.add(identity);
                     
                     if (key.equals(defaultIdentityStr))
@@ -177,6 +185,9 @@ public class Identities implements KeyUpdateHandler {
                 String prefix = "identity" + index + ".";
                 properties.setProperty(prefix + "publicName", identity.getPublicName());
                 properties.setProperty(prefix + "key", identity.getFullKey());
+                Fingerprint fingerprint = identity.getFingerprint();
+                byte[] salt = fingerprint==null ? null : fingerprint.getSalt();
+                properties.setProperty(prefix + "salt", salt==null ? "" : new String(Base64.encode(salt)));
                 String description = identity.getDescription();
                 properties.setProperty(prefix + "description", (description==null ? "" : description));
                 byte[] picture = identity.getPicture();

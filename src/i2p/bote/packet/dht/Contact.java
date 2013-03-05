@@ -26,8 +26,8 @@ import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.crypto.KeyUpdateHandler;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.Fingerprint;
 import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.fileencryption.SCryptParameters;
 import i2p.bote.packet.TypeCode;
 
 import java.io.ByteArrayOutputStream;
@@ -41,14 +41,10 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
 
-import net.i2p.I2PAppContext;
-import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
-import net.i2p.util.RandomSource;
 
 import com.lambdaworks.codec.Base64;
-import com.lambdaworks.crypto.SCrypt;
 
 /**
  * Represents an address book entry. Can be stored in the DHT.
@@ -56,20 +52,15 @@ import com.lambdaworks.crypto.SCrypt;
 @TypeCode('C')
 public class Contact extends DhtStorablePacket {
     private final static Charset UTF8 = Charset.forName("UTF-8");
-    private final static SCryptParameters SCRYPT_PARAMETERS = new SCryptParameters(1<<14, 8, 1);
-    private final static int NUM_FINGERPRINT_BYTES = 32;   // length of the raw fingerprint
-    private final static int NUM_WORDS_IN_FINGERPRINT = 7;   // #words generated from the raw fingerprint
-    private final static int NUM_WORDS_IN_LIST = 1 << 13;   // must be a power of 2
-    private final static int NUM_SALT_BYTES = 4;
     
     private Log log = new Log(Contact.class);
     private String name;
     private Hash nameHash;   // SHA-256 hash of the UTF8-encoded name in lower case
     private EmailDestination destination;
-    private byte[] salt;
     private byte[] picture;
     private String text;
     private byte[] signature;
+    private Fingerprint fingerprint;
 
     /**
      * Creates a new <code>Contact</code>. Calculates a salt value which takes some time;
@@ -79,20 +70,17 @@ public class Contact extends DhtStorablePacket {
      * @param keyUpdateHandler For signing the packet
      * @param picture A browser-renderable picture
      * @param text
+     * @param salt
      * @throws GeneralSecurityException
      * @throws PasswordException 
      */
-    public Contact(EmailIdentity identity, KeyUpdateHandler keyUpdateHandler, byte[] picture, String text) throws GeneralSecurityException, PasswordException {
-        this(calculateHash(identity.getPublicName()), identity, picture, text);
-        generateSalt();
-        sign(identity, keyUpdateHandler);
-    }
-    
-    public Contact(Hash nameHash, EmailDestination destination, byte[] picture, String text) {
-        this.nameHash = nameHash;
-        this.destination = destination;
+    public Contact(EmailIdentity identity, KeyUpdateHandler keyUpdateHandler, byte[] picture, String text, Fingerprint fingerprint) throws GeneralSecurityException, PasswordException {
+        destination = identity;
         this.picture = picture;
         this.text = text;
+        this.fingerprint = fingerprint;
+        nameHash = EmailIdentity.calculateHash(identity.getPublicName());
+        sign(identity, keyUpdateHandler);
     }
     
     /**
@@ -101,8 +89,8 @@ public class Contact extends DhtStorablePacket {
      */
     public Contact(String name, EmailDestination destination) {
         this.name = name;
-        nameHash = calculateHash(name);
         this.destination = destination;
+        nameHash = EmailIdentity.calculateHash(name);
     }
     
     public Contact(String name, EmailDestination destination, String pictureBase64, String text) {
@@ -112,6 +100,7 @@ public class Contact extends DhtStorablePacket {
         this.text = text;
     }
 
+    /** Restores a <code>Contact</code> from its byte array representation. Note that the <code>name</code> field is not set. */
     public Contact(byte[] data) throws GeneralSecurityException {
         super(data);
         ByteBuffer buffer = ByteBuffer.wrap(data, HEADER_LENGTH, data.length-HEADER_LENGTH);
@@ -124,8 +113,9 @@ public class Contact extends DhtStorablePacket {
             buffer.get(emailDestBytes);
             destination = new EmailDestination(emailDestBytes);
             
-            salt = new byte[NUM_SALT_BYTES];
+            byte[] salt = new byte[Fingerprint.NUM_SALT_BYTES];
             buffer.get(salt);
+            fingerprint = new Fingerprint(nameHash, destination, salt);
             
             int pLen = buffer.getShort();
             picture = new byte[pLen];
@@ -150,60 +140,8 @@ public class Contact extends DhtStorablePacket {
             log.debug("Extra bytes in Directory Entry data.");
     }
 
-    /** Returns the DHT key */
-    public static Hash calculateHash(String name) {
-        name = name.trim();
-        if (name.endsWith("@bote.i2p"))
-            name = name.substring(0, name.length()-"@bote.i2p".length());
-        byte[] nameBytes = name.toLowerCase().getBytes(UTF8);
-        return SHA256Generator.getInstance().calculateHash(nameBytes);
-    }
-    
-    /** Finds a salt value such that scrypt(nameHash|destination, salt) starts with a zero byte */
-    private void generateSalt() throws GeneralSecurityException {
-        byte[] input = Util.concat(nameHash.toByteArray(), destination.toByteArray());
-        RandomSource randomSource = I2PAppContext.getGlobalContext().random();
-        while (true) {
-            salt = new byte[NUM_SALT_BYTES];
-            randomSource.nextBytes(salt);
-            byte[] fingerprint = SCrypt.scrypt(input, salt, SCRYPT_PARAMETERS.N, SCRYPT_PARAMETERS.r, SCRYPT_PARAMETERS.p, NUM_FINGERPRINT_BYTES);
-            if (fingerprint[31] == 0)
-                return;
-        }
-    }
-    
-    /**
-     * Returns a byte array of length <code>NUM_FINGERPRINT_BYTES</code>.
-     * @return
-     * @throws GeneralSecurityException
-     */
-    private byte[] getRawFingerprint() throws GeneralSecurityException {
-        byte[] input = Util.concat(nameHash.toByteArray(), destination.toByteArray());
-        byte[] fingerprint = SCrypt.scrypt(input, salt, SCRYPT_PARAMETERS.N, SCRYPT_PARAMETERS.r, SCRYPT_PARAMETERS.p, NUM_FINGERPRINT_BYTES);
-        return fingerprint;
-    }
-    
-    /**
-     * Returns the fingerprint for this <code>Contact</code> based on a word list.<br/>
-     * Throws a <code>NullPointerException</code> if salt is not initialized.<br/>
-     * This fingerprint doesn't contain the full <code>NUM_FINGERPRINT_BYTES</code> bytes
-     * worth of information from the raw fingerprint, but it is more recognizable to users.
-     * @param wordList a word list for some locale
-     * @throws GeneralSecurityException
-     */
-    public String getFingerprint(String[] wordList) throws GeneralSecurityException {
-        byte[] fingerprintBytes = getRawFingerprint();
-        ByteBuffer fingerprintBuffer = ByteBuffer.wrap(fingerprintBytes);
-        StringBuilder fingerprintWords = new StringBuilder();
-        for (int i=0; i<NUM_WORDS_IN_FINGERPRINT; i++) {
-            if (i > 0)
-                fingerprintWords.append(" - ");
-            int index = fingerprintBuffer.getShort() & (NUM_WORDS_IN_LIST - 1);
-            String word = wordList[index];
-            fingerprintWords.append(word);
-        }
-        
-        return fingerprintWords.toString();
+    public Hash getNameHash() {
+        return nameHash;
     }
     
     /**
@@ -221,17 +159,24 @@ public class Contact extends DhtStorablePacket {
     }
     
     /**
-     * Verifies the signature and checks that the 31th byte of the fingerprint is zero.
+     * Verifies the signature and the fingerprint.
      * @return
      * @throws GeneralSecurityException 
      */
     public boolean verify() throws GeneralSecurityException {
+        if (signature==null || fingerprint==null)
+            return false;
+        
         CryptoImplementation cryptoImpl = destination.getCryptoImpl();
         PublicKey key = destination.getPublicSigningKey();
         boolean valid = cryptoImpl.verify(getDataToSign(), signature, key);
         
-        valid &= getRawFingerprint()[NUM_FINGERPRINT_BYTES-1] == 0;
+        valid &= fingerprint.isValid();
         return valid;
+    }
+    
+    public Fingerprint getFingerprint() {
+        return fingerprint;
     }
     
     private byte[] getDataToSign() {
@@ -243,7 +188,7 @@ public class Contact extends DhtStorablePacket {
     
     public void setName(String name) {
         this.name = name;
-        nameHash = calculateHash(name);
+        nameHash = EmailIdentity.calculateHash(name);
     }
 
     public String getName() {
@@ -252,7 +197,7 @@ public class Contact extends DhtStorablePacket {
     
     @Override
     public Hash getDhtKey() {
-        return nameHash;
+        return getNameHash();
     }
 
     public String getBase64Dest() {
@@ -307,7 +252,7 @@ public class Contact extends DhtStorablePacket {
             dataStream.writeShort(destBytes.length);
             dataStream.write(destBytes);
             
-            dataStream.write(salt);
+            dataStream.write(fingerprint.getSalt());
             
             if (picture == null)
                 picture = new byte[0];

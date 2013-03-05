@@ -64,11 +64,11 @@
             
             <%-- fingerprint --%>
             <c:set var="uiLocaleCode" value="${jspHelperBean.language}"/>
-            <b><ib:message key="Fingerprint: "/></b> ${ib:getFingerprint(result, uiLocaleCode)}
+            <b><ib:message key="Fingerprint:"/></b> ${ib:getContactFingerprint(result, uiLocaleCode)}
             <ib:expandable>
                 <c:forEach items="${jspHelperBean.wordListLocales}" var="localeCode">
                     <c:if test="${localeCode ne uiLocaleCode}">
-                        &nbsp;&nbsp;<b>${localeCode}</b>: ${ib:getFingerprint(result, localeCode)}<br/>
+                        &nbsp;&nbsp;<b>${localeCode}</b>: ${ib:getContactFingerprint(result, localeCode)}<br/>
                     </c:if>
                 </c:forEach>
             </ib:expandable>

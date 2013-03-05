@@ -29,6 +29,7 @@ import i2p.bote.Util;
 import i2p.bote.crypto.KeyUpdateHandler;
 import i2p.bote.crypto.wordlist.WordListAnchor;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.Fingerprint;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -82,7 +83,8 @@ public class ContactTest {
         InputStream inputStream = getClass().getResourceAsStream("Struwwelpeter.jpg");
         byte[] picture = Util.readBytes(inputStream);
         KeyUpdateHandler keyUpdateHandler = TestUtil.createVerifyingKeyUpdateHandler(1);
-        contact = new Contact(identity, keyUpdateHandler, picture, text);
+        identity.generateFingerprint();
+        contact = new Contact(identity, keyUpdateHandler, picture, text, identity.getFingerprint());
     }
 
     @Test
@@ -96,9 +98,9 @@ public class ContactTest {
         assertEquals(contact.getName(), contact2.getName());
         assertEquals(contact.getDestination().toBase64(), contact2.getDestination().toBase64());
         assertEquals(contact.getText(), contact2.getText());
-        assertEquals(contact.getFingerprint(wordListDE), contact2.getFingerprint(wordListDE));
-        assertEquals(contact.getFingerprint(wordListEN), contact2.getFingerprint(wordListEN));
-        assertFalse(contact.getFingerprint(wordListEN).equals(contact2.getFingerprint(wordListDE)));
+        assertEquals(contact.getFingerprint().getWords(wordListDE), contact2.getFingerprint().getWords(wordListDE));
+        assertEquals(contact.getFingerprint().getWords(wordListEN), contact2.getFingerprint().getWords(wordListEN));
+        assertFalse(contact.getFingerprint().getWords(wordListEN).equals(contact2.getFingerprint().getWords(wordListDE)));
         assertEquals(contact.getPictureBase64(), contact2.getPictureBase64());
         byte[] arrayB = contact2.toByteArray();
         assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
@@ -117,9 +119,10 @@ public class ContactTest {
         
         // restore the original name and make the salt invalid
         contact.setName(contactName);
-        Field saltField = Contact.class.getDeclaredField("salt");
+        Fingerprint fingerprint = contact.getFingerprint();
+        Field saltField = Fingerprint.class.getDeclaredField("salt");
         saltField.setAccessible(true);
-        byte[] salt = (byte[])saltField.get(contact);
+        byte[] salt = (byte[])saltField.get(fingerprint);
         salt[2]++;
         assertFalse(contact.verify());
         

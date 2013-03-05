@@ -32,6 +32,7 @@ import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.Fingerprint;
 import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
@@ -190,7 +191,14 @@ public class JSPHelper {
     
     public static String getFingerprint(Contact contact, String localeCode) throws GeneralSecurityException {
         String[] wordList = I2PBote.getInstance().getWordList(localeCode);
-        return contact.getFingerprint(wordList);
+        Fingerprint fingerprint = contact.getFingerprint();
+        return fingerprint==null ? null : fingerprint.getWords(wordList);
+    }
+    
+    public static String getFingerprint(EmailIdentity identity, String localeCode) throws GeneralSecurityException {
+        String[] wordList = I2PBote.getInstance().getWordList(localeCode);
+        Fingerprint fingerprint = identity.getFingerprint();
+        return fingerprint==null ? null : fingerprint.getWords(wordList);
     }
     
     /** @see {@link I2PBote#getWordListLocales() */

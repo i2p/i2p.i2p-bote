@@ -146,6 +146,29 @@
             </div>
         </c:if>
     
+        <c:if test="${not empty param.key}">
+            <div class="identity-form-label">
+                <ib:message key="Fingerprint:"/>
+            </div>
+            <c:set var="uiLocaleCode" value="${jspHelperBean.language}"/>
+            <c:set var="fingerprint" value="${ib:getIdentityFingerprint(identity, uiLocaleCode)}"/>
+            <div class="identity-form-value">
+                <c:if test="${not empty fingerprint}">
+                    ${fingerprint}
+                    <ib:expandable>
+                        <c:forEach items="${jspHelperBean.wordListLocales}" var="localeCode">
+                            <c:if test="${localeCode ne uiLocaleCode}">
+                                &nbsp;&nbsp;<b>${localeCode}</b>: ${ib:getIdentityFingerprint(identity, localeCode)}<br/>
+                            </c:if>
+                        </c:forEach>
+                    </ib:expandable>
+                </c:if>
+            </div>
+            <c:if test="${empty fingerprint}">
+                &nbsp;
+            </c:if>
+        </c:if>
+        
         <div class="identity-form-label">
             <ib:message key="Default Identity:"/>
         </div>
