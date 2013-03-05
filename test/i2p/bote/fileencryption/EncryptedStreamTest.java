@@ -23,9 +23,6 @@ package i2p.bote.fileencryption;
 
 import static org.junit.Assert.assertEquals;
 import i2p.bote.Util;
-import i2p.bote.fileencryption.DerivedKey;
-import i2p.bote.fileencryption.EncryptedInputStream;
-import i2p.bote.fileencryption.EncryptedOutputStream;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -53,4 +50,39 @@ public class EncryptedStreamTest {
         
         assertEquals(plainText, decryptedText);
     }
+    
+    /** Tests <code>mark()</code> and <code>reset()</code>. */
+    @Test
+    public void testReset() throws Exception {
+        String plainText = "Ich bin Salomo. Ich bin der arme König Salomo." +
+        		"Einst war ich unermeßlich reich, weise und gottesfürchtig. Ob" +
+        		"meiner Macht erzitterten die Gewaltigen. Ich war ein Fürst des" +
+        		"Friedens und der Gerechtigkeit. Aber meine Weisheit zerstörte" +
+        		"meine Gottesfurcht und als ich Gott nicht mehr fürchtete," +
+        		"zerstörte meine Weisheit meinen Reichtum. Nun sind die" +
+        		"Städte tot, über die ich regierte, mein Reich leer, das mir" +
+        		"anvertraut worden war, eine blauschimmernde Wüste, und" +
+        		"irgendwo um einen kleinen, gelben, namenlosen Stern kreist," +
+        		"sinnlos, immerzu die radioaktive Erde. Ich bin Salomo, ich bin" +
+        		"Salomo, ich bin der arme König Salomo.";
+        
+        byte[] password = "s3krit p@ssw3rd".getBytes();
+        DerivedKey derivedKey = FileEncryptionTestUtil.deriveKey(password);
+        
+        ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+        OutputStream encryptedOutputStream = new EncryptedOutputStream(byteOutputStream, derivedKey);
+        encryptedOutputStream.write(plainText.getBytes());
+        encryptedOutputStream.close();
+        
+        ByteArrayInputStream byteInputStream = new ByteArrayInputStream(byteOutputStream.toByteArray());
+        EncryptedInputStream encryptedInputStream = new EncryptedInputStream(byteInputStream, password);
+        encryptedInputStream.mark(1024 * 1024);
+        String decryptedText = new String(Util.readBytes(encryptedInputStream));
+        assertEquals(plainText, decryptedText);
+        
+        // reset 
+        encryptedInputStream.reset();
+        decryptedText = new String(Util.readBytes(encryptedInputStream));
+        assertEquals(plainText, decryptedText);
+   }
 }

@@ -137,4 +137,14 @@ public class EncryptedInputStream extends FilterInputStream {
     public int available() {
         return decryptedData.available();
     }
+    
+    @Override
+    public void mark(int readLimit) {
+        decryptedData.mark(readLimit);
+    }
+    
+    @Override
+    public void reset() {
+        decryptedData.reset();
+    }
 }
