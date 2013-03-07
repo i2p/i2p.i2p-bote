@@ -33,26 +33,27 @@
 <jsp:include page="header.jsp"/>
 
 <div class="main">
-    <c:set var="result" value="${ib:lookupInDirectory(param.name)}"/>
-    <c:if test="${empty result}">
-        <ib:message key="The name &quot;{0}&quot; was not found in the directory." var="errorMessage" scope="request">
-            <ib:param value="${param.name}"/>
-        </ib:message>
-        <jsp:forward page="addressBook.jsp"/>
-    </c:if>
-    
-    <c:if test="${not empty result}">
-        <c:if test="${param.confirm eq true}">
+    <c:if test="${param.confirm eq true}">
         <ib:requirePassword>
-            <c:set var="errorMessage" value="${ib:saveContact(result.destination, param.name, result.pictureBase64, result.text)}"/>
+            <c:set var="errorMessage" value="${ib:saveContact(param.destination, param.name, param.picture, param.text)}"/>
             <c:if test="${empty errorMessage}">
                 <ib:message key="The name has been imported to the address book." var="infoMessage" scope="request"/>
             </c:if>
             <jsp:forward page="addressBook.jsp"/>
         </ib:requirePassword>
+    </c:if>
+        
+    <c:if test="${param.confirm ne true}">
+        <c:set var="result" value="${ib:lookupInDirectory(param.name)}"/>
+        
+        <c:if test="${empty result}">
+            <ib:message key="The name &quot;{0}&quot; was not found in the directory." var="errorMessage" scope="request">
+                <ib:param value="${param.name}"/>
+            </ib:message>
+            <jsp:forward page="addressBook.jsp"/>
         </c:if>
         
-        <c:if test="${param.confirm ne true}">
+        <c:if test="${not empty result}">
             <h2><ib:message key="Import Contact"/></h2>
             <p>
             <ib:message>
