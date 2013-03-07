@@ -90,7 +90,7 @@
                 <img src="data:${identity.pictureType};base64,${identity.pictureBase64}"/>
             </c:if>
             <c:if test="${empty identity.picture}">
-                &nbsp;
+                &nbsp;<br/>&nbsp;<br/>
             </c:if>
         </div>
     
@@ -98,14 +98,7 @@
             <div class="field-label"><ib:message key="Text:"/></div>
             <div class="addtl-text"><ib:message key="(published to the address directory)"/></div>
         </div>
-        <div class="identity-form-text">
-            <c:if test="${not empty identity.text}">
-                ${fn:escapeXml(identity.text)}
-            </c:if>
-            <c:if test="${empty identity.text}">
-                &nbsp;
-            </c:if>
-        </div>
+        <div class="identity-form-text"><c:if test="${not empty identity.text}">${fn:escapeXml(identity.text)}</c:if><c:if test="${empty identity.text}">&nbsp;</c:if></div>
     
         <div class="identity-form-label">
             <div class="field-label"><ib:message key="Encryption:"/></div>

@@ -128,7 +128,8 @@ public class Identities implements KeyUpdateHandler {
                 EmailIdentity identity = new EmailIdentity(key);
                 identity.setDescription(properties.getProperty(prefix + "description"));
                 String pictureBase64 = properties.getProperty(prefix + "picture");
-                identity.setPicture(pictureBase64==null ? null : Base64.decode(pictureBase64.toCharArray()));
+                if (pictureBase64!=null && !pictureBase64.isEmpty())
+                    identity.setPicture(Base64.decode(pictureBase64.toCharArray()));
                 identity.setText(properties.getProperty(prefix + "text"));
                 identity.setPublished("true".equalsIgnoreCase(properties.getProperty(prefix + "published")));
                 String name = properties.getProperty(prefix + "publicName");
