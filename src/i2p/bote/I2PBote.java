@@ -113,7 +113,7 @@ import net.i2p.util.Log;
  */
 public class I2PBote implements NetworkStatusSource {
     public static final int PROTOCOL_VERSION = 4;
-    private static final String APP_VERSION = "0.2.7";
+    private static final String APP_VERSION = "0.2.8";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
     private static volatile I2PBote instance;
     

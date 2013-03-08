@@ -1,6 +1,9 @@
 I2P-Bote Version History
 ------------------------
 
+0.2.8 (Released on Mar 8, 2013)
+ * Fixes and enhancements to the address directory
+
 0.2.7 (Released on Feb 13, 2013)
   * Delivery confirmations
   * Basic distributed address directory
