@@ -661,6 +661,10 @@ public class JSPHelper {
         I2PBote.getInstance().clearPassword();
     }
     
+    public List<File> getUndecryptableFiles() throws PasswordException, IOException, GeneralSecurityException {
+        return I2PBote.getInstance().getUndecryptableFiles();
+    }
+    
     public boolean isUpdateAvailable() {
         return I2PBote.getInstance().isUpdateAvailable();
     }

@@ -24,6 +24,7 @@ package i2p.bote;
 import static i2p.bote.Util._;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.crypto.wordlist.WordListAnchor;
+import i2p.bote.debug.DebugSupport;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
@@ -145,6 +146,7 @@ public class I2PBote implements NetworkStatusSource {
     private RelayPeerManager peerManager;
     private PasswordCache passwordCache;
     private ConnectTask connectTask;
+    private DebugSupport debugSupport;
 
     /**
      * Constructs a new instance of <code>I2PBote</code> and initializes
@@ -185,6 +187,8 @@ public class I2PBote implements NetworkStatusSource {
         addressBook = new AddressBook(configuration.getAddressBookFile(), passwordCache);
         initializeFolderAccess(passwordCache);
         initializeExternalThemeDir();
+        
+        debugSupport = new DebugSupport(configuration, passwordCache);
         
         wordLists = new WordListAnchor();
     }
@@ -630,6 +634,10 @@ public class I2PBote implements NetworkStatusSource {
     /** Removes the password from the password cache. If there is no password in the cache, nothing happens. */
     public void clearPassword() {
         passwordCache.clear();
+    }
+    
+    public List<File> getUndecryptableFiles() throws PasswordException, IOException, GeneralSecurityException {
+        return debugSupport.getUndecryptableFiles();
     }
     
     private Collection<EmailFolder> getEmailFolders() {
