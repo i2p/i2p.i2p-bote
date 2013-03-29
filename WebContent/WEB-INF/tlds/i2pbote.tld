@@ -297,6 +297,44 @@
     <body-content>empty</body-content>
 </tag>
 
+<tag>
+    <info>
+        Changes the application password. If no password is
+        currently set, the old password is an empty string.
+    </info>
+    <name>setPassword</name>
+    <tag-class>i2p.bote.web.SetPasswordTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>oldPassword</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+    <attribute>
+        <name>newPassword</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+    <attribute>
+        <name>confirmNewPassword</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+</tag>
+
+<tag>
+    <info>
+        If the password is being changed (i.e. all files are being
+        reencrypted with a new password), this call blocks until
+        the password change is finished. If the password isn't being
+        changed, it returns immediately.
+        This tag produces no output.
+    </info>
+    <name>waitForPasswordChange</name>
+    <tag-class>i2p.bote.web.WaitForPasswordChangeTag</tag-class>
+    <body-content>empty</body-content>
+</tag>
+
 <function>
     <name>createOrModifyIdentity</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
@@ -552,18 +590,6 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         boolean tryPassword(java.lang.String)
-    </function-signature>
-</function>
-
-<function>
-    <name>changePassword</name>
-    <description>
-        Sets a new password. Returns a localized error message,
-        or null if the password change was sucessful.
-    </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
-    <function-signature>
-        java.lang.String changePassword(java.lang.String, java.lang.String, java.lang.String)
     </function-signature>
 </function>
 

@@ -19,18 +19,21 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.fileencryption;
+package i2p.bote.web;
 
-/**
- * This exception is thrown when a password is invalid or missing.
- */
-public class PasswordException extends Exception {
-    private static final long serialVersionUID = 9105407855443550137L;
-    
-    public PasswordException() {
-    }
-    
-    public PasswordException(String message) {
-        super(message);
+import i2p.bote.I2PBote;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.SimpleTagSupport;
+
+public class WaitForPasswordChangeTag extends SimpleTagSupport {
+
+    @Override
+    public void doTag() throws JspException {
+        try {
+            I2PBote.getInstance().waitForPasswordChange();
+        } catch (Throwable e) {
+            throw new JspException(e);
+        }
     }
 }

@@ -89,7 +89,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.mail.MessagingException;
@@ -145,6 +149,7 @@ public class I2PBote implements NetworkStatusSource {
     private KademliaDHT dht;
     private RelayPeerManager peerManager;
     private PasswordCache passwordCache;
+    private Future<Void> passwordChangeResult;
     private ConnectTask connectTask;
     private DebugSupport debugSupport;
 
@@ -565,22 +570,52 @@ public class I2PBote implements NetworkStatusSource {
     }
     
     /**
+     * Calls {@link #changePassword(byte[], byte[], byte[])} in a new thread and
+     * returns a {@link Future} that throws the same exceptions the synchronous
+     * variant would.
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmNewPassword
+     */
+    public void changePasswordAsync(final byte[] oldPassword, final byte[] newPassword, final byte[] confirmNewPassword) {
+        passwordChangeResult = Executors.newSingleThreadExecutor().submit(new Callable<Void>() {
+            @Override
+            public Void call() throws IOException, GeneralSecurityException, PasswordException {
+                changePassword(oldPassword, newPassword, confirmNewPassword);
+                return null;
+            }
+        });
+    }
+    
+    public void waitForPasswordChange() throws Throwable {
+        if (passwordChangeResult == null)
+            return;
+        
+        try {
+            passwordChangeResult.get();
+        } catch (ExecutionException e) {
+            throw e.getCause();
+        } finally {
+            passwordChangeResult = null;
+        }
+    }
+    
+    /**
      * Reencrypts all encrypted files with a new password
      * @param oldPassword
      * @param newPassword
      * @param confirmNewPassword
-     * @return An error message if the two new passwords don't match, <code>null</code> otherwise
      * @throws IOException 
      * @throws GeneralSecurityException 
-     * @throws PasswordException 
+     * @throws PasswordException if the old password is incorrect or two new passwords don't match
      */
-    public String changePassword(byte[] oldPassword, byte[] newPassword, byte[] confirmNewPassword) throws IOException, GeneralSecurityException, PasswordException {
+    public void changePassword(byte[] oldPassword, byte[] newPassword, byte[] confirmNewPassword) throws IOException, GeneralSecurityException, PasswordException {
         File passwordFile = configuration.getPasswordFile();
         
         if (!FileEncryptionUtil.isPasswordCorrect(oldPassword, passwordFile))
-            return _("The old password is not correct.");
+            throw new PasswordException(_("The old password is not correct."));
         if (!Arrays.equals(newPassword, confirmNewPassword))
-            return _("The new password and the confirmation password do not match.");
+            throw new PasswordException(_("The new password and the confirmation password do not match."));
         
         // lock so no files are encrypted with the old password while the password is being changed
         passwordCache.lockPassword();
@@ -597,8 +632,6 @@ public class I2PBote implements NetworkStatusSource {
         finally {
             passwordCache.unlockPassword();
         }
-        
-        return null;
     }
     
     /**

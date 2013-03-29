@@ -26,48 +26,66 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <ib:message key="Set Password" var="title" scope="request"/>
-<c:if test="${param.action eq 'set'}">
-    <c:set var="errorMessage" value="${ib:changePassword(param.old, param.new, param.confirm)}" scope="request"/>
-    <c:if test="${empty errorMessage}">
+<c:if test="${param.action eq 'wait'}">
+    <c:catch var="exception">
+        <ib:waitForPasswordChange/>
+    </c:catch>
+    <c:if test="${empty exception}">
         <ib:message key="The password has been changed." var="infoMessage" scope="request"/>
         <jsp:forward page="index.jsp"/>
     </c:if>
+    <c:if test="${not empty exception}">
+        <c:set var="errorMessage" value="${exception.cause.localizedMessage}" scope="request"/>
+    </c:if>
+</c:if>
+<c:if test="${param.action eq 'set'}">
+    <c:set var="refreshUrl" value="setPassword.jsp?action=wait" scope="request"/>
+    <c:set var="refreshInterval" value="0" scope="request"/>
+    <ib:setPassword oldPassword="${param.old}" newPassword="${param.new}" confirmNewPassword="${param.confirm}"/>
 </c:if>
 
 <jsp:include page="header.jsp"/>
 
 <div class="main">
-    <h2><ib:message key="Set a new Password"/></h2>
+    <c:if test="${param.action eq 'set'}">
+        <h2><ib:message key="Please wait"/></h2>
+        <p>
+        <img src="${themeDir}/images/wait.gif"/> <ib:message key="Please wait while the password is being changed..."/>
+        </p>
+    </c:if>
+    <c:if test="${param.action ne 'set'}">
+        <h2><ib:message key="Set a new Password"/></h2>
+        
+        <p>
+        <ib:message key="If you have not set a password, leave the old password blank."/>
+        </p><p>
+        <ib:message>
+            Please note that if a password is set, emails cannot be checked automatically
+            but only when the Check Mail button is clicked.
+        </ib:message>
+        </p><br/>
+        
+        <form name="form" action="setPassword.jsp" method="POST">
+            <input type="hidden" name="action" value="set"/>
+            
+            <div class="password-label"><ib:message key="Old password:"/></div>
+            <div class="password-field"><input type="password" name="old"/></div>
+            
+            <div class="password-label"><ib:message key="New password:"/></div>
+            <div class="password-field"><input type="password" name="new"/></div>
+            
+            <div class="password-label"><ib:message key="Confirm:"/></div>
+            <div class="password-field"><input type="password" name="confirm"/></div>
+            
+            <p/>
+            <ib:message key="OK" var="ok"/>
+            <input type="submit" value="${ok}"/>
+        </form>
     
-    <p>
-    <ib:message key="If you have not set a password, leave the old password blank."/>
-    </p><p>
-    <ib:message>
-        Please note that if a password is set, emails cannot be checked automatically
-        but only when the Check Mail button is clicked.
-    </ib:message>
-    </p><br/>
-    
-    <form name="form" action="setPassword.jsp" method="POST">
-        <input type="hidden" name="action" value="set"/>
-        
-        <div class="password-label"><ib:message key="Old password:"/></div>
-        <div class="password-field"><input type="password" name="old"/></div>
-        
-        <div class="password-label"><ib:message key="New password:"/></div>
-        <div class="password-field"><input type="password" name="new"/></div>
-        
-        <div class="password-label"><ib:message key="Confirm:"/></div>
-        <div class="password-field"><input type="password" name="confirm"/></div>
-        
-        <p/>
-        <ib:message key="OK" var="ok"/>
-        <input type="submit" value="${ok}"/>
-    </form>
-
-    <script type="text/javascript" language="JavaScript">
-        document.forms['form'].elements['old'].focus();
-    </script>
+        <script type="text/javascript" language="JavaScript">
+            document.forms['form'].elements['old'].focus();
+        </script>
+    </c:if>
 </div>
 
 <jsp:include page="footer.jsp"/>

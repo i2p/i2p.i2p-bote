@@ -638,17 +638,6 @@ public class JSPHelper {
         }
     }
     
-    public static String changePassword(String oldPassword, String newPassword, String confirmNewPassword) {
-        try {
-            return I2PBote.getInstance().changePassword(oldPassword.getBytes(), newPassword.getBytes(), confirmNewPassword.getBytes());
-        }
-        catch (Exception e) {
-            Log log = new Log(JSPHelper.class);
-            log.error("Error while changing password", e);
-            return e.getLocalizedMessage();
-        }
-    }
-    
     public boolean isPasswordInCache() {
         return I2PBote.getInstance().isPasswordInCache();
     }
