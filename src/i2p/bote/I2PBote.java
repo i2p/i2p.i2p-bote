@@ -639,7 +639,7 @@ public class I2PBote implements NetworkStatusSource {
      * @throws PasswordException
      */
     public void tryPassword(byte[] password) throws IOException, GeneralSecurityException, PasswordException  {
-        File passwordFile = I2PBote.getInstance().getConfiguration().getPasswordFile();
+        File passwordFile = configuration.getPasswordFile();
         boolean correct = FileEncryptionUtil.isPasswordCorrect(password, passwordFile);
         if (correct)
             passwordCache.setPassword(password);
