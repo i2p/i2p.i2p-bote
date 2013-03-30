@@ -173,7 +173,8 @@ public class Identities implements KeyUpdateHandler {
                     defaultIndex = index;
                 
                 String prefix = "identity" + index + ".";
-                properties.setProperty(prefix + "publicName", identity.getPublicName());
+                String name = identity.getPublicName();
+                properties.setProperty(prefix + "publicName", name==null ? "" : name);
                 properties.setProperty(prefix + "key", identity.getFullKey());
                 Fingerprint fingerprint = identity.getFingerprint();
                 byte[] salt = fingerprint==null ? null : fingerprint.getSalt();
