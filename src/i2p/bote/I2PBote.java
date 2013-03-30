@@ -618,8 +618,7 @@ public class I2PBote implements NetworkStatusSource {
             throw new PasswordException(_("The new password and the confirmation password do not match."));
         
         // lock so no files are encrypted with the old password while the password is being changed
-        passwordCache.lockPassword();
-        try {
+        synchronized(passwordCache) {
             passwordCache.setPassword(newPassword);
             DerivedKey newKey = passwordCache.getKey();
             identities.changePassword(oldPassword, newKey);
@@ -628,9 +627,6 @@ public class I2PBote implements NetworkStatusSource {
                 folder.changePassword(oldPassword, newKey);
             
             FileEncryptionUtil.writePasswordFile(passwordFile, passwordCache.getPassword(), newKey);
-        }
-        finally {
-            passwordCache.unlockPassword();
         }
     }
     

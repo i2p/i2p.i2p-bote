@@ -107,10 +107,10 @@ public class PasswordCacheTest {
             
             // lock the password and verify that is is not cleared until after unlocking
             passwordCache.setPassword(PASSWORD);
-            passwordCache.lockPassword();
-            TimeUnit.SECONDS.sleep(61);
-            assertTrue(Arrays.equals(PASSWORD, getPassword(passwordCache)));
-            passwordCache.unlockPassword();
+            synchronized(passwordCache) {
+                TimeUnit.SECONDS.sleep(61);
+                assertTrue(Arrays.equals(PASSWORD, getPassword(passwordCache)));
+            }
             TimeUnit.SECONDS.sleep(61);
             assertNull("Password was not cleared!", getPassword(passwordCache));
         }
@@ -135,12 +135,12 @@ public class PasswordCacheTest {
         // call setPassword while locked, should block
         passwordCache.setPassword(null);
         setPasswordThread = createSetPasswordThread();
-        passwordCache.lockPassword();
-        setPasswordThread.start();
-        Thread.sleep(100);
-        assertTrue(setPasswordThread.isAlive());
-        assertNull(getPassword(passwordCache));
-        passwordCache.unlockPassword();
+        synchronized(passwordCache) {
+            setPasswordThread.start();
+            Thread.sleep(100);
+            assertTrue(setPasswordThread.isAlive());
+            assertNull(getPassword(passwordCache));
+        }
         Thread.sleep(100);
         assertFalse(setPasswordThread.isAlive());
         assertTrue(Arrays.equals(passwordCache.getPassword(), PASSWORD));

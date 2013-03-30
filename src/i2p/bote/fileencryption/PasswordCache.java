@@ -34,8 +34,6 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import net.i2p.I2PAppContext;
 import net.i2p.util.I2PAppThread;
@@ -52,7 +50,6 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
     private DerivedKey derivedKey;
     private long lastReset;
     private Configuration configuration;
-    private Lock passwordLock = new ReentrantLock();
     private Collection<PasswordCacheListener> cacheListeners;
     
     /**
@@ -71,16 +68,15 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
      * @param password
      */
     public synchronized void setPassword(byte[] password) {
-        // wait until the lock is released
-        lockPassword();
-        resetExpiration();
-        this.password = password;
-        // clear the old key
-        if (derivedKey != null) {
-            derivedKey.clear();
-            derivedKey = null;
+        synchronized(this) {
+            resetExpiration();
+            this.password = password;
+            // clear the old key
+            if (derivedKey != null) {
+                derivedKey.clear();
+                derivedKey = null;
+            }
         }
-        unlockPassword();
         
         for (PasswordCacheListener listener: cacheListeners)
             listener.passwordProvided();
@@ -143,16 +139,6 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
         return derivedKey;
     }
 
-    /** Acquires a lock that prevents the password from expiring or being changed. */
-    public void lockPassword() {
-        passwordLock.lock();
-    }
-    
-    /** The counterpart to {@link #lockPassword()} */
-    public void unlockPassword() {
-        passwordLock.unlock();
-    }
-    
     private void resetExpiration() {
         lastReset = System.currentTimeMillis();
     }
@@ -167,8 +153,7 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
      * and fires {@link PasswordCacheListener}s.
      */
     public void clear() {
-        lockPassword();
-        try {
+        synchronized(this) {
             if (password == null)
                 return;
             Util.zeroOut(password);
@@ -177,9 +162,6 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
                 derivedKey.clear();
                 derivedKey = null;
             }
-        }
-        finally {
-            unlockPassword();
         }
         
         for (PasswordCacheListener listener: cacheListeners)
