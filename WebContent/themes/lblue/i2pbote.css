@@ -589,11 +589,6 @@ table td, th {
     text-align: center;
 }
 
-.header-column-sig {
-    width: 4%;
-    text-align: center;
-}
-
 .header-column-delivery {
     width: 8%;
     text-align: center;
@@ -645,11 +640,6 @@ table td, th {
 
 .header-column-addr-email-dest {
     width: 72%;
-}
-
-.sig-valid {
-	color: green;
-	text-align: center;
 }
 
 .sig-invalid {

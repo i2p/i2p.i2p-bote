@@ -108,10 +108,9 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="From"/>${fromColumnIndicator}</a>
             </th>
-            <%-- Don't show the "known" and "signature" columns in the sent folder --%>
+            <%-- Don't show the "known" column in the sent folder --%>
             <c:if test="${not isSentFolder}">
                 <th class="header-column-known"><ib:message key="Know"/></th>
-                <th class="header-column-sig"><ib:message key="Sig"/></th>
             </c:if>
             <th class="header-column-to">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&amp;sortcolumn=${TO}"/>
@@ -157,11 +156,6 @@
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
             
-            <c:set var="signature" value="<div class='sig-valid'>&#10004;</div>"/>
-            <c:if test="${!email.signatureValid}">
-                <c:set var="signature" value="<div class='sig-invalid'>&#10008;</div>"/>
-            </c:if>
-            
             <c:set var="known" value=""/>
             <c:if test="${ib:isKnown(email.sender)}">
                 <c:set var="known" value="<div class='sender-known'>&#10004;</div>"/>
@@ -196,13 +190,18 @@
             
             <tr class="${textClass} ${backgroundClass}">
             <td class="header-column-replied">
-                <c:if test="${email.replied}">&#10550;</c:if>
+                <c:if test="${not email.signatureValid and not email.anonymous}">
+                    <ib:message key="Signature is invalid or missing" var="sigMessage"/>
+                    <div class="sig-invalid"><img src="${themeDir}/images/warning.png" title="${sigMessage}"/></div>
+                </c:if>
+                <c:if test="${email.signatureValid}">
+                    <c:if test="${email.replied}">&#10550;</c:if>
+                </c:if>
             </td>
             <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(sender)}</a></td>
-            <%-- Don't show the "known" and "signature" columns in the sent folder --%>
+            <%-- Don't show the "known" column in the sent folder --%>
             <c:if test="${not isSentFolder}">
                 <td><c:out value="${known}" escapeXml="false"/></td>
-                <td><c:out value="${signature}" escapeXml="false"/></td>
             </c:if>
             <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(recipient)}</a></td>
             <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(subject)}</a></td>

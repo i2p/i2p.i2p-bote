@@ -51,7 +51,14 @@
     <div class="email-form-label"><ib:message key="Signature:"/></div>
     <div class="show-email-value">
         <c:if test="${email.signatureValid}"><ib:message key="Valid"/></c:if>
-        <c:if test="${!email.signatureValid}"><div style="color: red;"><ib:message key="Invalid or missing"/></div></c:if>
+        <c:if test="${!email.signatureValid}">
+            <c:if test="${email.anonymous}">
+                <ib:message key="N/A (sender is anonymous)"/>
+            </c:if>
+            <c:if test="${!email.anonymous}">
+                <div style="color: red;"><ib:message key="Invalid or missing"/></div>
+            </c:if>
+        </c:if>
     </div>
 
     <c:forEach var="replyToAddress" varStatus="status" items="${email.replyToAddresses}">
