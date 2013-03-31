@@ -198,7 +198,15 @@
                     <c:if test="${email.replied}">&#10550;</c:if>
                 </c:if>
             </td>
-            <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(sender)}</a></td>
+            <td class="ellipsis"><a href="${mailUrl}">
+                <c:if test="${email.anonymous}">
+                    <div class="anon-sender">
+                </c:if>
+                ${fn:escapeXml(sender)}
+                <c:if test="${empty sender}">
+                    </div>
+                </c:if>
+            </a></td>
             <%-- Don't show the "known" column in the sent folder --%>
             <c:if test="${not isSentFolder}">
                 <td><c:out value="${known}" escapeXml="false"/></td>

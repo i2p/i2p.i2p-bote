@@ -637,6 +637,10 @@ table td, th {
     text-align: center;
 }
 
+.anon-sender {
+    font-style: italic;
+}
+
 .sender-known {
     color: grey;
     text-align: center;
