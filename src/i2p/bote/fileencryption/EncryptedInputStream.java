@@ -78,8 +78,9 @@ public class EncryptedInputStream extends FilterInputStream {
      * @return the decrypted data
      * @throws IOException
      * @throws GeneralSecurityException
-     * @throws PasswordException 
+     * @throws PasswordException
      */
+    @SuppressWarnings("deprecation") // for net.i2p.crypto.AESEngine
     private byte[] readInputStream(InputStream inputStream, byte[] password, DerivedKey cachedKey) throws IOException, GeneralSecurityException, PasswordException {
         byte[] startOfFile = new byte[START_OF_FILE.length];
         inputStream.read(startOfFile);

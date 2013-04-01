@@ -111,6 +111,7 @@ public class EncryptedOutputStream extends FilterOutputStream {
      * data to the underlying <code>OutputStream</code>.
      * @throws IOException
      */
+    @SuppressWarnings("deprecation") // for net.i2p.crypto.AESEngine
     private void encryptAndWrite() throws IOException {
         downstream.write(START_OF_FILE);
         downstream.write(FORMAT_VERSION);

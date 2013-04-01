@@ -70,7 +70,7 @@ public class Contact extends DhtStorablePacket {
      * @param keyUpdateHandler For signing the packet
      * @param picture A browser-renderable picture
      * @param text
-     * @param salt
+     * @param fingerprint
      * @throws GeneralSecurityException
      * @throws PasswordException 
      */
