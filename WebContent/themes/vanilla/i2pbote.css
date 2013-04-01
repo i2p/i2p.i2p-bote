@@ -472,6 +472,7 @@ table td, th {
 	
 .full-identity {
 	margin-right: 10px;
+	font-weight: bold;
 }
 
 .publish-form-label {
@@ -594,6 +595,10 @@ table td, th {
 
 .header-column-date {
     width: 23%;
+}
+
+.header-column-status {
+    width: 100px;
 }
 
 .header-column-trash {
@@ -740,6 +745,18 @@ table td, th {
     margin-right: 5px;
     padding-top: 10px;
     min-height: 1em;
+}
+
+.show-email-invalid-sig {
+    color: red;
+}
+
+.show-email-reply {
+    position: absolute;
+}
+
+.show-email-delete {
+    margin-left: 120px;
 }
 
 .password-label {

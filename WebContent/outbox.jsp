@@ -107,7 +107,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Create Time"/>${createTimeColumnIndicator}</a>
             </th>
-            <th style="width: 100px;">
+            <th class="header-column-status">
                 <c:set var="sortLink" value="outbox.jsp?sortcolumn=${STATUS}"/>
                 <c:if test="${sortcolumn eq STATUS}">
                     <c:set var="sortLink" value="${sortLink}${reverseSortOrder}"/>
@@ -153,7 +153,7 @@
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
             </td>
-            <td><div${class}><a href="${mailUrl}" style="font-weight: ${fontWeight}">${ib:getEmailStatus(email)}</a></div></td>
+            <td><div${class}><a href="${mailUrl}">${ib:getEmailStatus(email)}</a></div></td>
             <td>
                 <a href="deleteEmail.jsp?folder=Outbox&amp;messageID=${email.messageID}">
                 <img src="${themeDir}/images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>

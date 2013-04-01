@@ -56,7 +56,7 @@
                 <ib:message key="N/A (sender is anonymous)"/>
             </c:if>
             <c:if test="${!email.anonymous}">
-                <div style="color: red;"><ib:message key="Invalid or missing"/></div>
+                <div class="show-email-invalid-sig"><ib:message key="Invalid or missing"/></div>
             </c:if>
         </c:if>
     </div>
@@ -102,7 +102,7 @@
     </c:if>
     
     <br/>
-    <div style="position: absolute;">
+    <div class="show-email-reply">
     <form action="newEmail.jsp" method="post">
         <c:set var="replyDisabled" value="${email.anonymous ? 'disabled=&quot;disabled&quot;' : ''}"/>
         <button type="submit"${replyDisabled}><ib:message key="Reply"/></button>
@@ -122,7 +122,7 @@
         <input type="hidden" name="quoteMsgId" value="${param.messageID}"/>
     </form>
     </div>
-    <div style="margin-left: 120px;">
+    <div class="show-email-delete">
     <form action="deleteEmail.jsp" method="post">
         <button type="submit"><ib:message key="Delete"/></button>
         <input type="hidden" name="folder" value="${param.folder}"/>
