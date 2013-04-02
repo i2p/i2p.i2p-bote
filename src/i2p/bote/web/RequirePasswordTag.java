@@ -25,11 +25,9 @@ import i2p.bote.fileencryption.PasswordException;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.el.ELException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
-@SuppressWarnings("deprecation")   // for javax.servlet.jsp.el.ELException, see below
 public class RequirePasswordTag extends BodyTagSupport implements TryCatchFinally {
     private static final long serialVersionUID = -7546294707936895413L;
     
@@ -41,12 +39,13 @@ public class RequirePasswordTag extends BodyTagSupport implements TryCatchFinall
     }
     
     @Override
+    @SuppressWarnings("deprecation")   // for javax.servlet.jsp.el.ELException
     public void doCatch(Throwable t) throws Throwable {
         boolean isPasswordException = t instanceof PasswordException || t.getCause() instanceof PasswordException;
         // Special handling of javax.servlet.jsp.el.ELException thrown by Jetty (version 5.1.15, at least):
         // This exception has a separate method named getRootCause() which returns the PasswordException
         // while the regular getCause() method returns null.
-        isPasswordException |= t instanceof ELException && ((ELException)t).getRootCause() instanceof PasswordException;
+        isPasswordException |= t instanceof javax.servlet.jsp.el.ELException && ((javax.servlet.jsp.el.ELException)t).getRootCause() instanceof PasswordException;
         
         if (isPasswordException) {
             String url;
