@@ -80,7 +80,7 @@
 
 <ib:requirePassword>
 <div class="main">
-    <form action="newEmail.jsp" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form id="emailform" action="newEmail.jsp" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
         <div class="email-form-label">
             <ib:message key="From:"/>
         </div>
@@ -203,9 +203,9 @@
             </c:if>
             
             <div>
-                <input type="file" name="newAttachment"/>
+                <input type="file" name="newAttachment" onchange="attachFile();"/>
                 <ib:message key="Add another attachment" var="linkTitle"/>
-                <button type="submit" name="action" value="attach" title="${linkTitle}"><ib:message key="Attach"/></button>
+                <button id="attachbutton" type="submit" name="action" value="attach" title="${linkTitle}"><ib:message key="Attach"/></button>
             </div>
             <div class="email-form-attach-small"><ib:message key="It is recommended to keep attachments below 500 kBytes."/></div>
         </div>
@@ -233,5 +233,22 @@
     </form>
 </div>
 </ib:requirePassword>
+
+<script>
+// simulates a click on the "attach" button
+function attachFile() {
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "action");
+    hiddenField.setAttribute("value", "attach");
+    document.forms["emailform"].appendChild(hiddenField);
+    document.forms["emailform"].submit();
+}
+
+function hideAttachButton() {
+    document.getElementById("attachbutton").style.visibility="hidden";
+}
+window.onload = hideAttachButton;
+</script>
 
 <jsp:include page="footer.jsp"/>
