@@ -173,7 +173,13 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
     // FolderElement implementation
     @Override
     protected UnencryptedEmailPacket createFolderElement(File file) throws IOException, MalformedPacketException {
-        FileInputStream inputStream = new FileInputStream(file);
-        return new UnencryptedEmailPacket(inputStream);
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(file);
+            return new UnencryptedEmailPacket(inputStream);
+        } finally {
+            if (inputStream != null)
+                inputStream.close();
+        }
     }
 }

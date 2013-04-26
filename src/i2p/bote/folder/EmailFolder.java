@@ -454,14 +454,20 @@ public class EmailFolder extends Folder<Email> {
     
     @Override
     protected Email createFolderElement(File emailFile) throws Exception {
-        InputStream emailStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(emailFile), passwordHolder));
-        File metadataFile = getMetadataFile(emailFile);
-        InputStream metadataStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(metadataFile), passwordHolder));
-        Email email = new Email(emailStream, metadataStream, passwordHolder);
-        
-        String messageIdString = emailFile.getName().substring(0, 44);
-        email.setMessageID(messageIdString);
-        
-        return email;
+        InputStream emailStream = null;
+        try {
+            emailStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(emailFile), passwordHolder));
+            File metadataFile = getMetadataFile(emailFile);
+            InputStream metadataStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(metadataFile), passwordHolder));
+            Email email = new Email(emailStream, metadataStream, passwordHolder);
+            
+            String messageIdString = emailFile.getName().substring(0, 44);
+            email.setMessageID(messageIdString);
+            
+            return email;
+        } finally {
+            if (emailStream != null)
+                emailStream.close();
+        }
     }
 }
