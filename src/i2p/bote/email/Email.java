@@ -196,7 +196,7 @@ public class Email extends MimeMessage {
                 @Override
                 public void updateHeaders() throws MessagingException {
                     super.updateHeaders();
-                    setHeader("Content-Transfer-Encoding", "8bit");
+                    setHeader("Content-Transfer-Encoding", "binary");
                 }
             };
             FileDataSource dataSource = new FileDataSource(attachment.tempFilename) {
