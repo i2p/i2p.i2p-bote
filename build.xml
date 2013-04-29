@@ -314,8 +314,7 @@
             <fileset dir="WebContent" includes="*.css"/>
             <fileset dir="WebContent/" includes="*.xml"/>
             <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
-          <zipfileset dir="WebContent/images" prefix="images"/>
-          <zipfileset dir="WebContent/themes" prefix="themes"/>
+            <zipfileset dir="WebContent/themes" prefix="themes"/>
         </war>
     </target>
     
