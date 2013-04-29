@@ -119,12 +119,12 @@
         </tr>
         
         <c:forEach items="${ib:getEmails(folder, sortcolumn, descending)}" var="email" varStatus="status">
-            <c:set var="sender" value="${ib:getNameAndDestination(email.sender)}"/>
+            <c:set var="sender" value="${ib:getNameAndShortDestination(email.sender)}"/>
             <c:if test="${empty sender}">
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
             
-            <c:set var="recipient" value="${ib:getNameAndDestination(email.oneRecipient)}"/>
+            <c:set var="recipient" value="${ib:getNameAndShortDestination(email.oneRecipient)}"/>
             
             <c:set var="createTime" value="${email.createTime}"/>
             

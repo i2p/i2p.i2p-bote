@@ -151,7 +151,7 @@
         </tr>
         
         <c:forEach items="${ib:getEmails(folder, sortcolumn, descending)}" var="email" varStatus="status">
-            <c:set var="sender" value="${ib:getNameAndDestination(email.sender)}"/>
+            <c:set var="sender" value="${ib:getNameAndShortDestination(email.sender)}"/>
             <c:if test="${empty sender}">
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
@@ -169,7 +169,7 @@
                 </c:if>
             </c:if>
             
-            <c:set var="recipient" value="${ib:getNameAndDestination(ib:getOneLocalRecipient(email))}"/>
+            <c:set var="recipient" value="${ib:getNameAndShortDestination(ib:getOneLocalRecipient(email))}"/>
             
             <c:set var="subject" value="${email.subject}"/>
             <c:if test="${empty subject}">

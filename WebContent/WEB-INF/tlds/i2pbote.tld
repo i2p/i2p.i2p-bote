@@ -515,6 +515,21 @@
 </function>
 
 <function>
+    <name>getNameAndShortDestination</name>
+    <description>
+        Returns a string containing the locally known name of the Email Destination
+        in the String argument, and the first 4 characters of the Base64-encoded Email
+        Destination.
+        If the Email Destination is not locally known (if it doesn't exist in the
+        address book or any of the identities), the address is returned unaltered.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String getNameAndShortDestination(java.lang.String)
+    </function-signature>
+</function>
+
+<function>
     <name>extractName</name>
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>

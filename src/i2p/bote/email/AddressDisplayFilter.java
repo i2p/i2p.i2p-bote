@@ -71,4 +71,18 @@ public class AddressDisplayFilter {
         
         return address;
     }
+    
+    /**
+     * Same as {@link #getNameAndDestination(String)} but base64 destinations are shortened to 4 characters
+     * if they are in the address book or refer to an email identity.
+     */ 
+    public String getNameAndShortDestination(String address) throws PasswordException, IOException, GeneralSecurityException {
+        String nameAndDest = getNameAndDestination(address);
+        String base64dest = EmailDestination.extractBase64Dest(address);
+        if (base64dest == null)
+            return nameAndDest;
+        if (nameAndDest.contains(base64dest) && nameAndDest.length()>base64dest.length())
+            nameAndDest = nameAndDest.replace(base64dest, base64dest.substring(0, 4));
+        return nameAndDest;
+    }
 }

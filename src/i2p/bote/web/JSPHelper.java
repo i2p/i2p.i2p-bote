@@ -569,6 +569,10 @@ public class JSPHelper {
         return getAddressDisplayFilter().getNameAndDestination(address);
     }
     
+    public static String getNameAndShortDestination(String address) throws PasswordException, IOException, GeneralSecurityException {
+        return getAddressDisplayFilter().getNameAndShortDestination(address);
+    }
+    
     private static AddressDisplayFilter getAddressDisplayFilter() throws PasswordException {
         Identities identities = I2PBote.getInstance().getIdentities();
         if (ADDRESS_DISPLAY_FILTER == null)
