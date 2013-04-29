@@ -580,6 +580,10 @@ public class JSPHelper {
         return I2PBote.getInstance().getConfiguration();
     }
     
+    public void setImapEnabled(boolean enabled) {
+        I2PBote.getInstance().setImapEnabled(enabled);
+    }
+    
     public String getAppVersion() {
         return I2PBote.getAppVersion();
     }

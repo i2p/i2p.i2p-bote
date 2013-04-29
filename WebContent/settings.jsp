@@ -38,6 +38,12 @@
     <jsp:setProperty name="configuration" property="relayMaxDelay" value="${param.maxDelay}"/>
     <jsp:setProperty name="configuration" property="gatewayEnabled" value="${param.gatewayEnabled eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="gatewayDestination" value="${param.gatewayDestination}"/>
+    <jsp:setProperty name="configuration" property="imapPort" value="${param.imapPort}"/>
+    <%--
+        Use the special property imapEnabled in JSPHelper which starts/stops the IMAP service.
+        Do this after setting imapPort so it starts up on the new port if it changed.
+     --%>
+    <jsp:setProperty name="jspHelperBean" property="imapEnabled" value="${param.imapEnabled eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="themeUrl" value="${param.theme}"/>
     <ib:saveConfiguration/>
     <ib:message key="Settings have been saved." var="infoMessage" scope="request"/>
@@ -100,6 +106,15 @@
         <br/>
         <ib:message key="Email Destination of the gateway:"/>
         <input type="text" name="gatewayDestination" size="50" value="${configuration.gatewayDestination}"/>
+        <br/>
+        
+        <%-- IMAP --%>
+        <c:set var="checked" value="${configuration.imapEnabled ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="imapEnabled"/>
+        <c:set var="imapPortField" value="<input type='text' name='imapPort' size='5' value='${configuration.imapPort}'/>"/>
+        <ib:message key="Enable IMAP on port {0}">
+            <ib:param value="${imapPortField}"/>
+        </ib:message>
         <br/>
         
         <%-- Locale --%>

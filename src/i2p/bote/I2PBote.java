@@ -394,15 +394,8 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, Passwor
         backgroundThreads.add(connectTask);
         connectTask.start();
         
-        if (configuration.isImapEnabled()) {
-            try {
-                imapService = new ImapService(configuration, this, this);
-            } catch (ConfigurationException e) {
-                log.error("IMAP service failed to start.", e);
-            }
-            if (!imapService.start())
-                log.error("IMAP service failed to start.");
-        }
+        if (configuration.isImapEnabled())
+            startImap();
     }
     
     public void shutDown() {
@@ -559,6 +552,31 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, Passwor
             return false;
         else
             return emailChecker.newMailReceived();
+    }
+    
+    public void setImapEnabled(boolean enabled) {
+        configuration.setImapEnabled(enabled);
+        if (imapService==null || !imapService.isStarted()) {
+            if (enabled)
+                startImap();
+        }
+        else if (imapService!=null && imapService.isStarted() && !enabled)
+            stopImap();
+    }
+    
+    private void startImap() {
+        try {
+            imapService = new ImapService(configuration, this, this);
+        } catch (ConfigurationException e) {
+            log.error("IMAP service failed to start.", e);
+        }
+        if (!imapService.start())
+            log.error("IMAP service failed to start.");
+    }
+    
+    private void stopImap() {
+        if (imapService!=null && !imapService.stop())
+            log.error("IMAP service failed to stop");
     }
     
     public EmailFolder getInbox() {
@@ -720,8 +738,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, Passwor
         for (I2PAppThread thread: backgroundThreads)
             if (thread!=null && thread.isAlive())
                 thread.interrupt();
-        if (imapService!=null && !imapService.stop())
-            log.error("IMAP service failed to stop");
+        stopImap();
         awaitShutdown(backgroundThreads, 5 * 1000);
         printRunningThreads();
     }
