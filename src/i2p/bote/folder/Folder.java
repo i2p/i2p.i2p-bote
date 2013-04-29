@@ -65,6 +65,11 @@ public abstract class Folder<T> {
         return storageDir;
     }
 
+    /** Returns the unique name of this folder. */
+    public String getName() {
+        return storageDir.getName();
+    }
+
     /**
      * Returns the number of elements in the folder, which is the size
      * of the array returned by {@link #getFilenames()}. This number may

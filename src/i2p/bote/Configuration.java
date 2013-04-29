@@ -70,7 +70,9 @@ public class Configuration {
     private static final String PARAMETER_STORAGE_TIME = "storageTime";
     private static final String PARAMETER_HASHCASH_STRENGTH = "hashCashStrength";
     private static final String PARAMETER_SMTP_PORT = "smtpPort";
-    private static final String PARAMETER_POP3_PORT = "pop3Port";
+    private static final String PARAMETER_IMAP_PORT = "imapPort";
+    private static final String PARAMETER_IMAP_ADDRESS = "imapAddress";
+    private static final String PARAMETER_IMAP_ENABLED = "imapEnabled";
     private static final String PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = "maxConcurIdCheckMail";
     private static final String PARAMETER_AUTO_MAIL_CHECK = "autoMailCheckEnabled";
     private static final String PARAMETER_DELIVERY_CHECK = "deliveryCheckEnabled";
@@ -100,7 +102,9 @@ public class Configuration {
     private static final int DEFAULT_STORAGE_TIME = 31;   // in days
     private static final int DEFAULT_HASHCASH_STRENGTH = 10;
     private static final int DEFAULT_SMTP_PORT = 7661;
-    private static final int DEFAULT_POP3_PORT = 7662;
+    private static final int DEFAULT_IMAP_PORT = 7662;
+    private static final String DEFAULT_IMAP_ADDRESS = "localhost";
+    private static final boolean DEFAULT_IMAP_ENABLED = false;
     private static final int DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = 10;
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
@@ -285,6 +289,27 @@ public class Configuration {
 
     public int getHashCashStrength() {
         return getIntParameter(PARAMETER_HASHCASH_STRENGTH, DEFAULT_HASHCASH_STRENGTH);
+    }
+    
+    public void setImapPort(int port) {
+        properties.setProperty(PARAMETER_IMAP_PORT, String.valueOf(port));
+    }
+    
+    public int getImapPort() {
+        return getIntParameter(PARAMETER_IMAP_PORT, DEFAULT_IMAP_PORT);
+    }
+    
+    /** Returns the host name the IMAP server listens on. */
+    public String getImapAddress() {
+        return properties.getProperty(PARAMETER_IMAP_ADDRESS, DEFAULT_IMAP_ADDRESS);
+    }
+    
+    public void setImapEnabled(boolean enabled) {
+        properties.setProperty(PARAMETER_IMAP_ENABLED, String.valueOf(enabled));
+    }
+    
+    public boolean isImapEnabled() {
+        return getBooleanParameter(PARAMETER_IMAP_ENABLED, DEFAULT_IMAP_ENABLED);
     }
     
     /**

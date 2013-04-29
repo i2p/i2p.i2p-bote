@@ -36,7 +36,6 @@ import i2p.bote.email.Fingerprint;
 import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
-import i2p.bote.folder.TrashFolder;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.NetworkStatus;
 import i2p.bote.packet.dht.Contact;
@@ -418,10 +417,7 @@ public class JSPHelper {
      */
     public static boolean deleteEmail(String folderName, String messageId) {
         EmailFolder folder = getMailFolder(folderName);
-        if (folder instanceof TrashFolder)
-            return folder.delete(messageId);
-        else
-            return I2PBote.getInstance().moveToTrash(folder, messageId);
+        return I2PBote.getInstance().deleteEmail(folder, messageId);
     }
     
     /**

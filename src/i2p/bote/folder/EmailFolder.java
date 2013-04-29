@@ -44,6 +44,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -64,10 +66,12 @@ public class EmailFolder extends Folder<Email> {
     
     private Log log = new Log(EmailFolder.class);
     private PasswordHolder passwordHolder;
+    private Collection<FolderListener> folderListeners;
     
     public EmailFolder(File storageDir, PasswordHolder passwordHolder) {
         super(storageDir, EMAIL_FILE_EXTENSION);
         this.passwordHolder = passwordHolder;
+        folderListeners = new ArrayList<FolderListener>();
     }
 
     /**
@@ -99,6 +103,9 @@ public class EmailFolder extends Folder<Email> {
         }
         
         saveMetadata(email);
+        
+        for (FolderListener listener: folderListeners)
+            listener.elementAdded();
     }
     
     public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
@@ -446,10 +453,20 @@ public class EmailFolder extends Folder<Email> {
             metadataFile.delete();
         
         File emailFile = getEmailFile(messageId);
+        boolean deleted;
         if (emailFile != null)
-            return emailFile.delete();
+            deleted = emailFile.delete();
         else
-            return false;
+            deleted = false;
+        
+        for (FolderListener listener: folderListeners)
+            listener.elementRemoved();
+        
+        return deleted;
+    }
+    
+    public void addFolderListener(FolderListener folderListener) {
+        folderListeners.add(folderListener);
     }
     
     @Override

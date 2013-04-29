@@ -33,8 +33,10 @@ import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordCache;
 import i2p.bote.fileencryption.PasswordCacheListener;
 import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.fileencryption.PasswordVerifier;
 import i2p.bote.folder.DirectoryEntryFolder;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.EmailFolderManager;
 import i2p.bote.folder.EmailPacketFolder;
 import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
@@ -42,6 +44,7 @@ import i2p.bote.folder.MessageIdCache;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.folder.TrashFolder;
+import i2p.bote.imap.ImapService;
 import i2p.bote.migration.Migrator;
 import i2p.bote.network.BanList;
 import i2p.bote.network.BannedPeer;
@@ -64,7 +67,6 @@ import i2p.bote.service.EmailChecker;
 import i2p.bote.service.ExpirationThread;
 import i2p.bote.service.OutboxListener;
 import i2p.bote.service.OutboxProcessor;
-import i2p.bote.service.POP3Service;
 import i2p.bote.service.RelayPacketSender;
 import i2p.bote.service.RelayPeerManager;
 import i2p.bote.service.SMTPService;
@@ -113,10 +115,12 @@ import net.i2p.data.Hash;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 
+import org.apache.commons.configuration.ConfigurationException;
+
 /**
  * This is the core class of the application. It is implemented as a singleton.
  */
-public class I2PBote implements NetworkStatusSource {
+public class I2PBote implements NetworkStatusSource, EmailFolderManager, PasswordVerifier {
     public static final int PROTOCOL_VERSION = 4;
     private static final String APP_VERSION = "0.2.8";
     private static final int STARTUP_DELAY = 3;   // the number of minutes to wait before connecting to I2P (this gives the router time to get ready)
@@ -141,7 +145,7 @@ public class I2PBote implements NetworkStatusSource {
     private WordListAnchor wordLists;
     private Collection<I2PAppThread> backgroundThreads;
     private SMTPService smtpService;
-    private POP3Service pop3Service;
+    private ImapService imapService;
     private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
     private EmailChecker emailChecker;
     private DeliveryChecker deliveryChecker;
@@ -294,9 +298,7 @@ public class I2PBote implements NetworkStatusSource {
         
         backgroundThreads.add(passwordCache);
 /*        smtpService = new SMTPService();
-        backgroundThreads.add(smtpService);
-        pop3Service = new POP3Service();
-        backgroundThreads.add(pop3Service);*/
+        backgroundThreads.add(smtpService);*/
         I2PSendQueue sendQueue = new I2PSendQueue(i2pSession, dispatcher);
         backgroundThreads.add(sendQueue);
         RelayPacketSender relayPacketSender = new RelayPacketSender(sendQueue, relayPacketFolder, configuration);   // reads packets stored in the relayPacketFolder and sends them
@@ -391,6 +393,16 @@ public class I2PBote implements NetworkStatusSource {
         connectTask = new ConnectTask();
         backgroundThreads.add(connectTask);
         connectTask.start();
+        
+        if (configuration.isImapEnabled()) {
+            try {
+                imapService = new ImapService(configuration, this, this);
+            } catch (ConfigurationException e) {
+                log.error("IMAP service failed to start.", e);
+            }
+            if (!imapService.start())
+                log.error("IMAP service failed to start.");
+        }
     }
     
     public void shutDown() {
@@ -565,8 +577,11 @@ public class I2PBote implements NetworkStatusSource {
         return trashFolder;
     }
     
-    public boolean moveToTrash(EmailFolder sourceFolder, String messageId) {
-        return sourceFolder.move(messageId, trashFolder);
+    public boolean deleteEmail(EmailFolder folder, String messageId) {
+        if (folder instanceof TrashFolder)
+            return folder.delete(messageId);
+        else
+            return folder.move(messageId, trashFolder);
     }
     
     /**
@@ -638,6 +653,7 @@ public class I2PBote implements NetworkStatusSource {
      * @throws GeneralSecurityException
      * @throws PasswordException
      */
+    @Override
     public void tryPassword(byte[] password) throws IOException, GeneralSecurityException, PasswordException  {
         File passwordFile = configuration.getPasswordFile();
         boolean correct = FileEncryptionUtil.isPasswordCorrect(password, passwordFile);
@@ -669,7 +685,7 @@ public class I2PBote implements NetworkStatusSource {
         return debugSupport.getUndecryptableFiles();
     }
     
-    private Collection<EmailFolder> getEmailFolders() {
+    public List<EmailFolder> getEmailFolders() {
         ArrayList<EmailFolder> folders = new ArrayList<EmailFolder>();
         folders.add(outbox);
         folders.add(inbox);
@@ -704,6 +720,8 @@ public class I2PBote implements NetworkStatusSource {
         for (I2PAppThread thread: backgroundThreads)
             if (thread!=null && thread.isAlive())
                 thread.interrupt();
+        if (imapService!=null && !imapService.stop())
+            log.error("IMAP service failed to stop");
         awaitShutdown(backgroundThreads, 5 * 1000);
         printRunningThreads();
     }
@@ -716,6 +734,8 @@ public class I2PBote implements NetworkStatusSource {
         log.debug(runningThreads.size() + " threads still running 5 seconds after interrupt()" + (runningThreads.isEmpty()?'.':':'));
         for (Thread thread: runningThreads)
             log.debug("  " + thread.getName());
+        if (imapService!=null && imapService.isStarted())
+            log.debug("IMAP service still running");
     }
     
     /**

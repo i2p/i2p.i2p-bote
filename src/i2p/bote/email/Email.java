@@ -54,6 +54,8 @@ import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.activation.MimetypesFileTypeMap;
 import javax.mail.Address;
+import javax.mail.Flags;
+import javax.mail.Flags.Flag;
 import javax.mail.Header;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -100,20 +102,6 @@ public class Email extends MimeMessage {
         this.includeSendTime = includeSendTime;
     }
 
-    /**
-     * Creates an <code>Email</code> with no metadata from a file containing an
-     * <strong>uncompressed</strong> MIME email.
-     * @param emailStream
-     * @param passwordHolder
-     * @throws MessagingException
-     * @throws IOException
-     * @throws PasswordException 
-     * @throws GeneralSecurityException 
-     */
-    public Email(InputStream emailStream, PasswordHolder passwordHolder) throws MessagingException, IOException, PasswordException, GeneralSecurityException {
-        this(emailStream, null, passwordHolder);
-    }
-    
     /**
      * Creates an <code>Email</code> from a file containing an <strong>uncompressed</strong> MIME email
      * and another file containing metadata. If the metadata file doesn't exist, the metadata will be
@@ -652,6 +640,11 @@ public class Email extends MimeMessage {
         return metadata.isDelivered();
     }
 
+    /** @see EmailMetadata#setReplied(boolean) */
+    public void setReplied(boolean replied) {
+        metadata.setReplied(replied);
+    }
+
     /** @see EmailMetadata#isReplied() */
     public boolean isReplied() {
         return metadata.isReplied();
@@ -670,6 +663,25 @@ public class Email extends MimeMessage {
     @Override
     public Date getReceivedDate() {
         return metadata.getReceivedDate();
+    }
+    
+    @Override
+    public synchronized void setFlags(Flags flag, boolean set) throws MessagingException {
+        if (flag.contains(Flag.SEEN))
+            setNew(!set);
+        if (flag.contains(Flag.ANSWERED))
+            setReplied(set);
+        super.setFlags(flag, set);
+    }
+    
+    @Override
+    public Flags getFlags() {
+        Flags flags = new Flags();
+        if (!isNew())
+            flags.add(Flag.SEEN);
+        if (isReplied())
+            flags.add(Flag.ANSWERED);
+        return flags;
     }
     
     /**
