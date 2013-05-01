@@ -10,6 +10,26 @@
     <property name="lib" value="WebContent/WEB-INF/lib"/>
     <property name="makeplugin" value="../i2p.scripts/plugin/makeplugin.sh"/>
     
+    <property name="junit.filename" value="junit-4.8.1.jar"/>
+    <property name="junit.url" value="http://sourceforge.net/projects/junit/files/junit/4.8.1/junit-4.8.1.jar/download"/>
+    <!-- Just the main jMock .jar, the .zip contains this and dependencies -->
+    <property name="jmock.filename" value="jmock-2.5.1.jar"/>
+    <property name="jmock.archive" value="jmock-2.5.1-jars.zip"/>
+    <property name="jmockcp" value="${lib}/jmock-2.5.1.jar:${lib}/hamcrest-core-1.1.jar:${lib}/hamcrest-library-1.1.jar:${lib}/jmock-legacy-2.5.1.jar:${lib}/cglib-nodep-2.1_3.jar:${lib}/objenesis-1.0.jar"/>
+    <property name="jmock.url" value="http://www.jmock.org/dist/${jmock.archive}"/>
+    <!-- Just one of the James .jars for checking presence of James, the .zip contains this and dependencies -->
+    <property name="james.filename" value="apache-james-imap-processor-0.3.jar"/>
+    <property name="james.archive" value="apache-james-3.0-beta4-app.zip"/>
+    <property name="james.url" value="http://apache.cs.utah.edu//james/apache-james/3.0beta4/apache-james-3.0-beta4-app.zip"/>
+    <!-- SubEtha SMTP -->
+    <property name="subetha.filename" value="subethasmtp-3.1.7.jar"/>
+    <property name="subetha.archive" value="subethasmtp-3.1.7.zip"/>
+    <property name="subetha.url" value="http://subethasmtp.googlecode.com/files/subethasmtp-3.1.7.zip"/>
+    <!-- the following are only used by win32installer -->
+    <property name="i2p.mtn" value="../i2p.mtn"/>
+    <property name="win32launcherurl" value="http://dist.codehaus.org/izpack/native-launcher/izpack-launcher-1.3.zip"/>
+    <property name="win32jreurl" value="http://javadl.sun.com/webapps/download/AutoDL?BundleId=47363"/>
+	
     <fileset dir="${lib}" id="imaplibs">
         <include name="apache-james-imap-api-0.3.jar"/>
         <include name="apache-james-imap-message-0.3.jar"/>
@@ -17,6 +37,7 @@
         <include name="apache-james-mailbox-api-0.4.jar"/>
         <include name="apache-james-mailbox-store-0.4.jar"/>
         <include name="apache-mime4j-core-0.7.2.jar"/>
+        <include name="apache-mime4j-dom-0.7.2.jar"/>
         <include name="commons-codec-1.5.jar"/>
         <include name="commons-collections-3.2.1.jar"/>
         <include name="commons-configuration-1.6.jar"/>
@@ -54,23 +75,10 @@
         <pathelement location="${lib}/scrypt-1.3.3.jar" />
         <pathelement location="${lib}/lzma-9.20.jar" />
         <pathelement location="${lib}/flexi-gmss-1.7p1.jar" />
+        <pathelement location="${lib}/${subetha.filename}" />
+        <pathelement location="WebContent/WEB-INF/classes" />
         <fileset refid="imaplibs"/>
     </path>
-    <property name="junit.filename" value="junit-4.8.1.jar"/>
-    <property name="junit.url" value="http://sourceforge.net/projects/junit/files/junit/4.8.1/junit-4.8.1.jar/download"/>
-    <!-- Just the main jMock .jar, the .zip contains this and dependencies -->
-    <property name="jmock.filename" value="jmock-2.5.1.jar"/>
-    <property name="jmock.archive" value="jmock-2.5.1-jars.zip"/>
-    <property name="jmockcp" value="${lib}/jmock-2.5.1.jar:${lib}/hamcrest-core-1.1.jar:${lib}/hamcrest-library-1.1.jar:${lib}/jmock-legacy-2.5.1.jar:${lib}/cglib-nodep-2.1_3.jar:${lib}/objenesis-1.0.jar"/>
-    <property name="jmock.url" value="http://www.jmock.org/dist/${jmock.archive}"/>
-    <!-- Just one of the James .jars for checking presence of James, the .zip contains this and dependencies -->
-    <property name="james.filename" value="apache-james-imap-processor-0.3.jar"/>
-    <property name="james.archive" value="apache-james-3.0-beta4-app.zip"/>
-    <property name="james.url" value="http://apache.cs.utah.edu//james/apache-james/3.0beta4/apache-james-3.0-beta4-app.zip"/>
-    <!-- the following are only used by win32installer -->
-    <property name="i2p.mtn" value="../i2p.mtn"/>
-    <property name="win32launcherurl" value="http://dist.codehaus.org/izpack/native-launcher/izpack-launcher-1.3.zip"/>
-    <property name="win32jreurl" value="http://javadl.sun.com/webapps/download/AutoDL?BundleId=47363"/>
         
 
     <target name="help">
@@ -104,6 +112,8 @@
     <target name="compile" depends="checki2pbase">
         <available property="jamesexists" file="${lib}/${james.filename}" type="file"/>
         <ant target="downloadjames"/>
+        <available property="subethaexists" file="${lib}/${subetha.filename}" type="file"/>
+        <ant target="downloadsubetha"/>
 
         <mkdir dir="./ant_build" />
         <mkdir dir="./ant_build/classes" />
@@ -261,6 +271,14 @@
             <fileset refid="imaplibs"/>
             <mapper type="glob" from="*.jar" to="*.jar.pack"/>
         </apply>
+        <!-- pack the SMTP jar -->
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/${subetha.filename}.pack"/>
+            <arg value="${lib}/${subetha.filename}"/>
+        </exec>
 
         <copy file="WebContent/WEB-INF/lib/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
         <copy file="WebContent/WEB-INF/lib/decrypt.sh" todir="plugin/plugin.tmp/lib"/>
@@ -529,6 +547,7 @@
                 <include name="**/apache-james-mailbox-api-0.4.jar"/>
                 <include name="**/apache-james-mailbox-store-0.4.jar"/>
                 <include name="**/apache-mime4j-core-0.7.2.jar"/>
+                <include name="**/apache-mime4j-dom-0.7.2.jar"/>
                 <include name="**/commons-codec-1.5.jar"/>
                 <include name="**/commons-collections-3.2.1.jar"/>
                 <include name="**/commons-configuration-1.6.jar"/>
@@ -550,6 +569,23 @@
             </mapper>
         </unzip>
         <delete file="${lib}/${james.archive}"/>
+    </target>
+
+    <target name="downloadsubetha" unless="subethaexists">
+        <input message="SubEtha SMTP not found, download now?" validargs="y,n" addproperty="userinput.junit"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.junit}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${subetha.url}" verbose="true" dest="${lib}/${subetha.archive}"/>
+        <unzip src="${lib}/${subetha.archive}" dest="${lib}">
+            <patternset includes="**/${subetha.filename}"/>
+            <mapper>
+                <flattenmapper/>
+            </mapper>
+        </unzip>
+        <delete file="${lib}/${subetha.archive}"/>
     </target>
 
     <!-- Write the app version into ${version} -->
@@ -671,5 +707,6 @@
         <delete>
             <fileset refid="imaplibs"/>
         </delete>
+        <delete file="${lib}/${subetha.filename}" />
     </target>
 </project>

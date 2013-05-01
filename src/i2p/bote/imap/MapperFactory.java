@@ -148,18 +148,25 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             @Override
             protected MessageMetaData copy(Mailbox<String> mailbox, long uid, long modSeq, Message<String> original) throws MailboxException {
                 BoteMailbox boteBox = (BoteMailbox)mailbox;
-                BoteMessage boteMessage = (BoteMessage)original;
                 try {
-                    boteBox.add(boteMessage);
-                    return new SimpleMessageMetaData(boteMessage);
+                    BoteMessage newMessage = new BoteMessage((BoteMessage)original);
+                    newMessage.setUid(uid);
+                    newMessage.setModSeq(modSeq);
+                    boteBox.add(newMessage);
+                    return new SimpleMessageMetaData(newMessage);
                 } catch (Exception e) {
-                    throw new MailboxException("Can't add message [" + original + "] to folder [" + mailbox + "]");
+                    throw new MailboxException("Can't copy message [" + original + "] to folder [" + mailbox + "]");
                 }
             }
 
             /** Updates the metadata */
             @Override
             protected MessageMetaData save(Mailbox<String> mailbox, Message<String> message) throws MailboxException {
+                // Ignore requests to save non-BoteMessages so email clients don't save messages to the sent folder
+                // (I2P-Bote does this already, plus the email shouldn't show up in "sent" until it's actually been sent to the DHT)
+                if (!(message instanceof BoteMessage))
+                    return new SimpleMessageMetaData(message);
+                
                 BoteMailbox boteBox = (BoteMailbox)mailbox;
                 BoteMessage boteMessage = (BoteMessage)message;
                 try {

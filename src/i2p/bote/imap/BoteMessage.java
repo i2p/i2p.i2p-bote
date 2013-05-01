@@ -58,6 +58,17 @@ public class BoteMessage implements Message<String> {
         this.folderName = folderName;
     }
     
+    /**
+     * Copy constructor
+     * @param original
+     * @throws MessagingException
+     * @throws IOException
+     */
+    BoteMessage(BoteMessage original) throws MessagingException, IOException {
+        email = new Email(original.email);
+        folderName = original.folderName;
+    }
+    
     Email getEmail() {
         return email;
     }

@@ -129,10 +129,11 @@ public class Email extends MimeMessage {
      * @throws MessagingException 
      * @throws IOException 
      */
-    private Email(InputStream inputStream, boolean compressed) throws MessagingException, IOException {
+    public Email(InputStream inputStream, boolean compressed) throws MessagingException, IOException {
         super(Session.getDefaultInstance(new Properties()), compressed?Email.decompress(inputStream):inputStream);
         messageId = new UniqueId();
         includeSendTime = getSentDate() != null;
+        metadata = new EmailMetadata();
     }
 
    /**
@@ -147,6 +148,18 @@ public class Email extends MimeMessage {
         metadata = new EmailMetadata();
     }
 
+    /**
+     * Copy constructor 
+     * @throws IOException 
+     * @throws MessagingException
+     */
+    public Email(Email original) throws MessagingException, IOException {
+        super(original);
+        messageId = original.messageId;
+        metadata = original.metadata;
+        includeSendTime = original.includeSendTime;
+    }
+    
     /**
      * Sets the message text and adds attachments.
      * @param text
@@ -453,7 +466,7 @@ public class Email extends MimeMessage {
     }
     
     /**
-     * Throws an exception if one or more address fields contain an invalid
+     * Throws a <code>DataFormatException</code> if one or more address fields contain an invalid
      * Email Destination. If all addresses are valid, nothing happens.
      * @throws MessagingException
      * @throws DataFormatException
@@ -462,27 +475,38 @@ public class Email extends MimeMessage {
         Collection<Header> headers = getAllAddressHeaders();
         for (Header header: headers) {
             String address = header.getValue();
-            if (!"Sender".equalsIgnoreCase(header.getName()) || !isAnonymous()) {   // don't validate if this is the "sender" field and the sender is anonymous
-                boolean validEmailDest = false;
-                try {
-                    new EmailDestination(address);
-                    validEmailDest = true;
-                }
-                catch (GeneralSecurityException e) {
-                    log.debug("Address contains no email destination: <" + address + ">, message: " + e.getLocalizedMessage());
-                }
-                try {
-                    String adrString = address.toString();
-                    new InternetAddress(adrString, true);
-                    // InternetAddress accepts addresses without a domain, so check that there is a '.' after the '@'
-                    if (adrString.indexOf('@') >= adrString.indexOf('.'))
-                        throw new DataFormatException(_("Invalid address: {0}", address));
-                    validEmailDest = true;
-                } catch (AddressException e) {
-                    log.debug("Address contains no external email address: <" + address + ">, message: " + e.getLocalizedMessage());
-                }
-                if (!validEmailDest)
-                    throw new DataFormatException(_("Address doesn't contain an Email Destination or an external address: {0}", address));
+            try {
+                if ("Sender".equalsIgnoreCase(header.getName()) || "From".equalsIgnoreCase(header.getName()))   // don't validate if this is the "sender" field and the sender is anonymous
+                    checkSender(address);
+                else
+                    checkRecipient(address);
+            } catch (AddressException e) {
+                String errorMessage = _("Address doesn't contain an Email Destination or an external address: {0}", address);
+                log.debug(errorMessage, e);
+                throw new DataFormatException(errorMessage);
+            }
+        }
+    }
+    
+    public static void checkSender(String address) throws AddressException {
+        // same rules as for recipients, except senders can be anonymous
+        if (!"Anonymous".equalsIgnoreCase(address))
+            checkRecipient(address);
+    }
+    
+    public static void checkRecipient(String address) throws AddressException {
+        try {
+            new EmailDestination(address);
+        }
+        catch (GeneralSecurityException e) {
+            // check for external address
+            try {
+                new InternetAddress(address, true);
+                // InternetAddress accepts addresses without a domain, so check that there is a '.' after the '@'
+                if (address.indexOf('@') >= address.indexOf('.'))
+                    throw new AddressException(_("Invalid address: {0}", address));
+            } catch (AddressException e2) {
+                throw new AddressException("Invalid Address: \"" + address + "\"");
             }
         }
     }
@@ -497,7 +521,7 @@ public class Email extends MimeMessage {
         }
     }
     
-    private List<Header> getAllAddressHeaders() throws MessagingException {
+    public List<Header> getAllAddressHeaders() throws MessagingException {
         @SuppressWarnings("unchecked")
         Enumeration<Header> addressHeaders = (Enumeration<Header>)getMatchingHeaders(ADDRESS_HEADERS);
         return Collections.list(addressHeaders);

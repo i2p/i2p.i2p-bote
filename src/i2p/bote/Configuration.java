@@ -70,6 +70,7 @@ public class Configuration {
     private static final String PARAMETER_STORAGE_TIME = "storageTime";
     private static final String PARAMETER_HASHCASH_STRENGTH = "hashCashStrength";
     private static final String PARAMETER_SMTP_PORT = "smtpPort";
+    private static final String PARAMETER_SMTP_ADDRESS = "smtpAddress";
     private static final String PARAMETER_IMAP_PORT = "imapPort";
     private static final String PARAMETER_IMAP_ADDRESS = "imapAddress";
     private static final String PARAMETER_IMAP_ENABLED = "imapEnabled";
@@ -102,6 +103,7 @@ public class Configuration {
     private static final int DEFAULT_STORAGE_TIME = 31;   // in days
     private static final int DEFAULT_HASHCASH_STRENGTH = 10;
     private static final int DEFAULT_SMTP_PORT = 7661;
+    private static final String DEFAULT_SMTP_ADDRESS = "localhost";
     private static final int DEFAULT_IMAP_PORT = 7662;
     private static final String DEFAULT_IMAP_ADDRESS = "localhost";
     private static final boolean DEFAULT_IMAP_ENABLED = false;
@@ -289,6 +291,19 @@ public class Configuration {
 
     public int getHashCashStrength() {
         return getIntParameter(PARAMETER_HASHCASH_STRENGTH, DEFAULT_HASHCASH_STRENGTH);
+    }
+    
+    public void setSmtpPort(int port) {
+        properties.setProperty(PARAMETER_SMTP_PORT, String.valueOf(port));
+    }
+    
+    public int getSmtpPort() {
+        return getIntParameter(PARAMETER_SMTP_PORT, DEFAULT_SMTP_PORT);
+    }
+    
+    /** Returns the host name the SMTP server listens on. */
+    public String getSmtpAddress() {
+        return properties.getProperty(PARAMETER_SMTP_ADDRESS, DEFAULT_SMTP_ADDRESS);
     }
     
     public void setImapPort(int port) {

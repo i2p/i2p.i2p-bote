@@ -19,17 +19,19 @@
  * along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package i2p.bote.service;
+package i2p.bote;
 
-import net.i2p.util.I2PAppThread;
+import i2p.bote.email.Email;
+import i2p.bote.fileencryption.PasswordException;
 
-public class SMTPService extends I2PAppThread {
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
-    public SMTPService() {
-        super("SMTPService");
-    }
+import javax.mail.MessagingException;
 
-    @Override
-    public void run() {
-    }
+import net.i2p.data.DataFormatException;
+
+public interface MailSender {
+
+    void sendEmail(Email email) throws MessagingException, PasswordException, IOException, GeneralSecurityException, DataFormatException;
 }
