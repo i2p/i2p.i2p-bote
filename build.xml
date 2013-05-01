@@ -13,10 +13,10 @@
     <property name="junit.filename" value="junit-4.8.1.jar"/>
     <property name="junit.url" value="http://sourceforge.net/projects/junit/files/junit/4.8.1/junit-4.8.1.jar/download"/>
     <!-- Just the main jMock .jar, the .zip contains this and dependencies -->
-    <property name="jmock.filename" value="jmock-2.5.1.jar"/>
-    <property name="jmock.archive" value="jmock-2.5.1-jars.zip"/>
-    <property name="jmockcp" value="${lib}/jmock-2.5.1.jar:${lib}/hamcrest-core-1.1.jar:${lib}/hamcrest-library-1.1.jar:${lib}/jmock-legacy-2.5.1.jar:${lib}/cglib-nodep-2.1_3.jar:${lib}/objenesis-1.0.jar"/>
-    <property name="jmock.url" value="http://www.jmock.org/dist/${jmock.archive}"/>
+    <property name="jmock.filename" value="jmock-2.6.0.jar"/>
+    <property name="jmock.archive" value="jmock-2.6.0-jars.zip"/>
+    <property name="jmockcp" value="${lib}/jmock-2.6.0.jar:${lib}/hamcrest-core-1.3.jar:${lib}/hamcrest-library-1.3.jar:${lib}/jmock-legacy-2.6.0.jar:${lib}/cglib-nodep-2.2.3.jar:${lib}/objenesis-1.0.jar"/>
+    <property name="jmock.url" value="http://jmock.org/downloads/${jmock.archive}"/>
     <!-- Just one of the James .jars for checking presence of James, the .zip contains this and dependencies -->
     <property name="james.filename" value="apache-james-imap-processor-0.3.jar"/>
     <property name="james.archive" value="apache-james-3.0-beta4-app.zip"/>
