@@ -567,11 +567,11 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     private void startImap() {
         try {
             imapService = new ImapService(configuration, this, this);
+            if (!imapService.start())
+                log.error("IMAP service failed to start.");
         } catch (ConfigurationException e) {
             log.error("IMAP service failed to start.", e);
         }
-        if (!imapService.start())
-            log.error("IMAP service failed to start.");
     }
     
     private void stopImap() {
