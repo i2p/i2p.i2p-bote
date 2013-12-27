@@ -378,6 +378,8 @@ public class EmailFolder extends Folder<Email> {
                         numNew++;
                 } catch (IOException e) {
                     log.error("Can't read metadata file: <" + metaFile.getAbsolutePath() + ">", e);
+                } catch (GeneralSecurityException gse) {
+                	log.error("Can't access metadata file: <" + metaFile.getAbsolutePath() + ">", gse);
                 }
             else
                 numNew++;
