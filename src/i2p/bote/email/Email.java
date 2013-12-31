@@ -678,6 +678,16 @@ public class Email extends MimeMessage {
         return metadata.isReplied();
     }
 
+    /** @see EmailMetadata#setDeleted(boolean) */
+    public void setDeleted(boolean deleted) {
+        metadata.setDeleted(deleted);
+    }
+
+    /** @see EmailMetadata#isDeleted() */
+    public boolean isDeleted() {
+        return metadata.isDeleted();
+    }
+
     /** @see EmailMetadata#getDeliveryPercentage() */
     public int getDeliveryPercentage() {
         return metadata.getDeliveryPercentage();
@@ -699,6 +709,8 @@ public class Email extends MimeMessage {
             setNew(!set);
         if (flag.contains(Flag.ANSWERED))
             setReplied(set);
+        if (flag.contains(Flag.DELETED))
+            setDeleted(set);
         super.setFlags(flag, set);
     }
     
@@ -709,6 +721,8 @@ public class Email extends MimeMessage {
             flags.add(Flag.SEEN);
         if (isReplied())
             flags.add(Flag.ANSWERED);
+        if (isDeleted())
+            flags.add(Flag.DELETED);
         return flags;
     }
     

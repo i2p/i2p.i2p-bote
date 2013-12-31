@@ -116,8 +116,18 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
 
             @Override
             public Map<Long, MessageMetaData> expungeMarkedForDeletionInMailbox(Mailbox<String> mailbox, MessageRange set) throws MailboxException {
-                // not implemented for now
-                return Collections.emptyMap();
+                final Map<Long, MessageMetaData> filteredResult = new HashMap<Long, MessageMetaData>();
+
+                Iterator<Message<String>> it = findInMailbox(mailbox, set, FetchType.Metadata, -1);
+                while (it.hasNext()) {
+                    Message<String> message = it.next();
+                    if (message.isDeleted()) {
+                        filteredResult.put(message.getUid(), new SimpleMessageMetaData(message));
+                        delete(mailbox, message);
+                    }
+                }
+
+                return filteredResult;
             }
 
             @Override

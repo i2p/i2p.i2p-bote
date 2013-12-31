@@ -59,6 +59,7 @@ public class EmailMetadata extends Properties {
     private static final String PROPERTY_CREATE_TIME = "createTime";
     private static final String PROPERTY_RECEIVED_DATE = "receivedDate";
     private static final String PROPERTY_REPLIED = "replied";
+    private static final String PROPERTY_DELETED = "deleted";
     private static final String PROPERTY_DESTINATION = "destination";
     private static final String PACKET = "packet";
     private static final String DHT_KEY = "dhtKey";
@@ -146,6 +147,15 @@ public class EmailMetadata extends Properties {
     public boolean isReplied() {
         String repliedStr = getProperty(PROPERTY_REPLIED);
         return "true".equals(repliedStr);
+    }
+
+    public void setDeleted(boolean deleted) {
+        setProperty(PROPERTY_DELETED, deleted ? "true" : "false");
+    }
+
+    public boolean isDeleted() {
+        String deletedStr = getProperty(PROPERTY_DELETED);
+        return "true".equals(deletedStr);
     }
     
     /**

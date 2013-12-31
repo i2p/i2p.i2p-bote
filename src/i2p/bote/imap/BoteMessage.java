@@ -34,7 +34,6 @@ import javax.mail.Flags;
 import javax.mail.Header;
 import javax.mail.MessagingException;
 import javax.mail.Part;
-
 import i2p.bote.Util;
 import i2p.bote.email.Email;
 
@@ -266,7 +265,7 @@ public class BoteMessage implements Message<String> {
 
     @Override
     public boolean isDeleted() {
-        return false;   // not supported
+        return email.isDeleted();
     }
 
     @Override
