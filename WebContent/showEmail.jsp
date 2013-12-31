@@ -44,7 +44,7 @@
             <ib:message key="Anonymous"/>
         </c:if>
         <c:if test="${!email.anonymous}">
-            <ib:address address="${email.sender}"/>
+            <ib:address address="${email.oneFromAddress}"/>
         </c:if>
     </div>
 

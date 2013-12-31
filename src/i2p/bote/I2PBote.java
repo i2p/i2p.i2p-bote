@@ -497,7 +497,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         
         // sign email unless sender is anonymous
         if (!email.isAnonymous()) {
-            String sender = email.getSender().toString();
+            String sender = email.getOneFromAddress();
             EmailIdentity senderIdentity = identities.extractIdentity(sender);
             if (senderIdentity == null)
                 throw new MessagingException(_("No identity matches the sender/from field: " + sender));

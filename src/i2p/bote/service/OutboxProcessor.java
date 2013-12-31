@@ -152,7 +152,7 @@ public class OutboxProcessor extends I2PAppThread {
     private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException, IOException, InterruptedException {
         EmailIdentity senderIdentity = null;
         if (!email.isAnonymous()) {
-            String sender = email.getSender().toString();
+            String sender = email.getOneFromAddress();
             senderIdentity = identities.extractIdentity(sender);
             if (senderIdentity == null) {
                 log.error("No identity matches the sender/from field: " + sender + " in email: " + email);

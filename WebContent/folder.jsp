@@ -151,13 +151,13 @@
         </tr>
         
         <c:forEach items="${ib:getEmails(folder, sortcolumn, descending)}" var="email" varStatus="status">
-            <c:set var="sender" value="${ib:getNameAndShortDestination(email.sender)}"/>
+            <c:set var="sender" value="${ib:getNameAndShortDestination(email.oneFromAddress)}"/>
             <c:if test="${empty sender}">
                 <ib:message key="Anonymous" var="sender"/>
             </c:if>
             
             <c:set var="known" value=""/>
-            <c:if test="${ib:isKnown(email.sender)}">
+            <c:if test="${ib:isKnown(email.oneFromAddress)}">
                 <c:set var="known" value="<div class='sender-known'>&#10004;</div>"/>
             </c:if>
             

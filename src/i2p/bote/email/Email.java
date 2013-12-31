@@ -262,11 +262,15 @@ public class Email extends MimeMessage {
      * @throws MessagingException
      */
     public boolean isAnonymous() throws MessagingException {
-        Address sender = getSender();
-        return sender==null || "Anonymous".equalsIgnoreCase(sender.toString());
+        String sender = getOneFromAddress();
+        return sender==null || "Anonymous".equalsIgnoreCase(sender);
     }
     
-    /** Returns the value of the "from:" header, or <code>null</code> if there is none. */
+    /**
+     * Returns the first value of the "from:" header (or the value of the
+     * "sender:" header if "from:" is not there), or <code>null</code> if there
+     * is none.
+     */
     public String getOneFromAddress() throws MessagingException {
         Address[] fromAddresses = getFrom();
         if (fromAddresses==null || fromAddresses.length==0)
@@ -450,7 +454,7 @@ public class Email extends MimeMessage {
         try {
             removeHeader(SIGNATURE_HEADER);   // remove the signature before verifying
             byte[] signature = Base64.decode(base64Signature);
-            EmailDestination senderDestination = new EmailDestination(getSender().toString());
+            EmailDestination senderDestination = new EmailDestination(getOneFromAddress());
             return cryptoImpl.verify(toByteArray(), signature, senderDestination.getPublicSigningKey());
         } catch (Exception e) {
             log.error("Cannot verify email signature. Email: [" + this + "]", e);
@@ -557,7 +561,7 @@ public class Email extends MimeMessage {
         if (replyTo!=null && replyTo.length>0)
             return replyTo[0];
         else {
-            String sender = getSender().toString();
+            String sender = getOneFromAddress();
             EmailIdentity senderIdentity = identities.extractIdentity(sender);
             if (senderIdentity != null)
                 return getOneRecipient();   // sent by local user, so reply to recipient
@@ -945,7 +949,7 @@ public class Email extends MimeMessage {
     public String toString() {
         StringBuilder result = new StringBuilder("MsgId: ").append(getMessageID());
         try {
-            result = result.append("Sender: ").append(getSender());
+            result = result.append("From: ").append(getOneFromAddress());
             result = result.append("Recipients: ");
             for (Address recipient: getAllRecipients()) {
                 if (result.length() > 1000) {

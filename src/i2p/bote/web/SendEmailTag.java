@@ -74,7 +74,12 @@ public class SendEmailTag extends BodyTagSupport {
         else
             try {
                 // set addresses
-                email.setSender(new InternetAddress(senderAddress));
+                InternetAddress ia = new InternetAddress(senderAddress);
+                email.setFrom(ia);
+                // We must continue to set "Sender:" even with only one mailbox
+                // in "From:", which is against RFC 2822 but required for older
+                // Bote versions to see a sender (and validate the signature).
+                email.setSender(ia);
                 email.setSubject(subject, "UTF-8");
                 for (Recipient recipient: recipients)
                     email.addRecipient(recipient.type, recipient.address);
