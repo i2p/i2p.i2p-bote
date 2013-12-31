@@ -107,6 +107,7 @@
         <echo message="  junit:    Runs all unit tests" />
         <echo message="  javadoc:  Generates code documentation in the javadoc dir" />
         <echo message="  clean:    Removes all generated files and directories" />
+        <echo message="  distclean: Removes all generated files and directories, and all downloaded libraries" />
     </target>
 
     <target name="all" depends="clean, src, war, plugin" />
@@ -714,6 +715,9 @@
         <delete file="src.zip" />
         <delete file="i2pinstall.exe" />
         <delete dir="javadoc" />
+    </target>
+
+    <target name="distclean" depends="clean">
         <delete>
             <fileset refid="imaplibs"/>
         </delete>
