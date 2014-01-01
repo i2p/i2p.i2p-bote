@@ -147,8 +147,13 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
 
             @Override
             public List<Long> findRecentMessageUidsInMailbox(Mailbox<String> mailbox) throws MailboxException {
-                // not implemented for now
-                return Collections.emptyList();
+                final List<Long> results = new ArrayList<Long>();
+                BoteMailbox boteMailbox = (BoteMailbox)mailbox;
+                for (BoteMessage message: boteMailbox.getAllMessages())
+                    if (message.isRecent())
+                        results.add(message.getUid());
+                Collections.sort(results);
+                return results;
             }
 
             @Override
