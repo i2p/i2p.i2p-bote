@@ -703,14 +703,15 @@ public class Email extends MimeMessage {
         return metadata.getReceivedDate();
     }
     
+    /**
+     * Sets flags for this message.
+     * @param flag The current state of flags for this message.
+     */
     @Override
     public synchronized void setFlags(Flags flag, boolean set) throws MessagingException {
-        if (flag.contains(Flag.SEEN))
-            setNew(!set);
-        if (flag.contains(Flag.ANSWERED))
-            setReplied(set);
-        if (flag.contains(Flag.DELETED))
-            setDeleted(set);
+        setNew(!(flag.contains(Flag.SEEN)));
+        setReplied(flag.contains(Flag.ANSWERED));
+        setDeleted(flag.contains(Flag.DELETED));
         super.setFlags(flag, set);
     }
     
