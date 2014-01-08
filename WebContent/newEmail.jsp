@@ -81,6 +81,10 @@
 <ib:requirePassword>
 <div class="main">
     <form id="emailform" action="newEmail.jsp" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+        <div class="email-form-button-send">
+            <button type="submit" name="action" value="send">&#x2794; <ib:message key="Send"/></button>
+        </div>
+
         <div class="email-form-label">
             <ib:message key="From:"/>
         </div>
@@ -226,10 +230,6 @@
             <input type="hidden" name="quoteMsgFolder" value="${param.quoteMsgFolder}"/>
             <input type="hidden" name="quoteMsgId" value="${param.quoteMsgId}"/>
         </c:if>
-        
-        <div class="email-form-value">
-            <button type="submit" name="action" value="send"><ib:message key="Send"/></button>
-        </div>
     </form>
 </div>
 </ib:requirePassword>

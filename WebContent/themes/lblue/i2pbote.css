@@ -150,6 +150,7 @@ iframe {
 }
 
 .main {
+    position: relative;
     margin: 0px 20px 20px 240px;
     padding: 0 15px 15px 25px;
     background: #ddf url('images/background.png');
@@ -676,6 +677,12 @@ table td, th {
 
 .folder-item-old a {
     font-weight: normal;
+}
+
+.email-form-button-send {
+    position: absolute;
+    right: 20px;
+    top: 10px;
 }
 
 .email-form-button-row {
