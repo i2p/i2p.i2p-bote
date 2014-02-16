@@ -1,6 +1,11 @@
 I2P-Bote Version History
 ------------------------
 
+0.2.9 (Released on Feb 7, 2014)
+  * Experimental SMTP and IMAP support
+  * UI and IMAP improvements by str4d
+  * Misc. UI improvements
+
 0.2.8 (Released on Mar 8, 2013)
  * Fixes and enhancements to the address directory
 
