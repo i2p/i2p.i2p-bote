@@ -122,13 +122,13 @@ The Kademlia implementation used by I2P-Bote differs from standard Kademlia in s
  * No caching of DHT items because they are only retrieved once and then deleted
  * I2P-Bote uses sibling lists (s-buckets) as suggested in the S/Kademlia paper
 
-There are two types of data that is stored in the DHT: Email Packets and Index Packets. A third data type
-will be added for the address directory when it is implemented.
+There are three types of data that is stored in the DHT: Email Packets, Index Packets, and Contacts.
 Index packets contain the DHT keys of one or more email packets. The DHT key of an index packet is the
 SHA-256 hash of the Email Destination the email packets are destined for.
 To check for new email for a given Email Destination, I2P-Bote first queries the DHT for index packets for that
 Email Destination, then queries the DHT for all email packet keys in the index packets. When a complete set of
 email packets has been received, the email is reconstructed and placed in the inbox.
+TODO Contacts
 
 To delete an email packet, or an entry in an index packet, the delete request must contain the correct
 verification code (the delete verification hash). The verification code is the SHA-256 hash of another block of
@@ -239,8 +239,6 @@ Strings in packets are UTF8 encoded.
                       | COMP  | 1 byte     | Compression type for TEXT
                       | TLEN  | 2 bytes    | Length of the TEXT field, max 2000
                       | TEXT  | byte[]     | User defined text in UTF8
-                      | SLEN  | 2 bytes    | Length of SIG
-                      | SIG   | byte[]     | A signature over the [TYPE, ..., TEXT] fields by DEST
   --------------------+-------+------------+------------------------------------------------------------------
 
 3.2. Communication Packets
@@ -352,7 +350,7 @@ Strings in packets are UTF8 encoded.
                       | DTYP  | 1 byte     | Type of data to retrieve:
                       |       |            |   'I' = Index Packet
                       |       |            |   'E' = Email Packet
-                      |       |            |   'M' = Directory Entry
+                      |       |            |   'C' = Directory Entry
                       | KEY   | 32 bytes   | DHT key to look up
   --------------------+-------+------------+------------------------------------------------------------------
    Deletion Query     |       |            | A request to a peer to return a Deletion Info Packet for a given
@@ -583,7 +581,7 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
 
   bcprov-ecc-jdk16-146.jar   A stripped down version of the BouncyCastle library,
                              containing only the classes needed for ECC.
-  mailapi.jar                Part of JavaMail
+  mailapi.jar                Part of JavaMail 1.4.3
   lzma-9.20.jar              An LZMA implementation from http://www.7-zip.org/sdk.html
   ntruenc-1.2.jar            An NTRU implementation from http://sf.net/projects/ntru/
                              (only the NTRUEncrypt part, not NTRUSign)
@@ -627,10 +625,16 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
   can use the same key derivation parameters. This makes decryption much faster because
   the key only needs to be derived once per session.
 
+7.3. Fingerprints For Directory Entries
 
-8. Setting Up a Development Environment
+  TODO
+  H = scrypt(name, dest, zuf.wert); die letzten 8 Binärstellen von H müssen 0 sein
+   13*7+22+18 = 131
 
-8.1. Eclipse
+
+8. Development
+
+8.1. Setting up Eclipse
 
   Rough steps, may not be complete:
   
@@ -656,6 +660,12 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
   * Start two or more servers, go to http://localhost:<port>/i2p.i2p-bote/, and click "connect".
     After a minute, it should say "connected" and you should see the other server(s) on network.jsp.
 
+8.2. Transifex
+
+  To update translations from Transifex, run "tx pull". On Debian and its derivatives, tx can be
+  installed via "sudo apt-get install transifex-client". After installation, run "tx init" in
+  the project directory.
+
 
 9. Glossary of Terms
 
@@ -679,7 +689,7 @@ Email Destination
 Email Address
   Email Addresses in I2P-Bote are shortcuts for Email Destinations.
   Email Address <--> Email Destination mappings are stored in two places: the local address book and the
-  distributed address directory (the latter not being implemented yet).
+  distributed address directory.
 
 Email Identity
   An Email Identity is an Email Destination plus a name you want to be known as when you use that identity.
