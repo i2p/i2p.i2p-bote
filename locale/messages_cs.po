@@ -1,29 +1,37 @@
 # 
 # Translators:
-# Waseihou Watashi <waseihou@gmail.com>, 2012.
+# Waseihou Watashi <waseihou@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
-"Report-Msgid-Bugs-To: https://trac.i2p2.de/\n"
-"POT-Creation-Date: 2011-09-23 19:19+0000\n"
-"PO-Revision-Date: 2012-02-15 21:54+0000\n"
-"Last-Translator: Waseihou Watashi <waseihou@gmail.com>\n"
-"Language-Team: Czech (http://www.transifex.net/projects/p/I2P/language/cs/)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-02 21:10+0000\n"
+"PO-Revision-Date: 2013-05-02 21:15+0000\n"
+"Last-Translator: HungryHobo <HungryHobo@i2pmail.org>\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/I2P/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: src/i2p/bote/I2PBote.java:402 src/i2p/bote/service/OutboxProcessor.java:157
+#: src/i2p/bote/Configuration.java:62
+msgid "lblue"
+msgstr ""
+
+#: src/i2p/bote/Configuration.java:63
+msgid "vanilla"
+msgstr ""
+
+#: src/i2p/bote/I2PBote.java:503 src/i2p/bote/service/OutboxProcessor.java:159
 msgid "No identity matches the sender/from field: "
 msgstr "Žádná identita neodpovídá poli odesílatel/od:"
 
-#: src/i2p/bote/I2PBote.java:478
+#: src/i2p/bote/I2PBote.java:663
 msgid "The old password is not correct."
 msgstr "Staré heslo je špatně zadané."
 
-#: src/i2p/bote/I2PBote.java:480
+#: src/i2p/bote/I2PBote.java:665
 msgid "The new password and the confirmation password do not match."
 msgstr "Nové heslo a jeho potvrzení se neshodují."
 
@@ -35,27 +43,35 @@ msgstr "256 bitové šifrování pomocí eliptických křivek"
 msgid "521-bit Elliptic Curve Encryption"
 msgstr "521 bitové šifrování pomocí eliptických křivek"
 
-#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
+#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:55
 msgid "2048-bit ElGamal Encryption"
 msgstr "2048 bitové šifrování ElGamal"
 
-#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:119
 msgid "NTRU-1087 Encryption"
 msgstr "šifrování NTRU-1087"
 
-#: src/i2p/bote/email/Email.java:481
-#, java-format
-msgid "Invalid address: {0}"
-msgstr "Neplatná adresa: {0}"
-
-#: src/i2p/bote/email/Email.java:487
+#: src/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Adresa neobsahuje emailovou destinaci nebo vnejší adresu: {0}"
 
-#: src/i2p/bote/folder/Outbox.java:117
+#: src/i2p/bote/email/Email.java:507
+#, java-format
+msgid "Invalid address: {0}"
+msgstr "Neplatná adresa: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:116
 msgid "Queued"
 msgstr "Ve frontě"
+
+#: src/i2p/bote/imap/BoteMailbox.java:85
+msgid "Password required or invalid password provided"
+msgstr ""
+
+#: src/i2p/bote/imap/MapperFactory.java:276
+msgid "Deletion of mailboxes is not currently supported."
+msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -74,7 +90,7 @@ msgid "First Seen"
 msgstr "Poprvé zaznamenáno"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:86
+#: src/i2p/bote/web/PeerInfoTag.java:96
 msgid "I2P Destination"
 msgstr "I2P destinace"
 
@@ -83,7 +99,7 @@ msgid "Locked?"
 msgstr "Zamčeno?"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:85 src/i2p/bote/web/PeerInfoTag.java:110
+#: src/i2p/bote/web/PeerInfoTag.java:95 src/i2p/bote/web/PeerInfoTag.java:120
 msgid "Peer"
 msgstr "Sdíleč"
 
@@ -103,63 +119,72 @@ msgstr "(žádný)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/i2p/bote/service/OutboxProcessor.java:162
+#: src/i2p/bote/service/OutboxProcessor.java:164
 msgid "Sending"
 msgstr "Odesílám"
 
-#: src/i2p/bote/service/OutboxProcessor.java:171
+#: src/i2p/bote/service/OutboxProcessor.java:173
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Odesláno {0} z {1} příjemců."
 
-#: src/i2p/bote/service/OutboxProcessor.java:178 WebContent/folder.jsp
-msgid "Sent"
-msgstr "Odesláno"
+#: src/i2p/bote/service/OutboxProcessor.java:180
+msgid "Email sent"
+msgstr ""
 
-#: src/i2p/bote/service/OutboxProcessor.java:181
+#: src/i2p/bote/service/OutboxProcessor.java:183
 msgid "Gateway disabled"
 msgstr "Brána vypnuta"
 
-#: src/i2p/bote/service/OutboxProcessor.java:217
+#: src/i2p/bote/service/OutboxProcessor.java:223
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Neplatný příjemce"
 
-#: src/i2p/bote/service/OutboxProcessor.java:221
+#: src/i2p/bote/service/OutboxProcessor.java:227
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Chyba při vyváření emailových paketů: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:225
+#: src/i2p/bote/service/OutboxProcessor.java:231
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Chyba při odesílání emailu: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:121
+#: src/i2p/bote/service/OutboxProcessor.java:235
+#, java-format
+msgid "Error saving email metadata: {0}"
+msgstr ""
+
+#: src/i2p/bote/web/JSPHelper.java:111
+msgid "Not set."
+msgstr ""
+
+#: src/i2p/bote/web/JSPHelper.java:136
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr ""
 
-#: src/i2p/bote/web/PeerInfoTag.java:56
+#: src/i2p/bote/web/PeerInfoTag.java:58
 msgid "Kademlia Peers:"
 msgstr "Kademlia protějšky:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:81
+#: src/i2p/bote/web/PeerInfoTag.java:91
 msgid "Relay Peers:"
 msgstr ""
 
-#: src/i2p/bote/web/PeerInfoTag.java:87
+#: src/i2p/bote/web/PeerInfoTag.java:97
 msgid "Reachability %"
 msgstr "Dostupnost %"
 
-#: src/i2p/bote/web/PeerInfoTag.java:106
+#: src/i2p/bote/web/PeerInfoTag.java:116
 msgid "Banned Peers:"
 msgstr "Zakázané protějšky"
 
-#: src/i2p/bote/web/PeerInfoTag.java:111
+#: src/i2p/bote/web/PeerInfoTag.java:121
 msgid "Destination Hash"
 msgstr "Haš destinace"
 
-#: src/i2p/bote/web/PeerInfoTag.java:112
+#: src/i2p/bote/web/PeerInfoTag.java:122
 msgid "Ban Reason"
 msgstr "Důvod zákazu"
 
@@ -176,41 +201,167 @@ msgstr "Email byl přidán do fronty pro odeslání."
 msgid "Error sending email: {0}"
 msgstr "Chyba při odesílání emailu: {0}"
 
-#: WebContent/folder.jsp
-msgid "From"
+#: WebContent/network.jsp
+msgid "Network"
+msgstr "Síť"
+
+#: WebContent/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr "Síťové informace nejsou dostupné protože I2P-Bote ještě nespustil připojení k síti."
+
+#: WebContent/network.jsp
+msgid "Local destination:"
+msgstr "Lokální destinace:"
+
+#: WebContent/saveIdentities.jsp
+msgid "Error:"
 msgstr ""
 
-#: WebContent/folder.jsp
-msgid "Know"
+#: WebContent/settings.jsp
+msgid "Settings have been saved."
+msgstr "Změny byly uloženy."
+
+#: WebContent/settings.jsp
+msgid "Settings"
 msgstr ""
 
-#: WebContent/folder.jsp
-msgid "Sig"
+#: WebContent/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "Kontrolovat jestli nepřišel nový email každých {0} minut."
+
+#: WebContent/settings.jsp
+msgid "Check delivery status of sent emails"
 msgstr ""
 
-#: WebContent/folder.jsp
-msgid "To"
+#: WebContent/settings.jsp
+msgid "Use relays when sending mail:"
 msgstr ""
 
-#: WebContent/folder.jsp
-msgid "Subject"
+#: WebContent/settings.jsp
+msgid "None"
+msgstr "Žádné"
+
+#: WebContent/settings.jsp
+msgid "Delay per relay hop: Between"
 msgstr ""
 
-#: WebContent/folder.jsp
+#: WebContent/settings.jsp
+msgid "and"
+msgstr "a"
+
+#: WebContent/settings.jsp
+msgid "minutes"
+msgstr "minut"
+
+#: WebContent/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "Použít bránu při posílání na emailovou adresu která je mimo I2P"
+
+#: WebContent/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "Emailová destinace brány:"
+
+#: WebContent/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Do odchozích emailů přidat čas odeslání"
+
+#: WebContent/settings.jsp
+msgid "Theme:"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Save"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Change Password"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "From:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
 msgid "Anonymous"
 msgstr ""
 
-#: WebContent/folder.jsp
-msgid "(No subject)"
+#: WebContent/showEmail.jsp
+msgid "Signature:"
 msgstr ""
 
-#: WebContent/folder.jsp
+#: WebContent/showEmail.jsp
+msgid "Valid"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Invalid or missing"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Reply To:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "To:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "CC:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "BCC:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Sent:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Received:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Subject:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Message:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Attachments:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Status:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Reply"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Re:"
+msgstr ""
+
+#: WebContent/showEmail.jsp
 msgid "Delete"
 msgstr "Smazat"
-
-#: WebContent/folder.jsp
-msgid "Delete this email"
-msgstr ""
 
 #: WebContent/about.jsp
 msgid "About I2P-Bote"
@@ -221,7 +372,7 @@ msgid "I2P-Bote Version {0}"
 msgstr ""
 
 #: WebContent/about.jsp
-msgid "Author:"
+msgid "Main Developer:"
 msgstr ""
 
 #: WebContent/about.jsp
@@ -276,235 +427,69 @@ msgstr ""
 msgid "Arabic translation"
 msgstr ""
 
-#: WebContent/network.jsp
-msgid "Network"
-msgstr "Síť"
-
-#: WebContent/network.jsp
-msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "Síťové informace nejsou dostupné protože I2P-Bote ještě nespustil připojení k síti."
-
-#: WebContent/network.jsp
-msgid "Local destination:"
-msgstr "Lokální destinace:"
-
-#: WebContent/deleteIdentity.jsp
-msgid "Error:"
+#: WebContent/about.jsp
+msgid "Czech translation"
 msgstr ""
 
-#: WebContent/identities.jsp
-msgid "Email Identities"
-msgstr "Emailové identity"
-
-#: WebContent/identities.jsp
-msgid "No email identities are defined."
-msgstr "Nebyly vytvořeny žádné emailové identity."
-
-#: WebContent/identities.jsp
-msgid "Def."
-msgstr "Ident."
-
-#: WebContent/identities.jsp
-msgid "Public Name"
-msgstr "Veřejné jméno"
-
-#: WebContent/identities.jsp
-msgid "Description"
-msgstr "Popis"
-
-#: WebContent/identities.jsp
-msgid "Email Address"
-msgstr "Emailová adresa"
-
-#: WebContent/identities.jsp
-msgid "Email Destination"
-msgstr "Destinace emailu"
-
-#: WebContent/identities.jsp
-msgid "New Identity"
-msgstr "Nová identita"
-
-#: WebContent/newEmail.jsp
-msgid "New Email"
-msgstr "Nový email"
-
-#: WebContent/newEmail.jsp
-msgid "Please select a file to attach and try again."
+#: WebContent/about.jsp
+msgid "German translation"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "From:"
+#: WebContent/about.jsp
+msgid "Polish translation"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "To:"
+#: WebContent/about.jsp
+msgid "Italian translation"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "CC:"
+#: WebContent/about.jsp
+msgid "Ukrainian translation"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "BCC:"
+#: WebContent/about.jsp
+msgid "Hungarian translation"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "Reply To:"
+#: WebContent/about.jsp
+msgid "Code fixes, translation updates from tx"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "Addr. Book..."
+#: WebContent/publishDestination.jsp
+msgid "Add Email Destination to Directory"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "Subject:"
+#: WebContent/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "Attachments:"
+#: WebContent/publishDestination.jsp
+msgid "Publish to the Address Directory"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "Remove this attachment"
+#: WebContent/publishDestination.jsp
+msgid "Picture to upload:"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "Add another attachment"
+#: WebContent/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "Attach"
+#: WebContent/publishDestination.jsp
+msgid "Text to include:"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
+#: WebContent/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "Message:"
+#: WebContent/publishDestination.jsp
+msgid "Publish"
 msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "{0} wrote:"
+#: WebContent/publishDestination.jsp
+msgid "The identity has been added to the address directory."
 msgstr ""
-
-#: WebContent/newEmail.jsp
-msgid "Send"
-msgstr ""
-
-#: WebContent/newEmail.jsp
-msgid "Save"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "New Email Identity"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Create"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Edit Email Identity"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Public Name:"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "(required field, shown to recipients)"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Description:"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "(optional, kept private)"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Encryption:"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "(If unsure, leave the default)"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Email Destination:"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Default Identity:"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Private keys:"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "(Never reveal to anyone!)"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Show"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Cancel"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Delete this identity"
-msgstr "Smazat tuto identitu"
-
-#: WebContent/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
-msgstr ""
-
-#: WebContent/deleteContact.jsp
-msgid "Error"
-msgstr ""
-
-#: WebContent/deleteEmail.jsp
-msgid "Error: Couldn't delete email."
-msgstr ""
-
-#: WebContent/setPassword.jsp
-msgid "Set Password"
-msgstr "Zadat heslo"
-
-#: WebContent/setPassword.jsp
-msgid "The password has been changed."
-msgstr "Heslo bylo změněno."
-
-#: WebContent/setPassword.jsp
-msgid "Set a new Password"
-msgstr "Zadat nové heslo"
-
-#: WebContent/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "Pokud jste nezměnili heslo, nechejte staré heslo prázdné."
-
-#: WebContent/setPassword.jsp
-msgid "Old password:"
-msgstr "Staré heslo:"
-
-#: WebContent/setPassword.jsp
-msgid "New password:"
-msgstr "Nové heslo:"
-
-#: WebContent/setPassword.jsp
-msgid "Confirm:"
-msgstr "Nové heslo (znovu):"
-
-#: WebContent/setPassword.jsp
-msgid "OK"
-msgstr "OK"
 
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
@@ -543,10 +528,6 @@ msgid "Configuration"
 msgstr ""
 
 #: WebContent/header.jsp
-msgid "Settings"
-msgstr ""
-
-#: WebContent/header.jsp
 msgid "Network Status"
 msgstr ""
 
@@ -565,6 +546,140 @@ msgstr ""
 #: WebContent/header.jsp
 msgid "About"
 msgstr "O programu"
+
+#: WebContent/statusFrame.jsp
+msgid "Not Started"
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Connecting..."
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Connected"
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Error"
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Unknown Status"
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Connect Now"
+msgstr ""
+
+#: WebContent/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr ""
+
+#: WebContent/connectError.jsp
+msgid "Error Details"
+msgstr ""
+
+#: WebContent/outbox.jsp
+msgid "Outbox"
+msgstr ""
+
+#: WebContent/outbox.jsp
+msgid "From"
+msgstr ""
+
+#: WebContent/outbox.jsp
+msgid "To"
+msgstr ""
+
+#: WebContent/outbox.jsp
+msgid "Subject"
+msgstr ""
+
+#: WebContent/outbox.jsp
+msgid "Create Time"
+msgstr "Čas vyvoření"
+
+#: WebContent/outbox.jsp
+msgid "Status"
+msgstr "Stav"
+
+#: WebContent/outbox.jsp
+msgid "(No subject)"
+msgstr ""
+
+#: WebContent/outbox.jsp
+msgid "Delete this email"
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Set Password"
+msgstr "Zadat heslo"
+
+#: WebContent/setPassword.jsp
+msgid "The password has been changed."
+msgstr "Heslo bylo změněno."
+
+#: WebContent/setPassword.jsp
+msgid "Please wait"
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Zadat nové heslo"
+
+#: WebContent/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "Pokud jste nezměnili heslo, nechejte staré heslo prázdné."
+
+#: WebContent/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Old password:"
+msgstr "Staré heslo:"
+
+#: WebContent/setPassword.jsp
+msgid "New password:"
+msgstr "Nové heslo:"
+
+#: WebContent/setPassword.jsp
+msgid "Confirm:"
+msgstr "Nové heslo (znovu):"
+
+#: WebContent/setPassword.jsp
+msgid "OK"
+msgstr "OK"
+
+#: WebContent/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr ""
+
+#: WebContent/submitIdentity.jsp
+msgid "Please wait..."
+msgstr ""
+
+#: WebContent/submitIdentity.jsp
+msgid "The Email Identity is being generated. This can take several minutes."
+msgstr ""
+
+#: WebContent/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr ""
 
 #: WebContent/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -591,11 +706,70 @@ msgid "Edit Contact"
 msgstr ""
 
 #: WebContent/editContact.jsp
+msgid "Email Destination:"
+msgstr ""
+
+#: WebContent/editContact.jsp
 msgid "(required field)"
 msgstr ""
 
 #: WebContent/editContact.jsp
 msgid "Name:"
+msgstr ""
+
+#: WebContent/editContact.jsp
+msgid "Picture:"
+msgstr ""
+
+#: WebContent/editContact.jsp
+msgid "Text:"
+msgstr ""
+
+#: WebContent/editContact.jsp
+msgid "Cancel"
+msgstr ""
+
+#: WebContent/noIdentities.jsp
+msgid "No Email Identity Defined"
+msgstr "Žádná emailová identita nebyla definována."
+
+#: WebContent/noIdentities.jsp
+msgid "Create a New Email Identity"
+msgstr "Vytvořit novou emailovou identitu"
+
+#: WebContent/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Import Contact"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Fingerprint:"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Email Destination: "
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Import"
 msgstr ""
 
 #: WebContent/folders.jsp
@@ -607,79 +781,160 @@ msgid "Inbox"
 msgstr ""
 
 #: WebContent/folders.jsp
-msgid "Outbox"
-msgstr ""
-
-#: WebContent/folders.jsp
-msgid "Sent Emails"
-msgstr ""
-
-#: WebContent/folders.jsp
-msgid "Drafts"
-msgstr ""
+msgid "Sent"
+msgstr "Odesláno"
 
 #: WebContent/folders.jsp
 msgid "Trash"
 msgstr ""
 
-#: WebContent/folders.jsp
-msgid "Manage Folders"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr "Abyste mohli přijímat emaily od ostatních lidí, musíte si nejdříve vytvořit emailovou identitu."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr "Emailová identita je spojena s emailovou destinací. Kdokoliv může poslat email na emailovou destinaci, ale pouze vlastník identity ho může přečíst."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr "V jistém smyslu je emailová identita podobná tradičnímu emailovému účtu, jediný rozdíl je v tom že neexistuje žádný poskytovatel této který by mohl číst vaše emaily protože I2P-Bote uchovává na síti všechny emaily zašifrované."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
 msgstr ""
 
-#: WebContent/statusFrame.jsp
-msgid "Not Started"
+#: WebContent/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr "Zveřejnit emailovou destinaci aby vás ostatní mohli kontaktovat."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr "Je jednoduché vytvořit vícero identit za různými účely, nebo pro kontaktování rozdílných okruhů osob."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
 msgstr ""
 
-#: WebContent/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
 msgstr ""
 
-#: WebContent/statusFrame.jsp
-msgid "Connect Now"
+#: WebContent/clearPasswordCache.jsp
+msgid "Password Cleared"
 msgstr ""
 
-#: WebContent/statusFrame.jsp
-msgid "Connecting..."
+#: WebContent/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
 msgstr ""
 
-#: WebContent/statusFrame.jsp
-msgid "Connected"
+#: WebContent/sendEmail.jsp
+msgid "New Email"
+msgstr "Nový email"
+
+#: WebContent/sendEmail.jsp
+msgid "Go to inbox"
 msgstr ""
 
-#: WebContent/statusFrame.jsp
-msgid "Unknown Status"
+#: WebContent/editIdentity.jsp
+msgid "More..."
 msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Signature:"
+#: WebContent/editIdentity.jsp
+msgid "Less..."
 msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Valid"
+#: WebContent/editIdentity.jsp
+msgid "New Email Identity"
 msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Invalid or missing"
+#: WebContent/editIdentity.jsp
+msgid "Create"
 msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Sent:"
+#: WebContent/editIdentity.jsp
+msgid "Edit Email Identity"
 msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Received:"
+#: WebContent/editIdentity.jsp
+msgid "An Email Identity lets you receive email from other I2P-Bote users."
 msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Status:"
+#: WebContent/editIdentity.jsp
+msgid "Public Name:"
 msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Reply"
+#: WebContent/editIdentity.jsp
+msgid "(required field, shown to recipients)"
 msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Re:"
+#: WebContent/editIdentity.jsp
+msgid "Description:"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "(optional, kept private)"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Encryption:"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "(If unsure, leave the default)"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Default Identity:"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Private keys:"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "(Never reveal to anyone!)"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Show"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Cannot publish until connected."
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Delete this identity"
+msgstr "Smazat tuto identitu"
+
+#: WebContent/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
 msgstr ""
 
 #: WebContent/addressBook.jsp
@@ -699,6 +954,10 @@ msgid "Name"
 msgstr "Jméno"
 
 #: WebContent/addressBook.jsp
+msgid "Email Destination"
+msgstr "Destinace emailu"
+
+#: WebContent/addressBook.jsp
 msgid "Delete this contact"
 msgstr "Smazat tento kontakt"
 
@@ -709,6 +968,46 @@ msgstr "Přidat příjemce"
 #: WebContent/addressBook.jsp
 msgid "Return"
 msgstr "Zpět"
+
+#: WebContent/addressBook.jsp
+msgid "Import from the public address directory"
+msgstr ""
+
+#: WebContent/addressBook.jsp
+msgid "Lookup"
+msgstr ""
+
+#: WebContent/buttonFrame.jsp
+msgid "Checking for mail..."
+msgstr "Kontroluji příchozí poštu..."
+
+#: WebContent/buttonFrame.jsp
+msgid "Check Mail"
+msgstr "Kontroluji poštu"
+
+#: WebContent/buttonFrame.jsp
+msgid "Compose"
+msgstr ""
+
+#: WebContent/buttonFrame.jsp
+msgid "Last checked:"
+msgstr ""
+
+#: WebContent/folder.jsp
+msgid "Know"
+msgstr ""
+
+#: WebContent/folder.jsp
+msgid "Sent Time"
+msgstr ""
+
+#: WebContent/folder.jsp
+msgid "Delivered"
+msgstr ""
+
+#: WebContent/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr ""
 
 #: WebContent/showFullIdentity.jsp
 msgid "Full Identity"
@@ -723,76 +1022,84 @@ msgid ""
 "Do not show the above information to anyone! It contains your private keys."
 msgstr ""
 
-#: WebContent/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
+#: WebContent/identities.jsp
+msgid "Email Identities"
+msgstr "Emailové identity"
+
+#: WebContent/identities.jsp
+msgid "No email identities are defined."
+msgstr "Nebyly vytvořeny žádné emailové identity."
+
+#: WebContent/identities.jsp
+msgid "Def."
+msgstr "Ident."
+
+#: WebContent/identities.jsp
+msgid "Public Name"
+msgstr "Veřejné jméno"
+
+#: WebContent/identities.jsp
+msgid "Description"
+msgstr "Popis"
+
+#: WebContent/identities.jsp
+msgid "New Identity"
+msgstr "Nová identita"
+
+#: WebContent/newEmail.jsp
+msgid "Please select a file to attach and try again."
 msgstr ""
 
-#: WebContent/submitIdentity.jsp
-msgid "Please wait..."
+#: WebContent/newEmail.jsp
+msgid "Addr. Book..."
 msgstr ""
 
-#: WebContent/submitIdentity.jsp
-msgid "The Email Identity is being generated. This can take several minutes."
+#: WebContent/newEmail.jsp
+msgid "Remove this attachment"
 msgstr ""
 
-#: WebContent/submitIdentity.jsp
-msgid "The email identity has been saved."
+#: WebContent/newEmail.jsp
+msgid "Add another attachment"
 msgstr ""
 
-#: WebContent/outbox.jsp
-msgid "Create Time"
-msgstr "Čas vyvoření"
-
-#: WebContent/outbox.jsp
-msgid "Status"
-msgstr "Stav"
-
-#: WebContent/settings.jsp
-msgid "Settings have been saved."
-msgstr "Změny byly uloženy."
-
-#: WebContent/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "Kontrolovat jestli nepřišel nový email každých {0} minut."
-
-#: WebContent/settings.jsp
-msgid "Use relays when sending mail:"
+#: WebContent/newEmail.jsp
+msgid "Attach"
 msgstr ""
 
-#: WebContent/settings.jsp
-msgid "None"
-msgstr "Žádné"
-
-#: WebContent/settings.jsp
-msgid "Delay per relay hop: Between"
+#: WebContent/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
 msgstr ""
 
-#: WebContent/settings.jsp
-msgid "and"
-msgstr "a"
-
-#: WebContent/settings.jsp
-msgid "minutes"
-msgstr "minut"
-
-#: WebContent/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "Použít bránu při posílání na emailovou adresu která je mimo I2P"
-
-#: WebContent/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr "Emailová destinace brány:"
-
-#: WebContent/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+#: WebContent/newEmail.jsp
+msgid "{0} wrote:"
 msgstr ""
 
-#: WebContent/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Do odchozích emailů přidat čas odeslání"
+#: WebContent/newEmail.jsp
+msgid "Send"
+msgstr ""
 
-#: WebContent/settings.jsp
-msgid "Change Password"
+#: WebContent/debug.jsp
+msgid "Debug"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Debug Page"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Test encrypted files"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "No file encryption problems found."
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Undecryptable files:"
+msgstr ""
+
+#: WebContent/deleteEmail.jsp
+msgid "Error: Couldn't delete email."
 msgstr ""
 
 #: WebContent/password.jsp
@@ -811,95 +1118,18 @@ msgstr "Nutno zadat heslo"
 msgid "Password:"
 msgstr "Heslo:"
 
-#: WebContent/clearPasswordCache.jsp
-msgid "Password Cleared"
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total"
 msgstr ""
 
-#: WebContent/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr ""
-
-#: WebContent/buttonFrame.jsp
-msgid "Checking for mail..."
-msgstr "Kontroluji příchozí poštu..."
-
-#: WebContent/buttonFrame.jsp
-msgid "Check Mail"
-msgstr "Kontroluji poštu"
-
-#: WebContent/buttonFrame.jsp
-msgid "New"
-msgstr ""
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"In order to receive email from other people, you need to create an email "
-"identity first."
-msgstr "Abyste mohli přijímat emaily od ostatních lidí, musíte si nejdříve vytvořit emailovou identitu."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"Every email identity is associated with an email destination. Anybody can "
-"send email to the email destination, but only the identity holder can read "
-"it."
-msgstr "Emailová identita je spojena s emailovou destinací. Kdokoliv může poslat email na emailovou destinaci, ale pouze vlastník identity ho může přečíst."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"In a sense, email identities are the equivalent to traditional email "
-"accounts - except that there is no provider that can read all your email "
-"because I2P-Bote stores all emails encrypted on the network."
-msgstr "V jistém smyslu je emailová identita podobná tradičnímu emailovému účtu, jediný rozdíl je v tom že neexistuje žádný poskytovatel této který by mohl číst vaše emaily protože I2P-Bote uchovává na síti všechny emaily zašifrované."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities.txt; "
-"never give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote automaticky dešifruje všechny emaily které vám byly poslané, k tomu používá emailovou identitu kterou jste vytvořili. Emailové identity jsou uloženy v souboru jménem identities.txt - nedovolte nikomu aby tento soubor získal, jinak bude schopen číst vaše maily."
-
-#: WebContent/noIdentities.jsp
-msgid "Do give out the email destination so others can contact you."
-msgstr "Zveřejnit emailovou destinaci aby vás ostatní mohli kontaktovat."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"It is easy to create multiple identities for different purposes, or "
-"different contacts."
-msgstr "Je jednoduché vytvořit vícero identit za různými účely, nebo pro kontaktování rozdílných okruhů osob."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"When you create a new email identity, you can choose the type of encryption "
-"that will be used by the email identity. While all encryption algorithms "
-"offered by I2P-Bote provide a high level of privacy, the length of an email "
-"destination depends on the encryption used. The higher the number of bits, "
-"the longer the email destination."
-msgstr "Při vytváření nové emailové identity můžete zvolit použitý šifrovací algoritmus. Přestože všechny algoritmy které I2P-Bote nabízí poskytují vysokou míru soukromí, délka emailové destinace závisí na použitém šifrovacím algoritmu. Čím větší počet bitů je použit, tím delší je emailová destinace.;"
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"Note that the same is not true for encryption strength. 256-bit elliptic "
-"curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
-"elliptic curve is equivalent to 15360-bit ElGamal."
-msgstr "Všimněte si že toto neplatí pro sílu šifrovacích algoritmů. 256 bitové šifrování pomocí eliptických křivek je svojí bezpečností ekvivalentí 3072 bitovému ElGamal. 521 bitové šifrování pomocí eliptických křivek pak odpovída 15360 bitovému ElGamal."
-
-#: WebContent/noIdentities.jsp
-msgid "No Email Identity Defined"
-msgstr "Žádná emailová identita nebyla definována."
-
-#: WebContent/noIdentities.jsp
-msgid "Create a New Email Identity"
-msgstr "Vytvořit novou emailovou identitu"
-
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Email Destination: "
-msgstr ""
-
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total, {1} new"
 msgstr ""
 
 #: WebContent/WEB-INF/tags/printDate.tag
 msgid "Unknown"
+msgstr ""
+
+#: WebContent/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
 msgstr ""

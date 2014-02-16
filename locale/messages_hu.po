@@ -3,26 +3,34 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
-"Report-Msgid-Bugs-To: https://trac.i2p2.de/\n"
-"POT-Creation-Date: 2011-09-23 19:19+0000\n"
-"PO-Revision-Date: 2012-06-02 23:49+0000\n"
-"Last-Translator: AdminLMH <lehetmashogy@i2pmail.org>\n"
-"Language-Team: Hungarian (http://www.transifex.net/projects/p/I2P/language/hu/)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-02 21:10+0000\n"
+"PO-Revision-Date: 2013-05-02 21:15+0000\n"
+"Last-Translator: HungryHobo <HungryHobo@i2pmail.org>\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/I2P/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: hu\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/i2p/bote/I2PBote.java:402 src/i2p/bote/service/OutboxProcessor.java:157
+#: src/i2p/bote/Configuration.java:62
+msgid "lblue"
+msgstr ""
+
+#: src/i2p/bote/Configuration.java:63
+msgid "vanilla"
+msgstr ""
+
+#: src/i2p/bote/I2PBote.java:503 src/i2p/bote/service/OutboxProcessor.java:159
 msgid "No identity matches the sender/from field: "
 msgstr "Nincsenek azonossági egyezések a feladó/-tól mezőben:"
 
-#: src/i2p/bote/I2PBote.java:478
+#: src/i2p/bote/I2PBote.java:663
 msgid "The old password is not correct."
 msgstr "A régi jelszó nem megfelelő."
 
-#: src/i2p/bote/I2PBote.java:480
+#: src/i2p/bote/I2PBote.java:665
 msgid "The new password and the confirmation password do not match."
 msgstr "Az új jelszó és a megerősítő jelszó nem egyezik."
 
@@ -34,27 +42,35 @@ msgstr "256 bites Elliptikus Görbe Titkosítás"
 msgid "521-bit Elliptic Curve Encryption"
 msgstr "521 bites Elliptikus Görbe Titkosítás"
 
-#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
+#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:55
 msgid "2048-bit ElGamal Encryption"
 msgstr "2048 bites ElGamal Titkosítás"
 
-#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:119
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 Titkosítás"
 
-#: src/i2p/bote/email/Email.java:481
-#, java-format
-msgid "Invalid address: {0}"
-msgstr "Érvénytelen cím: {0}"
-
-#: src/i2p/bote/email/Email.java:487
+#: src/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Cím nem tartalmaz e-mail célállomást vagy külső címet: {0}"
 
-#: src/i2p/bote/folder/Outbox.java:117
+#: src/i2p/bote/email/Email.java:507
+#, java-format
+msgid "Invalid address: {0}"
+msgstr "Érvénytelen cím: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:116
 msgid "Queued"
 msgstr "Sorba állítva"
+
+#: src/i2p/bote/imap/BoteMailbox.java:85
+msgid "Password required or invalid password provided"
+msgstr ""
+
+#: src/i2p/bote/imap/MapperFactory.java:276
+msgid "Deletion of mailboxes is not currently supported."
+msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -73,7 +89,7 @@ msgid "First Seen"
 msgstr "Először Látva"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:86
+#: src/i2p/bote/web/PeerInfoTag.java:96
 msgid "I2P Destination"
 msgstr "I2P Célállomás"
 
@@ -82,7 +98,7 @@ msgid "Locked?"
 msgstr "Lezárva?"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:85 src/i2p/bote/web/PeerInfoTag.java:110
+#: src/i2p/bote/web/PeerInfoTag.java:95 src/i2p/bote/web/PeerInfoTag.java:120
 msgid "Peer"
 msgstr "Társ"
 
@@ -102,63 +118,72 @@ msgstr "(üres)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/i2p/bote/service/OutboxProcessor.java:162
+#: src/i2p/bote/service/OutboxProcessor.java:164
 msgid "Sending"
 msgstr "Küldés"
 
-#: src/i2p/bote/service/OutboxProcessor.java:171
+#: src/i2p/bote/service/OutboxProcessor.java:173
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Elüldve {0} számára a {1} címzettből"
 
-#: src/i2p/bote/service/OutboxProcessor.java:178 WebContent/folder.jsp
-msgid "Sent"
-msgstr "Elküldve"
+#: src/i2p/bote/service/OutboxProcessor.java:180
+msgid "Email sent"
+msgstr ""
 
-#: src/i2p/bote/service/OutboxProcessor.java:181
+#: src/i2p/bote/service/OutboxProcessor.java:183
 msgid "Gateway disabled"
 msgstr "Átjáró letiltva"
 
-#: src/i2p/bote/service/OutboxProcessor.java:217
+#: src/i2p/bote/service/OutboxProcessor.java:223
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Érvénytelen fogadó cím: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:221
+#: src/i2p/bote/service/OutboxProcessor.java:227
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Hiba az e-mail csomagok létrehozásakor: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:225
+#: src/i2p/bote/service/OutboxProcessor.java:231
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Hiba a levélküldés közben: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:121
+#: src/i2p/bote/service/OutboxProcessor.java:235
+#, java-format
+msgid "Error saving email metadata: {0}"
+msgstr ""
+
+#: src/i2p/bote/web/JSPHelper.java:111
+msgid "Not set."
+msgstr ""
+
+#: src/i2p/bote/web/JSPHelper.java:136
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Titkosítási Végrehajtás: Érvénytelen azonosító szám:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:56
+#: src/i2p/bote/web/PeerInfoTag.java:58
 msgid "Kademlia Peers:"
 msgstr "Kademila Társak:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:81
+#: src/i2p/bote/web/PeerInfoTag.java:91
 msgid "Relay Peers:"
 msgstr "Közvetítő Társak:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:87
+#: src/i2p/bote/web/PeerInfoTag.java:97
 msgid "Reachability %"
 msgstr "Elérhetőség %"
 
-#: src/i2p/bote/web/PeerInfoTag.java:106
+#: src/i2p/bote/web/PeerInfoTag.java:116
 msgid "Banned Peers:"
 msgstr "Kitiltott Társak:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:111
+#: src/i2p/bote/web/PeerInfoTag.java:121
 msgid "Destination Hash"
 msgstr "Célállomás Hash"
 
-#: src/i2p/bote/web/PeerInfoTag.java:112
+#: src/i2p/bote/web/PeerInfoTag.java:122
 msgid "Ban Reason"
 msgstr "Kitiltás Oka"
 
@@ -175,41 +200,167 @@ msgstr "Az e-mail küldésre sorba állítva."
 msgid "Error sending email: {0}"
 msgstr "Hiba a levél küldésekor: {0}"
 
-#: WebContent/folder.jsp
-msgid "From"
-msgstr "Feladó"
+#: WebContent/network.jsp
+msgid "Network"
+msgstr "Hálózat"
 
-#: WebContent/folder.jsp
-msgid "Know"
-msgstr "Ismert"
+#: WebContent/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr "Hálózati információ nem elérhető, mert az I2P-Bote még nem kezdte meg a csatlakozást a hálózathoz."
 
-#: WebContent/folder.jsp
-msgid "Sig"
-msgstr "Aláírás"
+#: WebContent/network.jsp
+msgid "Local destination:"
+msgstr "Helyi célállomás:"
 
-#: WebContent/folder.jsp
-msgid "To"
-msgstr "Címzett"
+#: WebContent/saveIdentities.jsp
+msgid "Error:"
+msgstr "Hiba:"
 
-#: WebContent/folder.jsp
-msgid "Subject"
-msgstr "Tárgy"
+#: WebContent/settings.jsp
+msgid "Settings have been saved."
+msgstr "Beállítások elmentve."
 
-#: WebContent/folder.jsp
+#: WebContent/settings.jsp
+msgid "Settings"
+msgstr "Beállítások"
+
+#: WebContent/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "Levelek ellenőrzése {0} percenként."
+
+#: WebContent/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "Közvetítők használata levél küldésekor:"
+
+#: WebContent/settings.jsp
+msgid "None"
+msgstr "Semmi"
+
+#: WebContent/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr "Késleltetés közvetítő közötti ugrásonként:"
+
+#: WebContent/settings.jsp
+msgid "and"
+msgstr "és "
+
+#: WebContent/settings.jsp
+msgid "minutes"
+msgstr "perc"
+
+#: WebContent/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "Átjáró használata nem I2P e-mail címre való küldéskor"
+
+#: WebContent/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "Átjáró E-mail Célállomássa:"
+
+#: WebContent/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr "Angol nyelv használata a kimenő e-mailhez ('Re:', 'wrote:', stb.)"
+
+#: WebContent/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Küldés idejének hozzáadása a kimenő levelekhez"
+
+#: WebContent/settings.jsp
+msgid "Theme:"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Save"
+msgstr "Mentés"
+
+#: WebContent/settings.jsp
+msgid "Change Password"
+msgstr "Jelszó Megváltoztatása"
+
+#: WebContent/showEmail.jsp
+msgid "From:"
+msgstr "Küldő:"
+
+#: WebContent/showEmail.jsp
 msgid "Anonymous"
 msgstr "Anoním / Névtelen"
 
-#: WebContent/folder.jsp
-msgid "(No subject)"
-msgstr "(Nincs tárgy)"
+#: WebContent/showEmail.jsp
+msgid "Signature:"
+msgstr "Aláírás:"
 
-#: WebContent/folder.jsp
+#: WebContent/showEmail.jsp
+msgid "Valid"
+msgstr "Érvényes"
+
+#: WebContent/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "Érvénytelen vagy hiányzik"
+
+#: WebContent/showEmail.jsp
+msgid "Reply To:"
+msgstr "Válasz a következőnek:"
+
+#: WebContent/showEmail.jsp
+msgid "To:"
+msgstr "Címzett:"
+
+#: WebContent/showEmail.jsp
+msgid "CC:"
+msgstr "Másolatot kap:"
+
+#: WebContent/showEmail.jsp
+msgid "BCC:"
+msgstr "BCC:"
+
+#: WebContent/showEmail.jsp
+msgid "Sent:"
+msgstr "Elküldve:"
+
+#: WebContent/showEmail.jsp
+msgid "Received:"
+msgstr "Érkezett:"
+
+#: WebContent/showEmail.jsp
+msgid "Subject:"
+msgstr "Tárgy:"
+
+#: WebContent/showEmail.jsp
+msgid "Message:"
+msgstr "Üzenet?:"
+
+#: WebContent/showEmail.jsp
+msgid "Attachments:"
+msgstr "Mellékletek:"
+
+#: WebContent/showEmail.jsp
+msgid "Status:"
+msgstr "Állapot:"
+
+#: WebContent/showEmail.jsp
+msgid "Reply"
+msgstr "Válasz"
+
+#: WebContent/showEmail.jsp
+msgid "Re:"
+msgstr "Re:"
+
+#: WebContent/showEmail.jsp
 msgid "Delete"
 msgstr "Törlés"
-
-#: WebContent/folder.jsp
-msgid "Delete this email"
-msgstr "Töröld ezt az e-mailt"
 
 #: WebContent/about.jsp
 msgid "About I2P-Bote"
@@ -220,8 +371,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote verzió {0}"
 
 #: WebContent/about.jsp
-msgid "Author:"
-msgstr "Készítette:"
+msgid "Main Developer:"
+msgstr ""
 
 #: WebContent/about.jsp
 msgid "Click to send an email"
@@ -275,235 +426,69 @@ msgstr "Kínai fordítás"
 msgid "Arabic translation"
 msgstr "Arab fordítás"
 
-#: WebContent/network.jsp
-msgid "Network"
-msgstr "Hálózat"
+#: WebContent/about.jsp
+msgid "Czech translation"
+msgstr ""
 
-#: WebContent/network.jsp
-msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "Hálózati információ nem elérhető, mert az I2P-Bote még nem kezdte meg a csatlakozást a hálózathoz."
+#: WebContent/about.jsp
+msgid "German translation"
+msgstr ""
 
-#: WebContent/network.jsp
-msgid "Local destination:"
-msgstr "Helyi célállomás:"
+#: WebContent/about.jsp
+msgid "Polish translation"
+msgstr ""
 
-#: WebContent/deleteIdentity.jsp
-msgid "Error:"
-msgstr "Hiba:"
+#: WebContent/about.jsp
+msgid "Italian translation"
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "Email Identities"
-msgstr "E-mail személyazonosság"
+#: WebContent/about.jsp
+msgid "Ukrainian translation"
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "No email identities are defined."
-msgstr "E-mail személnyazonosság nincs meghatározva"
+#: WebContent/about.jsp
+msgid "Hungarian translation"
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "Def."
-msgstr "Alap"
+#: WebContent/about.jsp
+msgid "Code fixes, translation updates from tx"
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "Public Name"
-msgstr "Nyilvános Név"
+#: WebContent/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "Description"
-msgstr "Leírás"
+#: WebContent/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "Email Address"
-msgstr "E-mail Cím"
+#: WebContent/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "Email Destination"
-msgstr "E-mail Célállomás"
+#: WebContent/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "New Identity"
-msgstr "Új Személyazonosság"
+#: WebContent/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "New Email"
-msgstr "Új E-mail"
+#: WebContent/publishDestination.jsp
+msgid "Text to include:"
+msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr "Kérlek, válassz egy csatolandó fájlt és próbáld újra"
+#: WebContent/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "From:"
-msgstr "Küldő:"
+#: WebContent/publishDestination.jsp
+msgid "Publish"
+msgstr ""
 
-#: WebContent/newEmail.jsp
-msgid "To:"
-msgstr "Címzett:"
-
-#: WebContent/newEmail.jsp
-msgid "CC:"
-msgstr "Másolatot kap:"
-
-#: WebContent/newEmail.jsp
-msgid "BCC:"
-msgstr "BCC:"
-
-#: WebContent/newEmail.jsp
-msgid "Reply To:"
-msgstr "Válasz a következőnek:"
-
-#: WebContent/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Címjegyzék"
-
-#: WebContent/newEmail.jsp
-msgid "Subject:"
-msgstr "Tárgy:"
-
-#: WebContent/newEmail.jsp
-msgid "Attachments:"
-msgstr "Mellékletek:"
-
-#: WebContent/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "Melléklet eltávolítása"
-
-#: WebContent/newEmail.jsp
-msgid "Add another attachment"
-msgstr "Újabb melléklet hozzáadása"
-
-#: WebContent/newEmail.jsp
-msgid "Attach"
-msgstr "Csatolás"
-
-#: WebContent/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "Javasoltak az 500 kbájt alatti mellékletek."
-
-#: WebContent/newEmail.jsp
-msgid "Message:"
-msgstr "Üzenet?:"
-
-#: WebContent/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} írta:"
-
-#: WebContent/newEmail.jsp
-msgid "Send"
-msgstr "Küldés"
-
-#: WebContent/newEmail.jsp
-msgid "Save"
-msgstr "Mentés"
-
-#: WebContent/editIdentity.jsp
-msgid "New Email Identity"
-msgstr "Új E-mail Személyazonosság"
-
-#: WebContent/editIdentity.jsp
-msgid "Create"
-msgstr "Létrehozás"
-
-#: WebContent/editIdentity.jsp
-msgid "Edit Email Identity"
-msgstr "E-mail Személyazonosság Szerkesztése"
-
-#: WebContent/editIdentity.jsp
-msgid "Public Name:"
-msgstr "Nyilvános Név:"
-
-#: WebContent/editIdentity.jsp
-msgid "(required field, shown to recipients)"
-msgstr "(mező kitöltése szükséges, címzettek által látható)"
-
-#: WebContent/editIdentity.jsp
-msgid "Description:"
-msgstr "Leírás:"
-
-#: WebContent/editIdentity.jsp
-msgid "(optional, kept private)"
-msgstr "(opcionális, titkos marad)"
-
-#: WebContent/editIdentity.jsp
-msgid "Encryption:"
-msgstr "Titkosítás:"
-
-#: WebContent/editIdentity.jsp
-msgid "(If unsure, leave the default)"
-msgstr "(ha bizonytalan vagy, maradja az alapértelmezettnél)"
-
-#: WebContent/editIdentity.jsp
-msgid "Email Destination:"
-msgstr "E-mail Célállomás:"
-
-#: WebContent/editIdentity.jsp
-msgid "Default Identity:"
-msgstr "Alapértelmezett Személyazonosság:"
-
-#: WebContent/editIdentity.jsp
-msgid "Private keys:"
-msgstr "Privát kulcsok:"
-
-#: WebContent/editIdentity.jsp
-msgid "(Never reveal to anyone!)"
-msgstr "(Soha ne add át senkinek!)"
-
-#: WebContent/editIdentity.jsp
-msgid "Show"
-msgstr "Mutat"
-
-#: WebContent/editIdentity.jsp
-msgid "Cancel"
-msgstr "Mégse"
-
-#: WebContent/editIdentity.jsp
-msgid "Delete this identity"
-msgstr "Személyazonosság törlése"
-
-#: WebContent/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
-msgstr "Névjegy törölve a címjegyzékből."
-
-#: WebContent/deleteContact.jsp
-msgid "Error"
-msgstr "Hiba"
-
-#: WebContent/deleteEmail.jsp
-msgid "Error: Couldn't delete email."
-msgstr "Hiba: e-mail törlése sikertelen"
-
-#: WebContent/setPassword.jsp
-msgid "Set Password"
-msgstr "Jelszó Beállítása"
-
-#: WebContent/setPassword.jsp
-msgid "The password has been changed."
-msgstr "A jelszó megváltotaztatása sikerült."
-
-#: WebContent/setPassword.jsp
-msgid "Set a new Password"
-msgstr "Új Jelszó Beállítása"
-
-#: WebContent/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "Ha nem állítottál be jelszót, hagyd a régi jelszó mezőt üresen."
-
-#: WebContent/setPassword.jsp
-msgid "Old password:"
-msgstr "Régi jelszó:"
-
-#: WebContent/setPassword.jsp
-msgid "New password:"
-msgstr "Új jelszó:"
-
-#: WebContent/setPassword.jsp
-msgid "Confirm:"
-msgstr "Megerősítés:"
-
-#: WebContent/setPassword.jsp
-msgid "OK"
-msgstr "Rendben"
+#: WebContent/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr ""
 
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
@@ -542,10 +527,6 @@ msgid "Configuration"
 msgstr "Beállítások"
 
 #: WebContent/header.jsp
-msgid "Settings"
-msgstr "Beállítások"
-
-#: WebContent/header.jsp
 msgid "Network Status"
 msgstr "Hálózat Állapota"
 
@@ -564,6 +545,140 @@ msgstr "GYIK"
 #: WebContent/header.jsp
 msgid "About"
 msgstr "Névjegy"
+
+#: WebContent/statusFrame.jsp
+msgid "Not Started"
+msgstr "Nincs elindítva"
+
+#: WebContent/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr "Várakozás 3 percig..."
+
+#: WebContent/statusFrame.jsp
+msgid "Connecting..."
+msgstr "Csatlakozás..."
+
+#: WebContent/statusFrame.jsp
+msgid "Connected"
+msgstr "Csatlakozva"
+
+#: WebContent/statusFrame.jsp
+msgid "Error"
+msgstr "Hiba"
+
+#: WebContent/statusFrame.jsp
+msgid "Unknown Status"
+msgstr "Ismeretlen Státusz"
+
+#: WebContent/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Connect Now"
+msgstr "Csatlakozás Most"
+
+#: WebContent/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr ""
+
+#: WebContent/connectError.jsp
+msgid "Error Details"
+msgstr ""
+
+#: WebContent/outbox.jsp
+msgid "Outbox"
+msgstr "Kimenő Üzenetek"
+
+#: WebContent/outbox.jsp
+msgid "From"
+msgstr "Feladó"
+
+#: WebContent/outbox.jsp
+msgid "To"
+msgstr "Címzett"
+
+#: WebContent/outbox.jsp
+msgid "Subject"
+msgstr "Tárgy"
+
+#: WebContent/outbox.jsp
+msgid "Create Time"
+msgstr "Létrehozás Ideje"
+
+#: WebContent/outbox.jsp
+msgid "Status"
+msgstr "Státusz"
+
+#: WebContent/outbox.jsp
+msgid "(No subject)"
+msgstr "(Nincs tárgy)"
+
+#: WebContent/outbox.jsp
+msgid "Delete this email"
+msgstr "Töröld ezt az e-mailt"
+
+#: WebContent/setPassword.jsp
+msgid "Set Password"
+msgstr "Jelszó Beállítása"
+
+#: WebContent/setPassword.jsp
+msgid "The password has been changed."
+msgstr "A jelszó megváltotaztatása sikerült."
+
+#: WebContent/setPassword.jsp
+msgid "Please wait"
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Új Jelszó Beállítása"
+
+#: WebContent/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "Ha nem állítottál be jelszót, hagyd a régi jelszó mezőt üresen."
+
+#: WebContent/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Old password:"
+msgstr "Régi jelszó:"
+
+#: WebContent/setPassword.jsp
+msgid "New password:"
+msgstr "Új jelszó:"
+
+#: WebContent/setPassword.jsp
+msgid "Confirm:"
+msgstr "Megerősítés:"
+
+#: WebContent/setPassword.jsp
+msgid "OK"
+msgstr "Rendben"
+
+#: WebContent/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "Kérlek, töltsd ki a Nyilvános Név mezőt."
+
+#: WebContent/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "Kérlek, várj..."
+
+#: WebContent/submitIdentity.jsp
+msgid "The Email Identity is being generated. This can take several minutes."
+msgstr "Az E-mail Személyazonosság Készül. Ez néhány percig eltarthat."
+
+#: WebContent/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "Az e-mail személyazonosság elmentve."
 
 #: WebContent/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -590,12 +705,71 @@ msgid "Edit Contact"
 msgstr "Névjegy Szerkesztése"
 
 #: WebContent/editContact.jsp
+msgid "Email Destination:"
+msgstr "E-mail Célállomás:"
+
+#: WebContent/editContact.jsp
 msgid "(required field)"
 msgstr "(mező kitöltése kötelező)"
 
 #: WebContent/editContact.jsp
 msgid "Name:"
 msgstr "Név:"
+
+#: WebContent/editContact.jsp
+msgid "Picture:"
+msgstr ""
+
+#: WebContent/editContact.jsp
+msgid "Text:"
+msgstr ""
+
+#: WebContent/editContact.jsp
+msgid "Cancel"
+msgstr "Mégse"
+
+#: WebContent/noIdentities.jsp
+msgid "No Email Identity Defined"
+msgstr "Nincs E-mail Személyazonosság Meghatározva"
+
+#: WebContent/noIdentities.jsp
+msgid "Create a New Email Identity"
+msgstr "Új E-mail Személyazonosság Létrehozása"
+
+#: WebContent/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Import Contact"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Fingerprint:"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Email Destination: "
+msgstr "E-mail Célállomás:"
+
+#: WebContent/importContact.jsp
+msgid "Import"
+msgstr ""
 
 #: WebContent/folders.jsp
 msgid "Folders"
@@ -606,80 +780,161 @@ msgid "Inbox"
 msgstr "Bejövő Üzenetek"
 
 #: WebContent/folders.jsp
-msgid "Outbox"
-msgstr "Kimenő Üzenetek"
-
-#: WebContent/folders.jsp
-msgid "Sent Emails"
-msgstr "Elküldött Üzenetek"
-
-#: WebContent/folders.jsp
-msgid "Drafts"
-msgstr "Piszkozatok"
+msgid "Sent"
+msgstr "Elküldve"
 
 #: WebContent/folders.jsp
 msgid "Trash"
 msgstr "Törölt Elemek"
 
-#: WebContent/folders.jsp
-msgid "Manage Folders"
-msgstr "Mappák Kezelése"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr "Annak érdekében, hogy másoktól leveleket kapj, először hozz létre egy e-mail személyazonosságot."
 
-#: WebContent/statusFrame.jsp
-msgid "Not Started"
-msgstr "Nincs elindítva"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr "Mindegyik e-mail személyazonosság egy e-mail célállomáshoz van hozzárendelve. Bárki küldhet e-mailt az e-mail célállomásra, de csak a személyazonosság tulajdonosa olvashatja azt."
 
-#: WebContent/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
-msgstr "Várakozás 3 percig..."
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr "Bizonyos értelemben az e-mail személyazonosságok megegyeznek a hagyományos e-mail fiókokkal - kivéve, hogy nincs e-mail szolgáltató, ami elolvashatja az összes leveled, mivel az I2P-Bote minden levelet titkosítva tárol a hálózaton."
 
-#: WebContent/statusFrame.jsp
-msgid "Connect Now"
-msgstr "Csatlakozás Most"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
+msgstr ""
 
-#: WebContent/statusFrame.jsp
-msgid "Connecting..."
-msgstr "Csatlakozás..."
+#: WebContent/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr "Add ki az e-mail célállomásodat, hogy mások kapcsolatba léphessenek veled."
 
-#: WebContent/statusFrame.jsp
-msgid "Connected"
-msgstr "Csatlakozva"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr "Különböző célokra vagy különböző kapcsolatok számára többféle személyazonosság készíthető egyszerű módon."
 
-#: WebContent/statusFrame.jsp
-msgid "Unknown Status"
-msgstr "Ismeretlen Státusz"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
+msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Signature:"
-msgstr "Aláírás:"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
+msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Valid"
-msgstr "Érvényes"
+#: WebContent/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "Jelszó Törölve"
 
-#: WebContent/showEmail.jsp
-msgid "Invalid or missing"
-msgstr "Érvénytelen vagy hiányzik"
+#: WebContent/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "A jelszó törlésre került a cache-ből."
 
-#: WebContent/showEmail.jsp
-msgid "Sent:"
-msgstr "Elküldve:"
+#: WebContent/sendEmail.jsp
+msgid "New Email"
+msgstr "Új E-mail"
 
-#: WebContent/showEmail.jsp
-msgid "Received:"
-msgstr "Érkezett:"
+#: WebContent/sendEmail.jsp
+msgid "Go to inbox"
+msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Status:"
-msgstr "Állapot:"
+#: WebContent/editIdentity.jsp
+msgid "More..."
+msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Reply"
-msgstr "Válasz"
+#: WebContent/editIdentity.jsp
+msgid "Less..."
+msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Re:"
-msgstr "Re:"
+#: WebContent/editIdentity.jsp
+msgid "New Email Identity"
+msgstr "Új E-mail Személyazonosság"
+
+#: WebContent/editIdentity.jsp
+msgid "Create"
+msgstr "Létrehozás"
+
+#: WebContent/editIdentity.jsp
+msgid "Edit Email Identity"
+msgstr "E-mail Személyazonosság Szerkesztése"
+
+#: WebContent/editIdentity.jsp
+msgid "An Email Identity lets you receive email from other I2P-Bote users."
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Public Name:"
+msgstr "Nyilvános Név:"
+
+#: WebContent/editIdentity.jsp
+msgid "(required field, shown to recipients)"
+msgstr "(mező kitöltése szükséges, címzettek által látható)"
+
+#: WebContent/editIdentity.jsp
+msgid "Description:"
+msgstr "Leírás:"
+
+#: WebContent/editIdentity.jsp
+msgid "(optional, kept private)"
+msgstr "(opcionális, titkos marad)"
+
+#: WebContent/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Encryption:"
+msgstr "Titkosítás:"
+
+#: WebContent/editIdentity.jsp
+msgid "(If unsure, leave the default)"
+msgstr "(ha bizonytalan vagy, maradja az alapértelmezettnél)"
+
+#: WebContent/editIdentity.jsp
+msgid "Default Identity:"
+msgstr "Alapértelmezett Személyazonosság:"
+
+#: WebContent/editIdentity.jsp
+msgid "Private keys:"
+msgstr "Privát kulcsok:"
+
+#: WebContent/editIdentity.jsp
+msgid "(Never reveal to anyone!)"
+msgstr "(Soha ne add át senkinek!)"
+
+#: WebContent/editIdentity.jsp
+msgid "Show"
+msgstr "Mutat"
+
+#: WebContent/editIdentity.jsp
+msgid "Cannot publish until connected."
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Delete this identity"
+msgstr "Személyazonosság törlése"
+
+#: WebContent/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr "Névjegy törölve a címjegyzékből."
 
 #: WebContent/addressBook.jsp
 msgid "Private Address Book"
@@ -698,6 +953,10 @@ msgid "Name"
 msgstr "Név"
 
 #: WebContent/addressBook.jsp
+msgid "Email Destination"
+msgstr "E-mail Célállomás"
+
+#: WebContent/addressBook.jsp
 msgid "Delete this contact"
 msgstr "Névjegy törlése"
 
@@ -708,6 +967,46 @@ msgstr "Címzett hozzáadása"
 #: WebContent/addressBook.jsp
 msgid "Return"
 msgstr "Visszaküldés"
+
+#: WebContent/addressBook.jsp
+msgid "Import from the public address directory"
+msgstr ""
+
+#: WebContent/addressBook.jsp
+msgid "Lookup"
+msgstr ""
+
+#: WebContent/buttonFrame.jsp
+msgid "Checking for mail..."
+msgstr "Levelek letöltése folyamatban..."
+
+#: WebContent/buttonFrame.jsp
+msgid "Check Mail"
+msgstr "Levelek Letöltése"
+
+#: WebContent/buttonFrame.jsp
+msgid "Compose"
+msgstr ""
+
+#: WebContent/buttonFrame.jsp
+msgid "Last checked:"
+msgstr ""
+
+#: WebContent/folder.jsp
+msgid "Know"
+msgstr "Ismert"
+
+#: WebContent/folder.jsp
+msgid "Sent Time"
+msgstr ""
+
+#: WebContent/folder.jsp
+msgid "Delivered"
+msgstr ""
+
+#: WebContent/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr ""
 
 #: WebContent/showFullIdentity.jsp
 msgid "Full Identity"
@@ -722,77 +1021,85 @@ msgid ""
 "Do not show the above information to anyone! It contains your private keys."
 msgstr "Senkinek ne mutasd meg a fenti információt! Tartalmazza a prvát kulcsaitdat."
 
-#: WebContent/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "Kérlek, töltsd ki a Nyilvános Név mezőt."
+#: WebContent/identities.jsp
+msgid "Email Identities"
+msgstr "E-mail személyazonosság"
 
-#: WebContent/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "Kérlek, várj..."
+#: WebContent/identities.jsp
+msgid "No email identities are defined."
+msgstr "E-mail személnyazonosság nincs meghatározva"
 
-#: WebContent/submitIdentity.jsp
-msgid "The Email Identity is being generated. This can take several minutes."
-msgstr "Az E-mail Személyazonosság Készül. Ez néhány percig eltarthat."
+#: WebContent/identities.jsp
+msgid "Def."
+msgstr "Alap"
 
-#: WebContent/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "Az e-mail személyazonosság elmentve."
+#: WebContent/identities.jsp
+msgid "Public Name"
+msgstr "Nyilvános Név"
 
-#: WebContent/outbox.jsp
-msgid "Create Time"
-msgstr "Létrehozás Ideje"
+#: WebContent/identities.jsp
+msgid "Description"
+msgstr "Leírás"
 
-#: WebContent/outbox.jsp
-msgid "Status"
-msgstr "Státusz"
+#: WebContent/identities.jsp
+msgid "New Identity"
+msgstr "Új Személyazonosság"
 
-#: WebContent/settings.jsp
-msgid "Settings have been saved."
-msgstr "Beállítások elmentve."
+#: WebContent/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "Kérlek, válassz egy csatolandó fájlt és próbáld újra"
 
-#: WebContent/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "Levelek ellenőrzése {0} percenként."
+#: WebContent/newEmail.jsp
+msgid "Addr. Book..."
+msgstr "Címjegyzék"
 
-#: WebContent/settings.jsp
-msgid "Use relays when sending mail:"
-msgstr "Közvetítők használata levél küldésekor:"
+#: WebContent/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "Melléklet eltávolítása"
 
-#: WebContent/settings.jsp
-msgid "None"
-msgstr "Semmi"
+#: WebContent/newEmail.jsp
+msgid "Add another attachment"
+msgstr "Újabb melléklet hozzáadása"
 
-#: WebContent/settings.jsp
-msgid "Delay per relay hop: Between"
-msgstr "Késleltetés közvetítő közötti ugrásonként:"
+#: WebContent/newEmail.jsp
+msgid "Attach"
+msgstr "Csatolás"
 
-#: WebContent/settings.jsp
-msgid "and"
-msgstr "és "
+#: WebContent/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "Javasoltak az 500 kbájt alatti mellékletek."
 
-#: WebContent/settings.jsp
-msgid "minutes"
-msgstr "perc"
+#: WebContent/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} írta:"
 
-#: WebContent/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "Átjáró használata nem I2P e-mail címre való küldéskor"
+#: WebContent/newEmail.jsp
+msgid "Send"
+msgstr "Küldés"
 
-#: WebContent/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr "Átjáró E-mail Célállomássa:"
+#: WebContent/debug.jsp
+msgid "Debug"
+msgstr ""
 
-#: WebContent/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Angol nyelv használata a kimenő e-mailhez ('Re:', 'wrote:', stb.)"
+#: WebContent/debug.jsp
+msgid "Debug Page"
+msgstr ""
 
-#: WebContent/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Küldés idejének hozzáadása a kimenő levelekhez"
+#: WebContent/debug.jsp
+msgid "Test encrypted files"
+msgstr ""
 
-#: WebContent/settings.jsp
-msgid "Change Password"
-msgstr "Jelszó Megváltoztatása"
+#: WebContent/debug.jsp
+msgid "No file encryption problems found."
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Undecryptable files:"
+msgstr ""
+
+#: WebContent/deleteEmail.jsp
+msgid "Error: Couldn't delete email."
+msgstr "Hiba: e-mail törlése sikertelen"
 
 #: WebContent/password.jsp
 msgid "Password Required"
@@ -810,95 +1117,18 @@ msgstr "Jelszó szükséges"
 msgid "Password:"
 msgstr "Jelszó:"
 
-#: WebContent/clearPasswordCache.jsp
-msgid "Password Cleared"
-msgstr "Jelszó Törölve"
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total"
+msgstr ""
 
-#: WebContent/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr "A jelszó törlésre került a cache-ből."
-
-#: WebContent/buttonFrame.jsp
-msgid "Checking for mail..."
-msgstr "Levelek letöltése folyamatban..."
-
-#: WebContent/buttonFrame.jsp
-msgid "Check Mail"
-msgstr "Levelek Letöltése"
-
-#: WebContent/buttonFrame.jsp
-msgid "New"
-msgstr "Új"
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"In order to receive email from other people, you need to create an email "
-"identity first."
-msgstr "Annak érdekében, hogy másoktól leveleket kapj, először hozz létre egy e-mail személyazonosságot."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"Every email identity is associated with an email destination. Anybody can "
-"send email to the email destination, but only the identity holder can read "
-"it."
-msgstr "Mindegyik e-mail személyazonosság egy e-mail célállomáshoz van hozzárendelve. Bárki küldhet e-mailt az e-mail célállomásra, de csak a személyazonosság tulajdonosa olvashatja azt."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"In a sense, email identities are the equivalent to traditional email "
-"accounts - except that there is no provider that can read all your email "
-"because I2P-Bote stores all emails encrypted on the network."
-msgstr "Bizonyos értelemben az e-mail személyazonosságok megegyeznek a hagyományos e-mail fiókokkal - kivéve, hogy nincs e-mail szolgáltató, ami elolvashatja az összes leveled, mivel az I2P-Bote minden levelet titkosítva tárol a hálózaton."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities.txt; "
-"never give this file to anyone or they will be able to read all your emails."
-msgstr "Az I2P-Bote automatikusan feloldja a titkosítást számodra a hozzád már megérkezett levelekről annak az e-mail személyazonosságnak segítségével, melyet készítettél. Az e-mail személyazonosságok az identities.txt nevű fájlban kerülnek tárolásra; soha ne add ezt a fájlt oda senkinek, ellenkező esetben el tudják olvasni minden leveled."
-
-#: WebContent/noIdentities.jsp
-msgid "Do give out the email destination so others can contact you."
-msgstr "Add ki az e-mail célállomásodat, hogy mások kapcsolatba léphessenek veled."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"It is easy to create multiple identities for different purposes, or "
-"different contacts."
-msgstr "Különböző célokra vagy különböző kapcsolatok számára többféle személyazonosság készíthető egyszerű módon."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"When you create a new email identity, you can choose the type of encryption "
-"that will be used by the email identity. While all encryption algorithms "
-"offered by I2P-Bote provide a high level of privacy, the length of an email "
-"destination depends on the encryption used. The higher the number of bits, "
-"the longer the email destination."
-msgstr "Új e-mail személyazonosság készítésekor kiválasztható az e-mail személyazonosság által használt titkosítás típusa. Mindegyik, az I2P-Bote által biztosított titkosítási algoritmus magas szintű titoktartást biztosít, az e-mail célállomás hosszúsága azonban a használt titkosítás fajtájától függ. Minél több a bitek száma, annál hosszabb az e-mail célállomás."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"Note that the same is not true for encryption strength. 256-bit elliptic "
-"curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
-"elliptic curve is equivalent to 15360-bit ElGamal."
-msgstr "Vedd figyelembe, hogy ugyanez nem igaz a titkosítás erősségére. A 256 bites elliptikus görbe titkosítás erősségét tekintve azonos a 3072 bites ElGamal titkosítással. Az 521 bites elliptikus görbe titkosítás erősségét tekintve azonos a 15360 bites ElGamal titkosítással."
-
-#: WebContent/noIdentities.jsp
-msgid "No Email Identity Defined"
-msgstr "Nincs E-mail Személyazonosság Meghatározva"
-
-#: WebContent/noIdentities.jsp
-msgid "Create a New Email Identity"
-msgstr "Új E-mail Személyazonosság Létrehozása"
-
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Email Destination: "
-msgstr "E-mail Célállomás:"
-
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "Hozzáadás a Címjegyzékhez"
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total, {1} new"
+msgstr ""
 
 #: WebContent/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Ismeretlen"
+
+#: WebContent/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Hozzáadás a Címjegyzékhez"

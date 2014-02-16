@@ -1,13 +1,13 @@
 # 
 # Translators:
-# Mikal <mikalv@mikalv.net>, 2013.
+# mikalv <mikalv@mikalv.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
-"Report-Msgid-Bugs-To: https://trac.i2p2.de/\n"
-"POT-Creation-Date: 2013-01-20 15:54+0000\n"
-"PO-Revision-Date: 2013-01-26 17:19+0000\n"
-"Last-Translator: mikalv <mikalv@mikalv.net>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-02 21:10+0000\n"
+"PO-Revision-Date: 2013-05-02 21:15+0000\n"
+"Last-Translator: HungryHobo <HungryHobo@i2pmail.org>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/projects/p/I2P/language/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,23 +15,23 @@ msgstr ""
 "Language: nb\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/i2p/bote/Configuration.java:60
+#: src/i2p/bote/Configuration.java:62
 msgid "lblue"
 msgstr "lblue"
 
-#: src/i2p/bote/Configuration.java:61
+#: src/i2p/bote/Configuration.java:63
 msgid "vanilla"
 msgstr "vanilla"
 
-#: src/i2p/bote/I2PBote.java:419 src/i2p/bote/service/OutboxProcessor.java:159
+#: src/i2p/bote/I2PBote.java:503 src/i2p/bote/service/OutboxProcessor.java:159
 msgid "No identity matches the sender/from field: "
 msgstr "Ingen identitet matcher med sender/fra område"
 
-#: src/i2p/bote/I2PBote.java:507
+#: src/i2p/bote/I2PBote.java:663
 msgid "The old password is not correct."
 msgstr "Det gamle passordet er ikke korrekt."
 
-#: src/i2p/bote/I2PBote.java:509
+#: src/i2p/bote/I2PBote.java:665
 msgid "The new password and the confirmation password do not match."
 msgstr "Det nye passordet og bekreftelsespassordet matcher ikke."
 
@@ -51,19 +51,27 @@ msgstr "2048-bit ElGamal Kryptering"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 Kryptering"
 
-#: src/i2p/bote/email/Email.java:494
-#, java-format
-msgid "Invalid address: {0}"
-msgstr "Ugyldig adresse: {0}"
-
-#: src/i2p/bote/email/Email.java:500
+#: src/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Adressen inneholder ingen Epost Destinasjon eller ekstern adresse: {0}"
 
-#: src/i2p/bote/folder/Outbox.java:117
+#: src/i2p/bote/email/Email.java:507
+#, java-format
+msgid "Invalid address: {0}"
+msgstr "Ugyldig adresse: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:116
 msgid "Queued"
 msgstr "I kø"
+
+#: src/i2p/bote/imap/BoteMailbox.java:85
+msgid "Password required or invalid password provided"
+msgstr ""
+
+#: src/i2p/bote/imap/MapperFactory.java:276
+msgid "Deletion of mailboxes is not currently supported."
+msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -121,8 +129,8 @@ msgid "Sent to {0} out of {1} recipients"
 msgstr "Sendt til {0} ut av {1} mottagere"
 
 #: src/i2p/bote/service/OutboxProcessor.java:180
-msgid "Email has been sent"
-msgstr "E-post har blitt sendt"
+msgid "Email sent"
+msgstr ""
 
 #: src/i2p/bote/service/OutboxProcessor.java:183
 msgid "Gateway disabled"
@@ -148,11 +156,11 @@ msgstr "Det har skjedd en feil under sending av epost: {0}"
 msgid "Error saving email metadata: {0}"
 msgstr "Feil ved lagring av e-post medatadata: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:109
+#: src/i2p/bote/web/JSPHelper.java:111
 msgid "Not set."
 msgstr "Ikke satt."
 
-#: src/i2p/bote/web/JSPHelper.java:134
+#: src/i2p/bote/web/JSPHelper.java:136
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Invalid ID nummer for CryptoImplementation:"
 
@@ -224,6 +232,10 @@ msgid "Check for mail every {0} minutes"
 msgstr "Sjekk mail hvert {0} minutt"
 
 #: WebContent/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: WebContent/settings.jsp
 msgid "Use relays when sending mail:"
 msgstr "Bruk releer under sending av epost:"
 
@@ -250,6 +262,10 @@ msgstr "Bruk en gateway under sending til epostadresser som ikke er I2P"
 #: WebContent/settings.jsp
 msgid "Email Destination of the gateway:"
 msgstr "Epost Destinasjon av gateway"
+
+#: WebContent/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr ""
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -286,6 +302,10 @@ msgstr "Signatur:"
 #: WebContent/showEmail.jsp
 msgid "Valid"
 msgstr "Gyldig"
+
+#: WebContent/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr ""
 
 #: WebContent/showEmail.jsp
 msgid "Invalid or missing"
@@ -435,6 +455,42 @@ msgstr "Hingarn  oversettelse"
 msgid "Code fixes, translation updates from tx"
 msgstr "Kode fikser, oversettelser oppdateringer fra tx"
 
+#: WebContent/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "Text to include:"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "Publish"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr ""
+
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
 msgstr "- I2P-Bote"
@@ -572,6 +628,14 @@ msgid "The password has been changed."
 msgstr "Passordet har blitt endret."
 
 #: WebContent/setPassword.jsp
+msgid "Please wait"
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr ""
+
+#: WebContent/setPassword.jsp
 msgid "Set a new Password"
 msgstr "Sett et nytt passord"
 
@@ -654,6 +718,14 @@ msgid "Name:"
 msgstr "Navn:"
 
 #: WebContent/editContact.jsp
+msgid "Picture:"
+msgstr ""
+
+#: WebContent/editContact.jsp
+msgid "Text:"
+msgstr ""
+
+#: WebContent/editContact.jsp
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -664,6 +736,41 @@ msgstr "Ingen Epost Identitet Definert"
 #: WebContent/noIdentities.jsp
 msgid "Create a New Email Identity"
 msgstr "Lag en Ny Epost Identitet"
+
+#: WebContent/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Import Contact"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Fingerprint:"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Email Destination: "
+msgstr "Epost Destinasjon: "
+
+#: WebContent/importContact.jsp
+msgid "Import"
+msgstr ""
 
 #: WebContent/folders.jsp
 msgid "Folders"
@@ -791,6 +898,10 @@ msgid "(optional, kept private)"
 msgstr "(valgfritt, forblir privat)"
 
 #: WebContent/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
 msgid "Encryption:"
 msgstr "Kryptering:"
 
@@ -813,6 +924,10 @@ msgstr "(Aldri vis til noen!)"
 #: WebContent/editIdentity.jsp
 msgid "Show"
 msgstr "Vis"
+
+#: WebContent/editIdentity.jsp
+msgid "Cannot publish until connected."
+msgstr ""
 
 #: WebContent/editIdentity.jsp
 msgid "Delete this identity"
@@ -854,6 +969,14 @@ msgstr "Legg til mottagere"
 msgid "Return"
 msgstr "Tilbake"
 
+#: WebContent/addressBook.jsp
+msgid "Import from the public address directory"
+msgstr ""
+
+#: WebContent/addressBook.jsp
+msgid "Lookup"
+msgstr ""
+
 #: WebContent/buttonFrame.jsp
 msgid "Checking for mail..."
 msgstr "Sjekker etter post..."
@@ -875,16 +998,16 @@ msgid "Know"
 msgstr "Vet"
 
 #: WebContent/folder.jsp
-msgid "Sig"
-msgstr "Sig"
-
-#: WebContent/folder.jsp
 msgid "Sent Time"
 msgstr "Sendt tid"
 
 #: WebContent/folder.jsp
 msgid "Delivered"
 msgstr "Levert"
+
+#: WebContent/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr ""
 
 #: WebContent/showFullIdentity.jsp
 msgid "Full Identity"
@@ -955,6 +1078,26 @@ msgstr "{0} skrev:"
 msgid "Send"
 msgstr "Send"
 
+#: WebContent/debug.jsp
+msgid "Debug"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Debug Page"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Test encrypted files"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "No file encryption problems found."
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Undecryptable files:"
+msgstr ""
+
 #: WebContent/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
 msgstr "Feil: Kunne ikke slette epost."
@@ -976,16 +1119,16 @@ msgid "Password:"
 msgstr "Passord"
 
 #: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total"
+msgstr ""
+
+#: WebContent/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total, {1} new"
 msgstr "{0} e-poster totalt, {1} ny"
 
 #: WebContent/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Ukjent"
-
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Email Destination: "
-msgstr "Epost Destinasjon: "
 
 #: WebContent/WEB-INF/tags/address.tag
 msgid "Add to Address Book"

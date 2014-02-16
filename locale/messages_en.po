@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 15:54+0000\n"
+"POT-Creation-Date: 2013-05-02 21:10+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -11,23 +11,23 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/i2p/bote/Configuration.java:60
+#: src/i2p/bote/Configuration.java:62
 msgid "lblue"
 msgstr ""
 
-#: src/i2p/bote/Configuration.java:61
+#: src/i2p/bote/Configuration.java:63
 msgid "vanilla"
 msgstr ""
 
-#: src/i2p/bote/I2PBote.java:419 src/i2p/bote/service/OutboxProcessor.java:159
+#: src/i2p/bote/I2PBote.java:503 src/i2p/bote/service/OutboxProcessor.java:159
 msgid "No identity matches the sender/from field: "
 msgstr ""
 
-#: src/i2p/bote/I2PBote.java:507
+#: src/i2p/bote/I2PBote.java:663
 msgid "The old password is not correct."
 msgstr ""
 
-#: src/i2p/bote/I2PBote.java:509
+#: src/i2p/bote/I2PBote.java:665
 msgid "The new password and the confirmation password do not match."
 msgstr ""
 
@@ -47,18 +47,26 @@ msgstr ""
 msgid "NTRU-1087 Encryption"
 msgstr ""
 
-#: src/i2p/bote/email/Email.java:494
-#, java-format
-msgid "Invalid address: {0}"
-msgstr ""
-
-#: src/i2p/bote/email/Email.java:500
+#: src/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
 
-#: src/i2p/bote/folder/Outbox.java:117
+#: src/i2p/bote/email/Email.java:507
+#, java-format
+msgid "Invalid address: {0}"
+msgstr ""
+
+#: src/i2p/bote/folder/Outbox.java:116
 msgid "Queued"
+msgstr ""
+
+#: src/i2p/bote/imap/BoteMailbox.java:85
+msgid "Password required or invalid password provided"
+msgstr ""
+
+#: src/i2p/bote/imap/MapperFactory.java:276
+msgid "Deletion of mailboxes is not currently supported."
 msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
@@ -117,7 +125,7 @@ msgid "Sent to {0} out of {1} recipients"
 msgstr ""
 
 #: src/i2p/bote/service/OutboxProcessor.java:180
-msgid "Email has been sent"
+msgid "Email sent"
 msgstr ""
 
 #: src/i2p/bote/service/OutboxProcessor.java:183
@@ -144,11 +152,11 @@ msgstr ""
 msgid "Error saving email metadata: {0}"
 msgstr ""
 
-#: src/i2p/bote/web/JSPHelper.java:109
+#: src/i2p/bote/web/JSPHelper.java:111
 msgid "Not set."
 msgstr ""
 
-#: src/i2p/bote/web/JSPHelper.java:134
+#: src/i2p/bote/web/JSPHelper.java:136
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr ""
 
@@ -220,6 +228,10 @@ msgid "Check for mail every {0} minutes"
 msgstr ""
 
 #: WebContent/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: WebContent/settings.jsp
 msgid "Use relays when sending mail:"
 msgstr ""
 
@@ -245,6 +257,10 @@ msgstr ""
 
 #: WebContent/settings.jsp
 msgid "Email Destination of the gateway:"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Enable IMAP on port {0}"
 msgstr ""
 
 #: WebContent/settings.jsp
@@ -281,6 +297,10 @@ msgstr ""
 
 #: WebContent/showEmail.jsp
 msgid "Valid"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "N/A (sender is anonymous)"
 msgstr ""
 
 #: WebContent/showEmail.jsp
@@ -431,6 +451,42 @@ msgstr ""
 msgid "Code fixes, translation updates from tx"
 msgstr ""
 
+#: WebContent/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "Text to include:"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "Publish"
+msgstr ""
+
+#: WebContent/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr ""
+
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
 msgstr ""
@@ -568,6 +624,14 @@ msgid "The password has been changed."
 msgstr ""
 
 #: WebContent/setPassword.jsp
+msgid "Please wait"
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr ""
+
+#: WebContent/setPassword.jsp
 msgid "Set a new Password"
 msgstr ""
 
@@ -650,6 +714,14 @@ msgid "Name:"
 msgstr ""
 
 #: WebContent/editContact.jsp
+msgid "Picture:"
+msgstr ""
+
+#: WebContent/editContact.jsp
+msgid "Text:"
+msgstr ""
+
+#: WebContent/editContact.jsp
 msgid "Cancel"
 msgstr ""
 
@@ -659,6 +731,41 @@ msgstr ""
 
 #: WebContent/noIdentities.jsp
 msgid "Create a New Email Identity"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Import Contact"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Fingerprint:"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Email Destination: "
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Import"
 msgstr ""
 
 #: WebContent/folders.jsp
@@ -787,6 +894,10 @@ msgid "(optional, kept private)"
 msgstr ""
 
 #: WebContent/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
 msgid "Encryption:"
 msgstr ""
 
@@ -808,6 +919,10 @@ msgstr ""
 
 #: WebContent/editIdentity.jsp
 msgid "Show"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Cannot publish until connected."
 msgstr ""
 
 #: WebContent/editIdentity.jsp
@@ -850,6 +965,14 @@ msgstr ""
 msgid "Return"
 msgstr ""
 
+#: WebContent/addressBook.jsp
+msgid "Import from the public address directory"
+msgstr ""
+
+#: WebContent/addressBook.jsp
+msgid "Lookup"
+msgstr ""
+
 #: WebContent/buttonFrame.jsp
 msgid "Checking for mail..."
 msgstr ""
@@ -871,15 +994,15 @@ msgid "Know"
 msgstr ""
 
 #: WebContent/folder.jsp
-msgid "Sig"
-msgstr ""
-
-#: WebContent/folder.jsp
 msgid "Sent Time"
 msgstr ""
 
 #: WebContent/folder.jsp
 msgid "Delivered"
+msgstr ""
+
+#: WebContent/folder.jsp
+msgid "Signature is invalid or missing"
 msgstr ""
 
 #: WebContent/showFullIdentity.jsp
@@ -951,6 +1074,26 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
+#: WebContent/debug.jsp
+msgid "Debug"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Debug Page"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Test encrypted files"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "No file encryption problems found."
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Undecryptable files:"
+msgstr ""
+
 #: WebContent/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
 msgstr ""
@@ -972,15 +1115,15 @@ msgid "Password:"
 msgstr ""
 
 #: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total"
+msgstr ""
+
+#: WebContent/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total, {1} new"
 msgstr ""
 
 #: WebContent/WEB-INF/tags/printDate.tag
 msgid "Unknown"
-msgstr ""
-
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Email Destination: "
 msgstr ""
 
 #: WebContent/WEB-INF/tags/address.tag

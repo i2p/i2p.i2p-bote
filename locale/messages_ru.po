@@ -1,38 +1,40 @@
-# 
+#
 # Translators:
 # ducki2p <ducki2p@gmail.com>, 2011.
 # walking <walking@i2pmail.org>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
-"Report-Msgid-Bugs-To: https://trac.i2p2.de/\n"
-"POT-Creation-Date: 2012-07-29 09:59+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-02 21:10+0000\n"
 "PO-Revision-Date: 2012-07-29 10:00+0000\n"
 "Last-Translator: kytv <killyourtv@i2pmail.org>\n"
-"Language-Team: Russian (http://www.transifex.com/projects/p/I2P/language/ru/)\n"
+"Language-Team: Russian (http://www.transifex.com/projects/p/I2P/language/"
+"ru/)\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/i2p/bote/Configuration.java:59
+#: src/i2p/bote/Configuration.java:62
 msgid "lblue"
 msgstr ""
 
-#: src/i2p/bote/Configuration.java:59
+#: src/i2p/bote/Configuration.java:63
 msgid "vanilla"
 msgstr ""
 
-#: src/i2p/bote/I2PBote.java:415 src/i2p/bote/service/OutboxProcessor.java:157
+#: src/i2p/bote/I2PBote.java:503 src/i2p/bote/service/OutboxProcessor.java:159
 msgid "No identity matches the sender/from field: "
 msgstr "Нет соответствующего набора ключей для такого отправителя: "
 
-#: src/i2p/bote/I2PBote.java:491
+#: src/i2p/bote/I2PBote.java:663
 msgid "The old password is not correct."
 msgstr "Старый пароль не верен."
 
-#: src/i2p/bote/I2PBote.java:493
+#: src/i2p/bote/I2PBote.java:665
 msgid "The new password and the confirmation password do not match."
 msgstr "Новый пароль и пароль для подтверждения не совпадают."
 
@@ -48,23 +50,31 @@ msgstr "521-битное шифрование эллиптическими кр�
 msgid "2048-bit ElGamal Encryption"
 msgstr "2048-битное шифрование Эль-Гамаля"
 
-#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:117
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:119
 msgid "NTRU-1087 Encryption"
 msgstr "Шифрование NTRU-1087"
 
-#: src/i2p/bote/email/Email.java:481
-#, java-format
-msgid "Invalid address: {0}"
-msgstr "Некорректный адрес: {0}"
-
-#: src/i2p/bote/email/Email.java:487
+#: src/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Адрес не содержит ни Bote-адреса, ни внешнего адреса: {0}"
 
-#: src/i2p/bote/folder/Outbox.java:117
+#: src/i2p/bote/email/Email.java:507
+#, java-format
+msgid "Invalid address: {0}"
+msgstr "Некорректный адрес: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:116
 msgid "Queued"
 msgstr "Поставлено в очередь"
+
+#: src/i2p/bote/imap/BoteMailbox.java:85
+msgid "Password required or invalid password provided"
+msgstr ""
+
+#: src/i2p/bote/imap/MapperFactory.java:276
+msgid "Deletion of mailboxes is not currently supported."
+msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -83,7 +93,7 @@ msgid "First Seen"
 msgstr "Впервые замечено"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:86
+#: src/i2p/bote/web/PeerInfoTag.java:96
 msgid "I2P Destination"
 msgstr "I2P-адрес"
 
@@ -92,7 +102,7 @@ msgid "Locked?"
 msgstr "Заблокировано?"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:85 src/i2p/bote/web/PeerInfoTag.java:110
+#: src/i2p/bote/web/PeerInfoTag.java:95 src/i2p/bote/web/PeerInfoTag.java:120
 msgid "Peer"
 msgstr "Пир"
 
@@ -112,67 +122,73 @@ msgstr "-"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/i2p/bote/service/OutboxProcessor.java:162
+#: src/i2p/bote/service/OutboxProcessor.java:164
 msgid "Sending"
 msgstr "Отправка"
 
-#: src/i2p/bote/service/OutboxProcessor.java:171
+#: src/i2p/bote/service/OutboxProcessor.java:173
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Отправленно {0} из {1} получателей"
 
-#: src/i2p/bote/service/OutboxProcessor.java:178 WebContent/folder.jsp
-msgid "Sent"
-msgstr "Отправленно"
+#: src/i2p/bote/service/OutboxProcessor.java:180
+#, fuzzy
+msgid "Email sent"
+msgstr "Наборы ключей"
 
-#: src/i2p/bote/service/OutboxProcessor.java:181
+#: src/i2p/bote/service/OutboxProcessor.java:183
 msgid "Gateway disabled"
 msgstr "Шлюз отключён"
 
-#: src/i2p/bote/service/OutboxProcessor.java:217
+#: src/i2p/bote/service/OutboxProcessor.java:223
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Неправильный адрес получателя: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:221
+#: src/i2p/bote/service/OutboxProcessor.java:227
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Ошибка создания пакетов электронной почты: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:225
+#: src/i2p/bote/service/OutboxProcessor.java:231
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Ошибка при отправке почты: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:107
+#: src/i2p/bote/service/OutboxProcessor.java:235
+#, fuzzy, java-format
+msgid "Error saving email metadata: {0}"
+msgstr "Ошибка отправки email-а: {0}"
+
+#: src/i2p/bote/web/JSPHelper.java:111
 msgid "Not set."
 msgstr ""
 
-#: src/i2p/bote/web/JSPHelper.java:132
+#: src/i2p/bote/web/JSPHelper.java:136
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Неверный идентификатор для CryptoImplementation: "
 
-#: src/i2p/bote/web/PeerInfoTag.java:56
+#: src/i2p/bote/web/PeerInfoTag.java:58
 msgid "Kademlia Peers:"
 msgstr "Пиры Kademlia:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:81
+#: src/i2p/bote/web/PeerInfoTag.java:91
 msgid "Relay Peers:"
 msgstr "Промежуточные пиры:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:87
+#: src/i2p/bote/web/PeerInfoTag.java:97
 msgid "Reachability %"
 msgstr "Доступность %"
 
-#: src/i2p/bote/web/PeerInfoTag.java:106
+#: src/i2p/bote/web/PeerInfoTag.java:116
 msgid "Banned Peers:"
 msgstr "Забаненные пиры:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:111
+#: src/i2p/bote/web/PeerInfoTag.java:121
 msgid "Destination Hash"
 msgstr "I2P-хеш"
 
-#: src/i2p/bote/web/PeerInfoTag.java:112
+#: src/i2p/bote/web/PeerInfoTag.java:122
 msgid "Ban Reason"
 msgstr "Причина бана"
 
@@ -189,41 +205,171 @@ msgstr "Email был добавлен в очередь для отправки.
 msgid "Error sending email: {0}"
 msgstr "Ошибка отправки email-а: {0}"
 
-#: WebContent/folder.jsp
-msgid "From"
-msgstr "От"
+#: WebContent/network.jsp
+msgid "Network"
+msgstr "Сеть"
 
-#: WebContent/folder.jsp
-msgid "Know"
-msgstr "Знаком"
+#: WebContent/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr ""
+"Сетевая информация недоступна, поскольку I2P-Bote ещё не начал подключение к "
+"сети."
 
-#: WebContent/folder.jsp
-msgid "Sig"
-msgstr "Sig"
+#: WebContent/network.jsp
+msgid "Local destination:"
+msgstr "Локальный адрес:"
 
-#: WebContent/folder.jsp
-msgid "To"
-msgstr "Кому"
+#: WebContent/saveIdentities.jsp
+msgid "Error:"
+msgstr "Ошибка:"
 
-#: WebContent/folder.jsp
-msgid "Subject"
-msgstr "Тема"
+#: WebContent/settings.jsp
+msgid "Settings have been saved."
+msgstr "Настройки были сохранены."
 
-#: WebContent/folder.jsp
+#: WebContent/settings.jsp
+msgid "Settings"
+msgstr "Настройки"
+
+#: WebContent/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "Проверять на наличие новой почты каждые {0} минут"
+
+#: WebContent/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "Использовать посредников при отправке почты:"
+
+#: WebContent/settings.jsp
+msgid "None"
+msgstr "Нет"
+
+#: WebContent/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr "Задержка на промежуточных хопах: между"
+
+#: WebContent/settings.jsp
+msgid "and"
+msgstr "и"
+
+#: WebContent/settings.jsp
+msgid "minutes"
+msgstr "минут"
+
+#: WebContent/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "Использовать шлюз для отправки на не I2P-адреса"
+
+#: WebContent/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "Bote-адрес шлюза:"
+
+#: WebContent/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Английский язык для текста, добавляемого к исходящие почте («Re:», «wrote:» "
+"и т.д)"
+
+#: WebContent/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Включать время отправки в исходящие сообщения"
+
+#: WebContent/settings.jsp
+msgid "Theme:"
+msgstr ""
+
+#: WebContent/settings.jsp
+msgid "Save"
+msgstr "Сохранить"
+
+#: WebContent/settings.jsp
+msgid "Change Password"
+msgstr "Сменить пароль"
+
+#: WebContent/showEmail.jsp
+msgid "From:"
+msgstr "От:"
+
+#: WebContent/showEmail.jsp
 msgid "Anonymous"
 msgstr "Аноним"
 
-#: WebContent/folder.jsp
-msgid "(No subject)"
-msgstr "(нет темы)"
+#: WebContent/showEmail.jsp
+msgid "Signature:"
+msgstr "Подпись:"
 
-#: WebContent/folder.jsp
+#: WebContent/showEmail.jsp
+msgid "Valid"
+msgstr "Корректная"
+
+#: WebContent/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr ""
+
+#: WebContent/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "Некорректная или отсутствуюет"
+
+#: WebContent/showEmail.jsp
+msgid "Reply To:"
+msgstr "Ответ:"
+
+#: WebContent/showEmail.jsp
+msgid "To:"
+msgstr "Кому:"
+
+#: WebContent/showEmail.jsp
+msgid "CC:"
+msgstr "Копия:"
+
+#: WebContent/showEmail.jsp
+msgid "BCC:"
+msgstr "Скрытая копия:"
+
+#: WebContent/showEmail.jsp
+msgid "Sent:"
+msgstr "Отправлено:"
+
+#: WebContent/showEmail.jsp
+msgid "Received:"
+msgstr "Получено:"
+
+#: WebContent/showEmail.jsp
+msgid "Subject:"
+msgstr "Тема:"
+
+#: WebContent/showEmail.jsp
+msgid "Message:"
+msgstr "Сообщение:"
+
+#: WebContent/showEmail.jsp
+msgid "Attachments:"
+msgstr "Вложения:"
+
+#: WebContent/showEmail.jsp
+msgid "Status:"
+msgstr "Статус:"
+
+#: WebContent/showEmail.jsp
+msgid "Reply"
+msgstr "Ответ"
+
+#: WebContent/showEmail.jsp
+msgid "Re:"
+msgstr "AW:"
+
+#: WebContent/showEmail.jsp
 msgid "Delete"
 msgstr "Удалить"
-
-#: WebContent/folder.jsp
-msgid "Delete this email"
-msgstr "Удалить это письмо"
 
 #: WebContent/about.jsp
 msgid "About I2P-Bote"
@@ -317,235 +463,45 @@ msgstr ""
 msgid "Code fixes, translation updates from tx"
 msgstr ""
 
-#: WebContent/network.jsp
-msgid "Network"
-msgstr "Сеть"
+#: WebContent/publishDestination.jsp
+#, fuzzy
+msgid "Add Email Destination to Directory"
+msgstr "Bote-адрес шлюза:"
 
-#: WebContent/network.jsp
-msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "Сетевая информация недоступна, поскольку I2P-Bote ещё не начал подключение к сети."
-
-#: WebContent/network.jsp
-msgid "Local destination:"
-msgstr "Локальный адрес:"
-
-#: WebContent/deleteIdentity.jsp
-msgid "The email identity has been deleted."
+#: WebContent/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
 msgstr ""
 
-#: WebContent/deleteIdentity.jsp
-msgid "Error:"
-msgstr "Ошибка:"
+#: WebContent/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "Email Identities"
-msgstr "Наборы ключей"
+#: WebContent/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr ""
 
-#: WebContent/identities.jsp
-msgid "No email identities are defined."
-msgstr "Не определено ни одного набора ключей."
-
-#: WebContent/identities.jsp
-msgid "Def."
-msgstr "Def."
-
-#: WebContent/identities.jsp
-msgid "Public Name"
-msgstr "Отображаемое имя"
-
-#: WebContent/identities.jsp
-msgid "Description"
-msgstr "Описание"
-
-#: WebContent/identities.jsp
-msgid "Email Destination"
-msgstr "Bote-адрес"
-
-#: WebContent/identities.jsp
-msgid "New Identity"
-msgstr "Новый набор ключей"
-
-#: WebContent/newEmail.jsp
-msgid "New Email"
-msgstr "Новая письмо"
-
-#: WebContent/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr "Выберете файл для вложения и попробуйте снова."
-
-#: WebContent/newEmail.jsp
-msgid "From:"
-msgstr "От:"
-
-#: WebContent/newEmail.jsp
-msgid "To:"
-msgstr "Кому:"
-
-#: WebContent/newEmail.jsp
-msgid "CC:"
-msgstr "Копия:"
-
-#: WebContent/newEmail.jsp
-msgid "BCC:"
-msgstr "Скрытая копия:"
-
-#: WebContent/newEmail.jsp
-msgid "Reply To:"
-msgstr "Ответ:"
-
-#: WebContent/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Адресная книга..."
-
-#: WebContent/newEmail.jsp
-msgid "Subject:"
-msgstr "Тема:"
-
-#: WebContent/newEmail.jsp
-msgid "Attachments:"
-msgstr "Вложения:"
-
-#: WebContent/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "Убрать это вложение"
-
-#: WebContent/newEmail.jsp
-msgid "Add another attachment"
-msgstr "Добавить другое вложение"
-
-#: WebContent/newEmail.jsp
-msgid "Attach"
-msgstr "Добавить"
-
-#: WebContent/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "Рекомендуется придерживаться размера вложений менее 500 КБайт."
-
-#: WebContent/newEmail.jsp
-msgid "Message:"
-msgstr "Сообщение:"
-
-#: WebContent/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} писал:"
-
-#: WebContent/newEmail.jsp
-msgid "Send"
-msgstr "Отправить"
-
-#: WebContent/newEmail.jsp
-msgid "Save"
-msgstr "Сохранить"
-
-#: WebContent/editIdentity.jsp
-msgid "New Email Identity"
-msgstr "Новый набор ключей"
-
-#: WebContent/editIdentity.jsp
-msgid "Create"
-msgstr "Создать"
-
-#: WebContent/editIdentity.jsp
-msgid "Edit Email Identity"
-msgstr "Править набор"
-
-#: WebContent/editIdentity.jsp
-msgid "Public Name:"
-msgstr "Отображаемое имя:"
-
-#: WebContent/editIdentity.jsp
-msgid "(required field, shown to recipients)"
-msgstr "(обязательное поле, отображается полечателям)"
-
-#: WebContent/editIdentity.jsp
-msgid "Description:"
-msgstr "Описание:"
-
-#: WebContent/editIdentity.jsp
-msgid "(optional, kept private)"
+#: WebContent/publishDestination.jsp
+#, fuzzy
+msgid "(optional, 7.5 kBytes max)"
 msgstr "(опционально, скрыто от остальных)"
 
-#: WebContent/editIdentity.jsp
-msgid "Encryption:"
-msgstr "Шифрование:"
-
-#: WebContent/editIdentity.jsp
-msgid "(If unsure, leave the default)"
-msgstr "(оставьте по-умолчанию, если не уверены)"
-
-#: WebContent/editIdentity.jsp
-msgid "Email Destination:"
-msgstr "Bote-адрес:"
-
-#: WebContent/editIdentity.jsp
-msgid "Default Identity:"
-msgstr "Набор ключей по-умолчанию:"
-
-#: WebContent/editIdentity.jsp
-msgid "Private keys:"
+#: WebContent/publishDestination.jsp
+msgid "Text to include:"
 msgstr ""
 
-#: WebContent/editIdentity.jsp
-msgid "(Never reveal to anyone!)"
+#: WebContent/publishDestination.jsp
+#, fuzzy
+msgid "(optional, 2000 chars max)"
+msgstr "(опционально, скрыто от остальных)"
+
+#: WebContent/publishDestination.jsp
+msgid "Publish"
 msgstr ""
 
-#: WebContent/editIdentity.jsp
-msgid "Show"
-msgstr ""
-
-#: WebContent/editIdentity.jsp
-msgid "Cancel"
-msgstr "Отмена"
-
-#: WebContent/editIdentity.jsp
-msgid "Delete this identity"
-msgstr "Удалить этот набор"
-
-#: WebContent/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
+#: WebContent/publishDestination.jsp
+#, fuzzy
+msgid "The identity has been added to the address directory."
 msgstr "Контакт был удалён из адресной книги."
-
-#: WebContent/deleteContact.jsp
-msgid "Error"
-msgstr "Ошибка"
-
-#: WebContent/deleteEmail.jsp
-msgid "Error: Couldn't delete email."
-msgstr "Ошибка: невозможно удалить письмо."
-
-#: WebContent/setPassword.jsp
-msgid "Set Password"
-msgstr "Задание пароля"
-
-#: WebContent/setPassword.jsp
-msgid "The password has been changed."
-msgstr "Пароль был изменён."
-
-#: WebContent/setPassword.jsp
-msgid "Set a new Password"
-msgstr "Установить новый пароль"
-
-#: WebContent/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "Если вы не задавали пароль, оставьте поле ввода старого пароля пустым."
-
-#: WebContent/setPassword.jsp
-msgid "Old password:"
-msgstr "Старый пароль:"
-
-#: WebContent/setPassword.jsp
-msgid "New password:"
-msgstr "Новый пароль:"
-
-#: WebContent/setPassword.jsp
-msgid "Confirm:"
-msgstr "Подтверждение:"
-
-#: WebContent/setPassword.jsp
-msgid "OK"
-msgstr "OK"
 
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
@@ -565,7 +521,8 @@ msgstr "Безопасная распределённая почта"
 
 #: WebContent/header.jsp
 msgid "A new version is available. Click here for the configuration page."
-msgstr "Доступна новая версия. Нажмите здесь для перехода на страницу настройки."
+msgstr ""
+"Доступна новая версия. Нажмите здесь для перехода на страницу настройки."
 
 #: WebContent/header.jsp
 msgid "Addresses"
@@ -582,10 +539,6 @@ msgstr "Адресная книга"
 #: WebContent/header.jsp
 msgid "Configuration"
 msgstr "Конфигурация"
-
-#: WebContent/header.jsp
-msgid "Settings"
-msgstr "Настройки"
 
 #: WebContent/header.jsp
 msgid "Network Status"
@@ -606,6 +559,142 @@ msgstr ""
 #: WebContent/header.jsp
 msgid "About"
 msgstr "О I2P-Bote"
+
+#: WebContent/statusFrame.jsp
+msgid "Not Started"
+msgstr "Не запущено"
+
+#: WebContent/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr "Ждём 3 минуты..."
+
+#: WebContent/statusFrame.jsp
+msgid "Connecting..."
+msgstr "Соединяюсь..."
+
+#: WebContent/statusFrame.jsp
+msgid "Connected"
+msgstr "Подключён"
+
+#: WebContent/statusFrame.jsp
+msgid "Error"
+msgstr "Ошибка"
+
+#: WebContent/statusFrame.jsp
+msgid "Unknown Status"
+msgstr "Неизвестный статус"
+
+#: WebContent/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr ""
+
+#: WebContent/statusFrame.jsp
+msgid "Connect Now"
+msgstr "Соединиться сейчас"
+
+#: WebContent/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr ""
+
+#: WebContent/connectError.jsp
+msgid "Error Details"
+msgstr ""
+
+#: WebContent/outbox.jsp
+msgid "Outbox"
+msgstr "Исходящие"
+
+#: WebContent/outbox.jsp
+msgid "From"
+msgstr "От"
+
+#: WebContent/outbox.jsp
+msgid "To"
+msgstr "Кому"
+
+#: WebContent/outbox.jsp
+msgid "Subject"
+msgstr "Тема"
+
+#: WebContent/outbox.jsp
+msgid "Create Time"
+msgstr "Время создания"
+
+#: WebContent/outbox.jsp
+msgid "Status"
+msgstr "Статус"
+
+#: WebContent/outbox.jsp
+msgid "(No subject)"
+msgstr "(нет темы)"
+
+#: WebContent/outbox.jsp
+msgid "Delete this email"
+msgstr "Удалить это письмо"
+
+#: WebContent/setPassword.jsp
+msgid "Set Password"
+msgstr "Задание пароля"
+
+#: WebContent/setPassword.jsp
+msgid "The password has been changed."
+msgstr "Пароль был изменён."
+
+#: WebContent/setPassword.jsp
+#, fuzzy
+msgid "Please wait"
+msgstr "Пожалуйста подождите..."
+
+#: WebContent/setPassword.jsp
+#, fuzzy
+msgid "Please wait while the password is being changed..."
+msgstr "Пароль был изменён."
+
+#: WebContent/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Установить новый пароль"
+
+#: WebContent/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "Если вы не задавали пароль, оставьте поле ввода старого пароля пустым."
+
+#: WebContent/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+
+#: WebContent/setPassword.jsp
+msgid "Old password:"
+msgstr "Старый пароль:"
+
+#: WebContent/setPassword.jsp
+msgid "New password:"
+msgstr "Новый пароль:"
+
+#: WebContent/setPassword.jsp
+msgid "Confirm:"
+msgstr "Подтверждение:"
+
+#: WebContent/setPassword.jsp
+msgid "OK"
+msgstr "OK"
+
+#: WebContent/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "Пожалуйста, заполните поле «Отображаемое имя»."
+
+#: WebContent/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "Пожалуйста подождите..."
+
+#: WebContent/submitIdentity.jsp
+msgid "The Email Identity is being generated. This can take several minutes."
+msgstr ""
+
+#: WebContent/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "Набор ключей был сохранён."
 
 #: WebContent/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -632,12 +721,75 @@ msgid "Edit Contact"
 msgstr "Править"
 
 #: WebContent/editContact.jsp
+msgid "Email Destination:"
+msgstr "Bote-адрес:"
+
+#: WebContent/editContact.jsp
 msgid "(required field)"
 msgstr "(обязательное поле)"
 
 #: WebContent/editContact.jsp
 msgid "Name:"
 msgstr "Имя:"
+
+#: WebContent/editContact.jsp
+#, fuzzy
+msgid "Picture:"
+msgstr "Подпись:"
+
+#: WebContent/editContact.jsp
+msgid "Text:"
+msgstr ""
+
+#: WebContent/editContact.jsp
+msgid "Cancel"
+msgstr "Отмена"
+
+#: WebContent/noIdentities.jsp
+msgid "No Email Identity Defined"
+msgstr "Ни одного набора ключей не определено"
+
+#: WebContent/noIdentities.jsp
+msgid "Create a New Email Identity"
+msgstr "Создать новый набор ключей"
+
+#: WebContent/importContact.jsp
+#, fuzzy
+msgid "Address Directory Lookup"
+msgstr "Адресная книга"
+
+#: WebContent/importContact.jsp
+#, fuzzy
+msgid "The name has been imported to the address book."
+msgstr "Контакт был удалён из адресной книги."
+
+#: WebContent/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr ""
+
+#: WebContent/importContact.jsp
+#, fuzzy
+msgid "Import Contact"
+msgstr "Править"
+
+#: WebContent/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Fingerprint:"
+msgstr ""
+
+#: WebContent/importContact.jsp
+msgid "Email Destination: "
+msgstr "Bote-Адрес:"
+
+#: WebContent/importContact.jsp
+msgid "Import"
+msgstr ""
 
 #: WebContent/folders.jsp
 msgid "Folders"
@@ -648,88 +800,180 @@ msgid "Inbox"
 msgstr "Входящие"
 
 #: WebContent/folders.jsp
-msgid "Outbox"
-msgstr "Исходящие"
-
-#: WebContent/folders.jsp
-msgid "Sent Emails"
-msgstr "Отправленные"
-
-#: WebContent/folders.jsp
-msgid "Drafts"
-msgstr "Черновики"
+msgid "Sent"
+msgstr "Отправленно"
 
 #: WebContent/folders.jsp
 msgid "Trash"
 msgstr "Корзина"
 
-#: WebContent/folders.jsp
-msgid "Manage Folders"
-msgstr "Управление папками"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr ""
+"Чтобы получать письма отдругих людей, необходимо сначала создать набор "
+"ключей."
 
-#: WebContent/statusFrame.jsp
-msgid "Not Started"
-msgstr "Не запущено"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr ""
+"Каждый набор ключей связан с Bote-адресом. Любой может отправить письмо на "
+"Bote-адрес, но только владелец ключей может их читать."
 
-#: WebContent/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
-msgstr "Ждём 3 минуты..."
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+"По-сути, набор ключей аналогичен традиционным аккаунтам электронной почты, "
+"но без провайдера, который может читать всю вашу корреспонденцию — I2P-Bote "
+"хранит все письма зашифрованными в сети."
 
-#: WebContent/statusFrame.jsp
-msgid "Connecting..."
-msgstr "Соединяюсь..."
+#: WebContent/identitiesHelp.jsp
+#, fuzzy
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
+msgstr ""
+"I2P-Bote автоматически расшифровывает отправленные вам письма при помощи "
+"созданного вами набора ключей. Наборы ключей хранятся в файле identities."
+"txt, никогда не давайте этот файл другим, чтобы они не могли прочесть вашу "
+"почту."
 
-#: WebContent/statusFrame.jsp
-msgid "Connected"
-msgstr "Подключён"
+#: WebContent/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr "Дайте другим ваш Bote-адрес и они смогут связаться с вами."
 
-#: WebContent/statusFrame.jsp
-msgid "Unknown Status"
-msgstr "Неизвестный статус"
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr ""
+"Легко создать несколько наборов ключей для разных целей, для разных "
+"контактов."
 
-#: WebContent/statusFrame.jsp
-msgid "Retry Connecting"
+#: WebContent/identitiesHelp.jsp
+#, fuzzy
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
+msgstr ""
+"Когда вы создаёте новый набор ключей, вы можете выбрать используемый им тип "
+"шифрования. Хотя все алгоритмы шифрования дают высокий уровень защищёности, "
+"длина Bote-адреса зависит от типа шифрования. Большее кол-во бит — длинее "
+"Bote-адрес"
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
 msgstr ""
 
-#: WebContent/statusFrame.jsp
-msgid "Connect Now"
-msgstr "Соединиться сейчас"
-
-#: WebContent/connectError.jsp
-msgid "Error Details"
+#: WebContent/clearPasswordCache.jsp
+msgid "Password Cleared"
 msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Signature:"
-msgstr "Подпись:"
+#: WebContent/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Valid"
-msgstr "Корректная"
+#: WebContent/sendEmail.jsp
+msgid "New Email"
+msgstr "Новая письмо"
 
-#: WebContent/showEmail.jsp
-msgid "Invalid or missing"
-msgstr "Некорректная или отсутствуюет"
+#: WebContent/sendEmail.jsp
+msgid "Go to inbox"
+msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Sent:"
-msgstr "Отправлено:"
+#: WebContent/editIdentity.jsp
+msgid "More..."
+msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Received:"
-msgstr "Получено:"
+#: WebContent/editIdentity.jsp
+msgid "Less..."
+msgstr ""
 
-#: WebContent/showEmail.jsp
-msgid "Status:"
-msgstr "Статус:"
+#: WebContent/editIdentity.jsp
+msgid "New Email Identity"
+msgstr "Новый набор ключей"
 
-#: WebContent/showEmail.jsp
-msgid "Reply"
-msgstr "Ответ"
+#: WebContent/editIdentity.jsp
+msgid "Create"
+msgstr "Создать"
 
-#: WebContent/showEmail.jsp
-msgid "Re:"
-msgstr "AW:"
+#: WebContent/editIdentity.jsp
+msgid "Edit Email Identity"
+msgstr "Править набор"
+
+#: WebContent/editIdentity.jsp
+msgid "An Email Identity lets you receive email from other I2P-Bote users."
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Public Name:"
+msgstr "Отображаемое имя:"
+
+#: WebContent/editIdentity.jsp
+msgid "(required field, shown to recipients)"
+msgstr "(обязательное поле, отображается полечателям)"
+
+#: WebContent/editIdentity.jsp
+msgid "Description:"
+msgstr "Описание:"
+
+#: WebContent/editIdentity.jsp
+msgid "(optional, kept private)"
+msgstr "(опционально, скрыто от остальных)"
+
+#: WebContent/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Encryption:"
+msgstr "Шифрование:"
+
+#: WebContent/editIdentity.jsp
+msgid "(If unsure, leave the default)"
+msgstr "(оставьте по-умолчанию, если не уверены)"
+
+#: WebContent/editIdentity.jsp
+msgid "Default Identity:"
+msgstr "Набор ключей по-умолчанию:"
+
+#: WebContent/editIdentity.jsp
+msgid "Private keys:"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "(Never reveal to anyone!)"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Show"
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Cannot publish until connected."
+msgstr ""
+
+#: WebContent/editIdentity.jsp
+msgid "Delete this identity"
+msgstr "Удалить этот набор"
+
+#: WebContent/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr "Контакт был удалён из адресной книги."
 
 #: WebContent/addressBook.jsp
 msgid "Private Address Book"
@@ -748,6 +992,10 @@ msgid "Name"
 msgstr "Имя"
 
 #: WebContent/addressBook.jsp
+msgid "Email Destination"
+msgstr "Bote-адрес"
+
+#: WebContent/addressBook.jsp
 msgid "Delete this contact"
 msgstr "Удалить этот контакт"
 
@@ -758,6 +1006,48 @@ msgstr "Добавить получателей"
 #: WebContent/addressBook.jsp
 msgid "Return"
 msgstr "Возврат"
+
+#: WebContent/addressBook.jsp
+msgid "Import from the public address directory"
+msgstr ""
+
+#: WebContent/addressBook.jsp
+msgid "Lookup"
+msgstr ""
+
+#: WebContent/buttonFrame.jsp
+msgid "Checking for mail..."
+msgstr "Проверка почты..."
+
+#: WebContent/buttonFrame.jsp
+msgid "Check Mail"
+msgstr "Проверить почту"
+
+#: WebContent/buttonFrame.jsp
+msgid "Compose"
+msgstr ""
+
+#: WebContent/buttonFrame.jsp
+msgid "Last checked:"
+msgstr ""
+
+#: WebContent/folder.jsp
+msgid "Know"
+msgstr "Знаком"
+
+#: WebContent/folder.jsp
+#, fuzzy
+msgid "Sent Time"
+msgstr "Время создания"
+
+#: WebContent/folder.jsp
+msgid "Delivered"
+msgstr ""
+
+#: WebContent/folder.jsp
+#, fuzzy
+msgid "Signature is invalid or missing"
+msgstr "Некорректная или отсутствуюет"
 
 #: WebContent/showFullIdentity.jsp
 msgid "Full Identity"
@@ -772,81 +1062,85 @@ msgid ""
 "Do not show the above information to anyone! It contains your private keys."
 msgstr ""
 
-#: WebContent/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "Пожалуйста, заполните поле «Отображаемое имя»."
+#: WebContent/identities.jsp
+msgid "Email Identities"
+msgstr "Наборы ключей"
 
-#: WebContent/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "Пожалуйста подождите..."
+#: WebContent/identities.jsp
+msgid "No email identities are defined."
+msgstr "Не определено ни одного набора ключей."
 
-#: WebContent/submitIdentity.jsp
-msgid "The Email Identity is being generated. This can take several minutes."
+#: WebContent/identities.jsp
+msgid "Def."
+msgstr "Def."
+
+#: WebContent/identities.jsp
+msgid "Public Name"
+msgstr "Отображаемое имя"
+
+#: WebContent/identities.jsp
+msgid "Description"
+msgstr "Описание"
+
+#: WebContent/identities.jsp
+msgid "New Identity"
+msgstr "Новый набор ключей"
+
+#: WebContent/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "Выберете файл для вложения и попробуйте снова."
+
+#: WebContent/newEmail.jsp
+msgid "Addr. Book..."
+msgstr "Адресная книга..."
+
+#: WebContent/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "Убрать это вложение"
+
+#: WebContent/newEmail.jsp
+msgid "Add another attachment"
+msgstr "Добавить другое вложение"
+
+#: WebContent/newEmail.jsp
+msgid "Attach"
+msgstr "Добавить"
+
+#: WebContent/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "Рекомендуется придерживаться размера вложений менее 500 КБайт."
+
+#: WebContent/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} писал:"
+
+#: WebContent/newEmail.jsp
+msgid "Send"
+msgstr "Отправить"
+
+#: WebContent/debug.jsp
+msgid "Debug"
 msgstr ""
 
-#: WebContent/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "Набор ключей был сохранён."
-
-#: WebContent/outbox.jsp
-msgid "Create Time"
-msgstr "Время создания"
-
-#: WebContent/outbox.jsp
-msgid "Status"
-msgstr "Статус"
-
-#: WebContent/settings.jsp
-msgid "Settings have been saved."
-msgstr "Настройки были сохранены."
-
-#: WebContent/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "Проверять на наличие новой почты каждые {0} минут"
-
-#: WebContent/settings.jsp
-msgid "Use relays when sending mail:"
-msgstr "Использовать посредников при отправке почты:"
-
-#: WebContent/settings.jsp
-msgid "None"
-msgstr "Нет"
-
-#: WebContent/settings.jsp
-msgid "Delay per relay hop: Between"
-msgstr "Задержка на промежуточных хопах: между"
-
-#: WebContent/settings.jsp
-msgid "and"
-msgstr "и"
-
-#: WebContent/settings.jsp
-msgid "minutes"
-msgstr "минут"
-
-#: WebContent/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "Использовать шлюз для отправки на не I2P-адреса"
-
-#: WebContent/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr "Bote-адрес шлюза:"
-
-#: WebContent/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Английский язык для текста, добавляемого к исходящие почте («Re:», «wrote:» и т.д)"
-
-#: WebContent/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Включать время отправки в исходящие сообщения"
-
-#: WebContent/settings.jsp
-msgid "Theme:"
+#: WebContent/debug.jsp
+msgid "Debug Page"
 msgstr ""
 
-#: WebContent/settings.jsp
-msgid "Change Password"
-msgstr "Сменить пароль"
+#: WebContent/debug.jsp
+msgid "Test encrypted files"
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "No file encryption problems found."
+msgstr ""
+
+#: WebContent/debug.jsp
+msgid "Undecryptable files:"
+msgstr ""
+
+#: WebContent/deleteEmail.jsp
+msgid "Error: Couldn't delete email."
+msgstr "Ошибка: невозможно удалить письмо."
 
 #: WebContent/password.jsp
 msgid "Password Required"
@@ -864,99 +1158,42 @@ msgstr "Требуется пароль"
 msgid "Password:"
 msgstr "Пароль:"
 
-#: WebContent/clearPasswordCache.jsp
-msgid "Password Cleared"
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total"
 msgstr ""
 
-#: WebContent/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total, {1} new"
 msgstr ""
-
-#: WebContent/buttonFrame.jsp
-msgid "Checking for mail..."
-msgstr "Проверка почты..."
-
-#: WebContent/buttonFrame.jsp
-msgid "Check Mail"
-msgstr "Проверить почту"
-
-#: WebContent/buttonFrame.jsp
-msgid "New"
-msgstr "Создать письмо"
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"In order to receive email from other people, you need to create an email "
-"identity first."
-msgstr "Чтобы получать письма отдругих людей, необходимо сначала создать набор ключей."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"Every email identity is associated with an email destination. Anybody can "
-"send email to the email destination, but only the identity holder can read "
-"it."
-msgstr "Каждый набор ключей связан с Bote-адресом. Любой может отправить письмо на Bote-адрес, но только владелец ключей может их читать."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"In a sense, email identities are the equivalent to traditional email "
-"accounts - except that there is no provider that can read all your email "
-"because I2P-Bote stores all emails encrypted on the network."
-msgstr "По-сути, набор ключей аналогичен традиционным аккаунтам электронной почты, но без провайдера, который может читать всю вашу корреспонденцию — I2P-Bote хранит все письма зашифрованными в сети."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities.txt; "
-"never give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote автоматически расшифровывает отправленные вам письма при помощи созданного вами набора ключей. Наборы ключей хранятся в файле identities.txt, никогда не давайте этот файл другим, чтобы они не могли прочесть вашу почту."
-
-#: WebContent/noIdentities.jsp
-msgid "Do give out the email destination so others can contact you."
-msgstr "Дайте другим ваш Bote-адрес и они смогут связаться с вами."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"It is easy to create multiple identities for different purposes, or "
-"different contacts."
-msgstr "Легко создать несколько наборов ключей для разных целей, для разных контактов."
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"When you create a new email identity, you can choose the type of encryption "
-"that will be used by the email identity. While all encryption algorithms "
-"offered by I2P-Bote provide a high level of privacy, the length of an email "
-"destination depends on the encryption used. The higher the number of bits, "
-"the longer the email destination."
-msgstr "Когда вы создаёте новый набор ключей, вы можете выбрать используемый им тип шифрования. Хотя все алгоритмы шифрования дают высокий уровень защищёности, длина Bote-адреса зависит от типа шифрования. Большее кол-во бит — длинее Bote-адрес"
-
-#: WebContent/noIdentities.jsp
-msgid ""
-"Note that the same is not true for encryption strength. 256-bit elliptic "
-"curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
-"elliptic curve is equivalent to 15360-bit ElGamal."
-msgstr "Однако это неверно в плане криптостойкости. 256-битнное элиптическое шифрование столь же стойко, как 3072-битный шифр Эль-Гамаля. 521-битное элиптическое шифрование столь же стойко, как 15360-битный шифр Эль-Гамаля."
-
-#: WebContent/noIdentities.jsp
-msgid "No Email Identity Defined"
-msgstr "Ни одного набора ключей не определено"
-
-#: WebContent/noIdentities.jsp
-msgid "Create a New Email Identity"
-msgstr "Создать новый набор ключей"
-
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Email Destination: "
-msgstr "Bote-Адрес:"
-
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "Добавить в адресную книгу"
 
 #: WebContent/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: WebContent/WEB-INF/tags/folderLink.tag
-msgid "{0} emails total, {1} new"
-msgstr ""
+#: WebContent/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Добавить в адресную книгу"
+
+#~ msgid "Sig"
+#~ msgstr "Sig"
+
+#~ msgid "Sent Emails"
+#~ msgstr "Отправленные"
+
+#~ msgid "Drafts"
+#~ msgstr "Черновики"
+
+#~ msgid "Manage Folders"
+#~ msgstr "Управление папками"
+
+#~ msgid "New"
+#~ msgstr "Создать письмо"
+
+#~ msgid ""
+#~ "Note that the same is not true for encryption strength. 256-bit elliptic "
+#~ "curve encryption is equivalent in strength to 3072-bit ElGamal. 521-bit "
+#~ "elliptic curve is equivalent to 15360-bit ElGamal."
+#~ msgstr ""
+#~ "Однако это неверно в плане криптостойкости. 256-битнное элиптическое "
+#~ "шифрование столь же стойко, как 3072-битный шифр Эль-Гамаля. 521-битное "
+#~ "элиптическое шифрование столь же стойко, как 15360-битный шифр Эль-Гамаля."
