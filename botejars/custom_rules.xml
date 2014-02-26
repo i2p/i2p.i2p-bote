@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="botejars">
+
+    <!-- override with i2pbase=path/to/source in local.properties -->
+    <property environment="env"/>
+    <condition property="i2pbase" value="${env.I2P}">
+        <isset property="env.I2P"/>
+    </condition>
+
+    <property name="i2plib" value="${i2pbase}/lib"/>
+
+    <!-- override with botesrc=path/to/source in local.properties -->
+    <property name="botesrc" value="../i2p.i2p-bote" />
+    <property name="botebase" location="${botesrc}" />
+    <available file="${botebase}" property="bote.present" />
+    <fail message="I2P-Bote source directory ${botebase} was not found. Install it there or set botesrc=/path/to/source in local.properties" >
+        <condition>
+            <not>
+                <isset property="bote.present" />
+            </not>
+        </condition>
+    </fail>
+    <echo message="Using I2P-Bote source at ${botebase}" />
+
+    <target name="-pre-compile" depends="copyrouterlibs,buildbote" />
+
+    <!--
+         Creates the output directories if they don't exist yet.
+    -->
+    <target name="-dirs">
+        <echo>Creating output directories if needed...</echo>
+        <mkdir dir="${resource.absolute.dir}" />
+        <mkdir dir="${gen.absolute.dir}" />
+        <mkdir dir="${out.absolute.dir}" />
+        <mkdir dir="${out.classes.absolute.dir}" />
+    </target>
+
+    <target name="-pre-clean" />
+
+    <!-- new rules -->
+
+    <target name="checki2pbase">
+        <fail unless="i2pbase" message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p."/>
+    </target>
+
+    <target name="copyrouterlibs" depends="-dirs,checki2pbase" >
+        <!-- router -->
+        <copy file="${i2plib}/router.jar" todir="${jar.libs.dir}" />
+
+        <!-- core -->
+        <!-- lots of unneeded stuff could be deleted here -->
+        <jar destfile="${jar.libs.dir}/i2p.jar" >
+            <zipfileset src="${i2plib}/i2p.jar" >
+                <exclude name="net/i2p/util/LogWriter.class" />
+                <exclude name="net/i2p/util/SecureDirectory.class" />
+                <exclude name="net/i2p/util/SecureFile.class" />
+                <exclude name="net/i2p/util/SecureFileOutputStream.class" />
+            </zipfileset >
+        </jar>
+
+        <!-- ministreaming -->
+        <copy file="${i2plib}/mstreaming.jar" todir="${jar.libs.dir}" />
+        <copy file="${i2plib}/streaming.jar" todir="${jar.libs.dir}" />
+
+    </target>
+
+    <target name="buildbote" depends="-dirs" >
+        <ant dir="${botebase}" inheritall="false" useNativeBasedir="true" >
+            <property name="i2pbase" value="${i2pbase}" />
+            <target name="jar" />
+        </ant>
+
+        <!-- bote -->
+        <copy todir="${jar.libs.dir}">
+            <fileset dir="${botebase}/WebContent/WEB-INF/lib" />
+        </copy>
+
+    </target>
+
+    <target name="distclean" depends="clean">
+        <delete dir="${jar.libs.dir}" verbose="${verbose}" />
+    </target>
+
+</project>

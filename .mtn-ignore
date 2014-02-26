@@ -1,72 +1,11 @@
-# Just to try and prevent some noob disasters.
-# Use mtn add --no-respect-ignore foo.jar to ignore this ignore list
+# General ignores
+.settings
 
-# Temporary/build files
-i2pbote.jar
-i2pbote.xpi2p
-i2pbote-update.xpi2p
-~$
-
-# Temporary/build dirs
-^ant_build
-^plugin/plugin.tmp
-^core/build/
-^webapp/build/
-
-# Build property overrides
-override.properties
-
-# Downloaded JavaMail libraries
-mailapi-.*.jar
-
-# Downloaded BouncyCastle Provider libraries
-bcprov-jdk15on-.*.jar
-
-# Downloaded IMAP libraries
-apache-james-imap-api-0.4-.*.jar
-apache-james-imap-message-0.4-.*.jar
-apache-james-imap-processor-0.4-.*.jar
-apache-james-mailbox-api-0.6-.*.jar
-apache-james-mailbox-store-0.6-.*.jar
-apache-mime4j-core-.*.jar
-apache-mime4j-dom-.*.jar
-commons-codec-.*.jar
-commons-collections-.*.jar
-commons-configuration-.*.jar
-commons-io-.*.jar
-commons-lang-.*.jar
-commons-logging-.*.jar
-james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar
-james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar
-james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar
-james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar
-james-server-util-3.0.0-beta5-SNAPSHOT.jar
-jutf7-1.0.0.jar
-log4j-1.2.17.jar
-netty-3.3.1.Final.jar
-protocols-api-1.6.4-.*.jar
-protocols-imap-1.6.4-.*.jar
-protocols-netty-1.6.4-.*.jar
-slf4j-api-.*.jar
-slf4j-log4j12-.*.jar
-
-# Downloaded SMTP libraries
-subethasmtp-3.1.7.jar
-
-# Downloaded JUnit libraries
-junit-4.8.1.jar
-
-# Downloaded Mockito libraries
-mockito-core-2.0.31-beta.jar
-
-# Downloaded jMock libraries
-cglib-nodep-2.2.3.jar
-hamcrest-core-1.3.jar
-hamcrest-library-1.3.jar
-hamcrest-unit-test-1.3.jar
-jmock-2.6.0.jar
-jmock-junit3-2.6.0.jar
-jmock-junit4-2.6.0.jar
-jmock-legacy-2.6.0.jar
-jmock-script-2.6.0.jar
-objenesis-1.0.jar
+# Android-specific ignores
+^bin
+^gen
+^botejars/bin
+^botejars/gen
+^botejars/lib
+lint.xml
+local.properties
