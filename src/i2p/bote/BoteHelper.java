@@ -4,9 +4,16 @@ import java.util.List;
 
 import android.content.Context;
 
+import i2p.bote.email.AddressDisplayFilter;
+import i2p.bote.email.Email;
+import i2p.bote.email.EmailAttribute;
+import i2p.bote.email.Identities;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 
 public class BoteHelper {
+    private static AddressDisplayFilter ADDRESS_DISPLAY_FILTER;
+
     public static EmailFolder getMailFolder(String folderName) {
         List<EmailFolder> folders = I2PBote.getInstance().getEmailFolders();
         for (EmailFolder folder : folders) {
@@ -36,5 +43,16 @@ public class BoteHelper {
             return ctx.getResources().getString(R.string.folder_trash);
         else
             return name;
+    }
+
+    public static List<Email> getEmails(EmailFolder folder, EmailAttribute sortColumn, boolean descending) throws PasswordException {
+        return folder.getElements(getAddressDisplayFilter(), sortColumn, descending);
+    }
+
+    private static AddressDisplayFilter getAddressDisplayFilter() throws PasswordException {
+        Identities identities = I2PBote.getInstance().getIdentities();
+        if (ADDRESS_DISPLAY_FILTER == null)
+            ADDRESS_DISPLAY_FILTER = new AddressDisplayFilter(identities, I2PBote.getInstance().getAddressBook());
+        return ADDRESS_DISPLAY_FILTER;
     }
 }
