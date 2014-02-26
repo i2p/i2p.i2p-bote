@@ -2,6 +2,7 @@ package i2p.bote;
 
 import i2p.bote.folder.EmailFolder;
 import android.os.Bundle;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -37,6 +38,10 @@ public class MailListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Initialize I2P settings
+        InitActivities init = new InitActivities(this);
+        init.initialize();
 
         // Initialize variables
         mTitle = mDrawerTitle = getTitle();
@@ -162,5 +167,23 @@ public class MailListActivity extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggle
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private class InitActivities {
+        private final Context ctx;
+        private final String myDir;
+
+        public InitActivities(Context c) {
+            ctx = c;
+            // This needs to be changed so that we can have an alternative place
+            myDir = c.getFilesDir().getAbsolutePath();
+        }
+
+        void initialize() {
+            // Set up the locations so settings can find them
+            System.setProperty("i2p.dir.base", myDir);
+            System.setProperty("i2p.dir.config", myDir);
+            System.setProperty("wrapper.logfile", myDir + "/wrapper.log");
+        }
     }
 }
