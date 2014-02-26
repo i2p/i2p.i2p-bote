@@ -96,7 +96,7 @@ public class MailListActivity extends ActionBarActivity {
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mActiveFolder = "";
+        mActiveFolder = "inbox";
         if (savedInstanceState != null) {
             mActiveFolder = savedInstanceState.getString(ACTIVE_FOLDER);
         }

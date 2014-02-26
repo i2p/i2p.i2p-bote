@@ -14,6 +14,11 @@ import i2p.bote.folder.EmailFolder;
 public class BoteHelper {
     private static AddressDisplayFilter ADDRESS_DISPLAY_FILTER;
 
+    /**
+     * Get an EmailFolder. If the folder is not found, returns null.
+     * @param folderName The folder to get.
+     * @return the EmailFolder.
+     */
     public static EmailFolder getMailFolder(String folderName) {
         List<EmailFolder> folders = I2PBote.getInstance().getEmailFolders();
         for (EmailFolder folder : folders) {
