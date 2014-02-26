@@ -1,34 +1,13 @@
 package i2p.bote;
 
 import java.security.GeneralSecurityException;
-import java.util.List;
-
 import android.content.Context;
 
-import i2p.bote.email.AddressDisplayFilter;
-import i2p.bote.email.Email;
-import i2p.bote.email.EmailAttribute;
-import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.util.GeneralHelper;
 
-public class BoteHelper {
-    private static AddressDisplayFilter ADDRESS_DISPLAY_FILTER;
-
-    /**
-     * Get an EmailFolder. If the folder is not found, returns null.
-     * @param folderName The folder to get.
-     * @return the EmailFolder.
-     */
-    public static EmailFolder getMailFolder(String folderName) {
-        List<EmailFolder> folders = I2PBote.getInstance().getEmailFolders();
-        for (EmailFolder folder : folders) {
-            if (folder.getName().equals(folderName))
-                return folder;
-        }
-        return null;
-    }
-
+public class BoteHelper extends GeneralHelper {
     /**
      * Get the translated name of the folder.
      * Built-in folders are special-cased; other folders are created by the
@@ -63,16 +42,5 @@ public class BoteHelper {
         }
 
         return displayName;
-    }
-
-    public static List<Email> getEmails(EmailFolder folder, EmailAttribute sortColumn, boolean descending) throws PasswordException {
-        return folder.getElements(getAddressDisplayFilter(), sortColumn, descending);
-    }
-
-    private static AddressDisplayFilter getAddressDisplayFilter() throws PasswordException {
-        Identities identities = I2PBote.getInstance().getIdentities();
-        if (ADDRESS_DISPLAY_FILTER == null)
-            ADDRESS_DISPLAY_FILTER = new AddressDisplayFilter(identities, I2PBote.getInstance().getAddressBook());
-        return ADDRESS_DISPLAY_FILTER;
     }
 }
