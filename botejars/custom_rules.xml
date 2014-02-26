@@ -48,6 +48,7 @@
         <copy file="${i2plib}/router.jar" todir="${jar.libs.dir}" />
 
         <!-- core -->
+        <!-- remove classes that are stubbed out -->
         <!-- lots of unneeded stuff could be deleted here -->
         <jar destfile="${jar.libs.dir}/i2p.jar" >
             <zipfileset src="${i2plib}/i2p.jar" >
