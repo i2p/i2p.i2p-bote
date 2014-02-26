@@ -33,7 +33,11 @@ public class FolderFragment extends ListFragment implements
         String folderName = getArguments().getString(FOLDER_NAME);
         mFolder = BoteHelper.getMailFolder(folderName);
 
+        getActivity().setTitle(BoteHelper.getFolderDisplayName(getActivity(), mFolder));
+
         setListAdapter(mAdapter);
+        setEmptyText(getResources().getString(
+                R.string.folder_empty));
 
         setListShown(false);
         if (mFolder != null)

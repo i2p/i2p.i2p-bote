@@ -1,5 +1,6 @@
 package i2p.bote;
 
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import android.content.Context;
@@ -22,7 +23,7 @@ public class BoteHelper {
     public static EmailFolder getMailFolder(String folderName) {
         List<EmailFolder> folders = I2PBote.getInstance().getEmailFolders();
         for (EmailFolder folder : folders) {
-            if (folder.getName() == folderName)
+            if (folder.getName().equals(folderName))
                 return folder;
         }
         return null;
@@ -37,17 +38,31 @@ public class BoteHelper {
      * @return The name of the folder.
      */
     public static String getFolderDisplayName(Context ctx, EmailFolder folder) {
+        String displayName = "";
+
         String name = folder.getName();
         if ("inbox".equals(name))
-            return ctx.getResources().getString(R.string.folder_inbox);
+            displayName = ctx.getResources().getString(R.string.folder_inbox);
         else if ("outbox".equals(name))
-            return ctx.getResources().getString(R.string.folder_outbox);
+            displayName = ctx.getResources().getString(R.string.folder_outbox);
         else if ("sent".equals(name))
-            return ctx.getResources().getString(R.string.folder_sent);
+            displayName = ctx.getResources().getString(R.string.folder_sent);
         else if ("trash".equals(name))
-            return ctx.getResources().getString(R.string.folder_trash);
+            displayName = ctx.getResources().getString(R.string.folder_trash);
         else
-            return name;
+            displayName = name;
+
+        try {
+            int numUnread = folder.getNumNewEmails();
+            if (numUnread > 0)
+                displayName = displayName + " (" + numUnread + ")";
+        } catch (GeneralSecurityException e) {
+            // TODO Auto-generated catch block
+        } catch (PasswordException e) {
+            // TODO Auto-generated catch block
+        }
+
+        return displayName;
     }
 
     public static List<Email> getEmails(EmailFolder folder, EmailAttribute sortColumn, boolean descending) throws PasswordException {

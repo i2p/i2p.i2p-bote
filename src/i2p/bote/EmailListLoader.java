@@ -22,12 +22,13 @@ public class EmailListLoader extends AsyncTaskLoader<List<Email>> implements
 
     @Override
     public List<Email> loadInBackground() {
+        List<Email> emails = null;
         try {
-            return BoteHelper.getEmails(mFolder, null, false);
+            emails = BoteHelper.getEmails(mFolder, null, false);
         } catch (PasswordException pe) {
             // TODO: Handle this error properly (get user to log in)
-            return null;
         }
+        return emails;
     }
 
     /**
