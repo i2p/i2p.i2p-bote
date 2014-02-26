@@ -470,6 +470,10 @@ public class EmailFolder extends Folder<Email> {
     public void addFolderListener(FolderListener folderListener) {
         folderListeners.add(folderListener);
     }
+
+    public void removeFolderListener(FolderListener folderListener) {
+        folderListeners.remove(folderListener);
+    }
     
     @Override
     protected Email createFolderElement(File emailFile) throws Exception {
