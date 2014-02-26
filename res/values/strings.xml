@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">I2P-Bote</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string name="drawer_open">Open nav</string>
+    <string name="drawer_close">Close nav</string>
+
+    <string name="folder_inbox">Inbox</string>
+    <string name="folder_outbox">Outbox</string>
+    <string name="folder_sent">Sent</string>
+    <string name="folder_trash">Trash</string>
+</resources>
