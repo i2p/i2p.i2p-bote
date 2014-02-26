@@ -719,8 +719,8 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     
     public List<EmailFolder> getEmailFolders() {
         ArrayList<EmailFolder> folders = new ArrayList<EmailFolder>();
-        folders.add(outbox);
         folders.add(inbox);
+        folders.add(outbox);
         folders.add(sentFolder);
         folders.add(trashFolder);
         return folders;
