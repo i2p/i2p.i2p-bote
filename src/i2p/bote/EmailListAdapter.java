@@ -1,11 +1,13 @@
 package i2p.bote;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import javax.mail.MessagingException;
 
 import i2p.bote.email.Email;
-import i2p.bote.folder.EmailFolder;
+import i2p.bote.fileencryption.PasswordException;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,12 +37,24 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
         View v = mInflater.inflate(R.layout.listitem_email, parent, false);
         Email email = getItem(position);
 
-        TextView name = (TextView) v.findViewById(R.id.email_subject);
+        TextView subject = (TextView) v.findViewById(R.id.email_subject);
+        TextView from = (TextView) v.findViewById(R.id.email_from);
+        TextView content = (TextView) v.findViewById(R.id.email_content);
         try {
-            name.setText(email.getSubject());
+            subject.setText(email.getSubject());
+            from.setText(BoteHelper.getNameAndShortDestination(email.getOneFromAddress()));
         } catch (MessagingException e) {
-            name.setText("ERROR: " + e.getMessage());
+            subject.setText("ERROR: " + e.getMessage());
+        } catch (PasswordException e) {
+            subject.setText("ERROR: " + e.getMessage());
+        } catch (IOException e) {
+            subject.setText("ERROR: " + e.getMessage());
+        } catch (GeneralSecurityException e) {
+            subject.setText("ERROR: " + e.getMessage());
         }
+        // TODO: Fix library bugs
+        // The .jar files are getting classes stripped during dexing.
+        //content.setText(email.getText());
 
         return v;
     }
