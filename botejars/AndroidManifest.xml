@@ -6,6 +6,6 @@
       android:installLocation="auto"
       >
 
-    <uses-sdk android:minSdkVersion="8" />
+    <uses-sdk android:minSdkVersion="9" />
 
 </manifest>

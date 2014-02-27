@@ -53,14 +53,11 @@
         <copy file="${i2plib}/router.jar" todir="${jar.libs.dir}" />
 
         <!-- core -->
-        <!-- remove classes that are stubbed out -->
+        <!-- remove classes that are overridden -->
         <!-- lots of unneeded stuff could be deleted here -->
         <jar destfile="${jar.libs.dir}/i2p.jar" >
             <zipfileset src="${i2plib}/i2p.jar" >
                 <exclude name="net/i2p/util/LogWriter.class" />
-                <exclude name="net/i2p/util/SecureDirectory.class" />
-                <exclude name="net/i2p/util/SecureFile.class" />
-                <exclude name="net/i2p/util/SecureFileOutputStream.class" />
             </zipfileset>
         </jar>
 
