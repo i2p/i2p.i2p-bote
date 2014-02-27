@@ -705,6 +705,7 @@
 
     <target name="clean">
         <delete dir="ant_build" />
+        <delete file="${lib}/i2pbote.jar" />
         <delete file="i2pbote.war" />
         <delete file="i2pbote-plugin.war" />
         <delete dir="plugin/plugin.tmp" />
