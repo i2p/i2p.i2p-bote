@@ -101,13 +101,14 @@ public class MailListActivity extends ActionBarActivity {
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mActiveFolder = "inbox";
-        if (savedInstanceState != null) {
+        if (savedInstanceState == null) {
+            mActiveFolder = "inbox";
+            FolderFragment f = FolderFragment.newInstance(mActiveFolder);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.list_fragment, f).commit();
+        } else {
             mActiveFolder = savedInstanceState.getString(ACTIVE_FOLDER);
         }
-        FolderFragment f = FolderFragment.newInstance(mActiveFolder);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.list_fragment, f).commit();
 
         // Open nav drawer if the user has never opened it themselves
         if (!mSharedPrefs.getBoolean(PREF_NAV_DRAWER_OPENED, false))
