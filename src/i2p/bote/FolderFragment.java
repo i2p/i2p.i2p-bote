@@ -6,6 +6,7 @@ import java.util.List;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.util.BoteHelper;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;

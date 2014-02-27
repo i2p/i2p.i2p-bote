@@ -1,11 +1,11 @@
-package i2p.bote;
+package i2p.bote.util;
 
 import java.security.GeneralSecurityException;
 import android.content.Context;
 
+import i2p.bote.R;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
-import i2p.bote.util.GeneralHelper;
 
 public class BoteHelper extends GeneralHelper {
     /**

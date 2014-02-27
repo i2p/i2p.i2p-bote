@@ -4,6 +4,7 @@ import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.FolderListener;
+import i2p.bote.util.BoteHelper;
 
 import java.util.List;
 

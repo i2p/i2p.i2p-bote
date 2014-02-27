@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.util.BoteHelper;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;

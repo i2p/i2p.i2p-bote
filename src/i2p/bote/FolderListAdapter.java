@@ -5,6 +5,7 @@ import java.util.List;
 
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.util.BoteHelper;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
