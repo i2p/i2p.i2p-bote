@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class FolderAdapter extends ArrayAdapter<EmailFolder> {
+public class FolderListAdapter extends ArrayAdapter<EmailFolder> {
     private final LayoutInflater mInflater;
 
-    public FolderAdapter(Context context) {
+    public FolderListAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_2);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

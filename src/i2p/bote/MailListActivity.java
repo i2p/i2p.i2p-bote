@@ -24,11 +24,9 @@ public class MailListActivity extends ActionBarActivity {
      * Navigation drawer variables
      */
     private DrawerLayout mDrawerLayout;
-    private FolderAdapter mFolderAdapter;
+    private FolderListAdapter mFolderAdapter;
     private ListView mFolderList;
     private ActionBarDrawerToggle mDrawerToggle;
-
-    private String mActiveFolder;
 
     private static final String SHARED_PREFS = "i2p.bote";
     private static final String PREF_NAV_DRAWER_OPENED = "navDrawerOpened";
@@ -47,16 +45,15 @@ public class MailListActivity extends ActionBarActivity {
         mTitle = mDrawerTitle = getTitle();
         mSharedPrefs = getSharedPreferences(SHARED_PREFS, 0);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mFolderAdapter = new FolderAdapter(this);
+        mFolderAdapter = new FolderListAdapter(this);
         mFolderList = (ListView) findViewById(R.id.drawer);
 
         // Set the list of folders
-        // XXX: Does this need a loader?
+        // TODO: This is slow, needs a loader
         mFolderAdapter.setData(I2PBote.getInstance().getEmailFolders());
 
         // Set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        mFolderList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         // Set the adapter for the list view
         mFolderList.setAdapter(mFolderAdapter);
         // Set the list's click listener
@@ -102,12 +99,13 @@ public class MailListActivity extends ActionBarActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            mActiveFolder = "inbox";
-            FolderFragment f = FolderFragment.newInstance(mActiveFolder);
+            FolderFragment f = FolderFragment.newInstance("inbox");
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.list_fragment, f).commit();
+            mFolderList.setItemChecked(0, true);
         } else {
-            mActiveFolder = savedInstanceState.getString(ACTIVE_FOLDER);
+            mFolderList.setItemChecked(
+                    savedInstanceState.getInt(ACTIVE_FOLDER), true);
         }
 
         // Open nav drawer if the user has never opened it themselves
@@ -117,18 +115,28 @@ public class MailListActivity extends ActionBarActivity {
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-            EmailFolder folder = mFolderAdapter.getItem(pos);
-            FolderFragment f = FolderFragment.newInstance(folder.getName());
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.list_fragment, f).commit();
-            mDrawerLayout.closeDrawer(mFolderList);
+            selectItem(pos);
         }
+    }
+
+    private void selectItem(int position) {
+        // Create the new fragment
+        EmailFolder folder = mFolderAdapter.getItem(position);
+        FolderFragment f = FolderFragment.newInstance(folder.getName());
+
+        // Insert the fragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.list_fragment, f).commit();
+
+        // Highlight the selected item and close the drawer
+        mFolderList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mFolderList);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ACTIVE_FOLDER, mActiveFolder);
+        outState.putInt(ACTIVE_FOLDER, mFolderList.getSelectedItemPosition());
     }
 
     @Override
