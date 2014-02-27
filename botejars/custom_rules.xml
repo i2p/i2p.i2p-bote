@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="botejars">
+<project name="botejars-imported">
 
     <!-- override with i2pbase=path/to/source in local.properties -->
     <property environment="env"/>
@@ -56,7 +56,7 @@
                 <exclude name="net/i2p/util/SecureDirectory.class" />
                 <exclude name="net/i2p/util/SecureFile.class" />
                 <exclude name="net/i2p/util/SecureFileOutputStream.class" />
-            </zipfileset >
+            </zipfileset>
         </jar>
 
         <!-- ministreaming -->
