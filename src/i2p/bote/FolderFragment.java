@@ -1,8 +1,10 @@
 package i2p.bote;
 
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import i2p.bote.email.Email;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -43,8 +45,16 @@ public class FolderFragment extends ListFragment implements
             setListShown(false);
             setEmptyText(getResources().getString(
                     R.string.folder_empty));
-            getActivity().setTitle(
-                    BoteHelper.getFolderDisplayName(getActivity(), mFolder, false));
+            try {
+                getActivity().setTitle(
+                        BoteHelper.getFolderDisplayName(getActivity(), mFolder, false));
+            } catch (PasswordException e) {
+                // TODO: Get password from user and retry
+                getActivity().setTitle("ERROR: " + e.getMessage());
+            } catch (GeneralSecurityException e) {
+                // TODO: Handle properly
+                getActivity().setTitle("ERROR: " + e.getMessage());
+            }
             getLoaderManager().initLoader(EMAIL_LIST_LOADER, null, this);
         }
     }
@@ -58,8 +68,16 @@ public class FolderFragment extends ListFragment implements
     public void onLoadFinished(Loader<List<Email>> loader,
             List<Email> data) {
         mAdapter.setData(data);
-        getActivity().setTitle(
-                BoteHelper.getFolderDisplayName(getActivity(), mFolder, true));
+        try {
+            getActivity().setTitle(
+                    BoteHelper.getFolderDisplayName(getActivity(), mFolder, true));
+        } catch (PasswordException e) {
+            // TODO: Get password from user and retry
+            getActivity().setTitle("ERROR: " + e.getMessage());
+        } catch (GeneralSecurityException e) {
+            // TODO: Handle properly
+            getActivity().setTitle("ERROR: " + e.getMessage());
+        }
 
         if (isResumed()) {
             setListShown(true);
@@ -70,7 +88,15 @@ public class FolderFragment extends ListFragment implements
 
     public void onLoaderReset(Loader<List<Email>> loader) {
         mAdapter.setData(null);
-        getActivity().setTitle(
-                BoteHelper.getFolderDisplayName(getActivity(), mFolder, false));
+        try {
+            getActivity().setTitle(
+                    BoteHelper.getFolderDisplayName(getActivity(), mFolder, false));
+        } catch (PasswordException e) {
+            // TODO: Get password from user and retry
+            getActivity().setTitle("ERROR: " + e.getMessage());
+        } catch (GeneralSecurityException e) {
+            // TODO: Handle properly
+            getActivity().setTitle("ERROR: " + e.getMessage());
+        }
     }
 }

@@ -16,8 +16,10 @@ public class BoteHelper extends GeneralHelper {
      * @param folder The folder.
      * @param showNew Should the name contain the number of new messages?
      * @return The name of the folder.
+     * @throws PasswordException
+     * @throws GeneralSecurityException
      */
-    public static String getFolderDisplayName(Context ctx, EmailFolder folder, boolean showNew) {
+    public static String getFolderDisplayName(Context ctx, EmailFolder folder, boolean showNew) throws PasswordException, GeneralSecurityException {
         String displayName = "";
 
         String name = folder.getName();
@@ -33,15 +35,9 @@ public class BoteHelper extends GeneralHelper {
             displayName = name;
 
         if (showNew) {
-            try {
-                int numNew = folder.getNumNewEmails();
-                if (numNew > 0)
-                    displayName = displayName + " (" + numNew + ")";
-            } catch (GeneralSecurityException e) {
-                // TODO Auto-generated catch block
-            } catch (PasswordException e) {
-                // TODO Auto-generated catch block
-            }
+            int numNew = folder.getNumNewEmails();
+            if (numNew > 0)
+                displayName = displayName + " (" + numNew + ")";
         }
 
         return displayName;

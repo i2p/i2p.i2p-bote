@@ -1,7 +1,9 @@
 package i2p.bote;
 
+import java.security.GeneralSecurityException;
 import java.util.List;
 
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -34,7 +36,15 @@ public class FolderAdapter extends ArrayAdapter<EmailFolder> {
 
         TextView name = (TextView) v.findViewById(R.id.folder_name);
         // TODO: This needs to be updated when emails change.
-        name.setText(BoteHelper.getFolderDisplayName(getContext(), folder, true));
+        try {
+            name.setText(BoteHelper.getFolderDisplayName(getContext(), folder, true));
+        } catch (PasswordException e) {
+            // TODO: Get password from user and retry
+            name.setText("ERROR: " + e.getMessage());
+        } catch (GeneralSecurityException e) {
+            // TODO: Handle properly
+            name.setText("ERROR: " + e.getMessage());
+        }
 
         return v;
     }
