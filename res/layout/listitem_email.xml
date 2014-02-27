@@ -29,4 +29,13 @@
         android:layout_below="@+id/email_from"
         android:text="Content" />
 
+    <TextView
+        android:id="@+id/email_sent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/email_subject"
+        android:text="##:## XX"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </RelativeLayout>

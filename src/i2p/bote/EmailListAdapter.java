@@ -2,6 +2,7 @@ package i2p.bote;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.text.DateFormat;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -9,6 +10,7 @@ import javax.mail.MessagingException;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +42,20 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
         TextView from = (TextView) v.findViewById(R.id.email_from);
         TextView content = (TextView) v.findViewById(R.id.email_content);
+        TextView sent = (TextView) v.findViewById(R.id.email_sent);
+
         try {
             subject.setText(email.getSubject());
-            from.setText(BoteHelper.getNameAndShortDestination(email.getOneFromAddress()));
+            from.setText(BoteHelper.getNameAndShortDestination(
+                    email.getOneFromAddress()));
+            if (email.getSentDate() != null)
+                sent.setText(DateFormat.getInstance().format(
+                        email.getSentDate()));
+
+            if (email.isNew()) {
+                subject.setTypeface(Typeface.DEFAULT_BOLD);
+                from.setTypeface(Typeface.DEFAULT_BOLD);
+            }
         } catch (MessagingException e) {
             subject.setText("ERROR: " + e.getMessage());
         } catch (PasswordException e) {
