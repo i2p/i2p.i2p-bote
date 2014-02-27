@@ -22,7 +22,7 @@
     </fail>
     <echo message="Using I2P-Bote source at ${botebase}" />
 
-    <target name="-pre-compile" depends="copyrouterlibs,buildbote" />
+    <target name="-pre-compile" depends="copyrouterlibs,copybotelibs" />
 
     <!--
          Creates the output directories if they don't exist yet.
@@ -35,7 +35,12 @@
         <mkdir dir="${out.classes.absolute.dir}" />
     </target>
 
-    <target name="-pre-clean" />
+    <target name="-pre-clean">
+        <delete dir="${jar.libs.dir}" verbose="${verbose}" />
+        <ant dir="${botebase}" inheritall="false" useNativeBasedir="true" >
+            <target name="clean" />
+        </ant>
+    </target>
 
     <!-- new rules -->
 
@@ -62,24 +67,21 @@
         <!-- ministreaming -->
         <copy file="${i2plib}/mstreaming.jar" todir="${jar.libs.dir}" />
         <copy file="${i2plib}/streaming.jar" todir="${jar.libs.dir}" />
-
     </target>
 
-    <target name="buildbote" depends="-dirs" >
+    <available property="have.bote" file="${botebase}/WebContent/WEB-INF/lib/i2pbote.jar" />
+
+    <target name="buildbote" unless="have.bote">
         <ant dir="${botebase}" inheritall="false" useNativeBasedir="true" >
             <property name="i2pbase" value="${i2pbase}" />
             <target name="jar" />
         </ant>
+    </target>
 
+    <target name="copybotelibs" depends="-dirs,buildbote">
         <!-- bote -->
         <copy todir="${jar.libs.dir}">
             <fileset dir="${botebase}/WebContent/WEB-INF/lib" />
         </copy>
-
     </target>
-
-    <target name="distclean" depends="clean">
-        <delete dir="${jar.libs.dir}" verbose="${verbose}" />
-    </target>
-
 </project>
