@@ -337,7 +337,7 @@
 
 <function>
     <name>createOrModifyIdentity</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         boolean createOrModifyIdentity(boolean, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
     </function-signature>
@@ -345,7 +345,7 @@
 
 <function>
     <name>modifyIdentity</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         boolean modifyIdentity(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
     </function-signature>
@@ -353,7 +353,7 @@
 
 <function>
     <name>deleteIdentity</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         boolean deleteIdentity(java.lang.String)
     </function-signature>
@@ -364,7 +364,7 @@
     <description>
         Looks up an EmailIdentity by destination key.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         i2p.bote.email.EmailIdentity getIdentity(java.lang.String)
     </function-signature>
@@ -375,7 +375,7 @@
     <description>
         Returns the fingerprint of a Contact in a given locale.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getFingerprint(i2p.bote.packet.dht.Contact, java.lang.String)
     </function-signature>
@@ -386,7 +386,7 @@
     <description>
         Returns the fingerprint of an EmailIdentity in a given locale.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getFingerprint(i2p.bote.email.EmailIdentity, java.lang.String)
     </function-signature>
@@ -397,7 +397,7 @@
     <description>
         Looks up a CryptoImplementation by ID number.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         i2p.bote.crypto.CryptoImplementation getCryptoImplementation(int)
     </function-signature>
@@ -405,7 +405,7 @@
 
 <function>
     <name>saveContact</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         boolean saveContact(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
     </function-signature>
@@ -413,7 +413,7 @@
 
 <function>
     <name>deleteContact</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         boolean deleteContact(java.lang.String)
     </function-signature>
@@ -424,7 +424,7 @@
     <description>
         Looks up a Contact in the address book by its Email Destination.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getContact(java.lang.String)
     </function-signature>
@@ -432,7 +432,7 @@
 
 <function>
     <name>getMailFolder</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         i2p.bote.EmailFolder getMailFolder(java.lang.String)
     </function-signature>
@@ -440,7 +440,7 @@
 
 <function>
     <name>getEmail</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         i2p.bote.email.Email getEmail(java.lang.String, java.lang.String)
     </function-signature>
@@ -448,7 +448,7 @@
 
 <function>
     <name>getEmails</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.util.List getEmails(i2p.bote.folder.EmailFolder, i2p.bote.email.EmailAttribute, boolean)
     </function-signature>
@@ -459,7 +459,7 @@
     <description>
         Returns up to maxLength characters of a "sender" header field.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getShortSenderName(java.lang.String, int)
     </function-signature>
@@ -467,7 +467,7 @@
 
 <function>
     <name>getOneLocalRecipient</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getOneLocalRecipient(i2p.bote.email.Email)
     </function-signature>
@@ -475,7 +475,7 @@
 
 <function>
     <name>getReplyAddress</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getReplyAddress(i2p.bote.email.Email, i2p.bote.email.Identities)
     </function-signature>
@@ -486,7 +486,7 @@
     <description>
         Returns the status of an email in the outbox. See OutboxProcessor.java.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getEmailStatus(i2p.bote.email.Email)
     </function-signature>
@@ -494,7 +494,7 @@
  
 <function>
     <name>deleteEmail</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.boolean deleteEmail(java.lang.String, java.lang.String)
     </function-signature>
@@ -508,7 +508,7 @@
         If the Email Destination is not locally known (if it doesn't exist in the
         address book or any of the identities), the address is returned unaltered.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getNameAndDestination(java.lang.String)
     </function-signature>
@@ -523,7 +523,7 @@
         If the Email Destination is not locally known (if it doesn't exist in the
         address book or any of the identities), the address is returned unaltered.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getNameAndShortDestination(java.lang.String)
     </function-signature>
@@ -531,7 +531,7 @@
 
 <function>
     <name>extractName</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String extractName(java.lang.String)
     </function-signature>
@@ -539,7 +539,7 @@
 
 <function>
     <name>extractEmailDestination</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         i2p.bote.email.EmailDestination extractEmailDestination(java.lang.String)
     </function-signature>
@@ -547,7 +547,7 @@
 
 <function>
     <name>getSortedRecipientParams</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.util.Map getSortedRecipientParams(java.util.Map)
     </function-signature>
@@ -564,7 +564,7 @@
         If the action is "removeRecipient" followed by a number, the
         recipient field with that index is removed.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.util.List mergeRecipientFields(javax.servlet.ServletRequest)
     </function-signature>
@@ -576,7 +576,7 @@
         Returns true if a string contains a Base64-encoded Email Destination that
         is either in the address book or among the Email Identities.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         boolean isKnown(java.lang.String)
     </function-signature>
@@ -602,7 +602,7 @@
         Otherwise, the password is not stored and false is
         returned.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         boolean tryPassword(java.lang.String)
     </function-signature>
@@ -613,7 +613,7 @@
     <description>
         Returns the size of a file in a human-readable format.
     </description>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         java.lang.String getFileSize(java.lang.String)
     </function-signature>
@@ -659,7 +659,7 @@
 
 <function>
     <name>lookupInDirectory</name>
-    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>
         i2p.bote.packet.dht.Contact lookupInDirectory(java.lang.String)
     </function-signature>
