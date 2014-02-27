@@ -43,7 +43,8 @@ public class FolderFragment extends ListFragment implements
             setListShown(false);
             setEmptyText(getResources().getString(
                     R.string.folder_empty));
-            getActivity().setTitle(BoteHelper.getFolderDisplayName(getActivity(), mFolder));
+            getActivity().setTitle(
+                    BoteHelper.getFolderDisplayName(getActivity(), mFolder, false));
             getLoaderManager().initLoader(EMAIL_LIST_LOADER, null, this);
         }
     }
@@ -57,6 +58,8 @@ public class FolderFragment extends ListFragment implements
     public void onLoadFinished(Loader<List<Email>> loader,
             List<Email> data) {
         mAdapter.setData(data);
+        getActivity().setTitle(
+                BoteHelper.getFolderDisplayName(getActivity(), mFolder, true));
 
         if (isResumed()) {
             setListShown(true);
@@ -67,5 +70,7 @@ public class FolderFragment extends ListFragment implements
 
     public void onLoaderReset(Loader<List<Email>> loader) {
         mAdapter.setData(null);
+        getActivity().setTitle(
+                BoteHelper.getFolderDisplayName(getActivity(), mFolder, false));
     }
 }

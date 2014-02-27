@@ -14,9 +14,10 @@ public class BoteHelper extends GeneralHelper {
      * user, so their name is already "translated".
      * @param ctx Android Context to get strings from.
      * @param folder The folder.
+     * @param showNew Should the name contain the number of new messages?
      * @return The name of the folder.
      */
-    public static String getFolderDisplayName(Context ctx, EmailFolder folder) {
+    public static String getFolderDisplayName(Context ctx, EmailFolder folder, boolean showNew) {
         String displayName = "";
 
         String name = folder.getName();
@@ -31,14 +32,16 @@ public class BoteHelper extends GeneralHelper {
         else
             displayName = name;
 
-        try {
-            int numUnread = folder.getNumNewEmails();
-            if (numUnread > 0)
-                displayName = displayName + " (" + numUnread + ")";
-        } catch (GeneralSecurityException e) {
-            // TODO Auto-generated catch block
-        } catch (PasswordException e) {
-            // TODO Auto-generated catch block
+        if (showNew) {
+            try {
+                int numNew = folder.getNumNewEmails();
+                if (numNew > 0)
+                    displayName = displayName + " (" + numNew + ")";
+            } catch (GeneralSecurityException e) {
+                // TODO Auto-generated catch block
+            } catch (PasswordException e) {
+                // TODO Auto-generated catch block
+            }
         }
 
         return displayName;

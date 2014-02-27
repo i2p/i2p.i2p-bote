@@ -33,7 +33,8 @@ public class FolderAdapter extends ArrayAdapter<EmailFolder> {
         EmailFolder folder = getItem(position);
 
         TextView name = (TextView) v.findViewById(R.id.folder_name);
-        name.setText(BoteHelper.getFolderDisplayName(getContext(), folder));
+        // TODO: This needs to be updated when emails change.
+        name.setText(BoteHelper.getFolderDisplayName(getContext(), folder, true));
 
         return v;
     }
