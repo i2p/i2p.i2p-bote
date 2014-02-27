@@ -78,7 +78,8 @@
     <target name="copybotelibs" depends="-dirs,buildbote">
         <!-- bote -->
         <copy todir="${jar.libs.dir}">
-            <fileset dir="${botebase}/WebContent/WEB-INF/lib" />
+            <!-- Regular JavaMail currently doesn't work on Android -->
+            <fileset dir="${botebase}/WebContent/WEB-INF/lib" excludes="mailapi.jar" />
         </copy>
     </target>
 </project>

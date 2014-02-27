@@ -52,9 +52,7 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
         } catch (GeneralSecurityException e) {
             subject.setText("ERROR: " + e.getMessage());
         }
-        // TODO: Fix library bugs
-        // The .jar files are getting classes stripped during dexing.
-        //content.setText(email.getText());
+        content.setText(email.getText());
 
         return v;
     }
