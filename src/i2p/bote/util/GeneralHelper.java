@@ -302,13 +302,13 @@ public class GeneralHelper {
     }
 
     public static EmailFolder getMailFolder(String folderName) {
-        if ("Inbox".equals(folderName))
+        if ("Inbox".equalsIgnoreCase(folderName))
             return I2PBote.getInstance().getInbox();
-        else if ("Outbox".equals(folderName))
+        else if ("Outbox".equalsIgnoreCase(folderName))
             return I2PBote.getInstance().getOutbox();
-        else if ("Sent".equals(folderName))
+        else if ("Sent".equalsIgnoreCase(folderName))
             return I2PBote.getInstance().getSentFolder();
-        else if ("Trash".equals(folderName))
+        else if ("Trash".equalsIgnoreCase(folderName))
             return I2PBote.getInstance().getTrashFolder();
         else
             return null;
