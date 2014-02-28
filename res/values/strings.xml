@@ -38,4 +38,6 @@
     <string name="pref_summ_minDelay">%s minutes</string>
     <string name="pref_title_maxDelay">Maximum delay per hop</string>
     <string name="pref_summ_maxDelay">%s minutes</string>
+    <string name="pref_title_i2cp_host">I2CP host</string>
+    <string name="pref_title_i2cp_port">I2CP port</string>
 </resources>

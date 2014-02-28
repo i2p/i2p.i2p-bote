@@ -1,7 +1,9 @@
 package i2p.bote;
 
+import net.i2p.client.I2PClient;
 import i2p.bote.folder.EmailFolder;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -202,6 +204,11 @@ public class MailListActivity extends ActionBarActivity implements
             System.setProperty("i2p.dir.base", myDir);
             System.setProperty("i2p.dir.config", myDir);
             System.setProperty("wrapper.logfile", myDir + "/wrapper.log");
+
+            // Set the I2CP host/port
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+            System.setProperty(I2PClient.PROP_TCP_HOST, prefs.getString("i2pbote.i2cp.tcp.host", "127.0.0.1"));
+            System.setProperty(I2PClient.PROP_TCP_PORT, prefs.getString("i2pbote.i2cp.tcp.port", "7654"));
         }
     }
 
