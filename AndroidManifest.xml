@@ -26,6 +26,9 @@
         <activity
             android:name="i2p.bote.ViewEmailActivity"
             android:parentActivityName="i2p.bote.MailListActivity" />
+        <activity
+            android:name="i2p.bote.SettingsActivity"
+            android:parentActivityName="i2p.bote.MailListActivity" />
     </application>
 
 </manifest>

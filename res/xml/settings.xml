@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/pref_title_general" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="autoMailCheckEnabled"
+            android:title="@string/pref_title_autoMail" />
+
+        <i2p.bote.util.IntEditTextPreference
+            android:defaultValue="30"
+            android:dependency="autoMailCheckEnabled"
+            android:key="mailCheckInterval"
+            android:summary="@string/pref_summ_checkInterval"
+            android:title="@string/pref_title_checkInterval" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="deliveryCheckEnabled"
+            android:summary="@string/pref_summ_delivery"
+            android:title="@string/pref_title_delivery" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_title_privacy" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="hideLocale"
+            android:summary="@string/pref_summ_hideLocale"
+            android:title="@string/pref_title_hideLocale" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="includeSentTime"
+            android:summary="@string/pref_summ_sentTime"
+            android:title="@string/pref_title_sentTime" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_title_routing" >
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/setting0to3"
+            android:entryValues="@array/setting0to3"
+            android:key="numSendHops"
+            android:summary="@string/pref_summ_numHops"
+            android:title="@string/pref_title_numHops" />
+
+        <i2p.bote.util.IntEditTextPreference
+            android:defaultValue="5"
+            android:dependency="numSendHops"
+            android:key="relayMinDelay"
+            android:summary="@string/pref_summ_minDelay"
+            android:title="@string/pref_title_minDelay" />
+        <i2p.bote.util.IntEditTextPreference
+            android:defaultValue="40"
+            android:dependency="numSendHops"
+            android:key="relayMaxDelay"
+            android:summary="@string/pref_summ_maxDelay"
+            android:title="@string/pref_title_maxDelay" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

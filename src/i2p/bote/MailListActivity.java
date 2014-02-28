@@ -156,8 +156,15 @@ public class MailListActivity extends ActionBarActivity implements
             return true;
         }
 
-        // Handle action buttons and overflow
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+        case R.id.action_settings:
+            Intent si = new Intent(this, SettingsActivity.class);
+            startActivity(si);
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
