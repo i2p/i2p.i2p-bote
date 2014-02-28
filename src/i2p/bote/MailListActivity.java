@@ -3,6 +3,7 @@ package i2p.bote;
 import i2p.bote.folder.EmailFolder;
 import android.os.Bundle;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -15,7 +16,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class MailListActivity extends ActionBarActivity {
+public class MailListActivity extends ActionBarActivity implements
+        FolderFragment.OnEmailSelectedListener {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private SharedPreferences mSharedPrefs;
@@ -194,5 +196,17 @@ public class MailListActivity extends ActionBarActivity {
             System.setProperty("i2p.dir.config", myDir);
             System.setProperty("wrapper.logfile", myDir + "/wrapper.log");
         }
+    }
+
+    // FolderFragment.OnEmailSelectedListener
+
+    @Override
+    public void onEmailSelected(String folderName, String messageId) {
+        // In single-pane mode, simply start the detail activity
+        // for the selected message ID.
+        Intent detailIntent = new Intent(this, ViewEmailActivity.class);
+        detailIntent.putExtra(ViewEmailActivity.FOLDER_NAME, folderName);
+        detailIntent.putExtra(ViewEmailActivity.MESSAGE_ID, messageId);
+        startActivity(detailIntent);
     }
 }

@@ -7,16 +7,21 @@ import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.util.BoteHelper;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.View;
+import android.widget.ListView;
 
 public class FolderFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<Email>> {
     public static final String FOLDER_NAME = "folder_name";
 
     private static final int EMAIL_LIST_LOADER = 1;
+
+    OnEmailSelectedListener mCallback;
 
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
@@ -27,6 +32,25 @@ public class FolderFragment extends ListFragment implements
         args.putString(FOLDER_NAME, folderName);
         f.setArguments(args);
         return f;
+    }
+
+    // Container Activity must implement this interface
+    public interface OnEmailSelectedListener {
+        public void onEmailSelected(String folderName, String messageId);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnEmailSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnEmailSelectedListener");
+        }
     }
 
     @Override
@@ -58,6 +82,13 @@ public class FolderFragment extends ListFragment implements
             }
             getLoaderManager().initLoader(EMAIL_LIST_LOADER, null, this);
         }
+    }
+
+    @Override
+    public void onListItemClick(ListView parent, View view, int pos, long id) {
+        super.onListItemClick(parent, view, pos, id);
+        mCallback.onEmailSelected(
+                mFolder.getName(), mAdapter.getItem(pos).getMessageID());
     }
 
     // LoaderManager.LoaderCallbacks<List<Email>>
