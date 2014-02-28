@@ -1,35 +1,13 @@
-package i2p.bote;
-
-import i2p.bote.email.Email;
-import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.folder.EmailFolder;
-import i2p.bote.folder.FolderListener;
-import i2p.bote.util.BoteHelper;
-
-import java.util.List;
+package i2p.bote.util;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-public class EmailListLoader extends AsyncTaskLoader<List<Email>> implements
-        FolderListener {
-    private EmailFolder mFolder;
-    private List<Email> mData;
+public abstract class BetterAsyncTaskLoader<T> extends AsyncTaskLoader<T> {
+    protected T mData;
 
-    public EmailListLoader(Context context, EmailFolder folder) {
+    public BetterAsyncTaskLoader(Context context) {
         super(context);
-        mFolder = folder;
-    }
-
-    @Override
-    public List<Email> loadInBackground() {
-        List<Email> emails = null;
-        try {
-            emails = BoteHelper.getEmails(mFolder, null, true);
-        } catch (PasswordException pe) {
-            // TODO: Handle this error properly (get user to log in)
-        }
-        return emails;
     }
 
     /**
@@ -38,7 +16,7 @@ public class EmailListLoader extends AsyncTaskLoader<List<Email>> implements
      * here just adds a little more logic.
      */
     @Override
-    public void deliverResult(List<Email> data) {
+    public void deliverResult(T data) {
         if (isReset()) {
             // An async query came in while the loader is stopped.  We
             // don't need the result.
@@ -49,7 +27,7 @@ public class EmailListLoader extends AsyncTaskLoader<List<Email>> implements
 
         // Hold a reference to the old data so it doesn't get garbage collected.
         // We must protect it until the new data has been delivered.
-        List<Email> oldData = mData;
+        T oldData = mData;
         mData = data;
 
         if (isStarted()) {
@@ -74,8 +52,8 @@ public class EmailListLoader extends AsyncTaskLoader<List<Email>> implements
             deliverResult(mData);
         }
 
-        // Start watching for changes in the folder
-        mFolder.addFolderListener(this);
+        // Start watching for changes
+        onStartMonitoring();
 
         if (takeContentChanged() || mData == null) {
             // When the observer detects a change, it should call onContentChanged()
@@ -117,14 +95,14 @@ public class EmailListLoader extends AsyncTaskLoader<List<Email>> implements
         }
 
         // Stop monitoring for changes.
-        mFolder.removeFolderListener(this);
+        onStopMonitoring();
     }
 
     /**
      * Handles a request to cancel a load.
      */
     @Override
-    public void onCanceled(List<Email> data) {
+    public void onCanceled(T data) {
         // Attempt to cancel the current asynchronous load.
         super.onCanceled(data);
 
@@ -133,25 +111,15 @@ public class EmailListLoader extends AsyncTaskLoader<List<Email>> implements
         releaseResources(data);
     }
 
+    protected abstract void onStartMonitoring();
+    protected abstract void onStopMonitoring();
+
     /**
      * Helper function to take care of releasing resources associated
      * with an actively loaded data set.
+     * For a simple List, there is nothing to do. For something like a Cursor, we 
+     * would close it in this method. All resources associated with the Loader
+     * should be released here.
      */
-    private void releaseResources(List<Email> data) {
-        // For a simple List, there is nothing to do. For something like a Cursor, we 
-        // would close it in this method. All resources associated with the Loader
-        // should be released here.
-    }
-
-    // FolderListener
-
-    @Override
-    public void elementAdded() {
-        onContentChanged();
-    }
-
-    @Override
-    public void elementRemoved() {
-        onContentChanged();
-    }
+    protected abstract void releaseResources(T data);
 }

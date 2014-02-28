@@ -6,8 +6,11 @@ import java.util.List;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.FolderListener;
+import i2p.bote.util.BetterAsyncTaskLoader;
 import i2p.bote.util.BoteHelper;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -95,6 +98,50 @@ public class FolderFragment extends ListFragment implements
 
     public Loader<List<Email>> onCreateLoader(int id, Bundle args) {
         return new EmailListLoader(getActivity(), mFolder);
+    }
+
+    private static class EmailListLoader extends BetterAsyncTaskLoader<List<Email>> implements
+            FolderListener {
+        private EmailFolder mFolder;
+
+        public EmailListLoader(Context context, EmailFolder folder) {
+            super(context);
+            mFolder = folder;
+        }
+
+        @Override
+        public List<Email> loadInBackground() {
+            List<Email> emails = null;
+            try {
+                emails = BoteHelper.getEmails(mFolder, null, true);
+            } catch (PasswordException pe) {
+                // TODO: Handle this error properly (get user to log in)
+            }
+            return emails;
+        }
+
+        protected void onStartMonitoring() {
+            mFolder.addFolderListener(this);
+        }
+
+        protected void onStopMonitoring() {
+            mFolder.removeFolderListener(this);
+        }
+
+        protected void releaseResources(List<Email> data) {
+        }
+
+        // FolderListener
+
+        @Override
+        public void elementAdded() {
+            onContentChanged();
+        }
+
+        @Override
+        public void elementRemoved() {
+            onContentChanged();
+        }
     }
 
     public void onLoadFinished(Loader<List<Email>> loader,
