@@ -25,7 +25,7 @@ public class EmailListLoader extends AsyncTaskLoader<List<Email>> implements
     public List<Email> loadInBackground() {
         List<Email> emails = null;
         try {
-            emails = BoteHelper.getEmails(mFolder, null, false);
+            emails = BoteHelper.getEmails(mFolder, null, true);
         } catch (PasswordException pe) {
             // TODO: Handle this error properly (get user to log in)
         }
