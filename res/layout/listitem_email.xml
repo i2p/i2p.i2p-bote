@@ -27,6 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/email_from"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="Content" />
 
     <TextView
