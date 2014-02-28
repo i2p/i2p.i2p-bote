@@ -14,4 +14,9 @@
 
     <string name="folder_empty">Folder is empty</string>
     <string name="folder_does_not_exist">Folder does not exist</string>
+
+    <string name="email_from">From:</string>
+    <string name="email_to">To:</string>
+    <string name="email_sent">Sent:</string>
+    <string name="email_received">Received:</string>
 </resources>

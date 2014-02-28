@@ -1,6 +1,10 @@
 package i2p.bote.util;
 
+import java.io.IOException;
 import java.security.GeneralSecurityException;
+
+import javax.mail.MessagingException;
+
 import android.content.Context;
 
 import i2p.bote.R;
@@ -41,5 +45,15 @@ public class BoteHelper extends GeneralHelper {
         }
 
         return displayName;
+    }
+
+    public static String getDisplayAddress(String address) throws PasswordException, IOException, GeneralSecurityException, MessagingException {
+        String fullAdr = getNameAndDestination(address);
+        String emailDest = extractEmailDestination(fullAdr);
+        String name = extractName(fullAdr);
+
+        return (emailDest == null ? address
+                : (name.isEmpty() ? emailDest.substring(0, 10)
+                        : name + " <" + emailDest.substring(0, 10) + "...>"));
     }
 }
