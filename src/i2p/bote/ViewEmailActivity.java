@@ -38,6 +38,9 @@ public class ViewEmailActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_email);
 
+        // Enable ActionBar app icon to behave as action to go back
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent i = getIntent();
         String folderName = i.getStringExtra(FOLDER_NAME);
         mFolder = BoteHelper.getMailFolder(
