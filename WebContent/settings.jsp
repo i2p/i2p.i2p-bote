@@ -44,6 +44,12 @@
         Do this after setting imapPort so it starts up on the new port if it changed.
      --%>
     <jsp:setProperty name="jspHelperBean" property="imapEnabled" value="${param.imapEnabled eq 'on' ? 'true' : 'false'}"/>
+    <jsp:setProperty name="configuration" property="smtpPort" value="${param.smtpPort}"/>
+    <%--
+        Use the special property smtpEnabled in JSPHelper which starts/stops the SMTP service.
+        Do this after setting smtpPort so it starts up on the new port if it changed.
+     --%>
+    <jsp:setProperty name="jspHelperBean" property="smtpEnabled" value="${param.smtpEnabled eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="themeUrl" value="${param.theme}"/>
     <ib:saveConfiguration/>
     <ib:message key="Settings have been saved." var="infoMessage" scope="request"/>
@@ -114,6 +120,15 @@
         <c:set var="imapPortField" value="<input type='text' name='imapPort' size='5' value='${configuration.imapPort}'/>"/>
         <ib:message key="Enable IMAP on port {0}">
             <ib:param value="${imapPortField}"/>
+        </ib:message>
+        <br/>
+        
+        <%-- SMTP --%>
+        <c:set var="checked" value="${configuration.smtpEnabled ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="smtpEnabled"/>
+        <c:set var="smtpPortField" value="<input type='text' name='smtpPort' size='5' value='${configuration.smtpPort}'/>"/>
+        <ib:message key="Enable SMTP on port {0}">
+            <ib:param value="${smtpPortField}"/>
         </ib:message>
         <br/>
         

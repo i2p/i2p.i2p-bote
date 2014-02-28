@@ -395,7 +395,8 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         
         if (configuration.isImapEnabled())
             startImap();
-        startSmtp();
+        if (configuration.isSmtpEnabled())
+            startSmtp();
     }
     
     public void shutDown() {
@@ -577,6 +578,16 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     private void stopImap() {
         if (imapService!=null && !imapService.stop())
             log.error("IMAP service failed to stop");
+    }
+    
+    public void setSmtpEnabled(boolean enabled) {
+        configuration.setSmtpEnabled(enabled);
+        if (smtpService==null || !smtpService.isRunning()) {
+            if (enabled)
+                startSmtp();
+        }
+        else if (smtpService!=null && smtpService.isRunning() && !enabled)
+            stopSmtp();
     }
     
     private void startSmtp() {
