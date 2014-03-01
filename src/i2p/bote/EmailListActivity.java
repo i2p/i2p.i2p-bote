@@ -18,8 +18,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class MailListActivity extends ActionBarActivity implements
-        FolderFragment.OnEmailSelectedListener {
+public class EmailListActivity extends ActionBarActivity implements
+        EmailListFragment.OnEmailSelectedListener {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private SharedPreferences mSharedPrefs;
@@ -103,7 +103,7 @@ public class MailListActivity extends ActionBarActivity implements
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            FolderFragment f = FolderFragment.newInstance("inbox");
+            EmailListFragment f = EmailListFragment.newInstance("inbox");
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.list_fragment, f).commit();
             mFolderList.setItemChecked(0, true);
@@ -126,7 +126,7 @@ public class MailListActivity extends ActionBarActivity implements
     private void selectItem(int position) {
         // Create the new fragment
         EmailFolder folder = mFolderAdapter.getItem(position);
-        FolderFragment f = FolderFragment.newInstance(folder.getName());
+        EmailListFragment f = EmailListFragment.newInstance(folder.getName());
 
         // Insert the fragment
         getSupportFragmentManager().beginTransaction()

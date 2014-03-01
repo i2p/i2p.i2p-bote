@@ -18,7 +18,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 
-public class FolderFragment extends ListFragment implements
+public class EmailListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<Email>> {
     public static final String FOLDER_NAME = "folder_name";
 
@@ -29,8 +29,8 @@ public class FolderFragment extends ListFragment implements
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
 
-    public static FolderFragment newInstance(String folderName) {
-        FolderFragment f = new FolderFragment();
+    public static EmailListFragment newInstance(String folderName) {
+        EmailListFragment f = new EmailListFragment();
         Bundle args = new Bundle();
         args.putString(FOLDER_NAME, folderName);
         f.setArguments(args);
