@@ -12,6 +12,7 @@
     <!-- override with botesrc=path/to/source in local.properties -->
     <property name="botesrc" value="../i2p.i2p-bote" />
     <property name="botebase" location="${botesrc}" />
+    <property name="botelib" location="${botebase}/WebContent/WEB-INF/lib" />
     <available file="${botebase}" property="bote.present" />
     <fail message="I2P-Bote source directory ${botebase} was not found. Install it there or set botesrc=/path/to/source in local.properties" >
         <condition>
@@ -66,7 +67,7 @@
         <copy file="${i2plib}/streaming.jar" todir="${jar.libs.dir}" />
     </target>
 
-    <available property="have.bote" file="${botebase}/WebContent/WEB-INF/lib/i2pbote.jar" />
+    <available property="have.bote" file="${botelib}/i2pbote.jar" />
 
     <target name="buildbote" unless="have.bote">
         <ant dir="${botebase}" inheritall="false" useNativeBasedir="true" >
@@ -77,9 +78,33 @@
 
     <target name="copybotelibs" depends="-dirs,buildbote">
         <!-- bote -->
+        <jar destfile="${jar.libs.dir}/i2pbote.jar" >
+            <!-- remove classes that are overridden or stubbed out -->
+            <zipfileset src="${botelib}/i2pbote.jar" >
+                <exclude name="i2p/bote/imap/" />
+                <exclude name="i2p/bote/smtp/" />
+            </zipfileset>
+            <!-- Include necessary deps for stubbed-out classes -->
+            <zipfileset src="${botelib}/commons-lang-2.6.jar" >
+                <include name="org/apache/commons/lang/exception/Nestable.class" />
+                <include name="org/apache/commons/lang/exception/NestableException.class" />
+            </zipfileset>
+            <zipfileset src="${botelib}/commons-configuration-1.6.jar" >
+                <include name="org/apache/commons/configuration/ConfigurationException.class" />
+            </zipfileset>
+        </jar>
+
+        <!-- bote deps -->
         <copy todir="${jar.libs.dir}">
-            <!-- Regular JavaMail currently doesn't work on Android -->
-            <fileset dir="${botebase}/WebContent/WEB-INF/lib" excludes="mailapi.jar" />
+            <fileset dir="${botelib}">
+                <include name="bcprov-ecc-jdk16-146.jar" />
+                <!-- Regular JavaMail currently doesn't work on Android
+                <include name="mailapi.jar" />-->
+                <include name="lzma-9.20.jar" />
+                <include name="ntruenc-1.2.jar" />
+                <include name="flexi-gmss-1.7p1.jar" />
+                <include name="scrypt-1.3.3.jar" />
+            </fileset>
         </copy>
     </target>
 </project>
