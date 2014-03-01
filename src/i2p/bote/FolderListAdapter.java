@@ -37,10 +37,10 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> {
         TextView name = (TextView) v.findViewById(R.id.folder_name);
         // TODO: This needs to be updated when emails change.
         try {
-            name.setText(BoteHelper.getFolderDisplayName(getContext(), folder, true));
+            name.setText(BoteHelper.getFolderDisplayNameWithNew(getContext(), folder));
         } catch (PasswordException e) {
-            // TODO: Get password from user and retry
-            name.setText("ERROR: " + e.getMessage());
+            // Password fetching is handled in EmailListFragment
+            name.setText(BoteHelper.getFolderDisplayName(getContext(), folder));
         }
 
         return v;

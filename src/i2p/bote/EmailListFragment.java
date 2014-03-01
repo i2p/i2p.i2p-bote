@@ -1,6 +1,11 @@
 package i2p.bote;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
+
+import net.i2p.I2PAppContext;
+import net.i2p.util.Log;
 
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
@@ -9,12 +14,16 @@ import i2p.bote.folder.FolderListener;
 import i2p.bote.util.BetterAsyncTaskLoader;
 import i2p.bote.util.BoteHelper;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
 public class EmailListFragment extends ListFragment implements
@@ -69,18 +78,68 @@ public class EmailListFragment extends ListFragment implements
                     R.string.folder_does_not_exist));
             getActivity().setTitle(getResources().getString(R.string.app_name));
         } else {
-            setListShown(false);
-            setEmptyText(getResources().getString(
-                    R.string.folder_empty));
-            try {
-                getActivity().setTitle(
-                        BoteHelper.getFolderDisplayName(getActivity(), mFolder, false));
-            } catch (PasswordException e) {
-                // TODO: Get password from user and retry
-                getActivity().setTitle("ERROR: " + e.getMessage());
+            getActivity().setTitle(
+                    BoteHelper.getFolderDisplayName(getActivity(), mFolder));
+            if (I2PBote.getInstance().isPasswordRequired()) {
+                // Request a password from the user.
+                requestPassword();
+            } else {
+                // Password is cached, or not set.
+                initializeList();
             }
-            getLoaderManager().initLoader(EMAIL_LIST_LOADER, null, this);
         }
+    }
+
+    /**
+     * Request the password from the user, and try it.
+     */
+    private void requestPassword() {
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        View promptView = li.inflate(R.layout.dialog_password, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(promptView);
+        final EditText input = (EditText) promptView.findViewById(R.id.passwordInput);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                try {
+                    if (BoteHelper.tryPassword(input.getText().toString()))
+                        initializeList();
+                    else
+                        setEmptyText(getResources().getString(
+                                R.string.password_incorrect));
+                } catch (IOException e) {
+                    setEmptyText(getResources().getString(
+                            R.string.password_file_error));
+                } catch (GeneralSecurityException e) {
+                    setEmptyText(getResources().getString(
+                            R.string.password_file_error));
+                }
+                dialog.dismiss();
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                setEmptyText(getResources().getString(
+                        R.string.not_authed));
+                dialog.cancel();
+            }
+        });
+        AlertDialog passwordDialog = builder.create();
+        passwordDialog.show();
+    }
+
+    /**
+     * Start loading the list of emails from this folder.
+     * Only called when we have a password cached, or no
+     * password is required.
+     */
+    private void initializeList() {
+        setListShown(false);
+        setEmptyText(getResources().getString(
+                R.string.folder_empty));
+        getLoaderManager().initLoader(EMAIL_LIST_LOADER, null, this);
     }
 
     @Override
@@ -111,7 +170,7 @@ public class EmailListFragment extends ListFragment implements
             try {
                 emails = BoteHelper.getEmails(mFolder, null, true);
             } catch (PasswordException pe) {
-                // TODO: Handle this error properly (get user to log in)
+                // XXX: Should not get here.
             }
             return emails;
         }
@@ -145,10 +204,12 @@ public class EmailListFragment extends ListFragment implements
         mAdapter.setData(data);
         try {
             getActivity().setTitle(
-                    BoteHelper.getFolderDisplayName(getActivity(), mFolder, true));
+                    BoteHelper.getFolderDisplayNameWithNew(getActivity(), mFolder));
         } catch (PasswordException e) {
-            // TODO: Get password from user and retry
-            getActivity().setTitle("ERROR: " + e.getMessage());
+            // Should not get here.
+            Log log = I2PAppContext.getGlobalContext().logManager().getLog(EmailListFragment.class);
+            if (log.shouldLog(Log.WARN))
+                log.warn("Email list loader finished, but password is no longer cached", e);
         }
 
         if (isResumed()) {
@@ -160,12 +221,7 @@ public class EmailListFragment extends ListFragment implements
 
     public void onLoaderReset(Loader<List<Email>> loader) {
         mAdapter.setData(null);
-        try {
-            getActivity().setTitle(
-                    BoteHelper.getFolderDisplayName(getActivity(), mFolder, false));
-        } catch (PasswordException e) {
-            // TODO: Get password from user and retry
-            getActivity().setTitle("ERROR: " + e.getMessage());
-        }
+        getActivity().setTitle(
+                BoteHelper.getFolderDisplayName(getActivity(), mFolder));
     }
 }

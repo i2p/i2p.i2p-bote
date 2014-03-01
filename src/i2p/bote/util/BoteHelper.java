@@ -22,26 +22,34 @@ public class BoteHelper extends GeneralHelper {
      * @return The name of the folder.
      * @throws PasswordException
      */
-    public static String getFolderDisplayName(Context ctx, EmailFolder folder, boolean showNew) throws PasswordException {
-        String displayName = "";
-
+    public static String getFolderDisplayName(Context ctx, EmailFolder folder) {
         String name = folder.getName();
         if ("inbox".equals(name))
-            displayName = ctx.getResources().getString(R.string.folder_inbox);
+            return ctx.getResources().getString(R.string.folder_inbox);
         else if ("outbox".equals(name))
-            displayName = ctx.getResources().getString(R.string.folder_outbox);
+            return ctx.getResources().getString(R.string.folder_outbox);
         else if ("sent".equals(name))
-            displayName = ctx.getResources().getString(R.string.folder_sent);
+            return ctx.getResources().getString(R.string.folder_sent);
         else if ("trash".equals(name))
-            displayName = ctx.getResources().getString(R.string.folder_trash);
+            return ctx.getResources().getString(R.string.folder_trash);
         else
-            displayName = name;
+            return name;
+    }
 
-        if (showNew) {
-            int numNew = folder.getNumNewEmails();
-            if (numNew > 0)
-                displayName = displayName + " (" + numNew + ")";
-        }
+    /**
+     * Get the translated name of the folder with the number of
+     * new messages it contains appended.
+     * @param ctx Android Context to get strings from.
+     * @param folder The folder.
+     * @return The name of the folder.
+     * @throws PasswordException
+     */
+    public static String getFolderDisplayNameWithNew(Context ctx, EmailFolder folder) throws PasswordException {
+        String displayName = getFolderDisplayName(ctx, folder);
+
+        int numNew = folder.getNumNewEmails();
+        if (numNew > 0)
+            displayName = displayName + " (" + numNew + ")";
 
         return displayName;
     }
