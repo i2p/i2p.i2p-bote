@@ -49,7 +49,6 @@ public class SettingsActivity extends PreferenceActivity {
         Iterator<String> iterator = all.keySet().iterator();
         while (iterator.hasNext()) {
             String x = iterator.next();
-            android.util.Log.i("I2P-Bote", "Looking at setting " + x);
             if (x.startsWith("i2pbote.")) // Skip over Android-specific settings
                 continue;
             else if ("autoMailCheckEnabled".equals(x))
