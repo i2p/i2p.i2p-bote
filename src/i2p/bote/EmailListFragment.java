@@ -1,6 +1,5 @@
 package i2p.bote;
 
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 import i2p.bote.email.Email;
@@ -79,9 +78,6 @@ public class EmailListFragment extends ListFragment implements
             } catch (PasswordException e) {
                 // TODO: Get password from user and retry
                 getActivity().setTitle("ERROR: " + e.getMessage());
-            } catch (GeneralSecurityException e) {
-                // TODO: Handle properly
-                getActivity().setTitle("ERROR: " + e.getMessage());
             }
             getLoaderManager().initLoader(EMAIL_LIST_LOADER, null, this);
         }
@@ -153,9 +149,6 @@ public class EmailListFragment extends ListFragment implements
         } catch (PasswordException e) {
             // TODO: Get password from user and retry
             getActivity().setTitle("ERROR: " + e.getMessage());
-        } catch (GeneralSecurityException e) {
-            // TODO: Handle properly
-            getActivity().setTitle("ERROR: " + e.getMessage());
         }
 
         if (isResumed()) {
@@ -172,9 +165,6 @@ public class EmailListFragment extends ListFragment implements
                     BoteHelper.getFolderDisplayName(getActivity(), mFolder, false));
         } catch (PasswordException e) {
             // TODO: Get password from user and retry
-            getActivity().setTitle("ERROR: " + e.getMessage());
-        } catch (GeneralSecurityException e) {
-            // TODO: Handle properly
             getActivity().setTitle("ERROR: " + e.getMessage());
         }
     }

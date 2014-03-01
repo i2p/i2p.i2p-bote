@@ -1,6 +1,5 @@
 package i2p.bote;
 
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 import i2p.bote.fileencryption.PasswordException;
@@ -41,9 +40,6 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> {
             name.setText(BoteHelper.getFolderDisplayName(getContext(), folder, true));
         } catch (PasswordException e) {
             // TODO: Get password from user and retry
-            name.setText("ERROR: " + e.getMessage());
-        } catch (GeneralSecurityException e) {
-            // TODO: Handle properly
             name.setText("ERROR: " + e.getMessage());
         }
 
