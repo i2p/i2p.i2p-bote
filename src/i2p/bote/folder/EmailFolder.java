@@ -363,10 +363,9 @@ public class EmailFolder extends Folder<Email> {
     /**
      * Returns the number of <strong>new</strong> emails in the folder.
      * @throws PasswordException 
-     * @throws GeneralSecurityException 
      * @see i2p.bote.folder.Folder#getNumElements()
      */
-    public int getNumNewEmails() throws GeneralSecurityException, PasswordException {
+    public int getNumNewEmails() throws PasswordException {
         int numNew = 0;
         for (File emailFile: getFilenames()) {
             // getFilenames() only returns email files but not metadata files
