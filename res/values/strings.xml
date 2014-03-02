@@ -8,6 +8,7 @@
     <string name="drawer_close">Close nav</string>
 
     <string name="enter_password">Enter password:</string>
+    <string name="checking_password">Checking password&#8230;</string>
     <string name="password_incorrect">Password was incorrect</string>
     <string name="password_file_error">Could not read password verification file</string>
     <string name="not_authed">Not authenticated</string>

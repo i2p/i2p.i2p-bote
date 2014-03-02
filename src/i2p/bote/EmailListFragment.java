@@ -15,8 +15,10 @@ import i2p.bote.util.BetterAsyncTaskLoader;
 import i2p.bote.util.BoteHelper;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -25,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class EmailListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<Email>> {
@@ -36,6 +39,9 @@ public class EmailListFragment extends ListFragment implements
 
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
+
+    private EditText mPasswordInput;
+    private TextView mPasswordError;
 
     public static EmailListFragment newInstance(String folderName) {
         EmailListFragment f = new EmailListFragment();
@@ -98,25 +104,14 @@ public class EmailListFragment extends ListFragment implements
         View promptView = li.inflate(R.layout.dialog_password, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(promptView);
-        final EditText input = (EditText) promptView.findViewById(R.id.passwordInput);
+        mPasswordInput = (EditText) promptView.findViewById(R.id.passwordInput);
+        mPasswordError = (TextView) promptView.findViewById(R.id.passwordError);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                try {
-                    if (BoteHelper.tryPassword(input.getText().toString()))
-                        initializeList();
-                    else
-                        setEmptyText(getResources().getString(
-                                R.string.password_incorrect));
-                } catch (IOException e) {
-                    setEmptyText(getResources().getString(
-                            R.string.password_file_error));
-                } catch (GeneralSecurityException e) {
-                    setEmptyText(getResources().getString(
-                            R.string.password_file_error));
-                }
                 dialog.dismiss();
+                new PasswordWaiter().execute();
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -128,6 +123,49 @@ public class EmailListFragment extends ListFragment implements
         });
         AlertDialog passwordDialog = builder.create();
         passwordDialog.show();
+    }
+
+    private class PasswordWaiter extends AsyncTask<Void, Void, String> {
+        private final ProgressDialog dialog = new ProgressDialog(EmailListFragment.this.getActivity());
+
+        protected void onPreExecute() {
+            dialog.setMessage(getResources().getString(
+                    R.string.checking_password));
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        protected String doInBackground(Void... params) {
+            try {
+                if (BoteHelper.tryPassword(mPasswordInput.getText().toString()))
+                    return null;
+                else {
+                    cancel(false);
+                    return getResources().getString(
+                            R.string.password_incorrect);
+                }
+            } catch (IOException e) {
+                cancel(false);
+                return getResources().getString(
+                        R.string.password_file_error);
+            } catch (GeneralSecurityException e) {
+                cancel(false);
+                return getResources().getString(
+                        R.string.password_file_error);
+            }
+        }
+
+        protected void onCancelled(String result) {
+            dialog.dismiss();
+            requestPassword();
+            mPasswordError.setText(result);
+        }
+
+        protected void onPostExecute(String result) {
+            // Password is valid
+            initializeList();
+            dialog.dismiss();
+        }
     }
 
     /**
