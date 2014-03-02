@@ -35,36 +35,43 @@ public class SetPasswordActivity extends ActionBarActivity {
                 String newPassword = newField.getText().toString();
                 String confirmNewPassword = confirmField.getText().toString();
 
-                I2PBote.getInstance().changePasswordAsync(
-                        oldPassword.getBytes(),
-                        newPassword.getBytes(),
-                        confirmNewPassword.getBytes());
-
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(newField.getWindowToken(), 0);
 
-                new PasswordWaiter().execute();
+                new PasswordWaiter().execute(oldPassword, newPassword, confirmNewPassword);
             }
         });
     }
 
-    private class PasswordWaiter extends AsyncTask<Void, Void, String> {
+    private class PasswordWaiter extends AsyncTask<String, String, String> {
         private final ProgressDialog dialog = new ProgressDialog(SetPasswordActivity.this);
 
         protected void onPreExecute() {
-            dialog.setMessage("Changing password...");
             dialog.setCancelable(false);
             dialog.show();
         }
 
-        protected String doInBackground(Void... params) {
+        protected String doInBackground(String... params) {
+            StatusListener lsnr = new StatusListener() {
+                public void updateStatus(String status) {
+                    publishProgress(status);
+                }
+            };
             try {
-                I2PBote.getInstance().waitForPasswordChange();
+                I2PBote.getInstance().changePassword(
+                        params[0].getBytes(),
+                        params[1].getBytes(),
+                        params[2].getBytes(),
+                        lsnr);
                 return null;
             } catch (Throwable e) {
                 cancel(false);
                 return e.getMessage();
             }
+        }
+
+        protected void onProgressUpdate(String... values) {
+            dialog.setMessage(values[0]);
         }
 
         protected void onCancelled(String result) {
