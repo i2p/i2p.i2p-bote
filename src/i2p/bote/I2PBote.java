@@ -668,22 +668,47 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
      * @throws PasswordException if the old password is incorrect or two new passwords don't match
      */
     public void changePassword(byte[] oldPassword, byte[] newPassword, byte[] confirmNewPassword) throws IOException, GeneralSecurityException, PasswordException {
+        changePassword(oldPassword, newPassword, confirmNewPassword, new StatusListener() {
+            public void updateStatus(String status) {} // Do nothing
+        });
+    }
+
+    /**
+     * Reencrypts all encrypted files with a new password
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmNewPassword
+     * @throws IOException 
+     * @throws GeneralSecurityException 
+     * @throws PasswordException if the old password is incorrect or two new passwords don't match
+     */
+    public void changePassword(byte[] oldPassword, byte[] newPassword, byte[] confirmNewPassword,
+            StatusListener lsnr) throws IOException, GeneralSecurityException, PasswordException {
         File passwordFile = configuration.getPasswordFile();
-        
+
+        lsnr.updateStatus(_("Checking password"));
+
         if (!FileEncryptionUtil.isPasswordCorrect(oldPassword, passwordFile))
             throw new PasswordException(_("The old password is not correct."));
         if (!Arrays.equals(newPassword, confirmNewPassword))
             throw new PasswordException(_("The new password and the confirmation password do not match."));
-        
+
         // lock so no files are encrypted with the old password while the password is being changed
         synchronized(passwordCache) {
             passwordCache.setPassword(newPassword);
             DerivedKey newKey = passwordCache.getKey();
+
+            lsnr.updateStatus(_("Re-encrypting identities"));
             identities.changePassword(oldPassword, newKey);
+
+            lsnr.updateStatus(_("Re-encrypting addressbook"));
             addressBook.changePassword(oldPassword, newKey);
-            for (EmailFolder folder: getEmailFolders())
+            for (EmailFolder folder: getEmailFolders()) {
+                lsnr.updateStatus(_("Re-encrypting folder") + " " + folder.getName());
                 folder.changePassword(oldPassword, newKey);
-            
+            }
+
+            lsnr.updateStatus(_("Updating password file"));
             FileEncryptionUtil.writePasswordFile(passwordFile, passwordCache.getPassword(), newKey);
         }
     }
