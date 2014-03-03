@@ -118,6 +118,7 @@ public class SetPasswordFragment extends Fragment {
     }
 
     public static class PasswordWaiterFrag extends TaskFragment<String, String, String> {
+        String currentStatus;
         TextView mStatus;
 
         public static PasswordWaiterFrag newInstance(String... params) {
@@ -134,6 +135,9 @@ public class SetPasswordFragment extends Fragment {
             View v = inflater.inflate(R.layout.dialog_status, container, false);
             mStatus = (TextView) v.findViewById(R.id.status);
 
+            if (currentStatus != null && !currentStatus.isEmpty())
+                mStatus.setText(currentStatus);
+
             return v;
         }
 
@@ -145,7 +149,8 @@ public class SetPasswordFragment extends Fragment {
 
         @Override
         public void updateProgress(String... values) {
-            mStatus.setText(values[0]);
+            currentStatus = values[0];
+            mStatus.setText(currentStatus);
         }
 
         @Override
