@@ -76,6 +76,12 @@ public class SetPasswordFragment extends Fragment {
         mSubmit = (Button) view.findViewById(R.id.submit_password);
         mError = (TextView) view.findViewById(R.id.error);
 
+        // If task is running, disable the submit button.
+        PasswordWaiterFrag f = (PasswordWaiterFrag) mFM.findFragmentByTag(PASSWORD_WAITER_TAG);
+        if (f != null) {
+            mSubmit.setEnabled(false);
+        }
+
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
