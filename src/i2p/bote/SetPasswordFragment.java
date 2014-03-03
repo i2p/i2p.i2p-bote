@@ -15,9 +15,31 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SetPasswordFragment extends Fragment {
+    private Callbacks mCallbacks = sDummyCallbacks;
+
+    public interface Callbacks {
+        public void onTaskFinished();
+    }
+    private static Callbacks sDummyCallbacks = new Callbacks() {
+        public void onTaskFinished() {};
+    };
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof Callbacks))
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        mCallbacks = (Callbacks) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = sDummyCallbacks;
+    }
+
     // Code to identify the fragment that is calling onActivityResult().
     static final int PASSWORD_WAITER = 0;
     // Tag so we can find the task fragment again, in another
@@ -72,7 +94,6 @@ public class SetPasswordFragment extends Fragment {
                 f.setTargetFragment(SetPasswordFragment.this, PASSWORD_WAITER);
                 mFM.beginTransaction()
                     .replace(R.id.password_waiter_frag, f, PASSWORD_WAITER_TAG)
-                    .addToBackStack(null)
                     .commit();
             }
         });
@@ -82,9 +103,7 @@ public class SetPasswordFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PASSWORD_WAITER) {
             if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(getActivity(), R.string.password_changed,
-                        Toast.LENGTH_SHORT).show();
-                getActivity().finish();
+                mCallbacks.onTaskFinished();
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 mSubmit.setEnabled(true);
                 mError.setText(data.getStringExtra("error"));
