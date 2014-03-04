@@ -50,9 +50,6 @@
     </target>
 
     <target name="copyrouterlibs" depends="-dirs,checki2pbase" >
-        <!-- router -->
-        <copy file="${i2plib}/router.jar" todir="${jar.libs.dir}" />
-
         <!-- core -->
         <!-- remove classes that are overridden -->
         <!-- lots of unneeded stuff could be deleted here -->
@@ -62,7 +59,7 @@
             </zipfileset>
         </jar>
 
-        <!-- ministreaming -->
+        <!-- streaming -->
         <copy file="${i2plib}/mstreaming.jar" todir="${jar.libs.dir}" />
         <copy file="${i2plib}/streaming.jar" todir="${jar.libs.dir}" />
     </target>
@@ -82,6 +79,7 @@
             <!-- remove classes that are overridden or stubbed out -->
             <zipfileset src="${botelib}/i2pbote.jar" >
                 <exclude name="i2p/bote/imap/" />
+                <exclude name="i2p/bote/service/seedless/" />
                 <exclude name="i2p/bote/smtp/" />
             </zipfileset>
             <!-- Include necessary deps for stubbed-out classes -->

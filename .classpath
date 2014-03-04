@@ -7,5 +7,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/i2p.i2p-bote"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/i2p_sdk"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ministreaming"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
