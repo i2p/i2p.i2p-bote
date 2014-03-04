@@ -678,6 +678,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
      * @param oldPassword
      * @param newPassword
      * @param confirmNewPassword
+     * @param lsnr A StatusListener to report progress to
      * @throws IOException 
      * @throws GeneralSecurityException 
      * @throws PasswordException if the old password is incorrect or two new passwords don't match
