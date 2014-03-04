@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:fragment="i2p.bote.SettingsActivity$SettingsFragment"
+        android:title="@string/pref_title_general" >
+        <extra
+            android:name="settings"
+            android:value="general" />
+    </header>
+    <header android:title="@string/pref_title_change_password" >
+        <intent
+            android:targetClass="i2p.bote.SetPasswordActivity"
+            android:targetPackage="i2p.bote" />
+    </header>
+
+</preference-headers>

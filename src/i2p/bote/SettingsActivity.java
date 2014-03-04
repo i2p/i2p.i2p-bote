@@ -1,9 +1,9 @@
 package i2p.bote;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -13,21 +13,33 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 public class SettingsActivity extends PreferenceActivity {
+    // Actions for legacy settings
+    private static final String ACTION_PREFS_GENERAL = "i2p.bote.PREFS_GENERAL";
 
-    @SuppressLint("NewApi")
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            addPreferencesFromResource(R.xml.settings);
-        } else {
-            // Display the fragment as the main content.
-            getFragmentManager().beginTransaction()
-                    .replace(android.R.id.content, new SettingsFragment())
-                    .commit();
+        String action = getIntent().getAction();
+        if (action != null) {
+            if (ACTION_PREFS_GENERAL.equals(action)) {
+                addPreferencesFromResource(R.xml.settings_general);
+            }
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            // Load the legacy preferences headers
+            addPreferencesFromResource(R.xml.settings_headers_legacy);
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    public void onBuildHeaders(List<Header> target) {
+        // The resource com.android.internal.R.bool.preferences_prefer_dual_pane
+        // has different definitions based upon screen size. At present, it will
+        // be true for -sw720dp devices, false otherwise. For your curiosity, in
+        // Nexus 7 it is false.
+        loadHeadersFromResource(R.xml.settings_headers, target);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -36,7 +48,10 @@ public class SettingsActivity extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            addPreferencesFromResource(R.xml.settings);
+            String settings = getArguments().getString("settings");
+            if ("general".equals(settings)) {
+                addPreferencesFromResource(R.xml.settings_general);
+            }
         }
     }
 

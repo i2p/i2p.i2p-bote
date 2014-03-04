@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <Preference android:title="@string/pref_title_change_password" >
-        <intent
-            android:targetClass="i2p.bote.SetPasswordActivity"
-            android:targetPackage="i2p.bote" />
-    </Preference>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="autoMailCheckEnabled"
+        android:title="@string/pref_title_autoMail" />
 
-    <PreferenceCategory android:title="@string/pref_title_general" >
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="autoMailCheckEnabled"
-            android:title="@string/pref_title_autoMail" />
+    <i2p.bote.util.IntEditTextPreference
+        android:defaultValue="30"
+        android:dependency="autoMailCheckEnabled"
+        android:key="mailCheckInterval"
+        android:summary="@string/pref_summ_checkInterval"
+        android:title="@string/pref_title_checkInterval" />
 
-        <i2p.bote.util.IntEditTextPreference
-            android:defaultValue="30"
-            android:dependency="autoMailCheckEnabled"
-            android:key="mailCheckInterval"
-            android:summary="@string/pref_summ_checkInterval"
-            android:title="@string/pref_title_checkInterval" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="deliveryCheckEnabled"
+        android:summary="@string/pref_summ_delivery"
+        android:title="@string/pref_title_delivery" />
 
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="deliveryCheckEnabled"
-            android:summary="@string/pref_summ_delivery"
-            android:title="@string/pref_title_delivery" />
-    </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_title_privacy" >
         <CheckBoxPreference
             android:defaultValue="true"
