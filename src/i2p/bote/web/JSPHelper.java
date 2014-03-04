@@ -27,7 +27,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
+
 import net.i2p.I2PAppContext;
 import net.i2p.util.Log;
 import net.i2p.util.Translate;
@@ -37,6 +48,123 @@ import net.i2p.util.Translate;
  * and serves as a bean for JSPs.
  */
 public class JSPHelper extends GeneralHelper {
+    /**
+     * Returns a new <code>SortedMap<String, String></code> that contains only those
+     * entries from the original map whose key is <code>"recipient"</code>, followed
+     * by a whole number.
+     * @param parameters
+     * @return A map whose keys start with "recipient", sorted by key
+     */
+    public static SortedMap<String, String> getSortedRecipientParams(Map<String, String> parameters) {
+        SortedMap<String, String> newMap = new TreeMap<String, String>();
+        for (String key: parameters.keySet()) {
+            if (key == null)
+                continue;
+            if (key.startsWith("recipient")) {
+                String indexString = key.substring("recipient".length());
+                if (isNumeric(indexString)) {
+                    String value = parameters.get(key);
+                    if (value ==null)
+                        value = "";
+                    newMap.put(key, value);
+                }
+            }
+        }
+        return newMap;
+    }
+
+    public static List<RecipientAddress> mergeRecipientFields(ServletRequest request) {
+        Log log = new Log(GeneralHelper.class);
+
+        // Convert request.getParameterMap() to a Map<String, String>
+        Map<String, String[]> parameterArrayMap = request.getParameterMap();
+        Map<String, String> parameterStringMap = new HashMap<String, String>();
+        for (Map.Entry<String, String[]> parameter: parameterArrayMap.entrySet()) {
+            String[] value = parameter.getValue();
+            if (value!=null && value.length>0)
+                parameterStringMap.put(parameter.getKey(), value[0]);
+            else
+                parameterStringMap.put(parameter.getKey(), "");
+        }
+        Map<String, String> oldAddresses = getSortedRecipientParams(parameterStringMap);
+
+        String action = request.getParameter("action");
+        int indexToRemove = -1;
+        if (action!=null && action.startsWith("removeRecipient")) {
+            String indexString = action.substring("removeRecipient".length());
+            if (isNumeric(indexString))
+                indexToRemove = Integer.valueOf(indexString);
+        }
+
+        // make an Iterator over the selectedContact values
+        String[] newAddressesArray = request.getParameterValues("selectedContact");
+        Iterator<String> newAddresses;
+        if (newAddressesArray == null)
+            newAddresses = new ArrayList<String>().iterator();
+        else
+            newAddresses = Arrays.asList(newAddressesArray).iterator();
+
+        // make selectedContact values and oldAddresses into one List
+        List<RecipientAddress> mergedAddresses = new ArrayList<RecipientAddress>();
+        int i = 0;
+        for (String address: oldAddresses.values()) {
+            // don't add it if it needs to be removed
+            if (i == indexToRemove) {
+                i++;
+                continue;
+            }
+
+            String typeKey = "recipientType" + i;
+            String type;
+            if (parameterStringMap.containsKey(typeKey))
+                type = parameterStringMap.get(typeKey);
+            else {
+                log.error("Request contains a parameter named recipient" + i + ", but no parameter named recipientType" + i + ".");
+                type = "to";
+            }
+
+            if (!address.trim().isEmpty())
+                mergedAddresses.add(new RecipientAddress(type, address));
+            // if an existing address field is empty and a selectedContact is available, put the selectedContact into the address field
+            else if (newAddresses.hasNext())
+                mergedAddresses.add(new RecipientAddress(type, newAddresses.next()));
+            else
+                mergedAddresses.add(new RecipientAddress(type, ""));
+
+            i++;
+        }
+
+        // add any remaining selectedContacts
+        while ((newAddresses.hasNext()))
+            mergedAddresses.add(new RecipientAddress("to", newAddresses.next()));
+
+        if ("addRecipientField".equalsIgnoreCase(action))
+            mergedAddresses.add(new RecipientAddress("to", ""));
+        // Make sure there is a blank recipient field at the end so all non-empty fields have a remove button next to them
+        else if (mergedAddresses.isEmpty() || !mergedAddresses.get(mergedAddresses.size()-1).getAddress().isEmpty())
+            mergedAddresses.add(new RecipientAddress("to", ""));
+
+        return mergedAddresses;
+    }
+
+    public static class RecipientAddress {
+        private String addressType;
+        private String address;
+
+        public RecipientAddress(String addressType, String address) {
+            this.addressType = addressType;
+            this.address = address;
+        }
+
+        public String getAddressType() {
+            return addressType;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+    }
+
     public static String escapeQuotes(String s) {
         if (s == null)
             return null;

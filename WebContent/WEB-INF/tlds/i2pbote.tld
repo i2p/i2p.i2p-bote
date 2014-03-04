@@ -547,7 +547,7 @@
 
 <function>
     <name>getSortedRecipientParams</name>
-    <function-class>i2p.bote.util.GeneralHelper</function-class>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         java.util.Map getSortedRecipientParams(java.util.Map)
     </function-signature>
@@ -564,7 +564,7 @@
         If the action is "removeRecipient" followed by a number, the
         recipient field with that index is removed.
     </description>
-    <function-class>i2p.bote.util.GeneralHelper</function-class>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         java.util.List mergeRecipientFields(javax.servlet.ServletRequest)
     </function-signature>
