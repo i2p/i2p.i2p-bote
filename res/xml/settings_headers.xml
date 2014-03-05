@@ -3,7 +3,8 @@
 
     <header
         android:fragment="i2p.bote.SettingsActivity$SettingsFragment"
-        android:title="@string/pref_title_general" >
+        android:title="@string/pref_title_general"
+        android:summary="@string/pref_summ_general" >
         <extra
             android:name="settings"
             android:value="general" />
@@ -13,5 +14,8 @@
             android:targetClass="i2p.bote.SetPasswordActivity"
             android:targetPackage="i2p.bote" />
     </header>
+    <header
+        android:id="@+id/identity_settings"
+        android:title="Identities" />
 
 </preference-headers>
