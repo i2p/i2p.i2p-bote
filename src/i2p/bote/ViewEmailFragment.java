@@ -10,11 +10,13 @@ import javax.mail.MessagingException;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.util.BoteHelper;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -64,6 +66,7 @@ public class ViewEmailFragment extends Fragment {
 
     private void displayEmail(Email email, View v) {
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
+        ImageView picture = (ImageView) v.findViewById(R.id.contact_picture);
         TextView sender = (TextView) v.findViewById(R.id.email_sender);
         LinearLayout recipients = (LinearLayout) v.findViewById(R.id.email_recipients);
         TextView sent = (TextView) v.findViewById(R.id.email_sent);
@@ -71,10 +74,15 @@ public class ViewEmailFragment extends Fragment {
         TextView content = (TextView) v.findViewById(R.id.email_content);
 
         try {
+            String fromAddress = email.getOneFromAddress();
+
             subject.setText(email.getSubject());
 
-            sender.setText(BoteHelper.getDisplayAddress(
-                    email.getOneFromAddress()));
+            Bitmap pic = BoteHelper.getPictureForAddress(fromAddress);
+            if (pic != null)
+                picture.setImageBitmap(pic);
+
+            sender.setText(BoteHelper.getDisplayAddress(fromAddress));
 
             for (Address recipient : email.getToAddresses()) {
                 TextView tv = new TextView(getActivity());

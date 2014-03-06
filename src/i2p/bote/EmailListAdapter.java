@@ -11,11 +11,13 @@ import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.util.BoteHelper;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class EmailListAdapter extends ArrayAdapter<Email> {
@@ -40,15 +42,21 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
         View v = mInflater.inflate(R.layout.listitem_email, parent, false);
         Email email = getItem(position);
 
+        ImageView picture = (ImageView) v.findViewById(R.id.contact_picture);
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
         TextView from = (TextView) v.findViewById(R.id.email_from);
         TextView content = (TextView) v.findViewById(R.id.email_content);
         TextView sent = (TextView) v.findViewById(R.id.email_sent);
 
         try {
+            String fromAddress = email.getOneFromAddress();
+
+            Bitmap pic = BoteHelper.getPictureForAddress(fromAddress);
+            if (pic != null)
+                picture.setImageBitmap(pic);
+
             subject.setText(email.getSubject());
-            from.setText(BoteHelper.getNameAndShortDestination(
-                    email.getOneFromAddress()));
+            from.setText(BoteHelper.getNameAndShortDestination(fromAddress));
             if (email.getSentDate() != null)
                 sent.setText(DateFormat.getInstance().format(
                         email.getSentDate()));

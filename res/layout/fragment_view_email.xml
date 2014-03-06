@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/darker_gray"
@@ -22,11 +22,21 @@
                 android:text="Subject"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
+            <ImageView
+                android:id="@+id/contact_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/email_subject"
+                android:layout_below="@+id/email_subject"
+                android:src="@drawable/ic_launcher" />
+
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="5dp" >
+                android:layout_below="@+id/email_subject"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/contact_picture" >
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -60,7 +70,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" >
-
                     </LinearLayout>
                 </TableRow>
 
@@ -96,10 +105,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Datetime" />
-
                 </TableRow>
             </TableLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/email_content"
