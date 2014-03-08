@@ -11,6 +11,7 @@ import java.util.Map;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -33,8 +34,8 @@ public class SettingsActivity extends PreferenceActivity {
     private Header[] mIdentityListHeaders;
     private List<Header> mGeneratedHeaders;
 
-    private String mRequestedIdentityHash;
-    private String mDeletingIdentityHash;
+    private String mRequestedIdentityKey;
+    private String mDeletingIdentityKey;
 
     // Async tasks
     private LoadIdentityListTask mLoadIdentityListTask;
@@ -130,11 +131,12 @@ public class SettingsActivity extends PreferenceActivity {
             for (int index = 0; index < headerCount; index++) {
                 Header header = mIdentityListHeaders[index];
                 if (header != null && header.id != HEADER_ID_UNDEFINED) {
-                    String hash = header.fragmentArguments.getString("hash");
-                    if (hash != mDeletingIdentityHash) {
+                    String key = header.extras.getString(
+                            EditIdentityFragment.IDENTITY_KEY);
+                    if (key != mDeletingIdentityKey) {
                         target.add(header);
-                        if (hash == mRequestedIdentityHash) {
-                            mRequestedIdentityHash = null;
+                        if (key == mRequestedIdentityKey) {
+                            mRequestedIdentityKey = null;
                         }
                     }
                 }
@@ -154,7 +156,7 @@ public class SettingsActivity extends PreferenceActivity {
     private void loadLegacySettings(String action) {
         if (ACTION_PREFS_GENERAL.equals(action)) {
             addPreferencesFromResource(R.xml.settings_general);
-        } // TODO: implement identity settings
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -166,7 +168,7 @@ public class SettingsActivity extends PreferenceActivity {
             String settings = getArguments().getString("settings");
             if ("general".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_general);
-            } // TODO: implement identity settings
+            }
         }
     }
 
@@ -241,16 +243,19 @@ public class SettingsActivity extends PreferenceActivity {
             for (EmailIdentity identity : identities) {
                 final long id = identity.getHash().hashCode();
                 final String name = identity.getPublicName();
-                final String desc = identity.getKey();
+                final String desc = identity.getDescription();
+                final String key = identity.getKey();
+                final Intent intent = new Intent(
+                        getApplicationContext(), EditIdentityActivity.class);
                 final Bundle args = new Bundle();
-                final String hash = identity.getHash().toBase64();
-                args.putString("hash", hash);
+                args.putString(EditIdentityFragment.IDENTITY_KEY, key);
+                intent.putExtras(args);
                 final Header newHeader = new Header();
                 newHeader.id = id;
                 newHeader.title = name;
                 newHeader.summary = desc;
-                newHeader.fragment = SettingsFragment.class.getName();
-                newHeader.fragmentArguments = args;
+                newHeader.intent = intent;
+                newHeader.extras = args;
                 result[index++] = newHeader;
             }
 

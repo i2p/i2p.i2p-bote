@@ -16,6 +16,6 @@
     </header>
     <header
         android:id="@+id/identity_settings"
-        android:title="Identities" />
+        android:title="@string/pref_title_identities" />
 
 </preference-headers>
