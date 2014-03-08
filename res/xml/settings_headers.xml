@@ -12,7 +12,7 @@
     <header android:title="@string/pref_title_change_password" >
         <intent
             android:targetClass="i2p.bote.config.SetPasswordActivity"
-            android:targetPackage="i2p.bote.config" />
+            android:targetPackage="i2p.bote" />
     </header>
     <header
         android:id="@+id/identity_settings"
