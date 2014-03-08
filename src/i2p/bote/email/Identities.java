@@ -251,6 +251,8 @@ public class Identities implements KeyUpdateHandler {
             identity.setDefault(false);
         
         defaultIdentity.setDefault(true);
+
+        this.defaultIdentity = defaultIdentity;
     }
     
     /**
