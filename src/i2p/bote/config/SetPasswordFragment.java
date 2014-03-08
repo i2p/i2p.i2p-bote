@@ -12,10 +12,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -50,12 +52,16 @@ public class SetPasswordFragment extends Fragment {
     static final String PASSWORD_WAITER_TAG = "passwordWaiterTask";
 
     private FragmentManager mFM;
-    Button mSubmit;
+    MenuItem mSave;
+    EditText mOldField;
+    EditText mNewField;
+    EditText mConfirmField;
     TextView mError;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         mFM = getFragmentManager();
         PasswordWaiterFrag f = (PasswordWaiterFrag) mFM.findFragmentByTag(PASSWORD_WAITER_TAG);
@@ -73,39 +79,48 @@ public class SetPasswordFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final EditText oldField = (EditText) view.findViewById(R.id.password_old);
-        final EditText newField = (EditText) view.findViewById(R.id.password_new);
-        final EditText confirmField = (EditText) view.findViewById(R.id.password_confirm);
-        mSubmit = (Button) view.findViewById(R.id.submit_password);
+        mOldField = (EditText) view.findViewById(R.id.password_old);
+        mNewField = (EditText) view.findViewById(R.id.password_new);
+        mConfirmField = (EditText) view.findViewById(R.id.password_confirm);
         mError = (TextView) view.findViewById(R.id.error);
+    }
 
-        // If task is running, disable the submit button.
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.set_password, menu);
+        mSave = menu.findItem(R.id.action_set_password);
+
+        // If task is running, disable the save button.
         PasswordWaiterFrag f = (PasswordWaiterFrag) mFM.findFragmentByTag(PASSWORD_WAITER_TAG);
-        if (f != null) {
-            mSubmit.setEnabled(false);
+        if (f != null)
+            mSave.setVisible(false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_set_password:
+            String oldPassword = mOldField.getText().toString();
+            String newPassword = mNewField.getText().toString();
+            String confirmNewPassword = mConfirmField.getText().toString();
+
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mNewField.getWindowToken(), 0);
+
+            mSave.setVisible(false);
+            mError.setText("");
+
+            PasswordWaiterFrag f = PasswordWaiterFrag.newInstance(oldPassword, newPassword, confirmNewPassword);
+            f.setTask(new PasswordWaiter());
+            f.setTargetFragment(SetPasswordFragment.this, PASSWORD_WAITER);
+            mFM.beginTransaction()
+                .replace(R.id.password_waiter_frag, f, PASSWORD_WAITER_TAG)
+                .commit();
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
         }
-
-        mSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String oldPassword = oldField.getText().toString();
-                String newPassword = newField.getText().toString();
-                String confirmNewPassword = confirmField.getText().toString();
-
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(newField.getWindowToken(), 0);
-
-                mSubmit.setEnabled(false);
-                mError.setText("");
-
-                PasswordWaiterFrag f = PasswordWaiterFrag.newInstance(oldPassword, newPassword, confirmNewPassword);
-                f.setTask(new PasswordWaiter());
-                f.setTargetFragment(SetPasswordFragment.this, PASSWORD_WAITER);
-                mFM.beginTransaction()
-                    .replace(R.id.password_waiter_frag, f, PASSWORD_WAITER_TAG)
-                    .commit();
-            }
-        });
     }
 
     @Override
@@ -114,7 +129,7 @@ public class SetPasswordFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 mCallbacks.onTaskFinished();
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                mSubmit.setEnabled(true);
+                mSave.setVisible(true);
                 mError.setText(data.getStringExtra("error"));
             }
         }
