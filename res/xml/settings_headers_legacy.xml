@@ -4,13 +4,13 @@
     <Preference android:title="@string/pref_title_general" >
         <intent
             android:action="i2p.bote.PREFS_GENERAL"
-            android:targetClass="i2p.bote.SettingsActivity"
-            android:targetPackage="i2p.bote" />
+            android:targetClass="i2p.bote.config.SettingsActivity"
+            android:targetPackage="i2p.bote.config" />
     </Preference>
     <Preference android:title="@string/pref_title_change_password" >
         <intent
-            android:targetClass="i2p.bote.SetPasswordActivity"
-            android:targetPackage="i2p.bote" />
+            android:targetClass="i2p.bote.config.SetPasswordActivity"
+            android:targetPackage="i2p.bote.config" />
     </Preference>
 
 </PreferenceScreen>

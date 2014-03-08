@@ -2,7 +2,7 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <header
-        android:fragment="i2p.bote.SettingsActivity$SettingsFragment"
+        android:fragment="i2p.bote.config.SettingsActivity$SettingsFragment"
         android:title="@string/pref_title_general"
         android:summary="@string/pref_summ_general" >
         <extra
@@ -11,8 +11,8 @@
     </header>
     <header android:title="@string/pref_title_change_password" >
         <intent
-            android:targetClass="i2p.bote.SetPasswordActivity"
-            android:targetPackage="i2p.bote" />
+            android:targetClass="i2p.bote.config.SetPasswordActivity"
+            android:targetPackage="i2p.bote.config" />
     </header>
     <header
         android:id="@+id/identity_settings"
