@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 public class NewEmailFragment extends Fragment {
     Spinner mSpinner;
+    int mDefaultPos;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class NewEmailFragment extends Fragment {
         mSpinner = (Spinner) view.findViewById(R.id.sender_spinner);
         IdentityAdapter adapter = new IdentityAdapter(getActivity());
         mSpinner.setAdapter(adapter);
+        mSpinner.setSelection(mDefaultPos);
     }
 
     @Override
@@ -67,10 +69,11 @@ public class NewEmailFragment extends Fragment {
 
             try {
                 Collection<EmailIdentity> identities = I2PBote.getInstance().getIdentities().getAll();
+                mDefaultPos = 0;
                 for (EmailIdentity identity : identities) {
                     add(identity);
                     if (identity.isDefault())
-                        mSpinner.setSelection(getPosition(identity));
+                        mDefaultPos = getPosition(identity);
                 }
             } catch (PasswordException e) {
                 // TODO Handle
