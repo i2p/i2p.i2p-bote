@@ -18,12 +18,16 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -69,6 +73,12 @@ public class EmailListFragment extends ListFragment implements
             throw new ClassCastException(activity.toString()
                     + " must implement OnEmailSelectedListener");
         }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -182,6 +192,24 @@ public class EmailListFragment extends ListFragment implements
         setEmptyText(getResources().getString(
                 R.string.folder_empty));
         getLoaderManager().initLoader(EMAIL_LIST_LOADER, null, this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.email_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_new_email:
+            Intent nei = new Intent(getActivity(), NewEmailActivity.class);
+            startActivity(nei);
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
