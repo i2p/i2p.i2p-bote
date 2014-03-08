@@ -31,11 +31,19 @@
         android:hint="@string/description"
         android:inputType="text" />
 
+    <CheckBox
+        android:id="@+id/default_identity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/description"
+        android:layout_below="@+id/description"
+        android:text="@string/default_identity" />
+
     <TextView
         android:id="@+id/error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/description"
+        android:layout_below="@+id/default_identity"
         android:textColor="@color/error_color" />
 
 </RelativeLayout>

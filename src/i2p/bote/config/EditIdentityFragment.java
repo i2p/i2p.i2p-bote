@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -64,6 +65,7 @@ public class EditIdentityFragment extends Fragment {
     MenuItem mSave;
     EditText mNameField;
     EditText mDescField;
+    CheckBox mDefaultField;
     TextView mError;
 
     public static EditIdentityFragment newInstance(String key) {
@@ -99,12 +101,14 @@ public class EditIdentityFragment extends Fragment {
 
         mNameField = (EditText) view.findViewById(R.id.public_name);
         mDescField = (EditText) view.findViewById(R.id.description);
+        mDefaultField = (CheckBox) view.findViewById(R.id.default_identity);
         mError = (TextView) view.findViewById(R.id.error);
 
         try {
             EmailIdentity identity = BoteHelper.getIdentity(mKey);
             mNameField.setText(identity.getPublicName());
             mDescField.setText(identity.getDescription());
+            mDefaultField.setChecked(identity.isDefault());
         } catch (PasswordException e) {
             // TODO Handle
             e.printStackTrace();
@@ -133,6 +137,7 @@ public class EditIdentityFragment extends Fragment {
         case R.id.action_save_identity:
             String publicName = mNameField.getText().toString();
             String description = mDescField.getText().toString();
+            boolean setDefault = mDefaultField.isChecked();
 
             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mNameField.getWindowToken(), 0);
@@ -147,7 +152,7 @@ public class EditIdentityFragment extends Fragment {
                     publicName,
                     description,
                     null,
-                    false);
+                    setDefault);
             f.setTask(new IdentityWaiter());
             f.setTargetFragment(EditIdentityFragment.this, IDENTITY_WAITER);
             mFM.beginTransaction()
