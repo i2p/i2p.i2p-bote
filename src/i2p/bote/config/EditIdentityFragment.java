@@ -18,10 +18,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -59,7 +61,9 @@ public class EditIdentityFragment extends Fragment {
 
     private String mKey;
     private FragmentManager mFM;
-    Button mSubmit;
+    MenuItem mSave;
+    EditText mNameField;
+    EditText mDescField;
     TextView mError;
 
     public static EditIdentityFragment newInstance(String key) {
@@ -73,6 +77,7 @@ public class EditIdentityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         mFM = getFragmentManager();
         IdentityWaiterFrag f = (IdentityWaiterFrag) mFM.findFragmentByTag(IDENTITY_WAITER_TAG);
@@ -92,15 +97,14 @@ public class EditIdentityFragment extends Fragment {
 
         mKey = getArguments().getString(IDENTITY_KEY);
 
-        final EditText nameField = (EditText) view.findViewById(R.id.public_name);
-        final EditText descField = (EditText) view.findViewById(R.id.description);
-        mSubmit = (Button) view.findViewById(R.id.submit_identity);
+        mNameField = (EditText) view.findViewById(R.id.public_name);
+        mDescField = (EditText) view.findViewById(R.id.description);
         mError = (TextView) view.findViewById(R.id.error);
 
         try {
             EmailIdentity identity = BoteHelper.getIdentity(mKey);
-            nameField.setText(identity.getPublicName());
-            descField.setText(identity.getDescription());
+            mNameField.setText(identity.getPublicName());
+            mDescField.setText(identity.getDescription());
         } catch (PasswordException e) {
             // TODO Handle
             e.printStackTrace();
@@ -111,38 +115,49 @@ public class EditIdentityFragment extends Fragment {
             // TODO Handle
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.edit_identity, menu);
+        mSave = menu.findItem(R.id.action_save_identity);
 
         IdentityWaiterFrag f = (IdentityWaiterFrag) mFM.findFragmentByTag(IDENTITY_WAITER_TAG);
         if (f != null)
-            mSubmit.setEnabled(false);
+            mSave.setVisible(false);
+    }
 
-        mSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String publicName = nameField.getText().toString();
-                String description = descField.getText().toString();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_save_identity:
+            String publicName = mNameField.getText().toString();
+            String description = mDescField.getText().toString();
 
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(nameField.getWindowToken(), 0);
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mNameField.getWindowToken(), 0);
 
-                mSubmit.setEnabled(false);
-                mError.setText("");
+            mSave.setVisible(false);
+            mError.setText("");
 
-                IdentityWaiterFrag f = IdentityWaiterFrag.newInstance(
-                        false,
-                        -1,
-                        mKey,
-                        publicName,
-                        description,
-                        null,
-                        false);
-                f.setTask(new IdentityWaiter());
-                f.setTargetFragment(EditIdentityFragment.this, IDENTITY_WAITER);
-                mFM.beginTransaction()
-                    .replace(R.id.identity_waiter_frag, f, IDENTITY_WAITER_TAG)
-                    .commit();
-            }
-        });
+            IdentityWaiterFrag f = IdentityWaiterFrag.newInstance(
+                    false,
+                    -1,
+                    mKey,
+                    publicName,
+                    description,
+                    null,
+                    false);
+            f.setTask(new IdentityWaiter());
+            f.setTargetFragment(EditIdentityFragment.this, IDENTITY_WAITER);
+            mFM.beginTransaction()
+            .replace(R.id.identity_waiter_frag, f, IDENTITY_WAITER_TAG)
+            .commit();
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -151,7 +166,7 @@ public class EditIdentityFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 mCallbacks.onTaskFinished();
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                mSubmit.setEnabled(true);
+                mSave.setVisible(true);
                 mError.setText(data.getStringExtra("error"));
             }
         }

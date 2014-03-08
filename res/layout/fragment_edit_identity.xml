@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp" >
 
     <ImageView
         android:id="@+id/identity_picture"
@@ -10,48 +12,30 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/public_name"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <EditText
         android:id="@+id/public_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/identity_picture"
+        android:layout_toRightOf="@+id/identity_picture"
         android:ems="10"
+        android:hint="@string/public_name"
         android:inputType="text" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/description"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/identity_picture"
         android:ems="10"
+        android:hint="@string/description"
         android:inputType="text" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_below="@+id/description"
+        android:textColor="@color/error_color" />
 
-        <Button
-            android:id="@+id/submit_identity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OK" />
-
-        <TextView
-            android:id="@+id/error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/error_color" />
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
