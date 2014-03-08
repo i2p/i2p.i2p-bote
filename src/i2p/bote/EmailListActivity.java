@@ -1,6 +1,7 @@
 package i2p.bote;
 
 import net.i2p.client.I2PClient;
+import i2p.bote.config.SettingsActivity;
 import i2p.bote.folder.EmailFolder;
 import android.os.Bundle;
 import android.preference.PreferenceManager;

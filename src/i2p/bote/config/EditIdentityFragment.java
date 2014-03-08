@@ -1,8 +1,11 @@
-package i2p.bote;
+package i2p.bote.config;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import i2p.bote.I2PBote;
+import i2p.bote.R;
+import i2p.bote.StatusListener;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.util.BoteHelper;
