@@ -142,8 +142,10 @@ public class Identities implements KeyUpdateHandler {
                 }
                 identities.add(identity);
                 
-                if (key.equals(defaultIdentityStr))
+                if (identity.getKey().equals(defaultIdentityStr)) {
+                    identity.setDefault(true);
                     defaultIdentity = identity;
+                }
                 
                 index++;
             }
@@ -167,10 +169,10 @@ public class Identities implements KeyUpdateHandler {
         SortedProperties properties = new SortedProperties();
         try {
             int index = 0;
-            int defaultIndex = -1;   // index of the default identity
+            String defaultIdentityStr = null;
             for (EmailIdentity identity: identities) {
                 if (identity == defaultIdentity)
-                    defaultIndex = index;
+                    defaultIdentityStr = identity.getKey();
                 
                 String prefix = "identity" + index + ".";
                 String name = identity.getPublicName();
@@ -189,8 +191,8 @@ public class Identities implements KeyUpdateHandler {
                 
                 index++;
             }
-            if (defaultIndex >= 0)
-                properties.setProperty("default", String.valueOf(defaultIndex));
+            if (defaultIdentityStr != null)
+                properties.setProperty("default", defaultIdentityStr);
             
             properties.store(new OutputStreamWriter(encryptedStream, "UTF-8"), null);
         } catch (IOException e) {
