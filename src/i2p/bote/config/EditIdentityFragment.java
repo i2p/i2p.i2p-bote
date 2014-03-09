@@ -2,10 +2,13 @@ package i2p.bote.config;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
 import i2p.bote.I2PBote;
 import i2p.bote.R;
 import i2p.bote.StatusListener;
+import i2p.bote.crypto.CryptoFactory;
+import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.util.BoteHelper;
@@ -24,8 +27,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class EditIdentityFragment extends Fragment {
@@ -60,11 +65,15 @@ public class EditIdentityFragment extends Fragment {
     // instance of this fragment after rotation.
     static final String IDENTITY_WAITER_TAG = "identityWaiterTask";
 
+    static final int DEFAULT_CRYPTO_IMPL = 2;
+
     private String mKey;
     private FragmentManager mFM;
     MenuItem mSave;
     EditText mNameField;
     EditText mDescField;
+    Spinner mCryptoField;
+    int mDefaultPos;
     CheckBox mDefaultField;
     TextView mError;
 
@@ -104,20 +113,30 @@ public class EditIdentityFragment extends Fragment {
         mDefaultField = (CheckBox) view.findViewById(R.id.default_identity);
         mError = (TextView) view.findViewById(R.id.error);
 
-        try {
-            EmailIdentity identity = BoteHelper.getIdentity(mKey);
-            mNameField.setText(identity.getPublicName());
-            mDescField.setText(identity.getDescription());
-            mDefaultField.setChecked(identity.isDefault());
-        } catch (PasswordException e) {
-            // TODO Handle
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Handle
-            e.printStackTrace();
-        } catch (GeneralSecurityException e) {
-            // TODO Handle
-            e.printStackTrace();
+        if (mKey == null) {
+            // Show the encryption choice field
+            mCryptoField = (Spinner) view.findViewById(R.id.crypto_impl);
+            CryptoAdapter adapter = new CryptoAdapter(getActivity());
+            mCryptoField.setAdapter(adapter);
+            mCryptoField.setSelection(mDefaultPos);
+            mCryptoField.setVisibility(View.VISIBLE);
+        } else {
+            // Load the identity to edit
+            try {
+                EmailIdentity identity = BoteHelper.getIdentity(mKey);
+                mNameField.setText(identity.getPublicName());
+                mDescField.setText(identity.getDescription());
+                mDefaultField.setChecked(identity.isDefault());
+            } catch (PasswordException e) {
+                // TODO Handle
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Handle
+                e.printStackTrace();
+            } catch (GeneralSecurityException e) {
+                // TODO Handle
+                e.printStackTrace();
+            }
         }
     }
 
@@ -139,6 +158,10 @@ public class EditIdentityFragment extends Fragment {
             String description = mDescField.getText().toString();
             boolean setDefault = mDefaultField.isChecked();
 
+            int cryptoImplId = -1;
+            if (mKey == null)
+                cryptoImplId = ((CryptoImplementation) mCryptoField.getSelectedItem()).getId();
+
             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mNameField.getWindowToken(), 0);
 
@@ -146,8 +169,8 @@ public class EditIdentityFragment extends Fragment {
             mError.setText("");
 
             IdentityWaiterFrag f = IdentityWaiterFrag.newInstance(
-                    false,
-                    -1,
+                    (mKey == null ? true : false),
+                    cryptoImplId,
                     mKey,
                     publicName,
                     description,
@@ -174,6 +197,40 @@ public class EditIdentityFragment extends Fragment {
                 mSave.setVisible(true);
                 mError.setText(data.getStringExtra("error"));
             }
+        }
+    }
+
+    private class CryptoAdapter extends ArrayAdapter<CryptoImplementation> {
+        public CryptoAdapter(Context context) {
+            super(context, android.R.layout.simple_spinner_item);
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            List<CryptoImplementation> instances = CryptoFactory.getInstances();
+            mDefaultPos = 0;
+            for (CryptoImplementation instance : instances) {
+                add(instance);
+                if (instance.getId() == DEFAULT_CRYPTO_IMPL)
+                    mDefaultPos = getPosition(instance);
+            }
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = super.getView(position, convertView, parent);
+            setViewText(v, position);
+            return v;
+        }
+
+        @Override
+        public View getDropDownView (int position, View convertView, ViewGroup parent) {
+            View v = super.getDropDownView(position, convertView, parent);
+            setViewText(v, position);
+            return v;
+        }
+
+        private void setViewText(View v, int position) {
+            TextView text = (TextView) v.findViewById(android.R.id.text1);
+            text.setText(getItem(position).getName());
         }
     }
 
@@ -268,7 +325,6 @@ public class EditIdentityFragment extends Fragment {
                     publishProgress(status);
                 }
             };
-            lsnr.updateStatus("Saving identity");
             try {
                 BoteHelper.createOrModifyIdentity(
                         (Boolean) params[0],
@@ -277,7 +333,9 @@ public class EditIdentityFragment extends Fragment {
                         (String) params[3],
                         (String) params[4],
                         (String) params[5],
-                        (Boolean) params[6]);
+                        (Boolean) params[6],
+                        lsnr);
+                lsnr.updateStatus("Saving identity");
                 I2PBote.getInstance().getIdentities().save();
                 return null;
             } catch (Throwable e) {

@@ -31,12 +31,20 @@
         android:hint="@string/description"
         android:inputType="text" />
 
-    <CheckBox
-        android:id="@+id/default_identity"
+    <Spinner
+        android:id="@+id/crypto_impl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/description"
         android:layout_below="@+id/description"
+        android:visibility="gone" />
+
+    <CheckBox
+        android:id="@+id/default_identity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/crypto_impl"
+        android:layout_below="@+id/crypto_impl"
         android:text="@string/default_identity" />
 
     <TextView

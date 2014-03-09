@@ -16,8 +16,11 @@ public class EditIdentityActivity extends ActionBarActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            EditIdentityFragment f = EditIdentityFragment.newInstance(
-                    getIntent().getExtras().getString(EditIdentityFragment.IDENTITY_KEY));
+            String key = null;
+            Bundle args = getIntent().getExtras();
+            if (args != null)
+                key = args.getString(EditIdentityFragment.IDENTITY_KEY);
+            EditIdentityFragment f = EditIdentityFragment.newInstance(key);
             getSupportFragmentManager().beginTransaction()
                 .add(R.id.edit_identity_frag, f).commit();
         }
