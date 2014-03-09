@@ -63,9 +63,11 @@ public class NewEmailFragment extends Fragment {
     }
 
     private class IdentityAdapter extends ArrayAdapter<EmailIdentity> {
+        private LayoutInflater mInflater;
+
         public IdentityAdapter(Context context) {
             super(context, android.R.layout.simple_spinner_item);
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             try {
                 Collection<EmailIdentity> identities = I2PBote.getInstance().getIdentities().getAll();
@@ -110,14 +112,24 @@ public class NewEmailFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View v = super.getView(position, convertView, parent);
+            View v;
+            if (convertView == null)
+                v = mInflater.inflate(android.R.layout.simple_spinner_item, parent, false);
+            else
+                v = convertView;
+
             setViewText(v, position);
             return v;
         }
 
         @Override
         public View getDropDownView (int position, View convertView, ViewGroup parent) {
-            View v = super.getDropDownView(position, convertView, parent);
+            View v;
+            if (convertView == null)
+                v = mInflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
+            else
+                v = convertView;
+
             setViewText(v, position);
             return v;
         }
