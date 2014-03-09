@@ -102,6 +102,11 @@ public class SettingsActivity extends PreferenceActivity {
         super.onPause();
     }
 
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        return SettingsFragment.class.getName().equals(fragmentName);
+    }
+
 
     //
     // Building Headers
