@@ -23,6 +23,7 @@ package i2p.bote.util;
 
 import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
+import i2p.bote.StatusListener;
 import i2p.bote.Util;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.crypto.CryptoFactory;
@@ -111,6 +112,26 @@ public class GeneralHelper {
      * @throws IOException 
      */
     public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException {
+        createOrModifyIdentity(createNew, cryptoImplId, key, publicName, description, emailAddress, setDefault, new StatusListener() {
+            public void updateStatus(String status) {} // Do nothing
+        });
+    }
+
+    /**
+     * Updates an email identity if <code>createNew</code> is <code>false</code>,
+     * or adds a new identity if <code>createNew</code> is <code>true</code>.
+     * @param createNew 
+     * @param cryptoImplId The id value of the cryptographic algorithm set to use for the new identity; ignored if <code>createNew</code> is <code>false</code>
+     * @param key A base64-encoded Email Destination key
+     * @param description
+     * @param publicName
+     * @param emailAddress
+     * @param setDefault If this is <code>true</code>, the identity becomes the new default identity. Otherwise, the default stays the same.
+     * @throws GeneralSecurityException 
+     * @throws PasswordException 
+     * @throws IOException 
+     */
+    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault, StatusListener lsnr) throws GeneralSecurityException, PasswordException, IOException {
         Log log = new Log(GeneralHelper.class);
         Identities identities = I2PBote.getInstance().getIdentities();
         EmailIdentity identity = identities.get(key);
@@ -123,6 +144,7 @@ public class GeneralHelper {
                 throw new IllegalArgumentException(errorMsg);
             }
 
+            lsnr.updateStatus("Generating keys");
             try {
                 identity = new EmailIdentity(cryptoImpl);
             } catch (GeneralSecurityException e) {
