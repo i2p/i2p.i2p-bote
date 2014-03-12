@@ -147,7 +147,7 @@ public class EditIdentityFragment extends Fragment {
 
         IdentityWaiterFrag f = (IdentityWaiterFrag) mFM.findFragmentByTag(IDENTITY_WAITER_TAG);
         if (f != null)
-            mSave.setVisible(false);
+            setInterfaceEnabled(false);
     }
 
     @Override
@@ -165,7 +165,7 @@ public class EditIdentityFragment extends Fragment {
             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mNameField.getWindowToken(), 0);
 
-            mSave.setVisible(false);
+            setInterfaceEnabled(false);
             mError.setText("");
 
             IdentityWaiterFrag f = IdentityWaiterFrag.newInstance(
@@ -194,10 +194,17 @@ public class EditIdentityFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 mCallbacks.onTaskFinished();
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                mSave.setVisible(true);
+                setInterfaceEnabled(true);
                 mError.setText(data.getStringExtra("error"));
             }
         }
+    }
+
+    private void setInterfaceEnabled(boolean enabled) {
+        mSave.setVisible(enabled);
+        mNameField.setEnabled(enabled);
+        mDescField.setEnabled(enabled);
+        mDefaultField.setEnabled(enabled);
     }
 
     private class CryptoAdapter extends ArrayAdapter<CryptoImplementation> {
