@@ -36,8 +36,11 @@
             android:name="i2p.bote.config.SetPasswordActivity"
             android:parentActivityName="i2p.bote.config.SettingsActivity" />
         <activity
-            android:name="i2p.bote.config.EditIdentityActivity"
+            android:name="i2p.bote.config.ViewIdentityActivity"
             android:parentActivityName="i2p.bote.config.SettingsActivity" />
+        <activity
+            android:name="i2p.bote.config.EditIdentityActivity"
+            android:parentActivityName="i2p.bote.config.ViewIdentityActivity" />
     </application>
 
 </manifest>

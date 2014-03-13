@@ -162,7 +162,7 @@ public class SettingsActivity extends PreferenceActivity {
                 Header header = mIdentityListHeaders[index];
                 if (header != null && header.id != HEADER_ID_UNDEFINED) {
                     String key = header.extras.getString(
-                            EditIdentityFragment.IDENTITY_KEY);
+                            ViewIdentityFragment.IDENTITY_KEY);
                     if (key != mDeletingIdentityKey) {
                         target.add(header);
                         if (key == mRequestedIdentityKey) {
@@ -276,9 +276,9 @@ public class SettingsActivity extends PreferenceActivity {
                 final String desc = identity.getDescription();
                 final String key = identity.getKey();
                 final Intent intent = new Intent(
-                        getApplicationContext(), EditIdentityActivity.class);
+                        getApplicationContext(), ViewIdentityActivity.class);
                 final Bundle args = new Bundle();
-                args.putString(EditIdentityFragment.IDENTITY_KEY, key);
+                args.putString(ViewIdentityFragment.IDENTITY_KEY, key);
                 intent.putExtras(args);
                 final Header newHeader = new Header();
                 newHeader.id = id;
