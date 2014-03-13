@@ -173,6 +173,7 @@ public class EmailListFragment extends ListFragment implements
             dialog.dismiss();
             requestPassword();
             mPasswordError.setText(result);
+            mPasswordError.setVisibility(View.VISIBLE);
         }
 
         protected void onPostExecute(String result) {
