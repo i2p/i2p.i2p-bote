@@ -1,28 +1,13 @@
-User guide
-- Howto for IMAP/SMTP
-Email composition
-- "Include sent time" as an option, pre-filled with settings default
-Identities
-- Generate dests in background rather than needing a dedicated tab open
-IMAP/SMTP
-- "Force SSL" option
-  - When disabled, users can connect with "insecure" or "STARTTLS"
-  - When enabled, users can connect with "SSL"
-- Separate password cache (IMAP auth should not unlock webui)
+- Email selection
+-- Deleting emails
+-- Mark as read
+- Send button action
+- Deleting identities
+-- Select identities in list, or menu option of each?
+- Addressbook
 
-Not-yet-implemented
-- Drafts folder
-- User-defined folders
-- Automatically disable timestamps when using mail routes
-- Random offset for fetch interval (#1360)
-- Per-identity settings (#1359)
-  - Fetch interval
-- Mail route per-hop settings
-  - Delay (#1361)
-  - Fixed forward time
-- Traffic correlation countermeasures at relays
-  - Mixing anonymity (minimum threshold on relay packets to send)
-  - Constant traffic (test and dummy messages)
-  - Balanced incoming/outgoing ratio
-  - Packet padding
-- Retrieving email via relays
+- Refactor code
+-- Reorganize for clarity
+-- Optimize use of Android lifecycles
+
+- Service to contain the Bote running threads
