@@ -573,12 +573,10 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
   The following property keys are currently stored and recognized:
     identity#.publicName  - The public name of the identity, included in emails.
     identity#.key         - Base64 of the identity keys.
-    identity#.salt        - A fingerprint salt.
+    identity#.salt        - Salt used to generate a fingerprint.
     identity#.description - Description of the identity, only displayed locally.
-    identity#.picture     - Base64 of byte[] containing picture data, will be published
-                            to the public addressbook.
-    identity#.text        - Text associated with the identity, will be published to the
-                            public addressbook.
+    identity#.picture     - Base64 of byte[] containing picture data
+    identity#.text        - Text associated with the identity.
     identity#.published   - Has the identity been published to the public addressbook?
   (# is an integer index)
 
