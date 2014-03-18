@@ -566,14 +566,27 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
 
 6.1. Identities file
 
-  Stores all email identities the local user has created. One line per entry.
-  Format:
-    <base64 key><tab><public name>[<tab><description>][<tab><email address>]
-  
+  Stores all email identities the local user has created. The file uses the
+  Java Properties format, and can be read into / written out from a Java
+  Properties object.
+
+  The following property keys are currently stored and recognized:
+    identity#.publicName  - The public name of the identity, included in emails.
+    identity#.key         - Base64 of the identity keys.
+    identity#.salt        - A fingerprint salt.
+    identity#.description - Description of the identity, only displayed locally.
+    identity#.picture     - Base64 of byte[] containing picture data, will be published
+                            to the public addressbook.
+    identity#.text        - Text associated with the identity, will be published to the
+                            public addressbook.
+    identity#.published   - Has the identity been published to the public addressbook?
+  (# is an integer index)
+
   The base64 key contains two public keys (encryption+signing) and two private
   keys.
-  The identities file can optionally contain a line that contains the string
-  "Default", a space, and an Email Destination (i.e. two public keys). If the
+
+  The identities file can optionally contain the property key "default", with
+  its value set to an Email Destination (i.e. two public keys). If the
   Email Destination matches one of the identities, that identity is used as
   the default.
 
