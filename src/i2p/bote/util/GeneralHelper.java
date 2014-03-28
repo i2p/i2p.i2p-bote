@@ -477,6 +477,10 @@ public class GeneralHelper {
         I2PBote.getInstance().setImapEnabled(enabled);
     }
 
+    public void setSmtpEnabled(boolean enabled) {
+        I2PBote.getInstance().setSmtpEnabled(enabled);
+    }
+
     public String getAppVersion() {
         return I2PBote.getAppVersion();
     }
