@@ -726,9 +726,13 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     public void tryPassword(byte[] password) throws IOException, GeneralSecurityException, PasswordException  {
         File passwordFile = configuration.getPasswordFile();
         boolean correct = FileEncryptionUtil.isPasswordCorrect(password, passwordFile);
-        if (correct)
-            passwordCache.setPassword(password);
-        else
+        if (correct) {
+            // Don't cache tried password if none is set. This check is needed
+            // because IMAP doesn't support a blank password, so the user
+            // inputs a random string.
+            if (passwordFile.exists()) 
+                passwordCache.setPassword(password);
+        } else
             throw new PasswordException();
     }
     
