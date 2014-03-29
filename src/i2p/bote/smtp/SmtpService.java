@@ -89,6 +89,7 @@ public class SmtpService extends SMTPServer {
                 @Override
                 public void from(String from) throws RejectException {
                     try {
+                        from = removeBoteSuffix(from);
                         Email.checkSender(from);
                     } catch(AddressException e) {
                         throw new RejectException();
@@ -145,6 +146,8 @@ public class SmtpService extends SMTPServer {
                 private String removeBoteSuffix(String address) {
                     if (address.endsWith("@bote"))
                         address = address.substring(0, address.indexOf("@bote"));
+                    else if (address.endsWith("@bote>"))
+                        address = address.substring(0, address.indexOf("@bote")) + ">";
                     return address;
                 }
                 
