@@ -102,7 +102,7 @@ public class BoteMailbox extends SimpleMailbox<String> {
     }
     
     /** Synchronizes the <code>messages</code> field from the underlying {@link EmailFolder}. */
-    private void updateMessages() {
+    private synchronized void updateMessages() {
         try {
             List<Email> emails = folder.getElements();
             // Add new emails to map
