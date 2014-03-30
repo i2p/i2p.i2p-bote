@@ -30,9 +30,11 @@ import i2p.bote.folder.FolderListener;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.mail.MessagingException;
 
@@ -46,6 +48,7 @@ import org.apache.james.mailbox.store.mail.model.impl.SimpleMailbox;
  */
 public class BoteMailbox extends SimpleMailbox<String> {
     private EmailFolder folder;
+    private SortedMap<Email, BoteMessage> messageMap;
     private List<BoteMessage> messages;
     private Long uid;
     private long modSeq;
@@ -53,6 +56,30 @@ public class BoteMailbox extends SimpleMailbox<String> {
     public BoteMailbox(EmailFolder folder, long uidValidity, long uid) {
         super(new MailboxPath("I2P-Bote", "bote", folder.getName()), uidValidity);
         this.folder = folder;
+        this.messageMap = new TreeMap<Email, BoteMessage>(new Comparator<Email>() {
+            @Override
+            public int compare(Email email1, Email email2) {
+                // Try received dates first, this is set for all received.
+                // emails. If not set, this is a sent email, use sent date.
+                Date msg1date = email1.getReceivedDate();
+                if (msg1date == null)
+                    try {
+                        msg1date = email1.getSentDate();
+                    } catch (MessagingException e) {}
+
+                Date msg2date = email2.getReceivedDate();
+                if (msg2date == null)
+                    try {
+                        msg2date = email2.getSentDate();
+                    } catch (MessagingException e) {}
+
+                if (msg1date != null && msg2date != null)
+                    return msg1date.compareTo(msg2date);
+
+                // Catch-all
+                return email1.getMessageID().compareTo(email2.getMessageID());
+            }
+        });
         this.uid = uid;
         
         modSeq = System.currentTimeMillis();
@@ -78,20 +105,28 @@ public class BoteMailbox extends SimpleMailbox<String> {
     private void updateMessages() {
         try {
             List<Email> emails = folder.getElements();
-            messages = new ArrayList<BoteMessage>();
-            for (Email email: emails)
-                messages.add(new BoteMessage(email, getFolderName()));
+            // Add new emails to map
+            for (Email email: emails) {
+                if (!messageMap.containsKey(email))
+                    messageMap.put(email, new BoteMessage(email, getFolderName()));
+            }
+            // Remove old emails from map
+            for (Email email : messageMap.keySet()) {
+                if (!emails.contains(email))
+                    messageMap.remove(email);
+            }
         } catch (PasswordException e) {
             throw new RuntimeException(_("Password required or invalid password provided"), e);
         }
-        Collections.sort(messages, new Comparator<BoteMessage>() {
-            @Override
-            public int compare(BoteMessage message1, BoteMessage message2) {
-                return message1.getMessageID().compareTo(message2.getMessageID());
+        // Generate the updated list of messages
+        messages = new ArrayList<BoteMessage>(messageMap.values());
+        // Update UIDs
+        for (BoteMessage message : messages) {
+            if (message.getUid() == 0) {
+                message.setUid(uid);
+                uid++;
             }
-        });
-        for (int i=0; i<messages.size(); i++)
-            messages.get(i).setUid(i + 1);
+        }
     }
     
     List<BoteMessage> getAllMessages() {
