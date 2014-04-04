@@ -102,24 +102,26 @@ public class BoteMailbox extends SimpleMailbox<String> {
     }
     
     /** Synchronizes the <code>messages</code> field from the underlying {@link EmailFolder}. */
-    private synchronized void updateMessages() {
-        try {
-            List<Email> emails = folder.getElements();
-            // Add new emails to map
-            for (Email email: emails) {
-                if (!messageMap.containsKey(email))
-                    messageMap.put(email, new BoteMessage(email, getFolderName()));
+    private void updateMessages() {
+        synchronized (messageMap) {
+            try {
+                List<Email> emails = folder.getElements();
+                // Add new emails to map
+                for (Email email: emails) {
+                    if (!messageMap.containsKey(email))
+                        messageMap.put(email, new BoteMessage(email, getFolderName()));
+                }
+                // Remove old emails from map
+                for (Email email : messageMap.keySet()) {
+                    if (!emails.contains(email))
+                        messageMap.remove(email);
+                }
+            } catch (PasswordException e) {
+                throw new RuntimeException(_("Password required or invalid password provided"), e);
             }
-            // Remove old emails from map
-            for (Email email : messageMap.keySet()) {
-                if (!emails.contains(email))
-                    messageMap.remove(email);
-            }
-        } catch (PasswordException e) {
-            throw new RuntimeException(_("Password required or invalid password provided"), e);
+            // Generate the updated list of messages
+            messages = new ArrayList<BoteMessage>(messageMap.values());
         }
-        // Generate the updated list of messages
-        messages = new ArrayList<BoteMessage>(messageMap.values());
         // Update UIDs
         for (BoteMessage message : messages) {
             if (message.getUid() == 0) {
@@ -170,7 +172,7 @@ public class BoteMailbox extends SimpleMailbox<String> {
     long getModSeq() {
         return modSeq;
     }
-    
+
     @Override
     public String toString() {
         return folder.toString();
