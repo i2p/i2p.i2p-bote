@@ -59,7 +59,6 @@ import org.apache.james.mailbox.model.MailboxACL.MailboxACLRights;
 import org.apache.james.mailbox.model.SimpleMailboxACL;
 import org.apache.james.mailbox.store.Authenticator;
 import org.apache.james.mailbox.store.HashMapDelegatingMailboxListener;
-import org.apache.james.mailbox.store.MailboxSessionMapperFactory;
 import org.apache.james.mailbox.store.RandomMailboxSessionIdGenerator;
 import org.apache.james.mailbox.store.StoreMailboxManager;
 import org.slf4j.LoggerFactory;
@@ -73,6 +72,7 @@ public class ImapService extends IMAPServer {
     
     private Log log = new Log(ImapService.class);
     private EmailFolderManager folderManager;
+    private MapperFactory mailboxSessionMapperFactory;
 
     public ImapService(Configuration configuration, final PasswordVerifier passwordVerifier, EmailFolderManager folderManager) throws ConfigurationException {
         this.folderManager = folderManager;
@@ -82,7 +82,7 @@ public class ImapService extends IMAPServer {
         configure(new HierarchicalConfiguration());   // use the defaults
         setListenAddresses(new InetSocketAddress(configuration.getImapAddress(), configuration.getImapPort()));
 
-        MailboxSessionMapperFactory<String> mailboxSessionMapperFactory = new MapperFactory(folderManager);
+        mailboxSessionMapperFactory = new MapperFactory(folderManager);
         MailboxACLResolver aclResolver = createMailboxACLResolver();
         GroupMembershipResolver groupMembershipResolver = new GroupMembershipResolver() {
             public boolean isMember(String user, String group) {
@@ -200,5 +200,12 @@ public class ImapService extends IMAPServer {
         boolean started = super.start();
         log.info("IMAP service listening on " + Arrays.toString(getBoundAddresses()));
         return started;
+    }
+
+    @Override
+    public boolean stop() {
+        mailboxSessionMapperFactory.stopListening();
+        boolean stopped = super.stop();
+        return stopped;
     }
 }

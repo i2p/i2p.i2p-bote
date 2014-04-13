@@ -52,6 +52,7 @@ public class BoteMailbox extends SimpleMailbox<String> {
     private List<BoteMessage> messages;
     private Long uid;
     private long modSeq;
+    private FolderListener folderListener;
 
     public BoteMailbox(EmailFolder folder, long uidValidity, long uid) {
         super(new MailboxPath("I2P-Bote", "bote", folder.getName()), uidValidity);
@@ -84,8 +85,13 @@ public class BoteMailbox extends SimpleMailbox<String> {
         
         modSeq = System.currentTimeMillis();
         modSeq <<= 32;
-        
-        folder.addFolderListener(new FolderListener() {
+
+        startListening();
+        updateMessages();
+    }
+
+    protected void startListening() {
+        folderListener = new FolderListener() {
             public void elementRemoved() {
                 updateMessages();
             }
@@ -93,8 +99,13 @@ public class BoteMailbox extends SimpleMailbox<String> {
             public void elementAdded() {
                 updateMessages();
             }
-        });
-        updateMessages();
+        };
+        folder.addFolderListener(folderListener);
+    }
+
+    protected void stopListening() {
+        folder.removeFolderListener(folderListener);
+        folderListener = null;
     }
     
     private String getFolderName() {

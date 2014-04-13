@@ -36,7 +36,6 @@ import javax.mail.MessagingException;
 import javax.mail.Part;
 import i2p.bote.Util;
 import i2p.bote.email.Email;
-
 import org.apache.james.mailbox.store.mail.model.Message;
 import org.apache.james.mailbox.store.mail.model.Property;
 
