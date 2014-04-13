@@ -725,11 +725,14 @@ public class Email extends MimeMessage {
      * added at the end so the email client accepts it.
      */
     private void removeBoteSuffix(InternetAddress address) {
-        String addr = address.getAddress();
-        if (addr.endsWith("@bote")) {
-            addr = addr.substring(0, addr.indexOf("@bote"));
-            address.setAddress(addr);
-        }
+        address.setAddress(removeBoteSuffix(address.getAddress()));
+    }
+
+    public static String removeBoteSuffix(String addr) {
+        if (addr.endsWith("@bote"))
+            return addr.substring(0, addr.indexOf("@bote"));
+        else
+            return addr;
     }
     
     /**

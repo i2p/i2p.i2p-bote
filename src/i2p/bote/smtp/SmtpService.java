@@ -32,9 +32,6 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.GeneralSecurityException;
-import java.util.List;
-
-import javax.mail.Header;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -90,7 +87,8 @@ public class SmtpService extends SMTPServer {
                 @Override
                 public void from(String from) throws RejectException {
                     try {
-                        Email.checkSender(new InternetAddress(from));
+                        Email.checkSender(new InternetAddress(
+                                Email.removeBoteSuffix(from)));
                     } catch(AddressException e) {
                         throw new RejectException();
                     }
@@ -100,7 +98,8 @@ public class SmtpService extends SMTPServer {
                 @Override
                 public void recipient(String recipient) throws RejectException {
                     try {
-                        Email.checkRecipient(new InternetAddress(recipient));
+                        Email.checkRecipient(new InternetAddress(
+                                Email.removeBoteSuffix(recipient)));
                     }
                     catch(AddressException e) {
                         throw new RejectException();
