@@ -37,6 +37,7 @@ import java.util.List;
 import javax.mail.Header;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
@@ -89,8 +90,7 @@ public class SmtpService extends SMTPServer {
                 @Override
                 public void from(String from) throws RejectException {
                     try {
-                        from = removeBoteSuffix(from);
-                        Email.checkSender(from);
+                        Email.checkSender(new InternetAddress(from));
                     } catch(AddressException e) {
                         throw new RejectException();
                     }
@@ -100,8 +100,7 @@ public class SmtpService extends SMTPServer {
                 @Override
                 public void recipient(String recipient) throws RejectException {
                     try {
-                        recipient = removeBoteSuffix(recipient);
-                        Email.checkRecipient(recipient);
+                        Email.checkRecipient(new InternetAddress(recipient));
                     }
                     catch(AddressException e) {
                         throw new RejectException();
@@ -116,14 +115,7 @@ public class SmtpService extends SMTPServer {
                         Email email = new Email(data, false);
                         
                         // remove @bote suffixes from email destinations
-                        List<Header> addressHeaders = email.getAllAddressHeaders();
-                        for (Header header: addressHeaders)
-                            email.removeHeader(header.getName());
-                        for (Header header: addressHeaders) {
-                            String address = header.getValue();
-                            address = removeBoteSuffix(address);
-                            email.addHeader(header.getName(), address);
-                        }
+                        email.removeBoteSuffixes();
                         
                         mailSender.sendEmail(email);
                     } catch(MessagingException e) {
@@ -137,18 +129,6 @@ public class SmtpService extends SMTPServer {
                     } catch (GeneralSecurityException e) {
                         throw new IOException(e);
                     }
-                }
-                
-                /**
-                 * Removes the "@bote" suffix which an email destination may have
-                 * added at the end so the email client accepts it.
-                 */
-                private String removeBoteSuffix(String address) {
-                    if (address.endsWith("@bote"))
-                        address = address.substring(0, address.indexOf("@bote"));
-                    else if (address.endsWith("@bote>"))
-                        address = address.substring(0, address.indexOf("@bote")) + ">";
-                    return address;
                 }
                 
                 @Override

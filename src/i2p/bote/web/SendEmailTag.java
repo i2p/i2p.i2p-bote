@@ -83,7 +83,8 @@ public class SendEmailTag extends BodyTagSupport {
                 email.setSubject(subject, "UTF-8");
                 for (Recipient recipient: recipients)
                     email.addRecipient(recipient.type, recipient.address);
-                email.fixAddresses();
+                // TODO: Comment out until we determine if this is necessary
+                //email.fixAddresses();
                 
                 // set the text and add attachments
                 email.setContent(message, attachments);

@@ -38,10 +38,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLConnection;
 import java.security.GeneralSecurityException;
 import java.security.PrivateKey;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -57,6 +59,7 @@ import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Flags.Flag;
 import javax.mail.Header;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
@@ -83,7 +86,6 @@ public class Email extends MimeMessage {
         "From", "Sender", "To", "CC", "BCC", "Reply-To", "Subject", "Date", "MIME-Version", "Content-Type",
         "Content-Transfer-Encoding", "In-Reply-To", "X-HashCash", "X-Priority", SIGNATURE_HEADER
     };
-    private static final String[] ADDRESS_HEADERS = new String[] {"From", "Sender", "To", "CC", "BCC", "Reply-To"};
     private static final int MAX_HEADER_LENGTH = 998;   // Maximum length of a header line, see RFC 5322
     private enum CompressionAlgorithm {UNCOMPRESSED, LZMA};   // The first byte in a compressed email
     
@@ -476,14 +478,23 @@ public class Email extends MimeMessage {
      * @throws DataFormatException
      */
     public void checkAddresses() throws MessagingException, DataFormatException {
-        Collection<Header> headers = getAllAddressHeaders();
-        for (Header header: headers) {
-            String address = header.getValue();
+        // Check sender
+        Collection<Address> fromAddresses = getAllFromAddresses();
+        for (Address address : fromAddresses) {
             try {
-                if ("Sender".equalsIgnoreCase(header.getName()) || "From".equalsIgnoreCase(header.getName()))   // don't validate if this is the "sender" field and the sender is anonymous
-                    checkSender(address);
-                else
-                    checkRecipient(address);
+                checkSender(address);
+            } catch (AddressException e) {
+                String errorMessage = _("Address doesn't contain an Email Destination or an external address: {0}", address);
+                log.debug(errorMessage, e);
+                throw new DataFormatException(errorMessage);
+            }
+        }
+
+        // Check all other addresses
+        Collection<Address> addresses = getAllAddresses(false);
+        for (Address address: addresses) {
+            try {
+                checkRecipient(address);
             } catch (AddressException e) {
                 String errorMessage = _("Address doesn't contain an Email Destination or an external address: {0}", address);
                 log.debug(errorMessage, e);
@@ -492,29 +503,25 @@ public class Email extends MimeMessage {
         }
     }
     
-    public static void checkSender(String address) throws AddressException {
+    public static void checkSender(Address address) throws AddressException {
         // same rules as for recipients, except senders can be anonymous
-        if (!"Anonymous".equalsIgnoreCase(address))
+        if (!"Anonymous".equalsIgnoreCase(address.toString()))
             checkRecipient(address);
     }
     
-    public static void checkRecipient(String address) throws AddressException {
+    public static void checkRecipient(Address address) throws AddressException {
+        String addr = address.toString();
         try {
-            new EmailDestination(address);
+            new EmailDestination(addr);
         }
         catch (GeneralSecurityException e) {
             // check for external address
-            try {
-                new InternetAddress(address, true);
-                // InternetAddress accepts addresses without a domain, so check that there is a '.' after the '@'
-                if (address.indexOf('@') >= address.indexOf('.'))
-                    throw new AddressException(_("Invalid address: {0}", address));
-            } catch (AddressException e2) {
-                throw new AddressException("Invalid Address: \"" + address + "\"");
-            }
+            // InternetAddress accepts addresses without a domain, so check that there is a '.' after the '@'
+            if (addr.indexOf('@') >= addr.indexOf('.'))
+                throw new AddressException(_("Invalid address: {0}", addr));
         }
     }
-    
+    /*
     public void fixAddresses() throws MessagingException {
         List<Header> addressHeaders = getAllAddressHeaders();
         for (String headerName: ADDRESS_HEADERS)
@@ -523,12 +530,41 @@ public class Email extends MimeMessage {
             String fixedAddress = Util.fixAddress(header.getValue());
             addHeader(header.getName(), fixedAddress);
         }
+    }*/
+    
+    public Collection<Address> getAllFromAddresses() throws MessagingException {
+        Collection<Address> addresses = new ArrayList<Address>();
+
+        Address[] from = getFrom();
+        if (from != null)
+            addresses.addAll(Arrays.asList(from));
+
+        Address sender = getSender();
+        if (sender != null)
+            addresses.addAll(Arrays.asList(sender));
+
+        return addresses;
     }
     
-    public List<Header> getAllAddressHeaders() throws MessagingException {
-        @SuppressWarnings("unchecked")
-        Enumeration<Header> addressHeaders = (Enumeration<Header>)getMatchingHeaders(ADDRESS_HEADERS);
-        return Collections.list(addressHeaders);
+    public Collection<Address> getAllAddresses(boolean includeFrom) throws MessagingException {
+        Collection<Address> addresses = new ArrayList<Address>();
+
+        // If we want to check validity, fetch these separately
+        // (because these can contain 'anonymous').
+        if (includeFrom) {
+            addresses.addAll(getAllFromAddresses());
+        }
+
+        Address[] recipients = getAllRecipients();
+        if (recipients != null)
+            addresses.addAll(Arrays.asList(recipients));
+
+        // Reply-To should not be anonymous, check with recipients
+        Address[] replyTo = getReplyToAddresses();
+        if (replyTo != null)
+            addresses.addAll(Arrays.asList(replyTo));
+
+        return addresses;
     }
     
     /**
@@ -538,8 +574,9 @@ public class Email extends MimeMessage {
      * Not to be confused with {@link #getReplyAddress(Identities)}.
      * @throws MessagingException
      */
-    public String[] getReplyToAddresses() throws MessagingException {
-        return getHeader("Reply-To");
+    public Address[] getReplyToAddresses() throws MessagingException {
+        String s = getHeader("Reply-To", ",");
+        return (s == null) ? null : InternetAddress.parseHeader(s, true);
     }
     
     /**
@@ -557,9 +594,9 @@ public class Email extends MimeMessage {
      * @throws PasswordException 
      */
     public String getReplyAddress(Identities identities) throws MessagingException, PasswordException, IOException, GeneralSecurityException {
-        String[] replyTo = getReplyToAddresses();
+        Address[] replyTo = getReplyToAddresses();
         if (replyTo!=null && replyTo.length>0)
-            return replyTo[0];
+            return replyTo[0].toString();
         else {
             String sender = getOneFromAddress();
             EmailIdentity senderIdentity = identities.extractIdentity(sender);
@@ -612,23 +649,87 @@ public class Email extends MimeMessage {
      * @throws MessagingException
      */
     private void removeRecipientNames() throws MessagingException {
-        removeRecipientNames("To");
-        removeRecipientNames("CC");
-        removeRecipientNames("BCC");
+        removeRecipientNames(RecipientType.TO);
+        removeRecipientNames(RecipientType.CC);
+        removeRecipientNames(RecipientType.BCC);
     }
     
-    private void removeRecipientNames(String headerName) throws MessagingException {
-        String[] headerValues = getHeader(headerName);
-        removeHeader(headerName);
-        if (headerValues != null)
-            for (String recipient: headerValues) {
-                String dest = EmailDestination.extractBase64Dest(recipient);
-                if (dest != null)
-                    addHeader(headerName, dest);
-                // If there is no email destination, assume it is an external address and don't change it
-                else
-                    addHeader(headerName, recipient);
-            }
+    private void removeRecipientNames(Message.RecipientType type) throws MessagingException {
+        Address[] recipients = getRecipients(type);
+        if (recipients != null) {
+            removeRecipientNames(recipients);
+            setRecipients(type, recipients);
+        }
+    }
+
+    private void removeRecipientNames(Address[] recipients) {
+        for (int i = 0; i < recipients.length; i++) {
+            removeRecipientName((InternetAddress) recipients[i]);
+        }
+    }
+
+    private void removeRecipientName(InternetAddress address) {
+        String addr = address.getAddress();
+        String dest = EmailDestination.extractBase64Dest(addr);
+        if (dest != null)
+            try {
+                address.setPersonal(null);
+            } catch (UnsupportedEncodingException e) {}
+        // If there is no email destination, assume it is an external address and don't change it
+    }
+
+    public void removeBoteSuffixes() throws MessagingException {
+        Address[] from = getFrom();
+        if (from != null) {
+            removeBoteSuffixes(from);
+            setFrom(from[0]);
+            if (from.length > 1)
+                addFrom(Arrays.copyOfRange(from, 1, from.length));
+        }
+        Address sender = getSender();
+        if (sender != null) {
+            removeBoteSuffix((InternetAddress) sender);
+            setSender(sender);
+        }
+
+        Address[] to = getRecipients(RecipientType.TO);
+        if (to != null) {
+            removeBoteSuffixes(to);
+            setRecipients(RecipientType.TO, to);
+        }
+        Address[] cc = getRecipients(RecipientType.CC);
+        if (cc != null) {
+            removeBoteSuffixes(cc);
+            setRecipients(RecipientType.CC, cc);
+        }
+        Address[] bcc = getRecipients(RecipientType.BCC);
+        if (bcc != null) {
+            removeBoteSuffixes(bcc);
+            setRecipients(RecipientType.BCC, bcc);
+        }
+        Address[] replyTo = getReplyToAddresses();
+        if (replyTo != null) {
+            removeBoteSuffixes(replyTo);
+            setReplyTo(replyTo);
+        }
+    }
+
+    private void removeBoteSuffixes(Address[] addresses) {
+        for (int i = 0; i < addresses.length; i++) {
+            removeBoteSuffix((InternetAddress) addresses[i]);
+        }
+    }
+
+    /**
+     * Removes the "@bote" suffix which an email destination may have
+     * added at the end so the email client accepts it.
+     */
+    private void removeBoteSuffix(InternetAddress address) {
+        String addr = address.getAddress();
+        if (addr.endsWith("@bote")) {
+            addr = addr.substring(0, addr.indexOf("@bote"));
+            address.setAddress(addr);
+        }
     }
     
     /**
