@@ -133,6 +133,10 @@
         <div class="contributor-name">KillYourTV</div>
         <div class="contributor-role"><ib:message key="Code fixes, translation updates from tx"/></div>
     </div>
+    <div>
+        <div class="contributor-name">str4d</div>
+        <div class="contributor-role"><ib:message key="Code fixes, Android app"/></div>
+    </div>
 </div>
 
 <jsp:include page="footer.jsp"/>
