@@ -60,8 +60,7 @@ anonymous than the anonymity provided by standard I2P connections. </font></font
 order to achieve high usability, we have enabled it to be used with
 standard mail clients such as Thunderbird, Evolution or Kmail,
 without having to worry about what extra information these
-applications send in their headers. [</font><font color="#ff0000">YET
-TO BE IMPLEMENTED</font><font color="#000000">] Furthermore there is
+applications send in their headers. Furthermore there is
 a web interface that lets you send and read e-mails or manage your
 settings and identities.</font></font></p>
 
@@ -71,7 +70,7 @@ not yet using I2P, just install I2P from <a href="http://www.i2p2.de/">http://ww
 and then install the I2P-Bote plugin as described in this manual.
 Otherwise simply read on!**</font></p>
 <p style="line-height: 150%;"><font face="Arial, sans-serif"><i>Current
-version is 0.2.6.</i></font><br><br>
+version is 0.2.10.</i></font><br><br>
 </p>
 <p style="line-height: 150%;"><font face="Arial, sans-serif">*Unless
 you send e-mails to or receive them from the regular internet, ALL
@@ -181,8 +180,8 @@ the local addressbook (there can only by one name per destination
 key) is displayed, if there is any, and you will see a green mark in
 the &#8220;Know&#8221; column, stating it is the locally known name. If there
 is no entry for a destination in local addressbook, the name
-specified by the sender will be displayed with a prefixed [UNK] in
-the mail clients). [<font color="#ff0000">POP3 NOT YET IMPLEMENTED</font>]</font></p>
+specified by the sender will be displayed with a prefixed {UNK} in
+the mail clients).</font></p>
 
 <p style="line-height: 150%;"><br><font face="Arial, sans-serif">You can
 also fill out the other fields, if you like:</font></p>
@@ -325,8 +324,8 @@ should normally save destinations to your addressbook, so that next
 time you get a mail from the same sender it will be shown to be from
 the same, locally known sender (&#8220;Loc&#8221; is checked) and a mail sent
 by someone else who is just using the same user name will be marked
-as NOT known locally (an x in web-UI's 'Know' column or [UNK] before
-the sender address in POP3), so you know it's a new/different one. </font></font>
+as NOT known locally (an x in web-UI's 'Know' column or {UNK} before
+the sender address in IMAP), so you know it's a new/different one. </font></font>
 </p>
 
 
@@ -559,9 +558,10 @@ Technical Concept</b></font></p>
 <font face="Arial, sans-serif">I2P-Bote
 is an end-to-end encrypted, network-internal, fully decentralized
 (i.e. serverless) e-mail system. It supports different identities and
-does not expose e-mail headers. Currently, it is still alpha software
-and can only by accessed via web console. It soon will have POP3
-support, and it is planned to guarantee additional anonymity by
+does not expose e-mail headers. Currently, it is still alpha software.
+It can be accessed via web console, and it has IMAP and SMTP support,
+so bote-mails can be read and written by regular email clients.
+It is planned to guarantee additional anonymity by
 providing a high-latency transport option. All bote-mails are
 automatically end-to-end encrypted, so that there's no need to set up
 extra e-mail encryption (though you can do that), and bote-mails will
@@ -607,7 +607,7 @@ that can be deleted, the node refuses storage requests.</font></font></p>
 I2P-Bote sanitizes the mail headers and does not allow any unneeded
 information to be transmitted, thus allowing the use of e-mail
 clients without prior checks of what this client sends in the mail
-headers. [<font color="#ff0000">POP3 not yet implemented</font>]</font></p>
+headers.</font></p>
 
 <p style="line-height: 150%;"><font face="Arial, sans-serif">All the
 encryption, path choosing and profiling is done locally so that there
