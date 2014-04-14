@@ -25,17 +25,26 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Header;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Part;
+import javax.mail.internet.InternetAddress;
+
 import i2p.bote.Util;
 import i2p.bote.email.Email;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.util.GeneralHelper;
+import net.i2p.util.Log;
+
 import org.apache.james.mailbox.store.mail.model.Message;
 import org.apache.james.mailbox.store.mail.model.Property;
 
@@ -190,7 +199,40 @@ public class BoteMessage implements Message<String> {
 
     @Override
     public InputStream getHeaderContent() throws IOException {
+        Address[] from;
+        Address sender;
+        Address[] to;
+        Address[] cc;
+        Address[] bcc;
+        Address[] replyTo;
         try {
+            // Backup current Addresses
+            from = email.getFrom();
+            sender = email.getSender();
+            to = email.getToAddresses();
+            cc = email.getCCAddresses();
+            bcc = email.getBCCAddresses();
+            replyTo = email.getReplyToAddresses();
+
+            // Insert names from addressbook if present
+            Address[] fromAddrs = email.getFrom();
+            if (fromAddrs != null) {
+                insertNames(fromAddrs);
+                email.setFrom((Address) null);
+            }
+            email.addFrom(fromAddrs);
+            Address senderAddr = email.getSender();
+            if (senderAddr != null)
+                email.setSender(insertName(senderAddr));
+            insertNames(RecipientType.TO);
+            insertNames(RecipientType.CC);
+            insertNames(RecipientType.BCC);
+            Address[] replyToAddrs = email.getReplyToAddresses();
+            if (replyToAddrs != null) {
+                insertNames(replyToAddrs);
+                email.setReplyTo(replyToAddrs);
+            }
+
             @SuppressWarnings("unchecked")
             List<String> headerLines = Collections.list(email.getAllHeaderLines());
             StringBuilder oneString = new StringBuilder();
@@ -198,11 +240,45 @@ public class BoteMessage implements Message<String> {
                 oneString.append(headerLine);
                 oneString.append("\r\n");   // RFC 822 says to use CRLF for newlines
             }
+
+            // Revert recipients to previous state to maintain signature validity
+            email.setFrom((Address) null);
+            email.addFrom(from);
+            email.setSender(sender);
+            email.setRecipients(RecipientType.TO, to);
+            email.setRecipients(RecipientType.CC, cc);
+            email.setRecipients(RecipientType.BCC, bcc);
+            email.setReplyTo(replyTo);
+
             byte[] bytes = oneString.toString().getBytes("UTF-8");   // should only contain ASCII which is compatible
             return new ByteArrayInputStream(bytes);
         } catch (MessagingException e) {
             throw new IOException(e);
         }
+    }
+
+    private void insertNames(RecipientType type) throws MessagingException, IOException {
+        Address[] recipients = email.getRecipients(type);
+        if (recipients != null) {
+            insertNames(recipients);
+            email.setRecipients(type, recipients);
+        }
+    }
+
+    private void insertNames(Address[] addresses) throws MessagingException, IOException {
+        for (int i = 0; i < addresses.length; i++) {
+            addresses[i] = insertName(addresses[i]);
+        }
+    }
+
+    private Address insertName(Address address) throws MessagingException, IOException {
+        try {
+            String nameAndDest = GeneralHelper.getImapNameAndDestination(address.toString());
+            return new InternetAddress(nameAndDest);
+        } catch (PasswordException e) {
+        } catch (GeneralSecurityException e) {
+        }
+        return null;
     }
 
     @Override

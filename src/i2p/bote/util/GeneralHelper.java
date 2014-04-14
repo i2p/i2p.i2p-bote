@@ -458,6 +458,10 @@ public class GeneralHelper {
         return getAddressDisplayFilter().getNameAndDestination(address);
     }
 
+    public static String getImapNameAndDestination(String address) throws PasswordException, IOException, GeneralSecurityException {
+        return getAddressDisplayFilter().getImapNameAndDestination(address);
+    }
+
     public static String getNameAndShortDestination(String address) throws PasswordException, IOException, GeneralSecurityException {
         return getAddressDisplayFilter().getNameAndShortDestination(address);
     }
