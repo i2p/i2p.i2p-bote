@@ -1,9 +1,9 @@
 package i2p.bote;
 
 import java.util.List;
-
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.FolderListener;
 import i2p.bote.util.BoteHelper;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class FolderListAdapter extends ArrayAdapter<EmailFolder> {
+public class FolderListAdapter extends ArrayAdapter<EmailFolder> implements FolderListener {
     private final LayoutInflater mInflater;
 
     public FolderListAdapter(Context context) {
@@ -21,10 +21,15 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> {
     }
 
     public void setData(List<EmailFolder> folders) {
+        // Remove previous FolderListeners
+        for (int i = 0; i < getCount(); i++) {
+            getItem(i).removeFolderListener(this);
+        }
         clear();
         if (folders != null) {
             for (EmailFolder folder : folders) {
                 add(folder);
+                folder.addFolderListener(this);
             }
         }
     }
@@ -35,7 +40,6 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> {
         EmailFolder folder = getItem(position);
 
         TextView name = (TextView) v.findViewById(R.id.folder_name);
-        // TODO: This needs to be updated when emails change.
         try {
             name.setText(BoteHelper.getFolderDisplayNameWithNew(getContext(), folder));
         } catch (PasswordException e) {
@@ -44,5 +48,17 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> {
         }
 
         return v;
+    }
+
+    // FolderListener
+
+    @Override
+    public void elementAdded() {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void elementRemoved() {
+        notifyDataSetChanged();
     }
 }
