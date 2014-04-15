@@ -283,6 +283,11 @@ public class EmailFolder extends Folder<Email> {
             }
         }
 
+        for (FolderListener listener: folderListeners)
+            listener.elementRemoved();
+        for (FolderListener listener: newFolder.folderListeners)
+            listener.elementAdded();
+
         return success;
     }
     
