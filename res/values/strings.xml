@@ -6,6 +6,9 @@
     <string name="action_send_email">Send email</string>
     <string name="action_settings">Settings</string>
 
+    <string name="items_selected">%s selected</string>
+    <string name="action_delete_emails">Delete selected emails</string>
+
     <string name="drawer_open">Open nav</string>
     <string name="drawer_close">Close nav</string>
 

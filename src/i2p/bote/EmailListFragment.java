@@ -24,12 +24,16 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +48,7 @@ public class EmailListFragment extends ListFragment implements
 
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
+    private ActionMode mMode;
 
     private EditText mPasswordInput;
     private TextView mPasswordError;
@@ -89,6 +94,17 @@ public class EmailListFragment extends ListFragment implements
         mFolder = BoteHelper.getMailFolder(folderName);
 
         setListAdapter(mAdapter);
+
+        // Set up CAB
+        mMode = null;
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                onListItemSelect(position);
+                return true;
+            }
+        });
 
         if (mFolder == null) {
             setEmptyText(getResources().getString(
@@ -216,8 +232,73 @@ public class EmailListFragment extends ListFragment implements
     @Override
     public void onListItemClick(ListView parent, View view, int pos, long id) {
         super.onListItemClick(parent, view, pos, id);
-        mCallback.onEmailSelected(
-                mFolder.getName(), mAdapter.getItem(pos).getMessageID());
+        if (mMode == null) {
+            mCallback.onEmailSelected(
+                    mFolder.getName(), mAdapter.getItem(pos).getMessageID());
+        } else
+            onListItemSelect(pos);
+    }
+
+    private void onListItemSelect(int position) {
+        mAdapter.toggleSelection(position);
+        boolean hasCheckedElement = mAdapter.getSelectedCount() > 0;
+
+        if (hasCheckedElement && mMode == null) {
+            mMode = ((ActionBarActivity) getActivity()).startSupportActionMode(new ModeCallback());
+        } else if (!hasCheckedElement && mMode != null) {
+            mMode.finish();
+        }
+
+        if (mMode != null)
+            mMode.setTitle(getResources().getString(
+                    R.string.items_selected, mAdapter.getSelectedCount()));
+    }
+
+    private final class ModeCallback implements ActionMode.Callback {
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            // Respond to clicks on the actions in the CAB
+            switch (item.getItemId()) {
+            case R.id.action_delete_emails:
+                SparseBooleanArray selected = mAdapter.getSelectedIds();
+                for (int i = (selected.size() - 1); i >= 0; i--) {
+                    if (selected.valueAt(i)) {
+                        Email email = mAdapter.getItem(selected.keyAt(i));
+                        // The Loader will update mAdapter
+                        I2PBote.getInstance().deleteEmail(mFolder, email.getMessageID());
+                    }
+                }
+                mode.finish();
+                return true;
+            default:
+                return false;
+            }
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate the menu for the CAB
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.email_list_context, menu);
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            // Here you can make any necessary updates to the activity when
+            // the CAB is removed.
+            mAdapter.removeSelection();
+
+            if (mode == mMode)
+                mMode = null;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            // Here you can perform updates to the CAB due to
+            // an invalidate() request
+            return false;
+        }
     }
 
     // LoaderManager.LoaderCallbacks<List<Email>>

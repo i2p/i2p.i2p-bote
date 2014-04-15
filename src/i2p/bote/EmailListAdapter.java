@@ -13,6 +13,7 @@ import i2p.bote.util.BoteHelper;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,12 @@ import android.widget.TextView;
 
 public class EmailListAdapter extends ArrayAdapter<Email> {
     private final LayoutInflater mInflater;
+    private SparseBooleanArray mSelectedEmails;
 
     public EmailListAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_2);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mSelectedEmails = new SparseBooleanArray();
     }
 
     public void setData(List<Email> emails) {
@@ -77,5 +80,30 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
         content.setText(email.getText());
 
         return v;
+    }
+
+    public void toggleSelection(int position) {
+        selectView(position, !mSelectedEmails.get(position));
+    }
+
+    public void removeSelection() {
+        mSelectedEmails = new SparseBooleanArray();
+        notifyDataSetChanged();
+    }
+
+    public void selectView(int position, boolean value) {
+        if (value)
+            mSelectedEmails.put(position, value);
+        else
+            mSelectedEmails.delete(position);
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedCount() {
+        return mSelectedEmails.size();
+    }
+
+    public SparseBooleanArray getSelectedIds() {
+        return mSelectedEmails;
     }
 }
