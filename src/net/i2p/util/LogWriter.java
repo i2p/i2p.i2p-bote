@@ -118,7 +118,7 @@ class LogWriter implements Runnable {
         }
     }
 
-    private static final String ANDROID_LOG_TAG = "I2P";
+    private static final String ANDROID_LOG_TAG = "I2P-Bote";
 
     public void log(int priority, Class<?> src, String name, String threadName, String msg) {
             if (src != null) {
