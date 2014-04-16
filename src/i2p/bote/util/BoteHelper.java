@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
-import i2p.bote.I2PBote;
 import i2p.bote.R;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;

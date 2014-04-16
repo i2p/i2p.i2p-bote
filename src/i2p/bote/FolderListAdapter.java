@@ -58,6 +58,11 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> implements Fold
     }
 
     @Override
+    public void elementUpdated() {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public void elementRemoved() {
         notifyDataSetChanged();
     }

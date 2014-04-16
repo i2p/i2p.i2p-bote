@@ -155,6 +155,11 @@ public class ViewEmailActivity extends ActionBarActivity implements
         }
 
         @Override
+        public void elementUpdated() {
+            onContentChanged();
+        }
+
+        @Override
         public void elementRemoved() {
             onContentChanged();
         }

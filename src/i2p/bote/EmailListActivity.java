@@ -3,6 +3,7 @@ package i2p.bote;
 import net.i2p.client.I2PClient;
 import i2p.bote.config.SettingsActivity;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.util.MoveToDialogFragment;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.content.Context;
@@ -20,7 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class EmailListActivity extends ActionBarActivity implements
-        EmailListFragment.OnEmailSelectedListener {
+        EmailListFragment.OnEmailSelectedListener,
+        MoveToDialogFragment.MoveToDialogListener {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private SharedPreferences mSharedPrefs;
@@ -223,5 +225,13 @@ public class EmailListActivity extends ActionBarActivity implements
         detailIntent.putExtra(ViewEmailActivity.FOLDER_NAME, folderName);
         detailIntent.putExtra(ViewEmailActivity.MESSAGE_ID, messageId);
         startActivity(detailIntent);
+    }
+
+    // MoveToDialogFragment.MoveToDialogListener
+
+    @Override
+    public void onFolderSelected(EmailFolder newFolder) {
+        EmailListFragment f = (EmailListFragment) getSupportFragmentManager().findFragmentById(R.id.list_fragment);
+        f.onFolderSelected(newFolder);
     }
 }

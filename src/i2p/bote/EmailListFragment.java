@@ -13,6 +13,7 @@ import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.FolderListener;
 import i2p.bote.util.BetterAsyncTaskLoader;
 import i2p.bote.util.BoteHelper;
+import i2p.bote.util.MoveToDialogFragment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -21,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -39,7 +41,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class EmailListFragment extends ListFragment implements
-        LoaderManager.LoaderCallbacks<List<Email>> {
+        LoaderManager.LoaderCallbacks<List<Email>>,
+        MoveToDialogFragment.MoveToDialogListener {
     public static final String FOLDER_NAME = "folder_name";
 
     private static final int EMAIL_LIST_LOADER = 1;
@@ -244,7 +247,8 @@ public class EmailListFragment extends ListFragment implements
         boolean hasCheckedElement = mAdapter.getSelectedCount() > 0;
 
         if (hasCheckedElement && mMode == null) {
-            mMode = ((ActionBarActivity) getActivity()).startSupportActionMode(new ModeCallback());
+            boolean unread = mAdapter.getItem(position).isNew();
+            mMode = ((ActionBarActivity) getActivity()).startSupportActionMode(new ModeCallback(unread));
         } else if (!hasCheckedElement && mMode != null) {
             mMode.finish();
         }
@@ -255,20 +259,52 @@ public class EmailListFragment extends ListFragment implements
     }
 
     private final class ModeCallback implements ActionMode.Callback {
+        private boolean areUnread;
+
+        public ModeCallback(boolean unread) {
+            super();
+            this.areUnread = unread;
+        }
+
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             // Respond to clicks on the actions in the CAB
             switch (item.getItemId()) {
-            case R.id.action_delete_emails:
-                SparseBooleanArray selected = mAdapter.getSelectedIds();
-                for (int i = (selected.size() - 1); i >= 0; i--) {
-                    if (selected.valueAt(i)) {
-                        Email email = mAdapter.getItem(selected.keyAt(i));
+            case R.id.action_delete:
+                SparseBooleanArray toDelete = mAdapter.getSelectedIds();
+                for (int i = (toDelete.size() - 1); i >= 0; i--) {
+                    if (toDelete.valueAt(i)) {
+                        Email email = mAdapter.getItem(toDelete.keyAt(i));
                         // The Loader will update mAdapter
                         I2PBote.getInstance().deleteEmail(mFolder, email.getMessageID());
                     }
                 }
                 mode.finish();
+                return true;
+            case R.id.action_mark_read:
+            case R.id.action_mark_unread:
+                SparseBooleanArray selected = mAdapter.getSelectedIds();
+                for (int i = (selected.size() - 1); i >= 0; i--) {
+                    if (selected.valueAt(i)) {
+                        Email email = mAdapter.getItem(selected.keyAt(i));
+                        try {
+                            // The Loader will update mAdapter
+                            mFolder.setNew(email, !areUnread);
+                        } catch (PasswordException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        } catch (GeneralSecurityException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                areUnread = !areUnread;
+                mMode.invalidate();
+                return true;
+            case R.id.action_move_to:
+                DialogFragment f = MoveToDialogFragment.newInstance(mFolder);
+                f.show(getFragmentManager(), "moveTo");
                 return true;
             default:
                 return false;
@@ -297,8 +333,23 @@ public class EmailListFragment extends ListFragment implements
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Here you can perform updates to the CAB due to
             // an invalidate() request
-            return false;
+            menu.findItem(R.id.action_mark_read).setVisible(areUnread);
+            menu.findItem(R.id.action_mark_unread).setVisible(!areUnread);
+            return true;
         }
+    }
+
+    // Called by EmailListActivity.onFolderSelected()
+
+    public void onFolderSelected(EmailFolder newFolder) {
+        SparseBooleanArray toMove = mAdapter.getSelectedIds();
+        for (int i = (toMove.size() - 1); i >= 0; i--) {
+            if (toMove.valueAt(i)) {
+                Email email = mAdapter.getItem(toMove.keyAt(i));
+                mFolder.move(email, newFolder);
+            }
+        }
+        mMode.finish();
     }
 
     // LoaderManager.LoaderCallbacks<List<Email>>
@@ -342,6 +393,11 @@ public class EmailListFragment extends ListFragment implements
 
         @Override
         public void elementAdded() {
+            onContentChanged();
+        }
+
+        @Override
+        public void elementUpdated() {
             onContentChanged();
         }
 
