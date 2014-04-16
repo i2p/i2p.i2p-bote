@@ -92,11 +92,15 @@ public class BoteMailbox extends SimpleMailbox<String> {
 
     protected void startListening() {
         folderListener = new FolderListener() {
-            public void elementRemoved() {
+            public void elementAdded() {
                 updateMessages();
             }
-            
-            public void elementAdded() {
+
+            public void elementUpdated() {
+                // Noop, BoteMessage has a reference to the Email
+            }
+
+            public void elementRemoved() {
                 updateMessages();
             }
         };

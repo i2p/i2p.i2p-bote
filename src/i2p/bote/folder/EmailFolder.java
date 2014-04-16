@@ -410,10 +410,14 @@ public class EmailFolder extends Folder<Email> {
         }
     }
     
-    public void setNew(Email email, boolean isNew) throws PasswordException, FileNotFoundException, IOException, GeneralSecurityException {
+    public void setNew(Email email, boolean isNew) throws PasswordException, GeneralSecurityException {
         EmailMetadata metadata = email.getMetadata();
         metadata.setNew(isNew);
-        saveMetadata(email);
+        try {
+            saveMetadata(email);
+        } catch (IOException e) {
+            log.error("Can't read metadata file for message ID <" + email.getMessageID() + ">", e);
+        }
     }
     
     public void setReplied(String messageId, boolean replied) throws PasswordException, GeneralSecurityException {
@@ -445,6 +449,9 @@ public class EmailFolder extends Folder<Email> {
             if (emailOutputStream != null)
                 emailOutputStream.close();
         }
+
+        for (FolderListener listener: folderListeners)
+            listener.elementUpdated();
     }
     
     /**

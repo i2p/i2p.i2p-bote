@@ -25,6 +25,8 @@ package i2p.bote.folder;
 public interface FolderListener {
 
     void elementAdded();
+
+    void elementUpdated();
     
     void elementRemoved();
 }
