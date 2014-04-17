@@ -23,7 +23,6 @@ package i2p.bote.email;
 
 import static i2p.bote.Util._;
 import i2p.bote.UniqueId;
-import i2p.bote.Util;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.crypto.KeyUpdateHandler;
@@ -47,10 +46,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 import java.util.TimeZone;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -74,6 +73,7 @@ import javax.mail.internet.MimeMultipart;
 import net.i2p.data.Base64;
 import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
+import net.i2p.util.SystemVersion;
 import SevenZip.Compression.LZMA.Decoder;
 import SevenZip.Compression.LZMA.Encoder;
 
@@ -316,6 +316,37 @@ public class Email extends MimeMessage {
         }
         else
             removeHeader("Date");
+    }
+
+    /**
+     * A global unique number, to ensure uniqueness of generated strings.
+     */
+    private static AtomicInteger androidUniqueID = new AtomicInteger();
+    /**
+     * Update the Message-ID header.  This method is called
+     * by the <code>updateHeaders</code>. The algorithm for
+     * choosing a Message-ID is overridden on Android because
+     * the default calls <code>InetAddress.getLocalHost()</code>
+     * which triggers a <code>NetworkOnMainThreadException</code>.
+     */
+    protected void updateMessageID() throws MessagingException {
+        if (SystemVersion.isAndroid()) {
+            String suffix = "droidjavamailuser@localhost";
+
+            StringBuffer s = new StringBuffer();
+
+            // Unique string is <hashcode>.<id>.<currentTime>.JavaMail.<suffix>
+            s.append(s.hashCode()).append('.').
+            append(androidUniqueID.getAndIncrement()).append('.').
+            append(System.currentTimeMillis()).append('.').
+            append("JavaMail.").
+            append(suffix);
+            setHeader("Message-ID", 
+                    "<" + s.toString() + ">");
+        } else {
+            super.updateMessageID();
+        }
+          
     }
 
     /**
