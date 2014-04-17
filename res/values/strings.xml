@@ -37,6 +37,7 @@
     <string name="to">To</string>
     <string name="subject">Subject</string>
     <string name="compose_email">Compose email</string>
+    <string name="email_queued_for_sending">Email queued for sending</string>
 
     <string name="pref_title_general">General</string>
     <string name="pref_summ_general">General settings and default identity settings</string>

@@ -1,9 +1,9 @@
 - Email selection
 -- Show which have been selected (background? image?)
-- Send button action
 - Deleting identities
 -- Select identities in list, or menu option of each?
 - Addressbook
+-- Integrate into new email recipients
 
 - Refactor code
 -- Reorganize for clarity
