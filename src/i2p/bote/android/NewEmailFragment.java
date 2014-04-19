@@ -1,4 +1,4 @@
-package i2p.bote;
+package i2p.bote.android;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -11,11 +11,12 @@ import javax.mail.internet.InternetAddress;
 
 import net.i2p.data.DataFormatException;
 
+import i2p.bote.I2PBote;
+import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.util.BoteHelper;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;

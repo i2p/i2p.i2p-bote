@@ -1,14 +1,14 @@
-package i2p.bote;
+package i2p.bote.android;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import i2p.bote.android.util.BetterAsyncTaskLoader;
+import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.FolderListener;
-import i2p.bote.util.BetterAsyncTaskLoader;
-import i2p.bote.util.BoteHelper;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

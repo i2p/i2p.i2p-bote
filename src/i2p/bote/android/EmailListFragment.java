@@ -1,4 +1,4 @@
-package i2p.bote;
+package i2p.bote.android;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -7,13 +7,14 @@ import java.util.List;
 import net.i2p.I2PAppContext;
 import net.i2p.util.Log;
 
+import i2p.bote.I2PBote;
+import i2p.bote.android.util.BetterAsyncTaskLoader;
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.FolderListener;
-import i2p.bote.util.BetterAsyncTaskLoader;
-import i2p.bote.util.BoteHelper;
-import i2p.bote.util.MoveToDialogFragment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

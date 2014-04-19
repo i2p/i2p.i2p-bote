@@ -6,7 +6,7 @@
         android:key="autoMailCheckEnabled"
         android:title="@string/pref_title_autoMail" />
 
-    <i2p.bote.util.IntEditTextPreference
+    <i2p.bote.android.util.IntEditTextPreference
         android:defaultValue="30"
         android:dependency="autoMailCheckEnabled"
         android:key="mailCheckInterval"
@@ -40,13 +40,13 @@
             android:summary="@string/pref_summ_numHops"
             android:title="@string/pref_title_numHops" />
 
-        <i2p.bote.util.IntEditTextPreference
+        <i2p.bote.android.util.IntEditTextPreference
             android:defaultValue="5"
             android:dependency="numSendHops"
             android:key="relayMinDelay"
             android:summary="@string/pref_summ_minDelay"
             android:title="@string/pref_title_minDelay" />
-        <i2p.bote.util.IntEditTextPreference
+        <i2p.bote.android.util.IntEditTextPreference
             android:defaultValue="40"
             android:dependency="numSendHops"
             android:key="relayMaxDelay"
@@ -54,12 +54,12 @@
             android:title="@string/pref_title_maxDelay" />
     </PreferenceCategory>
     <PreferenceCategory android:title="I2P" >
-        <i2p.bote.util.SummaryEditTextPreference
+        <i2p.bote.android.util.SummaryEditTextPreference
             android:defaultValue="127.0.0.1"
             android:key="i2pbote.i2cp.tcp.host"
             android:summary="%s"
             android:title="@string/pref_title_i2cp_host" />
-        <i2p.bote.util.SummaryEditTextPreference
+        <i2p.bote.android.util.SummaryEditTextPreference
             android:defaultValue="7654"
             android:key="i2pbote.i2cp.tcp.port"
             android:summary="%s"

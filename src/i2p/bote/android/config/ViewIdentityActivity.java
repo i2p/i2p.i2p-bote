@@ -1,4 +1,4 @@
-package i2p.bote.config;
+package i2p.bote.android.config;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

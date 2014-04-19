@@ -1,4 +1,4 @@
-package i2p.bote.util;
+package i2p.bote.android.util;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;

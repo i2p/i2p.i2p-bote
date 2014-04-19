@@ -1,19 +1,19 @@
-package i2p.bote.config;
+package i2p.bote.android.config;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
 import i2p.bote.I2PBote;
-import i2p.bote.R;
+import i2p.bote.android.R;
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.RobustAsyncTask;
+import i2p.bote.android.util.TaskFragment;
 import i2p.bote.StatusListener;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.util.BoteHelper;
-import i2p.bote.util.RobustAsyncTask;
-import i2p.bote.util.TaskFragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

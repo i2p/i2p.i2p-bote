@@ -1,9 +1,10 @@
-package i2p.bote;
+package i2p.bote.android;
 
 import net.i2p.client.I2PClient;
-import i2p.bote.config.SettingsActivity;
+import i2p.bote.I2PBote;
+import i2p.bote.android.config.SettingsActivity;
+import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.folder.EmailFolder;
-import i2p.bote.util.MoveToDialogFragment;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.content.Context;

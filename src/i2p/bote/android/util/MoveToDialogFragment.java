@@ -1,7 +1,7 @@
-package i2p.bote.util;
+package i2p.bote.android.util;
 
 import i2p.bote.I2PBote;
-import i2p.bote.R;
+import i2p.bote.android.R;
 import i2p.bote.folder.EmailFolder;
 
 import java.util.ArrayList;

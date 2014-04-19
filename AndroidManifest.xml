@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="i2p.bote"
+    package="i2p.bote.android"
     android:versionCode="1"
     android:versionName="0.1" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="i2p.bote.EmailListActivity"
+            android:name="i2p.bote.android.EmailListActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -24,23 +24,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="i2p.bote.ViewEmailActivity"
-            android:parentActivityName="i2p.bote.EmailListActivity" />
+            android:name="i2p.bote.android.ViewEmailActivity"
+            android:parentActivityName="i2p.bote.android.EmailListActivity" />
         <activity
-            android:name="i2p.bote.NewEmailActivity"
-            android:parentActivityName="i2p.bote.EmailListActivity" />
+            android:name="i2p.bote.android.NewEmailActivity"
+            android:parentActivityName="i2p.bote.android.EmailListActivity" />
         <activity
-            android:name="i2p.bote.config.SettingsActivity"
-            android:parentActivityName="i2p.bote.EmailListActivity" />
+            android:name="i2p.bote.android.config.SettingsActivity"
+            android:parentActivityName="i2p.bote.android.EmailListActivity" />
         <activity
-            android:name="i2p.bote.config.SetPasswordActivity"
-            android:parentActivityName="i2p.bote.config.SettingsActivity" />
+            android:name="i2p.bote.android.config.SetPasswordActivity"
+            android:parentActivityName="i2p.bote.android.config.SettingsActivity" />
         <activity
-            android:name="i2p.bote.config.ViewIdentityActivity"
-            android:parentActivityName="i2p.bote.config.SettingsActivity" />
+            android:name="i2p.bote.android.config.ViewIdentityActivity"
+            android:parentActivityName="i2p.bote.android.config.SettingsActivity" />
         <activity
-            android:name="i2p.bote.config.EditIdentityActivity"
-            android:parentActivityName="i2p.bote.config.ViewIdentityActivity" />
+            android:name="i2p.bote.android.config.EditIdentityActivity"
+            android:parentActivityName="i2p.bote.android.config.ViewIdentityActivity" />
     </application>
 
 </manifest>

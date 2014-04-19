@@ -1,6 +1,6 @@
-package i2p.bote.config;
+package i2p.bote.android.config;
 
-import i2p.bote.R;
+import i2p.bote.android.R;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;

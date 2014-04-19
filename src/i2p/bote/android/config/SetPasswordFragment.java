@@ -1,10 +1,10 @@
-package i2p.bote.config;
+package i2p.bote.android.config;
 
 import i2p.bote.I2PBote;
-import i2p.bote.R;
+import i2p.bote.android.R;
+import i2p.bote.android.util.RobustAsyncTask;
+import i2p.bote.android.util.TaskFragment;
 import i2p.bote.StatusListener;
-import i2p.bote.util.RobustAsyncTask;
-import i2p.bote.util.TaskFragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

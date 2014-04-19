@@ -1,4 +1,4 @@
-package i2p.bote.util;
+package i2p.bote.android.util;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -10,12 +10,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
-import i2p.bote.R;
+import i2p.bote.android.R;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.packet.dht.Contact;
+import i2p.bote.util.GeneralHelper;
 
 public class BoteHelper extends GeneralHelper {
     /**

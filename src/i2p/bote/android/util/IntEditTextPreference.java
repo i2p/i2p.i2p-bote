@@ -1,4 +1,4 @@
-package i2p.bote.util;
+package i2p.bote.android.util;
 
 import android.content.Context;
 import android.preference.EditTextPreference;

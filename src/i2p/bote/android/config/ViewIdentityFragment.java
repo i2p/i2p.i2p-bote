@@ -1,12 +1,12 @@
-package i2p.bote.config;
+package i2p.bote.android.config;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import i2p.bote.R;
+import i2p.bote.android.R;
+import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.util.BoteHelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
