@@ -211,7 +211,7 @@
     <!--
       - Make two plugins, one for initial installs and one for updates.
       - Only the initial install includes mailapi.jar.
-      - - Not the case for 0.2.10, mailapi.jar was updated.
+      - - XXX Not the case for 0.2.10, mailapi.jar was updated.
       - Neither includes jstl.jar or standard.jar, as any i2p version that has
       - plugin support has these two jars pulled out of susidns.war and put in
       - $I2P/lib. We set the classpath in webapps.config to find them.
@@ -238,7 +238,7 @@
             <arg value="plugin/plugin.tmp/lib/i2pbote.jar.pack"/>
             <arg value="${lib}/i2pbote.jar"/>
         </exec>
-        <!-- Pack mailapi.jar here for 0.2.10 -->
+        <!-- XXX Pack mailapi.jar here for 0.2.10 -->
         <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
             <arg value="--effort=9"/>
@@ -307,7 +307,7 @@
         <copy file="WebContent/WEB-INF/lib/decrypt.bat" todir="plugin/plugin.tmp/lib"/>
         <copy file="WebContent/WEB-INF/lib/fileinfo.bat" todir="plugin/plugin.tmp/lib"/>
 
-        <!-- Don't delete mailapi.jar from updater for 0.2.10
+        <!-- XXX Don't delete mailapi.jar from updater for 0.2.10
         <delete file="plugin/plugin.tmp/lib/mailapi.jar" />
         <delete file="plugin/plugin.tmp/lib/mailapi.jar.pack" />
         -->
@@ -329,7 +329,7 @@
         <move file="i2pbote.xpi2p" tofile="i2pbote-update.xpi2p" />
 
         <!-- make the install xpi2p -->
-        <!-- Don't pack mailapi.jar here for 0.2.10 -->
+        <!-- XXX Don't pack mailapi.jar here for 0.2.10 -->
         <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
         <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="version=${version}-b${build.number}" />
