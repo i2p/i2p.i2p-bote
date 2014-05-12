@@ -58,11 +58,12 @@ import org.apache.james.mailbox.store.user.SubscriptionMapper;
 class MapperFactory extends MailboxSessionMapperFactory<String> {
     private Log log = new Log(MapperFactory.class);
     private EmailFolderManager folderManager;
-    private Map<String, BoteMailbox> mailboxes;
+    private final Map<String, BoteMailbox> mailboxes;
     private long uidValidity;
     
     MapperFactory(EmailFolderManager folderManager) {
         this.folderManager = folderManager;
+        mailboxes = new HashMap<String, BoteMailbox>();
         uidValidity = System.currentTimeMillis();
         uidValidity <<= 32;
     }
@@ -76,8 +77,7 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
     /** Maps mailbox names to mailboxes. */
     private Map<String, BoteMailbox> getMailboxes() {
         // XXX: When user folders are set up, this will need to be updated.
-        if (mailboxes == null) {
-            mailboxes = new HashMap<String, BoteMailbox>();
+        if (mailboxes.isEmpty()) {
             for (EmailFolder folder: folderManager.getEmailFolders()) {
                 String folderName = folder.getName().toLowerCase();
                 mailboxes.put(folderName, new BoteMailbox(folder, uidValidity, 1));
