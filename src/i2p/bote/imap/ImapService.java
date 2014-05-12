@@ -35,6 +35,7 @@ import java.util.Collection;
 import javax.mail.Flags;
 
 import net.i2p.util.Log;
+import nl.jteam.tls.StrongTls;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -79,7 +80,15 @@ public class ImapService extends IMAPServer {
         
         setLog(LoggerFactory.getLogger(ImapService.class));
 
-        configure(new HierarchicalConfiguration());   // use the defaults
+        HierarchicalConfiguration cfg = new HierarchicalConfiguration();
+        // enable STARTTLS
+        cfg.setProperty("tls.[@startTLS]", true);
+        cfg.setProperty("tls.keystore", configuration.getSSLKeyStore());
+        cfg.setProperty("tls.secret", configuration.getSSLKeyStorePassword());
+        // select strong cipher suites
+        cfg.setProperty("tls.supportedCipherSuites.cipherSuite", StrongTls.ENABLED_CIPHER_SUITES);
+
+        configure(cfg);   // use the defaults for the rest
         setListenAddresses(new InetSocketAddress(configuration.getImapAddress(), configuration.getImapPort()));
 
         mailboxSessionMapperFactory = new MapperFactory(folderManager);

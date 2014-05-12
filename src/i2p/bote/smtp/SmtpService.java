@@ -30,14 +30,20 @@ import i2p.bote.fileencryption.PasswordVerifier;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.GeneralSecurityException;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
+import nl.jteam.tls.StrongTls;
 
 import org.subethamail.smtp.MessageContext;
 import org.subethamail.smtp.MessageHandler;
@@ -68,6 +74,30 @@ public class SmtpService extends SMTPServer {
         setBindAddress(InetAddress.getByName(configuration.getSmtpAddress()));
         setPort(configuration.getSmtpPort());
         setAuthenticationHandlerFactory(new EasyAuthenticationHandlerFactory(new Validator(passwordVerifier)));
+        setEnableTLS(true);
+
+        // Key store for private key and signing certs
+        System.setProperty("javax.net.ssl.keyStore", configuration.getSSLKeyStore());
+        System.setProperty("javax.net.ssl.keyStorePassword", configuration.getSSLKeyStorePassword());
+    }
+
+    @Override
+    public SSLSocket createSSLSocket(Socket socket) throws IOException {
+        SSLSocketFactory sf = ((SSLSocketFactory) SSLSocketFactory.getDefault());
+        InetSocketAddress remoteAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
+        SSLSocket s = (SSLSocket) (sf.createSocket(
+                socket, remoteAddress.getHostName(), socket.getPort(), true));
+
+        // we are a server
+        s.setUseClientMode(false);
+
+        // select strong protocols and cipher suites
+        s.setEnabledProtocols(StrongTls.intersection(
+                s.getSupportedProtocols(), StrongTls.ENABLED_PROTOCOLS));
+        s.setEnabledCipherSuites(StrongTls.intersection(
+                s.getSupportedCipherSuites(), StrongTls.ENABLED_CIPHER_SUITES));
+
+        return s;
     }
     
     /** Factory class that creates <code>MessageHandler</code>s. */

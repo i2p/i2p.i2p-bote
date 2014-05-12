@@ -38,7 +38,8 @@ import net.i2p.util.Log;
 
 public class Configuration {
     public static final String KEY_DERIVATION_PARAMETERS_FILE = "derivparams";   // name of the KDF parameter cache file, relative to I2P_BOTE_SUBDIR
-    
+
+    private static final String I2P_BOTE_INSTALLDIR = "plugins/i2pbote";       // relative to the I2P config dir
     private static final String I2P_BOTE_SUBDIR = "i2pbote";       // relative to the I2P app dir
     private static final String CONFIG_FILE_NAME = "i2pbote.config";
     private static final String DEST_KEY_FILE_NAME = "local_dest.key";
@@ -58,6 +59,8 @@ public class Configuration {
     private static final String SENT_FOLDER_DIR = "sent";           // relative to I2P_BOTE_SUBDIR
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
+    private static final String KEYSTORE_FILE = "i2p.bote.ssl.keystore.jks";      // relative to I2P_BOTE_INSTALLDIR
+    private static final String KEYSTORE_PASSWORD = "I2P-Bote_LocalSSL";
     private static final List<Theme> BUILT_IN_THEMES = Arrays.asList(new Theme[] {   // theme IDs correspond to a theme directory in the .war
         new Theme("lblue", _("lblue")),
         new Theme("vanilla", _("vanilla"))
@@ -590,6 +593,26 @@ public class Configuration {
      */
     public File getMigrationVersionFile() {
         return new File(i2pBoteDir, MIGRATION_VERSION_FILE);
+    }
+
+    /**
+     * @return the absolute path to the keystore containing the SSL server key.
+     * @since 0.2.10
+     */
+    public String getSSLKeyStore() {
+        // the parent directory of the plugins directory ($HOME or the value of the i2p.dir.config property)
+        File i2pConfigDir = I2PAppContext.getGlobalContext().getConfigDir();
+
+        File i2pBoteInstallDir = new File(i2pConfigDir, I2P_BOTE_INSTALLDIR);
+        return new File(i2pBoteInstallDir, KEYSTORE_FILE).getAbsolutePath();
+    }
+
+    /**
+     * @return the password for the SSL keystore.
+     * @since 0.2.10
+     */
+    public String getSSLKeyStorePassword() {
+        return KEYSTORE_PASSWORD;
     }
     
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
