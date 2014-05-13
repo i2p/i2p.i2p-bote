@@ -79,7 +79,6 @@ public class Configuration {
     private static final String PARAMETER_IMAP_ADDRESS = "imapAddress";
     private static final String PARAMETER_IMAP_ENABLED = "imapEnabled";
     private static final String PARAMETER_SSL_KEYSTORE_PASSWORD = "sslKeystorePassword";
-    private static final String PARAMETER_SSL_KEY_PASSWORD = "sslKeyPassword";
     private static final String PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = "maxConcurIdCheckMail";
     private static final String PARAMETER_AUTO_MAIL_CHECK = "autoMailCheckEnabled";
     private static final String PARAMETER_DELIVERY_CHECK = "deliveryCheckEnabled";
@@ -114,7 +113,6 @@ public class Configuration {
     private static final int DEFAULT_IMAP_PORT = 7662;
     private static final String DEFAULT_IMAP_ADDRESS = "localhost";
     private static final boolean DEFAULT_IMAP_ENABLED = false;
-    private static final String DEFAULT_SSL_KEYSTORE_PASSWORD = "changeit";
     private static final int DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = 10;
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
@@ -184,16 +182,18 @@ public class Configuration {
 
     private boolean createKeyStore(File ks) {
         // make a random 48 character password (30 * 8 / 5)
-        String keyPassword = KeyStoreUtil.randomString();
+        String keyStorePassword = KeyStoreUtil.randomString();
         // and one for the cname
         String cname = KeyStoreUtil.randomString() + ".ssl.bote.i2p";
 
-        boolean success = KeyStoreUtil.createKeys(ks, SSL_KEY_ALIAS, cname, "I2P-Bote", keyPassword);
+        boolean success = KeyStoreUtil.createKeys(
+                ks, keyStorePassword, SSL_KEY_ALIAS, cname, "I2P-Bote",
+                3652, "RSA", 2048, keyStorePassword);
         if (success) {
             success = ks.exists();
             if (success) {
-                properties.setProperty(PARAMETER_SSL_KEYSTORE_PASSWORD, DEFAULT_SSL_KEYSTORE_PASSWORD);
-                properties.setProperty(PARAMETER_SSL_KEY_PASSWORD, keyPassword);
+                properties.setProperty(PARAMETER_SSL_KEYSTORE_PASSWORD, keyStorePassword);
+                save();
             }
         }
         if (success) {
@@ -203,8 +203,9 @@ public class Configuration {
         } else {
             log.error("Failed to create I2P-Bote SSL keystore.\n" +
                        "This is for the Sun/Oracle keytool, others may be incompatible.\n" +
-                       "If you create the keystore manually, you must add " + PARAMETER_SSL_KEYSTORE_PASSWORD + " and " + PARAMETER_SSL_KEY_PASSWORD +
-                       " to " + (new File(i2pBoteDir, CONFIG_FILE_NAME)).getAbsolutePath());
+                       "If you create the keystore manually, you must add " + PARAMETER_SSL_KEYSTORE_PASSWORD +
+                       " to " + (new File(i2pBoteDir, CONFIG_FILE_NAME)).getAbsolutePath() + "\n" +
+                       "You must create the keystore using the same password for the keystore and the key.");
         }
         return success;
     }
@@ -388,15 +389,7 @@ public class Configuration {
      * @since 0.2.10
      */
     public String getSSLKeyStorePassword() {
-        return properties.getProperty(PARAMETER_SSL_KEYSTORE_PASSWORD, DEFAULT_SSL_KEYSTORE_PASSWORD);
-    }
-
-    /**
-     * @return the password for the SSL keystore.
-     * @since 0.2.10
-     */
-    public String getSSLKeyPassword() {
-        return properties.getProperty(PARAMETER_SSL_KEY_PASSWORD);
+        return properties.getProperty(PARAMETER_SSL_KEYSTORE_PASSWORD);
     }
     
     /**
