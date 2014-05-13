@@ -77,7 +77,7 @@ public class SmtpService extends SMTPServer {
         setEnableTLS(true);
 
         // Key store for private key and signing certs
-        System.setProperty("javax.net.ssl.keyStore", configuration.getSSLKeyStore());
+        System.setProperty("javax.net.ssl.keyStore", configuration.getSSLKeyStoreFile().getAbsolutePath());
         System.setProperty("javax.net.ssl.keyStorePassword", configuration.getSSLKeyStorePassword());
     }
 

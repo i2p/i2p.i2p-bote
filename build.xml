@@ -220,7 +220,6 @@
         <mkdir dir="plugin/plugin.tmp/lib" />
         <mkdir dir="plugin/plugin.tmp/console/webapps" />
         <copy file="plugin/webapps.config" todir="plugin/plugin.tmp/console/" />
-        <copy file="plugin/i2p.bote.ssl.keystore.jks" todir="plugin/plugin.tmp" />
 
         <!-- run all .jars and i2pbote-plugin.war through pack200 -->
         <move file="i2pbote-plugin.war" tofile="plugin/plugin.tmp/console/webapps/i2pbote.jar" />

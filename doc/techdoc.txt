@@ -668,8 +668,6 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
   * Create a file named logger.config in each work dir with the following contents:
       logger.record.i2p.bote=DEBUG
       logger.minimumOnScreenLevel=DEBUG
-  * If you are going to enable IMAP or SMTP on a server, copy plugin/i2p.bote.ssl.keystore.jks to
-    /path/to/<work_dir>/plugins/i2pbote/ for that server (making the folder).
   * Start two or more servers, go to http://localhost:<port>/i2p.i2p-bote/, and click "connect".
     After a minute, it should say "connected" and you should see the other server(s) on network.jsp.
 

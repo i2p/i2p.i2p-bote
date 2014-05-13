@@ -83,7 +83,7 @@ public class ImapService extends IMAPServer {
         HierarchicalConfiguration cfg = new HierarchicalConfiguration();
         // enable STARTTLS
         cfg.setProperty("tls.[@startTLS]", true);
-        cfg.setProperty("tls.keystore", configuration.getSSLKeyStore());
+        cfg.setProperty("tls.keystore", configuration.getSSLKeyStoreFile().getAbsolutePath());
         cfg.setProperty("tls.secret", configuration.getSSLKeyStorePassword());
         // select strong cipher suites
         cfg.setProperty("tls.supportedCipherSuites.cipherSuite", StrongTls.ENABLED_CIPHER_SUITES);

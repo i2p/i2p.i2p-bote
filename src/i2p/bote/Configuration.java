@@ -33,13 +33,13 @@ import java.util.List;
 import java.util.Properties;
 
 import net.i2p.I2PAppContext;
+import net.i2p.crypto.KeyStoreUtil;
 import net.i2p.data.DataHelper;
 import net.i2p.util.Log;
 
 public class Configuration {
     public static final String KEY_DERIVATION_PARAMETERS_FILE = "derivparams";   // name of the KDF parameter cache file, relative to I2P_BOTE_SUBDIR
 
-    private static final String I2P_BOTE_INSTALLDIR = "plugins/i2pbote";       // relative to the I2P config dir
     private static final String I2P_BOTE_SUBDIR = "i2pbote";       // relative to the I2P app dir
     private static final String CONFIG_FILE_NAME = "i2pbote.config";
     private static final String DEST_KEY_FILE_NAME = "local_dest.key";
@@ -49,6 +49,8 @@ public class Configuration {
     private static final String ADDRESS_BOOK_FILE_NAME = "addressBook";
     private static final String MESSAGE_ID_CACHE_FILE = "msgidcache.txt";
     private static final String PASSWORD_FILE = "password";
+    private static final String SSL_KEYSTORE_FILE = "i2p.bote.ssl.keystore.jks";      // relative to I2P_BOTE_SUBDIR
+    private static final String SSL_KEY_ALIAS = "botessl";
     private static final String OUTBOX_DIR = "outbox";              // relative to I2P_BOTE_SUBDIR
     private static final String RELAY_PKT_SUBDIR = "relay_pkt";     // relative to I2P_BOTE_SUBDIR
     private static final String INCOMPLETE_SUBDIR = "incomplete";   // relative to I2P_BOTE_SUBDIR
@@ -59,8 +61,6 @@ public class Configuration {
     private static final String SENT_FOLDER_DIR = "sent";           // relative to I2P_BOTE_SUBDIR
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
-    private static final String KEYSTORE_FILE = "i2p.bote.ssl.keystore.jks";      // relative to I2P_BOTE_INSTALLDIR
-    private static final String KEYSTORE_PASSWORD = "I2P-Bote_LocalSSL";
     private static final List<Theme> BUILT_IN_THEMES = Arrays.asList(new Theme[] {   // theme IDs correspond to a theme directory in the .war
         new Theme("lblue", _("lblue")),
         new Theme("vanilla", _("vanilla"))
@@ -78,6 +78,8 @@ public class Configuration {
     private static final String PARAMETER_IMAP_PORT = "imapPort";
     private static final String PARAMETER_IMAP_ADDRESS = "imapAddress";
     private static final String PARAMETER_IMAP_ENABLED = "imapEnabled";
+    private static final String PARAMETER_SSL_KEYSTORE_PASSWORD = "sslKeystorePassword";
+    private static final String PARAMETER_SSL_KEY_PASSWORD = "sslKeyPassword";
     private static final String PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = "maxConcurIdCheckMail";
     private static final String PARAMETER_AUTO_MAIL_CHECK = "autoMailCheckEnabled";
     private static final String PARAMETER_DELIVERY_CHECK = "deliveryCheckEnabled";
@@ -112,6 +114,7 @@ public class Configuration {
     private static final int DEFAULT_IMAP_PORT = 7662;
     private static final String DEFAULT_IMAP_ADDRESS = "localhost";
     private static final boolean DEFAULT_IMAP_ENABLED = false;
+    private static final String DEFAULT_SSL_KEYSTORE_PASSWORD = "changeit";
     private static final int DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL = 10;
     private static final boolean DEFAULT_AUTO_MAIL_CHECK = true;
     private static final int DEFAULT_MAIL_CHECK_INTERVAL = 30;   // in minutes
@@ -172,6 +175,38 @@ public class Configuration {
         }
         if (!configurationLoaded)
             log.info("Can't read configuration file <" + configFile.getAbsolutePath() + ">, using default settings.");
+
+        // Create SSL key if necessary
+        File ks = getSSLKeyStoreFile();
+        if (!ks.exists())
+            createKeyStore(ks);
+    }
+
+    private boolean createKeyStore(File ks) {
+        // make a random 48 character password (30 * 8 / 5)
+        String keyPassword = KeyStoreUtil.randomString();
+        // and one for the cname
+        String cname = KeyStoreUtil.randomString() + ".ssl.bote.i2p";
+
+        boolean success = KeyStoreUtil.createKeys(ks, SSL_KEY_ALIAS, cname, "I2P-Bote", keyPassword);
+        if (success) {
+            success = ks.exists();
+            if (success) {
+                properties.setProperty(PARAMETER_SSL_KEYSTORE_PASSWORD, DEFAULT_SSL_KEYSTORE_PASSWORD);
+                properties.setProperty(PARAMETER_SSL_KEY_PASSWORD, keyPassword);
+            }
+        }
+        if (success) {
+            log.logAlways(Log.INFO, "Created self-signed certificate for " + cname + " in keystore: " + ks.getAbsolutePath() + "\n" +
+                           "The certificate name was generated randomly, and is not associated with your " +
+                           "IP address, host name, router identity, or destination keys.");
+        } else {
+            log.error("Failed to create I2P-Bote SSL keystore.\n" +
+                       "This is for the Sun/Oracle keytool, others may be incompatible.\n" +
+                       "If you create the keystore manually, you must add " + PARAMETER_SSL_KEYSTORE_PASSWORD + " and " + PARAMETER_SSL_KEY_PASSWORD +
+                       " to " + (new File(i2pBoteDir, CONFIG_FILE_NAME)).getAbsolutePath());
+        }
+        return success;
     }
 
     public File getDestinationKeyFile() {
@@ -214,6 +249,14 @@ public class Configuration {
      */
     public File getKeyDerivationParametersFile() {
         return new File(i2pBoteDir, KEY_DERIVATION_PARAMETERS_FILE);
+    }
+
+    /**
+     * @return the keystore file containing the SSL server key.
+     * @since 0.2.10
+     */
+    public File getSSLKeyStoreFile() {
+        return new File(i2pBoteDir, SSL_KEYSTORE_FILE);
     }
     
     public File getOutboxDir() {
@@ -338,6 +381,22 @@ public class Configuration {
     
     public boolean isImapEnabled() {
         return getBooleanParameter(PARAMETER_IMAP_ENABLED, DEFAULT_IMAP_ENABLED);
+    }
+
+    /**
+     * @return the password for the SSL keystore.
+     * @since 0.2.10
+     */
+    public String getSSLKeyStorePassword() {
+        return properties.getProperty(PARAMETER_SSL_KEYSTORE_PASSWORD, DEFAULT_SSL_KEYSTORE_PASSWORD);
+    }
+
+    /**
+     * @return the password for the SSL keystore.
+     * @since 0.2.10
+     */
+    public String getSSLKeyPassword() {
+        return properties.getProperty(PARAMETER_SSL_KEY_PASSWORD);
     }
     
     /**
@@ -593,26 +652,6 @@ public class Configuration {
      */
     public File getMigrationVersionFile() {
         return new File(i2pBoteDir, MIGRATION_VERSION_FILE);
-    }
-
-    /**
-     * @return the absolute path to the keystore containing the SSL server key.
-     * @since 0.2.10
-     */
-    public String getSSLKeyStore() {
-        // the parent directory of the plugins directory ($HOME or the value of the i2p.dir.config property)
-        File i2pConfigDir = I2PAppContext.getGlobalContext().getConfigDir();
-
-        File i2pBoteInstallDir = new File(i2pConfigDir, I2P_BOTE_INSTALLDIR);
-        return new File(i2pBoteInstallDir, KEYSTORE_FILE).getAbsolutePath();
-    }
-
-    /**
-     * @return the password for the SSL keystore.
-     * @since 0.2.10
-     */
-    public String getSSLKeyStorePassword() {
-        return KEYSTORE_PASSWORD;
     }
     
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
