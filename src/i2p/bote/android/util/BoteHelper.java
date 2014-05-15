@@ -91,8 +91,7 @@ public class BoteHelper extends GeneralHelper {
                 // Address is in address book
                 String pic = c.getPictureBase64();
                 if (pic != null) {
-                    byte[] decodedPic = Base64.decode(pic, Base64.DEFAULT);
-                    return BitmapFactory.decodeByteArray(decodedPic, 0, decodedPic.length);
+                    return decodePicture(pic);
                 }
             } else {
                 // Address is an identity
@@ -100,8 +99,7 @@ public class BoteHelper extends GeneralHelper {
                 if (i != null) {
                     String pic = i.getPictureBase64();
                     if (pic != null) {
-                        byte[] decodedPic = Base64.decode(pic, Base64.DEFAULT);
-                        return BitmapFactory.decodeByteArray(decodedPic, 0, decodedPic.length);
+                        return decodePicture(pic);
                     }
                 }
             }
@@ -109,5 +107,10 @@ public class BoteHelper extends GeneralHelper {
 
         // Address not found anywhere, or found and has no picture
         return null;
+    }
+
+    public static Bitmap decodePicture(String picB64) {
+        byte[] decodedPic = Base64.decode(picB64, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedPic, 0, decodedPic.length);
     }
 }

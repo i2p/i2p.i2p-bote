@@ -2,6 +2,7 @@ package i2p.bote.android;
 
 import net.i2p.client.I2PClient;
 import i2p.bote.I2PBote;
+import i2p.bote.android.addressbook.AddressBookActivity;
 import i2p.bote.android.config.SettingsActivity;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.folder.EmailFolder;
@@ -163,6 +164,11 @@ public class EmailListActivity extends ActionBarActivity implements
         }
 
         switch (item.getItemId()) {
+        case R.id.action_address_book:
+            Intent ai = new Intent(this, AddressBookActivity.class);
+            startActivity(ai);
+            return true;
+
         case R.id.action_settings:
             Intent si = new Intent(this, SettingsActivity.class);
             startActivity(si);

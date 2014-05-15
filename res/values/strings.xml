@@ -4,6 +4,7 @@
     <string name="app_name">I2P-Bote</string>
     <string name="action_new_email">New email</string>
     <string name="action_send_email">Send email</string>
+    <string name="action_address_book">Address book</string>
     <string name="action_settings">Settings</string>
 
     <string name="items_selected">%s selected</string>
@@ -38,6 +39,9 @@
     <string name="subject">Subject</string>
     <string name="compose_email">Compose email</string>
     <string name="email_queued_for_sending">Email queued for sending</string>
+
+    <string name="address_book_empty">Address book is empty</string>
+    <string name="action_new_contact">New contact</string>
 
     <string name="pref_title_general">General</string>
     <string name="pref_summ_general">General settings and default identity settings</string>
