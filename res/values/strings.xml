@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">I2P-Bote</string>
+    <string name="app_name">Bote</string>
     <string name="action_new_email">New email</string>
     <string name="action_send_email">Send email</string>
     <string name="action_address_book">Address book</string>
