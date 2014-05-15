@@ -10,7 +10,7 @@
         android:id="@+id/identity_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/ic_contact_picture" />
 
     <EditText
         android:id="@+id/public_name"
