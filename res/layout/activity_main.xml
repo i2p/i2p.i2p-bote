@@ -14,14 +14,35 @@
         android:layout_height="match_parent" />
 
     <!-- The navigation drawer -->
-    <ListView
-        android:id="@+id/drawer"
+    <RelativeLayout
+        android:id="@+id/drawer_outer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
+        android:layout_gravity="start" >
+
+        <ListView
+            android:id="@+id/drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#111"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" >
+
+            <TextView
+                android:id="@+id/address_book"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/address_book"
+                android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+
+        </RelativeLayout>
+    </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>

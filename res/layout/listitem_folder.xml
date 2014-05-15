@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMediumInverse"
-        android:padding="5dp"
+        android:padding="15dp"
         android:text="Folder Name" />
 
 </RelativeLayout>

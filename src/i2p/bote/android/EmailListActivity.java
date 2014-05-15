@@ -21,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class EmailListActivity extends ActionBarActivity implements
         EmailListFragment.OnEmailSelectedListener,
@@ -33,6 +35,7 @@ public class EmailListActivity extends ActionBarActivity implements
      * Navigation drawer variables
      */
     private DrawerLayout mDrawerLayout;
+    private RelativeLayout mDrawerOuter;
     private FolderListAdapter mFolderAdapter;
     private ListView mFolderList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -54,6 +57,7 @@ public class EmailListActivity extends ActionBarActivity implements
         mTitle = mDrawerTitle = getTitle();
         mSharedPrefs = getSharedPreferences(SHARED_PREFS, 0);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerOuter = (RelativeLayout) findViewById(R.id.drawer_outer);
         mFolderAdapter = new FolderListAdapter(this);
         mFolderList = (ListView) findViewById(R.id.drawer);
 
@@ -117,9 +121,18 @@ public class EmailListActivity extends ActionBarActivity implements
                     savedInstanceState.getInt(ACTIVE_FOLDER), true);
         }
 
+        // Set up fixed actions
+        TextView addressBook = (TextView) findViewById(R.id.address_book);
+        addressBook.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent ai = new Intent(EmailListActivity.this, AddressBookActivity.class);
+                startActivity(ai);
+            }
+        });
+
         // Open nav drawer if the user has never opened it themselves
         if (!mSharedPrefs.getBoolean(PREF_NAV_DRAWER_OPENED, false))
-            mDrawerLayout.openDrawer(mFolderList);
+            mDrawerLayout.openDrawer(mDrawerOuter);
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -139,7 +152,7 @@ public class EmailListActivity extends ActionBarActivity implements
 
         // Highlight the selected item and close the drawer
         mFolderList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mFolderList);
+        mDrawerLayout.closeDrawer(mDrawerOuter);
     }
 
     @Override
@@ -164,11 +177,6 @@ public class EmailListActivity extends ActionBarActivity implements
         }
 
         switch (item.getItemId()) {
-        case R.id.action_address_book:
-            Intent ai = new Intent(this, AddressBookActivity.class);
-            startActivity(ai);
-            return true;
-
         case R.id.action_settings:
             Intent si = new Intent(this, SettingsActivity.class);
             startActivity(si);
