@@ -22,29 +22,29 @@
         android:hint="@string/public_name"
         android:inputType="text" />
 
-    <EditText
-        android:id="@+id/destination"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/contact_picture"
-        android:ems="10"
-        android:hint="@string/email_destination"
-        android:inputType="text" />
-
     <Button
         android:id="@+id/import_destination_from_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/destination"
-        android:layout_alignBaseline="@+id/destination"
+        android:layout_below="@+id/contact_picture"
         android:layout_alignParentRight="true"
         android:text="@string/label_browse" />
+
+    <EditText
+        android:id="@+id/destination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/import_destination_from_file"
+        android:layout_alignBaseline="@+id/import_destination_from_file"
+        android:ems="10"
+        android:hint="@string/email_destination"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/destination"
+        android:layout_below="@+id/import_destination_from_file"
         android:ems="10"
         android:hint="@string/description"
         android:inputType="text" />
