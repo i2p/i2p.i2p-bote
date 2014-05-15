@@ -2,21 +2,27 @@ package i2p.bote.android;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 
-import net.i2p.data.DataFormatException;
+import com.tokenautocomplete.FilteredArrayAdapter;
 
+import net.i2p.data.DataFormatException;
 import i2p.bote.I2PBote;
 import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.ContactsCompletionView;
+import i2p.bote.android.util.Person;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -29,7 +35,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -59,7 +64,8 @@ public class NewEmailFragment extends Fragment {
 
     Spinner mSpinner;
     int mDefaultPos;
-    MultiAutoCompleteTextView mRecipients;
+    ArrayAdapter<Person> mAdapter;
+    ContactsCompletionView mRecipients;
     EditText mSubject;
     EditText mContent;
 
@@ -84,12 +90,32 @@ public class NewEmailFragment extends Fragment {
         mSpinner.setAdapter(identities);
         mSpinner.setSelection(mDefaultPos);
 
-        mRecipients = (MultiAutoCompleteTextView) view.findViewById(R.id.recipients);
-        mRecipients.setAdapter(null); // TODO: Implement
-        mRecipients.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        List<Person> contacts = new ArrayList<Person>();
+        try {
+            for (Contact contact : I2PBote.getInstance().getAddressBook().getAll()) {
+                contacts.add(new Person(contact.getName(), contact.getBase64Dest()));
+            }
+        } catch (PasswordException e) {
+            // TODO handle
+            e.printStackTrace();
+        }
+        mAdapter = new FilteredArrayAdapter<Person>(getActivity(), android.R.layout.simple_list_item_1, contacts) {
+            @Override
+            protected boolean keepObject(Person obj, String mask) {
+                mask = mask.toLowerCase(Locale.US);
+                return obj.getName().toLowerCase(Locale.US).startsWith(mask) || obj.getAddress().toLowerCase(Locale.US).startsWith(mask);
+            }
+        };
+
+        mRecipients = (ContactsCompletionView) view.findViewById(R.id.recipients);
+        mRecipients.setAdapter(mAdapter);
 
         mSubject = (EditText) view.findViewById(R.id.subject);
         mContent = (EditText) view.findViewById(R.id.message);
+
+        if (savedInstanceState == null) {
+            mRecipients.setPrefix(getResources().getString(R.string.to));
+        }
     }
 
     @Override
@@ -124,8 +150,11 @@ public class NewEmailFragment extends Fragment {
             // Bote versions to see a sender (and validate the signature).
             email.setSender(ia);
 
-            // TODO: Implement properly
-            email.addRecipient(Message.RecipientType.TO, ia);
+            for (Object obj : mRecipients.getObjects()) {
+                Person person = (Person) obj;
+                email.addRecipient(Message.RecipientType.TO, new InternetAddress(
+                        person.getAddress(), person.getName()));
+            }
 
             email.setSubject(mSubject.getText().toString(), "UTF-8");
 

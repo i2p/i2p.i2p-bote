@@ -14,15 +14,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <MultiAutoCompleteTextView
+        <i2p.bote.android.util.ContactsCompletionView
             android:id="@+id/recipients"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/to" >
+            android:layout_height="wrap_content" >
 
             <requestFocus />
-        </MultiAutoCompleteTextView>
+        </i2p.bote.android.util.ContactsCompletionView>
 
         <EditText
             android:id="@+id/subject"
