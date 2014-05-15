@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp" >
+
+    <ImageView
+        android:id="@+id/contact_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+
+    <EditText
+        android:id="@+id/contact_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/contact_picture"
+        android:layout_toRightOf="@+id/contact_picture"
+        android:ems="10"
+        android:hint="@string/public_name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contact_picture"
+        android:ems="10"
+        android:hint="@string/email_destination"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/import_destination_from_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/destination"
+        android:layout_alignBaseline="@+id/destination"
+        android:layout_alignParentRight="true"
+        android:text="@string/label_browse" />
+
+    <EditText
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/destination"
+        android:ems="10"
+        android:hint="@string/description"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:textColor="@color/error_color" />
+
+</RelativeLayout>

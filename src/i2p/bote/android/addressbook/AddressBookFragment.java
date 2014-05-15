@@ -10,6 +10,7 @@ import java.util.SortedSet;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -72,8 +73,10 @@ public class AddressBookFragment extends ListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.action_new_contact:
-            // TODO
+            Intent nci = new Intent(getActivity(), EditContactActivity.class);
+            startActivity(nci);
             return true;
+
         default:
             return super.onOptionsItemSelected(item);
         }

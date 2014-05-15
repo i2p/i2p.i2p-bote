@@ -1,6 +1,8 @@
 package i2p.bote.android.addressbook;
 
 import i2p.bote.packet.dht.Contact;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -22,6 +24,15 @@ public class AddressBookActivity extends ActionBarActivity implements
 
     @Override
     public void onContactSelected(Contact contact) {
-        // TODO
+        if (getIntent().getAction() == Intent.ACTION_PICK) {
+            Intent result = new Intent();
+            result.putExtra(EditContactFragment.CONTACT_DESTINATION, contact.getBase64Dest());
+            setResult(Activity.RESULT_OK, result);
+            finish();
+        } else {
+            Intent i = new Intent(this, EditContactActivity.class);
+            i.putExtra(EditContactFragment.CONTACT_DESTINATION, contact.getBase64Dest());
+            startActivity(i);
+        }
     }
 }

@@ -33,6 +33,9 @@
             android:name="i2p.bote.android.addressbook.AddressBookActivity"
             android:parentActivityName="i2p.bote.android.EmailListActivity" />
         <activity
+            android:name="i2p.bote.android.addressbook.EditContactActivity"
+            android:parentActivityName="i2p.bote.android.addressbook.AddressBookActivity" />
+        <activity
             android:name="i2p.bote.android.config.SettingsActivity"
             android:parentActivityName="i2p.bote.android.EmailListActivity" />
         <activity
