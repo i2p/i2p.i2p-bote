@@ -40,7 +40,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         TextView name = (TextView) v.findViewById(R.id.contact_name);
 
         String pic = contact.getPictureBase64();
-        if (pic != null)
+        if (pic != null && !pic.isEmpty())
             picture.setImageBitmap(BoteHelper.decodePicture(pic));
 
         name.setText(contact.getName());
