@@ -1,5 +1,6 @@
 package i2p.bote.android.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
@@ -7,9 +8,9 @@ import javax.mail.MessagingException;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-
 import i2p.bote.android.R;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
@@ -112,5 +113,11 @@ public class BoteHelper extends GeneralHelper {
     public static Bitmap decodePicture(String picB64) {
         byte[] decodedPic = Base64.decode(picB64, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedPic, 0, decodedPic.length);
+    }
+
+    public static String encodePicture(Bitmap picture) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        boolean success = picture.compress(CompressFormat.PNG, 100, baos);
+        return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
     }
 }
