@@ -111,6 +111,8 @@ public class BoteHelper extends GeneralHelper {
     }
 
     public static Bitmap decodePicture(String picB64) {
+        if (picB64 == null)
+            return null;
         byte[] decodedPic = Base64.decode(picB64, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedPic, 0, decodedPic.length);
     }
