@@ -60,7 +60,7 @@ public class EditIdentityFragment extends EditPictureFragment {
     public static final String IDENTITY_KEY = "identity_key";
 
     // Code to identify the fragment that is calling onActivityResult().
-    static final int IDENTITY_WAITER = 0;
+    static final int IDENTITY_WAITER = 3;
     // Tag so we can find the task fragment again, in another
     // instance of this fragment after rotation.
     static final String IDENTITY_WAITER_TAG = "identityWaiterTask";
@@ -204,6 +204,8 @@ public class EditIdentityFragment extends EditPictureFragment {
                 setInterfaceEnabled(true);
                 mError.setText(data.getStringExtra("error"));
             }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

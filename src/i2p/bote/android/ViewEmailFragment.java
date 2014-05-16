@@ -66,7 +66,7 @@ public class ViewEmailFragment extends Fragment {
 
     private void displayEmail(Email email, View v) {
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
-        ImageView picture = (ImageView) v.findViewById(R.id.contact_picture);
+        ImageView picture = (ImageView) v.findViewById(R.id.picture);
         TextView sender = (TextView) v.findViewById(R.id.email_sender);
         LinearLayout recipients = (LinearLayout) v.findViewById(R.id.email_recipients);
         TextView sent = (TextView) v.findViewById(R.id.email_sent);

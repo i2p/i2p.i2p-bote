@@ -23,12 +23,12 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <ImageView
-                android:id="@+id/contact_picture"
+                android:id="@+id/picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/email_subject"
                 android:layout_below="@+id/email_subject"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_contact_picture" />
 
             <TableLayout
                 android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
                 android:layout_below="@+id/email_subject"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/contact_picture" >
+                android:layout_toRightOf="@+id/picture" >
 
                 <TableRow
                     android:layout_width="wrap_content"

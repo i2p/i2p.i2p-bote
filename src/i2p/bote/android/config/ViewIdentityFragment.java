@@ -8,6 +8,7 @@ import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ViewIdentityFragment extends Fragment {
@@ -24,6 +26,7 @@ public class ViewIdentityFragment extends Fragment {
     private String mKey;
     private EmailIdentity mIdentity;
 
+    ImageView mIdentityPicture;
     TextView mNameField;
     TextView mDescField;
     TextView mCryptoField;
@@ -53,14 +56,16 @@ public class ViewIdentityFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mIdentityPicture = (ImageView) view.findViewById(R.id.identity_picture);
+        mNameField = (TextView) view.findViewById(R.id.public_name);
+        mDescField = (TextView) view.findViewById(R.id.description);
+        mCryptoField = (TextView) view.findViewById(R.id.crypto_impl);
+        mKeyField = (TextView) view.findViewById(R.id.key);
+
         mKey = getArguments().getString(IDENTITY_KEY);
         if (mKey != null) {
             try {
                 mIdentity = BoteHelper.getIdentity(mKey);
-                mNameField = (TextView) view.findViewById(R.id.public_name);
-                mDescField = (TextView) view.findViewById(R.id.description);
-                mCryptoField = (TextView) view.findViewById(R.id.crypto_impl);
-                mKeyField = (TextView) view.findViewById(R.id.key);
             } catch (PasswordException e) {
                 // TODO Handle
                 e.printStackTrace();
@@ -79,6 +84,10 @@ public class ViewIdentityFragment extends Fragment {
         super.onResume();
 
         if (mIdentity != null) {
+            Bitmap picture = BoteHelper.decodePicture(mIdentity.getPictureBase64());
+            if (picture != null)
+                mIdentityPicture.setImageBitmap(picture);
+
             mNameField.setText(mIdentity.getPublicName());
             mDescField.setText(mIdentity.getDescription());
             mCryptoField.setText(mIdentity.getCryptoImpl().getName());
