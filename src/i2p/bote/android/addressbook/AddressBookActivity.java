@@ -1,5 +1,6 @@
 package i2p.bote.android.addressbook;
 
+import i2p.bote.android.R;
 import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +12,7 @@ public class AddressBookActivity extends ActionBarActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.address_book);
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

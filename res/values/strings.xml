@@ -35,6 +35,7 @@
     <string name="email_sent">Sent:</string>
     <string name="email_received">Received:</string>
 
+    <string name="compose">Compose</string>
     <string name="to">To: </string>
     <string name="subject">Subject</string>
     <string name="compose_email">Compose email</string>
