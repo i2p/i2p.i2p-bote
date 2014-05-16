@@ -1,5 +1,6 @@
 package i2p.bote.android;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,10 +53,23 @@ public class ViewEmailActivity extends ActionBarActivity implements
         mPagerAdapter = new ViewEmailPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            
+
             @Override
             public void onPageSelected(int position) {
                 mMessageId = mPagerAdapter.getMessageId(position);
+
+                // Mark the visible email as not new
+                if (mMessageId != null) {
+                    try {
+                        mFolder.setNew(mMessageId, false);
+                    } catch (PasswordException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (GeneralSecurityException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
@@ -170,6 +184,19 @@ public class ViewEmailActivity extends ActionBarActivity implements
         mPagerAdapter.setData(data);
         mPager.setCurrentItem(
                 mPagerAdapter.getPosition(mMessageId));
+
+        // Mark the current email as not new
+        if (mMessageId != null) {
+            try {
+                mFolder.setNew(mMessageId, false);
+            } catch (PasswordException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (GeneralSecurityException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
     public void onLoaderReset(Loader<List<String>> loader) {
