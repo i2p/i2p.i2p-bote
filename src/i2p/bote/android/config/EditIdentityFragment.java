@@ -7,6 +7,7 @@ import java.util.List;
 import i2p.bote.I2PBote;
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.EditPictureFragment;
 import i2p.bote.android.util.RobustAsyncTask;
 import i2p.bote.android.util.TaskFragment;
 import i2p.bote.StatusListener;
@@ -18,7 +19,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,7 +33,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class EditIdentityFragment extends Fragment {
+public class EditIdentityFragment extends EditPictureFragment {
     private Callbacks mCallbacks = sDummyCallbacks;
 
     public interface Callbacks {
@@ -124,6 +124,12 @@ public class EditIdentityFragment extends Fragment {
             // Load the identity to edit
             try {
                 EmailIdentity identity = BoteHelper.getIdentity(mKey);
+
+                String pic = identity.getPictureBase64();
+                if (pic != null && !pic.isEmpty()) {
+                    setPictureB64(pic);
+                }
+
                 mNameField.setText(identity.getPublicName());
                 mDescField.setText(identity.getDescription());
                 mDefaultField.setChecked(identity.isDefault());
@@ -154,6 +160,7 @@ public class EditIdentityFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.action_save_identity:
+            String picture = getPictureB64();
             String publicName = mNameField.getText().toString();
             String description = mDescField.getText().toString();
             boolean setDefault = mDefaultField.isChecked();

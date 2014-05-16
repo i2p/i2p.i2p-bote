@@ -116,8 +116,11 @@ public class BoteHelper extends GeneralHelper {
     }
 
     public static String encodePicture(Bitmap picture) {
+        if (picture == null)
+            return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        boolean success = picture.compress(CompressFormat.PNG, 100, baos);
+        // TODO something is corrupting here
+        picture.compress(CompressFormat.PNG, 0, baos);
         return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
     }
 }

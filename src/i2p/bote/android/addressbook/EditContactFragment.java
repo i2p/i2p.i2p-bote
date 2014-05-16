@@ -7,16 +7,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
-
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.EditPictureFragment;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,10 +27,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EditContactFragment extends Fragment {
+public class EditContactFragment extends EditPictureFragment {
     public static final String CONTACT_DESTINATION = "contact_destination";
 
-    static final int REQUEST_DESTINATION_FILE = 1;
+    static final int REQUEST_DESTINATION_FILE = 3;
 
     private String mDestination;
     EditText mNameField;
@@ -73,6 +72,12 @@ public class EditContactFragment extends Fragment {
         if (mDestination != null) {
             try {
                 Contact contact = BoteHelper.getContact(mDestination);
+
+                String pic = contact.getPictureBase64();
+                if (pic != null && !pic.isEmpty()) {
+                    setPictureB64(pic);
+                }
+
                 mNameField.setText(contact.getName());
                 mDestinationField.setText(mDestination);
                 mTextField.setText(contact.getText());
@@ -109,6 +114,7 @@ public class EditContactFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.action_save_contact:
+            String picture = getPictureB64();
             String name = mNameField.getText().toString();
             String destination = mDestinationField.getText().toString();
             String text = mTextField.getText().toString();
@@ -116,7 +122,7 @@ public class EditContactFragment extends Fragment {
             mError.setText("");
 
             try {
-                String err = BoteHelper.saveContact(destination, name, null, text);
+                String err = BoteHelper.saveContact(destination, name, picture, text);
                 if (err == null)
                     getActivity().finish();
                 else
@@ -160,6 +166,8 @@ public class EditContactFragment extends Fragment {
                             Toast.LENGTH_SHORT).show();
                 }
             }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

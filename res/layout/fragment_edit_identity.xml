@@ -7,7 +7,7 @@
     android:paddingTop="10dp" >
 
     <ImageView
-        android:id="@+id/identity_picture"
+        android:id="@+id/picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_contact_picture" />
@@ -16,8 +16,8 @@
         android:id="@+id/public_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/identity_picture"
-        android:layout_toRightOf="@+id/identity_picture"
+        android:layout_alignBottom="@+id/picture"
+        android:layout_toRightOf="@+id/picture"
         android:ems="10"
         android:hint="@string/public_name"
         android:inputType="text" />
@@ -26,7 +26,7 @@
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/identity_picture"
+        android:layout_below="@+id/picture"
         android:ems="10"
         android:hint="@string/description"
         android:inputType="text" />

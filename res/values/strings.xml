@@ -43,6 +43,7 @@
     <string name="address_book_empty">Address book is empty</string>
     <string name="action_new_contact">New contact</string>
 
+    <string name="contact_name">Contact name</string>
     <string name="email_destination">Email destination</string>
     <string name="label_browse">Browse</string>
     <string name="save_contact">Save contact</string>

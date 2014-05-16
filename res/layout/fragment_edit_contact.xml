@@ -7,7 +7,7 @@
     android:paddingTop="10dp" >
 
     <ImageView
-        android:id="@+id/contact_picture"
+        android:id="@+id/picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_contact_picture" />
@@ -16,17 +16,17 @@
         android:id="@+id/contact_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/contact_picture"
-        android:layout_toRightOf="@+id/contact_picture"
+        android:layout_alignBottom="@+id/picture"
+        android:layout_toRightOf="@+id/picture"
         android:ems="10"
-        android:hint="@string/public_name"
+        android:hint="@string/contact_name"
         android:inputType="text" />
 
     <Button
         android:id="@+id/import_destination_from_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/contact_picture"
+        android:layout_below="@+id/picture"
         android:layout_alignParentRight="true"
         android:text="@string/label_browse" />
 
