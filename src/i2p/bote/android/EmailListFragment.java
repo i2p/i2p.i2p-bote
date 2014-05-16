@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.i2p.I2PAppContext;
 import net.i2p.util.Log;
-
 import i2p.bote.I2PBote;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.util.BoteHelper;
@@ -43,7 +42,8 @@ import android.widget.TextView;
 
 public class EmailListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<Email>>,
-        MoveToDialogFragment.MoveToDialogListener {
+        MoveToDialogFragment.MoveToDialogListener,
+        EmailListAdapter.EmailSelector {
     public static final String FOLDER_NAME = "folder_name";
 
     private static final int EMAIL_LIST_LOADER = 1;
@@ -93,7 +93,7 @@ public class EmailListFragment extends ListFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new EmailListAdapter(getActivity());
+        mAdapter = new EmailListAdapter(getActivity(), this);
         String folderName = getArguments().getString(FOLDER_NAME);
         mFolder = BoteHelper.getMailFolder(folderName);
 
@@ -432,5 +432,11 @@ public class EmailListFragment extends ListFragment implements
         mAdapter.setData(null);
         getActivity().setTitle(
                 BoteHelper.getFolderDisplayName(getActivity(), mFolder));
+    }
+
+    // EmailListAdapter.EmailSelector
+
+    public void select(int position) {
+        onListItemSelect(position);
     }
 }

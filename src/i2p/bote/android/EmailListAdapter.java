@@ -24,11 +24,17 @@ import android.widget.TextView;
 public class EmailListAdapter extends ArrayAdapter<Email> {
     private final LayoutInflater mInflater;
     private SparseBooleanArray mSelectedEmails;
+    private EmailSelector mSelector;
 
-    public EmailListAdapter(Context context) {
+    public interface EmailSelector {
+        public void select(int position);
+    }
+
+    public EmailListAdapter(Context context, EmailSelector selector) {
         super(context, android.R.layout.simple_list_item_2);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSelectedEmails = new SparseBooleanArray();
+        mSelector = selector;
     }
 
     public void setData(List<Email> emails) {
@@ -43,13 +49,19 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = mInflater.inflate(R.layout.listitem_email, parent, false);
-        Email email = getItem(position);
+        final Email email = getItem(position);
 
         ImageView picture = (ImageView) v.findViewById(R.id.contact_picture);
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
         TextView from = (TextView) v.findViewById(R.id.email_from);
         TextView content = (TextView) v.findViewById(R.id.email_content);
         TextView sent = (TextView) v.findViewById(R.id.email_sent);
+
+        picture.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                mSelector.select(getPosition(email));
+            }
+        });
 
         try {
             String fromAddress = email.getOneFromAddress();
