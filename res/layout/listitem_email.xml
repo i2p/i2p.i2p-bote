@@ -10,6 +10,15 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_contact_picture" />
 
+    <ImageView
+        android:id="@+id/email_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/contact_picture"
+        android:layout_alignLeft="@+id/contact_picture"
+        android:visibility="gone"
+        android:src="@drawable/ic_navigation_accept" />
+
     <TextView
         android:id="@+id/email_subject"
         android:layout_width="wrap_content"

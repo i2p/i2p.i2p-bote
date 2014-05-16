@@ -63,6 +63,10 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
             }
         });
 
+        if (mSelectedEmails.get(position)) {
+            ((ImageView) v.findViewById(R.id.email_selected)).setVisibility(View.VISIBLE);
+        }
+
         try {
             String fromAddress = email.getOneFromAddress();
 
