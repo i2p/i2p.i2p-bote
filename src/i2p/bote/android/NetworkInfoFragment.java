@@ -44,5 +44,9 @@ public class NetworkInfoFragment extends Fragment {
         Collection<BannedPeer> bannedPeers = I2PBote.getInstance().getBannedPeers();
         ((TextView) view.findViewById(R.id.banned_peers)).setText(
                 "" + bannedPeers.size());
+
+        Exception e = I2PBote.getInstance().getConnectError();
+        if (e != null)
+            ((TextView) view.findViewById(R.id.error)).setText(e.toString());
     }
 }
