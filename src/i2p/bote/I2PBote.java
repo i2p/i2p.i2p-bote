@@ -88,6 +88,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -569,7 +570,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         try {
             imapService = new ImapService(configuration, this, this);
             if (!imapService.start())
-                log.error("IMAP service failed to start.");
+                log.error("IMAP service failed to start.", e);
         } catch (ConfigurationException e) {
             log.error("IMAP service failed to start.", e);
         }
@@ -775,6 +776,8 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     }
     
     public Set<RelayPeer> getRelayPeers() {
+        if (peerManager == null)
+            return new HashSet<RelayPeer>();
         return peerManager.getAllPeers();
     }
     
@@ -844,6 +847,8 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
 
     @Override
     public NetworkStatus getNetworkStatus() {
+        if (connectTask == null)
+            return NetworkStatus.NOT_STARTED;
         if (!connectTask.isDone())
             return connectTask.getNetworkStatus();
         else if (dht != null)
