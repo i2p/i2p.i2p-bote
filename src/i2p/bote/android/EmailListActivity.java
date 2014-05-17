@@ -109,36 +109,35 @@ public class EmailListActivity extends ActionBarActivity implements
 
             /** Called when the drawer motion state changes. */
             public void onDrawerStateChanged(int newState) {
-                if (newState == DrawerLayout.STATE_DRAGGING) {
+                if (newState == DrawerLayout.STATE_DRAGGING)
                     wasDragged = true;
 
-                    // Update network status
-                    Drawable statusIcon;
-                    switch (I2PBote.getInstance().getNetworkStatus()) {
-                    case DELAY:
-                        mNetworkStatus.setText(R.string.connect_delay);
-                        statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
-                        break;
-                    case CONNECTING:
-                        mNetworkStatus.setText(R.string.connecting);
-                        statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
-                        break;
-                    case CONNECTED:
-                        mNetworkStatus.setText(R.string.connected);
-                        statusIcon = getResources().getDrawable(android.R.drawable.presence_online);
-                        break;
-                    case ERROR:
-                        mNetworkStatus.setText(R.string.error);
-                        statusIcon = getResources().getDrawable(android.R.drawable.presence_busy);
-                        break;
-                    case NOT_STARTED:
-                    default:
-                        mNetworkStatus.setText(R.string.not_started);
-                        statusIcon = getResources().getDrawable(android.R.drawable.presence_offline);
-                    }
-                    mNetworkStatus.setCompoundDrawablesWithIntrinsicBounds(
-                            statusIcon, null, null, null);
+                // Update network status
+                Drawable statusIcon;
+                switch (I2PBote.getInstance().getNetworkStatus()) {
+                case DELAY:
+                    mNetworkStatus.setText(R.string.connect_delay);
+                    statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
+                    break;
+                case CONNECTING:
+                    mNetworkStatus.setText(R.string.connecting);
+                    statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
+                    break;
+                case CONNECTED:
+                    mNetworkStatus.setText(R.string.connected);
+                    statusIcon = getResources().getDrawable(android.R.drawable.presence_online);
+                    break;
+                case ERROR:
+                    mNetworkStatus.setText(R.string.error);
+                    statusIcon = getResources().getDrawable(android.R.drawable.presence_busy);
+                    break;
+                case NOT_STARTED:
+                default:
+                    mNetworkStatus.setText(R.string.not_started);
+                    statusIcon = getResources().getDrawable(android.R.drawable.presence_offline);
                 }
+                mNetworkStatus.setCompoundDrawablesWithIntrinsicBounds(
+                        statusIcon, null, null, null);
             }
         };
 
