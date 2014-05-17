@@ -411,6 +411,8 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         }
         if (socketManager != null)
             socketManager.destroySocketManager();
+
+        connectTask = null;
     }
 
     public static I2PBote getInstance() {
