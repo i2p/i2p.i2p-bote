@@ -10,13 +10,17 @@ import i2p.bote.folder.EmailFolder;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -163,8 +167,28 @@ public class EmailListActivity extends ActionBarActivity implements
         });
         mNetworkStatus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent nii = new Intent(EmailListActivity.this, NetworkInfoActivity.class);
-                startActivity(nii);
+                switch (I2PBote.getInstance().getNetworkStatus()) {
+                case NOT_STARTED:
+                case DELAY:
+                    DialogFragment df = new DialogFragment() {
+                        @Override
+                        public Dialog onCreateDialog(Bundle savedInstanceState) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setMessage(R.string.network_info_unavailable)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            return builder.create();
+                        }
+                    };
+                    df.show(getSupportFragmentManager(), "noinfo");
+                    break;
+                default:
+                    Intent nii = new Intent(EmailListActivity.this, NetworkInfoActivity.class);
+                    startActivity(nii);
+                }
             }
         });
 
