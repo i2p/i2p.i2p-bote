@@ -36,6 +36,7 @@ import net.i2p.I2PAppContext;
 import net.i2p.crypto.KeyStoreUtil;
 import net.i2p.data.DataHelper;
 import net.i2p.util.Log;
+import net.i2p.util.SystemVersion;
 
 public class Configuration {
     public static final String KEY_DERIVATION_PARAMETERS_FILE = "derivparams";   // name of the KDF parameter cache file, relative to I2P_BOTE_SUBDIR
@@ -62,8 +63,8 @@ public class Configuration {
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
     private static final List<Theme> BUILT_IN_THEMES = Arrays.asList(new Theme[] {   // theme IDs correspond to a theme directory in the .war
-        new Theme("lblue", _("lblue")),
-        new Theme("vanilla", _("vanilla"))
+            new Theme("lblue", _("lblue")),
+            new Theme("vanilla", _("vanilla"))
     });
     private static final String THEME_SUBDIR = "themes";   // relative to I2P_BOTE_SUBDIR
 
@@ -101,7 +102,7 @@ public class Configuration {
     private static final String PARAMETER_UPDATE_URL = "updateUrl";
     private static final String PARAMETER_UPDATE_CHECK_INTERVAL = "updateCheckInterval";
     private static final String PARAMETER_THEME = "theme";
-    
+
     // Defaults for each parameter
     private static final int DEFAULT_STORAGE_SPACE_INBOX = 1024 * 1024 * 1024;
     private static final int DEFAULT_STORAGE_SPACE_RELAY = 100 * 1024 * 1024;
@@ -135,12 +136,12 @@ public class Configuration {
     private static final String DEFAULT_UPDATE_URL = "http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote-update.xpi2p";
     private static final int DEFAULT_UPDATE_CHECK_INTERVAL = 60;   // in minutes
     private static final String DEFAULT_THEME = "lblue";
-    
+
     private Log log = new Log(Configuration.class);
     private Properties properties;
     private File i2pBoteDir;
     private File configFile;
-    
+
     /**
      * Reads configuration settings from the <code>I2P_BOTE_SUBDIR</code> subdirectory under
      * the I2P application directory. The I2P application directory can be changed via the
@@ -152,18 +153,18 @@ public class Configuration {
      */
     public Configuration() {
         properties = new Properties();
-        
+
         // get the I2PBote directory and make sure it exists
         i2pBoteDir = getI2PBoteDirectory();
         if (!i2pBoteDir.exists() && !i2pBoteDir.mkdirs())
-        log.error("Cannot create directory: <" + i2pBoteDir.getAbsolutePath() + ">");
-        
+            log.error("Cannot create directory: <" + i2pBoteDir.getAbsolutePath() + ">");
+
         // read the configuration file
         configFile = new File(i2pBoteDir, CONFIG_FILE_NAME);
         boolean configurationLoaded = false;
         if (configFile.exists()) {
             log.info("Loading config file <" + configFile.getAbsolutePath() + ">");
-            
+
             try {
                 DataHelper.loadProps(properties, configFile);
                 configurationLoaded = true;
@@ -175,9 +176,11 @@ public class Configuration {
             log.info("Can't read configuration file <" + configFile.getAbsolutePath() + ">, using default settings.");
 
         // Create SSL key if necessary
-        File ks = getSSLKeyStoreFile();
-        if (!ks.exists())
-            createKeyStore(ks);
+        if (!SystemVersion.isAndroid()) {
+            File ks = getSSLKeyStoreFile();
+            if (!ks.exists())
+                createKeyStore(ks);
+        }
     }
 
     private boolean createKeyStore(File ks) {
@@ -198,14 +201,14 @@ public class Configuration {
         }
         if (success) {
             log.logAlways(Log.INFO, "Created self-signed certificate for " + cname + " in keystore: " + ks.getAbsolutePath() + "\n" +
-                           "The certificate name was generated randomly, and is not associated with your " +
-                           "IP address, host name, router identity, or destination keys.");
+                    "The certificate name was generated randomly, and is not associated with your " +
+                    "IP address, host name, router identity, or destination keys.");
         } else {
             log.error("Failed to create I2P-Bote SSL keystore.\n" +
-                       "This is for the Sun/Oracle keytool, others may be incompatible.\n" +
-                       "If you create the keystore manually, you must add " + PARAMETER_SSL_KEYSTORE_PASSWORD +
-                       " to " + (new File(i2pBoteDir, CONFIG_FILE_NAME)).getAbsolutePath() + "\n" +
-                       "You must create the keystore using the same password for the keystore and the key.");
+                    "This is for the Sun/Oracle keytool, others may be incompatible.\n" +
+                    "If you create the keystore manually, you must add " + PARAMETER_SSL_KEYSTORE_PASSWORD +
+                    " to " + (new File(i2pBoteDir, CONFIG_FILE_NAME)).getAbsolutePath() + "\n" +
+                    "You must create the keystore using the same password for the keystore and the key.");
         }
         return success;
     }
@@ -213,27 +216,27 @@ public class Configuration {
     public File getDestinationKeyFile() {
         return new File(i2pBoteDir, DEST_KEY_FILE_NAME);
     }
-    
+
     public File getDhtPeerFile() {
         return new File(i2pBoteDir, DHT_PEER_FILE_NAME);
     }
-    
+
     public File getRelayPeerFile() {
         return new File(i2pBoteDir, RELAY_PEER_FILE_NAME);
     }
-    
+
     public File getIdentitiesFile() {
         return new File(i2pBoteDir, IDENTITIES_FILE_NAME);
     }
-    
+
     public File getAddressBookFile() {
         return new File(i2pBoteDir, ADDRESS_BOOK_FILE_NAME);
     }
-    
+
     public File getMessageIdCacheFile() {
         return new File(i2pBoteDir, MESSAGE_ID_CACHE_FILE);
     }
-    
+
     /**
      * The file returned by this method does not contain the user's password,
      * but a known string that is encrypted with the password. The purpose
@@ -243,7 +246,7 @@ public class Configuration {
     public File getPasswordFile() {
         return new File(i2pBoteDir, PASSWORD_FILE);
     }
-    
+
     /**
      * Returns the file that caches the parameters needed for generating a
      * file encryption key from a password.
@@ -259,35 +262,35 @@ public class Configuration {
     public File getSSLKeyStoreFile() {
         return new File(i2pBoteDir, SSL_KEYSTORE_FILE);
     }
-    
+
     public File getOutboxDir() {
         return new File(i2pBoteDir, OUTBOX_DIR);        
     }
-    
+
     public File getRelayPacketDir() {
         return new File(i2pBoteDir, RELAY_PKT_SUBDIR);       
     }
-    
+
     public File getSentFolderDir() {
         return new File(i2pBoteDir, SENT_FOLDER_DIR);
     }
-    
+
     public File getTrashFolderDir() {
         return new File(i2pBoteDir, TRASH_FOLDER_DIR);
     }
-    
+
     public File getInboxDir() {
         return new File(i2pBoteDir, INBOX_SUBDIR);       
     }
-    
+
     public File getIncompleteDir() {
         return new File(i2pBoteDir, INCOMPLETE_SUBDIR);       
     }
-    
+
     public File getEmailDhtStorageDir() {
         return new File(i2pBoteDir, EMAIL_DHT_SUBDIR);       
     }
-    
+
     public File getIndexPacketDhtStorageDir() {
         return new File(i2pBoteDir, INDEX_PACKET_DHT_SUBDIR);
     }
@@ -296,14 +299,14 @@ public class Configuration {
     public File getDirectoryEntryDhtStorageDir() {
         return new File(i2pBoteDir, DIRECTORY_ENTRY_DHT_SUBDIR);
     }
-    
+
     private static File getI2PBoteDirectory() {
         // the parent directory of the I2PBote directory ($HOME or the value of the i2p.dir.app property)
         File i2pAppDir = I2PAppContext.getGlobalContext().getAppDir();
-        
+
         return new File(i2pAppDir, I2P_BOTE_SUBDIR);
     }
-    
+
     /**
      * Saves the configuration to a file.
      */
@@ -323,14 +326,14 @@ public class Configuration {
     public int getStorageSpaceInbox() {
         return getIntParameter(PARAMETER_STORAGE_SPACE_INBOX, DEFAULT_STORAGE_SPACE_INBOX);
     }
-    
+
     /**
      * Returns the maximum size (in bytes) all messages stored for relaying can take up.
      */
     public int getStorageSpaceRelay() {
         return getIntParameter(PARAMETER_STORAGE_SPACE_RELAY, DEFAULT_STORAGE_SPACE_RELAY);
     }
-    
+
     /**
      * Returns the time (in milliseconds) after which an email is deleted from the outbox if it cannot be sent or relayed.
      */
@@ -341,45 +344,45 @@ public class Configuration {
     public int getHashCashStrength() {
         return getIntParameter(PARAMETER_HASHCASH_STRENGTH, DEFAULT_HASHCASH_STRENGTH);
     }
-    
+
     public void setSmtpPort(int port) {
         properties.setProperty(PARAMETER_SMTP_PORT, String.valueOf(port));
     }
-    
+
     public int getSmtpPort() {
         return getIntParameter(PARAMETER_SMTP_PORT, DEFAULT_SMTP_PORT);
     }
-    
+
     /** Returns the host name the SMTP server listens on. */
     public String getSmtpAddress() {
         return properties.getProperty(PARAMETER_SMTP_ADDRESS, DEFAULT_SMTP_ADDRESS);
     }
-    
+
     public void setSmtpEnabled(boolean enabled) {
         properties.setProperty(PARAMETER_SMTP_ENABLED, String.valueOf(enabled));
     }
-    
+
     public boolean isSmtpEnabled() {
         return getBooleanParameter(PARAMETER_SMTP_ENABLED, DEFAULT_SMTP_ENABLED);
     }
-    
+
     public void setImapPort(int port) {
         properties.setProperty(PARAMETER_IMAP_PORT, String.valueOf(port));
     }
-    
+
     public int getImapPort() {
         return getIntParameter(PARAMETER_IMAP_PORT, DEFAULT_IMAP_PORT);
     }
-    
+
     /** Returns the host name the IMAP server listens on. */
     public String getImapAddress() {
         return properties.getProperty(PARAMETER_IMAP_ADDRESS, DEFAULT_IMAP_ADDRESS);
     }
-    
+
     public void setImapEnabled(boolean enabled) {
         properties.setProperty(PARAMETER_IMAP_ENABLED, String.valueOf(enabled));
     }
-    
+
     public boolean isImapEnabled() {
         return getBooleanParameter(PARAMETER_IMAP_ENABLED, DEFAULT_IMAP_ENABLED);
     }
@@ -391,34 +394,34 @@ public class Configuration {
     public String getSSLKeyStorePassword() {
         return properties.getProperty(PARAMETER_SSL_KEYSTORE_PASSWORD);
     }
-    
+
     /**
      * Returns the maximum number of email identities to retrieve new emails for at a time.
      */
     public int getMaxConcurIdCheckMail() {
         return getIntParameter(PARAMETER_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL, DEFAULT_MAX_CONCURRENT_IDENTITIES_CHECK_MAIL);
     }
-    
+
     public void setAutoMailCheckEnabled(boolean enabled) {
         properties.setProperty(PARAMETER_AUTO_MAIL_CHECK, String.valueOf(enabled));
     }
-    
+
     public boolean isAutoMailCheckEnabled() {
         return getBooleanParameter(PARAMETER_AUTO_MAIL_CHECK, DEFAULT_AUTO_MAIL_CHECK);
     }
-    
+
     public void setDeliveryCheckEnabled(boolean enabled) {
         properties.setProperty(PARAMETER_DELIVERY_CHECK, String.valueOf(enabled));
     }
-    
+
     public boolean isDeliveryCheckEnabled() {
         return getBooleanParameter(PARAMETER_DELIVERY_CHECK, DEFAULT_DELIVERY_CHECK);
     }
-    
+
     public void setMailCheckInterval(int minutes) {
         properties.setProperty(PARAMETER_MAIL_CHECK_INTERVAL, String.valueOf(minutes));
     }
-    
+
     /**
      * Returns the number of minutes the application should wait before 
      * checking for mail again. This setting only has an effect if
@@ -432,7 +435,7 @@ public class Configuration {
     public void setOutboxCheckInterval(int minutes) {
         properties.setProperty(PARAMETER_OUTBOX_CHECK_INTERVAL, String.valueOf(minutes));
     }
-    
+
     /**
      * Returns the wait time, in minutes, before processing the outbox folder again.
      * @see i2p.bote.service.OutboxProcessor
@@ -444,7 +447,7 @@ public class Configuration {
     public void getDeliveryCheckInterval(int minutes) {
         properties.setProperty(PARAMETER_DELIVERY_CHECK_INTERVAL, String.valueOf(minutes));
     }
-    
+
     /**
      * Returns the wait time, in minutes, between checking the delivery status of sent emails.
      * @see i2p.bote.service.DeliveryChecker
@@ -456,14 +459,14 @@ public class Configuration {
     public void setRelaySendPause(int minutes) {
         properties.setProperty(PARAMETER_RELAY_SEND_PAUSE, String.valueOf(minutes));
     }
-    
+
     /**
      * Returns the number of minutes to wait before processing the relay packet folder again.
      */
     public int getRelaySendPause() {
         return getIntParameter(PARAMETER_RELAY_SEND_PAUSE, DEFAULT_RELAY_SEND_PAUSE);
     }
-    
+
     /**
      * Controls whether strings that are added to outgoing email, like "Re:" or "Fwd:",
      * are translated or not.<br/>
@@ -475,7 +478,7 @@ public class Configuration {
     public void setHideLocale(boolean hideLocale) {
         properties.setProperty(PARAMETER_HIDE_LOCALE, String.valueOf(hideLocale));
     }
-    
+
     public boolean getHideLocale() {
         return getBooleanParameter(PARAMETER_HIDE_LOCALE, DEFAULT_HIDE_LOCALE);
     }
@@ -487,48 +490,48 @@ public class Configuration {
     public void setIncludeSentTime(boolean includeSentTime) {
         properties.setProperty(PARAMETER_INCLUDE_SENT_TIME, String.valueOf(includeSentTime));
     }
-    
+
     public boolean getIncludeSentTime() {
         return getBooleanParameter(PARAMETER_INCLUDE_SENT_TIME, DEFAULT_INCLUDE_SENT_TIME);
     }
-    
+
     public int getMessageIdCacheSize() {
         return getIntParameter(PARAMETER_MESSAGE_ID_CACHE_SIZE, DEFAULT_MESSAGE_ID_CACHE_SIZE);
     }
-    
+
     /**
      * Returns the number of relay chains that should be used per Relay Request.
      */
     public int getRelayRedundancy() {
         return getIntParameter(PARAMETER_RELAY_REDUNDANCY, DEFAULT_RELAY_REDUNDANCY);
     }
-    
+
     public void setRelayMinDelay(int minDelay) {
         properties.setProperty(PARAMETER_RELAY_MIN_DELAY, String.valueOf(minDelay));
     }
-    
+
     /**
      * Returns the minimum amount of time in minutes that a Relay Request is delayed.
      */
     public int getRelayMinDelay() {
         return getIntParameter(PARAMETER_RELAY_MIN_DELAY, DEFAULT_RELAY_MIN_DELAY);
     }
-    
+
     public void setRelayMaxDelay(int maxDelay) {
         properties.setProperty(PARAMETER_RELAY_MAX_DELAY, String.valueOf(maxDelay));
     }
-    
+
     /**
      * Returns the maximum amount of time in minutes that a Relay Request is delayed.
      */
     public int getRelayMaxDelay() {
         return getIntParameter(PARAMETER_RELAY_MAX_DELAY, DEFAULT_RELAY_MAX_DELAY);
     }
-    
+
     public void setNumStoreHops(int numHops) {
         properties.setProperty(PARAMETER_NUM_STORE_HOPS, String.valueOf(numHops));
     }
-    
+
     /**
      * Returns the number of relays that should be used when sending a DHT store request.
      * @return A non-negative number
@@ -536,15 +539,15 @@ public class Configuration {
     public int getNumStoreHops() {
         return getIntParameter(PARAMETER_NUM_STORE_HOPS, DEFAULT_NUM_STORE_HOPS);
     }
-    
+
     public void setGatewayDestination(String destination) {
         properties.setProperty(PARAMETER_GATEWAY_DESTINATION, destination);
     }
-    
+
     public String getGatewayDestination() {
         return properties.getProperty(PARAMETER_GATEWAY_DESTINATION, DEFAULT_GATEWAY_DESTINATION);
     }
-    
+
     public void setGatewayEnabled(boolean enable) {
         properties.setProperty(PARAMETER_GATEWAY_ENABLED, String.valueOf(enable));
     }
@@ -556,29 +559,29 @@ public class Configuration {
     public void setPasswordCacheDuration(int duration) {
         properties.setProperty(PARAMETER_PASSWORD_CACHE_DURATION, String.valueOf(duration));
     }
-    
+
     /**
      * Returns the number of minutes the password is kept in memory
      */
     public int getPasswordCacheDuration() {
         return getIntParameter(PARAMETER_PASSWORD_CACHE_DURATION, DEFAULT_PASSWORD_CACHE_DURATION);
     }
-    
+
     public String getEeproxyHost() {
         return properties.getProperty(PARAMETER_EEPROXY_HOST, DEFAULT_EEPROXY_HOST);
     }
-    
+
     public int getEeproxyPort() {
         return getIntParameter(PARAMETER_EEPROXY_PORT, DEFAULT_EEPROXY_PORT);
     }
-    
+
     /**
      * Returns an HTTP URL pointing to the .xpi2p update file.
      */
     public String getUpdateUrl() {
         return properties.getProperty(PARAMETER_UPDATE_URL, DEFAULT_UPDATE_URL);
     }
-    
+
     /**
      * Returns the number of minutes to wait after checking for a new plugin version.
      */
@@ -589,14 +592,14 @@ public class Configuration {
     public void setThemeUrl(String url) {
         properties.setProperty(PARAMETER_THEME, url);
     }
-    
+
     /**
      * Returns the name of the current UI theme.
      */
     public String getTheme() {
         return properties.getProperty(PARAMETER_THEME, DEFAULT_THEME);
     }
-    
+
     /**
      * Returns a list of all available UI themes.
      */
@@ -606,21 +609,21 @@ public class Configuration {
         themes.addAll(getExternalThemes());
         return themes;
     }
-    
+
     /**
      * Returns only the UI themes that are included in the application.
      */
     public List<Theme> getBuiltInThemes() {
         return BUILT_IN_THEMES;
     }
-    
+
     /**
      * Returns the directory where the application looks for additional UI themes.
      */
     public File getExternalThemeDir() {
         return new File(i2pBoteDir, THEME_SUBDIR);
     }
-    
+
     private List<Theme> getExternalThemes() {
         File[] dirs = new File(i2pBoteDir, THEME_SUBDIR).listFiles(new FileFilter() {
             @Override
@@ -628,7 +631,7 @@ public class Configuration {
                 return pathname.isDirectory();
             }
         });
-        
+
         List<Theme> themes = new ArrayList<Theme>();
         if (dirs != null)
             for (File dir: dirs) {
@@ -638,7 +641,7 @@ public class Configuration {
             }
         return themes;
     }
-    
+
     /**
      * Returns the File that contains the version the I2P-Bote data directory was last
      * successfully migrated to.
@@ -646,7 +649,7 @@ public class Configuration {
     public File getMigrationVersionFile() {
         return new File(i2pBoteDir, MIGRATION_VERSION_FILE);
     }
-    
+
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
         String stringValue = properties.getProperty(parameterName);
         if ("true".equalsIgnoreCase(stringValue) || "yes".equalsIgnoreCase(stringValue) || "on".equalsIgnoreCase(stringValue) || "1".equals(stringValue))
@@ -660,7 +663,7 @@ public class Configuration {
             return defaultValue;
         }
     }
-    
+
     private int getIntParameter(String parameterName, int defaultValue) {
         String stringValue = properties.getProperty(parameterName);
         if (stringValue == null)
@@ -669,22 +672,22 @@ public class Configuration {
             try {
                 return new Integer(stringValue);
             }
-            catch (NumberFormatException e) {
-                log.warn("Can't convert value <" + stringValue + "> for parameter <" + parameterName + "> to int, using default.");
-                return defaultValue;
-            }
+        catch (NumberFormatException e) {
+            log.warn("Can't convert value <" + stringValue + "> for parameter <" + parameterName + "> to int, using default.");
+            return defaultValue;
+        }
     }
-    
+
     /** Simple class that represents a UI theme */
     public static class Theme {
         private String id;
         private String displayName;
-        
+
         private Theme(String id, String displayName) {
             this.id = id;
             this.displayName = displayName;
         }
-        
+
         public String getId() {
             return id;
         }
