@@ -4,10 +4,13 @@ import net.i2p.client.I2PClient;
 import i2p.bote.I2PBote;
 import i2p.bote.android.addressbook.AddressBookActivity;
 import i2p.bote.android.config.SettingsActivity;
+import i2p.bote.android.service.BoteService;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.folder.EmailFolder;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -200,7 +203,20 @@ public class EmailListActivity extends ActionBarActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu
         getMenuInflater().inflate(R.menu.main, menu);
+        if (isBoteServiceRunning())
+            menu.findItem(R.id.action_start_bote).setVisible(false);
+        else
+            menu.findItem(R.id.action_stop_bote).setVisible(false);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private boolean isBoteServiceRunning() {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (BoteService.class.getName().equals(service.service.getClassName()))
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -212,6 +228,16 @@ public class EmailListActivity extends ActionBarActivity implements
         }
 
         switch (item.getItemId()) {
+        case R.id.action_start_bote:
+            Intent start = new Intent(this, BoteService.class);
+            startService(start);
+            return true;
+
+        case R.id.action_stop_bote:
+            Intent stop = new Intent(this, BoteService.class);
+            stopService(stop);
+            return true;
+
         case R.id.action_settings:
             Intent si = new Intent(this, SettingsActivity.class);
             startActivity(si);
