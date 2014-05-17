@@ -43,8 +43,6 @@ import i2p.bote.Util;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.util.GeneralHelper;
-import net.i2p.util.Log;
-
 import org.apache.james.mailbox.store.mail.model.Message;
 import org.apache.james.mailbox.store.mail.model.Property;
 
