@@ -56,4 +56,35 @@
         android:text="##:## XX"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <ImageView
+        android:id="@+id/email_attachment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/email_from"
+        android:layout_alignBottom="@+id/email_from"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitEnd"
+        android:visibility="gone"
+        android:src="@drawable/ic_content_attachment" />
+
+    <ImageView
+        android:id="@+id/email_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/email_content"
+        android:layout_alignBottom="@+id/email_content"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitEnd"
+        android:visibility="gone"
+        android:src="@drawable/ic_navigation_accept" />
+
+    <TextView
+        android:id="@+id/email_status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/email_content"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:text="0%" />
+
 </RelativeLayout>
