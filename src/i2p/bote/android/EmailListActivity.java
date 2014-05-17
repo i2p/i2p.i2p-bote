@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -38,6 +39,7 @@ public class EmailListActivity extends ActionBarActivity implements
     private RelativeLayout mDrawerOuter;
     private FolderListAdapter mFolderAdapter;
     private ListView mFolderList;
+    private TextView mNetworkStatus;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private static final String SHARED_PREFS = "i2p.bote";
@@ -60,6 +62,7 @@ public class EmailListActivity extends ActionBarActivity implements
         mDrawerOuter = (RelativeLayout) findViewById(R.id.drawer_outer);
         mFolderAdapter = new FolderListAdapter(this);
         mFolderList = (ListView) findViewById(R.id.drawer);
+        mNetworkStatus = (TextView) findViewById(R.id.network_status);
 
         // Set the list of folders
         // TODO: This is slow, needs a loader
@@ -103,8 +106,36 @@ public class EmailListActivity extends ActionBarActivity implements
 
             /** Called when the drawer motion state changes. */
             public void onDrawerStateChanged(int newState) {
-                if (newState == DrawerLayout.STATE_DRAGGING)
+                if (newState == DrawerLayout.STATE_DRAGGING) {
                     wasDragged = true;
+
+                    // Update network status
+                    Drawable statusIcon;
+                    switch (I2PBote.getInstance().getNetworkStatus()) {
+                    case DELAY:
+                        mNetworkStatus.setText(R.string.connect_delay);
+                        statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
+                        break;
+                    case CONNECTING:
+                        mNetworkStatus.setText(R.string.connecting);
+                        statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
+                        break;
+                    case CONNECTED:
+                        mNetworkStatus.setText(R.string.connected);
+                        statusIcon = getResources().getDrawable(android.R.drawable.presence_online);
+                        break;
+                    case ERROR:
+                        mNetworkStatus.setText(R.string.error);
+                        statusIcon = getResources().getDrawable(android.R.drawable.presence_busy);
+                        break;
+                    case NOT_STARTED:
+                    default:
+                        mNetworkStatus.setText(R.string.not_started);
+                        statusIcon = getResources().getDrawable(android.R.drawable.presence_offline);
+                    }
+                    mNetworkStatus.setCompoundDrawablesWithIntrinsicBounds(
+                            statusIcon, null, null, null);
+                }
             }
         };
 
@@ -122,11 +153,15 @@ public class EmailListActivity extends ActionBarActivity implements
         }
 
         // Set up fixed actions
-        TextView addressBook = (TextView) findViewById(R.id.address_book);
-        addressBook.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.address_book).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent ai = new Intent(EmailListActivity.this, AddressBookActivity.class);
                 startActivity(ai);
+            }
+        });
+        mNetworkStatus.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                // TODO: network status page
             }
         });
 

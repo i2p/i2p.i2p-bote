@@ -18,21 +18,25 @@
         android:id="@+id/drawer_outer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start" >
+        android:layout_gravity="start"
+        android:background="#111" >
 
         <ListView
             android:id="@+id/drawer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#111"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fixed_actions"
+            android:layout_alignParentTop="true"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp" />
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/fixed_actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" >
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/address_book"
@@ -42,7 +46,16 @@
                 android:text="@string/address_book"
                 android:textAppearance="?android:attr/textAppearanceMediumInverse" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/network_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/presence_offline"
+                android:padding="15dp"
+                android:drawablePadding="10dp"
+                android:text="@string/network_status"
+                android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+        </LinearLayout>
     </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>

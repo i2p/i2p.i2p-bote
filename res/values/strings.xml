@@ -26,6 +26,13 @@
     <string name="folder_sent">Sent</string>
     <string name="folder_trash">Trash</string>
     <string name="address_book">Address book</string>
+    <string name="network_status">Network status</string>
+
+    <string name="not_started">Not started</string>
+    <string name="connect_delay">Waiting 3 minutes&#8230;</string>
+    <string name="connecting">Connecting&#8230;</string>
+    <string name="connected">Connected</string>
+    <string name="error">Error</string>
 
     <string name="folder_empty">Folder is empty</string>
     <string name="folder_does_not_exist">Folder does not exist</string>
