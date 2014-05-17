@@ -8,9 +8,6 @@
 - Refine view email page
 - Show contact pictures in recipients dropdown
 - Add optional CC: and BCC: fields
-- Show queued/sending status for emails in Outbox
-- Show delivered status for emails in Sent
--- Or any "sent" email?
 
 - Refactor code
 -- Reorganize for clarity
