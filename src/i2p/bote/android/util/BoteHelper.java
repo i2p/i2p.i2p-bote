@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import i2p.bote.android.R;
+import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
@@ -124,5 +126,29 @@ public class BoteHelper extends GeneralHelper {
         // TODO something is corrupting here
         picture.compress(CompressFormat.PNG, 0, baos);
         return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+    }
+
+    public static boolean isSentEmail(Email email) throws PasswordException, IOException, GeneralSecurityException, MessagingException {
+        // Is the sender anonymous and we are not the recipient?
+        if (email.isAnonymous()) {
+            Address[] recipients = email.getAllRecipients();
+            for (int i = 0; i < recipients.length; i++) {
+                String toDest = EmailDestination.extractBase64Dest(recipients[i].toString());
+                if (toDest != null && getIdentity(toDest) != null)
+                    // We are a recipient
+                    return false;
+            }
+            // We are not a recipient
+            return true;
+        }
+
+        // Are we the sender?
+        String fromAddress = email.getOneFromAddress();
+        String fromDest = EmailDestination.extractBase64Dest(fromAddress);
+        if ((fromDest != null && getIdentity(fromDest) != null))
+            return true;
+
+        // We are not the sender
+        return false;
     }
 }

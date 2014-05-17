@@ -8,9 +8,9 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.Part;
 
+import i2p.bote.Util;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Email;
-import i2p.bote.email.EmailDestination;
 import i2p.bote.fileencryption.PasswordException;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -97,16 +97,18 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
             }
 
             // Set email status if we sent it
-            String fromDest = EmailDestination.extractBase64Dest(fromAddress);
-            if (fromDest != null && BoteHelper.getIdentity(fromDest) != null) {
+            if (BoteHelper.isSentEmail(email)) {
                 TextView emailStatus = (TextView) v.findViewById(R.id.email_status_text);
                 if (email.isDelivered())
                     ((ImageView) v.findViewById(
                             R.id.email_status)).setVisibility(View.VISIBLE);
-                else if (email.getDeliveryPercentage() > 0)
-                    emailStatus.setText(email.getDeliveryPercentage() + "%");
-                else
-                    emailStatus.setText(BoteHelper.getEmailStatus(email));
+                else {
+                    if (email.getDeliveryPercentage() > 0)
+                        emailStatus.setText(email.getDeliveryPercentage() + "%");
+                    else
+                        emailStatus.setText(BoteHelper.getEmailStatus(email));
+                    emailStatus.setVisibility(View.VISIBLE);
+                }
             }
         } catch (MessagingException e) {
             subject.setText("ERROR: " + e.getMessage());
