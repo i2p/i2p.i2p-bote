@@ -98,17 +98,17 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
 
             // Set email status if we sent it
             if (BoteHelper.isSentEmail(email)) {
-                TextView emailStatus = (TextView) v.findViewById(R.id.email_status_text);
+                TextView emailStatus = (TextView) v.findViewById(R.id.email_status);
                 if (email.isDelivered())
-                    ((ImageView) v.findViewById(
-                            R.id.email_status)).setVisibility(View.VISIBLE);
-                else {
-                    if (email.getDeliveryPercentage() > 0)
-                        emailStatus.setText(email.getDeliveryPercentage() + "%");
-                    else
-                        emailStatus.setText(BoteHelper.getEmailStatus(email));
-                    emailStatus.setVisibility(View.VISIBLE);
-                }
+                    emailStatus.setCompoundDrawablesWithIntrinsicBounds(
+                            getContext().getResources().getDrawable(
+                                    R.drawable.ic_navigation_accept),
+                            null, null, null);
+                else if (email.getDeliveryPercentage() > 0)
+                    emailStatus.setText(email.getDeliveryPercentage() + "%");
+                else
+                    emailStatus.setText(BoteHelper.getEmailStatus(email));
+                emailStatus.setVisibility(View.VISIBLE);
             }
         } catch (MessagingException e) {
             subject.setText("ERROR: " + e.getMessage());

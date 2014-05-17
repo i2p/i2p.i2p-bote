@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/email_from"
         android:layout_below="@+id/email_from"
+        android:layout_toStartOf="@+id/email_status"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Content" />
@@ -67,24 +68,13 @@
         android:visibility="gone"
         android:src="@drawable/ic_content_attachment" />
 
-    <ImageView
+    <TextView
         android:id="@+id/email_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/email_content"
         android:layout_alignBottom="@+id/email_content"
         android:layout_alignParentRight="true"
-        android:scaleType="fitEnd"
-        android:visibility="gone"
-        android:src="@drawable/ic_navigation_accept" />
-
-    <TextView
-        android:id="@+id/email_status_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/email_content"
-        android:layout_alignParentRight="true"
-        android:visibility="gone"
-        android:text="0%" />
+        android:visibility="gone" />
 
 </RelativeLayout>
