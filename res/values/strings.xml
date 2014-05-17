@@ -58,6 +58,12 @@
     <string name="label_browse">Browse</string>
     <string name="save_contact">Save contact</string>
 
+    <string name="local_destination">Local Destination:</string>
+    <string name="not_set">Not set</string>
+    <string name="kademlia_peers">Kademlia Peers:</string>
+    <string name="relay_peers">Relay Peers:</string>
+    <string name="banned_peers">Banned Peers:</string>
+
     <string name="pref_title_general">General</string>
     <string name="pref_summ_general">General settings and default identity settings</string>
     <string name="pref_title_autoMail">Auto-check mail</string>

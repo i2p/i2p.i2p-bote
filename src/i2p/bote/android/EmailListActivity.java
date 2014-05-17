@@ -164,7 +164,8 @@ public class EmailListActivity extends ActionBarActivity implements
         });
         mNetworkStatus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                // TODO: network status page
+                Intent nii = new Intent(EmailListActivity.this, NetworkInfoActivity.class);
+                startActivity(nii);
             }
         });
 
