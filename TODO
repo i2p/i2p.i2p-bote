@@ -8,10 +8,7 @@
 - Refine view email page
 - Show contact pictures in recipients dropdown
 - Add optional CC: and BCC: fields
-- Network status page
 
 - Refactor code
 -- Reorganize for clarity
 -- Optimize use of Android lifecycles
-
-- Service to contain the Bote running threads
