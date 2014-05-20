@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
@@ -24,8 +25,12 @@ import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -114,7 +119,7 @@ public class NewEmailFragment extends Fragment {
         mContent = (EditText) view.findViewById(R.id.message);
 
         if (savedInstanceState == null) {
-            mRecipients.setPrefix(getResources().getString(R.string.to));
+            mRecipients.setPrefix(getResources().getString(R.string.email_to) + " ");
         }
     }
 
@@ -127,8 +132,8 @@ public class NewEmailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.action_send_email:
-            sendEmail();
-            mCallbacks.onTaskFinished();
+            if (sendEmail())
+                mCallbacks.onTaskFinished();
             return true;
 
         default:
@@ -136,7 +141,7 @@ public class NewEmailFragment extends Fragment {
         }
     }
 
-    private void sendEmail() {
+    private boolean sendEmail() {
         Email email = new Email(I2PBote.getInstance().getConfiguration().getIncludeSentTime());
         try {
             // Set sender
@@ -156,6 +161,27 @@ public class NewEmailFragment extends Fragment {
                         person.getAddress(), person.getName()));
             }
 
+            // Check that we have someone to send to
+            Address[] rcpts = email.getAllRecipients();
+            if (rcpts == null || rcpts.length == 0) {
+                // No recipients
+                DialogFragment df = new DialogFragment() {
+                    @Override
+                    public Dialog onCreateDialog(Bundle savedInstanceState) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(R.string.add_one_recipient)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        return builder.create();
+                    }
+                };
+                df.show(getActivity().getSupportFragmentManager(), "norecipients");
+                return false;
+            }
+
             email.setSubject(mSubject.getText().toString(), "UTF-8");
 
             // Set the text and add attachments
@@ -163,6 +189,7 @@ public class NewEmailFragment extends Fragment {
 
             // Send the email
             I2PBote.getInstance().sendEmail(email);
+            return true;
         } catch (PasswordException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -179,6 +206,7 @@ public class NewEmailFragment extends Fragment {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return false;
     }
 
     private class IdentityAdapter extends ArrayAdapter<EmailIdentity> {

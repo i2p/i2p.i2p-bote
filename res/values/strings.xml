@@ -45,9 +45,9 @@
     <string name="email_received">Received:</string>
 
     <string name="compose">Compose</string>
-    <string name="to">To: </string>
     <string name="subject">Subject</string>
     <string name="compose_email">Compose email</string>
+    <string name="add_one_recipient">Add at least one recipient.</string>
     <string name="email_queued_for_sending">Email queued for sending</string>
 
     <string name="address_book_empty">Address book is empty</string>
