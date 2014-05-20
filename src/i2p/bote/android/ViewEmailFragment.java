@@ -84,10 +84,13 @@ public class ViewEmailFragment extends Fragment {
 
             sender.setText(BoteHelper.getDisplayAddress(fromAddress));
 
-            for (Address recipient : email.getToAddresses()) {
-                TextView tv = new TextView(getActivity());
-                tv.setText(BoteHelper.getDisplayAddress(recipient.toString()));
-                recipients.addView(tv);
+            Address[] emailRecipients = email.getToAddresses();
+            if (emailRecipients != null) {
+                for (Address recipient : emailRecipients) {
+                    TextView tv = new TextView(getActivity());
+                    tv.setText(BoteHelper.getDisplayAddress(recipient.toString()));
+                    recipients.addView(tv);
+                }
             }
 
             if (email.getSentDate() != null)
