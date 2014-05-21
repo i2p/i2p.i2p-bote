@@ -7,6 +7,7 @@
 - Refine view email page
 - Show contact pictures in recipients dropdown
 - Add optional CC: and BCC: fields
+- Fix NPE in Settings when rotating screen
 
 - Refactor code
 -- Reorganize for clarity

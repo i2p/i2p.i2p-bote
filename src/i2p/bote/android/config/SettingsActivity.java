@@ -330,6 +330,7 @@ public class SettingsActivity extends PreferenceActivity {
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             super.setListAdapter(adapter); // TODO: implement legacy headers styling
         } else {
+            // TODO: Fix NPE when rotating screen
             super.setListAdapter(new HeaderAdapter(this, mGeneratedHeaders));
         }
     }
