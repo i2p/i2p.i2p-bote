@@ -61,14 +61,16 @@ public class ContactsCompletionView extends TokenCompleteTextView {
                 } catch (GeneralSecurityException e) {
                     // Not a valid Destination
                     // Assume the user meant an external address
-                    return new Person(completionText, completionText.replace(" ", "") + "@example.com", true);
+                    completionText = completionText.replace(" ", "") + "@example.com";
+                    return new Person(completionText, completionText, true);
                 }
             } catch (PasswordException e) {
                 // TODO handle
-                return new Person(completionText, completionText.replace(" ", "") + "@example.com", true);
+                completionText = completionText.replace(" ", "") + "@example.com";
+                return new Person(completionText, completionText, true);
             }
         } else {
-            return new Person(completionText.substring(0, index), completionText, true);
+            return new Person(completionText, completionText, true);
         }
     }
 }
