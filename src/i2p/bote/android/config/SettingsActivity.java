@@ -41,7 +41,6 @@ public class SettingsActivity extends PreferenceActivity {
 
     // Preference Header vars
     private Header[] mIdentityListHeaders;
-    private List<Header> mGeneratedHeaders;
 
     private String mRequestedIdentityKey;
     private String mDeletingIdentityKey;
@@ -185,9 +184,6 @@ public class SettingsActivity extends PreferenceActivity {
                 }
             }
         }
-
-        // Save for later use (see setListAdapter)
-        mGeneratedHeaders = target;
     }
 
 
@@ -344,7 +340,7 @@ public class SettingsActivity extends PreferenceActivity {
             super.setListAdapter(adapter); // TODO: implement legacy headers styling
         } else {
             // TODO: Fix NPE when rotating screen
-            super.setListAdapter(new HeaderAdapter(this, mGeneratedHeaders));
+            super.setListAdapter(new HeaderAdapter(this, adapter));
         }
     }
 
@@ -359,6 +355,7 @@ public class SettingsActivity extends PreferenceActivity {
             TextView summary;
         }
 
+        private ListAdapter mAdapter;
         private LayoutInflater mInflater;
 
         static int getHeaderType(Header header) {
@@ -400,9 +397,20 @@ public class SettingsActivity extends PreferenceActivity {
             return true;
         }
 
-        public HeaderAdapter(Context context, List<Header> objects) {
-            super(context, 0, objects);
+        public HeaderAdapter(Context context, ListAdapter adapter) {
+            super(context, 0);
+            mAdapter = adapter;
             mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public Header getItem(int position) {
+            return (Header) mAdapter.getItem(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mAdapter.getCount();
         }
 
         @Override
