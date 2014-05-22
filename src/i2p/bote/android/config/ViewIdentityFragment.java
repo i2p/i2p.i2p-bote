@@ -7,9 +7,14 @@ import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -107,6 +112,41 @@ public class ViewIdentityFragment extends Fragment {
             Intent ei = new Intent(getActivity(), EditIdentityActivity.class);
             ei.putExtra(EditIdentityFragment.IDENTITY_KEY, mKey);
             startActivity(ei);
+            return true;
+
+        case R.id.action_delete_identity:
+            DialogFragment df = new DialogFragment() {
+                @Override
+                public Dialog onCreateDialog(Bundle savedInstanceState) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(R.string.delete_identity)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            try {
+                                BoteHelper.deleteIdentity(mKey);
+                                getActivity().setResult(Activity.RESULT_OK);
+                                getActivity().finish();
+                            } catch (PasswordException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            } catch (GeneralSecurityException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }
+                    }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    return builder.create();
+                }
+            };
+            df.show(getActivity().getSupportFragmentManager(), "deletecontact");
             return true;
 
         default:

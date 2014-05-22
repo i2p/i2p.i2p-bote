@@ -101,5 +101,6 @@
     <string name="description">Description</string>
     <string name="default_identity">Default identity</string>
     <string name="save_identity">Save identity</string>
+    <string name="delete_identity">Delete identity?</string>
     <string name="identity_saved">Identity saved</string>
 </resources>

@@ -8,4 +8,9 @@
         android:title="@string/edit_identity"
         i2pandroid:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_delete_identity"
+        android:title="@string/action_delete"
+        i2pandroid:showAsAction="never"/>
+
 </menu>

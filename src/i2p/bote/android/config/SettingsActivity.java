@@ -5,6 +5,7 @@ import i2p.bote.I2PBote;
 import i2p.bote.android.R;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +36,8 @@ import android.widget.TextView;
 public class SettingsActivity extends PreferenceActivity {
     // Actions for legacy settings
     private static final String ACTION_PREFS_GENERAL = "i2p.bote.PREFS_GENERAL";
+
+    static final int ALTER_IDENTITY_LIST = 1;
 
     // Preference Header vars
     private Header[] mIdentityListHeaders;
@@ -116,11 +120,20 @@ public class SettingsActivity extends PreferenceActivity {
         switch (item.getItemId()) {
         case R.id.action_new_identity:
             Intent ni = new Intent(this, EditIdentityActivity.class);
-            startActivity(ni);
+            startActivityForResult(ni, ALTER_IDENTITY_LIST);
             return true;
 
         default:
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ALTER_IDENTITY_LIST) {
+            if (resultCode == Activity.RESULT_OK) {
+                updateIdentities();
+            }
         }
     }
 
@@ -369,7 +382,12 @@ public class SettingsActivity extends PreferenceActivity {
 
         @Override
         public boolean isEnabled(int position) {
-            return getItemViewType(position) != HEADER_TYPE_CATEGORY;
+            try {
+                return getItemViewType(position) != HEADER_TYPE_CATEGORY;
+            } catch (IndexOutOfBoundsException e) {
+                // Happens when deleting an identity
+                return false;
+            }
         }
 
         @Override
