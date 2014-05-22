@@ -51,8 +51,7 @@
                     <TextView
                         android:id="@+id/email_sender"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sender" />
+                        android:layout_height="wrap_content" />
                 </TableRow>
 
                 <TableRow
@@ -86,8 +85,7 @@
                     <TextView
                         android:id="@+id/email_sent"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Datetime" />
+                        android:layout_height="wrap_content" />
                 </TableRow>
 
                 <TableRow
@@ -103,8 +101,7 @@
                     <TextView
                         android:id="@+id/email_received"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Datetime" />
+                        android:layout_height="wrap_content" />
                 </TableRow>
             </TableLayout>
         </RelativeLayout>
@@ -113,8 +110,7 @@
             android:id="@+id/email_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Content" />
+            android:layout_margin="5dp" />
     </LinearLayout>
 
 </ScrollView>
