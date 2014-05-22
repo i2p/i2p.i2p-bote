@@ -1,13 +1,9 @@
-- Deleting identities
--- Select identities in list, or menu option of each?
-- Deleting contacts
 - Fix B64 encoding of Bitmaps
 - "Empty trash" option in Trash folder
 - Figure out how to highlight email backgrounds when selected in list
 - Refine view email page
 - Show contact pictures in recipients dropdown
 - Add optional CC: and BCC: fields
-- Fix NPE in Settings when rotating screen
 
 - Refactor code
 -- Reorganize for clarity
