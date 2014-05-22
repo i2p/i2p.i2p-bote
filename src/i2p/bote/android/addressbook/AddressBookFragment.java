@@ -74,7 +74,7 @@ public class AddressBookFragment extends ListFragment implements
         switch (item.getItemId()) {
         case R.id.action_new_contact:
             Intent nci = new Intent(getActivity(), EditContactActivity.class);
-            startActivity(nci);
+            getActivity().startActivityForResult(nci, AddressBookActivity.ALTER_CONTACT_LIST);
             return true;
 
         default:
@@ -85,6 +85,11 @@ public class AddressBookFragment extends ListFragment implements
     @Override
     public void onListItemClick(ListView parent, View view, int pos, long id) {
         mCallback.onContactSelected(mAdapter.getItem(pos));
+    }
+
+    protected void updateContactList() {
+        setListShown(false);
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     // LoaderManager.LoaderCallbacks<SortedSet<Contact>>

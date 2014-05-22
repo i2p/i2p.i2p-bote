@@ -57,6 +57,7 @@
     <string name="email_destination">Email destination</string>
     <string name="label_browse">Browse</string>
     <string name="save_contact">Save contact</string>
+    <string name="delete_contact">Delete contact?</string>
 
     <string name="network_info_unavailable">Network information is not available because Bote hasn\'t started connecting to the network yet.</string>
     <string name="local_destination">Local Destination:</string>

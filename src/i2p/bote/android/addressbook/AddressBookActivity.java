@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBarActivity;
 
 public class AddressBookActivity extends ActionBarActivity implements
         AddressBookFragment.OnContactSelectedListener {
+    static final int ALTER_CONTACT_LIST = 1;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,19 @@ public class AddressBookActivity extends ActionBarActivity implements
         } else {
             Intent i = new Intent(this, EditContactActivity.class);
             i.putExtra(EditContactFragment.CONTACT_DESTINATION, contact.getBase64Dest());
-            startActivity(i);
+            startActivityForResult(i, ALTER_CONTACT_LIST);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ALTER_CONTACT_LIST) {
+            if (resultCode == Activity.RESULT_OK) {
+                AddressBookFragment f = (AddressBookFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
+                f.updateContactList();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

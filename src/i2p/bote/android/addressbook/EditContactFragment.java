@@ -7,15 +7,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
+
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.EditPictureFragment;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -123,9 +128,11 @@ public class EditContactFragment extends EditPictureFragment {
 
             try {
                 String err = BoteHelper.saveContact(destination, name, picture, text);
-                if (err == null)
+                if (err == null) {
+                    if (mDestination == null) // Only set if adding new contact
+                        getActivity().setResult(Activity.RESULT_OK);
                     getActivity().finish();
-                else
+                } else
                     mError.setText(err);
             } catch (PasswordException e) {
                 // TODO Auto-generated catch block
@@ -136,6 +143,41 @@ public class EditContactFragment extends EditPictureFragment {
                 e.printStackTrace();
                 mError.setText(e.getLocalizedMessage());
             }
+            return true;
+
+        case R.id.action_delete_contact:
+            DialogFragment df = new DialogFragment() {
+                @Override
+                public Dialog onCreateDialog(Bundle savedInstanceState) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(R.string.delete_contact)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            try {
+                                String err = BoteHelper.deleteContact(mDestination);
+                                if (err == null) {
+                                    getActivity().setResult(Activity.RESULT_OK);
+                                    getActivity().finish();
+                                } else
+                                    mError.setText(err);
+                            } catch (PasswordException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            } catch (GeneralSecurityException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }
+                    }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    return builder.create();
+                }
+            };
+            df.show(getActivity().getSupportFragmentManager(), "deletecontact");
             return true;
 
         default:
