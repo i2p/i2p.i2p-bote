@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class ViewEmailFragment extends Fragment {
@@ -114,6 +115,12 @@ public class ViewEmailFragment extends Fragment {
         } catch (GeneralSecurityException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        }
+
+        if (BoteHelper.isOutbox(mFolderName)) {
+            ((TextView) v.findViewById(R.id.email_status)).setText(
+                    BoteHelper.getEmailStatusText(getActivity(), email, true));
+            ((TableRow) v.findViewById(R.id.email_status_row)).setVisibility(View.VISIBLE);
         }
     }
 }

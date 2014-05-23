@@ -103,6 +103,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </TableRow>
+
+                <TableRow
+                    android:id="@+id/email_status_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
+                        android:text="@string/email_status" />
+
+                    <TextView
+                        android:id="@+id/email_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </TableRow>
             </TableLayout>
         </RelativeLayout>
 
