@@ -110,7 +110,7 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
                             getContext().getResources().getDrawable(
                                     R.drawable.ic_navigation_accept),
                             null, null, null);
-                else if (email.getDeliveryPercentage() > 0)
+                else
                     emailStatus.setText(email.getDeliveryPercentage() + "%");
                 emailStatus.setVisibility(View.VISIBLE);
             }
