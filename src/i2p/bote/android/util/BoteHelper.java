@@ -8,6 +8,7 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,7 @@ import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.Outbox.EmailStatus;
 import i2p.bote.packet.dht.Contact;
 import i2p.bote.util.GeneralHelper;
 
@@ -150,5 +152,50 @@ public class BoteHelper extends GeneralHelper {
 
         // We are not the sender
         return false;
+    }
+
+    public static String getEmailStatusText(Context ctx, Email email, boolean full) {
+        Resources res = ctx.getResources();
+        EmailStatus emailStatus = getEmailStatus(email);
+        switch (emailStatus.getStatus()) {
+        case QUEUED:
+            return res.getString(R.string.queued);
+        case SENDING:
+            return res.getString(R.string.sending);
+        case SENT_TO:
+            if (full)
+                return res.getString(R.string.sent_to,
+                        emailStatus.getParam1(), emailStatus.getParam2());
+            else
+                return res.getString(R.string.sent_to_short,
+                        emailStatus.getParam1(), emailStatus.getParam2());
+        case EMAIL_SENT:
+            return res.getString(R.string.email_sent);
+        case GATEWAY_DISABLED:
+            return res.getString(R.string.gateway_disabled);
+        case NO_IDENTITY_MATCHES:
+            if (full)
+                return res.getString(R.string.no_identity_matches,
+                        emailStatus.getParam1());
+        case INVALID_RECIPIENT:
+            if (full)
+                return res.getString(R.string.invalid_recipient,
+                        emailStatus.getParam1());
+        case ERROR_CREATING_PACKETS:
+            if (full)
+                return res.getString(R.string.error_creating_packets,
+                        emailStatus.getParam1());
+        case ERROR_SENDING:
+            if (full)
+                return res.getString(R.string.error_sending,
+                        emailStatus.getParam1());
+        case ERROR_SAVING_METADATA:
+            if (full)
+                return res.getString(R.string.error_saving_metadata,
+                        emailStatus.getParam1());
+        default:
+            // Short string for errors and unknown status
+            return res.getString(R.string.error);
+        }
     }
 }

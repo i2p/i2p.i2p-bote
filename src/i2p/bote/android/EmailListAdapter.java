@@ -8,7 +8,6 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.Part;
 
-import i2p.bote.Util;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
@@ -107,7 +106,8 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
                 else if (email.getDeliveryPercentage() > 0)
                     emailStatus.setText(email.getDeliveryPercentage() + "%");
                 else
-                    emailStatus.setText(BoteHelper.getEmailStatus(email));
+                    emailStatus.setText(BoteHelper.getEmailStatusText(
+                            getContext(), email, false));
                 emailStatus.setVisibility(View.VISIBLE);
             }
         } catch (MessagingException e) {
