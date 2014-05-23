@@ -26,16 +26,18 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
     private final LayoutInflater mInflater;
     private SparseBooleanArray mSelectedEmails;
     private EmailSelector mSelector;
+    private boolean mIsOutbox;
 
     public interface EmailSelector {
         public void select(int position);
     }
 
-    public EmailListAdapter(Context context, EmailSelector selector) {
+    public EmailListAdapter(Context context, EmailSelector selector, boolean isOutbox) {
         super(context, android.R.layout.simple_list_item_2);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSelectedEmails = new SparseBooleanArray();
         mSelector = selector;
+        mIsOutbox = isOutbox;
     }
 
     public void setData(List<Email> emails) {
@@ -95,9 +97,14 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
                 from.setTypeface(Typeface.DEFAULT_BOLD);
             }
 
-            // Set email status if we sent it
-            if (BoteHelper.isSentEmail(email)) {
-                TextView emailStatus = (TextView) v.findViewById(R.id.email_status);
+            TextView emailStatus = (TextView) v.findViewById(R.id.email_status);
+            // Set email sending status if this is the outbox,
+            // or set email delivery status if we sent it.
+            if (mIsOutbox) {
+                emailStatus.setText(BoteHelper.getEmailStatusText(
+                        getContext(), email, false));
+                emailStatus.setVisibility(View.VISIBLE);
+            } else if (BoteHelper.isSentEmail(email)) {
                 if (email.isDelivered())
                     emailStatus.setCompoundDrawablesWithIntrinsicBounds(
                             getContext().getResources().getDrawable(
@@ -105,9 +112,6 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
                             null, null, null);
                 else if (email.getDeliveryPercentage() > 0)
                     emailStatus.setText(email.getDeliveryPercentage() + "%");
-                else
-                    emailStatus.setText(BoteHelper.getEmailStatusText(
-                            getContext(), email, false));
                 emailStatus.setVisibility(View.VISIBLE);
             }
         } catch (MessagingException e) {

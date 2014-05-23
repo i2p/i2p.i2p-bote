@@ -198,4 +198,8 @@ public class BoteHelper extends GeneralHelper {
             return res.getString(R.string.error);
         }
     }
+
+    public static boolean isOutbox(EmailFolder folder) {
+        return "Outbox".equalsIgnoreCase(folder.getName());
+    }
 }

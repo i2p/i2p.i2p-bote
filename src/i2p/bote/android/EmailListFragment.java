@@ -93,9 +93,10 @@ public class EmailListFragment extends ListFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new EmailListAdapter(getActivity(), this);
         String folderName = getArguments().getString(FOLDER_NAME);
         mFolder = BoteHelper.getMailFolder(folderName);
+        mAdapter = new EmailListAdapter(getActivity(), this,
+                BoteHelper.isOutbox(mFolder));
 
         setListAdapter(mAdapter);
 
@@ -317,6 +318,8 @@ public class EmailListFragment extends ListFragment implements
             // Inflate the menu for the CAB
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.email_list_context, menu);
+            if (BoteHelper.isOutbox(mFolder))
+                menu.findItem(R.id.action_move_to).setVisible(false);
             return true;
         }
 
