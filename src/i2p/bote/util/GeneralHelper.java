@@ -37,6 +37,7 @@ import i2p.bote.email.Fingerprint;
 import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.Outbox.EmailStatus;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.NetworkStatus;
 import i2p.bote.packet.dht.Contact;
@@ -54,6 +55,7 @@ import java.util.regex.Pattern;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
+
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
@@ -411,7 +413,7 @@ public class GeneralHelper {
         }
     }
 
-    public static String getEmailStatus(Email email) {
+    public static EmailStatus getEmailStatus(Email email) {
         return I2PBote.getInstance().getOutbox().getStatus(email);
     }
 

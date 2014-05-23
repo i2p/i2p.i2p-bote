@@ -153,7 +153,7 @@
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
             </td>
-            <td><div${class}><a href="${mailUrl}">${ib:getEmailStatus(email)}</a></div></td>
+            <td><div${class}><a href="${mailUrl}">${ib:getEmailStatusText(email)}</a></div></td>
             <td>
                 <a href="deleteEmail.jsp?folder=Outbox&amp;messageID=${email.messageID}">
                 <img src="${themeDir}/images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>

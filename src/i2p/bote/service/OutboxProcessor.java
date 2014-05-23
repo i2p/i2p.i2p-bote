@@ -21,7 +21,6 @@
 
 package i2p.bote.service;
 
-import static i2p.bote.Util._;
 import i2p.bote.Configuration;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
@@ -31,7 +30,9 @@ import i2p.bote.email.Identities;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.FolderIterator;
 import i2p.bote.folder.Outbox;
+import i2p.bote.folder.Outbox.EmailStatus.Status;
 import i2p.bote.folder.RelayPacketFolder;
+import i2p.bote.folder.Outbox.EmailStatus;
 import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.NetworkStatusSource;
@@ -156,12 +157,13 @@ public class OutboxProcessor extends I2PAppThread {
             senderIdentity = identities.extractIdentity(sender);
             if (senderIdentity == null) {
                 log.error("No identity matches the sender/from field: " + sender + " in email: " + email);
-                outbox.setStatus(email, _("No identity matches the sender/from field: " + sender));
+                outbox.setStatus(email, new EmailStatus(Status.NO_IDENTITY_MATCHES,
+                        sender));
             }
         }
         
         // send to I2P-Bote recipients
-        outbox.setStatus(email, _("Sending"));
+        outbox.setStatus(email, new EmailStatus(Status.SENDING));
         Address[] recipients = email.getAllRecipients();
         boolean containsExternalRecipients = false;
         for (int i=0; i<recipients.length; i++) {
@@ -170,17 +172,18 @@ public class OutboxProcessor extends I2PAppThread {
                 containsExternalRecipients = true;
             else
                 sendToOne(senderIdentity, recipient.toString(), email);
-            outbox.setStatus(email, _("Sent to {0} out of {1} recipients", i+1, recipients.length));
+            outbox.setStatus(email, new EmailStatus(Status.SENT_TO,
+                    i+1, recipients.length));
         }
         
         // send to external recipients if there are any
         if (containsExternalRecipients) {
             if (configuration.isGatewayEnabled()) {
                 sendToOne(senderIdentity, configuration.getGatewayDestination(), email);
-                outbox.setStatus(email, _("Email sent"));
+                outbox.setStatus(email, new EmailStatus(Status.EMAIL_SENT));
             }
             else {
-                outbox.setStatus(email, _("Gateway disabled"));
+                outbox.setStatus(email, new EmailStatus(Status.GATEWAY_DISABLED));
                 throw new MessagingException("The email contains external addresses, but the gateway is disabled.");
             }
         }
@@ -220,19 +223,23 @@ public class OutboxProcessor extends I2PAppThread {
             outbox.saveMetadata(email);
         } catch (GeneralSecurityException e) {
             log.error("Invalid recipient address. " + logSuffix, e);
-            outbox.setStatus(email, _("Invalid recipient address: {0}", recipient));
+            outbox.setStatus(email, new EmailStatus(Status.INVALID_RECIPIENT,
+                    recipient));
             throw e;
         } catch (MessagingException e) {
             log.error("Can't create email packets. " + logSuffix, e);
-            outbox.setStatus(email, _("Error creating email packets: {0}", e.getLocalizedMessage()));
+            outbox.setStatus(email, new EmailStatus(Status.ERROR_CREATING_PACKETS,
+                    e.getLocalizedMessage()));
             throw e;
         } catch (DhtException e) {
             log.error("Can't store email packet on the DHT. " + logSuffix, e);
-            outbox.setStatus(email, _("Error while sending email: {0}", e.getLocalizedMessage()));
+            outbox.setStatus(email, new EmailStatus(Status.ERROR_SENDING,
+                    e.getLocalizedMessage()));
             throw e;
         } catch (IOException e) {
             log.error("Can't save metadata. " + logSuffix, e);
-            outbox.setStatus(email, _("Error saving email metadata: {0}", e.getLocalizedMessage()));
+            outbox.setStatus(email, new EmailStatus(Status.ERROR_SAVING_METADATA,
+                    e.getLocalizedMessage()));
         }
     }
     

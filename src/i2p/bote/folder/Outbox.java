@@ -21,7 +21,6 @@
 
 package i2p.bote.folder;
 
-import static i2p.bote.Util._;
 import i2p.bote.email.AddressDisplayFilter;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailAttribute;
@@ -43,11 +42,63 @@ import java.util.concurrent.ConcurrentHashMap;
  * about the sending progress.
  */
 public class Outbox extends EmailFolder {
-    private Map<String, String> statusMap;   // maps message IDs to status strings
+    public static class EmailStatus {
+        public static enum Status {
+            QUEUED,
+            SENDING,
+            SENT_TO,
+            EMAIL_SENT,
+            GATEWAY_DISABLED,
+            NO_IDENTITY_MATCHES,
+            INVALID_RECIPIENT,
+            ERROR_CREATING_PACKETS,
+            ERROR_SENDING,
+            ERROR_SAVING_METADATA,
+            ;
+        }
+
+        private final Status status;
+        private final Object param1;
+        private final Object param2;
+
+        public EmailStatus(Status status) {
+            this(status, null, null);
+        }
+
+        public EmailStatus(Status status, Object param1) {
+            this(status, param1, null);
+        }
+
+        public EmailStatus(Status status, Object param1, Object param2) {
+            this.status = status;
+            this.param1 = param1;
+            this.param2 = param2;
+        }
+
+        public Status getStatus() {
+            return status;
+        }
+
+        public Object getParam1() {
+            return param1;
+        }
+
+        public Object getParam2() {
+            return param2;
+        }
+
+        public int compareTo(EmailStatus that) {
+            return status.compareTo(that.status);
+        }
+    }
+
+    public static final EmailStatus DEFAULT_STATUS = new EmailStatus(EmailStatus.Status.QUEUED);
+
+    private Map<String, EmailStatus> statusMap;   // maps message IDs to EmailStatus
     
     public Outbox(File storageDir, PasswordHolder passwordHolder) {
         super(storageDir, passwordHolder);
-        statusMap = new ConcurrentHashMap<String, String>();
+        statusMap = new ConcurrentHashMap<String, EmailStatus>();
     }
 
     /**
@@ -73,7 +124,7 @@ public class Outbox extends EmailFolder {
         return emails;
     }
 
-    public void setStatus(Email email, String status) {
+    public void setStatus(Email email, EmailStatus status) {
         String messageId = email.getMessageID();
         if (messageId != null)
             statusMap.put(messageId, status);
@@ -86,11 +137,11 @@ public class Outbox extends EmailFolder {
      * @param messageId The message ID of the email
      * @see #getDefaultStatus()
      */
-    private String getStatus(String messageId) {
+    private EmailStatus getStatus(String messageId) {
         if (statusMap.containsKey(messageId))
             return statusMap.get(messageId);
         else
-            return getDefaultStatus();
+            return DEFAULT_STATUS;
     }
     
     /**
@@ -100,19 +151,11 @@ public class Outbox extends EmailFolder {
      * @param email
      * @see #getDefaultStatus()
      */
-    public String getStatus(Email email) {
+    public EmailStatus getStatus(Email email) {
         String messageId = email.getMessageID();
         if (messageId == null)
-            return getDefaultStatus();
+            return DEFAULT_STATUS;
         else
             return getStatus(messageId);
-    }
-    
-    /**
-     * This is a method rather than a static String so GNU gettext
-     * recognizes the String.
-     */
-    private String getDefaultStatus() {
-        return _("Queued");
     }
 }

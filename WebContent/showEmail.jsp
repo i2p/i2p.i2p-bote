@@ -98,7 +98,7 @@
     
     <c:if test="${param.folder eq 'Outbox'}">
         <div class="email-form-label"><ib:message key="Status:"/></div>
-        <div class="show-email-value">${ib:getEmailStatus(email)}</div>
+        <div class="show-email-value">${ib:getEmailStatusText(email)}</div>
     </c:if>
     
     <br/>

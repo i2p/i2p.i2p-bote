@@ -21,6 +21,10 @@
 
 package i2p.bote.web;
 
+import static i2p.bote.Util._;
+import i2p.bote.I2PBote;
+import i2p.bote.email.Email;
+import i2p.bote.folder.Outbox.EmailStatus;
 import i2p.bote.util.GeneralHelper;
 
 import java.io.UnsupportedEncodingException;
@@ -221,6 +225,36 @@ public class JSPHelper extends GeneralHelper {
                 new Log(JSPHelper.class).error("Invalid URL: </" + localizedName + ">", e);
                 return baseName;
             }
+        }
+    }
+
+    public static String getEmailStatusText(Email email) {
+        EmailStatus emailStatus = getEmailStatus(email);
+        switch (emailStatus.getStatus()) {
+        case QUEUED:
+            return _("Queued");
+        case SENDING:
+            return _("Sending");
+        case SENT_TO:
+            return _("Sent to {0} out of {1} recipients",
+                    emailStatus.getParam1(), emailStatus.getParam2());
+        case EMAIL_SENT:
+            return _("Email sent");
+        case GATEWAY_DISABLED:
+            return _("Gateway disabled");
+        case NO_IDENTITY_MATCHES:
+            return _("No identity matches the sender/from field: {0}",
+                    emailStatus.getParam1());
+        case INVALID_RECIPIENT:
+            return _("Invalid recipient address: {0}", emailStatus.getParam1());
+        case ERROR_CREATING_PACKETS:
+            return _("Error creating email packets: {0}", emailStatus.getParam1());
+        case ERROR_SENDING:
+            return _("Error while sending email: {0}", emailStatus.getParam1());
+        case ERROR_SAVING_METADATA:
+            return _("Error saving email metadata: {0}", emailStatus.getParam1());
+        default:
+            return "";
         }
     }
 }
