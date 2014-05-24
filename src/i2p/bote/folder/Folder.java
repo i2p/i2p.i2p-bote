@@ -91,9 +91,10 @@ public abstract class Folder<T> {
                 return name.toUpperCase().endsWith(fileExtension.toUpperCase());
             }
         });
-        if (files == null)
+        if (files == null) {
             log.error("Cannot list files in directory <" + storageDir + ">");
-        else
+            files = new File[0];
+        } else
             // sort files by date, newest first
             Arrays.sort(files, new Comparator<File>() {
                 @Override
