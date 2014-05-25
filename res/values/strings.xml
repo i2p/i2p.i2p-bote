@@ -41,15 +41,15 @@
 
     <string name="queued">Queued</string>
     <string name="sending">Sending</string>
-    <string name="sent_to_short">Sent {0} of {1}</string>
-    <string name="sent_to">Sent to {0} out of {1} recipients</string>
+    <string name="sent_to_short">Sent %1$d of %2$d</string>
+    <string name="sent_to">Sent to %1$d out of %2$d recipients</string>
     <string name="email_sent">Email sent</string>
     <string name="gateway_disabled">Gateway disabled</string>
-    <string name="no_identity_matches">No identity matches the sender/from field: {0}</string>
-    <string name="invalid_recipient">Invalid recipient address: {0}</string>
-    <string name="error_creating_packets">Error creating email packets: {0}</string>
-    <string name="error_sending">Error while sending email: {0}</string>
-    <string name="error_saving_metadata">Error saving email metadata: {0}</string>
+    <string name="no_identity_matches">No identity matches the sender/from field: %s</string>
+    <string name="invalid_recipient">Invalid recipient address: %s</string>
+    <string name="error_creating_packets">Error creating email packets: %s</string>
+    <string name="error_sending">Error while sending email: %s</string>
+    <string name="error_saving_metadata">Error saving email metadata: %s</string>
 
     <string name="email_from">From:</string>
     <string name="email_to">To:</string>
