@@ -1,6 +1,5 @@
 package i2p.bote.android;
 
-import net.i2p.client.I2PClient;
 import i2p.bote.I2PBote;
 import i2p.bote.android.addressbook.AddressBookActivity;
 import i2p.bote.android.config.SettingsActivity;
@@ -8,7 +7,6 @@ import i2p.bote.android.service.BoteService;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.folder.EmailFolder;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -255,11 +253,13 @@ public class EmailListActivity extends ActionBarActivity implements
         case R.id.action_start_bote:
             Intent start = new Intent(this, BoteService.class);
             startService(start);
+            supportInvalidateOptionsMenu();
             return true;
 
         case R.id.action_stop_bote:
             Intent stop = new Intent(this, BoteService.class);
             stopService(stop);
+            supportInvalidateOptionsMenu();
             return true;
 
         case R.id.action_settings:
