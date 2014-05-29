@@ -53,17 +53,16 @@
             android:summary="@string/pref_summ_maxDelay"
             android:title="@string/pref_title_maxDelay" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="I2P" >
-        <i2p.bote.android.util.SummaryEditTextPreference
-            android:defaultValue="127.0.0.1"
-            android:key="i2pbote.i2cp.tcp.host"
-            android:summary="%s"
-            android:title="@string/pref_title_i2cp_host" />
-        <i2p.bote.android.util.SummaryEditTextPreference
-            android:defaultValue="7654"
-            android:key="i2pbote.i2cp.tcp.port"
-            android:summary="%s"
-            android:title="@string/pref_title_i2cp_port" />
+    <PreferenceCategory
+        android:key="i2pCategory"
+        android:title="I2P" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:disableDependentsState="true"
+            android:key="i2pbote.router.auto"
+            android:summaryOff="Manual"
+            android:summaryOn="Auto"
+            android:title="Router settings" />
     </PreferenceCategory>
 
 </PreferenceScreen>

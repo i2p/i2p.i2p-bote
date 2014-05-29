@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/i2p.i2p-bote"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/i2p_sdk"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ministreaming"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/i2p_router"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

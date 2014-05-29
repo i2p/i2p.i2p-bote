@@ -59,6 +59,9 @@
             </zipfileset>
         </jar>
 
+        <!-- router -->
+        <copy file="${i2plib}/router.jar" todir="${jar.libs.dir}" />
+
         <!-- streaming -->
         <copy file="${i2plib}/mstreaming.jar" todir="${jar.libs.dir}" />
         <copy file="${i2plib}/streaming.jar" todir="${jar.libs.dir}" />

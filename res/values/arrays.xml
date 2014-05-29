@@ -6,4 +6,14 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string-array name="routerOptions">
+        <item>internal</item>
+        <item>android</item>
+        <item>remote</item>
+    </string-array>
+    <string-array name="routerOptionNames">
+        <item>Internal</item>
+        <item>I2P Android</item>
+        <item>Remote I2P router</item>
+    </string-array>
 </resources>
