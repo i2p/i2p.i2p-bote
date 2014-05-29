@@ -64,6 +64,8 @@ class MigrateTo028 {
     
     private void migrateIdentitiesIfNeeded(Configuration configuration, PasswordHolder passwordHolder) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
         File identitiesFile = configuration.getIdentitiesFile();
+        if (!identitiesFile.exists())
+            return;
         
         BufferedReader input = null;
         try {
@@ -120,9 +122,9 @@ class MigrateTo028 {
         // set the default identity; if none defined, make the first one the default
         EmailIdentity defaultIdentity = get(identitiesSet, defaultIdentityString);
         if (defaultIdentity != null)
-            defaultIdentity.setDefault(true);
+            defaultIdentity.setDefaultIdentity(true);
         else if (!identitiesSet.isEmpty())
-            identitiesSet.iterator().next().setDefault(true);
+            identitiesSet.iterator().next().setDefaultIdentity(true);
         
         Identities identities = new Identities(configuration.getIdentitiesFile(), passwordHolder);
         for (EmailIdentity identity: identitiesSet)
@@ -177,6 +179,8 @@ class MigrateTo028 {
     
     private void migrateAddressBookIfNeeded(Configuration configuration, PasswordHolder passwordHolder) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
         File addressBookFile = configuration.getAddressBookFile();
+        if (!addressBookFile.exists())
+            return;
         
         BufferedReader input = null;
         try {
