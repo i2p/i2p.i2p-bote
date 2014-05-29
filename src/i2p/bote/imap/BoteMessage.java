@@ -358,7 +358,7 @@ public class BoteMessage implements Message<String> {
 
     @Override
     public boolean isSeen() {
-        return !email.isNew();
+        return !email.isUnread();
     }
 
     @Override

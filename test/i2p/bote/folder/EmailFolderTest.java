@@ -149,7 +149,7 @@ public class EmailFolderTest {
         folder1.add(email1);
         FolderIterator<Email> iterator = folder1.iterate();
         Email emailFromFolder = iterator.next();
-        assertEquals("\"new\" flag is false after adding email to folder!", emailFromFolder.isNew(), true);
+        assertEquals("\"unread\" flag is false after adding email to folder!", emailFromFolder.isUnread(), true);
         folder1.setNew(email1.getMessageID(), false);
     }
 }

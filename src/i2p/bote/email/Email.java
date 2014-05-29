@@ -783,14 +783,14 @@ public class Email extends MimeMessage {
         return messageId.toBase64();
     }
     
-    /** @see EmailMetadata#setNew(boolean) */
-    public void setNew(boolean isNew) {
-        metadata.setNew(isNew);
+    /** @see EmailMetadata#setUnread(boolean) */
+    public void setUnread(boolean unread) {
+        metadata.setUnread(unread);
     }
 
-    /** @see EmailMetadata#isNew() */
-    public boolean isNew() {
-        return metadata.isNew();
+    /** @see EmailMetadata#isUnread() */
+    public boolean isUnread() {
+        return metadata.isUnread();
     }
 
     /** @see EmailMetadata#setCreateTime(Date) */
@@ -844,7 +844,7 @@ public class Email extends MimeMessage {
      */
     @Override
     public synchronized void setFlags(Flags flag, boolean set) throws MessagingException {
-        setNew(!(flag.contains(Flag.SEEN)));
+        setUnread(!(flag.contains(Flag.SEEN)));
         setReplied(flag.contains(Flag.ANSWERED));
         setDeleted(flag.contains(Flag.DELETED));
         super.setFlags(flag, set);
@@ -853,7 +853,7 @@ public class Email extends MimeMessage {
     @Override
     public Flags getFlags() {
         Flags flags = new Flags();
-        if (!isNew())
+        if (!isUnread())
             flags.add(Flag.SEEN);
         if (isReplied())
             flags.add(Flag.ANSWERED);

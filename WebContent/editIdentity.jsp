@@ -34,7 +34,7 @@
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 
 <c:choose>
-    <c:when test="${param.new}">
+    <c:when test="${param.createNew}">
         <ib:message key="New Email Identity" var="title" scope="request"/>
         <ib:message key="Create" var="commitAction"/>
         <c:set var="publicName" value="${param.publicName}"/>
@@ -58,7 +58,7 @@
 
 <div class="main">
     <h2>${title}</h2>
-    <c:if test="${param.new}">
+    <c:if test="${param.createNew}">
         <ib:message>An Email Identity lets you receive email from other I2P-Bote users.</ib:message>
         <ib:expandable>
             <jsp:include page="identitiesHelp.jsp"/>
@@ -102,12 +102,12 @@
     
         <div class="identity-form-label">
             <div class="field-label"><ib:message key="Encryption:"/></div>
-            <c:if test="${param.new}">
+            <c:if test="${param.createNew}">
                 <div class="addtl-text"><ib:message key="(If unsure, leave the default)"/></div>
             </c:if>
         </div>
         <div class="identity-form-value">
-            <c:if test="${param.new}">
+            <c:if test="${param.createNew}">
                 <c:set var="selectedCryptoImplId" value="${param.cryptoImpl}"/>
                 <c:if test="${empty param.cryptoImpl}">
                     <c:set var="selectedCryptoImplId" value="2"/>
@@ -124,7 +124,7 @@
                     </c:forEach>
                 </select>
             </c:if>
-            <c:if test="${not param.new}">
+            <c:if test="${not param.createNew}">
                 <c:set var="cryptoImpl" value="${ib:getCryptoImplementation(identity.cryptoImpl.id)}"/>
                 ${cryptoImpl.name}
             </c:if>
@@ -169,10 +169,10 @@
             <c:if test="${jspHelperBean.identities.size le 1}">
                 <c:set var="disabled" value="disabled='disabled'"/>
             </c:if>
-            <c:if test="${param.isDefault or not empty disabled}">
+            <c:if test="${param.defaultIdentity or not empty disabled}">
                 <c:set var="checked" value="checked='checked'"/>
             </c:if>
-            <input type="checkbox" name="isDefault" ${disabled} ${checked}/>
+            <input type="checkbox" name="defaultIdentity" ${disabled} ${checked}/>
         </div>
         
         <c:if test="${not empty param.key}">
@@ -187,12 +187,12 @@
         
         <p><br/></p>
         <div class="identity-buttons">
-            <input type="hidden" name="new" value="${param.new}"/>
+            <input type="hidden" name="createNew" value="${param.createNew}"/>
             <input type="hidden" name="key" value="${param.key}"/>
             <button name="action" value="${commitAction}">${commitAction}</button>
             <button name="action" value="cancel"><ib:message key="Cancel"/></button>
         </div>
-        <c:if test="${not param.new}">
+        <c:if test="${not param.createNew}">
             <div class="identity-delete">
                 <jsp:include page="getStatus.jsp"/>
                 <c:if test="${connStatus ne CONNECTED}">

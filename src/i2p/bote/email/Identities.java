@@ -143,7 +143,7 @@ public class Identities implements KeyUpdateHandler {
                 identities.add(identity);
                 
                 if (identity.getKey().equals(defaultIdentityStr)) {
-                    identity.setDefault(true);
+                    identity.setDefaultIdentity(true);
                     defaultIdentity = identity;
                 }
                 
@@ -208,7 +208,7 @@ public class Identities implements KeyUpdateHandler {
         initializeIfNeeded();
         
         if (identities.isEmpty())
-            identity.setDefault(true);
+            identity.setDefaultIdentity(true);
         identities.add(identity);
     }
     
@@ -220,8 +220,8 @@ public class Identities implements KeyUpdateHandler {
             identities.remove(identity);
             
             // if we deleted the default identity, set a new default
-            if (identity.isDefault() && !identities.isEmpty())
-                identities.iterator().next().setDefault(true);
+            if (identity.isDefaultIdentity() && !identities.isEmpty())
+                identities.iterator().next().setDefaultIdentity(true);
             
             // when the last identity is deleted, remove the file; see isEmpty()
             if (identities.isEmpty() && !identitiesFile.delete())
@@ -250,9 +250,9 @@ public class Identities implements KeyUpdateHandler {
         
         // clear the old default
         for (EmailIdentity identity: identities)
-            identity.setDefault(false);
+            identity.setDefaultIdentity(false);
         
-        defaultIdentity.setDefault(true);
+        defaultIdentity.setDefaultIdentity(true);
 
         this.defaultIdentity = defaultIdentity;
     }
@@ -269,7 +269,7 @@ public class Identities implements KeyUpdateHandler {
             return null;
         
         for (EmailIdentity identity: identities)
-            if (identity.isDefault())
+            if (identity.isDefaultIdentity())
                 return identity;
         
         return null;

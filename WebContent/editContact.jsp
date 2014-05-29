@@ -34,10 +34,10 @@
         cancel    - go to the URL in backUrl
         
     Other parameters:
-        new       - true for new contact, false for existing contact.
-                    If new=true, the name field is populated with
+        createNew - true for new contact, false for existing contact.
+                    If createNew=true, the name field is populated with
                     the value of the "name" parameter.
-                    If new=false, the name is read from the address
+                    If createNew=false, the name is read from the address
                     book, and the "name" parameter is ignored.
 --%>
 
@@ -85,7 +85,7 @@
 </c:if>
 
 <c:choose>
-    <c:when test="${param.new}">
+    <c:when test="${param.createNew}">
         <ib:message key="New Contact" var="title"/>
         <c:set var="title" value="${title}" scope="request"/>
         <ib:message key="Add" var="submitButtonText"/>

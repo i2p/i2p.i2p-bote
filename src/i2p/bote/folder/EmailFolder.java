@@ -378,7 +378,7 @@ public class EmailFolder extends Folder<Email> {
             if (metaFile.exists())
                 try {
                     EmailMetadata metadata = getMetadata(metaFile);
-                    if (metadata.isNew())
+                    if (metadata.isUnread())
                         numNew++;
                 } catch (IOException e) {
                     log.error("Can't read metadata file: <" + metaFile.getAbsolutePath() + ">", e);
@@ -402,7 +402,7 @@ public class EmailFolder extends Folder<Email> {
      */
     public void setNew(String messageId, boolean isNew) throws PasswordException, GeneralSecurityException {
         EmailMetadata metadata = getMetadata(messageId);
-        metadata.setNew(isNew);
+        metadata.setUnread(isNew);
         try {
             saveMetadata(metadata, getMetadataFile(messageId));
         } catch (IOException e) {
@@ -412,7 +412,7 @@ public class EmailFolder extends Folder<Email> {
     
     public void setNew(Email email, boolean isNew) throws PasswordException, GeneralSecurityException {
         EmailMetadata metadata = email.getMetadata();
-        metadata.setNew(isNew);
+        metadata.setUnread(isNew);
         try {
             saveMetadata(email);
         } catch (IOException e) {

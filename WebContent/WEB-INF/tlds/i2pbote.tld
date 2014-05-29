@@ -482,13 +482,13 @@
 </function>
 
 <function>
-    <name>getEmailStatus</name>
+    <name>getEmailStatusText</name>
     <description>
         Returns the status of an email in the outbox. See OutboxProcessor.java.
     </description>
-    <function-class>i2p.bote.util.GeneralHelper</function-class>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
-        java.lang.String getEmailStatus(i2p.bote.email.Email)
+        java.lang.String getEmailStatusText(i2p.bote.email.Email)
     </function-signature>
 </function>
  

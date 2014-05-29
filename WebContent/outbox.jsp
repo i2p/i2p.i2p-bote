@@ -136,7 +136,7 @@
             <c:set var="mailUrl" value="showEmail.jsp?folder=Outbox&amp;messageID=${email.messageID}"/>
             
             <c:choose>
-                <c:when test="${email.new}"><c:set var="textClass" value="folder-item-new"/></c:when>
+                <c:when test="${email.unread}"><c:set var="textClass" value="folder-item-new"/></c:when>
                 <c:otherwise><c:set var="textClass" value="folder-item-old"/></c:otherwise>
             </c:choose>
             
@@ -153,7 +153,7 @@
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
             </td>
-            <td><div${class}><a href="${mailUrl}">${ib:getEmailStatusText(email)}</a></div></td>
+            <td><div><a href="${mailUrl}">${ib:getEmailStatusText(email)}</a></div></td>
             <td>
                 <a href="deleteEmail.jsp?folder=Outbox&amp;messageID=${email.messageID}">
                 <img src="${themeDir}/images/delete.png" alt="<ib:message key='Delete'/>" title="<ib:message key='Delete this email'/>"/></a>

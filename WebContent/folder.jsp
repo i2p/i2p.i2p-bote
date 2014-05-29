@@ -179,7 +179,7 @@
             <c:set var="mailUrl" value="showEmail.jsp?folder=${folderName}&amp;messageID=${email.messageID}"/>
             
             <c:choose>
-                <c:when test="${email.new}"><c:set var="textClass" value="folder-item-new"/></c:when>
+                <c:when test="${email.unread}"><c:set var="textClass" value="folder-item-new"/></c:when>
                 <c:otherwise><c:set var="textClass" value="folder-item-old"/></c:otherwise>
             </c:choose>
             

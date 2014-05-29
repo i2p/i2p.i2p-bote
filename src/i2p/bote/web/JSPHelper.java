@@ -22,7 +22,6 @@
 package i2p.bote.web;
 
 import static i2p.bote.Util._;
-import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
 import i2p.bote.folder.Outbox.EmailStatus;
 import i2p.bote.util.GeneralHelper;

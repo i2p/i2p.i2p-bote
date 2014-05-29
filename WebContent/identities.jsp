@@ -59,13 +59,13 @@
         
         <tr class="${backgroundClass}">
         <td class="data-column-default">
-            <c:if test="${identity.default}">
+            <c:if test="${identity.defaultIdentity}">
                 <img src="${themeDir}/images/default.png"/>
             </c:if>
         </td>
         <td>
             <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
-            <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&amp;new=false&amp;key=${identity.key}&amp;cryptoImpl=${identity.cryptoImpl}&amp;publicName=${ib:escapeQuotes(identity.publicName)}&amp;description=${ib:escapeQuotes(identity.description)}&amp;emailAddress=${ib:escapeQuotes(identity.emailAddress)}&amp;isDefault=${identity.default}">
+            <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&amp;createNew=false&amp;key=${identity.key}&amp;cryptoImpl=${identity.cryptoImpl}&amp;publicName=${ib:escapeQuotes(identity.publicName)}&amp;description=${ib:escapeQuotes(identity.description)}&amp;emailAddress=${ib:escapeQuotes(identity.emailAddress)}&amp;defaultIdentity=${identity.defaultIdentity}">
                 ${identity.publicName}
             </a>
         </td>
@@ -76,7 +76,7 @@
     </table>
     
     <p/>
-    <form action="editIdentity.jsp?new=true" method="POST">
+    <form action="editIdentity.jsp?createNew=true" method="POST">
         <button type="submit" value="New"><ib:message key="New Identity"/></button>
     </form>
 </div>

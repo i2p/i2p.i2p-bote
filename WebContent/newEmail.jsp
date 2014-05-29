@@ -71,7 +71,7 @@
 --%>
 <c:set var="originalAttachmentFilename" value="${requestScope['newAttachment'].originalFilename}"/>
 
-<ib:message key="New Email" var="title"scope="request"/>
+<ib:message key="New Email" var="title" scope="request"/>
 <c:if test="${param.action eq 'attach' and empty originalAttachmentFilename}">
     <ib:message key="Please select a file to attach and try again." var="noAttachmentMsg"/>
     <c:set var="errorMessage" value="${noAttachmentMsg}" scope="request"/>
@@ -97,7 +97,7 @@
                     <c:if test="${fn:contains(param.sender, identity.key)}">
                         <c:set var="selected" value=" selected"/>
                     </c:if>
-                    <c:if test="${empty param.sender && identity.default}">
+                    <c:if test="${empty param.sender && identity.defaultIdentity}">
                         <c:set var="selected" value=" selected"/>
                     </c:if>
                     <option value="${identity.publicName} &lt;${identity.key}&gt;"${selected}>

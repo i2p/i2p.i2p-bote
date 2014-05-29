@@ -55,7 +55,7 @@ import net.i2p.util.Log;
  */
 public class EmailMetadata extends Properties {
     private static final long serialVersionUID = 9058161682262839810L;
-    private static final String PROPERTY_NEW = "new";
+    private static final String PROPERTY_UNREAD = "new";
     private static final String PROPERTY_CREATE_TIME = "createTime";
     private static final String PROPERTY_RECEIVED_DATE = "receivedDate";
     private static final String PROPERTY_REPLIED = "replied";
@@ -69,7 +69,7 @@ public class EmailMetadata extends Properties {
     private Log log = new Log(EmailMetadata.class);
     
     public EmailMetadata() {
-        setNew(true);
+        setUnread(true);
         setCreateTime(new Date());
     }
     
@@ -107,8 +107,8 @@ public class EmailMetadata extends Properties {
         }
     }
     
-    public void setNew(boolean isNew) {
-        setProperty(PROPERTY_NEW, String.valueOf(isNew));
+    public void setUnread(boolean unread) {
+        setProperty(PROPERTY_UNREAD, String.valueOf(unread));
     }
 
     /**
@@ -116,8 +116,8 @@ public class EmailMetadata extends Properties {
      * if it has not been sent yet (outgoing mail).<br/>
      * The default is <code>true</code>.
      */
-    public boolean isNew() {
-        return getProperty(PROPERTY_NEW).equalsIgnoreCase("true");
+    public boolean isUnread() {
+        return getProperty(PROPERTY_UNREAD).equalsIgnoreCase("true");
     }
 
     public void setCreateTime(Date createTime) {

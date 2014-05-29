@@ -50,7 +50,7 @@ public class EmailIdentity extends EmailDestination {
     private String text;
     private Fingerprint fingerprint;
     private boolean published;
-    private boolean isDefault;
+    private boolean defaultIdentity;
 
     /**
      * Creates a random <code>EmailIdentity</code>.
@@ -185,12 +185,12 @@ public class EmailIdentity extends EmailDestination {
         return SHA256Generator.getInstance().calculateHash(nameBytes);
     }
     
-    public void setDefault(boolean isDefault) {
-        this.isDefault = isDefault;
+    public void setDefaultIdentity(boolean defaultIdentity) {
+        this.defaultIdentity = defaultIdentity;
     }
 
-    public boolean isDefault() {
-        return isDefault;
+    public boolean isDefaultIdentity() {
+        return defaultIdentity;
     }
 
     /**
