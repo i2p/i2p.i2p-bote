@@ -30,6 +30,7 @@ import i2p.bote.packet.ResponsePacket;
 import i2p.bote.packet.StatusCode;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -88,6 +89,16 @@ public class I2PSendQueue extends I2PAppThread implements PacketListener {
     }
     
     /**
+     * Queues a <code>Collection</code> of packets behind the last undelayed packet.
+     * @param packets
+     * @param destination
+     */
+    public void send(Collection<? extends CommunicationPacket> packets, Destination destination) {
+        for (CommunicationPacket packet: packets)
+            send(packet, destination, 0);
+    }
+    
+    /**
      * Queues a packet for sending at or after a certain time.
      * @param packet
      * @param destination
@@ -127,7 +138,7 @@ public class I2PSendQueue extends I2PAppThread implements PacketListener {
      * @param requestPacketId The packet id of the packet we're responding to
      */
     public void sendResponse(DataPacket packet, Destination destination, StatusCode statusCode, UniqueId requestPacketId) {
-        send(new ResponsePacket(packet, statusCode, requestPacketId), destination);
+        send(ResponsePacket.create(packet, statusCode, requestPacketId), destination);
     }
     
     /**

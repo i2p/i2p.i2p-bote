@@ -27,6 +27,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import net.i2p.util.Log;
 
@@ -45,7 +48,19 @@ public class ResponsePacket extends CommunicationPacket {
      * @param statusCode
      * @param packetId
      */
-    public ResponsePacket(DataPacket payload, StatusCode statusCode, UniqueId packetId) {
+    public static Collection<ResponsePacket> create(DataPacket payload, StatusCode statusCode, UniqueId packetId) {
+        if (payload instanceof Splittable && payload.isTooBig()) {
+            Collection<? extends DataPacket> dataPackets = ((Splittable)payload).split();
+            ArrayList<ResponsePacket> responsePackets = new ArrayList<ResponsePacket>();
+            for (DataPacket dataPacket: dataPackets)
+                responsePackets.add(new ResponsePacket(dataPacket, statusCode, packetId));
+            return responsePackets;
+        }
+        else
+            return Collections.singleton(new ResponsePacket(payload, statusCode, packetId));
+    }
+    
+    private ResponsePacket(DataPacket payload, StatusCode statusCode, UniqueId packetId) {
         super(packetId);
         this.payload = payload;
         this.statusCode = statusCode;

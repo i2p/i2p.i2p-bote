@@ -22,6 +22,8 @@
 package i2p.bote.packet.dht;
 
 import i2p.bote.email.EmailDestination;
+import i2p.bote.packet.DataPacket;
+import i2p.bote.packet.Splittable;
 import i2p.bote.packet.TypeCode;
 
 import java.io.ByteArrayOutputStream;
@@ -32,7 +34,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Hash;
@@ -53,10 +57,10 @@ import net.i2p.util.Log;
  * This class is not thread-safe.
  */
 @TypeCode('I')
-public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPacketEntry> {
+public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPacketEntry>, Splittable {
     private Log log = new Log(IndexPacket.class);
     private Hash destinationHash;   // The DHT key of this packet, which is the hash of the Email Destination for which this Index Packet stores Email Packet keys
-    private Collection<IndexPacketEntry> entries;
+    private List<IndexPacketEntry> entries;
 
     /**
      * @param emailDestination Determines the DHT key of this Index Packet
@@ -238,5 +242,25 @@ public class IndexPacket extends DhtStorablePacket implements Iterable<IndexPack
     @Override
     public Iterator<IndexPacketEntry> iterator() {
         return entries.iterator();
+    }
+
+    @Override
+    public Collection<? extends DataPacket> split() {
+        if (isTooBig()) {
+            int bytesPerEntry = entries.get(0).emailPacketKey.toByteArray().length + entries.get(0).delVerificationHash.toByteArray().length + 4;   // see toByteArray()
+            List<IndexPacket> subpackets = new ArrayList<IndexPacket>();
+            IndexPacket currentSubpacket = new IndexPacket(destinationHash);
+            for (IndexPacketEntry entry: entries) {
+                if (currentSubpacket.getSize()+bytesPerEntry > MAX_DATAGRAM_SIZE) {
+                    subpackets.add(currentSubpacket);
+                    currentSubpacket = new IndexPacket(destinationHash);
+                }
+                currentSubpacket.put(entry);
+            }
+            subpackets.add(currentSubpacket);
+            return subpackets;
+        }
+        else
+            return Collections.singleton(this);
     }
 }

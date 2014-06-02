@@ -194,12 +194,9 @@ public class IndexPacketFolder extends DeletionAwareDhtFolder<IndexPacket> imple
                 indexPacketToStore.remove(delRecord.dhtKey);
         
         // If an index packet with the same key exists in the folder, merge the two packets.
-        if (existingPacket instanceof IndexPacket) {
+        // The resulting packet may be too big for a datagram but we don't split it until a peer asks for it.
+        if (existingPacket instanceof IndexPacket)
             indexPacketToStore = new IndexPacket(indexPacketToStore, (IndexPacket)existingPacket);
-            if (indexPacketToStore.isTooBig())
-                // TODO make two new index packets, put half the email packet keys in each one, store the two index packets on the DHT, and put the two index packet keys into the local index file (only keep those two).
-                log.error("After merging, IndexPacket is too big for a datagram: size=" + indexPacketToStore.getSize());
-        }
         else if (existingPacket != null)
             log.error("Packet of type " + existingPacket.getClass().getSimpleName() + " found in IndexPacketFolder.");
         

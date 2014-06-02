@@ -595,7 +595,7 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
             if (storageHandler != null) {
                 DhtStorablePacket storedPacket = storageHandler.retrieve(retrieveRequest.getKey());
                 // if requested packet found, send it to the requester
-                ResponsePacket response = new ResponsePacket(storedPacket, StatusCode.OK, retrieveRequest.getPacketId());
+                Collection<ResponsePacket> response = ResponsePacket.create(storedPacket, StatusCode.OK, retrieveRequest.getPacketId());
                 if (storedPacket != null)
                     log.debug("Packet found for retrieve request: [" + retrieveRequest + "], replying to sender: [" + Util.toBase32(sender) + "]");
                 else
@@ -620,7 +620,7 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
                 if (delAuthorization != null) {
                     DeletionInfoPacket delInfo = new DeletionInfoPacket();
                     delInfo.put(dhtKey, delAuthorization);
-                    ResponsePacket response = new ResponsePacket(delInfo, StatusCode.OK, packet.getPacketId());
+                    Collection<ResponsePacket> response = ResponsePacket.create(delInfo, StatusCode.OK, packet.getPacketId());
                     sendQueue.send(response, sender);
                 }
             }
