@@ -249,7 +249,7 @@ public class EmailListFragment extends ListFragment implements
         boolean hasCheckedElement = mAdapter.getSelectedCount() > 0;
 
         if (hasCheckedElement && mMode == null) {
-            boolean unread = mAdapter.getItem(position).isNew();
+            boolean unread = mAdapter.getItem(position).isUnread();
             mMode = ((ActionBarActivity) getActivity()).startSupportActionMode(new ModeCallback(unread));
         } else if (!hasCheckedElement && mMode != null) {
             mMode.finish();

@@ -221,7 +221,7 @@ public class NewEmailFragment extends Fragment {
                 mDefaultPos = 0;
                 for (EmailIdentity identity : identities) {
                     add(identity);
-                    if (identity.isDefault())
+                    if (identity.isDefaultIdentity())
                         mDefaultPos = getPosition(identity);
                 }
             } catch (PasswordException e) {

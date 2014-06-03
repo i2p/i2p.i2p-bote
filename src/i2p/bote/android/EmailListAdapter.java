@@ -92,7 +92,7 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
                 }
             }
 
-            if (email.isNew()) {
+            if (email.isUnread()) {
                 subject.setTypeface(Typeface.DEFAULT_BOLD);
                 from.setTypeface(Typeface.DEFAULT_BOLD);
             }

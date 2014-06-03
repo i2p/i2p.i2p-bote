@@ -132,7 +132,7 @@ public class EditIdentityFragment extends EditPictureFragment {
 
                 mNameField.setText(identity.getPublicName());
                 mDescField.setText(identity.getDescription());
-                mDefaultField.setChecked(identity.isDefault());
+                mDefaultField.setChecked(identity.isDefaultIdentity());
             } catch (PasswordException e) {
                 // TODO Handle
                 e.printStackTrace();
