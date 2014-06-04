@@ -1,5 +1,4 @@
 Fixes:
-- EmailListActivity.onActivityResult() not called after I2P Android starts
 - Fix B64 encoding of Bitmaps
 - Figure out how to highlight email backgrounds when selected in list
 - Refine view email page

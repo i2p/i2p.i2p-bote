@@ -307,7 +307,7 @@ public class EmailListActivity extends ActionBarActivity implements
                                         dialog.dismiss();
                                         Intent i = new Intent("net.i2p.android.router");
                                         i.setAction("net.i2p.android.router.START_I2P");
-                                        startActivityForResult(i, REQUEST_START_I2P);
+                                        EmailListActivity.this.startActivityForResult(i, REQUEST_START_I2P);
                                     }
                                 })
                                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
