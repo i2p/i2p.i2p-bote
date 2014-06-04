@@ -26,6 +26,9 @@
         android:layout_alignTop="@+id/contact_picture"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/contact_picture"
+        android:layout_toStartOf="@+id/email_sent"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="Email subject"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -35,6 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/email_subject"
         android:layout_below="@+id/email_subject"
+        android:layout_toStartOf="@+id/email_attachment"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="From" />
 
     <TextView
