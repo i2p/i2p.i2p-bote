@@ -255,7 +255,14 @@ public class EmailListActivity extends ActionBarActivity implements
             Intent i2pIntent = new Intent(IRouterState.class.getName());
             i2pIntent.setClassName("net.i2p.android.router",
                     "net.i2p.android.router.service.RouterService");
-            mTriedBindState = bindService(i2pIntent, mStateConnection, BIND_AUTO_CREATE);
+            try {
+                mTriedBindState = bindService(
+                        i2pIntent, mStateConnection, BIND_AUTO_CREATE);
+            } catch (SecurityException e) {
+                // Old version of I2P Android (pre-0.9.13), cannot use
+                mStateService = null;
+                mTriedBindState = false;
+            }
         }
     }
 
