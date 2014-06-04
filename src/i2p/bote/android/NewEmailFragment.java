@@ -67,12 +67,26 @@ public class NewEmailFragment extends Fragment {
         mCallbacks = sDummyCallbacks;
     }
 
+    public static final String SENDER = "sender";
+    public static final String RECIPIENT = "recipient";
+
+    private String mSenderKey;
+
     Spinner mSpinner;
     int mDefaultPos;
     ArrayAdapter<Person> mAdapter;
     ContactsCompletionView mRecipients;
     EditText mSubject;
     EditText mContent;
+
+    public static NewEmailFragment newInstance(String sender, String recipient) {
+        NewEmailFragment f = new NewEmailFragment();
+        Bundle args = new Bundle();
+        args.putString(SENDER, sender);
+        args.putString(RECIPIENT, recipient);
+        f.setArguments(args);
+        return f;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,6 +103,11 @@ public class NewEmailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        String senderAddr = getArguments().getString(SENDER);
+        String recipientAddr = getArguments().getString(RECIPIENT);
+        if (senderAddr != null)
+            mSenderKey = BoteHelper.extractEmailDestination(senderAddr);
 
         mSpinner = (Spinner) view.findViewById(R.id.sender_spinner);
         IdentityAdapter identities = new IdentityAdapter(getActivity());
@@ -114,6 +133,17 @@ public class NewEmailFragment extends Fragment {
 
         mRecipients = (ContactsCompletionView) view.findViewById(R.id.recipients);
         mRecipients.setAdapter(mAdapter);
+        if (recipientAddr != null) {
+            String name = BoteHelper.extractName(recipientAddr);
+            String address = BoteHelper.extractEmailDestination(recipientAddr);
+            if (address == null) { // Assume external address
+                address = recipientAddr;
+                if (name.isEmpty())
+                    name = address;
+            } else if (name.isEmpty()) // Dest with no name
+                name = address.substring(0, 5);
+            mRecipients.addObject(new Person(name, address));
+        }
 
         mSubject = (EditText) view.findViewById(R.id.subject);
         mContent = (EditText) view.findViewById(R.id.message);
@@ -221,7 +251,8 @@ public class NewEmailFragment extends Fragment {
                 mDefaultPos = 0;
                 for (EmailIdentity identity : identities) {
                     add(identity);
-                    if (identity.isDefaultIdentity())
+                    if ((mSenderKey == null && identity.isDefaultIdentity()) ||
+                            (mSenderKey != null && identity.getKey().equals(mSenderKey)))
                         mDefaultPos = getPosition(identity);
                 }
             } catch (PasswordException e) {

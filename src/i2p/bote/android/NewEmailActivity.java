@@ -15,7 +15,14 @@ public class NewEmailActivity extends ActionBarActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            NewEmailFragment f = new NewEmailFragment();
+            String sender = null;
+            String recipient = null;
+            Bundle args = getIntent().getExtras();
+            if (args != null) {
+                sender = args.getString(NewEmailFragment.SENDER);
+                recipient = args.getString(NewEmailFragment.RECIPIENT);
+            }
+            NewEmailFragment f = NewEmailFragment.newInstance(sender, recipient);
             getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, f).commit();
         }

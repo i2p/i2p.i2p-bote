@@ -58,6 +58,7 @@
     <string name="email_sent">Sent:</string>
     <string name="email_received">Received:</string>
     <string name="email_status">Status:</string>
+    <string name="reply">Reply</string>
 
     <string name="compose">Compose</string>
     <string name="subject">Subject</string>

@@ -7,13 +7,18 @@ import java.text.DateFormat;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 
+import i2p.bote.I2PBote;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +29,10 @@ import android.widget.TextView;
 public class ViewEmailFragment extends Fragment {
     private String mFolderName;
     private String mMessageId;
+
+    private boolean mIsAnonymous;
+    private String mOneLocalRecipient;
+    private String mReplyToAddress;
 
     public static ViewEmailFragment newInstance(
             String folderName, String messageId) {
@@ -40,6 +49,7 @@ public class ViewEmailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mFolderName = getArguments() != null ? getArguments().getString("folderName") : "inbox";
         mMessageId = getArguments() != null ? getArguments().getString("messageId") : "1";
     }
@@ -103,6 +113,14 @@ public class ViewEmailFragment extends Fragment {
                         email.getReceivedDate()));
 
             content.setText(email.getText());
+
+            // Prepare fields for replying
+            mIsAnonymous = email.isAnonymous();
+            if (!mIsAnonymous) {
+                mOneLocalRecipient = BoteHelper.getOneLocalRecipient(email).toString();
+                mReplyToAddress = BoteHelper.getNameAndDestination(
+                        email.getReplyAddress(I2PBote.getInstance().getIdentities()));
+            }
         } catch (MessagingException e) {
             // TODO Handle
             e.printStackTrace();
@@ -121,6 +139,28 @@ public class ViewEmailFragment extends Fragment {
             ((TextView) v.findViewById(R.id.email_status)).setText(
                     BoteHelper.getEmailStatusText(getActivity(), email, true));
             ((TableRow) v.findViewById(R.id.email_status_row)).setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.view_email, menu);
+        if (mIsAnonymous)
+            menu.findItem(R.id.action_reply).setVisible(false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_reply:
+            Intent nei = new Intent(getActivity(), NewEmailActivity.class);
+            nei.putExtra(NewEmailFragment.SENDER, mOneLocalRecipient);
+            nei.putExtra(NewEmailFragment.RECIPIENT, mReplyToAddress);
+            startActivity(nei);
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 }
