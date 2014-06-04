@@ -26,7 +26,7 @@ public class Init {
      * Parses settings and prepares the system for starting the Bote service.
      * @return true if we should use the internal router, false otherwise.
      */
-    public RouterChoice initialize(IRouterState mStateService) {
+    public RouterChoice initialize(IRouterState stateService) {
         // Set up the locations so Router and WorkingDir can find them
         // We do this again here, in the event settings were changed.
         System.setProperty("i2p.dir.base", myDir);
@@ -37,7 +37,7 @@ public class Init {
         RouterChoice routerChoice;
         String i2cpHost, i2cpPort;
         if (prefs.getBoolean("i2pbote.router.auto", true)) {
-            if (mStateService != null) {
+            if (stateService != null) {
                 routerChoice = RouterChoice.ANDROID;
                 // TODO fetch settings from I2P Android
                 i2cpHost = "127.0.0.1";
