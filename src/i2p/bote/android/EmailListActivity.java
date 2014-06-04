@@ -1,19 +1,28 @@
 package i2p.bote.android;
 
+import net.i2p.android.router.service.IRouterState;
 import i2p.bote.I2PBote;
 import i2p.bote.android.addressbook.AddressBookActivity;
 import i2p.bote.android.config.SettingsActivity;
 import i2p.bote.android.service.BoteService;
+import i2p.bote.android.service.Init;
+import i2p.bote.android.service.Init.RouterChoice;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.folder.EmailFolder;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.preference.PreferenceManager;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
@@ -46,10 +55,14 @@ public class EmailListActivity extends ActionBarActivity implements
     private ListView mFolderList;
     private TextView mNetworkStatus;
     private ActionBarDrawerToggle mDrawerToggle;
+    RouterChoice mRouterChoice;
+    IRouterState mStateService = null;
 
     private static final String SHARED_PREFS = "i2p.bote";
     private static final String PREF_NAV_DRAWER_OPENED = "navDrawerOpened";
     private static final String ACTIVE_FOLDER = "activeFolder";
+
+    private static final int REQUEST_START_I2P = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,6 +245,28 @@ public class EmailListActivity extends ActionBarActivity implements
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("i2pbote.router.auto", true) ||
+                prefs.getString("i2pbote.router.use", "internal").equals("android")) {
+            // Try to bind to I2P Android
+            Intent i2pIntent = new Intent(IRouterState.class.getName());
+            i2pIntent.setClassName("net.i2p.android.router",
+                    "net.i2p.android.router.service.RouterService");
+            mTriedBindState = bindService(i2pIntent, mStateConnection, BIND_AUTO_CREATE);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mTriedBindState)
+            unbindService(mStateConnection);
+        mTriedBindState = false;
+    }
+
     private boolean isBoteServiceRunning() {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -251,9 +286,46 @@ public class EmailListActivity extends ActionBarActivity implements
 
         switch (item.getItemId()) {
         case R.id.action_start_bote:
-            Intent start = new Intent(this, BoteService.class);
-            startService(start);
-            supportInvalidateOptionsMenu();
+            // Init from settings
+            Init init = new Init(this);
+            mRouterChoice = init.initialize(mStateService);
+
+            if (mRouterChoice == RouterChoice.ANDROID) {
+                try {
+                    if (mStateService == null) {
+                        // I2P Android not installed
+                        // TODO: handle
+                    } else if (!mStateService.isStarted()) {
+                        // Ask user to start I2P Android
+                        DialogFragment df = new DialogFragment() {
+                            @Override
+                            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setMessage(R.string.start_i2p_android)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        Intent i = new Intent("net.i2p.android.router");
+                                        i.setAction("net.i2p.android.router.START_I2P");
+                                        startActivityForResult(i, REQUEST_START_I2P);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                return builder.create();
+                            }
+                        };
+                        df.show(getSupportFragmentManager(), "starti2p");
+                    } else
+                        startBote();
+                } catch (RemoteException e) {
+                    // TODO log
+                }
+            } else
+                startBote();
             return true;
 
         case R.id.action_stop_bote:
@@ -270,6 +342,24 @@ public class EmailListActivity extends ActionBarActivity implements
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_START_I2P) {
+            if (resultCode == Activity.RESULT_OK) {
+                startBote();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void startBote() {
+        Intent start = new Intent(this, BoteService.class);
+        start.putExtra(BoteService.ROUTER_CHOICE, mRouterChoice);
+        startService(start);
+        supportInvalidateOptionsMenu();
     }
 
     @Override
@@ -329,4 +419,23 @@ public class EmailListActivity extends ActionBarActivity implements
         EmailListFragment f = (EmailListFragment) getSupportFragmentManager().findFragmentById(R.id.list_fragment);
         f.onFolderSelected(newFolder);
     }
+
+
+    //
+    // I2P Android helpers
+    //
+
+    private boolean mTriedBindState;
+    private ServiceConnection mStateConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className,
+                IBinder service) {
+            mStateService = IRouterState.Stub.asInterface(service);
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            mStateService = null;
+        }
+    };
 }

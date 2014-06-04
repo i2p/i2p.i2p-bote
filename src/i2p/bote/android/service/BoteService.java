@@ -6,20 +6,21 @@ import net.i2p.router.Router;
 import net.i2p.router.RouterContext;
 import net.i2p.router.RouterLaunch;
 import i2p.bote.I2PBote;
+import i2p.bote.android.service.Init.RouterChoice;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
 public class BoteService extends Service {
-    boolean mUseInternalRouter;
+    public static final String ROUTER_CHOICE = "router_choice";
+
+    RouterChoice mRouterChoice;
     RouterContext mRouterContext;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // Init from settings
-        Init init = new Init(this);
-        mUseInternalRouter = init.initialize();
-        if (mUseInternalRouter)
+        mRouterChoice = (RouterChoice) intent.getSerializableExtra(ROUTER_CHOICE);
+        if (mRouterChoice == RouterChoice.INTERNAL)
             new Thread(new RouterStarter()).start();
         I2PBote.getInstance().startUp();
         return START_STICKY;
@@ -33,9 +34,14 @@ public class BoteService extends Service {
     @Override
     public void onDestroy() {
         I2PBote.getInstance().shutDown();
-        if (mUseInternalRouter)
+        if (mRouterChoice == RouterChoice.INTERNAL)
             new Thread(new RouterStopper()).start();
     }
+
+
+    //
+    // Internal router helpers
+    //
 
     private class RouterStarter implements Runnable {
         public void run() {
