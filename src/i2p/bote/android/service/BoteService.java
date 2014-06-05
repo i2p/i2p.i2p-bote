@@ -23,7 +23,7 @@ public class BoteService extends Service {
         if (mRouterChoice == RouterChoice.INTERNAL)
             new Thread(new RouterStarter()).start();
         I2PBote.getInstance().startUp();
-        return START_STICKY;
+        return START_REDELIVER_INTENT;
     }
 
     @Override
