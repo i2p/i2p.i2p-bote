@@ -3,6 +3,8 @@ package i2p.bote.android.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
@@ -205,5 +207,16 @@ public class BoteHelper extends GeneralHelper {
 
     public static boolean isOutbox(String folderName) {
         return "Outbox".equalsIgnoreCase(folderName);
+    }
+
+    public static List<Email> getNewEmails(EmailFolder folder) throws PasswordException {
+        List<Email> emails = folder.getElements();
+        Iterator<Email> iter = emails.iterator();
+        while (iter.hasNext()) {
+            Email email = iter.next();
+            if (!email.isUnread())
+                iter.remove();
+        }
+        return emails;
     }
 }

@@ -41,6 +41,11 @@
     <string name="folder_empty">Folder is empty</string>
     <string name="folder_does_not_exist">Folder does not exist</string>
 
+    <plurals name="n_new_emails">
+        <item quantity="one">One new email</item>
+        <item quantity="other">%d new emails</item>
+    </plurals>
+
     <string name="queued">Queued</string>
     <string name="sending">Sending</string>
     <string name="sent_to_short">Sent %1$d of %2$d</string>
