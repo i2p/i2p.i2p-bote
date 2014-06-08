@@ -105,7 +105,7 @@ public class EmailFolder extends Folder<Email> {
         saveMetadata(email);
         
         for (FolderListener listener: folderListeners)
-            listener.elementAdded();
+            listener.elementAdded(email.getMessageID());
     }
     
     public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
@@ -283,10 +283,12 @@ public class EmailFolder extends Folder<Email> {
             }
         }
 
-        for (FolderListener listener: folderListeners)
-            listener.elementRemoved();
-        for (FolderListener listener: newFolder.folderListeners)
-            listener.elementAdded();
+        if (success) {
+            for (FolderListener listener: folderListeners)
+                listener.elementRemoved(messageId);
+            for (FolderListener listener: newFolder.folderListeners)
+                listener.elementAdded(messageId);
+        }
 
         return success;
     }
@@ -473,7 +475,7 @@ public class EmailFolder extends Folder<Email> {
             deleted = false;
         
         for (FolderListener listener: folderListeners)
-            listener.elementRemoved();
+            listener.elementRemoved(messageId);
         
         return deleted;
     }

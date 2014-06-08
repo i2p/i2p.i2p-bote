@@ -32,11 +32,14 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.mail.MessagingException;
+import javax.mail.Flags.Flag;
 
 import org.apache.james.mailbox.model.MailboxPath;
 import org.apache.james.mailbox.model.MessageRange;
@@ -87,21 +90,55 @@ public class BoteMailbox extends SimpleMailbox<String> {
         modSeq <<= 32;
 
         startListening();
-        updateMessages();
+        try {
+            synchronized (messageMap) {
+                List<Email> emails = folder.getElements();
+                for (Email email : emails)
+                    messageMap.put(email, new BoteMessage(email, getFolderName()));
+                updateMessages();
+            }
+        } catch (PasswordException e) {
+            throw new RuntimeException(_("Password required or invalid password provided"), e);
+        }
     }
 
     protected void startListening() {
         folderListener = new FolderListener() {
-            public void elementAdded() {
-                updateMessages();
+            public void elementAdded(String messageId) {
+                try {
+                    synchronized (messageMap) {
+                        // Add new emails to map
+                        Email email = folder.getEmail(messageId);
+                        email.setFlag(Flag.RECENT, true);
+                        messageMap.put(email, new BoteMessage(email, getFolderName()));
+                        updateMessages();
+                    }
+                } catch (PasswordException e) {
+                    throw new RuntimeException(_("Password required or invalid password provided"), e);
+                } catch (MessagingException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
 
             public void elementUpdated() {
                 // Noop, BoteMessage has a reference to the Email
             }
 
-            public void elementRemoved() {
-                updateMessages();
+            public void elementRemoved(String messageId) {
+                synchronized (messageMap) {
+                    // Remove old email from map
+                    Set<Email> emails = messageMap.keySet();
+                    Iterator<Email> iter = emails.iterator();
+                    while (iter.hasNext()) {
+                        Email email = iter.next();
+                        if (email.getMessageID().equals(messageId)) {
+                            iter.remove();
+                            break;
+                        }
+                    }
+                    updateMessages();
+                }
             }
         };
         folder.addFolderListener(folderListener);
@@ -118,53 +155,44 @@ public class BoteMailbox extends SimpleMailbox<String> {
     
     /** Synchronizes the <code>messages</code> field from the underlying {@link EmailFolder}. */
     private void updateMessages() {
-        synchronized (messageMap) {
-            try {
-                List<Email> emails = folder.getElements();
-                // Add new emails to map
-                for (Email email: emails) {
-                    if (!messageMap.containsKey(email))
-                        messageMap.put(email, new BoteMessage(email, getFolderName()));
-                }
-                // Remove old emails from map
-                for (Email email : messageMap.keySet()) {
-                    if (!emails.contains(email))
-                        messageMap.remove(email);
-                }
-            } catch (PasswordException e) {
-                throw new RuntimeException(_("Password required or invalid password provided"), e);
-            }
+        synchronized (messages) {
             // Generate the updated list of messages
             messages = new ArrayList<BoteMessage>(messageMap.values());
-        }
-        // Update UIDs
-        for (BoteMessage message : messages) {
-            if (message.getUid() == 0) {
-                message.setUid(uid);
-                uid++;
+            // Update UIDs
+            for (BoteMessage message : messages) {
+                if (message.getUid() == 0) {
+                    message.setUid(uid);
+                    uid++;
+                }
             }
         }
     }
     
     List<BoteMessage> getAllMessages() {
-        return messages;
+        synchronized (messages) {
+            return messages;
+        }
     }
     
     List<Message<String>> getMessages(MessageRange set, int limit) {
         List<Message<String>> messageList = new ArrayList<Message<String>>();
-        for (long index: set) {
-            if (index < 1)   // IMAP indices start at 1
-                continue;
-            if (index > messages.size())
-                break;
-            BoteMessage message = messages.get((int)index - 1);
-            messageList.add(message);
+        synchronized (messages) {
+            for (long index: set) {
+                if (index < 1)   // IMAP indices start at 1
+                    continue;
+                if (index > messages.size())
+                    break;
+                BoteMessage message = messages.get((int)index - 1);
+                messageList.add(message);
+            }
         }
         return messageList;
     }
     
     int getNumMessages() {
-        return messages.size();
+        synchronized (messages) {
+            return messages.size();
+        }
     }
     
     void add(BoteMessage message) throws IOException, MessagingException, PasswordException, GeneralSecurityException {

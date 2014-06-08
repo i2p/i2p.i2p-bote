@@ -24,9 +24,9 @@ package i2p.bote.folder;
 /** Listens to elements being added or removed from a {@link EmailFolder}. */
 public interface FolderListener {
 
-    void elementAdded();
+    void elementAdded(String messageId);
 
     void elementUpdated();
     
-    void elementRemoved();
+    void elementRemoved(String messageId);
 }
