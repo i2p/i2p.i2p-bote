@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.mail.Address;
+import javax.mail.Flags.Flag;
 import javax.mail.MessagingException;
 
 import android.content.Context;
@@ -209,12 +210,14 @@ public class BoteHelper extends GeneralHelper {
         return "Outbox".equalsIgnoreCase(folderName);
     }
 
-    public static List<Email> getNewEmails(EmailFolder folder) throws PasswordException {
+    public static List<Email> getRecentEmails(EmailFolder folder) throws PasswordException, MessagingException {
         List<Email> emails = folder.getElements();
         Iterator<Email> iter = emails.iterator();
         while (iter.hasNext()) {
             Email email = iter.next();
-            if (!email.isUnread())
+            if (email.isSet(Flag.RECENT))
+                email.setFlag(Flag.RECENT, false);
+            else
                 iter.remove();
         }
         return emails;

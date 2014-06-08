@@ -112,7 +112,7 @@ public class BoteService extends Service implements FolderListener {
 
         try {
             EmailFolder inbox = I2PBote.getInstance().getInbox();
-            List<Email> newEmails = BoteHelper.getNewEmails(inbox);
+            List<Email> newEmails = BoteHelper.getRecentEmails(inbox);
             int numNew = newEmails.size();
             switch (numNew) {
             case 0:
