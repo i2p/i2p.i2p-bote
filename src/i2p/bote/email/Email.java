@@ -845,9 +845,12 @@ public class Email extends MimeMessage {
      */
     @Override
     public synchronized void setFlags(Flags flag, boolean set) throws MessagingException {
-        setUnread(!(flag.contains(Flag.SEEN)));
-        setReplied(flag.contains(Flag.ANSWERED));
-        setDeleted(flag.contains(Flag.DELETED));
+        if (flag.contains(Flag.SEEN))
+            setUnread(!set);
+        if (flag.contains(Flag.ANSWERED))
+            setReplied(set);
+        if (flag.contains(Flag.DELETED))
+            setDeleted(set);
         super.setFlags(flag, set);
     }
 
