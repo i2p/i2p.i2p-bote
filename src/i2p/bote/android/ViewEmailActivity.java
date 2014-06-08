@@ -4,6 +4,8 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Email;
@@ -62,10 +64,14 @@ public class ViewEmailActivity extends ActionBarActivity implements
                 if (mMessageId != null) {
                     try {
                         mFolder.setNew(mMessageId, false);
+                        mFolder.setRecent(mMessageId, false);
                     } catch (PasswordException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     } catch (GeneralSecurityException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (MessagingException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
@@ -189,10 +195,14 @@ public class ViewEmailActivity extends ActionBarActivity implements
         if (mMessageId != null) {
             try {
                 mFolder.setNew(mMessageId, false);
+                mFolder.setRecent(mMessageId, false);
             } catch (PasswordException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (GeneralSecurityException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (MessagingException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }

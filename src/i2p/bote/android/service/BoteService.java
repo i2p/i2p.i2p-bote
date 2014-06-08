@@ -5,6 +5,7 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.mail.Flags.Flag;
 
 import net.i2p.router.Router;
 import net.i2p.router.RouterContext;
@@ -88,20 +89,20 @@ public class BoteService extends Service implements FolderListener {
 
     @Override
     public void elementAdded(String messageId) {
-        notifyUnread();
+        notifyUnread(messageId);
     }
 
     @Override
     public void elementUpdated() {
-        notifyUnread();
+        // Noop
     }
 
     @Override
     public void elementRemoved(String messageId) {
-        notifyUnread();
+        // Noop
     }
 
-    private void notifyUnread() {
+    private void notifyUnread(String newMessageId) {
         NotificationManager nm = (NotificationManager) getSystemService(
                 Context.NOTIFICATION_SERVICE);
 
@@ -112,6 +113,11 @@ public class BoteService extends Service implements FolderListener {
 
         try {
             EmailFolder inbox = I2PBote.getInstance().getInbox();
+
+            // Set the new email as \Recent
+            inbox.setRecent(newMessageId, true);
+
+            // Now display/update notification with all \Recent emails
             List<Email> newEmails = BoteHelper.getRecentEmails(inbox);
             int numNew = newEmails.size();
             switch (numNew) {

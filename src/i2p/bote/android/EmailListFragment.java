@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
+import javax.mail.Flags.Flag;
+import javax.mail.MessagingException;
+
 import net.i2p.I2PAppContext;
 import net.i2p.util.Log;
 import i2p.bote.I2PBote;
@@ -413,6 +416,14 @@ public class EmailListFragment extends ListFragment implements
 
     public void onLoadFinished(Loader<List<Email>> loader,
             List<Email> data) {
+        // Clear recent flags
+        for (Email email : data)
+            try {
+                email.setFlag(Flag.RECENT, false);
+            } catch (MessagingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         mAdapter.setData(data);
         try {
             getActivity().setTitle(
