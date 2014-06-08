@@ -51,6 +51,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.mail.Flags.Flag;
 
 import net.i2p.util.Log;
 
@@ -392,6 +393,11 @@ public class EmailFolder extends Folder<Email> {
         }
         
         return numNew;
+    }
+
+    public void setRecent(String messageId, boolean isRecent) throws PasswordException, MessagingException {
+        Email email = getEmail(messageId);
+        email.setFlag(Flag.RECENT, isRecent);
     }
     
     /**
