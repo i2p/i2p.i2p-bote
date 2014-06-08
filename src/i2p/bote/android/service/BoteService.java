@@ -87,7 +87,7 @@ public class BoteService extends Service implements FolderListener {
     // FolderListener
 
     @Override
-    public void elementAdded() {
+    public void elementAdded(String messageId) {
         notifyUnread();
     }
 
@@ -97,7 +97,7 @@ public class BoteService extends Service implements FolderListener {
     }
 
     @Override
-    public void elementRemoved() {
+    public void elementRemoved(String messageId) {
         notifyUnread();
     }
 

@@ -1,6 +1,7 @@
 package i2p.bote.android;
 
 import java.util.List;
+
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
@@ -53,7 +54,7 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> implements Fold
     // FolderListener
 
     @Override
-    public void elementAdded() {
+    public void elementAdded(String messageId) {
         notifyDataSetChanged();
     }
 
@@ -63,7 +64,7 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> implements Fold
     }
 
     @Override
-    public void elementRemoved() {
+    public void elementRemoved(String messageId) {
         notifyDataSetChanged();
     }
 }

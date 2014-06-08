@@ -396,7 +396,7 @@ public class EmailListFragment extends ListFragment implements
         // FolderListener
 
         @Override
-        public void elementAdded() {
+        public void elementAdded(String messageId) {
             onContentChanged();
         }
 
@@ -406,7 +406,7 @@ public class EmailListFragment extends ListFragment implements
         }
 
         @Override
-        public void elementRemoved() {
+        public void elementRemoved(String messageId) {
             onContentChanged();
         }
     }
