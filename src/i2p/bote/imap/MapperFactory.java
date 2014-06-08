@@ -32,6 +32,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Flags;
+import javax.mail.Flags.Flag;
+
 import net.i2p.util.Log;
 
 import org.apache.james.mailbox.MailboxSession;
@@ -178,6 +181,11 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
                     BoteMessage newMessage = new BoteMessage((BoteMessage)original);
                     newMessage.setUid(uid);
                     newMessage.setModSeq(modSeq);
+                    Flags flags = original.createFlags();
+
+                    // Mark message as recent as it is a copy
+                    flags.add(Flag.RECENT);
+                    newMessage.setFlags(flags);
                     boteBox.add(newMessage);
                     return new SimpleMessageMetaData(newMessage);
                 } catch (Exception e) {

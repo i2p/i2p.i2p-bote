@@ -839,7 +839,8 @@ public class Email extends MimeMessage {
     }
     
     /**
-     * Sets flags for this message.
+     * Sets flags for this message. Flags not explicitly stored in metadata
+     * will be kept in-memory.
      * @param flag The current state of flags for this message.
      */
     @Override
@@ -849,17 +850,16 @@ public class Email extends MimeMessage {
         setDeleted(flag.contains(Flag.DELETED));
         super.setFlags(flag, set);
     }
-    
+
+    /**
+     * Updates in-memory flags from stored metadata and returns them.
+     */
     @Override
-    public Flags getFlags() {
-        Flags flags = new Flags();
-        if (!isUnread())
-            flags.add(Flag.SEEN);
-        if (isReplied())
-            flags.add(Flag.ANSWERED);
-        if (isDeleted())
-            flags.add(Flag.DELETED);
-        return flags;
+    public Flags getFlags() throws MessagingException {
+        super.setFlag(Flag.SEEN, !isUnread());
+        super.setFlag(Flag.ANSWERED, isReplied());
+        super.setFlag(Flag.DELETED, isDeleted());
+        return super.getFlags();
     }
     
     /**

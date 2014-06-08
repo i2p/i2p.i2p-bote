@@ -34,6 +34,7 @@ import java.util.List;
 import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Header;
+import javax.mail.Flags.Flag;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Part;
@@ -43,6 +44,7 @@ import i2p.bote.Util;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.util.GeneralHelper;
+
 import org.apache.james.mailbox.store.mail.model.Message;
 import org.apache.james.mailbox.store.mail.model.Property;
 
@@ -89,7 +91,11 @@ public class BoteMessage implements Message<String> {
 
     @Override
     public Flags createFlags() {
-        return email.getFlags();
+        try {
+            return email.getFlags();
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -353,7 +359,11 @@ public class BoteMessage implements Message<String> {
 
     @Override
     public boolean isRecent() {
-        return false;   // not currently supported
+        try {
+            return email.getFlags().contains(Flag.RECENT);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
