@@ -41,6 +41,7 @@ import i2p.bote.folder.EmailPacketFolder;
 import i2p.bote.folder.IncompleteEmailFolder;
 import i2p.bote.folder.IndexPacketFolder;
 import i2p.bote.folder.MessageIdCache;
+import i2p.bote.folder.NewEmailListener;
 import i2p.bote.folder.Outbox;
 import i2p.bote.folder.RelayPacketFolder;
 import i2p.bote.folder.TrashFolder;
@@ -621,6 +622,14 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     
     public EmailFolder getTrashFolder() {
         return trashFolder;
+    }
+
+    public void addNewEmailListener(NewEmailListener newEmailListener) {
+        incompleteEmailFolder.addNewEmailListener(newEmailListener);
+    }
+
+    public void removeNewEmailListener(NewEmailListener newEmailListener) {
+        incompleteEmailFolder.removeNewEmailListener(newEmailListener);
     }
     
     public boolean deleteEmail(EmailFolder folder, String messageId) {

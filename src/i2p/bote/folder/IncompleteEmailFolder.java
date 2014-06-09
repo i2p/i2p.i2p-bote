@@ -48,11 +48,13 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
     private Log log = new Log(IncompleteEmailFolder.class);
     private EmailFolder inbox;
     private MessageIdCache messageIdCache;
+    private Collection<NewEmailListener> newEmailListeners;
 
     public IncompleteEmailFolder(File storageDir, MessageIdCache messageIdCache, EmailFolder inbox) {
         super(storageDir);
         this.inbox = inbox;
         this.messageIdCache = messageIdCache;
+        newEmailListeners = new ArrayList<NewEmailListener>();
     }
     
     /**
@@ -141,6 +143,10 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
                 email.setSignatureFlag();   // incoming emails have no signature flag, so set it now; if it exists, don't trust but overwrite
                 email.getMetadata().setReceivedDate(new Date());
                 inbox.add(email);
+
+                // notify listeners
+                for (NewEmailListener listener : newEmailListeners)
+                    listener.emailReceived(email.getMessageID());
                 
                 // delete packets
                 for (File file: packetFiles)
@@ -181,5 +187,13 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
             if (inputStream != null)
                 inputStream.close();
         }
+    }
+
+    public void addNewEmailListener(NewEmailListener newEmailListener) {
+        newEmailListeners.add(newEmailListener);
+    }
+
+    public void removeNewEmailListener(NewEmailListener newEmailListener) {
+        newEmailListeners.remove(newEmailListener);
     }
 }
