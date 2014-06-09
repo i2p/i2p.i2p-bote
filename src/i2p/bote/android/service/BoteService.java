@@ -5,8 +5,6 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 
 import javax.mail.MessagingException;
-import javax.mail.Flags.Flag;
-
 import net.i2p.router.Router;
 import net.i2p.router.RouterContext;
 import net.i2p.router.RouterLaunch;
@@ -19,7 +17,7 @@ import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
-import i2p.bote.folder.FolderListener;
+import i2p.bote.folder.NewEmailListener;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -28,7 +26,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
-public class BoteService extends Service implements FolderListener {
+public class BoteService extends Service implements NewEmailListener {
     public static final String ROUTER_CHOICE = "router_choice";
     public static final int NOTIF_ID_NEW_EMAIL = 80739047;
 
@@ -43,7 +41,7 @@ public class BoteService extends Service implements FolderListener {
 
         I2PBote.getInstance().startUp();
 
-        I2PBote.getInstance().getInbox().addFolderListener(this);
+        I2PBote.getInstance().addNewEmailListener(this);
 
         return START_REDELIVER_INTENT;
     }
@@ -55,7 +53,7 @@ public class BoteService extends Service implements FolderListener {
 
     @Override
     public void onDestroy() {
-        I2PBote.getInstance().getInbox().removeFolderListener(this);
+        I2PBote.getInstance().removeNewEmailListener(this);
 
         I2PBote.getInstance().shutDown();
 
@@ -85,24 +83,10 @@ public class BoteService extends Service implements FolderListener {
         }
     }
 
-    // FolderListener
+    // NewEmailListener
 
     @Override
-    public void elementAdded(String messageId) {
-        notifyUnread(messageId);
-    }
-
-    @Override
-    public void elementUpdated() {
-        // Noop
-    }
-
-    @Override
-    public void elementRemoved(String messageId) {
-        // Noop
-    }
-
-    private void notifyUnread(String newMessageId) {
+    public void emailReceived(String messageId) {
         NotificationManager nm = (NotificationManager) getSystemService(
                 Context.NOTIFICATION_SERVICE);
 
@@ -115,7 +99,7 @@ public class BoteService extends Service implements FolderListener {
             EmailFolder inbox = I2PBote.getInstance().getInbox();
 
             // Set the new email as \Recent
-            inbox.setRecent(newMessageId, true);
+            inbox.setRecent(messageId, true);
 
             // Now display/update notification with all \Recent emails
             List<Email> newEmails = BoteHelper.getRecentEmails(inbox);
