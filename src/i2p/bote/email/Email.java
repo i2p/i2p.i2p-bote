@@ -782,7 +782,17 @@ public class Email extends MimeMessage {
     public String getMessageID() {
         return messageId.toBase64();
     }
-    
+
+    /** @see EmailMetadata#setRecent(recent) */
+    public void setRecent(boolean recent) {
+        metadata.setRecent(recent);
+    }
+
+    /** @see EmailMetadata#isRecent() */
+    public boolean isRecent() {
+        return metadata.isRecent();
+    }
+
     /** @see EmailMetadata#setUnread(boolean) */
     public void setUnread(boolean unread) {
         metadata.setUnread(unread);
@@ -845,6 +855,8 @@ public class Email extends MimeMessage {
      */
     @Override
     public synchronized void setFlags(Flags flag, boolean set) throws MessagingException {
+        if (flag.contains(Flag.RECENT))
+            setRecent(set);
         if (flag.contains(Flag.SEEN))
             setUnread(!set);
         if (flag.contains(Flag.ANSWERED))
@@ -859,6 +871,7 @@ public class Email extends MimeMessage {
      */
     @Override
     public Flags getFlags() throws MessagingException {
+        super.setFlag(Flag.RECENT, isRecent());
         super.setFlag(Flag.SEEN, !isUnread());
         super.setFlag(Flag.ANSWERED, isReplied());
         super.setFlag(Flag.DELETED, isDeleted());

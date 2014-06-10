@@ -395,9 +395,14 @@ public class EmailFolder extends Folder<Email> {
         return numNew;
     }
 
-    public void setRecent(String messageId, boolean isRecent) throws PasswordException, MessagingException {
-        Email email = getEmail(messageId);
-        email.setFlag(Flag.RECENT, isRecent);
+    public void setRecent(String messageId, boolean isRecent) throws PasswordException, GeneralSecurityException {
+        EmailMetadata metadata = getMetadata(messageId);
+        metadata.setRecent(isRecent);
+        try {
+            saveMetadata(metadata, getMetadataFile(messageId));
+        } catch (IOException e) {
+            log.error("Can't read metadata file for message ID <" + messageId + ">", e);
+        }
     }
     
     /**

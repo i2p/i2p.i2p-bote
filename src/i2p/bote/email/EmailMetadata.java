@@ -55,6 +55,7 @@ import net.i2p.util.Log;
  */
 public class EmailMetadata extends Properties {
     private static final long serialVersionUID = 9058161682262839810L;
+    private static final String PROPERTY_RECENT = "recent";
     private static final String PROPERTY_UNREAD = "new";
     private static final String PROPERTY_CREATE_TIME = "createTime";
     private static final String PROPERTY_RECEIVED_DATE = "receivedDate";
@@ -106,7 +107,20 @@ public class EmailMetadata extends Properties {
             }
         }
     }
-    
+
+    public void setRecent(boolean recent) {
+        setProperty(PROPERTY_RECENT, String.valueOf(recent));
+    }
+
+    /**
+     * Returns <code>true</code> if the email has recently arrived in its
+     * parent folder.<br/>
+     * The default is <code>false</code>.
+     */
+    public boolean isRecent() {
+        return getProperty(PROPERTY_RECENT).equalsIgnoreCase("true");
+    }
+
     public void setUnread(boolean unread) {
         setProperty(PROPERTY_UNREAD, String.valueOf(unread));
     }
