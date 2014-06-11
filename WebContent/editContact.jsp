@@ -48,7 +48,7 @@
         <c:set var="backUrl" value="addressBook.jsp"/>
     </c:if>
     <jsp:forward page="${backUrl}">
-        <jsp:param value="action" name=""/>
+        <jsp:param name="action" value="none"/>
     </jsp:forward>
 </c:if>
 
@@ -72,13 +72,13 @@
             <c:set var="forwardUrl" value="addressBook.jsp"/>
         </c:if>
         <jsp:forward page="${forwardUrl}">
-            <jsp:param name="action" value=""/>
+            <jsp:param name="action" value="none"/>
             <jsp:param name="infoMessage" value="${infoMessage}"/>
         </jsp:forward>
     </c:if>
     <c:if test="${!empty errorMessage}">
         <jsp:forward page="editContact.jsp">
-            <jsp:param name="action" value=""/>
+            <jsp:param name="action" value="none"/>
             <jsp:param name="errorMessage" value="${errorMessage}"/>
         </jsp:forward>
     </c:if>
