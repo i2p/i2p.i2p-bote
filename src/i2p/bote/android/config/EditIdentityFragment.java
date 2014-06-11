@@ -178,6 +178,7 @@ public class EditIdentityFragment extends EditPictureFragment {
             IdentityWaiterFrag f = IdentityWaiterFrag.newInstance(
                     (mKey == null ? true : false),
                     cryptoImplId,
+                    null,
                     mKey,
                     publicName,
                     description,
@@ -253,6 +254,7 @@ public class EditIdentityFragment extends EditPictureFragment {
     public static class IdentityWaiterFrag extends TaskFragment<Object, String, String> {
         static final String CREATE_NEW = "create_new";
         static final String CRYPTO_IMPL_ID = "crypto_impl_id";
+        static final String VANITY_PREFIX = "vanity_prefix";
         static final String KEY = "key";
         static final String PUBLIC_NAME = "public_name";
         static final String DESCRIPTION = "description";
@@ -263,11 +265,14 @@ public class EditIdentityFragment extends EditPictureFragment {
         TextView mStatus;
 
         public static IdentityWaiterFrag newInstance(
-                boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) {
+                boolean createNew, int cryptoImplId, String vanity_prefix,
+                String key, String publicName, String description,
+                String emailAddress, boolean setDefault) {
             IdentityWaiterFrag f = new IdentityWaiterFrag();
             Bundle args = new Bundle();
             args.putBoolean(CREATE_NEW, createNew);
             args.putInt(CRYPTO_IMPL_ID, cryptoImplId);
+            args.putString(VANITY_PREFIX, vanity_prefix);
             args.putString(KEY, key);
             args.putString(PUBLIC_NAME, publicName);
             args.putString(DESCRIPTION, description);
@@ -295,6 +300,7 @@ public class EditIdentityFragment extends EditPictureFragment {
             return new Object[] {
                     Boolean.valueOf(args.getBoolean(CREATE_NEW)),
                     Integer.valueOf(args.getInt(CRYPTO_IMPL_ID)),
+                    args.getString(VANITY_PREFIX),
                     args.getString(KEY),
                     args.getString(PUBLIC_NAME),
                     args.getString(DESCRIPTION),
@@ -349,7 +355,8 @@ public class EditIdentityFragment extends EditPictureFragment {
                         (String) params[3],
                         (String) params[4],
                         (String) params[5],
-                        (Boolean) params[6],
+                        (String) params[6],
+                        (Boolean) params[7],
                         lsnr);
                 lsnr.updateStatus("Saving identity");
                 I2PBote.getInstance().getIdentities().save();
