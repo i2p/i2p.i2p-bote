@@ -26,7 +26,7 @@
         android:layout_alignTop="@+id/contact_picture"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/contact_picture"
-        android:layout_toStartOf="@+id/email_sent"
+        android:layout_toStartOf="@+id/email_attachment"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Email subject"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/email_subject"
         android:layout_below="@+id/email_subject"
-        android:layout_toStartOf="@+id/email_attachment"
+        android:layout_toStartOf="@+id/email_sent"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="From" />
@@ -54,25 +54,25 @@
         android:maxLines="1"
         android:text="Content" />
 
+    <ImageView
+        android:id="@+id/email_attachment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/email_subject"
+        android:layout_alignBottom="@+id/email_subject"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitEnd"
+        android:visibility="gone"
+        android:src="@drawable/ic_content_attachment" />
+
     <TextView
         android:id="@+id/email_sent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/email_subject"
+        android:layout_alignTop="@+id/email_from"
         android:text="##:## XX"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <ImageView
-        android:id="@+id/email_attachment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/email_from"
-        android:layout_alignBottom="@+id/email_from"
-        android:layout_alignParentRight="true"
-        android:scaleType="fitEnd"
-        android:visibility="gone"
-        android:src="@drawable/ic_content_attachment" />
 
     <TextView
         android:id="@+id/email_status"
