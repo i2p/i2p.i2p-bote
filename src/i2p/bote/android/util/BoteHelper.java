@@ -210,6 +210,14 @@ public class BoteHelper extends GeneralHelper {
         return "Outbox".equalsIgnoreCase(folderName);
     }
 
+    public static boolean isTrash(EmailFolder folder) {
+        return isTrash(folder.getName());
+    }
+
+    public static boolean isTrash(String folderName) {
+        return "Trash".equalsIgnoreCase(folderName);
+    }
+
     public static List<Email> getRecentEmails(EmailFolder folder) throws PasswordException, MessagingException {
         List<Email> emails = folder.getElements();
         Iterator<Email> iter = emails.iterator();

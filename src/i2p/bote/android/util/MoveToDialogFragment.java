@@ -54,7 +54,7 @@ public class MoveToDialogFragment extends DialogFragment {
         Iterator<EmailFolder> i = mFolders.iterator();
         while (i.hasNext()) {
             EmailFolder folder = i.next();
-            if (folder.getName().equals(curFolder))
+            if (folder.getName().equals(curFolder) || BoteHelper.isOutbox(folder.getName()))
                 i.remove();
             else
                 mFolderDisplayNames.add(

@@ -321,7 +321,9 @@ public class EmailListFragment extends ListFragment implements
             // Inflate the menu for the CAB
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.email_list_context, menu);
-            if (BoteHelper.isOutbox(mFolder))
+            // Only allow moving from the trash
+            // TODO change this when user folders are implemented
+            if (!BoteHelper.isTrash(mFolder))
                 menu.findItem(R.id.action_move_to).setVisible(false);
             return true;
         }
