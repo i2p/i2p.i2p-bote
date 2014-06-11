@@ -33,26 +33,26 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/email_from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/email_subject"
-        android:layout_below="@+id/email_subject"
-        android:layout_toStartOf="@+id/email_sent"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="From" />
-
-    <TextView
         android:id="@+id/email_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/email_from"
-        android:layout_below="@+id/email_from"
+        android:layout_below="@+id/email_subject"
         android:layout_toStartOf="@+id/email_status"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Content" />
+
+    <TextView
+        android:id="@+id/email_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/email_subject"
+        android:layout_below="@+id/email_content"
+        android:layout_toStartOf="@+id/email_sent"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="From" />
 
     <ImageView
         android:id="@+id/email_attachment"
@@ -66,15 +66,6 @@
         android:src="@drawable/ic_content_attachment" />
 
     <TextView
-        android:id="@+id/email_sent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/email_from"
-        android:text="##:## XX"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
         android:id="@+id/email_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,5 +73,14 @@
         android:layout_alignBottom="@+id/email_content"
         android:layout_alignParentRight="true"
         android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/email_sent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/email_from"
+        android:text="##:## XX"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
