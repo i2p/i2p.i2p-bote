@@ -27,6 +27,7 @@ import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Set;
 
 import org.bouncycastle.crypto.InvalidCipherTextException;
 
@@ -68,6 +69,9 @@ public interface CryptoImplementation {
     
     KeyPair generateSigningKeyPair() throws GeneralSecurityException;
 
+    /** Returns all possible characters that a Base64-encoded Email Destination can start with. */
+    String getBase64InitialCharacters();
+
     // 
     // Key conversion
     // 
@@ -99,6 +103,11 @@ public interface CryptoImplementation {
      * Using this method may result in shorter strings than calling toByteArray and Base64-encoding the byte array.
      */
     String toBase64(PublicKeyPair keyPair) throws GeneralSecurityException;
+    
+    /**
+     * Converts a public encryption key to Base64.
+     */
+    String encryptionKeyToBase64(PublicKey key) throws GeneralSecurityException;
     
     /**
      * The toBase64 methods are incompatible with the toByteArray methods.

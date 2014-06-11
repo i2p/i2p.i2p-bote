@@ -21,6 +21,7 @@
 
 package i2p.bote.packet;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
@@ -31,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +45,9 @@ public class ResponsePacketTest {
         byte[] packetIdBytes = new byte[] {120, 120, -8, -88, 21, 126, 46, -61, 18, -101, 15, 53, 20, -44, -112, 42, 86, -117, 30, -96, -66, 33, 71, -55, -102, -78, 78, -82, -105, 66, -116, 43};
         UniqueId packetId = new UniqueId(packetIdBytes, 0);
         
-        responsePacket = new ResponsePacket(createDataPacket(), StatusCode.OK, packetId);
+        Collection<ResponsePacket> responsePackets = ResponsePacket.create(createDataPacket(), StatusCode.OK, packetId);
+        assertEquals(1, responsePackets.size());
+        responsePacket = responsePackets.iterator().next();
     }
 
     private DataPacket createDataPacket() throws GeneralSecurityException, IOException {

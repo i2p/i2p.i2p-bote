@@ -47,13 +47,25 @@
 <c:if test="${empty keygenCounter}">
     <c:set var="keygenCounter" value="0"/>
 </c:if>
+
+<c:set var="slow" value="false"/>
+<%-- If cryptoImpl=4, show the wait page --%>
+<c:if test="${param.cryptoImpl eq 4}">
+    <c:set var="slow" value="true"/>
+</c:if>
+<%-- When generating a vanity address, show the wait page --%>
+<c:if test="${not empty param.vanityPrefix}">
+    <c:set var="slow" value="true"/>
+</c:if>
+
 <c:choose>
     <c:when test="${empty param.publicName}">
         <ib:message key="Please fill in the Public Name field." var="errorMessage" scope="request"/>
         <jsp:forward page="editIdentity.jsp?createNew=true"/>
     </c:when>
-    <%-- If cryptoImpl=4 and a new identity is to be generated, show the wait page --%>
-    <c:when test="${param.createNew eq 'true' and param.cryptoImpl eq 4 and param.action ne 'wait' and empty param.counter}">
+    
+    <%-- Show the wait page when creating an identity will take a while --%>
+    <c:when test="${param.createNew eq 'true' and param.action ne 'wait' and empty param.counter and slow}">
         <jsp:forward page="submitIdentity.jsp">
             <jsp:param name="action" value="wait"/>
         </jsp:forward>
@@ -66,29 +78,36 @@
     <c:when test="${param.action eq 'wait'}">
         <c:set var="counterParam" value="${keygenCounter+1}"/>
         <%-- The double URL encoding prevents GET from breaking special chars --%>
-        <c:set var="refreshUrl" value="submitIdentity.jsp?counter=${counterParam}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;publicName=${ib:urlEncode(ib:urlEncode(param.publicName))}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}" scope="request"/>
+        <c:set var="refreshUrl" value="submitIdentity.jsp?counter=${counterParam}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;vanityPrefix=${param.vanityPrefix}&amp;publicName=${ib:urlEncode(ib:urlEncode(param.publicName))}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}" scope="request"/>
         <c:set var="refreshInterval" value="0" scope="request"/>
         <jsp:include page="header.jsp"/>
         <div class="main">
             <h2><ib:message key="Please wait..."/></h2>
             <img src="${themeDir}/images/wait.gif"/>
-            <ib:message key="The Email Identity is being generated. This can take several minutes."/>
+            <ib:message key="The Email Identity is being generated. This may take a while."/>
         </div>
     </c:when>
     <%-- This is where the actual identity generation takes place --%>
-    <c:when test="${param.counter gt keygenCounter or param.createNew ne 'true' or param.cryptoImpl ne 4}">
+    <c:when test="${param.counter gt keygenCounter or param.createNew ne 'true' or not slow}">
         <c:set var="publicName" value="${param.publicName}"/>
         <c:if test="${not empty param.counter}">
             <c:set var="publicName" value="${ib:urlDecode(publicName)}"/>
         </c:if>
         
         <%-- after password entry, go to the wait page if a new "slow" identity is being generated --%>
-        <c:if test="${param.createNew eq 'true' and param.cryptoImpl eq 4}">
+        <c:if test="${param.createNew eq 'true' and slow}">
             <c:set var="actionParam" value="action=wait&amp;"/>
         </c:if>
-        <c:set var="forwardUrl" value="submitIdentity.jsp?${actionParam}counter=${param.counter}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;publicName=${param.publicName}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}"/>
+        <c:set var="forwardUrl" value="submitIdentity.jsp?${actionParam}counter=${param.counter}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;vanityPrefix=${param.vanityPrefix}&amp;publicName=${param.publicName}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}"/>
         <ib:requirePassword forwardUrl="${forwardUrl}">
-            <c:set var="errorMessage" value="${ib:createOrModifyIdentity(param.createNew, param.cryptoImpl, param.key, publicName, param.description, param.emailAddress, param.defaultIdentity=='on')}"/>
+            <c:catch var="exception">
+                <c:set var="errorMessage" value="${ib:createOrModifyIdentity(param.createNew, param.cryptoImpl, param.vanityPrefix, param.key, publicName, param.description, param.emailAddress, param.defaultIdentity=='on')}"/>
+            </c:catch>
+            <c:if test="${exception.cause['class'].name eq 'i2p.bote.email.IllegalDestinationParametersException'}">
+                <jsp:forward page="editIdentity.jsp">
+                    <jsp:param name="errorMessage" value="${exception.cause.localizedMessage}"/>
+                </jsp:forward>
+            </c:if>
             <c:if test="${not empty param.counter}">
                 <c:set var="keygenCounter" value="${param.counter}" scope="session"/>
             </c:if>

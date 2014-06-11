@@ -35,6 +35,7 @@ import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Fingerprint;
 import i2p.bote.email.Identities;
+import i2p.bote.email.IllegalDestinationParametersException;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.Outbox.EmailStatus;
@@ -104,6 +105,7 @@ public class GeneralHelper {
      * or adds a new identity if <code>createNew</code> is <code>true</code>.
      * @param createNew 
      * @param cryptoImplId The id value of the cryptographic algorithm set to use for the new identity; ignored if <code>createNew</code> is <code>false</code>
+     * @param vanityPrefix
      * @param key A base64-encoded Email Destination key
      * @param description
      * @param publicName
@@ -112,9 +114,10 @@ public class GeneralHelper {
      * @throws GeneralSecurityException 
      * @throws PasswordException 
      * @throws IOException 
+     * @throws IllegalDestinationParametersException if <code>cryptoImpl</code> and <code>vanityPrefix</code> aren't compatible
      */
-    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException {
-        createOrModifyIdentity(createNew, cryptoImplId, key, publicName, description, emailAddress, setDefault, new StatusListener() {
+    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String vanityPrefix, String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException, IllegalDestinationParametersException {
+        createOrModifyIdentity(createNew, cryptoImplId, vanityPrefix, key, publicName, description, emailAddress, setDefault, new StatusListener() {
             public void updateStatus(String status) {} // Do nothing
         });
     }
@@ -124,6 +127,7 @@ public class GeneralHelper {
      * or adds a new identity if <code>createNew</code> is <code>true</code>.
      * @param createNew 
      * @param cryptoImplId The id value of the cryptographic algorithm set to use for the new identity; ignored if <code>createNew</code> is <code>false</code>
+     * @param vanityPrefix An alphanumeric string the destination should start with; ignored if <code>createNew==false</code>.
      * @param key A base64-encoded Email Destination key
      * @param description
      * @param publicName
@@ -132,8 +136,9 @@ public class GeneralHelper {
      * @throws GeneralSecurityException 
      * @throws PasswordException 
      * @throws IOException 
+     * @throws IllegalDestinationParametersException if <code>cryptoImplId</code> and <code>vanityPrefix</code> aren't compatible
      */
-    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String key, String publicName, String description, String emailAddress, boolean setDefault, StatusListener lsnr) throws GeneralSecurityException, PasswordException, IOException {
+    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String vanityPrefix, String key, String publicName, String description, String emailAddress, boolean setDefault, StatusListener lsnr) throws GeneralSecurityException, PasswordException, IOException, IllegalDestinationParametersException {
         Log log = new Log(GeneralHelper.class);
         Identities identities = I2PBote.getInstance().getIdentities();
         EmailIdentity identity = identities.get(key);
@@ -148,7 +153,7 @@ public class GeneralHelper {
 
             lsnr.updateStatus("Generating keys");
             try {
-                identity = new EmailIdentity(cryptoImpl);
+                identity = new EmailIdentity(cryptoImpl, vanityPrefix);
             } catch (GeneralSecurityException e) {
                 log.error("Can't create email identity from base64 string: <" + key + ">", e);
                 throw e;
@@ -170,7 +175,12 @@ public class GeneralHelper {
     }
 
     public static void modifyIdentity(String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException {
-        createOrModifyIdentity(false, -1, key, publicName, description, emailAddress, setDefault);
+        try {
+            createOrModifyIdentity(false, -1, null, key, publicName, description, emailAddress, setDefault);
+        } catch (IllegalDestinationParametersException e) {
+            Log log = new Log(GeneralHelper.class);
+            log.error("This shouldn't happen because no identity is being created here.", e);
+        }
     }
 
     /**

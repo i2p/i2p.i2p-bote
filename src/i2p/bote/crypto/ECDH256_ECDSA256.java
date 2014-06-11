@@ -65,6 +65,11 @@ public class ECDH256_ECDSA256 extends ECDH_ECDSA {
     }
     
     @Override
+    public String getBase64InitialCharacters() {
+        return "ghijklmnopqrstuvwxyz0123456789";
+    }
+    
+    @Override
     protected byte[] toByteArray(PublicKey key) {
         ECPublicKey ecKey = castToEcKey(key);
         return EC5Util.convertPoint(ecKey.getParams(), ecKey.getW(), true).getEncoded();

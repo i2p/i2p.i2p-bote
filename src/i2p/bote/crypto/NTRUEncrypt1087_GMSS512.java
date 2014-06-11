@@ -173,6 +173,11 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
     }
 
     @Override
+    public String encryptionKeyToBase64(PublicKey key) throws GeneralSecurityException {
+        return Base64.encode(key.getEncoded());
+    }
+
+    @Override
     public String toBase64(PrivateKeyPair keyPair) {
         String base64 = Base64.encode(toByteArray(keyPair));
         // the last two chars are always "==", so drop them

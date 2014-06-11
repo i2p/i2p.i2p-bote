@@ -55,7 +55,6 @@ import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.jce.provider.asymmetric.ec.KeyAgreement;
 import org.bouncycastle.jce.provider.asymmetric.ec.KeyFactory;
 import org.bouncycastle.jce.provider.asymmetric.ec.KeyPairGenerator;
-import org.bouncycastle.jce.provider.asymmetric.ec.Signature;
 import org.bouncycastle.jce.provider.asymmetric.ec.Signature.ecDSA256;
 import org.bouncycastle.jce.provider.asymmetric.ec.Signature.ecDSA512;
 import org.bouncycastle.jce.spec.ECNamedCurveSpec;
@@ -222,6 +221,11 @@ public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
     @Override
     public String toBase64(PublicKeyPair keyPair) throws GeneralSecurityException {
         return toBase64(keyPair.encryptionKey) + toBase64(keyPair.signingKey);
+    }
+
+    @Override
+    public String encryptionKeyToBase64(PublicKey key) throws GeneralSecurityException {
+        return toBase64(key);
     }
 
     /**

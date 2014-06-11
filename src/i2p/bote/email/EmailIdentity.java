@@ -21,6 +21,7 @@
 
 package i2p.bote.email;
 
+import static i2p.bote.Util._;
 import i2p.bote.Util;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
@@ -55,12 +56,25 @@ public class EmailIdentity extends EmailDestination {
     /**
      * Creates a random <code>EmailIdentity</code>.
      * @param cryptoImpl
+     * @param vanityPrefix Base64 chars that the Email Destination should start with; <code>null</code> or an empty string for no vanity Destination.
      * @throws GeneralSecurityException 
+     * @throws IllegalDestinationParametersException if <code>cryptoImpl</code> and <code>vanityPrefix</code> aren't compatible
      */
-    public EmailIdentity(CryptoImplementation cryptoImpl) throws GeneralSecurityException {
+    public EmailIdentity(CryptoImplementation cryptoImpl, String vanityPrefix) throws GeneralSecurityException, IllegalDestinationParametersException {
         super();
         this.cryptoImpl = cryptoImpl;
-        KeyPair encryptionKeys = cryptoImpl.generateEncryptionKeyPair();
+        
+        if ("".equals(vanityPrefix))
+            vanityPrefix = null;
+        if (vanityPrefix!=null && !cryptoImpl.getBase64InitialCharacters().contains(vanityPrefix.substring(0, 1))) {
+            String errorMsg = "This encryption type does not support destinations that start with a \"{0}\". Valid initial characters are {1}.";
+            throw new IllegalDestinationParametersException(_(errorMsg, vanityPrefix.charAt(0), cryptoImpl.getBase64InitialCharacters()));
+        }
+        
+        KeyPair encryptionKeys;
+        do {
+            encryptionKeys = cryptoImpl.generateEncryptionKeyPair();
+        } while (vanityPrefix!=null && !cryptoImpl.encryptionKeyToBase64(encryptionKeys.getPublic()).startsWith(vanityPrefix));
         KeyPair signingKeys = cryptoImpl.generateSigningKeyPair();
         
         publicEncryptionKey = encryptionKeys.getPublic();

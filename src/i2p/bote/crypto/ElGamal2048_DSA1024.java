@@ -89,6 +89,11 @@ public class ElGamal2048_DSA1024 extends AbstractCryptoImplementation {
     public String toBase64(PublicKeyPair keyPair) throws GeneralSecurityException {
         return Base64.encode(toByteArray(keyPair));
     }
+    
+    @Override
+    public String encryptionKeyToBase64(PublicKey key) throws GeneralSecurityException {
+        return Base64.encode(key.getEncoded());
+    }
 
     @Override
     public String toBase64(PrivateKeyPair keyPair) throws GeneralSecurityException {

@@ -52,10 +52,6 @@
 
 <jsp:include page="header.jsp"/>
 
-<div class="errorMessage">
-    ${fn:escapeXml(param.errorMessage)}
-</div>
-
 <div class="main">
     <h2>${title}</h2>
     <c:if test="${param.createNew}">
@@ -130,6 +126,16 @@
             </c:if>
         </div>
 
+        <c:if test="${param.createNew}">
+            <div class="identity-form-label">
+                <ib:message key="Vanity Destination:"/>
+                <div class="addtl-text"><ib:message key="(2 chars takes seconds, 3 takes minutes, etc.)"/></div>
+            </div>
+            <div class="identity-form-value">
+                <input type="text" size="10" name="vanityPrefix" value="${vanityPrefix}"/>
+            </div>
+        </c:if>
+    
         <c:if test="${not empty param.key}">
             <div class="identity-form-label">
                 <ib:message key="Email Destination:"/>

@@ -44,6 +44,12 @@ public abstract class AbstractCryptoImplementation implements CryptoImplementati
         appContext = I2PAppContext.getGlobalContext();
     }
     
+    /** This implementation returns the whole set of Base64 characters. */
+    @Override
+    public String getBase64InitialCharacters() {
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    }
+    
     @Override
     public byte[] toByteArray(PublicKeyPair keyPair) {
         byte[] encKey = keyPair.encryptionKey.getEncoded();
