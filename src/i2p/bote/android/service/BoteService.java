@@ -28,6 +28,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
@@ -157,7 +158,6 @@ public class BoteService extends Service implements NewEmailListener {
 
         NotificationCompat.Builder b =
                 new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher)
                 .setAutoCancel(true);
 
         try {
@@ -176,6 +176,13 @@ public class BoteService extends Service implements NewEmailListener {
 
             case 1:
                 Email email = newEmails.get(0);
+
+                Bitmap picture = BoteHelper.getPictureForAddress(email.getOneFromAddress());
+                if (picture != null)
+                    b.setLargeIcon(picture);
+                else
+                    b.setSmallIcon(R.drawable.ic_contact_picture);
+
                 b.setContentTitle(BoteHelper.getNameAndShortDestination(
                         email.getOneFromAddress()));
                 b.setContentText(email.getSubject());
@@ -189,6 +196,7 @@ public class BoteService extends Service implements NewEmailListener {
                 break;
 
             default:
+                b.setSmallIcon(R.drawable.ic_launcher);
                 b.setContentTitle(getResources().getQuantityString(
                         R.plurals.n_new_emails, numNew, numNew));
 
