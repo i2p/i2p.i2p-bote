@@ -7,7 +7,6 @@ import java.text.DateFormat;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 
-import i2p.bote.I2PBote;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
@@ -31,8 +30,6 @@ public class ViewEmailFragment extends Fragment {
     private String mMessageId;
 
     private boolean mIsAnonymous;
-    private String mOneLocalRecipient;
-    private String mReplyToAddress;
 
     public static ViewEmailFragment newInstance(
             String folderName, String messageId) {
@@ -116,11 +113,6 @@ public class ViewEmailFragment extends Fragment {
 
             // Prepare fields for replying
             mIsAnonymous = email.isAnonymous();
-            if (!mIsAnonymous) {
-                mOneLocalRecipient = BoteHelper.getOneLocalRecipient(email).toString();
-                mReplyToAddress = BoteHelper.getNameAndDestination(
-                        email.getReplyAddress(I2PBote.getInstance().getIdentities()));
-            }
         } catch (MessagingException e) {
             // TODO Handle
             e.printStackTrace();
@@ -154,8 +146,8 @@ public class ViewEmailFragment extends Fragment {
         switch (item.getItemId()) {
         case R.id.action_reply:
             Intent nei = new Intent(getActivity(), NewEmailActivity.class);
-            nei.putExtra(NewEmailFragment.SENDER, mOneLocalRecipient);
-            nei.putExtra(NewEmailFragment.RECIPIENT, mReplyToAddress);
+            nei.putExtra(NewEmailFragment.QUOTE_MSG_FOLDER, mFolderName);
+            nei.putExtra(NewEmailFragment.QUOTE_MSG_ID, mMessageId);
             startActivity(nei);
             return true;
 

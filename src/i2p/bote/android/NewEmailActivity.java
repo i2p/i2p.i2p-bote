@@ -15,14 +15,14 @@ public class NewEmailActivity extends ActionBarActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            String sender = null;
-            String recipient = null;
+            String quoteMsgFolder = null;
+            String quoteMsgId = null;
             Bundle args = getIntent().getExtras();
             if (args != null) {
-                sender = args.getString(NewEmailFragment.SENDER);
-                recipient = args.getString(NewEmailFragment.RECIPIENT);
+                quoteMsgFolder = args.getString(NewEmailFragment.QUOTE_MSG_FOLDER);
+                quoteMsgId = args.getString(NewEmailFragment.QUOTE_MSG_ID);
             }
-            NewEmailFragment f = NewEmailFragment.newInstance(sender, recipient);
+            NewEmailFragment f = NewEmailFragment.newInstance(quoteMsgFolder, quoteMsgId);
             getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, f).commit();
         }

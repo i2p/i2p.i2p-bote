@@ -67,8 +67,8 @@ public class NewEmailFragment extends Fragment {
         mCallbacks = sDummyCallbacks;
     }
 
-    public static final String SENDER = "sender";
-    public static final String RECIPIENT = "recipient";
+    public static final String QUOTE_MSG_FOLDER = "sender";
+    public static final String QUOTE_MSG_ID = "recipient";
 
     private String mSenderKey;
 
@@ -79,11 +79,11 @@ public class NewEmailFragment extends Fragment {
     EditText mSubject;
     EditText mContent;
 
-    public static NewEmailFragment newInstance(String sender, String recipient) {
+    public static NewEmailFragment newInstance(String quoteMsgFolder, String quoteMsgId) {
         NewEmailFragment f = new NewEmailFragment();
         Bundle args = new Bundle();
-        args.putString(SENDER, sender);
-        args.putString(RECIPIENT, recipient);
+        args.putString(QUOTE_MSG_FOLDER, quoteMsgFolder);
+        args.putString(QUOTE_MSG_ID, quoteMsgId);
         f.setArguments(args);
         return f;
     }
@@ -104,10 +104,31 @@ public class NewEmailFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String senderAddr = getArguments().getString(SENDER);
-        String recipientAddr = getArguments().getString(RECIPIENT);
-        if (senderAddr != null)
-            mSenderKey = BoteHelper.extractEmailDestination(senderAddr);
+        String quoteMsgFolder = getArguments().getString(QUOTE_MSG_FOLDER);
+        String quoteMsgId = getArguments().getString(QUOTE_MSG_ID);
+        Email origEmail = null;
+        String recipientAddr = null;
+        try {
+            origEmail = BoteHelper.getEmail(quoteMsgFolder, quoteMsgId);
+            if (origEmail != null) {
+                mSenderKey = BoteHelper.extractEmailDestination(
+                        BoteHelper.getOneLocalRecipient(origEmail).toString());
+                recipientAddr = BoteHelper.getNameAndDestination(
+                        origEmail.getReplyAddress(I2PBote.getInstance().getIdentities()));
+            }
+        } catch (PasswordException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (GeneralSecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         mSpinner = (Spinner) view.findViewById(R.id.sender_spinner);
         IdentityAdapter identities = new IdentityAdapter(getActivity());
