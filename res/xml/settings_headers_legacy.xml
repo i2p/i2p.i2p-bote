@@ -12,5 +12,6 @@
             android:targetClass="i2p.bote.android.config.SetPasswordActivity"
             android:targetPackage="i2p.bote.android" />
     </Preference>
+    <Preference android:title="@string/new_identity" />
 
 </PreferenceScreen>

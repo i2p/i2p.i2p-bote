@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,8 +30,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -111,35 +108,6 @@ public class SettingsActivity extends PreferenceActivity {
 
         // Store the settings in Android
         super.onPause();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu
-        getMenuInflater().inflate(R.menu.settings, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.action_new_identity:
-            Intent ni = new Intent(this, EditIdentityActivity.class);
-            startActivityForResult(ni, ALTER_IDENTITY_LIST);
-            return true;
-
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ALTER_IDENTITY_LIST) {
-            if (resultCode == Activity.RESULT_OK) {
-                updateIdentities();
-            }
-        }
     }
 
     @Override

@@ -121,7 +121,7 @@
     <string name="password_changed">Password changed successfully</string>
 
     <string name="pref_title_identities">Identities</string>
-    <string name="new_identity">New identity</string>
+    <string name="new_identity">New identity...</string>
     <string name="edit_identity">Edit identity</string>
     <string name="public_name">Public name</string>
     <string name="description">Description</string>

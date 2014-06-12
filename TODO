@@ -7,7 +7,6 @@ Fixes:
 -- Show full network error? Make it copy-able?
 
 Tasks:
-- Move "New Identity" action to list item
 - Subclass EmailListFragment for each default mailbox
 - Refactor code
 -- Reorganize for clarity

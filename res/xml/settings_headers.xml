@@ -17,5 +17,12 @@
     <header
         android:id="@+id/identity_settings"
         android:title="@string/pref_title_identities" />
+    <header
+        android:id="@+id/new_identity"
+        android:title="@string/new_identity" >
+        <intent
+            android:targetClass="i2p.bote.android.config.EditIdentityActivity"
+            android:targetPackage="i2p.bote.android" />
+    </header>
 
 </preference-headers>
