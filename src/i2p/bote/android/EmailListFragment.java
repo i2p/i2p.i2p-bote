@@ -321,6 +321,10 @@ public class EmailListFragment extends ListFragment implements
             // Inflate the menu for the CAB
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.email_list_context, menu);
+            if (BoteHelper.isOutbox(mFolder)) {
+                menu.findItem(R.id.action_mark_read).setVisible(false);
+                menu.findItem(R.id.action_mark_unread).setVisible(false);
+            }
             // Only allow moving from the trash
             // TODO change this when user folders are implemented
             if (!BoteHelper.isTrash(mFolder))
@@ -342,8 +346,10 @@ public class EmailListFragment extends ListFragment implements
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Here you can perform updates to the CAB due to
             // an invalidate() request
-            menu.findItem(R.id.action_mark_read).setVisible(areUnread);
-            menu.findItem(R.id.action_mark_unread).setVisible(!areUnread);
+            if (!BoteHelper.isOutbox(mFolder)) {
+                menu.findItem(R.id.action_mark_read).setVisible(areUnread);
+                menu.findItem(R.id.action_mark_unread).setVisible(!areUnread);
+            }
             return true;
         }
     }

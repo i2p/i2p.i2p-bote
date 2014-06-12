@@ -61,7 +61,8 @@ public class ViewEmailActivity extends ActionBarActivity implements
                 // Mark the visible email as not new
                 if (mMessageId != null) {
                     try {
-                        mFolder.setNew(mMessageId, false);
+                        if (!BoteHelper.isOutbox(mFolder))
+                            mFolder.setNew(mMessageId, false);
                         mFolder.setRecent(mMessageId, false);
                     } catch (PasswordException e) {
                         // TODO Auto-generated catch block
@@ -189,7 +190,8 @@ public class ViewEmailActivity extends ActionBarActivity implements
         // Mark the current email as not new
         if (mMessageId != null) {
             try {
-                mFolder.setNew(mMessageId, false);
+                if (!BoteHelper.isOutbox(mFolder))
+                    mFolder.setNew(mMessageId, false);
                 mFolder.setRecent(mMessageId, false);
             } catch (PasswordException e) {
                 // TODO Auto-generated catch block
