@@ -108,6 +108,9 @@ public class NewEmailFragment extends Fragment {
         String quoteMsgId = getArguments().getString(QUOTE_MSG_ID);
         Email origEmail = null;
         String recipientAddr = null;
+        String origSubject = null;
+        String origContent = null;
+        String origFrom = null;
         try {
             origEmail = BoteHelper.getEmail(quoteMsgFolder, quoteMsgId);
             if (origEmail != null) {
@@ -115,6 +118,9 @@ public class NewEmailFragment extends Fragment {
                         BoteHelper.getOneLocalRecipient(origEmail).toString());
                 recipientAddr = BoteHelper.getNameAndDestination(
                         origEmail.getReplyAddress(I2PBote.getInstance().getIdentities()));
+                origSubject = origEmail.getSubject();
+                origContent = origEmail.getText();
+                origFrom = BoteHelper.getShortSenderName(origEmail.getOneFromAddress(), 50);
             }
         } catch (PasswordException e) {
             // TODO Auto-generated catch block
@@ -168,6 +174,27 @@ public class NewEmailFragment extends Fragment {
 
         mSubject = (EditText) view.findViewById(R.id.subject);
         mContent = (EditText) view.findViewById(R.id.message);
+        boolean hide = I2PBote.getInstance().getConfiguration().getHideLocale();
+        if (origSubject != null) {
+            String responsePrefix = getResources().getString(
+                    hide ? R.string.response_prefix_re_hide
+                         : R.string.response_prefix_re);
+            if (!origSubject.startsWith(responsePrefix))
+                origSubject = responsePrefix + " " + origSubject;
+            mSubject.setText(origSubject);
+        }
+        if (origContent != null) {
+            StringBuilder quotation = new StringBuilder();
+            quotation.append("\n\n");
+            quotation.append(getResources().getString(
+                    hide ? R.string.response_quote_wrote
+                         : R.string.response_quote_wrote_hide,
+                            origFrom));
+            String[] lines = origContent.split("\r?\n|\r");
+            for (String line: lines)
+                quotation = quotation.append("\n> ").append(line);
+            mContent.setText(quotation);
+        }
 
         if (savedInstanceState == null) {
             mRecipients.setPrefix(getResources().getString(R.string.email_to) + " ");
