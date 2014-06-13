@@ -60,7 +60,7 @@
 
     <string name="email_from">From:</string>
     <string name="email_to">To:</string>
-    <string name="email_sent">Sent:</string>
+    <string name="label_sent">Sent:</string>
     <string name="email_received">Received:</string>
     <string name="email_status">Status:</string>
     <string name="reply">Reply</string>
