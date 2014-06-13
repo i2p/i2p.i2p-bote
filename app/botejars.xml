@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="botejars-imported">
+    <property file="local.properties" />
+    <property name="jar.libs.dir" value="libs" />
 
     <!-- override with i2pbase=path/to/source in local.properties -->
     <property environment="env"/>
@@ -23,21 +25,17 @@
     </fail>
     <echo message="Using I2P-Bote source at ${botebase}" />
 
-    <target name="-pre-compile" depends="copyrouterlibs,copybotelibs" />
+    <target name="precompile" depends="copyrouterlibs,copybotelibs" />
 
-    <!--
-         Creates the output directories if they don't exist yet.
-    -->
-    <target name="-dirs">
-        <echo>Creating output directories if needed...</echo>
-        <mkdir dir="${resource.absolute.dir}" />
-        <mkdir dir="${gen.absolute.dir}" />
-        <mkdir dir="${out.absolute.dir}" />
-        <mkdir dir="${out.classes.absolute.dir}" />
-    </target>
-
-    <target name="-pre-clean">
-        <delete dir="${jar.libs.dir}" verbose="${verbose}" />
+    <target name="preclean">
+        <delete verbose="${verbose}">
+            <fileset dir="${jar.libs.dir}">
+                <exclude name="mail.jar" />
+                <exclude name="additionnal.jar" />
+                <exclude name="activation.jar" />
+                <exclude name="tokenautocomplete.jar" />
+            </fileset>
+        </delete>
         <ant dir="${botebase}" inheritall="false" useNativeBasedir="true" >
             <target name="clean" />
         </ant>
@@ -49,7 +47,7 @@
         <fail unless="i2pbase" message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p."/>
     </target>
 
-    <target name="copyrouterlibs" depends="-dirs,checki2pbase" >
+    <target name="copyrouterlibs" depends="checki2pbase" >
         <!-- core -->
         <!-- remove classes that are overridden -->
         <!-- lots of unneeded stuff could be deleted here -->
@@ -76,7 +74,7 @@
         </ant>
     </target>
 
-    <target name="copybotelibs" depends="-dirs,buildbote">
+    <target name="copybotelibs" depends="buildbote">
         <!-- bote -->
         <jar destfile="${jar.libs.dir}/i2pbote.jar" >
             <!-- remove classes that are overridden or stubbed out -->
