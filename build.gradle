@@ -1,30 +1,14 @@
 buildscript {
+    repositories {
+        mavenCentral()
+    }
     dependencies {
-        classpath files('gradle/libs/gradle-witness.jar')
+        classpath 'com.android.tools.build:gradle:0.9.+'
     }
 }
 
-subprojects {
-    apply plugin: 'witness'
-    apply plugin: 'java'
-
+allprojects {
     repositories {
-        jcenter()
-    }
-
-    version = '0.4.3'
-    jar {
-        manifest {
-            attributes 'Implementation-Version': version
-        }
-    }
-
-    sourceCompatibility = 1.6
-    targetCompatibility = 1.6
-    // Set bootClasspath=/path/to/rt.jar:/path/to/jce.jar in gradle.properties if needed
-    if (bootClasspath) {
-        project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
-            ac.options.bootClasspath = bootClasspath
-        })
+        mavenCentral()
     }
 }

@@ -9,3 +9,14 @@
 ^botejars/lib
 lint.xml
 local.properties
+
+#IntelliJ IDEA
+^.idea
+.*.iml
+.*.ipr
+.*.iws
+out
+
+#Gradle
+^.gradle
+build
