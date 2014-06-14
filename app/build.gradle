@@ -24,4 +24,5 @@ clean.dependsOn preclean
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
     compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
 }

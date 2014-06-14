@@ -13,8 +13,6 @@ Tasks:
 -- Optimize use of Android lifecycles
 
 Features:
-- Show check mail status in inbox list header
-- Pull-to-check
 - Import/export identities
 -- Export Destination / make it copyable
 - Show contact pictures in recipients dropdown

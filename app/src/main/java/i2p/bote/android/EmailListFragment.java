@@ -7,6 +7,10 @@ import java.util.List;
 import javax.mail.Flags.Flag;
 import javax.mail.MessagingException;
 
+import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.Options;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import net.i2p.I2PAppContext;
 import net.i2p.util.Log;
 import i2p.bote.I2PBote;
@@ -37,6 +41,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -46,12 +51,14 @@ import android.widget.TextView;
 public class EmailListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<Email>>,
         MoveToDialogFragment.MoveToDialogListener,
-        EmailListAdapter.EmailSelector {
+        EmailListAdapter.EmailSelector, OnRefreshListener {
     public static final String FOLDER_NAME = "folder_name";
 
     private static final int EMAIL_LIST_LOADER = 1;
 
     OnEmailSelectedListener mCallback;
+
+    private PullToRefreshLayout mPullToRefreshLayout;
 
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
@@ -94,10 +101,42 @@ public class EmailListFragment extends ListFragment implements
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view,savedInstanceState);
         String folderName = getArguments().getString(FOLDER_NAME);
         mFolder = BoteHelper.getMailFolder(folderName);
+
+        if (BoteHelper.isInbox(mFolder)) {
+            // This is the View which is created by ListFragment
+            ViewGroup viewGroup = (ViewGroup) view;
+
+            // We need to create a PullToRefreshLayout manually
+            mPullToRefreshLayout = new PullToRefreshLayout(viewGroup.getContext());
+
+            // We can now setup the PullToRefreshLayout
+            ActionBarPullToRefresh.from(getActivity())
+
+                    // We need to insert the PullToRefreshLayout into the Fragment's ViewGroup
+                    .insertLayoutInto(viewGroup)
+
+                            // We need to mark the ListView and it's Empty View as pullable
+                            // This is because they are not dirent children of the ViewGroup
+                    .theseChildrenArePullable(getListView(), getListView().getEmptyView())
+
+                            // We can now complete the setup as desired
+                    .listener(this)
+                    .options(Options.create()
+                            .refreshOnUp(true)
+                            .build())
+                    .setup(mPullToRefreshLayout);
+
+            mPullToRefreshLayout.setRefreshing(I2PBote.getInstance().isCheckingForMail());
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mAdapter = new EmailListAdapter(getActivity(), this,
                 BoteHelper.isOutbox(mFolder));
 
@@ -460,5 +499,47 @@ public class EmailListFragment extends ListFragment implements
 
     public void select(int position) {
         onListItemSelect(position);
+    }
+
+    // OnRefreshListener
+
+    public void onRefreshStarted(View view) {
+        I2PBote bote = I2PBote.getInstance();
+        if (bote.isConnected()) {
+            try {
+                if (!bote.isCheckingForMail())
+                    bote.checkForMail();
+
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        while (I2PBote.getInstance().isCheckingForMail()) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {}
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        super.onPostExecute(result);
+
+                        // Notify PullToRefreshLayout that the refresh has finished
+                        mPullToRefreshLayout.setRefreshComplete();
+                    }
+                }.execute();
+            } catch (PasswordException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (GeneralSecurityException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else
+            mPullToRefreshLayout.setRefreshComplete();
     }
 }

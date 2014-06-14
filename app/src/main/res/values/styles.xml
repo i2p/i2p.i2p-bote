@@ -15,6 +15,20 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="ptrHeaderStyle">@style/Widget.Custom.PtrHeader</item>
+    </style>
+
+    <!--
+      ptrHeaderStyle above refers to this style which contains all of the
+      DefaultHeaderTransformer customization values. The name and parent
+      can be anything, but only the attributes defined in
+      library/res/attrs.xml are actually read in.
+    -->
+    <style name="Widget.Custom.PtrHeader" parent="android:Widget">
+        <!-- The strings to be displayed at the various states -->
+        <item name="ptrPullText">@string/pull_text</item>
+        <item name="ptrRefreshingText">@string/refreshing_text</item>
+        <item name="ptrReleaseText">@string/release_text</item>
     </style>
 
 </resources>

@@ -202,6 +202,14 @@ public class BoteHelper extends GeneralHelper {
         }
     }
 
+    public static boolean isInbox(EmailFolder folder) {
+        return isInbox(folder.getName());
+    }
+
+    public static boolean isInbox(String folderName) {
+        return "Inbox".equalsIgnoreCase(folderName);
+    }
+
     public static boolean isOutbox(EmailFolder folder) {
         return isOutbox(folder.getName());
     }
