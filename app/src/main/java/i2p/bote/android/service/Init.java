@@ -2,9 +2,21 @@ package i2p.bote.android.service;
 
 import net.i2p.android.router.service.IRouterState;
 import net.i2p.client.I2PClient;
+import net.i2p.data.DataHelper;
+import net.i2p.util.OrderedProperties;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import i2p.bote.android.R;
 
 public class Init {
     private final Context ctx;
@@ -32,6 +44,8 @@ public class Init {
         System.setProperty("i2p.dir.base", myDir);
         System.setProperty("i2p.dir.config", myDir);
         System.setProperty("wrapper.logfile", myDir + "/wrapper.log");
+
+        mergeResourceToFile(R.raw.router_config, "router.config", null);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         RouterChoice routerChoice;
@@ -70,5 +84,48 @@ public class Init {
         System.setProperty(I2PClient.PROP_TCP_PORT, i2cpPort);
 
         return routerChoice;
+    }
+
+    /**
+     *  Load defaults from resource,
+     *  then add props from settings,
+     *  and write back
+     *
+     *  @param f relative to base dir
+     *  @param props local overrides or null
+     */
+    public void mergeResourceToFile(int resID, String f, Properties overrides) {
+        InputStream in = null;
+        InputStream fin = null;
+
+        try {
+            in = ctx.getResources().openRawResource(resID);
+            Properties props = new OrderedProperties();
+            try {
+                fin = new FileInputStream(new File(myDir, f));
+                DataHelper.loadProps(props, fin);
+            } catch (IOException ioe) {
+            }
+
+            // write in default settings
+            DataHelper.loadProps(props, in);
+
+            // override with user settings
+            if (overrides != null)
+                props.putAll(overrides);
+            File path = new File(myDir, f);
+            DataHelper.storeProps(props, path);
+        } catch (IOException ioe) {
+        } catch (Resources.NotFoundException nfe) {
+        } finally {
+            if (in != null) try {
+                in.close();
+            } catch (IOException ioe) {
+            }
+            if (fin != null) try {
+                fin.close();
+            } catch (IOException ioe) {
+            }
+        }
     }
 }
