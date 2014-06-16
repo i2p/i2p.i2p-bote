@@ -24,8 +24,9 @@
 
             <ImageView
                 android:id="@+id/picture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:scaleType="centerCrop"
                 android:layout_alignLeft="@+id/email_subject"
                 android:layout_below="@+id/email_subject"
                 android:src="@drawable/ic_contact_picture" />

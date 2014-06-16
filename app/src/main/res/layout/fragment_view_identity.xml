@@ -8,17 +8,21 @@
 
     <ImageView
         android:id="@+id/identity_picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_contact_picture" />
 
     <TextView
         android:id="@+id/public_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/identity_picture"
+        android:layout_alignTop="@+id/identity_picture"
         android:layout_toRightOf="@+id/identity_picture"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
         android:ems="10"
+        android:textSize="20dp"
         android:text="@string/public_name" />
 
     <TextView
@@ -26,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/identity_picture"
+        android:layout_marginTop="5dp"
         android:ems="10"
         android:text="@string/description" />
 
@@ -35,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/description"
         android:layout_below="@+id/description"
+        android:layout_marginTop="5dp"
         android:text="Crypto implementation" />
 
     <TextView
@@ -42,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/crypto_impl"
+        android:layout_marginTop="5dp"
         android:text="Key" />
 
 </RelativeLayout>
