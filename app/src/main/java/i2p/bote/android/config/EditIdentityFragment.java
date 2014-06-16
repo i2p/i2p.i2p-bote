@@ -182,6 +182,7 @@ public class EditIdentityFragment extends EditPictureFragment {
                     mKey,
                     publicName,
                     description,
+                    picture,
                     null,
                     setDefault);
             f.setTask(new IdentityWaiter());
@@ -258,6 +259,7 @@ public class EditIdentityFragment extends EditPictureFragment {
         static final String KEY = "key";
         static final String PUBLIC_NAME = "public_name";
         static final String DESCRIPTION = "description";
+        static final String PICTURE_BASE64 = "picture_base64";
         static final String EMAIL_ADDRESS = "email_address";
         static final String SET_DEFAULT = "set_default";
 
@@ -267,7 +269,7 @@ public class EditIdentityFragment extends EditPictureFragment {
         public static IdentityWaiterFrag newInstance(
                 boolean createNew, int cryptoImplId, String vanity_prefix,
                 String key, String publicName, String description,
-                String emailAddress, boolean setDefault) {
+                String pictureBase64, String emailAddress, boolean setDefault) {
             IdentityWaiterFrag f = new IdentityWaiterFrag();
             Bundle args = new Bundle();
             args.putBoolean(CREATE_NEW, createNew);
@@ -276,6 +278,7 @@ public class EditIdentityFragment extends EditPictureFragment {
             args.putString(KEY, key);
             args.putString(PUBLIC_NAME, publicName);
             args.putString(DESCRIPTION, description);
+            args.putString(PICTURE_BASE64, pictureBase64);
             args.putString(EMAIL_ADDRESS, emailAddress);
             args.putBoolean(SET_DEFAULT, setDefault);
             f.setArguments(args);
@@ -304,6 +307,7 @@ public class EditIdentityFragment extends EditPictureFragment {
                     args.getString(KEY),
                     args.getString(PUBLIC_NAME),
                     args.getString(DESCRIPTION),
+                    args.getString(PICTURE_BASE64),
                     args.getString(EMAIL_ADDRESS),
                     Boolean.valueOf(args.getBoolean(SET_DEFAULT)),
             };
@@ -356,7 +360,8 @@ public class EditIdentityFragment extends EditPictureFragment {
                         (String) params[4],
                         (String) params[5],
                         (String) params[6],
-                        (Boolean) params[7],
+                        (String) params[7],
+                        (Boolean) params[8],
                         lsnr);
                 lsnr.updateStatus("Saving identity");
                 I2PBote.getInstance().getIdentities().save();
