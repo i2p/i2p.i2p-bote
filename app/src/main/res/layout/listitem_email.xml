@@ -6,15 +6,15 @@
 
     <ImageView
         android:id="@+id/contact_picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_contact_picture" />
 
     <ImageView
         android:id="@+id/email_selected"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:scaleType="centerCrop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/contact_picture"
         android:layout_alignLeft="@+id/contact_picture"
         android:visibility="gone"
