@@ -101,7 +101,7 @@
         <c:set var="forwardUrl" value="submitIdentity.jsp?${actionParam}counter=${param.counter}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;vanityPrefix=${param.vanityPrefix}&amp;publicName=${param.publicName}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}"/>
         <ib:requirePassword forwardUrl="${forwardUrl}">
             <c:catch var="exception">
-                <c:set var="errorMessage" value="${ib:createOrModifyIdentity(param.createNew, param.cryptoImpl, param.vanityPrefix, param.key, publicName, param.description, param.emailAddress, param.defaultIdentity=='on')}"/>
+                <c:set var="errorMessage" value="${ib:createOrModifyIdentity(param.createNew, param.cryptoImpl, param.vanityPrefix, param.key, publicName, param.description, null, param.emailAddress, param.defaultIdentity=='on')}"/>
             </c:catch>
             <c:if test="${exception.cause['class'].name eq 'i2p.bote.email.IllegalDestinationParametersException'}">
                 <jsp:forward page="editIdentity.jsp">

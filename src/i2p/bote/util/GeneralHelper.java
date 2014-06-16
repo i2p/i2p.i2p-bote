@@ -116,8 +116,8 @@ public class GeneralHelper {
      * @throws IOException 
      * @throws IllegalDestinationParametersException if <code>cryptoImpl</code> and <code>vanityPrefix</code> aren't compatible
      */
-    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String vanityPrefix, String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException, IllegalDestinationParametersException {
-        createOrModifyIdentity(createNew, cryptoImplId, vanityPrefix, key, publicName, description, emailAddress, setDefault, new StatusListener() {
+    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String vanityPrefix, String key, String publicName, String description, String pictureBase64, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException, IllegalDestinationParametersException {
+        createOrModifyIdentity(createNew, cryptoImplId, vanityPrefix, key, publicName, description, pictureBase64, emailAddress, setDefault, new StatusListener() {
             public void updateStatus(String status) {} // Do nothing
         });
     }
@@ -131,6 +131,7 @@ public class GeneralHelper {
      * @param key A base64-encoded Email Destination key
      * @param description
      * @param publicName
+     * @param picture
      * @param emailAddress
      * @param setDefault If this is <code>true</code>, the identity becomes the new default identity. Otherwise, the default stays the same.
      * @throws GeneralSecurityException 
@@ -138,7 +139,7 @@ public class GeneralHelper {
      * @throws IOException 
      * @throws IllegalDestinationParametersException if <code>cryptoImplId</code> and <code>vanityPrefix</code> aren't compatible
      */
-    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String vanityPrefix, String key, String publicName, String description, String emailAddress, boolean setDefault, StatusListener lsnr) throws GeneralSecurityException, PasswordException, IOException, IllegalDestinationParametersException {
+    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String vanityPrefix, String key, String publicName, String description, String pictureBase64, String emailAddress, boolean setDefault, StatusListener lsnr) throws GeneralSecurityException, PasswordException, IOException, IllegalDestinationParametersException {
         Log log = new Log(GeneralHelper.class);
         Identities identities = I2PBote.getInstance().getIdentities();
         EmailIdentity identity = identities.get(key);
@@ -160,12 +161,14 @@ public class GeneralHelper {
             }
             identity.setPublicName(publicName);
             identity.setDescription(description);
+            identity.setPictureBase64(pictureBase64);
             identity.setEmailAddress(emailAddress);
             identities.add(identity);
         }
         else {
             identity.setPublicName(publicName);
             identity.setDescription(description);
+            identity.setPictureBase64(pictureBase64);
             identity.setEmailAddress(emailAddress);
         }
 
@@ -174,9 +177,9 @@ public class GeneralHelper {
             identities.setDefault(identity);
     }
 
-    public static void modifyIdentity(String key, String publicName, String description, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException {
+    public static void modifyIdentity(String key, String publicName, String description, String pictureBase64, String emailAddress, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException {
         try {
-            createOrModifyIdentity(false, -1, null, key, publicName, description, emailAddress, setDefault);
+            createOrModifyIdentity(false, -1, null, key, publicName, description, pictureBase64, emailAddress, setDefault);
         } catch (IllegalDestinationParametersException e) {
             Log log = new Log(GeneralHelper.class);
             log.error("This shouldn't happen because no identity is being created here.", e);
