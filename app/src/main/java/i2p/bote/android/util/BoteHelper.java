@@ -89,11 +89,10 @@ public class BoteHelper extends GeneralHelper {
      * @throws GeneralSecurityException
      */
     public static Bitmap getPictureForAddress(String address) throws PasswordException, IOException, GeneralSecurityException {
-        String fullAdr = getNameAndDestination(address);
+        String base64dest = extractEmailDestination(address);
 
-        if (!address.equals(fullAdr)) {
+        if (base64dest != null) {
             // Address was found; try address book first
-            String base64dest = EmailDestination.extractBase64Dest(fullAdr);
             Contact c = getContact(base64dest);
             if (c != null) {
                 // Address is in address book
