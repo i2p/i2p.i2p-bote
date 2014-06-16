@@ -129,7 +129,7 @@ public class Identities implements KeyUpdateHandler {
                 identity.setDescription(properties.getProperty(prefix + "description"));
                 String pictureBase64 = properties.getProperty(prefix + "picture");
                 if (pictureBase64!=null && !pictureBase64.isEmpty())
-                    identity.setPicture(Base64.decode(pictureBase64.toCharArray()));
+                    identity.setPictureBase64(pictureBase64);
                 identity.setText(properties.getProperty(prefix + "text"));
                 identity.setPublished("true".equalsIgnoreCase(properties.getProperty(prefix + "published")));
                 String name = properties.getProperty(prefix + "publicName");
@@ -183,8 +183,8 @@ public class Identities implements KeyUpdateHandler {
                 properties.setProperty(prefix + "salt", salt==null ? "" : new String(Base64.encode(salt)));
                 String description = identity.getDescription();
                 properties.setProperty(prefix + "description", (description==null ? "" : description));
-                byte[] picture = identity.getPicture();
-                properties.setProperty(prefix + "picture", (picture==null ? "" : new String(Base64.encode(picture))));
+                String pictureBase64 = identity.getPictureBase64();
+                properties.setProperty(prefix + "picture", (pictureBase64==null ? "" : pictureBase64));
                 String text = identity.getText();
                 properties.setProperty(prefix + "text", (text==null ? "" : text));
                 properties.setProperty(prefix + "published", identity.isPublished() ? "true" : "false");

@@ -160,6 +160,13 @@ public class EmailIdentity extends EmailDestination {
         return picture;
     }
 
+    public void setPictureBase64(String pictureBase64) {
+        if (pictureBase64 == null)
+            picture = null;
+        else
+            picture = Base64.decode(pictureBase64.toCharArray());
+    }
+
     public String getPictureBase64() {
         if (picture == null)
             return null;
