@@ -15,7 +15,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
+
+import com.lambdaworks.codec.Base64;
+
 import i2p.bote.android.R;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
@@ -119,7 +121,7 @@ public class BoteHelper extends GeneralHelper {
     public static Bitmap decodePicture(String picB64) {
         if (picB64 == null)
             return null;
-        byte[] decodedPic = Base64.decode(picB64, Base64.DEFAULT);
+        byte[] decodedPic = Base64.decode(picB64.toCharArray());
         return BitmapFactory.decodeByteArray(decodedPic, 0, decodedPic.length);
     }
 
@@ -127,9 +129,8 @@ public class BoteHelper extends GeneralHelper {
         if (picture == null)
             return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        // TODO something is corrupting here
         picture.compress(CompressFormat.PNG, 0, baos);
-        return Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+        return new String(Base64.encode(baos.toByteArray()));
     }
 
     public static boolean isSentEmail(Email email) throws PasswordException, IOException, GeneralSecurityException, MessagingException {

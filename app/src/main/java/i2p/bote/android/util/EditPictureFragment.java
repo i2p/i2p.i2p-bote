@@ -41,8 +41,8 @@ public class EditPictureFragment extends Fragment {
 
     protected void setPictureB64(String pic) {
         mPicture = BoteHelper.decodePicture(pic);
-        System.out.println("mPicture == null? " + (mPicture == null));
-        mPictureView.setImageBitmap(mPicture);
+        if (mPicture != null)
+            mPictureView.setImageBitmap(mPicture);
     }
 
     protected String getPictureB64() {
