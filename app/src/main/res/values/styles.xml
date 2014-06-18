@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!--
@@ -14,6 +15,7 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
+
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="ptrHeaderStyle">@style/Widget.Custom.PtrHeader</item>
     </style>
@@ -25,6 +27,7 @@
       library/res/attrs.xml are actually read in.
     -->
     <style name="Widget.Custom.PtrHeader" parent="android:Widget">
+
         <!-- The strings to be displayed at the various states -->
         <item name="ptrPullText">@string/pull_text</item>
         <item name="ptrRefreshingText">@string/refreshing_text</item>

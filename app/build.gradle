@@ -22,7 +22,8 @@ preBuild.dependsOn precompile
 clean.dependsOn preclean
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:+'
     compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.android.support:support-v4:19.+'
+    compile 'com.android.support:appcompat-v7:19.+'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
 }
