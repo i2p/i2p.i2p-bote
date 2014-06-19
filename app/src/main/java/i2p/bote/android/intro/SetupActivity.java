@@ -1,13 +1,12 @@
 package i2p.bote.android.intro;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import i2p.bote.android.R;
 import i2p.bote.android.config.EditIdentityActivity;
@@ -40,14 +39,14 @@ public class SetupActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_setup_set_password, container, false);
-            ((Button)rootView.findViewById(R.id.button_set_password)).setOnClickListener(new View.OnClickListener() {
+            rootView.findViewById(R.id.button_set_password).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(getActivity(), SetPasswordActivity.class);
                     startActivityForResult(i, SET_PASSWORD);
                 }
             });
-            ((Button)rootView.findViewById(R.id.button_skip)).setOnClickListener(new View.OnClickListener() {
+            rootView.findViewById(R.id.button_skip).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     nextPage();
@@ -87,14 +86,14 @@ public class SetupActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_setup_create_identity, container, false);
-            ((Button)rootView.findViewById(R.id.button_set_password)).setOnClickListener(new View.OnClickListener() {
+            rootView.findViewById(R.id.button_set_password).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(getActivity(), EditIdentityActivity.class);
                     startActivityForResult(i, CREATE_IDENTITY);
                 }
             });
-            ((Button)rootView.findViewById(R.id.button_skip)).setOnClickListener(new View.OnClickListener() {
+            rootView.findViewById(R.id.button_skip).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     nextPage();
@@ -133,7 +132,7 @@ public class SetupActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_setup_finished, container, false);
-            ((Button)rootView.findViewById(R.id.button_finish)).setOnClickListener(new View.OnClickListener() {
+            rootView.findViewById(R.id.button_finish).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     getActivity().setResult(RESULT_OK);
