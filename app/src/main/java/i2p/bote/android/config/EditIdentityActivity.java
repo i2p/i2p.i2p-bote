@@ -31,6 +31,7 @@ public class EditIdentityActivity extends ActionBarActivity implements
     public void onTaskFinished() {
         Toast.makeText(this, R.string.identity_saved,
                 Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK);
         finish();
     }
 }

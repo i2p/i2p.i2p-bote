@@ -35,6 +35,14 @@
                 android:value="i2p.bote.android.EmailListActivity" />
         </activity>
         <activity
+            android:name=".intro.SetupActivity"
+            android:label="@string/title_activity_setup"
+            android:parentActivityName=".EmailListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="i2p.bote.android.EmailListActivity" />
+        </activity>
+        <activity
             android:name=".ViewEmailActivity"
             android:parentActivityName=".EmailListActivity" />
         <activity

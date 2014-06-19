@@ -16,6 +16,16 @@
     <string name="intro_4_1">Because Bote is a little different to traditional email, there are a few things to set up before you can start using it.</string>
     <string name="intro_4_2">The setup wizard will take a couple of minutes, and then everything will be ready.</string>
     <string name="lets_get_started">Let\'s Get Started</string>
+    <string name="title_activity_setup">Setup</string>
+    <string name="skip">Skip</string>
+    <string name="set_password">Set password</string>
+    <string name="setup_set_password_1">You can set a password for Bote. This will prevent other users from reading your emails, and will encrypt all files on-disk.</string>
+    <string name="setup_set_password_2">If you set a password, automatic email checking will be disabled. You can manually check for emails once you have authenticated by pulling down on the Inbox.</string>
+    <string name="setup_set_password_3">If you do not set a password now, you can do so later from the Settings menu.</string>
+    <string name="create_identity">Create identity</string>
+    <string name="setup_create_identity_1">To receive emails, you need an Identity. This is a set of cryptographic keys that enables you to encrypt and decrypt emails.</string>
+    <string name="setup_create_identity_2">A Destination is the public part of an Identity. This is the address that you will give to your contacts so they can send emails to you. When you send emails using an Identity, its Destination is included in the From field so the recipient can reply.</string>
+    <string name="setup_create_identity_3">If you do not create an Identity now, you can do so later from the Settings menu. If you only want to send emails, you do not need an Identity, because Bote emails can be sent anonymously. However the recipient will be unable to reply to you.</string>
     <string name="action_new_email">New email</string>
     <string name="action_send_email">Send email</string>
     <string name="action_start_bote">Connect to network</string>

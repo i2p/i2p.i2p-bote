@@ -22,6 +22,7 @@ public class SetPasswordActivity extends ActionBarActivity implements
     public void onTaskFinished() {
         Toast.makeText(this, R.string.password_changed,
                 Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK);
         finish();
     }
 }

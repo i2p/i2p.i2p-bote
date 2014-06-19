@@ -36,6 +36,7 @@ import i2p.bote.I2PBote;
 import i2p.bote.android.addressbook.AddressBookActivity;
 import i2p.bote.android.config.SettingsActivity;
 import i2p.bote.android.intro.IntroActivity;
+import i2p.bote.android.intro.SetupActivity;
 import i2p.bote.android.service.BoteService;
 import i2p.bote.android.service.Init;
 import i2p.bote.android.service.Init.RouterChoice;
@@ -66,8 +67,9 @@ public class EmailListActivity extends ActionBarActivity implements
     private static final String PREF_FIRST_START = "firstStart";
     private static final String ACTIVE_FOLDER = "activeFolder";
 
-    private static final int RUN_SETUP_WIZARD = 1;
-    private static final int REQUEST_START_I2P = 2;
+    private static final int SHOW_INTRODUCTION = 1;
+    private static final int RUN_SETUP = 2;
+    private static final int REQUEST_START_I2P = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,7 +219,7 @@ public class EmailListActivity extends ActionBarActivity implements
         if (true || mSharedPrefs.getBoolean(PREF_FIRST_START, true)) {
             mSharedPrefs.edit().putBoolean(PREF_FIRST_START, false).apply();
             Intent i = new Intent(EmailListActivity.this, IntroActivity.class);
-            startActivityForResult(i, RUN_SETUP_WIZARD);
+            startActivityForResult(i, SHOW_INTRODUCTION);
         }
     }
 
@@ -366,10 +368,15 @@ public class EmailListActivity extends ActionBarActivity implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RUN_SETUP_WIZARD) {
+        if (requestCode == SHOW_INTRODUCTION) {
             if (resultCode == RESULT_OK) {
-                // TODO remove (and implement a UI tutorial?)
-                Toast.makeText(this, "Setup wizard not yet implemented.", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(EmailListActivity.this, SetupActivity.class);
+                startActivityForResult(i, RUN_SETUP);
+            }
+        } else if (requestCode == RUN_SETUP) {
+            if (resultCode == RESULT_OK) {
+                // TODO implement a UI tutorial?
+                Toast.makeText(this, "Setup complete.", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == REQUEST_START_I2P) {
             if (resultCode == RESULT_OK) {
