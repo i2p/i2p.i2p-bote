@@ -26,6 +26,11 @@
     <string name="setup_create_identity_1">To receive emails, you need an Identity. This is a set of cryptographic keys that enables you to encrypt and decrypt emails.</string>
     <string name="setup_create_identity_2">A Destination is the public part of an Identity. This is the address that you will give to your contacts so they can send emails to you. When you send emails using an Identity, its Destination is included in the From field so the recipient can reply.</string>
     <string name="setup_create_identity_3">If you do not create an Identity now, you can do so later from the Settings menu. If you only want to send emails, you do not need an Identity, because Bote emails can be sent anonymously. However the recipient will be unable to reply to you.</string>
+    <string name="setup_finished">Setup finished</string>
+    <string name="setup_finished_1">Bote is configured and ready to use.</string>
+    <string name="setup_finished_2">To send and receive emails, Bote needs to connect to the distributed network. You can do this from the menu.</string>
+    <string name="setup_finished_3">While Bote is offline, you can read emails that have already been downloaded. You can also write emails and put them in the Outbox; they will be sent the next time Bote is online.</string>
+    <string name="go_to_inbox">Go to inbox</string>
     <string name="action_new_email">New email</string>
     <string name="action_send_email">Send email</string>
     <string name="action_start_bote">Connect to network</string>

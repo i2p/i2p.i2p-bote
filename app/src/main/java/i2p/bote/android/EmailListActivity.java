@@ -376,7 +376,6 @@ public class EmailListActivity extends ActionBarActivity implements
         } else if (requestCode == RUN_SETUP) {
             if (resultCode == RESULT_OK) {
                 // TODO implement a UI tutorial?
-                Toast.makeText(this, "Setup complete.", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == REQUEST_START_I2P) {
             if (resultCode == RESULT_OK) {

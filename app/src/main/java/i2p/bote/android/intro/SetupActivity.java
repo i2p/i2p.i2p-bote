@@ -115,9 +115,32 @@ public class SetupActivity extends ActionBarActivity {
         }
 
         private void nextPage() {
-            // TODO have a "finished" page?
-            getActivity().setResult(RESULT_OK);
-            getActivity().finish();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new SetupFinishedFragment())
+                    .commit();
+        }
+    }
+
+    /**
+     * Setup finished.
+     */
+    public static class SetupFinishedFragment extends Fragment {
+
+        public SetupFinishedFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_setup_finished, container, false);
+            ((Button)rootView.findViewById(R.id.button_finish)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().setResult(RESULT_OK);
+                    getActivity().finish();
+                }
+            });
+            return rootView;
         }
     }
 }
