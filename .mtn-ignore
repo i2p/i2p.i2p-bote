@@ -9,6 +9,7 @@
 ^botejars/lib
 lint.xml
 local.properties
+signing.gradle
 
 #IntelliJ IDEA
 ^.idea
