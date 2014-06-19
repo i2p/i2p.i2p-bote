@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Bote</string>
+    <string name="app_name" translatable="false">Bote</string>
+    <string name="intro_private">Private.</string>
+    <string name="intro_distributed">Distributed.</string>
+    <string name="intro_secure">Secure.</string>
+    <string name="swipe_to_start">Swipe to start</string>
+    <string name="i_know_what_to_do">I know what to do</string>
+    <string name="intro_1_1">Traditional email is not secure.</string>
+    <string name="intro_1_2">Bote is a new kind of email.</string>
+    <string name="intro_2_1">When you send an email in Bote, everything is encrypted - including the email metadata. Only the recipient can download and read the email.</string>
+    <string name="intro_2_2">An outsider can only see that an email was sent, not who sent it. And if the recipient never publishes their address, the outsider can\'t even tell who the recipient is.</string>
+    <string name="intro_3_1">With traditional email, you need to trust a central server. And if it is blocked, you can\'t send or receive emails.</string>
+    <string name="intro_3_2">Bote uses a distributed peer-to-peer network, similar to BitTorrent. Encrypted emails are split up and stored with many other Bote users.</string>
+    <string name="intro_4_1">Because Bote is a little different to traditional email, there are a few things to set up before you can start using it.</string>
+    <string name="intro_4_2">The setup wizard will take a couple of minutes, and then everything will be ready.</string>
+    <string name="lets_get_started">Let\'s Get Started</string>
     <string name="action_new_email">New email</string>
     <string name="action_send_email">Send email</string>
     <string name="action_start_bote">Connect to network</string>

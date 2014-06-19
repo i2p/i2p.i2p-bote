@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:support-v4:19.+'
     compile 'com.android.support:appcompat-v7:19.+'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
+    compile 'com.mcxiaoke.viewpagerindicator:library:2.4.1'
 }

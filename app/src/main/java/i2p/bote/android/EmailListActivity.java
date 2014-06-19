@@ -1,23 +1,9 @@
 package i2p.bote.android;
 
-import net.i2p.android.router.service.IRouterState;
-import i2p.bote.I2PBote;
-import i2p.bote.android.addressbook.AddressBookActivity;
-import i2p.bote.android.config.SettingsActivity;
-import i2p.bote.android.service.BoteService;
-import i2p.bote.android.service.Init;
-import i2p.bote.android.service.Init.RouterChoice;
-import i2p.bote.android.util.MoveToDialogFragment;
-import i2p.bote.folder.EmailFolder;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.os.RemoteException;
-import android.preference.PreferenceManager;
-import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,6 +12,10 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
@@ -38,6 +28,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import net.i2p.android.router.service.IRouterState;
+
+import i2p.bote.I2PBote;
+import i2p.bote.android.addressbook.AddressBookActivity;
+import i2p.bote.android.config.SettingsActivity;
+import i2p.bote.android.intro.IntroActivity;
+import i2p.bote.android.service.BoteService;
+import i2p.bote.android.service.Init;
+import i2p.bote.android.service.Init.RouterChoice;
+import i2p.bote.android.util.MoveToDialogFragment;
+import i2p.bote.folder.EmailFolder;
 
 public class EmailListActivity extends ActionBarActivity implements
         EmailListFragment.OnEmailSelectedListener,
@@ -60,9 +63,11 @@ public class EmailListActivity extends ActionBarActivity implements
 
     private static final String SHARED_PREFS = "i2p.bote";
     private static final String PREF_NAV_DRAWER_OPENED = "navDrawerOpened";
+    private static final String PREF_FIRST_START = "firstStart";
     private static final String ACTIVE_FOLDER = "activeFolder";
 
-    private static final int REQUEST_START_I2P = 1;
+    private static final int RUN_SETUP_WIZARD = 1;
+    private static final int REQUEST_START_I2P = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +211,14 @@ public class EmailListActivity extends ActionBarActivity implements
         // Open nav drawer if the user has never opened it themselves
         if (!mSharedPrefs.getBoolean(PREF_NAV_DRAWER_OPENED, false))
             mDrawerLayout.openDrawer(mDrawerOuter);
+
+        // If first start, go to introduction and setup wizard
+        // TODO always show while testing, revert to preference when finished
+        if (true || mSharedPrefs.getBoolean(PREF_FIRST_START, true)) {
+            mSharedPrefs.edit().putBoolean(PREF_FIRST_START, false).apply();
+            Intent i = new Intent(EmailListActivity.this, IntroActivity.class);
+            startActivityForResult(i, RUN_SETUP_WIZARD);
+        }
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -353,8 +366,13 @@ public class EmailListActivity extends ActionBarActivity implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_START_I2P) {
-            if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == RUN_SETUP_WIZARD) {
+            if (resultCode == RESULT_OK) {
+                // TODO remove (and implement a UI tutorial?)
+                Toast.makeText(this, "Setup wizard not yet implemented.", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == REQUEST_START_I2P) {
+            if (resultCode == RESULT_OK) {
                 startBote();
             }
         } else {

@@ -28,6 +28,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".intro.IntroActivity"
+            android:parentActivityName=".EmailListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="i2p.bote.android.EmailListActivity" />
+        </activity>
+        <activity
             android:name=".ViewEmailActivity"
             android:parentActivityName=".EmailListActivity" />
         <activity
