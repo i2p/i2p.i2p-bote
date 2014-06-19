@@ -15,7 +15,7 @@
     <string name="intro_3_2">Bote uses a distributed peer-to-peer network, similar to BitTorrent. Encrypted emails are split up and stored with many other Bote users.</string>
     <string name="intro_4_1">Because Bote is a little different to traditional email, there are a few things to set up before you can start using it.</string>
     <string name="intro_4_2">The setup wizard will take a couple of minutes, and then everything will be ready.</string>
-    <string name="lets_get_started">Let\'s Get Started</string>
+    <string name="lets_get_started">Let\'s get started</string>
     <string name="title_activity_setup">Setup</string>
     <string name="skip">Skip</string>
     <string name="set_password">Set password</string>
