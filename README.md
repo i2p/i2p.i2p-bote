@@ -1,28 +1,34 @@
-# I2P-Bote
+# I2P-Bote for Android
 
-I2P-Bote is a plugin for I2P that allows users to send and receive emails while preserving privacy. It does not need a mail server because emails are stored in a distributed hash table. They are automatically encrypted and digitally signed, which ensures no one but the intended recipient can read the email, and third parties cannot forge them.
+Bote is an Android port of I2P-Bote.
 
-**Features:**
+## Build process
 
-  * Themeable webmail interface
-  * User interface translated in many languages
-  * One-click creation of email accounts (called email identities)
-  * Emails can be sent under a sender identity, or anonymously
-  * ElGamal, Elliptic Curve, and NTRU Encryption
-  * Encryption and signing is transparent, without the need to know about PGP
-  * Delivery confirmation
-  * Basic support for short recipient names
-  * IMAP / SMTP
+### Preparation
 
-**Planned Features:**
+1. Install I2P. You need the installed libraries to build against.
 
-  * Custom folders
-  * Sending and receiving via relays, similar to Mixmaster
-  * Lots of small improvements
+2. Download the Android SDK. The simplest method is to download Android Studio.
 
-**More information**
+3. Check out the `i2p.i2p-bote` and `i2p.i2p-bote.android` repositories.
 
-The links below only work within I2P, i.e., make sure you are running I2P and your browser is using the proxy at localhost:4444.
+4. Create a `local.properties` file in `i2p.i2p-bote.android/app` containing:
 
-  * http://i2pbote.i2p I2P-Bote homepage
-  * http://forum.i2p/viewforum.php?f=35 I2P-Bote forum
+    i2pbase=/path/to/installed/i2p
+    botesrc=/path/to/i2p.i2p-bote
+
+### Building from the command line
+
+1. Create a `local.properties` file in `i2p.i2p-bote.android` containing:
+
+    sdk.dir=/path/to/android-studio/sdk
+
+2. `./gradlew assembleDebug`
+
+3. The APK will be placed in `i2p.i2p-bote.android/app/build/apk`.
+
+### Building with Android Studio
+
+1. Import `i2p.i2p-bote.android` into Android Studio. (This creates the `local.properties` file automatically).
+
+2. Build and run the app (Shift+F10).
