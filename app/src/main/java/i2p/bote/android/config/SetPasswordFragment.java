@@ -1,16 +1,10 @@
 package i2p.bote.android.config;
 
-import i2p.bote.I2PBote;
-import i2p.bote.android.R;
-import i2p.bote.android.util.RobustAsyncTask;
-import i2p.bote.android.util.TaskFragment;
-import i2p.bote.StatusListener;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +14,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import i2p.bote.I2PBote;
+import i2p.bote.StatusListener;
+import i2p.bote.android.R;
+import i2p.bote.android.util.RobustAsyncTask;
+import i2p.bote.android.util.TaskFragment;
 
 public class SetPasswordFragment extends Fragment {
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -51,7 +51,6 @@ public class SetPasswordFragment extends Fragment {
     // instance of this fragment after rotation.
     static final String PASSWORD_WAITER_TAG = "passwordWaiterTask";
 
-    private FragmentManager mFM;
     MenuItem mSave;
     EditText mOldField;
     EditText mNewField;
@@ -63,8 +62,7 @@ public class SetPasswordFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        mFM = getFragmentManager();
-        PasswordWaiterFrag f = (PasswordWaiterFrag) mFM.findFragmentByTag(PASSWORD_WAITER_TAG);
+        PasswordWaiterFrag f = (PasswordWaiterFrag) getFragmentManager().findFragmentByTag(PASSWORD_WAITER_TAG);
         if (f != null)
             f.setTargetFragment(this, PASSWORD_WAITER);
     }
@@ -91,7 +89,7 @@ public class SetPasswordFragment extends Fragment {
         mSave = menu.findItem(R.id.action_set_password);
 
         // If task is running, disable the save button.
-        PasswordWaiterFrag f = (PasswordWaiterFrag) mFM.findFragmentByTag(PASSWORD_WAITER_TAG);
+        PasswordWaiterFrag f = (PasswordWaiterFrag) getFragmentManager().findFragmentByTag(PASSWORD_WAITER_TAG);
         if (f != null)
             setInterfaceEnabled(false);
     }
@@ -113,7 +111,7 @@ public class SetPasswordFragment extends Fragment {
             PasswordWaiterFrag f = PasswordWaiterFrag.newInstance(oldPassword, newPassword, confirmNewPassword);
             f.setTask(new PasswordWaiter());
             f.setTargetFragment(SetPasswordFragment.this, PASSWORD_WAITER);
-            mFM.beginTransaction()
+            getFragmentManager().beginTransaction()
                 .replace(R.id.password_waiter_frag, f, PASSWORD_WAITER_TAG)
                 .commit();
             return true;

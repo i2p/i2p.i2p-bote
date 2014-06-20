@@ -1,25 +1,9 @@
 package i2p.bote.android.config;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.List;
-
-import i2p.bote.I2PBote;
-import i2p.bote.android.R;
-import i2p.bote.android.util.BoteHelper;
-import i2p.bote.android.util.EditPictureFragment;
-import i2p.bote.android.util.RobustAsyncTask;
-import i2p.bote.android.util.TaskFragment;
-import i2p.bote.StatusListener;
-import i2p.bote.crypto.CryptoFactory;
-import i2p.bote.crypto.CryptoImplementation;
-import i2p.bote.email.EmailIdentity;
-import i2p.bote.fileencryption.PasswordException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +16,22 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.List;
+
+import i2p.bote.I2PBote;
+import i2p.bote.StatusListener;
+import i2p.bote.android.R;
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.EditPictureFragment;
+import i2p.bote.android.util.RobustAsyncTask;
+import i2p.bote.android.util.TaskFragment;
+import i2p.bote.crypto.CryptoFactory;
+import i2p.bote.crypto.CryptoImplementation;
+import i2p.bote.email.EmailIdentity;
+import i2p.bote.fileencryption.PasswordException;
 
 public class EditIdentityFragment extends EditPictureFragment {
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -68,7 +68,6 @@ public class EditIdentityFragment extends EditPictureFragment {
     static final int DEFAULT_CRYPTO_IMPL = 2;
 
     private String mKey;
-    private FragmentManager mFM;
     MenuItem mSave;
     EditText mNameField;
     EditText mDescField;
@@ -90,8 +89,7 @@ public class EditIdentityFragment extends EditPictureFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        mFM = getFragmentManager();
-        IdentityWaiterFrag f = (IdentityWaiterFrag) mFM.findFragmentByTag(IDENTITY_WAITER_TAG);
+        IdentityWaiterFrag f = (IdentityWaiterFrag) getFragmentManager().findFragmentByTag(IDENTITY_WAITER_TAG);
         if (f != null)
             f.setTargetFragment(this, IDENTITY_WAITER);
     }
@@ -151,7 +149,7 @@ public class EditIdentityFragment extends EditPictureFragment {
         inflater.inflate(R.menu.edit_identity, menu);
         mSave = menu.findItem(R.id.action_save_identity);
 
-        IdentityWaiterFrag f = (IdentityWaiterFrag) mFM.findFragmentByTag(IDENTITY_WAITER_TAG);
+        IdentityWaiterFrag f = (IdentityWaiterFrag) getFragmentManager().findFragmentByTag(IDENTITY_WAITER_TAG);
         if (f != null)
             setInterfaceEnabled(false);
     }
@@ -187,7 +185,7 @@ public class EditIdentityFragment extends EditPictureFragment {
                     setDefault);
             f.setTask(new IdentityWaiter());
             f.setTargetFragment(EditIdentityFragment.this, IDENTITY_WAITER);
-            mFM.beginTransaction()
+            getFragmentManager().beginTransaction()
             .replace(R.id.identity_waiter_frag, f, IDENTITY_WAITER_TAG)
             .commit();
             return true;
