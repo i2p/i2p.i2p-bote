@@ -2,5 +2,9 @@ LICENSES
 --------
 
 This software is licensed under the GPL version 3 (see licenses/GPLv3.txt),
-except for bcprov-ecc-jdk16-146.jar which is licensed under the
-Bouncy Castle License (see licenses/BouncyCastle.txt).
+except for:
+
+- bcprov-ecc-jdk16-146.jar which is licensed under the Bouncy Castle License
+  (see licenses/BouncyCastle.txt).
+- nl.jteam.tls.StrongTls which is licensed under the Apache License, Version
+  2.0 (see licenses/LICENSE-Apache2.0.txt).
