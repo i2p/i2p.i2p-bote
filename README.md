@@ -17,6 +17,11 @@ Bote is an Android port of I2P-Bote.
     i2pbase=/path/to/installed/i2p
     botesrc=/path/to/i2p.i2p-bote
 
+5. Gradle will pull dependencies over the clearnet by default. To use Tor, create a `gradle.properties` file in `i2p.i2p-bote.android` containing:
+
+    systemProp.socksProxyHost=localhost
+    systemProp.socksProxyPort=9150
+
 ### Building from the command line
 
 1. Create a `local.properties` file in `i2p.i2p-bote.android` containing:
