@@ -43,3 +43,16 @@ Bote is an Android port of I2P-Bote.
 1. Import `i2p.i2p-bote.android` into Android Studio. (This creates the `local.properties` file automatically).
 
 2. Build and run the app (`Shift+F10`).
+
+### Signing release builds
+
+1. Create a `signing.properties` file in `i2p.i2p-bote.android` containing:
+
+    ```
+    STORE_FILE=/path/to/android.keystore
+    STORE_PASSWORD=store.password
+    KEY_ALIAS=key.alias
+    KEY_PASSWORD=key.password
+    ```
+
+2. `./gradlew assembleRelease`
