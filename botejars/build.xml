@@ -8,8 +8,26 @@
     <condition property="i2pbase" value="${env.I2P}">
         <isset property="env.I2P"/>
     </condition>
+    <condition property="i2plib" value="${i2pbase}/lib">
+        <isset property="i2pbase"/>
+    </condition>
 
-    <property name="i2plib" value="${i2pbase}/lib"/>
+    <!-- or set i2psrc=path/to/source in local.properties -->
+    <condition property="i2plib" value="${i2psrc}/build">
+        <isset property="i2psrc"/>
+    </condition>
+    <condition property="i2pbase" value="${i2psrc}">
+        <isset property="i2psrc"/>
+    </condition>
+
+    <available file="${i2pbase}" property="i2p.present" />
+    <fail message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p." >
+        <condition>
+            <not>
+                <isset property="i2p.present" />
+            </not>
+        </condition>
+    </fail>
 
     <!-- override with botesrc=path/to/source in local.properties -->
     <property name="botesrc" value="../i2p.i2p-bote" />
@@ -27,19 +45,30 @@
 
     <target name="preparebotelibs" depends="copyrouterlibs,copybotelibs" />
 
-    <target name="clean">
+    <condition property="dontclean" value="true">
+        <not>
+            <isset property="i2psrc"/>
+        </not>
+    </condition>
+
+    <target name="cleanI2P" unless="dontclean">
+        <ant dir="${i2pbase}" inheritall="false" useNativeBasedir="true" target="clean" />
+    </target>
+
+    <target name="clean" depends="cleanI2P">
         <ant dir="${botebase}" inheritall="false" useNativeBasedir="true" >
             <target name="clean" />
         </ant>
     </target>
 
-    <!-- new rules -->
+    <!-- test for one of them, assume it means we have all of them -->
+    <available property="have.streaming" file="${i2plib}/streaming.jar" />
 
-    <target name="checki2pbase">
-        <fail unless="i2pbase" message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p."/>
+    <target name="buildJarsForBote" unless="have.streaming">
+        <ant dir="${i2pbase}" inheritall="false" useNativeBasedir="true" target="jarBote" />
     </target>
 
-    <target name="copyrouterlibs" depends="checki2pbase" >
+    <target name="copyrouterlibs" depends="buildJarsForBote" >
         <!-- core -->
         <!-- remove classes that are overridden -->
         <!-- lots of unneeded stuff could be deleted here -->
@@ -62,6 +91,7 @@
     <target name="buildbote" unless="have.bote">
         <ant dir="${botebase}" inheritall="false" useNativeBasedir="true" >
             <property name="i2pbase" value="${i2pbase}" />
+            <property name="i2plib" value="${i2plib}" />
             <target name="jar" />
         </ant>
     </target>
