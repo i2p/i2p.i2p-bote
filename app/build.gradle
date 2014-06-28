@@ -17,11 +17,8 @@ android {
     }
 }
 
-ant.importBuild('botejars.xml')
-preBuild.dependsOn precompile
-clean.dependsOn preclean
-
 dependencies {
+    compile project(':botejars')
     compile fileTree(dir: 'libs', include: '*.jar')
     compile 'com.android.support:support-v4:19.+'
     compile 'com.android.support:appcompat-v7:19.+'

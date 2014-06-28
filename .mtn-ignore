@@ -2,11 +2,7 @@
 ^.settings
 
 # Android-specific ignores
-^bin
-^gen
-^botejars/bin
-^botejars/gen
-^botejars/lib
+^botejars/libs
 lint.xml
 local.properties
 signing.gradle

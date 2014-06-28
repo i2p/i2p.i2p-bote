@@ -3,7 +3,7 @@
     <property file="local.properties" />
     <property name="jar.libs.dir" value="libs" />
 
-    <!-- override with i2pbase=path/to/source in local.properties -->
+    <!-- override with i2pbase=path/to/install in local.properties -->
     <property environment="env"/>
     <condition property="i2pbase" value="${env.I2P}">
         <isset property="env.I2P"/>
@@ -25,17 +25,9 @@
     </fail>
     <echo message="Using I2P-Bote source at ${botebase}" />
 
-    <target name="precompile" depends="copyrouterlibs,copybotelibs" />
+    <target name="preparebotelibs" depends="copyrouterlibs,copybotelibs" />
 
-    <target name="preclean">
-        <delete verbose="${verbose}">
-            <fileset dir="${jar.libs.dir}">
-                <exclude name="mail.jar" />
-                <exclude name="additionnal.jar" />
-                <exclude name="activation.jar" />
-                <exclude name="tokenautocomplete.jar" />
-            </fileset>
-        </delete>
+    <target name="clean">
         <ant dir="${botebase}" inheritall="false" useNativeBasedir="true" >
             <target name="clean" />
         </ant>
