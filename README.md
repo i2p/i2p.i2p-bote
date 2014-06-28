@@ -14,19 +14,25 @@ Bote is an Android port of I2P-Bote.
 
 4. Create a `local.properties` file in `i2p.i2p-bote.android/app` containing:
 
+    ```
     i2pbase=/path/to/installed/i2p
     botesrc=/path/to/i2p.i2p-bote
+    ```
 
 5. Gradle will pull dependencies over the clearnet by default. To use Tor, create a `gradle.properties` file in `i2p.i2p-bote.android` containing:
 
+    ```
     systemProp.socksProxyHost=localhost
     systemProp.socksProxyPort=9150
+    ```
 
 ### Building from the command line
 
 1. Create a `local.properties` file in `i2p.i2p-bote.android` containing:
 
+    ```
     sdk.dir=/path/to/android-studio/sdk
+    ```
 
 2. `./gradlew assembleDebug`
 
@@ -36,4 +42,4 @@ Bote is an Android port of I2P-Bote.
 
 1. Import `i2p.i2p-bote.android` into Android Studio. (This creates the `local.properties` file automatically).
 
-2. Build and run the app (Shift+F10).
+2. Build and run the app (`Shift+F10`).
