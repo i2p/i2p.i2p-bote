@@ -1,5 +1,4 @@
 apply plugin: 'android'
-apply from: 'signing.gradle'
 
 android {
     compileSdkVersion 19
@@ -7,6 +6,9 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 19
+    }
+    signingConfigs {
+        release
     }
     buildTypes {
         release {
@@ -30,4 +32,28 @@ dependencies {
     compile ('com.mcxiaoke.viewpagerindicator:library:2.4.1') {
         exclude group: 'com.android.support', module: 'support-v4'
     }
+}
+
+def Properties props = new Properties()
+def propFile = new File(project.rootDir, 'signing.properties')
+
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null &&
+            props.containsKey('STORE_FILE') &&
+            props.containsKey('STORE_PASSWORD') &&
+            props.containsKey('KEY_ALIAS') &&
+            props.containsKey('KEY_PASSWORD')) {
+        android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
+        android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
+        android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
+        android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
+    } else {
+        println 'signing.properties found but some entries are missing'
+        android.buildTypes.release.signingConfig = null
+    }
+} else {
+    println 'signing.properties not found'
+    android.buildTypes.release.signingConfig = null
 }

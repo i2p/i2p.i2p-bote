@@ -5,7 +5,7 @@
 ^botejars/libs
 lint.xml
 local.properties
-signing.gradle
+signing.properties
 
 #IntelliJ IDEA
 ^.idea
