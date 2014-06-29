@@ -4,6 +4,33 @@ Bote is an Android port of I2P-Bote.
 
 ## Build process
 
+### Dependencies:
+
+- Java SDK (preferably Oracle/Sun or OpenJDK) 1.6.0 or higher
+- Apache Ant 1.8.0 or higher
+- [I2P source](https://github.com/i2p/i2p.i2p)
+- [I2P-Bote source](https://github.com/i2p/i2p.i2p-bote)
+- Android SDK (tested with Rev 22.6.4 and platform-tools version 19.1)
+- Android Support Repository
+- Gradle 1.12
+
+### Gradle
+
+The build system is based on Gradle. There are several methods for setting Gradle up:
+
+* It can be downloaded from [the Gradle website](http://www.gradle.org/downloads).
+
+* Most distributions will have Gradle packages. Be careful to check the provided version; Debian and Ubuntu have old versions in their main repositories. There is a [PPA](https://launchpad.net/~cwchien/+archive/gradle) for Ubuntu with the latest version of Gradle.
+
+* A Gradle wrapper is provided in the codebase. It takes all the same commands as the regular `gradle` command. The first time that any command is run, it will automatically download, cache and use the correct version of Gradle. This is the simplest way to get started with the codebase. To use it, replace `gradle` with `./gradlew` (or `./gradlew.bat` on Windows) in the commands below.
+
+Gradle will pull dependencies over the clearnet by default. To use Tor, create a `gradle.properties` file in `i2p.android.base` containing:
+
+    ```
+    systemProp.socksProxyHost=localhost
+    systemProp.socksProxyPort=9150
+    ```
+
 ### Preparation
 
 1. Install I2P. You need the installed libraries to build against.
@@ -19,13 +46,6 @@ Bote is an Android port of I2P-Bote.
     botesrc=/path/to/i2p.i2p-bote
     ```
 
-5. Gradle will pull dependencies over the clearnet by default. To use Tor, create a `gradle.properties` file in `i2p.i2p-bote.android` containing:
-
-    ```
-    systemProp.socksProxyHost=localhost
-    systemProp.socksProxyPort=9150
-    ```
-
 ### Building from the command line
 
 1. Create a `local.properties` file in `i2p.i2p-bote.android` containing:
@@ -34,7 +54,7 @@ Bote is an Android port of I2P-Bote.
     sdk.dir=/path/to/android-studio/sdk
     ```
 
-2. `./gradlew assembleDebug`
+2. `gradle assembleDebug`
 
 3. The APK will be placed in `i2p.i2p-bote.android/app/build/apk`.
 
@@ -55,4 +75,4 @@ Bote is an Android port of I2P-Bote.
     KEY_PASSWORD=key.password
     ```
 
-2. `./gradlew assembleRelease`
+2. `gradle assembleRelease`
