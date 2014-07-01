@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath files('gradle/libs/gradle-witness.jar')
     }
 }
 
