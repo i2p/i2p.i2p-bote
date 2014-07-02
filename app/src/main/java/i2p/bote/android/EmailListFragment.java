@@ -59,6 +59,7 @@ public class EmailListFragment extends ListFragment implements
     OnEmailSelectedListener mCallback;
 
     private PullToRefreshLayout mPullToRefreshLayout;
+    private TextView mNumIncompleteEmails;
 
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
@@ -131,6 +132,14 @@ public class EmailListFragment extends ListFragment implements
                     .setup(mPullToRefreshLayout);
 
             mPullToRefreshLayout.setRefreshing(I2PBote.getInstance().isCheckingForMail());
+
+            int numIncompleteEmails = I2PBote.getInstance().getNumIncompleteEmails();
+            if (numIncompleteEmails > 0) {
+                mNumIncompleteEmails = new TextView(getActivity());
+                mNumIncompleteEmails.setText(getResources().getString(R.string.incomplete_emails,
+                        numIncompleteEmails));
+                getListView().addHeaderView(mNumIncompleteEmails);
+            }
         }
     }
 
@@ -279,11 +288,13 @@ public class EmailListFragment extends ListFragment implements
     @Override
     public void onListItemClick(ListView parent, View view, int pos, long id) {
         super.onListItemClick(parent, view, pos, id);
+        int position = mNumIncompleteEmails == null ? pos : pos - 1;
+        if (position < 0) return;
         if (mMode == null) {
             mCallback.onEmailSelected(
-                    mFolder.getName(), mAdapter.getItem(pos).getMessageID());
+                    mFolder.getName(), mAdapter.getItem(position).getMessageID());
         } else
-            onListItemSelect(pos);
+            onListItemSelect(position);
     }
 
     private void onListItemSelect(int position) {
@@ -524,6 +535,19 @@ public class EmailListFragment extends ListFragment implements
                     @Override
                     protected void onPostExecute(Void result) {
                         super.onPostExecute(result);
+
+                        int numIncomingEmails = I2PBote.getInstance().getNumIncompleteEmails();
+                        if (numIncomingEmails > 0) {
+                            if (mNumIncompleteEmails == null) {
+                                mNumIncompleteEmails = new TextView(getActivity());
+                                getListView().addHeaderView(mNumIncompleteEmails);
+                            }
+                            mNumIncompleteEmails.setText(getResources().getString(R.string.incomplete_emails,
+                                    numIncomingEmails));
+                        } else if (mNumIncompleteEmails != null) {
+                            getListView().removeHeaderView(mNumIncompleteEmails);
+                            mNumIncompleteEmails = null;
+                        }
 
                         // Notify PullToRefreshLayout that the refresh has finished
                         mPullToRefreshLayout.setRefreshComplete();

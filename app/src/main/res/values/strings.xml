@@ -40,6 +40,7 @@
     <string name="pull_text">Pull to check email</string>
     <string name="refreshing_text">Checking email...</string>
     <string name="release_text">Let go to check email</string>
+    <string name="incomplete_emails">%s incomplete emails</string>
     <string name="items_selected">%s selected</string>
     <string name="action_delete">Delete</string>
     <string name="action_mark_read">Mark read</string>
