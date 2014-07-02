@@ -184,14 +184,17 @@ public class EmailListActivity extends ActionBarActivity implements
         });
         mNetworkStatus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                int boteNotStartedMessage = R.string.network_info_unavailable;
                 switch (I2PBote.getInstance().getNetworkStatus()) {
-                case NOT_STARTED:
                 case DELAY:
+                    boteNotStartedMessage = R.string.network_info_unavailable_delay;
+                case NOT_STARTED:
+                    final int message = boteNotStartedMessage;
                     DialogFragment df = new DialogFragment() {
                         @Override
                         public Dialog onCreateDialog(Bundle savedInstanceState) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setMessage(R.string.network_info_unavailable)
+                            builder.setMessage(message)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
