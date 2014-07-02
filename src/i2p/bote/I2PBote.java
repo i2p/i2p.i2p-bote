@@ -624,6 +624,10 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         return trashFolder;
     }
 
+    public int getNumIncompleteEmails() {
+        return incompleteEmailFolder.getNumIncompleteEmails();
+    }
+
     public void addNewEmailListener(NewEmailListener newEmailListener) {
         incompleteEmailFolder.addNewEmailListener(newEmailListener);
     }

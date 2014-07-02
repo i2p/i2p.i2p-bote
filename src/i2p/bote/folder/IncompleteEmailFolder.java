@@ -38,6 +38,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.i2p.util.Log;
 
@@ -55,6 +57,17 @@ public class IncompleteEmailFolder extends PacketFolder<UnencryptedEmailPacket> 
         this.inbox = inbox;
         this.messageIdCache = messageIdCache;
         newEmailListeners = new ArrayList<NewEmailListener>();
+    }
+
+    public synchronized int getNumIncompleteEmails() {
+        Set<String> messages = new HashSet<String>();
+        File[] packets = getFilenames();
+        for (int i = 0; i < packets.length; i++) {
+            File packet = packets[i];
+            String messageId = packet.getName().split("_")[0];
+            messages.add(messageId);
+        }
+        return messages.size();
     }
     
     /**
