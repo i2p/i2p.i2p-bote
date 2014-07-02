@@ -1,5 +1,6 @@
 package i2p.bote.android.config;
 
+import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +12,10 @@ public class EditIdentityActivity extends ActionBarActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_identity);
+
+        // Initialize I2P settings
+        InitActivities init = new InitActivities(this);
+        init.initialize();
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

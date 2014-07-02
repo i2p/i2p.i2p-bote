@@ -1,5 +1,6 @@
 package i2p.bote.android.config;
 
+import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +13,10 @@ public class SetPasswordActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setTitle(R.string.pref_title_change_password);
         setContentView(R.layout.activity_set_password);
+
+        // Initialize I2P settings
+        InitActivities init = new InitActivities(this);
+        init.initialize();
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

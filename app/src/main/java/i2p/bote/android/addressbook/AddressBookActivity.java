@@ -1,5 +1,6 @@
 package i2p.bote.android.addressbook;
 
+import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
@@ -15,6 +16,10 @@ public class AddressBookActivity extends ActionBarActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.address_book);
+
+        // Initialize I2P settings
+        InitActivities init = new InitActivities(this);
+        init.initialize();
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -3,10 +3,16 @@ package i2p.bote.android.config;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import i2p.bote.android.InitActivities;
+
 public class ViewIdentityActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize I2P settings
+        InitActivities init = new InitActivities(this);
+        init.initialize();
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -2,6 +2,7 @@ package i2p.bote.android.config;
 
 import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
+import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 import i2p.bote.android.util.SummaryEditTextPreference;
 import i2p.bote.email.EmailIdentity;
@@ -59,6 +60,10 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize I2P settings
+        InitActivities init = new InitActivities(this);
+        init.initialize();
 
         String action = getIntent().getAction();
         if (action != null) {

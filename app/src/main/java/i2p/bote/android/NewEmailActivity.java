@@ -11,6 +11,10 @@ public class NewEmailActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setTitle(R.string.compose);
 
+        // Initialize I2P settings
+        InitActivities init = new InitActivities(this);
+        init.initialize();
+
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

@@ -39,6 +39,10 @@ public class ViewEmailActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_email);
 
+        // Initialize I2P settings
+        InitActivities init = new InitActivities(this);
+        init.initialize();
+
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
