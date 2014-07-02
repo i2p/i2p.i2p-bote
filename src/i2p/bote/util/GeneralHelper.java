@@ -330,6 +330,10 @@ public class GeneralHelper {
         return I2PBote.getInstance().newMailReceived();
     }
 
+    public int getNumIncompleteEmails() {
+        return I2PBote.getInstance().getNumIncompleteEmails();
+    }
+
     public static EmailFolder getMailFolder(String folderName) {
         if ("Inbox".equalsIgnoreCase(folderName))
             return I2PBote.getInstance().getInbox();

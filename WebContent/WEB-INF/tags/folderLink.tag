@@ -47,3 +47,13 @@
 </a>
 
 <c:if test="${numNew>0}">(${numNew})</c:if>
+
+<c:if test="${dirName == 'Inbox'}">
+    <c:set var="numIncomplete" value="${jspHelperBean.numIncompleteEmails}"/>
+    <c:if test="${numIncomplete>0}">
+        <ib:message key="{0} incomplete" var="numIncompleteMsg">
+            <ib:param value="${numIncomplete}"/>
+        </ib:message>
+        (${numIncompleteMsg})
+    </c:if>
+</c:if>
