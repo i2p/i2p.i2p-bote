@@ -14,6 +14,5 @@ Tasks:
 Features:
 - Import/export identities
 -- Export Destination / make it copyable
-- Show contact pictures in recipients dropdown
 - Add optional CC: and BCC: fields
 - "Empty trash" option in Trash folder

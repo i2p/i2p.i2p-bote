@@ -45,32 +45,34 @@ public class ContactsCompletionView extends TokenCompleteTextView {
                 // Check if it is a known Destination
                 Contact c = BoteHelper.getContact(completionText);
                 if (c != null)
-                    return new Person(c.getName(), c.getBase64Dest());
+                    return new Person(c.getName(), c.getBase64Dest(),
+                            BoteHelper.decodePicture(c.getPictureBase64()));
 
                 // Check if it is a name
                 SortedSet<Contact> contacts = I2PBote.getInstance().getAddressBook().getAll();
                 for (Contact contact : contacts) {
                     if (contact.getName().startsWith(completionText))
-                        return new Person(contact.getName(), contact.getBase64Dest());
+                        return new Person(contact.getName(), contact.getBase64Dest(),
+                                BoteHelper.decodePicture(contact.getPictureBase64()));
                 }
 
                 // Try as a new Destination
                 try {
                     new EmailDestination(completionText);
-                    return new Person(completionText.substring(0, 5), completionText);
+                    return new Person(completionText.substring(0, 5), completionText, null);
                 } catch (GeneralSecurityException e) {
                     // Not a valid Destination
                     // Assume the user meant an external address
                     completionText = completionText.replace(" ", "") + "@example.com";
-                    return new Person(completionText, completionText, true);
+                    return new Person(completionText, completionText, null, true);
                 }
             } catch (PasswordException e) {
                 // TODO handle
                 completionText = completionText.replace(" ", "") + "@example.com";
-                return new Person(completionText, completionText, true);
+                return new Person(completionText, completionText, null, true);
             }
         } else {
-            return new Person(completionText, completionText, true);
+            return new Person(completionText, completionText, null, true);
         }
     }
 }

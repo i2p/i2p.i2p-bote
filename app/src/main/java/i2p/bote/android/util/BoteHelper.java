@@ -35,7 +35,6 @@ public class BoteHelper extends GeneralHelper {
      * user, so their name is already "translated".
      * @param ctx Android Context to get strings from.
      * @param folder The folder.
-     * @param showNew Should the name contain the number of new messages?
      * @return The name of the folder.
      * @throws PasswordException
      */
@@ -94,27 +93,42 @@ public class BoteHelper extends GeneralHelper {
         String base64dest = extractEmailDestination(address);
 
         if (base64dest != null) {
-            // Address was found; try address book first
-            Contact c = getContact(base64dest);
-            if (c != null) {
-                // Address is in address book
-                String pic = c.getPictureBase64();
-                if (pic != null) {
-                    return decodePicture(pic);
-                }
-            } else {
-                // Address is an identity
-                EmailIdentity i = getIdentity(base64dest);
-                if (i != null) {
-                    String pic = i.getPictureBase64();
-                    if (pic != null) {
-                        return decodePicture(pic);
-                    }
-                }
-            }
+            return getPictureForDestination(base64dest);
         }
 
         // Address not found anywhere, or found and has no picture
+        return null;
+    }
+
+    /**
+     * Get a Bitmap containing the picture for the contact or identity
+     * corresponding to the given Destination.
+     * @param base64dest
+     * @return a Bitmap, or null if no picture was found.
+     * @throws PasswordException
+     * @throws IOException
+     * @throws GeneralSecurityException
+     */
+    public static Bitmap getPictureForDestination(String base64dest) throws PasswordException, IOException, GeneralSecurityException {
+        // Address was found; try address book first
+        Contact c = getContact(base64dest);
+        if (c != null) {
+            // Address is in address book
+            String pic = c.getPictureBase64();
+            if (pic != null) {
+                return decodePicture(pic);
+            }
+        } else {
+            // Address is an identity
+            EmailIdentity i = getIdentity(base64dest);
+            if (i != null) {
+                String pic = i.getPictureBase64();
+                if (pic != null) {
+                    return decodePicture(pic);
+                }
+            }
+        }
+        // Address is not known
         return null;
     }
 

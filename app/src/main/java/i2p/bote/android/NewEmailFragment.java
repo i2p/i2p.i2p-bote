@@ -29,6 +29,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -107,7 +109,9 @@ public class NewEmailFragment extends Fragment {
         String quoteMsgFolder = getArguments().getString(QUOTE_MSG_FOLDER);
         String quoteMsgId = getArguments().getString(QUOTE_MSG_ID);
         Email origEmail = null;
+        String recipientName = null;
         String recipientAddr = null;
+        Bitmap recipientPic = null;
         String origSubject = null;
         String origContent = null;
         String origFrom = null;
@@ -116,8 +120,19 @@ public class NewEmailFragment extends Fragment {
             if (origEmail != null) {
                 mSenderKey = BoteHelper.extractEmailDestination(
                         BoteHelper.getOneLocalRecipient(origEmail).toString());
-                recipientAddr = BoteHelper.getNameAndDestination(
+                String recipient = BoteHelper.getNameAndDestination(
                         origEmail.getReplyAddress(I2PBote.getInstance().getIdentities()));
+                recipientName = BoteHelper.extractName(recipient);
+                recipientAddr = BoteHelper.extractEmailDestination(recipient);
+                if (recipientAddr == null) { // Assume external address
+                    recipientAddr = recipient;
+                    if (recipientName.isEmpty())
+                        recipientName = recipientAddr;
+                } else {
+                    if (recipientName.isEmpty()) // Dest with no name
+                        recipientName = recipientAddr.substring(0, 5);
+                    recipientPic = BoteHelper.getPictureForDestination(recipientAddr);
+                }
                 origSubject = origEmail.getSubject();
                 origContent = origEmail.getText();
                 origFrom = BoteHelper.getShortSenderName(origEmail.getOneFromAddress(), 50);
@@ -144,7 +159,8 @@ public class NewEmailFragment extends Fragment {
         List<Person> contacts = new ArrayList<Person>();
         try {
             for (Contact contact : I2PBote.getInstance().getAddressBook().getAll()) {
-                contacts.add(new Person(contact.getName(), contact.getBase64Dest()));
+                contacts.add(new Person(contact.getName(), contact.getBase64Dest(),
+                        BoteHelper.decodePicture(contact.getPictureBase64())));
             }
         } catch (PasswordException e) {
             // TODO handle
@@ -156,20 +172,30 @@ public class NewEmailFragment extends Fragment {
                 mask = mask.toLowerCase(Locale.US);
                 return obj.getName().toLowerCase(Locale.US).startsWith(mask) || obj.getAddress().toLowerCase(Locale.US).startsWith(mask);
             }
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v;
+                if (convertView == null)
+                    v = ((LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                            .inflate(R.layout.listitem_contact, parent, false);
+                else
+                    v = convertView;
+                setViewContent(v, position);
+                return v;
+            }
+            private void setViewContent(View v, int position) {
+                Person person = getItem(position);
+                ((TextView)v.findViewById(R.id.contact_name)).setText(person.getName());
+                if (person.getPicture() != null)
+                    ((ImageView)v.findViewById(R.id.contact_picture))
+                            .setImageBitmap(person.getPicture());
+            }
         };
 
         mRecipients = (ContactsCompletionView) view.findViewById(R.id.recipients);
         mRecipients.setAdapter(mAdapter);
         if (recipientAddr != null) {
-            String name = BoteHelper.extractName(recipientAddr);
-            String address = BoteHelper.extractEmailDestination(recipientAddr);
-            if (address == null) { // Assume external address
-                address = recipientAddr;
-                if (name.isEmpty())
-                    name = address;
-            } else if (name.isEmpty()) // Dest with no name
-                name = address.substring(0, 5);
-            mRecipients.addObject(new Person(name, address));
+            mRecipients.addObject(new Person(recipientName, recipientAddr, recipientPic));
         }
 
         mSubject = (EditText) view.findViewById(R.id.subject);
