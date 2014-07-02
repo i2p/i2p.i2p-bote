@@ -28,7 +28,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.i2p.android.router.service.IRouterState;
 
@@ -411,24 +410,6 @@ public class EmailListActivity extends ActionBarActivity implements
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggle
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    private class InitActivities {
-        private final Context ctx;
-        private final String myDir;
-
-        public InitActivities(Context c) {
-            ctx = c;
-            // This needs to be changed so that we can have an alternative place
-            myDir = c.getFilesDir().getAbsolutePath();
-        }
-
-        void initialize() {
-            // Set up the locations so settings can find them
-            System.setProperty("i2p.dir.base", myDir);
-            System.setProperty("i2p.dir.config", myDir);
-            System.setProperty("wrapper.logfile", myDir + "/wrapper.log");
-        }
     }
 
     // FolderFragment.OnEmailSelectedListener
