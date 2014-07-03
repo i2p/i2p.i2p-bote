@@ -42,7 +42,7 @@ dependencyVerification {
             'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:a94f35b8b701d2cf761bb6b731d0921f73fb552a69a9c1d1379a19c2a9418ec6',
             'com.github.chrisbanes.actionbarpulltorefresh:library:ea06f4e8cf7ae959cbe37028acf2631a6950714d2112e16531e4528daf69b6db',
             'com.github.castorflex.smoothprogressbar:library:eb35b46d99a7f56d3d173cafe5f0f31beaaba0ce606258f81b07b0607ee3c32f',
-            'com.mcxiaoke.viewpagerindicator:library:1e8aad664137f68abdfee94889f6da3dc98be652a235176a403965a07a25de62',
+            'com.mcxiaoke.viewpagerindicator:library:470bbd2bec1ede64ad21efd6f02676807d22f1b526c4ac6a5b41a428c6e47e67',
     ]
 }
 
