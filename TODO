@@ -16,7 +16,6 @@ Features:
 - Public address book lookup
 - Import/export identities
 - Export Destination / make it copyable
--- NFC
 -- SMS / message
 - Add optional CC: and BCC: fields
 - "Empty trash" option in Trash folder

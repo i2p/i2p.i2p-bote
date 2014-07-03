@@ -13,6 +13,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -152,5 +155,41 @@ public class ViewIdentityFragment extends Fragment {
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    public NdefMessage createNdefMessage() {
+        NdefMessage msg = new NdefMessage(new NdefRecord[]{
+                createNameRecord(),
+                createDestinationRecord()
+        });
+        return msg;
+    }
+
+    private NdefRecord createNameRecord() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+            return new NdefRecord(
+                    NdefRecord.TNF_EXTERNAL_TYPE,
+                    "i2p.bote:contact".getBytes(),
+                    new byte[0],
+                    mIdentity.getPublicName().getBytes()
+            );
+        else
+            return NdefRecord.createExternal(
+                    "i2p.bote", "contact", mIdentity.getPublicName().getBytes()
+            );
+    }
+
+    private NdefRecord createDestinationRecord() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+            return new NdefRecord(
+                    NdefRecord.TNF_EXTERNAL_TYPE,
+                    "i2p.bote:contactDestination".getBytes(),
+                    new byte[0],
+                    mIdentity.getKey().getBytes()
+            );
+        else
+            return NdefRecord.createExternal(
+                    "i2p.bote", "contactDestination", mIdentity.getKey().getBytes()
+            );
     }
 }
