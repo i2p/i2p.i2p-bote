@@ -6,13 +6,17 @@ Fixes:
 -- Show full network error? Make it copy-able?
 
 Tasks:
+- More layouts for intro and setup (tune for each screen size)
 - Subclass EmailListFragment for each default mailbox
 - Refactor code
 -- Reorganize for clarity
 -- Optimize use of Android lifecycles
 
 Features:
+- Public address book lookup
 - Import/export identities
--- Export Destination / make it copyable
+- Export Destination / make it copyable
+-- NFC
+-- SMS / message
 - Add optional CC: and BCC: fields
 - "Empty trash" option in Trash folder
