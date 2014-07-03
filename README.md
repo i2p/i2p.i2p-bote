@@ -39,7 +39,7 @@ Gradle will pull dependencies over the clearnet by default. To use Tor, create a
 
 3. Check out the `i2p.i2p-bote` and `i2p.i2p-bote.android` repositories.
 
-4. Create a `local.properties` file in `i2p.i2p-bote.android/app` containing:
+4. Create a `local.properties` file in `i2p.i2p-bote.android/botejars` containing:
 
     ```
     i2pbase=/path/to/installed/i2p
