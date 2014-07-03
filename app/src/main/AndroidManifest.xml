@@ -5,6 +5,7 @@
     android:versionName="0.1.1" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -69,6 +70,16 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="i2p.bote.android.addressbook.AddressBookActivity" />
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="vnd.android.nfc"
+                    android:host="ext"
+                    android:pathPrefix="/i2p.bote:contact"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".NetworkInfoActivity"
