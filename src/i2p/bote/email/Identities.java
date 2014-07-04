@@ -182,6 +182,26 @@ public class Identities implements KeyUpdateHandler {
         Util.makePrivate(identitiesFile);
     }
 
+    public void export(File exportFile, String password) throws IOException, GeneralSecurityException, PasswordException {
+        initializeIfNeeded();
+
+        OutputStream exportStream = new FileOutputStream(exportFile);
+        if (password != null) {
+            DerivedKey derivedKey = null; // TODO fix
+            exportStream = new EncryptedOutputStream(exportStream, derivedKey);
+        }
+
+        try {
+            Properties properties = saveToProperties();
+            properties.store(new OutputStreamWriter(exportStream, "UTF-8"), null);
+        } catch (IOException e) {
+            log.error("Can't export email identities to file <" + exportFile.getAbsolutePath() + ">.", e);
+            throw e;
+        } finally {
+            exportStream.close();
+        }
+    }
+
     private Properties saveToProperties() throws GeneralSecurityException {
         SortedProperties properties = new SortedProperties();
         int index = 0;
