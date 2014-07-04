@@ -147,5 +147,6 @@
     <string name="save_identity">Save identity</string>
     <string name="delete_identity">Delete identity?</string>
     <string name="identity_saved">Identity saved</string>
+    <string name="export_identities">Export identities</string>
 
 </resources>
