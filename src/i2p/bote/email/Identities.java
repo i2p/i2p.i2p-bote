@@ -115,40 +115,8 @@ public class Identities implements KeyUpdateHandler {
             // No PasswordException occurred, so read the input stream
             Properties properties = new Properties();
             properties.load(new InputStreamReader(encryptedStream));
-            
-            String defaultIdentityStr = properties.getProperty("default");
-            identities = new TreeSet<EmailIdentity>(new IdentityComparator());
-            int index = 0;
-            while (true) {
-                String prefix = "identity" + index + ".";
-                String key = properties.getProperty(prefix + "key");
-                if (key == null)
-                    break;
-                
-                EmailIdentity identity = new EmailIdentity(key);
-                identity.setDescription(properties.getProperty(prefix + "description"));
-                String pictureBase64 = properties.getProperty(prefix + "picture");
-                if (pictureBase64!=null && !pictureBase64.isEmpty())
-                    identity.setPictureBase64(pictureBase64);
-                identity.setText(properties.getProperty(prefix + "text"));
-                identity.setPublished("true".equalsIgnoreCase(properties.getProperty(prefix + "published")));
-                String name = properties.getProperty(prefix + "publicName");
-                identity.setPublicName(name);
-                String salt = properties.getProperty(prefix + "salt");
-                if (salt != null) {
-                    Hash nameHash = EmailIdentity.calculateHash(name);
-                    Fingerprint fingerprint = new Fingerprint(nameHash, identity, Base64.decode(salt.toCharArray()));
-                    identity.setFingerprint(fingerprint);
-                }
-                identities.add(identity);
-                
-                if (identity.getKey().equals(defaultIdentityStr)) {
-                    identity.setDefaultIdentity(true);
-                    defaultIdentity = identity;
-                }
-                
-                index++;
-            }
+
+            loadFromProperties(properties);
         }
         finally {
             if (input != null)
@@ -161,39 +129,49 @@ public class Identities implements KeyUpdateHandler {
         }
     }
 
+    private void loadFromProperties(Properties properties) throws GeneralSecurityException {
+        String defaultIdentityStr = properties.getProperty("default");
+        identities = new TreeSet<EmailIdentity>(new IdentityComparator());
+        int index = 0;
+        while (true) {
+            String prefix = "identity" + index + ".";
+            String key = properties.getProperty(prefix + "key");
+            if (key == null)
+                break;
+
+            EmailIdentity identity = new EmailIdentity(key);
+            identity.setDescription(properties.getProperty(prefix + "description"));
+            String pictureBase64 = properties.getProperty(prefix + "picture");
+            if (pictureBase64!=null && !pictureBase64.isEmpty())
+                identity.setPictureBase64(pictureBase64);
+            identity.setText(properties.getProperty(prefix + "text"));
+            identity.setPublished("true".equalsIgnoreCase(properties.getProperty(prefix + "published")));
+            String name = properties.getProperty(prefix + "publicName");
+            identity.setPublicName(name);
+            String salt = properties.getProperty(prefix + "salt");
+            if (salt != null) {
+                Hash nameHash = EmailIdentity.calculateHash(name);
+                Fingerprint fingerprint = new Fingerprint(nameHash, identity, Base64.decode(salt.toCharArray()));
+                identity.setFingerprint(fingerprint);
+            }
+            identities.add(identity);
+
+            if (identity.getKey().equals(defaultIdentityStr)) {
+                identity.setDefaultIdentity(true);
+                defaultIdentity = identity;
+            }
+
+            index++;
+        }
+    }
+
     /** Saves all identities to file. */
     public void save() throws IOException, GeneralSecurityException, PasswordException {
         initializeIfNeeded();
             
         OutputStream encryptedStream = new EncryptedOutputStream(new FileOutputStream(identitiesFile), passwordHolder);
-        SortedProperties properties = new SortedProperties();
         try {
-            int index = 0;
-            String defaultIdentityStr = null;
-            for (EmailIdentity identity: identities) {
-                if (identity == defaultIdentity)
-                    defaultIdentityStr = identity.getKey();
-                
-                String prefix = "identity" + index + ".";
-                String name = identity.getPublicName();
-                properties.setProperty(prefix + "publicName", name==null ? "" : name);
-                properties.setProperty(prefix + "key", identity.getFullKey());
-                Fingerprint fingerprint = identity.getFingerprint();
-                byte[] salt = fingerprint==null ? null : fingerprint.getSalt();
-                properties.setProperty(prefix + "salt", salt==null ? "" : new String(Base64.encode(salt)));
-                String description = identity.getDescription();
-                properties.setProperty(prefix + "description", (description==null ? "" : description));
-                String pictureBase64 = identity.getPictureBase64();
-                properties.setProperty(prefix + "picture", (pictureBase64==null ? "" : pictureBase64));
-                String text = identity.getText();
-                properties.setProperty(prefix + "text", (text==null ? "" : text));
-                properties.setProperty(prefix + "published", identity.isPublished() ? "true" : "false");
-                
-                index++;
-            }
-            if (defaultIdentityStr != null)
-                properties.setProperty("default", defaultIdentityStr);
-            
+            Properties properties = saveToProperties();
             properties.store(new OutputStreamWriter(encryptedStream, "UTF-8"), null);
         } catch (IOException e) {
             log.error("Can't save email identities to file <" + identitiesFile.getAbsolutePath() + ">.", e);
@@ -202,6 +180,38 @@ public class Identities implements KeyUpdateHandler {
             encryptedStream.close();
         }
         Util.makePrivate(identitiesFile);
+    }
+
+    private Properties saveToProperties() throws GeneralSecurityException {
+        SortedProperties properties = new SortedProperties();
+        int index = 0;
+        String defaultIdentityStr = null;
+        for (EmailIdentity identity: identities) {
+            if (identity == defaultIdentity)
+                defaultIdentityStr = identity.getKey();
+
+            String prefix = "identity" + index + ".";
+            String name = identity.getPublicName();
+            properties.setProperty(prefix + "publicName", name==null ? "" : name);
+            properties.setProperty(prefix + "key", identity.getFullKey());
+            Fingerprint fingerprint = identity.getFingerprint();
+            byte[] salt = fingerprint==null ? null : fingerprint.getSalt();
+            properties.setProperty(prefix + "salt", salt==null ? "" : new String(Base64.encode(salt)));
+            String description = identity.getDescription();
+            properties.setProperty(prefix + "description", (description==null ? "" : description));
+            String pictureBase64 = identity.getPictureBase64();
+            properties.setProperty(prefix + "picture", (pictureBase64==null ? "" : pictureBase64));
+            String text = identity.getText();
+            properties.setProperty(prefix + "text", (text==null ? "" : text));
+            properties.setProperty(prefix + "published", identity.isPublished() ? "true" : "false");
+            
+            index++;
+        }
+
+        if (defaultIdentityStr != null)
+            properties.setProperty("default", defaultIdentityStr);
+
+        return properties;
     }
     
     public void add(EmailIdentity identity) throws PasswordException, IOException, GeneralSecurityException {
