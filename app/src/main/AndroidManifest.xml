@@ -117,6 +117,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="i2p.bote.android.config.ViewIdentityActivity" />
         </activity>
+        <activity
+            android:name=".config.IdentityShipActivity"
+            android:parentActivityName=".config.SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="i2p.bote.android.config.SettingsActivity" />
+        </activity>
     </application>
 
 </manifest>

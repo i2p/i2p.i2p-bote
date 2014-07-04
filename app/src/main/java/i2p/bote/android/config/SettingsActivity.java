@@ -136,43 +136,12 @@ public class SettingsActivity extends PreferenceActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.export_identities:
-                // TODO ask if file should be encrypted
-                askForExportFilename(null);
+                Intent ei = new Intent(this, IdentityShipActivity.class);
+                ei.putExtra(IdentityShipActivity.EXPORTING, true);
+                startActivity(ei);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void askForExportFilename(String password) {
-        // TODO ask for filename
-        String exportFilename = "identities";
-        checkIfExportFileExists(exportFilename, password);
-    }
-
-    private void checkIfExportFileExists(String exportFilename, String password) {
-        File exportFile = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOCUMENTS
-        ), exportFilename + (password == null ? ".txt" : ".bote"));
-        if (exportFile.exists()) {
-            // TODO ask to rename or overwrite
-            //askForExportFilename(password);
-            exportIdentities(exportFile, password);
-        } else
-            exportIdentities(exportFile, password);
-    }
-
-    private void exportIdentities(File exportFile, String password) {
-        try {
-            // TODO ask for password
-            I2PBote.getInstance().getIdentities().export(exportFile, password);
-            Toast.makeText(this, R.string.identities_exported, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (PasswordException e) {
-            e.printStackTrace();
         }
     }
 
