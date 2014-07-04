@@ -136,25 +136,43 @@ public class SettingsActivity extends PreferenceActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.export_identities:
-                // TODO ask if file should be encrypted (remove .txt from filename if yes)
-                // TODO ask for filename
-                File exportFile = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DOCUMENTS
-                ), "identities.txt");
-                try {
-                    // TODO ask for password
-                    I2PBote.getInstance().getIdentities().export(exportFile, null);
-                    Toast.makeText(this, "Identities exported to Documents folder", Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (GeneralSecurityException e) {
-                    e.printStackTrace();
-                } catch (PasswordException e) {
-                    e.printStackTrace();
-                }
+                // TODO ask if file should be encrypted
+                askForExportFilename(null);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void askForExportFilename(String password) {
+        // TODO ask for filename
+        String exportFilename = "identities";
+        checkIfExportFileExists(exportFilename, password);
+    }
+
+    private void checkIfExportFileExists(String exportFilename, String password) {
+        File exportFile = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS
+        ), exportFilename + (password == null ? ".txt" : ".bote"));
+        if (exportFile.exists()) {
+            // TODO ask to rename or overwrite
+            //askForExportFilename(password);
+            exportIdentities(exportFile, password);
+        } else
+            exportIdentities(exportFile, password);
+    }
+
+    private void exportIdentities(File exportFile, String password) {
+        try {
+            // TODO ask for password
+            I2PBote.getInstance().getIdentities().export(exportFile, password);
+            Toast.makeText(this, R.string.identities_exported, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (PasswordException e) {
+            e.printStackTrace();
         }
     }
 
