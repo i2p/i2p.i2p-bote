@@ -10,6 +10,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -244,13 +245,12 @@ public class EditContactFragment extends EditPictureFragment {
         if (requestCode == REQUEST_DESTINATION_FILE) {
             if (resultCode == Activity.RESULT_OK) {
                 Uri result = data.getData();
-                String path = result.getPath();
-                File file = new File(path);
                 BufferedReader br;
                 try {
+                    ParcelFileDescriptor pfd = getActivity().getContentResolver().openFileDescriptor(result, "r");
                     br = new BufferedReader(
                             new InputStreamReader(
-                                    new FileInputStream(file))
+                                    new FileInputStream(pfd.getFileDescriptor()))
                     );
                     try {
                         mDestinationField.setText(br.readLine());
