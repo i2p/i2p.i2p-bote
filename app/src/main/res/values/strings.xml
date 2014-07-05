@@ -151,7 +151,7 @@
     <string name="password_empty">Password is empty</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
     <string name="file_exists">File exists</string>
-    <string name="identities_exported">Identities exported to Documents folder</string>
+    <string name="identities_exported">Identities exported to Downloads folder</string>
     <string name="import_identities">Import identities</string>
     <string name="identities_imported">Identities imported</string>
 

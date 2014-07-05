@@ -197,7 +197,7 @@ public abstract class IdentityShipFragment extends Fragment {
                     }
 
                     File exportFile = new File(Environment.getExternalStoragePublicDirectory(
-                            Environment.DIRECTORY_DOCUMENTS
+                            Environment.DIRECTORY_DOWNLOADS
                     ), exportFilename + suffix);
                     if (exportFile.exists()) {
                         // TODO ask to rename or overwrite
