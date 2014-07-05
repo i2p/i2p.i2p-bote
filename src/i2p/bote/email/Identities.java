@@ -117,7 +117,7 @@ public class Identities implements KeyUpdateHandler {
             Properties properties = new Properties();
             properties.load(new InputStreamReader(encryptedStream));
 
-            loadFromProperties(properties, false);
+            loadFromProperties(properties, false, false);
         }
         finally {
             if (input != null)
@@ -130,7 +130,8 @@ public class Identities implements KeyUpdateHandler {
         }
     }
 
-    public void importFromFileDescriptor(FileDescriptor importFile, String password, boolean append) throws PasswordException, IOException, GeneralSecurityException {
+    public void importFromFileDescriptor(FileDescriptor importFile, String password,
+            boolean append, boolean replace) throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
 
         InputStream importStream = new FileInputStream(importFile);
@@ -141,7 +142,7 @@ public class Identities implements KeyUpdateHandler {
             Properties properties = new Properties();
             properties.load(new InputStreamReader(importStream));
 
-            loadFromProperties(properties, append);
+            loadFromProperties(properties, append, replace);
 
             // Save the new identities
             save();
@@ -150,9 +151,10 @@ public class Identities implements KeyUpdateHandler {
         }
     }
 
-    private void loadFromProperties(Properties properties, boolean append) throws GeneralSecurityException {
+    private void loadFromProperties(Properties properties, boolean append, boolean replace) throws GeneralSecurityException {
         String defaultIdentityStr = properties.getProperty("default");
-        identities = new TreeSet<EmailIdentity>(new IdentityComparator());
+        if (identities == null || !append)
+            identities = new TreeSet<EmailIdentity>(new IdentityComparator());
         int index = 0;
         while (true) {
             String prefix = "identity" + index + ".";
@@ -175,6 +177,8 @@ public class Identities implements KeyUpdateHandler {
                 Fingerprint fingerprint = new Fingerprint(nameHash, identity, Base64.decode(salt.toCharArray()));
                 identity.setFingerprint(fingerprint);
             }
+            if (append && replace && identities.contains(identity))
+                identities.remove(identity);
             identities.add(identity);
 
             if (identity.getKey().equals(defaultIdentityStr)) {
