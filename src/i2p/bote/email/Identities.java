@@ -33,6 +33,7 @@ import i2p.bote.util.SortedProperties;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -116,7 +117,7 @@ public class Identities implements KeyUpdateHandler {
             Properties properties = new Properties();
             properties.load(new InputStreamReader(encryptedStream));
 
-            loadFromProperties(properties);
+            loadFromProperties(properties, false);
         }
         finally {
             if (input != null)
@@ -129,7 +130,27 @@ public class Identities implements KeyUpdateHandler {
         }
     }
 
-    private void loadFromProperties(Properties properties) throws GeneralSecurityException {
+    public void importFromFileDescriptor(FileDescriptor importFile, String password, boolean append) throws PasswordException, IOException, GeneralSecurityException {
+        initializeIfNeeded();
+
+        InputStream importStream = new FileInputStream(importFile);
+        if (password != null)
+            importStream = new EncryptedInputStream(importStream, password.getBytes());
+
+        try {
+            Properties properties = new Properties();
+            properties.load(new InputStreamReader(importStream));
+
+            loadFromProperties(properties, append);
+
+            // Save the new identities
+            save();
+        } finally {
+            importStream.close();
+        }
+    }
+
+    private void loadFromProperties(Properties properties, boolean append) throws GeneralSecurityException {
         String defaultIdentityStr = properties.getProperty("default");
         identities = new TreeSet<EmailIdentity>(new IdentityComparator());
         int index = 0;
