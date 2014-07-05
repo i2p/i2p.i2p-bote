@@ -10,9 +10,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -273,6 +275,7 @@ public abstract class IdentityShipFragment extends Fragment {
 
         EditText mPassword;
         CheckBox mOverwrite;
+        CheckBox mReplace;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -286,6 +289,14 @@ public abstract class IdentityShipFragment extends Fragment {
 
             mPassword = (EditText) view.findViewById(R.id.password);
             mOverwrite = (CheckBox) view.findViewById(R.id.overwrite);
+            mReplace = (CheckBox) view.findViewById(R.id.replace);
+
+            mOverwrite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mReplace.setVisibility(b ? View.GONE : View.VISIBLE);
+                }
+            });
 
             view.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -313,7 +324,7 @@ public abstract class IdentityShipFragment extends Fragment {
                         String password = mPassword.getText().toString();
                         if (password.isEmpty())
                             password = null;
-                        importIdentities(pfd, password, !mOverwrite.isChecked());
+                        importIdentities(pfd, password, !mOverwrite.isChecked(), mReplace.isChecked());
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                         mError.setText(e.getLocalizedMessage());
@@ -324,11 +335,13 @@ public abstract class IdentityShipFragment extends Fragment {
             }
         }
 
-        private void importIdentities(ParcelFileDescriptor importFile, String password, boolean append) {
+        private void importIdentities(ParcelFileDescriptor importFile, String password,
+                                      boolean append, boolean replace) {
             setInterfaceEnabled(false);
             mError.setText("");
 
-            ImportWaiterFrag f = ImportWaiterFrag.newInstance(importFile, password, append);
+            ImportWaiterFrag f = ImportWaiterFrag.newInstance(
+                    importFile, password, append, replace);
             f.setTask(new ImportWaiter());
             f.setTargetFragment(ImportIdentitiesFragment.this, SHIP_WAITER);
             getFragmentManager().beginTransaction()
@@ -346,13 +359,16 @@ public abstract class IdentityShipFragment extends Fragment {
             static final String SHIP_FILE_DESCRIPTOR = "shipFile";
             static final String PASSWORD = "password";
             static final String APPEND = "append";
+            static final String REPLACE = "replace";
 
-            public static ImportWaiterFrag newInstance(ParcelFileDescriptor shipFile, String password, boolean append) {
+            public static ImportWaiterFrag newInstance(ParcelFileDescriptor shipFile, String password,
+                                                       boolean append, boolean replace) {
                 ImportWaiterFrag f = new ImportWaiterFrag();
                 Bundle args = new Bundle();
                 args.putParcelable(SHIP_FILE_DESCRIPTOR, shipFile);
                 args.putString(PASSWORD, password);
                 args.putBoolean(APPEND, append);
+                args.putBoolean(REPLACE, replace);
                 f.setArguments(args);
                 return f;
             }
@@ -365,6 +381,7 @@ public abstract class IdentityShipFragment extends Fragment {
                                 .getFileDescriptor(),
                         args.getString(PASSWORD),
                         args.getBoolean(APPEND),
+                        args.getBoolean(REPLACE),
                 };
             }
         }
@@ -377,7 +394,8 @@ public abstract class IdentityShipFragment extends Fragment {
                     I2PBote.getInstance().getIdentities().importFromFileDescriptor(
                             (FileDescriptor) params[0],
                             (String) params[1],
-                            (Boolean) params[2]);
+                            (Boolean) params[2],
+                            (Boolean) params[3]);
                     return null;
                 } catch (Throwable e) {
                     e.printStackTrace();

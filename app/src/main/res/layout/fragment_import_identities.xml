@@ -25,8 +25,15 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Overwrite existing identities"
+        android:text="Overwrite all existing identities"
         android:id="@+id/overwrite"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duplicates: replace existing identity"
+        android:id="@+id/replace"
         android:checked="false" />
 
     <TextView
