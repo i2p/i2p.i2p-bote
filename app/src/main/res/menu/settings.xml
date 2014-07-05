@@ -7,4 +7,9 @@
         android:id="@+id/export_identities"
         android:title="@string/export_identities"
         i2pandroid:showAsAction="never" />
+
+    <item
+        android:id="@+id/import_identities"
+        android:title="@string/import_identities"
+        i2pandroid:showAsAction="never" />
 </menu>

@@ -140,6 +140,11 @@ public class SettingsActivity extends PreferenceActivity {
                 ei.putExtra(IdentityShipActivity.EXPORTING, true);
                 startActivity(ei);
                 return true;
+            case R.id.import_identities:
+                Intent ii = new Intent(this, IdentityShipActivity.class);
+                ii.putExtra(IdentityShipActivity.EXPORTING, false);
+                startActivity(ii);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

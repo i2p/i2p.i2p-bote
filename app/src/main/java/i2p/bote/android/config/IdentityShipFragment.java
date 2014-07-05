@@ -2,19 +2,23 @@ package i2p.bote.android.config;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 
 import i2p.bote.I2PBote;
 import i2p.bote.android.R;
@@ -55,7 +59,9 @@ public abstract class IdentityShipFragment extends Fragment {
     TextView mError;
 
     public static IdentityShipFragment newInstance(boolean exporting) {
-        return new ExportIdentitiesFragment(); // TODO implement importing
+        return exporting ?
+                new ExportIdentitiesFragment() :
+                new ImportIdentitiesFragment();
     }
 
     @Override
@@ -91,20 +97,8 @@ public abstract class IdentityShipFragment extends Fragment {
     protected abstract void setInterfaceEnabled(boolean enabled);
 
     public static class ShipWaiterFrag extends TaskFragment<Object, String, String> {
-        static final String SHIP_FILE = "shipFile";
-        static final String PASSWORD = "password";
-
         String currentStatus;
         TextView mStatus;
-
-        public static ShipWaiterFrag newInstance(File shipFile, String password) {
-            ShipWaiterFrag f = new ShipWaiterFrag();
-            Bundle args = new Bundle();
-            args.putSerializable(SHIP_FILE, shipFile);
-            args.putString(PASSWORD, password);
-            f.setArguments(args);
-            return f;
-        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,15 +110,6 @@ public abstract class IdentityShipFragment extends Fragment {
                 mStatus.setText(currentStatus);
 
             return v;
-        }
-
-        @Override
-        public Object[] getParams() {
-            Bundle args = getArguments();
-            return new Object[]{
-                    (File) args.getSerializable(SHIP_FILE),
-                    args.getString(PASSWORD),
-            };
         }
 
         @Override
@@ -217,7 +202,6 @@ public abstract class IdentityShipFragment extends Fragment {
                     if (exportFile.exists()) {
                         // TODO ask to rename or overwrite
                         mError.setText(R.string.file_exists);
-                        return;
                     } else
                         exportIdentities(exportFile, password);
                 }
@@ -228,7 +212,7 @@ public abstract class IdentityShipFragment extends Fragment {
             setInterfaceEnabled(false);
             mError.setText("");
 
-            ShipWaiterFrag f = ShipWaiterFrag.newInstance(exportFile, password);
+            ExportWaiterFrag f = ExportWaiterFrag.newInstance(exportFile, password);
             f.setTask(new ExportWaiter());
             f.setTargetFragment(ExportIdentitiesFragment.this, SHIP_WAITER);
             getFragmentManager().beginTransaction()
@@ -244,6 +228,29 @@ public abstract class IdentityShipFragment extends Fragment {
             mConfirmPassword.setEnabled(enabled);
         }
 
+        public static class ExportWaiterFrag extends ShipWaiterFrag {
+            static final String SHIP_FILE = "shipFile";
+            static final String PASSWORD = "password";
+
+            public static ExportWaiterFrag newInstance(File shipFile, String password) {
+                ExportWaiterFrag f = new ExportWaiterFrag();
+                Bundle args = new Bundle();
+                args.putSerializable(SHIP_FILE, shipFile);
+                args.putString(PASSWORD, password);
+                f.setArguments(args);
+                return f;
+            }
+
+            @Override
+            public Object[] getParams() {
+                Bundle args = getArguments();
+                return new Object[]{
+                        args.getSerializable(SHIP_FILE),
+                        args.getString(PASSWORD),
+                };
+            }
+        }
+
         private class ExportWaiter extends RobustAsyncTask<Object, String, String> {
             @Override
             protected String doInBackground(Object... params) {
@@ -254,6 +261,126 @@ public abstract class IdentityShipFragment extends Fragment {
                             (String) params[1]);
                     return null;
                 } catch (Throwable e) {
+                    cancel(false);
+                    return e.getMessage();
+                }
+            }
+        }
+    }
+
+    public static class ImportIdentitiesFragment extends IdentityShipFragment {
+        static final int SELECT_IMPORT_FILE = 1;
+
+        EditText mPassword;
+        CheckBox mOverwrite;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_import_identities, container, false);
+        }
+
+        @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+
+            mPassword = (EditText) view.findViewById(R.id.password);
+            mOverwrite = (CheckBox) view.findViewById(R.id.overwrite);
+
+            view.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                    i.setType("text/plain");
+                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                    try {
+                        startActivityForResult(i, SELECT_IMPORT_FILE);
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(getActivity(), "Please install a File Manager.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (requestCode == SELECT_IMPORT_FILE) {
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri result = data.getData();
+                    try {
+                        ParcelFileDescriptor pfd = getActivity().getContentResolver().openFileDescriptor(result, "r");
+                        String password = mPassword.getText().toString();
+                        if (password.isEmpty())
+                            password = null;
+                        importIdentities(pfd, password, !mOverwrite.isChecked());
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        mError.setText(e.getLocalizedMessage());
+                    }
+                }
+            } else {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+
+        private void importIdentities(ParcelFileDescriptor importFile, String password, boolean append) {
+            setInterfaceEnabled(false);
+            mError.setText("");
+
+            ImportWaiterFrag f = ImportWaiterFrag.newInstance(importFile, password, append);
+            f.setTask(new ImportWaiter());
+            f.setTargetFragment(ImportIdentitiesFragment.this, SHIP_WAITER);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.waiter_frag, f, SHIP_WAITER_TAG)
+                    .commit();
+        }
+
+        @Override
+        protected void setInterfaceEnabled(boolean enabled) {
+            mPassword.setEnabled(enabled);
+            mOverwrite.setEnabled(enabled);
+        }
+
+        public static class ImportWaiterFrag extends ShipWaiterFrag {
+            static final String SHIP_FILE_DESCRIPTOR = "shipFile";
+            static final String PASSWORD = "password";
+            static final String APPEND = "append";
+
+            public static ImportWaiterFrag newInstance(ParcelFileDescriptor shipFile, String password, boolean append) {
+                ImportWaiterFrag f = new ImportWaiterFrag();
+                Bundle args = new Bundle();
+                args.putParcelable(SHIP_FILE_DESCRIPTOR, shipFile);
+                args.putString(PASSWORD, password);
+                args.putBoolean(APPEND, append);
+                f.setArguments(args);
+                return f;
+            }
+
+            @Override
+            public Object[] getParams() {
+                Bundle args = getArguments();
+                return new Object[]{
+                        ((ParcelFileDescriptor) args.getParcelable(SHIP_FILE_DESCRIPTOR))
+                                .getFileDescriptor(),
+                        args.getString(PASSWORD),
+                        args.getBoolean(APPEND),
+                };
+            }
+        }
+
+        private class ImportWaiter extends RobustAsyncTask<Object, String, String> {
+            @Override
+            protected String doInBackground(Object... params) {
+                try {
+                    publishProgress("Importing identities");
+                    I2PBote.getInstance().getIdentities().importFromFileDescriptor(
+                            (FileDescriptor) params[0],
+                            (String) params[1],
+                            (Boolean) params[2]);
+                    return null;
+                } catch (Throwable e) {
+                    e.printStackTrace();
                     cancel(false);
                     return e.getMessage();
                 }
