@@ -132,11 +132,22 @@ public class Identities implements KeyUpdateHandler {
         }
     }
 
-    public void importFromFileDescriptor(FileDescriptor importFile, String password,
+    /**
+     * Imports identities.
+     * @param importFileDescriptor
+     * @param password
+     * @param append Set to false if existing identities should be dropped.
+     * @param replace Set to false to ignore duplicates, true to import and replace existing.
+     * @return true if the import succeeded, false if there were no identities found.
+     * @throws PasswordException if the provided password is invalid.
+     * @throws IOException
+     * @throws GeneralSecurityException
+     */
+    public boolean importFromFileDescriptor(FileDescriptor importFileDescriptor, String password,
             boolean append, boolean replace) throws PasswordException, IOException, GeneralSecurityException {
         initializeIfNeeded();
 
-        InputStream importStream = new FileInputStream(importFile);
+        InputStream importStream = new FileInputStream(importFileDescriptor);
         if (password != null)
             importStream = new EncryptedInputStream(importStream, password.getBytes());
 
@@ -144,16 +155,18 @@ public class Identities implements KeyUpdateHandler {
             Properties properties = new Properties();
             properties.load(new InputStreamReader(importStream));
 
-            loadFromProperties(properties, append, replace);
-
-            // Save the new identities
-            save();
+            if (loadFromProperties(properties, append, replace)) {
+                // Save the new identities
+                save();
+                return true;
+            } else // No identities found
+                return false;
         } finally {
             importStream.close();
         }
     }
 
-    private void loadFromProperties(Properties properties, boolean append, boolean replace) throws GeneralSecurityException {
+    private boolean loadFromProperties(Properties properties, boolean append, boolean replace) throws GeneralSecurityException {
         String defaultIdentityStr = properties.getProperty("default");
         if (identities == null || !append)
             identities = new TreeSet<EmailIdentity>(new IdentityComparator());
@@ -190,6 +203,7 @@ public class Identities implements KeyUpdateHandler {
 
             index++;
         }
+        return index > 0;
     }
 
     /** Saves all identities to file. */
