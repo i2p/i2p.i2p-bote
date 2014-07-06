@@ -21,12 +21,14 @@
 
 package i2p.bote.email;
 
+import i2p.bote.I2PBote;
 import i2p.bote.Util;
 import i2p.bote.crypto.KeyUpdateHandler;
 import i2p.bote.fileencryption.DerivedKey;
 import i2p.bote.fileencryption.EncryptedInputStream;
 import i2p.bote.fileencryption.EncryptedOutputStream;
 import i2p.bote.fileencryption.FileEncryptionUtil;
+import i2p.bote.fileencryption.PasswordCache;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
 import i2p.bote.util.SortedProperties;
@@ -212,7 +214,10 @@ public class Identities implements KeyUpdateHandler {
 
         OutputStream exportStream = new FileOutputStream(exportFile);
         if (password != null) {
-            DerivedKey derivedKey = null; // TODO fix
+            // Use same salt and parameters as the on-disk files
+            PasswordCache cache = new PasswordCache(I2PBote.getInstance().getConfiguration());
+            cache.setPassword(password.getBytes());
+            DerivedKey derivedKey = cache.getKey();
             exportStream = new EncryptedOutputStream(exportStream, derivedKey);
         }
 
