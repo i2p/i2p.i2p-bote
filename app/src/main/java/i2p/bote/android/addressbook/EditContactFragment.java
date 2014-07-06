@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,6 +72,7 @@ public class EditContactFragment extends EditPictureFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mDestination = getArguments().getString(CONTACT_DESTINATION);
     }
 
     @Override
@@ -82,7 +85,6 @@ public class EditContactFragment extends EditPictureFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mDestination = getArguments().getString(CONTACT_DESTINATION);
         String newName = getArguments().getString(NEW_NAME);
 
         mNameField = (EditText) view.findViewById(R.id.contact_name);
@@ -168,6 +170,17 @@ public class EditContactFragment extends EditPictureFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.edit_contact, menu);
+
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+        ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+        if (mDestination != null) {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, mDestination);
+            shareIntent.setType("text/plain");
+            shareActionProvider.setShareIntent(shareIntent);
+        }
     }
 
     @Override

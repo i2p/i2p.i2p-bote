@@ -19,6 +19,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,6 +54,7 @@ public class ViewIdentityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mKey = getArguments().getString(IDENTITY_KEY);
     }
 
     @Override
@@ -70,7 +73,6 @@ public class ViewIdentityFragment extends Fragment {
         mCryptoField = (TextView) view.findViewById(R.id.crypto_impl);
         mKeyField = (TextView) view.findViewById(R.id.key);
 
-        mKey = getArguments().getString(IDENTITY_KEY);
         if (mKey != null) {
             try {
                 mIdentity = BoteHelper.getIdentity(mKey);
@@ -106,6 +108,17 @@ public class ViewIdentityFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_identity, menu);
+
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+        ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+        if (mKey != null) {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, mKey);
+            shareIntent.setType("text/plain");
+            shareActionProvider.setShareIntent(shareIntent);
+        }
     }
 
     @Override

@@ -99,6 +99,7 @@
     <string name="response_quote_wrote">%s wrote:</string>
     <string name="response_quote_wrote_hide" translatable="false">%s wrote:</string>
     <string name="address_book_empty">Address book is empty</string>
+    <string name="share">Share</string>
     <string name="action_new_contact">New contact</string>
     <string name="contact_name">Contact name</string>
     <string name="email_destination">Email destination</string>
