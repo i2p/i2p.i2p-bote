@@ -52,8 +52,6 @@ public class BoteService extends Service implements NewEmailListener {
         if (mRouterChoice == RouterChoice.ANDROID) {
             // Bind to I2P Android
             Intent i2pIntent = new Intent(IRouterState.class.getName());
-            i2pIntent.setClassName("net.i2p.android.router",
-                    "net.i2p.android.router.service.RouterService");
             mTriedBindState = bindService(
                     i2pIntent, mStateConnection, 0);
         } else if (mRouterChoice == RouterChoice.REMOTE)
