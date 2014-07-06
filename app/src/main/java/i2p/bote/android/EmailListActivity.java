@@ -270,8 +270,6 @@ public class EmailListActivity extends ActionBarActivity implements
                 prefs.getString("i2pbote.router.use", "internal").equals("android")) {
             // Try to bind to I2P Android
             Intent i2pIntent = new Intent(IRouterState.class.getName());
-            i2pIntent.setClassName("net.i2p.android.router",
-                    "net.i2p.android.router.service.RouterService");
             try {
                 mTriedBindState = bindService(
                         i2pIntent, mStateConnection, BIND_AUTO_CREATE);
@@ -329,8 +327,7 @@ public class EmailListActivity extends ActionBarActivity implements
                                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
-                                        Intent i = new Intent("net.i2p.android.router");
-                                        i.setAction("net.i2p.android.router.START_I2P");
+                                        Intent i = new Intent("net.i2p.android.router.START_I2P");
                                         EmailListActivity.this.startActivityForResult(i, REQUEST_START_I2P);
                                     }
                                 })
