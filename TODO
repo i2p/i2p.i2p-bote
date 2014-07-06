@@ -17,4 +17,5 @@ Tasks:
 Features:
 - Public address book lookup
 - Add optional CC: and BCC: fields
+- Attachments
 - "Empty trash" option in Trash folder
