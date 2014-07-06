@@ -21,6 +21,7 @@
 
 package i2p.bote.network.kademlia;
 
+import i2p.bote.I2PBote;
 import i2p.bote.UniqueId;
 import i2p.bote.Util;
 import i2p.bote.folder.DeletionAwareDhtFolder;
@@ -420,6 +421,7 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
                 }
             i2pReceiver.removePacketListener(this);
             readySignal.countDown();
+            I2PBote.getInstance().networkStatusChanged();
                 
             log.debug("BootstrapTask exiting.");
         }

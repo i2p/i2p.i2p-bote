@@ -22,6 +22,10 @@
 package i2p.bote.network;
 
 public interface NetworkStatusSource {
+
+    void addNetworkStatusListener(NetworkStatusListener networkStatusListener);
+
+    void removeNetworkStatusListener(NetworkStatusListener networkStatusListener);
     
     /**
      * Returns the status of initialization of the application.

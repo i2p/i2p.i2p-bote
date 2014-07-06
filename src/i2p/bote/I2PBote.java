@@ -55,6 +55,7 @@ import i2p.bote.network.DhtResults;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
 import i2p.bote.network.NetworkStatus;
+import i2p.bote.network.NetworkStatusListener;
 import i2p.bote.network.NetworkStatusSource;
 import i2p.bote.network.RelayPacketHandler;
 import i2p.bote.network.RelayPeer;
@@ -159,6 +160,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     private Future<Void> passwordChangeResult;
     private ConnectTask connectTask;
     private DebugSupport debugSupport;
+    private Collection<NetworkStatusListener> networkStatusListeners;
 
     /**
      * Constructs a new instance of <code>I2PBote</code> and initializes
@@ -203,6 +205,8 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         debugSupport = new DebugSupport(configuration, passwordCache);
         
         wordLists = new WordListAnchor();
+
+        networkStatusListeners = new ArrayList<NetworkStatusListener>();
     }
 
     /**
@@ -860,6 +864,27 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         connectTask.startSignal.countDown();
     }
 
+    public void networkStatusChanged() {
+        synchronized (networkStatusListeners) {
+            for (NetworkStatusListener nsl : networkStatusListeners)
+                nsl.networkStatusChanged();
+        }
+    }
+
+    @Override
+    public void addNetworkStatusListener(NetworkStatusListener networkStatusListener) {
+        synchronized (networkStatusListeners) {
+            networkStatusListeners.add(networkStatusListener);
+        }
+    }
+
+    @Override
+    public void removeNetworkStatusListener(NetworkStatusListener networkStatusListener) {
+        synchronized (networkStatusListeners) {
+            networkStatusListeners.remove(networkStatusListener);
+        }
+    }
+
     @Override
     public NetworkStatus getNetworkStatus() {
         if (connectTask == null)
@@ -918,17 +943,21 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         @Override
         public void run() {
             status = NetworkStatus.DELAY;
+            networkStatusChanged();
             try {
                 startSignal.await(STARTUP_DELAY, TimeUnit.MINUTES);
                 status = NetworkStatus.CONNECTING;
+                networkStatusChanged();
                 initializeSession();
                 initializeServices();
                 startAllServices();
                 doneSignal.countDown();
+                networkStatusChanged();
             } catch (InterruptedException e) {
                 log.debug("ConnectTask interrupted, exiting");
             } catch (Exception e) {
                 status = NetworkStatus.ERROR;
+                networkStatusChanged();
                 error = e;
                 log.error("Can't initialize the application.", e);
             }
