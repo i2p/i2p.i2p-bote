@@ -1,4 +1,5 @@
 Fixes:
+- Search for any I2P Android app id (.router, .donate etc.)
 - Figure out how to highlight email backgrounds when selected in list
 - Refine view email page
 -- Delete/read/unread/move actions that don't break everything
@@ -7,6 +8,7 @@ Fixes:
 
 Tasks:
 - More layouts for intro and setup (tune for each screen size)
+- Create and bundle network status icons
 - Subclass EmailListFragment for each default mailbox
 - Refactor code
 -- Reorganize for clarity
@@ -14,6 +16,5 @@ Tasks:
 
 Features:
 - Public address book lookup
-- Import/export identities
 - Add optional CC: and BCC: fields
 - "Empty trash" option in Trash folder
