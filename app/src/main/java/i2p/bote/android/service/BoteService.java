@@ -21,6 +21,8 @@ import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.NewEmailListener;
+import i2p.bote.network.NetworkStatusListener;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -33,12 +35,13 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 
-public class BoteService extends Service implements NewEmailListener {
+public class BoteService extends Service implements NetworkStatusListener, NewEmailListener {
     public static final String ROUTER_CHOICE = "router_choice";
     public static final int NOTIF_ID_SERVICE = 8073;
     public static final int NOTIF_ID_NEW_EMAIL = 80739047;
 
     RouterChoice mRouterChoice;
+    NotificationCompat.Builder mStatusBuilder;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -58,9 +61,8 @@ public class BoteService extends Service implements NewEmailListener {
         } else if (mRouterChoice == RouterChoice.REMOTE)
             bote.connectNow();
 
-        NotificationCompat.Builder b = new NotificationCompat.Builder(this)
+        mStatusBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(getResources().getString(R.string.app_name))
-                .setContentText(getResources().getString(R.string.connected_to_network))
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true);
@@ -68,9 +70,13 @@ public class BoteService extends Service implements NewEmailListener {
         Intent ni = new Intent(this, EmailListActivity.class);
         ni.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pi = PendingIntent.getActivity(this, 0, ni, PendingIntent.FLAG_UPDATE_CURRENT);
-        b.setContentIntent(pi);
+        mStatusBuilder.setContentIntent(pi);
 
-        startForeground(NOTIF_ID_SERVICE, b.build());
+        updateServiceNotifText();
+
+        startForeground(NOTIF_ID_SERVICE, mStatusBuilder.build());
+
+        bote.addNetworkStatusListener(this);
 
         return START_REDELIVER_INTENT;
     }
@@ -161,6 +167,39 @@ public class BoteService extends Service implements NewEmailListener {
         }
     };
 
+
+    // NetworkStatusListener
+
+    @Override
+    public void networkStatusChanged() {
+        updateServiceNotifText();
+
+        NotificationManager nm = (NotificationManager) getSystemService(
+                Context.NOTIFICATION_SERVICE);
+        nm.notify(NOTIF_ID_SERVICE, mStatusBuilder.build());
+    }
+
+    private void updateServiceNotifText() {
+        String statusText;
+        switch (I2PBote.getInstance().getNetworkStatus()) {
+            case DELAY:
+                statusText = getResources().getString(R.string.waiting_for_network);
+                break;
+            case CONNECTING:
+                statusText = getResources().getString(R.string.connecting_to_network);
+                break;
+            case CONNECTED:
+                statusText = getResources().getString(R.string.connected_to_network);
+                break;
+            case ERROR:
+                statusText = getResources().getString(R.string.error);
+                break;
+            case NOT_STARTED: // Should not happen
+            default:
+                statusText = getResources().getString(R.string.not_started);
+        }
+        mStatusBuilder.setContentText(statusText);
+    }
 
     // NewEmailListener
 

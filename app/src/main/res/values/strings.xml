@@ -66,7 +66,9 @@
     <string name="error">Error</string>
     <string name="folder_empty">Folder is empty</string>
     <string name="folder_does_not_exist">Folder does not exist</string>
-    <string name="connected_to_network">Connected to the I2P network</string>
+    <string name="waiting_for_network">Waiting on I2P</string>
+    <string name="connecting_to_network">Connecting to the Bote network</string>
+    <string name="connected_to_network">Connected to the Bote network</string>
 
     <plurals name="n_new_emails">
         <item quantity="one">One new email</item>
