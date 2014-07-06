@@ -152,8 +152,12 @@
     <string name="password_empty">Password is empty</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
     <string name="file_exists">File exists</string>
+    <string name="exporting_identities">Exporting identities</string>
     <string name="identities_exported">Identities exported to Downloads folder</string>
     <string name="import_identities">Import identities</string>
+    <string name="importing_identities">Importing identities</string>
+    <string name="no_identities_found">No identities were found.</string>
+    <string name="no_identities_found_maybe_encrypted">No identities were found. Is the file encrypted?</string>
     <string name="identities_imported">Identities imported</string>
 
 </resources>

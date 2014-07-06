@@ -26,6 +26,7 @@ import i2p.bote.I2PBote;
 import i2p.bote.android.R;
 import i2p.bote.android.util.RobustAsyncTask;
 import i2p.bote.android.util.TaskFragment;
+import i2p.bote.fileencryption.PasswordException;
 
 public abstract class IdentityShipFragment extends Fragment {
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -257,7 +258,7 @@ public abstract class IdentityShipFragment extends Fragment {
             @Override
             protected String doInBackground(Object... params) {
                 try {
-                    publishProgress("Exporting identities");
+                    publishProgress(getResources().getString(R.string.exporting_identities));
                     I2PBote.getInstance().getIdentities().export(
                             (File) params[0],
                             (String) params[1]);
@@ -390,17 +391,26 @@ public abstract class IdentityShipFragment extends Fragment {
             @Override
             protected String doInBackground(Object... params) {
                 try {
-                    publishProgress("Importing identities");
-                    I2PBote.getInstance().getIdentities().importFromFileDescriptor(
+                    publishProgress(getResources().getString(R.string.importing_identities));
+                    boolean success = I2PBote.getInstance().getIdentities().importFromFileDescriptor(
                             (FileDescriptor) params[0],
                             (String) params[1],
                             (Boolean) params[2],
                             (Boolean) params[3]);
-                    return null;
+                    if (success)
+                        return null;
+                    else {
+                        cancel(false);
+                        return (params[1] == null) ?
+                                getResources().getString(R.string.no_identities_found_maybe_encrypted) :
+                                getResources().getString(R.string.no_identities_found);
+                    }
                 } catch (Throwable e) {
                     e.printStackTrace();
                     cancel(false);
-                    return e.getMessage();
+                    if (e instanceof PasswordException)
+                        return getResources().getString(R.string.password_incorrect);
+                    return e.getLocalizedMessage();
                 }
             }
         }
