@@ -35,6 +35,7 @@ import android.support.v4.app.NotificationCompat;
 
 public class BoteService extends Service implements NewEmailListener {
     public static final String ROUTER_CHOICE = "router_choice";
+    public static final int NOTIF_ID_SERVICE = 8073;
     public static final int NOTIF_ID_NEW_EMAIL = 80739047;
 
     RouterChoice mRouterChoice;
@@ -56,6 +57,20 @@ public class BoteService extends Service implements NewEmailListener {
                     i2pIntent, mStateConnection, 0);
         } else if (mRouterChoice == RouterChoice.REMOTE)
             bote.connectNow();
+
+        NotificationCompat.Builder b = new NotificationCompat.Builder(this)
+                .setContentTitle(getResources().getString(R.string.app_name))
+                .setContentText(getResources().getString(R.string.connected_to_network))
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setOngoing(true)
+                .setOnlyAlertOnce(true);
+
+        Intent ni = new Intent(this, EmailListActivity.class);
+        ni.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, ni, PendingIntent.FLAG_UPDATE_CURRENT);
+        b.setContentIntent(pi);
+
+        startForeground(NOTIF_ID_SERVICE, b.build());
 
         return START_REDELIVER_INTENT;
     }
