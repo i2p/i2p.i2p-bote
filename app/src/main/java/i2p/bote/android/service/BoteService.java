@@ -96,8 +96,14 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
         }
         mTriedBindState = false;
 
+        I2PBote.getInstance().removeNetworkStatusListener(this);
         I2PBote.getInstance().removeNewEmailListener(this);
-        I2PBote.getInstance().shutDown();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                I2PBote.getInstance().shutDown();
+            }
+        }).start();
 
         if (mRouterChoice == RouterChoice.INTERNAL)
             new Thread(new RouterStopper()).start();
@@ -174,9 +180,7 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
     public void networkStatusChanged() {
         updateServiceNotifText();
 
-        NotificationManager nm = (NotificationManager) getSystemService(
-                Context.NOTIFICATION_SERVICE);
-        nm.notify(NOTIF_ID_SERVICE, mStatusBuilder.build());
+        startForeground(NOTIF_ID_SERVICE, mStatusBuilder.build());
     }
 
     private void updateServiceNotifText() {
@@ -194,7 +198,7 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
             case ERROR:
                 statusText = getResources().getString(R.string.error);
                 break;
-            case NOT_STARTED: // Should not happen
+            case NOT_STARTED:
             default:
                 statusText = getResources().getString(R.string.not_started);
         }
