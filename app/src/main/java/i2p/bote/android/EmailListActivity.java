@@ -41,10 +41,12 @@ import i2p.bote.android.service.Init;
 import i2p.bote.android.service.Init.RouterChoice;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.network.NetworkStatusListener;
 
 public class EmailListActivity extends ActionBarActivity implements
         EmailListFragment.OnEmailSelectedListener,
-        MoveToDialogFragment.MoveToDialogListener {
+        MoveToDialogFragment.MoveToDialogListener,
+        NetworkStatusListener {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private SharedPreferences mSharedPrefs;
@@ -132,33 +134,6 @@ public class EmailListActivity extends ActionBarActivity implements
             public void onDrawerStateChanged(int newState) {
                 if (newState == DrawerLayout.STATE_DRAGGING)
                     wasDragged = true;
-
-                // Update network status
-                Drawable statusIcon;
-                switch (I2PBote.getInstance().getNetworkStatus()) {
-                case DELAY:
-                    mNetworkStatus.setText(R.string.connect_delay);
-                    statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
-                    break;
-                case CONNECTING:
-                    mNetworkStatus.setText(R.string.connecting);
-                    statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
-                    break;
-                case CONNECTED:
-                    mNetworkStatus.setText(R.string.connected);
-                    statusIcon = getResources().getDrawable(android.R.drawable.presence_online);
-                    break;
-                case ERROR:
-                    mNetworkStatus.setText(R.string.error);
-                    statusIcon = getResources().getDrawable(android.R.drawable.presence_busy);
-                    break;
-                case NOT_STARTED:
-                default:
-                    mNetworkStatus.setText(R.string.not_started);
-                    statusIcon = getResources().getDrawable(android.R.drawable.presence_offline);
-                }
-                mNetworkStatus.setCompoundDrawablesWithIntrinsicBounds(
-                        statusIcon, null, null, null);
             }
         };
 
@@ -279,6 +254,10 @@ public class EmailListActivity extends ActionBarActivity implements
                 mTriedBindState = false;
             }
         }
+
+        I2PBote.getInstance().addNetworkStatusListener(this);
+        // Fetch current network status
+        networkStatusChanged();
     }
 
     @Override
@@ -287,6 +266,8 @@ public class EmailListActivity extends ActionBarActivity implements
         if (mTriedBindState)
             unbindService(mStateConnection);
         mTriedBindState = false;
+
+        I2PBote.getInstance().removeNetworkStatusListener(this);
     }
 
     private boolean isBoteServiceRunning() {
@@ -430,6 +411,45 @@ public class EmailListActivity extends ActionBarActivity implements
     public void onFolderSelected(EmailFolder newFolder) {
         EmailListFragment f = (EmailListFragment) getSupportFragmentManager().findFragmentById(R.id.list_fragment);
         f.onFolderSelected(newFolder);
+    }
+
+    // NetworkStatusListener
+
+    @Override
+    public void networkStatusChanged() {
+        // Update network status
+        final int statusText;
+        final Drawable statusIcon;
+        switch (I2PBote.getInstance().getNetworkStatus()) {
+            case DELAY:
+                statusText = R.string.connect_delay;
+                statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
+                break;
+            case CONNECTING:
+                statusText = R.string.connecting;
+                statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
+                break;
+            case CONNECTED:
+                statusText = R.string.connected;
+                statusIcon = getResources().getDrawable(android.R.drawable.presence_online);
+                break;
+            case ERROR:
+                statusText = R.string.error;
+                statusIcon = getResources().getDrawable(android.R.drawable.presence_busy);
+                break;
+            case NOT_STARTED:
+            default:
+                statusText = R.string.not_started;
+                statusIcon = getResources().getDrawable(android.R.drawable.presence_offline);
+        }
+        mNetworkStatus.post(new Runnable() {
+            @Override
+            public void run() {
+                mNetworkStatus.setText(statusText);
+                mNetworkStatus.setCompoundDrawablesWithIntrinsicBounds(
+                        statusIcon, null, null, null);
+            }
+        });
     }
 
 
