@@ -1,5 +1,15 @@
 package i2p.bote.android;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
@@ -11,31 +21,19 @@ import javax.mail.Part;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 public class EmailListAdapter extends ArrayAdapter<Email> {
     private final LayoutInflater mInflater;
-    private SparseBooleanArray mSelectedEmails;
     private EmailSelector mSelector;
     private boolean mIsOutbox;
 
     public interface EmailSelector {
-        public void select(int position);
+        public void select(View view);
     }
 
     public EmailListAdapter(Context context, EmailSelector selector, boolean isOutbox) {
         super(context, android.R.layout.simple_list_item_2);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mSelectedEmails = new SparseBooleanArray();
         mSelector = selector;
         mIsOutbox = isOutbox;
     }
@@ -51,7 +49,7 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = mInflater.inflate(R.layout.listitem_email, parent, false);
+        final View v = mInflater.inflate(R.layout.listitem_email, parent, false);
         final Email email = getItem(position);
 
         ImageView picture = (ImageView) v.findViewById(R.id.contact_picture);
@@ -62,13 +60,14 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
 
         picture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                mSelector.select(getPosition(email));
+                mSelector.select(v);
             }
         });
 
-        if (mSelectedEmails.get(position)) {
-            ((ImageView) v.findViewById(R.id.email_selected)).setVisibility(View.VISIBLE);
-        }
+        // TODO fix
+        //if (mSelectedEmails.get(position)) {
+        //    ((ImageView) v.findViewById(R.id.email_selected)).setVisibility(View.VISIBLE);
+        //}
 
         try {
             String fromAddress = email.getOneFromAddress();
@@ -126,30 +125,5 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
         content.setText(email.getText());
 
         return v;
-    }
-
-    public void toggleSelection(int position) {
-        selectView(position, !mSelectedEmails.get(position));
-    }
-
-    public void removeSelection() {
-        mSelectedEmails = new SparseBooleanArray();
-        notifyDataSetChanged();
-    }
-
-    public void selectView(int position, boolean value) {
-        if (value)
-            mSelectedEmails.put(position, value);
-        else
-            mSelectedEmails.delete(position);
-        notifyDataSetChanged();
-    }
-
-    public int getSelectedCount() {
-        return mSelectedEmails.size();
-    }
-
-    public SparseBooleanArray getSelectedIds() {
-        return mSelectedEmails;
     }
 }

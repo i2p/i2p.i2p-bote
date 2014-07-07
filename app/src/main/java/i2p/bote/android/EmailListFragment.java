@@ -1,26 +1,5 @@
 package i2p.bote.android;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.List;
-
-import javax.mail.Flags.Flag;
-import javax.mail.MessagingException;
-
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.Options;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
-import net.i2p.I2PAppContext;
-import net.i2p.util.Log;
-import i2p.bote.I2PBote;
-import i2p.bote.android.util.BetterAsyncTaskLoader;
-import i2p.bote.android.util.BoteHelper;
-import i2p.bote.android.util.MoveToDialogFragment;
-import i2p.bote.email.Email;
-import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.folder.EmailFolder;
-import i2p.bote.folder.FolderListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -28,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
@@ -43,10 +23,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import net.i2p.I2PAppContext;
+import net.i2p.util.Log;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.List;
+
+import javax.mail.Flags.Flag;
+import javax.mail.MessagingException;
+
+import i2p.bote.I2PBote;
+import i2p.bote.android.util.BetterAsyncTaskLoader;
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.MoveToDialogFragment;
+import i2p.bote.android.util.MultiSelectionUtil;
+import i2p.bote.email.Email;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.FolderListener;
+import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.Options;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class EmailListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<Email>>,
@@ -63,7 +66,10 @@ public class EmailListFragment extends ListFragment implements
 
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
-    private ActionMode mMode;
+
+    // The Controller which provides CHOICE_MODE_MULTIPLE_MODAL-like functionality
+    private MultiSelectionUtil.Controller mMultiSelectController;
+    private ModalChoiceListener mModalChoiceListener;
 
     private EditText mPasswordInput;
     private TextView mPasswordError;
@@ -103,7 +109,7 @@ public class EmailListFragment extends ListFragment implements
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view,savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
         String folderName = getArguments().getString(FOLDER_NAME);
         mFolder = BoteHelper.getMailFolder(folderName);
 
@@ -138,6 +144,7 @@ public class EmailListFragment extends ListFragment implements
                 mNumIncompleteEmails = new TextView(getActivity());
                 mNumIncompleteEmails.setText(getResources().getString(R.string.incomplete_emails,
                         numIncompleteEmails));
+                mNumIncompleteEmails.setPadding(16, 5, 16, 5);
                 getListView().addHeaderView(mNumIncompleteEmails);
             }
         }
@@ -151,16 +158,15 @@ public class EmailListFragment extends ListFragment implements
 
         setListAdapter(mAdapter);
 
-        // Set up CAB
-        mMode = null;
-        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                    int position, long id) {
-                onListItemSelect(position);
-                return true;
-            }
-        });
+        // Attach a MultiSelectionUtil.Controller to the ListView, giving it an instance of
+        // ModalChoiceListener (see below)
+        mModalChoiceListener = new ModalChoiceListener();
+        mMultiSelectController = MultiSelectionUtil
+                .attachMultiSelectionController(getListView(), (ActionBarActivity) getActivity(),
+                        mModalChoiceListener);
+
+        // Allow the Controller to restore itself
+        mMultiSelectController.restoreInstanceState(savedInstanceState);
 
         if (mFolder == null) {
             setEmptyText(getResources().getString(
@@ -268,6 +274,16 @@ public class EmailListFragment extends ListFragment implements
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Allow the Controller to save it's instance state so that any checked items are
+        // stored
+        if (mMultiSelectController != null)
+            mMultiSelectController.saveInstanceState(outState);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.email_list, menu);
     }
@@ -275,94 +291,97 @@ public class EmailListFragment extends ListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.action_new_email:
-            Intent nei = new Intent(getActivity(), NewEmailActivity.class);
-            startActivity(nei);
-            return true;
+            case R.id.action_new_email:
+                Intent nei = new Intent(getActivity(), NewEmailActivity.class);
+                startActivity(nei);
+                return true;
 
-        default:
-            return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
     @Override
     public void onListItemClick(ListView parent, View view, int pos, long id) {
         super.onListItemClick(parent, view, pos, id);
-        int position = mNumIncompleteEmails == null ? pos : pos - 1;
-        if (position < 0) return;
-        if (mMode == null) {
-            mCallback.onEmailSelected(
-                    mFolder.getName(), mAdapter.getItem(position).getMessageID());
-        } else
-            onListItemSelect(position);
+        final Email email = (Email) getListView().getItemAtPosition(pos);
+        if (email != null)
+            mCallback.onEmailSelected(mFolder.getName(), email.getMessageID());
     }
 
-    private void onListItemSelect(int position) {
-        mAdapter.toggleSelection(position);
-        boolean hasCheckedElement = mAdapter.getSelectedCount() > 0;
-
-        if (hasCheckedElement && mMode == null) {
-            boolean unread = mAdapter.getItem(position).isUnread();
-            mMode = ((ActionBarActivity) getActivity()).startSupportActionMode(new ModeCallback(unread));
-        } else if (!hasCheckedElement && mMode != null) {
-            mMode.finish();
-        }
-
-        if (mMode != null)
-            mMode.setTitle(getResources().getString(
-                    R.string.items_selected, mAdapter.getSelectedCount()));
-    }
-
-    private final class ModeCallback implements ActionMode.Callback {
+    private class ModalChoiceListener implements MultiSelectionUtil.MultiChoiceModeListener {
         private boolean areUnread;
 
-        public ModeCallback(boolean unread) {
-            super();
-            this.areUnread = unread;
+        @Override
+        public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+            final ListView listView = getListView();
+            int numChecked = 0;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                final SparseBooleanArray items = listView.getCheckedItemPositions();
+                for (int i = 0; i < items.size(); i++)
+                    if (items.valueAt(i))
+                        numChecked++;
+            } else
+                numChecked = listView.getCheckedItemCount();
+
+            mode.setTitle(getResources().getString(R.string.items_selected, numChecked));
+
+            if (checked && numChecked == 1) { // This is the first checked item
+                Email email = (Email) listView.getItemAtPosition(position);
+                areUnread = email.isUnread();
+                mode.invalidate();
+            }
         }
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            final ListView listView = getListView();
             // Respond to clicks on the actions in the CAB
             switch (item.getItemId()) {
-            case R.id.action_delete:
-                SparseBooleanArray toDelete = mAdapter.getSelectedIds();
-                for (int i = (toDelete.size() - 1); i >= 0; i--) {
-                    if (toDelete.valueAt(i)) {
-                        Email email = mAdapter.getItem(toDelete.keyAt(i));
-                        // The Loader will update mAdapter
-                        I2PBote.getInstance().deleteEmail(mFolder, email.getMessageID());
-                    }
-                }
-                mode.finish();
-                return true;
-            case R.id.action_mark_read:
-            case R.id.action_mark_unread:
-                SparseBooleanArray selected = mAdapter.getSelectedIds();
-                for (int i = (selected.size() - 1); i >= 0; i--) {
-                    if (selected.valueAt(i)) {
-                        Email email = mAdapter.getItem(selected.keyAt(i));
-                        try {
+                case R.id.action_delete:
+                    SparseBooleanArray toDelete = listView.getCheckedItemPositions();
+                    if (toDelete.size() == 0)
+                        return false;
+
+                    for (int i = (toDelete.size() - 1); i >= 0; i--) {
+                        if (toDelete.valueAt(i)) {
+                            Email email = (Email) listView.getItemAtPosition(toDelete.keyAt(i));
                             // The Loader will update mAdapter
-                            mFolder.setNew(email, !areUnread);
-                        } catch (PasswordException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        } catch (GeneralSecurityException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+                            I2PBote.getInstance().deleteEmail(mFolder, email.getMessageID());
                         }
                     }
-                }
-                areUnread = !areUnread;
-                mMode.invalidate();
-                return true;
-            case R.id.action_move_to:
-                DialogFragment f = MoveToDialogFragment.newInstance(mFolder);
-                f.show(getFragmentManager(), "moveTo");
-                return true;
-            default:
-                return false;
+                    mode.finish();
+                    return true;
+
+                case R.id.action_mark_read:
+                case R.id.action_mark_unread:
+                    SparseBooleanArray selected = listView.getCheckedItemPositions();
+                    for (int i = (selected.size() - 1); i >= 0; i--) {
+                        if (selected.valueAt(i)) {
+                            Email email = (Email) listView.getItemAtPosition(selected.keyAt(i));
+                            try {
+                                // The Loader will update mAdapter
+                                mFolder.setNew(email, !areUnread);
+                            } catch (PasswordException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            } catch (GeneralSecurityException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    areUnread = !areUnread;
+                    mode.invalidate();
+                    return true;
+
+                case R.id.action_move_to:
+                    DialogFragment f = MoveToDialogFragment.newInstance(mFolder);
+                    f.show(getFragmentManager(), "moveTo");
+                    return true;
+
+                default:
+                    return false;
             }
         }
 
@@ -383,16 +402,6 @@ public class EmailListFragment extends ListFragment implements
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            // Here you can make any necessary updates to the activity when
-            // the CAB is removed.
-            mAdapter.removeSelection();
-
-            if (mode == mMode)
-                mMode = null;
-        }
-
-        @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Here you can perform updates to the CAB due to
             // an invalidate() request
@@ -402,19 +411,24 @@ public class EmailListFragment extends ListFragment implements
             }
             return true;
         }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+        }
     }
 
     // Called by EmailListActivity.onFolderSelected()
 
     public void onFolderSelected(EmailFolder newFolder) {
-        SparseBooleanArray toMove = mAdapter.getSelectedIds();
+        final ListView listView = getListView();
+        SparseBooleanArray toMove = listView.getCheckedItemPositions();
         for (int i = (toMove.size() - 1); i >= 0; i--) {
             if (toMove.valueAt(i)) {
-                Email email = mAdapter.getItem(toMove.keyAt(i));
+                Email email = (Email) listView.getItemAtPosition(toMove.keyAt(i));
                 mFolder.move(email, newFolder);
             }
         }
-        mMode.finish();
+        mMultiSelectController.finish();
     }
 
     // LoaderManager.LoaderCallbacks<List<Email>>
@@ -473,7 +487,7 @@ public class EmailListFragment extends ListFragment implements
     }
 
     public void onLoadFinished(Loader<List<Email>> loader,
-            List<Email> data) {
+                               List<Email> data) {
         // Clear recent flags
         for (Email email : data)
             try {
@@ -508,8 +522,12 @@ public class EmailListFragment extends ListFragment implements
 
     // EmailListAdapter.EmailSelector
 
-    public void select(int position) {
-        onListItemSelect(position);
+    public void select(View view) {
+        // TODO temporarily disabled while broken, need to fix
+        //final ListView listView = getListView();
+        //final int position = listView.getPositionForView(view);
+        //listView.setItemChecked(position, !listView.isItemChecked(position));
+        //view.performLongClick();
     }
 
     // OnRefreshListener
@@ -527,7 +545,8 @@ public class EmailListFragment extends ListFragment implements
                         while (I2PBote.getInstance().isCheckingForMail()) {
                             try {
                                 Thread.sleep(100);
-                            } catch (InterruptedException e) {}
+                            } catch (InterruptedException e) {
+                            }
                         }
                         return null;
                     }

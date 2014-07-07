@@ -1,5 +1,6 @@
 Fixes:
-- Figure out how to highlight email backgrounds when selected in list
+- Fix clicking pictures to select emails
+- Fix tick over selected emails
 - Refine view email page
 -- Delete/read/unread/move actions that don't break everything
 - Improve network status page
