@@ -192,8 +192,7 @@ public class EmailListActivity extends ActionBarActivity implements
             mDrawerLayout.openDrawer(mDrawerOuter);
 
         // If first start, go to introduction and setup wizard
-        // TODO always show while testing, revert to preference when finished
-        if (true || mSharedPrefs.getBoolean(PREF_FIRST_START, true)) {
+        if (mSharedPrefs.getBoolean(PREF_FIRST_START, true)) {
             mSharedPrefs.edit().putBoolean(PREF_FIRST_START, false).apply();
             Intent i = new Intent(EmailListActivity.this, IntroActivity.class);
             startActivityForResult(i, SHOW_INTRODUCTION);
