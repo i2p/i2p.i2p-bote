@@ -147,7 +147,7 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
             try {
                 mStateService.registerCallback(mStatusListener);
                 String state = mStateService.getState();
-                if ("RUNNING".equals(state) ||"ACTIVE".equals(state))
+                if ("ACTIVE".equals(state))
                     I2PBote.getInstance().connectNow();
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
