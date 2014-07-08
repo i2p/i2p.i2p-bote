@@ -86,6 +86,7 @@
     <string name="error_creating_packets">Error creating email packets: %s</string>
     <string name="error_sending">Error while sending email: %s</string>
     <string name="error_saving_metadata">Error saving email metadata: %s</string>
+    <string name="email_not_found">Email not found</string>
     <string name="email_from">From:</string>
     <string name="email_to">To:</string>
     <string name="label_sent">Sent:</string>
@@ -104,9 +105,16 @@
     <string name="address_book_empty">Address book is empty</string>
     <string name="share">Share</string>
     <string name="action_new_contact">New contact</string>
+    <string name="select_a_picture">Select a picture</string>
+    <string name="no_image_cropping_app_found">No image cropping app found</string>
+    <string name="select_a_cropping_app">Select a cropping app</string>
     <string name="contact_name">Contact name</string>
     <string name="email_destination">Email destination</string>
     <string name="label_browse">Browse</string>
+    <string name="select_email_destination_file">Select file containing Email Destination</string>
+    <string name="please_install_a_file_manager">Please install a File Manager.</string>
+    <string name="failed_to_read_email_destination_file">Failed to read Email Destination file.</string>
+    <string name="could_not_find_email_destination_file">Could not find Email Destination file.</string>
     <string name="save_contact">Save contact</string>
     <string name="delete_contact">Delete contact?</string>
     <string name="network_info_unavailable">Network information is not available because Bote hasn\'t started connecting to the network yet.</string>
@@ -135,6 +143,8 @@
     <string name="pref_summ_minDelay">%s minutes</string>
     <string name="pref_title_maxDelay">Maximum delay per hop</string>
     <string name="pref_summ_maxDelay">%s minutes</string>
+    <string name="pref_title_router">Router</string>
+    <string name="pref_dialog_title_router">Router to use</string>
     <string name="pref_title_i2cp_host">I2CP host</string>
     <string name="pref_title_i2cp_port">I2CP port</string>
     <string name="pref_title_change_password">Change password</string>

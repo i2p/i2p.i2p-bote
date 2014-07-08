@@ -196,7 +196,7 @@ public class EmailListFragment extends ListFragment implements
         mPasswordInput = (EditText) promptView.findViewById(R.id.passwordInput);
         mPasswordError = (TextView) promptView.findViewById(R.id.passwordError);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 InputMethodManager imm = (InputMethodManager) EmailListFragment.this
@@ -205,7 +205,7 @@ public class EmailListFragment extends ListFragment implements
                 dialog.dismiss();
                 new PasswordWaiter().execute();
             }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 setEmptyText(getResources().getString(

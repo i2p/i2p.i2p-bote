@@ -33,7 +33,7 @@ public class EditPictureFragment extends Fragment {
                 Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                 i.setType("image/*");
                 startActivityForResult(
-                        Intent.createChooser(i, "Select a picture"),
+                        Intent.createChooser(i, getResources().getString(R.string.select_a_picture)),
                         REQUEST_PICTURE_FILE);
             }
         });
@@ -88,7 +88,8 @@ public class EditPictureFragment extends Fragment {
 
         List<ResolveInfo> list = getActivity().getPackageManager().queryIntentActivities(intent, 0);
         if (list.size() == 0) {
-            Toast.makeText(getActivity(), "No image cropping app found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_image_cropping_app_found, Toast.LENGTH_SHORT)
+                    .show();
         } else {
             intent.setData(mPictureCaptureUri);
             intent.putExtra("outputX", 72);
@@ -99,7 +100,8 @@ public class EditPictureFragment extends Fragment {
             intent.putExtra("return-data", true);
 
             startActivityForResult(
-                    Intent.createChooser(intent, "Select a cropping app"),
+                    Intent.createChooser(intent,
+                            getResources().getString(R.string.select_a_cropping_app)),
                     CROP_PICTURE);
         }
     }

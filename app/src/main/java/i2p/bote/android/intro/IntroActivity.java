@@ -127,7 +127,6 @@ public class IntroActivity extends ActionBarActivity {
                     b.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // TODO start setup wizard
                             getActivity().setResult(Activity.RESULT_OK);
                             getActivity().finish();
                         }

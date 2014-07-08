@@ -285,9 +285,9 @@ public class SettingsActivity extends PreferenceActivity {
         routerChoice.setKey("i2pbote.router.use");
         routerChoice.setEntries(R.array.routerOptionNames);
         routerChoice.setEntryValues(R.array.routerOptions);
-        routerChoice.setTitle("Router");
+        routerChoice.setTitle(R.string.pref_title_router);
         routerChoice.setSummary("%s");
-        routerChoice.setDialogTitle("Router to use");
+        routerChoice.setDialogTitle(R.string.pref_dialog_title_router);
         routerChoice.setDefaultValue("internal");
         return routerChoice;
     }

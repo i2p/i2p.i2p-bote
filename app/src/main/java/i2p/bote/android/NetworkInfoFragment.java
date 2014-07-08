@@ -47,6 +47,6 @@ public class NetworkInfoFragment extends Fragment {
 
         Exception e = I2PBote.getInstance().getConnectError();
         if (e != null)
-            ((TextView) view.findViewById(R.id.error)).setText(e.toString());
+            ((TextView) view.findViewById(R.id.error)).setText(e.getLocalizedMessage());
     }
 }

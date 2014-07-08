@@ -121,10 +121,11 @@ public class EditContactFragment extends EditPictureFragment {
                 i.addCategory(Intent.CATEGORY_OPENABLE);
                 try {
                     startActivityForResult(
-                            Intent.createChooser(i, "Select file containing Email Destination"),
+                            Intent.createChooser(i,
+                                    getResources().getString(R.string.select_email_destination_file)),
                             REQUEST_DESTINATION_FILE);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getActivity(), "Please install a File Manager.",
+                    Toast.makeText(getActivity(), R.string.please_install_a_file_manager,
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -268,11 +269,11 @@ public class EditContactFragment extends EditPictureFragment {
                     try {
                         mDestinationField.setText(br.readLine());
                     } catch (IOException ioe) {
-                        Toast.makeText(getActivity(), "Failed to read Email Destination file.",
+                        Toast.makeText(getActivity(), R.string.failed_to_read_email_destination_file,
                                 Toast.LENGTH_SHORT).show();
                     }
                 } catch (FileNotFoundException fnfe) {
-                    Toast.makeText(getActivity(), "Could not find Email Destination file.",
+                    Toast.makeText(getActivity(), R.string.could_not_find_email_destination_file,
                             Toast.LENGTH_SHORT).show();
                 }
             }

@@ -62,7 +62,7 @@ public class ViewEmailFragment extends Fragment {
                 displayEmail(e, v);
             } else {
                 TextView subject = (TextView) v.findViewById(R.id.email_subject);
-                subject.setText("Email not found");
+                subject.setText(R.string.email_not_found);
             }
         } catch (PasswordException e) {
             // TODO: Handle

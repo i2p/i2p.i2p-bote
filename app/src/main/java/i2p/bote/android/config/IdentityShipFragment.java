@@ -308,7 +308,7 @@ public abstract class IdentityShipFragment extends Fragment {
                     try {
                         startActivityForResult(i, SELECT_IMPORT_FILE);
                     } catch (android.content.ActivityNotFoundException ex) {
-                        Toast.makeText(getActivity(), "Please install a File Manager.",
+                        Toast.makeText(getActivity(), R.string.please_install_a_file_manager,
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
