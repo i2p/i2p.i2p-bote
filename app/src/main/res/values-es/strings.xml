@@ -137,7 +137,12 @@
   <string name="pref_summ_minDelay">%s minutos</string>
   <string name="pref_title_maxDelay">Retardo máximo por salto</string>
   <string name="pref_summ_maxDelay">%s minutos</string>
+  <string name="router_settings">Configuraciones del router I2P</string>
+  <string name="auto">Auto</string>
+  <string name="manual">Manual</string>
   <string name="pref_title_router">Router I2P</string>
+  <string name="internal">Interno</string>
+  <string name="remote_i2p_router">Router I2P remoto</string>
   <string name="pref_dialog_title_router">Router I2P a usar</string>
   <string name="pref_title_i2cp_host">Anfitrión I2CP</string>
   <string name="pref_title_i2cp_port">Puerto I2CP</string>
