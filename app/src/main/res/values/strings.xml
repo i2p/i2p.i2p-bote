@@ -143,7 +143,12 @@
     <string name="pref_summ_minDelay">%s minutes</string>
     <string name="pref_title_maxDelay">Maximum delay per hop</string>
     <string name="pref_summ_maxDelay">%s minutes</string>
+    <string name="router_settings">Router settings</string>
+    <string name="auto">Auto</string>
+    <string name="manual">Manual</string>
     <string name="pref_title_router">Router</string>
+    <string name="internal">Internal</string>
+    <string name="remote_i2p_router">Remote I2P router</string>
     <string name="pref_dialog_title_router">Router to use</string>
     <string name="pref_title_i2cp_host">I2CP host</string>
     <string name="pref_title_i2cp_port">I2CP port</string>

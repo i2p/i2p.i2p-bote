@@ -12,8 +12,8 @@
         <item>remote</item>
     </string-array>
     <string-array name="routerOptionNames">
-        <item>Internal</item>
+        <item>@string/internal</item>
         <item>I2P Android</item>
-        <item>Remote I2P router</item>
+        <item>@string/remote_i2p_router</item>
     </string-array>
 </resources>

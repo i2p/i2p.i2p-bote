@@ -60,9 +60,9 @@
             android:defaultValue="true"
             android:disableDependentsState="true"
             android:key="i2pbote.router.auto"
-            android:summaryOff="Manual"
-            android:summaryOn="Auto"
-            android:title="Router settings" />
+            android:summaryOff="@string/manual"
+            android:summaryOn="@string/auto"
+            android:title="@string/router_settings" />
     </PreferenceCategory>
 
 </PreferenceScreen>
