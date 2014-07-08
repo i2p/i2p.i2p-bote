@@ -145,7 +145,7 @@ public class EmailListFragment extends ListFragment implements
                 mNumIncompleteEmails.setText(getResources().getString(R.string.incomplete_emails,
                         numIncompleteEmails));
                 mNumIncompleteEmails.setPadding(16, 5, 16, 5);
-                getListView().addHeaderView(mNumIncompleteEmails);
+                getListView().addHeaderView(mNumIncompleteEmails, null, false);
             }
         }
     }
