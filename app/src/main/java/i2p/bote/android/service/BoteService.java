@@ -63,7 +63,7 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
 
         mStatusBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(getResources().getString(R.string.app_name))
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notif)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true);
 
@@ -252,7 +252,7 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
                 break;
 
             default:
-                b.setSmallIcon(R.drawable.ic_launcher);
+                b.setSmallIcon(R.drawable.ic_notif);
                 b.setContentTitle(getResources().getQuantityString(
                         R.plurals.n_new_emails, numNew, numNew));
 
