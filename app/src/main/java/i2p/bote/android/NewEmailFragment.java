@@ -213,8 +213,8 @@ public class NewEmailFragment extends Fragment {
             StringBuilder quotation = new StringBuilder();
             quotation.append("\n\n");
             quotation.append(getResources().getString(
-                    hide ? R.string.response_quote_wrote
-                         : R.string.response_quote_wrote_hide,
+                    hide ? R.string.response_quote_wrote_hide
+                         : R.string.response_quote_wrote,
                             origFrom));
             String[] lines = origContent.split("\r?\n|\r");
             for (String line: lines)
