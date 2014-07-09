@@ -82,7 +82,7 @@ public class IntroActivity extends ActionBarActivity {
 
         @Override
         public int getCount() {
-            return 5;
+            return 6;
         }
     }
 
@@ -122,8 +122,10 @@ public class IntroActivity extends ActionBarActivity {
                 case 3:
                     return inflater.inflate(R.layout.fragment_intro_3, container, false);
                 case 4:
-                    View v4 = inflater.inflate(R.layout.fragment_intro_4, container, false);
-                    Button b = (Button) v4.findViewById(R.id.start_setup_wizard);
+                    return inflater.inflate(R.layout.fragment_intro_4, container, false);
+                case 5:
+                    View v5 = inflater.inflate(R.layout.fragment_intro_5, container, false);
+                    Button b = (Button) v5.findViewById(R.id.start_setup_wizard);
                     b.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -131,7 +133,7 @@ public class IntroActivity extends ActionBarActivity {
                             getActivity().finish();
                         }
                     });
-                    return v4;
+                    return v5;
                 default:
                     View v0 = inflater.inflate(R.layout.fragment_intro_0, container, false);
                     TextView tv = (TextView) v0.findViewById(R.id.intro_app_name);
