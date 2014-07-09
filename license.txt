@@ -12,3 +12,8 @@ Several libraries and classes are licensed under the Apache License, Version
 
 I2P-Bote is licensed under the GPL version 3. See its repository for details
 about its license and those of the libraries it uses.
+
+Images used in the introduction are adapted from the Free Software Foundation
+Email Self-Defense guide (https://emailselfdefense.fsf.org/), and are licensed
+under the Creative Commons Attribution 4.0 license (or later version) (see
+https://creativecommons.org/licenses/by/4.0/).
