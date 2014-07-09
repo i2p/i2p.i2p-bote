@@ -125,8 +125,13 @@
                 <include name="lzma-9.20.jar" />
                 <include name="ntruenc-1.2.jar" />
                 <include name="flexi-gmss-1.7p1.jar" />
-                <include name="scrypt-1.4.0.jar" />
             </fileset>
         </copy>
+        <jar destfile="${jar.libs.dir}/scrypt-1.4.0.jar" >
+            <zipfileset src="${botelib}/scrypt-1.4.0.jar" >
+                <!-- Exclude x86_64 native binaries -->
+                <exclude name="lib/" />
+            </zipfileset>
+        </jar>
     </target>
 </project>
