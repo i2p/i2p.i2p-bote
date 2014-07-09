@@ -1,5 +1,4 @@
 Fixes:
-- Fix clicking pictures to select emails
 - Fix tick over selected emails
 - Refine view email page
 -- Delete/read/unread/move actions that don't break everything
