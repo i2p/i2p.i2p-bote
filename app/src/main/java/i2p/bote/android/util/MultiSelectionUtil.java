@@ -95,6 +95,10 @@ public class MultiSelectionUtil {
             listView.setOnItemLongClickListener(mCallbacks);
         }
 
+        public boolean inActionMode() {
+            return mActionMode != null;
+        }
+
         /**
          * Finish the current Action Mode (if there is one).
          */

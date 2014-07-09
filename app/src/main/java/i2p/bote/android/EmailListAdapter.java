@@ -28,6 +28,7 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
     private boolean mIsOutbox;
 
     public interface EmailSelector {
+        public boolean inActionMode();
         public void select(View view);
     }
 
@@ -58,11 +59,12 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
         TextView content = (TextView) v.findViewById(R.id.email_content);
         TextView sent = (TextView) v.findViewById(R.id.email_sent);
 
-        picture.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                mSelector.select(v);
-            }
-        });
+        if (!mSelector.inActionMode())
+            picture.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    mSelector.select(v);
+                }
+            });
 
         // TODO fix
         //if (mSelectedEmails.get(position)) {

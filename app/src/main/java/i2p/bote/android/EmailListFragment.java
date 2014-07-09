@@ -522,12 +522,15 @@ public class EmailListFragment extends ListFragment implements
 
     // EmailListAdapter.EmailSelector
 
+    public boolean inActionMode() {
+        return mMultiSelectController.inActionMode();
+    }
+
     public void select(View view) {
-        // TODO temporarily disabled while broken, need to fix
-        //final ListView listView = getListView();
-        //final int position = listView.getPositionForView(view);
-        //listView.setItemChecked(position, !listView.isItemChecked(position));
-        //view.performLongClick();
+        final ListView listView = getListView();
+        final int position = listView.getPositionForView(view);
+        listView.setItemChecked(position, !listView.isItemChecked(position));
+        view.performLongClick();
     }
 
     // OnRefreshListener
