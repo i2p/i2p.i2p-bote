@@ -15,7 +15,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/intro_2" />
+        android:src="@drawable/intro_3" />
 
     <ScrollView
         android:layout_width="wrap_content"
