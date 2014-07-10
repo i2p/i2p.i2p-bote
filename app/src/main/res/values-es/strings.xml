@@ -5,8 +5,16 @@
   <string name="intro_secure">Seguro.</string>
   <string name="swipe_to_start">Gesto de barrido para iniciar</string>
   <string name="i_know_what_to_do">Sé lo que hacer</string>
+  <string name="intro_1_1">El correo electrónico tradicional es inseguro. No fue diseñado para proteger a la gente de redes de vigilancia.</string>
+  <string name="intro_1_2">Incluso si cifra los contenidos de su correo, los metadatos del correo pueden monitorizarse para revelar grandes cantidades de información acerca de usted y las personas con las que habla.</string>
+  <string name="intro_2_1">Bote es un tipo nuevo de correo electrónico que proporciona privacidad extremo-a-extremo completa, y seguridad. Se ejecuta sobre la red de anonimato I2P, que oculta la actividad que usted realiza.</string>
+  <string name="intro_2_2">Cuando envía un correo electrónico en Bote, todo está cifrado - incluyendo los metadatos del correo. Sólo el receptor puede descargar y leer y el correo.</string>
   <string name="intro_3_1">Con el correo electrónico tradicional necesita confiar en un servidor central, y si está bloqueado no puede enviar ni recibir correos.</string>
   <string name="intro_3_2">Bote usa una red entre-pares (P2P) distribuida, similar a BitTorrent. Los correos cifrados son divididos y almacenados entre muchos otros usuarios de Bote.</string>
+  <string name="intro_4_1">Los adversarios sólo pueden ver que un correo electrónico ha sido enviado. Ellos no pueden ver la identidad real del remitente o el receptor.</string>
+  <string name="intro_4_2">Y los correos de Bote pueden enviarse con retardo; el remitente hace bastante tiempo que podría haberse ido antes de que el correo cifrado sea almacenado, previniendo ataques basados en temporalidad.</string>
+  <string name="intro_5_1">A causa de que Bote es un poco diferente de otros correos electrónicos tradicionales, hay unas pocas cosas a configurar antes de que pueda comenzar a usarlas.</string>
+  <string name="intro_5_2">El asistente de instalación tardará un par de minutos, y luego todo estará listo.</string>
   <string name="lets_get_started">Comencemos</string>
   <string name="title_activity_setup">Instalar</string>
   <string name="skip">Omitir</string>
