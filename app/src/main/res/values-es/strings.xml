@@ -5,14 +5,8 @@
   <string name="intro_secure">Seguro.</string>
   <string name="swipe_to_start">Gesto de barrido para iniciar</string>
   <string name="i_know_what_to_do">Sé lo que hacer</string>
-  <string name="intro_1_1">El correo electrónico tradicional no es seguro.</string>
-  <string name="intro_1_2">Bote es un nuevo tipo de correo electrónico.</string>
-  <string name="intro_2_1">Cuando envía un correo electrónico en Bote, todo está cifrado - incluyendo los metadatos del correo electrónico. Sólo el receptor puede descargar y leer el correo.</string>
-  <string name="intro_2_2">Un extraño sólo puede ver que se envió un correo, no quién lo envió. Y si el receptor nunca publica su dirección de correo, el extraño ni siquiera puede decir quien es el receptor.</string>
   <string name="intro_3_1">Con el correo electrónico tradicional necesita confiar en un servidor central, y si está bloqueado no puede enviar ni recibir correos.</string>
   <string name="intro_3_2">Bote usa una red entre-pares (P2P) distribuida, similar a BitTorrent. Los correos cifrados son divididos y almacenados entre muchos otros usuarios de Bote.</string>
-  <string name="intro_4_1">A causa de que Bote es un poco diferente del correo electrónico tradicional, hay unas pocas cosas a configurar antes de pueda comenzar a usarlo.</string>
-  <string name="intro_4_2">Seguir los pasos del asistente de configuración le llevará un par de minutos, y luego todo estará listo.</string>
   <string name="lets_get_started">Comencemos</string>
   <string name="title_activity_setup">Instalar</string>
   <string name="skip">Omitir</string>
