@@ -14,7 +14,7 @@
     <string name="intro_3_1">With traditional email, you need to trust a central server. And if it is blocked, you can\'t send or receive emails.</string>
     <string name="intro_3_2">Bote uses a distributed peer-to-peer network, similar to BitTorrent. Encrypted emails are split up and stored with many other Bote users.</string>
     <string name="intro_4_1">Adversaries can only see that an email has been sent. They can\'t see the real identity of the sender or recipient.</string>
-    <string name="intro_4_2">And Bote emails can be sent with a delay; the sender could be long gone before the encrypted email is stored, preventing timing attacks.</string>
+    <string name="intro_4_2">And Bote emails can be sent with a delay; the sender could be long gone before the encrypted email is stored in the network, preventing timing attacks.</string>
     <string name="intro_5_1">Because Bote is a little different to traditional email, there are a few things to set up before you can start using it.</string>
     <string name="intro_5_2">The setup wizard will take a couple of minutes, and then everything will be ready.</string>
     <string name="lets_get_started">Let\'s get started</string>
