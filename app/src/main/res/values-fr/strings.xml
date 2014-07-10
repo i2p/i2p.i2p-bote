@@ -12,6 +12,7 @@
   <string name="intro_3_1">Avec le courrier électronique traditionnel, vous devez avoir confiance en un serveur central. Et s\'il est bloqué, vous ne pouvez pas envoyer ni recevoir de courriers électroniques.</string>
   <string name="intro_3_2">Bote utilise un réseau pair-à-pair distribué, semblable à BitTorrent. Les courriers électroniques cryptés sont partagés et stockés avec beaucoup d\'autres utilisateurs de Bote.</string>
   <string name="intro_4_1">Les adversaires peuvent seulement voir qu\'un courrier électronique a été envoyé. Ils ne peuvent pas voir l\'identité réelle de l\'expéditeur ni celle du destinataire.</string>
+  <string name="intro_4_2">Et les courriers électroniques de Bote peuvent être envoyés avec du retard; l\'expéditeur pouvant ainsi être parti depuis longtemps avant que le courrier électronique crypté ne soit stocké dans le réseau, ceci empêchant des attaques de type timing.</string>
   <string name="intro_5_1">Parce que Bote est un peu différent du courrier électronique traditionnel, il y a quelques détails à configurer avant que vous ne puissiez commencer à l\'utiliser.</string>
   <string name="intro_5_2">L\'assistant de configuration prendra deux ou trois minutes puis ensuite tout sera prêt.</string>
   <string name="lets_get_started">Commençons</string>
@@ -127,6 +128,7 @@
   <string name="pref_title_delivery">Statut de livraison</string>
   <string name="pref_summ_delivery">Vérifier le statut de livraison des emails envoyés</string>
   <string name="pref_title_privacy">Respect de la vie privée</string>
+  <string name="pref_title_hideLocale">Cacher le lieu</string>
   <string name="pref_summ_hideLocale">Utiliser l\'anglais pour les textes ajoutés aux emails sortants (\'Re:\', \'wrote:\', etc.)</string>
   <string name="pref_title_sentTime">Heure d\'envoi</string>
   <string name="pref_summ_sentTime">Inclure l\'heure d\'envoi dans les emails sortants</string>
