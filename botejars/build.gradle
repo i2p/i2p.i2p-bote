@@ -8,16 +8,18 @@ compileJava.dependsOn buildJars
 
 // TODO an empty botejars.jar is added to the classpath
 
-artifacts.add('default', file('libs/i2p.jar'))
-artifacts.add('default', file('libs/router.jar'))
-artifacts.add('default', file('libs/mstreaming.jar'))
-artifacts.add('default', file('libs/streaming.jar'))
-artifacts.add('default', file('libs/bcprov-ecc-jdk16-146.jar'))
-artifacts.add('default', file('libs/flexi-gmss-1.7p1.jar'))
-artifacts.add('default', file('libs/lzma-9.20.jar'))
-artifacts.add('default', file('libs/ntruenc-1.2.jar'))
-artifacts.add('default', file('libs/scrypt-1.4.0.jar'))
-artifacts.add('default', file('libs/i2pbote.jar'))
+artifacts {
+    'default' file('libs/i2p.jar')
+    'default' file('libs/router.jar')
+    'default' file('libs/mstreaming.jar')
+    'default' file('libs/streaming.jar')
+    'default' file('libs/bcprov-ecc-jdk16-146.jar')
+    'default' file('libs/flexi-gmss-1.7p1.jar')
+    'default' file('libs/lzma-9.20.jar')
+    'default' file('libs/ntruenc-1.2.jar')
+    'default' file('libs/scrypt-1.4.0.jar')
+    'default' file('libs/i2pbote.jar')
+}
 
 clean.dependsOn cleanBuildJars
 
