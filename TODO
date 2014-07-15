@@ -1,4 +1,5 @@
 Fixes:
+- Hide old password field in SetPasswordFragment if none is set
 - Fix tick over selected emails
 - Refine view email page
 -- Delete/read/unread/move actions that don't break everything
@@ -16,5 +17,8 @@ Tasks:
 Features:
 - Public address book lookup
 - Add optional CC: and BCC: fields
+- Forward
+- Reply all
 - Attachments
+- QR codes for identities
 - "Empty trash" option in Trash folder
