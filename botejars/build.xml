@@ -62,9 +62,9 @@
     </target>
 
     <!-- test for one of them, assume it means we have all of them -->
-    <available property="have.streaming" file="${i2plib}/streaming.jar" />
+    <available property="have.jstl" file="${i2plib}/jstl.jar" />
 
-    <target name="buildJarsForBote" unless="have.streaming">
+    <target name="buildJarsForBote" unless="have.jstl">
         <ant dir="${i2pbase}" inheritall="false" useNativeBasedir="true" target="jarBote" />
     </target>
 
