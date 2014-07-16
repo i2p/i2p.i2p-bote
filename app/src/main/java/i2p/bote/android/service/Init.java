@@ -1,17 +1,17 @@
 package i2p.bote.android.service;
 
-import net.i2p.android.router.service.IRouterState;
-import net.i2p.client.I2PClient;
-import net.i2p.data.DataHelper;
-import net.i2p.util.OrderedProperties;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
+import net.i2p.android.router.service.IRouterState;
+import net.i2p.client.I2PClient;
+import net.i2p.data.DataHelper;
+import net.i2p.util.OrderedProperties;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -25,7 +25,7 @@ public class Init {
     public enum RouterChoice {
         INTERNAL,
         ANDROID,
-        REMOTE;
+        REMOTE
     }
 
     public Init(Context c) {
@@ -51,32 +51,26 @@ public class Init {
         RouterChoice routerChoice;
         String i2cpHost, i2cpPort;
         if (prefs.getBoolean("i2pbote.router.auto", true)) {
-            if (stateService != null) {
+            if (stateService != null)
                 routerChoice = RouterChoice.ANDROID;
-                // TODO fetch settings from I2P Android
-                i2cpHost = "127.0.0.1";
-                i2cpPort = "7654";
-            } else {
+            else
                 routerChoice = RouterChoice.INTERNAL;
-                i2cpHost = "internal";
-                i2cpPort = "internal";
-            }
+            i2cpHost = "internal";
+            i2cpPort = "internal";
         } else {
             // Check manual settings
             String which = prefs.getString("i2pbote.router.use", "internal");
-            if ("internal".equals(which)) {
-                routerChoice = RouterChoice.INTERNAL;
-                i2cpHost = "internal";
-                i2cpPort = "internal";
-            } else if ("android".equals(which)) {
-                routerChoice = RouterChoice.ANDROID;
-                // TODO fetch settings from I2P Android
-                i2cpHost = "127.0.0.1";
-                i2cpPort = "7654";
-            } else { // Remote router
+            if ("remote".equals(which)) {
                 routerChoice = RouterChoice.REMOTE;
                 i2cpHost = prefs.getString("i2pbote.i2cp.tcp.host", "127.0.0.1");
                 i2cpPort = prefs.getString("i2pbote.i2cp.tcp.port", "7654");
+            } else {
+                if ("android".equals(which))
+                    routerChoice = RouterChoice.ANDROID;
+                else // Internal router
+                    routerChoice = RouterChoice.INTERNAL;
+                i2cpHost = "internal";
+                i2cpPort = "internal";
             }
         }
         // Set the I2CP host/port
@@ -92,7 +86,7 @@ public class Init {
      *  and write back
      *
      *  @param f relative to base dir
-     *  @param props local overrides or null
+     *  @param overrides local overrides or null
      */
     public void mergeResourceToFile(int resID, String f, Properties overrides) {
         InputStream in = null;
