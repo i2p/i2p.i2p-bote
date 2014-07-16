@@ -8,6 +8,7 @@ import javax.mail.MessagingException;
 
 import net.i2p.android.router.service.IRouterState;
 import net.i2p.android.router.service.IRouterStateCallback;
+import net.i2p.android.router.service.State;
 import net.i2p.router.Router;
 import net.i2p.router.RouterContext;
 import net.i2p.router.RouterLaunch;
@@ -146,8 +147,8 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
             mStateService = IRouterState.Stub.asInterface(service);
             try {
                 mStateService.registerCallback(mStatusListener);
-                String state = mStateService.getState();
-                if ("ACTIVE".equals(state))
+                final int state = mStateService.getState();
+                if (state == State.ACTIVE)
                     I2PBote.getInstance().connectNow();
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
@@ -164,11 +165,11 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
 
     private final IRouterStateCallback.Stub mStatusListener =
             new IRouterStateCallback.Stub() {
-        public void stateChanged(String newState) throws RemoteException {
-            if ("STOPPING".equals(newState) ||
-                    "MANUAL_STOPPING".equals(newState) ||
-                    "MANUAL_QUITTING".equals(newState) ||
-                    "NETWORK_STOPPING".equals(newState))
+        public void stateChanged(int newState) throws RemoteException {
+            if (newState == State.STOPPING ||
+                    newState == State.MANUAL_STOPPING ||
+                    newState == State.MANUAL_QUITTING ||
+                    newState == State.NETWORK_STOPPING)
                 stopSelf();
         }
     };
