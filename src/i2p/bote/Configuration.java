@@ -69,6 +69,7 @@ public class Configuration {
     private static final String THEME_SUBDIR = "themes";   // relative to I2P_BOTE_SUBDIR
 
     // Parameter names in the config file
+    private static final String PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED = "i2cpDomainSocketEnabled";
     private static final String PARAMETER_STORAGE_SPACE_INBOX = "storageSpaceInbox";
     private static final String PARAMETER_STORAGE_SPACE_RELAY = "storageSpaceRelay";
     private static final String PARAMETER_STORAGE_TIME = "storageTime";
@@ -104,6 +105,7 @@ public class Configuration {
     private static final String PARAMETER_THEME = "theme";
 
     // Defaults for each parameter
+    private static final boolean DEFAULT_I2CP_DOMAIN_SOCKET_ENABLED = false;
     private static final int DEFAULT_STORAGE_SPACE_INBOX = 1024 * 1024 * 1024;
     private static final int DEFAULT_STORAGE_SPACE_RELAY = 100 * 1024 * 1024;
     private static final int DEFAULT_STORAGE_TIME = 31;   // in days
@@ -211,6 +213,29 @@ public class Configuration {
                     "You must create the keystore using the same password for the keystore and the key.");
         }
         return success;
+    }
+
+    /**
+     * @param enabled ignored if not on Android.
+     * @since 0.2.10
+     */
+    public void setI2CPDomainSocketEnabled(boolean enabled) {
+        if (SystemVersion.isAndroid())
+            properties.setProperty(
+                    PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED,
+                    String.valueOf(enabled));
+    }
+
+    /**
+     * @return false if not on Android.
+     * @since 0.2.10
+     */
+    public boolean isI2CPDomainSocketEnabled() {
+        return SystemVersion.isAndroid() ?
+                getBooleanParameter(
+                        PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED,
+                        DEFAULT_I2CP_DOMAIN_SOCKET_ENABLED) :
+                false;
     }
 
     public File getDestinationKeyFile() {

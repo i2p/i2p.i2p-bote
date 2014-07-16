@@ -242,6 +242,8 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         // set tunnel names
         sessionProperties.setProperty("inbound.nickname", "I2P-Bote");
         sessionProperties.setProperty("outbound.nickname", "I2P-Bote");
+        if (configuration.isI2CPDomainSocketEnabled())
+            sessionProperties.setProperty("i2cp.domainSocket", "true");
         // According to sponge, muxed depends on gzip, so leave gzip enabled
                 
         // read the local destination key from the key file if it exists
