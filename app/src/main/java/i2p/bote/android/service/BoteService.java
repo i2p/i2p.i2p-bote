@@ -148,7 +148,7 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
             mStateService = IRouterState.Stub.asInterface(service);
             try {
                 mStateService.registerCallback(mStatusListener);
-                final int state = mStateService.getState();
+                final State state = mStateService.getState();
                 if (state == State.ACTIVE)
                     I2PBote.getInstance().connectNow();
             } catch (RemoteException e) {
@@ -166,7 +166,7 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
 
     private final IRouterStateCallback.Stub mStatusListener =
             new IRouterStateCallback.Stub() {
-        public void stateChanged(int newState) throws RemoteException {
+        public void stateChanged(State newState) throws RemoteException {
             if (newState == State.STOPPING ||
                     newState == State.MANUAL_STOPPING ||
                     newState == State.MANUAL_QUITTING ||
