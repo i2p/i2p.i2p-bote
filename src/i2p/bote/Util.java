@@ -50,6 +50,7 @@ import javax.mail.Part;
 
 import net.i2p.I2PAppContext;
 import net.i2p.crypto.SHA256Generator;
+import net.i2p.crypto.SessionKeyManager;
 import net.i2p.data.Base32;
 import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
@@ -381,7 +382,8 @@ public class Util {
     /** Encrypts data with an I2P public key */
     public static byte[] encrypt(byte data[], PublicKey key) {
         I2PAppContext appContext = I2PAppContext.getGlobalContext();
-        SessionKey sessionKey = appContext.sessionKeyManager().createSession(key);
+        SessionKeyManager sessionKeyMgr = new net.i2p.crypto.SessionKeyManager(appContext) { };
+        SessionKey sessionKey = sessionKeyMgr.createSession(key);
         return appContext.elGamalAESEngine().encrypt(data, key, sessionKey, null, null, null, 0);
     }
     
@@ -391,7 +393,9 @@ public class Util {
      */
     public static byte[] decrypt(byte data[], PrivateKey key) throws DataFormatException {
         I2PAppContext appContext = I2PAppContext.getGlobalContext();
-        return appContext.elGamalAESEngine().decrypt(data, key, appContext.sessionKeyManager());
+        SessionKeyManager sessionKeyMgr = new net.i2p.crypto.SessionKeyManager(appContext) {
+        };
+        return appContext.elGamalAESEngine().decrypt(data, key, sessionKeyMgr);
     }
     
     /** Overwrites a <code>byte</code> array with zeros */
