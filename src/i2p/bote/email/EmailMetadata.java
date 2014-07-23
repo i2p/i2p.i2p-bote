@@ -118,7 +118,7 @@ public class EmailMetadata extends Properties {
      * The default is <code>false</code>.
      */
     public boolean isRecent() {
-        return getProperty(PROPERTY_RECENT).equalsIgnoreCase("true");
+        return "true".equalsIgnoreCase(getProperty(PROPERTY_RECENT));
     }
 
     public void setUnread(boolean unread) {
@@ -131,7 +131,7 @@ public class EmailMetadata extends Properties {
      * The default is <code>true</code>.
      */
     public boolean isUnread() {
-        return getProperty(PROPERTY_UNREAD).equalsIgnoreCase("true");
+        return "true".equalsIgnoreCase(getProperty(PROPERTY_UNREAD));
     }
 
     public void setCreateTime(Date createTime) {

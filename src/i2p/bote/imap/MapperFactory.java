@@ -72,7 +72,7 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
     }
     
     @Override
-    protected SubscriptionMapper createSubscriptionMapper(MailboxSession session) throws SubscriptionException {
+    public SubscriptionMapper createSubscriptionMapper(MailboxSession session) throws SubscriptionException {
         // not implemented for now
         return null;
     }
@@ -96,7 +96,7 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
     }
     
     @Override
-    protected MessageMapper<String> createMessageMapper(MailboxSession mailboxSession) throws MailboxException {
+    public MessageMapper<String> createMessageMapper(MailboxSession mailboxSession) throws MailboxException {
         UidProvider<String> uidProvider = createUidProvider();
         ModSeqProvider<String> modSeqProvider = createModSeqProvider();
         
@@ -193,6 +193,13 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
                 }
             }
 
+            @Override
+            public MessageMetaData move(Mailbox<String> mailbox, Message<String> message) throws MailboxException {
+                MessageMetaData metadata = copy(mailbox, message);
+                delete(mailbox, message);
+                return metadata;
+            }
+
             /** Updates the metadata */
             @Override
             protected MessageMetaData save(Mailbox<String> mailbox, Message<String> message) throws MailboxException {
@@ -259,7 +266,7 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
     }
     
     @Override
-    protected MailboxMapper<String> createMailboxMapper(MailboxSession session) throws MailboxException {
+    public MailboxMapper<String> createMailboxMapper(MailboxSession session) throws MailboxException {
         return new MailboxMapper<String>() {
             
             @Override
