@@ -12,7 +12,7 @@
   <string name="intro_3_1">Con el correo electrónico tradicional necesita confiar en un servidor central, y si está bloqueado no puede enviar ni recibir correos.</string>
   <string name="intro_3_2">Bote usa una red entre-pares (P2P) distribuida, similar a BitTorrent. Los correos cifrados son divididos y almacenados entre muchos otros usuarios de Bote.</string>
   <string name="intro_4_1">Los adversarios sólo pueden ver que un correo electrónico ha sido enviado. Ellos no pueden ver la identidad real del remitente o el receptor.</string>
-  <string name="intro_4_2">Y los correos de Bote pueden enviarse con retardo; el remitente hace bastante tiempo que podría haberse ido antes de que el correo cifrado sea almacenado, previniendo ataques basados en temporalidad.</string>
+  <string name="intro_4_2">Y los correos de Bote pueden enviarse con un retardo; el remitente hace bastante tiempo que podría haberse ido antes de que el correo cifrado sea almacenado en la red, previniendo ataques basados en restricciones temporales.</string>
   <string name="intro_5_1">A causa de que Bote es un poco diferente de otros correos electrónicos tradicionales, hay unas pocas cosas a configurar antes de que pueda comenzar a usarlas.</string>
   <string name="intro_5_2">El asistente de instalación tardará un par de minutos, y luego todo estará listo.</string>
   <string name="lets_get_started">Comencemos</string>
