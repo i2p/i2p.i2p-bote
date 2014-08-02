@@ -75,12 +75,13 @@ import i2p.bote.service.UpdateChecker;
 import i2p.bote.service.seedless.SeedlessInitializer;
 import i2p.bote.smtp.SmtpService;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.Thread.State;
 import java.net.URISyntaxException;
@@ -118,6 +119,8 @@ import net.i2p.data.Destination;
 import net.i2p.data.Hash;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
+import net.i2p.util.SecureFile;
+import net.i2p.util.SecureFileOutputStream;
 
 import org.apache.commons.configuration.ConfigurationException;
 
@@ -371,6 +374,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
      * @throws IOException
      */
     private void saveLocalDestinationKeys(File keyFile, byte[] localDestinationArray) throws DataFormatException, IOException {
+        keyFile = new SecureFile(keyFile.getAbsolutePath());
         if (keyFile.exists()) {
             File oldKeyFile = new File(keyFile.getPath() + "_backup");
             if (!keyFile.renameTo(oldKeyFile))
@@ -380,14 +384,13 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
             if (!keyFile.createNewFile())
                 log.error("Cannot create destination key file: <" + keyFile.getAbsolutePath() + ">");
         
-        FileWriter fileWriter = new FileWriter(keyFile);
+        BufferedWriter fileWriter = new BufferedWriter(new OutputStreamWriter(new SecureFileOutputStream(keyFile)));
         try {
             fileWriter.write(Base64.encode(localDestinationArray));
         }
         finally {
             fileWriter.close();
         }
-        Util.makePrivate(keyFile);
     }
     
     /**

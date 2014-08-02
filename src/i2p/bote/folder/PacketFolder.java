@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import net.i2p.util.Log;
+import net.i2p.util.SecureFileOutputStream;
 
 /**
  * This class stores new files under a random file name with the .pkt extension.<br/>
@@ -57,9 +58,8 @@ public class PacketFolder<PacketType extends I2PBotePacket> extends Folder<Packe
         FileOutputStream outputStream = null;
         File file = new File(storageDir, filename);
         try {
-            outputStream = new FileOutputStream(file);
+            outputStream = new SecureFileOutputStream(file);
             packetToStore.writeTo(outputStream);
-            Util.makePrivate(file);
         } catch (Exception e) {
             log.error("Can't save packet to file: <" + filename + ">", e);
         }

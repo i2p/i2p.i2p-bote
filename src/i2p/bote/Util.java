@@ -367,18 +367,6 @@ public class Util {
         return valid;
     }
     
-    /**
-     * Makes a file readable and writable only by the current OS user,
-     * if the operating system supports it. Errors are ignored.
-     * @param file
-     */
-    public static void makePrivate(File file) {
-        file.setReadable(false, false);
-        file.setReadable(true, true);
-        file.setWritable(false, false);
-        file.setWritable(true, true);
-    }
-    
     /** Encrypts data with an I2P public key */
     public static byte[] encrypt(byte data[], PublicKey key) {
         I2PAppContext appContext = I2PAppContext.getGlobalContext();

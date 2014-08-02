@@ -54,8 +54,8 @@ import i2p.bote.packet.dht.StoreRequest;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.Collection;
@@ -77,6 +77,7 @@ import net.i2p.util.ConcurrentHashSet;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
+import net.i2p.util.SecureFileOutputStream;
 
 /**
  * The main class of the Kademlia implementation. All the high-level Kademlia logic
@@ -531,7 +532,7 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
     private void writePeers(List<KademliaPeer> peers, File file) {
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(file));
+            writer = new BufferedWriter(new OutputStreamWriter(new SecureFileOutputStream(file.getAbsolutePath())));
             writer.write("# Each line is one Base64-encoded I2P destination.");
             writer.newLine();
             writer.write("# Do not edit while I2P-Bote is running as it will be overwritten.");
@@ -540,7 +541,6 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
                 writer.write(peer.toBase64());
                 writer.newLine();
             }
-            Util.makePrivate(file);
         }
         catch (IOException e) {
             log.error("Can't write peers to file <" + file.getAbsolutePath() + ">", e);

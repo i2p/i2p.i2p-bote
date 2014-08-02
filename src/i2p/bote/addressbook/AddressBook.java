@@ -21,7 +21,6 @@
 
 package i2p.bote.addressbook;
 
-import i2p.bote.Util;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.fileencryption.DerivedKey;
 import i2p.bote.fileencryption.EncryptedInputStream;
@@ -36,7 +35,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -49,6 +47,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.i2p.util.Log;
+import net.i2p.util.SecureFileOutputStream;
 
 /**
  * Implements the private address book. Holds a set of {@link Contact}s
@@ -142,7 +141,7 @@ public class AddressBook {
     public void save() throws IOException, PasswordException, GeneralSecurityException {
         initializeIfNeeded();
         
-        OutputStream encryptedStream = new EncryptedOutputStream(new FileOutputStream(addressFile), passwordHolder);
+        OutputStream encryptedStream = new EncryptedOutputStream(new SecureFileOutputStream(addressFile), passwordHolder);
         SortedProperties properties = new SortedProperties();
         try {
             int index = 0;
@@ -158,7 +157,6 @@ public class AddressBook {
                 index++;
             }
             properties.store(new OutputStreamWriter(encryptedStream, "UTF-8"), null);
-            Util.makePrivate(addressFile);
         } catch (IOException e) {
             log.error("Can't save email identities to file <" + addressFile.getAbsolutePath() + ">.", e);
             throw e;

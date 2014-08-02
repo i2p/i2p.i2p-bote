@@ -35,8 +35,8 @@ import i2p.bote.packet.relay.PeerListRequest;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +50,7 @@ import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
+import net.i2p.util.SecureFileOutputStream;
 
 /**
  * Relay peers are managed independently of the DHT peers because:
@@ -148,7 +149,7 @@ public class RelayPeerManager extends I2PAppThread implements PacketListener {
     private void writePeers(File file) {
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(file));
+            writer = new BufferedWriter(new OutputStreamWriter(new SecureFileOutputStream(file.getAbsolutePath())));
             writer.write("# Each line is in the format: <dest> [resp1] [resp2] ..."); writer.newLine();
             writer.write("#   dest  = the I2P destination"); writer.newLine();
             writer.write("#   resp* = true or false, depending on whether the peer responded"); writer.newLine();
@@ -161,7 +162,6 @@ public class RelayPeerManager extends I2PAppThread implements PacketListener {
                     writer.write("\t" + responded);
                 writer.newLine();
             }
-            Util.makePrivate(file);
         }
         catch (IOException e) {
             log.error("Can't write peers to file <" + file.getAbsolutePath() + ">", e);

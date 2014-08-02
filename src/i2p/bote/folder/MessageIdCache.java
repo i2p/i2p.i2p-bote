@@ -22,20 +22,20 @@
 package i2p.bote.folder;
 
 import i2p.bote.UniqueId;
-import i2p.bote.Util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import net.i2p.util.Log;
+import net.i2p.util.SecureFileOutputStream;
 
 /**
  * Email packets are sometimes delivered again after the email has already
@@ -100,10 +100,9 @@ public class MessageIdCache {
         String newLine = System.getProperty("line.separator");
         Writer writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(cacheFile));
+            writer = new BufferedWriter(new OutputStreamWriter(new SecureFileOutputStream(cacheFile.getAbsolutePath())));
             for (UniqueId id: idList)
                 writer.write(id.toBase64() + newLine);
-            Util.makePrivate(cacheFile);
         }
         catch (IOException e) {
             log.error("Can't write message ID cache file.", e);

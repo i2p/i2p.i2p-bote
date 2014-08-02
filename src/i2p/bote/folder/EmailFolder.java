@@ -39,7 +39,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -51,9 +50,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.mail.MessagingException;
-import javax.mail.Flags.Flag;
 
 import net.i2p.util.Log;
+import net.i2p.util.SecureFileOutputStream;
 
 /**
  * Stores emails in a directory on the file system.<br/>
@@ -94,10 +93,9 @@ public class EmailFolder extends Folder<Email> {
         // write out the email file
         File emailFile = getEmailFile(email);
         log.info("Mail folder <" + storageDir + ">: storing email file: <" + emailFile.getAbsolutePath() + ">");
-        OutputStream emailOutputStream = new BufferedOutputStream(new EncryptedOutputStream(new FileOutputStream(emailFile), passwordHolder));
+        OutputStream emailOutputStream = new BufferedOutputStream(new EncryptedOutputStream(new SecureFileOutputStream(emailFile), passwordHolder));
         try {
             email.writeTo(emailOutputStream);
-            Util.makePrivate(emailFile);
         }
         finally {
             emailOutputStream.close();
@@ -451,10 +449,9 @@ public class EmailFolder extends Folder<Email> {
     
     private void saveMetadata(EmailMetadata metadata, File file) throws PasswordException, FileNotFoundException, IOException, GeneralSecurityException {
         log.info("Mail folder <" + storageDir + ">: storing metadata file: <" + file.getAbsolutePath() + ">");
-        OutputStream emailOutputStream = new BufferedOutputStream(new EncryptedOutputStream(new FileOutputStream(file), passwordHolder));
+        OutputStream emailOutputStream = new BufferedOutputStream(new EncryptedOutputStream(new SecureFileOutputStream(file), passwordHolder));
         try {
             metadata.writeTo(emailOutputStream);
-            Util.makePrivate(file);
         } catch (IOException e) {
             log.error("Can't write metadata to file <" + file.getAbsolutePath() + ">", e);
             throw e;

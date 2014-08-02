@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import net.i2p.util.Log;
+import net.i2p.util.SecureFile;
 
 /**
  * Reads files from a directory and returns them as objects of type <code>T</code>.<br/>
@@ -56,9 +57,8 @@ public abstract class Folder<T> {
         this.storageDir = storageDir;
         this.fileExtension = fileExtension;
         
-        if (!storageDir.exists() && !storageDir.mkdirs())
+        if (!storageDir.exists() && !new SecureFile(storageDir.getAbsolutePath()).mkdirs())
             log.error("Can't create directory: '" + storageDir + "'");
-        Util.makePrivate(storageDir);
     }
 
     public File getStorageDirectory() {

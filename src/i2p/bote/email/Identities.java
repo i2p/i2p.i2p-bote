@@ -22,7 +22,6 @@
 package i2p.bote.email;
 
 import i2p.bote.I2PBote;
-import i2p.bote.Util;
 import i2p.bote.crypto.KeyUpdateHandler;
 import i2p.bote.fileencryption.DerivedKey;
 import i2p.bote.fileencryption.EncryptedInputStream;
@@ -54,6 +53,7 @@ import java.util.TreeSet;
 
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
+import net.i2p.util.SecureFileOutputStream;
 
 import com.lambdaworks.codec.Base64;
 
@@ -210,7 +210,7 @@ public class Identities implements KeyUpdateHandler {
     public void save() throws IOException, GeneralSecurityException, PasswordException {
         initializeIfNeeded();
             
-        OutputStream encryptedStream = new EncryptedOutputStream(new FileOutputStream(identitiesFile), passwordHolder);
+        OutputStream encryptedStream = new EncryptedOutputStream(new SecureFileOutputStream(identitiesFile), passwordHolder);
         try {
             Properties properties = saveToProperties();
             properties.store(new OutputStreamWriter(encryptedStream, "UTF-8"), null);
@@ -220,7 +220,6 @@ public class Identities implements KeyUpdateHandler {
         } finally {
             encryptedStream.close();
         }
-        Util.makePrivate(identitiesFile);
     }
 
     public void export(File exportFile, String password) throws IOException, GeneralSecurityException, PasswordException {

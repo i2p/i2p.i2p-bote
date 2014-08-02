@@ -36,6 +36,7 @@ import net.i2p.I2PAppContext;
 import net.i2p.crypto.KeyStoreUtil;
 import net.i2p.data.DataHelper;
 import net.i2p.util.Log;
+import net.i2p.util.SecureFile;
 import net.i2p.util.SystemVersion;
 
 public class Configuration {
@@ -338,8 +339,7 @@ public class Configuration {
     public void save() {
         log.debug("Saving config file <" + configFile.getAbsolutePath() + ">");
         try {
-            DataHelper.storeProps(properties, configFile);
-            Util.makePrivate(configFile);
+            DataHelper.storeProps(properties, new SecureFile(configFile.getAbsolutePath()));
         } catch (IOException e) {
             log.error("Cannot save configuration to file <" + configFile.getAbsolutePath() + ">", e);
         }

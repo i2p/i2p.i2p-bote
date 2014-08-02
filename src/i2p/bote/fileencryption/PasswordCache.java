@@ -28,7 +28,6 @@ import i2p.bote.Util;
 
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -38,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 import net.i2p.I2PAppContext;
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
+import net.i2p.util.SecureFileOutputStream;
 
 /**
  * Stores a password in memory so the user doesn't have to re-enter it.
@@ -108,7 +108,7 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
             try {
                 byte[] key = FileEncryptionUtil.getEncryptionKey(password, salt, KDF_PARAMETERS);
                 derivedKey = new DerivedKey(salt, KDF_PARAMETERS, key);
-                outputStream = new DataOutputStream(new FileOutputStream(derivParamFile));
+                outputStream = new DataOutputStream(new SecureFileOutputStream(derivParamFile));
                 KDF_PARAMETERS.writeTo(outputStream);
                 outputStream.write(salt);
             }
