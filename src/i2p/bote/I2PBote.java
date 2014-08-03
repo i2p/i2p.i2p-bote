@@ -71,7 +71,6 @@ import i2p.bote.service.OutboxListener;
 import i2p.bote.service.OutboxProcessor;
 import i2p.bote.service.RelayPacketSender;
 import i2p.bote.service.RelayPeerManager;
-import i2p.bote.service.UpdateChecker;
 import i2p.bote.service.seedless.SeedlessInitializer;
 import i2p.bote.smtp.SmtpService;
 
@@ -156,7 +155,6 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     private OutboxProcessor outboxProcessor;   // reads emails stored in the outbox and sends them
     private EmailChecker emailChecker;
     private DeliveryChecker deliveryChecker;
-    private UpdateChecker updateChecker;
     private KademliaDHT dht;
     private RelayPeerManager peerManager;
     private PasswordCache passwordCache;
@@ -361,9 +359,6 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         
         deliveryChecker = new DeliveryChecker(dht, sentFolder, configuration, this);
         backgroundThreads.add(deliveryChecker);
-        
-        updateChecker = new UpdateChecker(this, configuration);
-        backgroundThreads.add(updateChecker);
     }
 
     /**
@@ -529,14 +524,6 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         emailChecker.checkForMail();
     }
 
-    /** Returns <code>true</code> if I2P-Bote can be updated to a newer version */
-    public boolean isUpdateAvailable() {
-        if (updateChecker == null)
-            return false;
-        else
-            return updateChecker.isUpdateAvailable();
-    }
-    
     /**
      * @see EmailChecker#isCheckingForMail()
      */

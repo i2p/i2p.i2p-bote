@@ -76,12 +76,6 @@
     <div class="subtitle"><ib:message key="Secure Distributed Email"/></div>
 </div>
 
-<c:if test="${jspHelperBean.updateAvailable}">
-<div class="updateMessage">
-    <a href="http://localhost:7657/configclients.jsp#plugin" target="_parent"><ib:message key="A new version is available. Click here for the configuration page."/></a>
-</div>
-</c:if>
-
 <div class="menubox">
     <iframe src="buttonFrame.jsp" class="button-frame"></iframe>
 </div>

@@ -567,10 +567,6 @@ public class GeneralHelper {
         return I2PBote.getInstance().getUndecryptableFiles();
     }
 
-    public boolean isUpdateAvailable() {
-        return I2PBote.getInstance().isUpdateAvailable();
-    }
-
     public static String getFileSize(String filename) {
         return Util.getHumanReadableSize(new File(filename));
     }
