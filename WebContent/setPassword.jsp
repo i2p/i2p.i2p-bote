@@ -41,7 +41,7 @@
 <c:if test="${param.action eq 'set'}">
     <c:set var="refreshUrl" value="setPassword.jsp?action=wait" scope="request"/>
     <c:set var="refreshInterval" value="0" scope="request"/>
-    <ib:setPassword oldPassword="${param.old}" newPassword="${param.new}" confirmNewPassword="${param.confirm}"/>
+    <ib:setPassword oldPassword="${param.oldPassword}" newPassword="${param.newPassword}" confirmNewPassword="${param.confirm}"/>
 </c:if>
 
 <jsp:include page="header.jsp"/>
@@ -69,10 +69,10 @@
             <input type="hidden" name="action" value="set"/>
             
             <div class="password-label"><ib:message key="Old password:"/></div>
-            <div class="password-field"><input type="password" name="old"/></div>
+            <div class="password-field"><input type="password" name="oldPassword"/></div>
             
             <div class="password-label"><ib:message key="New password:"/></div>
-            <div class="password-field"><input type="password" name="new"/></div>
+            <div class="password-field"><input type="password" name="newPassword"/></div>
             
             <div class="password-label"><ib:message key="Confirm:"/></div>
             <div class="password-field"><input type="password" name="confirm"/></div>
@@ -83,7 +83,7 @@
         </form>
     
         <script type="text/javascript" language="JavaScript">
-            document.forms['form'].elements['old'].focus();
+            document.forms['form'].elements['oldPassword'].focus();
         </script>
     </c:if>
 </div>
