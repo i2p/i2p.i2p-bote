@@ -97,7 +97,13 @@ public class EmailDestination {
     public static String extractBase64Dest(String address) {
         if (address == null)
             return null;
-        
+
+        // remove possible prefixes
+        if (address.startsWith("mailto:") ||
+                address.startsWith("i2pbote:") ||
+                address.startsWith("bote:"))
+            address = address.substring(address.indexOf(':') + 1);
+
         // find the crypto implementation for this key length
         for (CryptoImplementation cryptoImpl: CryptoFactory.getInstances()) {
             int base64Length = cryptoImpl.getBase64PublicKeyPairLength();   // length of an email destination with this CryptoImplementation
