@@ -98,6 +98,9 @@ public class EmailDestination {
         if (address == null)
             return null;
 
+        // remove spaces and newlines
+        // doesn't affect extraction from "name <dest>" addresses
+        address.replaceAll("[\\s\\r\\n]+", "");
         // remove possible prefixes
         if (address.startsWith("mailto:") ||
                 address.startsWith("i2pbote:") ||
