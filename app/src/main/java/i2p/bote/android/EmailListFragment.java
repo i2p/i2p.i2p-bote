@@ -1,10 +1,7 @@
 package i2p.bote.android;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -16,14 +13,11 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,6 +46,7 @@ import uk.co.senab.actionbarpulltorefresh.library.Options;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class EmailListFragment extends ListFragment implements
+        BoteHelper.RequestPasswordListener,
         LoaderManager.LoaderCallbacks<List<Email>>,
         MoveToDialogFragment.MoveToDialogListener,
         EmailListAdapter.EmailSelector, OnRefreshListener {
@@ -70,9 +65,6 @@ public class EmailListFragment extends ListFragment implements
     // The Controller which provides CHOICE_MODE_MULTIPLE_MODAL-like functionality
     private MultiSelectionUtil.Controller mMultiSelectController;
     private ModalChoiceListener mModalChoiceListener;
-
-    private EditText mPasswordInput;
-    private TextView mPasswordError;
 
     public static EmailListFragment newInstance(String folderName) {
         EmailListFragment f = new EmailListFragment();
@@ -168,7 +160,7 @@ public class EmailListFragment extends ListFragment implements
                     BoteHelper.getFolderDisplayName(getActivity(), mFolder));
             if (I2PBote.getInstance().isPasswordRequired()) {
                 // Request a password from the user.
-                requestPassword();
+                BoteHelper.requestPassword(getActivity(), this);
             } else {
                 // Password is cached, or not set.
                 initializeList();
@@ -176,80 +168,13 @@ public class EmailListFragment extends ListFragment implements
         }
     }
 
-    /**
-     * Request the password from the user, and try it.
-     */
-    private void requestPassword() {
-        LayoutInflater li = LayoutInflater.from(getActivity());
-        View promptView = li.inflate(R.layout.dialog_password, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(promptView);
-        mPasswordInput = (EditText) promptView.findViewById(R.id.passwordInput);
-        mPasswordError = (TextView) promptView.findViewById(R.id.passwordError);
-
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                InputMethodManager imm = (InputMethodManager) EmailListFragment.this
-                        .getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mPasswordInput.getWindowToken(), 0);
-                dialog.dismiss();
-                new PasswordWaiter().execute();
-            }
-        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                setEmptyText(getResources().getString(
-                        R.string.not_authed));
-                dialog.cancel();
-            }
-        });
-        AlertDialog passwordDialog = builder.create();
-        passwordDialog.show();
+    public void onPasswordVerified() {
+        initializeList();
     }
 
-    private class PasswordWaiter extends AsyncTask<Void, Void, String> {
-        private final ProgressDialog dialog = new ProgressDialog(EmailListFragment.this.getActivity());
-
-        protected void onPreExecute() {
-            dialog.setMessage(getResources().getString(
-                    R.string.checking_password));
-            dialog.setCancelable(false);
-            dialog.show();
-        }
-
-        protected String doInBackground(Void... params) {
-            try {
-                if (BoteHelper.tryPassword(mPasswordInput.getText().toString()))
-                    return null;
-                else {
-                    cancel(false);
-                    return getResources().getString(
-                            R.string.password_incorrect);
-                }
-            } catch (IOException e) {
-                cancel(false);
-                return getResources().getString(
-                        R.string.password_file_error);
-            } catch (GeneralSecurityException e) {
-                cancel(false);
-                return getResources().getString(
-                        R.string.password_file_error);
-            }
-        }
-
-        protected void onCancelled(String result) {
-            dialog.dismiss();
-            requestPassword();
-            mPasswordError.setText(result);
-            mPasswordError.setVisibility(View.VISIBLE);
-        }
-
-        protected void onPostExecute(String result) {
-            // Password is valid
-            initializeList();
-            dialog.dismiss();
-        }
+    public void onPasswordCanceled() {
+        setEmptyText(getResources().getString(
+                R.string.not_authed));
     }
 
     /**

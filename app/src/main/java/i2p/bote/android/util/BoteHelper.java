@@ -10,11 +10,20 @@ import javax.mail.Address;
 import javax.mail.Flags.Flag;
 import javax.mail.MessagingException;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.lambdaworks.codec.Base64;
 
@@ -249,5 +258,105 @@ public class BoteHelper extends GeneralHelper {
                 iter.remove();
         }
         return emails;
+    }
+
+    public interface RequestPasswordListener {
+        public void onPasswordVerified();
+        public void onPasswordCanceled();
+    }
+
+    /**
+     * Request the password from the user, and try it.
+     */
+    public static void requestPassword(final Context context, final RequestPasswordListener listener) {
+        requestPassword(context, listener, null);
+    }
+
+    /**
+     * Request the password from the user, and try it.
+     *
+     * @param error is pre-filled in the dialog if not null.
+     */
+    public static void requestPassword(final Context context, final RequestPasswordListener listener, String error) {
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptView = li.inflate(R.layout.dialog_password, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(promptView);
+
+        final EditText passwordInput = (EditText) promptView.findViewById(R.id.passwordInput);
+        if (error != null) {
+            TextView passwordError = (TextView) promptView.findViewById(R.id.passwordError);
+            passwordError.setText(error);
+            passwordError.setVisibility(View.VISIBLE);
+        }
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(passwordInput.getWindowToken(), 0);
+                dialog.dismiss();
+                new PasswordWaiter(context, listener).execute(passwordInput.getText().toString());
+            }
+        }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                listener.onPasswordCanceled();
+            }
+        });
+        AlertDialog passwordDialog = builder.create();
+        passwordDialog.show();
+    }
+
+    private static class PasswordWaiter extends AsyncTask<String, Void, String> {
+        private final Context mContext;
+        private final ProgressDialog mDialog;
+        private final RequestPasswordListener mListener;
+
+        public PasswordWaiter(Context context, RequestPasswordListener listener) {
+            super();
+            mContext = context;
+            mDialog = new ProgressDialog(context);
+            mListener = listener;
+        }
+
+        protected void onPreExecute() {
+            mDialog.setMessage(mContext.getResources().getString(
+                    R.string.checking_password));
+            mDialog.setCancelable(false);
+            mDialog.show();
+        }
+
+        protected String doInBackground(String... params) {
+            try {
+                if (BoteHelper.tryPassword(params[0]))
+                    return null;
+                else {
+                    cancel(false);
+                    return mContext.getResources().getString(
+                            R.string.password_incorrect);
+                }
+            } catch (IOException e) {
+                cancel(false);
+                return mContext.getResources().getString(
+                        R.string.password_file_error);
+            } catch (GeneralSecurityException e) {
+                cancel(false);
+                return mContext.getResources().getString(
+                        R.string.password_file_error);
+            }
+        }
+
+        protected void onCancelled(String result) {
+            mDialog.dismiss();
+            requestPassword(mContext, mListener, result);
+        }
+
+        protected void onPostExecute(String result) {
+            // Password is valid
+            mDialog.dismiss();
+            mListener.onPasswordVerified();
+        }
     }
 }
