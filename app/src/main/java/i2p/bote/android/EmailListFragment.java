@@ -138,15 +138,6 @@ public class EmailListFragment extends ListFragment implements
                     .setup(mPullToRefreshLayout);
 
             mPullToRefreshLayout.setRefreshing(I2PBote.getInstance().isCheckingForMail());
-
-            int numIncompleteEmails = I2PBote.getInstance().getNumIncompleteEmails();
-            if (numIncompleteEmails > 0) {
-                mNumIncompleteEmails = new TextView(getActivity());
-                mNumIncompleteEmails.setText(getResources().getString(R.string.incomplete_emails,
-                        numIncompleteEmails));
-                mNumIncompleteEmails.setPadding(16, 5, 16, 5);
-                getListView().addHeaderView(mNumIncompleteEmails, null, false);
-            }
         }
     }
 
@@ -267,6 +258,15 @@ public class EmailListFragment extends ListFragment implements
      * password is required.
      */
     private void initializeList() {
+        int numIncompleteEmails = I2PBote.getInstance().getNumIncompleteEmails();
+        if (numIncompleteEmails > 0) {
+            mNumIncompleteEmails = new TextView(getActivity());
+            mNumIncompleteEmails.setText(getResources().getString(R.string.incomplete_emails,
+                    numIncompleteEmails));
+            mNumIncompleteEmails.setPadding(16, 5, 16, 5);
+            getListView().addHeaderView(mNumIncompleteEmails, null, false);
+        }
+
         setListShown(false);
         setEmptyText(getResources().getString(
                 R.string.folder_empty));
