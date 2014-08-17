@@ -3,6 +3,7 @@ package i2p.bote.android.addressbook;
 import i2p.bote.I2PBote;
 import i2p.bote.android.R;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
+import i2p.bote.android.util.BoteHelper;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.dht.Contact;
 
@@ -58,6 +59,32 @@ public class AddressBookFragment extends ListFragment implements
 
         setListAdapter(mAdapter);
 
+        if (I2PBote.getInstance().isPasswordRequired()) {
+            // Request a password from the user.
+            BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
+                @Override
+                public void onPasswordVerified() {
+                    initializeList();
+                }
+
+                @Override
+                public void onPasswordCanceled() {
+                    setEmptyText(getResources().getString(
+                            R.string.not_authed));
+                }
+            });
+        } else {
+            // Password is cached, or not set.
+            initializeList();
+        }
+    }
+
+    /**
+     * Start loading the address book.
+     * Only called when we have a password cached, or no
+     * password is required.
+     */
+    private void initializeList() {
         setListShown(false);
         setEmptyText(getResources().getString(
                 R.string.address_book_empty));
@@ -73,13 +100,31 @@ public class AddressBookFragment extends ListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.action_new_contact:
-            Intent nci = new Intent(getActivity(), EditContactActivity.class);
-            getActivity().startActivityForResult(nci, AddressBookActivity.ALTER_CONTACT_LIST);
+            if (I2PBote.getInstance().isPasswordRequired()) {
+                BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
+                    @Override
+                    public void onPasswordVerified() {
+                        initializeList();
+                        startNewContact();
+                    }
+
+                    @Override
+                    public void onPasswordCanceled() {
+                    }
+                });
+            } else {
+                startNewContact();
+            }
             return true;
 
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void startNewContact() {
+        Intent nci = new Intent(getActivity(), EditContactActivity.class);
+        getActivity().startActivityForResult(nci, AddressBookActivity.ALTER_CONTACT_LIST);
     }
 
     @Override

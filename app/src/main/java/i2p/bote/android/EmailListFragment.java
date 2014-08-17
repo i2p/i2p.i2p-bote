@@ -46,7 +46,6 @@ import uk.co.senab.actionbarpulltorefresh.library.Options;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class EmailListFragment extends ListFragment implements
-        BoteHelper.RequestPasswordListener,
         LoaderManager.LoaderCallbacks<List<Email>>,
         MoveToDialogFragment.MoveToDialogListener,
         EmailListAdapter.EmailSelector, OnRefreshListener {
@@ -160,21 +159,23 @@ public class EmailListFragment extends ListFragment implements
                     BoteHelper.getFolderDisplayName(getActivity(), mFolder));
             if (I2PBote.getInstance().isPasswordRequired()) {
                 // Request a password from the user.
-                BoteHelper.requestPassword(getActivity(), this);
+                BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
+                    @Override
+                    public void onPasswordVerified() {
+                        initializeList();
+                    }
+
+                    @Override
+                    public void onPasswordCanceled() {
+                        setEmptyText(getResources().getString(
+                                R.string.not_authed));
+                    }
+                });
             } else {
                 // Password is cached, or not set.
                 initializeList();
             }
         }
-    }
-
-    public void onPasswordVerified() {
-        initializeList();
-    }
-
-    public void onPasswordCanceled() {
-        setEmptyText(getResources().getString(
-                R.string.not_authed));
     }
 
     /**
@@ -217,13 +218,31 @@ public class EmailListFragment extends ListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_new_email:
-                Intent nei = new Intent(getActivity(), NewEmailActivity.class);
-                startActivity(nei);
+                if (I2PBote.getInstance().isPasswordRequired()) {
+                    BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
+                        @Override
+                        public void onPasswordVerified() {
+                            initializeList();
+                            startNewEmail();
+                        }
+
+                        @Override
+                        public void onPasswordCanceled() {
+                        }
+                    });
+                } else {
+                    startNewEmail();
+                }
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void startNewEmail() {
+        Intent nei = new Intent(getActivity(), NewEmailActivity.class);
+        startActivity(nei);
     }
 
     @Override
