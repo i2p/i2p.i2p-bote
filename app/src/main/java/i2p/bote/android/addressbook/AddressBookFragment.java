@@ -58,8 +58,15 @@ public class AddressBookFragment extends ListFragment implements
         mAdapter = new ContactAdapter(getActivity());
 
         setListAdapter(mAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         if (I2PBote.getInstance().isPasswordRequired()) {
+            // Ensure any existing data is destroyed.
+            destroyList();
             // Request a password from the user.
             BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
                 @Override
@@ -69,8 +76,6 @@ public class AddressBookFragment extends ListFragment implements
 
                 @Override
                 public void onPasswordCanceled() {
-                    setEmptyText(getResources().getString(
-                            R.string.not_authed));
                 }
             });
         } else {
@@ -79,16 +84,28 @@ public class AddressBookFragment extends ListFragment implements
         }
     }
 
+    private boolean listInitialized;
     /**
      * Start loading the address book.
      * Only called when we have a password cached, or no
      * password is required.
      */
     private void initializeList() {
+        if (listInitialized)
+            return;
+
         setListShown(false);
         setEmptyText(getResources().getString(
                 R.string.address_book_empty));
         getLoaderManager().initLoader(0, null, this);
+
+        listInitialized = true;
+    }
+
+    private void destroyList() {
+        setEmptyText(getResources().getString(
+                R.string.not_authed));
+        getLoaderManager().destroyLoader(0);
     }
 
     @Override
@@ -104,7 +121,6 @@ public class AddressBookFragment extends ListFragment implements
                 BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
                     @Override
                     public void onPasswordVerified() {
-                        initializeList();
                         startNewContact();
                     }
 

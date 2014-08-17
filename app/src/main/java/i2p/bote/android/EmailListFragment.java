@@ -157,7 +157,17 @@ public class EmailListFragment extends ListFragment implements
         } else {
             getActivity().setTitle(
                     BoteHelper.getFolderDisplayName(getActivity(), mFolder));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mFolder != null) {
             if (I2PBote.getInstance().isPasswordRequired()) {
+                // Ensure any existing data is destroyed.
+                destroyList();
                 // Request a password from the user.
                 BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
                     @Override
@@ -167,8 +177,6 @@ public class EmailListFragment extends ListFragment implements
 
                     @Override
                     public void onPasswordCanceled() {
-                        setEmptyText(getResources().getString(
-                                R.string.not_authed));
                     }
                 });
             } else {
@@ -178,12 +186,16 @@ public class EmailListFragment extends ListFragment implements
         }
     }
 
+    private boolean listInitialized;
     /**
      * Start loading the list of emails from this folder.
      * Only called when we have a password cached, or no
      * password is required.
      */
     private void initializeList() {
+        if (listInitialized)
+            return;
+
         int numIncompleteEmails = I2PBote.getInstance().getNumIncompleteEmails();
         if (numIncompleteEmails > 0) {
             mNumIncompleteEmails = new TextView(getActivity());
@@ -197,6 +209,21 @@ public class EmailListFragment extends ListFragment implements
         setEmptyText(getResources().getString(
                 R.string.folder_empty));
         getLoaderManager().initLoader(EMAIL_LIST_LOADER, null, this);
+
+        listInitialized = true;
+    }
+
+    private void destroyList() {
+        if (mNumIncompleteEmails != null) {
+            getListView().removeHeaderView(mNumIncompleteEmails);
+            mNumIncompleteEmails = null;
+        }
+
+        setEmptyText(getResources().getString(
+                R.string.not_authed));
+        getLoaderManager().destroyLoader(EMAIL_LIST_LOADER);
+
+        listInitialized = false;
     }
 
     @Override
@@ -222,7 +249,6 @@ public class EmailListFragment extends ListFragment implements
                     BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
                         @Override
                         public void onPasswordVerified() {
-                            initializeList();
                             startNewEmail();
                         }
 
