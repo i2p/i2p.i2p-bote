@@ -157,6 +157,10 @@ public class EmailListFragment extends ListFragment implements
         } else {
             getActivity().setTitle(
                     BoteHelper.getFolderDisplayName(getActivity(), mFolder));
+            if (I2PBote.getInstance().isPasswordRequired()) {
+                // Request a password from the user.
+                BoteHelper.requestPassword(getActivity(), null);
+            }
         }
     }
 
@@ -168,17 +172,6 @@ public class EmailListFragment extends ListFragment implements
             if (I2PBote.getInstance().isPasswordRequired()) {
                 // Ensure any existing data is destroyed.
                 destroyList();
-                // Request a password from the user.
-                BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
-                    @Override
-                    public void onPasswordVerified() {
-                        initializeList();
-                    }
-
-                    @Override
-                    public void onPasswordCanceled() {
-                    }
-                });
             } else {
                 // Password is cached, or not set.
                 initializeList();

@@ -302,7 +302,8 @@ public class BoteHelper extends GeneralHelper {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
-                listener.onPasswordCanceled();
+                if (listener != null)
+                    listener.onPasswordCanceled();
             }
         });
         AlertDialog passwordDialog = builder.create();
@@ -356,7 +357,8 @@ public class BoteHelper extends GeneralHelper {
         protected void onPostExecute(String result) {
             // Password is valid
             mDialog.dismiss();
-            mListener.onPasswordVerified();
+            if (mListener != null)
+                mListener.onPasswordVerified();
         }
     }
 }
