@@ -1,5 +1,6 @@
 Fixes:
 - Hide old password field in SetPasswordFragment if none is set
+- Don't show Share menu for new contacts
 - Fix tick over selected emails
 - Refine view email page
 -- Delete/read/unread/move actions that don't break everything
@@ -7,14 +8,17 @@ Fixes:
 -- Show full network error? Make it copy-able?
 
 Tasks:
+- Add a "do you want to skip tutorial" dialog to back button
 - More layouts for intro and setup (tune for each screen size)
-- Create and bundle network status icons
+- Create and bundle better network status icons
 - Subclass EmailListFragment for each default mailbox
 - Refactor code
 -- Reorganize for clarity
 -- Optimize use of Android lifecycles
 
 Features:
+- Fingerprints for identities and contacts
+  - Easy way for users to compare to validate
 - Public address book lookup
 - Add optional CC: and BCC: fields
 - Forward
@@ -22,3 +26,4 @@ Features:
 - Attachments
 - QR codes for identities
 - "Empty trash" option in Trash folder
+- Overlay to explain
