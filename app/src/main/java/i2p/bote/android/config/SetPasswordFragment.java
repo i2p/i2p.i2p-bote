@@ -81,6 +81,11 @@ public class SetPasswordFragment extends Fragment {
         mNewField = (EditText) view.findViewById(R.id.password_new);
         mConfirmField = (EditText) view.findViewById(R.id.password_confirm);
         mError = (TextView) view.findViewById(R.id.error);
+
+        if (!I2PBote.getInstance().getConfiguration().getPasswordFile().exists()) {
+            mOldField.setVisibility(View.GONE);
+            view.findViewById(R.id.msg_remove_password).setVisibility(View.GONE);
+        }
     }
 
     @Override

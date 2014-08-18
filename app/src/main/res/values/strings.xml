@@ -158,6 +158,7 @@
     <string name="old_password">Old password</string>
     <string name="new_password">New password</string>
     <string name="confirm_new_password">Confirm new password</string>
+    <string name="remove_password_info">To remove the password, leave the \'New password\' fields blank.</string>
     <string name="password_changed">Password changed successfully</string>
     <string name="pref_title_identities">Identities</string>
     <string name="new_identity">New identity…</string>
