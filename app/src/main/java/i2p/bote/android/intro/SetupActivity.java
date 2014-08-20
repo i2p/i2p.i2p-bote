@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import i2p.bote.android.R;
 import i2p.bote.android.config.EditIdentityActivity;
@@ -18,11 +19,24 @@ public class SetupActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
+
+        // If a user has chosen to enter the setup wizard, don't let them
+        // accidentally exit it early.
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new SetPasswordFragment())
                     .commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // If a user has chosen to enter the setup wizard, don't let them
+        // accidentally exit it early.
+        Toast.makeText(this, R.string.please_finish_setup, Toast.LENGTH_SHORT).show();
     }
 
 
