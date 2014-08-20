@@ -1,6 +1,4 @@
 Fixes:
-- Hide old password field in SetPasswordFragment if none is set
-- Don't show Share menu for new contacts
 - Fix tick over selected emails
 - Refine view email page
 -- Delete/read/unread/move actions that don't break everything

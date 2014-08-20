@@ -181,7 +181,8 @@ public class EditContactFragment extends EditPictureFragment {
             shareIntent.putExtra(Intent.EXTRA_TEXT, mDestination);
             shareIntent.setType("text/plain");
             shareActionProvider.setShareIntent(shareIntent);
-        }
+        } else
+            item.setVisible(false);
     }
 
     @Override
