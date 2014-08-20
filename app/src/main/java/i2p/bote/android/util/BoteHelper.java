@@ -191,10 +191,10 @@ public class BoteHelper extends GeneralHelper {
         case SENT_TO:
             if (full)
                 return res.getString(R.string.sent_to,
-                        emailStatus.getParam1(), emailStatus.getParam2());
+                        (Integer) emailStatus.getParam1(), (Integer) emailStatus.getParam2());
             else
                 return res.getString(R.string.sent_to_short,
-                        emailStatus.getParam1(), emailStatus.getParam2());
+                        (Integer) emailStatus.getParam1(), (Integer) emailStatus.getParam2());
         case EMAIL_SENT:
             return res.getString(R.string.email_sent);
         case GATEWAY_DISABLED:
