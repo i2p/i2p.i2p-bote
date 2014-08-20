@@ -19,6 +19,7 @@
     <string name="intro_5_2">The setup wizard will take a couple of minutes, and then everything will be ready.</string>
     <string name="lets_get_started">Let\'s get started</string>
     <string name="title_activity_setup">Setup</string>
+    <string name="please_finish_setup">Please finish setting up Bote.</string>
     <string name="skip">Skip</string>
     <string name="set_password">Set password</string>
     <string name="setup_set_password_1">You can set a password for Bote. This will prevent other users from reading your emails, and will encrypt all files on-disk.</string>
