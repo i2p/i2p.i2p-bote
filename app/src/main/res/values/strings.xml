@@ -43,7 +43,9 @@
     <string name="pull_text">Pull to check email</string>
     <string name="refreshing_text">Checking email…</string>
     <string name="release_text">Let go to check email</string>
+    <!-- Argument is a number -->
     <string name="incomplete_emails">%s incomplete emails</string>
+    <!-- Argument is a number -->
     <string name="items_selected">%s selected</string>
     <string name="action_delete">Delete</string>
     <string name="action_mark_read">Mark read</string>
@@ -80,7 +82,11 @@
 
     <string name="queued">Queued</string>
     <string name="sending">Sending</string>
+    <!-- Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to. -->
     <string name="sent_to_short">Sent %1$d of %2$d</string>
+    <!-- Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to. -->
     <string name="sent_to">Sent to %1$d out of %2$d recipients</string>
     <string name="email_sent">Email sent</string>
     <string name="gateway_disabled">Gateway disabled</string>
@@ -103,6 +109,7 @@
     <string name="email_queued_for_sending">Email queued for sending</string>
     <string name="response_prefix_re">Re:</string>
     <string name="response_prefix_re_hide" translatable="false">Re:</string>
+    <!-- Used in email replies above quoted text, like "Bob wrote:" -->
     <string name="response_quote_wrote">%s wrote:</string>
     <string name="response_quote_wrote_hide" translatable="false">%s wrote:</string>
     <string name="address_book_empty">Address book is empty</string>
