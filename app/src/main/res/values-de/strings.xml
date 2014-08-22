@@ -17,6 +17,7 @@
   <string name="intro_5_2">Der Einrichtungsassistent wird ein paar Minuten brauchen, dann ist alles bereit.</string>
   <string name="lets_get_started">Fangen wir an</string>
   <string name="title_activity_setup">Einrichtung</string>
+  <string name="please_finish_setup">Bitte schließen Sie die Einrichtung von Bote ab.</string>
   <string name="skip">überspringen</string>
   <string name="set_password">Passwort festlegen</string>
   <string name="setup_set_password_1">Sie können ein Passwort für Bote einstellen. Dies wird andere Nutzer davon abhalten, Ihre E-Mails zu lesen, und wird alle Dateien auf der Festplatte verschlüsseln.</string>
@@ -40,7 +41,9 @@
   <string name="pull_text">Zum Abrufen der E-Mails: ziehen</string>
   <string name="refreshing_text">Prüfe auf neue E-mails</string>
   <string name="release_text">Loslassen, um auf neue E-mails zu prüfen</string>
+  <!--Argument is a number-->
   <string name="incomplete_emails">%s unvollständige E-Mails</string>
+  <!--Argument is a number-->
   <string name="items_selected">%s ausgewählt</string>
   <string name="action_delete">löschen</string>
   <string name="action_mark_read">als gelesen markieren</string>
@@ -75,7 +78,11 @@
   </plurals>
   <string name="queued">in Warteschlange</string>
   <string name="sending">versenden ...</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to_short">%1$d von %2$d versendet</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to">An %1$d von %2$d Empfänger versendet</string>
   <string name="email_sent">E-Mail versendet</string>
   <string name="gateway_disabled">Gateway deaktiviert</string>
@@ -97,6 +104,7 @@
   <string name="add_one_recipient">Mindestens ein Empfänger nötig</string>
   <string name="email_queued_for_sending">Email in der Sendewarteschlange eingefügt </string>
   <string name="response_prefix_re">Antw:</string>
+  <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s schrieb:</string>
   <string name="address_book_empty">Adressbuch ist leer</string>
   <string name="share">Teilen</string>
@@ -152,6 +160,7 @@
   <string name="old_password">Altes Passwort</string>
   <string name="new_password">Neues Passwort</string>
   <string name="confirm_new_password">Neues Passwort bestätigen</string>
+  <string name="remove_password_info">Um das Passwort zu entfernen, lassen Sie das \'Neues Passwort\'-Feld leer.</string>
   <string name="password_changed">Passwort erfolgreich geändert</string>
   <string name="pref_title_identities">Identitäten</string>
   <string name="new_identity">Neue Identität …</string>

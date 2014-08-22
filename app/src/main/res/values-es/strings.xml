@@ -17,6 +17,7 @@
   <string name="intro_5_2">El asistente de instalación tardará un par de minutos, y luego todo estará listo.</string>
   <string name="lets_get_started">Comencemos</string>
   <string name="title_activity_setup">Instalar</string>
+  <string name="please_finish_setup">Por favor termine de configurar Bote.</string>
   <string name="skip">Omitir</string>
   <string name="set_password">Establecer contraseña</string>
   <string name="setup_set_password_1">Puede establecer una contraseña para Bote. Esto prevendrá que otros usuarios lean sus correos, y cifrará todos los ficheros en-el-disco.</string>
@@ -40,7 +41,9 @@
   <string name="pull_text">Descargar para comprobar el correo</string>
   <string name="refreshing_text">Comprobando el correo...</string>
   <string name="release_text">Dejar ir para comprobar el correo</string>
+  <!--Argument is a number-->
   <string name="incomplete_emails">%s correos incompletos</string>
+  <!--Argument is a number-->
   <string name="items_selected">%s seleccionados</string>
   <string name="action_delete">Eliminar</string>
   <string name="action_mark_read">Marcar como leído</string>
@@ -75,7 +78,11 @@
   </plurals>
   <string name="queued">En cola</string>
   <string name="sending">Enviando</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to_short">Enviado %1$d de %2$d</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to">Enviado a %1$d de %2$d destinatarios</string>
   <string name="email_sent">Correo enviado</string>
   <string name="gateway_disabled">Pasarela deshabilitada</string>
@@ -97,6 +104,7 @@
   <string name="add_one_recipient">Añadir al menos un destinatario.</string>
   <string name="email_queued_for_sending">Correo en cola para su envío</string>
   <string name="response_prefix_re">Re:</string>
+  <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s escribió:</string>
   <string name="address_book_empty">La libreta de direcciones está vacía</string>
   <string name="share">Compartir</string>
@@ -152,6 +160,7 @@
   <string name="old_password">Contraseña antigua</string>
   <string name="new_password">Nueva contraseña</string>
   <string name="confirm_new_password">Confirmar nueva contraseña</string>
+  <string name="remove_password_info">Para eliminar la contraseña, deje en blanco los campos \'Nueva contraseña\'.</string>
   <string name="password_changed">Contraseña cambiada con éxito</string>
   <string name="pref_title_identities">Identidades</string>
   <string name="new_identity">Nueva identidad...</string>

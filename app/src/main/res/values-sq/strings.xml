@@ -5,7 +5,7 @@
   <string name="intro_secure">I/e siguruar</string>
   <string name="swipe_to_start">Lëmoje për ta startuar</string>
   <string name="i_know_what_to_do">E di se çka do të bëj</string>
-  <string name="intro_1_1">E-posti tradicional është jo i sigurtë. Nuk është krijuar të mbrojë njerëzit nga përgjime ndërmjet rrjetit,</string>
+  <string name="intro_1_1">E-posti tradicional nuk është i sigurtë. Nuk është krijuar të mbrojë njerëzit nga përgjime ndërmjet rrjetit,</string>
   <string name="intro_1_2">Edhe nëse ju e inkriptoni përmbajtjen e e-posteve tuaja, përmbledhja e përgjithshme e të gjitha e-.posteve që shkëmbehen mund të përgjohet, pra sovraniteti i jetës private rrezikohet. </string>
   <string name="intro_2_1">Bote ështe një e-post i tipit të ri, që mund të ju shërbejë me siguri totale të përmbajtes së e-postëve tuaj që keni shkëmbyer në rrjetet sociale. Mund të punojë në I2P anonymity network (rrjet anonimiteti), që fsheh aktivitetet e juaja në rrjetet sociale. </string>
   <string name="intro_2_2">Kur e dërgoni një e-post ndërmjet Bote, ç\'do pjesë është e inkriptuar - duke e inkluduar edhe email metadata. Vetëm marrësi është në gjendje të shkarkojë dhe lexojë e-postin.</string>
@@ -17,6 +17,7 @@
   <string name="intro_5_2">Asistenti i konfigurimit merr pak kohë, dhe pastaj e tëra është gati.</string>
   <string name="lets_get_started">Le të fillojmë</string>
   <string name="title_activity_setup">Konfigurimi</string>
+  <string name="please_finish_setup">Ju lutem përfundoni të vendosni Bote\'në. </string>
   <string name="skip">Anashkalo/kapërce</string>
   <string name="set_password">Fute fjalëkalimin</string>
   <string name="setup_set_password_1">Mund të krijosh një fjalëkalim për Bote. Kjo do të pamundësonte potencialin e përgjimit të e-postëve tuaj nga përdorësit tjerë, dhe do te inkriptonte të gjitha filet on-disk (në disk).</string>
@@ -40,7 +41,9 @@
   <string name="pull_text">Tërhiq për të shqyrtuar e-postet</string>
   <string name="refreshing_text">Duke shqyrtuar e-postet...</string>
   <string name="release_text">Lëshoje për të shqyrtuar e-poste</string>
+  <!--Argument is a number-->
   <string name="incomplete_emails">%s e-poste të pakryera</string>
+  <!--Argument is a number-->
   <string name="items_selected">%s selektuar</string>
   <string name="action_delete">Fshij</string>
   <string name="action_mark_read">Shenjo si të lexuar</string>
@@ -75,7 +78,11 @@
   </plurals>
   <string name="queued">Në radhë</string>
   <string name="sending">Duke dërguar</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to_short">Dërgoj %1$d nga %2$d</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to">Dërguar te %1$d nga %2$d marrës</string>
   <string name="email_sent">E-posti u dërgua</string>
   <string name="gateway_disabled">Porta jo në përdorim</string>
@@ -97,6 +104,7 @@
   <string name="add_one_recipient">Prano të paktën një marrës. </string>
   <string name="email_queued_for_sending">E-posti i radhitur për dërgim</string>
   <string name="response_prefix_re">Re:</string>
+  <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s shkroi:</string>
   <string name="address_book_empty">Libri i adresave është i thatë</string>
   <string name="share">Shpërndaj</string>
