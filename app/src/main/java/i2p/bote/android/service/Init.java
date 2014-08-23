@@ -36,7 +36,7 @@ public class Init {
 
     /**
      * Parses settings and prepares the system for starting the Bote service.
-     * @return true if we should use the internal router, false otherwise.
+     * @return the router choice.
      */
     public RouterChoice initialize(IRouterState stateService) {
         // Set up the locations so Router and WorkingDir can find them
