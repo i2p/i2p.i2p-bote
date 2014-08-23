@@ -70,7 +70,8 @@ router.reseedSSLDisable=false
 
 #
 # Hidden by default, this turns off sharing, etc.
-router.hiddenMode=true
+# bad idea, reduces user experience.
+router.hiddenMode=false
 
 #
 # Bad idea, disable it!
