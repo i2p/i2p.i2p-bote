@@ -27,8 +27,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.zxing.integration.android.IntentIntegrator;
 
 public class ViewIdentityFragment extends Fragment {
     public static final String IDENTITY_KEY = "identity_key";
@@ -39,8 +42,11 @@ public class ViewIdentityFragment extends Fragment {
     ImageView mIdentityPicture;
     TextView mNameField;
     TextView mDescField;
+    TextView mFingerprintField;
     TextView mCryptoField;
     TextView mKeyField;
+
+    Button mGenQRCode;
 
     public static ViewIdentityFragment newInstance(String key) {
         ViewIdentityFragment f = new ViewIdentityFragment();
@@ -70,8 +76,10 @@ public class ViewIdentityFragment extends Fragment {
         mIdentityPicture = (ImageView) view.findViewById(R.id.identity_picture);
         mNameField = (TextView) view.findViewById(R.id.public_name);
         mDescField = (TextView) view.findViewById(R.id.description);
+        mFingerprintField = (TextView) view.findViewById(R.id.fingerprint);
         mCryptoField = (TextView) view.findViewById(R.id.crypto_impl);
         mKeyField = (TextView) view.findViewById(R.id.key);
+        mGenQRCode = (Button) view.findViewById(R.id.generate_qr);
 
         if (mKey != null) {
             try {
@@ -100,8 +108,22 @@ public class ViewIdentityFragment extends Fragment {
 
             mNameField.setText(mIdentity.getPublicName());
             mDescField.setText(mIdentity.getDescription());
+            try {
+                mFingerprintField.setText(BoteHelper.getFingerprint(mIdentity, "en"));
+            } catch (GeneralSecurityException e) {
+                // Could not get fingerprint
+                mFingerprintField.setText(e.getLocalizedMessage());
+            }
             mCryptoField.setText(mIdentity.getCryptoImpl().getName());
             mKeyField.setText(mKey);
+
+            mGenQRCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    IntentIntegrator i = new IntentIntegrator(getActivity());
+                    i.shareText("bote:" + mKey);
+                }
+            });
         }
     }
 

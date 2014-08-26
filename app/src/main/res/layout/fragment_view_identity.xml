@@ -36,11 +36,21 @@
         android:text="@string/description" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Key information"
+        android:id="@+id/title_key_info"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/description"
+        android:layout_marginTop="5dp" />
+
+    <TextView
         android:id="@+id/crypto_impl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/description"
-        android:layout_below="@+id/description"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_key_info"
         android:layout_marginTop="5dp"
         android:text="Crypto implementation" />
 
@@ -51,5 +61,34 @@
         android:layout_below="@+id/crypto_impl"
         android:layout_marginTop="5dp"
         android:text="Key" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Fingerprint"
+        android:id="@+id/title_fingerprint"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/key"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:id="@+id/fingerprint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_fingerprint"
+        android:layout_marginTop="5dp"
+        android:text="Fingerprint" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate QR code"
+        android:id="@+id/generate_qr"
+        android:layout_below="@+id/fingerprint"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp" />
 
 </RelativeLayout>
