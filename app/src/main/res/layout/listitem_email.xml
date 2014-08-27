@@ -38,7 +38,7 @@
         android:id="@+id/email_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/email_from"
+        android:layout_alignLeft="@+id/email_address"
         android:layout_below="@+id/email_subject"
         android:layout_toStartOf="@+id/email_status"
         android:ellipsize="end"
@@ -46,7 +46,7 @@
         android:text="Content" />
 
     <TextView
-        android:id="@+id/email_from"
+        android:id="@+id/email_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/email_subject"
@@ -81,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/email_from"
+        android:layout_alignTop="@+id/email_address"
         android:text="##:## XX"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

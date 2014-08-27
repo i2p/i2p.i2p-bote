@@ -1,6 +1,5 @@
 Fixes:
 - Auto-comma the To: field when it loses focus
-- Show recipient for emails listed in Outbox and Sent
 - Ask to login when opening "Create new identity"
 - Fix tick over selected emails
 - Refine view email page

@@ -55,7 +55,7 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
 
         ImageView picture = (ImageView) v.findViewById(R.id.contact_picture);
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
-        TextView from = (TextView) v.findViewById(R.id.email_from);
+        TextView address = (TextView) v.findViewById(R.id.email_address);
         TextView content = (TextView) v.findViewById(R.id.email_content);
         TextView sent = (TextView) v.findViewById(R.id.email_sent);
 
@@ -72,14 +72,18 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
         //}
 
         try {
-            String fromAddress = email.getOneFromAddress();
+            String otherAddress;
+            if (BoteHelper.isSentEmail(email))
+                otherAddress = email.getOneRecipient();
+            else
+                otherAddress = email.getOneFromAddress();
 
-            Bitmap pic = BoteHelper.getPictureForAddress(fromAddress);
+            Bitmap pic = BoteHelper.getPictureForAddress(otherAddress);
             if (pic != null)
                 picture.setImageBitmap(pic);
 
             subject.setText(email.getSubject());
-            from.setText(BoteHelper.getNameAndShortDestination(fromAddress));
+            address.setText(BoteHelper.getNameAndShortDestination(otherAddress));
             if (email.getSentDate() != null)
                 sent.setText(DateFormat.getInstance().format(
                         email.getSentDate()));
@@ -95,7 +99,7 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
 
             if (email.isUnread()) {
                 subject.setTypeface(Typeface.DEFAULT_BOLD);
-                from.setTypeface(Typeface.DEFAULT_BOLD);
+                address.setTypeface(Typeface.DEFAULT_BOLD);
             }
 
             TextView emailStatus = (TextView) v.findViewById(R.id.email_status);
