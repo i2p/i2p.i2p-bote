@@ -1,4 +1,7 @@
 Fixes:
+- Auto-comma the To: field when it loses focus
+- Show recipient for emails listed in Outbox and Sent
+- Ask to login when opening "Create new identity"
 - Fix tick over selected emails
 - Refine view email page
 -- Delete/read/unread/move actions that don't break everything
@@ -6,6 +9,9 @@ Fixes:
 -- Show full network error? Make it copy-able?
 
 Tasks:
+- Show logged-in status somewhere
+-- Persistent notification
+-- Logout action
 - More layouts for intro and setup (tune for each screen size)
 - Create and bundle better network status icons
 - Subclass EmailListFragment for each default mailbox
@@ -17,6 +23,7 @@ Features:
 - Fingerprints for identities and contacts
   - Easy way for users to compare to validate
 - Public address book lookup
+- "Write email" link in address book
 - Add optional CC: and BCC: fields
 - Forward
 - Reply all
@@ -24,3 +31,5 @@ Features:
 - QR codes for identities
 - "Empty trash" option in Trash folder
 - Overlay to explain
+- Option to run only when connected to an outlet
+- Option to run only when connected to wifi
