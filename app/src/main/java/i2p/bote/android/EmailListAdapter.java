@@ -101,6 +101,12 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
                 subject.setTypeface(Typeface.DEFAULT_BOLD);
                 address.setTypeface(Typeface.DEFAULT_BOLD);
             }
+            if (email.isAnonymous() && !BoteHelper.isSentEmail(email)) {
+                if (email.isUnread())
+                    address.setTypeface(Typeface.DEFAULT, Typeface.BOLD_ITALIC);
+                else
+                    address.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
+            }
 
             TextView emailStatus = (TextView) v.findViewById(R.id.email_status);
             // Set email sending status if this is the outbox,
