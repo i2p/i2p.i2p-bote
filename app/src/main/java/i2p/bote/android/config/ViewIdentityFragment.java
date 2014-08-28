@@ -1,12 +1,5 @@
 package i2p.bote.android.config;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-
-import i2p.bote.android.R;
-import i2p.bote.android.util.BoteHelper;
-import i2p.bote.email.EmailIdentity;
-import i2p.bote.fileencryption.PasswordException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -32,6 +25,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
+import i2p.bote.android.R;
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.email.EmailIdentity;
+import i2p.bote.fileencryption.PasswordException;
 
 public class ViewIdentityFragment extends Fragment {
     public static final String IDENTITY_KEY = "identity_key";
@@ -109,7 +110,8 @@ public class ViewIdentityFragment extends Fragment {
             mNameField.setText(mIdentity.getPublicName());
             mDescField.setText(mIdentity.getDescription());
             try {
-                mFingerprintField.setText(BoteHelper.getFingerprint(mIdentity, "en"));
+                String locale = getActivity().getResources().getConfiguration().locale.getLanguage();
+                mFingerprintField.setText(BoteHelper.getFingerprint(mIdentity, locale));
             } catch (GeneralSecurityException e) {
                 // Could not get fingerprint
                 mFingerprintField.setText(e.getLocalizedMessage());
