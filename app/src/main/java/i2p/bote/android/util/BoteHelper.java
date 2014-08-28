@@ -305,7 +305,7 @@ public class BoteHelper extends GeneralHelper {
                 if (listener != null)
                     listener.onPasswordCanceled();
             }
-        });
+        }).setCancelable(false);
         AlertDialog passwordDialog = builder.create();
         passwordDialog.show();
     }
