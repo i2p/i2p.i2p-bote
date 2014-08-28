@@ -110,10 +110,31 @@ public class EditIdentityFragment extends EditPictureFragment {
         mDescField = (EditText) view.findViewById(R.id.description);
         mDefaultField = (CheckBox) view.findViewById(R.id.default_identity);
         mError = (TextView) view.findViewById(R.id.error);
+        mCryptoField = (Spinner) view.findViewById(R.id.crypto_impl);
 
+        if (I2PBote.getInstance().isPasswordRequired()) {
+            // Request a password from the user.
+            BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
+                @Override
+                public void onPasswordVerified() {
+                    initializeIdentity();
+                }
+
+                @Override
+                public void onPasswordCanceled() {
+                    getActivity().setResult(Activity.RESULT_CANCELED);
+                    getActivity().finish();
+                }
+            });
+        } else {
+            // Password is cached, or not set.
+            initializeIdentity();
+        }
+    }
+
+    private void initializeIdentity() {
         if (mKey == null) {
             // Show the encryption choice field
-            mCryptoField = (Spinner) view.findViewById(R.id.crypto_impl);
             CryptoAdapter adapter = new CryptoAdapter(getActivity());
             mCryptoField.setAdapter(adapter);
             mCryptoField.setSelection(mDefaultPos);
