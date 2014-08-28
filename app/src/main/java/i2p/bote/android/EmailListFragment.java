@@ -159,7 +159,16 @@ public class EmailListFragment extends ListFragment implements
                     BoteHelper.getFolderDisplayName(getActivity(), mFolder));
             if (I2PBote.getInstance().isPasswordRequired()) {
                 // Request a password from the user.
-                BoteHelper.requestPassword(getActivity(), null);
+                BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
+                    @Override
+                    public void onPasswordVerified() {
+                        initializeList();
+                    }
+
+                    @Override
+                    public void onPasswordCanceled() {
+                    }
+                });
             }
         }
     }
