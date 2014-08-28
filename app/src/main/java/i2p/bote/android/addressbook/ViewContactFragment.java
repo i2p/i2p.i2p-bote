@@ -43,6 +43,7 @@ public class ViewContactFragment extends Fragment {
     TextView mTextField;
     TextView mCryptoField;
     TextView mDestinationField;
+    TextView mFingerprintField;
 
     public static ViewContactFragment newInstance(String destination) {
         ViewContactFragment f = new ViewContactFragment();
@@ -74,6 +75,7 @@ public class ViewContactFragment extends Fragment {
         mTextField = (TextView) view.findViewById(R.id.text);
         mCryptoField = (TextView) view.findViewById(R.id.crypto_impl);
         mDestinationField = (TextView) view.findViewById(R.id.destination);
+        mFingerprintField = (TextView) view.findViewById(R.id.fingerprint);
 
         if (mDestination != null) {
             try {
@@ -98,6 +100,13 @@ public class ViewContactFragment extends Fragment {
             mTextField.setText(mContact.getText());
             mCryptoField.setText(mContact.getDestination().getCryptoImpl().getName());
             mDestinationField.setText(mDestination);
+            try {
+                String locale = getActivity().getResources().getConfiguration().locale.getLanguage();
+                mFingerprintField.setText(BoteHelper.getFingerprint(mContact, locale));
+            } catch (GeneralSecurityException e) {
+                // Could not get fingerprint
+                mFingerprintField.setText(e.getLocalizedMessage());
+            }
         }
     }
 

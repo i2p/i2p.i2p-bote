@@ -62,4 +62,23 @@
         android:layout_marginTop="5dp"
         android:text="Destination" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Fingerprint"
+        android:id="@+id/title_fingerprint"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/destination"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:id="@+id/fingerprint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_fingerprint"
+        android:layout_marginTop="5dp"
+        android:text="Fingerprint" />
+
 </RelativeLayout>
