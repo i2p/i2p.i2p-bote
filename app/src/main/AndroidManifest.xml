@@ -66,11 +66,18 @@
                 android:value="i2p.bote.android.EmailListActivity" />
         </activity>
         <activity
-            android:name=".addressbook.EditContactActivity"
+            android:name=".addressbook.ViewContactActivity"
             android:parentActivityName=".addressbook.AddressBookActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="i2p.bote.android.addressbook.AddressBookActivity" />
+        </activity>
+        <activity
+            android:name=".addressbook.EditContactActivity"
+            android:parentActivityName=".addressbook.ViewContactActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="i2p.bote.android.addressbook.ViewContactActivity" />
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />

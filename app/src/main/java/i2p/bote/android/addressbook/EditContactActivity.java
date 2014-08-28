@@ -1,11 +1,9 @@
 package i2p.bote.android.addressbook;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,9 +12,6 @@ import android.support.v7.app.ActionBarActivity;
 import i2p.bote.android.InitActivities;
 
 public class EditContactActivity extends ActionBarActivity {
-    NfcAdapter mNfcAdapter;
-
-    @SuppressLint("NewApi")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,42 +32,20 @@ public class EditContactActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(android.R.id.content, f).commit();
         }
-
-        // NFC send only works on API 10+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-            if (mNfcAdapter != null &&
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-                mNfcAdapter.setNdefPushMessageCallback(new NfcAdapter.CreateNdefMessageCallback() {
-                    @Override
-                    public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
-                        return getNdefMessage();
-                    }
-                }, this);
-        }
     }
 
-    @SuppressLint("NewApi")
     @Override
     public void onResume() {
         super.onResume();
 
-        if (mNfcAdapter != null &&
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            mNfcAdapter.enableForegroundNdefPush(this, getNdefMessage());
+        // NFC receive only works on API 10+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+            // Check to see that the Activity started due to an Android Beam
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) ||
+                    NfcAdapter.ACTION_TAG_DISCOVERED.equals(getIntent().getAction())) {
+                processIntent(getIntent());
+            }
         }
-
-        // Check to see that the Activity started due to an Android Beam
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) ||
-                NfcAdapter.ACTION_TAG_DISCOVERED.equals(getIntent().getAction())) {
-            processIntent(getIntent());
-        }
-    }
-
-    private NdefMessage getNdefMessage() {
-        EditContactFragment f = (EditContactFragment) getSupportFragmentManager()
-                .findFragmentById(android.R.id.content);
-        return f.createNdefMessage();
     }
 
     @Override
@@ -101,16 +74,5 @@ public class EditContactActivity extends ActionBarActivity {
                 name, destination);
         getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, f).commit();
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        if (mNfcAdapter != null &&
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            mNfcAdapter.disableForegroundNdefPush(this);
-        }
     }
 }

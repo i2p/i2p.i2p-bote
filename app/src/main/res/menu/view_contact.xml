@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:i2pandroid="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/menu_item_share"
+        android:title="@string/share"
+        i2pandroid:showAsAction="ifRoom"
+        i2pandroid:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+
+    <item
+        android:id="@+id/action_edit_contact"
+        android:icon="@drawable/ic_content_edit"
+        android:title="@string/edit_contact"
+        i2pandroid:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_delete_contact"
+        android:title="@string/action_delete"
+        i2pandroid:showAsAction="never"/>
+
+</menu>

@@ -1,19 +1,10 @@
 package i2p.bote.android.addressbook;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -132,57 +122,9 @@ public class EditContactFragment extends EditPictureFragment {
         });
     }
 
-    public NdefMessage createNdefMessage() {
-        NdefMessage msg = new NdefMessage(new NdefRecord[]{
-                createNameRecord(),
-                createDestinationRecord()
-        });
-        return msg;
-    }
-
-    private NdefRecord createNameRecord() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-            return new NdefRecord(
-                    NdefRecord.TNF_EXTERNAL_TYPE,
-                    "i2p.bote:contact".getBytes(),
-                    new byte[0],
-                    mNameField.getText().toString().getBytes()
-            );
-        else
-            return NdefRecord.createExternal(
-                    "i2p.bote", "contact", mNameField.getText().toString().getBytes()
-            );
-    }
-
-    private NdefRecord createDestinationRecord() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-            return new NdefRecord(
-                    NdefRecord.TNF_EXTERNAL_TYPE,
-                    "i2p.bote:contactDestination".getBytes(),
-                    new byte[0],
-                    mDestinationField.getText().toString().getBytes()
-            );
-        else
-            return NdefRecord.createExternal(
-                    "i2p.bote", "contactDestination", mDestinationField.getText().toString().getBytes()
-            );
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.edit_contact, menu);
-
-        MenuItem item = menu.findItem(R.id.menu_item_share);
-        ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
-        if (mDestination != null) {
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, mDestination);
-            shareIntent.setType("text/plain");
-            shareActionProvider.setShareIntent(shareIntent);
-        } else
-            item.setVisible(false);
     }
 
     @Override
@@ -213,41 +155,6 @@ public class EditContactFragment extends EditPictureFragment {
                     e.printStackTrace();
                     mError.setText(e.getLocalizedMessage());
                 }
-                return true;
-
-            case R.id.action_delete_contact:
-                DialogFragment df = new DialogFragment() {
-                    @Override
-                    public Dialog onCreateDialog(Bundle savedInstanceState) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(R.string.delete_contact)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        try {
-                                            String err = BoteHelper.deleteContact(mDestination);
-                                            if (err == null) {
-                                                getActivity().setResult(Activity.RESULT_OK);
-                                                getActivity().finish();
-                                            } else
-                                                mError.setText(err);
-                                        } catch (PasswordException e) {
-                                            // TODO Auto-generated catch block
-                                            e.printStackTrace();
-                                        } catch (GeneralSecurityException e) {
-                                            // TODO Auto-generated catch block
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        return builder.create();
-                    }
-                };
-                df.show(getActivity().getSupportFragmentManager(), "deletecontact");
                 return true;
 
             default:
