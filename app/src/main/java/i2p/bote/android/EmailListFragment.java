@@ -117,11 +117,11 @@ public class EmailListFragment extends ListFragment implements
                     // We need to insert the PullToRefreshLayout into the Fragment's ViewGroup
                     .insertLayoutInto(viewGroup)
 
-                            // We need to mark the ListView and it's Empty View as pullable
-                            // This is because they are not dirent children of the ViewGroup
+                    // We need to mark the ListView and its Empty View as pullable
+                    // This is because they are not direct children of the ViewGroup
                     .theseChildrenArePullable(getListView(), getListView().getEmptyView())
 
-                            // We can now complete the setup as desired
+                    // We can now complete the setup as desired
                     .listener(this)
                     .options(Options.create()
                             .refreshOnUp(true)
