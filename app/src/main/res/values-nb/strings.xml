@@ -37,7 +37,9 @@
   <string name="pull_text">Dra for å sjekke e-post</string>
   <string name="refreshing_text">Sjekker e-post...</string>
   <string name="release_text">La oss sjekke e-post</string>
+  <!--Argument is a number-->
   <string name="incomplete_emails">%s uferdige e-poster</string>
+  <!--Argument is a number-->
   <string name="items_selected">%s valgt</string>
   <string name="action_delete">Slett</string>
   <string name="action_mark_read">Marker som lest</string>
@@ -63,6 +65,10 @@
   <string name="connected_to_network">Koblet til Bote nettverket. </string>
   <string name="queued">Satt på kø</string>
   <string name="sending">Sender</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
   <string name="email_sent">E-post sendt</string>
   <string name="email_not_found">E-posten ikke funnet</string>
   <string name="email_from">Fra;</string>
@@ -76,6 +82,7 @@
   <string name="compose_email">Lage e-post</string>
   <string name="add_one_recipient">Legg til minst én mottaker.</string>
   <string name="email_queued_for_sending">E-posten satt i kø for å sendes</string>
+  <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s skrev:</string>
   <string name="address_book_empty">Addresseboka er tom</string>
   <string name="share">Del</string>

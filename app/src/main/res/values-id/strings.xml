@@ -40,7 +40,9 @@
   <string name="pull_text">Tarik untuk memeriksa email</string>
   <string name="refreshing_text">Memeriksa email...</string>
   <string name="release_text">Mari memeriksa email</string>
+  <!--Argument is a number-->
   <string name="incomplete_emails">%s email tidak lengkap</string>
+  <!--Argument is a number-->
   <string name="items_selected">%s dipilih</string>
   <string name="action_delete">Hapus</string>
   <string name="action_mark_read">Tandai dibaca</string>
@@ -74,7 +76,11 @@
   </plurals>
   <string name="queued">Mengantri</string>
   <string name="sending">Mengirim</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to_short">Mengirim %1$d dari %2$d</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to">Mengirim ke %1$d dari %2$d penerima</string>
   <string name="email_sent">Email terkirim</string>
   <string name="gateway_disabled">Gateaway dinonaktifkan</string>
@@ -96,6 +102,7 @@
   <string name="add_one_recipient">Tambahkan minimal satu penerima.</string>
   <string name="email_queued_for_sending">Email diantrikan untuk dikirm</string>
   <string name="response_prefix_re">Re:</string>
+  <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s menulis:</string>
   <string name="address_book_empty">Buku alamat kosong</string>
   <string name="share">Bagikan</string>
