@@ -23,8 +23,6 @@ Features:
 - Public address book lookup
 - "Write email" link in address book
 - Add optional CC: and BCC: fields
-- Forward
-- Reply all
 - Attachments
 - QR codes for identities
 - "Empty trash" option in Trash folder

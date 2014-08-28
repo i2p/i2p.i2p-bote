@@ -144,15 +144,29 @@ public class ViewEmailFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.action_reply:
-            Intent nei = new Intent(getActivity(), NewEmailActivity.class);
-            nei.putExtra(NewEmailFragment.QUOTE_MSG_FOLDER, mFolderName);
-            nei.putExtra(NewEmailFragment.QUOTE_MSG_ID, mMessageId);
-            startActivity(nei);
-            return true;
+            case R.id.action_reply:
+            case R.id.action_reply_all:
+            case R.id.action_forward:
+                Intent nei = new Intent(getActivity(), NewEmailActivity.class);
+                nei.putExtra(NewEmailFragment.QUOTE_MSG_FOLDER, mFolderName);
+                nei.putExtra(NewEmailFragment.QUOTE_MSG_ID, mMessageId);
+                NewEmailFragment.QuoteMsgType type = null;
+                switch (item.getItemId()) {
+                    case R.id.action_reply:
+                        type = NewEmailFragment.QuoteMsgType.REPLY;
+                        break;
+                    case R.id.action_reply_all:
+                        type = NewEmailFragment.QuoteMsgType.REPLY_ALL;
+                        break;
+                    case R.id.action_forward:
+                        type = NewEmailFragment.QuoteMsgType.FORWARD;
+                }
+                nei.putExtra(NewEmailFragment.QUOTE_MSG_TYPE, type);
+                startActivity(nei);
+                return true;
 
-        default:
-            return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

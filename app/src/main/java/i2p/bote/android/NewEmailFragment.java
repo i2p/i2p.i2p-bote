@@ -52,7 +52,7 @@ public class NewEmailFragment extends Fragment {
         public void onTaskFinished();
     }
     private static Callbacks sDummyCallbacks = new Callbacks() {
-        public void onTaskFinished() {};
+        public void onTaskFinished() {}
     };
 
     @Override
@@ -71,6 +71,12 @@ public class NewEmailFragment extends Fragment {
 
     public static final String QUOTE_MSG_FOLDER = "sender";
     public static final String QUOTE_MSG_ID = "recipient";
+    public static enum QuoteMsgType {
+        REPLY,
+        REPLY_ALL,
+        FORWARD
+    }
+    public static final String QUOTE_MSG_TYPE = "type";
 
     private String mSenderKey;
 
@@ -81,11 +87,13 @@ public class NewEmailFragment extends Fragment {
     EditText mSubject;
     EditText mContent;
 
-    public static NewEmailFragment newInstance(String quoteMsgFolder, String quoteMsgId) {
+    public static NewEmailFragment newInstance(String quoteMsgFolder, String quoteMsgId,
+                                               QuoteMsgType quoteMsgType) {
         NewEmailFragment f = new NewEmailFragment();
         Bundle args = new Bundle();
         args.putString(QUOTE_MSG_FOLDER, quoteMsgFolder);
         args.putString(QUOTE_MSG_ID, quoteMsgId);
+        args.putSerializable(QUOTE_MSG_TYPE, quoteMsgType);
         f.setArguments(args);
         return f;
     }
@@ -106,39 +114,45 @@ public class NewEmailFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mSpinner = (Spinner) view.findViewById(R.id.sender_spinner);
+        mRecipients = (ContactsCompletionView) view.findViewById(R.id.recipients);
+        mSubject = (EditText) view.findViewById(R.id.subject);
+        mContent = (EditText) view.findViewById(R.id.message);
+
         String quoteMsgFolder = getArguments().getString(QUOTE_MSG_FOLDER);
         String quoteMsgId = getArguments().getString(QUOTE_MSG_ID);
-        Email origEmail = null;
-        String recipientName = null;
-        String recipientAddr = null;
-        Bitmap recipientPic = null;
+        QuoteMsgType quoteMsgType = (QuoteMsgType) getArguments().getSerializable(QUOTE_MSG_TYPE);
+        boolean hide = I2PBote.getInstance().getConfiguration().getHideLocale();
+
+        List<Person> recipients = new ArrayList<Person>();
         String origSubject = null;
         String origContent = null;
         String origFrom = null;
         try {
-            origEmail = BoteHelper.getEmail(quoteMsgFolder, quoteMsgId);
+            Email origEmail = BoteHelper.getEmail(quoteMsgFolder, quoteMsgId);
+
             if (origEmail != null) {
                 mSenderKey = BoteHelper.extractEmailDestination(
                         BoteHelper.getOneLocalRecipient(origEmail).toString());
-                String recipient = BoteHelper.getNameAndDestination(
-                        origEmail.getReplyAddress(I2PBote.getInstance().getIdentities()));
-                recipientName = BoteHelper.extractName(recipient);
-                recipientAddr = BoteHelper.extractEmailDestination(recipient);
-                if (recipientAddr == null) { // Assume external address
-                    recipientAddr = recipient;
-                    if (recipientName.isEmpty())
-                        recipientName = recipientAddr;
-                } else {
-                    if (recipientName.isEmpty()) // Dest with no name
-                        recipientName = recipientAddr.substring(0, 5);
-                    recipientPic = BoteHelper.getPictureForDestination(recipientAddr);
+
+                if (quoteMsgType == QuoteMsgType.REPLY) {
+                    String recipient = BoteHelper.getNameAndDestination(
+                            origEmail.getReplyAddress(I2PBote.getInstance().getIdentities()));
+                    recipients.add(extractPerson(recipient));
+                } else if (quoteMsgType == QuoteMsgType.REPLY_ALL) {
+                    // TODO don't include our address
+                    // What happens if an email is received by multiple local identities?
+                    for (Address address : origEmail.getAllAddresses(true)) {
+                        recipients.add(extractPerson(address.toString()));
+                    }
                 }
+
                 origSubject = origEmail.getSubject();
                 origContent = origEmail.getText();
                 origFrom = BoteHelper.getShortSenderName(origEmail.getOneFromAddress(), 50);
             }
         } catch (PasswordException e) {
-            // TODO Auto-generated catch block
+            // Should not happen, we cannot get to this page without authenticating
             e.printStackTrace();
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -151,11 +165,12 @@ public class NewEmailFragment extends Fragment {
             e.printStackTrace();
         }
 
-        mSpinner = (Spinner) view.findViewById(R.id.sender_spinner);
+        // Set up identities spinner
         IdentityAdapter identities = new IdentityAdapter(getActivity());
         mSpinner.setAdapter(identities);
         mSpinner.setSelection(mDefaultPos);
 
+        // Set up contacts auto-complete
         List<Person> contacts = new ArrayList<Person>();
         try {
             for (Contact contact : I2PBote.getInstance().getAddressBook().getAll()) {
@@ -192,21 +207,24 @@ public class NewEmailFragment extends Fragment {
             }
         };
 
-        mRecipients = (ContactsCompletionView) view.findViewById(R.id.recipients);
         mRecipients.setAdapter(mAdapter);
-        if (recipientAddr != null) {
-            mRecipients.addObject(new Person(recipientName, recipientAddr, recipientPic));
+        for (Person recipient : recipients) {
+            mRecipients.addObject(recipient);
         }
 
-        mSubject = (EditText) view.findViewById(R.id.subject);
-        mContent = (EditText) view.findViewById(R.id.message);
-        boolean hide = I2PBote.getInstance().getConfiguration().getHideLocale();
         if (origSubject != null) {
-            String responsePrefix = getResources().getString(
-                    hide ? R.string.response_prefix_re_hide
-                         : R.string.response_prefix_re);
-            if (!origSubject.startsWith(responsePrefix))
-                origSubject = responsePrefix + " " + origSubject;
+            String subjectPrefix;
+            if (quoteMsgType == QuoteMsgType.FORWARD) {
+                subjectPrefix = getResources().getString(
+                        hide ? R.string.subject_prefix_fwd_hide
+                                : R.string.subject_prefix_fwd);
+            } else {
+                subjectPrefix = getResources().getString(
+                        hide ? R.string.response_prefix_re_hide
+                                : R.string.response_prefix_re);
+            }
+            if (!origSubject.startsWith(subjectPrefix))
+                origSubject = subjectPrefix + " " + origSubject;
             mSubject.setText(origSubject);
         }
         if (origContent != null) {
@@ -224,6 +242,31 @@ public class NewEmailFragment extends Fragment {
 
         if (savedInstanceState == null) {
             mRecipients.setPrefix(getResources().getString(R.string.email_to) + " ");
+        }
+    }
+
+    private Person extractPerson(String recipient) {
+        String recipientName = BoteHelper.extractName(recipient);
+        String recipientAddr = BoteHelper.extractEmailDestination(recipient);
+        if (recipientAddr == null) { // Assume external address
+            recipientAddr = recipient;
+            if (recipientName.isEmpty())
+                recipientName = recipientAddr;
+            return new Person(recipientName, recipientAddr, null, true);
+        } else {
+            if (recipientName.isEmpty()) // Dest with no name
+                recipientName = recipientAddr.substring(0, 5);
+            Bitmap recipientPic = null;
+            try {
+                recipientPic = BoteHelper.getPictureForDestination(recipientAddr);
+            } catch (PasswordException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            }
+            return new Person(recipientName, recipientAddr, recipientPic);
         }
     }
 

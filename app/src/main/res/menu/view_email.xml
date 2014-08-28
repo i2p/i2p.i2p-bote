@@ -8,4 +8,16 @@
         android:title="@string/reply"
         i2pandroid:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_reply_all"
+        android:icon="@drawable/ic_social_reply_all"
+        android:title="@string/reply_all"
+        i2pandroid:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_forward"
+        android:icon="@drawable/ic_social_forward"
+        android:title="@string/forward"
+        i2pandroid:showAsAction="ifRoom"/>
+
 </menu>

@@ -102,11 +102,15 @@
     <string name="email_received">Received:</string>
     <string name="email_status">Status:</string>
     <string name="reply">Reply</string>
+    <string name="reply_all">Reply all</string>
+    <string name="forward">Forward</string>
     <string name="compose">Compose</string>
     <string name="subject">Subject</string>
     <string name="compose_email">Compose email</string>
     <string name="add_one_recipient">Add at least one recipient.</string>
     <string name="email_queued_for_sending">Email queued for sending</string>
+    <string name="subject_prefix_fwd">Fwd:</string>
+    <string name="subject_prefix_fwd_hide" translatable="false">Fwd:</string>
     <string name="response_prefix_re">Re:</string>
     <string name="response_prefix_re_hide" translatable="false">Re:</string>
     <!-- Used in email replies above quoted text, like "Bob wrote:" -->
