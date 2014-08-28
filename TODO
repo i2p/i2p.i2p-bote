@@ -19,8 +19,7 @@ Tasks:
 -- Optimize use of Android lifecycles
 
 Features:
-- Fingerprints for identities and contacts
-  - Easy way for users to compare to validate
+- Fingerprints that users can compare to validate
 - Public address book lookup
 - "Write email" link in address book
 - Add optional CC: and BCC: fields
