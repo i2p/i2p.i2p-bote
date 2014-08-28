@@ -65,4 +65,15 @@ public class ViewIdentityActivity extends ActionBarActivity {
                 .findFragmentById(android.R.id.content);
         return f.createNdefMessage();
     }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mNfcAdapter != null &&
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            mNfcAdapter.disableForegroundNdefPush(this);
+        }
+    }
 }
