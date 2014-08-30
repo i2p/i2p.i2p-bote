@@ -131,6 +131,7 @@
     <string name="failed_to_read_email_destination_file">Failed to read Email Destination file.</string>
     <string name="could_not_find_email_destination_file">Could not find Email Destination file.</string>
     <string name="save_contact">Save contact</string>
+    <string name="not_a_valid_bote_address">This is not a valid Bote address</string>
     <string name="delete_contact">Delete contact?</string>
     <string name="network_info_unavailable">Network information is not available because Bote hasn\'t started connecting to the network yet.</string>
     <string name="network_info_unavailable_delay">Bote is waiting for the I2P router to start up and be ready.</string>
@@ -183,7 +184,6 @@
     <string name="delete_identity">Delete identity?</string>
     <string name="identity_saved">Identity saved</string>
     <string name="export_identities">Export identities</string>
-    <string name="password_empty">Password is empty</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
     <string name="file_exists">File exists</string>
     <string name="exporting_identities">Exporting identities</string>
@@ -193,5 +193,6 @@
     <string name="no_identities_found">No identities were found.</string>
     <string name="no_identities_found_maybe_encrypted">No identities were found. Is the file encrypted?</string>
     <string name="identities_imported">Identities imported</string>
+    <string name="this_field_is_required">This field is required</string>
 
 </resources>

@@ -190,13 +190,24 @@ public abstract class IdentityShipFragment extends Fragment {
                     if (encrypt) {
                         password = mPassword.getText().toString();
                         String confirmPassword = mConfirmPassword.getText().toString();
+
                         if (password.isEmpty()) {
-                            mError.setText(R.string.password_empty);
+                            mPassword.setError(getActivity().getString(R.string.this_field_is_required));
+                            mPassword.requestFocus();
+                            return;
+                        } else
+                            mPassword.setError(null);
+
+                        if (confirmPassword.isEmpty()) {
+                            mConfirmPassword.setError(getActivity().getString(R.string.this_field_is_required));
+                            mConfirmPassword.requestFocus();
                             return;
                         } else if (!password.equals(confirmPassword)) {
-                            mError.setText(R.string.passwords_do_not_match);
+                            mConfirmPassword.setError(getActivity().getString(R.string.passwords_do_not_match));
+                            mConfirmPassword.requestFocus();
                             return;
-                        }
+                        } else
+                            mConfirmPassword.setError(null);
                     }
 
                     File exportFile = new File(Environment.getExternalStoragePublicDirectory(
@@ -204,9 +215,13 @@ public abstract class IdentityShipFragment extends Fragment {
                     ), exportFilename + suffix);
                     if (exportFile.exists()) {
                         // TODO ask to rename or overwrite
-                        mError.setText(R.string.file_exists);
+                        mExportFilename.setError(getActivity().getString(R.string.file_exists));
+                        mExportFilename.requestFocus();
+                        return;
                     } else
-                        exportIdentities(exportFile, password);
+                        mExportFilename.setError(null);
+
+                    exportIdentities(exportFile, password);
                 }
             });
         }

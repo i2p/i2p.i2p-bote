@@ -312,21 +312,11 @@ public class NewEmailFragment extends Fragment {
             Address[] rcpts = email.getAllRecipients();
             if (rcpts == null || rcpts.length == 0) {
                 // No recipients
-                DialogFragment df = new DialogFragment() {
-                    @Override
-                    public Dialog onCreateDialog(Bundle savedInstanceState) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(R.string.add_one_recipient)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                        return builder.create();
-                    }
-                };
-                df.show(getActivity().getSupportFragmentManager(), "norecipients");
+                mRecipients.setError(getActivity().getString(R.string.add_one_recipient));
+                mRecipients.requestFocus();
                 return false;
+            } else {
+                mRecipients.setError(null);
             }
 
             email.setSubject(mSubject.getText().toString(), "UTF-8");

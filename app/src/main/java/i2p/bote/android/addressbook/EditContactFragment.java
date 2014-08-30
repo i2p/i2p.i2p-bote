@@ -136,6 +136,15 @@ public class EditContactFragment extends EditPictureFragment {
                 String destination = mDestinationField.getText().toString();
                 String text = mTextField.getText().toString();
 
+                // Check fields
+                if (destination.isEmpty()) {
+                    mDestinationField.setError(getActivity().getString(R.string.this_field_is_required));
+                    mDestinationField.requestFocus();
+                    return true;
+                } else {
+                    mDestinationField.setError(null);
+                }
+
                 mError.setText("");
 
                 try {
@@ -144,8 +153,15 @@ public class EditContactFragment extends EditPictureFragment {
                         if (mDestination == null) // Only set if adding new contact
                             getActivity().setResult(Activity.RESULT_OK);
                         getActivity().finish();
-                    } else
-                        mError.setText(err);
+                    } else {
+                        if (err.startsWith("No Email Destination found in string:") ||
+                                err.startsWith("Not a valid Email Destination:")) {
+                            mDestinationField.setError(getActivity().getString(R.string.not_a_valid_bote_address));
+                            mDestinationField.requestFocus();
+                        } else {
+                            mError.setText(err);
+                        }
+                    }
                 } catch (PasswordException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
