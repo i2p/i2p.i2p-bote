@@ -20,16 +20,17 @@ public class NewEmailActivity extends ActionBarActivity implements
 
         if (savedInstanceState == null) {
             NewEmailFragment f;
+            String quoteMsgFolder = null;
+            String quoteMsgId = null;
+            NewEmailFragment.QuoteMsgType quoteMsgType = null;
             Bundle args = getIntent().getExtras();
             if (args != null) {
-                String quoteMsgFolder = args.getString(NewEmailFragment.QUOTE_MSG_FOLDER);
-                String quoteMsgId = args.getString(NewEmailFragment.QUOTE_MSG_ID);
-                NewEmailFragment.QuoteMsgType quoteMsgType =
+                quoteMsgFolder = args.getString(NewEmailFragment.QUOTE_MSG_FOLDER);
+                quoteMsgId = args.getString(NewEmailFragment.QUOTE_MSG_ID);
+                quoteMsgType =
                         (NewEmailFragment.QuoteMsgType) args.getSerializable(NewEmailFragment.QUOTE_MSG_TYPE);
-                f = NewEmailFragment.newInstance(quoteMsgFolder, quoteMsgId, quoteMsgType);
-            } else {
-                f = new NewEmailFragment();
             }
+            f = NewEmailFragment.newInstance(quoteMsgFolder, quoteMsgId, quoteMsgType);
             getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, f).commit();
         }
