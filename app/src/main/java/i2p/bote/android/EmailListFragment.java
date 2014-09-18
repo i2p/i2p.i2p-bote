@@ -63,6 +63,7 @@ public class EmailListFragment extends ListFragment implements
 
     private MenuItem mLogIn;
     private MenuItem mClearPassword;
+    private MenuItem mNewEmail;
 
     // The Controller which provides CHOICE_MODE_MULTIPLE_MODAL-like functionality
     private MultiSelectionUtil.Controller mMultiSelectController;
@@ -160,20 +161,6 @@ public class EmailListFragment extends ListFragment implements
         } else {
             getActivity().setTitle(
                     BoteHelper.getFolderDisplayName(getActivity(), mFolder));
-            if (I2PBote.getInstance().isPasswordRequired()) {
-                // Request a password from the user.
-                BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
-                    @Override
-                    public void onPasswordVerified() {
-                        setPasswordActionsState();
-                        initializeList();
-                    }
-
-                    @Override
-                    public void onPasswordCanceled() {
-                    }
-                });
-            }
         }
     }
 
@@ -249,14 +236,18 @@ public class EmailListFragment extends ListFragment implements
         inflater.inflate(R.menu.email_list, menu);
         mLogIn = menu.findItem(R.id.action_log_in);
         mClearPassword = menu.findItem(R.id.action_clear_password);
+        mNewEmail = menu.findItem(R.id.action_new_email);
         setPasswordActionsState();
     }
 
     private void setPasswordActionsState() {
+        boolean passwordRequired = I2PBote.getInstance().isPasswordRequired();
         if (mLogIn != null)
-            mLogIn.setVisible(I2PBote.getInstance().isPasswordRequired());
+            mLogIn.setVisible(passwordRequired);
         if (mClearPassword != null)
             mClearPassword.setVisible(I2PBote.getInstance().isPasswordInCache());
+        if (mNewEmail != null)
+            mNewEmail.setVisible(!passwordRequired);
     }
 
     @Override
@@ -284,20 +275,7 @@ public class EmailListFragment extends ListFragment implements
                 return true;
 
             case R.id.action_new_email:
-                if (I2PBote.getInstance().isPasswordRequired()) {
-                    BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
-                        @Override
-                        public void onPasswordVerified() {
-                            startNewEmail();
-                        }
-
-                        @Override
-                        public void onPasswordCanceled() {
-                        }
-                    });
-                } else {
-                    startNewEmail();
-                }
+                startNewEmail();
                 return true;
 
             default:
