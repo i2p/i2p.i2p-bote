@@ -39,14 +39,15 @@ import i2p.bote.android.intro.SetupActivity;
 import i2p.bote.android.service.BoteService;
 import i2p.bote.android.service.Init;
 import i2p.bote.android.service.Init.RouterChoice;
-import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.MoveToDialogFragment;
+import i2p.bote.fileencryption.PasswordCacheListener;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.network.NetworkStatusListener;
 
 public class EmailListActivity extends ActionBarActivity implements
         EmailListFragment.OnEmailSelectedListener,
         MoveToDialogFragment.MoveToDialogListener,
+        PasswordCacheListener,
         NetworkStatusListener {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
@@ -255,6 +256,7 @@ public class EmailListActivity extends ActionBarActivity implements
             }
         }
 
+        I2PBote.getInstance().addPasswordCacheListener(this);
         I2PBote.getInstance().addNetworkStatusListener(this);
         // Fetch current network status
         networkStatusChanged();
@@ -267,6 +269,7 @@ public class EmailListActivity extends ActionBarActivity implements
             unbindService(mStateConnection);
         mTriedBindState = false;
 
+        I2PBote.getInstance().removePasswordCacheListener(this);
         I2PBote.getInstance().removeNetworkStatusListener(this);
     }
 
@@ -411,6 +414,28 @@ public class EmailListActivity extends ActionBarActivity implements
     public void onFolderSelected(EmailFolder newFolder) {
         EmailListFragment f = (EmailListFragment) getSupportFragmentManager().findFragmentById(R.id.list_fragment);
         f.onFolderSelected(newFolder);
+    }
+
+    // PasswordCacheListener
+
+    @Override
+    public void passwordProvided() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mFolderAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void passwordCleared() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mFolderAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     // NetworkStatusListener
