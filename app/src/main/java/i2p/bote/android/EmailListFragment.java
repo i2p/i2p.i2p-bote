@@ -178,7 +178,7 @@ public class EmailListFragment extends ListFragment implements
             }
         }
 
-        setPasswordActionsState();
+        getActivity().supportInvalidateOptionsMenu();
     }
 
     private boolean listInitialized;
@@ -237,17 +237,14 @@ public class EmailListFragment extends ListFragment implements
         mLogIn = menu.findItem(R.id.action_log_in);
         mClearPassword = menu.findItem(R.id.action_clear_password);
         mNewEmail = menu.findItem(R.id.action_new_email);
-        setPasswordActionsState();
     }
 
-    private void setPasswordActionsState() {
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
         boolean passwordRequired = I2PBote.getInstance().isPasswordRequired();
-        if (mLogIn != null)
-            mLogIn.setVisible(passwordRequired);
-        if (mClearPassword != null)
-            mClearPassword.setVisible(I2PBote.getInstance().isPasswordInCache());
-        if (mNewEmail != null)
-            mNewEmail.setVisible(!passwordRequired);
+        mLogIn.setVisible(passwordRequired);
+        mNewEmail.setVisible(!passwordRequired);
+        mClearPassword.setVisible(I2PBote.getInstance().isPasswordInCache());
     }
 
     @Override
@@ -258,8 +255,8 @@ public class EmailListFragment extends ListFragment implements
                 BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
                     @Override
                     public void onPasswordVerified() {
-                        setPasswordActionsState();
                         initializeList();
+                        getActivity().supportInvalidateOptionsMenu();
                     }
 
                     @Override
@@ -271,7 +268,7 @@ public class EmailListFragment extends ListFragment implements
             case R.id.action_clear_password:
                 BoteHelper.clearPassword();
                 destroyList();
-                setPasswordActionsState();
+                getActivity().supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.action_new_email:
