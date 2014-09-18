@@ -39,6 +39,7 @@ import i2p.bote.android.intro.SetupActivity;
 import i2p.bote.android.service.BoteService;
 import i2p.bote.android.service.Init;
 import i2p.bote.android.service.Init.RouterChoice;
+import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.network.NetworkStatusListener;

@@ -61,6 +61,9 @@ public class EmailListFragment extends ListFragment implements
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
 
+    private MenuItem mLogIn;
+    private MenuItem mClearPassword;
+
     // The Controller which provides CHOICE_MODE_MULTIPLE_MODAL-like functionality
     private MultiSelectionUtil.Controller mMultiSelectController;
     private ModalChoiceListener mModalChoiceListener;
@@ -162,6 +165,7 @@ public class EmailListFragment extends ListFragment implements
                 BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
                     @Override
                     public void onPasswordVerified() {
+                        setPasswordActionsState();
                         initializeList();
                     }
 
@@ -186,6 +190,8 @@ public class EmailListFragment extends ListFragment implements
                 initializeList();
             }
         }
+
+        setPasswordActionsState();
     }
 
     private boolean listInitialized;
@@ -241,11 +247,42 @@ public class EmailListFragment extends ListFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.email_list, menu);
+        mLogIn = menu.findItem(R.id.action_log_in);
+        mClearPassword = menu.findItem(R.id.action_clear_password);
+        setPasswordActionsState();
+    }
+
+    private void setPasswordActionsState() {
+        if (mLogIn != null)
+            mLogIn.setVisible(I2PBote.getInstance().isPasswordRequired());
+        if (mClearPassword != null)
+            mClearPassword.setVisible(I2PBote.getInstance().isPasswordInCache());
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_log_in:
+                // Request a password from the user.
+                BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
+                    @Override
+                    public void onPasswordVerified() {
+                        setPasswordActionsState();
+                        initializeList();
+                    }
+
+                    @Override
+                    public void onPasswordCanceled() {
+                    }
+                });
+                return true;
+
+            case R.id.action_clear_password:
+                BoteHelper.clearPassword();
+                destroyList();
+                setPasswordActionsState();
+                return true;
+
             case R.id.action_new_email:
                 if (I2PBote.getInstance().isPasswordRequired()) {
                     BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {

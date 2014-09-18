@@ -34,6 +34,8 @@
     <string name="setup_finished_2">To send and receive emails, Bote needs to connect to the distributed network. You can do this from the menu.</string>
     <string name="setup_finished_3">While Bote is offline, you can read emails that have already been downloaded. You can also write emails and put them in the Outbox; they will be sent the next time Bote is online.</string>
     <string name="go_to_inbox">Go to inbox</string>
+    <string name="log_in">Log in</string>
+    <string name="clear_password">Clear password</string>
     <string name="action_new_email">New email</string>
     <string name="action_send_email">Send email</string>
     <string name="action_start_bote">Connect to network</string>

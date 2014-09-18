@@ -8,9 +8,7 @@ Fixes:
 - Get pull-to-check working for empty inbox
 
 Tasks:
-- Show logged-in status somewhere
--- Persistent notification
--- Logout action
+- Show logged-in status in persistent notification
 - More layouts for intro and setup (tune for each screen size)
 - Create and bundle better network status icons
 - Subclass EmailListFragment for each default mailbox
