@@ -35,7 +35,7 @@
     <string name="setup_finished_3">While Bote is offline, you can read emails that have already been downloaded. You can also write emails and put them in the Outbox; they will be sent the next time Bote is online.</string>
     <string name="go_to_inbox">Go to inbox</string>
     <string name="log_in">Log in</string>
-    <string name="clear_password">Clear password</string>
+    <string name="log_out">Log out</string>
     <string name="touch_lock_to_log_in">Touch the lock icon to log in.</string>
     <string name="action_new_email">New email</string>
     <string name="action_send_email">Send email</string>

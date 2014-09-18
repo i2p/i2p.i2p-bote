@@ -235,7 +235,7 @@ public class EmailListFragment extends ListFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.email_list, menu);
         mLogIn = menu.findItem(R.id.action_log_in);
-        mClearPassword = menu.findItem(R.id.action_clear_password);
+        mClearPassword = menu.findItem(R.id.action_log_out);
         mNewEmail = menu.findItem(R.id.action_new_email);
     }
 
@@ -265,7 +265,7 @@ public class EmailListFragment extends ListFragment implements
                 });
                 return true;
 
-            case R.id.action_clear_password:
+            case R.id.action_log_out:
                 BoteHelper.clearPassword();
                 destroyList();
                 getActivity().supportInvalidateOptionsMenu();
