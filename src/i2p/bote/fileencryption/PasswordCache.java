@@ -171,6 +171,10 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
     public void addPasswordCacheListener(PasswordCacheListener listener) {
         cacheListeners.add(listener);
     }
+
+    public void removePasswordCacheListener(PasswordCacheListener listener) {
+        cacheListeners.remove(listener);
+    }
     
     /**
      * Clears the password after a certain time if {@link #getPassword()} hasn't been called.

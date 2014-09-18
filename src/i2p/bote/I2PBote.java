@@ -766,6 +766,14 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     public void clearPassword() {
         passwordCache.clear();
     }
+
+    public void addPasswordCacheListener(PasswordCacheListener passwordCacheListener) {
+        passwordCache.addPasswordCacheListener(passwordCacheListener);
+    }
+
+    public void removePasswordCacheListener(PasswordCacheListener passwordCacheListener) {
+        passwordCache.removePasswordCacheListener(passwordCacheListener);
+    }
     
     public List<File> getUndecryptableFiles() throws PasswordException, IOException, GeneralSecurityException {
         return debugSupport.getUndecryptableFiles();
