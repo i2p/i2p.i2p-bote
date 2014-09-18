@@ -36,6 +36,7 @@
     <string name="go_to_inbox">Go to inbox</string>
     <string name="log_in">Log in</string>
     <string name="clear_password">Clear password</string>
+    <string name="touch_lock_to_log_in">Touch the lock icon to log in.</string>
     <string name="action_new_email">New email</string>
     <string name="action_send_email">Send email</string>
     <string name="action_start_bote">Connect to network</string>

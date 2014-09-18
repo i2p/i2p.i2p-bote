@@ -215,7 +215,7 @@ public class EmailListFragment extends ListFragment implements
         }
 
         setEmptyText(getResources().getString(
-                R.string.not_authed));
+                R.string.touch_lock_to_log_in));
         getLoaderManager().destroyLoader(EMAIL_LIST_LOADER);
 
         listInitialized = false;
