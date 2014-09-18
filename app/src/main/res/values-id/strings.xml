@@ -17,6 +17,7 @@
   <string name="intro_5_2">Wizard penyetelan akan memerlukan beberapa menit, dan kemudian segalanya akan siap.</string>
   <string name="lets_get_started">Mari memulai</string>
   <string name="title_activity_setup">Setelan</string>
+  <string name="please_finish_setup">Silahkan menyelesaikan pengaturan Bote.</string>
   <string name="skip">Lewati</string>
   <string name="set_password">Setel kata sandi</string>
   <string name="setup_set_password_1">Anda dapat menyetel kata sandi untuk Bote. Hal ini akan mencegah pengguna lain membaca email Anda, dan akan mengenkripsi semua file pada disk.</string>
@@ -96,17 +97,21 @@
   <string name="email_received">Diterima:</string>
   <string name="email_status">Status:</string>
   <string name="reply">Balas</string>
+  <string name="reply_all">Balas semua</string>
+  <string name="forward">Teruskan</string>
   <string name="compose">Buat baru</string>
   <string name="subject">Subyek</string>
   <string name="compose_email">Membuat email</string>
   <string name="add_one_recipient">Tambahkan minimal satu penerima.</string>
   <string name="email_queued_for_sending">Email diantrikan untuk dikirm</string>
+  <string name="subject_prefix_fwd">Fwd:</string>
   <string name="response_prefix_re">Re:</string>
   <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s menulis:</string>
   <string name="address_book_empty">Buku alamat kosong</string>
   <string name="share">Bagikan</string>
   <string name="action_new_contact">Kontak baru</string>
+  <string name="edit_contact">Edit kontak</string>
   <string name="select_a_picture">Pilih gambar</string>
   <string name="no_image_cropping_app_found">Tidak ada apl pemotong gambar yang ditemukan</string>
   <string name="select_a_cropping_app">Pilih apl pemotong</string>
@@ -158,6 +163,7 @@
   <string name="old_password">Kata sandi lama</string>
   <string name="new_password">Kata sandi baru</string>
   <string name="confirm_new_password">Konfirmasi kata sandi baru</string>
+  <string name="remove_password_info">Untuk menghapus kata sandi, biarkan field \'Kata sandi baru\' kosong.</string>
   <string name="password_changed">Kata sandi berhasil diubah</string>
   <string name="pref_title_identities">Identitas</string>
   <string name="new_identity">Identitas baru...</string>

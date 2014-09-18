@@ -98,17 +98,21 @@
   <string name="email_received">Reçu :</string>
   <string name="email_status">Statut :</string>
   <string name="reply">Répondre</string>
+  <string name="reply_all">Répondre à tous</string>
+  <string name="forward">Transférer</string>
   <string name="compose">Composer</string>
   <string name="subject">Objet</string>
   <string name="compose_email">Composer un courrier électronique</string>
   <string name="add_one_recipient">Ajouter un destinataire au minimum</string>
   <string name="email_queued_for_sending">Email mis en file d\'attente pour envoi</string>
+  <string name="subject_prefix_fwd">Tr:</string>
   <string name="response_prefix_re">Re :</string>
   <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s a écrit :</string>
   <string name="address_book_empty">Le carnet d\'adresses est vide</string>
   <string name="share">Partager</string>
   <string name="action_new_contact">Nouveau contact</string>
+  <string name="edit_contact">Éditer contact</string>
   <string name="select_a_picture">Sélectionnez une image</string>
   <string name="no_image_cropping_app_found">Pas d\'app de découpe d\'image trouvée</string>
   <string name="select_a_cropping_app">Sélectionnez une app de découpe d\'image</string>

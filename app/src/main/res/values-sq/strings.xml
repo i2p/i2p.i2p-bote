@@ -98,17 +98,21 @@
   <string name="email_received">Marrur:</string>
   <string name="email_status">Statusi:</string>
   <string name="reply">Pergjegjje</string>
+  <string name="reply_all">Përgjigju të gjithëve</string>
+  <string name="forward">Përcjelle</string>
   <string name="compose">Krijo</string>
   <string name="subject">Tema</string>
   <string name="compose_email">Krijo e-postin</string>
   <string name="add_one_recipient">Prano të paktën një marrës. </string>
   <string name="email_queued_for_sending">E-posti i radhitur për dërgim</string>
+  <string name="subject_prefix_fwd">Fwd:</string>
   <string name="response_prefix_re">Re:</string>
   <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s shkroi:</string>
   <string name="address_book_empty">Libri i adresave është i thatë</string>
   <string name="share">Shpërndaj</string>
   <string name="action_new_contact">Kontakt i ri</string>
+  <string name="edit_contact">Ndrysho kontaktin</string>
   <string name="select_a_picture">Zgjedhe një foto</string>
   <string name="no_image_cropping_app_found">Nuk gjindet image cropping app\'i </string>
   <string name="select_a_cropping_app">Zgjedhe një cropping app</string>

@@ -40,6 +40,7 @@
   <string name="start_i2p_android">Похоже, что I2P Android не запущен. Запустить I2P Android?</string>
   <string name="pull_text">Потяните, чтобы проверить почту</string>
   <string name="refreshing_text">Выполняется проверка электронной почты…</string>
+  <string name="release_text">Позволить проверять почту</string>
   <!--Argument is a number-->
   <string name="incomplete_emails">%s незаконченных писем</string>
   <!--Argument is a number-->
@@ -86,6 +87,7 @@
   <string name="sent_to">Отправлено %1$d из %2$d получателей</string>
   <string name="email_sent">Сообщение отправлено</string>
   <string name="gateway_disabled">Шлюз отключен</string>
+  <string name="no_identity_matches">Идентификатор не соответствует отправителю/полю \"от\": %s</string>
   <string name="invalid_recipient">Недействительный адрес получателя: %s</string>
   <string name="error_creating_packets">Ошибка при создании пакетов сообщения: %s</string>
   <string name="error_sending">Ошибка при отправке письма: %s</string>
@@ -97,17 +99,21 @@
   <string name="email_received">Получено:</string>
   <string name="email_status">Статус:</string>
   <string name="reply">Ответить</string>
+  <string name="reply_all">Ответить на все</string>
+  <string name="forward">Переслать</string>
   <string name="compose">Написать</string>
   <string name="subject">Тема</string>
   <string name="compose_email">Написать письмо</string>
   <string name="add_one_recipient">Добавьте как минимум одного получателя</string>
   <string name="email_queued_for_sending">Письмо поставлено в очередь на отправку</string>
+  <string name="subject_prefix_fwd">Fwd:</string>
   <string name="response_prefix_re">Re:</string>
   <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s пишет:</string>
   <string name="address_book_empty">Адресная книга пуста</string>
   <string name="share">Поделиться</string>
   <string name="action_new_contact">Новый контакт</string>
+  <string name="edit_contact">Редактировать контакт</string>
   <string name="select_a_picture">Выберите изображение</string>
   <string name="no_image_cropping_app_found">Приложение для обрезки изображений не найдено</string>
   <string name="select_a_cropping_app">Выберите приложение для обрезки изображений</string>

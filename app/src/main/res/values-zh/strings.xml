@@ -97,17 +97,21 @@
   <string name="email_received">接收:</string>
   <string name="email_status">状态:</string>
   <string name="reply">回复</string>
+  <string name="reply_all">全部回复</string>
+  <string name="forward">转发</string>
   <string name="compose">撰写</string>
   <string name="subject">主题</string>
   <string name="compose_email">撰写邮件</string>
   <string name="add_one_recipient">请添加至少一个收件人。</string>
   <string name="email_queued_for_sending">邮件已进入发送队列</string>
+  <string name="subject_prefix_fwd">转发:</string>
   <string name="response_prefix_re">回复:</string>
   <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s 写道:</string>
   <string name="address_book_empty">通讯录是空的</string>
   <string name="share">分享</string>
   <string name="action_new_contact">新建联系人</string>
+  <string name="edit_contact">编辑联系人</string>
   <string name="select_a_picture">选择一个图片</string>
   <string name="no_image_cropping_app_found">没有找到图像摄取应用</string>
   <string name="select_a_cropping_app">选择一个摄取应用</string>
