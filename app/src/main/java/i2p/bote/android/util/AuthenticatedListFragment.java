@@ -77,7 +77,7 @@ public abstract class AuthenticatedListFragment extends ListFragment {
         }
     }
 
-    protected void initializeList() {
+    private void initializeList() {
         if (mListInitialized)
             return;
 
@@ -86,7 +86,7 @@ public abstract class AuthenticatedListFragment extends ListFragment {
         mListInitialized = true;
     }
 
-    protected void destroyList() {
+    private void destroyList() {
         onDestroyList();
 
         setEmptyText(getResources().getString(
