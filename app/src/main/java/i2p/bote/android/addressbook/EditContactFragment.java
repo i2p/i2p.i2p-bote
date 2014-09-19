@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 
+import i2p.bote.I2PBote;
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.EditPictureFragment;
@@ -75,12 +76,51 @@ public class EditContactFragment extends EditPictureFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String newName = getArguments().getString(NEW_NAME);
-
         mNameField = (EditText) view.findViewById(R.id.contact_name);
         mDestinationField = (EditText) view.findViewById(R.id.destination);
         mTextField = (EditText) view.findViewById(R.id.text);
         mError = (TextView) view.findViewById(R.id.error);
+
+        Button b = (Button) view.findViewById(R.id.import_destination_from_file);
+        b.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.setType("text/plain");
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                try {
+                    startActivityForResult(
+                            Intent.createChooser(i,
+                                    getResources().getString(R.string.select_email_destination_file)),
+                            REQUEST_DESTINATION_FILE);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getActivity(), R.string.please_install_a_file_manager,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        if (I2PBote.getInstance().isPasswordRequired()) {
+            // Request a password from the user.
+            BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
+                @Override
+                public void onPasswordVerified() {
+                    initializeContact();
+                }
+
+                @Override
+                public void onPasswordCanceled() {
+                    getActivity().setResult(Activity.RESULT_CANCELED);
+                    getActivity().finish();
+                }
+            });
+        } else {
+            // Password is cached, or not set.
+            initializeContact();
+        }
+    }
+
+    private void initializeContact() {
+        String newName = getArguments().getString(NEW_NAME);
 
         if (mDestination != null) {
             try {
@@ -102,24 +142,6 @@ public class EditContactFragment extends EditPictureFragment {
             mNameField.setText(newName);
             mDestinationField.setText(getArguments().getString(NEW_DESTINATION));
         }
-
-        Button b = (Button) view.findViewById(R.id.import_destination_from_file);
-        b.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.setType("text/plain");
-                i.addCategory(Intent.CATEGORY_OPENABLE);
-                try {
-                    startActivityForResult(
-                            Intent.createChooser(i,
-                                    getResources().getString(R.string.select_email_destination_file)),
-                            REQUEST_DESTINATION_FILE);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getActivity(), R.string.please_install_a_file_manager,
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     @Override
