@@ -1,19 +1,9 @@
 package i2p.bote.android.addressbook;
 
-import i2p.bote.I2PBote;
-import i2p.bote.android.R;
-import i2p.bote.android.util.BetterAsyncTaskLoader;
-import i2p.bote.android.util.BoteHelper;
-import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.packet.dht.Contact;
-
-import java.util.SortedSet;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.Menu;
@@ -22,10 +12,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-public class AddressBookFragment extends ListFragment implements
+import java.util.SortedSet;
+
+import i2p.bote.I2PBote;
+import i2p.bote.android.R;
+import i2p.bote.android.util.AuthenticatedListFragment;
+import i2p.bote.android.util.BetterAsyncTaskLoader;
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.packet.dht.Contact;
+
+public class AddressBookFragment extends AuthenticatedListFragment implements
         LoaderManager.LoaderCallbacks<SortedSet<Contact>> {
     OnContactSelectedListener mCallback;
     private ContactAdapter mAdapter;
+
+    private MenuItem mNewContact;
 
     // Container Activity must implement this interface
     public interface OnContactSelectedListener {
@@ -60,57 +62,33 @@ public class AddressBookFragment extends ListFragment implements
         setListAdapter(mAdapter);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (I2PBote.getInstance().isPasswordRequired()) {
-            // Ensure any existing data is destroyed.
-            destroyList();
-            // Request a password from the user.
-            BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
-                @Override
-                public void onPasswordVerified() {
-                    initializeList();
-                }
-
-                @Override
-                public void onPasswordCanceled() {
-                }
-            });
-        } else {
-            // Password is cached, or not set.
-            initializeList();
-        }
-    }
-
-    private boolean listInitialized;
     /**
      * Start loading the address book.
      * Only called when we have a password cached, or no
      * password is required.
      */
-    private void initializeList() {
-        if (listInitialized)
-            return;
-
+    protected void onInitializeList() {
         setListShown(false);
         setEmptyText(getResources().getString(
                 R.string.address_book_empty));
         getLoaderManager().initLoader(0, null, this);
-
-        listInitialized = true;
     }
 
-    private void destroyList() {
-        setEmptyText(getResources().getString(
-                R.string.not_authed));
+    protected void onDestroyList() {
         getLoaderManager().destroyLoader(0);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.address_book_list, menu);
+        mNewContact = menu.findItem(R.id.action_new_contact);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        mNewContact.setVisible(!I2PBote.getInstance().isPasswordRequired());
     }
 
     @Override
