@@ -55,7 +55,6 @@
   <string name="checking_password">正在检查密码…</string>
   <string name="password_incorrect">密码不正确</string>
   <string name="password_file_error">无法读取密码验证文件</string>
-  <string name="not_authed">未通过身份验证</string>
   <string name="folder_inbox">收件箱</string>
   <string name="folder_outbox">发件箱</string>
   <string name="folder_sent">发送</string>
@@ -175,7 +174,6 @@
   <string name="delete_identity">删除身份？</string>
   <string name="identity_saved">身份已保存</string>
   <string name="export_identities">导出身份</string>
-  <string name="password_empty">密码为空</string>
   <string name="passwords_do_not_match">密码不匹配</string>
   <string name="file_exists">文件已存在</string>
   <string name="exporting_identities">正在导出身份</string>

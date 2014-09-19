@@ -55,7 +55,6 @@
   <string name="checking_password">Duke verifikuar fjalëkalimin...</string>
   <string name="password_incorrect">Fjalëkalimi ishte i gabuar</string>
   <string name="password_file_error">Nuk mund të lexonte filin verifikues të fjalëkalimit</string>
-  <string name="not_authed">Jo i/e vërtetuar</string>
   <string name="folder_inbox">Inbox (Filet e marrura) </string>
   <string name="folder_outbox">Outbox (filet e dërguara) </string>
   <string name="folder_sent">Dërguar</string>
@@ -173,7 +172,6 @@
   <string name="delete_identity">Fshij identitetin?</string>
   <string name="identity_saved">Identiteti u shpëtua</string>
   <string name="export_identities">Eksporto identitetet</string>
-  <string name="password_empty">Fjalëkalimi është i zbrazët</string>
   <string name="passwords_do_not_match">Fjalëkalimet nuk përputhen</string>
   <string name="file_exists">Fili ekziston</string>
   <string name="exporting_identities">Eksportim identitetesh</string>

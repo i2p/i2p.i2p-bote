@@ -55,7 +55,6 @@
   <string name="checking_password">Выполняется проверка пароля...</string>
   <string name="password_incorrect">Неверный пароль</string>
   <string name="password_file_error">Не удалось прочесть файл верификации пароля</string>
-  <string name="not_authed">Проверка подлинности не пройдена</string>
   <string name="folder_inbox">Входящие</string>
   <string name="folder_outbox">Исходящие</string>
   <string name="folder_sent">Отправленные</string>
@@ -177,7 +176,6 @@
   <string name="delete_identity">Удалить идентификатор?</string>
   <string name="identity_saved">Идентификатор сохранён</string>
   <string name="export_identities">Экспортировать идентификаторы</string>
-  <string name="password_empty">Пустой пароль</string>
   <string name="passwords_do_not_match">Пароли не совпадают</string>
   <string name="file_exists">Файл существует</string>
   <string name="exporting_identities">Идентификаторы экспортируются</string>

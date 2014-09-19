@@ -55,7 +55,6 @@
   <string name="checking_password">Sprawdzanie hasła...</string>
   <string name="password_incorrect">Hasło jest nieprawidłowe</string>
   <string name="password_file_error">Nie można było odczytać hasła pliku weryfikacyjnego</string>
-  <string name="not_authed">Nie zidentyfikowano </string>
   <string name="folder_inbox">Odebrane</string>
   <string name="folder_outbox">Do Wysłania</string>
   <string name="folder_sent">Wysłane</string>
@@ -177,7 +176,6 @@
   <string name="delete_identity">Usunąć tożsamość?</string>
   <string name="identity_saved">Tożsamość zapisana</string>
   <string name="export_identities">Eksportuj tożsamości</string>
-  <string name="password_empty">Hasło jest puste</string>
   <string name="passwords_do_not_match">Hasła nie zgadzają się</string>
   <string name="file_exists">Plik istnieje</string>
   <string name="exporting_identities">Eksportowanie tożsamości</string>

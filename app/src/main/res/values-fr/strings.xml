@@ -55,7 +55,6 @@
   <string name="checking_password">Vérification mot de passe ...</string>
   <string name="password_incorrect">Mot de passe était incorrect</string>
   <string name="password_file_error">N\'a pas pu lire le fichier de vérification de mot de passe</string>
-  <string name="not_authed">Non authentifié</string>
   <string name="folder_inbox">Boîte de réception</string>
   <string name="folder_outbox">Boîte d\'envoi</string>
   <string name="folder_sent">Envoyé</string>
@@ -176,7 +175,6 @@
   <string name="delete_identity">Supprimer l\'identité ?</string>
   <string name="identity_saved">Identité sauvegardée</string>
   <string name="export_identities">Exporter les identités</string>
-  <string name="password_empty">Le mot de passe est vide</string>
   <string name="passwords_do_not_match">Les mots de passe ne correspondent pas</string>
   <string name="file_exists">Le fichier existe</string>
   <string name="exporting_identities">Exportation d\'identités</string>

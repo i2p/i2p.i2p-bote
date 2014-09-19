@@ -55,7 +55,6 @@
   <string name="checking_password">Comprobando la contraseña...</string>
   <string name="password_incorrect">La contraseña era incorrecta</string>
   <string name="password_file_error">No se pudo leer el fichero de verificación de la contraseña</string>
-  <string name="not_authed">No autentificado</string>
   <string name="folder_inbox">Bandeja de entrada</string>
   <string name="folder_outbox">Bandeja de salida</string>
   <string name="folder_sent">Enviado</string>
@@ -176,7 +175,6 @@
   <string name="delete_identity">¿Eliminar identidad?</string>
   <string name="identity_saved">Identidad guardada</string>
   <string name="export_identities">Exportar identidades</string>
-  <string name="password_empty">La contraseña está vacía</string>
   <string name="passwords_do_not_match">Las contraseñas no coinciden</string>
   <string name="file_exists">El fichero ya existe</string>
   <string name="exporting_identities">Exportando identidades</string>

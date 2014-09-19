@@ -55,7 +55,6 @@
   <string name="checking_password">Memeriksa kata sandi...</string>
   <string name="password_incorrect">Kata sandi tidak benar</string>
   <string name="password_file_error">Tidak dapat membaca file verifikasi kata sandi</string>
-  <string name="not_authed">Belum terotentikasi</string>
   <string name="folder_inbox">Kotak masuk</string>
   <string name="folder_outbox">Kotak keluar</string>
   <string name="folder_sent">Terkirim</string>
@@ -175,7 +174,6 @@
   <string name="delete_identity">Hapus identitas?</string>
   <string name="identity_saved">Identitas disimpan</string>
   <string name="export_identities">Ekspor identitas</string>
-  <string name="password_empty">Kata sandi kosong</string>
   <string name="passwords_do_not_match">Kata sandi tidak cocok</string>
   <string name="file_exists">File sudah ada</string>
   <string name="exporting_identities">Mengekspor identitas</string>

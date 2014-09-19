@@ -55,7 +55,6 @@
   <string name="checking_password">Passwort wird überprüft …</string>
   <string name="password_incorrect">Passwort war falsch</string>
   <string name="password_file_error">Konnte Passwortverifikationsdatei nicht lesen</string>
-  <string name="not_authed">Nicht authentifiziert</string>
   <string name="folder_inbox">Posteingang</string>
   <string name="folder_outbox">Postausgang</string>
   <string name="folder_sent">Gesendet</string>
@@ -176,7 +175,6 @@
   <string name="delete_identity">Identität löschen?</string>
   <string name="identity_saved">Identität gespeichert</string>
   <string name="export_identities">Identitäten exportieren</string>
-  <string name="password_empty">Passwort ist leer</string>
   <string name="passwords_do_not_match">Passwörter stimmen nicht überein</string>
   <string name="file_exists">Datei vorhanden</string>
   <string name="exporting_identities">Identitäten werden exportiert</string>
