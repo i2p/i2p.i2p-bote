@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
@@ -32,6 +31,7 @@ import javax.mail.Flags.Flag;
 import javax.mail.MessagingException;
 
 import i2p.bote.I2PBote;
+import i2p.bote.android.util.AuthenticatedListFragment;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.MoveToDialogFragment;
@@ -45,7 +45,7 @@ import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.Options;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class EmailListFragment extends ListFragment implements
+public class EmailListFragment extends AuthenticatedListFragment implements
         LoaderManager.LoaderCallbacks<List<Email>>,
         MoveToDialogFragment.MoveToDialogListener,
         EmailListAdapter.EmailSelector, OnRefreshListener {
@@ -61,8 +61,6 @@ public class EmailListFragment extends ListFragment implements
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
 
-    private MenuItem mLogIn;
-    private MenuItem mClearPassword;
     private MenuItem mNewEmail;
 
     // The Controller which provides CHOICE_MODE_MULTIPLE_MODAL-like functionality
@@ -94,12 +92,6 @@ public class EmailListFragment extends ListFragment implements
             throw new ClassCastException(activity.toString()
                     + " must implement OnEmailSelectedListener");
         }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -164,31 +156,13 @@ public class EmailListFragment extends ListFragment implements
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (mFolder != null) {
-            if (I2PBote.getInstance().isPasswordRequired()) {
-                // Ensure any existing data is destroyed.
-                destroyList();
-            } else {
-                // Password is cached, or not set.
-                initializeList();
-            }
-        }
-
-        getActivity().supportInvalidateOptionsMenu();
-    }
-
-    private boolean listInitialized;
     /**
      * Start loading the list of emails from this folder.
      * Only called when we have a password cached, or no
      * password is required.
      */
-    private void initializeList() {
-        if (listInitialized)
+    protected void onInitializeList() {
+        if (mFolder == null)
             return;
 
         int numIncompleteEmails = I2PBote.getInstance().getNumIncompleteEmails();
@@ -204,21 +178,15 @@ public class EmailListFragment extends ListFragment implements
         setEmptyText(getResources().getString(
                 R.string.folder_empty));
         getLoaderManager().initLoader(EMAIL_LIST_LOADER, null, this);
-
-        listInitialized = true;
     }
 
-    private void destroyList() {
+    protected void onDestroyList() {
         if (mNumIncompleteEmails != null) {
             getListView().removeHeaderView(mNumIncompleteEmails);
             mNumIncompleteEmails = null;
         }
 
-        setEmptyText(getResources().getString(
-                R.string.touch_lock_to_log_in));
         getLoaderManager().destroyLoader(EMAIL_LIST_LOADER);
-
-        listInitialized = false;
     }
 
     @Override
@@ -233,44 +201,20 @@ public class EmailListFragment extends ListFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.email_list, menu);
-        mLogIn = menu.findItem(R.id.action_log_in);
-        mClearPassword = menu.findItem(R.id.action_log_out);
         mNewEmail = menu.findItem(R.id.action_new_email);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        boolean passwordRequired = I2PBote.getInstance().isPasswordRequired();
-        mLogIn.setVisible(passwordRequired);
-        mNewEmail.setVisible(!passwordRequired);
-        mClearPassword.setVisible(I2PBote.getInstance().isPasswordInCache());
+        super.onPrepareOptionsMenu(menu);
+        mNewEmail.setVisible(!I2PBote.getInstance().isPasswordRequired());
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_log_in:
-                // Request a password from the user.
-                BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
-                    @Override
-                    public void onPasswordVerified() {
-                        initializeList();
-                        getActivity().supportInvalidateOptionsMenu();
-                    }
-
-                    @Override
-                    public void onPasswordCanceled() {
-                    }
-                });
-                return true;
-
-            case R.id.action_log_out:
-                BoteHelper.clearPassword();
-                destroyList();
-                getActivity().supportInvalidateOptionsMenu();
-                return true;
-
             case R.id.action_new_email:
                 startNewEmail();
                 return true;
