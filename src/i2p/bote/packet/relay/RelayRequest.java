@@ -232,6 +232,7 @@ public class RelayRequest extends CommunicationPacket {
             
             dataStream.writeInt((int)(delayMilliseconds/1000));
             // write the first 384 bytes (the two public keys)
+            // TODO This is NOT compatible with newer key types!
             dataStream.write(nextDestination.toByteArray(), 0, 384);
             
             returnChain.writeTo(dataStream);

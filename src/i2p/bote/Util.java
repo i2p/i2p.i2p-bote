@@ -264,6 +264,7 @@ public class Util {
     public static Destination createDestination(ByteBuffer buffer) throws DataFormatException {
         byte[] bytes = new byte[388];
         // read 384 bytes, leave the last 3 bytes zero
+        // TODO This is NOT compatible with newer key types!
         buffer.get(bytes, 0, 384);
         Destination peer = new Destination();
         peer.readBytes(bytes, 0);

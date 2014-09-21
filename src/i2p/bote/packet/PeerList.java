@@ -76,6 +76,7 @@ public class PeerList extends DataPacket {
             dataStream.writeShort(peers.size());
             for (Destination peer: peers)
                 // write the first 384 bytes (the two public keys)
+                // TODO This is NOT compatible with newer key types!
                 dataStream.write(peer.toByteArray(), 0, 384);
         }
         catch (IOException e) {
