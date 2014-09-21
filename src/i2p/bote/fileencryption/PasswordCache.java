@@ -126,7 +126,7 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
      */
     public synchronized byte[] getPassword() {
         resetExpiration();
-        if (password==null && !configuration.getPasswordFile().exists())
+        if ((password==null || password.length<=0) && !configuration.getPasswordFile().exists())
             return FileEncryptionConstants.DEFAULT_PASSWORD;
         else
             return password;
@@ -145,7 +145,7 @@ public class PasswordCache extends I2PAppThread implements PasswordHolder {
     
     /** Returns <code>true</code> if the password is currently cached. */
     public boolean isPasswordInCache() {
-        return password != null;
+        return password != null && password.length>0;
     }
     
     /**
