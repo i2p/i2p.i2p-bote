@@ -9,9 +9,12 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,22 +43,18 @@ import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.FolderListener;
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.Options;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class EmailListFragment extends AuthenticatedListFragment implements
         LoaderManager.LoaderCallbacks<List<Email>>,
         MoveToDialogFragment.MoveToDialogListener,
-        EmailListAdapter.EmailSelector, OnRefreshListener {
+        EmailListAdapter.EmailSelector, SwipeRefreshLayout.OnRefreshListener {
     public static final String FOLDER_NAME = "folder_name";
 
     private static final int EMAIL_LIST_LOADER = 1;
 
     OnEmailSelectedListener mCallback;
 
-    private PullToRefreshLayout mPullToRefreshLayout;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private TextView mNumIncompleteEmails;
 
     private EmailListAdapter mAdapter;
@@ -95,36 +94,90 @@ public class EmailListFragment extends AuthenticatedListFragment implements
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Create the list fragment's content view by calling the super method
+        final View listFragmentView = super.onCreateView(inflater, container, savedInstanceState);
+
         String folderName = getArguments().getString(FOLDER_NAME);
         mFolder = BoteHelper.getMailFolder(folderName);
 
         if (BoteHelper.isInbox(mFolder)) {
-            // This is the View which is created by ListFragment
-            ViewGroup viewGroup = (ViewGroup) view;
+            // Now create a SwipeRefreshLayout to wrap the fragment's content view
+            mSwipeRefreshLayout = new ListFragmentSwipeRefreshLayout(container.getContext());
 
-            // We need to create a PullToRefreshLayout manually
-            mPullToRefreshLayout = new PullToRefreshLayout(viewGroup.getContext());
+            // Add the list fragment's content view to the SwipeRefreshLayout, making sure that it fills
+            // the SwipeRefreshLayout
+            mSwipeRefreshLayout.addView(listFragmentView,
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-            // We can now setup the PullToRefreshLayout
-            ActionBarPullToRefresh.from(getActivity())
+            // Make sure that the SwipeRefreshLayout will fill the fragment
+            mSwipeRefreshLayout.setLayoutParams(
+                    new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT));
 
-                    // We need to insert the PullToRefreshLayout into the Fragment's ViewGroup
-                    .insertLayoutInto(viewGroup)
+            // Set up the SwipeRefreshLayout
+            mSwipeRefreshLayout.setOnRefreshListener(this);
+            mSwipeRefreshLayout.setRefreshing(I2PBote.getInstance().isCheckingForMail());
 
-                    // We need to mark the ListView and its Empty View as pullable
-                    // This is because they are not direct children of the ViewGroup
-                    .theseChildrenArePullable(getListView(), getListView().getEmptyView())
+            // Now return the SwipeRefreshLayout as this fragment's content view
+            return mSwipeRefreshLayout;
+        } else
+            return listFragmentView;
+    }
 
-                    // We can now complete the setup as desired
-                    .listener(this)
-                    .options(Options.create()
-                            .refreshOnUp(true)
-                            .build())
-                    .setup(mPullToRefreshLayout);
+    /**
+     * Sub-class of {@link android.support.v4.widget.SwipeRefreshLayout} for use in this
+     * {@link android.support.v4.app.ListFragment}. The reason that this is needed is because
+     * {@link android.support.v4.widget.SwipeRefreshLayout} only supports a single child, which it
+     * expects to be the one which triggers refreshes. In our case the layout's child is the content
+     * view returned from
+     * {@link android.support.v4.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}
+     * which is a {@link android.view.ViewGroup}.
+     *
+     * <p>To enable 'swipe-to-refresh' support via the {@link android.widget.ListView} we need to
+     * override the default behavior and properly signal when a gesture is possible. This is done by
+     * overriding {@link #canChildScrollUp()}.
+     */
+    private class ListFragmentSwipeRefreshLayout extends SwipeRefreshLayout {
 
-            mPullToRefreshLayout.setRefreshing(I2PBote.getInstance().isCheckingForMail());
+        public ListFragmentSwipeRefreshLayout(Context context) {
+            super(context);
+        }
+
+        /**
+         * As mentioned above, we need to override this method to properly signal when a
+         * 'swipe-to-refresh' is possible.
+         *
+         * @return true if the {@link android.widget.ListView} is visible and can scroll up.
+         */
+        @Override
+        public boolean canChildScrollUp() {
+            final ListView listView = getListView();
+            if (listView.getVisibility() == View.VISIBLE) {
+                return canListViewScrollUp(listView);
+            } else {
+                return false;
+            }
+        }
+
+    }
+
+    /**
+     * Utility method to check whether a {@link ListView} can scroll up from it's current position.
+     * Handles platform version differences, providing backwards compatible functionality where
+     * needed.
+     */
+    private static boolean canListViewScrollUp(ListView listView) {
+        if (android.os.Build.VERSION.SDK_INT >= 14) {
+            // For ICS and above we can call canScrollVertically() to determine this
+            return ViewCompat.canScrollVertically(listView, -1);
+        } else {
+            // Pre-ICS we need to manually check the first visible item and the child view's top
+            // value
+            return listView.getChildCount() > 0 &&
+                    (listView.getFirstVisiblePosition() > 0
+                            || listView.getChildAt(0).getTop() < listView.getPaddingTop());
         }
     }
 
@@ -461,9 +514,9 @@ public class EmailListFragment extends AuthenticatedListFragment implements
         view.performLongClick();
     }
 
-    // OnRefreshListener
+    // SwipeRefreshLayout.OnRefreshListener
 
-    public void onRefreshStarted(View view) {
+    public void onRefresh() {
         I2PBote bote = I2PBote.getInstance();
         if (bote.isConnected()) {
             try {
@@ -500,7 +553,7 @@ public class EmailListFragment extends AuthenticatedListFragment implements
                         }
 
                         // Notify PullToRefreshLayout that the refresh has finished
-                        mPullToRefreshLayout.setRefreshComplete();
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                 }.execute();
             } catch (PasswordException e) {
@@ -514,6 +567,6 @@ public class EmailListFragment extends AuthenticatedListFragment implements
                 e.printStackTrace();
             }
         } else
-            mPullToRefreshLayout.setRefreshComplete();
+            mSwipeRefreshLayout.setRefreshing(false);
     }
 }

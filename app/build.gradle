@@ -27,13 +27,8 @@ dependencies {
     compile 'net.i2p.android:client:0.1.1@aar'
     compile project(':botejars')
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.android.support:support-v4:19.1.0'
-    compile 'com.android.support:appcompat-v7:19.1.0'
-    // TODO temporary fix for broken developer preview of Support Library
-    compile ('com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+') {
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-    }
+    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:appcompat-v7:20.0.0'
     compile ('com.mcxiaoke.viewpagerindicator:library:2.4.1') {
         exclude group: 'com.android.support', module: 'support-v4'
     }
@@ -43,11 +38,8 @@ dependencies {
 dependencyVerification {
     verify = [
             'net.i2p.android:client:29815aa778f19bbf2c9d003e30289cca214481bb0fb17afe8adb77641aa7875f',
-            'com.android.support:support-v4:3f40fa7b3a4ead01ce15dce9453b061646e7fe2e7c51cb75ca01ee1e77037f3f',
-            'com.android.support:appcompat-v7:9df7637c5219202ddbbbf0924c2d5a9e6d64379166795a89d8f75d1e3f3372df',
-            'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:a94f35b8b701d2cf761bb6b731d0921f73fb552a69a9c1d1379a19c2a9418ec6',
-            'com.github.chrisbanes.actionbarpulltorefresh:library:ea06f4e8cf7ae959cbe37028acf2631a6950714d2112e16531e4528daf69b6db',
-            'com.github.castorflex.smoothprogressbar:library:eb35b46d99a7f56d3d173cafe5f0f31beaaba0ce606258f81b07b0607ee3c32f',
+            'com.android.support:support-v4:81f2b1c2c94efd5a4ec7fcd97b6cdcd00e87a933905c5c86103c7319eb024572',
+            'com.android.support:appcompat-v7:736f576ab0b68d27bdf18b1e7931566e6d8254b73965175313e87f8866b91547',
             'com.mcxiaoke.viewpagerindicator:library:470bbd2bec1ede64ad21efd6f02676807d22f1b526c4ac6a5b41a428c6e47e67',
             'com.google.zxing:android-integration:89e56aadf1164bd71e57949163c53abf90af368b51669c0d4a47a163335f95c4',
     ]
