@@ -150,11 +150,15 @@
     <string name="pref_title_privacy">Privacy</string>
     <string name="pref_title_hideLocale">Hide locale</string>
     <string name="pref_summ_hideLocale">Use English for text added to outgoing emails (\'Re:\', \'wrote:\', etc.)</string>
+    <string name="pref_summ_hideLocale_off">Use system language for text added to outgoing emails (\'Re:\', \'wrote:\', etc.)</string>
     <string name="pref_title_sentTime">Sent time</string>
     <string name="pref_summ_sentTime">Include sent time in outgoing emails</string>
     <string name="pref_title_routing">Routing</string>
-    <string name="pref_title_numHops">Relays</string>
-    <string name="pref_summ_numHops">Use %s relays when sending mail</string>
+    <string name="pref_title_numSendHops">Sending hops</string>
+    <plurals name="pref_summ_numHops">
+        <item quantity="one">%s relay</item>
+        <item quantity="other">%s relays</item>
+    </plurals>
     <string name="pref_title_minDelay">Minimum delay per hop</string>
     <string name="pref_summ_minDelay">%s minutes</string>
     <string name="pref_title_maxDelay">Maximum delay per hop</string>

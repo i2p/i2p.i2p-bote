@@ -217,6 +217,18 @@ public class SettingsActivity extends PreferenceActivity {
             if ("general".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_general);
 
+                ListPreference numSendHops = (ListPreference) findPreference("numSendHops");
+                numSendHops.setSummary(getResources().getQuantityText(R.plurals.pref_summ_numHops,
+                        Integer.valueOf(numSendHops.getValue())));
+                numSendHops.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        preference.setSummary(getResources().getQuantityText(R.plurals.pref_summ_numHops,
+                                Integer.valueOf((String) newValue)));
+                        return true;
+                    }
+                });
+
                 final PreferenceCategory i2pCat = (PreferenceCategory)findPreference("i2pCategory");
                 CheckBoxPreference routerAuto = (CheckBoxPreference)findPreference("i2pbote.router.auto");
 

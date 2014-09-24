@@ -23,7 +23,8 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="hideLocale"
-            android:summary="@string/pref_summ_hideLocale"
+            android:summaryOn="@string/pref_summ_hideLocale"
+            android:summaryOff="@string/pref_summ_hideLocale_off"
             android:title="@string/pref_title_hideLocale" />
         <CheckBoxPreference
             android:defaultValue="true"
@@ -37,8 +38,7 @@
             android:entries="@array/setting0to3"
             android:entryValues="@array/setting0to3"
             android:key="numSendHops"
-            android:summary="@string/pref_summ_numHops"
-            android:title="@string/pref_title_numHops" />
+            android:title="@string/pref_title_numSendHops" />
 
         <i2p.bote.android.util.IntEditTextPreference
             android:defaultValue="5"
