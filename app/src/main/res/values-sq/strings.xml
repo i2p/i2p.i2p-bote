@@ -38,9 +38,6 @@
   <string name="action_stop_bote">Ndalo lidhjen nga rrjeti</string>
   <string name="action_settings">Cilësimet</string>
   <string name="start_i2p_android">Po duket që I2P Android nuk është në funksionim, Doni ta filloni atë?</string>
-  <string name="pull_text">Tërhiq për të shqyrtuar e-postet</string>
-  <string name="refreshing_text">Duke shqyrtuar e-postet...</string>
-  <string name="release_text">Lëshoje për të shqyrtuar e-poste</string>
   <!--Argument is a number-->
   <string name="incomplete_emails">%s e-poste të pakryera</string>
   <!--Argument is a number-->

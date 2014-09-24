@@ -32,15 +32,15 @@
   <string name="setup_finished_2">Para enviar y recibir correos electrónicos, Bote necesita conectar a la red distribuida. Puede hacer esto desde el menú.</string>
   <string name="setup_finished_3">Mientras Bote está desconectado, puede leer correos electrónicos que ya hayan sido descargados. También puede escribir correos y ponerlos en la Bandeja de Salida; se enviarán la próxima vez que Bote esté conectado.</string>
   <string name="go_to_inbox">Ir a la bandeja de entrada</string>
+  <string name="log_in">Iniciar sesión</string>
+  <string name="log_out">Cerrar sesión</string>
+  <string name="touch_lock_to_log_in">Pulse el icono del candado para iniciar sesión.</string>
   <string name="action_new_email">Nuevo correo electrónico</string>
   <string name="action_send_email">Enviar correo electrónico</string>
   <string name="action_start_bote">Conectar a la red</string>
   <string name="action_stop_bote">Desconectar de la red</string>
   <string name="action_settings">Configuraciones</string>
   <string name="start_i2p_android">Parece que I2P Android no está ejecutándose. ¿Desea reiniciarlo?</string>
-  <string name="pull_text">Descargar para comprobar el correo</string>
-  <string name="refreshing_text">Comprobando el correo...</string>
-  <string name="release_text">Dejar ir para comprobar el correo</string>
   <!--Argument is a number-->
   <string name="incomplete_emails">%s correos incompletos</string>
   <!--Argument is a number-->
@@ -123,6 +123,7 @@
   <string name="failed_to_read_email_destination_file">Fallo al leer el fichero del destino del correo electrónico.</string>
   <string name="could_not_find_email_destination_file">No se pudo encontrar el fichero del destino del correo.</string>
   <string name="save_contact">Guardar contacto</string>
+  <string name="not_a_valid_bote_address">Esta no es una dirección Bote válida</string>
   <string name="delete_contact">¿Eliminar contacto?</string>
   <string name="network_info_unavailable">La información de la red no está disponible porque Bote aún no ha comenzado a conectar a la red.</string>
   <string name="network_info_unavailable_delay">Bote está esperando a que el router I2P se inicie y esté listo.</string>
@@ -144,8 +145,6 @@
   <string name="pref_title_sentTime">Hora de envío</string>
   <string name="pref_summ_sentTime">Incluir hora de envío en correos salientes</string>
   <string name="pref_title_routing">Enrutado</string>
-  <string name="pref_title_numHops">Repetidores</string>
-  <string name="pref_summ_numHops">Usar %s repetidores al enviar correo</string>
   <string name="pref_title_minDelay">Retardo mínimo por salto</string>
   <string name="pref_summ_minDelay">%s minutos</string>
   <string name="pref_title_maxDelay">Retardo máximo por salto</string>
@@ -184,4 +183,5 @@
   <string name="no_identities_found">No se encontraron identidades.</string>
   <string name="no_identities_found_maybe_encrypted">No se encontraron identidades. ¿El fichero está cifrado?</string>
   <string name="identities_imported">Identidades importadas</string>
+  <string name="this_field_is_required">Este campo es obligatorio</string>
 </resources>

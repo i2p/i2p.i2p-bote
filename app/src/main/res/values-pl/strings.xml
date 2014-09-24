@@ -38,9 +38,6 @@
   <string name="action_stop_bote">Rozłącz z siecią</string>
   <string name="action_settings">Ustawienia</string>
   <string name="start_i2p_android">Wygląda na to, że I2P Android nie jest uruchomiony. Czy chcesz go włączyć?</string>
-  <string name="pull_text">Pociągnij aby sprawdzić email</string>
-  <string name="refreshing_text">Sprawdzanie emaili...</string>
-  <string name="release_text">Sprawdźmy email</string>
   <!--Argument is a number-->
   <string name="incomplete_emails">%s niepełnych emaili</string>
   <!--Argument is a number-->
@@ -145,8 +142,6 @@
   <string name="pref_title_sentTime">Czas wysłania</string>
   <string name="pref_summ_sentTime">Dołącz czas wysłania w e-mailach wychodzących</string>
   <string name="pref_title_routing">Routing</string>
-  <string name="pref_title_numHops">Przekaźniki/Relays</string>
-  <string name="pref_summ_numHops">Używaj %s przekaźników podczas wysyłania e-maila</string>
   <string name="pref_title_minDelay">Minimalne opóźnienie dla przeskoku</string>
   <string name="pref_summ_minDelay">%s minut</string>
   <string name="pref_title_maxDelay">Maksymalne opóźnienie dla przeskoku</string>

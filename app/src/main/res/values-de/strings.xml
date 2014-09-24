@@ -32,15 +32,15 @@
   <string name="setup_finished_2">Um E-Mails zu verschicken und zu empfangen, muss sich Bote mit dem dezentralisierten Netzwerk verbinden. Sie können dies im Menü tun.</string>
   <string name="setup_finished_3">Wenn Bote offline ist, können Sie E-Mails lesen, die bereits heruntergeladen wurden. Sie können auch E-Mails schreiben und diese in den Postausgang legen; sie werden gesendet, sobald Bote das nächste Mal online ist. </string>
   <string name="go_to_inbox">Zum Posteingang gehen</string>
+  <string name="log_in">Anmelden</string>
+  <string name="log_out">Abmelden</string>
+  <string name="touch_lock_to_log_in">Berühren Sie das Sperrsymbol, um sich anzumelden.</string>
   <string name="action_new_email">Neue E-Mail</string>
   <string name="action_send_email">E-Mail senden</string>
   <string name="action_start_bote">Mit dem Netzwerk verbinden</string>
   <string name="action_stop_bote">Netzwerkverbindung trennen</string>
   <string name="action_settings">Einstellungen</string>
   <string name="start_i2p_android">I2P Android scheint nicht zu laufen. Möchten Sie es starten?</string>
-  <string name="pull_text">Zum Abrufen der E-Mails ziehen</string>
-  <string name="refreshing_text">Prüfe auf neue E-Mails ...</string>
-  <string name="release_text">Loslassen, um auf neue E-mails zu prüfen</string>
   <!--Argument is a number-->
   <string name="incomplete_emails">%s unvollständige E-Mails</string>
   <!--Argument is a number-->
@@ -123,6 +123,7 @@
   <string name="failed_to_read_email_destination_file">Fehler beim Lesen der Datei mit dem Email-Ziel</string>
   <string name="could_not_find_email_destination_file">Konnte Datei mit Email-Ziel nicht finden.</string>
   <string name="save_contact">Kontakt speichern</string>
+  <string name="not_a_valid_bote_address">Dies ist keine gültige Bote-Adresse</string>
   <string name="delete_contact">Kontakt löschen?</string>
   <string name="network_info_unavailable">Bote ist noch nicht mit dem Netzwerk verbunden. Netzwerkinformationen sind daher noch nicht verfügbar.</string>
   <string name="network_info_unavailable_delay">Bote wartet auf den Start und die Verfügbarkeit des I2P-Routers</string>
@@ -144,8 +145,6 @@
   <string name="pref_title_sentTime">Sendezeitpunkt</string>
   <string name="pref_summ_sentTime">Zeitpunkt des Verschickens in ausgehender Mail anhängen</string>
   <string name="pref_title_routing">Routing</string>
-  <string name="pref_title_numHops">Relays</string>
-  <string name="pref_summ_numHops">%s Relays beim Senden der Mail verwenden</string>
   <string name="pref_title_minDelay">Minimale Verzögerung je Zwischenstation</string>
   <string name="pref_summ_minDelay">%s Minuten</string>
   <string name="pref_title_maxDelay">Maximale Verzögerung je Zwischenstation</string>
@@ -184,4 +183,5 @@
   <string name="no_identities_found">Keine Identitäten gefunden.</string>
   <string name="no_identities_found_maybe_encrypted">Keine Identitäten gefunden. Ist die Datei verschlüsselt?</string>
   <string name="identities_imported">Identitäten importiert</string>
+  <string name="this_field_is_required">Dieses Feld ist erforderlich</string>
 </resources>
