@@ -63,6 +63,7 @@ public class EmailListFragment extends AuthenticatedListFragment implements
     private EmailFolder mFolder;
 
     private MenuItem mNewEmail;
+    private MenuItem mCheckEmail;
 
     // The Controller which provides CHOICE_MODE_MULTIPLE_MODAL-like functionality
     private MultiSelectionUtil.Controller mMultiSelectController;
@@ -211,12 +212,17 @@ public class EmailListFragment extends AuthenticatedListFragment implements
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.email_list, menu);
         mNewEmail = menu.findItem(R.id.action_new_email);
+        mCheckEmail = menu.findItem(R.id.action_check_email);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        mNewEmail.setVisible(!I2PBote.getInstance().isPasswordRequired());
+        boolean passwordRequired = I2PBote.getInstance().isPasswordRequired();
+        mNewEmail.setVisible(!passwordRequired);
+        mCheckEmail.setVisible(mSwipeRefreshLayout != null && !passwordRequired);
+        if (mSwipeRefreshLayout != null)
+            mSwipeRefreshLayout.setEnabled(!passwordRequired);
     }
 
     @Override
@@ -224,6 +230,13 @@ public class EmailListFragment extends AuthenticatedListFragment implements
         switch (item.getItemId()) {
             case R.id.action_new_email:
                 startNewEmail();
+                return true;
+
+            case R.id.action_check_email:
+                if (!mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    onRefresh();
+                }
                 return true;
 
             default:
