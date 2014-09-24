@@ -5,7 +5,6 @@ Fixes:
 -- Delete/read/unread/move actions that don't break everything
 - Improve network status page
 -- Show full network error? Make it copy-able?
-- Get pull-to-check working for empty inbox
 
 Tasks:
 - Show logged-in status in persistent notification
