@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
@@ -20,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +39,7 @@ import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.android.util.MultiSelectionUtil;
+import i2p.bote.android.util.MultiSwipeRefreshLayout;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
@@ -54,7 +55,8 @@ public class EmailListFragment extends AuthenticatedListFragment implements
 
     OnEmailSelectedListener mCallback;
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private MultiSwipeRefreshLayout mSwipeRefreshLayout;
+    private TextView mEmptyText;
     private TextView mNumIncompleteEmails;
 
     private EmailListAdapter mAdapter;
@@ -102,83 +104,35 @@ public class EmailListFragment extends AuthenticatedListFragment implements
         mFolder = BoteHelper.getMailFolder(folderName);
 
         if (BoteHelper.isInbox(mFolder)) {
-            // Now create a SwipeRefreshLayout to wrap the fragment's content view
-            mSwipeRefreshLayout = new ListFragmentSwipeRefreshLayout(container.getContext());
+            // Inflate the MultiSwipeRefreshLayout
+            mSwipeRefreshLayout = (MultiSwipeRefreshLayout) inflater.inflate(
+                    R.layout.fragment_list_emails, container, false);
+            FrameLayout listContainer = (FrameLayout) mSwipeRefreshLayout.findViewById(R.id.list_container);
+            listContainer.addView(listFragmentView);
 
-            // Add the list fragment's content view to the SwipeRefreshLayout, making sure that it fills
-            // the SwipeRefreshLayout
-            mSwipeRefreshLayout.addView(listFragmentView,
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            // Set up the empty view
+            View emptyView = mSwipeRefreshLayout.findViewById(android.R.id.empty);
+            ListView listView = (ListView) mSwipeRefreshLayout.findViewById(android.R.id.list);
+            listView.setEmptyView(emptyView);
+            mEmptyText = (TextView) mSwipeRefreshLayout.findViewById(R.id.empty_text);
 
-            // Make sure that the SwipeRefreshLayout will fill the fragment
-            mSwipeRefreshLayout.setLayoutParams(
-                    new ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT));
-
-            // Set up the SwipeRefreshLayout
+            // Set up the MultiSwipeRefreshLayout
+            mSwipeRefreshLayout.setSwipeableChildren(android.R.id.list, android.R.id.empty);
             mSwipeRefreshLayout.setOnRefreshListener(this);
             mSwipeRefreshLayout.setRefreshing(I2PBote.getInstance().isCheckingForMail());
 
-            // Now return the SwipeRefreshLayout as this fragment's content view
+            // Now return the MultiSwipeRefreshLayout as this fragment's content view
             return mSwipeRefreshLayout;
         } else
             return listFragmentView;
     }
 
-    /**
-     * Sub-class of {@link android.support.v4.widget.SwipeRefreshLayout} for use in this
-     * {@link android.support.v4.app.ListFragment}. The reason that this is needed is because
-     * {@link android.support.v4.widget.SwipeRefreshLayout} only supports a single child, which it
-     * expects to be the one which triggers refreshes. In our case the layout's child is the content
-     * view returned from
-     * {@link android.support.v4.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}
-     * which is a {@link android.view.ViewGroup}.
-     *
-     * <p>To enable 'swipe-to-refresh' support via the {@link android.widget.ListView} we need to
-     * override the default behavior and properly signal when a gesture is possible. This is done by
-     * overriding {@link #canChildScrollUp()}.
-     */
-    private class ListFragmentSwipeRefreshLayout extends SwipeRefreshLayout {
-
-        public ListFragmentSwipeRefreshLayout(Context context) {
-            super(context);
-        }
-
-        /**
-         * As mentioned above, we need to override this method to properly signal when a
-         * 'swipe-to-refresh' is possible.
-         *
-         * @return true if the {@link android.widget.ListView} is visible and can scroll up.
-         */
-        @Override
-        public boolean canChildScrollUp() {
-            final ListView listView = getListView();
-            if (listView.getVisibility() == View.VISIBLE) {
-                return canListViewScrollUp(listView);
-            } else {
-                return false;
-            }
-        }
-
-    }
-
-    /**
-     * Utility method to check whether a {@link ListView} can scroll up from it's current position.
-     * Handles platform version differences, providing backwards compatible functionality where
-     * needed.
-     */
-    private static boolean canListViewScrollUp(ListView listView) {
-        if (android.os.Build.VERSION.SDK_INT >= 14) {
-            // For ICS and above we can call canScrollVertically() to determine this
-            return ViewCompat.canScrollVertically(listView, -1);
-        } else {
-            // Pre-ICS we need to manually check the first visible item and the child view's top
-            // value
-            return listView.getChildCount() > 0 &&
-                    (listView.getFirstVisiblePosition() > 0
-                            || listView.getChildAt(0).getTop() < listView.getPaddingTop());
-        }
+    @Override
+    public void setEmptyText(CharSequence text) {
+        if (mEmptyText == null)
+            super.setEmptyText(text);
+        else
+            mEmptyText.setText(text);
     }
 
     @Override
