@@ -7,7 +7,7 @@
 
     <property name="i2plib" value="${i2pbase}/lib"/>
     <property name="jstllib" value="${i2pbase}/apps/susidns/src/WEB-INF/lib"/>
-    <property name="lib" value="WebContent/WEB-INF/lib"/>
+    <property name="lib" value="lib"/>
     <property name="makeplugin" value="../i2p.scripts/plugin/makeplugin.sh"/>
     
     <property name="junit.filename" value="junit-4.8.1.jar"/>
@@ -65,7 +65,6 @@
         <pathelement location="${i2plib}/mstreaming.jar" />
         <pathelement location="${i2plib}/streaming.jar" />
         <pathelement location="${i2plib}/router.jar" />
-        <!-- <pathelement location="${i2plib}/i2ptunnel.jar" /> -->
         <pathelement location="${i2plib}/org.mortbay.jetty.jar"/>
         <pathelement location="${i2plib}/jasper-compiler.jar" />
         <pathelement location="${i2plib}/jasper-runtime.jar" />
@@ -81,7 +80,7 @@
         <pathelement location="${lib}/lzma-9.20.jar" />
         <pathelement location="${lib}/flexi-gmss-1.7p1.jar" />
         <pathelement location="${lib}/${subetha.filename}" />
-        <pathelement location="WebContent/WEB-INF/classes" />
+        <pathelement location="src/main/webapp/WEB-INF/classes" />
         <fileset refid="imaplibs"/>
     </path>
 
@@ -121,7 +120,7 @@
         <fail unless="i2pbase" message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p."/>
     </target>
 
-    <!-- compiles everything under src/, but not test/ or ant/ -->
+    <!-- compiles everything under src/main/java, but not src/test/ or src/build/ -->
     <target name="compile" depends="checki2pbase">
         <available property="jamesexists" file="${lib}/${james.filename}" type="file"/>
         <ant target="downloadjames"/>
@@ -131,7 +130,7 @@
         <mkdir dir="./ant_build" />
         <mkdir dir="./ant_build/classes" />
         <javac
-            srcdir="./src"
+            srcdir="./src/main/java"
             debug="true"
             deprecation="on"
             source="1.6" target="1.6" 
@@ -157,7 +156,7 @@
             <arg value="-webinc" />
             <arg value="ant_build/web-fragment.xml" />
             <arg value="-webapp" />
-            <arg value="WebContent" />
+            <arg value="src/main/webapp" />
         </java>
 
         <javac
@@ -170,7 +169,7 @@
             includes="**/*.java"
             classpathref="jspcp"
             failonerror="true" />
-        <copy file="WebContent/WEB-INF/web.xml" tofile="ant_build/web.xml" />
+        <copy file="src/main/webapp/WEB-INF/web.xml" tofile="ant_build/web.xml" />
         <loadfile property="jspc.web.fragment" srcfile="ant_build/web-fragment.xml" />
         <replace file="ant_build/web.xml">
             <replacefilter token="&lt;!-- precompiled servlets --&gt;" value="${jspc.web.fragment}" />
@@ -181,10 +180,9 @@
         <mkdir dir="ant_build" />
         <war destfile="i2pbote.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
-            <fileset dir="WebContent" includes="*.html"/>
-            <fileset dir="WebContent" includes="*.css"/>
-            <fileset dir="WebContent/" includes="*.xml"/>
-            <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
+            <fileset dir="src/main/webapp" includes="*.html"/>
+            <fileset dir="src/main/webapp/" includes="*.xml"/>
+            <webinf dir="src/main/webapp/WEB-INF/tlds" includes="*.tld"/>
             <lib file="${lib}/i2pbote.jar"/>
             <lib file="${lib}/mailapi.jar"/>
             <lib file="${lib}/bcprov-ecc-jdk16-146.jar"/>
@@ -192,7 +190,7 @@
             <lib file="${lib}/scrypt-1.4.0.jar"/>
             <lib file="${lib}/lzma-9.20.jar"/>
             <lib file="${lib}/flexi-gmss-1.7p1.jar"/>
-          <zipfileset dir="WebContent/themes" prefix="themes"/>
+          <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
         </war>
 
         <echo message="SHA256 sum:"/>
@@ -205,8 +203,8 @@
         <mkdir dir="ant_build" />
         <jar destfile="${lib}/i2pbote.jar">
             <fileset dir="ant_build/classes" excludes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/** codec/** **/*Test.class"/>
-            <fileset dir="src" includes="i2p/bote/network/built-in-peers.txt"/>
-            <fileset dir="src" includes="i2p/bote/crypto/wordlist/"/>
+            <fileset dir="src/main/java" includes="i2p/bote/network/built-in-peers.txt"/>
+            <fileset dir="src/main/java" includes="i2p/bote/crypto/wordlist/"/>
             <manifest>
                 <attribute name="Class-Path" value="${manifest.classpath}" />
             </manifest>
@@ -305,12 +303,12 @@
             <arg value="${lib}/${subetha.filename}"/>
         </exec>
 
-        <copy file="WebContent/WEB-INF/lib/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
-        <copy file="WebContent/WEB-INF/lib/decrypt.sh" todir="plugin/plugin.tmp/lib"/>
-        <copy file="WebContent/WEB-INF/lib/fileinfo.sh" todir="plugin/plugin.tmp/lib"/>
-        <copy file="WebContent/WEB-INF/lib/encrypt.bat" todir="plugin/plugin.tmp/lib"/>
-        <copy file="WebContent/WEB-INF/lib/decrypt.bat" todir="plugin/plugin.tmp/lib"/>
-        <copy file="WebContent/WEB-INF/lib/fileinfo.bat" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/decrypt.sh" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/fileinfo.sh" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/encrypt.bat" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/decrypt.bat" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/fileinfo.bat" todir="plugin/plugin.tmp/lib"/>
 
         <!-- XXX Don't delete mailapi.jar from updater for 0.2.10
         <delete file="plugin/plugin.tmp/lib/mailapi.jar" />
@@ -349,11 +347,10 @@
         <mkdir dir="ant_build" />
         <war destfile="i2pbote-plugin.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
-            <fileset dir="WebContent" includes="*.html"/>
-            <fileset dir="WebContent" includes="*.css"/>
-            <fileset dir="WebContent/" includes="*.xml"/>
-            <webinf dir="WebContent/WEB-INF/tlds" includes="*.tld"/>
-            <zipfileset dir="WebContent/themes" prefix="themes"/>
+            <fileset dir="src/main/webapp" includes="*.html"/>
+            <fileset dir="src/main/webapp/" includes="*.xml"/>
+            <webinf dir="src/main/webapp/WEB-INF/tlds" includes="*.tld"/>
+            <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
         </war>
     </target>
     
@@ -361,13 +358,13 @@
         <!-- Update the messages_*.po files.
              We need to supply the bat file for windows, and then change the fail property to true -->
         <exec executable="sh" osfamily="unix" failifexecutionfails="false" >
-            <arg value="./bundle-messages.sh" />
+            <arg value="src/build/scripts/bundle-messages.sh" />
         </exec>
         <exec executable="sh" osfamily="mac" failifexecutionfails="false" >
-            <arg value="./bundle-messages.sh" />
+            <arg value="src/build/scripts/bundle-messages.sh" />
         </exec>
         <exec executable="sh" osfamily="windows" failifexecutionfails="false" >
-            <arg value="./bundle-messages.sh" />
+            <arg value="src/build/scripts/bundle-messages.sh" />
         </exec>
     </target>
 
@@ -453,15 +450,15 @@
     <target name="poupdate" depends="compileantclasses">
         <!-- Update the messages_*.po files.  -->
         <exec executable="sh" osfamily="unix" failonerror="true" >
-            <arg value="./bundle-messages.sh" />
+            <arg value="src/build/scripts/bundle-messages.sh" />
             <arg value="-p" />
         </exec>
         <exec executable="sh" osfamily="mac" failonerror="true" >
-            <arg value="./bundle-messages.sh" />
+            <arg value="src/build/scripts/bundle-messages.sh" />
             <arg value="-p" />
         </exec>
         <exec executable="sh" osfamily="windows" failifexecutionfails="true" >
-            <arg value="bundle-messages.sh" />
+            <arg value="src/build/scripts/bundle-messages.sh" />
             <arg value="-p" />
         </exec>
     </target>
@@ -469,7 +466,7 @@
     <!-- compiles the Java code in the ant directory -->
     <target name="compileantclasses" depends="compile">
         <javac
-            srcdir="./ant"
+            srcdir="./src/build/java"
             debug="true"
             deprecation="on"
             source="1.6" target="1.6" 
@@ -494,7 +491,7 @@
         </path>
 
         <javac
-            srcdir="./test"
+            srcdir="./src/test/java"
             debug="true"
             deprecation="on"
             source="1.6" target="1.6" 
@@ -502,9 +499,9 @@
             destdir="./ant_build/classes"
             classpathref="junitcp"
             failonerror="true" />
-        <copy file="test/i2p/bote/packet/dht/Struwwelpeter.jpg" tofile="ant_build/classes/i2p/bote/packet/dht/Struwwelpeter.jpg"/>
-        <copy file="src/i2p/bote/crypto/wordlist/words_de.txt" tofile="ant_build/classes/i2p/bote/crypto/wordlist/words_de.txt"/>
-        <copy file="src/i2p/bote/crypto/wordlist/words_en.txt" tofile="ant_build/classes/i2p/bote/crypto/wordlist/words_en.txt"/>
+        <copy file="src/test/java/i2p/bote/packet/dht/Struwwelpeter.jpg" tofile="ant_build/classes/i2p/bote/packet/dht/Struwwelpeter.jpg"/>
+        <copy file="src/main/java/i2p/bote/crypto/wordlist/words_de.txt" tofile="ant_build/classes/i2p/bote/crypto/wordlist/words_de.txt"/>
+        <copy file="src/main/java/i2p/bote/crypto/wordlist/words_en.txt" tofile="ant_build/classes/i2p/bote/crypto/wordlist/words_en.txt"/>
 
         <echo message="Running JUnit tests..."/>
         <junit printsummary="off" failureproperty="failed">
@@ -614,7 +611,7 @@
     <!-- Depends on compile b/c it gets the app version from I2PBote.class -->
     <target name="getversion" depends="compile">
         <javac
-            srcdir="./ant"
+            srcdir="./src/build/java"
             debug="true"
             deprecation="on"
             source="1.6" target="1.6" 
@@ -636,18 +633,14 @@
     <target name="src" depends="getversion">
         <property name="subdir" value="i2pbote-${version}-src"/>
         <zip destfile="src.zip">
-            <zipfileset dir="src" prefix="${subdir}/src"/>
-            <zipfileset dir="WebContent" prefix="${subdir}/WebContent" followsymlinks="false"/>
-            <zipfileset dir="test" prefix="${subdir}/test"/>
-            <zipfileset dir="ant" prefix="${subdir}/ant"/>
+            <zipfileset dir="src" prefix="${subdir}/src" followsymlinks="false"/>
             <zipfileset dir="doc" prefix="${subdir}/doc"/>
             <zipfileset dir="plugin" prefix="${subdir}/plugin">
                 <exclude name="plugin.tmp/**"/>
             </zipfileset>
             <zipfileset file="build.xml" prefix="${subdir}"/>
             <zipfileset file="locale/messages_de.po" prefix="${subdir}/locale"/>
-            <zipfileset file="bundle-messages.sh" prefix="${subdir}"/>
-            <zipfileset file="jsp2po.sh" prefix="${subdir}"/>
+            <zipfileset file="src/build/scripts/bundle-messages.sh" prefix="${subdir}"/>
             <zipfileset file="history.txt" prefix="${subdir}"/>
             <zipfileset file="license.txt" prefix="${subdir}"/>
         </zip>
