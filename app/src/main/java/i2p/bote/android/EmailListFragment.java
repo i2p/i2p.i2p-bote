@@ -176,7 +176,7 @@ public class EmailListFragment extends AuthenticatedListFragment implements
         int numIncompleteEmails = I2PBote.getInstance().getNumIncompleteEmails();
         if (numIncompleteEmails > 0) {
             mNumIncompleteEmails = new TextView(getActivity());
-            mNumIncompleteEmails.setText(getResources().getString(R.string.incomplete_emails,
+            mNumIncompleteEmails.setText(getResources().getQuantityString(R.plurals.incomplete_emails,
                     numIncompleteEmails));
             mNumIncompleteEmails.setPadding(16, 5, 16, 5);
             getListView().addHeaderView(mNumIncompleteEmails, null, false);
