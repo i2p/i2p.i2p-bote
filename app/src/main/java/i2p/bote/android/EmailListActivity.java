@@ -60,6 +60,7 @@ public class EmailListActivity extends ActionBarActivity implements
     private RelativeLayout mDrawerOuter;
     private FolderListAdapter mFolderAdapter;
     private ListView mFolderList;
+    private int mCurPos;
     private TextView mNetworkStatusText;
     private ActionBarDrawerToggle mDrawerToggle;
     RouterChoice mRouterChoice;
@@ -147,9 +148,9 @@ public class EmailListActivity extends ActionBarActivity implements
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.list_fragment, f).commit();
             mFolderList.setItemChecked(0, true);
+            mCurPos = 0;
         } else {
-            mFolderList.setItemChecked(
-                    savedInstanceState.getInt(ACTIVE_FOLDER), true);
+            mCurPos = savedInstanceState.getInt(ACTIVE_FOLDER);
         }
 
         // Set up fixed actions
@@ -208,23 +209,26 @@ public class EmailListActivity extends ActionBarActivity implements
     }
 
     private void selectItem(int position) {
-        // Create the new fragment
-        EmailFolder folder = mFolderAdapter.getItem(position);
-        EmailListFragment f = EmailListFragment.newInstance(folder.getName());
+        if (position != mCurPos) {
+            // Create the new fragment
+            EmailFolder folder = mFolderAdapter.getItem(position);
+            EmailListFragment f = EmailListFragment.newInstance(folder.getName());
 
-        // Insert the fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.list_fragment, f).commit();
+            // Insert the fragment
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.list_fragment, f).commit();
 
-        // Highlight the selected item and close the drawer
-        mFolderList.setItemChecked(position, true);
+            // Save the current position
+            mCurPos = position;
+        }
+        // Close the drawer
         mDrawerLayout.closeDrawer(mDrawerOuter);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(ACTIVE_FOLDER, mFolderList.getSelectedItemPosition());
+        outState.putInt(ACTIVE_FOLDER, mCurPos);
     }
 
     @Override
