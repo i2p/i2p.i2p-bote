@@ -662,7 +662,7 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
   * Comment out all lines in built-in-peers.txt and disable seedless so you get a closed network
   * Start and stop all servers, then go to Debug Configurations (or Run Configurations)
     and add the following to Arguments -> VM arumgents:
-      -Di2p.dir.config="/path/to/<work_dir>/" -Di2p.dir.app="/path/to/<work_dir>"
+      -Di2p.dir.config="/path/to/<work_dir>/i2pbote/" -Di2p.dir.app="/path/to/<work_dir>/i2pbote/"
     where <work_dir> is the name you gave that work dir. Repeat for the other servers.
   * Edit built-in-peers.txt and add the I2P destination from the first test server
   * Create a file named logger.config in each work dir with the following contents:
