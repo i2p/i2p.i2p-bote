@@ -218,13 +218,15 @@ public class SettingsActivity extends PreferenceActivity {
                 addPreferencesFromResource(R.xml.settings_general);
 
                 ListPreference numSendHops = (ListPreference) findPreference("numSendHops");
-                numSendHops.setSummary(getResources().getQuantityText(R.plurals.pref_summ_numHops,
-                        Integer.valueOf(numSendHops.getValue())));
+                int value = Integer.valueOf(numSendHops.getValue());
+                numSendHops.setSummary(getResources().getQuantityString(R.plurals.pref_summ_numHops,
+                        value, value));
                 numSendHops.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        preference.setSummary(getResources().getQuantityText(R.plurals.pref_summ_numHops,
-                                Integer.valueOf((String) newValue)));
+                        int value = Integer.valueOf((String) newValue);
+                        preference.setSummary(getResources().getQuantityString(R.plurals.pref_summ_numHops,
+                                value, value));
                         return true;
                     }
                 });

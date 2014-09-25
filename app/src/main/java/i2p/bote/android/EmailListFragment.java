@@ -177,7 +177,7 @@ public class EmailListFragment extends AuthenticatedListFragment implements
         if (numIncompleteEmails > 0) {
             mNumIncompleteEmails = new TextView(getActivity());
             mNumIncompleteEmails.setText(getResources().getQuantityString(R.plurals.incomplete_emails,
-                    numIncompleteEmails));
+                    numIncompleteEmails, numIncompleteEmails));
             mNumIncompleteEmails.setPadding(16, 5, 16, 5);
             getListView().addHeaderView(mNumIncompleteEmails, null, false);
         }

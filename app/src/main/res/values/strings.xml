@@ -46,7 +46,7 @@
     <string name="check_email">Check email</string>
     <!-- Argument is a number -->
     <plurals name="incomplete_emails">
-        <item quantity="one">%d incomplete emails</item>
+        <item quantity="one">One incomplete email</item>
         <item quantity="other">%d incomplete emails</item>
     </plurals>
     <!-- Argument is a number -->
@@ -79,7 +79,7 @@
     <string name="connected_to_network">Connected to the Bote network</string>
 
     <plurals name="n_new_emails">
-        <item quantity="one">%d new email</item>
+        <item quantity="one">One new email</item>
         <item quantity="other">%d new emails</item>
     </plurals>
 
