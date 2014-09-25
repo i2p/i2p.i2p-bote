@@ -60,7 +60,7 @@ public class EmailListActivity extends ActionBarActivity implements
     private RelativeLayout mDrawerOuter;
     private FolderListAdapter mFolderAdapter;
     private ListView mFolderList;
-    private TextView mNetworkStatus;
+    private TextView mNetworkStatusText;
     private ActionBarDrawerToggle mDrawerToggle;
     RouterChoice mRouterChoice;
     IRouterState mStateService = null;
@@ -90,7 +90,7 @@ public class EmailListActivity extends ActionBarActivity implements
         mDrawerOuter = (RelativeLayout) findViewById(R.id.drawer_outer);
         mFolderAdapter = new FolderListAdapter(this);
         mFolderList = (ListView) findViewById(R.id.drawer);
-        mNetworkStatus = (TextView) findViewById(R.id.network_status);
+        mNetworkStatusText = (TextView) findViewById(R.id.network_status_text);
 
         // Set the list of folders
         // TODO: This is slow, needs a loader
@@ -159,32 +159,32 @@ public class EmailListActivity extends ActionBarActivity implements
                 startActivity(ai);
             }
         });
-        mNetworkStatus.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.network_status).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 int boteNotStartedMessage = R.string.network_info_unavailable;
                 switch (I2PBote.getInstance().getNetworkStatus()) {
-                case DELAY:
-                    boteNotStartedMessage = R.string.network_info_unavailable_delay;
-                case NOT_STARTED:
-                    final int message = boteNotStartedMessage;
-                    DialogFragment df = new DialogFragment() {
-                        @Override
-                        public Dialog onCreateDialog(Bundle savedInstanceState) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setMessage(message)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            return builder.create();
-                        }
-                    };
-                    df.show(getSupportFragmentManager(), "noinfo");
-                    break;
-                default:
-                    Intent nii = new Intent(EmailListActivity.this, NetworkInfoActivity.class);
-                    startActivity(nii);
+                    case DELAY:
+                        boteNotStartedMessage = R.string.network_info_unavailable_delay;
+                    case NOT_STARTED:
+                        final int message = boteNotStartedMessage;
+                        DialogFragment df = new DialogFragment() {
+                            @Override
+                            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setMessage(message)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                return builder.create();
+                            }
+                        };
+                        df.show(getSupportFragmentManager(), "noinfo");
+                        break;
+                    default:
+                        Intent nii = new Intent(EmailListActivity.this, NetworkInfoActivity.class);
+                        startActivity(nii);
                 }
             }
         });
@@ -467,11 +467,11 @@ public class EmailListActivity extends ActionBarActivity implements
                 statusText = R.string.not_started;
                 statusIcon = getResources().getDrawable(android.R.drawable.presence_offline);
         }
-        mNetworkStatus.post(new Runnable() {
+        mNetworkStatusText.post(new Runnable() {
             @Override
             public void run() {
-                mNetworkStatus.setText(statusText);
-                mNetworkStatus.setCompoundDrawablesWithIntrinsicBounds(
+                mNetworkStatusText.setText(statusText);
+                mNetworkStatusText.setCompoundDrawablesWithIntrinsicBounds(
                         statusIcon, null, null, null);
             }
         });

@@ -38,25 +38,51 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical" >
 
-            <TextView
+            <FrameLayout
                 android:id="@+id/address_book"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/folder_activated_background"
-                android:padding="15dp"
-                android:text="@string/address_book"
-                android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+                android:background="@drawable/folder_activated_background">
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="48dp"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginRight="56dp"
+                    android:layout_marginEnd="56dp"
+                    android:text="@string/address_book"
+                    android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/network_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/folder_activated_background"
-                android:drawableLeft="@android:drawable/presence_offline"
-                android:drawablePadding="10dp"
-                android:padding="15dp"
-                android:text="@string/network_status"
-                android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+                android:background="@drawable/folder_activated_background">
+
+                <TextView
+                    android:id="@+id/network_status_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@android:drawable/presence_offline"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:minHeight="48dp"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginRight="56dp"
+                    android:layout_marginEnd="56dp"
+                    android:text="@string/network_status"
+                    android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+            </FrameLayout>
+
         </LinearLayout>
     </RelativeLayout>
 
