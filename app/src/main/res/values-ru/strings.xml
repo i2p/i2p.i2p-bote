@@ -41,8 +41,8 @@
   <string name="action_stop_bote">Отключиться от сети</string>
   <string name="action_settings">Настройки</string>
   <string name="start_i2p_android">Похоже, что I2P Android не запущен. Запустить I2P Android?</string>
+  <string name="check_email">Проверить почту</string>
   <!--Argument is a number-->
-  <string name="incomplete_emails">%s незаконченных писем</string>
   <!--Argument is a number-->
   <string name="items_selected">%s выбрано</string>
   <string name="action_delete">Удалить</string>
@@ -143,9 +143,16 @@
   <string name="pref_title_privacy">Приватность</string>
   <string name="pref_title_hideLocale">Скрывать используемый язык</string>
   <string name="pref_summ_hideLocale">Использовать английский язык в исходящих сообщениях (\'Re:\', \'wrote:\', и т. д.)</string>
+  <string name="pref_summ_hideLocale_off">Использовать установленный в системе язык для текстов, добавляемых к исходящим письмам (таких как \'Re:\', \'wrote:\' и т. д.)</string>
   <string name="pref_title_sentTime">Время отправки</string>
   <string name="pref_summ_sentTime">Включать время отправления в исходящих сообщениях</string>
   <string name="pref_title_routing">Маршрутизация</string>
+  <string name="pref_title_numSendHops">Отправка транзитных точек</string>
+  <plurals name="pref_summ_numHops">
+    <item quantity="one">%s ретранслятор</item>
+    <item quantity="few">%s ретранслятора</item>
+    <item quantity="other">%s ретрансляторов</item>
+  </plurals>
   <string name="pref_title_minDelay">Минимальная задержка при каждом прыжке</string>
   <string name="pref_summ_minDelay">%s мин.</string>
   <string name="pref_title_maxDelay">Максимальная задержка при каждом прыжке</string>

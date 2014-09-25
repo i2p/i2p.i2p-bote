@@ -42,7 +42,6 @@
   <string name="action_settings">Paramètres</string>
   <string name="start_i2p_android">Il apparaît que I2P Android n\'est pas en cours de fonctionnement. Voudriez-vous le démarrer ?</string>
   <!--Argument is a number-->
-  <string name="incomplete_emails">%s courriers incomplets</string>
   <!--Argument is a number-->
   <string name="items_selected">%s sélectionné(s)</string>
   <string name="action_delete">Supprimer</string>

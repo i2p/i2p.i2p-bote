@@ -41,8 +41,8 @@
   <string name="action_stop_bote">Netzwerkverbindung trennen</string>
   <string name="action_settings">Einstellungen</string>
   <string name="start_i2p_android">I2P Android scheint nicht zu laufen. Möchten Sie es starten?</string>
+  <string name="check_email">E-Mail abrufen</string>
   <!--Argument is a number-->
-  <string name="incomplete_emails">%s unvollständige E-Mails</string>
   <!--Argument is a number-->
   <string name="items_selected">%s ausgewählt</string>
   <string name="action_delete">Löschen</string>
