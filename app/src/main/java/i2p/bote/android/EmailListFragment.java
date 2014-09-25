@@ -118,6 +118,8 @@ public class EmailListFragment extends AuthenticatedListFragment implements
             mEmptyText = (TextView) mSwipeRefreshLayout.findViewById(R.id.empty_text);
 
             // Set up the MultiSwipeRefreshLayout
+            mSwipeRefreshLayout.setColorSchemeResources(
+                    R.color.uva_color, R.color.translucent_blue, R.color.error_color, android.R.color.black);
             mSwipeRefreshLayout.setSwipeableChildren(android.R.id.list, android.R.id.empty);
             mSwipeRefreshLayout.setOnRefreshListener(this);
             mSwipeRefreshLayout.setRefreshing(I2PBote.getInstance().isCheckingForMail());
