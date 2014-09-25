@@ -13,6 +13,9 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -84,9 +87,28 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
 
             subject.setText(email.getSubject());
             address.setText(BoteHelper.getNameAndShortDestination(otherAddress));
-            if (email.getSentDate() != null)
-                sent.setText(DateFormat.getInstance().format(
-                        email.getSentDate()));
+
+            Date sentDate = email.getSentDate();
+            if (sentDate != null) {
+                DateFormat df;
+                Calendar boundary = Calendar.getInstance();
+                boundary.set(Calendar.HOUR, 0);
+                boundary.set(Calendar.MINUTE, 0);
+                boundary.set(Calendar.SECOND, 0);
+                if (sentDate.before(boundary.getTime())) {
+                    boundary.set(Calendar.MONTH, Calendar.JANUARY);
+                    boundary.set(Calendar.DAY_OF_MONTH, 1);
+                    if (sentDate.before(boundary.getTime())) // Sent before this year
+                        df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+                    else { // Sent this year before today
+                        String yearlessPattern = ((SimpleDateFormat) SimpleDateFormat.getDateInstance(DateFormat.MEDIUM))
+                                .toPattern().replaceAll(",?\\W?[Yy]+\\W?", "");
+                        df = new SimpleDateFormat(yearlessPattern);
+                    }
+                } else // Sent today
+                    df = DateFormat.getTimeInstance();
+                sent.setText(df.format(sentDate));
+            }
 
             List<Part> parts = email.getParts();
             for (Part part : parts) {
