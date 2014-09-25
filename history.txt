@@ -1,12 +1,20 @@
 I2P-Bote Version History
 ------------------------
 
-0.2.10 (Released Jul 23, 2014)
- * Vanity destinations
- * Security fix related to ElGamal email destinations
- * IMAP fixes
- * "After merging, IndexPacket is too big..." error fixed
- * Numerous fixes and enhancements by str4d
+0.2.11
+  * Strip prefixes, spaces and newlines from email destinations (to better
+    handle destinations pasted from different sources). Supported prefixes:
+     o mailto:
+     o bote:
+     o i2pbote:
+  * In-app update notification removed
+
+0.2.10 (Released on Jul 23, 2014)
+  * Vanity destinations
+  * Security fix related to ElGamal email destinations
+  * IMAP fixes
+  * "After merging, IndexPacket is too big..." error fixed
+  * Numerous fixes and enhancements by str4d
 
 0.2.9 (Released on Feb 7, 2014)
   * Experimental SMTP and IMAP support
@@ -14,7 +22,7 @@ I2P-Bote Version History
   * Misc. UI improvements
 
 0.2.8 (Released on Mar 8, 2013)
- * Fixes and enhancements to the address directory
+  * Fixes and enhancements to the address directory
 
 0.2.7 (Released on Feb 13, 2013)
   * Delivery confirmations
