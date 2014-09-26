@@ -32,7 +32,7 @@
     <!-- override with botesrc=path/to/source in local.properties -->
     <property name="botesrc" value="../i2p.i2p-bote" />
     <property name="botebase" location="${botesrc}" />
-    <property name="botelib" location="${botebase}/WebContent/WEB-INF/lib" />
+    <property name="botelib" location="${botebase}/lib" />
     <available file="${botebase}" property="bote.present" />
     <fail message="I2P-Bote source directory ${botebase} was not found. Install it there or set botesrc=/path/to/source in local.properties" >
         <condition>
