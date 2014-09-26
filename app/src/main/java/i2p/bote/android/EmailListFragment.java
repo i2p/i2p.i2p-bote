@@ -516,8 +516,9 @@ public class EmailListFragment extends AuthenticatedListFragment implements
                                 mNumIncompleteEmails = new TextView(getActivity());
                                 getListView().addHeaderView(mNumIncompleteEmails);
                             }
-                            mNumIncompleteEmails.setText(getResources().getString(R.string.incomplete_emails,
-                                    numIncomingEmails));
+                            mNumIncompleteEmails.setText(getResources().getQuantityString(
+                                    R.plurals.incomplete_emails,
+                                    numIncomingEmails, numIncomingEmails));
                         } else if (mNumIncompleteEmails != null) {
                             getListView().removeHeaderView(mNumIncompleteEmails);
                             mNumIncompleteEmails = null;
