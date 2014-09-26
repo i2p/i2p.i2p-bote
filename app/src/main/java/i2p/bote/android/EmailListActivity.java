@@ -4,17 +4,13 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
@@ -29,7 +25,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import net.i2p.android.router.service.IRouterState;
+import net.i2p.android.ui.I2PAndroidHelper;
 
 import i2p.bote.I2PBote;
 import i2p.bote.android.addressbook.AddressBookActivity;
@@ -49,6 +45,9 @@ public class EmailListActivity extends ActionBarActivity implements
         MoveToDialogFragment.MoveToDialogListener,
         PasswordCacheListener,
         NetworkStatusListener {
+    private I2PAndroidHelper mHelper;
+    private RouterChoice mRouterChoice;
+
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private SharedPreferences mSharedPrefs;
@@ -63,8 +62,6 @@ public class EmailListActivity extends ActionBarActivity implements
     private int mCurPos;
     private TextView mNetworkStatusText;
     private ActionBarDrawerToggle mDrawerToggle;
-    RouterChoice mRouterChoice;
-    IRouterState mStateService = null;
 
     private static final String SHARED_PREFS = "i2p.bote";
     private static final String PREF_NAV_DRAWER_OPENED = "navDrawerOpened";
@@ -73,7 +70,6 @@ public class EmailListActivity extends ActionBarActivity implements
 
     private static final int SHOW_INTRODUCTION = 1;
     private static final int RUN_SETUP = 2;
-    private static final int REQUEST_START_I2P = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +81,7 @@ public class EmailListActivity extends ActionBarActivity implements
         init.initialize();
 
         // Initialize variables
+        mHelper = new I2PAndroidHelper(this);
         mTitle = mDrawerTitle = getTitle();
         mSharedPrefs = getSharedPreferences(SHARED_PREFS, 0);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -249,15 +246,7 @@ public class EmailListActivity extends ActionBarActivity implements
         if (prefs.getBoolean("i2pbote.router.auto", true) ||
                 prefs.getString("i2pbote.router.use", "internal").equals("android")) {
             // Try to bind to I2P Android
-            Intent i2pIntent = new Intent(IRouterState.class.getName());
-            try {
-                mTriedBindState = bindService(
-                        i2pIntent, mStateConnection, BIND_AUTO_CREATE);
-            } catch (SecurityException e) {
-                // Old version of I2P Android (pre-0.9.13), cannot use
-                mStateService = null;
-                mTriedBindState = false;
-            }
+            mHelper.bind();
         }
 
         I2PBote.getInstance().addPasswordCacheListener(this);
@@ -269,9 +258,7 @@ public class EmailListActivity extends ActionBarActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        if (mTriedBindState)
-            unbindService(mStateConnection);
-        mTriedBindState = false;
+        mHelper.unbind();
 
         I2PBote.getInstance().removePasswordCacheListener(this);
         I2PBote.getInstance().removeNetworkStatusListener(this);
@@ -298,41 +285,17 @@ public class EmailListActivity extends ActionBarActivity implements
         case R.id.action_start_bote:
             // Init from settings
             Init init = new Init(this);
-            mRouterChoice = init.initialize(mStateService);
+            mRouterChoice = init.initialize(mHelper);
 
             if (mRouterChoice == RouterChoice.ANDROID) {
-                try {
-                    if (mStateService == null) {
-                        // I2P Android not installed
-                        // TODO: handle
-                    } else if (!mStateService.isStarted()) {
-                        // Ask user to start I2P Android
-                        DialogFragment df = new DialogFragment() {
-                            @Override
-                            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                builder.setMessage(R.string.start_i2p_android)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        Intent i = new Intent("net.i2p.android.router.START_I2P");
-                                        EmailListActivity.this.startActivityForResult(i, REQUEST_START_I2P);
-                                    }
-                                })
-                                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-                                return builder.create();
-                            }
-                        };
-                        df.show(getSupportFragmentManager(), "starti2p");
-                    } else
-                        startBote();
-                } catch (RemoteException e) {
-                    // TODO log
-                }
+                if (!mHelper.isI2PAndroidInstalled()) {
+                    // I2P Android not installed
+                    mHelper.promptToInstall(this);
+                } else if (!mHelper.isI2PAndroidRunning()) {
+                    // Ask user to start I2P Android
+                    mHelper.requestI2PAndroidStart(this);
+                } else
+                    startBote();
             } else
                 startBote();
             return true;
@@ -364,7 +327,7 @@ public class EmailListActivity extends ActionBarActivity implements
             if (resultCode == RESULT_OK) {
                 // TODO implement a UI tutorial?
             }
-        } else if (requestCode == REQUEST_START_I2P) {
+        } else if (requestCode == I2PAndroidHelper.REQUEST_START_I2P) {
             if (resultCode == RESULT_OK) {
                 startBote();
             }
@@ -480,23 +443,4 @@ public class EmailListActivity extends ActionBarActivity implements
             }
         });
     }
-
-
-    //
-    // I2P Android helpers
-    //
-
-    private boolean mTriedBindState;
-    private ServiceConnection mStateConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className,
-                IBinder service) {
-            mStateService = IRouterState.Stub.asInterface(service);
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            // This is called when the connection with the service has been
-            // unexpectedly disconnected -- that is, its process crashed.
-            mStateService = null;
-        }
-    };
 }

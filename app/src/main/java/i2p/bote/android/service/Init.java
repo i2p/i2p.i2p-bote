@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
-import net.i2p.android.router.service.IRouterState;
+import net.i2p.android.ui.I2PAndroidHelper;
 import net.i2p.client.I2PClient;
 import net.i2p.data.DataHelper;
 import net.i2p.util.OrderedProperties;
@@ -38,7 +38,7 @@ public class Init {
      * Parses settings and prepares the system for starting the Bote service.
      * @return the router choice.
      */
-    public RouterChoice initialize(IRouterState stateService) {
+    public RouterChoice initialize(I2PAndroidHelper helper) {
         // Set up the locations so Router and WorkingDir can find them
         // We do this again here, in the event settings were changed.
         System.setProperty("i2p.dir.base", myDir);
@@ -51,7 +51,7 @@ public class Init {
         RouterChoice routerChoice;
         String i2cpHost, i2cpPort;
         if (prefs.getBoolean("i2pbote.router.auto", true)) {
-            if (stateService != null)
+            if (helper.isI2PAndroidInstalled())
                 routerChoice = RouterChoice.ANDROID;
             else
                 routerChoice = RouterChoice.INTERNAL;
