@@ -41,7 +41,12 @@
   <string name="action_stop_bote">Déconnecter du réseau</string>
   <string name="action_settings">Paramètres</string>
   <string name="start_i2p_android">Il apparaît que I2P Android n\'est pas en cours de fonctionnement. Voudriez-vous le démarrer ?</string>
+  <string name="check_email">Relever emails</string>
   <!--Argument is a number-->
+  <plurals name="incomplete_emails">
+    <item quantity="one">Un email incomplet</item>
+    <item quantity="other">%d emails incomplets</item>
+  </plurals>
   <!--Argument is a number-->
   <string name="items_selected">%s sélectionné(s)</string>
   <string name="action_delete">Supprimer</string>
@@ -141,9 +146,15 @@
   <string name="pref_title_privacy">Respect de la vie privée</string>
   <string name="pref_title_hideLocale">Cacher le lieu</string>
   <string name="pref_summ_hideLocale">Utiliser l\'anglais pour les textes ajoutés aux emails sortants (\'Re:\', \'wrote:\', etc.)</string>
+  <string name="pref_summ_hideLocale_off">Utiliser la langue du système pour ale texte ajouté aux emails sortants (\'Re:\', \'wrote:\', etc.)</string>
   <string name="pref_title_sentTime">Heure d\'envoi</string>
   <string name="pref_summ_sentTime">Inclure l\'heure d\'envoi dans les emails sortants</string>
   <string name="pref_title_routing">Routage</string>
+  <string name="pref_title_numSendHops">Étapes d\'envoi</string>
+  <plurals name="pref_summ_numHops">
+    <item quantity="one">%s relais</item>
+    <item quantity="other">%s relais</item>
+  </plurals>
   <string name="pref_title_minDelay">Délai minimum par étape</string>
   <string name="pref_summ_minDelay">%s minutes</string>
   <string name="pref_title_maxDelay">Délai maximum par étape</string>

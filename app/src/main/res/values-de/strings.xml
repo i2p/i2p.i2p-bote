@@ -43,6 +43,10 @@
   <string name="start_i2p_android">I2P Android scheint nicht zu laufen. Möchten Sie es starten?</string>
   <string name="check_email">E-Mail abrufen</string>
   <!--Argument is a number-->
+  <plurals name="incomplete_emails">
+    <item quantity="one">Eine unvollständige E-Mail</item>
+    <item quantity="other">%d unvollständige E-Mails</item>
+  </plurals>
   <!--Argument is a number-->
   <string name="items_selected">%s ausgewählt</string>
   <string name="action_delete">Löschen</string>
@@ -141,10 +145,16 @@
   <string name="pref_summ_delivery">Überprüfe den Zustellungsstatus der gesendeten Mails</string>
   <string name="pref_title_privacy">Datenschutz</string>
   <string name="pref_title_hideLocale">Lokale verstecken</string>
-  <string name="pref_summ_hideLocale">Benutze Englisch für ausgehenden Emails angehängten Text (\'Re:\', \'wrote:\', etc) </string>
+  <string name="pref_summ_hideLocale">Englisch für den hinzuzufügenden Text an ausgehenden E-Mails verwenden (\"Re:\", \"wrote:\", usw.)</string>
+  <string name="pref_summ_hideLocale_off">Systemsprache für den hinzuzufügenden Text an ausgehenden E-Mails verwenden (\"Antw:\", \"schrieb:\", usw.)</string>
   <string name="pref_title_sentTime">Sendezeitpunkt</string>
   <string name="pref_summ_sentTime">Zeitpunkt des Verschickens in ausgehender Mail anhängen</string>
   <string name="pref_title_routing">Routing</string>
+  <string name="pref_title_numSendHops">Zwischenstationen werden gesendet</string>
+  <plurals name="pref_summ_numHops">
+    <item quantity="one">%s Relay</item>
+    <item quantity="other">%s Relays</item>
+  </plurals>
   <string name="pref_title_minDelay">Minimale Verzögerung je Zwischenstation</string>
   <string name="pref_summ_minDelay">%s Minuten</string>
   <string name="pref_title_maxDelay">Maximale Verzögerung je Zwischenstation</string>
