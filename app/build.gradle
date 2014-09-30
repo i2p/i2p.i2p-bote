@@ -37,7 +37,7 @@ dependencies {
 
 dependencyVerification {
     verify = [
-            'net.i2p.android:client:2f527a3bbd99bd1f4b8c3460ccae70120b73a009014afa8316279950df69b988',
+            'net.i2p.android:client:58305303f42b30c30af41213790f9b4fcdead67495e8c15cd8339319cb428a8b',
             'com.android.support:support-v4:81f2b1c2c94efd5a4ec7fcd97b6cdcd00e87a933905c5c86103c7319eb024572',
             'com.android.support:appcompat-v7:736f576ab0b68d27bdf18b1e7931566e6d8254b73965175313e87f8866b91547',
             'com.mcxiaoke.viewpagerindicator:library:470bbd2bec1ede64ad21efd6f02676807d22f1b526c4ac6a5b41a428c6e47e67',
