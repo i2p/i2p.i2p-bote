@@ -43,6 +43,11 @@
   <string name="start_i2p_android">Похоже, что I2P Android не запущен. Запустить I2P Android?</string>
   <string name="check_email">Проверить почту</string>
   <!--Argument is a number-->
+  <plurals name="incomplete_emails">
+    <item quantity="one">Одно незаконченное письмо</item>
+    <item quantity="few">%d незаконченных письма</item>
+    <item quantity="other">%d незаконченных писем</item>
+  </plurals>
   <!--Argument is a number-->
   <string name="items_selected">%s выбрано</string>
   <string name="action_delete">Удалить</string>
