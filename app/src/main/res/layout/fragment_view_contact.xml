@@ -1,86 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" >
+    android:paddingTop="@dimen/activity_vertical_margin">
 
-    <ImageView
-        android:id="@+id/contact_picture"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_contact_picture" />
-
-    <TextView
-        android:id="@+id/contact_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/contact_picture"
-        android:layout_toRightOf="@+id/contact_picture"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="5dp"
-        android:ems="10"
-        android:textSize="20dp"
-        android:text="@string/public_name" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/contact_picture"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:text="@string/description" />
+        <RelativeLayout
+            android:id="@+id/picture_layout"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/picture_background">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Address information"
-        android:id="@+id/title_key_info"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/text"
-        android:layout_marginTop="5dp" />
+            <ImageView
+                android:id="@+id/contact_picture"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_contact_picture" />
+        </RelativeLayout>
 
-    <TextView
-        android:id="@+id/crypto_impl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/title_key_info"
-        android:layout_marginTop="5dp"
-        android:text="Crypto implementation" />
+        <TextView
+            android:id="@+id/contact_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/picture_layout"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:text="@string/public_name"
+            android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/destination"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/crypto_impl"
-        android:layout_marginTop="5dp"
-        android:text="Destination" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contact_name"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:text="@string/description" />
 
-    <TextView
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Fingerprint"
-        android:id="@+id/title_fingerprint"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/destination"
-        android:layout_marginTop="5dp" />
+        <TextView
+            android:id="@+id/title_key_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/text"
+            android:layout_marginTop="5dp"
+            android:text="Address information"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/fingerprint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/title_fingerprint"
-        android:layout_marginTop="5dp"
-        android:text="Fingerprint" />
+        <TextView
+            android:id="@+id/crypto_impl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/title_key_info"
+            android:layout_marginTop="5dp"
+            android:text="Crypto implementation" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/destination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/crypto_impl"
+            android:layout_marginTop="5dp"
+            android:text="Destination" />
+
+        <TextView
+            android:id="@+id/title_fingerprint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/destination"
+            android:layout_marginTop="5dp"
+            android:text="Fingerprint"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/fingerprint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/title_fingerprint"
+            android:layout_marginTop="5dp"
+            android:text="Fingerprint"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</ScrollView>
