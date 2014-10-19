@@ -154,6 +154,7 @@ public class EmailListActivity extends ActionBarActivity implements
         // Set up fixed actions
         findViewById(R.id.address_book).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                mDrawerLayout.closeDrawer(mDrawerOuter);
                 Intent ai = new Intent(EmailListActivity.this, AddressBookActivity.class);
                 startActivity(ai);
             }
@@ -182,6 +183,7 @@ public class EmailListActivity extends ActionBarActivity implements
                         df.show(getSupportFragmentManager(), "noinfo");
                         break;
                     default:
+                        mDrawerLayout.closeDrawer(mDrawerOuter);
                         Intent nii = new Intent(EmailListActivity.this, NetworkInfoActivity.class);
                         startActivity(nii);
                 }
