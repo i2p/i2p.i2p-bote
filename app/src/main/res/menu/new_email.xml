@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_send_email"
-        android:icon="@drawable/ic_social_send_now"
+        android:icon="@drawable/ic_send_white_24dp"
         android:title="@string/action_send_email"
         i2pandroid:showAsAction="ifRoom"/>
 

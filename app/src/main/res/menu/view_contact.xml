@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/action_edit_contact"
-        android:icon="@drawable/ic_content_edit"
+        android:icon="@drawable/ic_create_white_24dp"
         android:title="@string/edit_contact"
         i2pandroid:showAsAction="ifRoom"/>
 

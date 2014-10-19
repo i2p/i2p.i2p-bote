@@ -107,7 +107,7 @@ public class EmailListActivity extends ActionBarActivity implements
 
         // Set up drawer toggle
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+                R.drawable.ic_menu_white_24dp, R.string.drawer_open, R.string.drawer_close) {
             private boolean wasDragged = false;
 
             /** Called when a drawer has settled in a completely closed state. */
