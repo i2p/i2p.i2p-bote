@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EmailListActivity" >
+    tools:context=".EmailListActivity">
 
     <!-- The mail list view -->
     <FrameLayout
@@ -19,7 +18,7 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#111" >
+        android:background="@color/background_floating_material_light">
 
         <ListView
             android:id="@+id/drawer"
@@ -36,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/address_book"
@@ -46,17 +45,14 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/nav_entry_height"
                     android:gravity="center_vertical"
-                    android:minHeight="48dp"
-                    android:paddingLeft="16dp"
-                    android:paddingStart="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingEnd="16dp"
-                    android:layout_marginRight="56dp"
-                    android:layout_marginEnd="56dp"
+                    android:paddingEnd="@dimen/nav_horizontal_margin"
+                    android:paddingLeft="@dimen/nav_horizontal_margin"
+                    android:paddingRight="@dimen/nav_horizontal_margin"
+                    android:paddingStart="@dimen/nav_horizontal_margin"
                     android:text="@string/address_book"
-                    android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
             </FrameLayout>
 
             <FrameLayout
@@ -68,19 +64,17 @@
                 <TextView
                     android:id="@+id/network_status_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/nav_entry_height"
                     android:drawableLeft="@android:drawable/presence_offline"
                     android:drawablePadding="10dp"
+                    android:drawableStart="@android:drawable/presence_offline"
                     android:gravity="center_vertical"
-                    android:minHeight="48dp"
-                    android:paddingLeft="16dp"
-                    android:paddingStart="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingEnd="16dp"
-                    android:layout_marginRight="56dp"
-                    android:layout_marginEnd="56dp"
+                    android:paddingEnd="@dimen/nav_horizontal_margin"
+                    android:paddingLeft="@dimen/nav_horizontal_margin"
+                    android:paddingRight="@dimen/nav_horizontal_margin"
+                    android:paddingStart="@dimen/nav_horizontal_margin"
                     android:text="@string/network_status"
-                    android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
             </FrameLayout>
 
         </LinearLayout>

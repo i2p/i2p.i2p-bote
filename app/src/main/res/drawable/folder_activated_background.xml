@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/uva_color" android:state_activated="true" />
-    <item android:drawable="@color/uva_color" android:state_checked="true" />
-    <item android:drawable="@color/uva_color" android:state_pressed="true" />
-    <item android:drawable="@color/uva_color" android:state_selected="true" />
-    <item android:drawable="@color/default_color" />
+    <item android:drawable="@color/translucent_blue" android:state_activated="true" />
+    <item android:drawable="@color/translucent_blue" android:state_checked="true" />
+    <item android:drawable="@color/translucent_blue" android:state_pressed="true" />
+    <item android:drawable="@color/translucent_blue" android:state_selected="true" />
 </selector>
