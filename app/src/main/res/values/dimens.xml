@@ -6,4 +6,8 @@
     <dimen name="nav_horizontal_margin">16dp</dimen>
     <dimen name="nav_entry_height">48dp</dimen>
 
+    <dimen name="listitem_height">88dp</dimen>
+    <dimen name="listitem_horizontal_margin">16dp</dimen>
+    <dimen name="listitem_picture_size">40dp</dimen>
+    <dimen name="listitem_text_left_margin">72dp</dimen>
 </resources>
