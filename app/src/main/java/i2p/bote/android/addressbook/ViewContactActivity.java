@@ -1,17 +1,16 @@
 package i2p.bote.android.addressbook;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 
 import i2p.bote.android.InitActivities;
+import i2p.bote.android.R;
 
 public class ViewContactActivity extends ActionBarActivity {
     NfcAdapter mNfcAdapter;
@@ -20,10 +19,15 @@ public class ViewContactActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_toolbar);
 
         // Initialize I2P settings
         InitActivities init = new InitActivities(this);
         init.initialize();
+
+        // Set the action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,7 +39,7 @@ public class ViewContactActivity extends ActionBarActivity {
                 destination = args.getString(ViewContactFragment.CONTACT_DESTINATION);
             ViewContactFragment f = ViewContactFragment.newInstance(destination);
             getSupportFragmentManager().beginTransaction()
-                    .add(android.R.id.content, f).commit();
+                    .add(R.id.container, f).commit();
         }
 
         // NFC send only works on API 10+
@@ -65,7 +69,7 @@ public class ViewContactActivity extends ActionBarActivity {
 
     private NdefMessage getNdefMessage() {
         ViewContactFragment f = (ViewContactFragment) getSupportFragmentManager()
-                .findFragmentById(android.R.id.content);
+                .findFragmentById(R.id.container);
         return f.createNdefMessage();
     }
 

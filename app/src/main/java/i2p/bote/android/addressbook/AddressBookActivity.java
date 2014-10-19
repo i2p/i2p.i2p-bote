@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 
 public class AddressBookActivity extends ActionBarActivity implements
         AddressBookFragment.OnContactSelectedListener {
@@ -15,11 +16,16 @@ public class AddressBookActivity extends ActionBarActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_toolbar);
         setTitle(R.string.address_book);
 
         // Initialize I2P settings
         InitActivities init = new InitActivities(this);
         init.initialize();
+
+        // Set the action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -27,7 +33,7 @@ public class AddressBookActivity extends ActionBarActivity implements
         if (savedInstanceState == null) {
             AddressBookFragment f = new AddressBookFragment();
             getSupportFragmentManager().beginTransaction()
-                .add(android.R.id.content, f).commit();
+                .add(R.id.container, f).commit();
         }
     }
 
@@ -49,7 +55,7 @@ public class AddressBookActivity extends ActionBarActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ALTER_CONTACT_LIST) {
             if (resultCode == Activity.RESULT_OK) {
-                AddressBookFragment f = (AddressBookFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
+                AddressBookFragment f = (AddressBookFragment) getSupportFragmentManager().findFragmentById(R.id.container);
                 f.updateContactList();
             }
         } else {

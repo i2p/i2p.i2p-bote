@@ -2,6 +2,7 @@ package i2p.bote.android.config;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import i2p.bote.android.InitActivities;
@@ -21,6 +22,10 @@ public class IdentityShipActivity extends ActionBarActivity implements
         // Initialize I2P settings
         InitActivities init = new InitActivities(this);
         init.initialize();
+
+        // Set the action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Bote" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.Bote" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Here we setting appcompat’s actionBarStyle -->
         <!--<item name="actionBarStyle">@style/MyActionBarStyle</item>-->
 

@@ -2,6 +2,7 @@ package i2p.bote.android;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 public class NewEmailActivity extends ActionBarActivity implements
@@ -9,11 +10,16 @@ public class NewEmailActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_toolbar);
         setTitle(R.string.compose);
 
         // Initialize I2P settings
         InitActivities init = new InitActivities(this);
         init.initialize();
+
+        // Set the action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -32,7 +38,7 @@ public class NewEmailActivity extends ActionBarActivity implements
             }
             f = NewEmailFragment.newInstance(quoteMsgFolder, quoteMsgId, quoteMsgType);
             getSupportFragmentManager().beginTransaction()
-                .add(android.R.id.content, f).commit();
+                .add(R.id.container, f).commit();
         }
     }
 

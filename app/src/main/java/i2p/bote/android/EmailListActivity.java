@@ -12,11 +12,12 @@ import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,6 +81,10 @@ public class EmailListActivity extends ActionBarActivity implements
         InitActivities init = new InitActivities(this);
         init.initialize();
 
+        // Set the action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+
         // Initialize variables
         mHelper = new I2PAndroidHelper(this);
         mTitle = mDrawerTitle = getTitle();
@@ -101,13 +106,9 @@ public class EmailListActivity extends ActionBarActivity implements
         // Set the list's click listener
         mFolderList.setOnItemClickListener(new DrawerItemClickListener());
 
-        // Enable ActionBar app icon to behave as action to toggle nav drawer
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
         // Set up drawer toggle
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_menu_white_24dp, R.string.drawer_open, R.string.drawer_close) {
+                R.string.drawer_open, R.string.drawer_close) {
             private boolean wasDragged = false;
 
             /** Called when a drawer has settled in a completely closed state. */
@@ -192,7 +193,6 @@ public class EmailListActivity extends ActionBarActivity implements
             mDrawerLayout.openDrawer(mDrawerOuter);
 
         // If first start, go to introduction and setup wizard
-        if (mSharedPrefs.getBoolean(PREF_FIRST_START, true)) {
             mSharedPrefs.edit().putBoolean(PREF_FIRST_START, false).apply();
             Intent i = new Intent(EmailListActivity.this, IntroActivity.class);
             startActivityForResult(i, SHOW_INTRODUCTION);

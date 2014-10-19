@@ -1,83 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EmailListActivity">
+    android:orientation="vertical">
 
-    <!-- The mail list view -->
-    <FrameLayout
-        android:id="@+id/list_fragment"
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <!-- The navigation drawer -->
-    <RelativeLayout
-        android:id="@+id/drawer_outer"
-        android:layout_width="240dp"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/background_floating_material_light">
+        tools:context=".EmailListActivity">
 
-        <ListView
-            android:id="@+id/drawer"
+        <!-- The mail list view -->
+        <FrameLayout
+            android:id="@+id/list_fragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/fixed_actions"
-            android:layout_alignParentTop="true"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp" />
+            android:layout_height="match_parent" />
 
-        <LinearLayout
-            android:id="@+id/fixed_actions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
+        <!-- The navigation drawer -->
+        <RelativeLayout
+            android:id="@+id/drawer_outer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/background_floating_material_light">
 
-            <FrameLayout
-                android:id="@+id/address_book"
+            <ListView
+                android:id="@+id/drawer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/folder_activated_background">
+                android:layout_above="@+id/fixed_actions"
+                android:layout_alignParentTop="true"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/nav_entry_height"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="@dimen/nav_horizontal_margin"
-                    android:paddingLeft="@dimen/nav_horizontal_margin"
-                    android:paddingRight="@dimen/nav_horizontal_margin"
-                    android:paddingStart="@dimen/nav_horizontal_margin"
-                    android:text="@string/address_book"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/network_status"
+            <LinearLayout
+                android:id="@+id/fixed_actions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/folder_activated_background">
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/network_status_text"
+                <FrameLayout
+                    android:id="@+id/address_book"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/nav_entry_height"
-                    android:drawableLeft="@android:drawable/presence_offline"
-                    android:drawablePadding="10dp"
-                    android:drawableStart="@android:drawable/presence_offline"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="@dimen/nav_horizontal_margin"
-                    android:paddingLeft="@dimen/nav_horizontal_margin"
-                    android:paddingRight="@dimen/nav_horizontal_margin"
-                    android:paddingStart="@dimen/nav_horizontal_margin"
-                    android:text="@string/network_status"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-            </FrameLayout>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/folder_activated_background">
 
-        </LinearLayout>
-    </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/nav_entry_height"
+                        android:gravity="center_vertical"
+                        android:paddingEnd="@dimen/nav_horizontal_margin"
+                        android:paddingLeft="@dimen/nav_horizontal_margin"
+                        android:paddingRight="@dimen/nav_horizontal_margin"
+                        android:paddingStart="@dimen/nav_horizontal_margin"
+                        android:text="@string/address_book"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                </FrameLayout>
 
-</android.support.v4.widget.DrawerLayout>
+                <FrameLayout
+                    android:id="@+id/network_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/folder_activated_background">
+
+                    <TextView
+                        android:id="@+id/network_status_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/nav_entry_height"
+                        android:drawableLeft="@android:drawable/presence_offline"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@android:drawable/presence_offline"
+                        android:gravity="center_vertical"
+                        android:paddingEnd="@dimen/nav_horizontal_margin"
+                        android:paddingLeft="@dimen/nav_horizontal_margin"
+                        android:paddingRight="@dimen/nav_horizontal_margin"
+                        android:paddingStart="@dimen/nav_horizontal_margin"
+                        android:text="@string/network_status"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                </FrameLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>

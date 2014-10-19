@@ -8,17 +8,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 
 import i2p.bote.android.InitActivities;
+import i2p.bote.android.R;
 
 public class EditContactActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_toolbar);
 
         // Initialize I2P settings
         InitActivities init = new InitActivities(this);
         init.initialize();
+
+        // Set the action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -30,7 +37,7 @@ public class EditContactActivity extends ActionBarActivity {
                 destination = args.getString(EditContactFragment.CONTACT_DESTINATION);
             EditContactFragment f = EditContactFragment.newInstance(destination);
             getSupportFragmentManager().beginTransaction()
-                    .add(android.R.id.content, f).commit();
+                    .add(R.id.container, f).commit();
         }
     }
 
@@ -73,6 +80,6 @@ public class EditContactActivity extends ActionBarActivity {
         EditContactFragment f = EditContactFragment.newInstance(
                 name, destination);
         getSupportFragmentManager().beginTransaction()
-                .replace(android.R.id.content, f).commit();
+                .replace(R.id.container, f).commit();
     }
 }

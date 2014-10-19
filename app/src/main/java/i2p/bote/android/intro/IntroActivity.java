@@ -39,9 +39,6 @@ public class IntroActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        // Take up the entire screen.
-        getSupportActionBar().hide();
-
         // Create the sections adapter.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
