@@ -80,27 +80,35 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                 </RelativeLayout>
 
-                <FrameLayout
+                <RelativeLayout
                     android:id="@+id/network_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/folder_activated_background">
 
-                    <TextView
-                        android:id="@+id/network_status_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/nav_entry_height"
-                        android:drawableLeft="@android:drawable/presence_offline"
-                        android:drawablePadding="10dp"
-                        android:drawableStart="@android:drawable/presence_offline"
-                        android:gravity="center_vertical"
+                    <ImageView
+                        android:id="@+id/network_status_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:paddingEnd="@dimen/nav_horizontal_margin"
                         android:paddingLeft="@dimen/nav_horizontal_margin"
                         android:paddingRight="@dimen/nav_horizontal_margin"
                         android:paddingStart="@dimen/nav_horizontal_margin"
+                        android:src="@drawable/ic_cloud_off_grey600_24dp" />
+
+                    <TextView
+                        android:id="@+id/network_status_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/nav_entry_height"
+                        android:gravity="center_vertical"
+                        android:paddingEnd="@dimen/nav_horizontal_margin"
+                        android:paddingLeft="@dimen/listitem_text_left_margin"
+                        android:paddingRight="@dimen/nav_horizontal_margin"
+                        android:paddingStart="@dimen/listitem_text_left_margin"
                         android:text="@string/network_status"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-                </FrameLayout>
+                </RelativeLayout>
 
             </LinearLayout>
         </RelativeLayout>

@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class EmailListActivity extends ActionBarActivity implements
     private FolderListAdapter mFolderAdapter;
     private ListView mFolderList;
     private int mCurPos;
+    private ImageView mNetworkStatusIcon;
     private TextView mNetworkStatusText;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -93,6 +95,7 @@ public class EmailListActivity extends ActionBarActivity implements
         mDrawerOuter = (RelativeLayout) findViewById(R.id.drawer_outer);
         mFolderAdapter = new FolderListAdapter(this);
         mFolderList = (ListView) findViewById(R.id.drawer);
+        mNetworkStatusIcon = (ImageView) findViewById(R.id.network_status_icon);
         mNetworkStatusText = (TextView) findViewById(R.id.network_status_text);
 
         // Set the list of folders
@@ -418,31 +421,35 @@ public class EmailListActivity extends ActionBarActivity implements
         switch (I2PBote.getInstance().getNetworkStatus()) {
             case DELAY:
                 statusText = R.string.connect_delay;
-                statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
+                statusIcon = getResources().getDrawable(R.drawable.ic_av_timer_grey600_24dp);
                 break;
             case CONNECTING:
                 statusText = R.string.connecting;
-                statusIcon = getResources().getDrawable(android.R.drawable.presence_away);
+                statusIcon = getResources().getDrawable(R.drawable.ic_cloud_queue_grey600_24dp);
                 break;
             case CONNECTED:
                 statusText = R.string.connected;
-                statusIcon = getResources().getDrawable(android.R.drawable.presence_online);
+                statusIcon = getResources().getDrawable(R.drawable.ic_cloud_done_grey600_24dp);
                 break;
             case ERROR:
                 statusText = R.string.error;
-                statusIcon = getResources().getDrawable(android.R.drawable.presence_busy);
+                statusIcon = getResources().getDrawable(R.drawable.ic_error_red_24dp);
                 break;
             case NOT_STARTED:
             default:
                 statusText = R.string.not_started;
-                statusIcon = getResources().getDrawable(android.R.drawable.presence_offline);
+                statusIcon = getResources().getDrawable(R.drawable.ic_cloud_off_grey600_24dp);
         }
         mNetworkStatusText.post(new Runnable() {
             @Override
             public void run() {
                 mNetworkStatusText.setText(statusText);
-                mNetworkStatusText.setCompoundDrawablesWithIntrinsicBounds(
-                        statusIcon, null, null, null);
+            }
+        });
+        mNetworkStatusIcon.post(new Runnable() {
+            @Override
+            public void run() {
+                mNetworkStatusIcon.setImageDrawable(statusIcon);
             }
         });
     }
