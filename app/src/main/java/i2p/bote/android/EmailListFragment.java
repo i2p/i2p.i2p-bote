@@ -13,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
 import android.util.SparseBooleanArray;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -181,7 +182,9 @@ public class EmailListFragment extends AuthenticatedListFragment implements
                 mNumIncompleteEmails = new TextView(getActivity());
                 mNumIncompleteEmails.setText(getResources().getQuantityString(R.plurals.incomplete_emails,
                         numIncompleteEmails, numIncompleteEmails));
-                mNumIncompleteEmails.setPadding(16, 5, 16, 5);
+                mNumIncompleteEmails.setPadding(16, 8, 16, 8);
+                mNumIncompleteEmails.setGravity(Gravity.RIGHT);
+                mNumIncompleteEmails.setTextAppearance(getActivity(), R.style.TextAppearance_AppCompat_Small);
                 getListView().addHeaderView(mNumIncompleteEmails, null, false);
             }
         }
