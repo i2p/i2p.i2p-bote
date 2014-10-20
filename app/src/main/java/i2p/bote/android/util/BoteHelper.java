@@ -18,6 +18,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,6 +79,20 @@ public class BoteHelper extends GeneralHelper {
             displayName = displayName + " (" + numNew + ")";
 
         return displayName;
+    }
+
+    public static Drawable getFolderIcon(Context ctx, EmailFolder folder) {
+        String name = folder.getName();
+        if ("inbox".equals(name))
+            return ctx.getResources().getDrawable(R.drawable.ic_inbox_grey600_24dp);
+        else if ("outbox".equals(name))
+            return ctx.getResources().getDrawable(R.drawable.ic_cloud_queue_grey600_24dp);
+        else if ("sent".equals(name))
+            return ctx.getResources().getDrawable(R.drawable.ic_send_grey600_24dp);
+        else if ("trash".equals(name))
+            return ctx.getResources().getDrawable(R.drawable.ic_delete_grey600_24dp);
+        else
+            return null;
     }
 
     public static String getDisplayAddress(String address) throws PasswordException, IOException, GeneralSecurityException, MessagingException {

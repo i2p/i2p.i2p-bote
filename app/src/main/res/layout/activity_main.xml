@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,23 +52,33 @@
                 android:layout_alignParentBottom="true"
                 android:orientation="vertical">
 
-                <FrameLayout
+                <RelativeLayout
                     android:id="@+id/address_book"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/folder_activated_background">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:paddingEnd="@dimen/nav_horizontal_margin"
+                        android:paddingLeft="@dimen/listitem_horizontal_margin"
+                        android:paddingRight="@dimen/nav_horizontal_margin"
+                        android:paddingStart="@dimen/listitem_horizontal_margin"
+                        android:src="@drawable/ic_contacts_grey600_24dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/nav_entry_height"
                         android:gravity="center_vertical"
                         android:paddingEnd="@dimen/nav_horizontal_margin"
-                        android:paddingLeft="@dimen/nav_horizontal_margin"
+                        android:paddingLeft="@dimen/listitem_text_left_margin"
                         android:paddingRight="@dimen/nav_horizontal_margin"
-                        android:paddingStart="@dimen/nav_horizontal_margin"
+                        android:paddingStart="@dimen/listitem_text_left_margin"
                         android:text="@string/address_book"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-                </FrameLayout>
+                </RelativeLayout>
 
                 <FrameLayout
                     android:id="@+id/network_status"

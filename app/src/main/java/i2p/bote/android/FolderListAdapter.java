@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class FolderListAdapter extends ArrayAdapter<EmailFolder> implements FolderListener {
@@ -37,10 +38,12 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> implements Fold
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = mInflater.inflate(R.layout.listitem_folder, parent, false);
+        View v = mInflater.inflate(R.layout.listitem_folder_with_icon, parent, false);
         EmailFolder folder = getItem(position);
 
+        ImageView icon = (ImageView) v.findViewById(R.id.folder_icon);
         TextView name = (TextView) v.findViewById(R.id.folder_name);
+        icon.setImageDrawable(BoteHelper.getFolderIcon(getContext(), folder));
         try {
             name.setText(BoteHelper.getFolderDisplayNameWithNew(getContext(), folder));
         } catch (PasswordException e) {
