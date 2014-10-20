@@ -86,7 +86,7 @@ public class BoteHelper extends GeneralHelper {
         if ("inbox".equals(name))
             return ctx.getResources().getDrawable(R.drawable.ic_inbox_grey600_24dp);
         else if ("outbox".equals(name))
-            return ctx.getResources().getDrawable(R.drawable.ic_cloud_queue_grey600_24dp);
+            return ctx.getResources().getDrawable(R.drawable.ic_cloud_upload_grey600_24dp);
         else if ("sent".equals(name))
             return ctx.getResources().getDrawable(R.drawable.ic_send_grey600_24dp);
         else if ("trash".equals(name))
