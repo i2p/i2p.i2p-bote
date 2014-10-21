@@ -18,6 +18,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,6 +98,15 @@ public class EmailListActivity extends ActionBarActivity implements
         mFolderList = (ListView) findViewById(R.id.drawer);
         mNetworkStatusIcon = (ImageView) findViewById(R.id.network_status_icon);
         mNetworkStatusText = (TextView) findViewById(R.id.network_status_text);
+
+        // Set the drawer width per Material design spec
+        // http://www.google.com/design/spec/layout/structure.html#structure-side-nav-1
+        // Mobile: side nav width = screen width - app bar height
+        // Desktop: Max width for left nav is 400 dp. Not handled yet.
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        DrawerLayout.LayoutParams lp = (DrawerLayout.LayoutParams) mDrawerOuter.getLayoutParams();
+        lp.width = dm.widthPixels - toolbar.getLayoutParams().height;
 
         // Set the list of folders
         // TODO: This is slow, needs a loader
