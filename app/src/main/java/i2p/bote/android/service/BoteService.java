@@ -1,29 +1,5 @@
 package i2p.bote.android.service;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.List;
-
-import javax.mail.MessagingException;
-
-import net.i2p.android.router.service.IRouterState;
-import net.i2p.android.router.service.IRouterStateCallback;
-import net.i2p.android.router.service.State;
-import net.i2p.router.Router;
-import net.i2p.router.RouterContext;
-import net.i2p.router.RouterLaunch;
-import i2p.bote.I2PBote;
-import i2p.bote.android.EmailListActivity;
-import i2p.bote.android.R;
-import i2p.bote.android.ViewEmailActivity;
-import i2p.bote.android.service.Init.RouterChoice;
-import i2p.bote.android.util.BoteHelper;
-import i2p.bote.email.Email;
-import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.folder.EmailFolder;
-import i2p.bote.folder.NewEmailListener;
-import i2p.bote.network.NetworkStatusListener;
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -35,6 +11,31 @@ import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
+
+import net.i2p.android.router.service.IRouterState;
+import net.i2p.android.router.service.IRouterStateCallback;
+import net.i2p.android.router.service.State;
+import net.i2p.router.Router;
+import net.i2p.router.RouterContext;
+import net.i2p.router.RouterLaunch;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.List;
+
+import javax.mail.MessagingException;
+
+import i2p.bote.I2PBote;
+import i2p.bote.android.EmailListActivity;
+import i2p.bote.android.R;
+import i2p.bote.android.ViewEmailActivity;
+import i2p.bote.android.service.Init.RouterChoice;
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.email.Email;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.NewEmailListener;
+import i2p.bote.network.NetworkStatusListener;
 
 public class BoteService extends Service implements NetworkStatusListener, NewEmailListener {
     public static final String ROUTER_CHOICE = "router_choice";
@@ -235,14 +236,17 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
             case 1:
                 Email email = newEmails.get(0);
 
-                Bitmap picture = BoteHelper.getPictureForAddress(email.getOneFromAddress());
+                String fromAddress = email.getOneFromAddress();
+                Bitmap picture = BoteHelper.getPictureForAddress(fromAddress);
                 if (picture != null)
                     b.setLargeIcon(picture);
+                else if (!email.isAnonymous())
+                    b.setLargeIcon(BoteHelper.getIdenticonForAddress(fromAddress, 56, 56)); // TODO fix size
                 else
                     b.setSmallIcon(R.drawable.ic_contact_picture);
 
                 b.setContentTitle(BoteHelper.getNameAndShortDestination(
-                        email.getOneFromAddress()));
+                        fromAddress));
                 b.setContentText(email.getSubject());
 
                 Intent vei = new Intent(this, ViewEmailActivity.class);

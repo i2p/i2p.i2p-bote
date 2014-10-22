@@ -1,15 +1,5 @@
 package i2p.bote.android;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.text.DateFormat;
-
-import javax.mail.Address;
-import javax.mail.MessagingException;
-
-import i2p.bote.android.util.BoteHelper;
-import i2p.bote.email.Email;
-import i2p.bote.fileencryption.PasswordException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -24,6 +14,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.text.DateFormat;
+
+import javax.mail.Address;
+import javax.mail.MessagingException;
+
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.email.Email;
+import i2p.bote.fileencryption.PasswordException;
 
 public class ViewEmailFragment extends Fragment {
     private String mFolderName;
@@ -89,6 +90,10 @@ public class ViewEmailFragment extends Fragment {
             Bitmap pic = BoteHelper.getPictureForAddress(fromAddress);
             if (pic != null)
                 picture.setImageBitmap(pic);
+            else if (!email.isAnonymous()) {
+                ViewGroup.LayoutParams lp = picture.getLayoutParams();
+                picture.setImageBitmap(BoteHelper.getIdenticonForAddress(fromAddress, lp.width, lp.height));
+            }
 
             sender.setText(BoteHelper.getDisplayAddress(fromAddress));
 

@@ -95,6 +95,10 @@ public class ViewContactFragment extends Fragment {
             Bitmap picture = BoteHelper.decodePicture(mContact.getPictureBase64());
             if (picture != null)
                 mContactPicture.setImageBitmap(picture);
+            else  {
+                ViewGroup.LayoutParams lp = mContactPicture.getLayoutParams();
+                mContactPicture.setImageBitmap(BoteHelper.getIdenticonForAddress(mDestination, lp.width, lp.height));
+            }
 
             mNameField.setText(mContact.getName());
             mTextField.setText(mContact.getText());

@@ -1,15 +1,5 @@
 package i2p.bote.android.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.mail.Address;
-import javax.mail.Flags.Flag;
-import javax.mail.MessagingException;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -29,6 +20,16 @@ import android.widget.TextView;
 
 import com.lambdaworks.codec.Base64;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.mail.Address;
+import javax.mail.Flags.Flag;
+import javax.mail.MessagingException;
+
 import i2p.bote.android.R;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
@@ -38,6 +39,7 @@ import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.Outbox.EmailStatus;
 import i2p.bote.packet.dht.Contact;
 import i2p.bote.util.GeneralHelper;
+import im.delight.android.identicons.Identicon;
 
 public class BoteHelper extends GeneralHelper {
     /**
@@ -170,6 +172,17 @@ public class BoteHelper extends GeneralHelper {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         picture.compress(CompressFormat.PNG, 0, baos);
         return new String(Base64.encode(baos.toByteArray()));
+    }
+
+    public static Bitmap getIdenticonForAddress(String address, int width, int height) {
+        String base64dest = extractEmailDestination(address);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Identicon identicon = new Identicon();
+        identicon.show(base64dest == null ? address : base64dest);
+        identicon.updateSize(canvas.getWidth(), canvas.getHeight());
+        identicon.draw(canvas);
+        return bitmap;
     }
 
     public static boolean isSentEmail(Email email) throws PasswordException, IOException, GeneralSecurityException, MessagingException {

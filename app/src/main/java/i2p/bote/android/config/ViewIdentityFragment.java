@@ -106,6 +106,10 @@ public class ViewIdentityFragment extends Fragment {
             Bitmap picture = BoteHelper.decodePicture(mIdentity.getPictureBase64());
             if (picture != null)
                 mIdentityPicture.setImageBitmap(picture);
+            else {
+                ViewGroup.LayoutParams lp = mIdentityPicture.getLayoutParams();
+                mIdentityPicture.setImageBitmap(BoteHelper.getIdenticonForAddress(mKey, lp.width, lp.height));
+            }
 
             mNameField.setText(mIdentity.getPublicName());
             mDescField.setText(mIdentity.getDescription());
