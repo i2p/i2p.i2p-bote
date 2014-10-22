@@ -11,6 +11,7 @@ Tasks:
 - More layouts for intro and setup (tune for each screen size)
 - Create and bundle better network status icons
 - Subclass EmailListFragment for each default mailbox
+- Cache Identicons for speed
 - Refactor code
 -- Reorganize for clarity
 -- Optimize use of Android lifecycles
