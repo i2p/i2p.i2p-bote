@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -63,7 +64,7 @@ public class EmailListFragment extends AuthenticatedListFragment implements
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
 
-    private MenuItem mNewEmail;
+    private ImageButton mNewEmail;
     private MenuItem mCheckEmail;
 
     // The Controller which provides CHOICE_MODE_MULTIPLE_MODAL-like functionality
@@ -104,13 +105,24 @@ public class EmailListFragment extends AuthenticatedListFragment implements
 
         String folderName = getArguments().getString(FOLDER_NAME);
         mFolder = BoteHelper.getMailFolder(folderName);
+        boolean isInbox = BoteHelper.isInbox(mFolder);
 
-        if (BoteHelper.isInbox(mFolder)) {
-            // Inflate the MultiSwipeRefreshLayout
-            mSwipeRefreshLayout = (MultiSwipeRefreshLayout) inflater.inflate(
-                    R.layout.fragment_list_emails, container, false);
-            FrameLayout listContainer = (FrameLayout) mSwipeRefreshLayout.findViewById(R.id.list_container);
-            listContainer.addView(listFragmentView);
+        View v = inflater.inflate(
+                isInbox ? R.layout.fragment_list_emails_with_refresh : R.layout.fragment_list_emails,
+                container, false);
+        FrameLayout listContainer = (FrameLayout) v.findViewById(R.id.list_container);
+        listContainer.addView(listFragmentView);
+
+        mNewEmail = (ImageButton) v.findViewById(R.id.promoted_action);
+        mNewEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNewEmail();
+            }
+        });
+
+        if (isInbox) {
+            mSwipeRefreshLayout = (MultiSwipeRefreshLayout) v;
 
             // Set up the empty view
             View emptyView = mSwipeRefreshLayout.findViewById(android.R.id.empty);
@@ -124,11 +136,9 @@ public class EmailListFragment extends AuthenticatedListFragment implements
             mSwipeRefreshLayout.setSwipeableChildren(android.R.id.list, android.R.id.empty);
             mSwipeRefreshLayout.setOnRefreshListener(this);
             mSwipeRefreshLayout.setRefreshing(I2PBote.getInstance().isCheckingForMail());
+        }
 
-            // Now return the MultiSwipeRefreshLayout as this fragment's content view
-            return mSwipeRefreshLayout;
-        } else
-            return listFragmentView;
+        return v;
     }
 
     @Override
@@ -218,7 +228,6 @@ public class EmailListFragment extends AuthenticatedListFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.email_list, menu);
-        mNewEmail = menu.findItem(R.id.action_new_email);
         mCheckEmail = menu.findItem(R.id.action_check_email);
     }
 
@@ -226,7 +235,7 @@ public class EmailListFragment extends AuthenticatedListFragment implements
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         boolean passwordRequired = I2PBote.getInstance().isPasswordRequired();
-        mNewEmail.setVisible(!passwordRequired);
+        mNewEmail.setVisibility(passwordRequired ? View.GONE : View.VISIBLE);
         mCheckEmail.setVisible(mSwipeRefreshLayout != null && !passwordRequired);
         if (mSwipeRefreshLayout != null)
             mSwipeRefreshLayout.setEnabled(!passwordRequired);
@@ -235,10 +244,6 @@ public class EmailListFragment extends AuthenticatedListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_new_email:
-                startNewEmail();
-                return true;
-
             case R.id.action_check_email:
                 if (!mSwipeRefreshLayout.isRefreshing()) {
                     mSwipeRefreshLayout.setRefreshing(true);

@@ -3,12 +3,6 @@
     xmlns:i2pandroid="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/action_new_email"
-        android:icon="@drawable/ic_create_white_24dp"
-        android:title="@string/action_new_email"
-        i2pandroid:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/action_check_email"
         android:title="@string/check_email"
         i2pandroid:showAsAction="never"/>

@@ -4,6 +4,7 @@
     <color name="primary">#3f51b5</color><!-- Indigo 500 -->
     <color name="primary_dark">#303f9f</color><!-- Indigo 700 -->
     <color name="accent">#ffab40</color><!-- Orange A200 -->
+    <color name="accent_dark">#ff9100</color><!-- Orange A400 -->
 
     <!-- A translucent holo blue -->
     <color name="translucent_blue">#9033B5E5</color>
