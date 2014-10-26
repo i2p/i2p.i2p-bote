@@ -19,7 +19,7 @@
         android:layout_marginBottom="@dimen/listitem_horizontal_margin"
         android:layout_marginEnd="@dimen/listitem_horizontal_margin"
         android:layout_marginRight="@dimen/listitem_horizontal_margin"
-        app:colorNormal="@color/accent"
-        app:colorPressed="@color/accent_dark"
-        app:drawable="@drawable/ic_create_white_24dp" />
+        app:fab_colorNormal="@color/accent"
+        app:fab_colorPressed="@color/accent_dark"
+        app:fab_icon="@drawable/ic_create_white_24dp" />
 </RelativeLayout>
