@@ -201,9 +201,13 @@ public class NewEmailFragment extends Fragment {
             private void setViewContent(View v, int position) {
                 Person person = getItem(position);
                 ((TextView)v.findViewById(R.id.contact_name)).setText(person.getName());
-                if (person.getPicture() != null)
-                    ((ImageView)v.findViewById(R.id.contact_picture))
-                            .setImageBitmap(person.getPicture());
+                ImageView picView = (ImageView) v.findViewById(R.id.contact_picture);
+                Bitmap picture = person.getPicture();
+                if (picture == null) {
+                    ViewGroup.LayoutParams lp = picView.getLayoutParams();
+                    picture = BoteHelper.getIdenticonForAddress(person.getAddress(), lp.width, lp.height);
+                }
+                picView.setImageBitmap(picture);
             }
         };
 

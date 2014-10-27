@@ -10,10 +10,12 @@ import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +34,14 @@ public class ContactsCompletionView extends TokenCompleteTextView {
         LayoutInflater l = (LayoutInflater)getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         LinearLayout view = (LinearLayout)l.inflate(R.layout.contact_token, (ViewGroup)ContactsCompletionView.this.getParent(), false);
         ((TextView)view.findViewById(R.id.contact_name)).setText(person.getName());
+
+        ImageView picView = (ImageView) view.findViewById(R.id.contact_picture);
+        Bitmap picture = person.getPicture();
+        if (picture == null) {
+            ViewGroup.LayoutParams lp = picView.getLayoutParams();
+            picture = BoteHelper.getIdenticonForAddress(person.getAddress(), lp.width, lp.height);
+        }
+        picView.setImageBitmap(picture);
 
         return view;
     }
