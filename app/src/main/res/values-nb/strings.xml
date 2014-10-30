@@ -34,11 +34,6 @@
   <string name="action_stop_bote">Koble fra nettverk</string>
   <string name="action_settings">Innstillinger</string>
   <string name="start_i2p_android">Det later til at I2P for Android ikke kjører. Vil du starte det?</string>
-  <string name="pull_text">Dra for å sjekke e-post</string>
-  <string name="refreshing_text">Sjekker e-post...</string>
-  <string name="release_text">La oss sjekke e-post</string>
-  <!--Argument is a number-->
-  <string name="incomplete_emails">%s uferdige e-poster</string>
   <!--Argument is a number-->
   <string name="items_selected">%s valgt</string>
   <string name="action_delete">Slett</string>
