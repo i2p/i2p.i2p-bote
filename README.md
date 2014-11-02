@@ -46,10 +46,11 @@ Gradle will pull dependencies over the clearnet by default. To use Tor, create a
     botesrc=/path/to/i2p.i2p-bote
     ```
 
-5. If you want to use a local copy of the I2P Android client library, place it in a folder and add the following line to your `~/.gradle/gradle.properties`:
+5. If you want to use a local copy of the I2P Android client library, install it in your local Maven repository with:
 
     ```
-    localFileRepoDir=/path/to/folder
+    cd path/to/i2p.android.base
+    ./gradlew client:installArchives
     ```
 
 ### Building from the command line

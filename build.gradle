@@ -8,18 +8,9 @@ buildscript {
     }
 }
 
-if (hasProperty('localFileRepoDir')) {
-    allprojects {
-        repositories {
-            flatDir {
-                dirs file(localFileRepoDir)
-            }
-        }
-    }
-}
-
 allprojects {
     repositories {
+        mavenLocal()
         mavenCentral()
     }
 }
