@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    compile 'net.i2p.android:client:0.2@aar'
+    compile 'net.i2p.android:client:0.3@aar'
     compile project(':botejars')
     compile fileTree(dir: 'libs', include: '*.jar')
     compile 'com.android.support:support-v4:21.0.0'
@@ -38,7 +38,7 @@ dependencies {
 
 dependencyVerification {
     verify = [
-            'net.i2p.android:client:58305303f42b30c30af41213790f9b4fcdead67495e8c15cd8339319cb428a8b',
+            'net.i2p.android:client:4c5c6f81dc20a93240d901a19c8ce9f6ac699539ef1a4e18c1844fd98e5928e3',
             'com.android.support:support-v4:199ef7bb169386c80b4836354df6747ce2ae3d24434db923c22439e47106a1e2',
             'com.android.support:appcompat-v7:45e999dda55fe81d9cc1c7342b7b70480ff3f307baa8da0df767f92fc5c52cd1',
             'com.mcxiaoke.viewpagerindicator:library:470bbd2bec1ede64ad21efd6f02676807d22f1b526c4ac6a5b41a428c6e47e67',
