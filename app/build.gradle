@@ -41,6 +41,7 @@ dependencyVerification {
             'net.i2p.android:client:4c5c6f81dc20a93240d901a19c8ce9f6ac699539ef1a4e18c1844fd98e5928e3',
             'com.android.support:support-v4:199ef7bb169386c80b4836354df6747ce2ae3d24434db923c22439e47106a1e2',
             'com.android.support:appcompat-v7:45e999dda55fe81d9cc1c7342b7b70480ff3f307baa8da0df767f92fc5c52cd1',
+            'net.i2p.android.ext:floatingactionbutton:84cf5b67a66337bef59b46f57468c730387ca766b5a5f06ca852ba46cabbc0fb',
             'com.mcxiaoke.viewpagerindicator:library:470bbd2bec1ede64ad21efd6f02676807d22f1b526c4ac6a5b41a428c6e47e67',
             'com.google.zxing:android-integration:89e56aadf1164bd71e57949163c53abf90af368b51669c0d4a47a163335f95c4',
     ]
