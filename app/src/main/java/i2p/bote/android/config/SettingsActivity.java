@@ -32,6 +32,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +49,8 @@ public class SettingsActivity extends PreferenceActivity {
     private static final String ACTION_PREFS_GENERAL = "i2p.bote.PREFS_GENERAL";
 
     static final int ALTER_IDENTITY_LIST = 1;
+
+    private Toolbar mToolbar;
 
     // Preference Header vars
     private Header[] mIdentityListHeaders;
@@ -78,6 +81,29 @@ public class SettingsActivity extends PreferenceActivity {
             // Load the legacy preferences headers
             buildLegacyHeaders();
         }
+
+        mToolbar.setTitle(getTitle());
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        ViewGroup contentView = (ViewGroup) LayoutInflater.from(this).inflate(
+                R.layout.activity_settings,
+                (ViewGroup) getWindow().getDecorView().getRootView(), false);
+
+        mToolbar = (Toolbar) contentView.findViewById(R.id.main_toolbar);
+        mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        ViewGroup contentWrapper = (ViewGroup) contentView.findViewById(R.id.content_wrapper);
+        LayoutInflater.from(this).inflate(layoutResID, contentWrapper, true);
+
+        getWindow().setContentView(contentView);
     }
 
     @Override
