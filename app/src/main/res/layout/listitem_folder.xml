@@ -14,6 +14,6 @@
         android:paddingRight="@dimen/nav_horizontal_margin"
         android:paddingStart="@dimen/nav_horizontal_margin"
         android:text="Folder Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Primary" />
 
 </RelativeLayout>

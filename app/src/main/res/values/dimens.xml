@@ -6,11 +6,20 @@
     <dimen name="nav_horizontal_margin">16dp</dimen>
     <dimen name="nav_entry_height">48dp</dimen>
 
-    <dimen name="listitem_height_one_line">56dp</dimen>
-    <dimen name="listitem_height_three_lines">88dp</dimen>
+    <dimen name="text_size_primary">16sp</dimen>
+    <dimen name="text_size_secondary">14sp</dimen>
+
+    <dimen name="list_vertical_padding">8dp</dimen>
     <dimen name="listitem_horizontal_margin">16dp</dimen>
     <dimen name="listitem_picture_size">40dp</dimen>
+    <dimen name="listitem_icon_size">24dp</dimen>
     <dimen name="listitem_text_left_margin">72dp</dimen>
+    <dimen name="listitem_icon_left_margin">8dp</dimen>
+
+    <dimen name="listitem_height_one_line">48dp</dimen>
+    <dimen name="listitem_height_one_line_avatar">56dp</dimen>
+
+    <dimen name="listitem_height_three_lines">88dp</dimen>
 
     <dimen name="contact_chip_height">32dp</dimen>
     <dimen name="contact_chip_main_margins">8dp</dimen>
