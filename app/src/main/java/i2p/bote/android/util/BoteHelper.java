@@ -175,11 +175,21 @@ public class BoteHelper extends GeneralHelper {
     }
 
     public static Bitmap getIdenticonForAddress(String address, int width, int height) {
-        String base64dest = extractEmailDestination(address);
+        String identifier = extractEmailDestination(address);
+        if (identifier == null) {
+            // Check if the string contains chars in angle brackets
+            int ltIndex = address.indexOf('<');
+            int gtIndex = address.indexOf('>', ltIndex);
+            if (ltIndex>=0 && gtIndex>0)
+                identifier = address.substring(ltIndex+1, gtIndex);
+            else
+                identifier = address;
+        }
+
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Identicon identicon = new Identicon();
-        identicon.show(base64dest == null ? address : base64dest);
+        identicon.show(identifier);
         identicon.updateSize(canvas.getWidth(), canvas.getHeight());
         identicon.draw(canvas);
         return bitmap;
