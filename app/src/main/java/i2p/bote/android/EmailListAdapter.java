@@ -84,7 +84,7 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
             Bitmap pic = BoteHelper.getPictureForAddress(otherAddress);
             if (pic != null)
                 picture.setImageBitmap(pic);
-            else if (!email.isAnonymous()) {
+            else if (BoteHelper.isSentEmail(email) || !email.isAnonymous()) {
                 ViewGroup.LayoutParams lp = picture.getLayoutParams();
                 picture.setImageBitmap(BoteHelper.getIdenticonForAddress(otherAddress, lp.width, lp.height));
             }
