@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/contact_chip_height"
     android:background="@drawable/token_background"
@@ -9,8 +10,9 @@
         android:id="@+id/contact_picture"
         android:layout_width="@dimen/contact_chip_height"
         android:layout_height="@dimen/contact_chip_height"
+        android:background="@color/background_material_light"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_contact_picture" />
+        android:src="@drawable/ic_contact_picture"/>
 
     <TextView
         android:id="@+id/contact_name"
@@ -22,6 +24,6 @@
         android:layout_marginStart="@dimen/contact_chip_main_margins"
         android:gravity="center_vertical"
         android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"/>
 
 </LinearLayout>
