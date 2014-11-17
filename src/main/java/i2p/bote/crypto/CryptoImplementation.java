@@ -27,8 +27,6 @@ import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.Set;
-
 import org.bouncycastle.crypto.InvalidCipherTextException;
 
 /**

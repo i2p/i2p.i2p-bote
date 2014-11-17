@@ -21,7 +21,6 @@
 
 package i2p.bote.folder;
 
-import i2p.bote.Util;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.MalformedPacketException;

@@ -28,8 +28,6 @@ import i2p.bote.packet.dht.Contact;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import net.i2p.util.Log;
-
 /**
  * This class is used for adding/replacing names in email addresses with
  * local names (address book entries and email identities).
