@@ -22,6 +22,7 @@
 package i2p.bote.email;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.TestUtil;
@@ -177,6 +178,7 @@ public class EmailTest {
         for (UnencryptedEmailPacket packet: packets)
             outputStream.write(packet.getContent());
         newEmail = new Email(outputStream.toByteArray());
+        assertNotNull("BCC header expected!", newEmail.getHeader("BCC"));
         assertEquals("One BCC header expected!", 1, newEmail.getHeader("BCC").length);
         assertEquals(4, newEmail.getAllRecipients().length);
     }

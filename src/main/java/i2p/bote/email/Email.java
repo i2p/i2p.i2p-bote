@@ -1015,12 +1015,12 @@ public class Email extends MimeMessage {
      * @throws MessagingException
      */
     private boolean isBCC(String address) throws MessagingException {
-        String[] bccAddresses = getHeader("BCC");
+        Address[] bccAddresses = getBCCAddresses();
         if (bccAddresses == null)
             return false;
         
-        for (String bccAddress: bccAddresses)
-            if (bccAddress.equals(address))
+        for (Address bccAddress: bccAddresses)
+            if (bccAddress.toString().equals(address))
                 return true;
         
         return false;
