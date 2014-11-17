@@ -21,8 +21,8 @@
 
 package i2p.bote;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.crypto.ECDH256_ECDSA256;
 import i2p.bote.crypto.ECDH521_ECDSA521;

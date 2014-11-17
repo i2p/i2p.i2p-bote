@@ -21,7 +21,7 @@
 
 package i2p.bote.packet.dht;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 import i2p.bote.UniqueId;
 
 import java.util.Arrays;

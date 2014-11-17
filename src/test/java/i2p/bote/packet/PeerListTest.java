@@ -21,7 +21,7 @@
 
 package i2p.bote.packet;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
