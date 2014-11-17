@@ -50,6 +50,7 @@ public class ViewEmailActivity extends ActionBarActivity implements
 
         // Enable ActionBar app icon to behave as action to go back
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Intent i = getIntent();
         String folderName = i.getStringExtra(FOLDER_NAME);

@@ -51,8 +51,6 @@ public class EmailListActivity extends ActionBarActivity implements
     private I2PAndroidHelper mHelper;
     private RouterChoice mRouterChoice;
 
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
     private SharedPreferences mSharedPrefs;
 
     /**
@@ -90,7 +88,6 @@ public class EmailListActivity extends ActionBarActivity implements
 
         // Initialize variables
         mHelper = new I2PAndroidHelper(this);
-        mTitle = mDrawerTitle = getTitle();
         mSharedPrefs = getSharedPreferences(SHARED_PREFS, 0);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerOuter = (RelativeLayout) findViewById(R.id.drawer_outer);
@@ -130,7 +127,6 @@ public class EmailListActivity extends ActionBarActivity implements
                 // Don't mark as opened if the user closed by dragging
                 // but uses the action bar icon to open
                 wasDragged = false;
-                getSupportActionBar().setTitle(mTitle);
                 supportInvalidateOptionsMenu();
             }
 
@@ -139,9 +135,8 @@ public class EmailListActivity extends ActionBarActivity implements
                 if (wasDragged && !mSharedPrefs.getBoolean(PREF_NAV_DRAWER_OPENED, false)) {
                     SharedPreferences.Editor edit = mSharedPrefs.edit();
                     edit.putBoolean(PREF_NAV_DRAWER_OPENED, true);
-                    edit.commit();
+                    edit.apply();
                 }
-                getSupportActionBar().setTitle(mDrawerTitle);
                 supportInvalidateOptionsMenu();
             }
 
@@ -362,8 +357,7 @@ public class EmailListActivity extends ActionBarActivity implements
 
     @Override
     public void setTitle(CharSequence title) {
-        mTitle = title;
-        getSupportActionBar().setTitle(mTitle);
+        getSupportActionBar().setTitle(title);
     }
 
     @Override
