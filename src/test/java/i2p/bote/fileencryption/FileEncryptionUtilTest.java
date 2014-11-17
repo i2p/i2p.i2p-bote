@@ -21,6 +21,7 @@
 
 package i2p.bote.fileencryption;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.Util;
@@ -32,8 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -89,7 +88,7 @@ public class FileEncryptionUtilTest {
         FileEncryptionUtil.changePassword(encryptedFile, password, FileEncryptionTestUtil.deriveKey(newPassword));
         InputStream inputStream = new EncryptedInputStream(new FileInputStream(encryptedFile), newPassword);
         byte[] decryptedText = Util.readBytes(inputStream);
-        assertTrue(Arrays.equals(plainText, decryptedText));
+        assertArrayEquals(plainText, decryptedText);
         
         encryptedFile.delete();
    }

@@ -21,6 +21,7 @@
 
 package i2p.bote.packet.dht;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -35,8 +36,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -103,7 +102,7 @@ public class ContactTest {
         assertFalse(contact.getFingerprint().getWords(wordListEN).equals(contact2.getFingerprint().getWords(wordListDE)));
         assertEquals(contact.getPictureBase64(), contact2.getPictureBase64());
         byte[] arrayB = contact2.toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
     }
     
     @Test

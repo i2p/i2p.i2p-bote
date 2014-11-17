@@ -21,11 +21,10 @@
 
 package i2p.bote.packet.relay;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,6 +54,6 @@ public class ReturnChainTest {
         assertTrue(buffer.hasArray());
         byte[] arrayA = buffer.array();
         byte[] arrayB = returnChain.toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
     }
 }

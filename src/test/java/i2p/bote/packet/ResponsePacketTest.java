@@ -21,8 +21,8 @@
 
 package i2p.bote.packet;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.packet.dht.EncryptedEmailPacket;
@@ -31,7 +31,6 @@ import i2p.bote.packet.dht.UnencryptedEmailPacket;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Before;
@@ -67,6 +66,6 @@ public class ResponsePacketTest {
     public void toByteArrayAndBack() throws Exception {
         byte[] arrayA = responsePacket.toByteArray();
         byte[] arrayB = new ResponsePacket(arrayA).toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
     }
 }

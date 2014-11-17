@@ -21,10 +21,7 @@
 
 package i2p.bote.packet.dht;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-
+import static org.junit.Assert.assertArrayEquals;
 import net.i2p.data.Hash;
 
 import org.junit.Before;
@@ -44,6 +41,6 @@ public class DeletionQueryTest {
         byte[] arrayA = delQuery.toByteArray();
         byte[] arrayB;
         arrayB = new DeletionQuery(arrayA).toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
     }
 }

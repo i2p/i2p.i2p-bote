@@ -21,15 +21,13 @@
 
 package i2p.bote.packet.dht;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
 import i2p.bote.UniqueId;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.packet.I2PBotePacket;
 
 import java.io.ByteArrayInputStream;
-import java.util.Arrays;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,7 +54,7 @@ public class StoreRequestTest {
     public void toByteArrayAndBack() throws Exception {
         byte[] arrayA = storeRequest.toByteArray();
         byte[] arrayB = new StoreRequest(arrayA).toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
         
     }
     
@@ -64,6 +62,6 @@ public class StoreRequestTest {
     public void testGetPacketToStore() throws Exception {
         byte[] arrayA = dhtPacket.toByteArray();
         byte[] arrayB = storeRequest.getPacketToStore().toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
     }
 }

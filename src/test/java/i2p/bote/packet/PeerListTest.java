@@ -21,10 +21,8 @@
 
 package i2p.bote.packet;
 
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.assertArrayEquals;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import net.i2p.data.Destination;
@@ -54,6 +52,6 @@ public class PeerListTest {
         byte[] arrayA = peerList.toByteArray();
         byte[] arrayB;
         arrayB = new PeerList(arrayA).toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
     }
 }

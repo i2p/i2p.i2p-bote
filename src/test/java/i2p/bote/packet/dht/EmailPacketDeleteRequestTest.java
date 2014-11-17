@@ -21,10 +21,8 @@
 
 package i2p.bote.packet.dht;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
 import i2p.bote.UniqueId;
-
-import java.util.Arrays;
 
 import net.i2p.data.Hash;
 
@@ -47,6 +45,6 @@ public class EmailPacketDeleteRequestTest {
         byte[] arrayA = delRequest.toByteArray();
         byte[] arrayB;
         arrayB = new EmailPacketDeleteRequest(arrayA).toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
     }
 }

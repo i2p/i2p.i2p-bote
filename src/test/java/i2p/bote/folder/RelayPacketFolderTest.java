@@ -21,6 +21,7 @@
 
 package i2p.bote.folder;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.UniqueId;
@@ -34,7 +35,6 @@ import i2p.bote.packet.relay.RelayRequest;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
@@ -105,7 +105,7 @@ public class RelayPacketFolderTest {
         RelayRequest storedPacket = iterator.next();
         byte[] arrayA = relayRequest.toByteArray();
         byte[] arrayB = storedPacket.toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
         assertFalse("Folder has more than one element!", iterator.hasNext());
 
         iterator.remove();

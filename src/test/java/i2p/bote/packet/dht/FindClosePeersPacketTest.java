@@ -21,11 +21,8 @@
 
 package i2p.bote.packet.dht;
 
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.assertArrayEquals;
 import i2p.bote.packet.dht.FindClosePeersPacket;
-
-import java.util.Arrays;
 
 import net.i2p.data.Hash;
 
@@ -51,6 +48,6 @@ public class FindClosePeersPacketTest {
     public void toByteArrayAndBack() throws Exception {
         byte[] arrayA = findCloseNodesPacket.toByteArray();
         byte[] arrayB = new FindClosePeersPacket(arrayA).toByteArray();
-        assertTrue("The two arrays differ!", Arrays.equals(arrayA, arrayB));
+        assertArrayEquals("The two arrays differ!", arrayA, arrayB);
     }
 }

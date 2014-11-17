@@ -21,6 +21,7 @@
 
 package i2p.bote.packet.dht;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -33,8 +34,6 @@ import i2p.bote.packet.I2PBotePacket;
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-
 import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Hash;
 
@@ -83,7 +82,7 @@ public class EncryptedEmailPacketTest {
         for (EncryptedEmailPacket packet: encryptedPackets) {
             byte[] arrayA = packet.toByteArray();
             byte[] arrayB = new EncryptedEmailPacket(arrayA).toByteArray();
-            assertTrue("The two arrays differ! CryptoImplementation = " + packet.getCryptoImpl().getName(), Arrays.equals(arrayA, arrayB));
+            assertArrayEquals("The two arrays differ! CryptoImplementation = " + packet.getCryptoImpl().getName(), arrayA, arrayB);
         }
     }
     
@@ -94,7 +93,7 @@ public class EncryptedEmailPacketTest {
             UnencryptedEmailPacket decryptedPacket = packet.decrypt(identities[i]);
             byte[] arrayA = decryptedPacket.getContent();
             byte[] arrayB = message.getBytes();
-            assertTrue("Email message differs after decryption! CryptoImplementation = " + packet.getCryptoImpl().getName(), Arrays.equals(arrayA, arrayB));
+            assertArrayEquals("Email message differs after decryption! CryptoImplementation = " + packet.getCryptoImpl().getName(), arrayA, arrayB);
         }
     }
     

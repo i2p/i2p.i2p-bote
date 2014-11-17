@@ -21,6 +21,7 @@
 
 package i2p.bote.fileencryption;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -71,7 +72,7 @@ public class PasswordCacheTest {
         DerivedKey derivedKey = passwordCache.getKey();
         assertEquals(derivedKey.scryptParams, FileEncryptionConstants.KDF_PARAMETERS);
         byte[] expectedKey = FileEncryptionUtil.getEncryptionKey(PASSWORD, derivedKey.salt, derivedKey.scryptParams);
-        assertTrue(Arrays.equals(expectedKey, derivedKey.key));
+        assertArrayEquals(expectedKey, derivedKey.key);
         
         // verify that the salt was cached in a file and is reused
         PasswordCache newPasswordCache = TestUtil.createPasswordCache(testDir);
@@ -79,7 +80,7 @@ public class PasswordCacheTest {
         newPasswordCache.setPassword(PASSWORD);
         byte[] oldSalt = derivedKey.salt;
         byte[] newSalt = passwordCache.getKey().salt;
-        assertTrue(Arrays.equals(oldSalt, newSalt));
+        assertArrayEquals(oldSalt, newSalt);
         
         // delete the cache file, clear the derived key, and verify that a new salt is generated
         Configuration configuration = TestUtil.createConfiguration(testDir);
@@ -101,7 +102,7 @@ public class PasswordCacheTest {
             // Verify that the password expires 60 seconds after it is set
             // (the timeout is set in TestUtil.createConfiguration(File))
             TimeUnit.SECONDS.sleep(58);
-            assertTrue(Arrays.equals(PASSWORD, getPassword(passwordCache)));
+            assertArrayEquals(PASSWORD, getPassword(passwordCache));
             TimeUnit.SECONDS.sleep(3);
             assertNull("Password was not cleared!", getPassword(passwordCache));
             
@@ -109,7 +110,7 @@ public class PasswordCacheTest {
             passwordCache.setPassword(PASSWORD);
             synchronized(passwordCache) {
                 TimeUnit.SECONDS.sleep(61);
-                assertTrue(Arrays.equals(PASSWORD, getPassword(passwordCache)));
+                assertArrayEquals(PASSWORD, getPassword(passwordCache));
             }
             TimeUnit.SECONDS.sleep(61);
             assertNull("Password was not cleared!", getPassword(passwordCache));
@@ -130,7 +131,7 @@ public class PasswordCacheTest {
         setPasswordThread.start();
         Thread.sleep(100);
         assertFalse(setPasswordThread.isAlive());
-        assertTrue(Arrays.equals(passwordCache.getPassword(), PASSWORD));
+        assertArrayEquals(passwordCache.getPassword(), PASSWORD);
         
         // call setPassword while locked, should block
         passwordCache.setPassword(null);
@@ -143,7 +144,7 @@ public class PasswordCacheTest {
         }
         Thread.sleep(100);
         assertFalse(setPasswordThread.isAlive());
-        assertTrue(Arrays.equals(passwordCache.getPassword(), PASSWORD));
+        assertArrayEquals(passwordCache.getPassword(), PASSWORD);
     }
     
     /**

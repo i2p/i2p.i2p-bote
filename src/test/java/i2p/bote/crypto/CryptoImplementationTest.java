@@ -21,6 +21,7 @@
 
 package i2p.bote.crypto;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.TestUtil;
@@ -31,7 +32,6 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -69,7 +69,7 @@ public class CryptoImplementationTest {
             byte[] originalPublic = cryptoImpl.toByteArray(originalPublicKeyPair);
             PublicKeyPair keyPairPublic = cryptoImpl.createPublicKeyPair(testData.base64PublicKeyPair);
             byte[] reencodedPublic = cryptoImpl.toByteArray(keyPairPublic);
-            assertTrue(Arrays.equals(originalPublic, reencodedPublic));
+            assertArrayEquals(originalPublic, reencodedPublic);
             assertEquals(cryptoImpl.getByteArrayPublicKeyPairLength(), reencodedPublic.length);
             
             // test private key pair
@@ -77,7 +77,7 @@ public class CryptoImplementationTest {
             byte[] originalPrivate = cryptoImpl.toByteArray(originalPrivateKeyPair);
             PrivateKeyPair keyPairPrivate = cryptoImpl.createPrivateKeyPair(testData.base64PrivateKeyPair);
             byte[] reencodedPrivate = cryptoImpl.toByteArray(keyPairPrivate);
-            assertTrue(Arrays.equals(originalPrivate, reencodedPrivate));
+            assertArrayEquals(originalPrivate, reencodedPrivate);
         }
     }
 
@@ -108,7 +108,7 @@ public class CryptoImplementationTest {
                 KeyPair encryptionKeys = testData.encryptionKeys;
                 byte[] encrypted = cryptoImpl.encrypt(original, encryptionKeys.getPublic());
                 byte[] decrypted = cryptoImpl.decrypt(encrypted, encryptionKeys.getPublic(), encryptionKeys.getPrivate());
-                assertTrue("encrypted data != decrypted data for crypto implementation <" + cryptoImpl.getName() + ">", Arrays.equals(original, decrypted));
+                assertArrayEquals("encrypted data != decrypted data for crypto implementation <" + cryptoImpl.getName() + ">", original, decrypted);
             }
     }
 

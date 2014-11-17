@@ -21,6 +21,7 @@
 
 package i2p.bote.packet.relay;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -38,7 +39,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.client.I2PClient;
@@ -145,12 +145,12 @@ public class RelayRequestTest {
         // test one layer
         bytes = relayRequestSingle.toByteArray();
         bytes2 = new RelayRequest(bytes).toByteArray();
-        assertTrue("The two packets differ!", Arrays.equals(bytes, bytes2));
+        assertArrayEquals("The two packets differ!", bytes, bytes2);
         
         // test nested
         bytes = relayRequestMulti.toByteArray();
         bytes2 = new RelayRequest(bytes).toByteArray();
-        assertTrue("The two packets differ!", Arrays.equals(bytes, bytes2));
+        assertArrayEquals("The two packets differ!", bytes, bytes2);
     }
     
     @Test
@@ -163,7 +163,7 @@ public class RelayRequestTest {
             RelayRequest relayRequest = (RelayRequest)commPacket;
             commPacket = decryptDataPacket(relayRequest, relayRequest.getNextDestination());
         }
-        assertTrue(Arrays.equals(storeRequestBytes, commPacket.toByteArray()));
+        assertArrayEquals(storeRequestBytes, commPacket.toByteArray());
     }
     
     private CommunicationPacket decryptDataPacket(RelayRequest request, Destination destination) throws I2PSessionException, DataFormatException, MalformedPacketException {
