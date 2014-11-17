@@ -6,6 +6,7 @@
     <dimen name="nav_horizontal_margin">16dp</dimen>
     <dimen name="nav_entry_height">48dp</dimen>
 
+    <dimen name="text_size_subject">18sp</dimen>
     <dimen name="text_size_primary">16sp</dimen>
     <dimen name="text_size_secondary">14sp</dimen>
 

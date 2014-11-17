@@ -25,6 +25,10 @@
         <item name="android:textSize">@dimen/text_size_primary</item>
     </style>
 
+    <style name="TextAppearance.AppCompat.Subject" parent="TextAppearance.AppCompat.Primary">
+        <item name="android:textSize">@dimen/text_size_subject</item>
+    </style>
+
     <style name="TextAppearance.AppCompat.Secondary" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/secondary_text_default_material_light</item>
         <item name="android:textSize">@dimen/text_size_secondary</item>

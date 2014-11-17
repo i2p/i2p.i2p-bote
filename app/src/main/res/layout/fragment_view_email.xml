@@ -1,126 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin">
 
-            <TextView
-                android:id="@+id/email_subject"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/email_subject_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Subject"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:orientation="horizontal"
+                android:padding="@dimen/listitem_horizontal_margin">
+
+                <ImageView
+                    android:id="@+id/signature_invalid"
+                    android:layout_width="@dimen/listitem_icon_size"
+                    android:layout_height="@dimen/listitem_icon_size"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_error_red_24dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/email_subject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toEndOf="@id/signature_invalid"
+                    android:layout_toRightOf="@id/signature_invalid"
+                    android:text="Subject"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subject"/>
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/picture"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
+                android:layout_width="@dimen/listitem_picture_size"
+                android:layout_height="@dimen/listitem_picture_size"
+                android:layout_below="@+id/email_subject_container"
+                android:layout_marginLeft="@dimen/listitem_horizontal_margin"
+                android:layout_marginStart="@dimen/listitem_horizontal_margin"
+                android:layout_marginTop="2dp"
                 android:scaleType="centerCrop"
-                android:layout_alignLeft="@+id/email_subject"
-                android:layout_below="@+id/email_subject"
-                android:src="@drawable/ic_contact_picture" />
+                android:src="@drawable/ic_contact_picture"/>
+
+            <TextView
+                android:id="@+id/email_sender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/email_subject_container"
+                android:layout_marginEnd="@dimen/listitem_horizontal_margin"
+                android:layout_marginLeft="@dimen/listitem_text_left_margin"
+                android:layout_marginRight="@dimen/listitem_horizontal_margin"
+                android:layout_marginStart="@dimen/listitem_text_left_margin"
+                android:text="From"
+                android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
 
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/email_subject"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/picture" >
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/email_sender"
+                android:layout_marginEnd="@dimen/listitem_horizontal_margin"
+                android:layout_marginLeft="@dimen/listitem_text_left_margin"
+                android:layout_marginRight="@dimen/listitem_horizontal_margin"
+                android:layout_marginStart="@dimen/listitem_text_left_margin">
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="3dp"
-                        android:text="@string/email_from" />
-
-                    <TextView
-                        android:id="@+id/email_sender"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="3dp"
-                        android:text="@string/email_to" />
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/email_to"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
                     <LinearLayout
                         android:id="@+id/email_recipients"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
                     </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="3dp"
-                        android:text="@string/label_sent" />
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/label_sent"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
                     <TextView
                         android:id="@+id/email_sent"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
                 </TableRow>
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="3dp"
-                        android:text="@string/email_received" />
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/email_received"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
                     <TextView
                         android:id="@+id/email_received"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/email_status_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone" >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="3dp"
-                        android:text="@string/email_status" />
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/email_status"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
                     <TextView
                         android:id="@+id/email_status"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
                 </TableRow>
             </TableLayout>
         </RelativeLayout>
@@ -129,10 +165,10 @@
             android:id="@+id/email_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin" />
+            android:paddingTop="@dimen/activity_vertical_margin"/>
     </LinearLayout>
 
 </ScrollView>

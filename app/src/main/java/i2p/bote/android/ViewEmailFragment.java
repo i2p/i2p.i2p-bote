@@ -2,6 +2,7 @@ package i2p.bote.android;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -74,6 +76,7 @@ public class ViewEmailFragment extends Fragment {
     }
 
     private void displayEmail(Email email, View v) {
+        View sigInvalid = v.findViewById(R.id.signature_invalid);
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
         ImageView picture = (ImageView) v.findViewById(R.id.picture);
         TextView sender = (TextView) v.findViewById(R.id.email_sender);
@@ -95,13 +98,28 @@ public class ViewEmailFragment extends Fragment {
                 picture.setImageBitmap(BoteHelper.getIdenticonForAddress(fromAddress, lp.width, lp.height));
             }
 
-            sender.setText(BoteHelper.getDisplayAddress(fromAddress));
+            final String senderDisplay = BoteHelper.getDisplayAddress(fromAddress);
+
+            if (!email.isSignatureValid() && !email.isAnonymous()) {
+                sigInvalid.setVisibility(View.VISIBLE);
+                sigInvalid.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getActivity(), getString(R.string.signature_invalid, senderDisplay), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            sender.setText(senderDisplay);
+            if (email.isAnonymous() && !BoteHelper.isSentEmail(email))
+                sender.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
 
             Address[] emailRecipients = email.getToAddresses();
             if (emailRecipients != null) {
                 for (Address recipient : emailRecipients) {
                     TextView tv = new TextView(getActivity());
                     tv.setText(BoteHelper.getDisplayAddress(recipient.toString()));
+                    tv.setTextAppearance(getActivity(), R.style.TextAppearance_AppCompat_Secondary);
                     recipients.addView(tv);
                 }
             }
