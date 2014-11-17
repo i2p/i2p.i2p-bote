@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="nav_max_width">320dp</dimen>
     <dimen name="nav_horizontal_margin">16dp</dimen>
     <dimen name="nav_entry_height">48dp</dimen>
 

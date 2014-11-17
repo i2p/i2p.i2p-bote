@@ -101,12 +101,13 @@ public class EmailListActivity extends ActionBarActivity implements
 
         // Set the drawer width per Material design spec
         // http://www.google.com/design/spec/layout/structure.html#structure-side-nav-1
-        // Mobile: side nav width = screen width - app bar height
-        // Desktop: Max width for left nav is 400 dp. Not handled yet.
+        // Mobile: side nav width = min(screen width - app bar height, 320dp)
+        // Desktop: side nav width = min(screen width - app bar height, 400dp)
+        int maxWidth = getResources().getDimensionPixelSize(R.dimen.nav_max_width);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         DrawerLayout.LayoutParams lp = (DrawerLayout.LayoutParams) mDrawerOuter.getLayoutParams();
-        lp.width = dm.widthPixels - toolbar.getLayoutParams().height;
+        lp.width = Math.min(dm.widthPixels - toolbar.getLayoutParams().height, maxWidth);
 
         // Set the list of folders
         // TODO: This is slow, needs a loader
