@@ -49,6 +49,7 @@ import javax.mail.MessagingException;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.jmock.lib.concurrent.Synchroniser;
 import org.jmock.lib.legacy.ClassImposteriser;
 
 public class TestUtil {
@@ -94,8 +95,10 @@ public class TestUtil {
      * @param testDir
      */
     public static Configuration createConfiguration(File testDir) {
+        final Synchroniser synchroniser = new Synchroniser();
         Mockery mockery = new Mockery() {{
             setImposteriser(ClassImposteriser.INSTANCE);
+            setThreadingPolicy(synchroniser); // otherwise we get errors on threads
         }};
         final Configuration configuration = mockery.mock(Configuration.class);
         

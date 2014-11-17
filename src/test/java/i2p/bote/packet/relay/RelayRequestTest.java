@@ -50,6 +50,7 @@ import net.i2p.data.DataFormatException;
 import net.i2p.data.Destination;
 
 import org.jmock.Mockery;
+import org.jmock.lib.concurrent.Synchroniser;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
@@ -86,8 +87,10 @@ public class RelayRequestTest {
         i2pClient = I2PClientFactory.createClient();
         I2PSession i2pSession = i2pClient.createSession(new ByteArrayInputStream(Base64.decode(localBase64DestKeys)), null);
         
+        final Synchroniser synchroniser = new Synchroniser();
         Mockery mockery = new Mockery() {{
             setImposteriser(ClassImposteriser.INSTANCE);
+            setThreadingPolicy(synchroniser); // otherwise we get errors on threads
         }};
         I2PSendQueue sendQueue = mockery.mock(I2PSendQueue.class);
         
