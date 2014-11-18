@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -20,7 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,8 +30,10 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import i2p.bote.android.Constants;
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.QrCodeUtils;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
 
@@ -47,8 +50,7 @@ public class ViewIdentityFragment extends Fragment {
     TextView mFingerprintField;
     TextView mCryptoField;
     TextView mKeyField;
-
-    Button mGenQRCode;
+    ImageView mKeyQrCode;
 
     public static ViewIdentityFragment newInstance(String key) {
         ViewIdentityFragment f = new ViewIdentityFragment();
@@ -82,7 +84,7 @@ public class ViewIdentityFragment extends Fragment {
         mFingerprintField = (TextView) view.findViewById(R.id.fingerprint);
         mCryptoField = (TextView) view.findViewById(R.id.crypto_impl);
         mKeyField = (TextView) view.findViewById(R.id.key);
-        mGenQRCode = (Button) view.findViewById(R.id.generate_qr);
+        mKeyQrCode = (ImageView) view.findViewById(R.id.key_qr_code);
 
         if (mKey != null) {
             try {
@@ -142,13 +144,15 @@ public class ViewIdentityFragment extends Fragment {
             mCryptoField.setText(mIdentity.getCryptoImpl().getName());
             mKeyField.setText(mKey);
 
-            mGenQRCode.setOnClickListener(new View.OnClickListener() {
+            mKeyQrCode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     IntentIntegrator i = new IntentIntegrator(getActivity());
                     i.shareText("bote:" + mKey);
                 }
             });
+
+            loadQrCode();
         }
     }
 
@@ -240,5 +244,35 @@ public class ViewIdentityFragment extends Fragment {
             return NdefRecord.createExternal(
                     "i2p.bote", "contactDestination", mIdentity.getKey().getBytes()
             );
+    }
+
+    /**
+     * Load QR Code asynchronously and with a fade in animation
+     */
+    private void loadQrCode() {
+        AsyncTask<Void, Void, Bitmap> loadTask =
+                new AsyncTask<Void, Void, Bitmap>() {
+                    protected Bitmap doInBackground(Void... unused) {
+                        String qrCodeContent = Constants.EMAILDEST_SCHEME + ":" + mKey;
+                        // render with minimal size
+                        return QrCodeUtils.getQRCodeBitmap(qrCodeContent, 0);
+                    }
+                    protected void onPostExecute(Bitmap qrCode) {
+                    // only change view, if fragment is attached to activity
+                        if (ViewIdentityFragment.this.isAdded()) {
+                        // scale the image up to our actual size. we do this in code rather
+                        // than let the ImageView do this because we don't require filtering.
+                            Bitmap scaled = Bitmap.createScaledBitmap(qrCode,
+                                    mKeyQrCode.getHeight(), mKeyQrCode.getHeight(),
+                                    false);
+                            mKeyQrCode.setImageBitmap(scaled);
+                            // simple fade-in animation
+                            AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+                            anim.setDuration(200);
+                            mKeyQrCode.startAnimation(anim);
+                        }
+                    }
+                };
+        loadTask.execute();
     }
 }

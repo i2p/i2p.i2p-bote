@@ -68,9 +68,10 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title_key_info"
@@ -83,16 +84,21 @@
                 android:id="@+id/crypto_impl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/title_key_info"
                 android:layout_marginTop="8dp"
                 android:text="Crypto implementation"
                 android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
+
+            <ImageView
+                android:id="@+id/key_qr_code"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"/>
 
             <TextView
                 android:id="@+id/key"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/crypto_impl"
                 android:layout_marginTop="8dp"
                 android:text="Key"
                 android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
@@ -101,7 +107,6 @@
                 android:id="@+id/title_fingerprint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/key"
                 android:layout_marginTop="8dp"
                 android:text="Fingerprint"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subject"
@@ -111,20 +116,11 @@
                 android:id="@+id/fingerprint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/title_fingerprint"
                 android:layout_marginTop="8dp"
                 android:text="Fingerprint"
                 android:textAppearance="@style/TextAppearance.AppCompat.Primary"
                 android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/generate_qr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/fingerprint"
-                android:layout_marginTop="8dp"
-                android:text="Generate QR code"/>
-        </RelativeLayout>
+        </LinearLayout>
 
     </ScrollView>
 </LinearLayout>
