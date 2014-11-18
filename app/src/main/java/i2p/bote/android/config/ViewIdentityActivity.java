@@ -19,18 +19,10 @@ public class ViewIdentityActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_toolbar);
 
         // Initialize I2P settings
         InitActivities init = new InitActivities(this);
         init.initialize();
-
-        // Set the action bar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-
-        // Enable ActionBar app icon to behave as action to go back
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             String key = null;
@@ -39,7 +31,7 @@ public class ViewIdentityActivity extends ActionBarActivity {
                 key = args.getString(ViewIdentityFragment.IDENTITY_KEY);
             ViewIdentityFragment f = ViewIdentityFragment.newInstance(key);
             getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, f).commit();
+                .add(android.R.id.content, f).commit();
         }
 
         // NFC send only works on API 10+
@@ -69,7 +61,7 @@ public class ViewIdentityActivity extends ActionBarActivity {
 
     private NdefMessage getNdefMessage() {
         ViewIdentityFragment f = (ViewIdentityFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.container);
+                .findFragmentById(android.R.id.content);
         return f.createNdefMessage();
     }
 

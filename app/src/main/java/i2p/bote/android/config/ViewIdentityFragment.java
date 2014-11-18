@@ -12,8 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +40,7 @@ public class ViewIdentityFragment extends Fragment {
     private String mKey;
     private EmailIdentity mIdentity;
 
+    Toolbar mToolbar;
     ImageView mIdentityPicture;
     TextView mNameField;
     TextView mDescField;
@@ -74,6 +75,7 @@ public class ViewIdentityFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mToolbar = (Toolbar) view.findViewById(R.id.main_toolbar);
         mIdentityPicture = (ImageView) view.findViewById(R.id.identity_picture);
         mNameField = (TextView) view.findViewById(R.id.public_name);
         mDescField = (TextView) view.findViewById(R.id.description);
@@ -99,6 +101,18 @@ public class ViewIdentityFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ActionBarActivity activity = ((ActionBarActivity)getActivity());
+
+        // Set the action bar
+        activity.setSupportActionBar(mToolbar);
+
+        // Enable ActionBar app icon to behave as action to go back
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -112,7 +126,12 @@ public class ViewIdentityFragment extends Fragment {
             }
 
             mNameField.setText(mIdentity.getPublicName());
-            mDescField.setText(mIdentity.getDescription());
+            if (mIdentity.getDescription().isEmpty())
+                mDescField.setVisibility(View.GONE);
+            else {
+                mDescField.setText(mIdentity.getDescription());
+                mDescField.setVisibility(View.VISIBLE);
+            }
             try {
                 String locale = getActivity().getResources().getConfiguration().locale.getLanguage();
                 mFingerprintField.setText(BoteHelper.getFingerprint(mIdentity, locale));
@@ -136,17 +155,6 @@ public class ViewIdentityFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_identity, menu);
-
-        MenuItem item = menu.findItem(R.id.menu_item_share);
-        ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
-        if (mKey != null) {
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, mKey);
-            shareIntent.setType("text/plain");
-            shareActionProvider.setShareIntent(shareIntent);
-        }
     }
 
     @Override

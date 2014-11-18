@@ -3,12 +3,6 @@
     xmlns:i2pandroid="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/menu_item_share"
-        android:title="@string/share"
-        i2pandroid:showAsAction="ifRoom"
-        i2pandroid:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
-
-    <item
         android:id="@+id/action_edit_identity"
         android:icon="@drawable/ic_create_white_24dp"
         android:title="@string/edit_identity"

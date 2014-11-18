@@ -20,6 +20,10 @@
         <!-- The rest of your attributes -->
     </style>
 
+    <style name="TextAppearance.AppCompat.Headline.Inverse" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/primary_text_default_material_dark</item>
+    </style>
+
     <style name="TextAppearance.AppCompat.Primary" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/primary_text_default_material_light</item>
         <item name="android:textSize">@dimen/text_size_primary</item>
@@ -32,6 +36,10 @@
     <style name="TextAppearance.AppCompat.Secondary" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/secondary_text_default_material_light</item>
         <item name="android:textSize">@dimen/text_size_secondary</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Secondary.Inverse" parent="TextAppearance.AppCompat.Secondary">
+        <item name="android:textColor">@color/secondary_text_default_material_dark</item>
     </style>
 
     <style name="Divider">
