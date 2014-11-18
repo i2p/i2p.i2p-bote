@@ -1,38 +1,14 @@
 package i2p.bote.android;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-
-import javax.mail.Address;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-
-import com.tokenautocomplete.FilteredArrayAdapter;
-
-import net.i2p.data.DataFormatException;
-import i2p.bote.I2PBote;
-import i2p.bote.android.util.BoteHelper;
-import i2p.bote.android.util.ContactsCompletionView;
-import i2p.bote.android.util.Person;
-import i2p.bote.email.Attachment;
-import i2p.bote.email.Email;
-import i2p.bote.email.EmailIdentity;
-import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,14 +21,47 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.tokenautocomplete.FilteredArrayAdapter;
+
+import net.i2p.data.DataFormatException;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+
+import i2p.bote.I2PBote;
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.ContactsCompletionView;
+import i2p.bote.android.util.Person;
+import i2p.bote.email.Attachment;
+import i2p.bote.email.Email;
+import i2p.bote.email.EmailIdentity;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.packet.dht.Contact;
+
 public class NewEmailFragment extends Fragment {
     private Callbacks mCallbacks = sDummyCallbacks;
 
     public interface Callbacks {
         public void onTaskFinished();
+
+        public void onBackPressAllowed();
     }
+
     private static Callbacks sDummyCallbacks = new Callbacks() {
-        public void onTaskFinished() {}
+        public void onTaskFinished() {
+        }
+
+        public void onBackPressAllowed() {
+        }
     };
 
     @Override
@@ -71,11 +80,13 @@ public class NewEmailFragment extends Fragment {
 
     public static final String QUOTE_MSG_FOLDER = "sender";
     public static final String QUOTE_MSG_ID = "recipient";
+
     public static enum QuoteMsgType {
         REPLY,
         REPLY_ALL,
         FORWARD
     }
+
     public static final String QUOTE_MSG_TYPE = "type";
 
     private String mSenderKey;
@@ -86,6 +97,7 @@ public class NewEmailFragment extends Fragment {
     ContactsCompletionView mRecipients;
     EditText mSubject;
     EditText mContent;
+    boolean mDirty;
 
     public static NewEmailFragment newInstance(String quoteMsgFolder, String quoteMsgId,
                                                QuoteMsgType quoteMsgType) {
@@ -106,7 +118,7 @@ public class NewEmailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_new_email, container, false);
     }
 
@@ -189,20 +201,22 @@ public class NewEmailFragment extends Fragment {
                 mask = mask.toLowerCase(Locale.US);
                 return obj.getName().toLowerCase(Locale.US).startsWith(mask) || obj.getAddress().toLowerCase(Locale.US).startsWith(mask);
             }
+
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View v;
                 if (convertView == null)
-                    v = ((LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                    v = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                             .inflate(R.layout.listitem_contact, parent, false);
                 else
                     v = convertView;
                 setViewContent(v, position);
                 return v;
             }
+
             private void setViewContent(View v, int position) {
                 Person person = getItem(position);
-                ((TextView)v.findViewById(R.id.contact_name)).setText(person.getName());
+                ((TextView) v.findViewById(R.id.contact_name)).setText(person.getName());
                 ImageView picView = (ImageView) v.findViewById(R.id.contact_picture);
                 Bitmap picture = person.getPicture();
                 if (picture == null) {
@@ -238,10 +252,10 @@ public class NewEmailFragment extends Fragment {
             quotation.append("\n\n");
             quotation.append(getResources().getString(
                     hide ? R.string.response_quote_wrote_hide
-                         : R.string.response_quote_wrote,
-                            origFrom));
+                            : R.string.response_quote_wrote,
+                    origFrom));
             String[] lines = origContent.split("\r?\n|\r");
-            for (String line: lines)
+            for (String line : lines)
                 quotation = quotation.append("\n> ").append(line);
             mContent.setText(quotation);
         }
@@ -249,6 +263,23 @@ public class NewEmailFragment extends Fragment {
         if (savedInstanceState == null) {
             mRecipients.setPrefix(getResources().getString(R.string.email_to) + " ");
         }
+
+        TextWatcher dirtyWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mDirty = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        };
+        mSubject.addTextChangedListener(dirtyWatcher);
+        mContent.addTextChangedListener(dirtyWatcher);
     }
 
     private Person extractPerson(String recipient) {
@@ -295,15 +326,36 @@ public class NewEmailFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.action_send_email:
-            if (sendEmail())
-                mCallbacks.onTaskFinished();
-            return true;
+            case R.id.action_send_email:
+                if (sendEmail())
+                    mCallbacks.onTaskFinished();
+                return true;
 
-        default:
-            return super.onOptionsItemSelected(item);
+            case android.R.id.home:
+                if (mDirty) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(R.string.stop_composing_email)
+                            .setMessage(R.string.all_changes_will_be_discarded)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    getActivity().onNavigateUp();
+                                }
+                            }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    }).show();
+                    return true;
+                } else
+                    return super.onOptionsItemSelected(item);
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -314,7 +366,7 @@ public class NewEmailFragment extends Fragment {
             EmailIdentity sender = (EmailIdentity) mSpinner.getSelectedItem();
             InternetAddress ia = new InternetAddress(
                     sender == null ? "Anonymous" :
-                        BoteHelper.getNameAndDestination(sender.getKey()));
+                            BoteHelper.getNameAndDestination(sender.getKey()));
             email.setFrom(ia);
             // We must continue to set "Sender:" even with only one mailbox
             // in "From:", which is against RFC 2822 but required for older
@@ -370,7 +422,7 @@ public class NewEmailFragment extends Fragment {
 
         public IdentityAdapter(Context context) {
             super(context, android.R.layout.simple_spinner_item);
-            mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             try {
                 Collection<EmailIdentity> identities = I2PBote.getInstance().getIdentities().getAll();
@@ -427,7 +479,7 @@ public class NewEmailFragment extends Fragment {
         }
 
         @Override
-        public View getDropDownView (int position, View convertView, ViewGroup parent) {
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
             View v;
             if (convertView == null)
                 v = mInflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
@@ -446,5 +498,26 @@ public class NewEmailFragment extends Fragment {
             else
                 text.setText(identity.getPublicName());
         }
+    }
+
+    public void onBackPressed() {
+        if (mDirty) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.stop_composing_email)
+                    .setMessage(R.string.all_changes_will_be_discarded)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            mCallbacks.onBackPressAllowed();
+                        }
+                    }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            }).show();
+        } else
+            mCallbacks.onBackPressAllowed();
     }
 }

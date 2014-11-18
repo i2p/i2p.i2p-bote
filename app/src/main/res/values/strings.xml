@@ -111,6 +111,8 @@
     <string name="subject">Subject</string>
     <string name="compose_email">Compose email</string>
     <string name="add_one_recipient">Add at least one recipient.</string>
+    <string name="stop_composing_email">Stop composing email?</string>
+    <string name="all_changes_will_be_discarded">All changes will be discarded.</string>
     <string name="email_queued_for_sending">Email queued for sending</string>
     <string name="subject_prefix_fwd">Fwd:</string>
     <string name="subject_prefix_fwd_hide" translatable="false">Fwd:</string>

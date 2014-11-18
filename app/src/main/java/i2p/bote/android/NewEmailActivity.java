@@ -42,11 +42,22 @@ public class NewEmailActivity extends ActionBarActivity implements
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        NewEmailFragment f = (NewEmailFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+        f.onBackPressed();
+    }
+
     // NewEmailFragment.Callbacks
 
     public void onTaskFinished() {
         Toast.makeText(this, R.string.email_queued_for_sending,
                 Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    @Override
+    public void onBackPressAllowed() {
+        super.onBackPressed();
     }
 }
