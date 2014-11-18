@@ -15,11 +15,11 @@ public class Identicon extends IdenticonBase {
         return 5;
     }
 
-    protected int getSymmetricColumnIndex(int row) {
-        if (row < CENTER_COLUMN_INDEX) {
-            return row;
+    protected int getSymmetricColumnIndex(int col) {
+        if (col < CENTER_COLUMN_INDEX) {
+            return col;
         } else {
-            return getColumnCount() - row - 1;
+            return getColumnCount() - col - 1;
         }
     }
 
@@ -31,5 +31,15 @@ public class Identicon extends IdenticonBase {
     @Override
     protected int getIconColor() {
         return Color.rgb(getByte(0) + 128, getByte(1) + 128, getByte(2) + 128);
+    }
+
+    @Override
+    protected int getBackgroundColor() {
+        float[] hsv = new float[3];
+        Color.colorToHSV(getIconColor(), hsv);
+        if (hsv[2] < 0.5)
+            return Color.parseColor("#ffeeeeee"); // @color/background_material_light
+        else
+            return Color.parseColor("#ff303030"); // @color/background_material_dark
     }
 }
