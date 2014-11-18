@@ -1,101 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/toolbar_height_with_picture"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <RelativeLayout
             android:id="@+id/picture_layout"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/picture_background">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal">
 
             <ImageView
                 android:id="@+id/contact_picture"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_centerHorizontal="true"
+                android:layout_width="@dimen/toolbar_picture_size"
+                android:layout_height="@dimen/toolbar_picture_size"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:background="@color/background_material_light"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_contact_picture" />
+                android:src="@drawable/ic_contact_picture"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/listitem_horizontal_margin"
+                android:layout_marginStart="@dimen/listitem_horizontal_margin"
+                android:layout_toEndOf="@id/contact_picture"
+                android:layout_toRightOf="@id/contact_picture"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/contact_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/public_name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline.Inverse"/>
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Secondary.Inverse"/>
+            </LinearLayout>
         </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/contact_name"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/picture_layout"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:text="@string/public_name"
-            android:textSize="20dp" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/contact_name"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:text="@string/description" />
+            <TextView
+                android:id="@+id/title_key_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address information"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subject"/>
 
-        <TextView
-            android:id="@+id/title_key_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/text"
-            android:layout_marginTop="5dp"
-            android:text="Address information"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/crypto_impl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_key_info"
+                android:layout_marginTop="8dp"
+                android:text="Crypto implementation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
 
-        <TextView
-            android:id="@+id/crypto_impl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/title_key_info"
-            android:layout_marginTop="5dp"
-            android:text="Crypto implementation" />
+            <TextView
+                android:id="@+id/destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/crypto_impl"
+                android:layout_marginTop="8dp"
+                android:text="Destination"
+                android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
-        <TextView
-            android:id="@+id/destination"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/crypto_impl"
-            android:layout_marginTop="5dp"
-            android:text="Destination" />
+            <TextView
+                android:id="@+id/title_fingerprint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/destination"
+                android:layout_marginTop="8dp"
+                android:text="Fingerprint"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subject"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/title_fingerprint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/destination"
-            android:layout_marginTop="5dp"
-            android:text="Fingerprint"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/fingerprint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_fingerprint"
+                android:layout_marginTop="8dp"
+                android:text="Fingerprint"
+                android:textAppearance="@style/TextAppearance.AppCompat.Primary"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/fingerprint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/title_fingerprint"
-            android:layout_marginTop="5dp"
-            android:text="Fingerprint"
-            android:visibility="gone" />
-
-    </RelativeLayout>
-</ScrollView>
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

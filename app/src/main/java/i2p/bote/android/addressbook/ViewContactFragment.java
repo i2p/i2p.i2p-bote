@@ -12,15 +12,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +37,7 @@ public class ViewContactFragment extends Fragment {
     private String mDestination;
     private Contact mContact;
 
+    Toolbar mToolbar;
     ImageView mContactPicture;
     TextView mNameField;
     TextView mTextField;
@@ -70,6 +70,7 @@ public class ViewContactFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mToolbar = (Toolbar) view.findViewById(R.id.main_toolbar);
         mContactPicture = (ImageView) view.findViewById(R.id.contact_picture);
         mNameField = (TextView) view.findViewById(R.id.contact_name);
         mTextField = (TextView) view.findViewById(R.id.text);
@@ -88,6 +89,18 @@ public class ViewContactFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ActionBarActivity activity = ((ActionBarActivity)getActivity());
+
+        // Set the action bar
+        activity.setSupportActionBar(mToolbar);
+
+        // Enable ActionBar app icon to behave as action to go back
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -101,7 +114,12 @@ public class ViewContactFragment extends Fragment {
             }
 
             mNameField.setText(mContact.getName());
-            mTextField.setText(mContact.getText());
+            if (mContact.getText().isEmpty())
+                mTextField.setVisibility(View.GONE);
+            else {
+                mTextField.setText(mContact.getText());
+                mTextField.setVisibility(View.VISIBLE);
+            }
             mCryptoField.setText(mContact.getDestination().getCryptoImpl().getName());
             mDestinationField.setText(mDestination);
             try {
@@ -117,17 +135,6 @@ public class ViewContactFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_contact, menu);
-
-        MenuItem item = menu.findItem(R.id.menu_item_share);
-        ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
-        if (mDestination != null) {
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, mDestination);
-            shareIntent.setType("text/plain");
-            shareActionProvider.setShareIntent(shareIntent);
-        }
     }
 
     @Override
