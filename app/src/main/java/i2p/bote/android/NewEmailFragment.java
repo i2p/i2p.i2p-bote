@@ -143,7 +143,8 @@ public class NewEmailFragment extends Fragment {
                     // TODO don't include our address
                     // What happens if an email is received by multiple local identities?
                     for (Address address : origEmail.getAllAddresses(true)) {
-                        recipients.add(extractPerson(address.toString()));
+                        if (!address.toString().equals("Anonymous"))
+                            recipients.add(extractPerson(address.toString()));
                     }
                 }
 
