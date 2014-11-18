@@ -3,16 +3,16 @@ package im.delight.android.identicons;
 import android.graphics.Color;
 
 public class Identicon extends IdenticonBase {
-    private static final int CENTER_COLUMN_INDEX = 3;
+    private static final int CENTER_COLUMN_INDEX = 5;
 
     @Override
     protected int getRowCount() {
-        return 5;
+        return 9;
     }
 
     @Override
     protected int getColumnCount() {
-        return 5;
+        return 9;
     }
 
     protected int getSymmetricColumnIndex(int col) {
