@@ -485,6 +485,11 @@ public class GeneralHelper {
         return getAddressDisplayFilter().getNameAndShortDestination(address);
     }
 
+    public static String getName(String address) throws PasswordException, IOException, GeneralSecurityException {
+        String name =  getAddressDisplayFilter().getName(address);
+        return name.isEmpty() ? extractName(address) : name;
+    }
+
     private static AddressDisplayFilter getAddressDisplayFilter() throws PasswordException {
         Identities identities = I2PBote.getInstance().getIdentities();
         if (ADDRESS_DISPLAY_FILTER == null)

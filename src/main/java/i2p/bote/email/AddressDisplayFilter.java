@@ -126,4 +126,35 @@ public class AddressDisplayFilter {
             nameAndDest = nameAndDest.replace(base64dest, base64dest.substring(0, 4));
         return nameAndDest;
     }
+    
+    /**
+     * Looks up the name associated with a Base64-encoded Email Destination
+     * in the address book and the local identities, and returns a string
+     * that contains the name.<br/>
+     * If <code>address</code> already contains a name, it is replaced with
+     * the one from the address book or identities.<br/>
+     * If no name is found in the address book or the identities, or if
+     * <code>address</code> does not contain a valid Email Destination,
+     * an empty string is returned.
+     * @param address A Base64-encoded Email Destination, and optionally a name
+     * @throws PasswordException 
+     * @throws GeneralSecurityException 
+     * @throws IOException 
+     */
+    public String getName(String address) throws PasswordException, IOException, GeneralSecurityException {
+        String base64dest = EmailDestination.extractBase64Dest(address);
+        if (base64dest != null) {
+            // try the address book
+            Contact contact = addressBook.get(base64dest);
+            if (contact != null)
+                return contact.getName();
+            
+            // if no address book entry, try the email identities
+            EmailIdentity identity = identities.get(base64dest);
+            if (identity != null)
+                return identity.getPublicName();
+        }
+
+        return "";
+    }
 }
