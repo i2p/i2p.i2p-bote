@@ -40,7 +40,6 @@
   <string name="action_start_bote">Mit dem Netzwerk verbinden</string>
   <string name="action_stop_bote">Netzwerkverbindung trennen</string>
   <string name="action_settings">Einstellungen</string>
-  <string name="start_i2p_android">I2P Android scheint nicht zu laufen. Möchten Sie es starten?</string>
   <string name="check_email">E-Mail abrufen</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
@@ -95,6 +94,7 @@
   <string name="error_sending">Fehler beim Verchicken der Email %s</string>
   <string name="error_saving_metadata">Fehler beim Speichern der Email-Metadaten: %s</string>
   <string name="email_not_found">E-Mail nicht gefunden</string>
+  <string name="signature_invalid">Diese E-Mail hat keine gültige Signatur. Sie wurde wahrscheinlich nicht von %s gesendet.</string>
   <string name="email_from">Von:</string>
   <string name="email_to">An:</string>
   <string name="label_sent">Abgeschickt:</string>
@@ -107,6 +107,8 @@
   <string name="subject">Betreff</string>
   <string name="compose_email">E-Mail verfassen</string>
   <string name="add_one_recipient">Mindestens ein Empfänger nötig</string>
+  <string name="stop_composing_email">Verfassen der E-Mail stoppen</string>
+  <string name="all_changes_will_be_discarded">Alle Änderungen werden verworfen.</string>
   <string name="email_queued_for_sending">Email in der Sendewarteschlange eingefügt </string>
   <string name="subject_prefix_fwd">WG:</string>
   <string name="response_prefix_re">Antw:</string>

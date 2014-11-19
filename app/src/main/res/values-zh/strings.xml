@@ -40,7 +40,6 @@
   <string name="action_start_bote">连接到网络</string>
   <string name="action_stop_bote">断开网络</string>
   <string name="action_settings">设置</string>
-  <string name="start_i2p_android">看起来 I2P Android 未在运行。您想启动它吗？</string>
   <string name="check_email">检查邮件</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
@@ -93,6 +92,7 @@
   <string name="error_sending">发送邮件时出错: %s</string>
   <string name="error_saving_metadata">保存邮件元数据出错: %s</string>
   <string name="email_not_found">邮件未找到</string>
+  <string name="signature_invalid">此电子邮件没有一个有效的签名。它很可能不是由 %s 发送的。</string>
   <string name="email_from">从:</string>
   <string name="email_to">至:</string>
   <string name="label_sent">发送:</string>
@@ -105,6 +105,8 @@
   <string name="subject">主题</string>
   <string name="compose_email">撰写邮件</string>
   <string name="add_one_recipient">请添加至少一个收件人。</string>
+  <string name="stop_composing_email">停止撰写邮件？</string>
+  <string name="all_changes_will_be_discarded">所有更改将被丢弃。</string>
   <string name="email_queued_for_sending">邮件已进入发送队列</string>
   <string name="subject_prefix_fwd">转发:</string>
   <string name="response_prefix_re">回复:</string>

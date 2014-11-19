@@ -40,7 +40,6 @@
   <string name="action_start_bote">Connecter au réseau</string>
   <string name="action_stop_bote">Déconnecter du réseau</string>
   <string name="action_settings">Paramètres</string>
-  <string name="start_i2p_android">Il apparaît que I2P Android n\'est pas en cours de fonctionnement. Voudriez-vous le démarrer ?</string>
   <string name="check_email">Relever emails</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">

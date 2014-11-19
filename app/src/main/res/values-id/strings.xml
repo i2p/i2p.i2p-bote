@@ -37,7 +37,6 @@
   <string name="action_start_bote">Hubungkan dengan jaringan</string>
   <string name="action_stop_bote">Putuskan dari jairngan</string>
   <string name="action_settings">Pengaturan</string>
-  <string name="start_i2p_android">Sepertinya I2P Android tidak berjalan. Apakah Anda ingin memulainya?</string>
   <!--Argument is a number-->
   <!--Argument is a number-->
   <string name="items_selected">%s dipilih</string>

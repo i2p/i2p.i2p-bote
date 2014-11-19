@@ -37,7 +37,6 @@
   <string name="action_start_bote">Połącz z siecią</string>
   <string name="action_stop_bote">Rozłącz z siecią</string>
   <string name="action_settings">Ustawienia</string>
-  <string name="start_i2p_android">Wygląda na to, że I2P Android nie jest uruchomiony. Czy chcesz go włączyć?</string>
   <!--Argument is a number-->
   <!--Argument is a number-->
   <string name="items_selected">%s zaznaczonych</string>

@@ -37,7 +37,6 @@
   <string name="action_start_bote">Lidhu në rrjet</string>
   <string name="action_stop_bote">Ndalo lidhjen nga rrjeti</string>
   <string name="action_settings">Cilësimet</string>
-  <string name="start_i2p_android">Po duket që I2P Android nuk është në funksionim, Doni ta filloni atë?</string>
   <!--Argument is a number-->
   <!--Argument is a number-->
   <string name="items_selected">%s selektuar</string>
