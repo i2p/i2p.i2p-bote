@@ -1,4 +1,5 @@
 0.3 (Upcoming)
+ * Moved to Material design
  * Overhauled password usability
  * Check email improvements
    * Use new-style swipe
@@ -7,7 +8,6 @@
  * QR codes for sharing identities
  * Separated viewing and editing contacts
  * Various bug fixes
- * Various UI improvements
  * Updated translations
 
 0.3-rc3 / 2014-08-23 / 6e7655836552d13d6fa6b7512e7dcf77cb3d413b
