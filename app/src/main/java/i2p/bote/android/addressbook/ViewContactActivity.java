@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 import i2p.bote.android.InitActivities;
-import i2p.bote.android.R;
 
 public class ViewContactActivity extends ActionBarActivity {
     NfcAdapter mNfcAdapter;

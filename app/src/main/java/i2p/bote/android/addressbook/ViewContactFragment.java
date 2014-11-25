@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import java.security.GeneralSecurityException;
 
+import i2p.bote.android.Constants;
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.fileencryption.PasswordException;
@@ -198,13 +199,14 @@ public class ViewContactFragment extends Fragment {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
             return new NdefRecord(
                     NdefRecord.TNF_EXTERNAL_TYPE,
-                    "i2p.bote:contact".getBytes(),
+                    Constants.NDEF_LEGACY_TYPE_CONTACT.getBytes(),
                     new byte[0],
                     mContact.getName().getBytes()
             );
         else
             return NdefRecord.createExternal(
-                    "i2p.bote", "contact", mContact.getName().getBytes()
+                    Constants.NDEF_DOMAIN, Constants.NDEF_TYPE_CONTACT,
+                    mContact.getName().getBytes()
             );
     }
 
@@ -212,13 +214,14 @@ public class ViewContactFragment extends Fragment {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
             return new NdefRecord(
                     NdefRecord.TNF_EXTERNAL_TYPE,
-                    "i2p.bote:contactDestination".getBytes(),
+                    Constants.NDEF_LEGACY_TYPE_CONTACT_DESTINATION.getBytes(),
                     new byte[0],
                     mContact.getDestination().getKey().getBytes()
             );
         else
             return NdefRecord.createExternal(
-                    "i2p.bote", "contactDestination", mContact.getDestination().getKey().getBytes()
+                    Constants.NDEF_DOMAIN, Constants.NDEF_TYPE_CONTACT_DESTINATION,
+                    mContact.getDestination().getKey().getBytes()
             );
     }
 }

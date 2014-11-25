@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
+import java.util.Arrays;
+
+import i2p.bote.android.Constants;
 import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 
@@ -45,13 +47,10 @@ public class EditContactActivity extends ActionBarActivity {
     public void onResume() {
         super.onResume();
 
-        // NFC receive only works on API 10+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            // Check to see that the Activity started due to an Android Beam
-            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) ||
-                    NfcAdapter.ACTION_TAG_DISCOVERED.equals(getIntent().getAction())) {
-                processIntent(getIntent());
-            }
+        // Check to see that the Activity started due to an Android Beam
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction()) ||
+                NfcAdapter.ACTION_TAG_DISCOVERED.equals(getIntent().getAction())) {
+            processIntent(getIntent());
         }
     }
 
@@ -64,7 +63,7 @@ public class EditContactActivity extends ActionBarActivity {
     /**
      * Parses the NDEF Message from the intent
      */
-    void processIntent(Intent intent) {
+    private void processIntent(Intent intent) {
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
                 NfcAdapter.EXTRA_NDEF_MESSAGES);
         if (rawMsgs == null || rawMsgs.length < 1)
@@ -72,7 +71,11 @@ public class EditContactActivity extends ActionBarActivity {
         NdefMessage msg = (NdefMessage) rawMsgs[0];
 
         NdefRecord[] records = msg.getRecords();
-        if (records.length != 2)
+        if (records.length != 2 ||
+                records[0].getTnf() != NdefRecord.TNF_EXTERNAL_TYPE ||
+                !Arrays.equals(records[0].getType(), Constants.NDEF_LEGACY_TYPE_CONTACT.getBytes()) ||
+                records[1].getTnf() != NdefRecord.TNF_EXTERNAL_TYPE ||
+                !Arrays.equals(records[1].getType(), Constants.NDEF_LEGACY_TYPE_CONTACT_DESTINATION.getBytes()))
             return; // TODO notify user?
         String name = new String(records[0].getPayload());
         String destination = new String(records[1].getPayload());
