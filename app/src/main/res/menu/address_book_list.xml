@@ -2,10 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:i2pandroid="http://schemas.android.com/apk/res-auto" >
 
-    <item
-        android:id="@+id/action_new_contact"
-        android:icon="@drawable/ic_person_add_white_24dp"
-        android:title="@string/action_new_contact"
-        i2pandroid:showAsAction="ifRoom"/>
-
 </menu>

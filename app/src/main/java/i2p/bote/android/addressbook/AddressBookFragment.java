@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.SortedSet;
@@ -18,7 +21,6 @@ import i2p.bote.I2PBote;
 import i2p.bote.android.R;
 import i2p.bote.android.util.AuthenticatedListFragment;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
-import i2p.bote.android.util.BoteHelper;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.dht.Contact;
 
@@ -27,7 +29,7 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
     OnContactSelectedListener mCallback;
     private ContactAdapter mAdapter;
 
-    private MenuItem mNewContact;
+    private View mPromotedActions;
 
     // Container Activity must implement this interface
     public interface OnContactSelectedListener {
@@ -51,7 +53,30 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Only so we can show/hide the FAM
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Create the list fragment's content view by calling the super method
+        final View listFragmentView = super.onCreateView(inflater, container, savedInstanceState);
+
+        View v = inflater.inflate(R.layout.fragment_list_contacts, container, false);
+        FrameLayout listContainer = (FrameLayout) v.findViewById(R.id.list_container);
+        listContainer.addView(listFragmentView);
+
+        mPromotedActions = v.findViewById(R.id.promoted_actions);
+
+        ImageButton b = (ImageButton) v.findViewById(R.id.action_new_contact);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNewContact();
+            }
+        });
+
+        return v;
     }
 
     @Override
@@ -81,39 +106,13 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.address_book_list, menu);
-        mNewContact = menu.findItem(R.id.action_new_contact);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        mNewContact.setVisible(!I2PBote.getInstance().isPasswordRequired());
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.action_new_contact:
-            if (I2PBote.getInstance().isPasswordRequired()) {
-                BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
-                    @Override
-                    public void onPasswordVerified() {
-                        startNewContact();
-                    }
-
-                    @Override
-                    public void onPasswordCanceled() {
-                    }
-                });
-            } else {
-                startNewContact();
-            }
-            return true;
-
-        default:
-            return super.onOptionsItemSelected(item);
-        }
+        boolean passwordRequired = I2PBote.getInstance().isPasswordRequired();
+        mPromotedActions.setVisibility(passwordRequired ? View.GONE : View.VISIBLE);
     }
 
     private void startNewContact() {
