@@ -45,12 +45,12 @@ public class AddressBookActivity extends ActionBarActivity implements
     public void onContactSelected(Contact contact) {
         if (Intent.ACTION_PICK.equals(getIntent().getAction())) {
             Intent result = new Intent();
-            result.putExtra(ViewContactFragment.CONTACT_DESTINATION, contact.getBase64Dest());
+            result.putExtra(ViewContactFragment.ADDRESS, contact.getBase64Dest());
             setResult(Activity.RESULT_OK, result);
             finish();
         } else {
             Intent i = new Intent(this, ViewContactActivity.class);
-            i.putExtra(ViewContactFragment.CONTACT_DESTINATION, contact.getBase64Dest());
+            i.putExtra(ViewContactFragment.ADDRESS, contact.getBase64Dest());
             startActivityForResult(i, ALTER_CONTACT_LIST);
         }
     }

@@ -8,7 +8,6 @@ import i2p.bote.android.util.SummaryEditTextPreference;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
@@ -23,7 +22,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -35,14 +33,12 @@ import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SettingsActivity extends PreferenceActivity {
     // Actions for legacy settings
@@ -209,7 +205,7 @@ public class SettingsActivity extends PreferenceActivity {
                 Header header = mIdentityListHeaders[index];
                 if (header != null && header.id != HEADER_ID_UNDEFINED) {
                     String key = header.extras.getString(
-                            ViewIdentityFragment.IDENTITY_KEY);
+                            ViewIdentityFragment.ADDRESS);
                     if (key != mDeletingIdentityKey) {
                         target.add(header);
                         if (key == mRequestedIdentityKey) {
@@ -428,7 +424,7 @@ public class SettingsActivity extends PreferenceActivity {
                 final Intent intent = new Intent(
                         getApplicationContext(), ViewIdentityActivity.class);
                 final Bundle args = new Bundle();
-                args.putString(ViewIdentityFragment.IDENTITY_KEY, key);
+                args.putString(ViewIdentityFragment.ADDRESS, key);
                 intent.putExtras(args);
                 final Header newHeader = new Header();
                 newHeader.id = id;

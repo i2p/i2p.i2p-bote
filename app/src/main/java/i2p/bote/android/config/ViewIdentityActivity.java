@@ -7,10 +7,8 @@ import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 
 import i2p.bote.android.InitActivities;
-import i2p.bote.android.R;
 
 public class ViewIdentityActivity extends ActionBarActivity {
     NfcAdapter mNfcAdapter;
@@ -28,7 +26,7 @@ public class ViewIdentityActivity extends ActionBarActivity {
             String key = null;
             Bundle args = getIntent().getExtras();
             if (args != null)
-                key = args.getString(ViewIdentityFragment.IDENTITY_KEY);
+                key = args.getString(ViewIdentityFragment.ADDRESS);
             ViewIdentityFragment f = ViewIdentityFragment.newInstance(key);
             getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, f).commit();

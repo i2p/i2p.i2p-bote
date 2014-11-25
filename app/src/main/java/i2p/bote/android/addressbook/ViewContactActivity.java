@@ -26,7 +26,7 @@ public class ViewContactActivity extends ActionBarActivity {
             String destination = null;
             Bundle args = getIntent().getExtras();
             if (args != null)
-                destination = args.getString(ViewContactFragment.CONTACT_DESTINATION);
+                destination = args.getString(ViewContactFragment.ADDRESS);
             ViewContactFragment f = ViewContactFragment.newInstance(destination);
             getSupportFragmentManager().beginTransaction()
                     .add(android.R.id.content, f).commit();
