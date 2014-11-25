@@ -82,22 +82,26 @@ public class EditContactFragment extends EditPictureFragment {
         mError = (TextView) view.findViewById(R.id.error);
 
         Button b = (Button) view.findViewById(R.id.import_destination_from_file);
-        b.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.setType("text/plain");
-                i.addCategory(Intent.CATEGORY_OPENABLE);
-                try {
-                    startActivityForResult(
-                            Intent.createChooser(i,
-                                    getResources().getString(R.string.select_email_destination_file)),
-                            REQUEST_DESTINATION_FILE);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getActivity(), R.string.please_install_a_file_manager,
-                            Toast.LENGTH_SHORT).show();
+        if (mDestination != null) {
+            mDestinationField.setVisibility(View.GONE);
+            b.setVisibility(View.GONE);
+        } else
+            b.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                    i.setType("text/plain");
+                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                    try {
+                        startActivityForResult(
+                                Intent.createChooser(i,
+                                        getResources().getString(R.string.select_email_destination_file)),
+                                REQUEST_DESTINATION_FILE);
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(getActivity(), R.string.please_install_a_file_manager,
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
 
         if (I2PBote.getInstance().isPasswordRequired()) {
             // Request a password from the user.
@@ -132,7 +136,6 @@ public class EditContactFragment extends EditPictureFragment {
                 }
 
                 mNameField.setText(contact.getName());
-                mDestinationField.setText(mDestination);
                 mTextField.setText(contact.getText());
             } catch (PasswordException e) {
                 // TODO Handle
@@ -155,7 +158,8 @@ public class EditContactFragment extends EditPictureFragment {
             case R.id.action_save_contact:
                 String picture = getPictureB64();
                 String name = mNameField.getText().toString();
-                String destination = mDestinationField.getText().toString();
+                String destination = mDestination == null ?
+                        mDestinationField.getText().toString() : mDestination;
                 String text = mTextField.getText().toString();
 
                 // Check fields
