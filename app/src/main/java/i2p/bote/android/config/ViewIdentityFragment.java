@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.AsyncTask;
@@ -22,10 +24,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.zxing.integration.android.IntentIntegrator;
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -51,6 +58,16 @@ public class ViewIdentityFragment extends Fragment {
     TextView mCryptoField;
     TextView mKeyField;
     ImageView mKeyQrCode;
+    ImageView mExpandedQrCode;
+
+    // Hold a reference to the current animator,
+    // so that it can be canceled mid-way.
+    private Animator mQrCodeAnimator;
+
+    // The system "short" animation time duration, in milliseconds. This
+    // duration is ideal for subtle animations or animations that occur
+    // very frequently.
+    private int mShortAnimationDuration;
 
     public static ViewIdentityFragment newInstance(String key) {
         ViewIdentityFragment f = new ViewIdentityFragment();
@@ -65,6 +82,10 @@ public class ViewIdentityFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mKey = getArguments().getString(IDENTITY_KEY);
+
+        // Retrieve and cache the system's default "short" animation time.
+        mShortAnimationDuration = getResources().getInteger(
+                android.R.integer.config_shortAnimTime);
     }
 
     @Override
@@ -85,6 +106,7 @@ public class ViewIdentityFragment extends Fragment {
         mCryptoField = (TextView) view.findViewById(R.id.crypto_impl);
         mKeyField = (TextView) view.findViewById(R.id.key);
         mKeyQrCode = (ImageView) view.findViewById(R.id.key_qr_code);
+        mExpandedQrCode = (ImageView) view.findViewById(R.id.expanded_qr_code);
 
         if (mKey != null) {
             try {
@@ -147,8 +169,7 @@ public class ViewIdentityFragment extends Fragment {
             mKeyQrCode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    IntentIntegrator i = new IntentIntegrator(getActivity());
-                    i.shareText(Constants.EMAILDEST_SCHEME + ":" + mKey);
+                    zoomQrCode();
                 }
             });
 
@@ -267,6 +288,12 @@ public class ViewIdentityFragment extends Fragment {
                                     mKeyQrCode.getHeight(), mKeyQrCode.getHeight(),
                                     false);
                             mKeyQrCode.setImageBitmap(scaled);
+                            // scale for the expanded image
+                            int smallestDimen = Math.min(mExpandedQrCode.getWidth(), mExpandedQrCode.getHeight());
+                            scaled = Bitmap.createScaledBitmap(qrCode,
+                                    smallestDimen, smallestDimen,
+                                    false);
+                            mExpandedQrCode.setImageBitmap(scaled);
                             // simple fade-in animation
                             AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
                             anim.setDuration(200);
@@ -275,5 +302,139 @@ public class ViewIdentityFragment extends Fragment {
                     }
                 };
         loadTask.execute();
+    }
+
+    private void zoomQrCode() {
+        // If there's an animation in progress, cancel it
+        // immediately and proceed with this one.
+        if (mQrCodeAnimator != null) {
+            mQrCodeAnimator.cancel();
+        }
+
+        // Calculate the starting and ending bounds for the zoomed-in image.
+        // This step involves lots of math. Yay, math.
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+
+        // The start bounds are the global visible rectangle of the thumbnail,
+        // and the final bounds are the global visible rectangle of the container
+        // view. Also set the container view's offset as the origin for the
+        // bounds, since that's the origin for the positioning animation
+        // properties (X, Y).
+        mKeyQrCode.getGlobalVisibleRect(startBounds);
+        getActivity().findViewById(R.id.container)
+                .getGlobalVisibleRect(finalBounds, globalOffset);
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
+        // Adjust the start bounds to be the same aspect ratio as the final
+        // bounds using the "center crop" technique. This prevents undesirable
+        // stretching during the animation. Also calculate the start scaling
+        // factor (the end scaling factor is always 1.0).
+        float startScale;
+        if ((float) finalBounds.width() / finalBounds.height()
+                > (float) startBounds.width() / startBounds.height()) {
+            // Extend start bounds horizontally
+            startScale = (float) startBounds.height() / finalBounds.height();
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width()) / 2;
+            startBounds.left -= deltaWidth;
+            startBounds.right += deltaWidth;
+        } else {
+            // Extend start bounds vertically
+            startScale = (float) startBounds.width() / finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height()) / 2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom += deltaHeight;
+        }
+
+        // Hide the thumbnail and show the zoomed-in view. When the animation
+        // begins, it will position the zoomed-in view in the place of the
+        // thumbnail.
+        ViewHelper.setAlpha(mKeyQrCode, 0f);
+        mExpandedQrCode.setVisibility(View.VISIBLE);
+
+        // Set the pivot point for SCALE_X and SCALE_Y transformations
+        // to the top-left corner of the zoomed-in view (the default
+        // is the center of the view).
+        ViewHelper.setPivotX(mExpandedQrCode, 0f);
+        ViewHelper.setPivotY(mExpandedQrCode, 0f);
+
+        // Construct and run the parallel animation of the four translation and
+        // scale properties (X, Y, SCALE_X, and SCALE_Y).
+        AnimatorSet set = new AnimatorSet();
+        set
+                .play(ObjectAnimator.ofFloat(mExpandedQrCode, "x",
+                        startBounds.left, finalBounds.left))
+                .with(ObjectAnimator.ofFloat(mExpandedQrCode, "y",
+                        startBounds.top, finalBounds.top))
+                .with(ObjectAnimator.ofFloat(mExpandedQrCode, "scaleX",
+                        startScale, 1f))
+                .with(ObjectAnimator.ofFloat(mExpandedQrCode, "scaleY",
+                        startScale, 1f));
+        set.setDuration(mShortAnimationDuration);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mQrCodeAnimator = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                mQrCodeAnimator = null;
+            }
+        });
+        set.start();
+        mQrCodeAnimator = set;
+
+        // Upon clicking the zoomed-in image, it should zoom back down
+        // to the original bounds and show the thumbnail instead of
+        // the expanded image.
+        final float startScaleFinal = startScale;
+        mExpandedQrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mQrCodeAnimator != null) {
+                    mQrCodeAnimator.cancel();
+                }
+
+                // Animate the four positioning/sizing properties in parallel,
+                // back to their original values.
+                AnimatorSet set = new AnimatorSet();
+                set.play(ObjectAnimator
+                        .ofFloat(mExpandedQrCode, "x", startBounds.left))
+                        .with(ObjectAnimator
+                                .ofFloat(mExpandedQrCode,
+                                        "y", startBounds.top))
+                        .with(ObjectAnimator
+                                .ofFloat(mExpandedQrCode,
+                                        "scaleX", startScaleFinal))
+                        .with(ObjectAnimator
+                                .ofFloat(mExpandedQrCode,
+                                        "scaleY", startScaleFinal));
+                set.setDuration(mShortAnimationDuration);
+                set.setInterpolator(new DecelerateInterpolator());
+                set.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        ViewHelper.setAlpha(mKeyQrCode, 1f);
+                        mExpandedQrCode.setVisibility(View.GONE);
+                        mQrCodeAnimator = null;
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        ViewHelper.setAlpha(mKeyQrCode, 1f);
+                        mExpandedQrCode.setVisibility(View.GONE);
+                        mQrCodeAnimator = null;
+                    }
+                });
+                set.start();
+                mQrCodeAnimator = set;
+            }
+        });
     }
 }
