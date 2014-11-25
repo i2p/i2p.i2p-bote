@@ -91,7 +91,7 @@ public class ViewIdentityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_view_identity, container, false);
+        return inflater.inflate(R.layout.fragment_view_address, container, false);
     }
 
     @Override
@@ -99,13 +99,13 @@ public class ViewIdentityFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mToolbar = (Toolbar) view.findViewById(R.id.main_toolbar);
-        mIdentityPicture = (ImageView) view.findViewById(R.id.identity_picture);
+        mIdentityPicture = (ImageView) view.findViewById(R.id.picture);
         mNameField = (TextView) view.findViewById(R.id.public_name);
         mDescField = (TextView) view.findViewById(R.id.description);
         mFingerprintField = (TextView) view.findViewById(R.id.fingerprint);
-        mCryptoField = (TextView) view.findViewById(R.id.crypto_impl);
-        mKeyField = (TextView) view.findViewById(R.id.key);
-        mKeyQrCode = (ImageView) view.findViewById(R.id.key_qr_code);
+        mCryptoField = (TextView) view.findViewById(R.id.crypto_impl_name);
+        mKeyField = (TextView) view.findViewById(R.id.email_dest);
+        mKeyQrCode = (ImageView) view.findViewById(R.id.email_dest_qr_code);
         mExpandedQrCode = (ImageView) view.findViewById(R.id.expanded_qr_code);
 
         if (mKey != null) {

@@ -29,7 +29,7 @@
                 android:layout_gravity="bottom|center_horizontal">
 
                 <ImageView
-                    android:id="@+id/identity_picture"
+                    android:id="@+id/picture"
                     android:layout_width="@dimen/toolbar_picture_size"
                     android:layout_height="@dimen/toolbar_picture_size"
                     android:layout_alignParentLeft="true"
@@ -44,8 +44,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/listitem_horizontal_margin"
                     android:layout_marginStart="@dimen/listitem_horizontal_margin"
-                    android:layout_toEndOf="@id/identity_picture"
-                    android:layout_toRightOf="@id/identity_picture"
+                    android:layout_toEndOf="@id/picture"
+                    android:layout_toRightOf="@id/picture"
                     android:orientation="vertical">
 
                     <TextView
@@ -79,14 +79,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/title_key_info"
+                    android:id="@+id/title_address_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Key information"
+                    android:text="Address information"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subject"/>
 
                 <TextView
-                    android:id="@+id/crypto_impl"
+                    android:id="@+id/crypto_impl_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -94,14 +94,14 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
 
                 <ImageView
-                    android:id="@+id/key_qr_code"
+                    android:id="@+id/email_dest_qr_code"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"/>
 
                 <TextView
-                    android:id="@+id/key"
+                    android:id="@+id/email_dest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

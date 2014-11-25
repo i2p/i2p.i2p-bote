@@ -64,7 +64,7 @@ public class ViewContactFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_view_contact, container, false);
+        return inflater.inflate(R.layout.fragment_view_address, container, false);
     }
 
     @Override
@@ -72,11 +72,11 @@ public class ViewContactFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mToolbar = (Toolbar) view.findViewById(R.id.main_toolbar);
-        mContactPicture = (ImageView) view.findViewById(R.id.contact_picture);
-        mNameField = (TextView) view.findViewById(R.id.contact_name);
-        mTextField = (TextView) view.findViewById(R.id.text);
-        mCryptoField = (TextView) view.findViewById(R.id.crypto_impl);
-        mDestinationField = (TextView) view.findViewById(R.id.destination);
+        mContactPicture = (ImageView) view.findViewById(R.id.picture);
+        mNameField = (TextView) view.findViewById(R.id.public_name);
+        mTextField = (TextView) view.findViewById(R.id.description);
+        mCryptoField = (TextView) view.findViewById(R.id.crypto_impl_name);
+        mDestinationField = (TextView) view.findViewById(R.id.email_dest);
         mFingerprintField = (TextView) view.findViewById(R.id.fingerprint);
 
         if (mDestination != null) {
