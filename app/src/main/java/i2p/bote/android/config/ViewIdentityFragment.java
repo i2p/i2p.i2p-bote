@@ -69,7 +69,7 @@ public class ViewIdentityFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_view_identity, container, false);
     }
 
@@ -105,7 +105,7 @@ public class ViewIdentityFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ActionBarActivity activity = ((ActionBarActivity)getActivity());
+        ActionBarActivity activity = ((ActionBarActivity) getActivity());
 
         // Set the action bar
         activity.setSupportActionBar(mToolbar);
@@ -148,7 +148,7 @@ public class ViewIdentityFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     IntentIntegrator i = new IntentIntegrator(getActivity());
-                    i.shareText("bote:" + mKey);
+                    i.shareText(Constants.EMAILDEST_SCHEME + ":" + mKey);
                 }
             });
 
@@ -164,49 +164,49 @@ public class ViewIdentityFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.action_edit_identity:
-            Intent ei = new Intent(getActivity(), EditIdentityActivity.class);
-            ei.putExtra(EditIdentityFragment.IDENTITY_KEY, mKey);
-            startActivity(ei);
-            return true;
+            case R.id.action_edit_identity:
+                Intent ei = new Intent(getActivity(), EditIdentityActivity.class);
+                ei.putExtra(EditIdentityFragment.IDENTITY_KEY, mKey);
+                startActivity(ei);
+                return true;
 
-        case R.id.action_delete_identity:
-            DialogFragment df = new DialogFragment() {
-                @Override
-                public Dialog onCreateDialog(Bundle savedInstanceState) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage(R.string.delete_identity)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            try {
-                                BoteHelper.deleteIdentity(mKey);
-                                getActivity().setResult(Activity.RESULT_OK);
-                                getActivity().finish();
-                            } catch (PasswordException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            } catch (GeneralSecurityException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+            case R.id.action_delete_identity:
+                DialogFragment df = new DialogFragment() {
+                    @Override
+                    public Dialog onCreateDialog(Bundle savedInstanceState) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(R.string.delete_identity)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        try {
+                                            BoteHelper.deleteIdentity(mKey);
+                                            getActivity().setResult(Activity.RESULT_OK);
+                                            getActivity().finish();
+                                        } catch (PasswordException e) {
+                                            // TODO Auto-generated catch block
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            // TODO Auto-generated catch block
+                                            e.printStackTrace();
+                                        } catch (GeneralSecurityException e) {
+                                            // TODO Auto-generated catch block
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
                             }
-                        }
-                    }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    return builder.create();
-                }
-            };
-            df.show(getActivity().getSupportFragmentManager(), "deletecontact");
-            return true;
+                        });
+                        return builder.create();
+                    }
+                };
+                df.show(getActivity().getSupportFragmentManager(), "deletecontact");
+                return true;
 
-        default:
-            return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -257,11 +257,12 @@ public class ViewIdentityFragment extends Fragment {
                         // render with minimal size
                         return QrCodeUtils.getQRCodeBitmap(qrCodeContent, 0);
                     }
+
                     protected void onPostExecute(Bitmap qrCode) {
-                    // only change view, if fragment is attached to activity
+                        // only change view, if fragment is attached to activity
                         if (ViewIdentityFragment.this.isAdded()) {
-                        // scale the image up to our actual size. we do this in code rather
-                        // than let the ImageView do this because we don't require filtering.
+                            // scale the image up to our actual size. we do this in code rather
+                            // than let the ImageView do this because we don't require filtering.
                             Bitmap scaled = Bitmap.createScaledBitmap(qrCode,
                                     mKeyQrCode.getHeight(), mKeyQrCode.getHeight(),
                                     false);

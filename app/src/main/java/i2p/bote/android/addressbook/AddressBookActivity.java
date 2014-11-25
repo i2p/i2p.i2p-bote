@@ -1,5 +1,6 @@
 package i2p.bote.android.addressbook;
 
+import i2p.bote.android.Constants;
 import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 import i2p.bote.packet.dht.Contact;
@@ -8,6 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class AddressBookActivity extends ActionBarActivity implements
         AddressBookFragment.OnContactSelectedListener {
@@ -39,7 +43,7 @@ public class AddressBookActivity extends ActionBarActivity implements
 
     @Override
     public void onContactSelected(Contact contact) {
-        if (getIntent().getAction() == Intent.ACTION_PICK) {
+        if (Intent.ACTION_PICK.equals(getIntent().getAction())) {
             Intent result = new Intent();
             result.putExtra(ViewContactFragment.CONTACT_DESTINATION, contact.getBase64Dest());
             setResult(Activity.RESULT_OK, result);
@@ -53,7 +57,16 @@ public class AddressBookActivity extends ActionBarActivity implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ALTER_CONTACT_LIST) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (scanResult != null) {
+            String content = scanResult.getContents();
+            if (content != null && content.startsWith(Constants.EMAILDEST_SCHEME)) {
+                String destination = content.substring(Constants.EMAILDEST_SCHEME.length() + 1);
+                Intent nci = new Intent(this, EditContactActivity.class);
+                nci.putExtra(EditContactFragment.NEW_DESTINATION, destination);
+                startActivityForResult(nci, ALTER_CONTACT_LIST);
+            }
+        } else if (requestCode == ALTER_CONTACT_LIST) {
             if (resultCode == Activity.RESULT_OK) {
                 AddressBookFragment f = (AddressBookFragment) getSupportFragmentManager().findFragmentById(R.id.container);
                 f.updateContactList();

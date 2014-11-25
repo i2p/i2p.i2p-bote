@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+
 import java.util.SortedSet;
 
 import i2p.bote.I2PBote;
@@ -76,6 +78,14 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
             }
         });
 
+        b = (ImageButton) v.findViewById(R.id.action_scan_qr_code);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startScanQrCode();
+            }
+        });
+
         return v;
     }
 
@@ -118,6 +128,11 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
     private void startNewContact() {
         Intent nci = new Intent(getActivity(), EditContactActivity.class);
         getActivity().startActivityForResult(nci, AddressBookActivity.ALTER_CONTACT_LIST);
+    }
+
+    private void startScanQrCode() {
+        IntentIntegrator integrator = new IntentIntegrator(getActivity());
+        integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
     }
 
     @Override

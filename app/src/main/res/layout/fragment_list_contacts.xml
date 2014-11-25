@@ -24,6 +24,14 @@
         app:fab_addButtonColorPressed="@color/accent_dark">
 
         <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_scan_qr_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/accent"
+            app:fab_colorPressed="@color/accent_dark"
+            app:fab_icon="@drawable/ic_scan_qr_code_white_24dp"/>
+
+        <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
             android:id="@+id/action_new_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

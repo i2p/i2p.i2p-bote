@@ -124,7 +124,7 @@ public class EditContactFragment extends EditPictureFragment {
     }
 
     private void initializeContact() {
-        String newName = getArguments().getString(NEW_NAME);
+        String newDest = getArguments().getString(NEW_DESTINATION);
 
         if (mDestination != null) {
             try {
@@ -141,9 +141,9 @@ public class EditContactFragment extends EditPictureFragment {
                 // TODO Handle
                 e.printStackTrace();
             }
-        } else if (newName != null) {
-            mNameField.setText(newName);
-            mDestinationField.setText(getArguments().getString(NEW_DESTINATION));
+        } else if (newDest != null) {
+            mNameField.setText(getArguments().getString(NEW_NAME));
+            mDestinationField.setText(newDest);
         }
     }
 
