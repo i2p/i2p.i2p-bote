@@ -1,10 +1,8 @@
 Fixes:
 - Auto-comma the To: field when it loses focus
 - Fix tick over selected emails
-- Refine view email page
--- Delete/read/unread/move actions that don't break everything
-- Improve network status page
--- Show full network error? Make it copy-able?
+- Delete/read/unread/move actions on view email pagethat don't break everything
+- Show full network error? Make it copy-able?
 
 Tasks:
 - Show logged-in status in persistent notification
@@ -22,7 +20,6 @@ Features:
 - "Write email" link in address book
 - Add optional CC: and BCC: fields
 - Attachments
-- QR codes for identities
 - "Empty trash" option in Trash folder
 - Overlay to explain
 - Option to run only when connected to an outlet
