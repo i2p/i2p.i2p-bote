@@ -30,4 +30,6 @@
     <dimen name="contact_chip_main_margins">8dp</dimen>
     <dimen name="contact_chip_right_margin">12dp</dimen>
     <dimen name="contact_chip_corner_radius">16dp</dimen>
+
+    <dimen name="pie_size">300dp</dimen>
 </resources>
