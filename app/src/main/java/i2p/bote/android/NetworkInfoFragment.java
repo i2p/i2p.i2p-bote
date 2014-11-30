@@ -12,14 +12,11 @@ import com.androidplot.pie.PieChart;
 import com.androidplot.pie.Segment;
 import com.androidplot.pie.SegmentFormatter;
 
-import net.i2p.data.Destination;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import i2p.bote.I2PBote;
-import i2p.bote.Util;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.RelayPeer;
@@ -46,11 +43,6 @@ public class NetworkInfoFragment extends Fragment {
         mKademliaPeers = (TextView) view.findViewById(R.id.kademlia_peers);
         mRelayPie = (PieChart) view.findViewById(R.id.relay_peers_pie);
         mRelayPeers = (TextView) view.findViewById(R.id.relay_peers);
-
-        Destination dest = I2PBote.getInstance().getLocalDestination();
-        if (dest != null)
-            ((TextView) view.findViewById(R.id.local_destination)).setText(
-                    Util.toBase32(dest));
 
         setupKademliaPeers();
         setupRelayPeers();
