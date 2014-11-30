@@ -142,8 +142,13 @@
     <string name="network_info_unavailable_delay">Bote is waiting for the I2P router to start up and be ready.</string>
     <string name="local_destination">Local Destination:</string>
     <string name="not_set">Not set</string>
-    <string name="kademlia_peers">Kademlia Peers:</string>
+    <string name="kademlia_peers">Network Peers:</string>
+    <string name="reachable">Reachable</string>
+    <string name="unreachable">Unreachable</string>
     <string name="relay_peers">Relay Peers:</string>
+    <string name="good">Good</string>
+    <string name="unreliable">Unreliable</string>
+    <string name="untested">Untested</string>
     <string name="banned_peers">Banned Peers:</string>
     <string name="pref_title_general">General</string>
     <string name="pref_summ_general">General settings and default identity settings</string>

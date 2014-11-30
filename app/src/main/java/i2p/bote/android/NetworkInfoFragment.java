@@ -90,7 +90,7 @@ public class NetworkInfoFragment extends Fragment {
                 mKademliaPeers.setText("" + dhtStats.getData().size());
 
                 if (reachable > 0) {
-                    Segment r = new Segment("Reachable", reachable);
+                    Segment r = new Segment(getString(R.string.reachable), reachable);
 
                     SegmentFormatter rf = new SegmentFormatter();
                     setupSegmentFormatter(rf);
@@ -100,7 +100,7 @@ public class NetworkInfoFragment extends Fragment {
                 }
 
                 if (unreachable > 0) {
-                    Segment u = new Segment("Unreachable", dhtStats.getData().size() - reachable);
+                    Segment u = new Segment(getString(R.string.unreachable), dhtStats.getData().size() - reachable);
 
                     SegmentFormatter uf = new SegmentFormatter();
                     setupSegmentFormatter(uf);
@@ -140,7 +140,7 @@ public class NetworkInfoFragment extends Fragment {
             int bad = relayPeers.size() - good - untested;
 
             if (good > 0) {
-                Segment g = new Segment("Good", good);
+                Segment g = new Segment(getString(R.string.good), good);
 
                 SegmentFormatter gf = new SegmentFormatter();
                 setupSegmentFormatter(gf);
@@ -150,7 +150,7 @@ public class NetworkInfoFragment extends Fragment {
             }
 
             if (bad > 0) {
-                Segment b = new Segment("Unreliable", bad);
+                Segment b = new Segment(getString(R.string.unreliable), bad);
 
                 SegmentFormatter bf = new SegmentFormatter();
                 setupSegmentFormatter(bf);
@@ -160,7 +160,7 @@ public class NetworkInfoFragment extends Fragment {
             }
 
             if (untested > 0) {
-                Segment u = new Segment("Untested", untested);
+                Segment u = new Segment(getString(R.string.untested), untested);
 
                 SegmentFormatter uf = new SegmentFormatter();
                 setupSegmentFormatter(uf);
