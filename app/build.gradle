@@ -29,8 +29,8 @@ dependencies {
     compile 'net.i2p.android:client:0.3@aar'
     compile project(':botejars')
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.android.support:support-v4:21.0.0'
-    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile 'com.android.support:support-v4:21.0.2'
+    compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'net.i2p.android.ext:floatingactionbutton:1.1.0'
     compile ('com.mcxiaoke.viewpagerindicator:library:2.4.1') {
         exclude group: 'com.android.support', module: 'support-v4'
@@ -43,8 +43,8 @@ dependencies {
 dependencyVerification {
     verify = [
             'net.i2p.android:client:4c5c6f81dc20a93240d901a19c8ce9f6ac699539ef1a4e18c1844fd98e5928e3',
-            'com.android.support:support-v4:199ef7bb169386c80b4836354df6747ce2ae3d24434db923c22439e47106a1e2',
-            'com.android.support:appcompat-v7:45e999dda55fe81d9cc1c7342b7b70480ff3f307baa8da0df767f92fc5c52cd1',
+            'com.android.support:support-v4:126a4c291f41f75f3fff4968e9d397bc8454cdff4d8f994cbe0524e3bad76e72',
+            'com.android.support:appcompat-v7:b760fd3d0b0b0547a1bcef9031b40939f31049ba955f04c8fdc5aa09a25d19e9',
             'net.i2p.android.ext:floatingactionbutton:84cf5b67a66337bef59b46f57468c730387ca766b5a5f06ca852ba46cabbc0fb',
             'com.mcxiaoke.viewpagerindicator:library:470bbd2bec1ede64ad21efd6f02676807d22f1b526c4ac6a5b41a428c6e47e67',
             'com.google.zxing:core:f00b32f7a1b0edc914a8f74301e8dc34f189afc4698e9c8cc54e5d46772734a5',
