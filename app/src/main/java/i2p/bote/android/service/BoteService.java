@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import net.i2p.android.router.service.IRouterState;
 import net.i2p.android.router.service.IRouterStateCallback;
 import net.i2p.android.router.service.State;
+import net.i2p.android.ui.I2PAndroidHelper;
 import net.i2p.router.Router;
 import net.i2p.router.RouterContext;
 import net.i2p.router.RouterLaunch;
@@ -58,9 +59,7 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
 
         if (mRouterChoice == RouterChoice.ANDROID) {
             // Bind to I2P Android
-            Intent i2pIntent = new Intent(IRouterState.class.getName());
-            mTriedBindState = bindService(
-                    i2pIntent, mStateConnection, 0);
+            mTriedBindState = (new I2PAndroidHelper(this)).bind(mStateConnection, 0);
         } else if (mRouterChoice == RouterChoice.REMOTE)
             bote.connectNow();
 
