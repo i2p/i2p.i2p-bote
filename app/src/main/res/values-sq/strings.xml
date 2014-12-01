@@ -123,7 +123,6 @@
   <string name="network_info_unavailable_delay">Bote është duke pritur router\'in e I2P\'së të startojë dhe të jetë gati. </string>
   <string name="local_destination">Destinacioni Lokal:</string>
   <string name="not_set">E pakryer. </string>
-  <string name="kademlia_peers">Peers\'ët Kademlia:</string>
   <string name="relay_peers">Peersët ritransmetues:</string>
   <string name="banned_peers">Peers\'ët e dëbuar:</string>
   <string name="pref_title_general">Të përgjithshme</string>

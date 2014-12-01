@@ -122,7 +122,6 @@
   <string name="network_info_unavailable_delay">Bote sedang menunggu router I2P untuk memulai dan bersiap.</string>
   <string name="local_destination">Tujuan Lokal:</string>
   <string name="not_set">Belum disetel</string>
-  <string name="kademlia_peers">Kademlia Peers:</string>
   <string name="relay_peers">Relay Peers:</string>
   <string name="banned_peers">Banned Peers:</string>
   <string name="pref_title_general">Umum</string>

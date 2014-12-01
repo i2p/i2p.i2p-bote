@@ -135,8 +135,13 @@
   <string name="network_info_unavailable_delay">Bote wartet auf den Start und die Verfügbarkeit des I2P-Routers</string>
   <string name="local_destination">Lokales Ziel:</string>
   <string name="not_set">Nicht festgelegt</string>
-  <string name="kademlia_peers">Kademlia-Peers:</string>
+  <string name="kademlia_peers">Netzwerk-Peers:</string>
+  <string name="reachable">Erreichbar</string>
+  <string name="unreachable">Unerreichbar</string>
   <string name="relay_peers">Weiterleitungs-Peers:</string>
+  <string name="good">Gut</string>
+  <string name="unreliable">Unzuverlässig</string>
+  <string name="untested">Ungetestet</string>
   <string name="banned_peers">Gebannte Peers:</string>
   <string name="pref_title_general">Allgemein</string>
   <string name="pref_summ_general">Allgemeine Einstellungen und Standard-Identitätseinstellungen</string>

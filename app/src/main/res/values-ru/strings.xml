@@ -137,7 +137,6 @@
   <string name="network_info_unavailable_delay">Bote ожидает запуска и готовности маршрутизатора I2P.</string>
   <string name="local_destination">Адрес локального отправителя:</string>
   <string name="not_set">Не задано</string>
-  <string name="kademlia_peers">Пиры Kademlia:</string>
   <string name="relay_peers">Промежуточные пиры:</string>
   <string name="banned_peers">Заблокированные пиры:</string>
   <string name="pref_title_general">Общие</string>

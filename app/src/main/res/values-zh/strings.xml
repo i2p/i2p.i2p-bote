@@ -133,8 +133,13 @@
   <string name="network_info_unavailable_delay">Bote 正在等待 I2P 路由器启动并准备就绪。</string>
   <string name="local_destination">本地目的地：</string>
   <string name="not_set">未设置</string>
-  <string name="kademlia_peers">Kademlia 节点:</string>
+  <string name="kademlia_peers">网络对等端:</string>
+  <string name="reachable">可达</string>
+  <string name="unreachable">不可达</string>
   <string name="relay_peers">中继节点:</string>
+  <string name="good">良好</string>
+  <string name="unreliable">不可靠</string>
+  <string name="untested">未测试</string>
   <string name="banned_peers">已封禁节点:</string>
   <string name="pref_title_general">常规</string>
   <string name="pref_summ_general">常规设置和默认身份设置</string>

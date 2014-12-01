@@ -94,6 +94,7 @@
   <string name="error_sending">Error al enviar correo electrónico: %s</string>
   <string name="error_saving_metadata">Error al guardar metadatos del correo electrónico: %s</string>
   <string name="email_not_found">Correo no encontrado</string>
+  <string name="signature_invalid">Este correo no tiene una firma válida. Probablemente no fue enviado por %s.</string>
   <string name="email_from">Desde:</string>
   <string name="email_to">Hacia:</string>
   <string name="label_sent">Enviado:</string>
@@ -106,6 +107,8 @@
   <string name="subject">Asunto</string>
   <string name="compose_email">Componer correo</string>
   <string name="add_one_recipient">Añadir al menos un destinatario.</string>
+  <string name="stop_composing_email">¿Detener composición del correo?</string>
+  <string name="all_changes_will_be_discarded">Todos los cambios se descartarán.</string>
   <string name="email_queued_for_sending">Correo en cola para su envío</string>
   <string name="subject_prefix_fwd">Reenv:</string>
   <string name="response_prefix_re">Re:</string>
@@ -132,8 +135,13 @@
   <string name="network_info_unavailable_delay">Bote está esperando a que el router I2P se inicie y esté listo.</string>
   <string name="local_destination">Destino local:</string>
   <string name="not_set">No establecido</string>
-  <string name="kademlia_peers">Pares en Kademlia:</string>
+  <string name="kademlia_peers">Pares de red:</string>
+  <string name="reachable">Alcanzable</string>
+  <string name="unreachable">Inalcanzable</string>
   <string name="relay_peers">Pares repetidores:</string>
+  <string name="good">Bueno</string>
+  <string name="unreliable">No confiable</string>
+  <string name="untested">No probado</string>
   <string name="banned_peers">Pares expulsados:</string>
   <string name="pref_title_general">General</string>
   <string name="pref_summ_general">Preferencias generales y configuraciones de identidad por defecto</string>

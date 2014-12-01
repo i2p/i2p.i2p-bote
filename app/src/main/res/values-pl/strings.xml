@@ -124,7 +124,6 @@
   <string name="network_info_unavailable_delay">Bote czeka na uruchomienie routera I2P i jego gotowość.</string>
   <string name="local_destination">Lokalne Przeznaczenie:</string>
   <string name="not_set">Nieustawione </string>
-  <string name="kademlia_peers">Kademlia Peery:</string>
   <string name="relay_peers">Przekaźnikowe Peery:</string>
   <string name="banned_peers">Zbanowane Peery:</string>
   <string name="pref_title_general">Generalne</string>
