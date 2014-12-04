@@ -1,12 +1,14 @@
-0.3 (Upcoming)
- * Moved to Material design
+0.3 / 2014-12-01 / ebba8aac78d50eda9d25f936e8bd348553966649
+ * Migrated to new Material design from Android Lollipop
  * Overhauled password usability
+ * Identicons for contacts without pictures
  * Check email improvements
    * Use new-style swipe
    * Users can now launch check from menu, or swipe on empty inbox
  * "Forward" and "Reply all" actions for emails
  * QR codes for sharing identities
  * Separated viewing and editing contacts
+ * Improved network information page
  * Various bug fixes
  * Updated translations
 
