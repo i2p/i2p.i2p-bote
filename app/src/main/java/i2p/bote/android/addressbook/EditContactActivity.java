@@ -33,7 +33,7 @@ public class EditContactActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            EditContactFragment f = null;
+            EditContactFragment f;
             Bundle args = getIntent().getExtras();
             if (args != null) {
                 String destination = args.getString(EditContactFragment.NEW_DESTINATION);
@@ -44,7 +44,8 @@ public class EditContactActivity extends ActionBarActivity {
                     destination = args.getString(EditContactFragment.CONTACT_DESTINATION);
                     f = EditContactFragment.newInstance(destination);
                 }
-            }
+            } else
+                f = EditContactFragment.newInstance(null);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, f).commit();
         }

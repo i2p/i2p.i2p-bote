@@ -1,3 +1,6 @@
+0.3.1
+ * Fixed crash when clicking "Create new contact" button
+
 0.3 / 2014-12-01 / ebba8aac78d50eda9d25f936e8bd348553966649
  * Migrated to new Material design from Android Lollipop
  * Overhauled password usability
