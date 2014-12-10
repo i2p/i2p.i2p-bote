@@ -2,6 +2,7 @@
  * Fixed crash when clicking "Create new contact" button
  * Fixed occasional crash when Bote disconnects from network
  * Added labels to the address book actions menu
+ * Updated translations
 
 0.3 / 2014-12-01 / ebba8aac78d50eda9d25f936e8bd348553966649
  * Migrated to new Material design from Android Lollipop
