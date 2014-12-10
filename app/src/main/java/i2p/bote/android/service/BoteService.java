@@ -90,10 +90,12 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
 
     @Override
     public void onDestroy() {
-        if (mTriedBindState) {
-            try {
-                mStateService.unregisterCallback(mStatusListener);
-            } catch (RemoteException e) {}
+        if (mTriedBindState && mStateConnection != null) {
+            if (mStateService != null) {
+                try {
+                    mStateService.unregisterCallback(mStatusListener);
+                } catch (RemoteException e) {}
+            }
             unbindService(mStateConnection);
         }
         mTriedBindState = false;
