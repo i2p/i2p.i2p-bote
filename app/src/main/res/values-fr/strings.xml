@@ -135,7 +135,13 @@
   <string name="network_info_unavailable_delay">Bote attend que le routeur I2P aie démarré et soit prêt.</string>
   <string name="local_destination">Destination locale :</string>
   <string name="not_set">Non défini</string>
+  <string name="kademlia_peers">Pairs réseau:</string>
+  <string name="reachable">Accessible</string>
+  <string name="unreachable">Non accessible</string>
   <string name="relay_peers">Pairs relais :</string>
+  <string name="good">Bonne</string>
+  <string name="unreliable">Non fiable</string>
+  <string name="untested">Non testé</string>
   <string name="banned_peers">Pairs bannis :</string>
   <string name="pref_title_general">Général</string>
   <string name="pref_summ_general">Paramètres généraux et paramètres d\'identité prédéfinie</string>
