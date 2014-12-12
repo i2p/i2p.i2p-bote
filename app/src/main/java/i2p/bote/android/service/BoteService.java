@@ -36,6 +36,7 @@ import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.NewEmailListener;
+import i2p.bote.network.NetworkStatus;
 import i2p.bote.network.NetworkStatusListener;
 
 public class BoteService extends Service implements NetworkStatusListener, NewEmailListener {
@@ -151,7 +152,8 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
             try {
                 mStateService.registerCallback(mStatusListener);
                 final State state = mStateService.getState();
-                if (state == State.ACTIVE)
+                if (state == State.ACTIVE &&
+                        I2PBote.getInstance().getNetworkStatus() == NetworkStatus.DELAY)
                     I2PBote.getInstance().connectNow();
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
@@ -169,7 +171,10 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
     private final IRouterStateCallback.Stub mStatusListener =
             new IRouterStateCallback.Stub() {
         public void stateChanged(State newState) throws RemoteException {
-            if (newState == State.STOPPING ||
+            if (newState == State.ACTIVE &&
+                    I2PBote.getInstance().getNetworkStatus() == NetworkStatus.DELAY)
+                I2PBote.getInstance().connectNow();
+            else if (newState == State.STOPPING ||
                     newState == State.MANUAL_STOPPING ||
                     newState == State.MANUAL_QUITTING ||
                     newState == State.NETWORK_STOPPING)
