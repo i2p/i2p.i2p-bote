@@ -115,6 +115,7 @@
   <string name="address_book_empty">通讯录是空的</string>
   <string name="share">分享</string>
   <string name="action_new_contact">新建联系人</string>
+  <string name="action_scan_qr_code">扫描二维码</string>
   <string name="edit_contact">编辑联系人</string>
   <string name="select_a_picture">选择一个图片</string>
   <string name="no_image_cropping_app_found">没有找到图像摄取应用</string>

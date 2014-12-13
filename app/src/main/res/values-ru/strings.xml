@@ -119,6 +119,7 @@
   <string name="address_book_empty">Адресная книга пуста</string>
   <string name="share">Поделиться</string>
   <string name="action_new_contact">Новый контакт</string>
+  <string name="action_scan_qr_code">Считать QR-код</string>
   <string name="edit_contact">Редактировать контакт</string>
   <string name="select_a_picture">Выберите изображение</string>
   <string name="no_image_cropping_app_found">Приложение для обрезки изображений не найдено</string>

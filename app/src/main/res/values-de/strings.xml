@@ -117,6 +117,7 @@
   <string name="address_book_empty">Adressbuch ist leer</string>
   <string name="share">Teilen</string>
   <string name="action_new_contact">Neuer Kontakt</string>
+  <string name="action_scan_qr_code">QR-Code scannen</string>
   <string name="edit_contact">Kontakt bearbeiten</string>
   <string name="select_a_picture">Wählen Sie ein Bild</string>
   <string name="no_image_cropping_app_found">Kein Programm zum Bildbeschneiden gefunden</string>
