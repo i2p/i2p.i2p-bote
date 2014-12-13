@@ -2,6 +2,7 @@ package i2p.bote.android.util;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -25,6 +26,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -89,6 +91,23 @@ public abstract class ViewAddressFragment extends Fragment {
         mAddressField = (TextView) view.findViewById(R.id.email_dest);
         mAddressQrCode = (ImageView) view.findViewById(R.id.email_dest_qr_code);
         mExpandedQrCode = (ImageView) view.findViewById(R.id.expanded_qr_code);
+
+        view.findViewById(R.id.copy_key).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Object clipboardService = getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) clipboardService;
+                    clipboard.setText(mAddress);
+                } else {
+                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) clipboardService;
+                    android.content.ClipData clip = android.content.ClipData.newPlainText(
+                            getString(R.string.bote_dest_for, getPublicName()), mAddress);
+                    clipboard.setPrimaryClip(clip);
+                }
+                Toast.makeText(getActivity(), R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         if (mAddress != null) {
             loadAddress();
