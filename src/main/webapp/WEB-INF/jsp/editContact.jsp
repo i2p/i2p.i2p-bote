@@ -139,7 +139,7 @@
         <div class="contact-form-text">${fn:escapeXml(contact.text)}</div>
         <input type="hidden" name="text" value="${contact.text}"/>
         
-        <p/>
+        <p>&nbsp;</p>
         <button name="action" value="save">${submitButtonText}</button>
         <button name="action" value="cancel"><ib:message key="Cancel"/></button>
     </form>
