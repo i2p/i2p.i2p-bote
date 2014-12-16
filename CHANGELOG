@@ -1,6 +1,7 @@
 0.3.1
  * Fixed crash when clicking "Create new contact" button
  * Fixed occasional crashes when Bote connects to / disconnects from the network
+ * Improved robustness and user feedback for email checking
  * Added "Copy to clipboard" button to identities and contacts
  * Added labels to the address book actions menu
  * Updated translations

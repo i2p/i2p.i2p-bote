@@ -58,6 +58,7 @@ public class EmailListFragment extends AuthenticatedListFragment implements
     OnEmailSelectedListener mCallback;
 
     private MultiSwipeRefreshLayout mSwipeRefreshLayout;
+    private AsyncTask<Void, Void, Void> mCheckingTask;
     private TextView mEmptyText;
     private TextView mNumIncompleteEmails;
 
@@ -135,7 +136,6 @@ public class EmailListFragment extends AuthenticatedListFragment implements
                     R.color.primary, R.color.accent, R.color.primary, R.color.accent);
             mSwipeRefreshLayout.setSwipeableChildren(android.R.id.list, android.R.id.empty);
             mSwipeRefreshLayout.setOnRefreshListener(this);
-            mSwipeRefreshLayout.setRefreshing(I2PBote.getInstance().isCheckingForMail());
         }
 
         return v;
@@ -174,6 +174,29 @@ public class EmailListFragment extends AuthenticatedListFragment implements
         } else {
             getActivity().setTitle(
                     BoteHelper.getFolderDisplayName(getActivity(), mFolder));
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (mSwipeRefreshLayout != null) {
+            boolean isChecking = I2PBote.getInstance().isCheckingForMail();
+            mSwipeRefreshLayout.setRefreshing(isChecking);
+            if (isChecking)
+                onRefresh();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (mCheckingTask != null) {
+            mCheckingTask.cancel(true);
+            mCheckingTask = null;
+            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 
@@ -237,8 +260,16 @@ public class EmailListFragment extends AuthenticatedListFragment implements
         boolean passwordRequired = I2PBote.getInstance().isPasswordRequired();
         mNewEmail.setVisibility(passwordRequired ? View.GONE : View.VISIBLE);
         mCheckEmail.setVisible(mSwipeRefreshLayout != null && !passwordRequired);
-        if (mSwipeRefreshLayout != null)
+        if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setEnabled(!passwordRequired);
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mCheckEmail.setTitle(R.string.checking_email);
+                mCheckEmail.setEnabled(false);
+            } else {
+                mCheckEmail.setTitle(R.string.check_email);
+                mCheckEmail.setEnabled(true);
+            }
+        }
     }
 
     @Override
@@ -248,6 +279,7 @@ public class EmailListFragment extends AuthenticatedListFragment implements
                 if (!mSwipeRefreshLayout.isRefreshing()) {
                     mSwipeRefreshLayout.setRefreshing(true);
                     onRefresh();
+                    getActivity().supportInvalidateOptionsMenu();
                 }
                 return true;
 
@@ -496,19 +528,26 @@ public class EmailListFragment extends AuthenticatedListFragment implements
     // SwipeRefreshLayout.OnRefreshListener
 
     public void onRefresh() {
+        // If we are already checking, do nothing else
+        if (mCheckingTask != null)
+            return;
+
         I2PBote bote = I2PBote.getInstance();
         if (bote.isConnected()) {
             try {
                 if (!bote.isCheckingForMail())
                     bote.checkForMail();
 
-                new AsyncTask<Void, Void, Void>() {
+                mCheckingTask = new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
                         while (I2PBote.getInstance().isCheckingForMail()) {
                             try {
                                 Thread.sleep(100);
                             } catch (InterruptedException e) {
+                            }
+                            if (isCancelled()) {
+                                break;
                             }
                         }
                         return null;
@@ -534,8 +573,10 @@ public class EmailListFragment extends AuthenticatedListFragment implements
 
                         // Notify PullToRefreshLayout that the refresh has finished
                         mSwipeRefreshLayout.setRefreshing(false);
+                        getActivity().supportInvalidateOptionsMenu();
                     }
-                }.execute();
+                };
+                mCheckingTask.execute();
             } catch (PasswordException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
