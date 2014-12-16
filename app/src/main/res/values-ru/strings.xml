@@ -205,4 +205,6 @@
   <string name="no_identities_found_maybe_encrypted">Идентификаторы не найдены. Это зашифрованный файл?</string>
   <string name="identities_imported">Идентификаторы импортированы</string>
   <string name="this_field_is_required">Это поле обязательно для заполнения</string>
+  <string name="bote_dest_for">Адрес Bote для %s</string>
+  <string name="copied_to_clipboard">Скопировано в буфер</string>
 </resources>

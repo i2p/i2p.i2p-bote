@@ -202,4 +202,6 @@
   <string name="no_identities_found_maybe_encrypted">No se encontraron identidades. ¿El fichero está cifrado?</string>
   <string name="identities_imported">Identidades importadas</string>
   <string name="this_field_is_required">Este campo es obligatorio</string>
+  <string name="bote_dest_for">Dirección de Bote para %s</string>
+  <string name="copied_to_clipboard">Copiado al portapapeles</string>
 </resources>

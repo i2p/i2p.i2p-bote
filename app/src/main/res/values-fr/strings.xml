@@ -117,6 +117,7 @@
   <string name="address_book_empty">Le carnet d\'adresses est vide</string>
   <string name="share">Partager</string>
   <string name="action_new_contact">Nouveau contact</string>
+  <string name="action_scan_qr_code">Scanner QR code</string>
   <string name="edit_contact">Éditer contact</string>
   <string name="select_a_picture">Sélectionnez une image</string>
   <string name="no_image_cropping_app_found">Pas d\'app de découpe d\'image trouvée</string>
@@ -201,4 +202,6 @@
   <string name="no_identities_found_maybe_encrypted">Pas d\'identités trouvées. Est-ce que le fichier est crypté ?</string>
   <string name="identities_imported">Identités importées</string>
   <string name="this_field_is_required">Ce champ est requis</string>
+  <string name="bote_dest_for">Adresse Bote pour %s</string>
+  <string name="copied_to_clipboard">Copié dans le presse-papiers</string>
 </resources>

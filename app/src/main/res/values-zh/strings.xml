@@ -199,4 +199,6 @@
   <string name="no_identities_found_maybe_encrypted">没有找到神。这是一个加密文件？</string>
   <string name="identities_imported">身份已导入</string>
   <string name="this_field_is_required">此项必填</string>
+  <string name="bote_dest_for">%s 的 Bote 地址</string>
+  <string name="copied_to_clipboard">复制到剪贴板</string>
 </resources>

@@ -202,4 +202,6 @@
   <string name="no_identities_found_maybe_encrypted">Keine Identitäten gefunden. Ist die Datei verschlüsselt?</string>
   <string name="identities_imported">Identitäten importiert</string>
   <string name="this_field_is_required">Dieses Feld ist erforderlich</string>
+  <string name="bote_dest_for">Bote-Adresse für %s</string>
+  <string name="copied_to_clipboard">In die Zwischenablage kopiert</string>
 </resources>
