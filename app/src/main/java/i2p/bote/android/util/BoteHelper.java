@@ -293,7 +293,7 @@ public class BoteHelper extends GeneralHelper {
         Iterator<Email> iter = emails.iterator();
         while (iter.hasNext()) {
             Email email = iter.next();
-            if (!email.isSet(Flag.RECENT))
+            if (!email.isRecent())
                 iter.remove();
         }
         return emails;
