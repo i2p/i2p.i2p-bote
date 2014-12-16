@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class FolderListAdapter extends ArrayAdapter<EmailFolder> implements FolderListener {
+public class FolderListAdapter extends ArrayAdapter<EmailFolder> {
     private final LayoutInflater mInflater;
 
     public FolderListAdapter(Context context) {
@@ -22,16 +22,16 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> implements Fold
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setData(List<EmailFolder> folders) {
+    public void setData(List<EmailFolder> folders, FolderListener folderListener) {
         // Remove previous FolderListeners
         for (int i = 0; i < getCount(); i++) {
-            getItem(i).removeFolderListener(this);
+            getItem(i).removeFolderListener(folderListener);
         }
         clear();
         if (folders != null) {
             for (EmailFolder folder : folders) {
                 add(folder);
-                folder.addFolderListener(this);
+                folder.addFolderListener(folderListener);
             }
         }
     }
@@ -52,22 +52,5 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> implements Fold
         }
 
         return v;
-    }
-
-    // FolderListener
-
-    @Override
-    public void elementAdded(String messageId) {
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void elementUpdated() {
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void elementRemoved(String messageId) {
-        notifyDataSetChanged();
     }
 }

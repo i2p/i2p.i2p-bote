@@ -41,12 +41,14 @@ import i2p.bote.android.service.Init.RouterChoice;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.fileencryption.PasswordCacheListener;
 import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.FolderListener;
 import i2p.bote.network.NetworkStatusListener;
 
 public class EmailListActivity extends ActionBarActivity implements
         EmailListFragment.OnEmailSelectedListener,
         MoveToDialogFragment.MoveToDialogListener,
         PasswordCacheListener,
+        FolderListener,
         NetworkStatusListener {
     private I2PAndroidHelper mHelper;
     private RouterChoice mRouterChoice;
@@ -108,7 +110,7 @@ public class EmailListActivity extends ActionBarActivity implements
 
         // Set the list of folders
         // TODO: This is slow, needs a loader
-        mFolderAdapter.setData(I2PBote.getInstance().getEmailFolders());
+        mFolderAdapter.setData(I2PBote.getInstance().getEmailFolders(), this);
 
         // Set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -289,42 +291,42 @@ public class EmailListActivity extends ActionBarActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
-        if(mDrawerToggle.onOptionsItemSelected(item)) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
         switch (item.getItemId()) {
-        case R.id.action_start_bote:
-            // Init from settings
-            Init init = new Init(this);
-            mRouterChoice = init.initialize(mHelper);
+            case R.id.action_start_bote:
+                // Init from settings
+                Init init = new Init(this);
+                mRouterChoice = init.initialize(mHelper);
 
-            if (mRouterChoice == RouterChoice.ANDROID) {
-                if (!mHelper.isI2PAndroidInstalled()) {
-                    // I2P Android not installed
-                    mHelper.promptToInstall(this);
-                } else if (!mHelper.isI2PAndroidRunning()) {
-                    // Ask user to start I2P Android
-                    mHelper.requestI2PAndroidStart(this);
+                if (mRouterChoice == RouterChoice.ANDROID) {
+                    if (!mHelper.isI2PAndroidInstalled()) {
+                        // I2P Android not installed
+                        mHelper.promptToInstall(this);
+                    } else if (!mHelper.isI2PAndroidRunning()) {
+                        // Ask user to start I2P Android
+                        mHelper.requestI2PAndroidStart(this);
+                    } else
+                        startBote();
                 } else
                     startBote();
-            } else
-                startBote();
-            return true;
+                return true;
 
-        case R.id.action_stop_bote:
-            Intent stop = new Intent(this, BoteService.class);
-            stopService(stop);
-            supportInvalidateOptionsMenu();
-            return true;
+            case R.id.action_stop_bote:
+                Intent stop = new Intent(this, BoteService.class);
+                stopService(stop);
+                supportInvalidateOptionsMenu();
+                return true;
 
-        case R.id.action_settings:
-            Intent si = new Intent(this, SettingsActivity.class);
-            startActivity(si);
-            return true;
+            case R.id.action_settings:
+                Intent si = new Intent(this, SettingsActivity.class);
+                startActivity(si);
+                return true;
 
-        default:
-            return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -408,6 +410,38 @@ public class EmailListActivity extends ActionBarActivity implements
 
     @Override
     public void passwordCleared() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mFolderAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    // FolderListener
+
+    @Override
+    public void elementAdded(String messageId) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mFolderAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void elementUpdated() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mFolderAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void elementRemoved(String messageId) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
