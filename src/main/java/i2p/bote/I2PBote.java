@@ -238,7 +238,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
      * Sets up a {@link I2PSession}, using the I2P destination stored on disk or creating a new I2P
      * destination if no key file exists.
      */
-    private void initializeSession() {
+    private void initializeSession() throws I2PSessionException {
         Properties sessionProperties = new Properties();
         // set tunnel names
         sessionProperties.setProperty("inbound.nickname", "I2P-Bote");
@@ -256,12 +256,13 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
             fileReader.read(destKeyBuffer);
             byte[] localDestinationKey = Base64.decode(new String(destKeyBuffer));
             ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
-            socketManager = I2PSocketManagerFactory.createManager(inputStream, sessionProperties);
+            socketManager = I2PSocketManagerFactory.createDisconnectedManager(inputStream, null, 0, sessionProperties);
         }
         catch (IOException e) {
             log.debug("Destination key file doesn't exist or isn't readable." + e);
-        }
-        finally {
+        } catch (I2PSessionException e) {
+            // Won't happen, inputStream != null
+        } finally {
             if (fileReader != null)
                 try {
                     fileReader.close();
@@ -278,12 +279,10 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
                 ByteArrayOutputStream arrayStream = new ByteArrayOutputStream();
                 i2pClient.createDestination(arrayStream);
                 byte[] localDestinationKey = arrayStream.toByteArray();
-                
+
                 ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
-                socketManager = I2PSocketManagerFactory.createManager(inputStream, sessionProperties);
-                if (socketManager == null)   // null indicates an error
-                    log.error("Error creating I2PSocketManagerFactory");
-                    
+                socketManager = I2PSocketManagerFactory.createDisconnectedManager(inputStream, null, 0, sessionProperties);
+
                 saveLocalDestinationKeys(destinationKeyFile, localDestinationKey);
             } catch (I2PException e) {
                 log.error("Error creating local destination key.", e);
@@ -291,8 +290,11 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
                 log.error("Error writing local destination key to file.", e);
             }
         }
-        
+
         i2pSession = socketManager.getSession();
+        // Throws I2PSessionException if the connection fails
+        i2pSession.connect();
+
         Destination localDestination = i2pSession.getMyDestination();
         log.info("Local destination key (base64): " + localDestination.toBase64());
         log.info("Local destination hash (base64): " + localDestination.calculateHash().toBase64());
