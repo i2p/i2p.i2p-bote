@@ -24,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.i2p.I2PAppContext;
 import net.i2p.util.Log;
@@ -587,7 +588,9 @@ public class EmailListFragment extends AuthenticatedListFragment implements
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        } else
+        } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getActivity(), R.string.bote_needs_to_be_connected, Toast.LENGTH_SHORT).show();
+        }
     }
 }
