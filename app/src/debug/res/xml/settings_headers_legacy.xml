@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference android:title="@string/pref_title_general" >
+        <intent
+            android:action="i2p.bote.PREFS_GENERAL"
+            android:targetClass="i2p.bote.android.config.SettingsActivity"
+            android:targetPackage="i2p.bote.android.debug" />
+    </Preference>
+    <Preference android:title="@string/pref_title_change_password" >
+        <intent
+            android:targetClass="i2p.bote.android.config.SetPasswordActivity"
+            android:targetPackage="i2p.bote.android.debug" />
+    </Preference>
+    <Preference android:title="@string/new_identity" >
+        <intent
+            android:targetClass="i2p.bote.android.config.EditIdentityActivity"
+            android:targetPackage="i2p.bote.android.debug" />
+    </Preference>
+
+</PreferenceScreen>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:fragment="i2p.bote.android.config.SettingsActivity$SettingsFragment"
+        android:title="@string/pref_title_general"
+        android:summary="@string/pref_summ_general" >
+        <extra
+            android:name="settings"
+            android:value="general" />
+    </header>
+    <header android:title="@string/pref_title_change_password" >
+        <intent
+            android:targetClass="i2p.bote.android.config.SetPasswordActivity"
+            android:targetPackage="i2p.bote.android.debug" />
+    </header>
+    <header
+        android:id="@+id/identity_settings"
+        android:title="@string/pref_title_identities" />
+    <header
+        android:id="@+id/new_identity"
+        android:title="@string/new_identity" >
+        <intent
+            android:targetClass="i2p.bote.android.config.EditIdentityActivity"
+            android:targetPackage="i2p.bote.android.debug" />
+    </header>
+
+</preference-headers>
