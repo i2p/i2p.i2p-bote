@@ -1,17 +1,25 @@
 package i2p.bote.android;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidplot.pie.PieChart;
 import com.androidplot.pie.Segment;
 import com.androidplot.pie.SegmentFormatter;
 
+import net.i2p.android.ui.I2PAndroidHelper;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +32,8 @@ import i2p.bote.network.RelayPeer;
 import static i2p.bote.Util._;
 
 public class NetworkInfoFragment extends Fragment {
+    private Exception mConnectError;
+
     private PieChart mKademliaPie;
     private TextView mKademliaPeers;
     private PieChart mRelayPie;
@@ -31,29 +41,54 @@ public class NetworkInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_network_info, container, false);
+                             Bundle savedInstanceState) {
+        mConnectError = I2PBote.getInstance().getConnectError();
+        if (mConnectError == null)
+            return inflater.inflate(R.layout.fragment_network_info, container, false);
+        else
+            return inflater.inflate(R.layout.fragment_network_error, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mKademliaPie = (PieChart) view.findViewById(R.id.kademlia_peers_pie);
-        mKademliaPeers = (TextView) view.findViewById(R.id.kademlia_peers);
-        mRelayPie = (PieChart) view.findViewById(R.id.relay_peers_pie);
-        mRelayPeers = (TextView) view.findViewById(R.id.relay_peers);
+        if (mConnectError == null) {
+            mKademliaPie = (PieChart) view.findViewById(R.id.kademlia_peers_pie);
+            mKademliaPeers = (TextView) view.findViewById(R.id.kademlia_peers);
+            mRelayPie = (PieChart) view.findViewById(R.id.relay_peers_pie);
+            mRelayPeers = (TextView) view.findViewById(R.id.relay_peers);
 
-        setupKademliaPeers();
-        setupRelayPeers();
+            setupKademliaPeers();
+            setupRelayPeers();
 
-        Collection<BannedPeer> bannedPeers = I2PBote.getInstance().getBannedPeers();
-        ((TextView) view.findViewById(R.id.banned_peers)).setText(
-                "" + bannedPeers.size());
+            Collection<BannedPeer> bannedPeers = I2PBote.getInstance().getBannedPeers();
+            ((TextView) view.findViewById(R.id.banned_peers)).setText(
+                    "" + bannedPeers.size());
+        } else {
+            ((TextView) view.findViewById(R.id.error)).setText(mConnectError.toString());
 
-        Exception e = I2PBote.getInstance().getConnectError();
-        if (e != null)
-            ((TextView) view.findViewById(R.id.error)).setText(e.toString());
+            view.findViewById(R.id.copy_error).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String fullError = joinStackTrace(mConnectError);
+                    Object clipboardService = getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) clipboardService;
+                        clipboard.setText(fullError);
+                    } else {
+                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) clipboardService;
+                        android.content.ClipData clip = android.content.ClipData.newPlainText(
+                                getString(R.string.bote_connection_error), fullError);
+                        clipboard.setPrimaryClip(clip);
+                    }
+                    Toast.makeText(getActivity(), R.string.full_error_copied_to_clipboard, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            if ((new I2PAndroidHelper(getActivity())).isI2PAndroidInstalled())
+                view.findViewById(R.id.error_page_i2p_content).setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupSegmentFormatter(SegmentFormatter sf) {
@@ -164,5 +199,45 @@ public class NetworkInfoFragment extends Fragment {
 
         mRelayPie.getBorderPaint().setColor(Color.TRANSPARENT);
         mRelayPie.getBackgroundPaint().setColor(Color.TRANSPARENT);
+    }
+
+    private static String joinStackTrace(Throwable e) {
+        StringWriter writer = null;
+        try {
+            writer = new StringWriter();
+            joinStackTrace(e, writer);
+            return writer.toString();
+        }
+        finally {
+            if (writer != null)
+                try {
+                    writer.close();
+                } catch (IOException e1) {
+                    // ignore
+                }
+        }
+    }
+
+    private static void joinStackTrace(Throwable e, StringWriter writer) {
+        PrintWriter printer = null;
+        try {
+            printer = new PrintWriter(writer);
+
+            while (e != null) {
+
+                printer.println(e);
+                StackTraceElement[] trace = e.getStackTrace();
+                for (int i = 0; i < trace.length; i++)
+                    printer.println("\tat " + trace[i]);
+
+                e = e.getCause();
+                if (e != null)
+                    printer.println("Caused by:\r\n");
+            }
+        }
+        finally {
+            if (printer != null)
+                printer.close();
+        }
     }
 }

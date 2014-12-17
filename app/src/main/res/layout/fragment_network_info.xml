@@ -78,11 +78,5 @@
             android:text="0"
             android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
 
-        <TextView
-            android:id="@+id/error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
-
     </LinearLayout>
 </ScrollView>
