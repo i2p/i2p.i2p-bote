@@ -10,11 +10,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +82,12 @@ public abstract class IdentityShipFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().setTitle(getTitle());
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SHIP_WAITER) {
             if (resultCode == Activity.RESULT_OK) {
@@ -97,6 +101,7 @@ public abstract class IdentityShipFragment extends Fragment {
         }
     }
 
+    protected abstract int getTitle();
     protected abstract void setInterfaceEnabled(boolean enabled);
 
     public static class ShipWaiterFrag extends TaskFragment<Object, String, String> {
@@ -239,6 +244,11 @@ public abstract class IdentityShipFragment extends Fragment {
         }
 
         @Override
+        protected int getTitle() {
+            return R.string.export_identities;
+        }
+
+        @Override
         protected void setInterfaceEnabled(boolean enabled) {
             mExportFilename.setEnabled(enabled);
             mEncrypt.setEnabled(enabled);
@@ -363,6 +373,11 @@ public abstract class IdentityShipFragment extends Fragment {
             getFragmentManager().beginTransaction()
                     .replace(R.id.waiter_frag, f, SHIP_WAITER_TAG)
                     .commit();
+        }
+
+        @Override
+        protected int getTitle() {
+            return R.string.import_identities;
         }
 
         @Override

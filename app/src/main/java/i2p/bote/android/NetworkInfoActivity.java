@@ -9,7 +9,6 @@ public class NetworkInfoActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
-        setTitle(R.string.network_status);
 
         // Initialize I2P settings
         InitActivities init = new InitActivities(this);

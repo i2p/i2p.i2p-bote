@@ -21,7 +21,6 @@ public class AddressBookActivity extends ActionBarActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
-        setTitle(R.string.address_book);
 
         // Initialize I2P settings
         InitActivities init = new InitActivities(this);

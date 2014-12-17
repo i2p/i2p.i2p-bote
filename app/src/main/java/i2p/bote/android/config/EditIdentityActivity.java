@@ -30,6 +30,8 @@ public class EditIdentityActivity extends ActionBarActivity implements
             Bundle args = getIntent().getExtras();
             if (args != null)
                 key = args.getString(EditIdentityFragment.IDENTITY_KEY);
+            if (key != null)
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
             EditIdentityFragment f = EditIdentityFragment.newInstance(key);
             getSupportFragmentManager().beginTransaction()
                 .add(R.id.edit_identity_frag, f).commit();

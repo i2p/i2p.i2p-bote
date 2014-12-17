@@ -12,7 +12,6 @@ public class SetPasswordActivity extends ActionBarActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.pref_title_change_password);
         setContentView(R.layout.activity_set_password);
 
         // Initialize I2P settings

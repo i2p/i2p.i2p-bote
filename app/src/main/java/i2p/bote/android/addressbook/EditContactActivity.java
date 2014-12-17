@@ -44,6 +44,8 @@ public class EditContactActivity extends ActionBarActivity {
                     destination = args.getString(EditContactFragment.CONTACT_DESTINATION);
                     f = EditContactFragment.newInstance(destination);
                 }
+                if (destination != null)
+                    getSupportActionBar().setDisplayShowTitleEnabled(false);
             } else
                 f = EditContactFragment.newInstance(null);
             getSupportFragmentManager().beginTransaction()

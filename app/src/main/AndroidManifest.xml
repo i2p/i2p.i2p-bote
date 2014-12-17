@@ -47,6 +47,7 @@
         </activity>
         <activity
             android:name=".NewEmailActivity"
+            android:label="@string/compose"
             android:parentActivityName=".EmailListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -54,6 +55,7 @@
         </activity>
         <activity
             android:name=".addressbook.AddressBookActivity"
+            android:label="@string/address_book"
             android:parentActivityName=".EmailListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -68,6 +70,7 @@
         </activity>
         <activity
             android:name=".addressbook.EditContactActivity"
+            android:label="@string/action_new_contact"
             android:parentActivityName=".addressbook.ViewContactActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -85,6 +88,7 @@
         </activity>
         <activity
             android:name=".NetworkInfoActivity"
+            android:label="@string/network_status"
             android:parentActivityName=".EmailListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -92,6 +96,7 @@
         </activity>
         <activity
             android:name=".config.SettingsActivity"
+            android:label="@string/action_settings"
             android:parentActivityName=".EmailListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -99,6 +104,7 @@
         </activity>
         <activity
             android:name=".config.SetPasswordActivity"
+            android:label="@string/pref_title_change_password"
             android:parentActivityName=".config.SettingsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -113,6 +119,7 @@
         </activity>
         <activity
             android:name=".config.EditIdentityActivity"
+            android:label="@string/title_new_identity"
             android:parentActivityName=".config.ViewIdentityActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
