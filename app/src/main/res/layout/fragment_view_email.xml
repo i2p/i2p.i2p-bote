@@ -161,7 +161,12 @@
             </TableLayout>
         </RelativeLayout>
 
-        <View style="@style/Divider.Horizontal"/>
+        <View
+            style="@style/Divider.Horizontal"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"/>
 
         <TextView
             android:id="@+id/email_content"
