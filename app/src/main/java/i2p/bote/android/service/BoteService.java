@@ -1,5 +1,6 @@
 package i2p.bote.android.service;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -22,8 +23,10 @@ import net.i2p.router.RouterLaunch;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.HashSet;
 import java.util.List;
 
+import javax.mail.Address;
 import javax.mail.MessagingException;
 
 import i2p.bote.I2PBote;
@@ -221,9 +224,10 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
         NotificationManager nm = (NotificationManager) getSystemService(
                 Context.NOTIFICATION_SERVICE);
 
-        NotificationCompat.Builder b =
-                new NotificationCompat.Builder(this)
-                .setAutoCancel(true);
+        NotificationCompat.Builder b = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_notif)
+                .setDefaults(Notification.DEFAULT_ALL);
 
         try {
             EmailFolder inbox = I2PBote.getInstance().getInbox();
@@ -246,9 +250,11 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
                 Bitmap picture = BoteHelper.getPictureForAddress(fromAddress);
                 if (picture != null)
                     b.setLargeIcon(picture);
-                else if (!email.isAnonymous())
-                    b.setLargeIcon(BoteHelper.getIdenticonForAddress(fromAddress, 56, 56)); // TODO fix size
-                else
+                else if (!email.isAnonymous()) {
+                    int width = getResources().getDimensionPixelSize(R.dimen.notification_large_icon_width);
+                    int height = getResources().getDimensionPixelSize(R.dimen.notification_large_icon_height);
+                    b.setLargeIcon(BoteHelper.getIdenticonForAddress(fromAddress, width, height));
+                } else
                     b.setSmallIcon(R.drawable.ic_contact_picture);
 
                 b.setContentTitle(BoteHelper.getNameAndShortDestination(
@@ -264,16 +270,18 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
                 break;
 
             default:
-                b.setSmallIcon(R.drawable.ic_notif);
                 b.setContentTitle(getResources().getQuantityString(
                         R.plurals.n_new_emails, numNew, numNew));
 
+                HashSet<Address> recipients = new HashSet<Address>();
                 String bigText = "";
                 for (Email ne : newEmails) {
+                    recipients.add(BoteHelper.getOneLocalRecipient(ne));
                     bigText += BoteHelper.getNameAndShortDestination(
                             ne.getOneFromAddress());
                     bigText += ": " + ne.getSubject() + "\n";
                 }
+                b.setContentText(BoteHelper.joinAddressNames(recipients));
                 b.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
 
                 Intent eli = new Intent(this, EmailListActivity.class);

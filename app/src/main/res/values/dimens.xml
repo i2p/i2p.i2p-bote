@@ -26,6 +26,9 @@
 
     <dimen name="listitem_height_three_lines">88dp</dimen>
 
+    <dimen name="notification_large_icon_width">64dp</dimen>
+    <dimen name="notification_large_icon_height">64dp</dimen>
+
     <dimen name="contact_chip_height">32dp</dimen>
     <dimen name="contact_chip_main_margins">8dp</dimen>
     <dimen name="contact_chip_right_margin">12dp</dimen>

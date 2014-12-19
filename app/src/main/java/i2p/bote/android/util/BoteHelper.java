@@ -23,11 +23,11 @@ import com.lambdaworks.codec.Base64;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.mail.Address;
-import javax.mail.Flags.Flag;
 import javax.mail.MessagingException;
 
 import i2p.bote.android.R;
@@ -400,5 +400,19 @@ public class BoteHelper extends GeneralHelper {
             if (mListener != null)
                 mListener.onPasswordVerified();
         }
+    }
+
+    public static String joinAddressNames(Collection<Address> s) throws PasswordException, GeneralSecurityException, IOException {
+        StringBuilder builder = new StringBuilder();
+        Iterator<Address> iter = s.iterator();
+        while (iter.hasNext()) {
+            String name = getName(iter.next().toString());
+            builder.append(name);
+            if (!iter.hasNext()) {
+                break;
+            }
+            builder.append(", ");
+        }
+        return builder.toString();
     }
 }
