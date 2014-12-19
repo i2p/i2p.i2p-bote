@@ -1,12 +1,11 @@
-0.4
+0.4 / 2014-12-19 / fdc9c619eff53745d49c987b353ce5b04278dfd6
  * New email notifications!
  * Fixed crash when clicking "Create new contact" button
  * Fixed crash when sending email
  * Fixed occasional crashes when Bote connects to / disconnects from the network
- * Improved robustness and user feedback for email checking
  * Added "Copy to clipboard" button to identities and contacts
  * Added labels to the address book actions menu
- * Updated translations
+ * UI improvements, bug fixes, translation updates
 
 0.3 / 2014-12-01 / ebba8aac78d50eda9d25f936e8bd348553966649
  * Migrated to new Material design from Android Lollipop
