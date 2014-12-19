@@ -42,6 +42,7 @@
   <string name="action_settings">Einstellungen</string>
   <string name="check_email">E-Mail abrufen</string>
   <string name="checking_email">Auf neue E-Mails wird geprüft…</string>
+  <string name="bote_needs_to_be_connected">Bote muss mit dem Netzwerk verbunden werden</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
     <item quantity="one">Eine unvollständige E-Mail</item>
@@ -145,6 +146,10 @@
   <string name="unreliable">Unzuverlässig</string>
   <string name="untested">Ungetestet</string>
   <string name="banned_peers">Gebannte Peers:</string>
+  <string name="connect_error_occurred">Oh je! Bote konnte nicht mit dem Netzwerk verbinden.</string>
+  <string name="this_is_the_error">Dies ist der Fehler, der aufgetreten ist:</string>
+  <string name="bote_connection_error">Bote-Verbindungsfehler</string>
+  <string name="full_error_copied_to_clipboard">Vollständiger Fehler in die Zwischenablage kopiert</string>
   <string name="pref_title_general">Allgemein</string>
   <string name="pref_summ_general">Allgemeine Einstellungen und Standard-Identitätseinstellungen</string>
   <string name="pref_title_autoMail">Automatisch auf neue E-Mails prüfen</string>
@@ -186,6 +191,7 @@
   <string name="pref_title_identities">Identitäten</string>
   <string name="new_identity">Neue Identität …</string>
   <string name="edit_identity">Identität bearbeiten</string>
+  <string name="title_new_identity">Neue Identität</string>
   <string name="public_name">Öffentlicher Name</string>
   <string name="description">Beschreibung</string>
   <string name="default_identity">Standardidentität</string>

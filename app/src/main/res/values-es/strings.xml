@@ -42,6 +42,7 @@
   <string name="action_settings">Configuraciones</string>
   <string name="check_email">Comprobar correo electrónico</string>
   <string name="checking_email">Comprobando correo electrónico...</string>
+  <string name="bote_needs_to_be_connected">Bote necesita estar conectado a la red</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
     <item quantity="one">Un correo electrónico incompleto</item>
@@ -145,6 +146,12 @@
   <string name="unreliable">No confiable</string>
   <string name="untested">No probado</string>
   <string name="banned_peers">Pares expulsados:</string>
+  <string name="connect_error_occurred">¡Oh querido/a! Bote no pudo conectar a la red.</string>
+  <string name="this_is_the_error">Este es el error que sucedió:</string>
+  <string name="most_errors_fixed_on_restart">Puede arreglar la mayoría de los problemas reiniciando Bote. Para hacer esto, vuelva a la página principal de Bote, luego haga clic en \"Desconectar de la red\" en el menú, y luego clic de nuevo en \"Conectar a la red\" en el menú.</string>
+  <string name="also_check_i2p_android">Si eso no ayuda, compruebe que I2P está ejecutándose. Puede ver el actual estado de I2P en el panel de notificación, o al abrir la aplicación I2P. Si no se está ejecutando adecuadamente, reinicie I2P (en la aplicación, haga clic en \"Detener\", y luego clic en \"Iniciar\" cuando aparezca). Espere a que I2P esté ejecutándose completamente, y luego inicie Bote.</string>
+  <string name="bote_connection_error">Error de conexión de Bote</string>
+  <string name="full_error_copied_to_clipboard">Error completo copiado al portapapeles</string>
   <string name="pref_title_general">General</string>
   <string name="pref_summ_general">Preferencias generales y configuraciones de identidad por defecto</string>
   <string name="pref_title_autoMail">Auto-comprobar correo</string>
@@ -186,6 +193,7 @@
   <string name="pref_title_identities">Identidades</string>
   <string name="new_identity">Nueva identidad...</string>
   <string name="edit_identity">Editar identidad</string>
+  <string name="title_new_identity">Nueva identidad</string>
   <string name="public_name">Nombre público</string>
   <string name="description">Descripción</string>
   <string name="default_identity">Identidad por defecto</string>
