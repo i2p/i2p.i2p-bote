@@ -2,7 +2,6 @@ Fixes:
 - Auto-comma the To: field when it loses focus
 - Fix tick over selected emails
 - Delete/read/unread/move actions on view email page that don't break everything
-- Show full network error? Make it copy-able?
 
 Tasks:
 - Show logged-in status in persistent notification
