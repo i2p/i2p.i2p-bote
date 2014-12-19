@@ -41,6 +41,7 @@
   <string name="action_stop_bote">断开网络</string>
   <string name="action_settings">设置</string>
   <string name="check_email">检查邮件</string>
+  <string name="checking_email">正在检查电子邮件…</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
     <item quantity="other">%d 封未完成的邮件</item>

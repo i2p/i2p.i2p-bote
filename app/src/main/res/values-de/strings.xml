@@ -41,6 +41,7 @@
   <string name="action_stop_bote">Netzwerkverbindung trennen</string>
   <string name="action_settings">Einstellungen</string>
   <string name="check_email">E-Mail abrufen</string>
+  <string name="checking_email">Auf neue E-Mails wird geprüft…</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
     <item quantity="one">Eine unvollständige E-Mail</item>

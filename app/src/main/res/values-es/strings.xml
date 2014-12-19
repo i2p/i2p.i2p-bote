@@ -41,6 +41,7 @@
   <string name="action_stop_bote">Desconectar de la red</string>
   <string name="action_settings">Configuraciones</string>
   <string name="check_email">Comprobar correo electrónico</string>
+  <string name="checking_email">Comprobando correo electrónico...</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
     <item quantity="one">Un correo electrónico incompleto</item>

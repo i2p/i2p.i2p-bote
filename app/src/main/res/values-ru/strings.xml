@@ -41,6 +41,7 @@
   <string name="action_stop_bote">Отключиться от сети</string>
   <string name="action_settings">Настройки</string>
   <string name="check_email">Проверить почту</string>
+  <string name="checking_email">Проверка почты...</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
     <item quantity="one">Одно незаконченное письмо</item>
