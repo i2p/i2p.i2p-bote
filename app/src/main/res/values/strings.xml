@@ -156,7 +156,7 @@
     <string name="connect_error_occurred">Oh dear! Bote couldn\'t connect to the network.</string>
     <string name="this_is_the_error">This is the error that happened:</string>
     <string name="most_errors_fixed_on_restart">You can fix most problems by restarting Bote. To do this, go back to the main Bote page, then click "Disconnect from network" in the menu, and then click "Connect to network" in the menu again.</string>
-    <string name="also_check_i2p_android">If that doesn\'t help, check that I2P is running. You can see I2P\'s current status in the notification drawer, or by opening the I2P app. If it isn\'t running properly, restart I2P (in the app, click "Stop", and then click "Start" when it appears). Wait for I2P to be fully running, and then star Bote.</string>
+    <string name="also_check_i2p_android">If that doesn\'t help, check that I2P is running. You can see I2P\'s current status in the notification drawer, or by opening the I2P app. If it isn\'t running properly, restart I2P (in the app, click "Stop", and then click "Start" when it appears). Wait for I2P to be fully running, and then start Bote.</string>
     <string name="bote_connection_error">Bote connection error</string>
     <string name="full_error_copied_to_clipboard">Full error copied to clipboard</string>
     <string name="pref_title_general">General</string>
