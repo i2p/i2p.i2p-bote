@@ -41,6 +41,8 @@
   <string name="action_stop_bote">Déconnecter du réseau</string>
   <string name="action_settings">Paramètres</string>
   <string name="check_email">Relever emails</string>
+  <string name="checking_email">Recherche de courrier...</string>
+  <string name="bote_needs_to_be_connected">Bote a besoin de se connecter au réseau</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
     <item quantity="one">Un email incomplet</item>
@@ -144,6 +146,12 @@
   <string name="unreliable">Non fiable</string>
   <string name="untested">Non testé</string>
   <string name="banned_peers">Pairs bannis :</string>
+  <string name="connect_error_occurred">Oh zut ! Bote n\'a pas pu se connecter au réseau.</string>
+  <string name="this_is_the_error">Voici l\'erreur qui s\'est produite :</string>
+  <string name="most_errors_fixed_on_restart">Vous pouvez résoudre la plupart des problèmes en redémarrant Bote. Pour ceci, revenez à la page principale de Bote, puis dans le menu cliquez \"Déconnecter du réseau\", et ensuite dans le menu cliquez \"Connecter au réseau\" à nouveau.</string>
+  <string name="also_check_i2p_android">Si cela ne vous aide pas, assurez-vous que I2P est en marche. Vous pouvez voir le statut actuel d\'I2P dans le tiroir de notification, ou en ouvrant l\'app I2P. Si elle ne marche pas correctement, redémarrez I2P (dans l\'app, cliquez \"Arrêter\", puis cliquez \"Démarrer\" quand il apparaît). Attendez que I2P soit complètement en marche, puis démarrez Bote.</string>
+  <string name="bote_connection_error">Erreur de connexion Bote</string>
+  <string name="full_error_copied_to_clipboard">L\'erreur entière a été copiée dans le presse-papiers</string>
   <string name="pref_title_general">Général</string>
   <string name="pref_summ_general">Paramètres généraux et paramètres d\'identité prédéfinie</string>
   <string name="pref_title_autoMail">Auto-chercher le courrier</string>
@@ -185,6 +193,7 @@
   <string name="pref_title_identities">Identités</string>
   <string name="new_identity">Nouvelle identité ...</string>
   <string name="edit_identity">Éditer l\'identité</string>
+  <string name="title_new_identity">Nouvelle identité</string>
   <string name="public_name">Nom public</string>
   <string name="description">Description</string>
   <string name="default_identity">Identité prédéfinie</string>

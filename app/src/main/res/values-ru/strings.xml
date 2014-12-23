@@ -42,6 +42,7 @@
   <string name="action_settings">Настройки</string>
   <string name="check_email">Проверить почту</string>
   <string name="checking_email">Проверка почты...</string>
+  <string name="bote_needs_to_be_connected">Bote требуется подключение к сети</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
     <item quantity="one">Одно незаконченное письмо</item>
@@ -147,6 +148,13 @@
   <string name="unreliable">Ненадежный</string>
   <string name="untested">Непроверенный</string>
   <string name="banned_peers">Заблокированные пиры:</string>
+  <string name="connect_error_occurred">Ох! Bote не смог подключиться к сети.</string>
+  <string name="this_is_the_error">Произошла ошибка:</string>
+  <string name="most_errors_fixed_on_restart">Большинство проблем можно решить, перезагрузив Bote. Для этого вернитесь на главную страницу Bote, нажмите в меню \"Отключиться от сети\", затем нажмите \"Подключиться к сети\".</string>
+  <string name="also_check_i2p_android">Если это не помогает, убедитесь, что I2P запущен. Вы можете посмотреть текущий статус I2P в уведомлениях или в приложении I2P. 
+Если есть проблемы, то перезапустите I2P (в приложении нажмите \"Остановить\", а затем нажмите, когда появится, \"Запустить\"). Подождите, пока I2P полностью запустится, и затем запустите Bote.</string>
+  <string name="bote_connection_error">Ошибка соединения </string>
+  <string name="full_error_copied_to_clipboard">Полный текст ошибки скопирован в буфер</string>
   <string name="pref_title_general">Общие</string>
   <string name="pref_summ_general">Общие настройки и настройки идентификатора по умолчанию</string>
   <string name="pref_title_autoMail">Автоматическая проверка почты</string>
@@ -189,6 +197,7 @@
   <string name="pref_title_identities">Идентификаторы</string>
   <string name="new_identity">Новый идентификатор...</string>
   <string name="edit_identity">Редактировать идентификатор</string>
+  <string name="title_new_identity">Новый идентификатор</string>
   <string name="public_name">Общедоступное имя</string>
   <string name="description">Описание</string>
   <string name="default_identity">Идентификатор по умолчанию</string>
