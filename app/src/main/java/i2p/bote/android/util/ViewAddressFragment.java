@@ -1,5 +1,6 @@
 package i2p.bote.android.util;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -111,6 +112,11 @@ public abstract class ViewAddressFragment extends Fragment {
 
         if (mAddress != null) {
             loadAddress();
+        } else {
+            // No address provided, finish
+            // Should not happen
+            getActivity().setResult(Activity.RESULT_CANCELED);
+            getActivity().finish();
         }
     }
 

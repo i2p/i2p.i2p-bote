@@ -27,6 +27,13 @@ public class ViewIdentityActivity extends ActionBarActivity {
             Bundle args = getIntent().getExtras();
             if (args != null)
                 key = args.getString(ViewIdentityFragment.ADDRESS);
+
+            if (key == null) {
+                setResult(RESULT_CANCELED);
+                finish();
+                return;
+            }
+
             ViewIdentityFragment f = ViewIdentityFragment.newInstance(key);
             getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, f).commit();
