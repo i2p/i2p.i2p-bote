@@ -1,3 +1,7 @@
+0.5
+ * Email content can be seleted/copied (API 11+)
+ * Bug fixes, translation updates
+
 0.4 / 2014-12-19 / fdc9c619eff53745d49c987b353ce5b04278dfd6
  * New email notifications!
  * Fixed crash when clicking "Create new contact" button
