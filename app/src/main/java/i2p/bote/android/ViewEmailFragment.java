@@ -3,6 +3,7 @@ package i2p.bote.android;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -133,6 +133,8 @@ public class ViewEmailFragment extends Fragment {
                         email.getReceivedDate()));
 
             content.setText(email.getText());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                content.setTextIsSelectable(true);
 
             // Prepare fields for replying
             mIsAnonymous = email.isAnonymous();
@@ -153,7 +155,7 @@ public class ViewEmailFragment extends Fragment {
         if (BoteHelper.isOutbox(mFolderName)) {
             ((TextView) v.findViewById(R.id.email_status)).setText(
                     BoteHelper.getEmailStatusText(getActivity(), email, true));
-            ((TableRow) v.findViewById(R.id.email_status_row)).setVisibility(View.VISIBLE);
+            v.findViewById(R.id.email_status_row).setVisibility(View.VISIBLE);
         }
     }
 
