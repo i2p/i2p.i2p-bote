@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Queue;
 
+import i2p.bote.android.Constants;
+
 /**
  * bridge to android logging
  *
@@ -118,8 +120,6 @@ class LogWriter implements Runnable {
         }
     }
 
-    private static final String ANDROID_LOG_TAG = "I2P-Bote";
-
     public void log(int priority, Class<?> src, String name, String threadName, String msg) {
             if (src != null) {
                 String tag = src.getName();
@@ -127,17 +127,17 @@ class LogWriter implements Runnable {
                 if (dot >= 0)
                     tag = tag.substring(dot + 1);
                 android.util.Log.println(toAndroidLevel(priority),
-                                         ANDROID_LOG_TAG,
+                                         Constants.ANDROID_LOG_TAG,
                                          tag +
                                          " [" + threadName + "] " + msg);
             } else if (name != null)
                 android.util.Log.println(toAndroidLevel(priority),
-                                         ANDROID_LOG_TAG,
+                                         Constants.ANDROID_LOG_TAG,
                                          name +
                                          " ["  + threadName + "] " + msg);
             else
                 android.util.Log.println(toAndroidLevel(priority),
-                                         ANDROID_LOG_TAG,
+                                         Constants.ANDROID_LOG_TAG,
                                          '[' + threadName + "] " + msg);
     }
 
@@ -148,19 +148,19 @@ class LogWriter implements Runnable {
                 if (dot >= 0)
                     tag = tag.substring(dot + 1);
                 android.util.Log.println(toAndroidLevel(priority),
-                                         ANDROID_LOG_TAG,
+                                         Constants.ANDROID_LOG_TAG,
                                          tag +
                                          " [" + threadName + "] " + msg +
                                          ' ' + t.toString() + ' ' + android.util.Log.getStackTraceString(t));
             } else if (name != null)
                 android.util.Log.println(toAndroidLevel(priority),
-                                         ANDROID_LOG_TAG,
+                                         Constants.ANDROID_LOG_TAG,
                                          name +
                                          " [" + threadName + "] " + msg +
                                          ' ' + t.toString() + ' ' + android.util.Log.getStackTraceString(t));
             else
                 android.util.Log.println(toAndroidLevel(priority),
-                                         ANDROID_LOG_TAG,
+                                         Constants.ANDROID_LOG_TAG,
                                          '[' + threadName + "] " +
                                          msg + ' ' + t.toString() + ' ' + android.util.Log.getStackTraceString(t));
     }

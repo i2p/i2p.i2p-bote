@@ -1,6 +1,8 @@
 package i2p.bote.android;
 
 public class Constants {
+    public static final String ANDROID_LOG_TAG = "I2P-Bote";
+
     public static final String EMAILDEST_SCHEME = "bote";
 
     public static final String NDEF_DOMAIN = "i2p.bote";
