@@ -103,6 +103,8 @@
     <string name="signature_invalid">This email does not have a valid signature. It was probably not sent by %s.</string>
     <string name="email_from">From:</string>
     <string name="email_to">To:</string>
+    <string name="email_cc">Cc:</string>
+    <string name="email_bcc">Bcc:</string>
     <string name="label_sent">Sent:</string>
     <string name="email_received">Received:</string>
     <string name="email_status">Status:</string>

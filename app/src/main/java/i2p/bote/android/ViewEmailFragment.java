@@ -80,7 +80,7 @@ public class ViewEmailFragment extends Fragment {
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
         ImageView picture = (ImageView) v.findViewById(R.id.picture);
         TextView sender = (TextView) v.findViewById(R.id.email_sender);
-        LinearLayout recipients = (LinearLayout) v.findViewById(R.id.email_recipients);
+        LinearLayout toRecipients = (LinearLayout) v.findViewById(R.id.email_to);
         TextView sent = (TextView) v.findViewById(R.id.email_sent);
         TextView received = (TextView) v.findViewById(R.id.email_received);
         TextView content = (TextView) v.findViewById(R.id.email_content);
@@ -114,13 +114,37 @@ public class ViewEmailFragment extends Fragment {
             if (email.isAnonymous() && !BoteHelper.isSentEmail(email))
                 sender.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
 
-            Address[] emailRecipients = email.getToAddresses();
-            if (emailRecipients != null) {
-                for (Address recipient : emailRecipients) {
+            Address[] emailToRecipients = email.getToAddresses();
+            if (emailToRecipients != null) {
+                for (Address recipient : emailToRecipients) {
                     TextView tv = new TextView(getActivity());
                     tv.setText(BoteHelper.getDisplayAddress(recipient.toString()));
                     tv.setTextAppearance(getActivity(), R.style.TextAppearance_AppCompat_Secondary);
-                    recipients.addView(tv);
+                    toRecipients.addView(tv);
+                }
+            }
+
+            Address[] emailCcRecipients = email.getCCAddresses();
+            if (emailCcRecipients != null) {
+                v.findViewById(R.id.email_cc_row).setVisibility(View.VISIBLE);
+                LinearLayout ccRecipients = (LinearLayout) v.findViewById(R.id.email_cc);
+                for (Address recipient : emailCcRecipients) {
+                    TextView tv = new TextView(getActivity());
+                    tv.setText(BoteHelper.getDisplayAddress(recipient.toString()));
+                    tv.setTextAppearance(getActivity(), R.style.TextAppearance_AppCompat_Secondary);
+                    ccRecipients.addView(tv);
+                }
+            }
+
+            Address[] emailBccRecipients = email.getBCCAddresses();
+            if (emailBccRecipients != null) {
+                v.findViewById(R.id.email_bcc_row).setVisibility(View.VISIBLE);
+                LinearLayout bccRecipients = (LinearLayout) v.findViewById(R.id.email_bcc);
+                for (Address recipient : emailBccRecipients) {
+                    TextView tv = new TextView(getActivity());
+                    tv.setText(BoteHelper.getDisplayAddress(recipient.toString()));
+                    tv.setTextAppearance(getActivity(), R.style.TextAppearance_AppCompat_Secondary);
+                    bccRecipients.addView(tv);
                 }
             }
 

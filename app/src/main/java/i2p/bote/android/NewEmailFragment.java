@@ -94,9 +94,13 @@ public class NewEmailFragment extends Fragment {
     Spinner mSpinner;
     int mDefaultPos;
     ArrayAdapter<Person> mAdapter;
-    ContactsCompletionView mRecipients;
+    ImageView mMore;
+    ContactsCompletionView mTo;
+    ContactsCompletionView mCc;
+    ContactsCompletionView mBcc;
     EditText mSubject;
     EditText mContent;
+    boolean mMoreVisible;
     boolean mDirty;
 
     public static NewEmailFragment newInstance(String quoteMsgFolder, String quoteMsgId,
@@ -127,7 +131,10 @@ public class NewEmailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mSpinner = (Spinner) view.findViewById(R.id.sender_spinner);
-        mRecipients = (ContactsCompletionView) view.findViewById(R.id.recipients);
+        mMore = (ImageView) view.findViewById(R.id.more);
+        mTo = (ContactsCompletionView) view.findViewById(R.id.to);
+        mCc = (ContactsCompletionView) view.findViewById(R.id.cc);
+        mBcc = (ContactsCompletionView) view.findViewById(R.id.bcc);
         mSubject = (EditText) view.findViewById(R.id.subject);
         mContent = (EditText) view.findViewById(R.id.message);
 
@@ -136,7 +143,8 @@ public class NewEmailFragment extends Fragment {
         QuoteMsgType quoteMsgType = (QuoteMsgType) getArguments().getSerializable(QUOTE_MSG_TYPE);
         boolean hide = I2PBote.getInstance().getConfiguration().getHideLocale();
 
-        List<Person> recipients = new ArrayList<Person>();
+        List<Person> toRecipients = new ArrayList<Person>();
+        List<Person> ccRecipients = new ArrayList<Person>();
         String origSubject = null;
         String origContent = null;
         String origFrom = null;
@@ -150,14 +158,15 @@ public class NewEmailFragment extends Fragment {
                 if (quoteMsgType == QuoteMsgType.REPLY) {
                     String recipient = BoteHelper.getNameAndDestination(
                             origEmail.getReplyAddress(I2PBote.getInstance().getIdentities()));
-                    recipients.add(extractPerson(recipient));
+                    toRecipients.add(extractPerson(recipient));
                 } else if (quoteMsgType == QuoteMsgType.REPLY_ALL) {
+                    // TODO split between To and Cc
                     // TODO don't include our address
                     // What happens if an email is received by multiple local identities?
                     for (Address address : origEmail.getAllAddresses(true)) {
                         Person person = extractPerson(address.toString());
                         if (person != null)
-                            recipients.add(person);
+                            toRecipients.add(person);
                     }
                 }
 
@@ -183,6 +192,19 @@ public class NewEmailFragment extends Fragment {
         IdentityAdapter identities = new IdentityAdapter(getActivity());
         mSpinner.setAdapter(identities);
         mSpinner.setSelection(mDefaultPos);
+
+        // Set up Cc/Bcc button
+        mMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCc.setVisibility(mMoreVisible ? View.GONE : View.VISIBLE);
+                mBcc.setVisibility(mMoreVisible ? View.GONE : View.VISIBLE);
+                mMore.setImageResource(mMoreVisible ?
+                        R.drawable.ic_unfold_more_grey600_24dp :
+                        R.drawable.ic_unfold_less_grey600_24dp);
+                mMoreVisible = !mMoreVisible;
+            }
+        });
 
         // Set up contacts auto-complete
         List<Person> contacts = new ArrayList<Person>();
@@ -227,9 +249,14 @@ public class NewEmailFragment extends Fragment {
             }
         };
 
-        mRecipients.setAdapter(mAdapter);
-        for (Person recipient : recipients) {
-            mRecipients.addObject(recipient);
+        mTo.setAdapter(mAdapter);
+        mCc.setAdapter(mAdapter);
+        mBcc.setAdapter(mAdapter);
+        for (Person recipient : toRecipients) {
+            mTo.addObject(recipient);
+        }
+        for (Person recipient : ccRecipients) {
+            mCc.addObject(recipient);
         }
 
         if (origSubject != null) {
@@ -261,7 +288,9 @@ public class NewEmailFragment extends Fragment {
         }
 
         if (savedInstanceState == null) {
-            mRecipients.setPrefix(getResources().getString(R.string.email_to) + " ");
+            mTo.setPrefix(getResources().getString(R.string.email_to) + " ");
+            mCc.setPrefix(getResources().getString(R.string.email_cc) + " ");
+            mBcc.setPrefix(getResources().getString(R.string.email_bcc) + " ");
         }
 
         TextWatcher dirtyWatcher = new TextWatcher() {
@@ -373,21 +402,33 @@ public class NewEmailFragment extends Fragment {
             // Bote versions to see a sender (and validate the signature).
             email.setSender(ia);
 
-            for (Object obj : mRecipients.getObjects()) {
+            for (Object obj : mTo.getObjects()) {
                 Person person = (Person) obj;
                 email.addRecipient(Message.RecipientType.TO, new InternetAddress(
                         person.getAddress(), person.getName()));
+            }
+            if (mMoreVisible) {
+                for (Object obj : mCc.getObjects()) {
+                    Person person = (Person) obj;
+                    email.addRecipient(Message.RecipientType.CC, new InternetAddress(
+                            person.getAddress(), person.getName()));
+                }
+                for (Object obj : mBcc.getObjects()) {
+                    Person person = (Person) obj;
+                    email.addRecipient(Message.RecipientType.BCC, new InternetAddress(
+                            person.getAddress(), person.getName()));
+                }
             }
 
             // Check that we have someone to send to
             Address[] rcpts = email.getAllRecipients();
             if (rcpts == null || rcpts.length == 0) {
                 // No recipients
-                mRecipients.setError(getActivity().getString(R.string.add_one_recipient));
-                mRecipients.requestFocus();
+                mTo.setError(getActivity().getString(R.string.add_one_recipient));
+                mTo.requestFocus();
                 return false;
             } else {
-                mRecipients.setError(null);
+                mTo.setError(null);
             }
 
             email.setSubject(mSubject.getText().toString(), "UTF-8");

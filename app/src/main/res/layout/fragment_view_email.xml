@@ -93,7 +93,51 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
                     <LinearLayout
-                        android:id="@+id/email_recipients"
+                        android:id="@+id/email_to"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/email_cc_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/email_cc"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
+
+                    <LinearLayout
+                        android:id="@+id/email_cc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/email_bcc_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/email_bcc"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
+
+                    <LinearLayout
+                        android:id="@+id/email_bcc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
