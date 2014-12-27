@@ -149,7 +149,7 @@
   <string name="connect_error_occurred">¡Oh querido/a! Bote no pudo conectar a la red.</string>
   <string name="this_is_the_error">Este es el error que sucedió:</string>
   <string name="most_errors_fixed_on_restart">Puede arreglar la mayoría de los problemas reiniciando Bote. Para hacer esto, vuelva a la página principal de Bote, luego haga clic en \"Desconectar de la red\" en el menú, y luego clic de nuevo en \"Conectar a la red\" en el menú.</string>
-  <string name="also_check_i2p_android">Si eso no ayuda, compruebe que I2P está ejecutándose. Puede ver el actual estado de I2P en el panel de notificación, o al abrir la aplicación I2P. Si no se está ejecutando adecuadamente, reinicie I2P (en la aplicación, haga clic en \"Detener\", y luego clic en \"Iniciar\" cuando aparezca). Espere a que I2P esté ejecutándose completamente, y luego inicie Bote.</string>
+  <string name="also_check_i2p_android">Si eso no ayuda, compruebe que I2P está ejecutándose. Puede ver el estado actual de I2P en la bandeja de notificación, o al abrir la aplicación I2P. Si no está ejecutándose adecuadamente, reinicie I2P (en la aplicación, haga clic en \"Detener\", y luego, cuando aparezca, clic en \"Iniciar\"). Espere a que I2P esté ejecutándose completamente, y luego inicie Bote.</string>
   <string name="bote_connection_error">Error de conexión de Bote</string>
   <string name="full_error_copied_to_clipboard">Error completo copiado al portapapeles</string>
   <string name="pref_title_general">General</string>

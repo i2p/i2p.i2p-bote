@@ -42,6 +42,7 @@
   <string name="action_settings">设置</string>
   <string name="check_email">检查邮件</string>
   <string name="checking_email">正在检查电子邮件…</string>
+  <string name="bote_needs_to_be_connected">Bote 需要连接到网络</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
     <item quantity="other">%d 封未完成的邮件</item>
@@ -143,6 +144,12 @@
   <string name="unreliable">不可靠</string>
   <string name="untested">未测试</string>
   <string name="banned_peers">已封禁节点:</string>
+  <string name="connect_error_occurred">噢亲爱的！Bote 无法连接到网络。</string>
+  <string name="this_is_the_error">这发生了错误：</string>
+  <string name="most_errors_fixed_on_restart">您可以通过重新启动 Bote 解决大多数问题。要尝试重启，请返回到 Bote 主页面，点击菜单中的“断开网络”，再点击“连接到网络”。</string>
+  <string name="also_check_i2p_android">如果这没有效果，请检查 I2P 是否正在运行。您可以在通知抽屉中看到 I2P 的连接状态，或者打开 I2P 应用查看也可以。如果它并未正常运行，重启 I2P（在应用中点击“停止”，然后等待并点击“开始”）。等待 I2P 完全运行，然后启动 Bote。</string>
+  <string name="bote_connection_error">Bote 连接出错</string>
+  <string name="full_error_copied_to_clipboard">完整的错误信息已复制到剪贴板</string>
   <string name="pref_title_general">常规</string>
   <string name="pref_summ_general">常规设置和默认身份设置</string>
   <string name="pref_title_autoMail">自动检查邮件</string>
@@ -183,6 +190,7 @@
   <string name="pref_title_identities">身份</string>
   <string name="new_identity">新建身份…</string>
   <string name="edit_identity">编辑身份</string>
+  <string name="title_new_identity">新建身份</string>
   <string name="public_name">公开名称</string>
   <string name="description">描述</string>
   <string name="default_identity">默认身份</string>
