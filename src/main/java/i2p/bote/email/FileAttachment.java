@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 
-import javax.activation.DataSource;
+import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.activation.MimetypesFileTypeMap;
 
@@ -40,18 +40,18 @@ public class FileAttachment implements Attachment {
     private String origFilename;
     private String tempFilename;
     private String mimeType;
-    private DataSource dataSource;
+    private DataHandler dataHandler;
 
     public FileAttachment(String origFilename, String tempFilename) {
         this.origFilename = origFilename;
         this.tempFilename = tempFilename;
         loadMimeType();
-        dataSource = new FileDataSource(tempFilename) {
+        dataHandler = new DataHandler(new FileDataSource(tempFilename) {
             @Override
             public String getContentType() {
                 return mimeType;
             }
-        };
+        });
     }
 
     /**
@@ -92,8 +92,8 @@ public class FileAttachment implements Attachment {
     }
 
     @Override
-    public DataSource getDataSource() {
-        return dataSource;
+    public DataHandler getDataHandler() {
+        return dataHandler;
     }
 
     @Override

@@ -48,7 +48,6 @@ import java.util.Properties;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.activation.DataHandler;
 import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Flags.Flag;
@@ -195,7 +194,7 @@ public class Email extends MimeMessage {
                     setHeader("Content-Transfer-Encoding", "binary");
                 }
             };
-            attachmentPart.setDataHandler(new DataHandler(attachment.getDataSource()));
+            attachmentPart.setDataHandler(attachment.getDataHandler());
             attachmentPart.setFileName(attachment.getFileName());
             multiPart.addBodyPart(attachmentPart);
         }

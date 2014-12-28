@@ -18,10 +18,10 @@
 
 package i2p.bote.email;
 
-import javax.activation.DataSource;
+import javax.activation.DataHandler;
 
 public interface Attachment {
     public String getFileName();
-    public DataSource getDataSource();
+    public DataHandler getDataHandler();
     public boolean clean();
 }
