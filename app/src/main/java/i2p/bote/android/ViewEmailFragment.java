@@ -20,11 +20,15 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
+import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
+import javax.mail.Part;
 
+import i2p.bote.Util;
 import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.ContentAttachment;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 
@@ -84,6 +88,7 @@ public class ViewEmailFragment extends Fragment {
         TextView sent = (TextView) v.findViewById(R.id.email_sent);
         TextView received = (TextView) v.findViewById(R.id.email_received);
         TextView content = (TextView) v.findViewById(R.id.email_content);
+        LinearLayout attachments = (LinearLayout) v.findViewById(R.id.attachments);
 
         try {
             String fromAddress = email.getOneFromAddress();
@@ -159,6 +164,19 @@ public class ViewEmailFragment extends Fragment {
             content.setText(email.getText());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                 content.setTextIsSelectable(true);
+
+            List<Part> parts = email.getParts();
+            for (int partIndex=0; partIndex < parts.size(); partIndex++) {
+                Part part = parts.get(partIndex);
+                if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
+                    ContentAttachment attachment = new ContentAttachment(part);
+                    final View a = getActivity().getLayoutInflater().inflate(R.layout.listitem_attachment, attachments, false);
+                    ((TextView)a.findViewById(R.id.filename)).setText(attachment.getFileName());
+                    ((TextView)a.findViewById(R.id.size)).setText(attachment.getHumanReadableSize(getActivity()));
+                    a.findViewById(R.id.remove_attachment).setVisibility(View.GONE);
+                    attachments.addView(a);
+                }
+            }
 
             // Prepare fields for replying
             mIsAnonymous = email.isAnonymous();

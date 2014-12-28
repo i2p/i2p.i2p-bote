@@ -68,6 +68,12 @@
             android:ems="10"
             android:hint="@string/compose_email"
             android:inputType="textMultiLine"/>
+
+        <LinearLayout
+            android:id="@+id/attachments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
     </LinearLayout>
 
 </ScrollView>

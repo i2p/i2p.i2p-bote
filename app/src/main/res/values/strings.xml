@@ -38,6 +38,11 @@
     <string name="log_out">Log out</string>
     <string name="touch_lock_to_log_in">Touch the lock icon to log in.</string>
     <string name="action_new_email">New email</string>
+    <string name="action_attach_file">Attach file</string>
+    <string name="select_attachment">Select a file to attach</string>
+    <string name="n_bytes" translatable="false">%s B</string>
+    <string name="n_kilobytes" translatable="false">%s KB</string>
+    <string name="n_megabytes" translatable="false">%s MB</string>
     <string name="action_send_email">Send email</string>
     <string name="action_start_bote">Connect to network</string>
     <string name="action_stop_bote">Disconnect from network</string>

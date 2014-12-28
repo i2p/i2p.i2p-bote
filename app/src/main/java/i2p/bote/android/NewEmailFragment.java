@@ -1,14 +1,20 @@
 package i2p.bote.android;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,6 +32,7 @@ import com.tokenautocomplete.FilteredArrayAdapter;
 
 import net.i2p.data.DataFormatException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -40,6 +48,7 @@ import javax.mail.internet.InternetAddress;
 import i2p.bote.I2PBote;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.ContactsCompletionView;
+import i2p.bote.android.util.ContentAttachment;
 import i2p.bote.android.util.Person;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
@@ -89,6 +98,8 @@ public class NewEmailFragment extends Fragment {
 
     public static final String QUOTE_MSG_TYPE = "type";
 
+    private static final int REQUEST_FILE = 1;
+
     private String mSenderKey;
 
     Spinner mSpinner;
@@ -100,6 +111,7 @@ public class NewEmailFragment extends Fragment {
     ContactsCompletionView mBcc;
     EditText mSubject;
     EditText mContent;
+    LinearLayout mAttachments;
     boolean mMoreVisible;
     boolean mDirty;
 
@@ -137,6 +149,7 @@ public class NewEmailFragment extends Fragment {
         mBcc = (ContactsCompletionView) view.findViewById(R.id.bcc);
         mSubject = (EditText) view.findViewById(R.id.subject);
         mContent = (EditText) view.findViewById(R.id.message);
+        mAttachments = (LinearLayout) view.findViewById(R.id.attachments);
 
         String quoteMsgFolder = getArguments().getString(QUOTE_MSG_FOLDER);
         String quoteMsgId = getArguments().getString(QUOTE_MSG_ID);
@@ -357,6 +370,10 @@ public class NewEmailFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_attach_file:
+                requestFile();
+                return true;
+
             case R.id.action_send_email:
                 if (sendEmail())
                     mCallbacks.onTaskFinished();
@@ -385,6 +402,64 @@ public class NewEmailFragment extends Fragment {
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void requestFile() {
+        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+        i.setType("*/*");
+        i.addCategory(Intent.CATEGORY_OPENABLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+            i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(
+                Intent.createChooser(i,
+                        getResources().getString(R.string.select_attachment)),
+                REQUEST_FILE);
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_CANCELED) {
+                System.out.println("Cancelled");
+            }
+            return;
+        }
+
+        switch (requestCode) {
+            case REQUEST_FILE:
+                addAttachment(data.getData());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 &&
+                        data.getClipData() != null) {
+                    ClipData clipData = data.getClipData();
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                        addAttachment(clipData.getItemAt(i).getUri());
+                    }
+                }
+                break;
+        }
+    }
+
+    private void addAttachment(Uri uri) {
+        // Try to create a ContentAttachment using the provided Uri.
+        try {
+            final ContentAttachment attachment = new ContentAttachment(getActivity().getContentResolver(), uri);
+            final View v = getActivity().getLayoutInflater().inflate(R.layout.listitem_attachment, mAttachments, false);
+            v.setTag(attachment);
+            ((TextView) v.findViewById(R.id.filename)).setText(attachment.getFileName());
+            ((TextView) v.findViewById(R.id.size)).setText(attachment.getHumanReadableSize(getActivity()));
+            v.findViewById(R.id.remove_attachment).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    attachment.clean();
+                    mAttachments.removeView(v);
+                }
+            });
+            mAttachments.addView(v);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e(Constants.ANDROID_LOG_TAG, "File not found: " + uri);
         }
     }
 
@@ -433,11 +508,25 @@ public class NewEmailFragment extends Fragment {
 
             email.setSubject(mSubject.getText().toString(), "UTF-8");
 
+            // Extract the attachments
+            List<Attachment> attachments = new ArrayList<Attachment>();
+            for (int i = 0; i < mAttachments.getChildCount(); i++) {
+                View v = mAttachments.getChildAt(i);
+                attachments.add((Attachment) v.getTag());
+            }
+
             // Set the text and add attachments
-            email.setContent(mContent.getText().toString(), (List<Attachment>) null);
+            email.setContent(mContent.getText().toString(), attachments);
 
             // Send the email
             I2PBote.getInstance().sendEmail(email);
+
+            // Clean up attachments
+            for (Attachment attachment : attachments) {
+                if (!attachment.clean())
+                    Log.e(Constants.ANDROID_LOG_TAG, "Can't clean up attachment: <" + attachment + ">");
+            }
+
             return true;
         } catch (PasswordException e) {
             // TODO Auto-generated catch block
