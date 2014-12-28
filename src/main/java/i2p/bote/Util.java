@@ -88,6 +88,10 @@ public class Util {
      * @throws MessagingException 
      * @throws IOException */
     public static String getHumanReadableSize(Part part) throws IOException, MessagingException {
+        return getHumanReadableSize(getPartSize(part));
+    }
+
+    public static long getPartSize(Part part) throws IOException, MessagingException {
         // find size in bytes
         InputStream inputStream = part.getInputStream();
         byte[] buffer = new byte[32*1024];
@@ -98,9 +102,8 @@ public class Util {
             if (bytesRead > 0)
                 totalBytes += bytesRead;
         } while (bytesRead > 0);
-        
-        // format to a string
-        return getHumanReadableSize(totalBytes);
+
+        return totalBytes;
     }
     
     private static String getHumanReadableSize(long numBytes) {
