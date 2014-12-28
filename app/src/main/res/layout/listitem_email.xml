@@ -71,8 +71,8 @@
 
     <ImageView
         android:id="@+id/email_attachment"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/listitem_icon_size"
+        android:layout_height="@dimen/listitem_icon_size"
         android:layout_alignBottom="@+id/email_subject"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -80,7 +80,7 @@
         android:layout_marginEnd="@dimen/listitem_horizontal_margin"
         android:layout_marginRight="@dimen/listitem_horizontal_margin"
         android:scaleType="fitEnd"
-        android:src="@drawable/ic_content_attachment"
+        android:src="@drawable/ic_attachment_grey600_24dp"
         android:visibility="gone" />
 
     <TextView
