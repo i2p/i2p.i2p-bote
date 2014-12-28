@@ -25,9 +25,9 @@ import static i2p.bote.Util._;
 import i2p.bote.I2PBote;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
+import i2p.bote.email.FileAttachment;
 import i2p.bote.fileencryption.PasswordException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,9 +94,8 @@ public class SendEmailTag extends BodyTagSupport {
                 
                 // delete attachment temp files
                 for (Attachment attachment: attachments) {
-                    File tempFile = new File(attachment.getTempFilename());
-                    if (!tempFile.delete())
-                        log.error("Can't delete file: <" + tempFile.getAbsolutePath() + ">");
+                    if (!attachment.clean())
+                        log.error("Can't clean up attachment: <" + attachment + ">");
                 }
                 
                 statusMessage = _("The email has been queued for sending.");
@@ -135,7 +134,7 @@ public class SendEmailTag extends BodyTagSupport {
     }
 
     void addAttachment(String origFilename, String tempFilename) {
-        attachments.add(new Attachment(origFilename, tempFilename));
+        attachments.add(new FileAttachment(origFilename, tempFilename));
     }
 
     public void setSubject(String subject) {

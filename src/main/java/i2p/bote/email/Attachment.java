@@ -1,8 +1,5 @@
 /**
- * Copyright (C) 2009  HungryHobo@mail.i2p
- * 
- * The GPG fingerprint for HungryHobo@mail.i2p is:
- * 6DD3 EAA2 9990 29BC 4AD2 7486 1E2C 7B61 76DC DC12
+ * Copyright (C) 2014  str4d@mail.i2p
  * 
  * This file is part of I2P-Bote.
  * I2P-Bote is free software: you can redistribute it and/or modify
@@ -21,16 +18,10 @@
 
 package i2p.bote.email;
 
-public class Attachment {
-    String origFilename;
-    String tempFilename;
-    
-    public Attachment(String origFilename, String tempFilename) {
-        this.origFilename = origFilename;
-        this.tempFilename = tempFilename;
-    }
-    
-    public String getTempFilename() {
-        return tempFilename;
-    }
+import javax.activation.DataSource;
+
+public interface Attachment {
+    public String getFileName();
+    public DataSource getDataSource();
+    public boolean clean();
 }

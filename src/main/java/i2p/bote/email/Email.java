@@ -30,15 +30,12 @@ import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
 import i2p.bote.packet.dht.UnencryptedEmailPacket;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URLConnection;
 import java.security.GeneralSecurityException;
 import java.security.PrivateKey;
 import java.util.ArrayList;
@@ -52,8 +49,6 @@ import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
-import javax.activation.MimetypesFileTypeMap;
 import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Flags.Flag;
@@ -193,8 +188,6 @@ public class Email extends MimeMessage {
      */
     private void attach(Multipart multiPart, List<Attachment> attachments) throws MessagingException {
         for (Attachment attachment: attachments) {
-            final String mimeType = getMimeType(attachment);
-            
             MimeBodyPart attachmentPart = new MimeBodyPart() {
                 @Override
                 public void updateHeaders() throws MessagingException {
@@ -202,49 +195,10 @@ public class Email extends MimeMessage {
                     setHeader("Content-Transfer-Encoding", "binary");
                 }
             };
-            FileDataSource dataSource = new FileDataSource(attachment.tempFilename) {
-                @Override
-                public String getContentType() {
-                    return mimeType;
-                }
-            };
-            attachmentPart.setDataHandler(new DataHandler(dataSource));
-            attachmentPart.setFileName(attachment.origFilename);
+            attachmentPart.setDataHandler(new DataHandler(attachment.getDataSource()));
+            attachmentPart.setFileName(attachment.getFileName());
             multiPart.addBodyPart(attachmentPart);
         }
-    }
-    
-    /**
-     * Returns the MIME type for an <code>Attachment</code>. MIME detection is done with
-     * JRE classes, so only a small number of MIME types are supported.<p/>
-     * It might be worthwhile to use the mime-util library which does a much better job:
-     * {@link http://sourceforge.net/projects/mime-util/files/}.
-     * @param attachment
-     */
-    private String getMimeType(Attachment attachment) {
-        MimetypesFileTypeMap mimeTypeMap = new MimetypesFileTypeMap();
-        String mimeType = mimeTypeMap.getContentType(attachment.origFilename);
-        if (mimeType != null)
-            return mimeType;
-        
-        InputStream inputStream = null;
-        try {
-            inputStream = new BufferedInputStream(new FileInputStream(attachment.tempFilename));
-            mimeType = URLConnection.guessContentTypeFromStream(inputStream);
-            if (mimeType != null)
-                return mimeType;
-        } catch (IOException e) {
-            log.error("Can't read file: <" + attachment.tempFilename + ">", e);
-        } finally {
-            try {
-                if (inputStream != null)
-                    inputStream.close();
-            } catch (IOException e) {
-                log.error("Can't close file: <" + attachment.tempFilename + ">", e);
-            }
-        }
-        
-        return "application/octet-stream";
     }
     
     public void setMetadata(EmailMetadata metadata) {
