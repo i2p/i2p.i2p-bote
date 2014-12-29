@@ -339,6 +339,10 @@ public class EmailListFragment extends AuthenticatedListFragment implements
                     for (int i = (toDelete.size() - 1); i >= 0; i--) {
                         if (toDelete.valueAt(i)) {
                             Email email = (Email) listView.getItemAtPosition(toDelete.keyAt(i));
+                            BoteHelper.revokeAttachmentUriPermissions(
+                                    getActivity(),
+                                    mFolder.getName(),
+                                    email);
                             // The Loader will update mAdapter
                             I2PBote.getInstance().deleteEmail(mFolder, email.getMessageID());
                         }

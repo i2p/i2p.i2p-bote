@@ -4,12 +4,14 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +31,10 @@ import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
+import javax.mail.Part;
 
 import i2p.bote.android.R;
+import i2p.bote.android.provider.AttachmentProvider;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailDestination;
 import i2p.bote.email.EmailIdentity;
@@ -414,5 +418,37 @@ public class BoteHelper extends GeneralHelper {
             builder.append(", ");
         }
         return builder.toString();
+    }
+
+    /**
+     * Attempt to revoke any URI permissions that were granted on an Email's attachments.
+     * This is best-effort; exceptions are silently ignored.
+     *
+     * @param context the Context in which permissions were granted
+     * @param folderName where the Email is
+     * @param email the Email to revoke permissions for
+     */
+    public static void revokeAttachmentUriPermissions(Context context, String folderName, Email email) {
+        List<Part> parts;
+        try {
+            parts = email.getParts();
+        } catch (Exception e) {
+            // Nothing we can do, abort
+            return;
+        }
+
+        for (Part part : parts) {
+            try {
+                if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
+                    Uri uri = AttachmentProvider.getUriForAttachment(folderName,
+                            email.getMessageID(), parts.indexOf(part));
+                    context.revokeUriPermission(uri,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION |
+                                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
+            } catch (MessagingException e) {
+                // Ignore and carry on
+            }
+        }
     }
 }

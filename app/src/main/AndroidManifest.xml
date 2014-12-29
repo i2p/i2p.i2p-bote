@@ -1,87 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="i2p.bote.android" >
+<manifest
+    package="i2p.bote.android"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.NFC"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Bote" >
-        <service android:name=".service.BoteService" />
+        android:theme="@style/Theme.Bote">
+        <service android:name=".service.BoteService"/>
 
         <activity
             android:name=".EmailListActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".intro.IntroActivity"
-            android:parentActivityName=".EmailListActivity" >
+            android:parentActivityName=".EmailListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.EmailListActivity" />
+                android:value="i2p.bote.android.EmailListActivity"/>
         </activity>
         <activity
             android:name=".intro.SetupActivity"
             android:label="@string/title_activity_setup"
-            android:parentActivityName=".EmailListActivity" >
+            android:parentActivityName=".EmailListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.EmailListActivity" />
+                android:value="i2p.bote.android.EmailListActivity"/>
         </activity>
         <activity
             android:name=".ViewEmailActivity"
-            android:parentActivityName=".EmailListActivity" >
+            android:parentActivityName=".EmailListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.EmailListActivity" />
+                android:value="i2p.bote.android.EmailListActivity"/>
         </activity>
         <activity
             android:name=".NewEmailActivity"
             android:label="@string/compose"
-            android:parentActivityName=".EmailListActivity" >
+            android:parentActivityName=".EmailListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.EmailListActivity" />
+                android:value="i2p.bote.android.EmailListActivity"/>
         </activity>
         <activity
             android:name=".addressbook.AddressBookActivity"
             android:label="@string/address_book"
-            android:parentActivityName=".EmailListActivity" >
+            android:parentActivityName=".EmailListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.EmailListActivity" />
+                android:value="i2p.bote.android.EmailListActivity"/>
         </activity>
         <activity
             android:name=".addressbook.ViewContactActivity"
-            android:parentActivityName=".addressbook.AddressBookActivity" >
+            android:parentActivityName=".addressbook.AddressBookActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.addressbook.AddressBookActivity" />
+                android:value="i2p.bote.android.addressbook.AddressBookActivity"/>
         </activity>
         <activity
             android:name=".addressbook.EditContactActivity"
             android:label="@string/action_new_contact"
-            android:parentActivityName=".addressbook.ViewContactActivity" >
+            android:parentActivityName=".addressbook.ViewContactActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.addressbook.ViewContactActivity" />
+                android:value="i2p.bote.android.addressbook.ViewContactActivity"/>
+
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="vnd.android.nfc"
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data
                     android:host="ext"
-                    android:pathPrefix="/i2p.bote:contact"/>
+                    android:pathPrefix="/i2p.bote:contact"
+                    android:scheme="vnd.android.nfc"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED"/>
@@ -90,49 +95,57 @@
         <activity
             android:name=".NetworkInfoActivity"
             android:label="@string/network_status"
-            android:parentActivityName=".EmailListActivity" >
+            android:parentActivityName=".EmailListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.EmailListActivity" />
+                android:value="i2p.bote.android.EmailListActivity"/>
         </activity>
         <activity
             android:name=".config.SettingsActivity"
             android:label="@string/action_settings"
-            android:parentActivityName=".EmailListActivity" >
+            android:parentActivityName=".EmailListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.EmailListActivity" />
+                android:value="i2p.bote.android.EmailListActivity"/>
         </activity>
         <activity
             android:name=".config.SetPasswordActivity"
             android:label="@string/pref_title_change_password"
-            android:parentActivityName=".config.SettingsActivity" >
+            android:parentActivityName=".config.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.config.SettingsActivity" />
+                android:value="i2p.bote.android.config.SettingsActivity"/>
         </activity>
         <activity
             android:name=".config.ViewIdentityActivity"
-            android:parentActivityName=".config.SettingsActivity" >
+            android:parentActivityName=".config.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.config.SettingsActivity" />
+                android:value="i2p.bote.android.config.SettingsActivity"/>
         </activity>
         <activity
             android:name=".config.EditIdentityActivity"
             android:label="@string/title_new_identity"
-            android:parentActivityName=".config.ViewIdentityActivity" >
+            android:parentActivityName=".config.ViewIdentityActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.config.ViewIdentityActivity" />
+                android:value="i2p.bote.android.config.ViewIdentityActivity"/>
         </activity>
         <activity
             android:name=".config.IdentityShipActivity"
-            android:parentActivityName=".config.SettingsActivity" >
+            android:parentActivityName=".config.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.config.SettingsActivity" />
+                android:value="i2p.bote.android.config.SettingsActivity"/>
         </activity>
+
+        <provider
+            android:name=".provider.AttachmentProvider"
+            android:authorities="${applicationId}.attachmentprovider"
+            android:enabled="true"
+            android:exported="false"
+            android:grantUriPermissions="true">
+        </provider>
     </application>
 
 </manifest>

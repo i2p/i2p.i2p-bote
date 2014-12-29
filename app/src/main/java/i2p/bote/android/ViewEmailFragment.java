@@ -26,6 +26,7 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.Part;
 
+import i2p.bote.android.provider.AttachmentProvider;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.ContentAttachment;
 import i2p.bote.email.Email;
@@ -168,15 +169,17 @@ public class ViewEmailFragment extends Fragment {
             for (int partIndex=0; partIndex < parts.size(); partIndex++) {
                 Part part = parts.get(partIndex);
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-                    ContentAttachment attachment = new ContentAttachment(part);
+                    ContentAttachment attachment = new ContentAttachment(getActivity(), part);
 
                     View a = getActivity().getLayoutInflater().inflate(R.layout.listitem_attachment, attachments, false);
                     ((TextView)a.findViewById(R.id.filename)).setText(attachment.getFileName());
-                    ((TextView)a.findViewById(R.id.size)).setText(attachment.getHumanReadableSize(getActivity()));
+                    ((TextView)a.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
                     a.findViewById(R.id.remove_attachment).setVisibility(View.GONE);
 
                     final Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(attachment.getUri());
+                    i.setData(AttachmentProvider.getUriForAttachment(mFolderName, mMessageId, partIndex));
+                    i.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION |
+                            Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                     a.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

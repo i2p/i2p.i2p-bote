@@ -4,12 +4,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
-import android.util.Log;
 
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,22 +19,19 @@ import javax.mail.MessagingException;
 import javax.mail.Part;
 
 import i2p.bote.Util;
-import i2p.bote.android.Constants;
 import i2p.bote.android.R;
 import i2p.bote.email.Attachment;
 
 public class ContentAttachment implements Attachment {
-    private ParcelFileDescriptor mAttachmentPFD;
+    private Context mCtx;
     private String mFileName;
     private long mSize;
     private DataHandler mDataHandler;
-    private Uri mUri;
 
-    public ContentAttachment(ContentResolver cr, Uri uri) throws FileNotFoundException {
-        // Get the content resolver instance for this context, and use it
-        // to get a ParcelFileDescriptor for the file.
-        mAttachmentPFD = cr.openFileDescriptor(uri, "r");
-        // If we get to here, the file exists
+    public ContentAttachment(Context context, final Uri uri) throws FileNotFoundException {
+        mCtx = context;
+        // Get the content resolver instance for this context
+        ContentResolver cr = context.getContentResolver();
 
         Cursor returnCursor = cr.query(
                 uri,
@@ -46,18 +39,19 @@ public class ContentAttachment implements Attachment {
                 null, null, null);
         int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
         int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
-        returnCursor.moveToFirst();
+
+        if (!returnCursor.moveToFirst())
+            throw new FileNotFoundException();
+
         mFileName = returnCursor.getString(nameIndex);
         mSize = returnCursor.getLong(sizeIndex);
         returnCursor.close();
 
-        // Get a regular file descriptor for the file
-        final FileDescriptor fd = mAttachmentPFD.getFileDescriptor();
         final String mimeType = cr.getType(uri);
         mDataHandler = new DataHandler(new DataSource() {
             @Override
             public InputStream getInputStream() throws IOException {
-                return new FileInputStream(fd);
+                return mCtx.getContentResolver().openInputStream(uri);
             }
 
             @Override
@@ -75,15 +69,14 @@ public class ContentAttachment implements Attachment {
                 return mFileName;
             }
         });
-        // mUri is not set here because uri is only usable by us.
-        // Viewing attachments is only allowed once the email has been created.
     }
 
-    public ContentAttachment(final Part part) throws IOException, MessagingException {
+    public ContentAttachment(Context context, Part part)
+            throws IOException, MessagingException {
+        mCtx = context;
         mFileName = part.getFileName();
         mSize = Util.getPartSize(part);
         mDataHandler = part.getDataHandler();
-        // TODO: Set mUri
     }
 
     @Override
@@ -95,7 +88,7 @@ public class ContentAttachment implements Attachment {
         return mSize;
     }
 
-    public String getHumanReadableSize(Context context) {
+    public String getHumanReadableSize() {
         int unit = (63-Long.numberOfLeadingZeros(mSize)) / 10;   // 0 if totalBytes<1K, 1 if 1K<=totalBytes<1M, etc.
         double value = (double)mSize / (1<<(10*unit));
         int formatStr;
@@ -109,7 +102,7 @@ public class ContentAttachment implements Attachment {
             formatter.setMaximumFractionDigits(1);
         else
             formatter.setMaximumFractionDigits(0);
-        return context.getString(formatStr, formatter.format(value));
+        return mCtx.getString(formatStr, formatter.format(value));
     }
 
     @Override
@@ -117,21 +110,8 @@ public class ContentAttachment implements Attachment {
         return mDataHandler;
     }
 
-    public Uri getUri() {
-        return mUri;
-    }
-
     @Override
     public boolean clean() {
-        if (mAttachmentPFD == null)
-            return true;
-
-        try {
-            mAttachmentPFD.close();
-            return true;
-        } catch (IOException e) {
-            Log.e(Constants.ANDROID_LOG_TAG, "Can't close ParcelFileDescriptor: <" + mFileName + ">", e);
-            return false;
-        }
+        return true;
     }
 }

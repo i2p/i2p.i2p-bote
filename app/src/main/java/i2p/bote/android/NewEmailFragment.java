@@ -444,11 +444,11 @@ public class NewEmailFragment extends Fragment {
     private void addAttachment(Uri uri) {
         // Try to create a ContentAttachment using the provided Uri.
         try {
-            final ContentAttachment attachment = new ContentAttachment(getActivity().getContentResolver(), uri);
+            final ContentAttachment attachment = new ContentAttachment(getActivity(), uri);
             final View v = getActivity().getLayoutInflater().inflate(R.layout.listitem_attachment, mAttachments, false);
             v.setTag(attachment);
             ((TextView) v.findViewById(R.id.filename)).setText(attachment.getFileName());
-            ((TextView) v.findViewById(R.id.size)).setText(attachment.getHumanReadableSize(getActivity()));
+            ((TextView) v.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
             v.findViewById(R.id.remove_attachment).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

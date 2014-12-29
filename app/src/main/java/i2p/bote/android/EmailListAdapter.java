@@ -117,8 +117,7 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
             List<Part> parts = email.getParts();
             for (Part part : parts) {
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-                    ((ImageView) v.findViewById(
-                            R.id.email_attachment)).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.email_attachment).setVisibility(View.VISIBLE);
                     break;
                 }
             }
