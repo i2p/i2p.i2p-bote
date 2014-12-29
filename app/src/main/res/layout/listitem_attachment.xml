@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/attachment_background"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="@dimen/listitem_icon_size"
+        android:layout_height="@dimen/listitem_icon_size"
+        android:src="@drawable/ic_attachment_grey600_24dp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/filename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="File name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
+
+        <TextView
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23.4 KB"
+            android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/remove_attachment"
+        android:layout_width="@dimen/listitem_picture_size"
+        android:layout_height="@dimen/listitem_picture_size"
+        android:scaleType="center"
+        android:src="@drawable/ic_clear_grey600_24dp"/>
+</LinearLayout>
