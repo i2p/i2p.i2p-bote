@@ -26,7 +26,6 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.Part;
 
-import i2p.bote.Util;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.ContentAttachment;
 import i2p.bote.email.Email;
@@ -170,10 +169,21 @@ public class ViewEmailFragment extends Fragment {
                 Part part = parts.get(partIndex);
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
                     ContentAttachment attachment = new ContentAttachment(part);
-                    final View a = getActivity().getLayoutInflater().inflate(R.layout.listitem_attachment, attachments, false);
+
+                    View a = getActivity().getLayoutInflater().inflate(R.layout.listitem_attachment, attachments, false);
                     ((TextView)a.findViewById(R.id.filename)).setText(attachment.getFileName());
                     ((TextView)a.findViewById(R.id.size)).setText(attachment.getHumanReadableSize(getActivity()));
                     a.findViewById(R.id.remove_attachment).setVisibility(View.GONE);
+
+                    final Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(attachment.getUri());
+                    a.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(i);
+                        }
+                    });
+
                     attachments.addView(a);
                 }
             }

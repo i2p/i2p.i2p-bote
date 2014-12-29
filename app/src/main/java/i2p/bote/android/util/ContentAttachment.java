@@ -32,6 +32,7 @@ public class ContentAttachment implements Attachment {
     private String mFileName;
     private long mSize;
     private DataHandler mDataHandler;
+    private Uri mUri;
 
     public ContentAttachment(ContentResolver cr, Uri uri) throws FileNotFoundException {
         // Get the content resolver instance for this context, and use it
@@ -74,12 +75,15 @@ public class ContentAttachment implements Attachment {
                 return mFileName;
             }
         });
+        // mUri is not set here because uri is only usable by us.
+        // Viewing attachments is only allowed once the email has been created.
     }
 
     public ContentAttachment(final Part part) throws IOException, MessagingException {
         mFileName = part.getFileName();
         mSize = Util.getPartSize(part);
         mDataHandler = part.getDataHandler();
+        // TODO: Set mUri
     }
 
     @Override
@@ -111,6 +115,10 @@ public class ContentAttachment implements Attachment {
     @Override
     public DataHandler getDataHandler() {
         return mDataHandler;
+    }
+
+    public Uri getUri() {
+        return mUri;
     }
 
     @Override
