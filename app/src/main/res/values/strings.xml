@@ -48,7 +48,7 @@
     <string name="action_stop_bote">Disconnect from network</string>
     <string name="action_settings">Settings</string>
     <string name="check_email">Check email</string>
-    <string name="checking_email">Checking email&#8230;</string>
+    <string name="checking_email">Checking email…</string>
     <string name="bote_needs_to_be_connected">Bote needs to be connected to the network</string>
     <!-- Argument is a number -->
     <plurals name="incomplete_emails">
@@ -91,11 +91,15 @@
 
     <string name="queued">Queued</string>
     <string name="sending">Sending</string>
-    <!-- Argument 1: how many recipients the email has been sent to so far.
-     Argument 2: the total number of recipients the email will be sent to. -->
+    <!--
+     Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.
+    -->
     <string name="sent_to_short">Sent %1$d of %2$d</string>
-    <!-- Argument 1: how many recipients the email has been sent to so far.
-     Argument 2: the total number of recipients the email will be sent to. -->
+    <!--
+     Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.
+    -->
     <string name="sent_to">Sent to %1$d out of %2$d recipients</string>
     <string name="email_sent">Email sent</string>
     <string name="gateway_disabled">Gateway disabled</string>
@@ -181,10 +185,12 @@
     <string name="pref_summ_sentTime">Include sent time in outgoing emails</string>
     <string name="pref_title_routing">Routing</string>
     <string name="pref_title_numSendHops">Sending hops</string>
+
     <plurals name="pref_summ_numHops">
         <item quantity="one">%s relay</item>
         <item quantity="other">%s relays</item>
     </plurals>
+
     <string name="pref_title_minDelay">Minimum delay per hop</string>
     <string name="pref_summ_minDelay">%s minutes</string>
     <string name="pref_title_maxDelay">Maximum delay per hop</string>
