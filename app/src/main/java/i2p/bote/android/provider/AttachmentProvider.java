@@ -69,19 +69,17 @@ public class AttachmentProvider extends ContentProvider {
 
         try {
             Part attachment = getAttachment(uri);
-            if (attachment != null) {
-                for (String col : projection) {
-                    switch (col) {
-                        case OpenableColumns.DISPLAY_NAME:
-                            b.add(attachment.getFileName());
-                            break;
-                        case OpenableColumns.SIZE:
-                            b.add(Util.getPartSize(attachment));
-                            break;
-                        default:
-                            b.add(null);
-                            break;
-                    }
+            if (attachment == null)
+                return null;
+
+            for (String col : projection) {
+                switch (col) {
+                    case OpenableColumns.DISPLAY_NAME:
+                        b.add(attachment.getFileName());
+                        break;
+                    case OpenableColumns.SIZE:
+                        b.add(Util.getPartSize(attachment));
+                        break;
                 }
             }
         } catch (PasswordException e) {
@@ -97,15 +95,11 @@ public class AttachmentProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        System.out.println("getType(): URI: " + uri);
-        System.out.println("Match: " + sUriMatcher.match(uri));
         if (sUriMatcher.match(uri) != UriMatcher.NO_MATCH) {
             try {
                 Part attachment = getAttachment(uri);
-                if (attachment != null) {
-                    System.out.println("Content type: " + attachment.getContentType());
+                if (attachment != null)
                     return attachment.getContentType();
-                }
             } catch (PasswordException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -178,8 +172,7 @@ public class AttachmentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // Copied from ContentProvider
-        return uri.buildUpon().appendPath("0").build();
+        return null;
     }
 
     @Override
