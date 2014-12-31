@@ -3,13 +3,14 @@ package i2p.bote.android;
 import android.content.Context;
 
 public class InitActivities {
-    private final Context ctx;
     private final String myDir;
 
     public InitActivities(Context c) {
-        ctx = c;
-        // This needs to be changed so that we can have an alternative place
-        myDir = c.getFilesDir().getAbsolutePath();
+        this(c.getFilesDir().getAbsolutePath());
+    }
+
+    public InitActivities(String i2pBaseDir) {
+        myDir = i2pBaseDir;
     }
 
     public void initialize() {
