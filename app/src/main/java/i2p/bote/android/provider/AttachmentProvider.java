@@ -98,8 +98,14 @@ public class AttachmentProvider extends ContentProvider {
         if (sUriMatcher.match(uri) != UriMatcher.NO_MATCH) {
             try {
                 Part attachment = getAttachment(uri);
-                if (attachment != null)
-                    return attachment.getContentType();
+                if (attachment != null) {
+                    String contentType = attachment.getContentType();
+                    // Remove any "; name=fileName" suffix
+                    int delim = contentType.indexOf(';');
+                    if (delim >= 0)
+                        contentType = contentType.substring(0, delim);
+                    return contentType;
+                }
             } catch (PasswordException e) {
                 e.printStackTrace();
             } catch (IOException e) {
