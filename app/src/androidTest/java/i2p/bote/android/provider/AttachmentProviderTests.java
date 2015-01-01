@@ -26,6 +26,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.Part;
 import javax.mail.internet.MimeBodyPart;
 
@@ -132,17 +134,40 @@ public class AttachmentProviderTests extends ProviderTestCase2<AttachmentProvide
     }
 
     private ContentAttachment createTextAttachment() throws Exception {
-        Part part = new MimeBodyPart(new ByteArrayInputStream("Test file content".getBytes()));
-        part.setFileName("test.txt");
-        return new ContentAttachment(getMockContext(), part);
+        return createAttachment("test.txt", "text/plain", "Test file content".getBytes());
     }
 
     private ContentAttachment createImageAttachment() throws Exception {
         Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.intro_1);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-        Part part = new MimeBodyPart(new ByteArrayInputStream(out.toByteArray()));
-        part.setFileName("intro_1.png");
+        return createAttachment("intro_1.png", "image/png", out.toByteArray());
+    }
+
+    private ContentAttachment createAttachment(final String fileName, final String mimeType, final byte[] content) throws Exception {
+        Part part = new MimeBodyPart();
+        part.setDataHandler(new DataHandler(new DataSource() {
+            @Override
+            public InputStream getInputStream() throws IOException {
+                return new ByteArrayInputStream(content);
+            }
+
+            @Override
+            public OutputStream getOutputStream() throws IOException {
+                throw new IOException("Cannot write to attachments");
+            }
+
+            @Override
+            public String getContentType() {
+                return mimeType;
+            }
+
+            @Override
+            public String getName() {
+                return fileName;
+            }
+        }));
+        part.setFileName(fileName);
         return new ContentAttachment(getMockContext(), part);
     }
 
