@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
@@ -30,6 +33,7 @@ import javax.mail.Part;
 import i2p.bote.android.provider.AttachmentProvider;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.ContentAttachment;
+import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 
@@ -61,7 +65,7 @@ public class ViewEmailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_view_email, container, false);
 
         try {
@@ -80,7 +84,7 @@ public class ViewEmailFragment extends Fragment {
         return v;
     }
 
-    private void displayEmail(final Email email, View v) {
+    private void displayEmail(Email email, View v) {
         View sigInvalid = v.findViewById(R.id.signature_invalid);
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
         ImageView picture = (ImageView) v.findViewById(R.id.picture);
@@ -167,18 +171,17 @@ public class ViewEmailFragment extends Fragment {
                 content.setTextIsSelectable(true);
 
             List<Part> parts = email.getParts();
-            for (int partIndex=0; partIndex < parts.size(); partIndex++) {
+            for (int partIndex = 0; partIndex < parts.size(); partIndex++) {
                 Part part = parts.get(partIndex);
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-                    ContentAttachment attachment = new ContentAttachment(getActivity(), part);
+                    final ContentAttachment attachment = new ContentAttachment(getActivity(), part);
 
                     View a = getActivity().getLayoutInflater().inflate(R.layout.listitem_attachment, attachments, false);
-                    ((TextView)a.findViewById(R.id.filename)).setText(attachment.getFileName());
-                    ((TextView)a.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
+                    ((TextView) a.findViewById(R.id.filename)).setText(attachment.getFileName());
+                    ((TextView) a.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
 
                     final ImageView action = (ImageView) a.findViewById(R.id.attachment_action);
                     action.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_more_vert_grey600_24dp));
-                    final int finalPartIndex = partIndex;
                     action.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -189,7 +192,7 @@ public class ViewEmailFragment extends Fragment {
                                 public boolean onMenuItemClick(MenuItem menuItem) {
                                     switch (menuItem.getItemId()) {
                                         case R.id.save_attachment:
-                                            saveAttachment(email, finalPartIndex);
+                                            saveAttachment(attachment);
                                             return true;
                                         default:
                                             return false;
@@ -238,14 +241,39 @@ public class ViewEmailFragment extends Fragment {
         }
     }
 
-    private void saveAttachment(Email email, int partNum) {
+    private void saveAttachment(Attachment attachment) {
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        String fileName = attachment.getFileName();
+        int extInd = fileName.lastIndexOf('.');
+        String name = fileName.substring(0, extInd);
+        String ext = fileName.substring(extInd);
+        File outFile = new File(downloadsDir, fileName);
+        for (int i = 1; outFile.exists() && i < 32; i++) {
+            fileName = name + "-" + i + ext;
+            outFile = new File(downloadsDir, fileName);
+        }
+        if (outFile.exists()) {
+            Toast.makeText(getActivity(), R.string.file_exists_in_downloads, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        FileOutputStream out = null;
         try {
-            Part attachment = email.getParts().get(partNum);
-            Toast.makeText(getActivity(), "Saving attachment " + attachment.getFileName(), Toast.LENGTH_SHORT).show();
-        } catch (MessagingException e) {
-            e.printStackTrace();
+            out = new FileOutputStream(outFile);
+            attachment.getDataHandler().writeTo(out);
+            Toast.makeText(getActivity(),
+                    getResources().getString(R.string.saved_to_downloads, fileName),
+                    Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(getActivity(), R.string.could_not_save_to_downloads, Toast.LENGTH_SHORT).show();
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                }
+            }
         }
     }
 

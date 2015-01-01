@@ -121,6 +121,9 @@
     <string name="reply_all">Reply all</string>
     <string name="forward">Forward</string>
     <string name="save">Save</string>
+    <string name="file_exists_in_downloads">File already exists in Downloads folder</string>
+    <string name="saved_to_downloads">%s saved to Downloads folder</string>
+    <string name="could_not_save_to_downloads">Could not save file to Downloads folder</string>
     <string name="compose">Compose</string>
     <string name="subject">Subject</string>
     <string name="compose_email">Compose email</string>
