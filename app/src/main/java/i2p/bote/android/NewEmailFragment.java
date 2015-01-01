@@ -449,7 +449,7 @@ public class NewEmailFragment extends Fragment {
             v.setTag(attachment);
             ((TextView) v.findViewById(R.id.filename)).setText(attachment.getFileName());
             ((TextView) v.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
-            v.findViewById(R.id.remove_attachment).setOnClickListener(new View.OnClickListener() {
+            v.findViewById(R.id.attachment_action).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     attachment.clean();

@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -79,7 +80,7 @@ public class ViewEmailFragment extends Fragment {
         return v;
     }
 
-    private void displayEmail(Email email, View v) {
+    private void displayEmail(final Email email, View v) {
         View sigInvalid = v.findViewById(R.id.signature_invalid);
         TextView subject = (TextView) v.findViewById(R.id.email_subject);
         ImageView picture = (ImageView) v.findViewById(R.id.picture);
@@ -174,7 +175,30 @@ public class ViewEmailFragment extends Fragment {
                     View a = getActivity().getLayoutInflater().inflate(R.layout.listitem_attachment, attachments, false);
                     ((TextView)a.findViewById(R.id.filename)).setText(attachment.getFileName());
                     ((TextView)a.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
-                    a.findViewById(R.id.remove_attachment).setVisibility(View.GONE);
+
+                    final ImageView action = (ImageView) a.findViewById(R.id.attachment_action);
+                    action.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_more_vert_grey600_24dp));
+                    final int finalPartIndex = partIndex;
+                    action.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            PopupMenu popup = new PopupMenu(getActivity(), action);
+                            popup.inflate(R.menu.attachment);
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem menuItem) {
+                                    switch (menuItem.getItemId()) {
+                                        case R.id.save_attachment:
+                                            saveAttachment(email, finalPartIndex);
+                                            return true;
+                                        default:
+                                            return false;
+                                    }
+                                }
+                            });
+                            popup.show();
+                        }
+                    });
 
                     final Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(AttachmentProvider.getUriForAttachment(mFolderName, mMessageId, partIndex));
@@ -211,6 +235,17 @@ public class ViewEmailFragment extends Fragment {
             ((TextView) v.findViewById(R.id.email_status)).setText(
                     BoteHelper.getEmailStatusText(getActivity(), email, true));
             v.findViewById(R.id.email_status_row).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void saveAttachment(Email email, int partNum) {
+        try {
+            Part attachment = email.getParts().get(partNum);
+            Toast.makeText(getActivity(), "Saving attachment " + attachment.getFileName(), Toast.LENGTH_SHORT).show();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

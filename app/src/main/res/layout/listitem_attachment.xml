@@ -37,7 +37,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/remove_attachment"
+        android:id="@+id/attachment_action"
         android:layout_width="@dimen/listitem_picture_size"
         android:layout_height="@dimen/listitem_picture_size"
         android:scaleType="center"

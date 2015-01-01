@@ -120,6 +120,7 @@
     <string name="reply">Reply</string>
     <string name="reply_all">Reply all</string>
     <string name="forward">Forward</string>
+    <string name="save">Save</string>
     <string name="compose">Compose</string>
     <string name="subject">Subject</string>
     <string name="compose_email">Compose email</string>
