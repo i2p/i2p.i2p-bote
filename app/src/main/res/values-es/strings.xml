@@ -99,6 +99,8 @@
   <string name="signature_invalid">Este correo no tiene una firma válida. Probablemente no fue enviado por %s.</string>
   <string name="email_from">Desde:</string>
   <string name="email_to">Hacia:</string>
+  <string name="email_cc">Cc:</string>
+  <string name="email_bcc">Cco:</string>
   <string name="label_sent">Enviado:</string>
   <string name="email_received">Recibido:</string>
   <string name="email_status">Estado:</string>

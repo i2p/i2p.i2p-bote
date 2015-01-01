@@ -101,6 +101,8 @@
   <string name="signature_invalid">Письмо имеет недействительную подпись. Вероятно, оно было отправлено не %s.</string>
   <string name="email_from">От:</string>
   <string name="email_to">Для:</string>
+  <string name="email_cc">Копия:</string>
+  <string name="email_bcc">Скрытая копия:</string>
   <string name="label_sent">Отправлено:</string>
   <string name="email_received">Получено:</string>
   <string name="email_status">Статус:</string>

@@ -97,6 +97,8 @@
   <string name="signature_invalid">此电子邮件没有一个有效的签名。它很可能不是由 %s 发送的。</string>
   <string name="email_from">从:</string>
   <string name="email_to">至:</string>
+  <string name="email_cc">抄送:</string>
+  <string name="email_bcc">密送:</string>
   <string name="label_sent">发送:</string>
   <string name="email_received">接收:</string>
   <string name="email_status">状态:</string>

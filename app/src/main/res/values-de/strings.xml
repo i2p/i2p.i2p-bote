@@ -99,6 +99,8 @@
   <string name="signature_invalid">Diese E-Mail hat keine gültige Signatur. Sie wurde wahrscheinlich nicht von %s gesendet.</string>
   <string name="email_from">Von:</string>
   <string name="email_to">An:</string>
+  <string name="email_cc">Kopie (CC):</string>
+  <string name="email_bcc">Blindkopie (BCC):</string>
   <string name="label_sent">Abgeschickt:</string>
   <string name="email_received">Erhalten:</string>
   <string name="email_status">Status:</string>
@@ -148,6 +150,8 @@
   <string name="banned_peers">Gebannte Peers:</string>
   <string name="connect_error_occurred">Oh je! Bote konnte nicht mit dem Netzwerk verbinden.</string>
   <string name="this_is_the_error">Dies ist der Fehler, der aufgetreten ist:</string>
+  <string name="most_errors_fixed_on_restart">Sie können die meisten Probleme mit einem Neustart von Bote beheben. Dazu müssen Sie zuück auf die Startseite von Bote, dann auf \"Disconnect from network\" im Menü klicken und dann wieder im Menü auf \"Connect to Network\" klicken.</string>
+  <string name="also_check_i2p_android">Wenn das nicht hilft, überprüfen sie, ob I2P läuft. Sie können den gegenwärtigen Status von I2P im notification drawer sehen oder indem Sie die I2P App öffen. Falls es nicht richtig läuft, starten Sie I2P neu (in der App \"Stop\" klicken und dann \"Start\" wenn es erscheint). Warten Sie, bis I2P vollständig läuft, dann starten Sie Bote.</string>
   <string name="bote_connection_error">Bote-Verbindungsfehler</string>
   <string name="full_error_copied_to_clipboard">Vollständiger Fehler in die Zwischenablage kopiert</string>
   <string name="pref_title_general">Allgemein</string>
