@@ -10,7 +10,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ProviderTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
-import android.util.Log;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,6 +33,7 @@ import javax.mail.internet.MimeBodyPart;
 import i2p.bote.I2PBote;
 import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
+import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.ContentAttachment;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
@@ -142,8 +142,8 @@ public class AttachmentProviderTests extends ProviderTestCase2<AttachmentProvide
         InputStream inOrig = attachment.getDataHandler().getInputStream();
         ByteArrayOutputStream outProv = new ByteArrayOutputStream();
         ByteArrayOutputStream outOrig = new ByteArrayOutputStream();
-        copyStream(inProv, outProv);
-        copyStream(inOrig, outOrig);
+        BoteHelper.copyStream(inProv, outProv);
+        BoteHelper.copyStream(inOrig, outOrig);
 
         assertThat("Provider content does not match original content",
                 outProv.toByteArray(), is(equalTo(outOrig.toByteArray())));
@@ -204,22 +204,5 @@ public class AttachmentProviderTests extends ProviderTestCase2<AttachmentProvide
     public void tearDown() throws Exception {
         super.tearDown();
         System.setProperty("i2pbote.initialized", "false");
-    }
-
-    private void copyStream(InputStream in, OutputStream out) {
-        byte[] buf = new byte[8192];
-        int len;
-
-        try {
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-
-            in.close();
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            Log.e(getClass().getSimpleName(), "Exception copying streams", e);
-        }
     }
 }

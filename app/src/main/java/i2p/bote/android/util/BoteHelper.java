@@ -13,6 +13,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +25,8 @@ import com.lambdaworks.codec.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -33,6 +36,7 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.Part;
 
+import i2p.bote.android.Constants;
 import i2p.bote.android.R;
 import i2p.bote.android.provider.AttachmentProvider;
 import i2p.bote.email.Email;
@@ -449,6 +453,23 @@ public class BoteHelper extends GeneralHelper {
             } catch (MessagingException e) {
                 // Ignore and carry on
             }
+        }
+    }
+
+    public static void copyStream(InputStream in, OutputStream out) {
+        byte[] buf = new byte[8192];
+        int len;
+
+        try {
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+
+            in.close();
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            Log.e(Constants.ANDROID_LOG_TAG, "Exception copying streams", e);
         }
     }
 }
