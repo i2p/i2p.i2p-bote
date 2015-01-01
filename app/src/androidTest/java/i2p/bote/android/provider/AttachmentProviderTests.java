@@ -104,6 +104,22 @@ public class AttachmentProviderTests extends ProviderTestCase2<AttachmentProvide
     }
 
     @Test
+    public void getTypeWithValidTextUri() throws Exception {
+        ContentAttachment attachment = createTextAttachment();
+        Uri uri = createEmailWithAttachment(attachment);
+        String type = getMockContentResolver().getType(uri);
+        assertThat("Type was not correct", type, is("text/plain"));
+    }
+
+    @Test
+    public void getTypeWithValidImageUri() throws Exception {
+        ContentAttachment attachment = createImageAttachment();
+        Uri uri = createEmailWithAttachment(attachment);
+        String type = getMockContentResolver().getType(uri);
+        assertThat("Type was not correct", type, is("image/png"));
+    }
+
+    @Test
     public void openFileWithValidTextUri() throws Exception {
         ContentAttachment attachment = createTextAttachment();
         Uri uri = createEmailWithAttachment(attachment);
