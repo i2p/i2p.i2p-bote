@@ -141,14 +141,12 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
                         getContext(), email, false));
                 emailStatus.setVisibility(View.VISIBLE);
             } else if (BoteHelper.isSentEmail(email)) {
-                if (email.isDelivered())
-                    emailStatus.setCompoundDrawablesWithIntrinsicBounds(
-                            getContext().getResources().getDrawable(
-                                    R.drawable.ic_navigation_accept),
-                            null, null, null);
-                else
+                if (email.isDelivered()) {
+                    v.findViewById(R.id.email_delivered).setVisibility(View.VISIBLE);
+                } else {
                     emailStatus.setText(email.getDeliveryPercentage() + "%");
-                emailStatus.setVisibility(View.VISIBLE);
+                    emailStatus.setVisibility(View.VISIBLE);
+                }
             }
         } catch (MessagingException e) {
             subject.setText("ERROR: " + e.getMessage());

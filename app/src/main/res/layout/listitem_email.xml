@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/listitem_height_three_lines"
     android:background="@drawable/listitem_checked">
@@ -13,7 +14,7 @@
         android:layout_marginStart="@dimen/listitem_horizontal_margin"
         android:layout_marginTop="4dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_contact_picture" />
+        android:src="@drawable/ic_contact_picture"/>
 
     <ImageView
         android:id="@+id/email_selected"
@@ -23,7 +24,7 @@
         android:layout_alignLeft="@+id/contact_picture"
         android:layout_alignStart="@+id/contact_picture"
         android:src="@drawable/ic_navigation_accept"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/email_subject"
@@ -34,12 +35,12 @@
         android:layout_marginLeft="@dimen/listitem_text_left_margin"
         android:layout_marginStart="@dimen/listitem_text_left_margin"
         android:layout_marginTop="12dp"
-        android:layout_toLeftOf="@+id/email_attachment"
-        android:layout_toStartOf="@+id/email_attachment"
+        android:layout_toLeftOf="@+id/email_sent"
+        android:layout_toStartOf="@+id/email_sent"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Email subject"
-        android:textAppearance="@style/TextAppearance.AppCompat.Primary" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
 
     <TextView
         android:id="@+id/email_address"
@@ -53,7 +54,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="From"
-        android:textAppearance="@style/TextAppearance.AppCompat.Secondary" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
     <TextView
         android:id="@+id/email_content"
@@ -62,26 +63,24 @@
         android:layout_alignLeft="@+id/email_subject"
         android:layout_alignStart="@+id/email_subject"
         android:layout_below="@+id/email_address"
-        android:layout_toLeftOf="@+id/email_sent"
-        android:layout_toStartOf="@+id/email_sent"
+        android:layout_toLeftOf="@+id/email_indicators"
+        android:layout_toStartOf="@+id/email_indicators"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Secondary" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
-    <ImageView
-        android:id="@+id/email_attachment"
-        android:layout_width="@dimen/listitem_icon_size"
-        android:layout_height="@dimen/listitem_icon_size"
-        android:layout_alignBottom="@+id/email_subject"
+    <TextView
+        android:id="@+id/email_sent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/email_subject"
         android:layout_marginEnd="@dimen/listitem_horizontal_margin"
         android:layout_marginRight="@dimen/listitem_horizontal_margin"
-        android:scaleType="fitEnd"
-        android:src="@drawable/ic_attachment_grey600_24dp"
-        android:visibility="gone" />
+        android:text="##:## XX"
+        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
     <TextView
         android:id="@+id/email_status"
@@ -93,18 +92,34 @@
         android:layout_alignTop="@+id/email_address"
         android:layout_marginEnd="@dimen/listitem_horizontal_margin"
         android:layout_marginRight="@dimen/listitem_horizontal_margin"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/email_sent"
+    <LinearLayout
+        android:id="@+id/email_indicators"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/email_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/email_content"
         android:layout_marginEnd="@dimen/listitem_horizontal_margin"
-        android:layout_marginRight="@dimen/listitem_horizontal_margin"
-        android:text="##:## XX"
-        android:textAppearance="@style/TextAppearance.AppCompat.Secondary" />
+        android:layout_marginRight="@dimen/listitem_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/email_attachment"
+            android:layout_width="@dimen/listitem_icon_size"
+            android:layout_height="match_parent"
+            android:scaleType="fitEnd"
+            android:src="@drawable/ic_attachment_grey600_24dp"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/email_delivered"
+            android:layout_width="@dimen/listitem_icon_size"
+            android:layout_height="match_parent"
+            android:scaleType="fitEnd"
+            android:src="@drawable/ic_beenhere_grey600_24dp"
+            android:visibility="gone"/>
+    </LinearLayout>
 
 </RelativeLayout>
