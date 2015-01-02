@@ -20,7 +20,7 @@
   <string name="please_finish_setup">Bitte schließen Sie die Einrichtung von Bote ab.</string>
   <string name="skip">Überspringen</string>
   <string name="set_password">Passwort festlegen</string>
-  <string name="setup_set_password_1">Sie können ein Passwort für Bote einstellen. Dies wird andere Nutzer davon abhalten, Ihre E-Mails zu lesen, und wird alle Dateien auf der Festplatte verschlüsseln.</string>
+  <string name="setup_set_password_1">Du kannst ein Passwort für Bote setzen. Dieses verhindert das andere User deine Emails lesen können und verschlüsselt alle Bote Dateien auf deinem Gerät.</string>
   <string name="setup_set_password_2">Wenn Sie ein Passwort einstellen, wird das automatische Prüfen auf neue E-Mails deaktiviert. Sie können E-Mails manuell abrufen, indem Sie den Posteingang herunterziehen, sobald Sie sich authentifiziert haben.  </string>
   <string name="setup_set_password_3">Wenn Sie jetzt kein Passwort einstellen, können Sie das auch später mit Hilfte des Einstellungsmenüs tun.</string>
   <string name="create_identity">Identität erstellen</string>
@@ -36,6 +36,8 @@
   <string name="log_out">Abmelden</string>
   <string name="touch_lock_to_log_in">Berühren Sie das Sperrsymbol, um sich anzumelden.</string>
   <string name="action_new_email">Neue E-Mail</string>
+  <string name="action_attach_file">Datei hinzufügen</string>
+  <string name="select_attachment">Datei zum Hinzufügen aussuchen</string>
   <string name="action_send_email">E-Mail senden</string>
   <string name="action_start_bote">Mit dem Netzwerk verbinden</string>
   <string name="action_stop_bote">Netzwerkverbindung trennen</string>
@@ -107,6 +109,10 @@
   <string name="reply">Antworten</string>
   <string name="reply_all">Allen antworten</string>
   <string name="forward">Weiterleiten</string>
+  <string name="save">Speichern</string>
+  <string name="file_exists_in_downloads">Datei existiert schon im Download Verzeichnis</string>
+  <string name="saved_to_downloads">%s im Download Verzeichnis gespeichert</string>
+  <string name="could_not_save_to_downloads">Konnte nicht ins Download Verzeichnis speichern</string>
   <string name="compose">Verfassen</string>
   <string name="subject">Betreff</string>
   <string name="compose_email">E-Mail verfassen</string>
@@ -120,6 +126,9 @@
   <string name="response_quote_wrote">%s schrieb:</string>
   <string name="address_book_empty">Adressbuch ist leer</string>
   <string name="share">Teilen</string>
+  <string name="address_info">Adressinformation</string>
+  <string name="copy">Kopieren</string>
+  <string name="fingerprint">Fingerprint</string>
   <string name="action_new_contact">Neuer Kontakt</string>
   <string name="action_scan_qr_code">QR-Code scannen</string>
   <string name="edit_contact">Kontakt bearbeiten</string>

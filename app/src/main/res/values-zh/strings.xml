@@ -124,6 +124,9 @@
   <string name="response_quote_wrote">%s 写道:</string>
   <string name="address_book_empty">通讯录是空的</string>
   <string name="share">分享</string>
+  <string name="address_info">地址信息</string>
+  <string name="copy">复制</string>
+  <string name="fingerprint">指纹</string>
   <string name="action_new_contact">新建联系人</string>
   <string name="action_scan_qr_code">扫描二维码</string>
   <string name="edit_contact">编辑联系人</string>

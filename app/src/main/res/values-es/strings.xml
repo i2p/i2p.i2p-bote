@@ -126,6 +126,9 @@
   <string name="response_quote_wrote">%s escribió:</string>
   <string name="address_book_empty">La libreta de direcciones está vacía</string>
   <string name="share">Compartir</string>
+  <string name="address_info">Información de la dirección</string>
+  <string name="copy">Copiar</string>
+  <string name="fingerprint">Huella de validación</string>
   <string name="action_new_contact">Nuevo contacto</string>
   <string name="action_scan_qr_code">Escanear código QR</string>
   <string name="edit_contact">Editar contacto</string>
