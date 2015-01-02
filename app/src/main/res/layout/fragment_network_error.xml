@@ -40,20 +40,13 @@
                 android:layout_weight="1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
-            <View
-                style="@style/Divider.Vertical"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"/>
-
-            <ImageView
+            <Button
                 android:id="@+id/copy_error"
-                android:layout_width="@dimen/listitem_picture_size"
-                android:layout_height="match_parent"
-                android:minHeight="@dimen/listitem_picture_size"
-                android:scaleType="center"
-                android:src="@drawable/ic_content_copy_grey600_24dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/copy"/>
         </LinearLayout>
 
         <TextView

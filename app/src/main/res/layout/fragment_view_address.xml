@@ -82,7 +82,7 @@
                     android:id="@+id/title_address_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address information"
+                    android:text="@string/address_info"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subject"/>
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Crypto implementation"
+                    android:text="@string/crypto_impl"
                     android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
 
                 <ImageView
@@ -115,19 +115,13 @@
                         android:text="Key"
                         android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
 
-                    <View
-                        style="@style/Divider.Vertical"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginStart="8dp"/>
-
-                    <ImageView
+                    <Button
                         android:id="@+id/copy_key"
-                        android:layout_width="@dimen/listitem_picture_size"
-                        android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:src="@drawable/ic_content_copy_grey600_24dp"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/copy"/>
                 </LinearLayout>
 
                 <TextView
@@ -135,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Fingerprint"
+                    android:text="@string/fingerprint"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subject"
                     android:visibility="gone"/>
 
@@ -144,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Fingerprint"
+                    android:text="@string/fingerprint"
                     android:textAppearance="@style/TextAppearance.AppCompat.Primary"
                     android:visibility="gone"/>
             </LinearLayout>
