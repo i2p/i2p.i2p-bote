@@ -7,8 +7,6 @@ Tasks:
 - Show logged-in status in persistent notification
 - Intro and setup
   - More layouts (tune for each screen size)
-  - Wording
-    <zzz> The only thing that sounded odd was talking about encryption "on-disk" which is very odd for a phone or tablet. I'd say "on your device" or something similar.
 - Subclass EmailListFragment for each default mailbox
 - Cache Identicons for speed
 - Refactor code

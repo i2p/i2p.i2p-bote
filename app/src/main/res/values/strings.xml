@@ -22,7 +22,7 @@
     <string name="please_finish_setup">Please finish setting up Bote.</string>
     <string name="skip">Skip</string>
     <string name="set_password">Set password</string>
-    <string name="setup_set_password_1">You can set a password for Bote. This will prevent other users from reading your emails, and will encrypt all files on-disk.</string>
+    <string name="setup_set_password_1">You can set a password for Bote. This will prevent other users from reading your emails, and will encrypt all Bote files on your device.</string>
     <string name="setup_set_password_2">If you set a password, automatic email checking will be disabled. You can manually check for emails once you have authenticated by pulling down on the Inbox.</string>
     <string name="setup_set_password_3">If you do not set a password now, you can do so later from the Settings menu.</string>
     <string name="create_identity">Create identity</string>
