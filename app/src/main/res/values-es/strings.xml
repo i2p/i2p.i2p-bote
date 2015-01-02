@@ -20,7 +20,7 @@
   <string name="please_finish_setup">Por favor termine de configurar Bote.</string>
   <string name="skip">Omitir</string>
   <string name="set_password">Establecer contraseña</string>
-  <string name="setup_set_password_1">Puede establecer una contraseña para Bote. Esto prevendrá que otros usuarios lean sus correos, y cifrará todos los ficheros en-el-disco.</string>
+  <string name="setup_set_password_1">Puede establecer una contraseña para Bote. Esto prevendrá que otros usuarios lean sus correos electrónicos, y cifrará todos los ficheros de Bote en su dispositivo.</string>
   <string name="setup_set_password_2">Si establece una contraseña, se deshabilitará la comprobación automática de correo electrónico. Una vez se haya autentificado, podrá comprobar correos manualmente descargándolos de la Bandeja de Entrada.</string>
   <string name="setup_set_password_3">Si no establece una contraseña ahora, puede hacerlo más tarde desde el menú Configuraciones.</string>
   <string name="create_identity">Crear identidad</string>
@@ -36,6 +36,8 @@
   <string name="log_out">Cerrar sesión</string>
   <string name="touch_lock_to_log_in">Pulse el icono del candado para iniciar sesión.</string>
   <string name="action_new_email">Nuevo correo electrónico</string>
+  <string name="action_attach_file">Adjuntar fichero</string>
+  <string name="select_attachment">Seleccionar un fichero a adjuntar</string>
   <string name="action_send_email">Enviar correo electrónico</string>
   <string name="action_start_bote">Conectar a la red</string>
   <string name="action_stop_bote">Desconectar de la red</string>
@@ -107,6 +109,10 @@
   <string name="reply">Responder</string>
   <string name="reply_all">Responder todos</string>
   <string name="forward">Reenviar</string>
+  <string name="save">Guardar</string>
+  <string name="file_exists_in_downloads">El fichero ya existe en la carpeta de descargas</string>
+  <string name="saved_to_downloads">%s guardado en la carpeta de descargas</string>
+  <string name="could_not_save_to_downloads">No se pudo guardar fichero en la carpeta de descargas</string>
   <string name="compose">Componer</string>
   <string name="subject">Asunto</string>
   <string name="compose_email">Componer correo</string>

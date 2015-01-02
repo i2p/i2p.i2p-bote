@@ -20,7 +20,7 @@
   <string name="please_finish_setup">请完成设置 Bote 的步骤。</string>
   <string name="skip">跳过</string>
   <string name="set_password">设置密码</string>
-  <string name="setup_set_password_1">您可以为 Bote 设置一个密码。这将保护并避免其他用户阅读您的邮件，通过加密在磁盘上的所有文件。</string>
+  <string name="setup_set_password_1">您可以为 Bote 设置一个密码。这可以避免其他用户阅读您的邮件，并将加密您的设备上所有的 Bote 文件。</string>
   <string name="setup_set_password_2">如果您设置了一个密码，自动邮件检查将被禁用。您可以在每次通过验证到达收件箱后手动检查一次邮件。</string>
   <string name="setup_set_password_3">如果您不在现在设置密码，您也可以以后再从“设置”菜单中进行设置。</string>
   <string name="create_identity">创建身份</string>
@@ -36,6 +36,8 @@
   <string name="log_out">注销</string>
   <string name="touch_lock_to_log_in">触摸锁图标登录。</string>
   <string name="action_new_email">新建邮件</string>
+  <string name="action_attach_file">附加文件</string>
+  <string name="select_attachment">请选择要附加的文件</string>
   <string name="action_send_email">发送邮件</string>
   <string name="action_start_bote">连接到网络</string>
   <string name="action_stop_bote">断开网络</string>
@@ -105,6 +107,10 @@
   <string name="reply">回复</string>
   <string name="reply_all">全部回复</string>
   <string name="forward">转发</string>
+  <string name="save">保存</string>
+  <string name="file_exists_in_downloads">文件已存在于下载文件夹中</string>
+  <string name="saved_to_downloads">%s 已保存到下载文件夹</string>
+  <string name="could_not_save_to_downloads">无法保存文件到下载文件夹</string>
   <string name="compose">撰写</string>
   <string name="subject">主题</string>
   <string name="compose_email">撰写邮件</string>
