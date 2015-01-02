@@ -141,7 +141,6 @@
     <string name="address_book_empty">Address book is empty</string>
     <string name="share">Share</string>
     <string name="address_info">Address information</string>
-    <string name="crypto_impl">Crypto implementation</string>
     <string name="copy">Copy</string>
     <string name="fingerprint">Fingerprint</string>
     <string name="action_new_contact">New contact</string>
