@@ -34,7 +34,7 @@
 
             <ImageView
                 android:id="@+id/more"
-                android:layout_width="@dimen/listitem_picture_size"
+                android:layout_width="@dimen/listitem_icon_size"
                 android:layout_height="@dimen/listitem_picture_size"
                 android:layout_gravity="center_vertical"
                 android:scaleType="center"
