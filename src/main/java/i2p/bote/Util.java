@@ -93,15 +93,25 @@ public class Util {
 
     public static long getPartSize(Part part) throws IOException, MessagingException {
         // find size in bytes
-        InputStream inputStream = part.getInputStream();
-        byte[] buffer = new byte[32*1024];
         long totalBytes = 0;
-        int bytesRead;
-        do {
-            bytesRead = inputStream.read(buffer, 0, buffer.length);
-            if (bytesRead > 0)
-                totalBytes += bytesRead;
-        } while (bytesRead > 0);
+        InputStream inputStream = null;
+        try {
+            inputStream = part.getInputStream();
+            byte[] buffer = new byte[32 * 1024];
+            int bytesRead;
+            do {
+                bytesRead = inputStream.read(buffer, 0, buffer.length);
+                if (bytesRead > 0)
+                    totalBytes += bytesRead;
+            } while (bytesRead > 0);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                }
+            }
+        }
 
         return totalBytes;
     }
