@@ -2,7 +2,13 @@ package i2p.bote.android;
 
 import android.content.Context;
 
+import java.security.Security;
+
 public class InitActivities {
+    static {
+        Security.insertProviderAt(new org.spongycastle.jce.provider.BouncyCastleProvider(), 1);
+    }
+
     private final String myDir;
 
     public InitActivities(Context c) {

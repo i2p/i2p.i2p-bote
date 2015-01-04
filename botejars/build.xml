@@ -89,6 +89,7 @@
         <jar destfile="${jar.libs.dir}/i2pbote.jar" >
             <!-- remove classes that are overridden or stubbed out -->
             <zipfileset src="${botelib}/i2pbote.jar" >
+                <exclude name="i2p/bote/crypto/ECUtils.class" />
                 <exclude name="i2p/bote/imap/" />
                 <exclude name="i2p/bote/service/seedless/" />
                 <exclude name="i2p/bote/smtp/" />
@@ -106,7 +107,6 @@
         <!-- bote deps -->
         <copy todir="${jar.libs.dir}">
             <fileset dir="${botelib}">
-                <include name="bcprov-ecc-jdk16-146.jar" />
                 <!-- Regular JavaMail currently doesn't work on Android
                 <include name="mailapi.jar" />-->
                 <include name="lzma-9.20.jar" />

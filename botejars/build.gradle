@@ -9,7 +9,6 @@ task buildJars(type: Exec) {
 
 artifacts {
     'default' file: file('libs/router.jar'), builtBy: buildJars
-    'default' file: file('libs/bcprov-ecc-jdk16-146.jar'), builtBy: buildJars
     'default' file: file('libs/flexi-gmss-1.7p1.jar'), builtBy: buildJars
     'default' file: file('libs/lzma-9.20.jar'), builtBy: buildJars
     'default' file: file('libs/ntruenc-1.2.jar'), builtBy: buildJars
