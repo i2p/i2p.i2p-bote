@@ -90,7 +90,6 @@
             <!-- remove classes that are overridden or stubbed out -->
             <zipfileset src="${botelib}/i2pbote.jar" >
                 <exclude name="i2p/bote/imap/" />
-                <exclude name="i2p/bote/service/UpdateChecker.class" />
                 <exclude name="i2p/bote/service/seedless/" />
                 <exclude name="i2p/bote/smtp/" />
             </zipfileset>
