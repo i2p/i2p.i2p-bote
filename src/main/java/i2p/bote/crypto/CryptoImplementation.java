@@ -27,7 +27,6 @@ import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import org.bouncycastle.crypto.InvalidCipherTextException;
 
 /**
  * Interface for all encryption/signature algorithm combinations supported by
@@ -134,7 +133,7 @@ public interface CryptoImplementation {
     byte[] encrypt(byte[] data, PublicKey key) throws GeneralSecurityException;
     
     /** This method takes a public key in addition to the private key because some algorithms need the public key for decryption. */
-    byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws GeneralSecurityException, InvalidCipherTextException;
+    byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws GeneralSecurityException;
     
     /**
      * @param data

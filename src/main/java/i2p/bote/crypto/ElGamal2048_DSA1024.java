@@ -49,7 +49,10 @@ import net.i2p.data.Signature;
  * Uses the I2P crypto routines.
  */
 public class ElGamal2048_DSA1024 extends AbstractCryptoImplementation {
-    
+    public ElGamal2048_DSA1024() throws GeneralSecurityException {
+        super();
+    }
+
     @Override
     public String getName() {
         return Util._("2048-bit ElGamal Encryption");

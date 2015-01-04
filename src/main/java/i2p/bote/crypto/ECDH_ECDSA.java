@@ -28,36 +28,25 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.GeneralSecurityException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.Key;
+import java.security.KeyFactory;
 import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.SignatureException;
+import java.security.Signature;
 import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
+import java.security.spec.ECParameterSpec;
 import java.security.spec.ECPrivateKeySpec;
 import java.security.spec.ECPublicKeySpec;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.util.Arrays;
 
+import javax.crypto.KeyAgreement;
 import net.i2p.data.Base64;
 import net.i2p.util.Log;
-
-import org.bouncycastle.asn1.nist.NISTNamedCurves;
-import org.bouncycastle.asn1.x9.X9ECParameters;
-import org.bouncycastle.crypto.InvalidCipherTextException;
-import org.bouncycastle.jce.provider.asymmetric.ec.KeyAgreement;
-import org.bouncycastle.jce.provider.asymmetric.ec.KeyFactory;
-import org.bouncycastle.jce.provider.asymmetric.ec.KeyPairGenerator;
-import org.bouncycastle.jce.provider.asymmetric.ec.Signature.ecDSA256;
-import org.bouncycastle.jce.provider.asymmetric.ec.Signature.ecDSA512;
-import org.bouncycastle.jce.spec.ECNamedCurveSpec;
 
 /**
  * Abstract base class for ECC (ECDH and ECDSA).
@@ -78,35 +67,45 @@ import org.bouncycastle.jce.spec.ECNamedCurveSpec;
  */
 public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
     private static final int IV_SIZE = 16;   // length of the AES initialization vector
-    
+
     protected int keyLengthBytes;
-    protected ECNamedCurveSpec ecParameterSpec;
-    private KeyPairGenerator.ECDH encryptionKeyPairGenerator;
-    private KeyPairGenerator.ECDSA signingKeyPairGenerator;
-    private BouncyECDHKeyFactory ecdhKeyFactory;
-    private BouncyECDSAKeyFactory ecdsaKeyFactory;
+    protected ECParameterSpec ecParameterSpec;
+    private KeyPairGenerator encryptionKeyPairGenerator;
+    private KeyPairGenerator signingKeyPairGenerator;
+    private KeyFactory ecdhKeyFactory;
+    private KeyFactory ecdsaKeyFactory;
+    private Signature signatureAlg;
+    private Signature altSignatureAlg;
     private Log log = new Log(ECDH_ECDSA.class);
-    
+
     /**
      * 
      * @param curveName
+     * @param bcCurveName
+     * @param sigName
      * @param keyLengthBytes Length of a byte array encoding of one (public or private) key
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidAlgorithmParameterException
+     * @throws GeneralSecurityException
      */
-    ECDH_ECDSA(String curveName, int keyLengthBytes) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        X9ECParameters params = NISTNamedCurves.getByName(curveName);
-        ecParameterSpec = new ECNamedCurveSpec(curveName, params.getCurve(), params.getG(), params.getN(), params.getH(), null);
+    ECDH_ECDSA(String curveName, String sigName, int keyLengthBytes) throws GeneralSecurityException {
+        super();
+
+        ecParameterSpec = ECUtils.getParameters(curveName);
+
+        signatureAlg = Signature.getInstance(sigName);
+        // Backwards-compatibility with old ECDSA-521 signatures that used SHA-256
+        if ("P-521".equals(curveName))
+            altSignatureAlg = Signature.getInstance("SHA256withECDSA");
+
         this.keyLengthBytes = keyLengthBytes;
-        
-        encryptionKeyPairGenerator = new KeyPairGenerator.ECDH();
-        encryptionKeyPairGenerator.initialize(ecParameterSpec);
-        
-        signingKeyPairGenerator = new KeyPairGenerator.ECDSA();
-        signingKeyPairGenerator.initialize(ecParameterSpec);
-        
-        ecdhKeyFactory = new BouncyECDHKeyFactory();
-        ecdsaKeyFactory = new BouncyECDSAKeyFactory();
+
+        encryptionKeyPairGenerator = KeyPairGenerator.getInstance("ECDH");
+        encryptionKeyPairGenerator.initialize(ecParameterSpec, appContext.random());
+
+        signingKeyPairGenerator = KeyPairGenerator.getInstance("ECDSA");
+        signingKeyPairGenerator.initialize(ecParameterSpec, appContext.random());
+
+        ecdhKeyFactory = KeyFactory.getInstance("ECDH");
+        ecdsaKeyFactory = KeyFactory.getInstance("ECDSA");
     }
     
     @Override
@@ -288,14 +287,13 @@ public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
      *   <li/>Use that secret as a key to encrypt the message with AES.<br/>
      *   <li/>Return the encrypted message and the ephemeral public key generated in step 1.<br/>
      * </ol>
-     * @throws InvalidKeyException 
-     * @throws NoSuchAlgorithmException 
+     * @throws GeneralSecurityException
      */
     @Override
-    public byte[] encrypt(byte[] data, PublicKey encryptionKey) throws InvalidKeyException, NoSuchAlgorithmException {
+    public byte[] encrypt(byte[] data, PublicKey encryptionKey) throws GeneralSecurityException {
         // generate an ephemeral EC key and a shared secret
         KeyPair ephKeyPair = encryptionKeyPairGenerator.generateKeyPair();
-        ECDHKeyAgreement keyAgreement = new ECDHKeyAgreement();
+        KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
         keyAgreement.init(ephKeyPair.getPrivate());
         keyAgreement.doPhase(encryptionKey, true);
         byte[] sharedSecret = keyAgreement.generateSecret();
@@ -328,13 +326,10 @@ public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
      *   <li/>Use that secret as a key to decrypt the message with AES.<br/>
      * </ol>
      * The public key is not used.
-     * @throws NoSuchAlgorithmException 
-     * @throws InvalidKeyException 
-     * @throws InvalidKeySpecException 
-     * @throws InvalidCipherTextException 
+     * @throws GeneralSecurityException
      */
     @Override
-    public byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, InvalidCipherTextException {
+    public byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws GeneralSecurityException {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
         try {
             // read the ephemeral public key
@@ -344,7 +339,7 @@ public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
             PublicKey ephPublicKey = ecdhKeyFactory.generatePublic(ephPublicKeySpec);
         
             // reconstruct the shared secret
-            ECDHKeyAgreement keyAgreement = new ECDHKeyAgreement();
+            KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
             keyAgreement.init(privateKey);
             keyAgreement.doPhase(ephPublicKey, true);
             byte[] sharedSecret = keyAgreement.generateSecret();
@@ -366,144 +361,32 @@ public abstract class ECDH_ECDSA extends AbstractCryptoImplementation {
     }
 
     protected abstract ECPublicKeySpec createPublicKeySpec(byte[] encodedKey) throws InvalidKeySpecException, NoSuchAlgorithmException;
-    
+
     @Override
-    public byte[] sign(byte[] data, PrivateKey privateKey, KeyUpdateHandler keyupdateHandler) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-//        BouncyECDSASignerSHA512 signatureAlg = new BouncyECDSASignerSHA512();
-        BouncyECDSASigner signatureAlg = getSigner();
+    public byte[] sign(byte[] data, PrivateKey privateKey, KeyUpdateHandler keyupdateHandler) throws GeneralSecurityException {
         signatureAlg.initSign(privateKey);
         signatureAlg.update(data);
         byte[] signature = signatureAlg.sign();
-        
+
         return signature;
     }
 
-    /** Returns the signature algorithm to use for signing (not verifying!). */
-    protected abstract BouncyECDSASigner getSigner();
-    
     /**
-     * Returns <code>true</code> if the signature is valid either for ECDSA with SHA-256 or
-     * ECDSA with SHA-512. This will change in a future version; ECDSA-521 will be SHA-512 only.
+     * @return <code>true</code> if the signature is valid.
      */
     @Override
-    public boolean verify(byte[] data, byte[] signature, PublicKey key) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException {
-        BouncyECDSASigner[] signatureAlgs = new BouncyECDSASigner[] {new BouncyECDSASignerSHA512(), new BouncyECDSASignerSHA256()};
-        for (BouncyECDSASigner signatureAlg: signatureAlgs) {
-            signatureAlg.initVerify(key);
-            signatureAlg.update(data);
-            boolean valid = signatureAlg.verify(signature);
-            if (valid)
-                return true;
+    public boolean verify(byte[] data, byte[] signature, PublicKey key) throws GeneralSecurityException {
+        signatureAlg.initVerify(key);
+        signatureAlg.update(data);
+        boolean valid = signatureAlg.verify(signature);
+
+        // Backwards-compatibility with old ECDSA-521 signatures that used SHA-256
+        if (!valid && altSignatureAlg != null) {
+            altSignatureAlg.initVerify(key);
+            altSignatureAlg.update(data);
+            valid = altSignatureAlg.verify(signature);
         }
-        return false;
-    }
-    
-    /** This class exposes the protected <code>engine*</code> methods in {@link KeyAgreement.DH} */
-    private class ECDHKeyAgreement extends KeyAgreement.DH {
-        
-        public void init(Key key) throws InvalidKeyException {
-            engineInit(key, appContext.random());
-        }
-        
-        public void doPhase(Key key, boolean lastPhase) throws InvalidKeyException, IllegalStateException {
-            engineDoPhase(key, lastPhase);
-        }
-        
-        public byte[] generateSecret() {
-            return engineGenerateSecret();
-        }
-    }
-    
-    /** This class exposes the protected <code>engine*</code> methods in {@link KeyFactory.ECDH} */
-    @SuppressWarnings("unchecked")   // this eliminates a warning in the ant build caused by org.bouncycastle.jce.provider.asymmetric.ec.KeyFactory.engineGetKeySpec(java.security.Key,java.lang.Class)
-    private class BouncyECDHKeyFactory extends KeyFactory.ECDH {
-        
-        public PublicKey generatePublic(KeySpec keySpec) throws InvalidKeySpecException {
-            return engineGeneratePublic(keySpec);
-        }
-        
-        public PrivateKey generatePrivate(KeySpec keySpec) throws InvalidKeySpecException {
-            return engineGeneratePrivate(keySpec);
-        }
-    }
-    
-    /** This class exposes the protected <code>engine*</code> methods in {@link KeyFactory.ECDSA} */
-    @SuppressWarnings("unchecked")   // this eliminates a warning in the ant build caused by org.bouncycastle.jce.provider.asymmetric.ec.KeyFactory.engineGetKeySpec(java.security.Key,java.lang.Class)
-    private class BouncyECDSAKeyFactory extends KeyFactory.ECDSA {
-        
-        public PublicKey generatePublic(KeySpec keySpec) throws InvalidKeySpecException {
-            return engineGeneratePublic(keySpec);
-        }
-        
-        public PrivateKey generatePrivate(KeySpec keySpec) throws InvalidKeySpecException {
-            return engineGeneratePrivate(keySpec);
-        }
-    }
-    
-    protected interface BouncyECDSASigner {
-        
-        void initSign(PrivateKey privateKey) throws InvalidKeyException;
-        
-        void initVerify(PublicKey publicKey) throws InvalidKeyException;
-        
-        void update(byte[] data) throws SignatureException;
-        
-        byte[] sign() throws SignatureException;
-        
-        boolean verify(byte[] signature) throws SignatureException;
-    }
-    
-    /**
-     * This class exposes the protected <code>engine*</code> methods in {@link ecDSA256}
-     * which implements ECDSA with SHA-256.
-     */
-    protected class BouncyECDSASignerSHA256 extends ecDSA256 implements BouncyECDSASigner {
-        
-        public final void initSign(PrivateKey privateKey) throws InvalidKeyException {
-            engineInitSign(privateKey);
-        }
-        
-        public final void initVerify(PublicKey publicKey) throws InvalidKeyException {
-            engineInitVerify(publicKey);
-        }
-        
-        public final void update(byte[] data) throws SignatureException {
-            engineUpdate(data, 0, data.length);
-        }
-        
-        public final byte[] sign() throws SignatureException {
-            return engineSign();
-        }
-        
-        public final boolean verify(byte[] signature) throws SignatureException {
-            return engineVerify(signature);
-        }
-    }
-    
-    /**
-     * This class exposes the protected <code>engine*</code> methods in {@link ecDSA512}
-     * which implements ECDSA with SHA-512.
-     */
-    protected class BouncyECDSASignerSHA512 extends ecDSA512 implements BouncyECDSASigner {
-        
-        public final void initSign(PrivateKey privateKey) throws InvalidKeyException {
-            engineInitSign(privateKey);
-        }
-        
-        public final void initVerify(PublicKey publicKey) throws InvalidKeyException {
-            engineInitVerify(publicKey);
-        }
-        
-        public final void update(byte[] data) throws SignatureException {
-            engineUpdate(data, 0, data.length);
-        }
-        
-        public final byte[] sign() throws SignatureException {
-            return engineSign();
-        }
-        
-        public final boolean verify(byte[] signature) throws SignatureException {
-            return engineVerify(signature);
-        }
+
+        return valid;
     }
 }

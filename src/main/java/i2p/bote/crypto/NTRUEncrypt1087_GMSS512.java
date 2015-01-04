@@ -31,20 +31,16 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyException;
 import java.security.KeyPair;
 import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
 
-import net.i2p.I2PAppContext;
 import net.i2p.data.Base64;
 import net.sf.ntru.encrypt.EncryptionKeyPair;
 import net.sf.ntru.encrypt.EncryptionParameters;
 import net.sf.ntru.encrypt.EncryptionPrivateKey;
 import net.sf.ntru.encrypt.EncryptionPublicKey;
 import net.sf.ntru.encrypt.NtruEncrypt;
-
-import org.bouncycastle.crypto.InvalidCipherTextException;
 
 import de.flexiprovider.api.exceptions.InvalidKeySpecException;
 import de.flexiprovider.api.keys.KeySpec;
@@ -103,13 +99,13 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
     private static final int PRIVATE_SIGNING_KEY_BYTES = 57180 + 4 + 14400;   // ASN1-encoded private key + 4 length bytes + padding
     private static final int ENCRYPTED_LENGTH_BYTES = PUBLIC_ENCRYPTION_KEY_BYTES;   // length of an NTRU-encrypted message (no AES)
     private static final int BLOCK_SIZE = 16;   // length of the AES initialization vector; also the AES block size for padding. Not to be confused with the AES key size.
-    
-    private I2PAppContext appContext;
+
     private GMSSKeyFactory gmssKeyFactory;
     private NtruEncrypt ntruEngine;
 
-    public NTRUEncrypt1087_GMSS512() {
-        appContext = I2PAppContext.getGlobalContext();
+    public NTRUEncrypt1087_GMSS512() throws GeneralSecurityException {
+        super();
+
         gmssKeyFactory = new GMSSKeyFactory();
         ntruEngine = new NtruEncrypt(NTRUENCRYPT_PARAMETERS);
     }
@@ -222,10 +218,10 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
 
     /**
      * Only accepts <code>NtruEncrypt1087PublicKey</code>s. 
-     * @throws NoSuchAlgorithmException
+     * @throws GeneralSecurityException
      */
     @Override
-    public byte[] encrypt(byte[] data, PublicKey key) throws NoSuchAlgorithmException {
+    public byte[] encrypt(byte[] data, PublicKey key) throws GeneralSecurityException {
         byte[] symmKey = new byte[32];
         appContext.random().nextBytes(symmKey);
         
@@ -252,11 +248,10 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
 
     /**
      * Only accepts <code>NtruEncrypt1087PublicKey</code>s and <code>Ntru1087PrivateKey</code>s.
-     * @throws NoSuchAlgorithmException 
-     * @throws InvalidCipherTextException 
+     * @throws GeneralSecurityException
      */
     @Override
-    public byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidCipherTextException {
+    public byte[] decrypt(byte[] data, PublicKey publicKey, PrivateKey privateKey) throws GeneralSecurityException {
         if (data == null)
             return null;
         

@@ -21,27 +21,31 @@
 
 package i2p.bote.crypto;
 
-import java.util.Arrays;
+import java.security.GeneralSecurityException;
+
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import net.i2p.I2PAppContext;
-import net.i2p.data.SessionKey;
-import net.i2p.util.Log;
-
-import org.bouncycastle.crypto.InvalidCipherTextException;
-import org.bouncycastle.crypto.paddings.PKCS7Padding;
 
 /**
  * Implements {@link #toByteArray(PublicKeyPair)} and {@link #toByteArray(PrivateKeyPair)},
  * and provides methods for AES encryption and decryption.
  */
 public abstract class AbstractCryptoImplementation implements CryptoImplementation {
-    private static final int BLOCK_SIZE = 16;   // the AES block size for padding. Not to be confused with the AES key size.
-    
     protected I2PAppContext appContext;
-    private Log log = new Log(AbstractCryptoImplementation.class);
-    
-    protected AbstractCryptoImplementation() {
+    private Cipher aesCipher;
+
+    protected AbstractCryptoImplementation() throws GeneralSecurityException {
         appContext = I2PAppContext.getGlobalContext();
+        try {
+            aesCipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+        } catch (NoSuchPaddingException e) {
+            // SUN provider incorrectly calls it PKCS5Padding
+            aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        }
     }
     
     /** This implementation returns the whole set of Base64 characters. */
@@ -72,34 +76,27 @@ public abstract class AbstractCryptoImplementation implements CryptoImplementati
         return encodedKeys;
     }
 
-    protected byte[] encryptAes(byte[] data, byte[] key, byte[] iv) {
-        // pad the data
-        int unpaddedLength = data.length;
-        data = Arrays.copyOf(data, unpaddedLength + BLOCK_SIZE - unpaddedLength%BLOCK_SIZE);  // make data.length a multiple of BLOCK_SIZE; if the length is a multiple of BLOCK_LENGTH, add a block of zeros
-        PKCS7Padding padding = new PKCS7Padding();
-        int numAdded = padding.addPadding(data, unpaddedLength);
-        if (log.shouldLog(Log.DEBUG) && numAdded != BLOCK_SIZE-unpaddedLength%BLOCK_SIZE)
-            log.error("Error: " + numAdded + " pad bytes added, expected: " + (BLOCK_SIZE-unpaddedLength%BLOCK_SIZE));
+    protected byte[] encryptAes(byte[] data, byte[] key, byte[] iv) throws GeneralSecurityException {
+        SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+        IvParameterSpec ivps = new IvParameterSpec(iv, 0, 16);
+        aesCipher.init(Cipher.ENCRYPT_MODE, keySpec, ivps, appContext.random());
 
-        byte[] encryptedData = new byte[data.length];
-        SessionKey sessionKey = new SessionKey(key);
-        appContext.aes().encrypt(data, 0, encryptedData, 0, sessionKey, iv, data.length);   // this method also checks that data.length is divisible by 16
-        return encryptedData;
+        byte[] encryptedData = new byte[aesCipher.getOutputSize(data.length)];
+        int encLen = aesCipher.doFinal(data, 0, data.length, encryptedData, 0);
+        byte[] ret = new byte[encLen];
+        System.arraycopy(encryptedData, 0, ret, 0, encLen);
+        return ret;
     }
     
-    protected byte[] decryptAes(byte[] data, byte[] key, byte[] iv) throws InvalidCipherTextException {
-        SessionKey sessionKey = new SessionKey(key);
-        byte[] decryptedData = new byte[data.length];
-        if (data.length%BLOCK_SIZE != 0)
-            log.error("Length of encrypted data is not divisible by " + BLOCK_SIZE + ". Length=" + decryptedData.length);
-        appContext.aes().decrypt(data, 0, decryptedData, 0, sessionKey, iv, data.length);
-        
-        // unpad the decrypted data
-        byte[] lastBlock = Arrays.copyOfRange(decryptedData, decryptedData.length-iv.length, decryptedData.length);
-        PKCS7Padding padding = new PKCS7Padding();
-        int padCount = padding.padCount(lastBlock);
-        decryptedData = Arrays.copyOf(decryptedData, decryptedData.length-padCount);
-        
-        return decryptedData;
+    protected byte[] decryptAes(byte[] data, byte[] key, byte[] iv) throws GeneralSecurityException {
+        SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+        IvParameterSpec ivps = new IvParameterSpec(iv, 0, 16);
+        aesCipher.init(Cipher.DECRYPT_MODE, keySpec, ivps, appContext.random());
+
+        byte[] decryptedData = new byte[aesCipher.getOutputSize(data.length)];
+        int decLen = aesCipher.doFinal(data, 0, data.length, decryptedData, 0);
+        byte[] ret = new byte[decLen];
+        System.arraycopy(decryptedData, 0, ret, 0, decLen);
+        return ret;
     }
 }

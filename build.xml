@@ -74,7 +74,7 @@
         <pathelement location="${i2plib}/jstl.jar" />
         <pathelement location="${i2plib}/standard.jar" />
         <pathelement location="${lib}/mailapi.jar" />
-        <pathelement location="${lib}/bcprov-ecc-jdk16-146.jar" />
+        <pathelement location="${lib}/bcprov-jdk15on-151.jar" />
         <pathelement location="${lib}/ntruenc-1.2.jar" />
         <pathelement location="${lib}/scrypt-1.4.0.jar" />
         <pathelement location="${lib}/lzma-9.20.jar" />
@@ -185,7 +185,7 @@
             <webinf dir="src/main/webapp/WEB-INF/tlds" includes="*.tld"/>
             <lib file="${lib}/i2pbote.jar"/>
             <lib file="${lib}/mailapi.jar"/>
-            <lib file="${lib}/bcprov-ecc-jdk16-146.jar"/>
+            <lib file="${lib}/bcprov-jdk15on-151.jar"/>
             <lib file="${lib}/ntruenc-1.2.jar"/>
             <lib file="${lib}/scrypt-1.4.0.jar"/>
             <lib file="${lib}/lzma-9.20.jar"/>
@@ -253,8 +253,9 @@
             <arg value="--no-gzip"/>
             <arg value="--effort=9"/>
             <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/bcprov-ecc-jdk16-146.jar.pack"/>
-            <arg value="${lib}/bcprov-ecc-jdk16-146.jar"/>
+            <arg value="--segment-limit=-1"/>
+            <arg value="plugin/plugin.tmp/lib/bcprov-jdk15on-151.jar.pack"/>
+            <arg value="${lib}/bcprov-jdk15on-151.jar"/>
         </exec>
         <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
@@ -411,7 +412,7 @@
         <copy file="plugin/webapps.config" todir="${i2pinstallerplugindir}/console"/>
         <copy file="${lib}/i2pbote.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/mailapi.jar" todir="${i2pinstallerplugindir}/lib"/>
-        <copy file="${lib}/bcprov-ecc-jdk16-146.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/bcprov-jdk15on-151.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/ntruenc-1.2.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/scrypt-1.4.0.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/lzma-9.20.jar" todir="${i2pinstallerplugindir}/lib"/>

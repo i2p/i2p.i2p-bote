@@ -590,8 +590,7 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
 
 6.2. Included .jar files and third-party source code
 
-  bcprov-ecc-jdk16-146.jar   A stripped down version of the BouncyCastle library,
-                             containing only the classes needed for ECC.
+  bcprov-jdk15on-151.jar     The BouncyCastle library and SecurityProvider.
   mailapi.jar                Part of JavaMail 1.5.1
   lzma-9.20.jar              An LZMA implementation from http://www.7-zip.org/sdk.html
   ntruenc-1.2.jar            An NTRU implementation from http://sf.net/projects/ntru/

@@ -24,7 +24,6 @@ package i2p.bote.crypto;
 import i2p.bote.Util;
 
 import java.security.GeneralSecurityException;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.interfaces.ECPublicKey;
@@ -35,13 +34,10 @@ import java.util.Arrays;
 
 import net.i2p.data.Base64;
 
-import org.bouncycastle.jce.ECPointUtil;
-import org.bouncycastle.jce.provider.asymmetric.ec.EC5Util;
-
 public class ECDH256_ECDSA256 extends ECDH_ECDSA {
 
-    public ECDH256_ECDSA256() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        super("P-256", 33);   // Use the NIST P-256 curve, also known as secp256r1
+    public ECDH256_ECDSA256() throws GeneralSecurityException {
+        super("P-256", "SHA256withECDSA", 33);   // Use the NIST P-256 curve, also known as secp256r1
     }
     
     @Override
@@ -72,13 +68,13 @@ public class ECDH256_ECDSA256 extends ECDH_ECDSA {
     @Override
     protected byte[] toByteArray(PublicKey key) {
         ECPublicKey ecKey = castToEcKey(key);
-        return EC5Util.convertPoint(ecKey.getParams(), ecKey.getW(), true).getEncoded();
+        return ECUtils.encodePoint(ecKey.getParams(), ecKey.getW(), true);
     }
     
     @Override
     protected ECPublicKeySpec createPublicKeySpec(byte[] encodedKey) throws InvalidKeySpecException, NoSuchAlgorithmException {
         // decompress into an EC point
-        ECPoint w = ECPointUtil.decodePoint(ecParameterSpec.getCurve(), encodedKey);
+        ECPoint w = ECUtils.decodePoint(ecParameterSpec.getCurve(), encodedKey);
         
         // make a public key from the public point w
         ECPublicKeySpec publicKeySpec = new ECPublicKeySpec(w, ecParameterSpec);
@@ -97,10 +93,5 @@ public class ECDH256_ECDSA256 extends ECDH_ECDSA {
         byte[] bytes = Arrays.copyOf(encrKeyBytes, encrKeyBytes.length + sigKeyBytes.length);
         System.arraycopy(sigKeyBytes, 0, bytes, encrKeyBytes.length, sigKeyBytes.length);
         return createPrivateKeyPair(bytes);
-    }
-    
-    @Override
-    protected BouncyECDSASigner getSigner() {
-        return new BouncyECDSASignerSHA256();
     }
 }

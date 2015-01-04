@@ -24,7 +24,6 @@ package i2p.bote.crypto;
 import i2p.bote.Util;
 
 import java.security.GeneralSecurityException;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.interfaces.ECPublicKey;
@@ -36,17 +35,14 @@ import java.util.Arrays;
 import net.i2p.data.Base64;
 import net.i2p.util.Log;
 
-import org.bouncycastle.jce.ECPointUtil;
-import org.bouncycastle.jce.provider.asymmetric.ec.EC5Util;
-
 /**
  * TODO document the 66-byte format
  */
 public class ECDH521_ECDSA521 extends ECDH_ECDSA {
     private Log log = new Log(ECDH521_ECDSA521.class);
 
-    public ECDH521_ECDSA521() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        super("P-521", 66);   // Use the NIST P-521 curve, also known as secp521r1
+    public ECDH521_ECDSA521() throws GeneralSecurityException {
+        super("P-521", "SHA512withECDSA", 66);   // Use the NIST P-521 curve, also known as secp521r1
     }
     
     @Override
@@ -72,7 +68,7 @@ public class ECDH521_ECDSA521 extends ECDH_ECDSA {
     @Override
     protected byte[] toByteArray(PublicKey key) {
         ECPublicKey ecKey = castToEcKey(key);
-        byte[] bouncyCompressedKey = EC5Util.convertPoint(ecKey.getParams(), ecKey.getW(), true).getEncoded();
+        byte[] bouncyCompressedKey = ECUtils.encodePoint(ecKey.getParams(), ecKey.getW(), true);
         
         // shorten by one byte (bouncyCompressedKey[0] is either 2 or 3, bouncyCompressedKey[1] is either 0 or 1, so they can fit in two bits)
         if (bouncyCompressedKey[0]!=2 && bouncyCompressedKey[0]!=3)
@@ -93,7 +89,7 @@ public class ECDH521_ECDSA521 extends ECDH_ECDSA {
         bouncyCompressedKey[0] = (byte)((bouncyCompressedKey[1] >> 1) + 2);
         bouncyCompressedKey[1] &= 1;
         // decompress into an EC point
-        ECPoint w = ECPointUtil.decodePoint(ecParameterSpec.getCurve(), bouncyCompressedKey);
+        ECPoint w = ECUtils.decodePoint(ecParameterSpec.getCurve(), bouncyCompressedKey);
         
         // make a public key from the public point w
         ECPublicKeySpec publicKeySpec = new ECPublicKeySpec(w, ecParameterSpec);
@@ -107,10 +103,5 @@ public class ECDH521_ECDSA521 extends ECDH_ECDSA {
         base64 = "A" + base64.substring(0, base64PrivateKeyLength) + "A" + base64.substring(base64PrivateKeyLength);
         byte[] bytes = Base64.decode(base64);
         return createPrivateKeyPair(bytes);
-    }
-    
-    @Override
-    protected BouncyECDSASigner getSigner() {
-        return new BouncyECDSASignerSHA512();
     }
 }

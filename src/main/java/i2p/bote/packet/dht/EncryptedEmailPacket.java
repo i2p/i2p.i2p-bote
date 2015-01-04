@@ -35,8 +35,6 @@ import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 
-import org.bouncycastle.crypto.InvalidCipherTextException;
-
 import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Hash;
 import net.i2p.util.Log;
@@ -159,7 +157,7 @@ public class EncryptedEmailPacket extends DhtStorablePacket {
      * @throws GeneralSecurityException 
      * @throws InvalidCipherTextException 
      */
-    public UnencryptedEmailPacket decrypt(EmailIdentity identity) throws GeneralSecurityException, InvalidCipherTextException {
+    public UnencryptedEmailPacket decrypt(EmailIdentity identity) throws GeneralSecurityException {
         if (cryptoImpl != identity.getCryptoImpl())
             throw new IllegalArgumentException("CryptoImplementations don't match. Email Packet: <" + cryptoImpl.getName() + ">, Email Identity: <" + identity.getCryptoImpl().getName() + ">.");
         
