@@ -388,6 +388,7 @@ public abstract class ViewAddressFragment extends Fragment {
                     public void onAnimationEnd(Animator animation) {
                         ViewHelper.setAlpha(mAddressQrCode, 1f);
                         mExpandedQrCode.setVisibility(View.GONE);
+                        mExpandedQrCode.setClickable(false);
                         mQrCodeAnimator = null;
                     }
 
@@ -395,6 +396,7 @@ public abstract class ViewAddressFragment extends Fragment {
                     public void onAnimationCancel(Animator animation) {
                         ViewHelper.setAlpha(mAddressQrCode, 1f);
                         mExpandedQrCode.setVisibility(View.GONE);
+                        mExpandedQrCode.setClickable(false);
                         mQrCodeAnimator = null;
                     }
                 });
