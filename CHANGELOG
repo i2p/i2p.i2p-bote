@@ -2,7 +2,8 @@
  * Attachments!
  * Email content can be seleted/copied (API 11+)
  * Cc: and Bcc: fields
- * Bug fixes, translation updates
+ * Much better support for legacy devices
+ * UI improvements, bug fixes, translation updates
 
 0.4 / 2014-12-19 / fdc9c619eff53745d49c987b353ce5b04278dfd6
  * New email notifications!
