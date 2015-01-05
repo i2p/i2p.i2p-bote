@@ -20,7 +20,7 @@
   <string name="please_finish_setup">Veuillez terminer de configurer Bote.</string>
   <string name="skip">Sauter</string>
   <string name="set_password">Définir mot de passe</string>
-  <string name="setup_set_password_1">Vous pouvez mettre un mot de passe à Bote. Ceci empêchera d\'autres utilisateurs de lire vos courriers électroniques et cryptera sur le disque tous les fichiers.</string>
+  <string name="setup_set_password_1">Vous pouvez mettre un mot de passe à Bote. Ceci empêchera d\'autres utilisateurs de lire vos courriers électroniques, et chiffrera tous les fichiers de Bote sur votre dispositif.</string>
   <string name="setup_set_password_2">Si vous mettez un mot de passe, la vérification automatique de courrier électronique sera mise hors service. Vous pouvez vérifier manuellement  les courriers électroniques une fois que vous vous êtes authentifié en tirant vers le bas la boîte de réception.</string>
   <string name="setup_set_password_3">Si vous ne mettez pas de mot de passe maintenant, vous pourrez le faire plus tard depuis le menu Paramètres.</string>
   <string name="create_identity">Créer une identité</string>
@@ -36,6 +36,8 @@
   <string name="log_out">Se déconnecter</string>
   <string name="touch_lock_to_log_in">Touchez l\'icône de verrouillage pour vous connecter.</string>
   <string name="action_new_email">Nouvel email</string>
+  <string name="action_attach_file">Attacher fichier</string>
+  <string name="select_attachment">Sélectionner le fichier à attacher</string>
   <string name="action_send_email">Envoyer email</string>
   <string name="action_start_bote">Connecter au réseau</string>
   <string name="action_stop_bote">Déconnecter du réseau</string>
@@ -99,12 +101,18 @@
   <string name="signature_invalid">Cet email n\'a pas de signature valide. Il n\'a probablement pas été envoyé par %s.</string>
   <string name="email_from">De :</string>
   <string name="email_to">À :</string>
+  <string name="email_cc">CC:</string>
+  <string name="email_bcc">CCI:</string>
   <string name="label_sent">Envoyé :</string>
   <string name="email_received">Reçu :</string>
   <string name="email_status">Statut :</string>
   <string name="reply">Répondre</string>
   <string name="reply_all">Répondre à tous</string>
   <string name="forward">Transférer</string>
+  <string name="save">Sauvegarder</string>
+  <string name="file_exists_in_downloads">Le fichier existe déjà dans le dossier Téléchargements</string>
+  <string name="saved_to_downloads">%s sauvegardé dans le dossier Téléchargements</string>
+  <string name="could_not_save_to_downloads">N\'a pas pu sauvegarder le fichier dans le dossier Téléchargements</string>
   <string name="compose">Composer</string>
   <string name="subject">Objet</string>
   <string name="compose_email">Composer un courrier électronique</string>
@@ -118,6 +126,9 @@
   <string name="response_quote_wrote">%s a écrit :</string>
   <string name="address_book_empty">Le carnet d\'adresses est vide</string>
   <string name="share">Partager</string>
+  <string name="address_info">Information d\'adresse</string>
+  <string name="copy">Copier</string>
+  <string name="fingerprint">Empreinte digitale</string>
   <string name="action_new_contact">Nouveau contact</string>
   <string name="action_scan_qr_code">Scanner QR code</string>
   <string name="edit_contact">Éditer contact</string>

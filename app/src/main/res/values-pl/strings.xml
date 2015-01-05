@@ -20,7 +20,7 @@
   <string name="please_finish_setup">Proszę skończyć ustawienia Bote.</string>
   <string name="skip">Pomiń</string>
   <string name="set_password">Ustaw hasło</string>
-  <string name="setup_set_password_1">Możesz wybrać hasło dla Bote. To nie pozwoli innym użytkownikom na czytanie Twoich e-maili, oraz będzie szyfrować wszystkie pliki na dysku.</string>
+  <string name="setup_set_password_1">Możesz ustawić hasło dla Bote. To sprawi, że inni nie będą mogli czytać Twoich emaili i wszystkie pliki Bote będą zaszyfrowane na Twoim urządzeniu.</string>
   <string name="setup_set_password_2">Jeśli ustawisz hasło, to automatyczne sprawdzanie e-maila będzie wyłączone. Możesz manualnie sprawdzać czy są nowe e-maile poprzez pociągnięcie w dół palcem będąc w skrzynce odbiorczej.</string>
   <string name="setup_set_password_3">Jeśli nie ustawisz teraz hasła, to będziesz mógł to zrobić później w Ustawieniach.</string>
   <string name="create_identity">Utwórz tożsamość</string>
@@ -32,12 +32,25 @@
   <string name="setup_finished_2">Aby wysyłać i otrzymywać emaile, Bote musi połączyć się do sieci rozproszonej. Można to zrobić z poziomu menu.</string>
   <string name="setup_finished_3">Kiedy Bote jest rozłączone/offline, to będziesz mógł czytać e-maile które wcześniej pobrałeś. Możesz także pisać e-maile i umieścić je w \'Do Wysłania\'. Zostaną one wysłane kiedy Bote będzie połączone/online.</string>
   <string name="go_to_inbox">Idź do skrzynki</string>
+  <string name="log_in">Zaloguj się</string>
+  <string name="log_out">Wyloguj</string>
+  <string name="touch_lock_to_log_in">Dotknij ikonę kłudki, aby się zalogować.</string>
   <string name="action_new_email">Nowy email</string>
+  <string name="action_attach_file">Załącz plik</string>
+  <string name="select_attachment">Wybierz plik załącznika</string>
   <string name="action_send_email">Wyślij email</string>
   <string name="action_start_bote">Połącz z siecią</string>
   <string name="action_stop_bote">Rozłącz z siecią</string>
   <string name="action_settings">Ustawienia</string>
+  <string name="check_email">Sprawdź email</string>
+  <string name="checking_email">Sprawdzanie email...</string>
+  <string name="bote_needs_to_be_connected">Bote musi być połączony z siecią</string>
   <!--Argument is a number-->
+  <plurals name="incomplete_emails">
+    <item quantity="one">Jeden niepełny email</item>
+    <item quantity="few">%d niepełnych emaili</item>
+    <item quantity="other">%d niepełnych emaili</item>
+  </plurals>
   <!--Argument is a number-->
   <string name="items_selected">%s zaznaczonych</string>
   <string name="action_delete">Usuń</string>
@@ -87,18 +100,27 @@
   <string name="error_sending">Wystąpił błąd podczas wysyłania e-maila: %s</string>
   <string name="error_saving_metadata">Wystąpił błąd podczas zapisywania metadanych emaila: %s</string>
   <string name="email_not_found">Nie znaleziono takiego e-maila</string>
+  <string name="signature_invalid">Ten email nie posiada prawidłowego podpisu. Najprawdopodobniej nie został on wysłany przez %s.</string>
   <string name="email_from">Od:</string>
   <string name="email_to">Do:</string>
+  <string name="email_cc">Cc:</string>
+  <string name="email_bcc">Bcc:</string>
   <string name="label_sent">Wysłano:</string>
   <string name="email_received">Otrzymano:</string>
   <string name="email_status">Stan:</string>
   <string name="reply">Odpowiedz</string>
   <string name="reply_all">Odpowiedz wszystkim</string>
   <string name="forward">Przekaż dalej</string>
+  <string name="save">Zapisz</string>
+  <string name="file_exists_in_downloads">Ten plik już istnieje w folderze Downloads</string>
+  <string name="saved_to_downloads">%s zapisano w folderze Downloads</string>
+  <string name="could_not_save_to_downloads">Nie można było zapisać w folderze Downloads</string>
   <string name="compose">Utwórz</string>
   <string name="subject">Temat</string>
   <string name="compose_email">Napisz email</string>
   <string name="add_one_recipient">Dodaj przynajmniej jednego odbiorcę.</string>
+  <string name="stop_composing_email">Zatrzymać tworzenie emaila?</string>
+  <string name="all_changes_will_be_discarded">Wszystkie zmiany zostaną odrzucone.</string>
   <string name="email_queued_for_sending">E-mail w kolejce do wysłania</string>
   <string name="subject_prefix_fwd">Przekazany:</string>
   <string name="response_prefix_re">Odp:</string>
@@ -106,7 +128,11 @@
   <string name="response_quote_wrote">%s napisał:</string>
   <string name="address_book_empty">Książka adresowa jest pusta</string>
   <string name="share">Udostępnij</string>
+  <string name="address_info">Informacje o adresie</string>
+  <string name="copy">Kopiuj</string>
+  <string name="fingerprint">Fingerprint</string>
   <string name="action_new_contact">Nowy kontakt</string>
+  <string name="action_scan_qr_code">Skanuj kod QR</string>
   <string name="edit_contact">Edytuj kontakt</string>
   <string name="select_a_picture">Wybierz zdjęcie</string>
   <string name="no_image_cropping_app_found">Nie znaleziono żadnej aplikacji do przycinania obrazu</string>
@@ -119,13 +145,26 @@
   <string name="failed_to_read_email_destination_file">Nie udało odczytać się pliku Przeznaczenia E-maila.</string>
   <string name="could_not_find_email_destination_file">Nie udało znaleźć się plik Przeznaczenia E-maila.</string>
   <string name="save_contact">Zapisz kontakt</string>
+  <string name="not_a_valid_bote_address">To nie jest prawidłowy adres Bote</string>
   <string name="delete_contact">Usunąć kontakt?</string>
   <string name="network_info_unavailable">Informacje o sieci nie są dostępne ponieważ Bote jeszcze nie zaczął łączyć się z siecią.</string>
   <string name="network_info_unavailable_delay">Bote czeka na uruchomienie routera I2P i jego gotowość.</string>
   <string name="local_destination">Lokalne Przeznaczenie:</string>
   <string name="not_set">Nieustawione </string>
+  <string name="kademlia_peers">Peery sieci:</string>
+  <string name="reachable">Dostępne</string>
+  <string name="unreachable">Niedostępne</string>
   <string name="relay_peers">Przekaźnikowe Peery:</string>
+  <string name="good">Dobre</string>
+  <string name="unreliable">Niepewne</string>
+  <string name="untested">Nietestowane</string>
   <string name="banned_peers">Zbanowane Peery:</string>
+  <string name="connect_error_occurred">Bote nie mógł połączyć się z siecią.</string>
+  <string name="this_is_the_error">Oto błąd który napotkaliśmy:</string>
+  <string name="most_errors_fixed_on_restart">Możesz naprawić wiele błędów poprzez zrestartowanie Bote. Aby to zrobić, idź wstecz do głowej strony Bote, nastepnie klinikj \"Rozłącz z siecią\" w menu, a następnie kliknij \"Połącz z siecią\" ponownie w menu.</string>
+  <string name="also_check_i2p_android">Jeśli to nie pomoże, sprawdź czy I2P jest włączone. Możesz sprawdzić status I2P w szufladzie notyfikacji, lub poprzez otwarcie aplikacji I2P. Jeśli nie działa ono poprawnie, to zrestartuj I2P (w aplikacji kliknij \"Stop\", a następnie kliknij \"Start\" kiedy się pojawi). Poczekaj aż I2P będzie w pełni uruchomione i wtedy uruchom Bote.</string>
+  <string name="bote_connection_error">Błąd połączenia Bote</string>
+  <string name="full_error_copied_to_clipboard">Cały błąd został skopiowany do schowka</string>
   <string name="pref_title_general">Generalne</string>
   <string name="pref_summ_general">Ustawienia generalne i ustawienia domyślne tożsamości</string>
   <string name="pref_title_autoMail">Auto-Sprawdź czy są nowe e-maile</string>
@@ -136,9 +175,16 @@
   <string name="pref_title_privacy">Prywatność</string>
   <string name="pref_title_hideLocale">Schowaj lokalne</string>
   <string name="pref_summ_hideLocale">Używaj języka Angielskiego dla tekstu dodanego do e-maili wychodzących (\'Re:\', \'wrote:\', itd.)</string>
+  <string name="pref_summ_hideLocale_off">Użyj języka systemowego dla tekstu dodanego w wychodzących emailach (\'Odp:\', \'napisał:\', itd.)</string>
   <string name="pref_title_sentTime">Czas wysłania</string>
   <string name="pref_summ_sentTime">Dołącz czas wysłania w e-mailach wychodzących</string>
   <string name="pref_title_routing">Routing</string>
+  <string name="pref_title_numSendHops">Wysyłanie skoków</string>
+  <plurals name="pref_summ_numHops">
+    <item quantity="one">%s przekaźnik</item>
+    <item quantity="few">%s przekaźników</item>
+    <item quantity="other">%s przekaźników</item>
+  </plurals>
   <string name="pref_title_minDelay">Minimalne opóźnienie dla przeskoku</string>
   <string name="pref_summ_minDelay">%s minut</string>
   <string name="pref_title_maxDelay">Maksymalne opóźnienie dla przeskoku</string>
@@ -161,6 +207,7 @@
   <string name="pref_title_identities">Tożsamości</string>
   <string name="new_identity">Nowa tożsamość...</string>
   <string name="edit_identity">Edytuj tożsamość</string>
+  <string name="title_new_identity">Nowa tożsamość</string>
   <string name="public_name">Publiczna nazwa</string>
   <string name="description">Opis</string>
   <string name="default_identity">Domyślna Tożsamość</string>
@@ -177,4 +224,7 @@
   <string name="no_identities_found">Nie znaleziono żadnych tożsamości.</string>
   <string name="no_identities_found_maybe_encrypted">Nie znaleziono żadnych tożsamości. Czy plik jest szyfrowany?</string>
   <string name="identities_imported">Tożsamości importowane</string>
+  <string name="this_field_is_required">Te pole jest wymagane</string>
+  <string name="bote_dest_for">Adres Bote dla %s</string>
+  <string name="copied_to_clipboard">Skopiowano do schowka</string>
 </resources>

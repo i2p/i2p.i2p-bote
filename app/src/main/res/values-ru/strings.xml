@@ -20,7 +20,7 @@
   <string name="please_finish_setup">Пожалуйста, завершите установку Bote.</string>
   <string name="skip">Пропустить</string>
   <string name="set_password">Установка пароля</string>
-  <string name="setup_set_password_1">Вы можете установить пароль для Bote. Это не позволит другим пользователям читать ваши сообщения, а также зашифрует все файлы на диске.</string>
+  <string name="setup_set_password_1">Вы можете установить пароль для Bote. Это не позволит другим пользователям читать ваши сообщения, а также зашифрует все файлы Bote на вашем устройстве.</string>
   <string name="setup_set_password_2">Если вы установите пароль, то автоматическая проверка почты будет отключена. Вы можете проверять почту вручную после аутентификации, потянув вниз Входящие.</string>
   <string name="setup_set_password_3">Если вы не установите пароль сейчас, можно сделать это позже в меню Настройки.</string>
   <string name="create_identity">Создать идентификатор</string>
@@ -36,6 +36,8 @@
   <string name="log_out">Выйти</string>
   <string name="touch_lock_to_log_in">Для входа дотроньтесь до иконки с замком</string>
   <string name="action_new_email">Новое письмо</string>
+  <string name="action_attach_file">Прикрепить файл</string>
+  <string name="select_attachment">Выберите файл для прикрепления</string>
   <string name="action_send_email">Отправить письмо</string>
   <string name="action_start_bote">Подключиться к сети</string>
   <string name="action_stop_bote">Отключиться от сети</string>
@@ -109,6 +111,10 @@
   <string name="reply">Ответить</string>
   <string name="reply_all">Ответить на все</string>
   <string name="forward">Переслать</string>
+  <string name="save">Сохранить</string>
+  <string name="file_exists_in_downloads">Файл уже существует в папке Загрузки</string>
+  <string name="saved_to_downloads">%s сохранено в папку Загрузки</string>
+  <string name="could_not_save_to_downloads">Не получилось сохранить файл в папку Загрузки</string>
   <string name="compose">Написать</string>
   <string name="subject">Тема</string>
   <string name="compose_email">Написать письмо</string>
@@ -122,6 +128,9 @@
   <string name="response_quote_wrote">%s пишет:</string>
   <string name="address_book_empty">Адресная книга пуста</string>
   <string name="share">Поделиться</string>
+  <string name="address_info">Информация об адресе</string>
+  <string name="copy">Копировать</string>
+  <string name="fingerprint">Отпечаток ключа</string>
   <string name="action_new_contact">Новый контакт</string>
   <string name="action_scan_qr_code">Считать QR-код</string>
   <string name="edit_contact">Редактировать контакт</string>
