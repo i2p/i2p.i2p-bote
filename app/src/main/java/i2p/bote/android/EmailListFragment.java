@@ -213,12 +213,10 @@ public class EmailListFragment extends AuthenticatedListFragment implements
         if (BoteHelper.isInbox(mFolder)) {
             int numIncompleteEmails = I2PBote.getInstance().getNumIncompleteEmails();
             if (numIncompleteEmails > 0) {
-                mNumIncompleteEmails = new TextView(getActivity());
+                mNumIncompleteEmails = (TextView) getActivity().getLayoutInflater().inflate(
+                        R.layout.listitem_incomplete, getListView(), false);
                 mNumIncompleteEmails.setText(getResources().getQuantityString(R.plurals.incomplete_emails,
                         numIncompleteEmails, numIncompleteEmails));
-                mNumIncompleteEmails.setPadding(16, 8, 16, 8);
-                mNumIncompleteEmails.setGravity(Gravity.RIGHT);
-                mNumIncompleteEmails.setTextAppearance(getActivity(), R.style.TextAppearance_AppCompat_Small);
                 getListView().addHeaderView(mNumIncompleteEmails, null, false);
             }
         }
