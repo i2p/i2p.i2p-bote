@@ -116,12 +116,8 @@ public class SettingsActivity extends PreferenceActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Map<String, ?> all = prefs.getAll();
-        Iterator<String> iterator = all.keySet().iterator();
-        while (iterator.hasNext()) {
-            String x = iterator.next();
-            if (x.startsWith("i2pbote.")) // Skip over Android-specific settings
-                continue;
-            else if ("autoMailCheckEnabled".equals(x))
+        for (String x : all.keySet()) {
+            if ("autoMailCheckEnabled".equals(x))
                 config.setAutoMailCheckEnabled(prefs.getBoolean(x, true));
             else if ("mailCheckInterval".equals(x))
                 config.setMailCheckInterval(prefs.getInt(x, 30));
@@ -527,6 +523,7 @@ public class SettingsActivity extends PreferenceActivity {
             }
         }
 
+        @SuppressWarnings("deprecation")
         private void showLegacyHeaders(Object[] result) {
             mLegacyIdentityListHeaders = (Preference[]) result[0];
             getPreferenceScreen().removeAll();
@@ -554,9 +551,8 @@ public class SettingsActivity extends PreferenceActivity {
         if (adapter == null) {
             super.setListAdapter(null);
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            super.setListAdapter(adapter); // TODO: implement legacy headers styling
+            super.setListAdapter(adapter);
         } else {
-            // TODO: Fix NPE when rotating screen
             super.setListAdapter(new HeaderAdapter(this, adapter));
         }
     }
@@ -635,26 +631,27 @@ public class SettingsActivity extends PreferenceActivity {
             HeaderViewHolder holder;
             Header header = getItem(position);
             int headerType = getHeaderType(header);
-            View view = null;
+            View view;
 
             if (convertView == null) {
                 holder = new HeaderViewHolder();
                 switch (headerType) {
-                case HEADER_TYPE_CATEGORY:
-                    view = new TextView(getContext(), null,
-                            android.R.attr.listSeparatorTextViewStyle);
-                    holder.title = (TextView) view;
-                    break;
+                    case HEADER_TYPE_CATEGORY:
+                        view = new TextView(getContext(), null,
+                                android.R.attr.listSeparatorTextViewStyle);
+                        holder.title = (TextView) view;
+                        break;
 
-                case HEADER_TYPE_NORMAL:
-                    view = mInflater.inflate(
-                            R.layout.preference_header_item, parent,
-                            false);
-                    holder.title = (TextView)
-                            view.findViewById(android.R.id.title);
-                    holder.summary = (TextView)
-                            view.findViewById(android.R.id.summary);
-                    break;
+                    case HEADER_TYPE_NORMAL:
+                    default:
+                        view = mInflater.inflate(
+                                R.layout.preference_header_item, parent,
+                                false);
+                        holder.title = (TextView)
+                                view.findViewById(android.R.id.title);
+                        holder.summary = (TextView)
+                                view.findViewById(android.R.id.summary);
+                        break;
                 }
                 view.setTag(holder);
             } else {
@@ -664,13 +661,13 @@ public class SettingsActivity extends PreferenceActivity {
 
             // All view fields must be updated every time, because the view may be recycled
             switch (headerType) {
-            case HEADER_TYPE_CATEGORY:
-                holder.title.setText(header.getTitle(getContext().getResources()));
-                break;
+                case HEADER_TYPE_CATEGORY:
+                    holder.title.setText(header.getTitle(getContext().getResources()));
+                    break;
 
-            case HEADER_TYPE_NORMAL:
-                updateCommonHeaderView(header, holder);
-                break;
+                case HEADER_TYPE_NORMAL:
+                    updateCommonHeaderView(header, holder);
+                    break;
             }
 
             return view;

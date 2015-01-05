@@ -13,6 +13,7 @@ import android.nfc.NdefRecord;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -94,6 +95,7 @@ public abstract class ViewAddressFragment extends Fragment {
         mExpandedQrCode = (ImageView) view.findViewById(R.id.expanded_qr_code);
 
         view.findViewById(R.id.copy_key).setOnClickListener(new View.OnClickListener() {
+            @SuppressWarnings("deprecation")
             @Override
             public void onClick(View view) {
                 Object clipboardService = getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -173,6 +175,7 @@ public abstract class ViewAddressFragment extends Fragment {
             case R.id.action_delete_identity:
                 DialogFragment df = new DialogFragment() {
                     @Override
+                    @NonNull
                     public Dialog onCreateDialog(Bundle savedInstanceState) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage(getDeleteAddressMessage())
@@ -198,11 +201,10 @@ public abstract class ViewAddressFragment extends Fragment {
     }
 
     public NdefMessage createNdefMessage() {
-        NdefMessage msg = new NdefMessage(new NdefRecord[]{
+        return new NdefMessage(new NdefRecord[]{
                 createNameRecord(),
                 createDestinationRecord()
         });
-        return msg;
     }
 
     private NdefRecord createNameRecord() {

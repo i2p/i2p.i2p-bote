@@ -388,7 +388,10 @@ public class NewEmailFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
-                                    getActivity().onNavigateUp();
+                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+                                        mCallbacks.onBackPressAllowed();
+                                    else
+                                        getActivity().onNavigateUp();
                                 }
                             }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override

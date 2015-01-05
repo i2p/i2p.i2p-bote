@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -180,6 +181,7 @@ public class EmailListActivity extends ActionBarActivity implements
                         final int message = boteNotStartedMessage;
                         DialogFragment df = new DialogFragment() {
                             @Override
+                            @NonNull
                             public Dialog onCreateDialog(Bundle savedInstanceState) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                 builder.setMessage(message)

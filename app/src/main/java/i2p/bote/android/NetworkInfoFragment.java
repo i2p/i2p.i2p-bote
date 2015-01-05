@@ -69,6 +69,7 @@ public class NetworkInfoFragment extends Fragment {
             ((TextView) view.findViewById(R.id.error)).setText(mConnectError.toString());
 
             view.findViewById(R.id.copy_error).setOnClickListener(new View.OnClickListener() {
+                @SuppressWarnings("deprecation")
                 @Override
                 public void onClick(View view) {
                     String fullError = joinStackTrace(mConnectError);
@@ -227,8 +228,7 @@ public class NetworkInfoFragment extends Fragment {
 
                 printer.println(e);
                 StackTraceElement[] trace = e.getStackTrace();
-                for (int i = 0; i < trace.length; i++)
-                    printer.println("\tat " + trace[i]);
+                for (StackTraceElement aTrace : trace) printer.println("\tat " + aTrace);
 
                 e = e.getCause();
                 if (e != null)

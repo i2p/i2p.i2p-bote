@@ -40,7 +40,7 @@ public class EditIdentityFragment extends EditPictureFragment {
         public void onTaskFinished();
     }
     private static Callbacks sDummyCallbacks = new Callbacks() {
-        public void onTaskFinished() {};
+        public void onTaskFinished() {}
     };
 
     @Override
@@ -195,7 +195,7 @@ public class EditIdentityFragment extends EditPictureFragment {
             mError.setText("");
 
             IdentityWaiterFrag f = IdentityWaiterFrag.newInstance(
-                    (mKey == null ? true : false),
+                    (mKey == null),
                     cryptoImplId,
                     null,
                     mKey,
@@ -320,15 +320,15 @@ public class EditIdentityFragment extends EditPictureFragment {
         public Object[] getParams() {
             Bundle args = getArguments();
             return new Object[] {
-                    Boolean.valueOf(args.getBoolean(CREATE_NEW)),
-                    Integer.valueOf(args.getInt(CRYPTO_IMPL_ID)),
+                    args.getBoolean(CREATE_NEW),
+                    args.getInt(CRYPTO_IMPL_ID),
                     args.getString(VANITY_PREFIX),
                     args.getString(KEY),
                     args.getString(PUBLIC_NAME),
                     args.getString(DESCRIPTION),
                     args.getString(PICTURE_BASE64),
                     args.getString(EMAIL_ADDRESS),
-                    Boolean.valueOf(args.getBoolean(SET_DEFAULT)),
+                    args.getBoolean(SET_DEFAULT),
             };
         }
 

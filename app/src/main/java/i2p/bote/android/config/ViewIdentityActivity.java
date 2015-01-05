@@ -53,6 +53,7 @@ public class ViewIdentityActivity extends ActionBarActivity {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     @Override
     public void onResume() {
@@ -70,6 +71,7 @@ public class ViewIdentityActivity extends ActionBarActivity {
         return f.createNdefMessage();
     }
 
+    @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     @Override
     public void onPause() {

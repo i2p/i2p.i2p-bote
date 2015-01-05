@@ -43,8 +43,8 @@ public class QrCodeUtils {
     /**
      * Generate Bitmap with QR Code based on input.
      *
-     * @param input
-     * @param size
+     * @param input The data to render as a QR code.
+     * @param size The preferred width and height of the QR code in pixels.
      * @return QR Code as Bitmap
      */
     public static Bitmap getQRCodeBitmap(final String input, final int size) {

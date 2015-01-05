@@ -28,7 +28,7 @@ public class SetPasswordFragment extends Fragment {
         public void onTaskFinished();
     }
     private static Callbacks sDummyCallbacks = new Callbacks() {
-        public void onTaskFinished() {};
+        public void onTaskFinished() {}
     };
 
     @Override

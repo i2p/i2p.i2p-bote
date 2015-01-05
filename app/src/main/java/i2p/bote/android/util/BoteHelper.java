@@ -57,7 +57,6 @@ public class BoteHelper extends GeneralHelper {
      * @param ctx Android Context to get strings from.
      * @param folder The folder.
      * @return The name of the folder.
-     * @throws PasswordException
      */
     public static String getFolderDisplayName(Context ctx, EmailFolder folder) {
         String name = folder.getName();
@@ -118,7 +117,7 @@ public class BoteHelper extends GeneralHelper {
     /**
      * Get a Bitmap containing the picture for the contact or identity
      * corresponding to the given address.
-     * @param address
+     * @param address the address to get a picture for.
      * @return a Bitmap, or null if no picture was found.
      * @throws PasswordException
      * @throws IOException
@@ -138,7 +137,7 @@ public class BoteHelper extends GeneralHelper {
     /**
      * Get a Bitmap containing the picture for the contact or identity
      * corresponding to the given Destination.
-     * @param base64dest
+     * @param base64dest the Destination to get a picture for.
      * @return a Bitmap, or null if no picture was found.
      * @throws PasswordException
      * @throws IOException
@@ -207,8 +206,8 @@ public class BoteHelper extends GeneralHelper {
         // Is the sender anonymous and we are not the recipient?
         if (email.isAnonymous()) {
             Address[] recipients = email.getAllRecipients();
-            for (int i = 0; i < recipients.length; i++) {
-                String toDest = EmailDestination.extractBase64Dest(recipients[i].toString());
+            for (Address recipient : recipients) {
+                String toDest = EmailDestination.extractBase64Dest(recipient.toString());
                 if (toDest != null && getIdentity(toDest) != null)
                     // We are a recipient
                     return false;

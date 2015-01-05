@@ -21,9 +21,7 @@ public class Person implements Serializable {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Person))
-            return false;
-        return address.equals(((Person)other).address);
+        return other instanceof Person && address.equals(((Person) other).address);
     }
 
     @Override

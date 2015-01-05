@@ -53,6 +53,7 @@ public class ViewContactActivity extends ActionBarActivity {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     @Override
     public void onResume() {
@@ -70,6 +71,7 @@ public class ViewContactActivity extends ActionBarActivity {
         return f.createNdefMessage();
     }
 
+    @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     @Override
     public void onPause() {
