@@ -36,10 +36,10 @@
         android:layout_gravity="start"
         android:background="@color/background_floating_material_light">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/drawer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_above="@+id/fixed_actions"
             android:layout_alignParentTop="true"
             android:choiceMode="singleChoice"

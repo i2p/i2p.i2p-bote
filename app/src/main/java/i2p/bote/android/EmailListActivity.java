@@ -18,14 +18,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,6 +46,7 @@ import i2p.bote.folder.FolderListener;
 import i2p.bote.network.NetworkStatusListener;
 
 public class EmailListActivity extends ActionBarActivity implements
+        FolderListAdapter.OnFolderSelectedListener,
         EmailListFragment.OnEmailSelectedListener,
         MoveToDialogFragment.MoveToDialogListener,
         PasswordCacheListener,
@@ -62,8 +63,7 @@ public class EmailListActivity extends ActionBarActivity implements
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mDrawerOuter;
     private FolderListAdapter mFolderAdapter;
-    private ListView mFolderList;
-    private int mCurPos;
+    private String mCurFolder;
     private ImageView mNetworkStatusIcon;
     private TextView mNetworkStatusText;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -94,8 +94,7 @@ public class EmailListActivity extends ActionBarActivity implements
         mSharedPrefs = getSharedPreferences(SHARED_PREFS, 0);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerOuter = (RelativeLayout) findViewById(R.id.drawer_outer);
-        mFolderAdapter = new FolderListAdapter(this);
-        mFolderList = (ListView) findViewById(R.id.drawer);
+        RecyclerView mFolderList = (RecyclerView) findViewById(R.id.drawer);
         mNetworkStatusIcon = (ImageView) findViewById(R.id.network_status_icon);
         mNetworkStatusText = (TextView) findViewById(R.id.network_status_text);
 
@@ -109,16 +108,21 @@ public class EmailListActivity extends ActionBarActivity implements
         DrawerLayout.LayoutParams lp = (DrawerLayout.LayoutParams) mDrawerOuter.getLayoutParams();
         lp.width = Math.min(dm.widthPixels - toolbar.getLayoutParams().height, maxWidth);
 
-        // Set the list of folders
-        // TODO: This is slow, needs a loader
-        mFolderAdapter.setData(I2PBote.getInstance().getEmailFolders(), this);
-
         // Set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+        // use a linear layout manager
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mFolderList.setLayoutManager(mLayoutManager);
+
+        mFolderAdapter = new FolderListAdapter(this, this);
+
+        // Set the list of folders
+        // TODO: This is slow, needs a loader
+        mFolderAdapter.setFolders(I2PBote.getInstance().getEmailFolders(), this);
+
         // Set the adapter for the list view
         mFolderList.setAdapter(mFolderAdapter);
-        // Set the list's click listener
-        mFolderList.setOnItemClickListener(new DrawerItemClickListener());
 
         // Set up drawer toggle
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -157,10 +161,10 @@ public class EmailListActivity extends ActionBarActivity implements
             EmailListFragment f = EmailListFragment.newInstance("inbox");
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.list_fragment, f).commit();
-            mFolderList.setItemChecked(0, true);
-            mCurPos = 0;
+            //mFolderList.setItemChecked(0, true);
+            mCurFolder = "";
         } else {
-            mCurPos = savedInstanceState.getInt(ACTIVE_FOLDER);
+            mCurFolder = savedInstanceState.getString(ACTIVE_FOLDER);
         }
 
         // Set up fixed actions
@@ -215,33 +219,10 @@ public class EmailListActivity extends ActionBarActivity implements
         }
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-            selectItem(pos);
-        }
-    }
-
-    private void selectItem(int position) {
-        if (position != mCurPos) {
-            // Create the new fragment
-            EmailFolder folder = mFolderAdapter.getItem(position);
-            EmailListFragment f = EmailListFragment.newInstance(folder.getName());
-
-            // Insert the fragment
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.list_fragment, f).commit();
-
-            // Save the current position
-            mCurPos = position;
-        }
-        // Close the drawer
-        mDrawerLayout.closeDrawer(mDrawerOuter);
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(ACTIVE_FOLDER, mCurPos);
+        outState.putString(ACTIVE_FOLDER, mCurFolder);
     }
 
     @Override
@@ -376,6 +357,24 @@ public class EmailListActivity extends ActionBarActivity implements
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggle
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    // FolderListAdapter.OnFolderSelectedListener
+
+    public void onDrawerFolderSelected(EmailFolder folder) {
+        if (!folder.getName().equals(mCurFolder)) {
+            // Create the new fragment
+            EmailListFragment f = EmailListFragment.newInstance(folder.getName());
+
+            // Insert the fragment
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.list_fragment, f).commit();
+
+            // Save the current position
+            mCurFolder = folder.getName();
+        }
+        // Close the drawer
+        mDrawerLayout.closeDrawer(mDrawerOuter);
     }
 
     // FolderFragment.OnEmailSelectedListener
