@@ -183,17 +183,18 @@ public class SettingsActivity extends PreferenceActivity {
     private void buildLegacyHeaders() {
         // Always add general preferences as first header
         addPreferencesFromResource(R.xml.settings_headers_legacy);
-        PreferenceScreen ps = getPreferenceScreen();
+        PreferenceCategory ic = new PreferenceCategory(this);
+        ic.setTitle(R.string.pref_title_identities);
 
         // Then add zero or more identity headers as necessary
         if (mLegacyIdentityListHeaders != null) {
-            final int headerCount = mLegacyIdentityListHeaders.length;
+            getPreferenceScreen().addPreference(ic);
             for (Preference header : mLegacyIdentityListHeaders) {
                 if (header != null) {
                     String key = header.getIntent().getExtras().getString(
                             ViewIdentityFragment.ADDRESS);
                     if (!key.equals(mDeletingIdentityKey)) {
-                        ps.addPreference(header);
+                        ic.addPreference(header);
                         if (key.equals(mRequestedIdentityKey)) {
                             mRequestedIdentityKey = null;
                         }
@@ -217,7 +218,6 @@ public class SettingsActivity extends PreferenceActivity {
 
         // Then add zero or more identity headers as necessary
         if (mIdentityListHeaders != null) {
-            final int headerCount = mIdentityListHeaders.length;
             for (Header header : mIdentityListHeaders) {
                 if (header != null && header.id != HEADER_ID_UNDEFINED) {
                     String key = header.extras.getString(
