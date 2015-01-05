@@ -30,6 +30,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,6 +51,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     // Preference Header vars
     private Header[] mIdentityListHeaders;
+    private Preference[] mLegacyIdentityListHeaders;
 
     private String mRequestedIdentityKey;
     private String mDeletingIdentityKey;
@@ -181,9 +183,24 @@ public class SettingsActivity extends PreferenceActivity {
     private void buildLegacyHeaders() {
         // Always add general preferences as first header
         addPreferencesFromResource(R.xml.settings_headers_legacy);
+        PreferenceScreen ps = getPreferenceScreen();
 
         // Then add zero or more identity headers as necessary
-        // TODO: implement
+        if (mLegacyIdentityListHeaders != null) {
+            final int headerCount = mLegacyIdentityListHeaders.length;
+            for (Preference header : mLegacyIdentityListHeaders) {
+                if (header != null) {
+                    String key = header.getIntent().getExtras().getString(
+                            ViewIdentityFragment.ADDRESS);
+                    if (!key.equals(mDeletingIdentityKey)) {
+                        ps.addPreference(header);
+                        if (key.equals(mRequestedIdentityKey)) {
+                            mRequestedIdentityKey = null;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -201,14 +218,13 @@ public class SettingsActivity extends PreferenceActivity {
         // Then add zero or more identity headers as necessary
         if (mIdentityListHeaders != null) {
             final int headerCount = mIdentityListHeaders.length;
-            for (int index = 0; index < headerCount; index++) {
-                Header header = mIdentityListHeaders[index];
+            for (Header header : mIdentityListHeaders) {
                 if (header != null && header.id != HEADER_ID_UNDEFINED) {
                     String key = header.extras.getString(
                             ViewIdentityFragment.ADDRESS);
-                    if (key != mDeletingIdentityKey) {
+                    if (!key.equals(mDeletingIdentityKey)) {
                         target.add(header);
-                        if (key == mRequestedIdentityKey) {
+                        if (key.equals(mRequestedIdentityKey)) {
                             mRequestedIdentityKey = null;
                         }
                     }
@@ -407,8 +423,26 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
         private Object[] loadLegacyHeaders(Collection<EmailIdentity> identities) {
-            // TODO: implement
-            return new Object[] {null};
+            Preference[] result = new Preference[identities.size()];
+            int index = 0;
+
+            for (EmailIdentity identity : identities) {
+                final String name = identity.getPublicName();
+                final String desc = identity.getDescription();
+                final String key = identity.getKey();
+                final Intent intent = new Intent(
+                        getApplicationContext(), ViewIdentityActivity.class);
+                final Bundle args = new Bundle();
+                args.putString(ViewIdentityFragment.ADDRESS, key);
+                intent.putExtras(args);
+                final Preference newHeader = new Preference(SettingsActivity.this);
+                newHeader.setTitle(name);
+                newHeader.setSummary(desc);
+                newHeader.setIntent(intent);
+                result[index++] = newHeader;
+            }
+
+            return new Object[] {result};
         }
 
         @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -449,13 +483,14 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
         private void showLegacyHeaders(Object[] result) {
-            // TODO: implement
+            mLegacyIdentityListHeaders = (Preference[]) result[0];
+            getPreferenceScreen().removeAll();
+            buildLegacyHeaders();
         }
 
         @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         private void showHeaders(Object[] result) {
-            final Header[] headers = (Header[]) result[0];
-            mIdentityListHeaders = headers;
+            mIdentityListHeaders = (Header[]) result[0];
             invalidateHeaders();
         }
 
