@@ -242,6 +242,47 @@ public class SettingsActivity extends PreferenceActivity {
     private void loadLegacySettings(String action) {
         if (ACTION_PREFS_GENERAL.equals(action)) {
             addPreferencesFromResource(R.xml.settings_general);
+
+            ListPreference numSendHops = (ListPreference) findPreference("numSendHops");
+            int value = Integer.valueOf(numSendHops.getValue());
+            numSendHops.setSummary(getResources().getQuantityString(R.plurals.pref_summ_numHops,
+                    value, value));
+            numSendHops.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    int value = Integer.valueOf((String) newValue);
+                    preference.setSummary(getResources().getQuantityString(R.plurals.pref_summ_numHops,
+                            value, value));
+                    return true;
+                }
+            });
+
+            final PreferenceCategory i2pCat = (PreferenceCategory)findPreference("i2pCategory");
+            CheckBoxPreference routerAuto = (CheckBoxPreference)findPreference("i2pbote.router.auto");
+
+            if (!routerAuto.isChecked()) {
+                setupI2PCategory(this, i2pCat);
+            }
+
+            routerAuto.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    final Boolean checked = (Boolean) newValue;
+                    if (!checked) {
+                        setupI2PCategory(SettingsActivity.this, i2pCat);
+                    } else {
+                        Preference p1 = i2pCat.findPreference("i2pbote.router.use");
+                        Preference p2 = i2pCat.findPreference("i2pbote.i2cp.tcp.host");
+                        Preference p3 = i2pCat.findPreference("i2pbote.i2cp.tcp.port");
+                        if (p1 != null)
+                            i2pCat.removePreference(p1);
+                        if (p2 != null)
+                            i2pCat.removePreference(p2);
+                        if (p3 != null)
+                            i2pCat.removePreference(p3);
+                    }
+                    return true;
+                }
+            });
         }
     }
 
@@ -279,7 +320,7 @@ public class SettingsActivity extends PreferenceActivity {
                 routerAuto.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         final Boolean checked = (Boolean) newValue;
-                        if (!checked.booleanValue()) {
+                        if (!checked) {
                             setupI2PCategory(getActivity(), i2pCat);
                         } else {
                             Preference p1 = i2pCat.findPreference("i2pbote.router.use");
@@ -306,6 +347,8 @@ public class SettingsActivity extends PreferenceActivity {
         i2pCat.addPreference(routerChoice);
         i2pCat.addPreference(hostField);
         i2pCat.addPreference(portField);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+            routerChoice.setSummary(routerChoice.getEntry());
 
         if ("remote".equals(routerChoice.getValue())) {
             hostField.setEnabled(true);
@@ -316,6 +359,8 @@ public class SettingsActivity extends PreferenceActivity {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 final String val = newValue.toString();
                 int index = routerChoice.findIndexOfValue(val);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+                    routerChoice.setSummary(routerChoice.getEntries()[index]);
                 if (index == 2) {
                     hostField.setEnabled(true);
                     hostField.setText("127.0.0.1");
