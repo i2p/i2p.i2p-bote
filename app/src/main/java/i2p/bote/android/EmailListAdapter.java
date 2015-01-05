@@ -10,20 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.mail.MessagingException;
 import javax.mail.Part;
 
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.email.Email;
-import i2p.bote.fileencryption.PasswordException;
 
 public class EmailListAdapter extends ArrayAdapter<Email> {
     private final LayoutInflater mInflater;
@@ -51,27 +47,53 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
         }
     }
 
+    private static class ViewHolder {
+        ImageView picture;
+        //View emailSelected;
+        TextView subject;
+        TextView address;
+        TextView content;
+        TextView sent;
+        View emailAttachment;
+        TextView emailStatus;
+        View emailDelivered;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final View v = mInflater.inflate(R.layout.listitem_email, parent, false);
+        ViewHolder holder;
+        View view;
+
+        if (convertView == null) {
+            holder = new ViewHolder();
+            view = mInflater.inflate(R.layout.listitem_email, parent, false);
+            holder.picture = (ImageView) view.findViewById(R.id.contact_picture);
+            //holder.emailSelected = view.findViewById(R.id.email_selected);
+            holder.subject = (TextView) view.findViewById(R.id.email_subject);
+            holder.address = (TextView) view.findViewById(R.id.email_address);
+            holder.content = (TextView) view.findViewById(R.id.email_content);
+            holder.sent = (TextView) view.findViewById(R.id.email_sent);
+            holder.emailAttachment = view.findViewById(R.id.email_attachment);
+            holder.emailStatus = (TextView) view.findViewById(R.id.email_status);
+            holder.emailDelivered = view.findViewById(R.id.email_delivered);
+            view.setTag(holder);
+        } else {
+            view = convertView;
+            holder = (ViewHolder) view.getTag();
+        }
+
         final Email email = getItem(position);
 
-        ImageView picture = (ImageView) v.findViewById(R.id.contact_picture);
-        TextView subject = (TextView) v.findViewById(R.id.email_subject);
-        TextView address = (TextView) v.findViewById(R.id.email_address);
-        TextView content = (TextView) v.findViewById(R.id.email_content);
-        TextView sent = (TextView) v.findViewById(R.id.email_sent);
-
         if (!mSelector.inActionMode())
-            picture.setOnClickListener(new View.OnClickListener() {
+            holder.picture.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    mSelector.select(v);
+                    mSelector.select(view);
                 }
             });
 
         // TODO fix
         //if (mSelectedEmails.get(position)) {
-        //    ((ImageView) v.findViewById(R.id.email_selected)).setVisibility(View.VISIBLE);
+        //    holder.emailSelected.setVisibility(View.VISIBLE);
         //}
 
         try {
@@ -83,26 +105,30 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
 
             Bitmap pic = BoteHelper.getPictureForAddress(otherAddress);
             if (pic != null)
-                picture.setImageBitmap(pic);
+                holder.picture.setImageBitmap(pic);
             else if (BoteHelper.isSentEmail(email) || !email.isAnonymous()) {
-                ViewGroup.LayoutParams lp = picture.getLayoutParams();
-                picture.setImageBitmap(BoteHelper.getIdenticonForAddress(otherAddress, lp.width, lp.height));
-            }
+                ViewGroup.LayoutParams lp = holder.picture.getLayoutParams();
+                holder.picture.setImageBitmap(BoteHelper.getIdenticonForAddress(otherAddress, lp.width, lp.height));
+            } else
+                holder.picture.setImageDrawable(
+                        getContext().getResources().getDrawable(R.drawable.ic_contact_picture));
 
-            subject.setText(email.getSubject());
-            address.setText(BoteHelper.getNameAndShortDestination(otherAddress));
+            holder.subject.setText(email.getSubject());
+            holder.address.setText(BoteHelper.getNameAndShortDestination(otherAddress));
 
-            Date sentDate = email.getSentDate();
-            if (sentDate != null) {
+            Date date = email.getSentDate();
+            if (date == null)
+                date = email.getReceivedDate();
+            if (date != null) {
                 DateFormat df;
                 Calendar boundary = Calendar.getInstance();
                 boundary.set(Calendar.HOUR, 0);
                 boundary.set(Calendar.MINUTE, 0);
                 boundary.set(Calendar.SECOND, 0);
-                if (sentDate.before(boundary.getTime())) {
+                if (date.before(boundary.getTime())) {
                     boundary.set(Calendar.MONTH, Calendar.JANUARY);
                     boundary.set(Calendar.DAY_OF_MONTH, 1);
-                    if (sentDate.before(boundary.getTime())) // Sent before this year
+                    if (date.before(boundary.getTime())) // Sent before this year
                         df = DateFormat.getDateInstance(DateFormat.MEDIUM);
                     else { // Sent this year before today
                         String yearlessPattern = ((SimpleDateFormat) SimpleDateFormat.getDateInstance(DateFormat.MEDIUM))
@@ -111,54 +137,51 @@ public class EmailListAdapter extends ArrayAdapter<Email> {
                     }
                 } else // Sent today
                     df = DateFormat.getTimeInstance();
-                sent.setText(df.format(sentDate));
-            }
+                holder.sent.setText(df.format(date));
+                holder.sent.setVisibility(View.VISIBLE);
+            } else
+                holder.sent.setVisibility(View.GONE);
 
+            holder.emailAttachment.setVisibility(View.GONE);
             List<Part> parts = email.getParts();
             for (Part part : parts) {
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-                    v.findViewById(R.id.email_attachment).setVisibility(View.VISIBLE);
+                    holder.emailAttachment.setVisibility(View.VISIBLE);
                     break;
                 }
             }
 
-            if (email.isUnread()) {
-                subject.setTypeface(Typeface.DEFAULT_BOLD);
-                address.setTypeface(Typeface.DEFAULT_BOLD);
-            }
+            holder.subject.setTypeface(email.isUnread() ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+            holder.address.setTypeface(email.isUnread() ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
             if (email.isAnonymous() && !BoteHelper.isSentEmail(email)) {
                 if (email.isUnread())
-                    address.setTypeface(Typeface.DEFAULT, Typeface.BOLD_ITALIC);
+                    holder.address.setTypeface(Typeface.DEFAULT, Typeface.BOLD_ITALIC);
                 else
-                    address.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
+                    holder.address.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
             }
 
-            TextView emailStatus = (TextView) v.findViewById(R.id.email_status);
             // Set email sending status if this is the outbox,
             // or set email delivery status if we sent it.
             if (mIsOutbox) {
-                emailStatus.setText(BoteHelper.getEmailStatusText(
+                holder.emailStatus.setText(BoteHelper.getEmailStatusText(
                         getContext(), email, false));
-                emailStatus.setVisibility(View.VISIBLE);
+                holder.emailStatus.setVisibility(View.VISIBLE);
             } else if (BoteHelper.isSentEmail(email)) {
                 if (email.isDelivered()) {
-                    v.findViewById(R.id.email_delivered).setVisibility(View.VISIBLE);
+                    holder.emailStatus.setVisibility(View.GONE);
                 } else {
-                    emailStatus.setText(email.getDeliveryPercentage() + "%");
-                    emailStatus.setVisibility(View.VISIBLE);
+                    holder.emailStatus.setText(email.getDeliveryPercentage() + "%");
+                    holder.emailStatus.setVisibility(View.VISIBLE);
                 }
             }
-        } catch (MessagingException e) {
-            subject.setText("ERROR: " + e.getMessage());
-        } catch (PasswordException e) {
-            subject.setText("ERROR: " + e.getMessage());
-        } catch (IOException e) {
-            subject.setText("ERROR: " + e.getMessage());
-        } catch (GeneralSecurityException e) {
-            subject.setText("ERROR: " + e.getMessage());
+            holder.emailDelivered.setVisibility(
+                    !mIsOutbox && BoteHelper.isSentEmail(email) && email.isDelivered() ?
+                            View.VISIBLE : View.GONE);
+        } catch (Exception e) {
+            holder.subject.setText("ERROR: " + e.getMessage());
         }
-        content.setText(email.getText());
+        holder.content.setText(email.getText());
 
-        return v;
+        return view;
     }
 }

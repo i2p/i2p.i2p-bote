@@ -36,21 +36,36 @@ public class FolderListAdapter extends ArrayAdapter<EmailFolder> {
         }
     }
 
+    private static class ViewHolder {
+        ImageView icon;
+        TextView name;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = mInflater.inflate(R.layout.listitem_folder_with_icon, parent, false);
+        ViewHolder holder;
+        View view;
+
+        if (convertView == null) {
+            holder = new ViewHolder();
+            view = mInflater.inflate(R.layout.listitem_folder_with_icon, parent, false);
+            holder.icon = (ImageView) view.findViewById(R.id.folder_icon);
+            holder.name = (TextView) view.findViewById(R.id.folder_name);
+            view.setTag(holder);
+        } else {
+            view = convertView;
+            holder = (ViewHolder) view.getTag();
+        }
         EmailFolder folder = getItem(position);
 
-        ImageView icon = (ImageView) v.findViewById(R.id.folder_icon);
-        TextView name = (TextView) v.findViewById(R.id.folder_name);
-        icon.setImageDrawable(BoteHelper.getFolderIcon(getContext(), folder));
+        holder.icon.setImageDrawable(BoteHelper.getFolderIcon(getContext(), folder));
         try {
-            name.setText(BoteHelper.getFolderDisplayNameWithNew(getContext(), folder));
+            holder.name.setText(BoteHelper.getFolderDisplayNameWithNew(getContext(), folder));
         } catch (PasswordException e) {
             // Password fetching is handled in EmailListFragment
-            name.setText(BoteHelper.getFolderDisplayName(getContext(), folder));
+            holder.name.setText(BoteHelper.getFolderDisplayName(getContext(), folder));
         }
 
-        return v;
+        return view;
     }
 }
