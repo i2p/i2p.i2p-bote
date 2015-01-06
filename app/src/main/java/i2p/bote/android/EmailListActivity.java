@@ -63,7 +63,6 @@ public class EmailListActivity extends ActionBarActivity implements
     private DrawerLayout mDrawerLayout;
     private RelativeLayout mDrawerOuter;
     private FolderListAdapter mFolderAdapter;
-    private String mCurFolder;
     private ImageView mNetworkStatusIcon;
     private TextView mNetworkStatusText;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -161,10 +160,8 @@ public class EmailListActivity extends ActionBarActivity implements
             EmailListFragment f = EmailListFragment.newInstance("inbox");
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.list_fragment, f).commit();
-            //mFolderList.setItemChecked(0, true);
-            mCurFolder = "";
         } else {
-            mCurFolder = savedInstanceState.getString(ACTIVE_FOLDER);
+            mFolderAdapter.setSelected(savedInstanceState.getInt(ACTIVE_FOLDER));
         }
 
         // Set up fixed actions
@@ -222,7 +219,7 @@ public class EmailListActivity extends ActionBarActivity implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ACTIVE_FOLDER, mCurFolder);
+        outState.putInt(ACTIVE_FOLDER, mFolderAdapter.getSelected());
     }
 
     @Override
@@ -361,17 +358,14 @@ public class EmailListActivity extends ActionBarActivity implements
 
     // FolderListAdapter.OnFolderSelectedListener
 
-    public void onDrawerFolderSelected(EmailFolder folder) {
-        if (!folder.getName().equals(mCurFolder)) {
+    public void onDrawerFolderSelected(EmailFolder folder, boolean alreadySelected) {
+        if (!alreadySelected) {
             // Create the new fragment
             EmailListFragment f = EmailListFragment.newInstance(folder.getName());
 
             // Insert the fragment
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.list_fragment, f).commit();
-
-            // Save the current position
-            mCurFolder = folder.getName();
         }
         // Close the drawer
         mDrawerLayout.closeDrawer(mDrawerOuter);

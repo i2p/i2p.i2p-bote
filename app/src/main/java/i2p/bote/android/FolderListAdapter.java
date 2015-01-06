@@ -1,6 +1,8 @@
 package i2p.bote.android;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import i2p.bote.folder.FolderListener;
 public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.ViewHolder> {
     private Context mCtx;
     private List<EmailFolder> mFolders;
+    private int mSelectedFolder;
     private OnFolderSelectedListener mListener;
 
     // Provide a reference to the views for each data item
@@ -35,11 +38,20 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
     }
 
     public static interface OnFolderSelectedListener {
-        public void onDrawerFolderSelected(EmailFolder folder);
+        /**
+         * Called when a folder has been selected from the navigation drawer.
+         *
+         * @param folder
+         * The EmailFolder that has just been selected.
+         * @param alreadySelected
+         * Is the selected folder already selected?
+         */
+        public void onDrawerFolderSelected(EmailFolder folder, boolean alreadySelected);
     }
 
     public FolderListAdapter(Context ctx, OnFolderSelectedListener listener) {
         mCtx = ctx;
+        mSelectedFolder = -1;
         mListener = listener;
     }
 
@@ -55,7 +67,24 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
         for (EmailFolder folder : folders) {
             folder.addFolderListener(folderListener);
         }
+
+        if (mSelectedFolder < 0)
+            mSelectedFolder = 0;
+
         notifyDataSetChanged();
+    }
+
+    public void setSelected(int position) {
+        if (position != mSelectedFolder) {
+            int oldSelected = mSelectedFolder;
+            mSelectedFolder = position;
+            notifyItemChanged(oldSelected);
+            notifyItemChanged(mSelectedFolder);
+        }
+    }
+
+    public int getSelected() {
+        return mSelectedFolder;
     }
 
     // Create new views (invoked by the layout manager)
@@ -69,7 +98,7 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final EmailFolder folder = mFolders.get(position);
 
         holder.mIcon.setImageDrawable(BoteHelper.getFolderIcon(mCtx, folder));
@@ -80,12 +109,24 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
             holder.mName.setText(BoteHelper.getFolderDisplayName(mCtx, folder));
         }
 
+        holder.itemView.setSelected(position == mSelectedFolder);
+
+        holder.mName.setTextAppearance(mCtx, position == mSelectedFolder ?
+                R.style.TextAppearance_AppCompat_NavDrawer_Selected :
+                R.style.TextAppearance_AppCompat_NavDrawer);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onDrawerFolderSelected(folder);
+                setSelected(position);
+                mListener.onDrawerFolderSelected(folder, position == mSelectedFolder);
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            holder.mIcon.setImageTintList(position == mSelectedFolder ?
+                    new ColorStateList(new int[][]{{}},
+                    new int[]{mCtx.getResources().getColor(R.color.accent_dark)}) : null);
     }
 
     // Return the size of the dataset (invoked by the layout manager)

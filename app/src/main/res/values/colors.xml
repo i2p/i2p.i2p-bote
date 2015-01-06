@@ -6,10 +6,8 @@
     <color name="accent">#ffab40</color><!-- Orange A200 -->
     <color name="accent_dark">#ff9100</color><!-- Orange A400 -->
 
-    <!-- A translucent holo blue -->
-    <color name="translucent_blue">#9033B5E5</color>
+    <color name="listitem_selected">#e0e0e0</color>
     <color name="uva_color">#c31756</color>
-    <color name="default_color">#111</color>
     <color name="error_color">#f00</color>
 
     <color name="green">#4caf50</color>
