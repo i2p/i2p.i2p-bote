@@ -98,7 +98,7 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final EmailFolder folder = mFolders.get(position);
 
         holder.mIcon.setImageDrawable(BoteHelper.getFolderIcon(mCtx, folder));
@@ -118,6 +118,7 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int position = holder.getPosition();
                 boolean alreadySelected = position == mSelectedFolder;
                 setSelected(position);
                 mListener.onDrawerFolderSelected(folder, alreadySelected);
