@@ -118,8 +118,9 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean alreadySelected = position == mSelectedFolder;
                 setSelected(position);
-                mListener.onDrawerFolderSelected(folder, position == mSelectedFolder);
+                mListener.onDrawerFolderSelected(folder, alreadySelected);
             }
         });
 
