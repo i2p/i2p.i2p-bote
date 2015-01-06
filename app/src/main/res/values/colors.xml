@@ -6,7 +6,7 @@
     <color name="accent">#ffab40</color><!-- Orange A200 -->
     <color name="accent_dark">#ff9100</color><!-- Orange A400 -->
 
-    <color name="listitem_selected">#e0e0e0</color>
+    <color name="listitem_selected">#e0e0e0</color><!-- Grey 300 -->
     <color name="uva_color">#c31756</color>
     <color name="error_color">#f00</color>
 
