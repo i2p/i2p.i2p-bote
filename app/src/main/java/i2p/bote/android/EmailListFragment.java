@@ -36,6 +36,7 @@ import i2p.bote.I2PBote;
 import i2p.bote.android.util.AuthenticatedFragment;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.DividerItemDecoration;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.android.util.MultiSelectionUtil;
 import i2p.bote.android.util.MultiSwipeRefreshLayout;
@@ -133,11 +134,12 @@ public class EmailListFragment extends AuthenticatedFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mEmailsList.setHasFixedSize(true);
+        mEmailsList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+
         // Use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mEmailsList.setLayoutManager(mLayoutManager);
-
-        mEmailsList.setHasFixedSize(true);
 
         // Set the adapter for the list view
         mAdapter = new EmailListAdapter(getActivity(), mFolder.getName(), mCallback);
