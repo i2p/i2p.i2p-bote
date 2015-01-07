@@ -6,14 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -21,14 +21,15 @@ import java.util.SortedSet;
 
 import i2p.bote.I2PBote;
 import i2p.bote.android.R;
-import i2p.bote.android.util.AuthenticatedListFragment;
+import i2p.bote.android.util.AuthenticatedFragment;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.dht.Contact;
 
-public class AddressBookFragment extends AuthenticatedListFragment implements
+public class AddressBookFragment extends AuthenticatedFragment implements
         LoaderManager.LoaderCallbacks<SortedSet<Contact>> {
     OnContactSelectedListener mCallback;
+    private RecyclerView mContactsList;
     private ContactAdapter mAdapter;
 
     private View mPromotedActions;
@@ -60,14 +61,11 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Create the list fragment's content view by calling the super method
-        final View listFragmentView = super.onCreateView(inflater, container, savedInstanceState);
-
+    public View onCreateAuthenticatedView(
+            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_contacts, container, false);
-        FrameLayout listContainer = (FrameLayout) v.findViewById(R.id.list_container);
-        listContainer.addView(listFragmentView);
 
+        mContactsList = (RecyclerView) v.findViewById(R.id.contacts_list);
         mPromotedActions = v.findViewById(R.id.promoted_actions);
 
         ImageButton b = (ImageButton) v.findViewById(R.id.action_new_contact);
@@ -92,9 +90,14 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new ContactAdapter(getActivity());
 
-        setListAdapter(mAdapter);
+        // Use a linear layout manager
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mContactsList.setLayoutManager(mLayoutManager);
+
+        // Set the adapter for the list view
+        mAdapter = new ContactAdapter(mCallback);
+        mContactsList.setAdapter(mAdapter);
     }
 
     /**
@@ -102,14 +105,11 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
      * Only called when we have a password cached, or no
      * password is required.
      */
-    protected void onInitializeList() {
-        setListShown(false);
-        setEmptyText(getResources().getString(
-                R.string.address_book_empty));
+    protected void onInitializeFragment() {
         getLoaderManager().initLoader(0, null, this);
     }
 
-    protected void onDestroyList() {
+    protected void onDestroyFragment() {
         getLoaderManager().destroyLoader(0);
     }
 
@@ -135,13 +135,7 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
         integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
     }
 
-    @Override
-    public void onListItemClick(ListView parent, View view, int pos, long id) {
-        mCallback.onContactSelected(mAdapter.getItem(pos));
-    }
-
     protected void updateContactList() {
-        setListShown(false);
         getLoaderManager().restartLoader(0, null, this);
     }
 
@@ -184,17 +178,11 @@ public class AddressBookFragment extends AuthenticatedListFragment implements
     @Override
     public void onLoadFinished(Loader<SortedSet<Contact>> loader,
             SortedSet<Contact> data) {
-        mAdapter.setData(data);
-
-        if (isResumed()) {
-            setListShown(true);
-        } else {
-            setListShownNoAnimation(true);
-        }
+        mAdapter.setContacts(data);
     }
 
     @Override
     public void onLoaderReset(Loader<SortedSet<Contact>> loader) {
-        mAdapter.setData(null);
+        mAdapter.setContacts(null);
     }
 }

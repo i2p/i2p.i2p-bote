@@ -1,54 +1,86 @@
 package i2p.bote.android.addressbook;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.packet.dht.Contact;
 
-public class ContactAdapter extends ArrayAdapter<Contact> {
-    private final LayoutInflater mInflater;
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
+    private List<Contact> mContacts;
+    private AddressBookFragment.OnContactSelectedListener mListener;
 
-    public ContactAdapter(Context context) {
-        super(context, android.R.layout.simple_list_item_2);
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mPicture;
+        public TextView mName;
 
-    public void setData(SortedSet<Contact> contacts) {
-        clear();
-        if (contacts != null) {
-            for (Contact contact : contacts) {
-                add(contact);
-            }
+        public ViewHolder(View itemView) {
+            super(itemView);
+            mPicture = (ImageView) itemView.findViewById(R.id.contact_picture);
+            mName = (TextView) itemView.findViewById(R.id.contact_name);
         }
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = mInflater.inflate(R.layout.listitem_contact, parent, false);
-        Contact contact = getItem(position);
+    public ContactAdapter(AddressBookFragment.OnContactSelectedListener listener) {
+        mListener = listener;
+    }
 
-        ImageView picture = (ImageView) v.findViewById(R.id.contact_picture);
-        TextView name = (TextView) v.findViewById(R.id.contact_name);
+    public void setContacts(SortedSet<Contact> contacts) {
+        if (contacts != null) {
+            mContacts = new ArrayList<Contact>();
+            mContacts.addAll(contacts);
+        } else
+            mContacts = null;
+
+        notifyDataSetChanged();
+    }
+
+    // Create new views (invoked by the layout manager)
+    @Override
+    public ContactAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                        int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.listitem_contact, parent, false);
+        return new ViewHolder(v);
+    }
+
+    // Replace the contents of a view (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        Contact contact = mContacts.get(position);
 
         String pic = contact.getPictureBase64();
         if (pic != null && !pic.isEmpty())
-            picture.setImageBitmap(BoteHelper.decodePicture(pic));
+            holder.mPicture.setImageBitmap(BoteHelper.decodePicture(pic));
         else {
-            ViewGroup.LayoutParams lp = picture.getLayoutParams();
-            picture.setImageBitmap(BoteHelper.getIdenticonForAddress(contact.getBase64Dest(), lp.width, lp.height));
+            ViewGroup.LayoutParams lp = holder.mPicture.getLayoutParams();
+            holder.mPicture.setImageBitmap(BoteHelper.getIdenticonForAddress(contact.getBase64Dest(), lp.width, lp.height));
         }
 
-        name.setText(contact.getName());
+        holder.mName.setText(contact.getName());
 
-        return v;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onContactSelected(mContacts.get(holder.getPosition()));
+            }
+        });
+    }
+
+    // Return the size of the dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount() {
+        if (mContacts != null)
+            return mContacts.size();
+        return 0;
     }
 }
