@@ -54,7 +54,8 @@ public class BoteHelper extends GeneralHelper {
      * Get the translated name of the folder.
      * Built-in folders are special-cased; other folders are created by the
      * user, so their name is already "translated".
-     * @param ctx Android Context to get strings from.
+     *
+     * @param ctx    Android Context to get strings from.
      * @param folder The folder.
      * @return The name of the folder.
      */
@@ -75,7 +76,8 @@ public class BoteHelper extends GeneralHelper {
     /**
      * Get the translated name of the folder with the number of
      * new messages it contains appended.
-     * @param ctx Android Context to get strings from.
+     *
+     * @param ctx    Android Context to get strings from.
      * @param folder The folder.
      * @return The name of the folder.
      * @throws PasswordException
@@ -111,12 +113,13 @@ public class BoteHelper extends GeneralHelper {
 
         return (emailDest == null ? address
                 : (name.isEmpty() ? emailDest.substring(0, 10)
-                        : name + " <" + emailDest.substring(0, 10) + "...>"));
+                : name + " <" + emailDest.substring(0, 10) + "...>"));
     }
 
     /**
      * Get a Bitmap containing the picture for the contact or identity
      * corresponding to the given address.
+     *
      * @param address the address to get a picture for.
      * @return a Bitmap, or null if no picture was found.
      * @throws PasswordException
@@ -137,6 +140,7 @@ public class BoteHelper extends GeneralHelper {
     /**
      * Get a Bitmap containing the picture for the contact or identity
      * corresponding to the given Destination.
+     *
      * @param base64dest the Destination to get a picture for.
      * @return a Bitmap, or null if no picture was found.
      * @throws PasswordException
@@ -187,8 +191,8 @@ public class BoteHelper extends GeneralHelper {
             // Check if the string contains chars in angle brackets
             int ltIndex = address.indexOf('<');
             int gtIndex = address.indexOf('>', ltIndex);
-            if (ltIndex>=0 && gtIndex>0)
-                identifier = address.substring(ltIndex+1, gtIndex);
+            if (ltIndex >= 0 && gtIndex > 0)
+                identifier = address.substring(ltIndex + 1, gtIndex);
             else
                 identifier = address;
         }
@@ -202,72 +206,99 @@ public class BoteHelper extends GeneralHelper {
         return bitmap;
     }
 
+    private static final String PROPERTY_SENT = "sent";
+    public static void setEmailSent(Email email, boolean isSent) {
+        email.getMetadata().setProperty(PROPERTY_SENT, isSent ? "true" : "false");
+    }
+
+    /**
+     * Determines if we sent this email, either anonymously or from a local identity.
+     *
+     * @param email The Email to query metadata for
+     * @return true if we sent this email, false otherwise
+     * @throws PasswordException
+     * @throws IOException
+     * @throws GeneralSecurityException
+     * @throws MessagingException
+     */
     public static boolean isSentEmail(Email email) throws PasswordException, IOException, GeneralSecurityException, MessagingException {
-        // Is the sender anonymous and we are not the recipient?
-        if (email.isAnonymous()) {
-            Address[] recipients = email.getAllRecipients();
-            for (Address recipient : recipients) {
-                String toDest = EmailDestination.extractBase64Dest(recipient.toString());
-                if (toDest != null && getIdentity(toDest) != null)
-                    // We are a recipient
-                    return false;
+        boolean isSent;
+
+        if (email.getMetadata().containsKey(PROPERTY_SENT)) {
+            String sentStr = email.getMetadata().getProperty(PROPERTY_SENT);
+            isSent = "true".equals(sentStr);
+        } else {
+            // Figure it out
+            // Is the sender anonymous?
+            if (email.isAnonymous()) {
+                // Assume we sent it unless we are a recipient
+                isSent = true;
+
+                Address[] recipients = email.getAllRecipients();
+                for (Address recipient : recipients) {
+                    String toDest = EmailDestination.extractBase64Dest(recipient.toString());
+                    if (toDest != null && getIdentity(toDest) != null) {
+                        // We are a recipient
+                        isSent = false;
+                        break;
+                    }
+                }
+            } else {
+                // Are we the sender?
+                String fromAddress = email.getOneFromAddress();
+                String fromDest = EmailDestination.extractBase64Dest(fromAddress);
+                isSent = (fromDest != null && getIdentity(fromDest) != null);
             }
-            // We are not a recipient
-            return true;
+
+            // Cache for next time
+            setEmailSent(email, isSent);
         }
 
-        // Are we the sender?
-        String fromAddress = email.getOneFromAddress();
-        String fromDest = EmailDestination.extractBase64Dest(fromAddress);
-        if ((fromDest != null && getIdentity(fromDest) != null))
-            return true;
-
-        // We are not the sender
-        return false;
+        return isSent;
     }
 
     public static String getEmailStatusText(Context ctx, Email email, boolean full) {
         Resources res = ctx.getResources();
         EmailStatus emailStatus = getEmailStatus(email);
         switch (emailStatus.getStatus()) {
-        case QUEUED:
-            return res.getString(R.string.queued);
-        case SENDING:
-            return res.getString(R.string.sending);
-        case SENT_TO:
-            if (full)
-                return res.getString(R.string.sent_to,
-                        (Integer) emailStatus.getParam1(), (Integer) emailStatus.getParam2());
-            else
-                return res.getString(R.string.sent_to_short,
-                        (Integer) emailStatus.getParam1(), (Integer) emailStatus.getParam2());
-        case EMAIL_SENT:
-            return res.getString(R.string.email_sent);
-        case GATEWAY_DISABLED:
-            return res.getString(R.string.gateway_disabled);
-        case NO_IDENTITY_MATCHES:
-            if (full)
-                return res.getString(R.string.no_identity_matches,
-                        emailStatus.getParam1());
-        case INVALID_RECIPIENT:
-            if (full)
-                return res.getString(R.string.invalid_recipient,
-                        emailStatus.getParam1());
-        case ERROR_CREATING_PACKETS:
-            if (full)
-                return res.getString(R.string.error_creating_packets,
-                        emailStatus.getParam1());
-        case ERROR_SENDING:
-            if (full)
-                return res.getString(R.string.error_sending,
-                        emailStatus.getParam1());
-        case ERROR_SAVING_METADATA:
-            if (full)
-                return res.getString(R.string.error_saving_metadata,
-                        emailStatus.getParam1());
-        default:
-            // Short string for errors and unknown status
-            return res.getString(R.string.error);
+            case QUEUED:
+                return res.getString(R.string.queued);
+            case SENDING:
+                return res.getString(R.string.sending);
+            case SENT_TO:
+                if (full)
+                    return res.getString(R.string.sent_to,
+                            (Integer) emailStatus.getParam1(), (Integer) emailStatus.getParam2());
+                else
+                    return res.getString(R.string.sent_to_short,
+                            (Integer) emailStatus.getParam1(), (Integer) emailStatus.getParam2());
+            case EMAIL_SENT:
+                return res.getString(R.string.email_sent);
+            case GATEWAY_DISABLED:
+                return res.getString(R.string.gateway_disabled);
+            case NO_IDENTITY_MATCHES:
+                if (full)
+                    return res.getString(R.string.no_identity_matches,
+                            emailStatus.getParam1());
+            case INVALID_RECIPIENT:
+                if (full)
+                    return res.getString(R.string.invalid_recipient,
+                            emailStatus.getParam1());
+            case ERROR_CREATING_PACKETS:
+                if (full)
+                    return res.getString(R.string.error_creating_packets,
+                            emailStatus.getParam1());
+            case ERROR_SENDING:
+                if (full)
+                    return res.getString(R.string.error_sending,
+                            emailStatus.getParam1());
+            case ERROR_SAVING_METADATA:
+                if (full)
+                    return res.getString(R.string.error_saving_metadata,
+                            emailStatus.getParam1());
+            default:
+                // Short string for errors and unknown status
+                return res.getString(R.string.error);
         }
     }
 
@@ -308,6 +339,7 @@ public class BoteHelper extends GeneralHelper {
 
     public interface RequestPasswordListener {
         public void onPasswordVerified();
+
         public void onPasswordCanceled();
     }
 
@@ -427,9 +459,9 @@ public class BoteHelper extends GeneralHelper {
      * Attempt to revoke any URI permissions that were granted on an Email's attachments.
      * This is best-effort; exceptions are silently ignored.
      *
-     * @param context the Context in which permissions were granted
+     * @param context    the Context in which permissions were granted
      * @param folderName where the Email is
-     * @param email the Email to revoke permissions for
+     * @param email      the Email to revoke permissions for
      */
     public static void revokeAttachmentUriPermissions(Context context, String folderName, Email email) {
         List<Part> parts;

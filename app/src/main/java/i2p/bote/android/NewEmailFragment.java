@@ -521,6 +521,9 @@ public class NewEmailFragment extends Fragment {
             // Set the text and add attachments
             email.setContent(mContent.getText().toString(), attachments);
 
+            // Cache the fact that we sent this email
+            BoteHelper.setEmailSent(email, true);
+
             // Send the email
             I2PBote.getInstance().sendEmail(email);
 
