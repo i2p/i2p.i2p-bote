@@ -7,8 +7,6 @@ Tasks:
 - Show logged-in status in persistent notification
 - Intro and setup
   - More layouts (tune for each screen size)
-- About page
-- Help page
 - Subclass EmailListFragment for each default mailbox
 - Cache Identicons for speed
 - Refactor code

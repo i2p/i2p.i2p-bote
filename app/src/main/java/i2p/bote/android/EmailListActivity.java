@@ -305,6 +305,11 @@ public class EmailListActivity extends ActionBarActivity implements
                 startActivity(si);
                 return true;
 
+            case R.id.action_help:
+                Intent hi = new Intent(this, HelpActivity.class);
+                startActivity(hi);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
