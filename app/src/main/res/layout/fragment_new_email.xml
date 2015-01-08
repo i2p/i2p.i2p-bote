@@ -27,7 +27,8 @@
                 android:id="@+id/to"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:textColor="@color/primary_text_default_material_light">
 
                 <requestFocus/>
             </i2p.bote.android.util.ContactsCompletionView>
@@ -45,12 +46,14 @@
             android:id="@+id/cc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/primary_text_default_material_light"
             android:visibility="gone"/>
 
         <i2p.bote.android.util.ContactsCompletionView
             android:id="@+id/bcc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/primary_text_default_material_light"
             android:visibility="gone"/>
 
         <EditText
