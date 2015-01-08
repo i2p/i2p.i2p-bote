@@ -1,0 +1,5 @@
+-keepclassmembers class i2p.bote.crypto.ECUtils {
+  public static java.security.spec.ECParameterSpec getParameters(String curveName);
+  public static byte[] encodePoint(java.security.spec.ECParameterSpec ecSpec, java.security.spec.ECPoint point, boolean withCompression);
+  public static java.security.spec.ECPoint decodePoint(java.security.spec.EllipticCurve curve, byte[] encoded);
+}
