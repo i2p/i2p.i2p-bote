@@ -19,18 +19,12 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_launcher"/>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_launcher"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,12 +41,34 @@
                     android:id="@+id/help_about_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/version"
                     android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
             </LinearLayout>
         </LinearLayout>
 
+        <TextView
+            style="@style/Help.About.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:text="@string/help_about_url"/>
+
+        <TextView
+            android:id="@+id/help_about_license"
+            style="@style/Help.About.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/license"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/libraries"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subject"/>
+
         <org.sufficientlysecure.htmltextview.HtmlTextView
-            android:id="@+id/help_about_text"
+            android:id="@+id/help_about_libraries"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>

@@ -21,15 +21,18 @@ public class HelpAboutFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_help_about, container, false);
 
         TextView versionText = (TextView) view.findViewById(R.id.help_about_version);
-        versionText.setText(getString(R.string.help_about_version) + " " + getVersion());
+        versionText.setText(getString(R.string.version) + " " + getVersion());
 
-        HtmlTextView aboutTextView = (HtmlTextView) view.findViewById(R.id.help_about_text);
+        TextView licenseText = (TextView) view.findViewById(R.id.help_about_license);
+        licenseText.setText(getString(R.string.license, "GPLv3+"));
+
+        HtmlTextView aboutLibsView = (HtmlTextView) view.findViewById(R.id.help_about_libraries);
 
         // load html from raw resource (Parsing handled by HtmlTextView library)
-        aboutTextView.setHtmlFromRawResource(getActivity(), R.raw.help_about, true);
+        aboutLibsView.setHtmlFromRawResource(getActivity(), R.raw.help_about_libraries, true);
 
         // no flickering when clicking textview for Android < 4
-        aboutTextView.setTextColor(getResources().getColor(android.R.color.black));
+        aboutLibsView.setTextColor(getResources().getColor(android.R.color.black));
 
         return view;
     }
