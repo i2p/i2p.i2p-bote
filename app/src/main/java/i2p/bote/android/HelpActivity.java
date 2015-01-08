@@ -65,8 +65,10 @@ public class HelpActivity extends ActionBarActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 1:
-                    return getString(R.string.changelog);
+                    return getString(R.string.pref_title_identities);
                 case 2:
+                    return getString(R.string.changelog);
+                case 3:
                     return getString(R.string.about);
                 case 0:
                 default:
@@ -78,8 +80,10 @@ public class HelpActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 1:
-                    return HelpHtmlFragment.newInstance(R.raw.help_changelog);
+                    return HelpHtmlFragment.newInstance(R.raw.help_identities);
                 case 2:
+                    return HelpHtmlFragment.newInstance(R.raw.help_changelog);
+                case 3:
                     return new HelpAboutFragment();
                 case 0:
                 default:
@@ -89,7 +93,7 @@ public class HelpActivity extends ActionBarActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
 }
