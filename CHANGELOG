@@ -20,20 +20,22 @@
  * Migrated to new Material design from Android Lollipop
  * Overhauled password usability
  * Identicons for contacts without pictures
- * Check email improvements
-   * Use new-style swipe
-   * Users can now launch check from menu, or swipe on empty inbox
+ * Use new-style swipe for checking emails
+ * Users can now check emails from menu, or swipe on empty inbox
  * "Forward" and "Reply all" actions for emails
  * QR codes for sharing identities
  * Separated viewing and editing contacts
  * Improved network information page
- * Various bug fixes
- * Updated translations
+ * Bug fixes, translation updates
 
 0.3-rc3 / 2014-08-23 / 6e7655836552d13d6fa6b7512e7dcf77cb3d413b
  * Test release to Norway on Google Play
 
 0.2 / 2014-07-10 / 6c9c580bf6272db575091a1b48f66315535380e0
+ * Fixed locale hiding in replies
+ * New notification icons
+ * New translation
+ * UI improvements and bug fixes
 
 0.1.1 / 2014-06-20 / a9c83d573dc3c5fbeeb288b347f996f440b33621
  * Fixed bugs in identity creation and password setting
