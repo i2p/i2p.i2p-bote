@@ -221,4 +221,13 @@
   <string name="this_field_is_required">此项必填</string>
   <string name="bote_dest_for">%s 的 Bote 地址</string>
   <string name="copied_to_clipboard">复制到剪贴板</string>
+  <string name="help">帮助</string>
+  <string name="start">开始</string>
+  <string name="changelog">变更日志</string>
+  <string name="about">关于</string>
+  <string name="version">版本</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <string name="license">许可协议：%s</string>
+  <!--Software libraries-->
+  <string name="libraries">库</string>
 </resources>

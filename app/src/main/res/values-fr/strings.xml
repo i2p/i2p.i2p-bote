@@ -224,4 +224,13 @@
   <string name="this_field_is_required">Ce champ est requis</string>
   <string name="bote_dest_for">Adresse Bote pour %s</string>
   <string name="copied_to_clipboard">Copié dans le presse-papiers</string>
+  <string name="help">Aide</string>
+  <string name="start">Démarrer</string>
+  <string name="changelog">Historique des modifications</string>
+  <string name="about">À propos</string>
+  <string name="version">Version</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <string name="license">Licence : %s</string>
+  <!--Software libraries-->
+  <string name="libraries">Bibliothèques</string>
 </resources>

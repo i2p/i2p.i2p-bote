@@ -154,7 +154,7 @@
   <string name="unreachable">Inalcanzable</string>
   <string name="relay_peers">Pares repetidores:</string>
   <string name="good">Bueno</string>
-  <string name="unreliable">No confiable</string>
+  <string name="unreliable">No fiable</string>
   <string name="untested">No probado</string>
   <string name="banned_peers">Pares expulsados:</string>
   <string name="connect_error_occurred">¡Oh querido/a! Bote no pudo conectar a la red.</string>
@@ -224,4 +224,13 @@
   <string name="this_field_is_required">Este campo es obligatorio</string>
   <string name="bote_dest_for">Dirección de Bote para %s</string>
   <string name="copied_to_clipboard">Copiado al portapapeles</string>
+  <string name="help">Ayuda</string>
+  <string name="start">Iniciar</string>
+  <string name="changelog">Registro de cambios</string>
+  <string name="about">Acerca de</string>
+  <string name="version">Versión</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <string name="license">Licencia: %s</string>
+  <!--Software libraries-->
+  <string name="libraries">Librerías</string>
 </resources>
