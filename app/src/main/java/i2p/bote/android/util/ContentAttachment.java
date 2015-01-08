@@ -10,8 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -19,7 +17,6 @@ import javax.mail.MessagingException;
 import javax.mail.Part;
 
 import i2p.bote.Util;
-import i2p.bote.android.R;
 import i2p.bote.email.Attachment;
 
 public class ContentAttachment implements Attachment {
@@ -89,20 +86,7 @@ public class ContentAttachment implements Attachment {
     }
 
     public String getHumanReadableSize() {
-        int unit = (63-Long.numberOfLeadingZeros(mSize)) / 10;   // 0 if totalBytes<1K, 1 if 1K<=totalBytes<1M, etc.
-        double value = (double)mSize / (1<<(10*unit));
-        int formatStr;
-        switch (unit) {
-            case 0: formatStr = R.string.n_bytes; break;
-            case 1: formatStr = R.string.n_kilobytes; break;
-            default: formatStr = R.string.n_megabytes;
-        }
-        NumberFormat formatter = NumberFormat.getInstance(Locale.getDefault());
-        if (value < 100)
-            formatter.setMaximumFractionDigits(1);
-        else
-            formatter.setMaximumFractionDigits(0);
-        return mCtx.getString(formatStr, formatter.format(value));
+        return BoteHelper.getHumanReadableSize(mCtx, mSize);
     }
 
     @Override

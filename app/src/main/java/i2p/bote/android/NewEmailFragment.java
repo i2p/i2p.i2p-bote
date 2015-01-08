@@ -98,6 +98,8 @@ public class NewEmailFragment extends Fragment {
 
     public static final String QUOTE_MSG_TYPE = "type";
 
+    private static final long MAX_RECOMMENDED_ATTACHMENT_SIZE = 1048576;
+
     private static final int REQUEST_FILE = 1;
 
     private String mSenderKey;
@@ -112,6 +114,8 @@ public class NewEmailFragment extends Fragment {
     EditText mSubject;
     EditText mContent;
     LinearLayout mAttachments;
+    private long mTotalAttachmentSize;
+    private View mAttachmentSizeWarning;
     boolean mMoreVisible;
     boolean mDirty;
 
@@ -455,14 +459,42 @@ public class NewEmailFragment extends Fragment {
             v.findViewById(R.id.attachment_action).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    updateAttachmentSizeCount(attachment.getSize(), false);
                     attachment.clean();
                     mAttachments.removeView(v);
                 }
             });
             mAttachments.addView(v);
+            updateAttachmentSizeCount(attachment.getSize(), true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Log.e(Constants.ANDROID_LOG_TAG, "File not found: " + uri);
+        }
+    }
+
+    private void updateAttachmentSizeCount(long size, boolean increase) {
+        if (increase) {
+            mTotalAttachmentSize += size;
+            if (mTotalAttachmentSize > MAX_RECOMMENDED_ATTACHMENT_SIZE &&
+                    mAttachmentSizeWarning == null) {
+                mAttachmentSizeWarning = getActivity().getLayoutInflater().inflate(
+                        R.layout.listitem_attachment_warning, mAttachments, false);
+                TextView warning = (TextView) mAttachmentSizeWarning.findViewById(
+                        R.id.attachment_warning_text);
+                warning.setText(
+                        getString(R.string.attachment_size_warning,
+                                BoteHelper.getHumanReadableSize(
+                                        getActivity(), MAX_RECOMMENDED_ATTACHMENT_SIZE))
+                );
+                mAttachments.addView(mAttachmentSizeWarning, 0);
+            }
+        } else {
+            mTotalAttachmentSize -= size;
+            if (mTotalAttachmentSize <= MAX_RECOMMENDED_ATTACHMENT_SIZE &&
+                    mAttachmentSizeWarning != null) {
+                mAttachments.removeView(mAttachmentSizeWarning);
+                mAttachmentSizeWarning = null;
+            }
         }
     }
 

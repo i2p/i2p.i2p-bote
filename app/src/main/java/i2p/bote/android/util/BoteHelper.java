@@ -28,9 +28,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
+import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
@@ -502,5 +504,22 @@ public class BoteHelper extends GeneralHelper {
         } catch (IOException e) {
             Log.e(Constants.ANDROID_LOG_TAG, "Exception copying streams", e);
         }
+    }
+
+    public static String getHumanReadableSize(Context context, long size) {
+        int unit = (63-Long.numberOfLeadingZeros(size)) / 10;   // 0 if totalBytes<1K, 1 if 1K<=totalBytes<1M, etc.
+        double value = (double)size / (1<<(10*unit));
+        int formatStr;
+        switch (unit) {
+            case 0: formatStr = R.string.n_bytes; break;
+            case 1: formatStr = R.string.n_kilobytes; break;
+            default: formatStr = R.string.n_megabytes;
+        }
+        NumberFormat formatter = NumberFormat.getInstance(Locale.getDefault());
+        if (value < 100)
+            formatter.setMaximumFractionDigits(1);
+        else
+            formatter.setMaximumFractionDigits(0);
+        return context.getString(formatStr, formatter.format(value));
     }
 }

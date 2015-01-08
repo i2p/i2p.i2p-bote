@@ -127,6 +127,8 @@
     <string name="compose">Compose</string>
     <string name="subject">Subject</string>
     <string name="compose_email">Compose email</string>
+    <!-- Argument is a file size, e.g. "500 KB" -->
+    <string name="attachment_size_warning">You have more than %s of attachments. Email sending may be slow.</string>
     <string name="add_one_recipient">Add at least one recipient.</string>
     <string name="stop_composing_email">Stop composing email?</string>
     <string name="all_changes_will_be_discarded">All changes will be discarded.</string>
