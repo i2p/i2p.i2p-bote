@@ -3,6 +3,7 @@
  * Email content can be seleted/copied (API 11+)
  * Cc: and Bcc: fields
  * Improved performance of email and contact lists
+ * Use ripple effect on API 21+
  * Much better support for legacy devices
  * Help and About screens
  * UI improvements, bug fixes, translation updates
