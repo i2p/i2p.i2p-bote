@@ -547,7 +547,9 @@ public class NewEmailFragment extends Fragment {
             List<Attachment> attachments = new ArrayList<Attachment>();
             for (int i = 0; i < mAttachments.getChildCount(); i++) {
                 View v = mAttachments.getChildAt(i);
-                attachments.add((Attachment) v.getTag());
+                // Warning views don't have tags set
+                if (v.getTag() != null)
+                    attachments.add((Attachment) v.getTag());
             }
 
             // Set the text and add attachments
