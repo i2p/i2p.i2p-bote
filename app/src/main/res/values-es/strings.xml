@@ -116,6 +116,8 @@
   <string name="compose">Componer</string>
   <string name="subject">Asunto</string>
   <string name="compose_email">Componer correo</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
+  <string name="attachment_size_warning">Tiene más de %s de adjuntos. El envío del correo puede ser lento.</string>
   <string name="add_one_recipient">Añadir al menos un destinatario.</string>
   <string name="stop_composing_email">¿Detener composición del correo?</string>
   <string name="all_changes_will_be_discarded">Todos los cambios se descartarán.</string>
