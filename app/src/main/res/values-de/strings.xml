@@ -116,6 +116,8 @@
   <string name="compose">Verfassen</string>
   <string name="subject">Betreff</string>
   <string name="compose_email">E-Mail verfassen</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
+  <string name="attachment_size_warning">Sie haben mehr als %s Anhänge. Email wird wahrscheinlich langsamer versendet.</string>
   <string name="add_one_recipient">Mindestens ein Empfänger nötig</string>
   <string name="stop_composing_email">Verfassen der E-Mail stoppen</string>
   <string name="all_changes_will_be_discarded">Alle Änderungen werden verworfen.</string>
@@ -224,4 +226,13 @@
   <string name="this_field_is_required">Dieses Feld ist erforderlich</string>
   <string name="bote_dest_for">Bote-Adresse für %s</string>
   <string name="copied_to_clipboard">In die Zwischenablage kopiert</string>
+  <string name="help">Hilfe</string>
+  <string name="start">Start</string>
+  <string name="changelog"> Versionsgeschichte</string>
+  <string name="about">Über</string>
+  <string name="version">Version</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <string name="license">Lizens: %s</string>
+  <!--Software libraries-->
+  <string name="libraries">Bibliotheken</string>
 </resources>
