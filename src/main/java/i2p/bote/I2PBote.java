@@ -814,14 +814,18 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     }
 
     private void stopAllServices() {
-        // interrupt all threads
-        for (I2PAppThread thread: backgroundThreads)
-            if (thread!=null && thread.isAlive())
-                thread.interrupt();
+        if (backgroundThreads != null) {
+            // interrupt all threads
+            for (I2PAppThread thread: backgroundThreads)
+                if (thread!=null && thread.isAlive())
+                    thread.interrupt();
+        }
         stopImap();
         stopSmtp();
-        awaitShutdown(backgroundThreads, 5 * 1000);
-        printRunningThreads();
+        if (backgroundThreads != null) {
+            awaitShutdown(5 * 1000);
+            printRunningThreads();
+        }
     }
 
     private void printRunningThreads() {
@@ -839,11 +843,10 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     }
     
     /**
-     * Waits up to <code>timeout</code> milliseconds for a <code>Collection</code> of threads to end.
-     * @param threads
+     * Waits up to <code>timeout</code> milliseconds for the background threads to end.
      * @param timeout In milliseconds
      */
-    private void awaitShutdown(Collection<I2PAppThread> threads, long timeout) {
+    private void awaitShutdown(long timeout) {
         long deadline = System.currentTimeMillis() + timeout;   // the time at which any background threads that are still running are interrupted
 
         for (I2PAppThread thread: backgroundThreads)
