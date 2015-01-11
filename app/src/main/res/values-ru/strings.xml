@@ -118,6 +118,8 @@
   <string name="compose">Написать</string>
   <string name="subject">Тема</string>
   <string name="compose_email">Написать письмо</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
+  <string name="attachment_size_warning">Размер прикрепленных файлов более %s. Отправка письма может быть медленной. </string>
   <string name="add_one_recipient">Добавьте как минимум одного получателя</string>
   <string name="stop_composing_email">Прервать написание письма?</string>
   <string name="all_changes_will_be_discarded">Все изменения будут сброшены.</string>
@@ -228,4 +230,13 @@
   <string name="this_field_is_required">Это поле обязательно для заполнения</string>
   <string name="bote_dest_for">Адрес Bote для %s</string>
   <string name="copied_to_clipboard">Скопировано в буфер</string>
+  <string name="help">Справка</string>
+  <string name="start">Запуск</string>
+  <string name="changelog">История изменений</string>
+  <string name="about">О приложении</string>
+  <string name="version">Версия</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <string name="license">Лицензия: %s</string>
+  <!--Software libraries-->
+  <string name="libraries">Библиотеки</string>
 </resources>

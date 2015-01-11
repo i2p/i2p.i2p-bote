@@ -114,6 +114,8 @@
   <string name="compose">撰写</string>
   <string name="subject">主题</string>
   <string name="compose_email">撰写邮件</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
+  <string name="attachment_size_warning">您附加了超过 %s 的附件。发送这封邮件可能很慢。</string>
   <string name="add_one_recipient">请添加至少一个收件人。</string>
   <string name="stop_composing_email">停止撰写邮件？</string>
   <string name="all_changes_will_be_discarded">所有更改将被丢弃。</string>
