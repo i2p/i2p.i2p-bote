@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.mail.MessagingException;
 import javax.mail.Part;
 
@@ -102,8 +103,29 @@ public class AttachmentProvider extends ContentProvider {
                     String contentType = attachment.getContentType();
                     // Remove any "; name=fileName" suffix
                     int delim = contentType.indexOf(';');
-                    if (delim >= 0)
+                    if (delim >= 0) {
+                        String params = contentType.substring(delim + 1);
                         contentType = contentType.substring(0, delim);
+
+                        // Double-check in case the attachment was created by an old
+                        // I2P-Bote version that didn't detect MIME types correctly.
+                        if ("application/octet-stream".equals(contentType)) {
+                            // Find the filename
+                            String filename = "";
+                            delim = params.indexOf("name=");
+                            if (delim >= 0) {
+                                filename = params.substring(delim + 5);
+                                delim = filename.indexOf(' ');
+                                if (delim >= 0)
+                                    filename = params.substring(0, delim);
+                            }
+
+                            if (!filename.isEmpty()) {
+                                MimetypesFileTypeMap mimeTypeMap = new MimetypesFileTypeMap();
+                                contentType = mimeTypeMap.getContentType(filename);
+                            }
+                        }
+                    }
                     return contentType;
                 }
             } catch (PasswordException e) {
