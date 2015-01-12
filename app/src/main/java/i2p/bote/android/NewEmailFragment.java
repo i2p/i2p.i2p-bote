@@ -47,7 +47,7 @@ import javax.mail.internet.InternetAddress;
 
 import i2p.bote.I2PBote;
 import i2p.bote.android.util.BoteHelper;
-import i2p.bote.android.util.ContactsCompletionView;
+import i2p.bote.android.widget.ContactsCompletionView;
 import i2p.bote.android.util.ContentAttachment;
 import i2p.bote.android.util.Person;
 import i2p.bote.email.Attachment;

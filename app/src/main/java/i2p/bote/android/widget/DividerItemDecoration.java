@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package i2p.bote.android.util;
+package i2p.bote.android.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

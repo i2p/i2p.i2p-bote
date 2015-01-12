@@ -4,14 +4,13 @@ import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
 import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
-import i2p.bote.android.util.SummaryEditTextPreference;
+import i2p.bote.android.widget.SummaryEditTextPreference;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +29,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;

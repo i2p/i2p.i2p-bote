@@ -23,7 +23,7 @@ import i2p.bote.I2PBote;
 import i2p.bote.android.R;
 import i2p.bote.android.util.AuthenticatedFragment;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
-import i2p.bote.android.util.DividerItemDecoration;
+import i2p.bote.android.widget.DividerItemDecoration;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.dht.Contact;
 

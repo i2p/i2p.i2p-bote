@@ -1,13 +1,5 @@
-package i2p.bote.android.util;
+package i2p.bote.android.widget;
 
-import java.security.GeneralSecurityException;
-import java.util.SortedSet;
-
-import i2p.bote.I2PBote;
-import i2p.bote.android.R;
-import i2p.bote.email.EmailDestination;
-import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,6 +12,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tokenautocomplete.TokenCompleteTextView;
+
+import java.security.GeneralSecurityException;
+import java.util.SortedSet;
+
+import i2p.bote.I2PBote;
+import i2p.bote.android.R;
+import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.Person;
+import i2p.bote.email.EmailDestination;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.packet.dht.Contact;
 
 public class ContactsCompletionView extends TokenCompleteTextView {
     public ContactsCompletionView(Context context, AttributeSet attrs) {

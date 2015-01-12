@@ -1,4 +1,4 @@
-package i2p.bote.android.util;
+package i2p.bote.android.widget;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
