@@ -76,6 +76,7 @@ dependencyVerification {
             'com.google.zxing:core:f00b32f7a1b0edc914a8f74301e8dc34f189afc4698e9c8cc54e5d46772734a5',
             'com.google.zxing:android-integration:89e56aadf1164bd71e57949163c53abf90af368b51669c0d4a47a163335f95c4',
             'com.androidplot:androidplot-core:777b54dd98b8dedc5f3fcc95018eece1188f6c692dcbd5b7744af175e15d70bd',
+            'com.pnikosis:materialish-progress:301efbc93b5c10b1798911fc610bbeb0f07c80582c299476ed7cd36e5eb23947'
     ]
 }
 

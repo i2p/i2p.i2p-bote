@@ -4,11 +4,8 @@ LICENSES
 This software is licensed under the GPL version 3 (see licenses/GPLv3.txt).
 
 Several libraries and classes are licensed under the Apache License, Version
-2.0 (see licenses/LICENSE-Apache2.0.txt):
-- ActionBar-PullToRefresh
-  (https://github.com/chrisbanes/ActionBar-PullToRefresh)
-- ViewPagerIndicator (http://viewpagerindicator.com/)
-- MultiSelectionUtil (from Google Android Samples)
+2.0 (see licenses/LICENSE-Apache2.0.txt). The full list of libraries in use
+can be found in app/src/main/res/raw/help_about_libraries.html
 
 I2P-Bote is licensed under the GPL version 3. See its repository for details
 about its license and those of the libraries it uses.
