@@ -63,7 +63,7 @@ public class FileAttachment implements Attachment {
     private void loadMimeType() {
         MimetypesFileTypeMap mimeTypeMap = new MimetypesFileTypeMap();
         mimeType = mimeTypeMap.getContentType(origFilename);
-        if (mimeType != null)
+        if (!"application/octet-stream".equals(mimeType))
             return;
 
         InputStream inputStream = null;

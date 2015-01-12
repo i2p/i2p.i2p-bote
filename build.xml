@@ -208,6 +208,7 @@
             <manifest>
                 <attribute name="Class-Path" value="${manifest.classpath}" />
             </manifest>
+            <metainf file="src/main/webapp/META-INF/mime.types"/>
         </jar>
     </target>
     
