@@ -327,7 +327,13 @@
         <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="update-only=true" />
         </exec>
-        <exec executable="${makeplugin}" failonerror="true" >
+        <input message="Enter key password for plugin-su3-keystore.ks:" addproperty="release.password.su3" />
+        <fail message="You must enter a password." >
+            <condition>
+                <equals arg1="${release.password.su3}" arg2=""/>
+            </condition>
+        </fail>
+        <exec executable="${makeplugin}" inputstring="${release.password.su3}" failonerror="true" >
             <arg value="plugin/plugin.tmp" />
         </exec>
         <move file="i2pbote.xpi2p" tofile="i2pbote-update.xpi2p" />
@@ -338,7 +344,7 @@
         <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="version=${version}-b${build.number}" />
         </exec>
-        <exec executable="${makeplugin}" >
+        <exec executable="${makeplugin}" inputstring="${release.password.su3}" failonerror="true" >
             <arg value="plugin/plugin.tmp" />
         </exec>
     </target>
