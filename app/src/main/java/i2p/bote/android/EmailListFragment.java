@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.pnikosis.materialishprogress.ProgressWheel;
+
 import net.i2p.I2PAppContext;
 import net.i2p.util.Log;
 
@@ -37,6 +39,7 @@ import i2p.bote.android.util.AuthenticatedFragment;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.DividerItemDecoration;
+import i2p.bote.android.util.LoadingRecyclerView;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.android.util.MultiSelectionUtil;
 import i2p.bote.android.util.MultiSwipeRefreshLayout;
@@ -58,7 +61,7 @@ public class EmailListFragment extends AuthenticatedFragment implements
     private MultiSwipeRefreshLayout mSwipeRefreshLayout;
     private AsyncTask<Void, Void, Void> mCheckingTask;
 
-    private RecyclerView mEmailsList;
+    private LoadingRecyclerView mEmailsList;
     private EmailListAdapter mAdapter;
     private EmailFolder mFolder;
 
@@ -107,7 +110,10 @@ public class EmailListFragment extends AuthenticatedFragment implements
                 isInbox ? R.layout.fragment_list_emails_with_refresh : R.layout.fragment_list_emails,
                 container, false);
 
-        mEmailsList = (RecyclerView) v.findViewById(R.id.emails_list);
+        mEmailsList = (LoadingRecyclerView) v.findViewById(R.id.emails_list);
+        View empty = v.findViewById(R.id.empty);
+        ProgressWheel loading = (ProgressWheel) v.findViewById(R.id.loading);
+        mEmailsList.setLoadingView(empty, loading);
 
         mNewEmail = (ImageButton) v.findViewById(R.id.promoted_action);
         mNewEmail.setOnClickListener(new View.OnClickListener() {

@@ -41,8 +41,8 @@ public class EmailListAdapter extends MultiSelectionUtil.SelectableAdapter<Recyc
     private List<Email> mEmails;
     private int mIncompleteEmails;
 
-    public static class IncompleteEmailViewHolder extends RecyclerView.ViewHolder {
-        public IncompleteEmailViewHolder(View itemView) {
+    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
+        public SimpleViewHolder(View itemView) {
             super(itemView);
         }
     }
@@ -140,6 +140,9 @@ public class EmailListAdapter extends MultiSelectionUtil.SelectableAdapter<Recyc
 
     @Override
     public int getItemViewType(int position) {
+        if (mEmails == null || mEmails.isEmpty())
+            return R.layout.listitem_empty;
+
         if (mIncompleteEmails > 0)
             position--;
 
@@ -152,11 +155,10 @@ public class EmailListAdapter extends MultiSelectionUtil.SelectableAdapter<Recyc
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(viewType, parent, false);
         switch (viewType) {
-            case R.layout.listitem_incomplete:
-                return new IncompleteEmailViewHolder(v);
             case R.layout.listitem_email:
-            default:
                 return new EmailViewHolder(v);
+            default:
+                return new SimpleViewHolder(v);
         }
     }
 
@@ -164,6 +166,11 @@ public class EmailListAdapter extends MultiSelectionUtil.SelectableAdapter<Recyc
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
+            case R.layout.listitem_empty:
+                ((TextView) holder.itemView).setText(
+                        mCtx.getResources().getString(R.string.folder_empty));
+                break;
+
             case R.layout.listitem_incomplete:
                 ((TextView) holder.itemView).setText(
                         mCtx.getResources().getQuantityString(R.plurals.incomplete_emails,
@@ -278,6 +285,9 @@ public class EmailListAdapter extends MultiSelectionUtil.SelectableAdapter<Recyc
                 }
                 evh.content.setText(email.getText());
                 break;
+
+            default:
+                break;
         }
     }
 
@@ -293,13 +303,17 @@ public class EmailListAdapter extends MultiSelectionUtil.SelectableAdapter<Recyc
     // Return the size of the dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        if (mEmails != null)
-            return mIncompleteEmails > 0 ? mEmails.size() + 1 : mEmails.size();
-        return 0;
+        if (mEmails == null || mEmails.isEmpty())
+            return 1;
+
+        return mIncompleteEmails > 0 ? mEmails.size() + 1 : mEmails.size();
     }
 
     public long getItemId(int position) {
+        if (mEmails == null || mEmails.isEmpty())
+            return 0;
+
         Email email = getEmail(position);
-        return email == null ? 0 : email.getMessageID().hashCode();
+        return email == null ? 1 : email.getMessageID().hashCode();
     }
 }
