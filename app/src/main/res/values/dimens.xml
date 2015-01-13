@@ -34,5 +34,7 @@
     <dimen name="contact_chip_right_margin">12dp</dimen>
     <dimen name="contact_chip_corner_radius">16dp</dimen>
 
+    <dimen name="qr_code_size">200dp</dimen>
+
     <dimen name="pie_size">300dp</dimen>
 </resources>

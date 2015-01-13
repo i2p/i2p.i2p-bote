@@ -95,8 +95,8 @@
 
                 <ImageView
                     android:id="@+id/email_dest_qr_code"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="@dimen/qr_code_size"
+                    android:layout_height="@dimen/qr_code_size"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"/>
 

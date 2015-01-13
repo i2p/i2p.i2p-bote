@@ -18,6 +18,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -239,29 +240,35 @@ public abstract class ViewAddressFragment extends Fragment {
      * Load QR Code asynchronously and with a fade in animation
      */
     private void loadQrCode() {
-        AsyncTask<Void, Void, Bitmap> loadTask =
-                new AsyncTask<Void, Void, Bitmap>() {
-                    protected Bitmap doInBackground(Void... unused) {
+        AsyncTask<Void, Void, Bitmap[]> loadTask =
+                new AsyncTask<Void, Void, Bitmap[]>() {
+                    protected Bitmap[] doInBackground(Void... unused) {
                         String qrCodeContent = Constants.EMAILDEST_SCHEME + ":" + mAddress;
                         // render with minimal size
-                        return QrCodeUtils.getQRCodeBitmap(qrCodeContent, 0);
+                        Bitmap qrCode = QrCodeUtils.getQRCodeBitmap(qrCodeContent, 0);
+                        Bitmap[] scaled = new Bitmap[2];
+
+                        // scale the image up to our actual size. we do this in code rather
+                        // than let the ImageView do this because we don't require filtering.
+                        int size = getResources().getDimensionPixelSize(R.dimen.qr_code_size);
+                        scaled[0] = Bitmap.createScaledBitmap(qrCode, size, size, false);
+
+                        // scale for the expanded image
+                        DisplayMetrics dm = new DisplayMetrics();
+                        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+                        int smallestDimen = Math.min(dm.widthPixels, dm.heightPixels);
+                        scaled[1] = Bitmap.createScaledBitmap(qrCode,
+                                smallestDimen, smallestDimen,
+                                false);
+
+                        return scaled;
                     }
 
-                    protected void onPostExecute(Bitmap qrCode) {
+                    protected void onPostExecute(Bitmap[] scaled) {
                         // only change view, if fragment is attached to activity
                         if (ViewAddressFragment.this.isAdded()) {
-                            // scale the image up to our actual size. we do this in code rather
-                            // than let the ImageView do this because we don't require filtering.
-                            Bitmap scaled = Bitmap.createScaledBitmap(qrCode,
-                                    mAddressQrCode.getHeight(), mAddressQrCode.getHeight(),
-                                    false);
-                            mAddressQrCode.setImageBitmap(scaled);
-                            // scale for the expanded image
-                            int smallestDimen = Math.min(mExpandedQrCode.getWidth(), mExpandedQrCode.getHeight());
-                            scaled = Bitmap.createScaledBitmap(qrCode,
-                                    smallestDimen, smallestDimen,
-                                    false);
-                            mExpandedQrCode.setImageBitmap(scaled);
+                            mAddressQrCode.setImageBitmap(scaled[0]);
+                            mExpandedQrCode.setImageBitmap(scaled[1]);
                             // simple fade-in animation
                             AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
                             anim.setDuration(200);
