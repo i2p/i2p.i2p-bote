@@ -1,19 +1,5 @@
 package i2p.bote.android.config;
 
-import i2p.bote.Configuration;
-import i2p.bote.I2PBote;
-import i2p.bote.android.InitActivities;
-import i2p.bote.android.R;
-import i2p.bote.android.widget.SummaryEditTextPreference;
-import i2p.bote.email.EmailIdentity;
-import i2p.bote.fileencryption.PasswordException;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +24,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import i2p.bote.Configuration;
+import i2p.bote.I2PBote;
+import i2p.bote.android.InitActivities;
+import i2p.bote.android.R;
+import i2p.bote.android.widget.SummaryEditTextPreference;
+import i2p.bote.email.EmailIdentity;
+import i2p.bote.fileencryption.PasswordException;
 
 public class SettingsActivity extends PreferenceActivity {
     // Actions for legacy settings
@@ -251,8 +251,8 @@ public class SettingsActivity extends PreferenceActivity {
                 }
             });
 
-            final PreferenceCategory i2pCat = (PreferenceCategory)findPreference("i2pCategory");
-            CheckBoxPreference routerAuto = (CheckBoxPreference)findPreference("i2pbote.router.auto");
+            final PreferenceCategory i2pCat = (PreferenceCategory) findPreference("i2pCategory");
+            CheckBoxPreference routerAuto = (CheckBoxPreference) findPreference("i2pbote.router.auto");
 
             if (!routerAuto.isChecked()) {
                 setupI2PCategory(this, i2pCat);
@@ -304,8 +304,8 @@ public class SettingsActivity extends PreferenceActivity {
                     }
                 });
 
-                final PreferenceCategory i2pCat = (PreferenceCategory)findPreference("i2pCategory");
-                CheckBoxPreference routerAuto = (CheckBoxPreference)findPreference("i2pbote.router.auto");
+                final PreferenceCategory i2pCat = (PreferenceCategory) findPreference("i2pCategory");
+                CheckBoxPreference routerAuto = (CheckBoxPreference) findPreference("i2pbote.router.auto");
 
                 if (!routerAuto.isChecked()) {
                     setupI2PCategory(getActivity(), i2pCat);
@@ -451,13 +451,13 @@ public class SettingsActivity extends PreferenceActivity {
                 }
             } catch (PasswordException e) {
                 cancel(false);
-                return new Object[] {e};
+                return new Object[]{e};
             } catch (IOException e) {
                 cancel(false);
-                return new Object[] {e};
+                return new Object[]{e};
             } catch (GeneralSecurityException e) {
                 cancel(false);
-                return new Object[] {e};
+                return new Object[]{e};
             }
         }
 
@@ -481,7 +481,7 @@ public class SettingsActivity extends PreferenceActivity {
                 result[index++] = newHeader;
             }
 
-            return new Object[] {result};
+            return new Object[]{result};
         }
 
         @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -508,7 +508,7 @@ public class SettingsActivity extends PreferenceActivity {
                 result[index++] = newHeader;
             }
 
-            return new Object[] {result};
+            return new Object[]{result};
         }
 
         @Override
@@ -611,7 +611,7 @@ public class SettingsActivity extends PreferenceActivity {
         public HeaderAdapter(Context context, ListAdapter adapter) {
             super(context, 0);
             mAdapter = adapter;
-            mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
