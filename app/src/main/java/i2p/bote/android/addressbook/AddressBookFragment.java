@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.SortedSet;
 
@@ -24,13 +25,14 @@ import i2p.bote.android.R;
 import i2p.bote.android.util.AuthenticatedFragment;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.widget.DividerItemDecoration;
+import i2p.bote.android.widget.LoadingRecyclerView;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.dht.Contact;
 
 public class AddressBookFragment extends AuthenticatedFragment implements
         LoaderManager.LoaderCallbacks<SortedSet<Contact>> {
     OnContactSelectedListener mCallback;
-    private RecyclerView mContactsList;
+    private LoadingRecyclerView mContactsList;
     private ContactAdapter mAdapter;
 
     private View mPromotedActions;
@@ -66,7 +68,10 @@ public class AddressBookFragment extends AuthenticatedFragment implements
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_contacts, container, false);
 
-        mContactsList = (RecyclerView) v.findViewById(R.id.contacts_list);
+        mContactsList = (LoadingRecyclerView) v.findViewById(R.id.contacts_list);
+        View empty = v.findViewById(R.id.empty);
+        ProgressWheel loading = (ProgressWheel) v.findViewById(R.id.loading);
+        mContactsList.setLoadingView(empty, loading);
         mPromotedActions = v.findViewById(R.id.promoted_actions);
 
         ImageButton b = (ImageButton) v.findViewById(R.id.action_new_contact);
@@ -100,7 +105,7 @@ public class AddressBookFragment extends AuthenticatedFragment implements
         mContactsList.setLayoutManager(mLayoutManager);
 
         // Set the adapter for the list view
-        mAdapter = new ContactAdapter(mCallback);
+        mAdapter = new ContactAdapter(getActivity(), mCallback);
         mContactsList.setAdapter(mAdapter);
     }
 
