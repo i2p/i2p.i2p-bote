@@ -89,7 +89,7 @@
     <h2><ib:message key="Addresses"/></h2>
     <a class="menuitem" href="identities.jsp"><ib:message key="Identities"/></a>
     <a class="menuitem" href="addressBook.jsp"><ib:message key="Address Book"/></a>
-    <div class="menuitem">Public Address Directory</div>
+    <%--<div class="menuitem">Public Address Directory</div> --%>
 </div>
 
 <div class="menubox">
