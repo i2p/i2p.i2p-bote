@@ -34,7 +34,6 @@
 
 <c:if test="${not empty e}">
     <jsp:include page="header.jsp"/>
-    <div class="main">
-        <ib:message key="Error:"/> ${e}
-    </div>
+    <ib:message key="Error:"/> ${e}
+    <jsp:include page="footer.jsp"/>
 </c:if>

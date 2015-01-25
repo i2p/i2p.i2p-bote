@@ -41,7 +41,14 @@
     <c:set var="refreshInterval" value="20" scope="request"/>
 </c:if>
 <ib:message key="Outbox" var="title" scope="request"/>
+<c:set var="mainClass" value="foldermain" scope="request"/>
 <jsp:include page="header.jsp"/>
+
+<div class="compose float">
+    <form action="newEmail.jsp" method="GET">
+        <button type="submit" value="New"><img src="${themeDir}/images/compose.png"/></button>
+    </form>
+</div>
 
 <c:set var="sortcolumn" value="${CREATE_TIME}"/>
 <c:if test="${!empty param.sortcolumn}">
@@ -70,7 +77,6 @@
     <c:set var="reverseSortOrder" value="&amp;descending=false"/>
 </c:if>
 
-<div class="main foldermain">
     <table>
         <c:set var="folder" value="${ib:getMailFolder('Outbox')}"/>
         <tr>
@@ -160,7 +166,6 @@
             </tr>
         </c:forEach>
     </table>
-</div>
 </ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

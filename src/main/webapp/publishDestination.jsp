@@ -41,7 +41,6 @@
 <ib:message key="Add Email Destination to Directory" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <c:if test="${param.action eq 'start'}">
         <%-- If the user changed the Public Name to try a new name that isn't taken, update it so they don't have to click save first --%>
         <ib:requirePassword>
@@ -89,6 +88,5 @@
         <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
         <jsp:forward page="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&new=false&key=${param.destination}"/>
     </c:if>
-</div>
 
 <jsp:include page="footer.jsp"/>

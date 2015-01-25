@@ -64,7 +64,7 @@
 
 <body>
 
-<div class="titlebar" onclick="document.location='.'">
+<header class="titlebar" onclick="document.location='.'">
     <c:if test="${jspHelperBean.passwordInCache}">
         <div class="password">
             <ib:message key="Password is cached. Click to clear the password cache." var="linkTitle"/>
@@ -74,8 +74,9 @@
     <div class="title"><ib:message key="I2P-Bote"/></div>
     <br/>
     <div class="subtitle"><ib:message key="Secure Distributed Email"/></div>
-</div>
+</header>
 
+<aside>
 <div class="menubox">
     <iframe src="buttonFrame.jsp" class="button-frame"></iframe>
 </div>
@@ -86,27 +87,35 @@
 
 <div class="menubox">
     <h2><ib:message key="Addresses"/></h2>
-    <a href="identities.jsp"><ib:message key="Identities"/></a><br/>
-    <a href="addressBook.jsp"><ib:message key="Address Book"/></a><br/>
-    Public Address Directory<br/>
+    <a class="menuitem" href="identities.jsp"><ib:message key="Identities"/></a>
+    <a class="menuitem" href="addressBook.jsp"><ib:message key="Address Book"/></a>
+    <div class="menuitem">Public Address Directory</div>
 </div>
 
 <div class="menubox">
     <h2><ib:message key="Configuration"/></h2>
-    <a href="settings.jsp"><ib:message key="Settings"/></a><br/>
+    <a class="menuitem" href="settings.jsp"><ib:message key="Settings"/></a>
 </div>
 
 <div class="menubox">
-    <h2><a href="network.jsp"><ib:message key="Network Status"/></a></h2>
+    <h2><ib:message key="Network Status"/></h2>
     <iframe src="statusFrame.jsp" class="status-frame"></iframe>
 </div>
 
 <div class="menubox">
     <h2><ib:message key="Help"/></h2>
-    <a href="${ib:getLocalizedFilename('User\'s Guide.html', pageContext.servletContext)}"><ib:message key="User Guide"/></a><br/>
-    <a href="${ib:getLocalizedFilename('FAQ.html', pageContext.servletContext)}"><ib:message key="FAQ"/></a><br/>
-    <a href="about.jsp"><ib:message key="About"/></a><br/>
+    <a class="menuitem" href="${ib:getLocalizedFilename('User\'s Guide.html', pageContext.servletContext)}"><ib:message key="User Guide"/></a>
+    <a class="menuitem" href="${ib:getLocalizedFilename('FAQ.html', pageContext.servletContext)}"><ib:message key="FAQ"/></a>
+    <a class="menuitem" href="about.jsp"><ib:message key="About"/></a>
 </div>
+</aside>
+
+<c:if test="${not empty contentClass}">
+<section class="${contentClass}">
+</c:if>
+<c:if test="${empty contentClass}">
+<section class="main">
+</c:if>
 
 <div class="infoMessage">
     <c:if test="${not empty infoMessage}">

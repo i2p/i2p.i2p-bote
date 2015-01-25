@@ -38,7 +38,6 @@
     </c:choose>
 </c:if>
 
-<div class="main">
     <h2><ib:message key="Password required"/></h2>
     
     <form name="form" action="password.jsp?passwordJspAction=check" method="POST">
@@ -51,6 +50,5 @@
     <script type="text/javascript" language="JavaScript">
         document.forms['form'].elements['password'].focus();
     </script>
-</div>
 
 <jsp:include page="footer.jsp"/>

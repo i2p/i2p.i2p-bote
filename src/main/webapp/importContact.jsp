@@ -31,7 +31,6 @@
 <ib:message key="Address Directory Lookup" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <c:if test="${param.confirm eq true}">
         <ib:requirePassword>
             <c:set var="errorMessage" value="${ib:saveContact(param.destination, param.name, param.picture, param.text)}"/>
@@ -98,6 +97,5 @@
             </form>
         </c:if>
     </c:if>
-</div>
 
 <jsp:include page="footer.jsp"/>

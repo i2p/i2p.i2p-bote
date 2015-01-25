@@ -29,8 +29,6 @@
 <ib:message key="New Email" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
-
 <ib:requirePassword>
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 <c:set var="configuration" value="${jspHelperBean.configuration}"/>
@@ -69,6 +67,5 @@
 
 <p/>
 <a href="."><ib:message key="Go to inbox"/></a>
-</div>
 
 <jsp:include page="footer.jsp"/>

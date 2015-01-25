@@ -51,7 +51,6 @@
 
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <h2>${title}</h2>
     <c:if test="${param.createNew}">
         <ib:message>An Email Identity lets you receive email from other I2P-Bote users.</ib:message>
@@ -213,7 +212,6 @@
     <script type="text/javascript" language="JavaScript">
         document.forms['form'].elements['publicName'].focus();
     </script>
-</div>
 </ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

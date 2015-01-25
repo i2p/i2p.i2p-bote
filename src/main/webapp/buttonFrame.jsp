@@ -101,7 +101,7 @@
     </c:if>
 </c:if>
 
-<div class="compose">
+<div class="compose frame">
     <form action="newEmail.jsp" target="_top" method="GET">
         <button type="submit" value="New"><ib:message key="Compose"/></button>
     </form>

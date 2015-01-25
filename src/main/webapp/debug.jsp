@@ -27,7 +27,6 @@
 <ib:message key="Debug" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <h2><ib:message key="Debug Page"/></h2>
     
     <c:if test="${empty param.action}">
@@ -55,6 +54,5 @@
             </c:if>
         </ib:requirePassword>
     </c:if>
-</div>
 
 <jsp:include page="footer.jsp"/>

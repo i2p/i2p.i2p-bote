@@ -36,9 +36,7 @@
 </c:if>
 <c:if test="${!empty errorMessage}">
     <jsp:include page="header.jsp"/>
-    <div class="main">
         <ib:message key="Error"/>: ${errorMessage}
-    </div>
     <jsp:include page="footer.jsp"/>
 </c:if>
 </ib:requirePassword>

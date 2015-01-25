@@ -29,7 +29,6 @@
 <jsp:include page="header.jsp"/>
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-<div class="main">
     <h2>
         <ib:message key="Email Identities"/>
     </h2>
@@ -78,6 +77,5 @@
     <form action="editIdentity.jsp?createNew=true" method="POST">
         <button type="submit" value="New"><ib:message key="New Identity"/></button>
     </form>
-</div>
 
 <jsp:include page="footer.jsp"/>

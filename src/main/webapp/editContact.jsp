@@ -100,7 +100,6 @@
 </c:choose>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <form name="form" action="editContact.jsp" method="post">
         <ib:copyParams paramsToCopy="${param.paramsToCopy}"/>
         
@@ -149,7 +148,6 @@
         else
             document.forms['form'].elements['name'].focus();
     </script>
-</div>
 </ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

@@ -42,11 +42,11 @@
     </ib:message>
 </c:if>
 
-<a href="folder.jsp?path=${dirName}" target="_parent" title="${linkTitle}">
-    <img src="themes/${jspHelperBean.configuration.theme}/images/folder.png"/>${displayName}
-</a>
+<a class="menuitem folder ${dirName}" href="folder.jsp?path=${dirName}" target="_parent" title="${linkTitle}">
+    <div class="menu-icon"><img src="themes/${jspHelperBean.configuration.theme}/images/folder.png"/></div>
+    <div class="menu-text">${displayName}</div>
 
-<c:if test="${numNew>0}">(${numNew})</c:if>
+<c:if test="${numNew>0}"><div class="folder-new">(${numNew})</div></c:if>
 
 <c:if test="${dirName == 'Inbox'}">
     <c:set var="numIncomplete" value="${jspHelperBean.numIncompleteEmails}"/>
@@ -54,6 +54,7 @@
         <ib:message key="{0} incomplete" var="numIncompleteMsg">
             <ib:param value="${numIncomplete}"/>
         </ib:message>
-        (${numIncompleteMsg})
+        <br /><div class="folder-incomplete">(${numIncompleteMsg})</div>
     </c:if>
 </c:if>
+</a>

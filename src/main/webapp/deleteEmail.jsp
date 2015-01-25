@@ -34,3 +34,5 @@
 <c:if test="${!deleted}">
     <ib:message key="Error: Couldn't delete email."/>
 </c:if>
+
+<jsp:include page="footer.jsp"/>

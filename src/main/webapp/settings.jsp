@@ -58,7 +58,6 @@
 <ib:message key="Settings" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <h2>
         <ib:message key="Settings"/>
     </h2>
@@ -163,6 +162,5 @@
 
     <p><br/></p>
     <p><a href="setPassword.jsp"><ib:message key="Change Password"/></a></p>
-</div>
 
 <jsp:include page="footer.jsp"/>

@@ -45,7 +45,6 @@
 
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <c:if test="${param.action eq 'set'}">
         <h2><ib:message key="Please wait"/></h2>
         <p>
@@ -85,6 +84,5 @@
             document.forms['form'].elements['oldPassword'].focus();
         </script>
     </c:if>
-</div>
 
 <jsp:include page="footer.jsp"/>

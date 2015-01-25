@@ -81,6 +81,9 @@ iframe {
     float: right;
     width: 50%;
 }
+.compose.float {
+    display: none;
+}
 
 .lastcheck {
     margin: 7px 0px 0px 0px;
@@ -137,6 +140,14 @@ iframe {
     font-size: 8pt;
     font-weight: bold;
     text-align: left;
+}
+
+.menuitem {
+    display: block;
+}
+
+.menuitem div {
+    display: inline-block;
 }
 
 .main, .emailtext {

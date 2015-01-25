@@ -28,13 +28,11 @@
 <c:set var="title" value="No Identity" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <h2><ib:message key="No Email Identity Defined"/></h2>
     <p>
     <jsp:include page="identitiesHelp.jsp"/>
     <form action="editIdentity.jsp?new=true" method="POST">
         <button type="submit" value="New"><ib:message key="Create a New Email Identity"/></button>
     </form>
-</div>
 
 <jsp:include page="footer.jsp"/>

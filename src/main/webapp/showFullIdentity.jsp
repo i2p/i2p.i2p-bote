@@ -28,7 +28,6 @@
 <jsp:include page="header.jsp"/>
 
 <ib:requirePassword>
-<div class="main">
     <c:set var="key" value="${param.key}"/>
     <c:set var="identity" value="${ib:getIdentity(key)}"/>
     <c:set var="publicName" value="${ib:escapeQuotes(identity.publicName)}"/>
@@ -48,7 +47,6 @@
         <input type="hidden" name="key" value="${key}"/>
         <button type="submit"><ib:message key="Return"/></button>
     </form>
-</div>
 </ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

@@ -34,7 +34,6 @@
 <jsp:include page="header.jsp"/>
 
 <ib:requirePassword>
-<div class="main">
     <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
     <c:set var="contacts" value="${jspHelperBean.addressBook.all}"/>
     
@@ -132,7 +131,6 @@
         </form><br/>
         Note that only exact matches are found.
     </c:if>
-</div>
 </ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

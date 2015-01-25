@@ -46,7 +46,14 @@
     <c:set var="refreshInterval" value="60" scope="request"/>
 </c:if>
 <ib:message key="${param.path}" var="title" scope="request" noextract="true"/>   <%-- Translation strings are extracted from folders.jsp --%>
+<c:set var="contentClass" value="main foldermain" scope="request"/>
 <jsp:include page="header.jsp"/>
+
+<div class="compose float">
+    <form action="newEmail.jsp" target="_top" method="GET">
+        <button type="submit" value="New"><img src="${themeDir}/images/compose.png"/></button>
+    </form>
+</div>
 
 <c:set var="folderName" value="${param.path}"/>
 <c:if test="${empty folderName}">
@@ -94,7 +101,6 @@
     <c:set var="reverseSortOrder" value="&amp;descending=false"/>
 </c:if>
 
-<div class="main foldermain">
     <table>
         <c:set var="folder" value="${ib:getMailFolder(folderName)}"/>
         <tr>
@@ -227,7 +233,6 @@
             </tr>
         </c:forEach>
     </table>
-</div>
 </ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

@@ -41,17 +41,38 @@
 
 <body class="iframe-body">
 
+<c:set var="statusUrl" value="network.jsp"/>
+<c:choose>
+    <c:when test="${connStatus == NOT_STARTED}">
+        <c:set var="statusIcon" value="not_started"/>
+        <c:set var="statusMessageKey" value="Not Started"/>
+    </c:when>
+    <c:when test="${connStatus == DELAY}">
+        <c:set var="statusIcon" value="delay"/>
+        <c:set var="statusMessageKey" value="Waiting 3 Minutes..."/>
+    </c:when>
+    <c:when test="${connStatus == CONNECTING}">
+        <c:set var="statusIcon" value="connecting"/>
+        <c:set var="statusMessageKey" value="Connecting..."/>
+    </c:when>
+    <c:when test="${connStatus == CONNECTED}">
+        <c:set var="statusIcon" value="connected"/>
+        <c:set var="statusMessageKey" value="Connected"/>
+    </c:when>
+    <c:when test="${connStatus == ERROR}">
+        <c:set var="statusIcon" value="connect_error"/>
+        <c:set var="statusMessageKey" value="Error"/>
+        <c:set var="statusUrl" value="connectError.jsp"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="statusMessageKey" value="Unknown Status"/>
+    </c:otherwise>
+</c:choose>
+
 <div class="statusbox">
-    <c:choose>
-        <c:when test="${connStatus == NOT_STARTED}"><img src="${themeDir}/images/connect_error.png"/> <ib:message key="Not Started"/></c:when>
-        <c:when test="${connStatus == DELAY}"><img src="${themeDir}/images/connecting.png"/> <ib:message key="Waiting 3 Minutes..."/><br/></c:when>
-        <c:when test="${connStatus == CONNECTING}"><img src="${themeDir}/images/connecting.png"/> <ib:message key="Connecting..."/></c:when>
-        <c:when test="${connStatus == CONNECTED}"><img src="${themeDir}/images/connected.png"/> <ib:message key="Connected"/></c:when>
-        <c:when test="${connStatus == ERROR}"><img src="${themeDir}/images/connect_error.png"/>
-            <a href="connectError.jsp" target="_parent"><ib:message key="Error"/></a>
-        </c:when>
-        <c:otherwise> <ib:message key="Unknown Status"/></c:otherwise>
-    </c:choose>
+<a class="menuitem" href="${statusUrl}" target="_parent">
+    <div class="menu-icon"><img src="${themeDir}/images/${statusIcon}.png"/></div>
+    <div class="menu-text"><ib:message key="${statusMessageKey}"/></div>
     
     <c:if test="${connStatus == DELAY or connStatus == ERROR}">
         <%-- Show the connect button --%>
@@ -69,6 +90,7 @@
             </form>
         </div>
     </c:if>
+</a>
 </div>
 
 </body>

@@ -27,7 +27,6 @@
 <ib:message key="About I2P-Bote" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <h2>
         <ib:message key="I2P-Bote Version {0}">
             <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
@@ -137,6 +136,5 @@
         <div class="contributor-name">str4d</div>
         <div class="contributor-role"><ib:message key="Code fixes, Android app"/></div>
     </div>
-</div>
 
 <jsp:include page="footer.jsp"/>

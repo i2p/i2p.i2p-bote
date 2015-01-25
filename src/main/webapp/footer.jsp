@@ -19,5 +19,6 @@
  along with I2P-Bote.  If not, see <http://www.gnu.org/licenses/>.
  --%>
 
+</section>
 </body>
 </html>

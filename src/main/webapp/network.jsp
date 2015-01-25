@@ -30,7 +30,6 @@
 <ib:message key="Network" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<div class="main">
     <c:choose>
         <c:when test="${connStatus==NOT_STARTED || connStatus==DELAY}">
             <span class="subheading">
@@ -44,6 +43,5 @@
             <ib:peerInfo/>
         </c:otherwise>
     </c:choose>
-</div>
 
 <jsp:include page="footer.jsp"/>

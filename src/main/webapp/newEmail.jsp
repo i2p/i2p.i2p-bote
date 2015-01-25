@@ -78,7 +78,6 @@
 <jsp:include page="header.jsp"/>
 
 <ib:requirePassword>
-<div class="main">
     <form id="emailform" action="newEmail.jsp" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
         <div class="email-form-button-send">
             <button type="submit" name="action" value="send">&#x2794; <ib:message key="Send"/></button>
@@ -230,7 +229,6 @@
             <input type="hidden" name="quoteMsgId" value="${param.quoteMsgId}"/>
         </c:if>
     </form>
-</div>
 </ib:requirePassword>
 
 <script>
