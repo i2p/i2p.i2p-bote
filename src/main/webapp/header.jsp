@@ -72,7 +72,6 @@
         </div>
     </c:if>
     <div class="title"><ib:message key="I2P-Bote"/></div>
-    <br/>
     <div class="subtitle"><ib:message key="Secure Distributed Email"/></div>
 </header>
 
