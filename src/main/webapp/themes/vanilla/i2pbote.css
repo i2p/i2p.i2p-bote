@@ -71,6 +71,10 @@ iframe {
     text-shadow: 0px 0px 1px rgba(148, 0, 0, 0.9);
 }
 
+.pagetitle {
+    display: none;
+}
+
 .checkmail {
     font: bold 8pt "Lucida Sans Unicode", "Bitstream Vera Sans", Verdana, Tahoma, Helvetica, sans-serif;
     float: left;

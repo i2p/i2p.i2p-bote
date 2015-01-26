@@ -73,6 +73,9 @@
     </c:if>
     <div class="title"><ib:message key="I2P-Bote"/></div>
     <div class="subtitle"><ib:message key="Secure Distributed Email"/></div>
+    <c:if test="${!empty title}">
+    <div class="pagetitle">${title}</div>
+    </c:if>
 </header>
 
 <aside>
