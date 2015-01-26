@@ -64,7 +64,7 @@
 
 <body>
 
-<header class="titlebar" onclick="document.location='.'">
+<header class="titlebar">
     <c:if test="${jspHelperBean.passwordInCache}">
         <div class="password">
             <ib:message key="Password is cached. Click to clear the password cache." var="linkTitle"/>

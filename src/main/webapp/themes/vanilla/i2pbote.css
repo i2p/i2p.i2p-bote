@@ -53,7 +53,6 @@ iframe {
     white-space: normal;
     background: #ddf url('images/background.png');
     opacity: 1.0;
-    cursor: pointer;
 }
 
 .title {
