@@ -76,8 +76,7 @@
             <div class="password-field"><input type="password" name="confirm"/></div>
             
             <p/>
-            <ib:message key="OK" var="ok"/>
-            <input type="submit" value="${ok}"/>
+            <button type="submit"><ib:message key="OK"/></button>
         </form>
     
         <script type="text/javascript" language="JavaScript">

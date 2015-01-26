@@ -43,8 +43,7 @@
     <form name="form" action="password.jsp?passwordJspAction=check" method="POST">
         <ib:copyParams paramsToCopy="*" paramsToExclude="password"/>
         <ib:message key="Password:"/> <input type="password" name="password"/>
-        <ib:message key="OK" var="ok"/>
-        <input type="submit" value="${ok}"/>
+        <button type="submit"><ib:message key="OK"/></button>
     </form>
 
     <script type="text/javascript" language="JavaScript">
