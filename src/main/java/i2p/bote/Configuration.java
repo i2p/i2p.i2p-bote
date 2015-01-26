@@ -64,6 +64,7 @@ public class Configuration {
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
     private static final List<Theme> BUILT_IN_THEMES = Arrays.asList(new Theme[] {   // theme IDs correspond to a theme directory in the .war
+            new Theme("material", _("Material")),
             new Theme("lblue", _("lblue")),
             new Theme("vanilla", _("vanilla"))
     });
@@ -138,7 +139,7 @@ public class Configuration {
     private static final int DEFAULT_EEPROXY_PORT = 4444;
     private static final String DEFAULT_UPDATE_URL = "http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote-update.xpi2p";
     private static final int DEFAULT_UPDATE_CHECK_INTERVAL = 60;   // in minutes
-    private static final String DEFAULT_THEME = "lblue";
+    private static final String DEFAULT_THEME = "material";
 
     private Log log = new Log(Configuration.class);
     private Properties properties;
