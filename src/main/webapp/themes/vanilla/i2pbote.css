@@ -155,7 +155,7 @@ iframe {
     display: inline-block;
 }
 
-.main, .emailtext {
+.main {
     margin: 0px 20px 20px 240px;
     padding: 0 15px 15px 25px;
     background: #eef url('images/background.png');

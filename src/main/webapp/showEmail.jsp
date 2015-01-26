@@ -34,9 +34,10 @@
 </c:if>
 
 <c:set var="title" value="${email.subject}" scope="request"/>
-<c:set var="contentClass" value="emailtext" scope="request"/>
+<c:set var="contentClass" value="main emailmain" scope="request"/>
 <jsp:include page="header.jsp"/>
 
+<article class="emailtext">
     <div class="email-form-label"><ib:message key="From:"/></div>
     <div class="show-email-value">
         <c:if test="${email.anonymous}">
@@ -128,6 +129,7 @@
         <input type="hidden" name="messageID" value="${email.messageID}"/>
     </form>
     </div>
+</article>
 </ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>
