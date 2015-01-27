@@ -40,7 +40,7 @@
 <c:if test="${param.action eq 'set'}">
     <c:set var="refreshUrl" value="setPassword.jsp?action=wait" scope="request"/>
     <c:set var="refreshInterval" value="0" scope="request"/>
-    <ib:setPassword oldPassword="${param.oldPassword}" newPassword="${param.newPassword}" confirmNewPassword="${param.confirm}"/>
+    <ib:setPassword oldPassword="${param.nofilter_oldPassword}" newPassword="${param.nofilter_newPassword}" confirmNewPassword="${param.nofilter_confirm}"/>
 </c:if>
 
 <jsp:include page="header.jsp"/>
@@ -67,20 +67,20 @@
             <input type="hidden" name="action" value="set"/>
             
             <div class="password-label"><ib:message key="Old password:"/></div>
-            <div class="password-field"><input type="password" name="oldPassword"/></div>
+            <div class="password-field"><input type="password" name="nofilter_oldPassword"/></div>
             
             <div class="password-label"><ib:message key="New password:"/></div>
-            <div class="password-field"><input type="password" name="newPassword"/></div>
+            <div class="password-field"><input type="password" name="nofilter_newPassword"/></div>
             
             <div class="password-label"><ib:message key="Confirm:"/></div>
-            <div class="password-field"><input type="password" name="confirm"/></div>
+            <div class="password-field"><input type="password" name="nofilter_confirm"/></div>
             
             <p/>
             <button type="submit"><ib:message key="OK"/></button>
         </form>
     
         <script type="text/javascript" language="JavaScript">
-            document.forms['form'].elements['oldPassword'].focus();
+            document.forms['form'].elements['nofilter_oldPassword'].focus();
         </script>
     </c:if>
 

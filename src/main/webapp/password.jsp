@@ -29,7 +29,7 @@
 
 <c:if test="${param.passwordJspAction eq 'check'}">
     <c:choose>
-        <c:when test="${ib:tryPassword(param.password)}">
+        <c:when test="${ib:tryPassword(param.nofilter_password)}">
             <jsp:forward page="${param.passwordJspForwardUrl}"/>
         </c:when>
         <c:otherwise>
@@ -41,13 +41,13 @@
     <h2><ib:message key="Password required"/></h2>
     
     <form name="form" action="password.jsp?passwordJspAction=check" method="POST">
-        <ib:copyParams paramsToCopy="*" paramsToExclude="password"/>
-        <ib:message key="Password:"/> <input type="password" name="password"/>
+        <ib:copyParams paramsToCopy="*" paramsToExclude="nofilter_password"/>
+        <ib:message key="Password:"/> <input type="password" name="nofilter_password"/>
         <button type="submit"><ib:message key="OK"/></button>
     </form>
 
     <script type="text/javascript" language="JavaScript">
-        document.forms['form'].elements['password'].focus();
+        document.forms['form'].elements['nofilter_password'].focus();
     </script>
 
 <jsp:include page="footer.jsp"/>
