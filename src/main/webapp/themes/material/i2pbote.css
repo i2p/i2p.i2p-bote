@@ -40,6 +40,7 @@ button, button:visited {
     text-transform: uppercase;
     transition-duration: 0.25s;
     transition-property: box-shadow;
+    vertical-align: middle;
 }
 button:active {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2), 0 10px 14px rgba(0, 0, 0, 0.1);
@@ -710,6 +711,7 @@ td a:link {
     font-weight: bold;
 }
 .email-form-recipient-label {
+    padding-top: 7px;
     position: absolute;
 }
 .email-form-recipient-value {
