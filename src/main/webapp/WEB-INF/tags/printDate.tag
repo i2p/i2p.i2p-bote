@@ -40,9 +40,12 @@
     <c:if test="${empty type}">
         <c:set var="type" value="both"/>
     </c:if>
+    <fmt:formatDate value="${date}" var="datestr" type="${type}" pattern="yyyy-MM-dd HH:mmX"/>
     <fmt:formatDate value="${date}" var="date" type="${type}" timeStyle="${timeStyle}"/>
 </c:if>
 <c:if test="${empty date and printUnknown eq true}">
-    <ib:message key="Unknown" var="date"/>
+    <ib:message key="Unknown"/>
 </c:if>
-${fn:escapeXml(date)}
+<c:if test="${!empty date}">
+    <time datetime="${datestr}">${fn:escapeXml(date)}</time>
+</c:if>

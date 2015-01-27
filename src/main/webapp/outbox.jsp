@@ -155,8 +155,7 @@
             <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(recipient)}</a></td>
             <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(subject)}</a></td>
             <td>
-                <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="date" timeStyle="short" printUnknown="true"/></a>
-                <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" type="time" timeStyle="short"/></a>
+                <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" timeStyle="short" printUnknown="true"/></a>
             </td>
             <td><div><a href="${mailUrl}">${ib:getEmailStatusText(email)}</a></div></td>
             <td>
