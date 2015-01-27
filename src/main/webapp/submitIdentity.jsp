@@ -60,7 +60,12 @@
 <c:choose>
     <c:when test="${empty param.publicName}">
         <ib:message key="Please fill in the Public Name field." var="errorMessage" scope="request"/>
-        <jsp:forward page="editIdentity.jsp?createNew=true"/>
+        <c:if test="${empty param.key}">
+            <jsp:forward page="editIdentity.jsp?createNew=true"/>
+        </c:if>
+        <c:if test="${not empty param.key}">
+            <jsp:forward page="editIdentity.jsp"/>
+        </c:if>
     </c:when>
     
     <%-- Show the wait page when creating an identity will take a while --%>
