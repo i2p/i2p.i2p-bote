@@ -338,6 +338,7 @@
             <arg value="plugin/plugin.tmp" />
         </exec>
         <move file="i2pbote.xpi2p" tofile="i2pbote-update.xpi2p" />
+        <move file="i2pbote.su3" tofile="i2pbote-update.su3" />
 
         <!-- make the install xpi2p -->
         <!-- XXX Don't pack mailapi.jar here for 0.2.10 -->
