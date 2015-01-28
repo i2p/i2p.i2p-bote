@@ -165,6 +165,32 @@
 </tag>
 
 <tag>
+    <name>importIdentities</name>
+    <tag-class>i2p.bote.web.ImportIdentitiesTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <name>identitiesFilename</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>true</required>
+    </attribute>
+    <attribute>
+        <name>password</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+    <attribute>
+        <name>overwrite</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+    <attribute>
+        <name>replace</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
+</tag>
+
+<tag>
     <name>publishDestination</name>
     <tag-class>i2p.bote.web.PublishDestinationTag</tag-class>
     <body-content>empty</body-content>

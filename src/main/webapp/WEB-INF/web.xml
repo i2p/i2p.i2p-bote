@@ -61,6 +61,10 @@
         <url-pattern>/publishDestination.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
+        <filter-name>MultipartFilter</filter-name>
+        <url-pattern>/importIdentities.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
         <filter-name>ThemeFilter</filter-name>
         <url-pattern>/themes/*</url-pattern>
     </filter-mapping>

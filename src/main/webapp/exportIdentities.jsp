@@ -25,15 +25,17 @@
 <ib:message key="Export Identities" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<form action="exportIdentitiesFile" method="POST">
-    <div class="password-label">
-        <ib:message key="Password:"/>
-        <div class="addtl-text"><ib:message key="(leave blank to not encrypt identities)"/></div>
-    </div>
-    <div class="password-field"><input type="password" name="nofilter_password"/></div>
-    <div class="password-label"><ib:message key="Confirm:"/></div>
-    <div class="password-field"><input type="password" name="nofilter_confirm"/></div>
-    <button type="submit"><ib:message key="Export"/></button>
-</form>
+<ib:requirePassword>
+    <form action="exportIdentitiesFile" method="POST">
+        <div class="password-label">
+            <ib:message key="Password:"/>
+            <div class="addtl-text"><ib:message key="(leave blank to not encrypt identities)"/></div>
+        </div>
+        <div class="password-field"><input type="password" name="nofilter_password"/></div>
+        <div class="password-label"><ib:message key="Confirm:"/></div>
+        <div class="password-field"><input type="password" name="nofilter_confirm"/></div>
+        <button type="submit"><ib:message key="Export"/></button>
+    </form>
+</ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>
