@@ -78,5 +78,8 @@
     <form action="editIdentity.jsp?createNew=true" method="POST">
         <button type="submit" value="New"><ib:message key="New Identity"/></button>
     </form>
+    <form action="exportIdentities.jsp" method="POST">
+        <button type="submit"><ib:message key="Export Identities"/></button>
+    </form>
 
 <jsp:include page="footer.jsp"/>

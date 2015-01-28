@@ -70,6 +70,10 @@
         <servlet-class>i2p.bote.web.ShowAttachment</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ExportIdentities</servlet-name>
+        <servlet-class>i2p.bote.web.ExportIdentities</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ThemeServlet</servlet-name>
         <servlet-class>i2p.bote.web.ThemeServlet</servlet-class>
     </servlet>
@@ -77,6 +81,10 @@
     <servlet-mapping>
         <servlet-name>ShowAttachment</servlet-name>
         <url-pattern>/showAttachment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportIdentities</servlet-name>
+        <url-pattern>/exportIdentitiesFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ThemeServlet</servlet-name>

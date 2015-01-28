@@ -226,23 +226,33 @@ public class Identities implements KeyUpdateHandler {
         initializeIfNeeded();
 
         OutputStream exportStream = new FileOutputStream(exportFile);
-        if (password != null) {
-            // Use same salt and parameters as the on-disk files
-            PasswordCache cache = new PasswordCache(I2PBote.getInstance().getConfiguration());
-            cache.setPassword(password.getBytes());
-            DerivedKey derivedKey = cache.getKey();
-            exportStream = new EncryptedOutputStream(exportStream, derivedKey);
-        }
-
         try {
-            Properties properties = saveToProperties();
-            properties.store(new OutputStreamWriter(exportStream, "UTF-8"), null);
+            export(exportStream, password);
         } catch (IOException e) {
             log.error("Can't export email identities to file <" + exportFile.getAbsolutePath() + ">.", e);
             throw e;
         } finally {
             exportStream.close();
         }
+    }
+
+    public void export(OutputStream exportStream, String password) throws IOException, GeneralSecurityException, PasswordException {
+        initializeIfNeeded();
+
+        OutputStreamWriter writer;
+        if (password != null) {
+            // Use same salt and parameters as the on-disk files
+            PasswordCache cache = new PasswordCache(I2PBote.getInstance().getConfiguration());
+            cache.setPassword(password.getBytes());
+            DerivedKey derivedKey = cache.getKey();
+            writer = new OutputStreamWriter(new EncryptedOutputStream(exportStream, derivedKey), "UTF-8");
+        } else
+            writer = new OutputStreamWriter(exportStream, "UTF-8");
+
+        Properties properties = saveToProperties();
+        properties.store(writer, null);
+        // If a password was provided, this call triggers the encryption
+        writer.close();
     }
 
     private Properties saveToProperties() throws GeneralSecurityException {
