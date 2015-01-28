@@ -21,7 +21,7 @@ a:active {
 body {
     background: white;
     color: #202020;
-    font: 9pt/130% "Roboto", arial, sans-serif;
+    font: 62.5%/130% "Roboto", arial, sans-serif;
     margin: 0;
     padding: 0em;
 }
@@ -51,16 +51,20 @@ button[disabled] {
     color: rgba(0, 0, 0, 0.26); /* 26% #000000 */
     cursor: default;
 }
+h1 {font-size: 2em}  /* displayed at 24px */
+h2 {font-size: 1.5em}  /* displayed at 18px */
+h3 {font-size: 1.25em}  /* displayed at 15px */
+h4 {font-size: 1em}  /* displayed at 12px */
 img {
     border: none;
 }
+input, select, th, td {font-size: 1em}
 input {
     background: white;
     color: #202020;
     margin: 10px 10px 10px 10px;
     border: 1px solid white;
     padding: 10px;
-    font-size: 8pt;
     font-weight: bold;
     text-decoration: none;
     min-width: 110px;
@@ -70,7 +74,6 @@ input, input:visited {
     background: white;
     color: #202020;
     margin: 5px;
-    font-size: 8pt;
     font-weight: bold;
     padding: 1px 2px;
     text-decoration: none;
@@ -95,7 +98,7 @@ input[type=text] {
     color: #001;
     margin: 5px;
     padding: 5px;
-    font-size: 8pt;
+    font-size: 1em;
     font-weight: bold;
     border: 1px solid #001;
     text-decoration: none;
@@ -110,7 +113,6 @@ select {
     padding: 2px;
     margin: 5px;
     border: 1px solid #001;
-    font-size: 9pt;
     text-align: left !important;
 }
 submit {
@@ -128,7 +130,6 @@ textarea {
     margin: 5px;
     background: white;
     color: #003;
-    font-size: 9pt;
     line-height: 130%;
     min-height: 100px;
     border: 1px solid #001;
@@ -174,18 +175,18 @@ iframe {
     white-space: normal;
 }
 .title {
-    font-size: 20px;
+    font-size: 2em;
     padding: 22px 0 8px 28px;
 }
 .subtitle {
     display: inline-block;
-    font-size: 14px;
+    font-size: 1.4em;
     padding: 0 0 22px 28px;
     width: 212px;
 }
 .pagetitle {
     display: inline-block;
-    font-size: 20px;
+    font-size: 2em;
     padding-left: 28px;
 }
 .password {
@@ -209,11 +210,11 @@ aside {
     clear: left;
 }
 .menubox, .folderbox, .statusbox {
-    font-size: 14px;
+    font-size: 1.4em;
 }
 .menubox h2, .folderbox h2 {
     color: #aaa;
-    font-size: 12px;
+    font-size: 0.857143em;
     font-weight: 500;
     line-height: 16px;
     margin: 16px 0 4px;
@@ -266,6 +267,7 @@ aside {
     display: none;
 }
 .lastcheck {
+    font-size: 1.2em;
     margin-left: 28px;
     margin-top: .25em;
 }
@@ -294,7 +296,7 @@ See also .menu-icon
     text-align: right;
 }
 .folder-incomplete {
-    font-size: 12px;
+    font-size: 0.857143em;
     font-weight: 300;
     margin: 0 24px 0 48px;
 }
@@ -304,14 +306,14 @@ See also .menu-icon
 
 .main {
     color: #202020;
-    font-size: 1em;
+    font-size: 1.3em;
     margin: 0px 0px 0px 240px;
     padding: 16px 16px 16px 28px;
     text-align: left;
 }
 .main form {
     color: #202020;
-    font-size: 1.2em;
+    font-size: 1em;
     margin-left: 1em;
 }
 .main h2 {
@@ -373,9 +375,11 @@ table td, th {
     font-size: 1em;
     font-weight: normal;
 }
+th[class^="header-column"] {
+    font-size: 0.923077em;
+}
 th[class^="header-column"], th[class^="header-column"] a {
     color: #333;
-    font-size: 12px;
     font-weight: 500;
     text-transform: uppercase;
 }
@@ -523,7 +527,7 @@ td a:link {
 
 .field-label {
     font-weight: bold;
-    font-size: 1.em;
+    font-size: 1em;
     height: 1em;
 }
 
@@ -705,10 +709,11 @@ td a:link {
     white-space: nowrap;
 }
 .email-form-label {
-    position: absolute;
-    padding-top: 10px;
-    padding-left: 5px;
+	font-size: 1.07692em;
     font-weight: bold;
+    padding-left: 5px;
+    padding-top: 10px;
+    position: absolute;
 }
 .email-form-recipient-label {
     padding-top: 7px;
