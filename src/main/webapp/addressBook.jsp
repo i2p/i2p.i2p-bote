@@ -28,6 +28,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <ib:message key="Address Book" var="title" scope="request"/>
@@ -78,7 +79,7 @@
                 <%-- Insert a random number into the request string so others can't see contacts using the CSS history hack --%>
                 <a href="editContact.jsp?rnd=${jspHelperBean.randomNumber}&amp;createNew=false&amp;destination=${contact.destination}">
             </c:if>
-                ${contact.name}
+                ${fn:escapeXml(contact.name)}
             <c:if test="${!param.select}">
                 </a>
             </c:if>

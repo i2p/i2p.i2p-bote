@@ -44,7 +44,7 @@
         
         <c:if test="${not empty emailDestination}">
 	        <%-- Print the shortened address which is always visible--%>
-	        <c:set var="shortAdr" value="${name}"/>
+	        <c:set var="shortAdr" value="${fn:escapeXml(name)}"/>
 	        <c:if test="${!empty name}">
 	            <c:set var="shortAdr" value="${shortAdr} &lt;"/>
 	        </c:if>

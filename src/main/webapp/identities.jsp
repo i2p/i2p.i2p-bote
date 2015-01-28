@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <ib:message key="Identities" var="title" scope="request"/>
@@ -64,7 +65,7 @@
         <td>
             <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
             <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&amp;createNew=false&amp;key=${identity.key}&amp;cryptoImpl=${identity.cryptoImpl}&amp;publicName=${ib:escapeQuotes(identity.publicName)}&amp;description=${ib:escapeQuotes(identity.description)}&amp;emailAddress=${ib:escapeQuotes(identity.emailAddress)}&amp;defaultIdentity=${identity.defaultIdentity}">
-                ${identity.publicName}
+                ${fn:escapeXml(identity.publicName)}
             </a>
         </td>
         <td>${identity.description}</td>
