@@ -31,17 +31,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<ib:message key="Address Book" var="title" scope="request"/>
-<jsp:include page="header.jsp"/>
-
 <ib:requirePassword>
     <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
     <c:set var="contacts" value="${jspHelperBean.addressBook.all}"/>
+
+    <ib:message key="Address Book" var="title" scope="request"/>
+    <c:if test="${!param.select}"><ib:message key="Private Address Book" var="pagetitle" scope="request"/></c:if>
+    <c:if test="${param.select && !empty contacts}"><ib:message key="Select One or More Entries" var="pagetitle" scope="request"/></c:if>
+    <jsp:include page="header.jsp"/>
     
-    <h2>
-        <c:if test="${!param.select}"><ib:message key="Private Address Book"/></c:if>
-        <c:if test="${param.select && !empty contacts}"><ib:message key="Select One or More Entries"/></c:if>
-    </h2>
+    <c:if test="${!empty pagetitle}"><h2>${pagetitle}</h2></c:if>
 
     <c:if test="${empty contacts}">
         <ib:message key="The address book is empty."/>
@@ -49,7 +48,7 @@
     
     <c:if test="${param.select}">
         <form action="${param.forwardUrl}" method="POST">
-        <ib:copyParams paramsToCopy="${param.paramsToCopy}"/>
+        <ib:copyParams paramsToCopy="${param.nofilter_paramsToCopy}"/>
     </c:if>
     
     <table>
@@ -70,7 +69,7 @@
         <tr class="${backgroundClass}">
         <c:if test="${param.select}">
             <td>
-                <input type="checkbox" name="selectedContact" value="${ib:escapeQuotes(contact.name)} &lt;${contact.destination}&gt;"/>
+                <input type="checkbox" name="nofilter_selectedContact" value="${ib:escapeQuotes(contact.name)} &lt;${contact.destination}&gt;"/>
             </td>
         </c:if>
         

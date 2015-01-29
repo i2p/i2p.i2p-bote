@@ -52,14 +52,14 @@
             <jsp:param name="destination" value="${ib:escapeQuotes(param[destparam])}"/>
             <jsp:param name="forwardUrl" value="newEmail.jsp"/>
             <jsp:param name="backUrl" value="newEmail.jsp"/>
-            <jsp:param name="paramsToCopy" value="sender,recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl,backUrl,paramsToCopy"/>
+            <jsp:param name="paramsToCopy" value="nofilter_sender,nofilter_recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl,backUrl,paramsToCopy"/>
         </jsp:forward>
     </c:when>
     <c:when test="${param.action eq 'lookup'}">
         <jsp:forward page="addressBook.jsp">
             <jsp:param name="select" value="true"/>
             <jsp:param name="forwardUrl" value="newEmail.jsp"/>
-            <jsp:param name="paramsToCopy" value="sender,recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl"/>
+            <jsp:param name="nofilter_paramsToCopy" value="nofilter_sender,nofilter_recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl"/>
         </jsp:forward>
     </c:when>
 </c:choose>
@@ -87,15 +87,15 @@
             <ib:message key="From:"/>
         </div>
         <div class="email-form-value">
-            <select name="sender">
+            <select name="nofilter_sender">
                 <option value="anonymous"><ib:message key="Anonymous"/></option>
                 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
                 <c:forEach items="${jspHelperBean.identities.all}" var="identity">
                     <c:set var="selected" value=""/>
-                    <c:if test="${fn:contains(param.sender, identity.key)}">
+                    <c:if test="${fn:contains(param.nofilter_sender, identity.key)}">
                         <c:set var="selected" value=" selected"/>
                     </c:if>
-                    <c:if test="${empty param.sender && identity.defaultIdentity}">
+                    <c:if test="${empty param.nofilter_sender && identity.defaultIdentity}">
                         <c:set var="selected" value=" selected"/>
                     </c:if>
                     <option value="${identity.publicName} &lt;${identity.key}&gt;"${selected}>
@@ -109,7 +109,7 @@
         <%-- Add an address line for each recipient --%>
         <c:set var="recipients" value="${ib:mergeRecipientFields(pageContext.request)}"/>
         <c:forEach var="recipient" items="${recipients}" varStatus="status">
-            <c:set var="recipientField" value="recipient${status.index}"/>
+            <c:set var="recipientField" value="nofilter_recipient${status.index}"/>
             <div class="email-form-recipient-label">
                 <c:set var="recipientTypeField" value="recipientType${status.index}"/>
                 <c:set var="recipientType" value="${param[recipientTypeField]}"/>

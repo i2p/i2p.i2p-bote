@@ -106,9 +106,9 @@
     <form action="newEmail.jsp" method="post">
         <c:set var="replyDisabled" value="${email.anonymous ? 'disabled=&quot;disabled&quot;' : ''}"/>
         <button type="submit"${replyDisabled}><ib:message key="Reply"/></button>
-        <input type="hidden" name="sender" value="${ib:escapeQuotes(ib:getOneLocalRecipient(email))}"/>
+        <input type="hidden" name="nofilter_sender" value="${ib:escapeQuotes(ib:getOneLocalRecipient(email))}"/>
         <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-        <input type="hidden" name="recipient0" value="${ib:escapeQuotes(ib:getReplyAddress(email, jspHelperBean.identities))}"/>
+        <input type="hidden" name="nofilter_recipient0" value="${ib:escapeQuotes(ib:getReplyAddress(email, jspHelperBean.identities))}"/>
         <input type="hidden" name="recipientType0" value="to"/>
         
         <ib:message key="Re:" var="responsePrefix" hide="true"/>

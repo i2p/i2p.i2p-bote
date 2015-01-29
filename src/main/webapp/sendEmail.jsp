@@ -33,9 +33,9 @@
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 <c:set var="configuration" value="${jspHelperBean.configuration}"/>
 <div class="subheading">
-<ib:sendEmail sender="${param.sender}" subject="${param.subject}" message="${param.message}" includeSentTime="${configuration.includeSentTime}">
+<ib:sendEmail sender="${param.nofilter_sender}" subject="${param.subject}" message="${param.message}" includeSentTime="${configuration.includeSentTime}">
     <c:forEach var="parameter" items="${ib:getSortedRecipientParams(param)}">
-        <c:set var="recipientIndex" value="${fn:substringAfter(parameter.key, 'recipient')}"/>
+        <c:set var="recipientIndex" value="${fn:substringAfter(parameter.key, 'nofilter_recipient')}"/>
         <c:set var="recipientTypeAttrName" value="recipientType${recipientIndex}"/>
         <c:if test="${not empty parameter.value}">
             <ib:recipient type="${param[recipientTypeAttrName]}" address="${parameter.value}"/>

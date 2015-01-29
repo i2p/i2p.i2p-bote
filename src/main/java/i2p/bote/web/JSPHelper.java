@@ -51,20 +51,22 @@ import net.i2p.util.Translate;
  * and serves as a bean for JSPs.
  */
 public class JSPHelper extends GeneralHelper {
+    private static final String RECIPIENT_KEY_PREFIX = "nofilter_recipient";
+
     /**
      * Returns a new <code>SortedMap<String, String></code> that contains only those
-     * entries from the original map whose key is <code>"recipient"</code>, followed
-     * by a whole number.
+     * entries from the original map whose key is <code>"nofilter_recipient"</code>,
+     * followed by a whole number.
      * @param parameters
-     * @return A map whose keys start with "recipient", sorted by key
+     * @return A map whose keys start with "nofilter_recipient", sorted by key
      */
     public static SortedMap<String, String> getSortedRecipientParams(Map<String, String> parameters) {
         SortedMap<String, String> newMap = new TreeMap<String, String>();
         for (String key: parameters.keySet()) {
             if (key == null)
                 continue;
-            if (key.startsWith("recipient")) {
-                String indexString = key.substring("recipient".length());
+            if (key.startsWith(RECIPIENT_KEY_PREFIX)) {
+                String indexString = key.substring(RECIPIENT_KEY_PREFIX.length());
                 if (isNumeric(indexString)) {
                     String value = parameters.get(key);
                     if (value ==null)
@@ -100,7 +102,7 @@ public class JSPHelper extends GeneralHelper {
         }
 
         // make an Iterator over the selectedContact values
-        String[] newAddressesArray = request.getParameterValues("selectedContact");
+        String[] newAddressesArray = request.getParameterValues("nofilter_selectedContact");
         Iterator<String> newAddresses;
         if (newAddressesArray == null)
             newAddresses = new ArrayList<String>().iterator();
