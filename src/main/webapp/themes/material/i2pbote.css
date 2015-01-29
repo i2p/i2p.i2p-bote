@@ -335,16 +335,23 @@ See also .menu-icon
 .main noscript {
 }
 .infoMessage {
-    text-align: center;
-    color: white;
-    font-size: 1em;
     background-color: #606060;
+    color: white;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    text-align: center;
 }
 .errorMessage {
-    text-align: center;
-    color: white;
-    font-size: 1em;
     background-color: #606060;
+    color: white;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+}
+.errorMessage:before {
+    content: url("images/warning.png");
+    display: inline-block;
+    margin-right: 0.5em;
+    vertical-align: middle;
 }
 .stackTrace {
     white-space: pre;
