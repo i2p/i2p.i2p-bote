@@ -275,7 +275,7 @@ aside {
 http://nicolasgallagher.com/css-image-replacement-with-pseudo-elements/
 See also .menu-icon
 */
-.folder .menu-icon:before {
+.folder .menu-icon:before, .menuitem.identities .menu-icon:before, .menuitem.address-book .menu-icon:before, .menuitem.settings .menu-icon:before {
     display: inline-block;
     font-size: 0;
     line-height: 0;
@@ -299,6 +299,15 @@ See also .menu-icon
     font-size: 0.857143em;
     font-weight: 300;
     margin: 0 24px 0 48px;
+}
+.menuitem.identities .menu-icon:before {
+    content: url("images/identities.png");
+}
+.menuitem.address-book .menu-icon:before {
+    content: url("images/addressbook.png");
+}
+.menuitem.settings .menu-icon:before {
+    content: url("images/settings.png");
 }
 
 
@@ -391,7 +400,7 @@ th[class^="header-column"], th[class^="header-column"] a {
     background: white;
     color: #202020;
 }
-td a:link {
+td a:link, td a:visited {
     color: #202020;
 }
 

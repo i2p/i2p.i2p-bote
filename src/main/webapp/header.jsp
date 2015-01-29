@@ -46,6 +46,8 @@
 <c:set var="themeDir" value="themes/${jspHelperBean.configuration.theme}" scope="request"/>
 <fmt:setLocale value="${jspHelperBean.language}" scope="request"/>
 
+<c:if test="${empty pagetitle and !empty title}"><c:set var="pagetitle" value="${title}"/></c:if>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -73,9 +75,7 @@
     </c:if>
     <div class="title"><ib:message key="I2P-Bote"/></div>
     <div class="subtitle"><ib:message key="Secure Distributed Email"/></div>
-    <c:if test="${!empty title}">
-    <div class="pagetitle">${title}</div>
-    </c:if>
+    <c:if test="${!empty pagetitle}"><div class="pagetitle">${pagetitle}</div></c:if>
 </header>
 
 <aside>
@@ -89,14 +89,28 @@
 
 <div class="menubox">
     <h2><ib:message key="Addresses"/></h2>
-    <a class="menuitem" href="identities.jsp"><ib:message key="Identities"/></a>
-    <a class="menuitem" href="addressBook.jsp"><ib:message key="Address Book"/></a>
-    <%--<div class="menuitem">Public Address Directory</div> --%>
+    <a class="menuitem identities" href="identities.jsp">
+        <div class="menu-icon"></div>
+        <div class="menu-text"><ib:message key="Identities"/></div>
+    </a>
+    <a class="menuitem address-book" href="addressBook.jsp">
+        <div class="menu-icon"></div>
+        <div class="menu-text"><ib:message key="Address Book"/></div>
+    </a>
+    <%--
+    <div class="menuitem public-address-directory">
+        <div class="menu-icon"></div>
+        <div class="menu-text">Public Address Directory</div>
+    </div>
+    --%>
 </div>
 
 <div class="menubox">
     <h2><ib:message key="Configuration"/></h2>
-    <a class="menuitem" href="settings.jsp"><ib:message key="Settings"/></a>
+    <a class="menuitem settings" href="settings.jsp">
+        <div class="menu-icon"></div>
+        <div class="menu-text"><ib:message key="Settings"/></div>
+    </a>
 </div>
 
 <div class="menubox">
