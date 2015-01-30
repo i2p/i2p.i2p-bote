@@ -29,6 +29,20 @@
 <ib:requirePassword>
 <c:set var="email" value="${ib:getEmail(param.folder, param.messageID)}"/>
 
+<c:choose><c:when test="${empty email}">
+    <c:choose>
+        <c:when test="${param.folder == 'Outbox'}">
+            <ib:message key="The email could not be found in this folder. It was probably moved to the Sent folder." var="errorMessage" scope="request"/>
+        </c:when>
+        <c:otherwise>
+            <ib:message key="The email could not be found in this folder." var="errorMessage" scope="request"/>
+        </c:otherwise>
+    </c:choose>
+    <jsp:forward page="folder.jsp">
+        <jsp:param name="path" value="${param.folder}"/>
+    </jsp:forward>
+</c:when><c:otherwise>
+
 <c:if test="${fn:toLowerCase(param.folder) ne 'outbox'}">
     <ib:setEmailRead folder="${ib:getMailFolder(param.folder)}" messageId="${param.messageID}" read="true"/>
 </c:if>
@@ -130,6 +144,8 @@
     </form>
     </div>
 </article>
+
+</c:otherwise></c:choose>
 </ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>
