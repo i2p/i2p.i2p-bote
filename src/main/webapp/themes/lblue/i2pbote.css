@@ -597,8 +597,12 @@ table td, th {
     width: 30%;
 }
 
+.header-column-attachment {
+    width: 24px;
+}
+
 .header-column-date {
-    width: 23%;
+    width: 18%;
 }
 
 .header-column-status {

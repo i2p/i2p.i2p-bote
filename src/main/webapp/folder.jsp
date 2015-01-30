@@ -133,6 +133,7 @@
                 </c:if>
                 <a href="${sortLink}"><ib:message key="Subject"/>${subjectColumnIndicator}</a>
             </th>
+            <th class="header-column-attachment"/>
             <th class="header-column-date">
                 <c:set var="sortLink" value="folder.jsp?path=${param.path}&amp;sortcolumn=${DATE}"/>
                 <c:if test="${sortcolumn eq DATE}">
@@ -218,6 +219,9 @@
             </c:if>
             <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(recipient)}</a></td>
             <td class="ellipsis"><a href="${mailUrl}">${fn:escapeXml(subject)}</a></td>
+            <td><c:if test="${email.containingAttachments}">
+                <img src="${themeDir}/images/attachment.png"/>
+            </c:if></td>
             <td>
                 <a href="${mailUrl}"><ib:printDate date="${email.sentDate}" timeStyle="short" printUnknown="true"/></a>
             </td>

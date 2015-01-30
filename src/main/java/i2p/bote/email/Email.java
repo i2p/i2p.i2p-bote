@@ -1020,6 +1020,14 @@ public class Email extends MimeMessage {
         return mostPreferable;
     }
 
+    public boolean isContainingAttachments() throws MessagingException, IOException {
+        for (Part part : getParts()) {
+            if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition()))
+                return true;
+        }
+        return false;
+    }
+
     /**
      * Returns the <code>Part</code>s of the email as a <code>List</code>.
      * <code>Part</code>s that are only containers are not included.<br/>
