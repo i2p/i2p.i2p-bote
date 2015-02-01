@@ -102,7 +102,8 @@ public class PeerInfoTag extends SimpleTagSupport {
                     out.println("<tr>");
                     out.println("<td>" + i + "</td>");
                     out.println("<td class=\"ellipsis\">" + Util.toBase32(peer) + "</td>");
-                    out.println("<td>" + peer.getReachability() + "</td>");
+                    int reachability = peer.getReachability();
+                    out.println("<td>" + (reachability == 0 ? _("Untested") : reachability) + "</td>");
                     out.println("</tr>");
                     i++;
                 }

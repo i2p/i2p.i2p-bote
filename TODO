@@ -4,5 +4,3 @@ Email composition
 - "Include sent time" as an option, pre-filled with settings default
 Identities
 - Generate dests in background rather than needing a dedicated tab open
-Network status
-- Mark new relay peers instead of showing 0% reachability
