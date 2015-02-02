@@ -38,8 +38,8 @@
         </c:when>
         <c:otherwise>
             <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-            <span class="subheading"><ib:message key="Local destination:"/></span>
-            ${jspHelperBean.localDestination}<p/><br/>
+            <p><span class="subheading"><ib:message key="Local destination:"/></span>
+            ${jspHelperBean.localDestination}</p>
             <ib:peerInfo/>
         </c:otherwise>
     </c:choose>

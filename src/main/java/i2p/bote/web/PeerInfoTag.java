@@ -1,4 +1,5 @@
 /**
+ * Copyright (C) 2015  str4d@mail.i2p
  * Copyright (C) 2009  HungryHobo@mail.i2p
  * 
  * The GPG fingerprint for HungryHobo@mail.i2p is:
@@ -28,6 +29,7 @@ import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.RelayPeer;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,6 +39,11 @@ import java.util.List;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
+
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.RingPlot;
+import org.jfree.chart.servlet.ServletUtilities;
+import org.jfree.data.general.DefaultPieDataset;
 
 import net.i2p.util.Log;
 
@@ -53,8 +60,31 @@ public class PeerInfoTag extends SimpleTagSupport {
             DhtPeerStats dhtStats = I2PBote.getInstance().getDhtStats();
             if (dhtStats == null)
                 return;
-            
+
             int numDhtPeers = dhtStats.getData().size();
+
+            // Get a sorted list of relay peers
+            RelayPeer[] relayPeers = I2PBote.getInstance().getRelayPeers().toArray(new RelayPeer[0]);
+            Arrays.sort(relayPeers, new Comparator<RelayPeer>() {
+                @Override
+                public int compare(RelayPeer peer1, RelayPeer peer2) {
+                    return peer2.getReachability() - peer1.getReachability();
+                }
+            });
+
+            // Print charts
+            out.println("<div class=\"network-charts\">");
+            out.println("<div class=\"chart\">");
+            out.println("<img src=\"displayChart?filename=" + createDhtChart(dhtStats) + "\"/>");
+            out.println("<div class=\"chart-text\">" + numDhtPeers + "</div>");
+            out.println("</div>");
+            out.println("<div class=\"chart\">");
+            out.println("<img src=\"displayChart?filename=" + createRelayChart(relayPeers) + "\"/>");
+            out.println("<div class=\"chart-text\">" + relayPeers.length + "</div>");
+            out.println("</div>");
+            out.println("</div>");
+            out.println("<br>");
+
             out.println("<span class=\"subheading\">" + _("Kademlia Peers:") + " " + numDhtPeers + "</span>");
             if (numDhtPeers > 0) {
                 out.println("<table");
@@ -76,16 +106,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                 out.println("</table>");
             }
             
-            out.println("<p/><br/>");
-            
-            // Get a sorted list of relay peers
-            RelayPeer[] relayPeers = I2PBote.getInstance().getRelayPeers().toArray(new RelayPeer[0]);
-            Arrays.sort(relayPeers, new Comparator<RelayPeer>() {
-                @Override
-                public int compare(RelayPeer peer1, RelayPeer peer2) {
-                    return peer2.getReachability() - peer1.getReachability();
-                }
-            });
+            out.println("<br/>");
             
             // Print relay peer info
             out.println("<span class=\"subheading\">" + _("Relay Peers:") + " " + relayPeers.length + "</span>");
@@ -110,7 +131,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                 out.println("</table>");
             }
             
-            out.println("<p/><br/>");
+            out.println("<br/>");
             
             // List banned peers
             Collection<BannedPeer> bannedPeers = I2PBote.getInstance().getBannedPeers();
@@ -137,5 +158,83 @@ public class PeerInfoTag extends SimpleTagSupport {
         } catch (IOException e) {
             log.error("Can't write output to HTML page", e);
         }
+    }
+
+    private String createDhtChart(DhtPeerStats dhtStats) throws IOException {
+        RingPlot plot;
+        int numDhtPeers = dhtStats.getData().size();
+        if (numDhtPeers == 0) {
+            DefaultPieDataset dataset = new DefaultPieDataset();
+            dataset.setValue("", 100);
+
+            plot = new RingPlot(dataset);
+            plot.setSectionPaint("", Color.gray);
+        } else {
+            int reachable = 0;
+            for (List<String> row : dhtStats.getData()) {
+                if (_("No").equals(row.get(4)))
+                    reachable += 1;
+            }
+            int unreachable = numDhtPeers - reachable;
+
+            DefaultPieDataset dataset = new DefaultPieDataset();
+            if (reachable > 0)
+                dataset.setValue(_("Reachable"), reachable);
+            if (unreachable > 0)
+                dataset.setValue(_("Unreachable"), unreachable);
+
+            plot = new RingPlot(dataset);
+            plot.setSectionPaint(_("Reachable"), Color.green);
+            plot.setSectionPaint(_("Unreachable"), Color.red);
+        }
+        plot.setLabelGenerator(null);
+        plot.setShadowGenerator(null);
+
+        JFreeChart dhtChart = new JFreeChart(
+                _("Kademlia Peers:"), JFreeChart.DEFAULT_TITLE_FONT,
+                plot, numDhtPeers == 0 ? false : true);
+        return ServletUtilities.saveChartAsPNG(dhtChart, 400, 300, null);
+    }
+
+    private String createRelayChart(RelayPeer[] relayPeers) throws IOException {
+        RingPlot plot;
+        if (relayPeers.length == 0) {
+            DefaultPieDataset dataset = new DefaultPieDataset();
+            dataset.setValue("", 100);
+
+            plot = new RingPlot(dataset);
+            plot.setSectionPaint("", Color.gray);
+        } else {
+            int good = 0;
+            int untested = 0;
+            for (RelayPeer relayPeer : relayPeers) {
+                int reachability = relayPeer.getReachability();
+                if (reachability == 0)
+                    untested += 1;
+                else if (reachability > 80)
+                    good += 1;
+            }
+            int bad = relayPeers.length - good - untested;
+
+            DefaultPieDataset dataset = new DefaultPieDataset();
+            if (good > 0)
+                dataset.setValue(_("Good"), good);
+            if (bad > 0)
+                dataset.setValue(_("Unreliable"), bad);
+            if (untested > 0)
+                dataset.setValue(_("Untested"), untested);
+
+            plot = new RingPlot(dataset);
+            plot.setSectionPaint(_("Good"), Color.green);
+            plot.setSectionPaint(_("Unreliable"), Color.red);
+            plot.setSectionPaint(_("Untested"), Color.orange);
+        }
+        plot.setLabelGenerator(null);
+        plot.setShadowGenerator(null);
+
+        JFreeChart chart = new JFreeChart(
+                _("Relay Peers:"), JFreeChart.DEFAULT_TITLE_FONT,
+                plot, relayPeers.length == 0 ? false : true);
+        return ServletUtilities.saveChartAsPNG(chart, 400, 300, null);
     }
 }

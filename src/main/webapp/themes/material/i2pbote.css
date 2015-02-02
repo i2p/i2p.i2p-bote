@@ -157,7 +157,7 @@ iframe {
 }
 .status-frame {
     height: auto;
-    max-height: 56px;
+    max-height: 98px;
     width: 100%;
 }
 .status-frame-connect {
@@ -697,6 +697,7 @@ td a:link, td a:visited {
 
 
 /* New email */
+
 .email-form-button-send {
     height: 24px;
     position: absolute;
@@ -783,6 +784,7 @@ td a:link, td a:visited {
 }
 
 /* Show email */
+
 .show-email-value {
     margin-left: 120px;
     margin-right: 5px;
@@ -812,6 +814,22 @@ td a:link, td a:visited {
 }
 .password-field {
     margin-left: 115px;
+}
+
+
+/* Network status */
+
+.network-charts .chart {
+    display: inline-block;
+    position: relative;
+    width: 400px;
+}
+.network-charts .chart-text {
+    font-size: 3em;
+    position: absolute;
+    text-align: center;
+    top: 143px;
+    width: 100%;
 }
 
 

@@ -80,6 +80,8 @@
         <pathelement location="${lib}/lzma-9.20.jar" />
         <pathelement location="${lib}/flexi-gmss-1.7p1.jar" />
         <pathelement location="${lib}/${subetha.filename}" />
+        <pathelement location="${lib}/jcommon-1.0.23.jar" />
+        <pathelement location="${lib}/jfreechart-1.0.19.jar" />
         <pathelement location="src/main/webapp/WEB-INF/classes" />
         <fileset refid="imaplibs"/>
     </path>
@@ -190,6 +192,8 @@
             <lib file="${lib}/scrypt-1.4.0.jar"/>
             <lib file="${lib}/lzma-9.20.jar"/>
             <lib file="${lib}/flexi-gmss-1.7p1.jar"/>
+            <lib file="${lib}/jcommon-1.0.23.jar" />
+            <lib file="${lib}/jfreechart-1.0.19.jar" />
           <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
         </war>
 
@@ -285,6 +289,20 @@
             <arg value="--modification-time=latest"/>
             <arg value="plugin/plugin.tmp/lib/flexi-gmss-1.7p1.jar.pack"/>
             <arg value="${lib}/flexi-gmss-1.7p1.jar"/>
+        </exec>
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/jcommon-1.0.23.jar.pack"/>
+            <arg value="${lib}/jcommon-1.0.23.jar"/>
+        </exec>
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/jfreechart-1.0.19.jar.pack"/>
+            <arg value="${lib}/jfreechart-1.0.19.jar"/>
         </exec>
         <!-- pack all IMAP jars -->
         <apply executable="pack200" failonerror="true" parallel="false" dest="plugin/plugin.tmp/lib/">
@@ -425,6 +443,8 @@
         <copy file="${lib}/scrypt-1.4.0.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/lzma-9.20.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/flexi-gmss-1.7p1.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/jcommon-1.0.23.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/jfreechart-1.0.19.jar" todir="${i2pinstallerplugindir}/lib"/>
         <!-- build the I2P + I2P-Bote install.jar -->
         <ant antfile="${installerdir}/i2p.i2p/build.xml" target="installer" inheritAll="false"/>
         <copy file="${installerdir}/i2p.i2p/install.jar" todir="${installerresources}"/>
