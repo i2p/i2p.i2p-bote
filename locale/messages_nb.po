@@ -1,13 +1,14 @@
 # 
 # Translators:
-# mikalv <mikalv@mikalv.net>, 2013
+# Mikal <mikalv@mikalv.net>, 2013
+# Shpetim <shpetim@privacysolutions.no>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-02 21:10+0000\n"
-"PO-Revision-Date: 2013-05-02 21:15+0000\n"
-"Last-Translator: HungryHobo <HungryHobo@i2pmail.org>\n"
+"PO-Revision-Date: 2014-08-21 15:36+0000\n"
+"Last-Translator: Shpetim <shpetim@privacysolutions.no>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/projects/p/I2P/language/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,7 +68,7 @@ msgstr "I kø"
 
 #: src/i2p/bote/imap/BoteMailbox.java:85
 msgid "Password required or invalid password provided"
-msgstr ""
+msgstr "Trenger passord eller ugyldig passord tastet"
 
 #: src/i2p/bote/imap/MapperFactory.java:276
 msgid "Deletion of mailboxes is not currently supported."
@@ -130,7 +131,7 @@ msgstr "Sendt til {0} ut av {1} mottagere"
 
 #: src/i2p/bote/service/OutboxProcessor.java:180
 msgid "Email sent"
-msgstr ""
+msgstr "E-posten sendt"
 
 #: src/i2p/bote/service/OutboxProcessor.java:183
 msgid "Gateway disabled"
@@ -194,12 +195,12 @@ msgstr "Feil: Vennligst legg til minst én mottager."
 
 #: src/i2p/bote/web/SendEmailTag.java:96
 msgid "The email has been queued for sending."
-msgstr "Eposten har blitt lagt i kø for sending."
+msgstr "E-posten har blitt lagt i kø for sending."
 
 #: src/i2p/bote/web/SendEmailTag.java:102
 #, java-format
 msgid "Error sending email: {0}"
-msgstr "Det skjedde en feil under sending av epost: {0}"
+msgstr "Feil under sending av epost: {0}"
 
 #: WebContent/network.jsp
 msgid "Network"
@@ -233,7 +234,7 @@ msgstr "Sjekk mail hvert {0} minutt"
 
 #: WebContent/settings.jsp
 msgid "Check delivery status of sent emails"
-msgstr ""
+msgstr "Sjekk leveringsstatus for sendte e-poster"
 
 #: WebContent/settings.jsp
 msgid "Use relays when sending mail:"
@@ -265,7 +266,7 @@ msgstr "Epost Destinasjon av gateway"
 
 #: WebContent/settings.jsp
 msgid "Enable IMAP on port {0}"
-msgstr ""
+msgstr "Aktiver IMAP på port {0}"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -305,7 +306,7 @@ msgstr "Gyldig"
 
 #: WebContent/showEmail.jsp
 msgid "N/A (sender is anonymous)"
-msgstr ""
+msgstr "I/T (senderen er anonym) "
 
 #: WebContent/showEmail.jsp
 msgid "Invalid or missing"
@@ -317,15 +318,15 @@ msgstr "Svar Til:"
 
 #: WebContent/showEmail.jsp
 msgid "To:"
-msgstr "Til"
+msgstr "Til:"
 
 #: WebContent/showEmail.jsp
 msgid "CC:"
-msgstr "CC"
+msgstr "CC:"
 
 #: WebContent/showEmail.jsp
 msgid "BCC:"
-msgstr "BCC"
+msgstr "BCC:"
 
 #: WebContent/showEmail.jsp
 msgid "Sent:"
@@ -409,7 +410,7 @@ msgstr "Fransk oversettelse"
 
 #: WebContent/about.jsp
 msgid "Dutch translation"
-msgstr "Nederlansk oversettelse"
+msgstr "Nederlandsk oversettelse"
 
 #: WebContent/about.jsp
 msgid "Norwegian translation"
@@ -429,7 +430,7 @@ msgstr "Arabisk oversettelse"
 
 #: WebContent/about.jsp
 msgid "Czech translation"
-msgstr "Czech oversettelse"
+msgstr " Tjekkisk oversettelse"
 
 #: WebContent/about.jsp
 msgid "German translation"
@@ -449,7 +450,7 @@ msgstr "Ukrainsk oversettelse"
 
 #: WebContent/about.jsp
 msgid "Hungarian translation"
-msgstr "Hingarn  oversettelse"
+msgstr "Ungarsk  oversettelse"
 
 #: WebContent/about.jsp
 msgid "Code fixes, translation updates from tx"
@@ -457,39 +458,39 @@ msgstr "Kode fikser, oversettelser oppdateringer fra tx"
 
 #: WebContent/publishDestination.jsp
 msgid "Add Email Destination to Directory"
-msgstr ""
+msgstr "Legg til E-post Destionasjonen på Katalogen."
 
 #: WebContent/publishDestination.jsp
 msgid "The name exists already. Please choose a different Public Name."
-msgstr ""
+msgstr "Navnet finnes allerede. Vær snill og velg en annen Offentlig Navn."
 
 #: WebContent/publishDestination.jsp
 msgid "Publish to the Address Directory"
-msgstr ""
+msgstr "Publiser på Adressekatalogen "
 
 #: WebContent/publishDestination.jsp
 msgid "Picture to upload:"
-msgstr ""
+msgstr "Bilde å opplaste:"
 
 #: WebContent/publishDestination.jsp
 msgid "(optional, 7.5 kBytes max)"
-msgstr ""
+msgstr "(valgfritt, 7,5 kBit maks)"
 
 #: WebContent/publishDestination.jsp
 msgid "Text to include:"
-msgstr ""
+msgstr "Teksten å inkludere:"
 
 #: WebContent/publishDestination.jsp
 msgid "(optional, 2000 chars max)"
-msgstr ""
+msgstr "(valgfritt, 2000 chars maks)"
 
 #: WebContent/publishDestination.jsp
 msgid "Publish"
-msgstr ""
+msgstr "Publiser"
 
 #: WebContent/publishDestination.jsp
 msgid "The identity has been added to the address directory."
-msgstr ""
+msgstr "Identiteten har blitt lagt til i adressekatalogen."
 
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
@@ -629,11 +630,11 @@ msgstr "Passordet har blitt endret."
 
 #: WebContent/setPassword.jsp
 msgid "Please wait"
-msgstr ""
+msgstr "Vennligst vent"
 
 #: WebContent/setPassword.jsp
 msgid "Please wait while the password is being changed..."
-msgstr ""
+msgstr "Vennligst vent mens passordet blir forandret..."
 
 #: WebContent/setPassword.jsp
 msgid "Set a new Password"
@@ -719,11 +720,11 @@ msgstr "Navn:"
 
 #: WebContent/editContact.jsp
 msgid "Picture:"
-msgstr ""
+msgstr "Bilde:"
 
 #: WebContent/editContact.jsp
 msgid "Text:"
-msgstr ""
+msgstr "Tekst:"
 
 #: WebContent/editContact.jsp
 msgid "Cancel"
@@ -739,30 +740,30 @@ msgstr "Lag en Ny Epost Identitet"
 
 #: WebContent/importContact.jsp
 msgid "Address Directory Lookup"
-msgstr ""
+msgstr "Oppslag av Adressekatalogen"
 
 #: WebContent/importContact.jsp
 msgid "The name has been imported to the address book."
-msgstr ""
+msgstr "Navnet har blitt importert til adressekatalogen."
 
 #: WebContent/importContact.jsp
 msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr ""
+msgstr "Navnet &quot;{0}&quot; var ikke funnet i katalogen. "
 
 #: WebContent/importContact.jsp
 msgid "Import Contact"
-msgstr ""
+msgstr "Importer Kontakten"
 
 #: WebContent/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
 "directory is not secure against manipulation, so do not click "
 "&quot;import&quot; unless you trust that it is the right email destination."
-msgstr ""
+msgstr "En matchende innspill var funnet i adressekatalogen. Legg merke til at adressekatalogen er ikke sikret mot manipulasjon, dermed klikk ikke på &quot;import&quot; med mindre du stoler på at det er den riktige destinmasjonen til e-poten. "
 
 #: WebContent/importContact.jsp
 msgid "Fingerprint:"
-msgstr ""
+msgstr "Fingeravtrykk:"
 
 #: WebContent/importContact.jsp
 msgid "Email Destination: "
@@ -770,7 +771,7 @@ msgstr "Epost Destinasjon: "
 
 #: WebContent/importContact.jsp
 msgid "Import"
-msgstr ""
+msgstr "Import "
 
 #: WebContent/folders.jsp
 msgid "Folders"
@@ -899,7 +900,7 @@ msgstr "(valgfritt, forblir privat)"
 
 #: WebContent/editIdentity.jsp
 msgid "(published to the address directory)"
-msgstr ""
+msgstr "(publisert på adressekatalogen)"
 
 #: WebContent/editIdentity.jsp
 msgid "Encryption:"
@@ -927,7 +928,7 @@ msgstr "Vis"
 
 #: WebContent/editIdentity.jsp
 msgid "Cannot publish until connected."
-msgstr ""
+msgstr "Kan ikke publisere før koblet til."
 
 #: WebContent/editIdentity.jsp
 msgid "Delete this identity"
@@ -971,11 +972,11 @@ msgstr "Tilbake"
 
 #: WebContent/addressBook.jsp
 msgid "Import from the public address directory"
-msgstr ""
+msgstr "Import fra den offentlige adressekatalogen"
 
 #: WebContent/addressBook.jsp
 msgid "Lookup"
-msgstr ""
+msgstr "Oppslag"
 
 #: WebContent/buttonFrame.jsp
 msgid "Checking for mail..."
@@ -1007,7 +1008,7 @@ msgstr "Levert"
 
 #: WebContent/folder.jsp
 msgid "Signature is invalid or missing"
-msgstr ""
+msgstr "Signaturen er inalid eller den mangler"
 
 #: WebContent/showFullIdentity.jsp
 msgid "Full Identity"
@@ -1088,15 +1089,15 @@ msgstr ""
 
 #: WebContent/debug.jsp
 msgid "Test encrypted files"
-msgstr ""
+msgstr "Test de krypterte filene"
 
 #: WebContent/debug.jsp
 msgid "No file encryption problems found."
-msgstr ""
+msgstr "Ingen problemer med fil krypteringen er funnet"
 
 #: WebContent/debug.jsp
 msgid "Undecryptable files:"
-msgstr ""
+msgstr "Udekrypterte filer:"
 
 #: WebContent/deleteEmail.jsp
 msgid "Error: Couldn't delete email."

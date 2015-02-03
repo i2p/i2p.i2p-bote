@@ -3,15 +3,15 @@
 # ducki2p <ducki2p@gmail.com>, 2011
 # Boxoa590, 2013
 # Boxoa590, 2012
-# Towatowa441, 2013-2014
+# Towinet, 2013-2014
 # walking <walking@i2pmail.org>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-02 21:10+0000\n"
-"PO-Revision-Date: 2014-01-19 13:22+0000\n"
-"Last-Translator: Towatowa441\n"
+"PO-Revision-Date: 2014-03-17 18:56+0000\n"
+"Last-Translator: Towinet\n"
 "Language-Team: French (http://www.transifex.com/projects/p/I2P/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -237,7 +237,7 @@ msgstr "Relever le courrier toutes les {0} minutes"
 
 #: WebContent/settings.jsp
 msgid "Check delivery status of sent emails"
-msgstr "Vérifier l'état de livraison de courriels envoyés"
+msgstr "Vérifier l'état de livraison des courriels envoyés"
 
 #: WebContent/settings.jsp
 msgid "Use relays when sending mail:"
@@ -249,7 +249,7 @@ msgstr "Désactivé"
 
 #: WebContent/settings.jsp
 msgid "Delay per relay hop: Between"
-msgstr "Délai par saut relais: Entre"
+msgstr "Délai par saut de relais : entre"
 
 #: WebContent/settings.jsp
 msgid "and"
@@ -273,7 +273,7 @@ msgstr "Activer IMAP sur le port {0}"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Utiliser l'anglais pour les titres d'en-têtes de messages sortants ('Re', 'wrote', etc.)"
+msgstr "Utiliser l'anglais pour le texte ajouté aux messages sortants ('Re', 'wrote', etc.)"
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -651,7 +651,7 @@ msgstr "Si vous n'avez définit aucun mot de passe, laissez le champ \"Ancien mo
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr "Veuillez noter que si un mot de passe est défini, les e-mails ne peuvent pas être vérifiées automatiquement, mais seulement lorsque le bouton Vérifier le courrier est cliqué."
+msgstr "Veuillez noter que si un mot de passe est défini, les e-mails ne peuvent pas être vérifiées automatiquement, mais seulement lorsque le bouton Relever le courrier est cliqué."
 
 #: WebContent/setPassword.jsp
 msgid "Old password:"
@@ -817,7 +817,7 @@ msgid ""
 "I2P-Bote automatically decrypts emails sent to you, using the email identity"
 " you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote déchiffre automatiquement les emails qui vous sont envoyés, en utilisant l'identité email que vous avez créée. Les identités email sont stockées dans un fichier nommé identities; ne jamais donner ce fichier à quelqu'un sinon il sera en mesure de lire tous vos e-mails."
+msgstr "I2P-Bote déchiffre automatiquement les emails qui vous sont envoyés, en utilisant l'identité email que vous avez créée. Les identités email sont stockées dans un fichier nommé identities; ne donnez jamais ce fichier à quelqu'un sinon il sera en mesure de lire tous vos e-mails."
 
 #: WebContent/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
@@ -995,7 +995,7 @@ msgstr "Composer"
 
 #: WebContent/buttonFrame.jsp
 msgid "Last checked:"
-msgstr "Dernière vérification:"
+msgstr "Dernière relève:"
 
 #: WebContent/folder.jsp
 msgid "Know"
@@ -1024,7 +1024,7 @@ msgstr "Identité de courrier complète de {0}:"
 #: WebContent/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr "Ne divulguez l'info ci-dessus à PERSONNE! C'est votre clé privée."
+msgstr "Ne divulguez l'information ci-dessus à PERSONNE ! Elle contient vos clés privées."
 
 #: WebContent/identities.jsp
 msgid "Email Identities"
@@ -1104,7 +1104,7 @@ msgstr "Fichiers indéchiffrables:"
 
 #: WebContent/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
-msgstr "Erreur: Impossible de supprimer le message."
+msgstr "Erreur: impossible de supprimer le message."
 
 #: WebContent/password.jsp
 msgid "Password Required"

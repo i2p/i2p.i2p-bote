@@ -1,13 +1,16 @@
 # 
 # Translators:
+# LinuxChata, 2014
+# madjong <madjong@i2pmail.org>, 2014
+# puxud <puxud@alivance.com>, 2014
 # gringoire <shmt@anapnea.net>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-02 21:10+0000\n"
-"PO-Revision-Date: 2013-05-02 21:15+0000\n"
-"Last-Translator: HungryHobo <HungryHobo@i2pmail.org>\n"
+"PO-Revision-Date: 2014-12-21 20:47+0000\n"
+"Last-Translator: madjong <madjong@i2pmail.org>\n"
 "Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/projects/p/I2P/language/uk_UA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,11 +20,11 @@ msgstr ""
 
 #: src/i2p/bote/Configuration.java:62
 msgid "lblue"
-msgstr ""
+msgstr "lblue"
 
 #: src/i2p/bote/Configuration.java:63
 msgid "vanilla"
-msgstr ""
+msgstr "vanilla"
 
 #: src/i2p/bote/I2PBote.java:503 src/i2p/bote/service/OutboxProcessor.java:159
 msgid "No identity matches the sender/from field: "
@@ -29,7 +32,7 @@ msgstr ""
 
 #: src/i2p/bote/I2PBote.java:663
 msgid "The old password is not correct."
-msgstr "Старий пароль неправильний."
+msgstr "Старий пароль не правильний."
 
 #: src/i2p/bote/I2PBote.java:665
 msgid "The new password and the confirmation password do not match."
@@ -37,19 +40,19 @@ msgstr "Новий пароль та підтвердження не співп�
 
 #: src/i2p/bote/crypto/ECDH256_ECDSA256.java:49
 msgid "256-bit Elliptic Curve Encryption"
-msgstr ""
+msgstr "256-бітне шифрування еліптичними кривими"
 
 #: src/i2p/bote/crypto/ECDH521_ECDSA521.java:54
 msgid "521-bit Elliptic Curve Encryption"
-msgstr ""
+msgstr "521-бітне шифрування еліптичними кривими"
 
 #: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:55
 msgid "2048-bit ElGamal Encryption"
-msgstr ""
+msgstr "2048-бітне шифрування Ель-Гамаля"
 
 #: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:119
 msgid "NTRU-1087 Encryption"
-msgstr ""
+msgstr "Шифрування NTRU-1087"
 
 #: src/i2p/bote/email/Email.java:484
 msgid ""
@@ -63,7 +66,7 @@ msgstr "Невірна електронна адреса: {0}"
 
 #: src/i2p/bote/folder/Outbox.java:116
 msgid "Queued"
-msgstr ""
+msgstr "У черзі"
 
 #: src/i2p/bote/imap/BoteMailbox.java:85
 msgid "Password required or invalid password provided"
@@ -75,11 +78,11 @@ msgstr ""
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
-msgstr "Неправильна версія протоколу"
+msgstr "Неправильна версія протоколу:"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "BktPfx"
-msgstr ""
+msgstr "BktPfx"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "Distance"
@@ -87,7 +90,7 @@ msgstr "Відстань"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "First Seen"
-msgstr ""
+msgstr "Уперше помічено"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 #: src/i2p/bote/web/PeerInfoTag.java:96
@@ -96,12 +99,12 @@ msgstr ""
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "Locked?"
-msgstr ""
+msgstr "Заблоковано?"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 #: src/i2p/bote/web/PeerInfoTag.java:95 src/i2p/bote/web/PeerInfoTag.java:120
 msgid "Peer"
-msgstr ""
+msgstr "Пір"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:67
 msgid "No"
@@ -113,11 +116,11 @@ msgstr "Так"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:84
 msgid "(None)"
-msgstr ""
+msgstr "(-)"
 
 #: src/i2p/bote/network/kademlia/KademliaPeerStats.java:89
 msgid "(S)"
-msgstr ""
+msgstr "(S)"
 
 #: src/i2p/bote/service/OutboxProcessor.java:164
 msgid "Sending"
@@ -130,7 +133,7 @@ msgstr ""
 
 #: src/i2p/bote/service/OutboxProcessor.java:180
 msgid "Email sent"
-msgstr ""
+msgstr "Лист відправлено"
 
 #: src/i2p/bote/service/OutboxProcessor.java:183
 msgid "Gateway disabled"
@@ -174,11 +177,11 @@ msgstr ""
 
 #: src/i2p/bote/web/PeerInfoTag.java:97
 msgid "Reachability %"
-msgstr ""
+msgstr "Доступність %"
 
 #: src/i2p/bote/web/PeerInfoTag.java:116
 msgid "Banned Peers:"
-msgstr ""
+msgstr "Забанені піри:"
 
 #: src/i2p/bote/web/PeerInfoTag.java:121
 msgid "Destination Hash"
@@ -186,7 +189,7 @@ msgstr ""
 
 #: src/i2p/bote/web/PeerInfoTag.java:122
 msgid "Ban Reason"
-msgstr ""
+msgstr "Причина бану"
 
 #: src/i2p/bote/web/SendEmailTag.java:73
 msgid "Error: Please add at least one recipient."
@@ -199,11 +202,11 @@ msgstr ""
 #: src/i2p/bote/web/SendEmailTag.java:102
 #, java-format
 msgid "Error sending email: {0}"
-msgstr ""
+msgstr "Помилка при відправці повідомлення: {0}"
 
 #: WebContent/network.jsp
 msgid "Network"
-msgstr ""
+msgstr "Мережа"
 
 #: WebContent/network.jsp
 msgid ""
@@ -217,19 +220,19 @@ msgstr ""
 
 #: WebContent/saveIdentities.jsp
 msgid "Error:"
-msgstr ""
+msgstr "Помилка:"
 
 #: WebContent/settings.jsp
 msgid "Settings have been saved."
-msgstr ""
+msgstr "Налаштування збережено."
 
 #: WebContent/settings.jsp
 msgid "Settings"
-msgstr ""
+msgstr "Налаштування"
 
 #: WebContent/settings.jsp
 msgid "Check for mail every {0} minutes"
-msgstr ""
+msgstr "Перевіряти поштову скриньку кожні {0} хвилин"
 
 #: WebContent/settings.jsp
 msgid "Check delivery status of sent emails"
@@ -249,11 +252,11 @@ msgstr ""
 
 #: WebContent/settings.jsp
 msgid "and"
-msgstr ""
+msgstr "і"
 
 #: WebContent/settings.jsp
 msgid "minutes"
-msgstr ""
+msgstr "хвилин"
 
 #: WebContent/settings.jsp
 msgid "Use a gateway when sending to non-I2P email addresses"
@@ -265,7 +268,7 @@ msgstr ""
 
 #: WebContent/settings.jsp
 msgid "Enable IMAP on port {0}"
-msgstr ""
+msgstr "Увімкнути IMAP ні порті {0}"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -273,31 +276,31 @@ msgstr ""
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"
-msgstr ""
+msgstr "Вказувати час відправки у вихідних повідомленнях"
 
 #: WebContent/settings.jsp
 msgid "Theme:"
-msgstr ""
+msgstr "Тема:"
 
 #: WebContent/settings.jsp
 msgid "Save"
-msgstr ""
+msgstr "Зберегти"
 
 #: WebContent/settings.jsp
 msgid "Change Password"
-msgstr ""
+msgstr "Змінити пароль"
 
 #: WebContent/showEmail.jsp
 msgid "From:"
-msgstr ""
+msgstr "Від:"
 
 #: WebContent/showEmail.jsp
 msgid "Anonymous"
-msgstr ""
+msgstr "Анонім"
 
 #: WebContent/showEmail.jsp
 msgid "Signature:"
-msgstr ""
+msgstr "Підпис:"
 
 #: WebContent/showEmail.jsp
 msgid "Valid"
@@ -317,7 +320,7 @@ msgstr ""
 
 #: WebContent/showEmail.jsp
 msgid "To:"
-msgstr ""
+msgstr "Кому:"
 
 #: WebContent/showEmail.jsp
 msgid "CC:"
@@ -337,23 +340,23 @@ msgstr ""
 
 #: WebContent/showEmail.jsp
 msgid "Subject:"
-msgstr ""
+msgstr "Тема:"
 
 #: WebContent/showEmail.jsp
 msgid "Message:"
-msgstr ""
+msgstr "Повідомлення:"
 
 #: WebContent/showEmail.jsp
 msgid "Attachments:"
-msgstr ""
+msgstr "Прикріпити файли:"
 
 #: WebContent/showEmail.jsp
 msgid "Status:"
-msgstr ""
+msgstr "Статус:"
 
 #: WebContent/showEmail.jsp
 msgid "Reply"
-msgstr ""
+msgstr "Відповісти"
 
 #: WebContent/showEmail.jsp
 msgid "Re:"
@@ -361,23 +364,23 @@ msgstr ""
 
 #: WebContent/showEmail.jsp
 msgid "Delete"
-msgstr ""
+msgstr "Видалити"
 
 #: WebContent/about.jsp
 msgid "About I2P-Bote"
-msgstr ""
+msgstr "Про I2P-Bote"
 
 #: WebContent/about.jsp
 msgid "I2P-Bote Version {0}"
-msgstr ""
+msgstr "I2P-Bote версії {0}"
 
 #: WebContent/about.jsp
 msgid "Main Developer:"
-msgstr ""
+msgstr "Головний розробник:"
 
 #: WebContent/about.jsp
 msgid "Click to send an email"
-msgstr ""
+msgstr "Натисніть щоб відправити повідомлення"
 
 #: WebContent/about.jsp
 msgid "Feedback on I2P-Bote"
@@ -401,11 +404,11 @@ msgstr ""
 
 #: WebContent/about.jsp
 msgid "Russian translation"
-msgstr ""
+msgstr "Переклад російською"
 
 #: WebContent/about.jsp
 msgid "French translation"
-msgstr ""
+msgstr "Переклад французькою"
 
 #: WebContent/about.jsp
 msgid "Dutch translation"
@@ -413,7 +416,7 @@ msgstr ""
 
 #: WebContent/about.jsp
 msgid "Norwegian translation"
-msgstr ""
+msgstr "Переклад норвезькою"
 
 #: WebContent/about.jsp
 msgid "Swedish translation"
@@ -421,31 +424,31 @@ msgstr ""
 
 #: WebContent/about.jsp
 msgid "Chinese translation"
-msgstr ""
+msgstr "Переклад китайською"
 
 #: WebContent/about.jsp
 msgid "Arabic translation"
-msgstr ""
+msgstr "Переклад арабською"
 
 #: WebContent/about.jsp
 msgid "Czech translation"
-msgstr ""
+msgstr "Переклад чеською"
 
 #: WebContent/about.jsp
 msgid "German translation"
-msgstr ""
+msgstr "Переклад німецькою"
 
 #: WebContent/about.jsp
 msgid "Polish translation"
-msgstr ""
+msgstr "Переклад польською"
 
 #: WebContent/about.jsp
 msgid "Italian translation"
-msgstr ""
+msgstr "Переклад італійською"
 
 #: WebContent/about.jsp
 msgid "Ukrainian translation"
-msgstr ""
+msgstr "Переклад українською"
 
 #: WebContent/about.jsp
 msgid "Hungarian translation"
@@ -469,11 +472,11 @@ msgstr ""
 
 #: WebContent/publishDestination.jsp
 msgid "Picture to upload:"
-msgstr ""
+msgstr "Картинка для завантаження:"
 
 #: WebContent/publishDestination.jsp
 msgid "(optional, 7.5 kBytes max)"
-msgstr ""
+msgstr "(вибірково, максимум 7.5 Кбайт)"
 
 #: WebContent/publishDestination.jsp
 msgid "Text to include:"
@@ -481,11 +484,11 @@ msgstr ""
 
 #: WebContent/publishDestination.jsp
 msgid "(optional, 2000 chars max)"
-msgstr ""
+msgstr "(вибірково, максимум 2000 символів)"
 
 #: WebContent/publishDestination.jsp
 msgid "Publish"
-msgstr ""
+msgstr "Опублікувати"
 
 #: WebContent/publishDestination.jsp
 msgid "The identity has been added to the address directory."
@@ -493,7 +496,7 @@ msgstr ""
 
 #: WebContent/header.jsp
 msgid "- I2P-Bote"
-msgstr ""
+msgstr "- I2P-Bote"
 
 #: WebContent/header.jsp
 msgid "Password is cached. Click to clear the password cache."
@@ -501,11 +504,11 @@ msgstr ""
 
 #: WebContent/header.jsp
 msgid "I2P-Bote"
-msgstr ""
+msgstr "I2P-Bote"
 
 #: WebContent/header.jsp
 msgid "Secure Distributed Email"
-msgstr ""
+msgstr "Безпечна децентралізована електронна пошта"
 
 #: WebContent/header.jsp
 msgid "A new version is available. Click here for the configuration page."
@@ -513,7 +516,7 @@ msgstr ""
 
 #: WebContent/header.jsp
 msgid "Addresses"
-msgstr ""
+msgstr "Адреси"
 
 #: WebContent/header.jsp
 msgid "Identities"
@@ -521,19 +524,19 @@ msgstr ""
 
 #: WebContent/header.jsp
 msgid "Address Book"
-msgstr ""
+msgstr "Адресна книга"
 
 #: WebContent/header.jsp
 msgid "Configuration"
-msgstr ""
+msgstr "Налаштування"
 
 #: WebContent/header.jsp
 msgid "Network Status"
-msgstr ""
+msgstr "Статус мережі"
 
 #: WebContent/header.jsp
 msgid "Help"
-msgstr ""
+msgstr "Допомога"
 
 #: WebContent/header.jsp
 msgid "User Guide"
@@ -541,15 +544,15 @@ msgstr ""
 
 #: WebContent/header.jsp
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ"
 
 #: WebContent/header.jsp
 msgid "About"
-msgstr ""
+msgstr "Про"
 
 #: WebContent/statusFrame.jsp
 msgid "Not Started"
-msgstr ""
+msgstr "Не запущено"
 
 #: WebContent/statusFrame.jsp
 msgid "Waiting 3 Minutes..."
@@ -557,15 +560,15 @@ msgstr ""
 
 #: WebContent/statusFrame.jsp
 msgid "Connecting..."
-msgstr ""
+msgstr "З’єднання..."
 
 #: WebContent/statusFrame.jsp
 msgid "Connected"
-msgstr ""
+msgstr "З’єднано"
 
 #: WebContent/statusFrame.jsp
 msgid "Error"
-msgstr ""
+msgstr "Помилка"
 
 #: WebContent/statusFrame.jsp
 msgid "Unknown Status"
@@ -573,11 +576,11 @@ msgstr ""
 
 #: WebContent/statusFrame.jsp
 msgid "Retry Connecting"
-msgstr ""
+msgstr "Повторити з’єднання"
 
 #: WebContent/statusFrame.jsp
 msgid "Connect Now"
-msgstr ""
+msgstr "З’єднатись зараз"
 
 #: WebContent/deleteIdentity.jsp
 msgid "The email identity has been deleted."
@@ -585,35 +588,35 @@ msgstr ""
 
 #: WebContent/connectError.jsp
 msgid "Error Details"
-msgstr ""
+msgstr "Подробиці помилки"
 
 #: WebContent/outbox.jsp
 msgid "Outbox"
-msgstr ""
+msgstr "Вихідні"
 
 #: WebContent/outbox.jsp
 msgid "From"
-msgstr ""
+msgstr "Від"
 
 #: WebContent/outbox.jsp
 msgid "To"
-msgstr ""
+msgstr "Кому"
 
 #: WebContent/outbox.jsp
 msgid "Subject"
-msgstr ""
+msgstr "Тема"
 
 #: WebContent/outbox.jsp
 msgid "Create Time"
-msgstr ""
+msgstr "Час створення"
 
 #: WebContent/outbox.jsp
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: WebContent/outbox.jsp
 msgid "(No subject)"
-msgstr ""
+msgstr "(немає теми)"
 
 #: WebContent/outbox.jsp
 msgid "Delete this email"
@@ -621,7 +624,7 @@ msgstr ""
 
 #: WebContent/setPassword.jsp
 msgid "Set Password"
-msgstr ""
+msgstr "Встановити пароль"
 
 #: WebContent/setPassword.jsp
 msgid "The password has been changed."
@@ -629,7 +632,7 @@ msgstr ""
 
 #: WebContent/setPassword.jsp
 msgid "Please wait"
-msgstr ""
+msgstr "Зачекайте, будь ласка"
 
 #: WebContent/setPassword.jsp
 msgid "Please wait while the password is being changed..."
@@ -637,7 +640,7 @@ msgstr ""
 
 #: WebContent/setPassword.jsp
 msgid "Set a new Password"
-msgstr ""
+msgstr "Змінити пароль"
 
 #: WebContent/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
@@ -651,19 +654,19 @@ msgstr ""
 
 #: WebContent/setPassword.jsp
 msgid "Old password:"
-msgstr ""
+msgstr "Старий пароль:"
 
 #: WebContent/setPassword.jsp
 msgid "New password:"
-msgstr ""
+msgstr "Новий пароль:"
 
 #: WebContent/setPassword.jsp
 msgid "Confirm:"
-msgstr ""
+msgstr "Підтвердити:"
 
 #: WebContent/setPassword.jsp
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: WebContent/submitIdentity.jsp
 msgid "Please fill in the Public Name field."
@@ -671,7 +674,7 @@ msgstr ""
 
 #: WebContent/submitIdentity.jsp
 msgid "Please wait..."
-msgstr ""
+msgstr "Зачекайте, будь ласка..."
 
 #: WebContent/submitIdentity.jsp
 msgid "The Email Identity is being generated. This can take several minutes."
@@ -687,7 +690,7 @@ msgstr ""
 
 #: WebContent/editContact.jsp
 msgid "Please fill in the Name field."
-msgstr ""
+msgstr "Будь ласка, заповніть поле Ім’я."
 
 #: WebContent/editContact.jsp
 msgid "The contact has been saved."
@@ -695,15 +698,15 @@ msgstr ""
 
 #: WebContent/editContact.jsp
 msgid "New Contact"
-msgstr ""
+msgstr "Новий контакт"
 
 #: WebContent/editContact.jsp
 msgid "Add"
-msgstr ""
+msgstr "Додати"
 
 #: WebContent/editContact.jsp
 msgid "Edit Contact"
-msgstr ""
+msgstr "Редагувати контакт"
 
 #: WebContent/editContact.jsp
 msgid "Email Destination:"
@@ -711,23 +714,23 @@ msgstr ""
 
 #: WebContent/editContact.jsp
 msgid "(required field)"
-msgstr ""
+msgstr "(обов’язкове поле)"
 
 #: WebContent/editContact.jsp
 msgid "Name:"
-msgstr ""
+msgstr "Ім’я:"
 
 #: WebContent/editContact.jsp
 msgid "Picture:"
-msgstr ""
+msgstr "Картинка:"
 
 #: WebContent/editContact.jsp
 msgid "Text:"
-msgstr ""
+msgstr "Текст:"
 
 #: WebContent/editContact.jsp
 msgid "Cancel"
-msgstr ""
+msgstr "Відмінити"
 
 #: WebContent/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -751,7 +754,7 @@ msgstr ""
 
 #: WebContent/importContact.jsp
 msgid "Import Contact"
-msgstr ""
+msgstr "Імпортувати контакт"
 
 #: WebContent/importContact.jsp
 msgid ""
@@ -770,15 +773,15 @@ msgstr ""
 
 #: WebContent/importContact.jsp
 msgid "Import"
-msgstr ""
+msgstr "Іспортувати"
 
 #: WebContent/folders.jsp
 msgid "Folders"
-msgstr ""
+msgstr "Теки"
 
 #: WebContent/folders.jsp
 msgid "Inbox"
-msgstr ""
+msgstr "Вхідні"
 
 #: WebContent/folders.jsp
 msgid "Sent"
@@ -786,7 +789,7 @@ msgstr "Надіслано"
 
 #: WebContent/folders.jsp
 msgid "Trash"
-msgstr ""
+msgstr "Смітник"
 
 #: WebContent/identitiesHelp.jsp
 msgid ""
@@ -859,11 +862,11 @@ msgstr ""
 
 #: WebContent/editIdentity.jsp
 msgid "More..."
-msgstr ""
+msgstr "Більше..."
 
 #: WebContent/editIdentity.jsp
 msgid "Less..."
-msgstr ""
+msgstr "Менше..."
 
 #: WebContent/editIdentity.jsp
 msgid "New Email Identity"
@@ -871,7 +874,7 @@ msgstr ""
 
 #: WebContent/editIdentity.jsp
 msgid "Create"
-msgstr ""
+msgstr "Створити"
 
 #: WebContent/editIdentity.jsp
 msgid "Edit Email Identity"
@@ -891,7 +894,7 @@ msgstr ""
 
 #: WebContent/editIdentity.jsp
 msgid "Description:"
-msgstr ""
+msgstr "Опис:"
 
 #: WebContent/editIdentity.jsp
 msgid "(optional, kept private)"
@@ -903,11 +906,11 @@ msgstr ""
 
 #: WebContent/editIdentity.jsp
 msgid "Encryption:"
-msgstr ""
+msgstr "Шифрування:"
 
 #: WebContent/editIdentity.jsp
 msgid "(If unsure, leave the default)"
-msgstr ""
+msgstr "(якщо не впевнені, залишіть як є)"
 
 #: WebContent/editIdentity.jsp
 msgid "Default Identity:"
@@ -923,7 +926,7 @@ msgstr ""
 
 #: WebContent/editIdentity.jsp
 msgid "Show"
-msgstr ""
+msgstr "Показати"
 
 #: WebContent/editIdentity.jsp
 msgid "Cannot publish until connected."
@@ -951,7 +954,7 @@ msgstr ""
 
 #: WebContent/addressBook.jsp
 msgid "Name"
-msgstr ""
+msgstr "Ім’я"
 
 #: WebContent/addressBook.jsp
 msgid "Email Destination"
@@ -959,7 +962,7 @@ msgstr ""
 
 #: WebContent/addressBook.jsp
 msgid "Delete this contact"
-msgstr ""
+msgstr "Видалити цей контакт"
 
 #: WebContent/addressBook.jsp
 msgid "Add Recipients"
@@ -987,7 +990,7 @@ msgstr ""
 
 #: WebContent/buttonFrame.jsp
 msgid "Compose"
-msgstr ""
+msgstr "Створити"
 
 #: WebContent/buttonFrame.jsp
 msgid "Last checked:"
@@ -999,11 +1002,11 @@ msgstr ""
 
 #: WebContent/folder.jsp
 msgid "Sent Time"
-msgstr ""
+msgstr "Час відправки"
 
 #: WebContent/folder.jsp
 msgid "Delivered"
-msgstr ""
+msgstr "Доставлено"
 
 #: WebContent/folder.jsp
 msgid "Signature is invalid or missing"
@@ -1040,7 +1043,7 @@ msgstr ""
 
 #: WebContent/identities.jsp
 msgid "Description"
-msgstr ""
+msgstr "Опис"
 
 #: WebContent/identities.jsp
 msgid "New Identity"
@@ -1052,7 +1055,7 @@ msgstr ""
 
 #: WebContent/newEmail.jsp
 msgid "Addr. Book..."
-msgstr ""
+msgstr "Адр. книга"
 
 #: WebContent/newEmail.jsp
 msgid "Remove this attachment"
@@ -1064,7 +1067,7 @@ msgstr ""
 
 #: WebContent/newEmail.jsp
 msgid "Attach"
-msgstr ""
+msgstr "Прикріпити"
 
 #: WebContent/newEmail.jsp
 msgid "It is recommended to keep attachments below 500 kBytes."
@@ -1076,7 +1079,7 @@ msgstr ""
 
 #: WebContent/newEmail.jsp
 msgid "Send"
-msgstr ""
+msgstr "Надіслати"
 
 #: WebContent/debug.jsp
 msgid "Debug"
@@ -1088,7 +1091,7 @@ msgstr ""
 
 #: WebContent/debug.jsp
 msgid "Test encrypted files"
-msgstr ""
+msgstr "Перевірити зашифровані файли"
 
 #: WebContent/debug.jsp
 msgid "No file encryption problems found."
@@ -1116,7 +1119,7 @@ msgstr ""
 
 #: WebContent/password.jsp
 msgid "Password:"
-msgstr ""
+msgstr "Пароль:"
 
 #: WebContent/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1132,4 +1135,4 @@ msgstr ""
 
 #: WebContent/WEB-INF/tags/address.tag
 msgid "Add to Address Book"
-msgstr ""
+msgstr "Додати до адресної книги"

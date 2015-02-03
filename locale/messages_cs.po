@@ -1,13 +1,14 @@
 # 
 # Translators:
+# A5h8d0wf0x <littleslyfoxie28@gmail.com>, 2014
 # Waseihou Watashi <waseihou@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-02 21:10+0000\n"
-"PO-Revision-Date: 2013-05-02 21:15+0000\n"
-"Last-Translator: HungryHobo <HungryHobo@i2pmail.org>\n"
+"PO-Revision-Date: 2014-10-07 20:19+0000\n"
+"Last-Translator: A5h8d0wf0x <littleslyfoxie28@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/I2P/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,11 +18,11 @@ msgstr ""
 
 #: src/i2p/bote/Configuration.java:62
 msgid "lblue"
-msgstr ""
+msgstr "Iblue"
 
 #: src/i2p/bote/Configuration.java:63
 msgid "vanilla"
-msgstr ""
+msgstr "Vannila"
 
 #: src/i2p/bote/I2PBote.java:503 src/i2p/bote/service/OutboxProcessor.java:159
 msgid "No identity matches the sender/from field: "
@@ -67,11 +68,11 @@ msgstr "Ve frontě"
 
 #: src/i2p/bote/imap/BoteMailbox.java:85
 msgid "Password required or invalid password provided"
-msgstr ""
+msgstr "Požadováno heslo nebo je k dispozici špatné heslo."
 
 #: src/i2p/bote/imap/MapperFactory.java:276
 msgid "Deletion of mailboxes is not currently supported."
-msgstr ""
+msgstr "Detekce mailboxů není v současnosti podporována"
 
 #: src/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -130,7 +131,7 @@ msgstr "Odesláno {0} z {1} příjemců."
 
 #: src/i2p/bote/service/OutboxProcessor.java:180
 msgid "Email sent"
-msgstr ""
+msgstr "Email byl odeslán"
 
 #: src/i2p/bote/service/OutboxProcessor.java:183
 msgid "Gateway disabled"
@@ -154,15 +155,15 @@ msgstr "Chyba při odesílání emailu: {0}"
 #: src/i2p/bote/service/OutboxProcessor.java:235
 #, java-format
 msgid "Error saving email metadata: {0}"
-msgstr ""
+msgstr "Error při ukládání emailovůch metadat: {0}"
 
 #: src/i2p/bote/web/JSPHelper.java:111
 msgid "Not set."
-msgstr ""
+msgstr "Nenastaveno"
 
 #: src/i2p/bote/web/JSPHelper.java:136
 msgid "Invalid ID number for CryptoImplementation: "
-msgstr ""
+msgstr "Neplatné číslo ID pro CryptoImplementaci:"
 
 #: src/i2p/bote/web/PeerInfoTag.java:58
 msgid "Kademlia Peers:"
@@ -170,7 +171,7 @@ msgstr "Kademlia protějšky:"
 
 #: src/i2p/bote/web/PeerInfoTag.java:91
 msgid "Relay Peers:"
-msgstr ""
+msgstr "Přenést peery:"
 
 #: src/i2p/bote/web/PeerInfoTag.java:97
 msgid "Reachability %"
@@ -217,7 +218,7 @@ msgstr "Lokální destinace:"
 
 #: WebContent/saveIdentities.jsp
 msgid "Error:"
-msgstr ""
+msgstr "Error:"
 
 #: WebContent/settings.jsp
 msgid "Settings have been saved."
@@ -225,7 +226,7 @@ msgstr "Změny byly uloženy."
 
 #: WebContent/settings.jsp
 msgid "Settings"
-msgstr ""
+msgstr "Nastavení"
 
 #: WebContent/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -233,11 +234,11 @@ msgstr "Kontrolovat jestli nepřišel nový email každých {0} minut."
 
 #: WebContent/settings.jsp
 msgid "Check delivery status of sent emails"
-msgstr ""
+msgstr "Zkontrolovat status doručení odeslaných emailů"
 
 #: WebContent/settings.jsp
 msgid "Use relays when sending mail:"
-msgstr ""
+msgstr "Použít "
 
 #: WebContent/settings.jsp
 msgid "None"
@@ -265,11 +266,11 @@ msgstr "Emailová destinace brány:"
 
 #: WebContent/settings.jsp
 msgid "Enable IMAP on port {0}"
-msgstr ""
+msgstr "Umožnit IMAP na port {0}"
 
 #: WebContent/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
+msgstr "Použít angličtinu pro text přidaný do odchozího emailu ('Re:', 'wrote:', atd.)"
 
 #: WebContent/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -277,87 +278,87 @@ msgstr "Do odchozích emailů přidat čas odeslání"
 
 #: WebContent/settings.jsp
 msgid "Theme:"
-msgstr ""
+msgstr "Téma"
 
 #: WebContent/settings.jsp
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #: WebContent/settings.jsp
 msgid "Change Password"
-msgstr ""
+msgstr "Změnit heslo"
 
 #: WebContent/showEmail.jsp
 msgid "From:"
-msgstr ""
+msgstr "Od:"
 
 #: WebContent/showEmail.jsp
 msgid "Anonymous"
-msgstr ""
+msgstr "Anonymní"
 
 #: WebContent/showEmail.jsp
 msgid "Signature:"
-msgstr ""
+msgstr "Podpis"
 
 #: WebContent/showEmail.jsp
 msgid "Valid"
-msgstr ""
+msgstr "Platný"
 
 #: WebContent/showEmail.jsp
 msgid "N/A (sender is anonymous)"
-msgstr ""
+msgstr "N/A (odesílatel je anonymní)"
 
 #: WebContent/showEmail.jsp
 msgid "Invalid or missing"
-msgstr ""
+msgstr "Chybné nebo chybějící"
 
 #: WebContent/showEmail.jsp
 msgid "Reply To:"
-msgstr ""
+msgstr "Odpovědět do:"
 
 #: WebContent/showEmail.jsp
 msgid "To:"
-msgstr ""
+msgstr "Do:"
 
 #: WebContent/showEmail.jsp
 msgid "CC:"
-msgstr ""
+msgstr "CC:"
 
 #: WebContent/showEmail.jsp
 msgid "BCC:"
-msgstr ""
+msgstr "BCC:"
 
 #: WebContent/showEmail.jsp
 msgid "Sent:"
-msgstr ""
+msgstr "Odesláno:"
 
 #: WebContent/showEmail.jsp
 msgid "Received:"
-msgstr ""
+msgstr "Přijato:"
 
 #: WebContent/showEmail.jsp
 msgid "Subject:"
-msgstr ""
+msgstr "Předmět:"
 
 #: WebContent/showEmail.jsp
 msgid "Message:"
-msgstr ""
+msgstr "Zpráva:"
 
 #: WebContent/showEmail.jsp
 msgid "Attachments:"
-msgstr ""
+msgstr "Přílohy"
 
 #: WebContent/showEmail.jsp
 msgid "Status:"
-msgstr ""
+msgstr "Status:"
 
 #: WebContent/showEmail.jsp
 msgid "Reply"
-msgstr ""
+msgstr "Odpovědět"
 
 #: WebContent/showEmail.jsp
 msgid "Re:"
-msgstr ""
+msgstr "Re:"
 
 #: WebContent/showEmail.jsp
 msgid "Delete"
@@ -365,35 +366,35 @@ msgstr "Smazat"
 
 #: WebContent/about.jsp
 msgid "About I2P-Bote"
-msgstr ""
+msgstr "O I2P-Bote"
 
 #: WebContent/about.jsp
 msgid "I2P-Bote Version {0}"
-msgstr ""
+msgstr "I2P-Bote verze {0}"
 
 #: WebContent/about.jsp
 msgid "Main Developer:"
-msgstr ""
+msgstr "Hlavní Vývojář"
 
 #: WebContent/about.jsp
 msgid "Click to send an email"
-msgstr ""
+msgstr "Klikněte pro odeslání emailu"
 
 #: WebContent/about.jsp
 msgid "Feedback on I2P-Bote"
-msgstr ""
+msgstr "Zpětná vazba na I2P-Bote"
 
 #: WebContent/about.jsp
 msgid "Contributors:"
-msgstr ""
+msgstr "Přispěvatelé:"
 
 #: WebContent/about.jsp
 msgid "Translation, QA, usability, technical feedback"
-msgstr ""
+msgstr "Překlad, QA, technická zpětná vazba"
 
 #: WebContent/about.jsp
 msgid "Pluginization, technical feedback"
-msgstr ""
+msgstr "Pluginizace, technická zpětná vazba"
 
 #: WebContent/about.jsp
 msgid "Seedless"
