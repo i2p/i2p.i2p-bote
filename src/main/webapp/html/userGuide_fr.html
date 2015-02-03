@@ -1,4 +1,4 @@
-<h1>Guide de l'utilisateur I2P-Bote</h1>
+<h1>Guide de l'utilisateur</h1>
 <h2>1. Introduction</h2>
 
 <p>I2P-Bote est une application de messagerie sécurisée pour I2P, à anonymat
@@ -13,17 +13,20 @@ des réseaux à basse latence.</p>
 apporte son propre niveau supplémentaire d'anonymat par l'ajout
 d'une autre couche d'anonymisation (sur-réseau).</p>
 
-<p>Ce concept d'anonymat étagé est ce rend I2P-Bote si souple :</p>
+<p>Ce concept d'anonymat étagé est ce rend I2P-Bote si souple : Vous pouvez le
+configurer pour être extrêmement anonyme et lent, ou moins anonyme mais plus
+rapide et efficace. Dans tous les cas, I2P-Bote procure toujours un très bon
+anonymat à l'expéditeur et au destinataire, ainsi qu'un cryptage de bout en
+bout. Sauf si vous recevez ou envoyez des messages de/vers l'Internet
+classique, TOUS les messages – le corps, les pièces jointes et les en-têtes à
+part l'adresse du destinataire (objet, date et heure, expéditeur, &hellip;)
+sont automatiquement cryptés de bout en bout de façon transparente. L'adresse
+du destinataire n'est visible que par le dernier nœud de la route qui stocke
+les paquets dans le réseau kad, ainsi que par les nœuds de stockage, mais ils
+ne peuvent pas lire les messages, ni qui l'a envoyé, ni qui le relèvera.</p>
 
-<p>Vous pouvez le configurer pour être extrêmement anonyme et lent, ou
-moins anonyme mais plus rapide et efficace. Dans tous les cas,
-I2P-Bote procure toujours un très bon anonymat
-à l'expéditeur et au destinataire, ainsi qu'un cryptage de bout en
-bout*.</p>
-
-<p>I2P-Bote
-permet de rendre vos communications encore plus anonymes, en activant
-les routes à haute latence – au prix d'une baisse de performance,
+<p>I2P-Bote permet de rendre vos communications encore plus anonymes, en
+activant les routes à haute latence – au prix d'une baisse de performance,
 cependant. Les utilisateurs qui souhaitent que leurs messages
 arrivent au plus vite peuvent désactiver les routes de messages et
 utiliser l'envoi 'direct' sur I2P. Ils sont ainsi
@@ -37,24 +40,6 @@ des informations supplémentaires que ces applications envoient dans
 leurs en-têtes. De plus, il y a une interface web qui vous permet d'envoyer et
 de recevoir des messages, et de gérer vos préférences et vos
 identités.</p>
-
-<p>I2P-Bote est facile à utiliser : si vous n'utilisez pas déjà I2P, installez
-le depuis <a href="https://geti2p.net/">https://geti2p.net</a> puis
-installez le greffon I2P-Bote comme expliqué dans ce manuel. Sinon,
-continuez la lecture!**</p>
-
-<p><em>La version actuelle est la 0.2.10.</em></p>
-
-<p>*Sauf si vous recevez ou envoyez des messages de/vers l'Internet classique,
-TOUS les messages – le corps, les pièces jointes et les en-têtes
-à part l'adresse du destinataire (objet, date et heure,
-expéditeur,...) sont automatiquement cryptés de bout en bout de
-façon transparente. L'adresse du destinataire n'est visible que par
-le dernier nœud de la route qui stocke les paquets dans le réseau
-kad, ainsi que par les nœuds de stockage, mais ils ne peuvent pas
-lire les messages, ni qui l'a envoyé, ni qui le relèvera.</p>
-
-<p>**Bien sûr, vous pouvez aussi le compiler à partir des sources.</p>
 
 <h2>2. Procédures</h2>
 

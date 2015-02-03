@@ -1,4 +1,4 @@
-<h1>I2P-Bote Manual</h1>
+<h1>User Guide</h1>
 <h2>1. Introduction</h2>
 
 <p>I2P-Bote is an easy-to-use, highly anonymous secure e-mail application for
@@ -11,11 +11,17 @@ thus avoiding the shortcomings of low-latency networks.</p>
 generates its own anonymity by adding another anonymizing layer (overlay
 network).</p>
 
-<p>This concept of layered anonymity is what makes I2P-Bote so flexible:</p>
-
-<p>You can configure it to be extremely anonymous and slow or less anonymous
-but faster/more efficient. In any event, I2P-Botealways provides a very good
-anonymity for both, sender and receiver, as well as end-to-end encryption*.</p>
+<p>This concept of layered anonymity is what makes I2P-Bote so flexible: you
+can configure it to be extremely anonymous and slow, or less anonymous
+but faster/more efficient. In any event, I2P-Bote always provides a very good
+anonymity for both, sender and receiver, as well as end-to-end encryption.
+Unless you send e-mails to or receive them from the regular internet, ALL
+emails - the mail body, attachments and the header except recipient's address
+(subject, date, time, sender address, &hellip;) are automatically and transparently
+end-to-end encrypted. The recipient's address is only visible for the mail
+route's last node that stores the packets into the kad network, and the
+respective storing nodes, but they cannot read the mail's content nor who sent
+it nor who will fetch it.</p>
 
 <p>I2P-Bote offers the option to make your communications even more anonymous,
 by enabling the high-latency mail routes - at cost of performance, however.
@@ -29,22 +35,6 @@ standard mail clients such as Thunderbird, Evolution or Kmail, without having
 to worry about what extra information these applications send in their headers.
 Furthermore there is a web interface that lets you send and read e-mails or
 manage your settings and identities.</p>
-
-<p>I2P-Bote is easy to use: If you're not yet using I2P, just install I2P from
-<a href="https://geti2p.net/">https://geti2p.net</a> and then install the
-I2P-Bote plugin as described in this manual. Otherwise simply read on!**</p>
-
-<p><em>Current version is 0.2.10.</em></p>
-
-<p>*Unless you send e-mails to or receive them from the regular internet, ALL
-emails - the mail body, attachments and the header except recipient's address
-(subject, date, time, sender address, ...) are automatically and transparently
-end-to-end encrypted. The recipient's address is only visible for the mail
-route's last node that stores the packets into the kad network, and the
-respective storing nodes, but they cannot read the mail's content nor who sent
-it nor who will fetch it.</p>
-
-<p>**Of course you can also compile from source.</p>
 
 <h2>2. Howto</h2>
 
