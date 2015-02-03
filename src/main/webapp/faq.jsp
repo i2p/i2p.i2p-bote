@@ -23,5 +23,6 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <ib:message key="FAQ" var="title" scope="request"/>
+<ib:message key="Frequently Asked Questions" var="pagetitle" scope="request"/>
 <c:set var="filename" value="${ib:getLocalizedFilename('FAQ.html', pageContext.servletContext)}" scope="request"/>
 <jsp:forward page="showHtml.jsp"/>
