@@ -79,15 +79,14 @@ everything to be up and running.</p>
 identity.</p>
 
 <h4>2.2.1 Creating an Identity</h4>
-<p>Click on 'Identities' on the left, then hit the â€œNew Identityâ€
-button.</p>
+<p>Click on 'Identities' on the left, then hit the 'New Identity' button.</p>
 
 <p>Enter at least a 'Public Name' and hit 'Create'. That's all that's needed to
 create an identity.</p>
 
 <p>The public name is the name you see for this identity (useful in case you
 have different identities for different sets of users you communicate with or
-different purposes) and it will be sent as "sender's name" to the mail's
+different purposes) and it will be sent as 'sender's name' to the mail's
 recipient. There is no need for Public Name to be unique.</p>
 
 <p>(As you can choose any name here - anyone could call himself HungryHobo
@@ -105,8 +104,10 @@ addressbook, the name specified by the sender will be displayed with a prefixed
 If you want to add some additional information for yourself about that
 identity, you can enter it here.</p>
 
-<p>Email Address - this field is not used yet. Choose from one of the given
-encryption algorithms. If in doubt, stick to the defaults.</p>
+<p>Email Address - this field is not used yet.</p>
+
+<p>Choose from one of the given encryption algorithms. If in doubt, stick to
+the defaults.</p>
 
 <p>You click on the name of one of your identities and copy the long key
 displayed under 'Email Destination'. This is your I2P-Bote e-mail address. If
@@ -129,7 +130,7 @@ you want to send a bote mail.</p>
 or 'Anonymous' under 'From' and enter the recipient's e-mail destination key
 or alternatively an address in the 'To:' line.</p>
 
-<p>Alternatively, you can hit the 'Addr. Book' button right under this very
+<p>(Alternatively, you can hit the 'Addr. Book' button right under this very
 line, in order to chose from e-mail dests stored locally in your address book:
 Mark the user(s) to which you want your mail to be sent and hit the 'Add
 Recipients' button.)</p>
@@ -194,8 +195,8 @@ sender) will have two x's.</p>
 <p>(Due to the distributed nature of I2P-Bote, sending as well as checking for
 and retrieving e-mails takes a few minutes. With mail routes activated
 respectively more. But you need not keep the browser open for that, simply
-leave I2P-Bote running as a background process â€“ this is also benefits your
-anonymity)</p>
+leave I2P-Bote running as a background process - this is also benefits your
+anonymity.)</p>
 
 <h4>2.2.3 Local Address Book</h4>
 <p>If you have the I2P-Bote e-mail key from somebody you want to write to more
@@ -203,9 +204,9 @@ frequently, it is handy to store that key locally into your address book (link
 on the left), specify a name of your own choosing for this contact and paste
 his mail destination in the corresponding line, then save.</p>
 
-<p>You should normally save destinations to your addressbook, so that next time
+<p>You should normally save destinations to your address book, so that next time
 you get a mail from the same sender it will be shown to be from the same,
-locally known sender (â€œLocâ€ is checked) and a mail sent by someone else who
+locally known sender ('Loc' is checked) and a mail sent by someone else who
 is just using the same user name will be marked as NOT known locally (an x in
 web-UI's 'Know' column or {UNK} before the sender address in IMAP), so you know
 it's a new/different one.</p>
@@ -236,7 +237,7 @@ mails for your identities. This can be set on a per-identity basis [not yet
 implemented]</p>
 
 <p>If you specify a random offset, then it will not check _exactly_ every XX
-minutes, but rather every (XX+-offset*XX)minutes, i.e. after a randomly chosen
+minutes, but rather every (XX+-offset*XX) minutes, i.e. after a randomly chosen
 time between (1-offset)XX minutes and (1+offset)XX minutes. [not yet
 implemented]</p>
 
@@ -263,8 +264,8 @@ random wait time between the two values will be chosen for the packet at that
 hop - or a fix time, then the packet will be forwarded at that fix time, e.
 g. noon UTC, no matter when it arrived. [fix time not yet implemented]</p>
 
-<p>(When using mail routes, the timestamps are automatically disabled. [not yet
-implemented])</p>
+<p>(When using mail routes, the timestamps are automatically disabled.) [not yet
+implemented]</p>
 
 <p>Under <em>Mixing anonymity</em> (minimum threshold number of relay
 packets that will be sent) you can specify a threshold. As your node can only
@@ -287,14 +288,14 @@ e-mails from the internet with your I2P-Bote application, you must first
 register with an appropriate mail gateway. Currently there is only one:
 postman.</p>
 
-<p>1) First, go to: <a href=
+<p>1) First, go to <a href=
 "http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?page_id=16</a> and
 register an account. If you already have an account or if you have just created
 one as described, proceed with #2.</p>
 
 <p>2) For an existing account you can add your I2P-Bote mail destination, so
 that e-mails coming from the internet are forwarded to your I2P-Bote app. To do
-so go to: <a href=
+so go to <a href=
 "http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</a> and
 provide the requested information.</p>
 
@@ -439,9 +440,9 @@ are located.</p>
 
 <h3>What I2P-Bote <em>does hide</em>:</h3>
 
-<p><em>I2P-Bote hides</em> both, the identity and location of sender and
-receiver, as well as those of intermediary nodes (relays and storing nodes),
-the content of your mails, their size, the number of mails you send.</p>
+<p>I2P-Bote hides both, the identity and location of sender and receiver, as
+well as those of intermediary nodes (relays and storing nodes), the content of
+your mails, their size, the number of mails you send.</p>
 
 <p>Only the recipient can know the sender's bote mail destination, and if he
 choses not to send his destination, not even the recipient will know it.</p>
@@ -473,12 +474,12 @@ the mail was addressed to via 'To:' or 'CC:'</p>
 <p>All entries that were under 'BCC:' will only be visible to the sender and
 this very recipient.</p>
 
-<p>The time an sent time will, if at all, only be visible to sender and
+<p>The time and sent time will, if at all, only be visible to sender and
 recipient.</p>
 
-<h3>What I2P-Bote <em>can hide</em> optionally:</h3>
+<h3>What I2P-Bote <em>can hide optionally</em>:</h3>
 <ul>
-<li>If mail routes are use, the time a bote mail is sent</li>
+<li>If mail routes are used, the time a bote mail is sent</li>
 <li>If mail routes are used, the time a bote mail is fetched. [not yet
 implemented]</li>
 <li>If the sender suppresses timestamps only the sender himself will know when
@@ -500,7 +501,7 @@ an I2P-Bote node in the stats.</p>
 
 <p>So the router id corresponds to the I2P destination (the address of an
 I2P-Bote node on the I2P network - there is no need to know it unless you are
-having problems connecting to other I2P-Bote nodes.)</p>
+having problems connecting to other I2P-Bote nodes).</p>
 
 <h3>I2P-Bote e-mail destination:</h3>
 <p>The I2P-Bote e-mail destination (key) is an identifier by which somebody can
@@ -512,14 +513,16 @@ end-to-end encryption of e-mails, header information and attachments.</p>
 
 <p>An I2P-Bote e-mail destination is a Base64 string containing a public
 encryption key and a signature verification key. Example:</p>
-<p>uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG</p>
-<p>In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa</p>
-<p>FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da</p>
-<p>-nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9</p>
-<p>HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ</p>
-<p>gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3</p>
-<p>SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp</p>
-<p>HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD</p>
+<pre>
+    uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
+    In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
+    FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da
+    -nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9
+    HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ
+    gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3
+    SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp
+    HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD
+</pre>
 
 <p>I2P-Bote router/node id and I2P-Bote e-mail destinations look similar, but
 are completely independent of each other.</p>
@@ -545,10 +548,9 @@ a name for this destination in his local address book.</p>
 <li>an e-mail destination (i.e. two public keys)</li>
 <li>two private keys for the e-mail destination</li>
 <li>a public name which can be shown to other people in e-mails</li>
-<li>a description which is not shown to anybody but you.</li>
+<li>a description which is not shown to anybody but you (it helps you remember
+which e-mail identity you use for which purpose).</li>
 </ul>
-
-<p>(It helps you remember which e-mail identity you use for which purpose.)</p>
 
 <p>An e-mail identity is not required for sending emails (although then only
 'Anonymous' can be selected for the 'sender' field).</p>
@@ -556,7 +558,7 @@ a name for this destination in his local address book.</p>
 <h3>Mail routes:</h3>
 <p>Mail routes are an additional high-latency transport for I2P-Bote. For this,
 a chain of I2P-Bote nodes is built, acting as relays/routers for packets and
-obeying to individual per-hop delays; [still no individual setting for delays
+obeying to individual per-hop delays. [still no individual setting for delays
 implemented]</p>
 
 <p><strong>BEWARE!</strong> If you choose this option - especially with many
@@ -570,12 +572,20 @@ its destination too soon. It will, of course, take longer - up to several days!<
 <p>User interface: HungryHobo</p>
 <p>Seedless integration: sponge</p>
 <p>German translation: HungryHobo</p>
-<p>French translation: albat, Redzara, Mixxy</p>
+<p>Russian translation: suhr</p>
+<p>French translation: albat, Redzara, Mixxy, magma</p>
 <p>Spanish translation: Mixxy</p>
+<p>Portuguese translation: Mixxy</p>
+<p>Dutch translation: KwukDuck</p>
+<p>Norwegian translation: hej</p>
+<p>Swedish translation: hottuna</p>
+<p>Chinese translation: walking</p>
+<p>Arabic translation: hamada</p>
 <p>Alpha testing: HungryHobo, Mixxy, Returning Novice, sponge, and many
 others</p>
+<p>Manual: Mixxy</p>
 
 <h2>7. Technical Details</h2>
-<p>-- see techdoc.txt --</p>
+<p>See techdoc.txt</p>
 
-<p>ENJOY THE BOTE FEELING!!</p>
+<h2>ENJOY THE BOTE FEELING!!</h2>
