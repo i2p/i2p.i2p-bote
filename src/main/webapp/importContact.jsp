@@ -29,7 +29,6 @@
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 
 <ib:message key="Address Directory Lookup" var="title" scope="request"/>
-<jsp:include page="header.jsp"/>
 
     <c:if test="${param.confirm eq true}">
         <ib:requirePassword>
@@ -52,7 +51,9 @@
         </c:if>
         
         <c:if test="${not empty result}">
-            <h2><ib:message key="Import Contact"/></h2>
+            <ib:message key="Import Contat" var="pagetitle" scope="request"/>
+            <jsp:include page="header.jsp"/>
+            <h1><ib:message key="Import Contact"/></h1>
             <p>
             <ib:message>
                 A matching record was found in the address directory. Note that the address directory is

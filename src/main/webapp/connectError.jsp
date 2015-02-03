@@ -28,7 +28,7 @@
 <ib:message key="Error Details" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-    <h2><ib:message key="Error"/></h2>
+    <h1><ib:message key="Error"/></h1>
     <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
     <ib:printException exception="${jspHelperBean.connectError}"/>
 

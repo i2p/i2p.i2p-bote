@@ -52,7 +52,7 @@
         </p>
     </c:if>
     <c:if test="${param.action ne 'set'}">
-        <h2><ib:message key="Set a new Password"/></h2>
+        <h1><ib:message key="Set a new Password"/></h1>
         
         <p>
         <ib:message key="If you have not set a password, leave the old password blank."/>

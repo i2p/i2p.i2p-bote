@@ -51,7 +51,7 @@
 
 <jsp:include page="header.jsp"/>
 
-    <h2>${title}</h2>
+    <h1>${title}</h1>
     <c:if test="${param.createNew}">
         <ib:message>An Email Identity lets you receive email from other I2P-Bote users.</ib:message>
         <ib:expandable>

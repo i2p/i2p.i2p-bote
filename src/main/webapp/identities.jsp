@@ -30,9 +30,7 @@
 <jsp:include page="header.jsp"/>
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
-    <h2>
-        <ib:message key="Email Identities"/>
-    </h2>
+    <h1><ib:message key="Email Identities"/></h1>
 
     <ib:requirePassword>
         <c:set var="identities" value="${jspHelperBean.identities.all}"/>

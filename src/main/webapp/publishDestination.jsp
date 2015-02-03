@@ -60,7 +60,7 @@
         </c:if>
     </c:if>
     <c:if test="${param.action eq 'step2'}">
-        <h2><ib:message key="Publish to the Address Directory"/></h2>
+        <h1><ib:message key="Publish to the Address Directory"/></h1>
         <form action="publishDestination.jsp?action=store" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
             <input type="hidden" name="name" value="${param.publicName}"/>
             <input type="hidden" name="destination" value="${param.key}"/>

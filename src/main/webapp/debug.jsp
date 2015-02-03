@@ -27,7 +27,7 @@
 <ib:message key="Debug" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-    <h2><ib:message key="Debug Page"/></h2>
+    <h1><ib:message key="Debug Page"/></h1>
     
     <c:if test="${empty param.action}">
         <form action="debug.jsp">

@@ -25,10 +25,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
-<c:set var="title" value="No Identity" scope="request"/>
+<ib:message key="No Identity" var="title" scope="request"/>
+<ib:message key="No Email Identity Defined" var="pagetitle" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-    <h2><ib:message key="No Email Identity Defined"/></h2>
+    <h1><ib:message key="No Email Identity Defined"/></h1>
     <p>
     <jsp:include page="identitiesHelp.jsp"/>
     <form action="editIdentity.jsp?new=true" method="POST">

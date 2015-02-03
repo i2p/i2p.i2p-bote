@@ -38,7 +38,7 @@
     </c:choose>
 </c:if>
 
-    <h2><ib:message key="Password required"/></h2>
+    <h1><ib:message key="Password required"/></h1>
     
     <form name="form" action="password.jsp?passwordJspAction=check" method="POST">
         <ib:copyParams paramsToCopy="*" paramsToExclude="nofilter_password"/>

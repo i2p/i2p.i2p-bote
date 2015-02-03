@@ -40,7 +40,7 @@
     <c:if test="${param.select && !empty contacts}"><ib:message key="Select One or More Entries" var="pagetitle" scope="request"/></c:if>
     <jsp:include page="header.jsp"/>
     
-    <c:if test="${!empty pagetitle}"><h2>${pagetitle}</h2></c:if>
+    <c:if test="${!empty pagetitle}"><h1>${pagetitle}</h1></c:if>
 
     <c:if test="${empty contacts}">
         <ib:message key="The address book is empty."/>

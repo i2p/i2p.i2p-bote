@@ -58,11 +58,8 @@
 <ib:message key="Settings" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-    <h2>
-        <ib:message key="Settings"/>
-    </h2>
-    <br/>
-    
+    <h1><ib:message key="Settings"/></h1>
+
     <form action="settings.jsp" method="post">
         <input type="hidden" name="action" value="save"/>
         
