@@ -35,18 +35,25 @@
     </h2>
     <br/>
     
-    <div class="contributor-category"><ib:message key="Main Developer:"/></div>
-    <div class="contributor-name">
-        <ib:message key="Click to send an email" var="linkTitle"/>
-        <ib:message key="Feedback on I2P-Bote" var="subject"/>
-        <a href="newEmail.jsp?recipient0=hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n&amp;recipientType0=to&amp;subject=${subject}" title="${linkTitle}">HungryHobo</a>
+    <div class="contributor-category"><ib:message key="Developers:"/></div>
+    <div>
+        <div class="contributor-name">
+            <ib:message key="Click to send an email" var="linkTitle"/>
+            <ib:message key="Feedback on I2P-Bote" var="subject"/>
+            <a href="newEmail.jsp?recipient0=hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n&amp;recipientType0=to&amp;subject=${subject}" title="${linkTitle}">HungryHobo</a>
+        </div>
+        <div class="contributor-role"><ib:message key="Technical concept, implementation, user interface"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">str4d</div>
+        <div class="contributor-role"><ib:message key="User experience, extended features, Android app"/></div>
     </div>
     <br/>
     
     <div class="contributor-category"><ib:message key="Contributors:"/></div>
     <div>
         <div class="contributor-name">Mixxy</div>
-        <div class="contributor-role"><ib:message key="Translation, QA, usability, technical feedback"/></div>
+        <div class="contributor-role"><ib:message key="Technical concept, translation, QA, usability, technical feedback"/></div>
     </div>
     <div>
         <div class="contributor-name">zzz</div>
@@ -54,7 +61,7 @@
     </div>
     <div>
         <div class="contributor-name">sponge</div>
-        <div class="contributor-role"><ib:message key="Seedless"/></div>
+        <div class="contributor-role"><ib:message key="Seedless integration"/></div>
     </div>
     <div>
         <div class="contributor-name">suhr</div>
@@ -70,6 +77,10 @@
     </div>
     <div>
         <div class="contributor-name">redzara</div>
+        <div class="contributor-role"><ib:message key="French translation"/></div>
+    </div>
+    <div>
+        <div class="contributor-name">magma</div>
         <div class="contributor-role"><ib:message key="French translation"/></div>
     </div>
     <div>
@@ -129,12 +140,12 @@
         <div class="contributor-role"><ib:message key="Arabic translation"/></div>
     </div>
     <div>
-        <div class="contributor-name">KillYourTV</div>
-        <div class="contributor-role"><ib:message key="Code fixes, translation updates from tx"/></div>
+        <div class="contributor-name">Returning Novice</div>
+        <div class="contributor-role"><ib:message key="Alpha testing"/></div>
     </div>
     <div>
-        <div class="contributor-name">str4d</div>
-        <div class="contributor-role"><ib:message key="Code fixes, Android app"/></div>
+        <div class="contributor-name">KillYourTV</div>
+        <div class="contributor-role"><ib:message key="Code fixes, translation updates from tx"/></div>
     </div>
 
 <jsp:include page="footer.jsp"/>
