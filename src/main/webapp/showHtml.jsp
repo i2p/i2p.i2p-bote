@@ -21,5 +21,5 @@
 <!DOCTYPE html>
 
 <jsp:include page="header.jsp"/>
-<jsp:include page="${filename}"/>
+<jsp:include page="html/${filename}"/>
 <jsp:include page="footer.jsp"/>
