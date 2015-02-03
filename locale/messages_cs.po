@@ -183,7 +183,7 @@ msgstr "Žádná identita neodpovídá poli odesílatel/od:"
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
 msgid "Invalid recipient address: {0}"
-msgstr "Neplatný příjemce"
+msgstr "Neplatný příjemce: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:252
 #, java-format

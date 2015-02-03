@@ -185,7 +185,7 @@ msgstr "Gateway disabilitato"
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
 #, fuzzy, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr "Nessuna identità fa match con il campo mittente/da:"
+msgstr "Nessuna identità fa match con il campo mittente/da: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -200,7 +200,7 @@ msgstr "Errore nel creare pacchetti email: {0}"
 #: src/main/java/i2p/bote/web/JSPHelper.java:254
 #, java-format
 msgid "Error while sending email: {0}"
-msgstr "Errore nell'invio di email: {0}"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:256
 #, java-format
