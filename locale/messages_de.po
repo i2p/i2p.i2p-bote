@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # blabla <blabla@trash-mail.com>, 2012
 # D.A. Loader <>, 2012
@@ -11,1131 +11,1321 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-02 21:10+0000\n"
+"POT-Creation-Date: 2015-02-03 04:27+0000\n"
 "PO-Revision-Date: 2013-05-08 14:04+0000\n"
 "Last-Translator: zeroflag <zeroflag@i2pmail.org>\n"
-"Language-Team: German (http://www.transifex.com/projects/p/I2P/language/de/)\n"
+"Language-Team: German (http://www.transifex.com/projects/p/I2P/language/"
+"de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/i2p/bote/Configuration.java:62
-msgid "lblue"
-msgstr "hellblau"
+#: src/main/java/i2p/bote/Configuration.java:67
+msgid "Material"
+msgstr ""
 
-#: src/i2p/bote/Configuration.java:63
-msgid "vanilla"
+#: src/main/java/i2p/bote/Configuration.java:68
+msgid "Light Blue"
+msgstr ""
+
+#: src/main/java/i2p/bote/Configuration.java:69
+#, fuzzy
+msgid "Vanilla"
 msgstr "vanille"
 
-#: src/i2p/bote/I2PBote.java:503 src/i2p/bote/service/OutboxProcessor.java:159
+#: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
 msgstr "Keine Mailidentität stimmt mit diesem Absenderfeld (\"Von\") überein:"
 
-#: src/i2p/bote/I2PBote.java:663
+#: src/main/java/i2p/bote/I2PBote.java:705
+#, fuzzy
+msgid "Checking password"
+msgstr "Kennwort ändern"
+
+#: src/main/java/i2p/bote/I2PBote.java:708
 msgid "The old password is not correct."
 msgstr "Das alte Kennwort ist leider nicht korrekt."
 
-#: src/i2p/bote/I2PBote.java:665
+#: src/main/java/i2p/bote/I2PBote.java:710
 msgid "The new password and the confirmation password do not match."
 msgstr "Das neue Kennwort und die Kennwortbestätigung stimmen nicht überein."
 
-#: src/i2p/bote/crypto/ECDH256_ECDSA256.java:49
+#: src/main/java/i2p/bote/I2PBote.java:717
+msgid "Re-encrypting identities"
+msgstr ""
+
+#: src/main/java/i2p/bote/I2PBote.java:720
+msgid "Re-encrypting addressbook"
+msgstr ""
+
+#: src/main/java/i2p/bote/I2PBote.java:723
+#, fuzzy
+msgid "Re-encrypting folder"
+msgstr "Überprüfe verschlüsselte Dateien"
+
+#: src/main/java/i2p/bote/I2PBote.java:727
+msgid "Updating password file"
+msgstr ""
+
+#: src/main/java/i2p/bote/crypto/ECDH256_ECDSA256.java:45
 msgid "256-bit Elliptic Curve Encryption"
 msgstr "Elliptische-Kurven-Verschlüsselung, 256 Bit"
 
-#: src/i2p/bote/crypto/ECDH521_ECDSA521.java:54
+#: src/main/java/i2p/bote/crypto/ECDH521_ECDSA521.java:50
 msgid "521-bit Elliptic Curve Encryption"
 msgstr "Elliptische-Kurven-Verschlüsselung, 521 Bit"
 
-#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:55
+#: src/main/java/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
 msgid "2048-bit ElGamal Encryption"
 msgstr "El-Gamal-Verschlüsselung, 2048 Bit"
 
-#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:119
+#: src/main/java/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087-Verschlüsselung"
 
-#: src/i2p/bote/email/Email.java:484
+#: src/main/java/i2p/bote/email/Email.java:471
+#: src/main/java/i2p/bote/email/Email.java:483
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
-msgstr "Die Adresse enthält weder eine Bote-Adresse, noch eine externe Mailadresse: {0}"
+msgstr ""
+"Die Adresse enthält weder eine Bote-Adresse, noch eine externe Mailadresse: "
+"{0}"
 
-#: src/i2p/bote/email/Email.java:507
+#: src/main/java/i2p/bote/email/Email.java:505
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Ungültige Adresse: {0}"
 
-#: src/i2p/bote/folder/Outbox.java:116
-msgid "Queued"
-msgstr "in Warteschlange"
-
-#: src/i2p/bote/imap/BoteMailbox.java:85
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:100
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:114
 msgid "Password required or invalid password provided"
 msgstr "Kennwort muss angegeben werden bzw. es wurde ein falsches eingegeben"
 
-#: src/i2p/bote/imap/MapperFactory.java:276
+#: src/main/java/i2p/bote/imap/MapperFactory.java:317
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Das Löschen von Ordnern ist derzeit nicht umgesetzt."
 
-#: src/i2p/bote/network/BanList.java:80
+#: src/main/java/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
 msgstr "Falsche Protokollversion:"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "BktPfx"
 msgstr "K-Buck."
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "Distance"
 msgstr "Entfernung"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "First Seen"
 msgstr "Erster Empfang"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:96
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:117
 msgid "I2P Destination"
 msgstr "I2P-Adresse"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "Locked?"
 msgstr "Gesperrt?"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/i2p/bote/web/PeerInfoTag.java:95 src/i2p/bote/web/PeerInfoTag.java:120
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:116
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:142
 msgid "Peer"
 msgstr "Gegenstelle"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:67
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:175
 msgid "No"
 msgstr "Nein"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:67
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
 msgid "Yes"
 msgstr "Ja"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:84
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:84
 msgid "(None)"
 msgstr "-"
 
-#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:89
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:89
 msgid "(S)"
 msgstr "(S)"
 
-#: src/i2p/bote/service/OutboxProcessor.java:164
+#: src/main/java/i2p/bote/util/GeneralHelper.java:100
+msgid "Not set."
+msgstr "nicht festgelegt"
+
+#: src/main/java/i2p/bote/util/GeneralHelper.java:150
+msgid "Invalid ID number for CryptoImplementation: "
+msgstr "ungültige Identnummer für CryptoImplementation:"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:236
+msgid "Queued"
+msgstr "in Warteschlange"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:238
 msgid "Sending"
 msgstr "Senden"
 
-#: src/i2p/bote/service/OutboxProcessor.java:173
+#: src/main/java/i2p/bote/web/JSPHelper.java:240
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "An {0} von {1} Empfängern gesendet"
 
-#: src/i2p/bote/service/OutboxProcessor.java:180
+#: src/main/java/i2p/bote/web/JSPHelper.java:243
 msgid "Email sent"
 msgstr "Mail versendet"
 
-#: src/i2p/bote/service/OutboxProcessor.java:183
+#: src/main/java/i2p/bote/web/JSPHelper.java:245
 msgid "Gateway disabled"
 msgstr "Durchleitung deaktiviert"
 
-#: src/i2p/bote/service/OutboxProcessor.java:223
+#: src/main/java/i2p/bote/web/JSPHelper.java:247
+#, fuzzy, java-format
+msgid "No identity matches the sender/from field: {0}"
+msgstr "Keine Mailidentität stimmt mit diesem Absenderfeld (\"Von\") überein:"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Ungültige Empfängeradresse: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:227
+#: src/main/java/i2p/bote/web/JSPHelper.java:252
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Fehler beim Erstellen der Mailpakete: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:231
+#: src/main/java/i2p/bote/web/JSPHelper.java:254
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Fehler beim Senden der Mail: {0}"
 
-#: src/i2p/bote/service/OutboxProcessor.java:235
+#: src/main/java/i2p/bote/web/JSPHelper.java:256
 #, java-format
 msgid "Error saving email metadata: {0}"
 msgstr "Fehler beim Speichern der Metadaten: {0}"
 
-#: src/i2p/bote/web/JSPHelper.java:111
-msgid "Not set."
-msgstr "nicht festgelegt"
-
-#: src/i2p/bote/web/JSPHelper.java:136
-msgid "Invalid ID number for CryptoImplementation: "
-msgstr "ungültige Identnummer für CryptoImplementation:"
-
-#: src/i2p/bote/web/PeerInfoTag.java:58
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:88
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:194
 msgid "Kademlia Peers:"
 msgstr "Kademlia-Gegenstellen:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:91
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:112
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:236
 msgid "Relay Peers:"
 msgstr "Verfügbare Zwischenstationen:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:97
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:118
 msgid "Reachability %"
 msgstr "Erreichbarkeit in %"
 
-#: src/i2p/bote/web/PeerInfoTag.java:116
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:127
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:225
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:230
+msgid "Untested"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:138
 msgid "Banned Peers:"
 msgstr "Verbannte Gegenstellen:"
 
-#: src/i2p/bote/web/PeerInfoTag.java:121
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:143
 msgid "Destination Hash"
 msgstr "I2P-Adresse (SHA256-Summe)"
 
-#: src/i2p/bote/web/PeerInfoTag.java:122
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:144
 msgid "Ban Reason"
 msgstr "Verbannungsgrund"
 
-#: src/i2p/bote/web/SendEmailTag.java:73
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:182
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:187
+#, fuzzy
+msgid "Reachable"
+msgstr "Erreichbarkeit in %"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:184
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:188
+msgid "Unreachable"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:221
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:228
+msgid "Good"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:223
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:229
+msgid "Unreliable"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:73
 msgid "Error: Please add at least one recipient."
 msgstr "Fehler: Bitte mindestens einen Empfänger angeben."
 
-#: src/i2p/bote/web/SendEmailTag.java:96
+#: src/main/java/i2p/bote/web/SendEmailTag.java:101
 msgid "The email has been queued for sending."
 msgstr "Die Mail wurde in die Sendeschlange eingestellt."
 
-#: src/i2p/bote/web/SendEmailTag.java:102
+#: src/main/java/i2p/bote/web/SendEmailTag.java:107
 #, java-format
 msgid "Error sending email: {0}"
 msgstr "Fehler beim Senden der Mail: {0}"
 
-#: WebContent/network.jsp
-msgid "Network"
-msgstr "Netzwerk"
-
-#: WebContent/network.jsp
-msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "Es sind keine Netzwerkinformationen verfügbar, da I2P-Bote noch nicht mit dem Netzwerk verbunden ist."
-
-#: WebContent/network.jsp
-msgid "Local destination:"
-msgstr "Eigene I2P-Kennung:"
-
-#: WebContent/saveIdentities.jsp
-msgid "Error:"
-msgstr "Fehler:"
-
-#: WebContent/settings.jsp
-msgid "Settings have been saved."
-msgstr "Die Einstellungen wurden gespeichert."
-
-#: WebContent/settings.jsp
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: WebContent/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "Alle {0} Minuten auf Mails prüfen"
-
-#: WebContent/settings.jsp
-msgid "Check delivery status of sent emails"
-msgstr "Empfang gesendeter Mails prüfen"
-
-#: WebContent/settings.jsp
-msgid "Use relays when sending mail:"
-msgstr "Über Zwischenstationen senden:"
-
-#: WebContent/settings.jsp
-msgid "None"
-msgstr "Aus"
-
-#: WebContent/settings.jsp
-msgid "Delay per relay hop: Between"
-msgstr "Verzögerung pro Zwischenstation: Zwischen"
-
-#: WebContent/settings.jsp
-msgid "and"
-msgstr "und"
-
-#: WebContent/settings.jsp
-msgid "minutes"
-msgstr "Minuten"
-
-#: WebContent/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "Durchleitung von Mails an Nicht-I2P-Adressen"
-
-#: WebContent/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr "Bote-Adresse des Durchleitungsdienstes:"
-
-#: WebContent/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "IMAP auf Port {0} aktivieren"
-
-#: WebContent/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Hinzufügungen in zu sendenden Mails auf Englisch halten („Re:“, „wrote:“ usw.)"
-
-#: WebContent/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Absendezeit mitschicken"
-
-#: WebContent/settings.jsp
-msgid "Theme:"
-msgstr "Oberfläche:"
-
-#: WebContent/settings.jsp
-msgid "Save"
-msgstr "Speichern"
-
-#: WebContent/settings.jsp
-msgid "Change Password"
-msgstr "Kennwort ändern"
-
-#: WebContent/showEmail.jsp
-msgid "From:"
-msgstr "Von:"
-
-#: WebContent/showEmail.jsp
-msgid "Anonymous"
-msgstr "Anonym"
-
-#: WebContent/showEmail.jsp
-msgid "Signature:"
-msgstr "Unterschrift:"
-
-#: WebContent/showEmail.jsp
-msgid "Valid"
-msgstr "Gültig"
-
-#: WebContent/showEmail.jsp
-msgid "N/A (sender is anonymous)"
-msgstr "Nicht vorhanden (anonymer Absender)"
-
-#: WebContent/showEmail.jsp
-msgid "Invalid or missing"
-msgstr "Ungültig oder nicht vorhanden"
-
-#: WebContent/showEmail.jsp
-msgid "Reply To:"
-msgstr "Antwort an:"
-
-#: WebContent/showEmail.jsp
-msgid "To:"
-msgstr "An:"
-
-#: WebContent/showEmail.jsp
-msgid "CC:"
-msgstr "Kopie:"
-
-#: WebContent/showEmail.jsp
-msgid "BCC:"
-msgstr "Blindkopie:"
-
-#: WebContent/showEmail.jsp
-msgid "Sent:"
-msgstr "Absendezeit:"
-
-#: WebContent/showEmail.jsp
-msgid "Received:"
-msgstr "Empfangszeit:"
-
-#: WebContent/showEmail.jsp
-msgid "Subject:"
-msgstr "Betreff:"
-
-#: WebContent/showEmail.jsp
-msgid "Message:"
-msgstr "Nachricht:"
-
-#: WebContent/showEmail.jsp
-msgid "Attachments:"
-msgstr "Anhänge:"
-
-#: WebContent/showEmail.jsp
-msgid "Status:"
-msgstr "Status:"
-
-#: WebContent/showEmail.jsp
-msgid "Reply"
-msgstr "Antworten"
-
-#: WebContent/showEmail.jsp
-msgid "Re:"
-msgstr "AW:"
-
-#: WebContent/showEmail.jsp
-msgid "Delete"
-msgstr "Löschen"
-
-#: WebContent/about.jsp
-msgid "About I2P-Bote"
-msgstr "Über I2P-Bote"
-
-#: WebContent/about.jsp
-msgid "I2P-Bote Version {0}"
-msgstr "I2P-Bote, Version {0}"
-
-#: WebContent/about.jsp
-msgid "Main Developer:"
-msgstr "Hauptentwickler:"
-
-#: WebContent/about.jsp
-msgid "Click to send an email"
-msgstr "Hier klicken, um eine Mail zu senden"
-
-#: WebContent/about.jsp
-msgid "Feedback on I2P-Bote"
-msgstr "Rückmeldung zu I2P-Bote"
-
-#: WebContent/about.jsp
-msgid "Contributors:"
-msgstr "Unterstützer:"
-
-#: WebContent/about.jsp
-msgid "Translation, QA, usability, technical feedback"
-msgstr "Übersetzungen, Qualitätssicherung, Benutzerfreundlichkeit, technisches Feedback"
-
-#: WebContent/about.jsp
-msgid "Pluginization, technical feedback"
-msgstr "Umsetzung als Zusatzprogramm, technische Rückmeldungen"
-
-#: WebContent/about.jsp
-msgid "Seedless"
-msgstr "Seedless"
-
-#: WebContent/about.jsp
-msgid "Russian translation"
-msgstr "Übersetzung ins Russische"
-
-#: WebContent/about.jsp
-msgid "French translation"
-msgstr "Übersetzung ins Französische"
-
-#: WebContent/about.jsp
-msgid "Dutch translation"
-msgstr "Übersetzung ins Niederländische"
-
-#: WebContent/about.jsp
-msgid "Norwegian translation"
-msgstr "Übersetzung ins Norwegische"
-
-#: WebContent/about.jsp
-msgid "Swedish translation"
-msgstr "Übersetzung ins Schwedische"
-
-#: WebContent/about.jsp
-msgid "Chinese translation"
-msgstr "Übersetzung ins Chinesische"
-
-#: WebContent/about.jsp
-msgid "Arabic translation"
-msgstr "Übersetzung ins Arabische"
-
-#: WebContent/about.jsp
-msgid "Czech translation"
-msgstr "Übersetzung ins Tschechische"
-
-#: WebContent/about.jsp
-msgid "German translation"
-msgstr "Übersetzung ins Deutsche"
-
-#: WebContent/about.jsp
-msgid "Polish translation"
-msgstr "Übersetzung ins Polnische"
-
-#: WebContent/about.jsp
-msgid "Italian translation"
-msgstr "Übersetzung ins Italienische"
-
-#: WebContent/about.jsp
-msgid "Ukrainian translation"
-msgstr "Übersetzung ins Ukrainische"
-
-#: WebContent/about.jsp
-msgid "Hungarian translation"
-msgstr "Übersetzung ins Ungarische"
-
-#: WebContent/about.jsp
-msgid "Code fixes, translation updates from tx"
-msgstr "Fehlerbehebungen, Aktualisierungen der Übersetzungen aus Transifex"
-
-#: WebContent/publishDestination.jsp
-msgid "Add Email Destination to Directory"
-msgstr "Bote-Adresse im Adressverzeichnis veröffentlichen"
-
-#: WebContent/publishDestination.jsp
-msgid "The name exists already. Please choose a different Public Name."
-msgstr "Dieser Name ist bereits vergeben. Bitte einen anderen wählen."
-
-#: WebContent/publishDestination.jsp
-msgid "Publish to the Address Directory"
-msgstr "Im Adressverzeichnis veröffentlichen"
-
-#: WebContent/publishDestination.jsp
-msgid "Picture to upload:"
-msgstr "Mitzuspeicherndes Bild:"
-
-#: WebContent/publishDestination.jsp
-msgid "(optional, 7.5 kBytes max)"
-msgstr "(optional; höchstens 7,5 kB)"
-
-#: WebContent/publishDestination.jsp
-msgid "Text to include:"
-msgstr "Einzubeziehender Text:"
-
-#: WebContent/publishDestination.jsp
-msgid "(optional, 2000 chars max)"
-msgstr "(optional; höchstens 2000 Zeichen)"
-
-#: WebContent/publishDestination.jsp
-msgid "Publish"
-msgstr "Veröffentlichen"
-
-#: WebContent/publishDestination.jsp
-msgid "The identity has been added to the address directory."
-msgstr "Die Identität wurde im öffentlichen Adressverzeichnis gespeichert."
-
-#: WebContent/header.jsp
-msgid "- I2P-Bote"
-msgstr "- I2P-Bote"
-
-#: WebContent/header.jsp
-msgid "Password is cached. Click to clear the password cache."
-msgstr "Das Kennwort ist im Zwischenspeicher. Hier klicken, um den Zwischenspeicher zu leeren."
-
-#: WebContent/header.jsp
-msgid "I2P-Bote"
-msgstr "I2P-Bote"
-
-#: WebContent/header.jsp
-msgid "Secure Distributed Email"
-msgstr "Sichere, dezentrale Mailkommunikation"
-
-#: WebContent/header.jsp
-msgid "A new version is available. Click here for the configuration page."
-msgstr "Eine neue Version ist verfügbar. Klick hier, um zur Konfigurationsseite zu gelangen."
-
-#: WebContent/header.jsp
-msgid "Addresses"
-msgstr "Adressen"
-
-#: WebContent/header.jsp
-msgid "Identities"
-msgstr "Identitäten"
-
-#: WebContent/header.jsp
-msgid "Address Book"
-msgstr "Adressbuch"
-
-#: WebContent/header.jsp
-msgid "Configuration"
-msgstr "Konfiguration"
-
-#: WebContent/header.jsp
-msgid "Network Status"
-msgstr "Netzwerkstatus"
-
-#: WebContent/header.jsp
-msgid "Help"
-msgstr "Hilfe"
-
-#: WebContent/header.jsp
-msgid "User Guide"
-msgstr "Benutzerleitfaden"
-
-#: WebContent/header.jsp
-msgid "FAQ"
-msgstr "FAQ"
-
-#: WebContent/header.jsp
-msgid "About"
-msgstr "Über I2P-Bote"
-
-#: WebContent/statusFrame.jsp
+#: src/main/webapp/statusFrame.jsp
 msgid "Not Started"
 msgstr "Nicht gestartet"
 
-#: WebContent/statusFrame.jsp
+#: src/main/webapp/statusFrame.jsp
 msgid "Waiting 3 Minutes..."
 msgstr "Warte 3 Minuten ..."
 
-#: WebContent/statusFrame.jsp
+#: src/main/webapp/statusFrame.jsp
 msgid "Connecting..."
 msgstr "Verbinde ..."
 
-#: WebContent/statusFrame.jsp
+#: src/main/webapp/statusFrame.jsp
 msgid "Connected"
 msgstr "Verbunden"
 
-#: WebContent/statusFrame.jsp
+#: src/main/webapp/statusFrame.jsp
 msgid "Error"
 msgstr "Fehler"
 
-#: WebContent/statusFrame.jsp
-msgid "Unknown Status"
-msgstr "Unbek. Status"
-
-#: WebContent/statusFrame.jsp
+#: src/main/webapp/statusFrame.jsp
 msgid "Retry Connecting"
 msgstr "erneuter Verbindungsversuch"
 
-#: WebContent/statusFrame.jsp
+#: src/main/webapp/statusFrame.jsp
 msgid "Connect Now"
 msgstr "Jetzt verbinden"
 
-#: WebContent/deleteIdentity.jsp
-msgid "The email identity has been deleted."
-msgstr "Die Identität wurde gelöscht."
+#: src/main/webapp/saveIdentities.jsp
+msgid "Error:"
+msgstr "Fehler:"
 
-#: WebContent/connectError.jsp
-msgid "Error Details"
-msgstr "Fehlerdetails"
-
-#: WebContent/outbox.jsp
+#: src/main/webapp/outbox.jsp
 msgid "Outbox"
 msgstr "Postausgang"
 
-#: WebContent/outbox.jsp
+#: src/main/webapp/outbox.jsp
 msgid "From"
 msgstr "Von"
 
-#: WebContent/outbox.jsp
+#: src/main/webapp/outbox.jsp
 msgid "To"
 msgstr "An"
 
-#: WebContent/outbox.jsp
+#: src/main/webapp/outbox.jsp
 msgid "Subject"
 msgstr "Betreff"
 
-#: WebContent/outbox.jsp
+#: src/main/webapp/outbox.jsp
 msgid "Create Time"
 msgstr "Erstellt am:"
 
-#: WebContent/outbox.jsp
+#: src/main/webapp/outbox.jsp
 msgid "Status"
 msgstr "Status"
 
-#: WebContent/outbox.jsp
+#: src/main/webapp/outbox.jsp
+msgid "Anonymous"
+msgstr "Anonym"
+
+#: src/main/webapp/outbox.jsp
 msgid "(No subject)"
 msgstr "(Kein Betreff)"
 
-#: WebContent/outbox.jsp
+#: src/main/webapp/outbox.jsp
+msgid "Delete"
+msgstr "Löschen"
+
+#: src/main/webapp/outbox.jsp
 msgid "Delete this email"
 msgstr "Diese Mail löschen"
 
-#: WebContent/setPassword.jsp
-msgid "Set Password"
-msgstr "Kennwort setzen"
+#: src/main/webapp/userGuide.jsp
+msgid "User Guide"
+msgstr "Benutzerleitfaden"
 
-#: WebContent/setPassword.jsp
-msgid "The password has been changed."
-msgstr "Das Kennwort wurde geändert."
+#: src/main/webapp/buttonFrame.jsp
+msgid "Checking for mail..."
+msgstr "Rufe Mails ab ..."
 
-#: WebContent/setPassword.jsp
-msgid "Please wait"
-msgstr "Bitte warten"
+#: src/main/webapp/buttonFrame.jsp
+msgid "Check Mail"
+msgstr "Abrufen"
 
-#: WebContent/setPassword.jsp
-msgid "Please wait while the password is being changed..."
-msgstr "Bitte warten, das Kennwort wird geändert..."
+#: src/main/webapp/buttonFrame.jsp
+msgid "Compose"
+msgstr "Verfassen"
 
-#: WebContent/setPassword.jsp
-msgid "Set a new Password"
-msgstr "Neues Kennwort setzen"
+#: src/main/webapp/buttonFrame.jsp
+msgid "Last checked:"
+msgstr "Zuletzt abgerufen:"
 
-#: WebContent/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "Wurde noch kein Kennwort erstellt, bitte das Feld \"altes Kennwort\" freilassen."
+#: src/main/webapp/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
 
-#: WebContent/setPassword.jsp
+#: src/main/webapp/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr ""
+"Das Kennwort ist im Zwischenspeicher. Hier klicken, um den Zwischenspeicher "
+"zu leeren."
+
+#: src/main/webapp/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Secure Distributed Email"
+msgstr "Sichere, dezentrale Mailkommunikation"
+
+#: src/main/webapp/header.jsp
+msgid "Addresses"
+msgstr "Adressen"
+
+#: src/main/webapp/header.jsp
+msgid "Identities"
+msgstr "Identitäten"
+
+#: src/main/webapp/header.jsp
+msgid "Address Book"
+msgstr "Adressbuch"
+
+#: src/main/webapp/header.jsp
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: src/main/webapp/header.jsp
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: src/main/webapp/header.jsp
+msgid "Network Status"
+msgstr "Netzwerkstatus"
+
+#: src/main/webapp/header.jsp
+msgid "Help"
+msgstr "Hilfe"
+
+#: src/main/webapp/header.jsp
+msgid "FAQ"
+msgstr "FAQ"
+
+#: src/main/webapp/header.jsp
+msgid "About"
+msgstr "Über I2P-Bote"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "Kennwortspeicher geleert"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "Das Kennwort wurde aus dem Zwischenspeicher gelöscht."
+
+#: src/main/webapp/newEmail.jsp
+msgid "New Email"
+msgstr "Neue Mail"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "Wähle eine anzuhängende Datei und versuche es erneut!"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Send"
+msgstr "Senden"
+
+#: src/main/webapp/newEmail.jsp
+msgid "From:"
+msgstr "Von:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "To:"
+msgstr "An:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "CC:"
+msgstr "Kopie:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "BCC:"
+msgstr "Blindkopie:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Reply To:"
+msgstr "Antwort an:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Addr. Book..."
+msgstr "Adressbuch ..."
+
+#: src/main/webapp/newEmail.jsp
+msgid "Subject:"
+msgstr "Betreff:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attachments:"
+msgstr "Anhänge:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "Diesen Anhang entfernen"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another attachment"
+msgstr "Weiteren Anhang hinzufügen"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attach"
+msgstr "Anhängen"
+
+#: src/main/webapp/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "Es wird empfohlen, Anhänge kleiner als 500 kB zu halten."
+
+#: src/main/webapp/newEmail.jsp
+msgid "Message:"
+msgstr "Nachricht:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} schrieb:"
+
+#: src/main/webapp/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr "Der Adressbucheintrag wurde gelöscht."
+
+#: src/main/webapp/showEmail.jsp
 msgid ""
-"Please note that if a password is set, emails cannot be checked "
-"automatically but only when the Check Mail button is clicked."
-msgstr "Hinweis: Wenn ein Kennwort gesetzt ist, werden neue Mails nicht automatisch abgerufen, sondern nur beim Anklicken des Knopfes „Abrufen“."
+"The email could not be found in this folder. It was probably moved to the "
+"Sent folder."
+msgstr ""
 
-#: WebContent/setPassword.jsp
-msgid "Old password:"
-msgstr "altes Kennwort"
+#: src/main/webapp/showEmail.jsp
+msgid "The email could not be found in this folder."
+msgstr ""
 
-#: WebContent/setPassword.jsp
-msgid "New password:"
-msgstr "neues Kennwort:"
+#: src/main/webapp/showEmail.jsp
+msgid "Signature:"
+msgstr "Unterschrift:"
 
-#: WebContent/setPassword.jsp
-msgid "Confirm:"
-msgstr "Bestätigen:"
+#: src/main/webapp/showEmail.jsp
+msgid "Valid"
+msgstr "Gültig"
 
-#: WebContent/setPassword.jsp
-msgid "OK"
-msgstr "OK"
+#: src/main/webapp/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr "Nicht vorhanden (anonymer Absender)"
 
-#: WebContent/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "Bitte füll das Feld „Öffentlicher Name“ aus!"
+#: src/main/webapp/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "Ungültig oder nicht vorhanden"
 
-#: WebContent/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "Bitte warten ..."
+#: src/main/webapp/showEmail.jsp
+msgid "Sent:"
+msgstr "Absendezeit:"
 
-#: WebContent/submitIdentity.jsp
-msgid "The Email Identity is being generated. This can take several minutes."
-msgstr "Die Mailidentität wird erzeugt. Dies kann mehrere Minuten dauern."
+#: src/main/webapp/showEmail.jsp
+msgid "Received:"
+msgstr "Empfangszeit:"
 
-#: WebContent/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "Die Identität wurde gespeichert."
+#: src/main/webapp/showEmail.jsp
+msgid "Status:"
+msgstr "Status:"
 
-#: WebContent/editContact.jsp
-msgid "Please fill in the Destination field."
-msgstr "Bitte füll das Empfängerfeld aus!"
+#: src/main/webapp/showEmail.jsp
+msgid "Reply"
+msgstr "Antworten"
 
-#: WebContent/editContact.jsp
-msgid "Please fill in the Name field."
-msgstr "Bitte füll das Namensfeld aus!"
+#: src/main/webapp/showEmail.jsp
+msgid "Re:"
+msgstr "AW:"
 
-#: WebContent/editContact.jsp
-msgid "The contact has been saved."
-msgstr "Der Adressbucheintrag wurde gespeichert."
+#: src/main/webapp/importIdentities.jsp
+#, fuzzy
+msgid "Import Identities"
+msgstr "Identitäten"
 
-#: WebContent/editContact.jsp
-msgid "New Contact"
-msgstr "Neuer Eintrag"
+#: src/main/webapp/importIdentities.jsp
+#, fuzzy
+msgid "Please select an identities file and try again."
+msgstr "Wähle eine anzuhängende Datei und versuche es erneut!"
 
-#: WebContent/editContact.jsp
-msgid "Add"
-msgstr "Hinzufügen"
+#: src/main/webapp/importIdentities.jsp
+#, fuzzy
+msgid "The identities have been imported."
+msgstr "Die Identität wurde gelöscht."
 
-#: WebContent/editContact.jsp
-msgid "Edit Contact"
-msgstr "Bearbeiten"
+#: src/main/webapp/importIdentities.jsp
+#, fuzzy
+msgid "Identities file:"
+msgstr "Identitäten"
 
-#: WebContent/editContact.jsp
-msgid "Email Destination:"
-msgstr "Bote-Adresse:"
+#: src/main/webapp/importIdentities.jsp
+msgid "Password:"
+msgstr "Kennwort:"
 
-#: WebContent/editContact.jsp
-msgid "(required field)"
-msgstr "(Pflichtfeld)"
+#: src/main/webapp/importIdentities.jsp
+msgid "(leave blank if identities not encrypted)"
+msgstr ""
 
-#: WebContent/editContact.jsp
-msgid "Name:"
-msgstr "Name:"
+#: src/main/webapp/importIdentities.jsp
+msgid "Overwrite all existing identities:"
+msgstr ""
 
-#: WebContent/editContact.jsp
-msgid "Picture:"
-msgstr "Bild:"
+#: src/main/webapp/importIdentities.jsp
+msgid "Duplicates: replace existing identity:"
+msgstr ""
 
-#: WebContent/editContact.jsp
-msgid "Text:"
-msgstr "Text:"
-
-#: WebContent/editContact.jsp
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: WebContent/noIdentities.jsp
-msgid "No Email Identity Defined"
-msgstr "Keine Mailidentität angelegt"
-
-#: WebContent/noIdentities.jsp
-msgid "Create a New Email Identity"
-msgstr "Neue Identität"
-
-#: WebContent/importContact.jsp
-msgid "Address Directory Lookup"
-msgstr "Im Adressverzeichnis nachschlagen"
-
-#: WebContent/importContact.jsp
-msgid "The name has been imported to the address book."
-msgstr "Der Name wurde im Adressbuch gespeichert."
-
-#: WebContent/importContact.jsp
-msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr "Der Name &quot;{0}&quot; wurde nicht im Adressbuch gefunden."
-
-#: WebContent/importContact.jsp
-msgid "Import Contact"
-msgstr "Kontakt importieren"
-
-#: WebContent/importContact.jsp
-msgid ""
-"A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click "
-"&quot;import&quot; unless you trust that it is the right email destination."
-msgstr "Ein passender Eintrag wurde im Adressverzeichnis gefunden. Beachte, dass das Adressvezeichnis nicht gegen Manipulation geschützt ist. Klicke nicht auf &quot;import&quot; wenn du nicht sicher bist, dass es die korrekte E-Mail ist."
-
-#: WebContent/importContact.jsp
-msgid "Fingerprint:"
-msgstr "Fingerprint:"
-
-#: WebContent/importContact.jsp
-msgid "Email Destination: "
-msgstr "Bote-Adresse:"
-
-#: WebContent/importContact.jsp
+#: src/main/webapp/importIdentities.jsp
 msgid "Import"
 msgstr "Importieren"
 
-#: WebContent/folders.jsp
-msgid "Folders"
-msgstr "Ordner"
+#: src/main/webapp/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr "Die Identität wurde gelöscht."
 
-#: WebContent/folders.jsp
-msgid "Inbox"
-msgstr "Posteingang"
+#: src/main/webapp/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr "Im Adressverzeichnis nachschlagen"
 
-#: WebContent/folders.jsp
-msgid "Sent"
-msgstr "Gesendet"
+#: src/main/webapp/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr "Der Name wurde im Adressbuch gespeichert."
 
-#: WebContent/folders.jsp
-msgid "Trash"
-msgstr "Papierkorb"
+#: src/main/webapp/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr "Der Name &quot;{0}&quot; wurde nicht im Adressbuch gefunden."
 
-#: WebContent/identitiesHelp.jsp
+#: src/main/webapp/importContact.jsp
+msgid "Import Contact"
+msgstr "Kontakt importieren"
+
+#: src/main/webapp/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+"Ein passender Eintrag wurde im Adressverzeichnis gefunden. Beachte, dass das "
+"Adressvezeichnis nicht gegen Manipulation geschützt ist. Klicke nicht auf "
+"&quot;import&quot; wenn du nicht sicher bist, dass es die korrekte E-Mail "
+"ist."
+
+#: src/main/webapp/importContact.jsp
+msgid "Fingerprint:"
+msgstr "Fingerprint:"
+
+#: src/main/webapp/importContact.jsp
+msgid "Email Destination: "
+msgstr "Bote-Adresse:"
+
+#: src/main/webapp/exportIdentities.jsp
+#, fuzzy
+msgid "Export Identities"
+msgstr "Identitäten"
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "(leave blank to not encrypt identities)"
+msgstr ""
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "Confirm:"
+msgstr "Bestätigen:"
+
+#: src/main/webapp/exportIdentities.jsp
+#, fuzzy
+msgid "Export"
+msgstr "Importieren"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr "Bote-Adresse im Adressverzeichnis veröffentlichen"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr "Dieser Name ist bereits vergeben. Bitte einen anderen wählen."
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr "Im Adressverzeichnis veröffentlichen"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr "Mitzuspeicherndes Bild:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr "(optional; höchstens 7,5 kB)"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Text to include:"
+msgstr "Einzubeziehender Text:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr "(optional; höchstens 2000 Zeichen)"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish"
+msgstr "Veröffentlichen"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr "Die Identität wurde im öffentlichen Adressverzeichnis gespeichert."
+
+#: src/main/webapp/debug.jsp
+msgid "Debug"
+msgstr "Debug"
+
+#: src/main/webapp/debug.jsp
+msgid "Debug Page"
+msgstr "Seite debuggen"
+
+#: src/main/webapp/debug.jsp
+msgid "Test encrypted files"
+msgstr "Überprüfe verschlüsselte Dateien"
+
+#: src/main/webapp/debug.jsp
+msgid "No file encryption problems found."
+msgstr "Keine Probleme bei der Dateiverschlüsselung festgestellt."
+
+#: src/main/webapp/debug.jsp
+msgid "Undecryptable files:"
+msgstr "Unentschlüsselbare Dateien:"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Private Address Book"
+msgstr "Privates Addressbuch"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Select One or More Entries"
+msgstr "Wähle einen oder mehrere Einträge aus!"
+
+#: src/main/webapp/addressBook.jsp
+msgid "The address book is empty."
+msgstr "Das Adressbuch ist leer."
+
+#: src/main/webapp/addressBook.jsp
+msgid "Name"
+msgstr "Name"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Email Destination"
+msgstr "Bote-Adresse"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Delete this contact"
+msgstr "Diesen Eintrag löschen"
+
+#: src/main/webapp/addressBook.jsp
+msgid "New Contact"
+msgstr "Neuer Eintrag"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Add Recipients"
+msgstr "Empfänger hinzufügen"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Return"
+msgstr "Zurück"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Import from the public address directory"
+msgstr "Aus dem öffentlichen Adressverzeichnis importieren"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Name:"
+msgstr "Name:"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Lookup"
+msgstr "Nachschlagen"
+
+#: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
 msgstr "Um Mails empfangen zu können, musst du zuerst eine Identität anlegen."
 
-#: WebContent/identitiesHelp.jsp
+#: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr "Jeder Identität ist eine Bote-Adresse zugeordnet. Jeder kann Mails an die Adresse schicken, aber nur der Besitzer der Identität kann sie lesen."
+msgstr ""
+"Jeder Identität ist eine Bote-Adresse zugeordnet. Jeder kann Mails an die "
+"Adresse schicken, aber nur der Besitzer der Identität kann sie lesen."
 
-#: WebContent/identitiesHelp.jsp
+#: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr "(Mail-)Identitäten entsprechen ungefähr herkömmlichen Mailkonten, nur dass es bei I2P-Bote keinen Mailanbieter gibt, der den Mailverkehr mitesen könnte."
+msgstr ""
+"(Mail-)Identitäten entsprechen ungefähr herkömmlichen Mailkonten, nur dass "
+"es bei I2P-Bote keinen Mailanbieter gibt, der den Mailverkehr mitesen könnte."
 
-#: WebContent/identitiesHelp.jsp
+#: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote entschlüsselt empfangene Mails automatisch mit Hilfe der jeweiligen Identität. Identitäten sind in der Datei identities abgelegt; gib diese Datei niemand anderem, da dieser sonst alle deine Mails lesen kann."
+msgstr ""
+"I2P-Bote entschlüsselt empfangene Mails automatisch mit Hilfe der jeweiligen "
+"Identität. Identitäten sind in der Datei identities abgelegt; gib diese "
+"Datei niemand anderem, da dieser sonst alle deine Mails lesen kann."
 
-#: WebContent/identitiesHelp.jsp
+#: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr "Bote-Adressen dagegen können anderen mitgeteilt werden, um mit ihnen in Kontakt zu treten. Das Weitergeben einer Bote-Adresse entspricht dem Weitergeben einer herkömmlichen Mailadresse."
+msgstr ""
+"Bote-Adressen dagegen können anderen mitgeteilt werden, um mit ihnen in "
+"Kontakt zu treten. Das Weitergeben einer Bote-Adresse entspricht dem "
+"Weitergeben einer herkömmlichen Mailadresse."
 
-#: WebContent/identitiesHelp.jsp
+#: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is easy to create multiple identities for different purposes, or "
 "different contacts."
-msgstr "Es ist auch ohne weiteres möglich, mehrere Identitäten für unterschiedliche Einsatzzwecke oder Mailpartner anzulegen."
+msgstr ""
+"Es ist auch ohne weiteres möglich, mehrere Identitäten für unterschiedliche "
+"Einsatzzwecke oder Mailpartner anzulegen."
 
-#: WebContent/identitiesHelp.jsp
+#: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "When you create a new email identity, you can choose the type of encryption "
 "that will be used by the email identity. While all encryption algorithms "
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr "Beim Anlegen einer neuen Identität kann zwischen verschiedenen Verschlüsselungsverfahren gewählt werden. Alle in I2P-Bote verfügbaren Verfahren bieten eine hohe bis höchste Verschlüsselungsstärke, bewirken aber unterschiedliche Adresslängen. Von der Wahl der Verschlüsselung hängt auch der Signieralgorithmus ab."
+msgstr ""
+"Beim Anlegen einer neuen Identität kann zwischen verschiedenen "
+"Verschlüsselungsverfahren gewählt werden. Alle in I2P-Bote verfügbaren "
+"Verfahren bieten eine hohe bis höchste Verschlüsselungsstärke, bewirken aber "
+"unterschiedliche Adresslängen. Von der Wahl der Verschlüsselung hängt auch "
+"der Signieralgorithmus ab."
 
-#: WebContent/identitiesHelp.jsp
+#: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr "Es wird empfohlen, die Elliptische-Kurven-Verschlüsselung mit 256 Bit zu wählen, da damit die Adressen am kürzesten sind (86 Zeichen) und dennoch eine hohe Sicherheit gewährt ist."
+msgstr ""
+"Es wird empfohlen, die Elliptische-Kurven-Verschlüsselung mit 256 Bit zu "
+"wählen, da damit die Adressen am kürzesten sind (86 Zeichen) und dennoch "
+"eine hohe Sicherheit gewährt ist."
 
-#: WebContent/clearPasswordCache.jsp
-msgid "Password Cleared"
-msgstr "Kennwortspeicher geleert"
+#: src/main/webapp/network.jsp
+msgid "Network"
+msgstr "Netzwerk"
 
-#: WebContent/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr "Das Kennwort wurde aus dem Zwischenspeicher gelöscht."
+#: src/main/webapp/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr ""
+"Es sind keine Netzwerkinformationen verfügbar, da I2P-Bote noch nicht mit "
+"dem Netzwerk verbunden ist."
 
-#: WebContent/sendEmail.jsp
-msgid "New Email"
-msgstr "Neue Mail"
+#: src/main/webapp/network.jsp
+msgid "Local destination:"
+msgstr "Eigene I2P-Kennung:"
 
-#: WebContent/sendEmail.jsp
-msgid "Go to inbox"
-msgstr "Zum Posteingang"
+#: src/main/webapp/folders.jsp
+msgid "Folders"
+msgstr "Ordner"
 
-#: WebContent/editIdentity.jsp
-msgid "More..."
-msgstr "Mehr..."
+#: src/main/webapp/folders.jsp
+msgid "Inbox"
+msgstr "Posteingang"
 
-#: WebContent/editIdentity.jsp
-msgid "Less..."
-msgstr "Weniger..."
+#: src/main/webapp/folders.jsp
+msgid "Sent"
+msgstr "Gesendet"
 
-#: WebContent/editIdentity.jsp
-msgid "New Email Identity"
-msgstr "Neue Identität"
+#: src/main/webapp/folders.jsp
+msgid "Trash"
+msgstr "Papierkorb"
 
-#: WebContent/editIdentity.jsp
-msgid "Create"
-msgstr "Anlegen"
-
-#: WebContent/editIdentity.jsp
-msgid "Edit Email Identity"
-msgstr "Identität bearbeiten"
-
-#: WebContent/editIdentity.jsp
-msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr "Mit einer Mailidentität können Nachrichten von anderen I2P-Bote-Benutzern empfangen werden."
-
-#: WebContent/editIdentity.jsp
-msgid "Public Name:"
-msgstr "Öffentlicher Name:"
-
-#: WebContent/editIdentity.jsp
-msgid "(required field, shown to recipients)"
-msgstr "(Pflichtfeld, für Empfänger sichtbar)"
-
-#: WebContent/editIdentity.jsp
-msgid "Description:"
-msgstr "Beschreibung:"
-
-#: WebContent/editIdentity.jsp
-msgid "(optional, kept private)"
-msgstr "(Optional, nicht für andere sichtbar)"
-
-#: WebContent/editIdentity.jsp
-msgid "(published to the address directory)"
-msgstr "(Im Adressverzeichnis veröffentlicht)"
-
-#: WebContent/editIdentity.jsp
-msgid "Encryption:"
-msgstr "Verschlüsselung:"
-
-#: WebContent/editIdentity.jsp
-msgid "(If unsure, leave the default)"
-msgstr "(Im Zweifelsfall die Voreinstellung belassen)"
-
-#: WebContent/editIdentity.jsp
-msgid "Default Identity:"
-msgstr "Beim Senden voreingestellt:"
-
-#: WebContent/editIdentity.jsp
-msgid "Private keys:"
-msgstr "Privatschlüssel:"
-
-#: WebContent/editIdentity.jsp
-msgid "(Never reveal to anyone!)"
-msgstr "(Niemals preisgeben!)"
-
-#: WebContent/editIdentity.jsp
-msgid "Show"
-msgstr "Zeigen"
-
-#: WebContent/editIdentity.jsp
-msgid "Cannot publish until connected."
-msgstr "Veröffentlichung nicht möglich ohne Verbindung."
-
-#: WebContent/editIdentity.jsp
-msgid "Delete this identity"
-msgstr "Diese Identität löschen"
-
-#: WebContent/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
-msgstr "Der Adressbucheintrag wurde gelöscht."
-
-#: WebContent/addressBook.jsp
-msgid "Private Address Book"
-msgstr "Privates Addressbuch"
-
-#: WebContent/addressBook.jsp
-msgid "Select One or More Entries"
-msgstr "Wähle einen oder mehrere Einträge aus!"
-
-#: WebContent/addressBook.jsp
-msgid "The address book is empty."
-msgstr "Das Adressbuch ist leer."
-
-#: WebContent/addressBook.jsp
-msgid "Name"
-msgstr "Name"
-
-#: WebContent/addressBook.jsp
-msgid "Email Destination"
-msgstr "Bote-Adresse"
-
-#: WebContent/addressBook.jsp
-msgid "Delete this contact"
-msgstr "Diesen Eintrag löschen"
-
-#: WebContent/addressBook.jsp
-msgid "Add Recipients"
-msgstr "Empfänger hinzufügen"
-
-#: WebContent/addressBook.jsp
-msgid "Return"
-msgstr "Zurück"
-
-#: WebContent/addressBook.jsp
-msgid "Import from the public address directory"
-msgstr "Aus dem öffentlichen Adressverzeichnis importieren"
-
-#: WebContent/addressBook.jsp
-msgid "Lookup"
-msgstr "Nachschlagen"
-
-#: WebContent/buttonFrame.jsp
-msgid "Checking for mail..."
-msgstr "Rufe Mails ab ..."
-
-#: WebContent/buttonFrame.jsp
-msgid "Check Mail"
-msgstr "Abrufen"
-
-#: WebContent/buttonFrame.jsp
-msgid "Compose"
-msgstr "Verfassen"
-
-#: WebContent/buttonFrame.jsp
-msgid "Last checked:"
-msgstr "Zuletzt abgerufen:"
-
-#: WebContent/folder.jsp
+#: src/main/webapp/folder.jsp
 msgid "Know"
 msgstr "Bek."
 
-#: WebContent/folder.jsp
+#: src/main/webapp/folder.jsp
 msgid "Sent Time"
 msgstr "Absendezeit"
 
-#: WebContent/folder.jsp
+#: src/main/webapp/folder.jsp
 msgid "Delivered"
 msgstr "Empfangen"
 
-#: WebContent/folder.jsp
+#: src/main/webapp/folder.jsp
 msgid "Signature is invalid or missing"
 msgstr "Signatur fehlt oder ist ungültig"
 
-#: WebContent/showFullIdentity.jsp
+#: src/main/webapp/showFullIdentity.jsp
 msgid "Full Identity"
 msgstr "vollständige Identität"
 
-#: WebContent/showFullIdentity.jsp
+#: src/main/webapp/showFullIdentity.jsp
 msgid "Full Email Identity for {0}:"
 msgstr "vollständige Mailidentität von {0}:"
 
-#: WebContent/showFullIdentity.jsp
+#: src/main/webapp/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr "Obige Information stets geheimhalten! Es sind darin die Privatschlüssel enthalten."
+msgstr ""
+"Obige Information stets geheimhalten! Es sind darin die Privatschlüssel "
+"enthalten."
 
-#: WebContent/identities.jsp
-msgid "Email Identities"
-msgstr "Identitäten"
+#: src/main/webapp/noIdentities.jsp
+msgid "No Email Identity Defined"
+msgstr "Keine Mailidentität angelegt"
 
-#: WebContent/identities.jsp
-msgid "No email identities are defined."
-msgstr "Es sind noch keine Identitäten angelegt worden."
-
-#: WebContent/identities.jsp
-msgid "Def."
-msgstr "Voreinst."
-
-#: WebContent/identities.jsp
-msgid "Public Name"
-msgstr "Öffentlicher Name"
-
-#: WebContent/identities.jsp
-msgid "Description"
-msgstr "Beschreibung"
-
-#: WebContent/identities.jsp
-msgid "New Identity"
+#: src/main/webapp/noIdentities.jsp
+msgid "Create a New Email Identity"
 msgstr "Neue Identität"
 
-#: WebContent/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr "Wähle eine anzuhängende Datei und versuche es erneut!"
+#: src/main/webapp/connectError.jsp
+msgid "Error Details"
+msgstr "Fehlerdetails"
 
-#: WebContent/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Adressbuch ..."
-
-#: WebContent/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "Diesen Anhang entfernen"
-
-#: WebContent/newEmail.jsp
-msgid "Add another attachment"
-msgstr "Weiteren Anhang hinzufügen"
-
-#: WebContent/newEmail.jsp
-msgid "Attach"
-msgstr "Anhängen"
-
-#: WebContent/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "Es wird empfohlen, Anhänge kleiner als 500 kB zu halten."
-
-#: WebContent/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} schrieb:"
-
-#: WebContent/newEmail.jsp
-msgid "Send"
-msgstr "Senden"
-
-#: WebContent/debug.jsp
-msgid "Debug"
-msgstr "Debug"
-
-#: WebContent/debug.jsp
-msgid "Debug Page"
-msgstr "Seite debuggen"
-
-#: WebContent/debug.jsp
-msgid "Test encrypted files"
-msgstr "Überprüfe verschlüsselte Dateien"
-
-#: WebContent/debug.jsp
-msgid "No file encryption problems found."
-msgstr "Keine Probleme bei der Dateiverschlüsselung festgestellt."
-
-#: WebContent/debug.jsp
-msgid "Undecryptable files:"
-msgstr "Unentschlüsselbare Dateien:"
-
-#: WebContent/deleteEmail.jsp
-msgid "Error: Couldn't delete email."
-msgstr "Fehler: Die Mail konnte nicht gelöscht werden."
-
-#: WebContent/password.jsp
+#: src/main/webapp/password.jsp
 msgid "Password Required"
 msgstr "Kennwort erforderlich"
 
-#: WebContent/password.jsp
+#: src/main/webapp/password.jsp
 msgid "Wrong password. Try again."
 msgstr "Falsches Kennwort - bitte erneut versuchen!"
 
-#: WebContent/password.jsp
+#: src/main/webapp/password.jsp
 msgid "Password required"
 msgstr "Kennwort erforderlich"
 
-#: WebContent/password.jsp
-msgid "Password:"
-msgstr "Kennwort:"
+#: src/main/webapp/password.jsp
+msgid "OK"
+msgstr "OK"
 
-#: WebContent/WEB-INF/tags/folderLink.tag
+#: src/main/webapp/deleteEmail.jsp
+msgid "Error: Couldn't delete email."
+msgstr "Fehler: Die Mail konnte nicht gelöscht werden."
+
+#: src/main/webapp/sendEmail.jsp
+msgid "Go to inbox"
+msgstr "Zum Posteingang"
+
+#: src/main/webapp/identities.jsp
+msgid "Email Identities"
+msgstr "Identitäten"
+
+#: src/main/webapp/identities.jsp
+msgid "No email identities are defined."
+msgstr "Es sind noch keine Identitäten angelegt worden."
+
+#: src/main/webapp/identities.jsp
+msgid "Def."
+msgstr "Voreinst."
+
+#: src/main/webapp/identities.jsp
+msgid "Public Name"
+msgstr "Öffentlicher Name"
+
+#: src/main/webapp/identities.jsp
+msgid "Description"
+msgstr "Beschreibung"
+
+#: src/main/webapp/identities.jsp
+msgid "New Identity"
+msgstr "Neue Identität"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "More..."
+msgstr "Mehr..."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Less..."
+msgstr "Weniger..."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "New Email Identity"
+msgstr "Neue Identität"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Create"
+msgstr "Anlegen"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Edit Email Identity"
+msgstr "Identität bearbeiten"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Save"
+msgstr "Speichern"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "An Email Identity lets you receive email from other I2P-Bote users."
+msgstr ""
+"Mit einer Mailidentität können Nachrichten von anderen I2P-Bote-Benutzern "
+"empfangen werden."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Public Name:"
+msgstr "Öffentlicher Name:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(required field, shown to recipients)"
+msgstr "(Pflichtfeld, für Empfänger sichtbar)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Description:"
+msgstr "Beschreibung:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(optional, kept private)"
+msgstr "(Optional, nicht für andere sichtbar)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Picture:"
+msgstr "Bild:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr "(Im Adressverzeichnis veröffentlicht)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Text:"
+msgstr "Text:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Encryption:"
+msgstr "Verschlüsselung:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(If unsure, leave the default)"
+msgstr "(Im Zweifelsfall die Voreinstellung belassen)"
+
+#: src/main/webapp/editIdentity.jsp
+#, fuzzy
+msgid "Vanity Destination:"
+msgstr "Bote-Adresse:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Email Destination:"
+msgstr "Bote-Adresse:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Default Identity:"
+msgstr "Beim Senden voreingestellt:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Private keys:"
+msgstr "Privatschlüssel:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(Never reveal to anyone!)"
+msgstr "(Niemals preisgeben!)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Show"
+msgstr "Zeigen"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Cannot publish until connected."
+msgstr "Veröffentlichung nicht möglich ohne Verbindung."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Delete this identity"
+msgstr "Diese Identität löschen"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "Bitte füll das Feld „Öffentlicher Name“ aus!"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "Bitte warten ..."
+
+#: src/main/webapp/submitIdentity.jsp
+#, fuzzy
+msgid "The Email Identity is being generated. This may take a while."
+msgstr "Die Mailidentität wird erzeugt. Dies kann mehrere Minuten dauern."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "Die Identität wurde gespeichert."
+
+#: src/main/webapp/editContact.jsp
+msgid "Please fill in the Destination field."
+msgstr "Bitte füll das Empfängerfeld aus!"
+
+#: src/main/webapp/editContact.jsp
+msgid "Please fill in the Name field."
+msgstr "Bitte füll das Namensfeld aus!"
+
+#: src/main/webapp/editContact.jsp
+msgid "The contact has been saved."
+msgstr "Der Adressbucheintrag wurde gespeichert."
+
+#: src/main/webapp/editContact.jsp
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: src/main/webapp/editContact.jsp
+msgid "Edit Contact"
+msgstr "Bearbeiten"
+
+#: src/main/webapp/editContact.jsp
+msgid "(required field)"
+msgstr "(Pflichtfeld)"
+
+#: src/main/webapp/about.jsp
+msgid "About I2P-Bote"
+msgstr "Über I2P-Bote"
+
+#: src/main/webapp/about.jsp
+msgid "I2P-Bote Version {0}"
+msgstr "I2P-Bote, Version {0}"
+
+#: src/main/webapp/about.jsp
+msgid "Main Developer:"
+msgstr "Hauptentwickler:"
+
+#: src/main/webapp/about.jsp
+msgid "Click to send an email"
+msgstr "Hier klicken, um eine Mail zu senden"
+
+#: src/main/webapp/about.jsp
+msgid "Feedback on I2P-Bote"
+msgstr "Rückmeldung zu I2P-Bote"
+
+#: src/main/webapp/about.jsp
+msgid "Contributors:"
+msgstr "Unterstützer:"
+
+#: src/main/webapp/about.jsp
+msgid "Translation, QA, usability, technical feedback"
+msgstr ""
+"Übersetzungen, Qualitätssicherung, Benutzerfreundlichkeit, technisches "
+"Feedback"
+
+#: src/main/webapp/about.jsp
+msgid "Pluginization, technical feedback"
+msgstr "Umsetzung als Zusatzprogramm, technische Rückmeldungen"
+
+#: src/main/webapp/about.jsp
+msgid "Seedless"
+msgstr "Seedless"
+
+#: src/main/webapp/about.jsp
+msgid "Russian translation"
+msgstr "Übersetzung ins Russische"
+
+#: src/main/webapp/about.jsp
+msgid "French translation"
+msgstr "Übersetzung ins Französische"
+
+#: src/main/webapp/about.jsp
+msgid "Dutch translation"
+msgstr "Übersetzung ins Niederländische"
+
+#: src/main/webapp/about.jsp
+msgid "Norwegian translation"
+msgstr "Übersetzung ins Norwegische"
+
+#: src/main/webapp/about.jsp
+msgid "Swedish translation"
+msgstr "Übersetzung ins Schwedische"
+
+#: src/main/webapp/about.jsp
+msgid "Chinese translation"
+msgstr "Übersetzung ins Chinesische"
+
+#: src/main/webapp/about.jsp
+msgid "Arabic translation"
+msgstr "Übersetzung ins Arabische"
+
+#: src/main/webapp/about.jsp
+msgid "Czech translation"
+msgstr "Übersetzung ins Tschechische"
+
+#: src/main/webapp/about.jsp
+msgid "German translation"
+msgstr "Übersetzung ins Deutsche"
+
+#: src/main/webapp/about.jsp
+msgid "Polish translation"
+msgstr "Übersetzung ins Polnische"
+
+#: src/main/webapp/about.jsp
+msgid "Italian translation"
+msgstr "Übersetzung ins Italienische"
+
+#: src/main/webapp/about.jsp
+msgid "Ukrainian translation"
+msgstr "Übersetzung ins Ukrainische"
+
+#: src/main/webapp/about.jsp
+msgid "Hungarian translation"
+msgstr "Übersetzung ins Ungarische"
+
+#: src/main/webapp/about.jsp
+msgid "Code fixes, translation updates from tx"
+msgstr "Fehlerbehebungen, Aktualisierungen der Übersetzungen aus Transifex"
+
+#: src/main/webapp/about.jsp
+msgid "Code fixes, Android app"
+msgstr ""
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set Password"
+msgstr "Kennwort setzen"
+
+#: src/main/webapp/setPassword.jsp
+msgid "The password has been changed."
+msgstr "Das Kennwort wurde geändert."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait"
+msgstr "Bitte warten"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr "Bitte warten, das Kennwort wird geändert..."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Neues Kennwort setzen"
+
+#: src/main/webapp/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr ""
+"Wurde noch kein Kennwort erstellt, bitte das Feld \"altes Kennwort\" "
+"freilassen."
+
+#: src/main/webapp/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+"Hinweis: Wenn ein Kennwort gesetzt ist, werden neue Mails nicht automatisch "
+"abgerufen, sondern nur beim Anklicken des Knopfes „Abrufen“."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Old password:"
+msgstr "altes Kennwort"
+
+#: src/main/webapp/setPassword.jsp
+msgid "New password:"
+msgstr "neues Kennwort:"
+
+#: src/main/webapp/settings.jsp
+msgid "Settings have been saved."
+msgstr "Die Einstellungen wurden gespeichert."
+
+#: src/main/webapp/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "Alle {0} Minuten auf Mails prüfen"
+
+#: src/main/webapp/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr "Empfang gesendeter Mails prüfen"
+
+#: src/main/webapp/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "Über Zwischenstationen senden:"
+
+#: src/main/webapp/settings.jsp
+msgid "None"
+msgstr "Aus"
+
+#: src/main/webapp/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr "Verzögerung pro Zwischenstation: Zwischen"
+
+#: src/main/webapp/settings.jsp
+msgid "and"
+msgstr "und"
+
+#: src/main/webapp/settings.jsp
+msgid "minutes"
+msgstr "Minuten"
+
+#: src/main/webapp/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "Durchleitung von Mails an Nicht-I2P-Adressen"
+
+#: src/main/webapp/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "Bote-Adresse des Durchleitungsdienstes:"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "IMAP auf Port {0} aktivieren"
+
+#: src/main/webapp/settings.jsp
+#, fuzzy
+msgid "Enable SMTP on port {0}"
+msgstr "IMAP auf Port {0} aktivieren"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Hinzufügungen in zu sendenden Mails auf Englisch halten („Re:“, „wrote:“ "
+"usw.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Absendezeit mitschicken"
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Oberfläche:"
+
+#: src/main/webapp/settings.jsp
+msgid "Change Password"
+msgstr "Kennwort ändern"
+
+#: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
 msgstr "{0} E-Mails insgesamt"
 
-#: WebContent/WEB-INF/tags/folderLink.tag
+#: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total, {1} new"
 msgstr "{0} E-Mails insgesamt, {1} neu"
 
-#: WebContent/WEB-INF/tags/printDate.tag
+#: src/main/webapp/WEB-INF/tags/folderLink.tag
+msgid "{0} incomplete"
+msgstr ""
+
+#: src/main/webapp/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Zum Adressbuch hinzufügen"
+
+#: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "unbekannt"
 
-#: WebContent/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "Zum Adressbuch hinzufügen"
+#~ msgid "lblue"
+#~ msgstr "hellblau"
+
+#~ msgid "A new version is available. Click here for the configuration page."
+#~ msgstr ""
+#~ "Eine neue Version ist verfügbar. Klick hier, um zur Konfigurationsseite "
+#~ "zu gelangen."
+
+#~ msgid "Unknown Status"
+#~ msgstr "Unbek. Status"
