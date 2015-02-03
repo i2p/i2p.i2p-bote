@@ -276,16 +276,18 @@ e-mails from the internet with your I2P-Bote application, you must first
 register with an appropriate mail gateway. Currently there is only one:
 postman.</p>
 
-<p>1) First, go to <a href=
+<ol>
+<li><p>First, go to <a href=
 "http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?page_id=16</a> and
 register an account. If you already have an account or if you have just created
-one as described, proceed with #2.</p>
+one as described, proceed with #2.</p></li>
 
-<p>2) For an existing account you can add your I2P-Bote mail destination, so
+<li><p>For an existing account you can add your I2P-Bote mail destination, so
 that e-mails coming from the internet are forwarded to your I2P-Bote app. To do
 so go to <a href=
 "http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</a> and
-provide the requested information.</p>
+provide the requested information.</p></li>
+</ol>
 
 <p>Now all e-mails sent to that address (<a href=
 "mailto:name@i2pmail.org">name@i2pmail.org</a> from the outer internet or
@@ -328,12 +330,12 @@ username in author's settings, and many many more)!</p>
 
 <p>If possible,</p>
 <ul>
-<li>leave I2P-Bote running 24/7,</li>
-<li>use mailroutes with randomized per-hop delays and/or per-hop fixed send
-times, [not yet <em>fully</em> implemented]</li>
-<li>use a long check interval,</li>
-<li>use a long local delay for own packets,</li>
-<li>use a big check interval randomization. [not yet implemented]</li>
+<li><p>leave I2P-Bote running 24/7,</p></li>
+<li><p>use mailroutes with randomized per-hop delays and/or per-hop fixed send
+times, [not yet <em>fully</em> implemented]</p></li>
+<li><p>use a long check interval,</p></li>
+<li><p>use a long local delay for own packets,</p></li>
+<li><p>use a big check interval randomization. [not yet implemented]</p></li>
 </ul>
 
 <p>You can suppress the sending of date and time in the e-mails' header.</p>
@@ -439,16 +441,18 @@ choses not to send his destination, not even the recipient will know it.</p>
 
 <p>Furthermore, I2P-Bote hides:</p>
 <ul>
-<li>the fact that you run I2P-Bote</li>
-<li>the fact that you send a mail</li>
-<li>the fact that you receive a mail</li>
-<li>the time you send a mail</li>
-<li>the time you receive a mail</li>
-<li>the upper limit of number of mails an unknown user receives
+<li><p>the fact that you run I2P-Bote</p></li>
+<li><p>the fact that you send a mail</p></li>
+<li><p>the fact that you receive a mail</p></li>
+<li><p>the time you send a mail</p></li>
+<li><p>the time you receive a mail</p></li>
+<li><p>the upper limit of number of mails an unknown user receives</p>
 <ul>
-<li>an abstract user, no concrete one, just concluding its existence from the existence of the mail identity as he could always have more than one e-mail identity</li>
+<li><p>an abstract user, no concrete one, just concluding its existence from
+the existence of the mail identity as he could always have more than one e-mail
+identity</p></li>
 </ul></li>
-<li>the lower limit, as an identity also sends out test and dummy messages</li>
+<li><p>the lower limit, as an identity also sends out test and dummy messages</p></li>
 </ul>
 
 <h3>What I2P-Bote <em>hides partially</em>:</h3>
@@ -467,11 +471,11 @@ recipient.</p>
 
 <h3>What I2P-Bote <em>can hide optionally</em>:</h3>
 <ul>
-<li>If mail routes are used, the time a bote mail is sent</li>
-<li>If mail routes are used, the time a bote mail is fetched. [not yet
-implemented]</li>
-<li>If the sender suppresses timestamps only the sender himself will know when
-he sent a mail.</li>
+<li><p>If mail routes are used, the time a bote mail is sent</p></li>
+<li><p>If mail routes are used, the time a bote mail is fetched. [not yet
+implemented]</p></li>
+<li><p>If the sender suppresses timestamps only the sender himself will know when
+he sent a mail.</p></li>
 </ul>
 
 <h3>What I2P-Bote <em>cannot hide</em>:</h3>
@@ -536,11 +540,11 @@ a name for this destination in his local address book.</p>
 
 <p>So technically speaking, an e-mail identity consists of four things:</p>
 <ul>
-<li>an e-mail destination (i.e. two public keys)</li>
-<li>two private keys for the e-mail destination</li>
-<li>a public name which can be shown to other people in e-mails</li>
-<li>a description which is not shown to anybody but you (it helps you remember
-which e-mail identity you use for which purpose).</li>
+<li><p>an e-mail destination (i.e. two public keys)</p></li>
+<li><p>two private keys for the e-mail destination</p></li>
+<li><p>a public name which can be shown to other people in e-mails</p></li>
+<li><p>a description which is not shown to anybody but you (it helps you remember
+which e-mail identity you use for which purpose).</p></li>
 </ul>
 
 <p>An e-mail identity is not required for sending emails (although then only

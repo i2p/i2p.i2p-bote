@@ -306,15 +306,18 @@ e-mails venant de l'Internet dans l'application I2P-Bote, vous devez
 d'abord vous enregistrer auprès d'une passerelle de messagerie. Il
 n'y en a actuellement qu'une seule: postman.</p>
 
-<p>1) D'abord, allez sur <a href="http://hq.postman.i2p/?page_id=16">
+<ol>
+<li><p>D'abord, allez sur <a href="http://hq.postman.i2p/?page_id=16">
 http://hq.postman.i2p/?page_id=16</a> et créez un compte. Si vous en avez déjà
-un, ou si vous venez de le créer, passer à l'étape 2).</p>
+un, ou si vous venez de le créer, passer à l'étape 2).</p></li>
 
-<p>2) Pour un compte donné, vous pouvez ajouter votre clé de destination
+<li><p>Pour un compte donné, vous pouvez ajouter votre clé de destination
 de messagerie, pour que les messages arrivant d'Internet puissent
 être transférés vers votre application I2P-Bote. Pour ce faire
 allez sur <a href="http://hq.postman.i2p/?page_id=74">
-http://hq.postman.i2p/?page_id=74</a> et indiquez les informations demandées.</p>
+http://hq.postman.i2p/?page_id=74</a> et indiquez les informations
+demandées.</p></li>
+</ol>
 
 <p>Maintenant, tous les e-mails envoyés à cette adresse (<a href=
 "mailto:nom@i2pmail.org">nom@i2pmail.org</a> depuis l'Internet externe ou depuis
@@ -366,12 +369,12 @@ multitude d'autres)!</p>
 
 <p>Si possible,</p>
 <ul>
-<li>laissez I2P-Bote tourner 24h/24 7j/7,</li>
-<li>utilisez les routes de messagerie en conjonction avec les retards
-aléatoires ou fixes par saut [pas encore <em>complètement</em> implémenté],</li>
-<li>utilisez un intervalle de relève long,</li>
-<li>utilisez un long retard pour vos propres paquets,</li>
-<li>utilisez un large intervalle de relève aléatoire. [pas encore implémenté]</li>
+<li><p>laissez I2P-Bote tourner 24h/24 7j/7,</p></li>
+<li><p>utilisez les routes de messagerie en conjonction avec les retards
+aléatoires ou fixes par saut [pas encore <em>complètement</em> implémenté],</p></li>
+<li><p>utilisez un intervalle de relève long,</p></li>
+<li><p>utilisez un long retard pour vos propres paquets,</p></li>
+<li><p>utilisez un large intervalle de relève aléatoire. [pas encore implémenté]</p></li>
 </ul>
 
 <p>Vous pouvez supprimer l'envoi des horodatages des en-têtes de messages.</p>
@@ -497,20 +500,20 @@ tenu dans l'ignorance de cette donnée.</p>
 
 <p>De plus, I2P-Bote masque:</p>
 <ul>
-<li>le fait que vous utilisez I2P-Bote</li>
-<li>le fait que vous envoyez un message</li>
-<li>le fait que vous recevez un message</li>
-<li>le moment d'envoi d'un message</li>
-<li>le moment de réception d'un message</li>
-<li>la limite supérieure du nombre de messages qu'un utilisateur inconnu
-reçoit
+<li><p>le fait que vous utilisez I2P-Bote</p></li>
+<li><p>le fait que vous envoyez un message</p></li>
+<li><p>le fait que vous recevez un message</p></li>
+<li><p>le moment d'envoi d'un message</p></li>
+<li><p>le moment de réception d'un message</p></li>
+<li><p>la limite supérieure du nombre de messages qu'un utilisateur inconnu
+reçoit</p>
 <ul>
-<li>un utilisateur abstrait, pas un concret, extrapolant simplement son
+<li><p>un utilisateur abstrait, pas un concret, extrapolant simplement son
 existence de celle de la destination de messagerie car il pourrait toujours
-avoir plus d'une identité</li>
+avoir plus d'une identité</p></li>
 </ul></li>
-<li>la limite basse, car une identité envoie également des messages de test et
-des messages leurres/'bidons'</li>
+<li><p>la limite basse, car une identité envoie également des messages de test et
+des messages leurres/'bidons'</p></li>
 </ul>
 
 <h3>Ce qu'I2P-Bote <em>masque partiellement</em>:</h3>
@@ -529,12 +532,12 @@ et le destinataire.</p>
 
 <h3>Ce qu'I2P-Bote <em>peut masquer optionnellement</em>:</h3>
 <ul>
-<li>Si les routes de messagerie sont utilisées, le moment de l'envoi d'un
-message</li>
-<li>Si les routes de messagerie sont utilisées, le moment de relève d'un
-message [pas encore implémenté].</li>
-<li>Si l'expéditeur supprime les horodatages, seul l'expéditeur sait quand
-il a envoyé un message.</li>
+<li><p>Si les routes de messagerie sont utilisées, le moment de l'envoi d'un
+message</p></li>
+<li><p>Si les routes de messagerie sont utilisées, le moment de relève d'un
+message [pas encore implémenté].</p></li>
+<li><p>Si l'expéditeur supprime les horodatages, seul l'expéditeur sait quand
+il a envoyé un message.</p></li>
 </ul>
 
 <h3>Ce qu'I2P-Bote <em>ne peut pas cacher</em>:</h3>
@@ -607,12 +610,12 @@ cette destination dans son propre carnet d'adresses local.</p>
 <p>Donc en termes techniques, une identité de messagerie est constituée de
 quatre éléments:</p>
 <ul>
-<li>une destination de messagerie (c'est à dire deux clés publiques)</li>
-<li>les deux clés privées correspondantes</li>
-<li>un nom public qui peut être montré aux correspondants</li>
-<li>une description qui n'est accessible qu'à vous même, le créateur
+<li><p>une destination de messagerie (c'est à dire deux clés publiques)</p></li>
+<li><p>les deux clés privées correspondantes</p></li>
+<li><p>un nom public qui peut être montré aux correspondants</p></li>
+<li><p>une description qui n'est accessible qu'à vous même, le créateur
 l'identité (pour vous aider à vous souvenir de l'usage que vous assignez à
-cette identité).</li>
+cette identité).</p></li>
 </ul>
 
 <p>Une identité n'est pas pas nécessaire pour envoyer des messages (dans ce
