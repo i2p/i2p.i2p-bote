@@ -1,0 +1,1134 @@
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: I2P\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-02 21:10+0000\n"
+"PO-Revision-Date: 2013-11-26 09:08+0000\n"
+"Last-Translator: pol polearnik <polearnik@mail.ru>\n"
+"Language-Team: Romanian (http://www.transifex.com/projects/p/I2P/language/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+#: src/i2p/bote/Configuration.java:62
+msgid "lblue"
+msgstr "lblue"
+
+#: src/i2p/bote/Configuration.java:63
+msgid "vanilla"
+msgstr "vanilie"
+
+#: src/i2p/bote/I2PBote.java:503 src/i2p/bote/service/OutboxProcessor.java:159
+msgid "No identity matches the sender/from field: "
+msgstr "Nici o identitate nu se potrivește cu expeditorul / din câmp:"
+
+#: src/i2p/bote/I2PBote.java:663
+msgid "The old password is not correct."
+msgstr "Parola veche nu este corectă."
+
+#: src/i2p/bote/I2PBote.java:665
+msgid "The new password and the confirmation password do not match."
+msgstr "Parolă noua și parola de confirmare nu coincid."
+
+#: src/i2p/bote/crypto/ECDH256_ECDSA256.java:49
+msgid "256-bit Elliptic Curve Encryption"
+msgstr "Criptarea 256-bit pe curve elliptice"
+
+#: src/i2p/bote/crypto/ECDH521_ECDSA521.java:54
+msgid "521-bit Elliptic Curve Encryption"
+msgstr "Criptarea 521-bit pe curve elliptice"
+
+#: src/i2p/bote/crypto/ElGamal2048_DSA1024.java:55
+msgid "2048-bit ElGamal Encryption"
+msgstr "2048-bit criptare ElGamal"
+
+#: src/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:119
+msgid "NTRU-1087 Encryption"
+msgstr "Criptarea NTRU-1087"
+
+#: src/i2p/bote/email/Email.java:484
+msgid ""
+"Address doesn't contain an Email Destination or an external address: {0}"
+msgstr "Adresa nu conține o destinație e-mail sau o adresă externă: {0}"
+
+#: src/i2p/bote/email/Email.java:507
+#, java-format
+msgid "Invalid address: {0}"
+msgstr "Adresă nevalidă: {0}"
+
+#: src/i2p/bote/folder/Outbox.java:116
+msgid "Queued"
+msgstr "În coadă"
+
+#: src/i2p/bote/imap/BoteMailbox.java:85
+msgid "Password required or invalid password provided"
+msgstr "Este necesara parola sau parola introdusa este incorecta"
+
+#: src/i2p/bote/imap/MapperFactory.java:276
+msgid "Deletion of mailboxes is not currently supported."
+msgstr "Ștergerea de căsuțe poștale nu este susținută în prezent."
+
+#: src/i2p/bote/network/BanList.java:80
+msgid "Wrong protocol version:"
+msgstr "Versiune de protocol greșit:"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "BktPfx"
+msgstr "BktPfx"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "Distance"
+msgstr "Distanță"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "First Seen"
+msgstr "primul vazut"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/i2p/bote/web/PeerInfoTag.java:96
+msgid "I2P Destination"
+msgstr "Destinație I2P"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "Locked?"
+msgstr "Blocat?"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/i2p/bote/web/PeerInfoTag.java:95 src/i2p/bote/web/PeerInfoTag.java:120
+msgid "Peer"
+msgstr "Coleg"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:67
+msgid "No"
+msgstr "NU"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:67
+msgid "Yes"
+msgstr "Da"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:84
+msgid "(None)"
+msgstr "(Nimic)"
+
+#: src/i2p/bote/network/kademlia/KademliaPeerStats.java:89
+msgid "(S)"
+msgstr "(S)"
+
+#: src/i2p/bote/service/OutboxProcessor.java:164
+msgid "Sending"
+msgstr "Trimitere"
+
+#: src/i2p/bote/service/OutboxProcessor.java:173
+#, java-format
+msgid "Sent to {0} out of {1} recipients"
+msgstr "Trimis la {0} din {1} destinatari"
+
+#: src/i2p/bote/service/OutboxProcessor.java:180
+msgid "Email sent"
+msgstr "E-mail este trimis"
+
+#: src/i2p/bote/service/OutboxProcessor.java:183
+msgid "Gateway disabled"
+msgstr "poarta de acces dezactivat"
+
+#: src/i2p/bote/service/OutboxProcessor.java:223
+#, java-format
+msgid "Invalid recipient address: {0}"
+msgstr "Adresa destinatarului nevalidă: {0}"
+
+#: src/i2p/bote/service/OutboxProcessor.java:227
+#, java-format
+msgid "Error creating email packets: {0}"
+msgstr "Eroare la crearea de pachete de e-mail: {0}"
+
+#: src/i2p/bote/service/OutboxProcessor.java:231
+#, java-format
+msgid "Error while sending email: {0}"
+msgstr "Eroare la trimiterea de e-mail: {0}"
+
+#: src/i2p/bote/service/OutboxProcessor.java:235
+#, java-format
+msgid "Error saving email metadata: {0}"
+msgstr "Eroare la salvarea de e-mail metadate: {0}"
+
+#: src/i2p/bote/web/JSPHelper.java:111
+msgid "Not set."
+msgstr "Nu este setat."
+
+#: src/i2p/bote/web/JSPHelper.java:136
+msgid "Invalid ID number for CryptoImplementation: "
+msgstr "Număr ID Incorect pentru CryptoImplementation:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:58
+msgid "Kademlia Peers:"
+msgstr "Kademlia colegii:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:91
+msgid "Relay Peers:"
+msgstr "Colegii Releu:"
+
+#: src/i2p/bote/web/PeerInfoTag.java:97
+msgid "Reachability %"
+msgstr "Accesibilitatea %"
+
+#: src/i2p/bote/web/PeerInfoTag.java:116
+msgid "Banned Peers:"
+msgstr "Colegii blocati"
+
+#: src/i2p/bote/web/PeerInfoTag.java:121
+msgid "Destination Hash"
+msgstr "Hashul destinației"
+
+#: src/i2p/bote/web/PeerInfoTag.java:122
+msgid "Ban Reason"
+msgstr "Motiv de Ban"
+
+#: src/i2p/bote/web/SendEmailTag.java:73
+msgid "Error: Please add at least one recipient."
+msgstr "Eroare: Vă rugăm să introduceţi cel puţin un destinatar"
+
+#: src/i2p/bote/web/SendEmailTag.java:96
+msgid "The email has been queued for sending."
+msgstr "E-mail a fost pus în coada de așteptare pentru trimiterea."
+
+#: src/i2p/bote/web/SendEmailTag.java:102
+#, java-format
+msgid "Error sending email: {0}"
+msgstr "Eroare la trimiterea de e-mail: {0}"
+
+#: WebContent/network.jsp
+msgid "Network"
+msgstr "Rețea"
+
+#: WebContent/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr "Informație de rețea nu este disponibila, deoarece I2P-Bote încă nu a început conectarea la rețea ."
+
+#: WebContent/network.jsp
+msgid "Local destination:"
+msgstr "Destinații locale:"
+
+#: WebContent/saveIdentities.jsp
+msgid "Error:"
+msgstr "Eroare"
+
+#: WebContent/settings.jsp
+msgid "Settings have been saved."
+msgstr "Setări au fost salvate."
+
+#: WebContent/settings.jsp
+msgid "Settings"
+msgstr "Configurări"
+
+#: WebContent/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "Verifica e-mail in fiecare {0} minute"
+
+#: WebContent/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr "Verificați starea de livrare de e-mailuri trimise"
+
+#: WebContent/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "Folosiți relee la trimiterea e-mail:"
+
+#: WebContent/settings.jsp
+msgid "None"
+msgstr "Niciunul"
+
+#: WebContent/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr "Întârziere pe hop releu: Între"
+
+#: WebContent/settings.jsp
+msgid "and"
+msgstr "și"
+
+#: WebContent/settings.jsp
+msgid "minutes"
+msgstr "minute"
+
+#: WebContent/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "Utilizați un gateway la trimiterea la adrese de e-mail non-I2P"
+
+#: WebContent/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "E-mail de destinație a gateway-ului:"
+
+#: WebContent/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Activați IMAP pe portul {0}"
+
+#: WebContent/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr "Utilizați engleză pentru textul adăugat la e-mail de ieșire (\"Re:\", \"wrote:\", etc)"
+
+#: WebContent/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Includeți timp de trimitere în e-mailurile trimise"
+
+#: WebContent/settings.jsp
+msgid "Theme:"
+msgstr "Teme:"
+
+#: WebContent/settings.jsp
+msgid "Save"
+msgstr "Salvează"
+
+#: WebContent/settings.jsp
+msgid "Change Password"
+msgstr "Schimbare parolă"
+
+#: WebContent/showEmail.jsp
+msgid "From:"
+msgstr "De la"
+
+#: WebContent/showEmail.jsp
+msgid "Anonymous"
+msgstr "Anonim"
+
+#: WebContent/showEmail.jsp
+msgid "Signature:"
+msgstr "Semnătură:"
+
+#: WebContent/showEmail.jsp
+msgid "Valid"
+msgstr "Valabil"
+
+#: WebContent/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr "N/A (expeditor anonim)"
+
+#: WebContent/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "Incorect sau lipsește"
+
+#: WebContent/showEmail.jsp
+msgid "Reply To:"
+msgstr "Răspunde către:"
+
+#: WebContent/showEmail.jsp
+msgid "To:"
+msgstr "pentru :"
+
+#: WebContent/showEmail.jsp
+msgid "CC:"
+msgstr "Copie:"
+
+#: WebContent/showEmail.jsp
+msgid "BCC:"
+msgstr "Copie oarbă:"
+
+#: WebContent/showEmail.jsp
+msgid "Sent:"
+msgstr "Trimise"
+
+#: WebContent/showEmail.jsp
+msgid "Received:"
+msgstr "Primite:"
+
+#: WebContent/showEmail.jsp
+msgid "Subject:"
+msgstr "Subiect:"
+
+#: WebContent/showEmail.jsp
+msgid "Message:"
+msgstr "Mesaj:"
+
+#: WebContent/showEmail.jsp
+msgid "Attachments:"
+msgstr "Atașamente:"
+
+#: WebContent/showEmail.jsp
+msgid "Status:"
+msgstr "Status:"
+
+#: WebContent/showEmail.jsp
+msgid "Reply"
+msgstr "Răspunde"
+
+#: WebContent/showEmail.jsp
+msgid "Re:"
+msgstr "Re:"
+
+#: WebContent/showEmail.jsp
+msgid "Delete"
+msgstr "Șterge"
+
+#: WebContent/about.jsp
+msgid "About I2P-Bote"
+msgstr "Despre I2P-Bote\\"
+
+#: WebContent/about.jsp
+msgid "I2P-Bote Version {0}"
+msgstr "I2P-Bote Versiunea {0}"
+
+#: WebContent/about.jsp
+msgid "Main Developer:"
+msgstr "Dezvoltator principal"
+
+#: WebContent/about.jsp
+msgid "Click to send an email"
+msgstr "Click aici pentru a trimite un e-mail"
+
+#: WebContent/about.jsp
+msgid "Feedback on I2P-Bote"
+msgstr "Feedback-ul pe I2P-Bote"
+
+#: WebContent/about.jsp
+msgid "Contributors:"
+msgstr "Contribuitori:"
+
+#: WebContent/about.jsp
+msgid "Translation, QA, usability, technical feedback"
+msgstr "Traducere, QA, uzabilitate, feedback-ul tehnic"
+
+#: WebContent/about.jsp
+msgid "Pluginization, technical feedback"
+msgstr "Pluginization, feedback-ul tehnic"
+
+#: WebContent/about.jsp
+msgid "Seedless"
+msgstr "Seedless"
+
+#: WebContent/about.jsp
+msgid "Russian translation"
+msgstr "traducere rusă"
+
+#: WebContent/about.jsp
+msgid "French translation"
+msgstr "traducere franceză"
+
+#: WebContent/about.jsp
+msgid "Dutch translation"
+msgstr "traducere olandeză"
+
+#: WebContent/about.jsp
+msgid "Norwegian translation"
+msgstr "traducere norvegiană"
+
+#: WebContent/about.jsp
+msgid "Swedish translation"
+msgstr "traducere suedeză"
+
+#: WebContent/about.jsp
+msgid "Chinese translation"
+msgstr "traducere în chineză"
+
+#: WebContent/about.jsp
+msgid "Arabic translation"
+msgstr "traducere arabă"
+
+#: WebContent/about.jsp
+msgid "Czech translation"
+msgstr "traducere cehă"
+
+#: WebContent/about.jsp
+msgid "German translation"
+msgstr "traducere germană"
+
+#: WebContent/about.jsp
+msgid "Polish translation"
+msgstr "traducere poloneză"
+
+#: WebContent/about.jsp
+msgid "Italian translation"
+msgstr "traducere italiană"
+
+#: WebContent/about.jsp
+msgid "Ukrainian translation"
+msgstr "traducere ucrainiană"
+
+#: WebContent/about.jsp
+msgid "Hungarian translation"
+msgstr "traducere ungară"
+
+#: WebContent/about.jsp
+msgid "Code fixes, translation updates from tx"
+msgstr "Remedieri de cod, actualizări de traducere de la tx"
+
+#: WebContent/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr "Adauga e-mail de destinație "
+
+#: WebContent/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr "Numele există deja. Vă rugăm să alegeți un alt nume public."
+
+#: WebContent/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr "Publicarea in agenda de adrese"
+
+#: WebContent/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr "Imagine pentru a încărca:"
+
+#: WebContent/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr "(opțional, 7.5 kocteți max)"
+
+#: WebContent/publishDestination.jsp
+msgid "Text to include:"
+msgstr "Text pentru a include:"
+
+#: WebContent/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr "(opțional, 2000 caractere max)"
+
+#: WebContent/publishDestination.jsp
+msgid "Publish"
+msgstr "Publică"
+
+#: WebContent/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr "Identitatea a fost adăugata la agenda de adrese."
+
+#: WebContent/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
+
+#: WebContent/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr "Parola este stocată în cache. Clic pentru a curati memoria cache."
+
+#: WebContent/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
+
+#: WebContent/header.jsp
+msgid "Secure Distributed Email"
+msgstr "Email secur distribuit"
+
+#: WebContent/header.jsp
+msgid "A new version is available. Click here for the configuration page."
+msgstr "O nouă versiune este disponibilă. Click aici pentru pagina de configurare."
+
+#: WebContent/header.jsp
+msgid "Addresses"
+msgstr "Adrese"
+
+#: WebContent/header.jsp
+msgid "Identities"
+msgstr "Identități"
+
+#: WebContent/header.jsp
+msgid "Address Book"
+msgstr "Carte de adrese"
+
+#: WebContent/header.jsp
+msgid "Configuration"
+msgstr "Configurație"
+
+#: WebContent/header.jsp
+msgid "Network Status"
+msgstr "Starea rețelei"
+
+#: WebContent/header.jsp
+msgid "Help"
+msgstr "Ajutor"
+
+#: WebContent/header.jsp
+msgid "User Guide"
+msgstr "Ghidul utilizatorului"
+
+#: WebContent/header.jsp
+msgid "FAQ"
+msgstr "FAQ"
+
+#: WebContent/header.jsp
+msgid "About"
+msgstr "Despre"
+
+#: WebContent/statusFrame.jsp
+msgid "Not Started"
+msgstr "Nepornit"
+
+#: WebContent/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr "Așteptare 3 minute ..."
+
+#: WebContent/statusFrame.jsp
+msgid "Connecting..."
+msgstr "Se conectează..."
+
+#: WebContent/statusFrame.jsp
+msgid "Connected"
+msgstr "Conectat"
+
+#: WebContent/statusFrame.jsp
+msgid "Error"
+msgstr "Eroare"
+
+#: WebContent/statusFrame.jsp
+msgid "Unknown Status"
+msgstr "Mesaj de stare necunoscut"
+
+#: WebContent/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr "Reîncercați Conectarea"
+
+#: WebContent/statusFrame.jsp
+msgid "Connect Now"
+msgstr "Conectează acum"
+
+#: WebContent/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr "Identitatea de e-mail a fost ștearsa."
+
+#: WebContent/connectError.jsp
+msgid "Error Details"
+msgstr "Detalii eroare"
+
+#: WebContent/outbox.jsp
+msgid "Outbox"
+msgstr "Netrimise"
+
+#: WebContent/outbox.jsp
+msgid "From"
+msgstr "De la"
+
+#: WebContent/outbox.jsp
+msgid "To"
+msgstr "Pentru"
+
+#: WebContent/outbox.jsp
+msgid "Subject"
+msgstr "Subiect"
+
+#: WebContent/outbox.jsp
+msgid "Create Time"
+msgstr "Creare Timp"
+
+#: WebContent/outbox.jsp
+msgid "Status"
+msgstr "Stare"
+
+#: WebContent/outbox.jsp
+msgid "(No subject)"
+msgstr "(Fără subiect)"
+
+#: WebContent/outbox.jsp
+msgid "Delete this email"
+msgstr "Șterge acest email"
+
+#: WebContent/setPassword.jsp
+msgid "Set Password"
+msgstr "Setați parola"
+
+#: WebContent/setPassword.jsp
+msgid "The password has been changed."
+msgstr "Am modificat parola dumneavoastră."
+
+#: WebContent/setPassword.jsp
+msgid "Please wait"
+msgstr "Va rog asteptati"
+
+#: WebContent/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr "Vă rugăm să așteptați în timp ce parola se schimba ..."
+
+#: WebContent/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Setare parolă noua"
+
+#: WebContent/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "Dacă nu ați setat o parolă, lăsați necompletată parola veche."
+
+#: WebContent/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr "Vă rugăm să rețineți că, dacă este setată o parolă, e-mailuri nu pot fi verificate în mod automat, ci numai atunci când butonul verifica e-mail este apăsat."
+
+#: WebContent/setPassword.jsp
+msgid "Old password:"
+msgstr "Parola veche:"
+
+#: WebContent/setPassword.jsp
+msgid "New password:"
+msgstr "Parola nouă:"
+
+#: WebContent/setPassword.jsp
+msgid "Confirm:"
+msgstr "Confirmați:"
+
+#: WebContent/setPassword.jsp
+msgid "OK"
+msgstr "OK"
+
+#: WebContent/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "Vă rugăm să completați câmpul Nume public."
+
+#: WebContent/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "Așteptați..."
+
+#: WebContent/submitIdentity.jsp
+msgid "The Email Identity is being generated. This can take several minutes."
+msgstr "identitate e-mail se genereaza. Acest lucru poate dura câteva minute."
+
+#: WebContent/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "Identitatea de e-mail a fost salvata."
+
+#: WebContent/editContact.jsp
+msgid "Please fill in the Destination field."
+msgstr "Vă rugăm să completați câmpul de destinație."
+
+#: WebContent/editContact.jsp
+msgid "Please fill in the Name field."
+msgstr "Vă rugăm să completați în câmpul Nume."
+
+#: WebContent/editContact.jsp
+msgid "The contact has been saved."
+msgstr "Contactul a fost salvat."
+
+#: WebContent/editContact.jsp
+msgid "New Contact"
+msgstr "Contact nou"
+
+#: WebContent/editContact.jsp
+msgid "Add"
+msgstr "Adaugă"
+
+#: WebContent/editContact.jsp
+msgid "Edit Contact"
+msgstr "Editează contact"
+
+#: WebContent/editContact.jsp
+msgid "Email Destination:"
+msgstr "Destinații email:"
+
+#: WebContent/editContact.jsp
+msgid "(required field)"
+msgstr "(Cîmp cerut)"
+
+#: WebContent/editContact.jsp
+msgid "Name:"
+msgstr "Nume:"
+
+#: WebContent/editContact.jsp
+msgid "Picture:"
+msgstr "Fotografie:"
+
+#: WebContent/editContact.jsp
+msgid "Text:"
+msgstr "Text:"
+
+#: WebContent/editContact.jsp
+msgid "Cancel"
+msgstr "Renunță"
+
+#: WebContent/noIdentities.jsp
+msgid "No Email Identity Defined"
+msgstr "Nici o identitate de e-mail definită"
+
+#: WebContent/noIdentities.jsp
+msgid "Create a New Email Identity"
+msgstr "Creare identității de e-mail nou"
+
+#: WebContent/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr "Cautarea in agenda de adrese"
+
+#: WebContent/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr "Numele a fost importat în agendă."
+
+#: WebContent/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr "Numele &quot;{0}&quot; nu a fost găsit în directorul."
+
+#: WebContent/importContact.jsp
+msgid "Import Contact"
+msgstr "Importă contact"
+
+#: WebContent/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "O înregistrare de potrivire a fost găsit în agenda de adrese. Rețineți că agenda de adrese nu este sigura împotriva manipulării, așa că nu faceți clic pe \"import\" dacă nu aveți încredere că aceasta este destinația de e-mail corecta."
+
+#: WebContent/importContact.jsp
+msgid "Fingerprint:"
+msgstr "Amprentă:"
+
+#: WebContent/importContact.jsp
+msgid "Email Destination: "
+msgstr "Destinații email:"
+
+#: WebContent/importContact.jsp
+msgid "Import"
+msgstr "Importă"
+
+#: WebContent/folders.jsp
+msgid "Folders"
+msgstr "Dosare"
+
+#: WebContent/folders.jsp
+msgid "Inbox"
+msgstr "Inbox"
+
+#: WebContent/folders.jsp
+msgid "Sent"
+msgstr "Trimise"
+
+#: WebContent/folders.jsp
+msgid "Trash"
+msgstr "Coșul de gunoi"
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr "Pentru a primi e-mail-uri de la alte persoane, aveți nevoie în primul rând de a crea o identitate de e-mail. "
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr "Fiecare identitate e-mail este asociată cu o destinație e-mail. Oricine poate trimite e-mail la destinația e-mail, ci numai titularul de identitate le poate citi."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr "Într-un sens, identități e-mail sunt echivalentul a conturilor de e-mail traditionale - cu excepția faptului că nu există nici un furnizor care poate citi toate e-mail-uri, deoarece depozit I2P-Bote toate mesajele de poștă electronică sunt criptate în rețea."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
+msgstr "I2P-Bote decriptează automat e-mailuri trimise la tine, folosind identitatea  de e-mail ce ați creat. Identități de e-mail sunt stocate într-un fișier numit identități, nu da acest fișier pentru oricine sau ei vor putea să citească toate mesajele de poștă electronică."
+
+#: WebContent/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr "Nu dati destinația e-mail, astfel încât ceilalți puteți sa va contactati."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr "Este ușor de a crea mai multe identități pentru scopuri diferite, sau diferite contacte."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
+msgstr "Când creați o identitate nouă e-mail, puteți alege tipul de criptare, care va fi utilizat de către identitatea e-mail. În timp ce toate algoritmi de criptare oferite de I2P-Bote oferă un nivel ridicat de intimitate, durata de o destinație de e-mail depinde de criptare folosite. Alegerea de criptare determină, de asemenea, algoritmul de semnare utilizat ."
+
+#: WebContent/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
+msgstr "În general, este recomandat sa alegeti tipul de criptare 256-bit curbe eliptice, deoarece produce cele mai scurte destinațiile de e-mail (86 caractere), fiind în același timp extrem de sigur."
+
+#: WebContent/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "Parola stersa"
+
+#: WebContent/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "Parola a fost eliminat din cache."
+
+#: WebContent/sendEmail.jsp
+msgid "New Email"
+msgstr "Mesaj nou"
+
+#: WebContent/sendEmail.jsp
+msgid "Go to inbox"
+msgstr "Salt la mesajele primite"
+
+#: WebContent/editIdentity.jsp
+msgid "More..."
+msgstr "Mai mult..."
+
+#: WebContent/editIdentity.jsp
+msgid "Less..."
+msgstr "Mai puțin ..."
+
+#: WebContent/editIdentity.jsp
+msgid "New Email Identity"
+msgstr "Identitatea e-mail nouă"
+
+#: WebContent/editIdentity.jsp
+msgid "Create"
+msgstr "Creează"
+
+#: WebContent/editIdentity.jsp
+msgid "Edit Email Identity"
+msgstr "Editarea identitatii e-mail "
+
+#: WebContent/editIdentity.jsp
+msgid "An Email Identity lets you receive email from other I2P-Bote users."
+msgstr "O identitate e-mail vă permite să primiți e-mail de la alți utilizatori I2P-Bote."
+
+#: WebContent/editIdentity.jsp
+msgid "Public Name:"
+msgstr "Numele publică:"
+
+#: WebContent/editIdentity.jsp
+msgid "(required field, shown to recipients)"
+msgstr "(câmp obligatoriu, prezentat la destinatari)"
+
+#: WebContent/editIdentity.jsp
+msgid "Description:"
+msgstr "Descriere:"
+
+#: WebContent/editIdentity.jsp
+msgid "(optional, kept private)"
+msgstr "(opțional, confidențial)"
+
+#: WebContent/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr "(Publicarea in agenda de adrese)"
+
+#: WebContent/editIdentity.jsp
+msgid "Encryption:"
+msgstr "Criptare:"
+
+#: WebContent/editIdentity.jsp
+msgid "(If unsure, leave the default)"
+msgstr "(Dacă nu sunteți sigur, lăsați implicit)"
+
+#: WebContent/editIdentity.jsp
+msgid "Default Identity:"
+msgstr "Identitatea implicită:"
+
+#: WebContent/editIdentity.jsp
+msgid "Private keys:"
+msgstr "Cheile private:"
+
+#: WebContent/editIdentity.jsp
+msgid "(Never reveal to anyone!)"
+msgstr "(nu-l descoperi nimănui!)"
+
+#: WebContent/editIdentity.jsp
+msgid "Show"
+msgstr "Arată"
+
+#: WebContent/editIdentity.jsp
+msgid "Cannot publish until connected."
+msgstr "Nu pot publica pana conectarea."
+
+#: WebContent/editIdentity.jsp
+msgid "Delete this identity"
+msgstr "Șterge această identitate "
+
+#: WebContent/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr "Contactul a fost șters din agendă."
+
+#: WebContent/addressBook.jsp
+msgid "Private Address Book"
+msgstr "Carte de adrese privata"
+
+#: WebContent/addressBook.jsp
+msgid "Select One or More Entries"
+msgstr "Selectați una sau mai multe intrări"
+
+#: WebContent/addressBook.jsp
+msgid "The address book is empty."
+msgstr "Agendă de adrese este goală."
+
+#: WebContent/addressBook.jsp
+msgid "Name"
+msgstr "Nume"
+
+#: WebContent/addressBook.jsp
+msgid "Email Destination"
+msgstr "Destinații email"
+
+#: WebContent/addressBook.jsp
+msgid "Delete this contact"
+msgstr "Șterge acest contact"
+
+#: WebContent/addressBook.jsp
+msgid "Add Recipients"
+msgstr "Adauga destinatar"
+
+#: WebContent/addressBook.jsp
+msgid "Return"
+msgstr "revenire"
+
+#: WebContent/addressBook.jsp
+msgid "Import from the public address directory"
+msgstr "Importul din agenda de adrese "
+
+#: WebContent/addressBook.jsp
+msgid "Lookup"
+msgstr "Căutare"
+
+#: WebContent/buttonFrame.jsp
+msgid "Checking for mail..."
+msgstr "Verificarea e-mail ..."
+
+#: WebContent/buttonFrame.jsp
+msgid "Check Mail"
+msgstr "Verifică poșta"
+
+#: WebContent/buttonFrame.jsp
+msgid "Compose"
+msgstr "Compunere"
+
+#: WebContent/buttonFrame.jsp
+msgid "Last checked:"
+msgstr "Ultima verificat:"
+
+#: WebContent/folder.jsp
+msgid "Know"
+msgstr "Cunoscute"
+
+#: WebContent/folder.jsp
+msgid "Sent Time"
+msgstr "Ora trimisa"
+
+#: WebContent/folder.jsp
+msgid "Delivered"
+msgstr "Livrat"
+
+#: WebContent/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr "Semnătura este nevalidă sau lipsește"
+
+#: WebContent/showFullIdentity.jsp
+msgid "Full Identity"
+msgstr "identitate completa"
+
+#: WebContent/showFullIdentity.jsp
+msgid "Full Email Identity for {0}:"
+msgstr "identitate complet de e-mail pentru {0}:"
+
+#: WebContent/showFullIdentity.jsp
+msgid ""
+"Do not show the above information to anyone! It contains your private keys."
+msgstr "Nu afișați informațiile de mai sus pentru oricine! Acesta conține cheile private."
+
+#: WebContent/identities.jsp
+msgid "Email Identities"
+msgstr "Identități de e-mail"
+
+#: WebContent/identities.jsp
+msgid "No email identities are defined."
+msgstr "Nu sunt identități de e-mail definite."
+
+#: WebContent/identities.jsp
+msgid "Def."
+msgstr "Def."
+
+#: WebContent/identities.jsp
+msgid "Public Name"
+msgstr "Numele publică:"
+
+#: WebContent/identities.jsp
+msgid "Description"
+msgstr "Descriere"
+
+#: WebContent/identities.jsp
+msgid "New Identity"
+msgstr "Identitate nouă"
+
+#: WebContent/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "Vă rugăm să selectați un fișier de atașat și încercați din nou."
+
+#: WebContent/newEmail.jsp
+msgid "Addr. Book..."
+msgstr "Agendă..."
+
+#: WebContent/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "Elimină atașament"
+
+#: WebContent/newEmail.jsp
+msgid "Add another attachment"
+msgstr "Adauga un alt atașament"
+
+#: WebContent/newEmail.jsp
+msgid "Attach"
+msgstr "Atașează"
+
+#: WebContent/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "Este recomandat să păstrați atașamente sub 500 kilobiți."
+
+#: WebContent/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} a scris:"
+
+#: WebContent/newEmail.jsp
+msgid "Send"
+msgstr "Trimite"
+
+#: WebContent/debug.jsp
+msgid "Debug"
+msgstr "Depanare"
+
+#: WebContent/debug.jsp
+msgid "Debug Page"
+msgstr "Pagina de depanare"
+
+#: WebContent/debug.jsp
+msgid "Test encrypted files"
+msgstr "Testarea fișierelor criptate"
+
+#: WebContent/debug.jsp
+msgid "No file encryption problems found."
+msgstr "Nu au fost gasite probleme cu criptare"
+
+#: WebContent/debug.jsp
+msgid "Undecryptable files:"
+msgstr "Fișierele nedescriptate"
+
+#: WebContent/deleteEmail.jsp
+msgid "Error: Couldn't delete email."
+msgstr "Eroare: Nu sa putut șterge e-mail."
+
+#: WebContent/password.jsp
+msgid "Password Required"
+msgstr "Parola obligatorie"
+
+#: WebContent/password.jsp
+msgid "Wrong password. Try again."
+msgstr "Parolă greșită. Reîncercați."
+
+#: WebContent/password.jsp
+msgid "Password required"
+msgstr "Necesită parolă"
+
+#: WebContent/password.jsp
+msgid "Password:"
+msgstr "Parolă:"
+
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total"
+msgstr "{0} emailuri in total"
+
+#: WebContent/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total, {1} new"
+msgstr "{0} e-mailuri în total, {1} nou"
+
+#: WebContent/WEB-INF/tags/printDate.tag
+msgid "Unknown"
+msgstr "Necunoscut"
+
+#: WebContent/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Adaugă în cartea de adrese"
