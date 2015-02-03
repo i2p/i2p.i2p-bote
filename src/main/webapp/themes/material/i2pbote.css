@@ -320,6 +320,12 @@ See also .menu-icon
     padding: 16px 16px 16px 28px;
     text-align: left;
 }
+.main nav {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    float: right;
+    margin: -16px -16px 16px 16px;
+    padding-right: 1em;
+}
 .main form {
     color: #202020;
     font-size: 1em;

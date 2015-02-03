@@ -1,5 +1,22 @@
 <h1>Guide de l'utilisateur</h1>
-<h2>1. Introduction</h2>
+
+<nav>
+<p><a href="#Introduction">1. Introduction</a></p>
+<p><a href="#How-To">2. How to use I2P-Bote</a></p>
+<p><a href="#Starting">2.1. Starting I2P-Bote</a></p>
+<p><a href="#Creating-Identities">2.2. Création d'une identité</a></p>
+<p><a href="#Sending-Receiving">2.3. Envoyer et recevoir des messages</a></p>
+<p><a href="#Address-Book">2.4. Carnet d'adresses local</a></p>
+<p><a href="#Settings">2.5. Les préférences de réglages (et ce qu'elles signifient)</a></p>
+<p><a href="#Gateway">2.6. E-mails de et vers l'Internet</a></p>
+<p><a href="#Considerations">3. Considérations sur l'anonymat</a></p>
+<p><a href="#Technical-Concept">4. Concept technique</a></p>
+<p><a href="#Terminology">5. Terminologie/Glossaire</a></p>
+<p><a href="#Credits">6. Remerciements</a></p>
+<p><a href="#Technical-Details">7. Détails techniques</a></p>
+</nav>
+
+<a name="Introduction"></a><h2>1. Introduction</h2>
 
 <p>I2P-Bote est une application de messagerie sécurisée pour I2P, à anonymat
 élevé et simple à utiliser. C'est un système sans serveur,
@@ -41,9 +58,9 @@ leurs en-têtes. De plus, il y a une interface web qui vous permet d'envoyer et
 de recevoir des messages, et de gérer vos préférences et vos
 identités.</p>
 
-<h2>2. How to use I2P-Bote</h2>
+<a name="How-To"></a><h2>2. How to use I2P-Bote</h2>
 
-<h3>2.1. Starting I2P-Bote</h3>
+<a name="Starting"></a><h3>2.1. Starting I2P-Bote</h3>
 <p>Après son lancement, I2P-Bote a besoin d'un peu plus de trois minutes pour
 être entièrement opérationnel (Il est configuré pour démarrer
 automatiquement en même temps que le routeur).</p>
@@ -52,7 +69,7 @@ automatiquement en même temps que le routeur).</p>
 
 <p>Si vous utiliser I2P-Bote pour vous-même, il vous faut créer une identité.</p>
 
-<h3>2.2. Création d'une identité</h3>
+<a name="Creating-Identities"></a><h3>2.2. Création d'une identité</h3>
 <p>Cliquez sur 'Identités' sur la gauche, puis sur le bouton 'Nouvelle
 identité'.</p>
 
@@ -103,7 +120,7 @@ sont conformes à vos besoins.</p>
 <p>(Vous pouvez créer plusieurs identités et leur associer des réglages
 différents.)</p>
 
-<h3>2.3. Envoyer et recevoir des messages</h3>
+<a name="Sending-Receiving"></a><h3>2.3. Envoyer et recevoir des messages</h3>
 <p>Vous avez besoin de la clé de destination de message I2P-Bote du
 correspondant à qui vous voulez envoyer un message bote.</p>
 
@@ -194,7 +211,7 @@ navigateur ouvert: il suffit de laisser tourner I2P-Bote en
 tant que processus d'arrière plan - ce dont profite aussi votre
 anonymat.)</p>
 
-<h3>2.4. Carnet d'adresses local</h3>
+<a name="Address-Book"></a><h3>2.4. Carnet d'adresses local</h3>
 <p>Si vous avez la clé de destination I2P-Bote de quelqu'un à qui vous
 voulez écrire souvent, il est commode de l'enregistrer dans votre
 carnet d'adresses local (lien sur la gauche): choisissez un nom
@@ -207,7 +224,7 @@ autre expéditeur de même nom serait marqué d'un 'x' (ou préfixé [UNK] dans 
 client de messagerie), vous prévenant ainsi qu'il provient de quelqu'un
 d'autre.</p>
 
-<h3>2.5. Les préférences de réglages (et ce qu'elles signifient)</h3>
+<a name="Settings"></a><h3>2.5. Les préférences de réglages (et ce qu'elles signifient)</h3>
 <p>Dans les préférences vous pouvez choisir la langue de l'interface
 d'I2P-Bote et décider que même si vous choisissez une autre langue,
 tout ce qui sera automatiquement ajouté comme titres d'en-têtes
@@ -281,7 +298,7 @@ transférer aléatoirement. [pas encore implémenté]</p>
 prise en compte ni par la fonction de relève globale automatique
 planifiée, ni par la relève manuelle globale.</p>
 
-<h3>2.6. E-mails de et vers l'Internet</h3>
+<a name="Gateway"></a><h3>2.6. E-mails de et vers l'Internet</h3>
 <p>[NOT YET FULLY IMPLEMENTED!]</p>
 
 <p>Pour pouvoir envoyer des messages bote vers l'Internet et recevoir des
@@ -335,7 +352,7 @@ postman: si un utilisateur d'I2P-Bote dépasse le quota de
 messages envoyés, les messages supplémentaires sont retournés à
 l'envoyeur.</p>
 
-<h2>3. Considérations sur l'anonymat</h2>
+<a name="Considerations"></a><h2>3. Considérations sur l'anonymat</h2>
 <p>N'envoyez
 pas d'informations susceptibles de vous identifier (nom, adresse,
 situation géographique, fuseau horaire, horodatages, âge, sites web
@@ -390,7 +407,7 @@ avec ces autres avec la même adresse il vous reconnaitrons. Ils ne
 pourraient pas si vous aviez utilisé une identité différente pour
 vous adresser à eux.</p>
 
-<h2>4. Concept technique</h2>
+<a name="Technical-Concept"></a><h2>4. Concept technique</h2>
 <p>I2P-Bote est un système de messagerie totalement décentralisé (sans
 serveur) intra réseau crypté de bout en bout. Il supporte
 l'utilisation d'identités multiples et n'expose pas les en-têtes de
@@ -525,7 +542,7 @@ il a envoyé un message.</li>
 relève les nouveaux messages, ni ne nombre de messages reçus par une identité
 donnée.</p>
 
-<h2>5. Terminologie/Glossaire:</h2>
+<a name="Terminology"></a><h2>5. Terminologie/Glossaire</h2>
 
 <h3>Identité du routeur/nœud I2P-Bote:</h3>
 <p>C'est l'identité par laquelle le routeur I2P-Bote est connu. Elle est
@@ -610,10 +627,10 @@ particulièrement avec de nombreux sauts et/ou de longs retards, ne soyez pas
 surpris si vos messages n'arrivent pas rapidement à destination. Ça prendra
 évidemment plus de temps - jusqu'à plusieurs jours!</p>
 
-<h2>6. Remerciements</h2>
+<a name="Credits"></a><h2>6. Remerciements</h2>
 <p>See <a href="about.jsp">the About page</a>.</p>
 
-<h2>7. Détails techniques</h2>
+<a name="Technical-Details"></a><h2>7. Détails techniques</h2>
 <p>Voir techdoc.txt</p>
 
 <h2>ENJOY THE BOTE FEELING!!</h2>
