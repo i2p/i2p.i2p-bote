@@ -65,8 +65,8 @@ public class Configuration {
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
     private static final List<Theme> BUILT_IN_THEMES = Arrays.asList(new Theme[] {   // theme IDs correspond to a theme directory in the .war
             new Theme("material", _("Material")),
-            new Theme("lblue", _("lblue")),
-            new Theme("vanilla", _("vanilla"))
+            new Theme("lblue", _("Light Blue")),
+            new Theme("vanilla", _("Vanilla"))
     });
     private static final String THEME_SUBDIR = "themes";   // relative to I2P_BOTE_SUBDIR
 
