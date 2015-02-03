@@ -45,23 +45,23 @@
 <c:choose>
     <c:when test="${connStatus == NOT_STARTED}">
         <c:set var="statusIcon" value="not_started"/>
-        <c:set var="statusMessageKey" value="Not Started"/>
+        <ib:message key="Not Started" var="statusMessage"/>
     </c:when>
     <c:when test="${connStatus == DELAY}">
         <c:set var="statusIcon" value="delay"/>
-        <c:set var="statusMessageKey" value="Waiting 3 Minutes..."/>
+        <ib:message key="Waiting 3 Minutes..." var="statusMessage"/>
     </c:when>
     <c:when test="${connStatus == CONNECTING}">
         <c:set var="statusIcon" value="connecting"/>
-        <c:set var="statusMessageKey" value="Connecting..."/>
+        <ib:message key="Connecting..." var="statusMessage"/>
     </c:when>
     <c:when test="${connStatus == CONNECTED}">
         <c:set var="statusIcon" value="connected"/>
-        <c:set var="statusMessageKey" value="Connected"/>
+        <ib:message key="Connected" var="statusMessage"/>
     </c:when>
     <c:when test="${connStatus == ERROR}">
         <c:set var="statusIcon" value="connect_error"/>
-        <c:set var="statusMessageKey" value="Error"/>
+        <ib:message key="Error" var="statusMessage"/>
         <c:set var="statusUrl" value="connectError.jsp"/>
     </c:when>
     <c:otherwise>
@@ -72,7 +72,7 @@
 <div class="statusbox">
 <a class="menuitem" href="${statusUrl}" target="_parent">
     <div class="menu-icon"><img src="${themeDir}/images/${statusIcon}.png"/></div>
-    <div class="menu-text"><ib:message key="${statusMessageKey}"/></div>
+    <div class="menu-text">${statusMessage}</div>
     
     <c:if test="${connStatus == DELAY or connStatus == ERROR}">
         <%-- Show the connect button --%>
