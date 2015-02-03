@@ -32,8 +32,8 @@ echo setting the environment variable LG2={LangCode}
 echo will limit .po file update to the language specified by {LangCode}.
 
 # add ../java/ so the refs will work in the po file
-JPATHS="src"
-JSPPATHS="WebContent"
+JPATHS="src/main/java"
+JSPPATHS="src/main/webapp"
 for i in locale/messages_*.po
 do
 	# get language
@@ -80,7 +80,7 @@ do
 		fi
 		
 		# extract strings from jsp files
-                $JAVA -cp ant_build/classes i2p.bote.ant.JspStrings WebContent >> ${i}t
+                $JAVA -cp ant_build/classes:$I2P/lib/i2p.jar i2p.bote.ant.JspStrings $JSPPATHS >> ${i}t
 		if [ $? -ne 0 ]
 		then
 			echo 'Warning - JspStrings failed, not updating translations'
