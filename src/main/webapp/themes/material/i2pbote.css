@@ -324,6 +324,7 @@ See also .menu-icon
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     float: right;
     margin: -16px -16px 16px 16px;
+    max-width: 240px;
     padding-right: 1em;
 }
 .main form {
