@@ -1,22 +1,9 @@
+[main]
+host = https://www.transifex.com
+lang_map = ru_RU: ru, sv_SE: sv, tr_TR: tr, uk_UA: uk, zh_CN: zh
+
 [I2P.plugin_i2pbote]
+file_filter = locale/messages_<lang>.po
 source_file = locale/messages_en.po
 source_lang = en
-trans.ar = locale/messages_ar.po
-trans.cs = locale/messages_cs.po
-trans.de = locale/messages_de.po
-trans.es = locale/messages_es.po
-trans.fr = locale/messages_fr.po
-trans.hu = locale/messages_hu.po
-trans.it = locale/messages_it.po
-trans.nl = locale/messages_nl.po
-trans.nb = locale/messages_nb.po
-trans.pl = locale/messages_pl.po
-trans.pt = locale/messages_pt.po
-trans.ru = locale/messages_ru.po
-trans.sv_SE = locale/messages_sv.po
-trans.uk_UA = locale/messages_uk.po
-trans.vi = locale/messages_vi.po
-trans.zh_CN = locale/messages_zh.po
-
-[main]
-host = http://www.transifex.net
+minimum_perc = 40
