@@ -1,161 +1,105 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>Guide de l'utilisateur</TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
-	<META NAME="CREATED" CONTENT="0;0">
-	<META NAME="CHANGED" CONTENT="20110407;10200100">
-	<STYLE TYPE="text/css">
-	<!--
-		@page { margin: 2cm }
-		P { margin-bottom: 0.21cm }
-		A:link { so-language: zxx }
-	-->
-	</STYLE>
-</HEAD>
-<BODY LANG="fr-FR" DIR="LTR">
-<P ALIGN=CENTER STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>Guide
-de l'utilisateur I2P-Bote</B></FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>1.
-Introduction</B></FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif">I2P-Bote
-est une application de messagerie sécurisée pour I2P, à anonymat
+<h1>Guide de l'utilisateur I2P-Bote</h1>
+<h2>1. Introduction</h2>
+
+<p>I2P-Bote est une application de messagerie sécurisée pour I2P, à anonymat
 élevé et simple à utiliser. C'est un système sans serveur,
 entièrement décentralisé, qui constitue et génère un réseau
 pairs à pairs sur le réseau d'anonymisation I2P, lui-même conçu
 selon les règles de l'art ; l'adjonction optionnelle d'un transport
 à la façon de Mixminion le débarrasse des faiblesses intrinsèques
-des réseaux à basse latence.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">I2P-Bote
-tire donc le meilleur de l'anonymat fourni par I2P, à quoi il
+des réseaux à basse latence.</p>
+
+<p>I2P-Bote tire donc le meilleur de l'anonymat fourni par I2P, à quoi il
 apporte son propre niveau supplémentaire d'anonymat par l'ajout
-d'une autre couche d'anonymisation (sur-réseau).</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Ce
-concept d'anonymat étagé est ce rend I2P-Bote si souple :</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
-pouvez le configurer pour être extrêmement anonyme et lent, ou
+d'une autre couche d'anonymisation (sur-réseau).</p>
+
+<p>Ce concept d'anonymat étagé est ce rend I2P-Bote si souple :</p>
+
+<p>Vous pouvez le configurer pour être extrêmement anonyme et lent, ou
 moins anonyme mais plus rapide et efficace. Dans tous les cas,
-I2P-Bote<FONT COLOR="#000000"> procure toujours un très bon anonymat
+I2P-Bote procure toujours un très bon anonymat
 à l'expéditeur et au destinataire, ainsi qu'un cryptage de bout en
-bout*. </FONT></FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">I2P-Bote
+bout*.</p>
+
+<p>I2P-Bote
 permet de rendre vos communications encore plus anonymes, en activant
 les routes à haute latence – au prix d'une baisse de performance,
 cependant. Les utilisateurs qui souhaitent que leurs messages
 arrivent au plus vite peuvent désactiver les routes de messages et
-utiliser l'envoi «&nbsp;direct&nbsp;» sur I2P. Ils sont ainsi
+utiliser l'envoi 'direct' sur I2P. Ils sont ainsi
 assurés de bénéficier au minimum de l'anonymat d'origine des
-connexions I2P. </FONT></FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><FONT COLOR="#000000">Pour
-atteindre une ergonomie élevée, nous l'avons conçu pour qu'il
+connexions I2P.</p>
+
+<p>Pour atteindre une ergonomie élevée, nous l'avons conçu pour qu'il
 puisse fonctionner avec les logiciels clients de messagerie standards
 tels que Thunderbird, Evolution ou Kmail, sans avoir à se préoccuper
 des informations supplémentaires que ces applications envoient dans
-leurs en-têtes [</FONT><FONT COLOR="#ff0000">PAS ENCORE IMPLÉMENTÉ</FONT><FONT COLOR="#000000">].
-De plus, il y a une interface web qui vous permet d'envoyer et de
-recevoir des messages, et de gérer vos préférences et vos
-identités.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">I2P-Bote
-est facile à utiliser : si vous n'utilisez pas déjà I2P, installez
-le depuis <A HREF="http://www.i2p2.de/">http://www.i2p2.de</A> puis
+leurs en-têtes. De plus, il y a une interface web qui vous permet d'envoyer et
+de recevoir des messages, et de gérer vos préférences et vos
+identités.</p>
+
+<p>I2P-Bote est facile à utiliser : si vous n'utilisez pas déjà I2P, installez
+le depuis <a href="http://www.i2p2.de/">http://www.i2p2.de</a> puis
 installez le greffon I2P-Bote comme expliqué dans ce manuel. Sinon,
-continuez la lecture!**</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>La
-version actuelle est la 0.2.6.</I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">*Sauf si
-vous recevez ou envoyez des messages de/vers l'Internet classique,
+continuez la lecture!**</p>
+
+<p><em>La version actuelle est la 0.2.10.</em></p>
+
+<p>*Sauf si vous recevez ou envoyez des messages de/vers l'Internet classique,
 TOUS les messages – le corps, les pièces jointes et les en-têtes
 à part l'adresse du destinataire (objet, date et heure,
 expéditeur,...) sont automatiquement cryptés de bout en bout de
 façon transparente. L'adresse du destinataire n'est visible que par
 le dernier nœud de la route qui stocke les paquets dans le réseau
 kad, ainsi que par les nœuds de stockage, mais ils ne peuvent pas
-lire les messages, ni qui l'a envoyé, ni qui le relèvera.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">**Bien
-sûr, vous pouvez aussi le compiler à partir des sources.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>2.
-Procédures</B></FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>2.1.
-Installation</U></FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Pour
-installer I2P-Bote, rendez-vous en bas de la page de configuration du
-client I2P sur </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><A HREF="http://localhost:7657/configclients.jsp">http://localhost:7657/configclients.jsp</A>
-</FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">en entrez
-:</FONT></P>
-<P STYLE="line-height: 150%"><A HREF="http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote.xpi2p"><FONT FACE="Arial, sans-serif">http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote.xpi2p</FONT></A></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(<A HREF="http://i2pbote.i2p/i2pbote.xpi2p">http://i2pbote.i2p/i2pbote.xpi2p</A>
-marche aussi, si vous avez i2pbote.i2p dans votre carnet d'adresses
-ou un abonnement)</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">dans le
-champ «&nbsp;…, URL de téléchargement&nbsp;:&nbsp;», puis
-cliquez sur le bouton «&nbsp;Installer le greffon&nbsp;». Attendez
-jusque à ce que le panneau de surveillance sur la gauche indique que
-le greffon est installé et démarré. </FONT>
-</P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Pour
-mettre à jour I2P-Bote, dans la même page, cliquez sur «&nbsp;Mise
-à jour&nbsp;»dans le cadre dédié au greffon une fois celui-ci
-installé.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>2.2.
-Utiliser I2P-Bote</U></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Dans
-la console du routeur <A HREF="http://127.0.0.1:7657/">http://127.0.0.1:7657/</A>
-cliquez sur </FONT><FONT FACE="Arial, sans-serif"><I>SecureMail</I></FONT>
-<FONT FACE="Arial, sans-serif">en haut à gauche dans le panneau de
-surveillance. Vous êtes maintenant dans l'interface web d'I2P-Bote.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Après
-son lancement, I2P-Bote a besoin d'un peu plus de trois minutes pour
+lire les messages, ni qui l'a envoyé, ni qui le relèvera.</p>
+
+<p>**Bien sûr, vous pouvez aussi le compiler à partir des sources.</p>
+
+<h2>2. Procédures</h2>
+
+<h3>2.1. Installation</h3>
+<p>Pour installer I2P-Bote, rendez-vous en bas de la page de configuration du
+client I2P sur <a href="http://localhost:7657/configclients.jsp">
+http://localhost:7657/configclients.jsp</a> en entrez <a href=
+"http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote.xpi2p">
+http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote.xpi2p</a>
+(<a href="http://i2pbote.i2p/i2pbote.xpi2p">http://i2pbote.i2p/i2pbote.xpi2p</a>
+marche aussi, si vous avez i2pbote.i2p dans votre carnet d'adresses ou un abonnement)
+dans le champ 'URL de téléchargement', puis cliquez sur le bouton 'Installer le
+greffon'. Attendez jusque à ce que le panneau de surveillance sur la gauche
+indique que le greffon est installé et démarré.</p>
+
+<p>In order to update your I2P-Bote instance, click 'Update' under I2P-Bote on
+the I2P Client Configuration page at <a href="http://localhost:7657/configclients.jsp">
+http://localhost:7657/configclients.jsp</a></p>
+
+<h3>2.2. Utiliser I2P-Bote</h3>
+<p>Dans la console du routeur <a href=
+"http://127.0.0.1:7657/">http://127.0.0.1:7657/</a> cliquez sur 'SecureMail' en haut à gauche dans le panneau de
+surveillance. Vous êtes maintenant dans l'interface web d'I2P-Bote.</p>
+
+<p>Après son lancement, I2P-Bote a besoin d'un peu plus de trois minutes pour
 être entièrement opérationnel (Il est configuré pour démarrer
-automatiquement en même temps que le routeur). </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Donc,
-quand le panneau de surveillance indique «&nbsp;Réseau&nbsp;: OK&nbsp;»,
-c'est prêt..</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Si vous
-utiliser I2P-Bote pour vous-même, il vous faut créer une identité.</FONT>
-</P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>2.2.1
-Création d'une identité</U></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Cliquez
-sur «&nbsp;Identités&nbsp;» sur la gauche, puis sur le bouton
-«&nbsp;Nouvelle identité&nbsp;».</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Entrez au
-moins un «&nbsp;Nom public&nbsp;» et cliquez sur «&nbsp;Créer&nbsp;».
-C'est tout ce qu'il faut faire pour créer une identité.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Le nom
-public est le nom que vous voyez pour cette identité (utile quand
-vous en avez plusieurs, pour communiquer avec différents groupes
-d'utilisateurs ou pour des besoins différents) et il sera envoyé
-aux destinataires en tant que «&nbsp;nom d'expéditeur&nbsp;». Il
-n'est pas nécessaire qu'il soit unique. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(Comme on
-peut choisir ici n'importe quel nom – n'importe qui pourrait
+automatiquement en même temps que le routeur).</p>
+
+<p>Donc, quand le panneau de surveillance indique 'Réseau: OK', c'est prêt.</p>
+
+<p>Si vous utiliser I2P-Bote pour vous-même, il vous faut créer une identité.</p>
+
+<h4>2.2.1 Création d'une identité</h4>
+<p>Cliquez sur 'Identités' sur la gauche, puis sur le bouton 'Nouvelle
+identité'.</p>
+
+<p>Entrez au moins un 'Nom public' et cliquez sur 'Créer'. C'est tout ce qu'il
+faut faire pour créer une identité.</p>
+
+<p>Le nom public est le nom que vous voyez pour cette identité (utile quand
+vous en avez plusieurs, pour communiquer avec différents groupes d'utilisateurs
+ou pour des besoins différents) et il sera envoyé aux destinataires en tant que
+'nom d'expéditeur'. Il n'est pas nécessaire qu'il soit unique.</p>
+
+<p>(Comme on peut choisir ici n'importe quel nom – n'importe qui pourrait
 choisir ici HungryHobo comme nom public – ce champ n'est pas conçu
 pour apporter au destinataire la certitude que deux messages
 proviennent du même expéditeur. C'est pourquoi c'est le nom
@@ -163,274 +107,241 @@ sauvegardé dans le carnet d'adresses local [il ne peut y avoir qu'un
 seul nom par clé de destination] qui est affiché dans la boîte de
 réception si l'expéditeur en a sélectionné un lors de l'envoi
 [envoi non anonyme], et vous verrez alors une marque verte dans la
-colonne «&nbsp;Connu&nbsp;» même si le nom public spécifié par
+colonne 'Connu' même si le nom public spécifié par
 l'expéditeur est différent pour cette sienne identité, indiquant
 ainsi qu'il s'agit bien de la destination connue localement. S'il n'y
 a pas d'entrée pour une destination donnée dans le carnet
 d'adresses, le nom indiqué par l'expéditeur est affiché précédé
-du préfixe [UNK] dans les logiciels clients de messagerie) [<FONT COLOR="#ff0000">POP3
-N'EST PAS ENCORE IMPLÉMENTÉ</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Vous
-pouvez aussi compléter les autres champs, si vous le souhaitez :</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Description
-– ce champ est conservé localement, pas diffusé. Il ne sert qu'à
-vous : si vous voulez ajouter des informations supplémentaires à
-votre usage au sujet de cette identité, ce champ est prévu pour
-cela. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Adresse
-e-mail – champ pas encore utilisé.</FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif"><BR></FONT></FONT><BR><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Choisissez
-un algorithme de cryptage parmi ceux proposés. Dans le doute, gardez
-celui proposé par défaut.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
-pouvez cliquer sur une de vos identités et copier la longue clé
-affichée sous «&nbsp;Destination de messagerie&nbsp;». C'est votre
+du préfixe [UNK] dans les logiciels clients de messagerie).</p>
+
+<p>Vous pouvez aussi compléter les autres champs, si vous le souhaitez :</p>
+
+<p>Description - ce champ est conservé localement, pas diffusé. Il ne sert qu'à
+vous : si vous voulez ajouter des informations supplémentaires à votre usage au
+sujet de cette identité, ce champ est prévu pour cela.</p>
+
+<p>Adresse e-mail - champ pas encore utilisé.</p>
+
+<p>Choisissez un algorithme de cryptage parmi ceux proposés. Dans le doute,
+gardez celui proposé par défaut.</p>
+
+<p>Vous pouvez cliquer sur une de vos identités et copier la longue clé
+affichée sous 'Destination de messagerie'. C'est votre
 adresse e-mail I2P-Bote. Si vous voulez recevoir des messages de
-quelqu'un, il faudra la lui transmettre.</FONT><BR><BR><FONT FACE="Arial, sans-serif">Vous
-pouvez maintenant envoyer et recevoir des messages I2P-Bote.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Mais vous
-devriez regarder les réglages d'I2P-Bote et vous assurer qu'il sont
-conformes à vos besoins.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(Vous
-pouvez créer plusieurs identités et leur associer des réglages
-différents.)</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U><BR>2.2.2
-Envoyer et recevoir des messages</U></FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous avez
-besoin de la clé de destination de message I2P-Bote du correspondant
-à qui vous voulez envoyer un message bote. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Pour
-envoyer un message, cliquez sur «&nbsp;Nouveau&nbsp;», choisissez
-votre identité d'expéditeur ou «&nbsp;Anonyme&nbsp;» dans le
-champ «&nbsp;De&nbsp;:&nbsp;» et entrez la destination du
-destinataire dans le champ «&nbsp;À&nbsp;:&nbsp;», ou une adresse
-mail.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(Vous
-pouvez aussi cliquer sur le bouton «&nbsp;Carnet d'adresses&nbsp;»
+quelqu'un, il faudra la lui transmettre.</p>
+
+<p>Vous pouvez maintenant envoyer et recevoir des messages I2P-Bote.</p>
+
+<p>Mais vous devriez regarder les réglages d'I2P-Bote et vous assurer qu'il
+sont conformes à vos besoins.</p>
+
+<p>(Vous pouvez créer plusieurs identités et leur associer des réglages
+différents.)</p>
+
+<h4>2.2.2 Envoyer et recevoir des messages</h4>
+<p>Vous avez besoin de la clé de destination de message I2P-Bote du
+correspondant à qui vous voulez envoyer un message bote.</p>
+
+<p>Pour envoyer un message, cliquez sur 'Nouveau', choisissez votre identité
+d'expéditeur ou 'Anonyme' dans le champ 'De :' et entrez la destination du
+destinataire dans le champ 'À :', ou une adresse mail.</p>
+
+<p>(Vous pouvez aussi cliquer sur le bouton 'Carnet d'adresses'
 tout proche de ce champ, pour choisir une destination stockée
-localement dans votre carnet d'adresses&nbsp;: cochez le/les
-utilisateur(s) destinataires et cliquez sur le bouton “Ajouter les
-destinataires&nbsp;»)</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
-pouvez ajouter plusieurs destinataires et changer l'attribut «&nbsp;À&nbsp;:&nbsp;»
-pour «&nbsp;Cc:&nbsp;» ou «&nbsp;Cci:&nbsp;».</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Le bouton
-«&nbsp;+&nbsp;» ajoute des lignes destinataires supplémentaires.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Rédigez
-maintenant votre message bote et cliquez sur «&nbsp;Envoyer&nbsp;»pour...
-l'envoyer, ou «&nbsp;Enregistrer&nbsp;» pour le sauvegarder dans
-votre dossier «&nbsp;Brouillons&nbsp;» ou tout autre dossier
-personnel [<FONT COLOR="#ff0000">pas encore implémenté</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">L'action
-d'envoi déplace le message dans le dossier «&nbsp;Boîte d'envoi&nbsp;»
+localement dans votre carnet d'adresses : cochez le/les
+utilisateur(s) destinataires et cliquez sur le bouton 'Ajouter les
+destinataires'.)</p>
+
+<p>Vous pouvez ajouter plusieurs destinataires et changer l'attribut 'À:' pour
+'Cc:' ou 'Cci:'.</p>
+
+<p>Le bouton '+' ajoute des lignes destinataires supplémentaires.</p>
+
+<p>Rédigez maintenant votre message bote et cliquez sur 'Envoyer' pour
+l'envoyer, ou 'Enregistrer' pour le sauvegarder dans
+votre dossier 'Brouillons' ou tout autre dossier
+personnel [pas encore implémenté].</p>
+
+<p>L'action d'envoi déplace le message dans le dossier 'Boîte d'envoi'
 et vous pouvez continuer à utiliser I2P-Bote, par exemple pour
 écrire un autre message, gérer votre carnet d'adresses, etc...
 I2P-Bote est alors en train d'envoyer votre message. Une fois envoyé,
-il est déplacé de la boîte d'envoi vers le dossier «&nbsp;Courriers
-envoyés&nbsp;». Votre message est en route (à moins que vous
-n'ayez défini un retard, ce qui n'est pas activé pas défaut).</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Dans
-I2P-Bote, les messages sont signés automatiquement (sauf ceux que
-vous envoyez comme «&nbsp;Anonyme&nbsp;», c'est à dire sans
-choisir d'identité d'expéditeur)&nbsp;: en effet, vous pouvez
-décider de ne pas choisir d'identité d'expéditeur.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">De par
-les réglages par défaut, I2P-Bote relève le automatiquement
+il est déplacé de la boîte d'envoi vers le dossier 'Courriers
+envoyés'. Votre message est en route (à moins que vous
+n'ayez défini un retard, ce qui n'est pas activé pas défaut).</p>
+
+<p>Dans I2P-Bote, les messages sont signés automatiquement (sauf ceux que
+vous envoyez comme 'Anonyme', c'est à dire sans
+choisir d'identité d'expéditeur): en effet, vous pouvez
+décider de ne pas choisir d'identité d'expéditeur.</p>
+
+<p>You can also send e-mails without specifying <em>any</em> sender
+identity/destination/address, just select 'Anonymous' in the scroll-down
+menu 'From:'.</p>
+
+<p>De par les réglages par défaut, I2P-Bote relève le automatiquement
 courrier, et tout ce que vous avez à faire pour savoir si vous avez
 reçu de nouveaux messages est de regarder dans la boîte de
-réception (lien sur la gauche).<BR>Vous pouvez forcer une relève en
-cliquant cliquant sur le bouton «&nbsp;Relever le courrier&nbsp;».
+réception (lien sur la gauche).</p>
+
+<p>Vous pouvez forcer une relève en
+cliquant cliquant sur le bouton 'Relever le courrier'.
 C'est une vérification globale qui tente de récupérer les nouveaux
 messages destinés à toutes vos identités à l'exception de celles
-exclues de cette fonctionnalité [</FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif">pas
-encore implémenté</FONT></FONT><FONT FACE="Arial, sans-serif">].</FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Le
-nombre de messages non lus est indiqué entre parenthèses à
-proximité du nom du dossier dans le cadre de gauche. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Cliquez
-sur «&nbsp;Boîte de réception&nbsp;» pour visualiser la liste des
-messages reçus. Vous y voyez deux colonnes peuplées de «&nbsp;x&nbsp;»
+exclues de cette fonctionnalité [pas encore implémenté].</p>
+
+<p>Le nombre de messages non lus est indiqué entre parenthèses à
+proximité du nom du dossier dans le cadre de gauche.</p>
+
+<p>Cliquez sur 'Boîte de réception' pour visualiser la liste des
+messages reçus. Vous y voyez deux colonnes peuplées de 'x'
 et de coches vertes. Elles vous indiquent si le message en question
 contient un signature valide et qu'il est donc certifié comme
 authentique et intègre (Sig), et si la destination de l'expéditeur
 est déjà connue, c'est à dire déjà enregistrée dans votre
 carnet d'adresses (Connu). Donc, deux coches vertes pour un message
 signalent que vous connaissez son expéditeur et que le message a été
-signalé par lui. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Si vous
-avez dans votre carnet d'adresses un certain nom et que vous recevez
-un message de la part d'une identité affichant ce nom, alors si la
-colonne «&nbsp;Connu&nbsp;» <U>n'indique pas</U> une <SPAN STYLE="font-style: normal">coche
-verte, c'est que le message provient d'une destination </SPAN><SPAN STYLE="font-style: normal"><U>différente</U></SPAN>
-<SPAN STYLE="font-style: normal">de celle contenue dans votre carnet
-d'adresses&nbsp;; son propriétaire a simplement choisi le même nom
-que celui d'un de vos contacts déjà enregistré.</SPAN></FONT></P>
-<P STYLE="font-style: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">S'il
-y a une coche verte dans la colonne «&nbsp;Sig&nbsp;», c'est que le
+signalé par lui.</p>
+
+<p>Si vous avez dans votre carnet d'adresses un certain nom et que vous recevez
+un message de la part d'une identité affichant ce nom, alors si la colonne
+'Connu' <em>n'indique pas</em> une coche verte, c'est que le message provient
+d'une destination <em>différente</em> de celle contenue dans votre carnet
+d'adresses; son propriétaire a simplement choisi le même nom que celui d'un de
+vos contacts déjà enregistré.</p>
+
+<p>S'il y a une coche verte dans la colonne 'Sig', c'est que le
 message est correctement signé et vous pouvez ajouter l'expéditeur
 à votre carnet d'adresses sous un nom différent qui sera dès lors
-affiché en tant qu'expéditeur.</FONT></P>
-<P STYLE="font-style: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">Évidemment,
-un message sans destination d'expéditeur (“Anonyme” affiché
-comme expéditeur) sera repéré par deux marques «&nbsp;x&nbsp;».</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Un clic
-sur un des messages de la liste ouvre celui-ci. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Ceci vaut
-pour tous les autres dossiers.</FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">(De
-par la nature décentralisée d'I2P-Bote, l'envoi comme la relève
+affiché en tant qu'expéditeur.</p>
+
+<p>Évidemment, un message sans destination d'expéditeur ('Anonyme' affiché
+comme expéditeur) sera repéré par deux marques 'x'.</p>
+
+<p>Un clic sur un des messages de la liste ouvre celui-ci.</p>
+
+<p>Ceci vaut pour tous les autres dossiers.</p>
+
+<p>(De par la nature décentralisée d'I2P-Bote, l'envoi comme la relève
 prennent quelques minutes. Sensiblement plus lorsque les routes de
 messages sont activées. Mais vous n'avez pas besoin de garder le
-navigateur ouvert&nbsp;: il suffit de laisser tourner I2P-Bote en
-tant que processus d'arrière plan – ce dont profite aussi votre
-anonymat)</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><U>2.2.3
-Carnet d'adresses local</U></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Si
-vous avez la clé de destination I2P-Bote de quelqu'un à qui vous
+navigateur ouvert: il suffit de laisser tourner I2P-Bote en
+tant que processus d'arrière plan - ce dont profite aussi votre
+anonymat.)</p>
+
+<h4>2.2.3 Carnet d'adresses local</h4>
+<p>Si vous avez la clé de destination I2P-Bote de quelqu'un à qui vous
 voulez écrire souvent, il est commode de l'enregistrer dans votre
-carnet d'adresses local (lien sur la gauche)&nbsp;: choisissez un nom
+carnet d'adresses local (lien sur la gauche): choisissez un nom
 (de façon complètement arbitraire), collez la clé dans le champ
-idoine et sauvegardez.</FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">C'est
-normalement ce que vous devriez faire, en sorte que le prochain
-message de ce destinataire soit marqué comme «&nbsp;Connu&nbsp;»,
-alors qu'un message d'un autre expéditeur de même nom serait marqué
-d'un «&nbsp;x&nbsp;» (ou préfixé [UNK] dans un client de
-messagerie), vous prévenant ainsi qu'il provient de quelqu'un
-d'autre. </FONT></FONT>
-</P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>2.2.4
-Les préférences de réglages (et ce qu'elles signifient)</U></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Dans
-les préférences vous pouvez choisir la langue de l'interface
+idoine et sauvegardez.</p>
+
+<p>C'est normalement ce que vous devriez faire, en sorte que le prochain
+message de ce destinataire soit marqué comme 'Connu', alors qu'un message d'un
+autre expéditeur de même nom serait marqué d'un 'x' (ou préfixé [UNK] dans un
+client de messagerie), vous prévenant ainsi qu'il provient de quelqu'un
+d'autre.</p>
+
+<h4>2.2.4 Les préférences de réglages (et ce qu'elles signifient)</h4>
+<p>Dans les préférences vous pouvez choisir la langue de l'interface
 d'I2P-Bote et décider que même si vous choisissez une autre langue,
 tout ce qui sera automatiquement ajouté comme titres d'en-têtes
 restera cependant en anglais pour ne pas dévoiler votre langue (et
 par là même, peut-être en déduire votre nationalité et
-compromettre votre anonymat – à ce sujet, la FAQ I2P-Bote et le
-chapitre 3 de ce manuel donnent d'autres conseils).</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
-pouvez aussi régler l'intervalle de relève automatique, et
+compromettre votre anonymat - à ce sujet, la FAQ I2P-Bote et le
+chapitre 3 de ce manuel donnent d'autres conseils).</p>
+
+<p>Vous pouvez aussi régler l'intervalle de relève automatique, et
 l'inclusion ou l'exclusion des horodatages pour vos messages (les
-horodatages sont toujours en UTC).</FONT></P>
-<P STYLE="font-style: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">(Quand
-vous utilisez les routes de messages, les horodatages sont
-automatiquement désactivés [<FONT COLOR="#ff0000">pas encore
-implémenté</FONT>]).</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>Relève
-automatique:</I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Pour le
-confort d'utilisation, cochez «&nbsp;Relever le courrier toutes les
-XX minutes&nbsp;:&nbsp;» et saisissez la valeur de l'intervalle. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Ceci
-définit la fréquence de tentatives de téléchargement de nouveaux
-messages pour vos identités. Ça peut être différentié par
-identité [<FONT COLOR="#ff0000">pas encore implémenté</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Si vous
-définissez un décalage aléatoire, la relève n'aura pas lieu
-exactement toutes les XX minutes, mais toutes les
-(XX+/-décalage*XX)minutes, c'est à dire après un temps aléatoire
-compris entre (1-décalage)*XX minutes et (1+décalage)*XX minutes
-[<FONT COLOR="#ff0000">pas encore implémenté</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
-pouvez également désactiver complètement la relève automatique
-pour une identité donnée.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(Si vous
-n'êtes pas à l'aise avec ces réglages, les valeurs par défaut
-vous conviendront très bien)</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif">Les
-</FONT><FONT FACE="Arial, sans-serif"><I>Routes de messagerie </I></FONT><FONT FACE="Arial, sans-serif">sont
-des chînes de nœuds I2P-Bote agissant en tant que routeurs relais
-pour le compte d'autres pairs et obéissant à des délais par saut
-définis par l'expéditeur, fournissant ainsi le transport à haute
-latence garant d'un anonymat plus élevé. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
-pouvez spécifier le nombre de nœuds (sauts) nécessaires à la
+horodatages sont toujours en UTC).</p>
+
+<p>(Quand vous utilisez les routes de messages, les horodatages sont
+automatiquement désactivés.) [pas encore implémenté]</p>
+
+<p>Relève automatique:</p>
+
+<p>Pour le confort d'utilisation, cochez 'Relever le courrier toutes les
+XX minutes:' et saisissez la valeur de l'intervalle.</p>
+
+<p>Cec définit la fréquence de tentatives de téléchargement de nouveaux
+messages pour vos identités. Ça peut être différentié par identité [pas encore
+implémenté].</p>
+
+<p>Si vous définissez un décalage aléatoire, la relève n'aura pas lieu
+exactement toutes les XX minutes, mais toutes les (XX+/-décalage*XX) minutes,
+c'est à dire après un temps aléatoire compris entre (1-décalage)*XX minutes et
+(1+décalage)*XX minutes [pas encore implémenté].</p>
+
+<p>Vous pouvez également désactiver complètement la relève automatique pour une
+identité donnée.</p>
+
+<p>(Si vous n'êtes pas à l'aise avec ces réglages, les valeurs par défaut vous
+conviendront très bien.)</p>
+
+<p>Les <em>Routes de messagerie</em> sont des chînes de nœuds I2P-Bote agissant
+en tant que routeurs relais pour le compte d'autres pairs et obéissant à des
+délais par saut définis par l'expéditeur, fournissant ainsi le transport à
+haute latence garant d'un anonymat plus élevé.</p>
+
+<p>Vous pouvez spécifier le nombre de nœuds (sauts) nécessaires à la
 constitution d'une route de messagerie. Ensuite, chacun des paquets
 de message envoyés par l'identité qui a activé la fonction routes
 de messagerie passera par une route de n sauts avant d'être stocké.
 Vous pouvez définir un délai pour chaque saut individuel, pour
 qu'aucun saut ne puisse savoir combien de temps le paquet attendra au
 niveau du saut suivant, ce qui rend la prédiction horaire impossible
-[<FONT COLOR="#ff0000">les définitions des retards par saut et par
-identité ne sont pas encore implémentées</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Vous
-pouvez définir une tranche de temps (p.e. 60-600 minutes) – puis
+[les définitions des retards par saut et par identité ne sont pas encore
+implémentées].</p>
+
+<p>Vous pouvez définir une tranche de temps (p.e. 60-600 minutes) – puis
 un retard aléatoire entre ces deux valeurs sera choisi pour le
 paquet au niveau de tel saut – ou une heure fixe à laquelle le
 paquet sera transféré, p.e. cet après-midi UTC, indépendamment du
-moment où il est arrivé [<FONT COLOR="#ff0000">heure fixe pas
-encore implémentée</FONT>]. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(Quand
-vous utilisez les routes de messagerie, les horodatages sont
-automatiquement désactivés [<FONT COLOR="#ff0000">pas encore
-implémenté</FONT>]).</FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Sous
-«&nbsp; </FONT><FONT FACE="Arial, sans-serif"><I>Minimum dans la
-messagerie</I></FONT>&nbsp;<FONT FACE="Arial, sans-serif">» (nombre
-minimum de paquets relayés à envoyer), vous pouvez indiquer un
-seuil. Comme votre instance I2P-Bote peut fonctionner comme un relais
-mélangeur, s'il y a suffisamment de paquets étrangers à mélanger
-et avec lesquels camoufler les vôtres, elle va accumuler les
-messages pour lesquels le retard demandé n'est pas échu jusqu'à
+moment où il est arrivé [heure fixe pas encore implémentée].]</p>
+
+<p>(Quand vous utilisez les routes de messagerie, les horodatages sont
+automatiquement désactivés.) [pas encore implémenté]</p>
+
+<p>Sous <em>Minimum dans la messagerie</em> (nombre minimum de paquets relayés
+à envoyer), vous pouvez indiquer un seuil. Comme votre instance I2P-Bote peut
+fonctionner comme un relais mélangeur, s'il y a suffisamment de paquets
+étrangers à mélanger et avec lesquels camoufler les vôtres, elle va accumuler
+les messages pour lesquels le retard demandé n'est pas échu jusqu'à
 atteindre ce seuil. Une fois atteint, votre bote commence à les
-transférer aléatoirement [</FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif">pas
-encore implémenté</FONT></FONT><FONT FACE="Arial, sans-serif">].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I>Exclure
-l'identité de la relève globale</I> [<FONT COLOR="#ff0000">pas
-encore implémenté</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Si vous
-activez cette option pour une de vos identités, elle ne sera pas
+transférer aléatoirement. [pas encore implémenté]</p>
+
+<p><em>Exclure l'identité de la relève globale</em> [pas encore implémenté]</p>
+
+<p>Si vous activez cette option pour une de vos identités, elle ne sera pas
 prise en compte ni par la fonction de relève globale automatique
-planifiée, ni par la relève manuelle globale.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>2.2.5
-E-mails de et vers l'Internet</U><SPAN STYLE="text-decoration: none">
-[</SPAN><FONT COLOR="#ff0000"><SPAN STYLE="text-decoration: none">NOT
-YET FULLY IMPLEMENTED!</SPAN></FONT><SPAN STYLE="text-decoration: none">]</SPAN></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Pour
-pouvoir envoyer des messages bote vers l'Internet et recevoir des
+planifiée, ni par la relève manuelle globale.</p>
+
+<h4>2.2.5 E-mails de et vers l'Internet</h4>
+<p>[NOT YET FULLY IMPLEMENTED!]</p>
+
+<p>Pour pouvoir envoyer des messages bote vers l'Internet et recevoir des
 e-mails venant de l'Internet dans l'application I2P-Bote, vous devez
 d'abord vous enregistrer auprès d'une passerelle de messagerie. Il
-n'y en a actuellement qu'une seule&nbsp;: postman. </FONT>
-</P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">1)
-D'abord, allez sur : <A HREF="http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?page_id=16</A>
-et créez un compte. Si vous en avez déjà un, ou si vous venez de
-le créer, passer à l'étape 2).</FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">2)
-Pour un compte donné, vous pouvez ajouter votre clé de destination
+n'y en a actuellement qu'une seule: postman.</p>
+
+<p>1) D'abord, allez sur <a href="http://hq.postman.i2p/?page_id=16">
+http://hq.postman.i2p/?page_id=16</a> et créez un compte. Si vous en avez déjà
+un, ou si vous venez de le créer, passer à l'étape 2).</p>
+
+<p>2) Pour un compte donné, vous pouvez ajouter votre clé de destination
 de messagerie, pour que les messages arrivant d'Internet puissent
 être transférés vers votre application I2P-Bote. Pour ce faire
-allez sur : <A HREF="http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</A>
-et indiquez les informations demandées.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Maintenant,
-tous les e-mails envoyés à cette adresse (<A HREF="mailto:name@i2pmail.org">nom@i2pmail.org</A>
-depuis l'Internet externe ou depuis <A HREF="mailto:name@mail.i2p">blaze@mail.i2p</A>
-pour les messages d'autres comptes postman) seront transférés par
-le réseau I2P-Bote à votre application I2P-Bote.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(N.B. En
-utilisant les adresses <A HREF="mailto:name@mail.i2p">nom@mail.i2p</A>
-ou <A HREF="mailto:name@i2pmail.org">nom@i2pmail.org</A> au lieu des
+allez sur <a href="http://hq.postman.i2p/?page_id=74">
+http://hq.postman.i2p/?page_id=74</a> et indiquez les informations demandées.</p>
+
+<p>Maintenant, tous les e-mails envoyés à cette adresse (<a href=
+"mailto:nom@i2pmail.org">nom@i2pmail.org</a> depuis l'Internet externe ou depuis
+<a href="mailto:nom@mail.i2p">nom@mail.i2p</a> pour les messages d'autres
+comptes postman) seront transférés par le réseau I2P-Bote à votre application
+I2P-Bote.</p>
+
+<p>(N.B. En utilisant les adresses <a href="mailto:nom@mail.i2p">nom@mail.i2p</a>
+ou <a href="mailto:nom@i2pmail.org">nom@i2pmail.org</a> au lieu des
 longues clés de destination, les messages ne sont plus cryptés de
 bout en bout. En conséquence, il est recommandé d'échanger les
 clés I2P-Bote pour la communication intra réseau. Postman offre des
@@ -440,78 +351,70 @@ jour cesser de fonctionner, ou pire, tomber sous le contrôle d'un
 nuisible qui pourrait manipuler les courriers. Comme pour la
 messagerie intra réseau, I2P-Bote vous assure que si vous utilisez
 des clés de destination, personne ne peut bricoler les messages que
-vous recevez ou envoyez.)</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Si vous
-voulez non seulement recevoir des messages d'Internet, mais aussi
+vous recevez ou envoyez.)</p>
+
+<p>Si vous voulez non seulement recevoir des messages d'Internet, mais aussi
 pouvoir en envoyer vers Internet depuis I2P-Bote, vous devez indiquer
 à votre application cliente I2P-Bote la clé de destination de la
 passerelle de messagerie, pour que votre I2P-Bote sache où envoyer
-les messages.<BR>Ceci se fait dans les «&nbsp;Préférences&nbsp;».
-Cette passerelle permet aux utilisateurs d'I2P-Bote de communiquer
-avec les utilisateurs de messagerie standard sur l'Internet classique
-et avec ceux qui utilisent le service i2pmail de postman
-(@mail.i2p).</FONT><BR><FONT FACE="Arial, sans-serif"><BR>Pour
-combattre les abus, il y a une limitation au nombre de messages que
+les messages.</p>
+
+<p>Ceci se fait dans les 'Préférences'. Cette passerelle permet aux
+utilisateurs d'I2P-Bote de communiquer avec les utilisateurs de messagerie
+standard sur l'Internet classique et avec ceux qui utilisent le service i2pmail
+de postman (@mail.i2p).</p>
+
+<p>Pour combattre les abus, il y a une limitation au nombre de messages que
 vous pouvez envoyer vers Internet, comme avec le service normal de
-postman&nbsp;: si un utilisateur d'I2P-Bote dépasse le quota de
+postman: si un utilisateur d'I2P-Bote dépasse le quota de
 messages envoyés, les messages supplémentaires sont retournés à
-l'envoyeur.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>3.
-Considérations sur l'anonymat</B></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">N'envoyez
+l'envoyeur.</p>
+
+<h2>3. Considérations sur l'anonymat</h2>
+<p>N'envoyez
 pas d'informations susceptibles de vous identifier (nom, adresse,
 situation géographique, fuseau horaire, horodatages, âge, sites web
 que vous venez de visiter ou sur lesquels vous venez de parler sur un
 blog, noms d'utilisateurs, adresses IP, identités de routeur I2P
 routeur, de nœud I2P-Bote, numéros de sécurité sociale, de carte
-de crédit, …, copies de passeport, de permis de conduire, de
-contrats de location, de photos – nu ou habillé –, documents qui
+de crédit, &hellip;, copies de passeport, de permis de conduire, de
+contrats de location, de photos - nu ou habillé, documents qui
 contiennent votre nom comme auteur dans les réglages, et une
-multitude d'autres) !</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>Si
-possible, </FONT>
-</P>
-<UL>
-	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">laissez
-	I2P-Bote tourner 24h/24 7j/7,</FONT></P>
-	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">utilisez
-	les routes de messagerie en conjonction avec les retards aléatoires
-	ou fixes par saut [<FONT COLOR="#ff0000">pas encore </FONT><FONT COLOR="#ff0000"><I>complètement</I></FONT><FONT COLOR="#ff0000">
-	implémenté</FONT>],</FONT></P>
-	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">utilisez
-	un intervalle de relève long,</FONT></P>
-	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">utilisez
-	un long retard pour vos propres paquets,</FONT></P>
-	<LI><P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">utilisez
-	un large intervalle de relève aléatoire [<FONT COLOR="#ff0000">pas
-	encore implémenté</FONT>].</FONT></P>
-</UL>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">Vous
-pouvez supprimer l'envoi des horodatages des en-têtes de messages.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Quand
-vous répondez, certains marqueurs comme, «&nbsp;Rép: [Top
-secret]&nbsp;» ou «&nbsp;[mégaphone] a écrit :&nbsp;» sont
-ajoutés à votre réponse. Ils diffèrent d'une langue à l'autre,
-suivant vos préférences de réglage de langue de l'interface
+multitude d'autres)!</p>
+
+<p>Si possible,</p>
+<ul>
+<li>laissez I2P-Bote tourner 24h/24 7j/7,</li>
+<li>utilisez les routes de messagerie en conjonction avec les retards
+aléatoires ou fixes par saut [pas encore <em>complètement</em> implémenté],</li>
+<li>utilisez un intervalle de relève long,</li>
+<li>utilisez un long retard pour vos propres paquets,</li>
+<li>utilisez un large intervalle de relève aléatoire. [pas encore implémenté]</li>
+</ul>
+
+<p>Vous pouvez supprimer l'envoi des horodatages des en-têtes de messages.</p>
+
+<p>Quand vous répondez, certains marqueurs comme, 'Rép: [Top secret]' ou
+'[mégaphone] a écrit:' sont ajoutés à votre réponse. Ils diffèrent d'une langue
+à l'autre, suivant vos préférences de réglage de langue de l'interface
 d'I2P-Bote. Cependant, si vous ne voulez pas que vos destinataires
 puissent savoir comment vous avez effectué ce réglage (révélateur
 de votre langue et peut-être de votre nationalité), vous pouvez
 désactiver la traduction de ces marqueurs pour qu'il restent en
-anglais, quelle que soit votre réglage de langue&nbsp;: Cochez la
-case «&nbsp;Utiliser l'anglais pour les titres d'en-têtes de
-messages sortants ('Re', 'wrote', etc.)&nbsp;».</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Soyez
-prudent sur le contenu de vos envois! N'incluez pas d'information
+anglais, quelle que soit votre réglage de langue: Cochez la
+case 'Utiliser l'anglais pour les titres d'en-têtes de
+messages sortants ('Re', 'wrote', etc.)'.</p>
+
+<p>Soyez prudent sur le contenu de vos envois! N'incluez pas d'information
 personnelles ou des informations que vous seul pouvez posséder.
-N'écrivez pas «&nbsp;je vais me coucher, il est tard&nbsp;»,
-lorsque les tampons horaires ne sont pas désactivés.<BR>La langue
-dans laquelle vous écrivez, votre style et vos particularités
-d'expression sont autant d'autres éléments qui pourraient
-intéresser un attaquant.</FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">I2P-Bote
-permet aussi l'utilisation d'identités multiples. Supposez qu'un de
+N'écrivez pas 'je vais me coucher, il est tard',
+lorsque les tampons horaires ne sont pas désactivés.</p>
+
+<p>La langue dans laquelle vous écrivez, votre style et vos particularités
+d'expression sont autant d'autres éléments qui pourraient intéresser un
+attaquant.</p>
+
+<p>I2P-Bote permet aussi l'utilisation d'identités multiples. Supposez qu'un de
 vos contacts découvre votre identité, car vous avez oublié
 d'enlever une information vous concernant d'un document confidentiel
 que vous lui avez transmis (par erreur ou pas). Maintenant, si ce
@@ -520,11 +423,10 @@ vos contacts, il pourrait leur révéler l'identité réelle liée à
 l'identité Bote qu'il connait de vous. Donc, si vous communiquez
 avec ces autres avec la même adresse il vous reconnaitrons. Ils ne
 pourraient pas si vous aviez utilisé une identité différente pour
-vous adresser à eux.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><B>4.
-Concept technique</B></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">I2P-Bote
-est un système de messagerie totalement décentralisé (sans
+vous adresser à eux.</p>
+
+<h2>4. Concept technique</h2>
+<p>I2P-Bote est un système de messagerie totalement décentralisé (sans
 serveur) intra réseau crypté de bout en bout. Il supporte
 l'utilisation d'identités multiples et n'expose pas les en-têtes de
 messages. Il est actuellement encore en version alpha et ne peut être
@@ -547,316 +449,223 @@ devient disponible côté destinataire. Ceci améliore la classe
 d'anonymat qui peut être atteinte par I2P-Bote. Pour ceux qui ne
 veulent pas de longs retards, tous ces réglages sont accessibles à
 l'utilisateur et chacun peut ainsi ajuster le niveau d'anonymat à
-ses désirs.</FONT></P>
-<P><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><BR>Les
-nœudsI2P-Bote stockent les messages cryptés dans une table de
+ses désirs.</p>
+
+<p>Les nœuds I2P-Bote stockent les messages cryptés dans une table de
 hachage décentralisée (DHT) Kademlia. En conséquence, un message
 peut être envoyé via de nombreux autres nœuds (relais) pour
 augmenter la sécurité, ou directement sur un groupe de nœuds de
 stockage pour une livraison plus rapide. Le même scenario s'applique
-aussi à le relève des messages.<BR>(L'utilisation des routes de
-message désactive automatiquement les tampons horaires)<BR>[</FONT></FONT><FONT COLOR="#ff0000"><FONT FACE="Arial, sans-serif">La
-relève via les relais n'est pas encore implémentée</FONT></FONT><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">].</FONT></FONT></P>
-<P><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Tous
-les nœuds sont créés égaux : il n'y a pas de «&nbsp;super-nœuds&nbsp;»
+aussi à le relève des messages.</p>
+
+<p>(L'utilisation des routes de message désactive automatiquement les tampons
+horaires.) [La relève via les relais n'est pas encore implémentée]</p>
+
+<p>Tous les nœuds sont créés égaux : il n'y a pas de 'super-nœuds'
 ni de nœuds désignés comme relais ou stockeurs. Tout le monde agit
 en tant que relais et stockage potentiels. L'utilisation d'espace
-disque est configurable par l'utilisateur.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Avant
-qu'un message ne soit envoyé à un relais, il est découpé en
+disque est configurable par l'utilisateur.</p>
+
+<p>Avant qu'un message ne soit envoyé à un relais, il est découpé en
 paquets et crypté avec la clé publique du destinataire. Ces paquets
-sont stockés de façon redondante dans la DHT.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Il
-sont conservés au moins 100 jours, pendant lesquels le destinataire
-peut les télécharger.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Les
-paquets relayés expirent aussi après 100 jours ou plus.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT COLOR="#000000"><FONT FACE="Arial, sans-serif">Si
-un nœud manque d'espace de stockage et qu'il n'y a pas de vieux
-paquets à supprimer, ce nœud refuse les requêtes de stockage.</FONT></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">De plus,
-I2P-Bote nettoie les en-têtes de messages en n'autorisant que les
+sont stockés de façon redondante dans la DHT.</p>
+
+<p>Il sont conservés au moins 100 jours, pendant lesquels le destinataire
+peut les télécharger.</p>
+
+<p>Les paquets relayés expirent aussi après 100 jours ou plus.</p>
+
+<p>Si un nœud manque d'espace de stockage et qu'il n'y a pas de vieux
+paquets à supprimer, ce nœud refuse les requêtes de stockage.</p>
+
+<p>De plus, I2P-Bote nettoie les en-têtes de messages en n'autorisant que les
 informations indispensables à la transmission, permettant ainsi
 l'utilisation de clients de messagerie sans vérification préalable
-de ce qu'ils ajoutent comme en-têtes bavardes [<FONT COLOR="#ff0000">POP3
-pas encore implémenté</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Tout le
-cryptage, le choix des chemins et le profilage sont effectués
+de ce qu'ils ajoutent comme en-têtes bavardes.</p>
+
+<p>Tout le cryptage, le choix des chemins et le profilage sont effectués
 localement en sorte qu'aucune tierce partie de confiance ne soit mise
-à contribution.</FONT></P>
-<P STYLE="font-weight: normal; line-height: 150%"><FONT FACE="Arial, sans-serif">Par
-une utilisation appropriée d'I2P-Bote, c'est à dire en gardant à
+à contribution.</p>
+
+<p>Pour son démarrage, I2P-Bote ne dépend pas non-plus d'un nœud central
+car il utilise Seedless.</p>
+
+<p>Par une utilisation appropriée d'I2P-Bote, c'est à dire en gardant à
 l'esprit les considérations signalées plus haut relatives au bon
 sens, personne ne saura qui vous êtes ni où vous vous trouvez. Et
 si vous êtes déjà surveillé et que votre connexion Internet est
 sur écoutes, le nuisible ne pourra pas savoir ce que vous envoyez ou
 recevez, ni avec qui vous communiquez et où sont situés vos
-correspondants.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>Rentrons
-un peu dans les détails&nbsp;:</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>Ce
-qu'I2P-Bote <I>cache</I> :</U></FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I>I2P-Bote
-cache à la fois, l'identité et la situation de l'expéditeur et du
+correspondants.</p>
+
+<p>Rentrons un peu dans les détails:</p>
+
+<h3>Ce qu'I2P-Bote <em>cache</em>:</h3>
+
+<p>I2P-Bote cache à la fois, l'identité et la situation de l'expéditeur et du
 ou destinataires, celles des nœuds intermédiaires (relais et
 stockage), le contenu des messages, leur taille, le nombre que vous
-envoyez.</I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Seul le
-destinataire peut connaître l'adresse de l'expéditeur du message
+envoyez.</p>
+
+<p>Seul le destinataire peut connaître l'adresse de l'expéditeur du message
 bote, et si ce dernier l'a décidé, même le destinataire peut être
-tenu dans l'ignorance de cette donnée.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Même si
-envoyez des horodatages, votre fuseau horaire ne sera pas dévoilé.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">De plus,
-I2P-Bote masque ...</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-le fait que vous utilisez... I2P-Bote</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-le fait que vous envoyez un message</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-le fait que vous recevez un message</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">et
-donc</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-le moment d'envoi d'un message</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-le moment de réception d'un message</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">ainsi
-que</FONT></P>
-<P STYLE="line-height: 150%">&nbsp;&nbsp;&nbsp; <FONT FACE="Arial, sans-serif">-
-la limite supérieure du nombre de messages qu'un utilisateur inconnu
-reçoit, - nota bene : un utilisateur abstrait, pas un concret,
-extrapolant simplement son existence de celle de la destination de
-messagerie<BR>&nbsp;&nbsp;&nbsp; - car il pourrait toujours avoir
-plus d'une identité ; et la limite basse, car une identité envoie
-également des messages de test et des messages leurres/«&nbsp;bidons&nbsp;»</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><U>Ce
-qu'I2P-Bote <I>masque partiellement</I> : </U></FONT>
-</P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">L'adresse
-I2P-Bote du destinataire n'est connue que par l'expéditeur et le(s)
-destinataire(s). </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">En cas de
-destinataires multiples, chacun verra tous les autres destinataires
-dont les adresses ont été indiquées en «&nbsp;A&nbsp;:» OU
-«&nbsp;Cc&nbsp;:&nbsp;».</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Toutes
-les entrées «&nbsp;Cci&nbsp;:&nbsp;» ne sont visibles qu'à
-l'expéditeur et au destinataire spécifique. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Le moment
-de l'envoi, s'il est précisé, n'est visible que par l'expéditeur
-et le destinataire.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>Ce
-qu'I2P-Bote </U></FONT><FONT FACE="Arial, sans-serif"><I><U>peut
-masquer optionnellement </U></I></FONT><FONT FACE="Arial, sans-serif"><U>:
-</U></FONT>
-</P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif">- Si
-les routes de messagerie sont utilisées, le moment de l'envoi d'un
-message</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- Si les
-routes de messagerie sont utilisées, le moment de relève d'un
-message [<FONT COLOR="#ff0000">pas encore implémenté</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">- Si
-l'expéditeur supprime les horodatages, seul l'expéditeur sait quand
-il a envoyé un message.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><FONT FACE="Arial, sans-serif"><U>Ce
-qu'I2P-Bote </U></FONT><FONT FACE="Arial, sans-serif"><I><U>ne peut
-pas cacher </U></I></FONT><FONT FACE="Arial, sans-serif"><U>: </U></FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>I2P-Bote
-ne peut pas masquer la fréquence à laquelle une identité donnée
-relève les nouveaux messages, ni ne nombre de messages reçus par
-une identité donnée.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>Pour
-son démarrage, I2P-Bote ne dépend pas non-plus d'un nœud central
-car il utilise Seedless.</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>5
-Terminologie/Glossaire:</B></FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><U>Identité
-du routeur/nœud I2P-Bote </U>:</I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">C'est
-l'identité par laquelle le routeur I2P-Bote est connu. Elle est
+tenu dans l'ignorance de cette donnée.</p>
+
+<p>Même si envoyez des horodatages, votre fuseau horaire ne sera pas dévoilé.</p>
+
+<p>De plus, I2P-Bote masque:</p>
+<ul>
+<li>le fait que vous utilisez I2P-Bote</li>
+<li>le fait que vous envoyez un message</li>
+<li>le fait que vous recevez un message</li>
+<li>le moment d'envoi d'un message</li>
+<li>le moment de réception d'un message</li>
+<li>la limite supérieure du nombre de messages qu'un utilisateur inconnu
+reçoit
+<ul>
+<li>un utilisateur abstrait, pas un concret, extrapolant simplement son
+existence de celle de la destination de messagerie car il pourrait toujours
+avoir plus d'une identité</li>
+</ul></li>
+<li>la limite basse, car une identité envoie également des messages de test et
+des messages leurres/'bidons'</li>
+</ul>
+
+<h3>Ce qu'I2P-Bote <em>masque partiellement</em>:</h3>
+
+<p>L'adresse I2P-Bote du destinataire n'est connue que par l'expéditeur et
+le(s) destinataire(s).</p>
+
+<p>En cas de destinataires multiples, chacun verra tous les autres destinataires
+dont les adresses ont été indiquées en 'A:' ou 'Cc:'.</p>
+
+<p>Toutes les entrées 'Cci:' ne sont visibles qu'à l'expéditeur et au
+destinataire spécifique.</p>
+
+<p>Le moment de l'envoi, s'il est précisé, n'est visible que par l'expéditeur
+et le destinataire.</p>
+
+<h3>Ce qu'I2P-Bote <em>peut masquer optionnellement</em>:</h3>
+<ul>
+<li>Si les routes de messagerie sont utilisées, le moment de l'envoi d'un
+message</li>
+<li>Si les routes de messagerie sont utilisées, le moment de relève d'un
+message [pas encore implémenté].</li>
+<li>Si l'expéditeur supprime les horodatages, seul l'expéditeur sait quand
+il a envoyé un message.</li>
+</ul>
+
+<h3>Ce qu'I2P-Bote <em>ne peut pas cacher</em>:</h3>
+<p>I2P-Bote ne peut pas masquer la fréquence à laquelle une identité donnée
+relève les nouveaux messages, ni ne nombre de messages reçus par une identité
+donnée.</p>
+
+<h2>5 Terminologie/Glossaire:</h2>
+
+<h3>Identité du routeur/nœud I2P-Bote:</h3>
+<p>C'est l'identité par laquelle le routeur I2P-Bote est connu. Elle est
 utilisée pour contacter ce routeur, pour stocker, relayer et relever
 les messages, mais aussi pour le cryptage par saut et le contacter
 via I2P, car c'est celle là même de la destination du tunnel I2P.
 Elle est affichée pour représenter le nœud I2P-Bote dans les
-statistiques.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Ainsi
-donc, l'identité du routeur (I2P-Bote) correspond à la destination
+statistiques.</p>
+
+<p>Ainsi donc, l'identité du routeur (I2P-Bote) correspond à la destination
 I2P (l'adresse d'un nœud I2P-Bote sur le réseau I2P – il n'y a
 pas de nécessité de la connaître, sauf en cas de problèmes de
-connexion aux autres nœuds I2P-Bote).</FONT></P>
-<P STYLE="font-weight: normal; line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I><U>Destination
-de messagerie I2P-Bote :</U></I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">La
-destination de messagerie I2P-Bote (clé) est un identifiant par
+connexion aux autres nœuds I2P-Bote).</p>
+
+<h3>Destination de messagerie I2P-Bote:</h3>
+<p>La destination de messagerie I2P-Bote (clé) est un identifiant par
 lequel quelqu'un peut être atteint via I2P-Bote, comme son nom
-l'indique&nbsp;: une destination e-mail. C'est donc pour I2P-Bote ce
-qu'est une adresse e-mail pour un système de messagerie standard&nbsp;:
+l'indique: une destination e-mail. C'est donc pour I2P-Bote ce
+qu'est une adresse e-mail pour un système de messagerie standard:
 la destination de messagerie est l'adresse effective d'envoi de
-messages, de stockage et de relève dans la DHT. <BR>Elle est aussi
+messages, de stockage et de relève dans la DHT. Elle est aussi
 utilisée pour le cryptage de bout en bout des messages, pour les
-informations d'en-têtes et les pièces jointes. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Une
-destination de messagerie I2P-Bote est une chaîne en base 64
+informations d'en-têtes et les pièces jointes.</p>
+
+<p>Une destination de messagerie I2P-Bote est une chaîne en base 64
 contenant une clé publique de cryptage et une clé de vérification
-de signature, par exemple&nbsp;: </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">-nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><BR>L'identité
-de routeur/nœud I2P-Bote et la destination de messagerie I2P-Bote se
-ressemblent mais elles sont complètement indépendantes l'une de
-l'autre.</FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I><U>Adresse
-e-mail :</U></I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Les
-adresses e-mail dans I2P-Bote sont des raccourcis des destinations de
-messagerie.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Les
-correspondances entre elles sont stockées à deux endroits&nbsp;: le
-carnet d'adresses local et l'annuaire d'adresses décentralisé [<FONT COLOR="#ff0000">ce
-dernier n'est pas encore implémenté</FONT>].</FONT></P>
-<P STYLE="line-height: 150%"><BR><FONT FACE="Arial, sans-serif"><I><U>Identité
-de messagerie I2P-Bote :</U></I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">L'identité
-de messagerie I2P-Bote est un porte clé de destination de messagerie
-I2P-Bote avec la clé privée correspondante et le nom que lui a
-donné l'utilisateur qui l'a créé. Ce nom sera envoyé avec la clé
-de destination si vous ne désactivez pas l'envoi de cette
-information sur l'expéditeur.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Elle ne
-sera visible que par le destinataire s'il n'a pas déjà un nom pour
-cette destination dans son propre carnet d'adresses local.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Donc en
-termes techniques, une identité de messagerie est constituée de
-quatre éléments&nbsp;:</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">* une
-destination de messagerie (c'est à dire deux clés publiques)</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">* les
-deux clés privées correspondantes</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">* un nom
-public qui peut être montré aux correspondants</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">* une
-description qui n'est accessible qu'à vous même, le créateur
-l'identité.</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">(Pour
-vous aider à vous souvenir de l'usage que vous assignez à cette
-identité).</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Une
-identité n'est pas pas nécessaire pour envoyer des messages (dans
-ce cas, seul «&nbsp;Anonyme&nbsp;» est proposé comme expéditeur
-dans le champ de sélection).</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><U>Routes
-de messagerie </U></I>:</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Les
-routes de messagerie sont un mode de transport à haute latence
+de signature, par exemple:</p>
+<pre>
+    uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
+    In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
+    FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da
+    -nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9
+    HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ
+    gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3
+    SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp
+    HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD
+</pre>
+
+<p>L'identité de routeur/nœud I2P-Bote et la destination de messagerie I2P-Bote
+se ressemblent mais elles sont complètement indépendantes l'une de l'autre.</p>
+
+<h3>Adresse e-mail:</h3>
+<p>Les adresses e-mail dans I2P-Bote sont des raccourcis des destinations de
+messagerie.</p>
+
+<p>Les correspondances entre elles sont stockées à deux endroits: le carnet
+d'adresses local et l'annuaire d'adresses décentralisé [ce dernier n'est pas
+encore implémenté].</p>
+
+<h3>Identité de messagerie I2P-Bote:</h3>
+<p>L'identité de messagerie I2P-Bote est un porte clé de destination de
+messagerie I2P-Bote avec la clé privée correspondante et le nom que lui a donné
+l'utilisateur qui l'a créé. Ce nom sera envoyé avec la clé de destination si
+vous ne désactivez pas l'envoi de cette information sur l'expéditeur.</p>
+
+<p>Elle ne sera visible que par le destinataire s'il n'a pas déjà un nom pour
+cette destination dans son propre carnet d'adresses local.</p>
+
+<p>Donc en termes techniques, une identité de messagerie est constituée de
+quatre éléments:</p>
+<ul>
+<li>une destination de messagerie (c'est à dire deux clés publiques)</li>
+<li>les deux clés privées correspondantes</li>
+<li>un nom public qui peut être montré aux correspondants</li>
+<li>une description qui n'est accessible qu'à vous même, le créateur
+l'identité (pour vous aider à vous souvenir de l'usage que vous assignez à
+cette identité).</li>
+</ul>
+
+<p>Une identité n'est pas pas nécessaire pour envoyer des messages (dans ce
+cas, seul 'Anonyme' est proposé comme expéditeur dans le champ de sélection).</p>
+
+<h3>Routes de messagerie:</h3>
+<p>Les routes de messagerie sont un mode de transport à haute latence
 supplémentaire pour I2P-Bote. Pour son fonctionnement, une chaîne
 de nœuds I2P-Bote est construite, agissant en tant que routeurs
-relais pour les paquets et obéissant à des retards par saut [<FONT COLOR="#ff0000">les
-retards individuels par saut ne sont pas encore implémentés</FONT>]&nbsp;;
-</FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B><BR>AVERTISSEMENT!</B></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Si vous
-choisissez cette option – particulièrement avec de nombreux sauts
-et/ou de longs retards, ne soyez pas surpris si vos messages
-n'arrivent pas rapidement à destination. Ça prendra évidemment
-plus de temps – jusqu'à plusieurs jours !</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><B>6.&nbsp;
-Remerciements</B></I></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Idée &amp;
-conception technique : HungryHobo, Mixxy </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Implémentation
-: HungryHobo </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Maintenance
-du greffon : zzz, HungryHobo </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Interface
-utilisateur : HungryHobo </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Intégration
-de Seedless : sponge </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-allemande : HungryHobo </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-russe : suhr</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-française : albat, Redzara, Mixxy, magma </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-espagnole : Mixxy</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-portugaise : Mixxy </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-hollandaise : KwukDuck </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-norvégienne : hej </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-suédoise : hottuna</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-chinoise : walking </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Traduction
-arabe : hamada </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Testeurs
-versions Alpha : HungryHobo, Mixxy, Returning Novice, sponge, et de
-nombreux autres. </FONT>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Manuel :
-Mixxy</FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">Testeurs
-versions Alpha : HungryHobo, Mixxy, Returning Novice, sponge, and
-many others</FONT></P>
-<P STYLE="line-height: 150%">Traduction française du manuel&nbsp;:
-magma (avril 2011) (grâce à l'aide inestimable de user pour la
-restitution correcte des concepts techniques et l'utilisation des
-outils techniques de l'équipe I2P).</P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><B>7.
-Détails techniques</B></FONT></P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif">-- voir
-techdoc.txt --</FONT></P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><BR><BR>
-</P>
-<P STYLE="line-height: 150%"><FONT FACE="Arial, sans-serif"><I><B>ENJOY
-THE BOTE FEELING!!</B></I></FONT></P>
-</BODY>
-</HTML>
+relais pour les paquets et obéissant à des retards par saut. [les
+retards individuels par saut ne sont pas encore implémentés]</p>
+
+<p><strong>AVERTISSEMENT!</strong> Si vous choisissez cette option -
+particulièrement avec de nombreux sauts et/ou de longs retards, ne soyez pas
+surpris si vos messages n'arrivent pas rapidement à destination. Ça prendra
+évidemment plus de temps - jusqu'à plusieurs jours!</p>
+
+<h2>6. Remerciements</h2>
+<p>Idée &amp; conception technique: HungryHobo, Mixxy</p>
+<p>Implémentation: HungryHobo</p>
+<p>Maintenance du greffon: zzz, HungryHobo</p>
+<p>Interface utilisateur: HungryHobo</p>
+<p>Intégration de Seedless: sponge</p>
+<p>Traduction allemande: HungryHobo</p>
+<p>Traduction russe: suhr</p>
+<p>Traduction française: albat, Redzara, Mixxy, magma</p>
+<p>Traduction espagnole: Mixxy</p>
+<p>Traduction portugaise: Mixxy</p>
+<p>Traduction hollandaise: KwukDuck</p>
+<p>Traduction norvégienne: hej</p>
+<p>Traduction suédoise: hottuna</p>
+<p>Traduction chinoise: walking</p>
+<p>Traduction arabe: hamada</p>
+<p>Testeurs versions Alpha : HungryHobo, Mixxy, Returning Novice, sponge, et de
+nombreux autres.</p>
+<p>Manuel: Mixxy</p>
+
+<h2>7. Détails techniques</h2>
+<p>Voir techdoc.txt</p>
+
+<h2>ENJOY THE BOTE FEELING!!</h2>
