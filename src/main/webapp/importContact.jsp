@@ -51,7 +51,7 @@
         </c:if>
         
         <c:if test="${not empty result}">
-            <ib:message key="Import Contat" var="pagetitle" scope="request"/>
+            <ib:message key="Import Contact" var="pagetitle" scope="request"/>
             <jsp:include page="header.jsp"/>
             <h1><ib:message key="Import Contact"/></h1>
             <p>
