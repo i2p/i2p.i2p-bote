@@ -813,6 +813,21 @@ td a:link, td a:visited {
 }
 
 
+/* Settings */
+
+.settings h3 {
+    border-bottom: 2px solid #ddd;
+    color: #aaa;
+    font-size: 0.923077em;
+    font-weight: 500;
+    line-height: 16px;
+    margin: 16px 0 4px;
+    overflow: hidden;
+    padding: 7px 0 0 28px;
+    text-transform: uppercase;
+}
+
+
 /* Set password */
 
 .password-label {

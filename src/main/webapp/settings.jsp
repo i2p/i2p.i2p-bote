@@ -56,13 +56,16 @@
 </c:if>
 
 <ib:message key="Settings" var="title" scope="request"/>
+<c:set var="contentClass" value="main settings" scope="request"/>
 <jsp:include page="header.jsp"/>
 
     <h1><ib:message key="Settings"/></h1>
 
     <form action="settings.jsp" method="post">
         <input type="hidden" name="action" value="save"/>
-        
+
+        <h3><ib:message key="General"/></h3>
+
         <%-- Auto mail checking and delivery checking --%>
         <c:set var="checked" value="${configuration.autoMailCheckEnabled ? ' checked' : ''}"/>
         <input type="checkbox"${checked} name="autoMailCheckEnabled"/>
@@ -74,7 +77,55 @@
         <input type="checkbox"${checked} name="deliveryCheckEnabled"/>
         <ib:message key="Check delivery status of sent emails"/>
         <br/>
-        
+
+        <%-- IMAP --%>
+        <c:set var="checked" value="${configuration.imapEnabled ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="imapEnabled"/>
+        <c:set var="imapPortField" value="<input type='text' name='imapPort' size='5' value='${configuration.imapPort}'/>"/>
+        <ib:message key="Enable IMAP on port {0}">
+            <ib:param value="${imapPortField}"/>
+        </ib:message>
+        <br/>
+
+        <%-- SMTP --%>
+        <c:set var="checked" value="${configuration.smtpEnabled ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="smtpEnabled"/>
+        <c:set var="smtpPortField" value="<input type='text' name='smtpPort' size='5' value='${configuration.smtpPort}'/>"/>
+        <ib:message key="Enable SMTP on port {0}">
+            <ib:param value="${smtpPortField}"/>
+        </ib:message>
+        <br/>
+
+        <%-- UI theme --%>
+        <ib:message key="Theme:"/>
+        <select name="theme">
+            <c:set var="currentTheme" value="${configuration.theme}"/>
+            <c:forEach items="${configuration.themes}" var="theme">
+                <c:set var="selected" value=""/>
+                <c:if test="${theme.id eq currentTheme}">
+                    <c:set var="selected" value=" selected"/>
+                </c:if>
+                <option value="${theme.id}"${selected}>${theme.displayName}</option>
+            </c:forEach>
+        </select>
+        <br/>
+
+        <h3><ib:message key="Privacy"/></h3>
+
+        <%-- Locale --%>
+        <c:set var="checked" value="${configuration.hideLocale ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="hideLocale"/>
+        <ib:message key="Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"/>
+        <br/>
+
+        <%-- Send time --%>
+        <c:set var="checked" value="${configuration.includeSentTime ? ' checked' : ''}"/>
+        <input type="checkbox"${checked} name="includeSentTime"/>
+        <ib:message key="Include send time in outgoing emails"/>
+        <br/>
+
+        <h3><ib:message key="Routing"/></h3>
+
         <%-- Relays --%>
         <ib:message key="Use relays when sending mail:"/>
         <select name="numStoreHops">
@@ -108,51 +159,7 @@
         <ib:message key="Email Destination of the gateway:"/>
         <input type="text" name="gatewayDestination" size="50" value="${configuration.gatewayDestination}"/>
         <br/>
-        
-        <%-- IMAP --%>
-        <c:set var="checked" value="${configuration.imapEnabled ? ' checked' : ''}"/>
-        <input type="checkbox"${checked} name="imapEnabled"/>
-        <c:set var="imapPortField" value="<input type='text' name='imapPort' size='5' value='${configuration.imapPort}'/>"/>
-        <ib:message key="Enable IMAP on port {0}">
-            <ib:param value="${imapPortField}"/>
-        </ib:message>
-        <br/>
-        
-        <%-- SMTP --%>
-        <c:set var="checked" value="${configuration.smtpEnabled ? ' checked' : ''}"/>
-        <input type="checkbox"${checked} name="smtpEnabled"/>
-        <c:set var="smtpPortField" value="<input type='text' name='smtpPort' size='5' value='${configuration.smtpPort}'/>"/>
-        <ib:message key="Enable SMTP on port {0}">
-            <ib:param value="${smtpPortField}"/>
-        </ib:message>
-        <br/>
-        
-        <%-- Locale --%>
-        <c:set var="checked" value="${configuration.hideLocale ? ' checked' : ''}"/>
-        <input type="checkbox"${checked} name="hideLocale"/>
-        <ib:message key="Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"/>
-        <br/>
 
-        <%-- Send time --%>
-        <c:set var="checked" value="${configuration.includeSentTime ? ' checked' : ''}"/>
-        <input type="checkbox"${checked} name="includeSentTime"/>
-        <ib:message key="Include send time in outgoing emails"/>
-        <br/>
-        
-        <%-- UI theme --%>
-        <ib:message key="Theme:"/>
-        <select name="theme">
-            <c:set var="currentTheme" value="${configuration.theme}"/>
-            <c:forEach items="${configuration.themes}" var="theme">
-                <c:set var="selected" value=""/>
-                <c:if test="${theme.id eq currentTheme}">
-                    <c:set var="selected" value=" selected"/>
-                </c:if>
-                <option value="${theme.id}"${selected}>${theme.displayName}</option>
-            </c:forEach>
-        </select>
-        <br/>
-        
         <p/>
         <button type="submit"><ib:message key="Save"/></button>
     </form> 
