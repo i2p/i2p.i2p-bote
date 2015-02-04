@@ -28,18 +28,16 @@ msgid "Light Blue"
 msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:69
-#, fuzzy
 msgid "Vanilla"
-msgstr "فانيلا"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
 msgstr "لا توجد هوية متوافقة مع المرسل:"
 
 #: src/main/java/i2p/bote/I2PBote.java:705
-#, fuzzy
 msgid "Checking password"
-msgstr "غير كلمة السر"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:708
 msgid "The old password is not correct."
@@ -179,9 +177,9 @@ msgid "Gateway disabled"
 msgstr "البوابة ممنوعة"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
-#, fuzzy, java-format
+#, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr "لا توجد هوية متوافقة مع المرسل:"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -237,9 +235,8 @@ msgstr "سبب المنع"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
-#, fuzzy
 msgid "Reachable"
-msgstr "نسبة الوصول %"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
@@ -540,24 +537,20 @@ msgid "Re:"
 msgstr "Re:"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Import Identities"
-msgstr "الهويات"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Please select an identities file and try again."
-msgstr "اخنر ملف لمشاركته وحاول مرة أخرى."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "The identities have been imported."
-msgstr "هوية الايميل تم مسحها"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Identities file:"
-msgstr "الهويات"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -615,9 +608,8 @@ msgid "Email Destination: "
 msgstr "البريد الإلكتروني للمتلقي :"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export Identities"
-msgstr "الهويات"
+msgstr ""
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
@@ -854,6 +846,11 @@ msgid ""
 msgstr "لا تظهر المعلومات التالية لأحد! انها تحتوي على مفتاحك السري."
 
 #: src/main/webapp/noIdentities.jsp
+#, fuzzy
+msgid "No Identity"
+msgstr "هوية جديدة"
+
+#: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
 msgstr "لم تحدد هوية الكترونية"
 
@@ -978,9 +975,8 @@ msgid "(If unsure, leave the default)"
 msgstr "(ان لم تكن متأكدا، دعه كما هو)"
 
 #: src/main/webapp/editIdentity.jsp
-#, fuzzy
 msgid "Vanity Destination:"
-msgstr "اتجاه البريد:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
@@ -1027,9 +1023,8 @@ msgid "Please wait..."
 msgstr "انتظر من فضلك..."
 
 #: src/main/webapp/submitIdentity.jsp
-#, fuzzy
 msgid "The Email Identity is being generated. This may take a while."
-msgstr "جاري انشاء هوية بريدية جديدة.يمكن ان تستغرق العملية عدة دقائق"
+msgstr ""
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1068,7 +1063,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "اصدار  {0} I2P-Bote"
 
 #: src/main/webapp/about.jsp
-msgid "Main Developer:"
+#, fuzzy
+msgid "Developers:"
 msgstr "المطور الرئيسي:"
 
 #: src/main/webapp/about.jsp
@@ -1080,11 +1076,20 @@ msgid "Feedback on I2P-Bote"
 msgstr "تعليقات حول I2P-Bote"
 
 #: src/main/webapp/about.jsp
+msgid "Technical concept, implementation, user interface"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "User experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr "المساهمون:"
 
 #: src/main/webapp/about.jsp
-msgid "Translation, QA, usability, technical feedback"
+#, fuzzy
+msgid "Technical concept, translation, QA, usability, technical feedback"
 msgstr "ترجمة، اسئلة شائعة، مشاكل تقنية"
 
 #: src/main/webapp/about.jsp
@@ -1092,8 +1097,9 @@ msgid "Pluginization, technical feedback"
 msgstr "مساعدة تقنية"
 
 #: src/main/webapp/about.jsp
-msgid "Seedless"
-msgstr "غبر مشارك"
+#, fuzzy
+msgid "Seedless integration"
+msgstr "ترجمة سويدية"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1148,12 +1154,12 @@ msgid "Hungarian translation"
 msgstr "الترجمة الهنجارية"
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, translation updates from tx"
-msgstr "اصلاحات بالكود و ترجمة من tx"
+msgid "Alpha testing"
+msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, Android app"
-msgstr ""
+msgid "Code fixes, translation updates from tx"
+msgstr "اصلاحات بالكود و ترجمة من tx"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
@@ -1257,6 +1263,10 @@ msgstr "القالب:"
 msgid "Change Password"
 msgstr "غير كلمة السر"
 
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr ""
+
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
 msgstr ""
@@ -1277,11 +1287,9 @@ msgstr "أضف الى دفتر العناوين"
 msgid "Unknown"
 msgstr "غير معروف"
 
-#~ msgid "lblue"
-#~ msgstr "أزرق"
+#, fuzzy
+#~ msgid "Import Contat"
+#~ msgstr "حرر العنوان"
 
-#~ msgid "A new version is available. Click here for the configuration page."
-#~ msgstr "تم اصدار جديد. انقر هنا للذهاب الى صفحة الاعدادات."
-
-#~ msgid "Unknown Status"
-#~ msgstr "حالة غير معروفة"
+#~ msgid "Seedless"
+#~ msgstr "غبر مشارك"

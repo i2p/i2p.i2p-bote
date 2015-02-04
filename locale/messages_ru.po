@@ -33,18 +33,16 @@ msgid "Light Blue"
 msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:69
-#, fuzzy
 msgid "Vanilla"
-msgstr "vanilla"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
 msgstr "Нет соответствующего набора ключей для такого отправителя: "
 
 #: src/main/java/i2p/bote/I2PBote.java:705
-#, fuzzy
 msgid "Checking password"
-msgstr "Сменить пароль"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:708
 msgid "The old password is not correct."
@@ -63,9 +61,8 @@ msgid "Re-encrypting addressbook"
 msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:723
-#, fuzzy
 msgid "Re-encrypting folder"
-msgstr "Проверить шифрованные файлы"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:727
 msgid "Updating password file"
@@ -185,9 +182,9 @@ msgid "Gateway disabled"
 msgstr "Шлюз отключён"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
-#, fuzzy, java-format
+#, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr "Нет соответствующего набора ключей для такого отправителя: "
+msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -243,9 +240,8 @@ msgstr "Причина бана"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
-#, fuzzy
 msgid "Reachable"
-msgstr "Доступность %"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
@@ -546,24 +542,20 @@ msgid "Re:"
 msgstr "AW:"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Import Identities"
-msgstr "Наборы ключей"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Please select an identities file and try again."
-msgstr "Выберете файл для вложения и попробуйте снова."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "The identities have been imported."
-msgstr "Идентификатор email был удален"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Identities file:"
-msgstr "Наборы ключей"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -623,9 +615,8 @@ msgid "Email Destination: "
 msgstr "Bote-Адрес:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export Identities"
-msgstr "Наборы ключей"
+msgstr ""
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
@@ -636,9 +627,8 @@ msgid "Confirm:"
 msgstr "Подтверждение:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export"
-msgstr "Импорт"
+msgstr ""
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -881,6 +871,11 @@ msgstr ""
 "личные ключи."
 
 #: src/main/webapp/noIdentities.jsp
+#, fuzzy
+msgid "No Identity"
+msgstr "Новый набор ключей"
+
+#: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
 msgstr "Ни одного набора ключей не определено"
 
@@ -1007,9 +1002,8 @@ msgid "(If unsure, leave the default)"
 msgstr "(оставьте по-умолчанию, если не уверены)"
 
 #: src/main/webapp/editIdentity.jsp
-#, fuzzy
 msgid "Vanity Destination:"
-msgstr "Bote-адрес:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
@@ -1056,10 +1050,8 @@ msgid "Please wait..."
 msgstr "Пожалуйста подождите..."
 
 #: src/main/webapp/submitIdentity.jsp
-#, fuzzy
 msgid "The Email Identity is being generated. This may take a while."
 msgstr ""
-"Вырабатывается идентификатор для Email. Это может занять несколько минут."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1098,7 +1090,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote, версия {0}"
 
 #: src/main/webapp/about.jsp
-msgid "Main Developer:"
+#, fuzzy
+msgid "Developers:"
 msgstr "Главный разработчик:"
 
 #: src/main/webapp/about.jsp
@@ -1110,11 +1103,20 @@ msgid "Feedback on I2P-Bote"
 msgstr "Feedback on I2P-Bote"
 
 #: src/main/webapp/about.jsp
+msgid "Technical concept, implementation, user interface"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "User experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr "Участники проекта:"
 
 #: src/main/webapp/about.jsp
-msgid "Translation, QA, usability, technical feedback"
+#, fuzzy
+msgid "Technical concept, translation, QA, usability, technical feedback"
 msgstr "Переводы, контроль качества, юзабилити, технические консультации."
 
 #: src/main/webapp/about.jsp
@@ -1122,8 +1124,9 @@ msgid "Pluginization, technical feedback"
 msgstr "Создание плагина, технические консультации"
 
 #: src/main/webapp/about.jsp
-msgid "Seedless"
-msgstr "Seedless"
+#, fuzzy
+msgid "Seedless integration"
+msgstr "Шведский перевод"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1178,12 +1181,12 @@ msgid "Hungarian translation"
 msgstr "Венгерский перевод"
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, translation updates from tx"
-msgstr "Исправления и обновления переводов от tx"
+msgid "Alpha testing"
+msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, Android app"
-msgstr ""
+msgid "Code fixes, translation updates from tx"
+msgstr "Исправления и обновления переводов от tx"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
@@ -1270,9 +1273,8 @@ msgid "Enable IMAP on port {0}"
 msgstr "Включить IMAP на порту {0}"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Enable SMTP on port {0}"
-msgstr "Включить IMAP на порту {0}"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1291,6 +1293,10 @@ msgstr "Тема:"
 #: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Сменить пароль"
+
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr ""
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1312,12 +1318,9 @@ msgstr "Добавить в адресную книгу"
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#~ msgid "lblue"
-#~ msgstr "lblue"
+#, fuzzy
+#~ msgid "Import Contat"
+#~ msgstr "Добавить контакты"
 
-#~ msgid "A new version is available. Click here for the configuration page."
-#~ msgstr ""
-#~ "Доступна новая версия. Нажмите здесь для перехода на страницу настройки."
-
-#~ msgid "Unknown Status"
-#~ msgstr "Неизвестный статус"
+#~ msgid "Seedless"
+#~ msgstr "Seedless"

@@ -1,9 +1,9 @@
 #
 # Translators:
+# gringoire <shmt@anapnea.net>, 2011
 # LinuxChata, 2014
 # madjong <madjong@i2pmail.org>, 2014
 # puxud <puxud@alivance.com>, 2014
-# gringoire <shmt@anapnea.net>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
@@ -29,18 +29,16 @@ msgid "Light Blue"
 msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:69
-#, fuzzy
 msgid "Vanilla"
-msgstr "vanilla"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
 msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:705
-#, fuzzy
 msgid "Checking password"
-msgstr "Змінити пароль"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:708
 msgid "The old password is not correct."
@@ -59,9 +57,8 @@ msgid "Re-encrypting addressbook"
 msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:723
-#, fuzzy
 msgid "Re-encrypting folder"
-msgstr "Перевірити зашифровані файли"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:727
 msgid "Updating password file"
@@ -239,9 +236,8 @@ msgstr "Причина бану"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
-#, fuzzy
 msgid "Reachable"
-msgstr "Доступність %"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
@@ -542,18 +538,16 @@ msgid "Re:"
 msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Import Identities"
-msgstr "Імпортувати контакт"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Please select an identities file and try again."
 msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "The identities have been imported."
-msgstr "Налаштування збережено."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Identities file:"
@@ -627,9 +621,8 @@ msgid "Confirm:"
 msgstr "Підтвердити:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export"
-msgstr "Іспортувати"
+msgstr ""
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -848,6 +841,10 @@ msgid ""
 msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
+msgid "No Identity"
+msgstr ""
+
+#: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
 msgstr ""
 
@@ -1060,7 +1057,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote версії {0}"
 
 #: src/main/webapp/about.jsp
-msgid "Main Developer:"
+#, fuzzy
+msgid "Developers:"
 msgstr "Головний розробник:"
 
 #: src/main/webapp/about.jsp
@@ -1072,11 +1070,19 @@ msgid "Feedback on I2P-Bote"
 msgstr ""
 
 #: src/main/webapp/about.jsp
+msgid "Technical concept, implementation, user interface"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "User experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Translation, QA, usability, technical feedback"
+msgid "Technical concept, translation, QA, usability, technical feedback"
 msgstr ""
 
 #: src/main/webapp/about.jsp
@@ -1084,7 +1090,7 @@ msgid "Pluginization, technical feedback"
 msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Seedless"
+msgid "Seedless integration"
 msgstr ""
 
 #: src/main/webapp/about.jsp
@@ -1140,11 +1146,11 @@ msgid "Hungarian translation"
 msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, translation updates from tx"
+msgid "Alpha testing"
 msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, Android app"
+msgid "Code fixes, translation updates from tx"
 msgstr ""
 
 #: src/main/webapp/setPassword.jsp
@@ -1230,9 +1236,8 @@ msgid "Enable IMAP on port {0}"
 msgstr "Увімкнути IMAP ні порті {0}"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Enable SMTP on port {0}"
-msgstr "Увімкнути IMAP ні порті {0}"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1249,6 +1254,10 @@ msgstr "Тема:"
 #: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Змінити пароль"
+
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr ""
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1270,5 +1279,6 @@ msgstr "Додати до адресної книги"
 msgid "Unknown"
 msgstr ""
 
-#~ msgid "lblue"
-#~ msgstr "lblue"
+#, fuzzy
+#~ msgid "Import Contat"
+#~ msgstr "Імпортувати контакт"

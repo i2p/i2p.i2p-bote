@@ -25,18 +25,16 @@ msgid "Light Blue"
 msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:69
-#, fuzzy
 msgid "Vanilla"
-msgstr "vanilla"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
 msgstr "Tidak ada identitas yang cocok dengan field pengirim/dari:"
 
 #: src/main/java/i2p/bote/I2PBote.java:705
-#, fuzzy
 msgid "Checking password"
-msgstr "Ubah Kata Sandi"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:708
 msgid "The old password is not correct."
@@ -55,9 +53,8 @@ msgid "Re-encrypting addressbook"
 msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:723
-#, fuzzy
 msgid "Re-encrypting folder"
-msgstr "Uji file terenkripsi"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:727
 msgid "Updating password file"
@@ -177,9 +174,9 @@ msgid "Gateway disabled"
 msgstr "Gateaway dinonaktifkan"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
-#, fuzzy, java-format
+#, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr "Tidak ada identitas yang cocok dengan field pengirim/dari:"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -235,9 +232,8 @@ msgstr "Alasan Ban"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
-#, fuzzy
 msgid "Reachable"
-msgstr "Dapat dijangkau %"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
@@ -538,24 +534,20 @@ msgid "Re:"
 msgstr "Re:"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Import Identities"
-msgstr "Identitas"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Please select an identities file and try again."
-msgstr "Silahkan pilih file untuk ditautkan dan coba lagi."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "The identities have been imported."
-msgstr "Identitas email telah dihapus."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Identities file:"
-msgstr "Identitas"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -617,9 +609,8 @@ msgid "Email Destination: "
 msgstr "Email Tujuan:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export Identities"
-msgstr "Identitas"
+msgstr ""
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
@@ -630,9 +621,8 @@ msgid "Confirm:"
 msgstr "Konfirmasi:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export"
-msgstr "impor"
+msgstr ""
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -877,6 +867,11 @@ msgstr ""
 "Anda."
 
 #: src/main/webapp/noIdentities.jsp
+#, fuzzy
+msgid "No Identity"
+msgstr "Identitas Baru"
+
+#: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
 msgstr "Tidak Ada Identitas Email Yang Didefinisikan"
 
@@ -1002,9 +997,8 @@ msgid "(If unsure, leave the default)"
 msgstr "(Jika tidak yakin, biarkan default)"
 
 #: src/main/webapp/editIdentity.jsp
-#, fuzzy
 msgid "Vanity Destination:"
-msgstr "Email Tujuan:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
@@ -1051,10 +1045,8 @@ msgid "Please wait..."
 msgstr "Mohon tunggu..."
 
 #: src/main/webapp/submitIdentity.jsp
-#, fuzzy
 msgid "The Email Identity is being generated. This may take a while."
 msgstr ""
-"Identitas Email sedang dibuat. Hal ini bisa membutuhkan beberapa menit."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1093,7 +1085,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote Versi {0}"
 
 #: src/main/webapp/about.jsp
-msgid "Main Developer:"
+#, fuzzy
+msgid "Developers:"
 msgstr "Pengembang Utama:"
 
 #: src/main/webapp/about.jsp
@@ -1105,11 +1098,20 @@ msgid "Feedback on I2P-Bote"
 msgstr "Umpan balik pada I2P-Bote"
 
 #: src/main/webapp/about.jsp
+msgid "Technical concept, implementation, user interface"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "User experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr "Kontributor:"
 
 #: src/main/webapp/about.jsp
-msgid "Translation, QA, usability, technical feedback"
+#, fuzzy
+msgid "Technical concept, translation, QA, usability, technical feedback"
 msgstr "Penerjemahan, QA, kegunaan, umpan balik teknikal"
 
 #: src/main/webapp/about.jsp
@@ -1117,8 +1119,9 @@ msgid "Pluginization, technical feedback"
 msgstr "Pluginisasi, umpan balik teknikal"
 
 #: src/main/webapp/about.jsp
-msgid "Seedless"
-msgstr "Seedless"
+#, fuzzy
+msgid "Seedless integration"
+msgstr "Penerjemahan Swedish"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1173,12 +1176,12 @@ msgid "Hungarian translation"
 msgstr "Penerjemahan Hungarian"
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, translation updates from tx"
-msgstr "Perbaikan kode, pembaruan terjemahan dari tx"
+msgid "Alpha testing"
+msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, Android app"
-msgstr ""
+msgid "Code fixes, translation updates from tx"
+msgstr "Perbaikan kode, pembaruan terjemahan dari tx"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
@@ -1265,9 +1268,8 @@ msgid "Enable IMAP on port {0}"
 msgstr "Aktifkan IMAP pada port {0}"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Enable SMTP on port {0}"
-msgstr "Aktifkan IMAP pada port {0}"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1286,6 +1288,10 @@ msgstr "Tema:"
 #: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Ubah Kata Sandi"
+
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr ""
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1307,11 +1313,9 @@ msgstr "Tambahkan ke Buku Alamat"
 msgid "Unknown"
 msgstr "Tidak diketahui"
 
-#~ msgid "lblue"
-#~ msgstr "lblue"
+#, fuzzy
+#~ msgid "Import Contat"
+#~ msgstr "Impor Kontak"
 
-#~ msgid "A new version is available. Click here for the configuration page."
-#~ msgstr "Versi terbaru sudah tersedia. Klik disini untuk laman konfigurasi."
-
-#~ msgid "Unknown Status"
-#~ msgstr "Status Tidak Diketahui"
+#~ msgid "Seedless"
+#~ msgstr "Seedless"

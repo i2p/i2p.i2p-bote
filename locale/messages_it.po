@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 04:27+0000\n"
+"POT-Creation-Date: 2015-02-04 10:45+0000\n"
 "PO-Revision-Date: 2013-11-02 22:59+0000\n"
 "Last-Translator: fletcherlynd <fletcherlynd@hotmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/I2P/language/"
@@ -882,6 +882,11 @@ msgstr ""
 "Non mostrare l'informazione sopra a chiunque! Contiene le tue chiavi private."
 
 #: src/main/webapp/noIdentities.jsp
+#, fuzzy
+msgid "No Identity"
+msgstr "Nuova Identità"
+
+#: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
 msgstr "Nessuna Identità Email Definita"
 
@@ -1101,7 +1106,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote Versione {0}"
 
 #: src/main/webapp/about.jsp
-msgid "Main Developer:"
+#, fuzzy
+msgid "Developers:"
 msgstr "Sviluppatore Capo:"
 
 #: src/main/webapp/about.jsp
@@ -1113,11 +1119,20 @@ msgid "Feedback on I2P-Bote"
 msgstr "Feedback su I2P-Bote"
 
 #: src/main/webapp/about.jsp
+msgid "Technical concept, implementation, user interface"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "User experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr "Collaboratori:"
 
 #: src/main/webapp/about.jsp
-msgid "Translation, QA, usability, technical feedback"
+#, fuzzy
+msgid "Technical concept, translation, QA, usability, technical feedback"
 msgstr "Traduzione, QA, usabilità, feedback tecnico"
 
 #: src/main/webapp/about.jsp
@@ -1125,8 +1140,9 @@ msgid "Pluginization, technical feedback"
 msgstr "Pluginizzazione, feedback tecnico"
 
 #: src/main/webapp/about.jsp
-msgid "Seedless"
-msgstr "Senza seed"
+#, fuzzy
+msgid "Seedless integration"
+msgstr "Traduzione Svedese"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1181,12 +1197,12 @@ msgid "Hungarian translation"
 msgstr "Traduzione Ungherese"
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, translation updates from tx"
-msgstr "Riparazione codici, aggiornamenti dalle trasmissioni (tx)"
+msgid "Alpha testing"
+msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, Android app"
-msgstr ""
+msgid "Code fixes, translation updates from tx"
+msgstr "Riparazione codici, aggiornamenti dalle trasmissioni (tx)"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
@@ -1295,6 +1311,10 @@ msgstr "Tema:"
 msgid "Change Password"
 msgstr "Cambia Password"
 
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr ""
+
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
 msgstr "{0} e-mail totali"
@@ -1314,6 +1334,13 @@ msgstr "Aggiungi a Rubrica"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Sconosciuto"
+
+#, fuzzy
+#~ msgid "Import Contat"
+#~ msgstr "Importa contatto"
+
+#~ msgid "Seedless"
+#~ msgstr "Senza seed"
 
 #~ msgid "lblue"
 #~ msgstr "I-blu"

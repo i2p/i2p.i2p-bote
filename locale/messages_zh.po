@@ -2,13 +2,14 @@
 # Translators:
 # walking <waling@mail.i2p>, 2013
 # walking <walking@i2pmail.org>, 2011
+# YF <yfdyh000@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 04:27+0000\n"
-"PO-Revision-Date: 2013-07-11 06:46+0000\n"
-"Last-Translator: xtoaster <zhazhenzhong@gmail.com>\n"
+"POT-Creation-Date: 2015-02-04 10:46+0000\n"
+"PO-Revision-Date: 2015-02-03 06:05+0000\n"
+"Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/I2P/"
 "language/zh_CN/)\n"
 "Language: zh_CN\n"
@@ -19,14 +20,13 @@ msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:67
 msgid "Material"
-msgstr ""
+msgstr "纸张"
 
 #: src/main/java/i2p/bote/Configuration.java:68
 msgid "Light Blue"
-msgstr ""
+msgstr "亮蓝"
 
 #: src/main/java/i2p/bote/Configuration.java:69
-#, fuzzy
 msgid "Vanilla"
 msgstr "香草白"
 
@@ -35,9 +35,8 @@ msgid "No identity matches the sender/from field: "
 msgstr "没有身份密钥与寄件者/收件人相匹配: "
 
 #: src/main/java/i2p/bote/I2PBote.java:705
-#, fuzzy
 msgid "Checking password"
-msgstr "修改密码"
+msgstr "正在检查密码"
 
 #: src/main/java/i2p/bote/I2PBote.java:708
 msgid "The old password is not correct."
@@ -49,20 +48,19 @@ msgstr "新密码与确认密码字段输入相符。"
 
 #: src/main/java/i2p/bote/I2PBote.java:717
 msgid "Re-encrypting identities"
-msgstr ""
+msgstr "重新加密身份"
 
 #: src/main/java/i2p/bote/I2PBote.java:720
 msgid "Re-encrypting addressbook"
-msgstr ""
+msgstr "重新加密地址簿"
 
 #: src/main/java/i2p/bote/I2PBote.java:723
-#, fuzzy
 msgid "Re-encrypting folder"
-msgstr "测试加密的文件"
+msgstr "重新加密文件夹"
 
 #: src/main/java/i2p/bote/I2PBote.java:727
 msgid "Updating password file"
-msgstr ""
+msgstr "正在更新密码文件"
 
 #: src/main/java/i2p/bote/crypto/ECDH256_ECDSA256.java:45
 msgid "256-bit Elliptic Curve Encryption"
@@ -178,9 +176,9 @@ msgid "Gateway disabled"
 msgstr "邮件网关已禁用"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
-#, fuzzy, java-format
+#, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr "没有身份密钥与寄件者/收件人相匹配: "
+msgstr "没有身份与寄件者/收件人相匹配: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -220,7 +218,7 @@ msgstr "可达性 %"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:225
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:230
 msgid "Untested"
-msgstr ""
+msgstr "未测试"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:138
 msgid "Banned Peers:"
@@ -236,24 +234,23 @@ msgstr "屏蔽原因"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
-#, fuzzy
 msgid "Reachable"
-msgstr "可达性 %"
+msgstr "可达"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
 msgid "Unreachable"
-msgstr ""
+msgstr "不可达"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:221
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:228
 msgid "Good"
-msgstr ""
+msgstr "良好"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:223
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:229
 msgid "Unreliable"
-msgstr ""
+msgstr "不可靠"
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:73
 msgid "Error: Please add at least one recipient."
@@ -496,11 +493,11 @@ msgstr "联系人已经从地址簿中删除。"
 msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
-msgstr ""
+msgstr "此文件夹中未找到电子邮件。它可能移动到了“已发送”文件夹。"
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
-msgstr ""
+msgstr "此文件夹中未找到电子邮件。"
 
 #: src/main/webapp/showEmail.jsp
 msgid "Signature:"
@@ -539,24 +536,20 @@ msgid "Re:"
 msgstr "回复:"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Import Identities"
-msgstr "身份"
+msgstr "导入身份"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Please select an identities file and try again."
-msgstr "请选择要附加的文件并重试。"
+msgstr "请选择一个身份文件并重试。"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "The identities have been imported."
-msgstr "邮箱身份已删除。"
+msgstr "此身份已被导入。"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Identities file:"
-msgstr "身份"
+msgstr "身份文件:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -564,15 +557,15 @@ msgstr "密码:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "(leave blank if identities not encrypted)"
-msgstr ""
+msgstr "(留空，如果身份未加密)"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Overwrite all existing identities:"
-msgstr ""
+msgstr "覆盖所有已存在身份:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Duplicates: replace existing identity:"
-msgstr ""
+msgstr "重复: 替换已有身份:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import"
@@ -616,22 +609,20 @@ msgid "Email Destination: "
 msgstr "Email 地址"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export Identities"
-msgstr "身份"
+msgstr "导出身份"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
-msgstr ""
+msgstr "(留空，如果身份不加密)"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Confirm:"
 msgstr "确认:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export"
-msgstr "导入"
+msgstr "导出"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -861,6 +852,11 @@ msgid ""
 msgstr "不要将上述信息透露给任何人！它包含有你的私钥。"
 
 #: src/main/webapp/noIdentities.jsp
+#, fuzzy
+msgid "No Identity"
+msgstr "新身份"
+
+#: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
 msgstr "您还没有生成任何邮箱身份"
 
@@ -985,13 +981,12 @@ msgid "(If unsure, leave the default)"
 msgstr "(如果不清楚，可使用默认设置)"
 
 #: src/main/webapp/editIdentity.jsp
-#, fuzzy
 msgid "Vanity Destination:"
-msgstr "邮箱地址:"
+msgstr "表象目的地:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
-msgstr ""
+msgstr "(2 字符需要几秒，3需要几分钟，等等)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Email Destination:"
@@ -1034,7 +1029,6 @@ msgid "Please wait..."
 msgstr "请等待..."
 
 #: src/main/webapp/submitIdentity.jsp
-#, fuzzy
 msgid "The Email Identity is being generated. This may take a while."
 msgstr "正在生成邮箱的身份标识。这可能需要几分钟。"
 
@@ -1075,7 +1069,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote, 版本 {0}"
 
 #: src/main/webapp/about.jsp
-msgid "Main Developer:"
+#, fuzzy
+msgid "Developers:"
 msgstr "主要开发人员："
 
 #: src/main/webapp/about.jsp
@@ -1087,11 +1082,20 @@ msgid "Feedback on I2P-Bote"
 msgstr "通过 I2P-Bote 反馈"
 
 #: src/main/webapp/about.jsp
+msgid "Technical concept, implementation, user interface"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "User experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr "贡献者:"
 
 #: src/main/webapp/about.jsp
-msgid "Translation, QA, usability, technical feedback"
+#, fuzzy
+msgid "Technical concept, translation, QA, usability, technical feedback"
 msgstr "翻译, QA, 实用性建议, 技术反馈"
 
 #: src/main/webapp/about.jsp
@@ -1099,8 +1103,9 @@ msgid "Pluginization, technical feedback"
 msgstr "插件化及技术反馈"
 
 #: src/main/webapp/about.jsp
-msgid "Seedless"
-msgstr "Seedless"
+#, fuzzy
+msgid "Seedless integration"
+msgstr "瑞典语翻译"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1155,12 +1160,12 @@ msgid "Hungarian translation"
 msgstr "匈牙利语翻译"
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, translation updates from tx"
-msgstr "TX 代码修复，翻译更新"
+msgid "Alpha testing"
+msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, Android app"
-msgstr ""
+msgid "Code fixes, translation updates from tx"
+msgstr "TX 代码修复，翻译更新"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
@@ -1247,9 +1252,8 @@ msgid "Enable IMAP on port {0}"
 msgstr "启用IMAP端口{0}"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Enable SMTP on port {0}"
-msgstr "启用IMAP端口{0}"
+msgstr "启用 SMTP 于端口 {0}"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1267,6 +1271,10 @@ msgstr "主题："
 msgid "Change Password"
 msgstr "修改密码"
 
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr ""
+
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
 msgstr "共 {0} 封邮件"
@@ -1277,7 +1285,7 @@ msgstr "共 {0} 封邮件，{1} 封新邮件"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
-msgstr ""
+msgstr "{0} 封未完成"
 
 #: src/main/webapp/WEB-INF/tags/address.tag
 msgid "Add to Address Book"
@@ -1287,11 +1295,12 @@ msgstr "添加至地址簿"
 msgid "Unknown"
 msgstr "未知"
 
-#~ msgid "lblue"
-#~ msgstr "蓝色心情"
+#, fuzzy
+#~ msgid "Import Contat"
+#~ msgstr "导入联系人"
 
-#~ msgid "A new version is available. Click here for the configuration page."
-#~ msgstr "有新版可用，点此进入设置页面。"
+#~ msgid "Seedless"
+#~ msgstr "Seedless"
 
-#~ msgid "Unknown Status"
-#~ msgstr "状态未知"
+#~ msgid "Code fixes, Android app"
+#~ msgstr "代码修复，Android 应用"

@@ -3,7 +3,6 @@
 # ducki2p <ducki2p@gmail.com>, 2011
 # hxdcmls, 2013
 # rafaelbf, 2013
-# rafaelbf, 2013
 # walking <walking@i2pmail.org>, 2011
 # wicked, 2012
 msgid ""
@@ -30,18 +29,16 @@ msgid "Light Blue"
 msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:69
-#, fuzzy
 msgid "Vanilla"
-msgstr "vanilla"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
 msgstr "Nenhuma identidade coincide com o campo do remetente 'De':"
 
 #: src/main/java/i2p/bote/I2PBote.java:705
-#, fuzzy
 msgid "Checking password"
-msgstr "Mudar palavra de passe"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:708
 msgid "The old password is not correct."
@@ -60,9 +57,8 @@ msgid "Re-encrypting addressbook"
 msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:723
-#, fuzzy
 msgid "Re-encrypting folder"
-msgstr "Testar arquivos encriptados"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:727
 msgid "Updating password file"
@@ -184,9 +180,9 @@ msgid "Gateway disabled"
 msgstr "Ponte de ligação desativada"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
-#, fuzzy, java-format
+#, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr "Nenhuma identidade coincide com o campo do remetente 'De':"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -242,9 +238,8 @@ msgstr "Razão da inadmisão"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
-#, fuzzy
 msgid "Reachable"
-msgstr "Disponibilidade em %"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
@@ -545,24 +540,20 @@ msgid "Re:"
 msgstr "Re:"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Import Identities"
-msgstr "Identidades"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Please select an identities file and try again."
-msgstr "Selecione um arquivo para anexar e tente novamente!"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "The identities have been imported."
-msgstr "A identidade do email foi eliminada."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Identities file:"
-msgstr "Identidades"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -624,9 +615,8 @@ msgid "Email Destination: "
 msgstr "Destinação de correio:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export Identities"
-msgstr "Identidades"
+msgstr ""
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
@@ -637,9 +627,8 @@ msgid "Confirm:"
 msgstr "Confirmar:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export"
-msgstr "Importar"
+msgstr ""
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -885,6 +874,11 @@ msgstr ""
 "privadas."
 
 #: src/main/webapp/noIdentities.jsp
+#, fuzzy
+msgid "No Identity"
+msgstr "Nova Identidade"
+
+#: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
 msgstr "Nenhuma identidade definida"
 
@@ -1011,9 +1005,8 @@ msgid "(If unsure, leave the default)"
 msgstr "(Se tiver dúvidas, deixe o padrão!)"
 
 #: src/main/webapp/editIdentity.jsp
-#, fuzzy
 msgid "Vanity Destination:"
-msgstr "Destinação de correio:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
@@ -1060,10 +1053,8 @@ msgid "Please wait..."
 msgstr "Por favor, aguarde ..."
 
 #: src/main/webapp/submitIdentity.jsp
-#, fuzzy
 msgid "The Email Identity is being generated. This may take a while."
 msgstr ""
-"A identidade de correio está sendo gerada. Isto pode levar alguns minutos."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1102,7 +1093,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote, versão {0}"
 
 #: src/main/webapp/about.jsp
-msgid "Main Developer:"
+#, fuzzy
+msgid "Developers:"
 msgstr "Desenvolvedor principal:"
 
 #: src/main/webapp/about.jsp
@@ -1114,11 +1106,20 @@ msgid "Feedback on I2P-Bote"
 msgstr "Comentários sobre o I2P-Bote"
 
 #: src/main/webapp/about.jsp
+msgid "Technical concept, implementation, user interface"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "User experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr "Contribuições por:"
 
 #: src/main/webapp/about.jsp
-msgid "Translation, QA, usability, technical feedback"
+#, fuzzy
+msgid "Technical concept, translation, QA, usability, technical feedback"
 msgstr "Traduções, controle de qualidade, usabilidade, consultas técnicas"
 
 #: src/main/webapp/about.jsp
@@ -1126,8 +1127,9 @@ msgid "Pluginization, technical feedback"
 msgstr "Plugin, consultas  técnicas"
 
 #: src/main/webapp/about.jsp
-msgid "Seedless"
-msgstr "Seedless"
+#, fuzzy
+msgid "Seedless integration"
+msgstr "Tradução ao sueco"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1182,12 +1184,12 @@ msgid "Hungarian translation"
 msgstr "Tradução Húngara"
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, translation updates from tx"
-msgstr "Correcções de código, atualizações de traduções de tx"
+msgid "Alpha testing"
+msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, Android app"
-msgstr ""
+msgid "Code fixes, translation updates from tx"
+msgstr "Correcções de código, atualizações de traduções de tx"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
@@ -1276,9 +1278,8 @@ msgid "Enable IMAP on port {0}"
 msgstr "Habilitar IMAP na porta {0}"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Enable SMTP on port {0}"
-msgstr "Habilitar IMAP na porta {0}"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1297,6 +1298,10 @@ msgstr "Tema:"
 #: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Mudar palavra de passe"
+
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr ""
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1318,13 +1323,9 @@ msgstr "Adicionar à Lista de Endereços"
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#~ msgid "lblue"
-#~ msgstr "lblue"
+#, fuzzy
+#~ msgid "Import Contat"
+#~ msgstr "Importar Contato"
 
-#~ msgid "A new version is available. Click here for the configuration page."
-#~ msgstr ""
-#~ "Uma nova versão está disponível. Clique aqui para a página de "
-#~ "configuração."
-
-#~ msgid "Unknown Status"
-#~ msgstr "Estado desconhecido"
+#~ msgid "Seedless"
+#~ msgstr "Seedless"

@@ -33,9 +33,8 @@ msgid "No identity matches the sender/from field: "
 msgstr "Không danh tính nào khớp với hàng người gửi:"
 
 #: src/main/java/i2p/bote/I2PBote.java:705
-#, fuzzy
 msgid "Checking password"
-msgstr "Đổi Mật Khẩu"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:708
 msgid "The old password is not correct."
@@ -175,9 +174,9 @@ msgid "Gateway disabled"
 msgstr "Cổng ra không chạy"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
-#, fuzzy, java-format
+#, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr "Không danh tính nào khớp với hàng người gửi:"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -233,9 +232,8 @@ msgstr "Lý do cấm"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
-#, fuzzy
 msgid "Reachable"
-msgstr "% khả năng với đến"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
@@ -536,24 +534,20 @@ msgid "Re:"
 msgstr "Re:"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Import Identities"
-msgstr "Danh tính"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Please select an identities file and try again."
-msgstr "Xin chọn một tập tin đính kèm khác."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "The identities have been imported."
-msgstr "Danh tính email đã được lưu."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Identities file:"
-msgstr "Danh tính"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -611,9 +605,8 @@ msgid "Email Destination: "
 msgstr "Email Đến:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export Identities"
-msgstr "Danh tính"
+msgstr ""
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
@@ -851,6 +844,11 @@ msgid ""
 msgstr "Đừng đưa thông tin trên cho ai khác! Nó chứa chìa khóa riêng của bạn. "
 
 #: src/main/webapp/noIdentities.jsp
+#, fuzzy
+msgid "No Identity"
+msgstr "Danh tính mới"
+
+#: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
 msgstr "Không có Danh tính "
 
@@ -975,9 +973,8 @@ msgid "(If unsure, leave the default)"
 msgstr "(Nếu không chắc chắn, hãy để mặc định)"
 
 #: src/main/webapp/editIdentity.jsp
-#, fuzzy
 msgid "Vanity Destination:"
-msgstr "Email Đến:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
@@ -1024,9 +1021,8 @@ msgid "Please wait..."
 msgstr "Xin chờ..."
 
 #: src/main/webapp/submitIdentity.jsp
-#, fuzzy
 msgid "The Email Identity is being generated. This may take a while."
-msgstr "Danh tính Email được thiết lập. Có thể mất vài phút."
+msgstr ""
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1065,7 +1061,7 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote Phiên bản {0}"
 
 #: src/main/webapp/about.jsp
-msgid "Main Developer:"
+msgid "Developers:"
 msgstr ""
 
 #: src/main/webapp/about.jsp
@@ -1077,11 +1073,20 @@ msgid "Feedback on I2P-Bote"
 msgstr "Phản hồi về I2P-Bote"
 
 #: src/main/webapp/about.jsp
+msgid "Technical concept, implementation, user interface"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "User experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr "Người đóng góp"
 
 #: src/main/webapp/about.jsp
-msgid "Translation, QA, usability, technical feedback"
+#, fuzzy
+msgid "Technical concept, translation, QA, usability, technical feedback"
 msgstr "Dịch thuật, Hỏi/Đáp, sử dụng, phản hồi kỹ thuật"
 
 #: src/main/webapp/about.jsp
@@ -1089,8 +1094,9 @@ msgid "Pluginization, technical feedback"
 msgstr "Pluginization, phản hồi kỹ thuật"
 
 #: src/main/webapp/about.jsp
-msgid "Seedless"
-msgstr "Danh mục Seedless"
+#, fuzzy
+msgid "Seedless integration"
+msgstr "Bản dịch tiếng Thụy Điển"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1145,11 +1151,11 @@ msgid "Hungarian translation"
 msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, translation updates from tx"
+msgid "Alpha testing"
 msgstr ""
 
 #: src/main/webapp/about.jsp
-msgid "Code fixes, Android app"
+msgid "Code fixes, translation updates from tx"
 msgstr ""
 
 #: src/main/webapp/setPassword.jsp
@@ -1254,6 +1260,10 @@ msgstr ""
 msgid "Change Password"
 msgstr "Đổi Mật Khẩu"
 
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr ""
+
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
 msgstr ""
@@ -1274,8 +1284,9 @@ msgstr "Thêm vào Sổ Địa Chỉ"
 msgid "Unknown"
 msgstr "Không rõ"
 
-#~ msgid "A new version is available. Click here for the configuration page."
-#~ msgstr "Phiên bản mới đã có. Bấm vào đây để vào trang cấu hình."
+#, fuzzy
+#~ msgid "Import Contat"
+#~ msgstr "Chỉnh sửa Liên hệ"
 
-#~ msgid "Unknown Status"
-#~ msgstr "Tình Trạng Không Rõ"
+#~ msgid "Seedless"
+#~ msgstr "Danh mục Seedless"
