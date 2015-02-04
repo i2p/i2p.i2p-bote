@@ -5,3 +5,22 @@ Email composition
 - "Include sent time" as an option, pre-filled with settings default
 Identities
 - Generate dests in background rather than needing a dedicated tab open
+
+Not-yet-implemented
+- Drafts folder
+- User-defined folders
+- Automatically disable timestamps when using mail routes
+- Random offset for fetch interval
+- Per-identity settings
+  - Exclude identities from global checking
+  - Fetch interval
+  - Mail route delays
+- Mail route per-hop settings
+  - Delay
+  - Fixed forward time
+- Traffic correlation countermeasures at relays
+  - Mixing anonymity (minimum threshold on relay packets to send)
+  - Constant traffic (test and dummy messages)
+  - Balanced incoming/outgoing ratio
+  - Packet padding
+- Retrieving email via relays
