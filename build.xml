@@ -194,6 +194,7 @@
             <lib file="${lib}/flexi-gmss-1.7p1.jar"/>
             <lib file="${lib}/jcommon-1.0.23.jar" />
             <lib file="${lib}/jfreechart-1.0.19.jar" />
+            <zipfileset dir="src/main/webapp/html" prefix="html"/>
           <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
         </war>
 
@@ -377,6 +378,7 @@
             <fileset dir="src/main/webapp" includes="*.html"/>
             <fileset dir="src/main/webapp/" includes="*.xml"/>
             <webinf dir="src/main/webapp/WEB-INF/tlds" includes="*.tld"/>
+            <zipfileset dir="src/main/webapp/html" prefix="html"/>
             <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
         </war>
     </target>
