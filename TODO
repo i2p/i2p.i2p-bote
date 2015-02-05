@@ -10,13 +10,13 @@ Not-yet-implemented
 - Drafts folder
 - User-defined folders
 - Automatically disable timestamps when using mail routes
-- Random offset for fetch interval
-- Per-identity settings
+- Random offset for fetch interval (#1360)
+- Per-identity settings (#1359)
   - Exclude identities from global checking
   - Fetch interval
-  - Mail route delays
+  - Mail route delays (#1450)
 - Mail route per-hop settings
-  - Delay
+  - Delay (#1361)
   - Fixed forward time
 - Traffic correlation countermeasures at relays
   - Mixing anonymity (minimum threshold on relay packets to send)
