@@ -62,6 +62,16 @@ import com.lambdaworks.codec.Base64;
  * The Email Identities can be written to, and read from, a password-encrypted file.
  */
 public class Identities implements KeyUpdateHandler {
+    private static final String IDENTITY_PREFIX = "identity";
+    private static final String PREF_KEY = "key";
+    private static final String PREF_PUBLIC_NAME = "publicName";
+    private static final String PREF_DESCRIPTION = "description";
+    private static final String PREF_SALT = "salt";
+    private static final String PREF_PICTURE = "picture";
+    private static final String PREF_TEXT = "text";
+    private static final String PREF_PUBLISHED = "published";
+    private static final String PREF_DEFAULT = "default";
+
     private Log log = new Log(Identities.class);
     private File identitiesFile;
     private PasswordHolder passwordHolder;
@@ -167,26 +177,26 @@ public class Identities implements KeyUpdateHandler {
     }
 
     private boolean loadFromProperties(Properties properties, boolean append, boolean replace) throws GeneralSecurityException {
-        String defaultIdentityStr = properties.getProperty("default");
+        String defaultIdentityStr = properties.getProperty(PREF_DEFAULT);
         if (identities == null || !append)
             identities = new TreeSet<EmailIdentity>(new IdentityComparator());
         int index = 0;
         while (true) {
-            String prefix = "identity" + index + ".";
-            String key = properties.getProperty(prefix + "key");
+            String prefix = IDENTITY_PREFIX + index + ".";
+            String key = properties.getProperty(prefix + PREF_KEY);
             if (key == null)
                 break;
 
             EmailIdentity identity = new EmailIdentity(key);
-            identity.setDescription(properties.getProperty(prefix + "description"));
-            String pictureBase64 = properties.getProperty(prefix + "picture");
+            identity.setDescription(properties.getProperty(prefix + PREF_DESCRIPTION));
+            String pictureBase64 = properties.getProperty(prefix + PREF_PICTURE);
             if (pictureBase64!=null && !pictureBase64.isEmpty())
                 identity.setPictureBase64(pictureBase64);
-            identity.setText(properties.getProperty(prefix + "text"));
-            identity.setPublished("true".equalsIgnoreCase(properties.getProperty(prefix + "published")));
-            String name = properties.getProperty(prefix + "publicName");
+            identity.setText(properties.getProperty(prefix + PREF_TEXT));
+            identity.setPublished("true".equalsIgnoreCase(properties.getProperty(prefix + PREF_PUBLISHED)));
+            String name = properties.getProperty(prefix + PREF_PUBLIC_NAME);
             identity.setPublicName(name);
-            String salt = properties.getProperty(prefix + "salt");
+            String salt = properties.getProperty(prefix + PREF_SALT);
             if (salt != null) {
                 Hash nameHash = EmailIdentity.calculateHash(name);
                 Fingerprint fingerprint = new Fingerprint(nameHash, identity, Base64.decode(salt.toCharArray()));
@@ -263,26 +273,26 @@ public class Identities implements KeyUpdateHandler {
             if (identity == defaultIdentity)
                 defaultIdentityStr = identity.getKey();
 
-            String prefix = "identity" + index + ".";
+            String prefix = IDENTITY_PREFIX + index + ".";
             String name = identity.getPublicName();
-            properties.setProperty(prefix + "publicName", name==null ? "" : name);
-            properties.setProperty(prefix + "key", identity.getFullKey());
+            properties.setProperty(prefix + PREF_PUBLIC_NAME, name==null ? "" : name);
+            properties.setProperty(prefix + PREF_KEY, identity.getFullKey());
             Fingerprint fingerprint = identity.getFingerprint();
             byte[] salt = fingerprint==null ? null : fingerprint.getSalt();
-            properties.setProperty(prefix + "salt", salt==null ? "" : new String(Base64.encode(salt)));
+            properties.setProperty(prefix + PREF_SALT, salt==null ? "" : new String(Base64.encode(salt)));
             String description = identity.getDescription();
-            properties.setProperty(prefix + "description", (description==null ? "" : description));
+            properties.setProperty(prefix + PREF_DESCRIPTION, (description==null ? "" : description));
             String pictureBase64 = identity.getPictureBase64();
-            properties.setProperty(prefix + "picture", (pictureBase64==null ? "" : pictureBase64));
+            properties.setProperty(prefix + PREF_PICTURE, (pictureBase64==null ? "" : pictureBase64));
             String text = identity.getText();
-            properties.setProperty(prefix + "text", (text==null ? "" : text));
-            properties.setProperty(prefix + "published", identity.isPublished() ? "true" : "false");
+            properties.setProperty(prefix + PREF_TEXT, (text==null ? "" : text));
+            properties.setProperty(prefix + PREF_PUBLISHED, identity.isPublished() ? "true" : "false");
             
             index++;
         }
 
         if (defaultIdentityStr != null)
-            properties.setProperty("default", defaultIdentityStr);
+            properties.setProperty(PREF_DEFAULT, defaultIdentityStr);
 
         return properties;
     }
