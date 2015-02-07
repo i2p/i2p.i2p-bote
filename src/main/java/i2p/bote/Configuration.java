@@ -677,29 +677,19 @@ public class Configuration {
     }
 
     private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
-        String stringValue = properties.getProperty(parameterName);
-        if ("true".equalsIgnoreCase(stringValue) || "yes".equalsIgnoreCase(stringValue) || "on".equalsIgnoreCase(stringValue) || "1".equals(stringValue))
-            return true;
-        else if ("false".equalsIgnoreCase(stringValue) || "no".equalsIgnoreCase(stringValue) || "off".equalsIgnoreCase(stringValue) || "0".equals(stringValue))
-            return false;
-        else if (stringValue == null)
-            return defaultValue;
-        else {
-            log.warn("<" + stringValue + "> is not a legal value for the boolean parameter <" + parameterName + ">");
+        try {
+            return Util.getBooleanParameter(properties, parameterName, defaultValue);
+        } catch (IllegalArgumentException e) {
+            log.warn("getBooleanParameter failed, using default", e);
             return defaultValue;
         }
     }
 
     private int getIntParameter(String parameterName, int defaultValue) {
-        String stringValue = properties.getProperty(parameterName);
-        if (stringValue == null)
-            return defaultValue;
-        else
-            try {
-                return new Integer(stringValue);
-            }
-        catch (NumberFormatException e) {
-            log.warn("Can't convert value <" + stringValue + "> for parameter <" + parameterName + "> to int, using default.");
+        try {
+            return Util.getIntParameter(properties, parameterName, defaultValue);
+        } catch (NumberFormatException e) {
+            log.warn("getIntParameter failed, using default", e);
             return defaultValue;
         }
     }

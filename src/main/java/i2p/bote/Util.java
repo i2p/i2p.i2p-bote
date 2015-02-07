@@ -43,6 +43,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.concurrent.ThreadFactory;
 
 import javax.mail.MessagingException;
@@ -427,5 +428,29 @@ public class Util {
             new Log(Util.class).error("Can't read from ByteArrayInputStream", e);
             return null;
         }
+    }
+
+    public static boolean getBooleanParameter(Properties properties, String parameterName, boolean defaultValue) {
+        String stringValue = properties.getProperty(parameterName);
+        if ("true".equalsIgnoreCase(stringValue) || "yes".equalsIgnoreCase(stringValue) || "on".equalsIgnoreCase(stringValue) || "1".equals(stringValue))
+            return true;
+        else if ("false".equalsIgnoreCase(stringValue) || "no".equalsIgnoreCase(stringValue) || "off".equalsIgnoreCase(stringValue) || "0".equals(stringValue))
+            return false;
+        else if (stringValue == null)
+            return defaultValue;
+        else
+            throw new IllegalArgumentException("<" + stringValue + "> is not a legal value for the boolean parameter <" + parameterName + ">");
+    }
+
+    public static int getIntParameter(Properties properties, String parameterName, int defaultValue) {
+        String stringValue = properties.getProperty(parameterName);
+        if (stringValue == null)
+            return defaultValue;
+        else
+            try {
+                return new Integer(stringValue);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException("Can't convert value <" + stringValue + "> for parameter <" + parameterName + "> to int.");
+            }
     }
 }
