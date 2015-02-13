@@ -229,7 +229,7 @@ aside {
     padding: 13px 0 13px 28px;
 }
 .menuitem:hover, .menuitem.selected {
-    background: #e0e0e0; /* Grey 300 */
+    background: #e8e8e8; /* Grey 300 */
     color: #3f51b5 !important; /* Indigo 500 */
     text-decoration: none;	
 }
