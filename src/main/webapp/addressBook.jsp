@@ -38,6 +38,7 @@
     <ib:message key="Address Book" var="title" scope="request"/>
     <c:if test="${!param.select}"><ib:message key="Private Address Book" var="pagetitle" scope="request"/></c:if>
     <c:if test="${param.select && !empty contacts}"><ib:message key="Select One or More Entries" var="pagetitle" scope="request"/></c:if>
+    <c:set var="navSelected" value="address-book" scope="request"/>
     <jsp:include page="header.jsp"/>
     
     <c:if test="${!empty pagetitle}"><h1>${pagetitle}</h1></c:if>

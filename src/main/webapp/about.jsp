@@ -25,6 +25,7 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <ib:message key="About I2P-Bote" var="title" scope="request"/>
+<c:set var="navSelected" value="about" scope="request"/>
 <jsp:include page="header.jsp"/>
 
     <h2>

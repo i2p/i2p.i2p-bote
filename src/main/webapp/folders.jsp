@@ -28,6 +28,7 @@
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 <c:set var="themeDir" value="themes/${jspHelperBean.configuration.theme}" scope="request"/>
+<c:set var="selected" value="${param.selected}" scope="request"/>
 
 <html>
 <head>

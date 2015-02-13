@@ -70,7 +70,7 @@
 </c:choose>
 
 <div class="statusbox">
-<a class="menuitem" href="${statusUrl}" target="_parent">
+<a class="menuitem${param.selected == 'network' ? ' selected' : '' }" href="${statusUrl}" target="_parent">
     <div class="menu-icon"><img src="${themeDir}/images/${statusIcon}.png"/></div>
     <div class="menu-text">${statusMessage}</div>
     

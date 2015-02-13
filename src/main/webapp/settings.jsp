@@ -57,6 +57,7 @@
 
 <ib:message key="Settings" var="title" scope="request"/>
 <c:set var="contentClass" value="main settings" scope="request"/>
+<c:set var="navSelected" value="settings" scope="request"/>
 <jsp:include page="header.jsp"/>
 
     <h1><ib:message key="Settings"/></h1>

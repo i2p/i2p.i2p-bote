@@ -47,6 +47,7 @@
 </c:if>
 <ib:message key="${param.path}" var="title" scope="request" noextract="true"/>   <%-- Translation strings are extracted from folders.jsp --%>
 <c:set var="contentClass" value="main foldermain" scope="request"/>
+<c:set var="navSelected" value="${param.path}" scope="request"/>
 <jsp:include page="header.jsp"/>
 
 <div class="compose float">

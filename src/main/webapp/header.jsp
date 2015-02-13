@@ -84,16 +84,16 @@
 </div>
 
 <div class="menubox">
-    <iframe src="folders.jsp" class="folders-frame"></iframe>
+    <iframe src="folders.jsp?selected=${navSelected}" class="folders-frame"></iframe>
 </div>
 
 <div class="menubox">
     <h2><ib:message key="Addresses"/></h2>
-    <a class="menuitem identities" href="identities.jsp">
+    <a class="menuitem${navSelected == 'identities' ? ' selected' : '' } identities" href="identities.jsp">
         <div class="menu-icon"></div>
         <div class="menu-text"><ib:message key="Identities"/></div>
     </a>
-    <a class="menuitem address-book" href="addressBook.jsp">
+    <a class="menuitem${navSelected == 'address-book' ? ' selected' : '' } address-book" href="addressBook.jsp">
         <div class="menu-icon"></div>
         <div class="menu-text"><ib:message key="Address Book"/></div>
     </a>
@@ -107,7 +107,7 @@
 
 <div class="menubox">
     <h2><ib:message key="Configuration"/></h2>
-    <a class="menuitem settings" href="settings.jsp">
+    <a class="menuitem${navSelected == 'settings' ? ' selected' : '' } settings" href="settings.jsp">
         <div class="menu-icon"></div>
         <div class="menu-text"><ib:message key="Settings"/></div>
     </a>
@@ -115,14 +115,14 @@
 
 <div class="menubox">
     <h2><ib:message key="Network Status"/></h2>
-    <iframe src="statusFrame.jsp" class="status-frame"></iframe>
+    <iframe src="statusFrame.jsp?selected=${navSelected}" class="status-frame"></iframe>
 </div>
 
 <div class="menubox">
     <h2><ib:message key="Help"/></h2>
-    <a class="menuitem" href="userGuide.jsp"><ib:message key="User Guide"/></a>
-    <a class="menuitem" href="faq.jsp"><ib:message key="FAQ"/></a>
-    <a class="menuitem" href="about.jsp"><ib:message key="About"/></a>
+    <a class="menuitem${navSelected == 'user-guide' ? ' selected' : '' }" href="userGuide.jsp"><ib:message key="User Guide"/></a>
+    <a class="menuitem${navSelected == 'faq' ? ' selected' : '' }" href="faq.jsp"><ib:message key="FAQ"/></a>
+    <a class="menuitem${navSelected == 'about' ? ' selected' : '' }" href="about.jsp"><ib:message key="About"/></a>
 </div>
 </aside>
 

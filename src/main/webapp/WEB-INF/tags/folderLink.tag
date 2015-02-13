@@ -42,7 +42,7 @@
     </ib:message>
 </c:if>
 
-<a class="menuitem folder ${dirName}" href="folder.jsp?path=${dirName}" target="_parent" title="${linkTitle}">
+<a class="menuitem${selected == dirName ? ' selected' : '' } folder ${dirName}" href="folder.jsp?path=${dirName}" target="_parent" title="${linkTitle}">
     <div class="menu-icon"><img src="themes/${jspHelperBean.configuration.theme}/images/folder.png"/></div>
     <div class="menu-text">${displayName}</div>
 

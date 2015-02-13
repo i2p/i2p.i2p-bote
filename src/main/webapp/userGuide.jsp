@@ -23,5 +23,6 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <ib:message key="User Guide" var="title" scope="request"/>
+<c:set var="navSelected" value="user-guide" scope="request"/>
 <c:set var="filename" value="${ib:getLocalizedFilename('userGuide.html', pageContext.servletContext)}" scope="request"/>
 <jsp:forward page="showHtml.jsp"/>

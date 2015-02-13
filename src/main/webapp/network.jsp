@@ -28,6 +28,7 @@
 <jsp:include page="getStatus.jsp"/>
 
 <ib:message key="Network" var="title" scope="request"/>
+<c:set var="navSelected" value="network" scope="request"/>
 <jsp:include page="header.jsp"/>
 
     <c:choose>
