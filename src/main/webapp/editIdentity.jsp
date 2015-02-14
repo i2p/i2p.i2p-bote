@@ -170,7 +170,7 @@
             <ib:message key="Default Identity:"/>
         </div>
         <div class="identity-form-checkbox">
-            <c:if test="${jspHelperBean.identities.size le 1}">
+            <c:if test="${jspHelperBean.identities.size le 1 and not param.createNew}">
                 <c:set var="disabled" value="disabled='disabled'"/>
             </c:if>
             <c:if test="${param.defaultIdentity or not empty disabled}">
