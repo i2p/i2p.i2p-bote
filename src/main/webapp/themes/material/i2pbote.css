@@ -332,6 +332,9 @@ See also .menu-icon
     font-size: 1em;
     margin-left: 1em;
 }
+.main form.onebutton {
+    display: inline-block;
+}
 .main h1 {
     display: none;
 }
