@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-04 10:45+0000\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: HungryHobo <HungryHobo@mail.i2p>\n"
 "Language-Team: \n"
@@ -1186,11 +1186,43 @@ msgid "Settings have been saved."
 msgstr ""
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
 msgstr ""
 
 #: src/main/webapp/settings.jsp
@@ -1219,26 +1251,6 @@ msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Email Destination of the gateway:"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
 msgstr ""
 
 #: src/main/webapp/settings.jsp

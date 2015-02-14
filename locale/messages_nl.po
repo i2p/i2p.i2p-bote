@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 04:27+0000\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
 "PO-Revision-Date: 2015-01-17 23:49+0000\n"
 "Last-Translator: Nathan Follens\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/I2P/language/nl/)\n"
@@ -871,9 +871,8 @@ msgstr ""
 "Toon de bovenstaande informatie aan niemand! Het bevat je privé-sleutels."
 
 #: src/main/webapp/noIdentities.jsp
-#, fuzzy
 msgid "No Identity"
-msgstr "Nieuwe Identiteit"
+msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1090,9 +1089,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote, Versie {0}"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Developers:"
-msgstr "Hoofd developer:"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1115,18 +1113,16 @@ msgid "Contributors:"
 msgstr "Contribuanten:"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "Vertaling, QA, bruikbaarheid, technische feedback"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
 msgstr "Pluginization, technische feedback"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Seedless integration"
-msgstr "Zweedse vertaling"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1234,12 +1230,47 @@ msgid "Settings have been saved."
 msgstr "De instellingen zijn opgeslagen."
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "Controleer elke {0} minuten op nieuwe mail"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
 msgstr "Controleer leveringsstatus van verzonden e-mails"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "IMAP op poort {0} aanzetten"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Thema:"
+
+#: src/main/webapp/settings.jsp
+#, fuzzy
+msgid "Privacy"
+msgstr "Privé-sleutels:"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Gebruik Engels als taal om toe te voegen aan uitgaande e-mail ('Re:', "
+"'wrote:' etc.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Voeg verzendtijd toe bij uitgaande e-mail"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1270,28 +1301,6 @@ msgid "Email Destination of the gateway:"
 msgstr "E-mail bestemming van de gateway:"
 
 #: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "IMAP op poort {0} aanzetten"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Gebruik Engels als taal om toe te voegen aan uitgaande e-mail ('Re:', "
-"'wrote:' etc.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Voeg verzendtijd toe bij uitgaande e-mail"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Thema:"
-
-#: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Verander wachtwoord"
 
@@ -1318,10 +1327,3 @@ msgstr "Toevoegen aan adresboek"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Onbekend"
-
-#, fuzzy
-#~ msgid "Import Contat"
-#~ msgstr "Contact importeren"
-
-#~ msgid "Seedless"
-#~ msgstr "Seedless"

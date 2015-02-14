@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-04 10:46+0000\n"
-"PO-Revision-Date: 2015-02-03 06:05+0000\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
+"PO-Revision-Date: 2015-02-04 13:23+0000\n"
 "Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/I2P/"
 "language/zh_CN/)\n"
@@ -76,7 +76,7 @@ msgstr "2048位 El-Gamal 加密"
 
 #: src/main/java/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
 msgid "NTRU-1087 Encryption"
-msgstr "NTRU-1087 算法"
+msgstr "NTRU-1087 加密"
 
 #: src/main/java/i2p/bote/email/Email.java:471
 #: src/main/java/i2p/bote/email/Email.java:483
@@ -96,7 +96,7 @@ msgstr "需要密码或密码输入错误"
 
 #: src/main/java/i2p/bote/imap/MapperFactory.java:317
 msgid "Deletion of mailboxes is not currently supported."
-msgstr "尚不支持邮箱的删除"
+msgstr "尚不支持删除邮箱。"
 
 #: src/main/java/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -371,7 +371,7 @@ msgstr "I2P-Bote"
 
 #: src/main/webapp/header.jsp
 msgid "Secure Distributed Email"
-msgstr "分布式安全邮"
+msgstr "分布式安全邮件"
 
 #: src/main/webapp/header.jsp
 msgid "Addresses"
@@ -407,7 +407,7 @@ msgstr "常见问题解答"
 
 #: src/main/webapp/header.jsp
 msgid "About"
-msgstr "关于 I2P-Bote"
+msgstr "关于"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"
@@ -475,7 +475,7 @@ msgstr "附件"
 
 #: src/main/webapp/newEmail.jsp
 msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "附件体积建议小于500k。"
+msgstr "附件体积建议保持在小于 500 KB。"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Message:"
@@ -852,9 +852,8 @@ msgid ""
 msgstr "不要将上述信息透露给任何人！它包含有你的私钥。"
 
 #: src/main/webapp/noIdentities.jsp
-#, fuzzy
 msgid "No Identity"
-msgstr "新身份"
+msgstr "无身份"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1069,9 +1068,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote, 版本 {0}"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Developers:"
-msgstr "主要开发人员："
+msgstr "开发者:"
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1083,29 +1081,27 @@ msgstr "通过 I2P-Bote 反馈"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, implementation, user interface"
-msgstr ""
+msgstr "技术概念、实现、用户界面"
 
 #: src/main/webapp/about.jsp
 msgid "User experience, extended features, Android app"
-msgstr ""
+msgstr "用户体验、扩展功能、Android 应用"
 
 #: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr "贡献者:"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "翻译, QA, 实用性建议, 技术反馈"
+msgstr "技术概念、翻译、质量保证、易用性、技术反馈"
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
 msgstr "插件化及技术反馈"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Seedless integration"
-msgstr "瑞典语翻译"
+msgstr "Seedless 整合"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1161,7 +1157,7 @@ msgstr "匈牙利语翻译"
 
 #: src/main/webapp/about.jsp
 msgid "Alpha testing"
-msgstr ""
+msgstr "Alpha 测试"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes, translation updates from tx"
@@ -1212,12 +1208,45 @@ msgid "Settings have been saved."
 msgstr "设置已保存。"
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "每 {0} 分钟查收一次邮件"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
 msgstr "检查已发出邮件的寄送情况"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "启用IMAP端口{0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr "启用 SMTP 于端口 {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "主题："
+
+#: src/main/webapp/settings.jsp
+#, fuzzy
+msgid "Privacy"
+msgstr "私钥:"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr "自动格式使用英语 ('Re:', 'wrote:' 等)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "为发送的邮件添加发送时间戳"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1248,32 +1277,12 @@ msgid "Email Destination of the gateway:"
 msgstr "收发公网邮件的网关地址:"
 
 #: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "启用IMAP端口{0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr "启用 SMTP 于端口 {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "自动格式使用英语 ('Re:', 'wrote:' 等)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "为发送的邮件添加发送时间戳"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "主题："
-
-#: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "修改密码"
 
 #: src/main/webapp/faq.jsp
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "常见问题"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1294,13 +1303,3 @@ msgstr "添加至地址簿"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "未知"
-
-#, fuzzy
-#~ msgid "Import Contat"
-#~ msgstr "导入联系人"
-
-#~ msgid "Seedless"
-#~ msgstr "Seedless"
-
-#~ msgid "Code fixes, Android app"
-#~ msgstr "代码修复，Android 应用"

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 04:27+0000\n"
-"PO-Revision-Date: 2013-05-02 21:15+0000\n"
-"Last-Translator: HungryHobo <HungryHobo@i2pmail.org>\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
+"PO-Revision-Date: 2015-02-04 11:00+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/I2P/language/"
 "ar/)\n"
 "Language: ar\n"
@@ -846,9 +846,8 @@ msgid ""
 msgstr "لا تظهر المعلومات التالية لأحد! انها تحتوي على مفتاحك السري."
 
 #: src/main/webapp/noIdentities.jsp
-#, fuzzy
 msgid "No Identity"
-msgstr "هوية جديدة"
+msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1063,9 +1062,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "اصدار  {0} I2P-Bote"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Developers:"
-msgstr "المطور الرئيسي:"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1088,18 +1086,16 @@ msgid "Contributors:"
 msgstr "المساهمون:"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "ترجمة، اسئلة شائعة، مشاكل تقنية"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
 msgstr "مساعدة تقنية"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Seedless integration"
-msgstr "ترجمة سويدية"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1204,11 +1200,44 @@ msgid "Settings have been saved."
 msgstr "تم حفظ الخيارات."
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "تحقق من البريد كل {0} دقيقة"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "القالب:"
+
+#: src/main/webapp/settings.jsp
+#, fuzzy
+msgid "Privacy"
+msgstr "المفاتيح الخاصة:"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr "استعمل الانجليزية في البريد الخارج ('Re', 'wrote', etc.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "اضافة تاريخ ارسال البريد الالكتروني"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
 msgstr ""
 
 #: src/main/webapp/settings.jsp
@@ -1240,26 +1269,6 @@ msgid "Email Destination of the gateway:"
 msgstr "البريد الإلكتروني للمتلقي"
 
 #: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "استعمل الانجليزية في البريد الخارج ('Re', 'wrote', etc.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "اضافة تاريخ ارسال البريد الالكتروني"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "القالب:"
-
-#: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "غير كلمة السر"
 
@@ -1286,10 +1295,3 @@ msgstr "أضف الى دفتر العناوين"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "غير معروف"
-
-#, fuzzy
-#~ msgid "Import Contat"
-#~ msgstr "حرر العنوان"
-
-#~ msgid "Seedless"
-#~ msgstr "غبر مشارك"

@@ -5,12 +5,12 @@
 # ColomboI2P <inactive+ColomboI2P@transifex.com>, 2012
 # fletcherlynd <fletcherlynd@hotmail.com>, 2013
 # mkkid <jokjok@hotmail.it>, 2011
-# Tony Goodyear <fswitch20@hotmail.com>, 2012
+# spawned76 <fswitch20@hotmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-04 10:45+0000\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
 "PO-Revision-Date: 2013-11-02 22:59+0000\n"
 "Last-Translator: fletcherlynd <fletcherlynd@hotmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/I2P/language/"
@@ -30,18 +30,16 @@ msgid "Light Blue"
 msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:69
-#, fuzzy
 msgid "Vanilla"
-msgstr "vaniglia"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
 msgstr "Nessuna identità fa match con il campo mittente/da:"
 
 #: src/main/java/i2p/bote/I2PBote.java:705
-#, fuzzy
 msgid "Checking password"
-msgstr "Cambia Password"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:708
 msgid "The old password is not correct."
@@ -60,9 +58,8 @@ msgid "Re-encrypting addressbook"
 msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:723
-#, fuzzy
 msgid "Re-encrypting folder"
-msgstr "Prova file  cifrati"
+msgstr ""
 
 #: src/main/java/i2p/bote/I2PBote.java:727
 msgid "Updating password file"
@@ -183,9 +180,9 @@ msgid "Gateway disabled"
 msgstr "Gateway disabilitato"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
-#, fuzzy, java-format
+#, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr "Nessuna identità fa match con il campo mittente/da: {0}"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -200,7 +197,7 @@ msgstr "Errore nel creare pacchetti email: {0}"
 #: src/main/java/i2p/bote/web/JSPHelper.java:254
 #, java-format
 msgid "Error while sending email: {0}"
-msgstr ""
+msgstr "Errore nell'invio di email: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:256
 #, java-format
@@ -241,9 +238,8 @@ msgstr "Ragione Interdizione"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
-#, fuzzy
 msgid "Reachable"
-msgstr "Raggiungibilità %"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
@@ -544,24 +540,20 @@ msgid "Re:"
 msgstr "Re:"
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Import Identities"
-msgstr "Identità"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Please select an identities file and try again."
-msgstr "Per cortesia selezionare un file da allegare e provare di nuovo."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "The identities have been imported."
-msgstr "L'identità email è stata cancellata."
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
-#, fuzzy
 msgid "Identities file:"
-msgstr "Identità"
+msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -623,9 +615,8 @@ msgid "Email Destination: "
 msgstr "Destinazione Email:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export Identities"
-msgstr "Identità"
+msgstr ""
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
@@ -636,9 +627,8 @@ msgid "Confirm:"
 msgstr "Conferma:"
 
 #: src/main/webapp/exportIdentities.jsp
-#, fuzzy
 msgid "Export"
-msgstr "Importa"
+msgstr ""
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -882,9 +872,8 @@ msgstr ""
 "Non mostrare l'informazione sopra a chiunque! Contiene le tue chiavi private."
 
 #: src/main/webapp/noIdentities.jsp
-#, fuzzy
 msgid "No Identity"
-msgstr "Nuova Identità"
+msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1013,9 +1002,8 @@ msgid "(If unsure, leave the default)"
 msgstr "(Se non si è sicuri, lasciare il defaultDa)"
 
 #: src/main/webapp/editIdentity.jsp
-#, fuzzy
 msgid "Vanity Destination:"
-msgstr "Destinazione Email:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
@@ -1063,11 +1051,8 @@ msgid "Please wait..."
 msgstr "Attendere Prego..."
 
 #: src/main/webapp/submitIdentity.jsp
-#, fuzzy
 msgid "The Email Identity is being generated. This may take a while."
 msgstr ""
-"Sta avvenendo la generazione dell'Identità Email. La cosa può durare diversi "
-"minuti."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1106,9 +1091,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote Versione {0}"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Developers:"
-msgstr "Sviluppatore Capo:"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1131,18 +1115,16 @@ msgid "Contributors:"
 msgstr "Collaboratori:"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "Traduzione, QA, usabilità, feedback tecnico"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
 msgstr "Pluginizzazione, feedback tecnico"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Seedless integration"
-msgstr "Traduzione Svedese"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1250,12 +1232,46 @@ msgid "Settings have been saved."
 msgstr "Le impostazioni sono state salvate."
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "Controlla posta ogni {0} minuti"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
 msgstr "Controlla lo stato di spedizione delle e-mail inviate"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Attiva IMAP sulla porta {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Tema:"
+
+#: src/main/webapp/settings.jsp
+#, fuzzy
+msgid "Privacy"
+msgstr "Chiavi private:"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Usa l'Inglese per il testo aggiunto a email in uscita ('Re:', 'wrote:', ecc.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Includi l'istante di invio nelle email in uscita"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1286,28 +1302,6 @@ msgid "Email Destination of the gateway:"
 msgstr "Destinazione Email del gateway:"
 
 #: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "Attiva IMAP sulla porta {0}"
-
-#: src/main/webapp/settings.jsp
-#, fuzzy
-msgid "Enable SMTP on port {0}"
-msgstr "Attiva IMAP sulla porta {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Usa l'Inglese per il testo aggiunto a email in uscita ('Re:', 'wrote:', ecc.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Includi l'istante di invio nelle email in uscita"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Tema:"
-
-#: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Cambia Password"
 
@@ -1334,21 +1328,3 @@ msgstr "Aggiungi a Rubrica"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Sconosciuto"
-
-#, fuzzy
-#~ msgid "Import Contat"
-#~ msgstr "Importa contatto"
-
-#~ msgid "Seedless"
-#~ msgstr "Senza seed"
-
-#~ msgid "lblue"
-#~ msgstr "I-blu"
-
-#~ msgid "A new version is available. Click here for the configuration page."
-#~ msgstr ""
-#~ "E' disponibile una nuova versione. Clicca qui per la pagina di "
-#~ "configurazione"
-
-#~ msgid "Unknown Status"
-#~ msgstr "Stato sconosciuto"

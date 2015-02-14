@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 04:27+0000\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
 "PO-Revision-Date: 2013-06-17 21:51+0000\n"
 "Last-Translator: rafaelbf\n"
 "Language-Team: Portuguese (http://www.transifex.com/projects/p/I2P/language/"
@@ -874,9 +874,8 @@ msgstr ""
 "privadas."
 
 #: src/main/webapp/noIdentities.jsp
-#, fuzzy
 msgid "No Identity"
-msgstr "Nova Identidade"
+msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1093,9 +1092,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote, versão {0}"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Developers:"
-msgstr "Desenvolvedor principal:"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1118,18 +1116,16 @@ msgid "Contributors:"
 msgstr "Contribuições por:"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "Traduções, controle de qualidade, usabilidade, consultas técnicas"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
 msgstr "Plugin, consultas  técnicas"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Seedless integration"
-msgstr "Tradução ao sueco"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1238,12 +1234,47 @@ msgid "Settings have been saved."
 msgstr "Configuração guardada."
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "Buscar novas mensagens cada {0} minutos"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
 msgstr "Verificar status de entrega dos emails enviados"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Habilitar IMAP na porta {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Tema:"
+
+#: src/main/webapp/settings.jsp
+#, fuzzy
+msgid "Privacy"
+msgstr "Chaves Privadas"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Usar inglês para texto adicionado nas mensagens enviadas (\"Re:\", \"wrote:"
+"\", etc.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Incluir a hora do envio nas mensagens enviadas"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1274,28 +1305,6 @@ msgid "Email Destination of the gateway:"
 msgstr "Destinação da ponte:"
 
 #: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "Habilitar IMAP na porta {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Usar inglês para texto adicionado nas mensagens enviadas (\"Re:\", \"wrote:"
-"\", etc.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Incluir a hora do envio nas mensagens enviadas"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Tema:"
-
-#: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Mudar palavra de passe"
 
@@ -1322,10 +1331,3 @@ msgstr "Adicionar à Lista de Endereços"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Desconhecido"
-
-#, fuzzy
-#~ msgid "Import Contat"
-#~ msgstr "Importar Contato"
-
-#~ msgid "Seedless"
-#~ msgstr "Seedless"

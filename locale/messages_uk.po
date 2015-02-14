@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 04:27+0000\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
 "PO-Revision-Date: 2014-12-21 20:47+0000\n"
 "Last-Translator: madjong <madjong@i2pmail.org>\n"
 "Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/projects/p/I2P/"
@@ -1057,9 +1057,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote версії {0}"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Developers:"
-msgstr "Головний розробник:"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1196,11 +1195,43 @@ msgid "Settings have been saved."
 msgstr "Налаштування збережено."
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "Перевіряти поштову скриньку кожні {0} хвилин"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Увімкнути IMAP ні порті {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Тема:"
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Вказувати час відправки у вихідних повідомленнях"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
 msgstr ""
 
 #: src/main/webapp/settings.jsp
@@ -1232,26 +1263,6 @@ msgid "Email Destination of the gateway:"
 msgstr ""
 
 #: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "Увімкнути IMAP ні порті {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Вказувати час відправки у вихідних повідомленнях"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Тема:"
-
-#: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Змінити пароль"
 
@@ -1278,7 +1289,3 @@ msgstr "Додати до адресної книги"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Import Contat"
-#~ msgstr "Імпортувати контакт"

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-04 10:45+0000\n"
-"PO-Revision-Date: 2015-02-04 10:41+0000\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
+"PO-Revision-Date: 2015-02-04 12:53+0000\n"
 "Last-Translator: Towinet\n"
 "Language-Team: French (http://www.transifex.com/projects/p/I2P/language/"
 "fr/)\n"
@@ -548,19 +548,19 @@ msgstr "Re:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import Identities"
-msgstr ""
+msgstr "Importer identités"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Please select an identities file and try again."
-msgstr ""
+msgstr "Veuillez sélectionner un fichier d'identités puis réessayer."
 
 #: src/main/webapp/importIdentities.jsp
 msgid "The identities have been imported."
-msgstr ""
+msgstr "Les identités ont été importées."
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Identities file:"
-msgstr ""
+msgstr "Fichier d'identités :"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -568,15 +568,15 @@ msgstr "Mot de passe:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "(leave blank if identities not encrypted)"
-msgstr ""
+msgstr "(laissez vide si les identités ne sont pas chiffrées)"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Overwrite all existing identities:"
-msgstr ""
+msgstr "Écraser toutes les identités existantes :"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Duplicates: replace existing identity:"
-msgstr ""
+msgstr "Doublon : remplacer l'identité existante :"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import"
@@ -623,11 +623,11 @@ msgstr "Destination de courrier:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export Identities"
-msgstr ""
+msgstr "Exporter identités"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
-msgstr ""
+msgstr "(laisser vide pour ne pas chiffrer les identités)"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Confirm:"
@@ -635,7 +635,7 @@ msgstr "Confirmer:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -884,9 +884,8 @@ msgstr ""
 "privées."
 
 #: src/main/webapp/noIdentities.jsp
-#, fuzzy
 msgid "No Identity"
-msgstr "Nouvelle identité"
+msgstr "Pas d'identité"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1016,11 +1015,11 @@ msgstr "(En cas de doute, gardez le choix par défaut)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Vanity Destination:"
-msgstr ""
+msgstr "Destination de vanité :"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
-msgstr ""
+msgstr "(2 caractères prennent des secondes, 3 prennent des minutes, etc)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Email Destination:"
@@ -1065,6 +1064,8 @@ msgstr "Merci de patienter ..."
 #: src/main/webapp/submitIdentity.jsp
 msgid "The Email Identity is being generated. This may take a while."
 msgstr ""
+"L'identité de courrier électronique est en cours de génération. Cela peut "
+"prendre quelque temps."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1103,9 +1104,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote version {0}"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Developers:"
-msgstr "Développeur principal :"
+msgstr "Développeurs :"
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1117,29 +1117,29 @@ msgstr "vos commentaires sur I2P-Bote"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, implementation, user interface"
-msgstr ""
+msgstr "Concept technique, mise en œuvre, interface utilisateur"
 
 #: src/main/webapp/about.jsp
 msgid "User experience, extended features, Android app"
-msgstr ""
+msgstr "Expérience utilisateur, fonctions étendues, application Android"
 
 #: src/main/webapp/about.jsp
 msgid "Contributors:"
 msgstr "Contributeurs:"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "Traduction, Assurance qualité, ergonomie, retours techniques"
+msgstr ""
+"Concept technique, traduction, QA (assurance qualité), facilité "
+"d'utilisation, retour d'information technique"
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
 msgstr "Greffe, retours techniques"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Seedless integration"
-msgstr "Traduction suédoise"
+msgstr "Intégration dans Seedless"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1195,7 +1195,7 @@ msgstr "Traduction Hongroise"
 
 #: src/main/webapp/about.jsp
 msgid "Alpha testing"
-msgstr ""
+msgstr "Test Alpha"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes, translation updates from tx"
@@ -1249,12 +1249,47 @@ msgid "Settings have been saved."
 msgstr "Configuration enregistrée."
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "Relever le courrier toutes les {0} minutes"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
 msgstr "Vérifier l'état de livraison des courriels envoyés"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Activer IMAP sur le port {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr "Permettre le SMTP sur le port {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Thème :"
+
+#: src/main/webapp/settings.jsp
+#, fuzzy
+msgid "Privacy"
+msgstr "Clefs privées"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Utiliser l'anglais pour le texte ajouté aux messages sortants ('Re', "
+"'wrote', etc.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Inclure l'heure d'envoi aux courriers sortants"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1285,34 +1320,12 @@ msgid "Email Destination of the gateway:"
 msgstr "Destination de courrier de la passerelle:"
 
 #: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "Activer IMAP sur le port {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Utiliser l'anglais pour le texte ajouté aux messages sortants ('Re', "
-"'wrote', etc.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Inclure l'heure d'envoi aux courriers sortants"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Thème :"
-
-#: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Changer le mot de passe"
 
 #: src/main/webapp/faq.jsp
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Foire Aux Questions"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1324,7 +1337,7 @@ msgstr "{0} emails au total, {1} nouveau(x)"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
-msgstr ""
+msgstr "{0} incomplet(s)"
 
 #: src/main/webapp/WEB-INF/tags/address.tag
 msgid "Add to Address Book"
@@ -1333,10 +1346,3 @@ msgstr "Ajouter au carnet d'adresses"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Inconnu"
-
-#, fuzzy
-#~ msgid "Import Contat"
-#~ msgstr "Importer contact"
-
-#~ msgid "Seedless"
-#~ msgstr "Non amorcé"

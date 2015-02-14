@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 04:27+0000\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
 "PO-Revision-Date: 2014-10-07 20:19+0000\n"
 "Last-Translator: A5h8d0wf0x <littleslyfoxie28@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/I2P/language/cs/)\n"
@@ -849,9 +849,8 @@ msgid ""
 msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
-#, fuzzy
 msgid "No Identity"
-msgstr "Nová identita"
+msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1066,9 +1065,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote verze {0}"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Developers:"
-msgstr "Hlavní Vývojář"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1091,9 +1089,8 @@ msgid "Contributors:"
 msgstr "Přispěvatelé:"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "Překlad, QA, technická zpětná vazba"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
@@ -1206,12 +1203,46 @@ msgid "Settings have been saved."
 msgstr "Změny byly uloženy."
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "Kontrolovat jestli nepřišel nový email každých {0} minut."
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
 msgstr "Zkontrolovat status doručení odeslaných emailů"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Umožnit IMAP na port {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Téma"
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Použít angličtinu pro text přidaný do odchozího emailu ('Re:', 'wrote:', "
+"atd.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Do odchozích emailů přidat čas odeslání"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1240,28 +1271,6 @@ msgstr "Použít bránu při posílání na emailovou adresu která je mimo I2P"
 #: src/main/webapp/settings.jsp
 msgid "Email Destination of the gateway:"
 msgstr "Emailová destinace brány:"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "Umožnit IMAP na port {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Použít angličtinu pro text přidaný do odchozího emailu ('Re:', 'wrote:', "
-"atd.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Do odchozích emailů přidat čas odeslání"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Téma"
 
 #: src/main/webapp/settings.jsp
 msgid "Change Password"

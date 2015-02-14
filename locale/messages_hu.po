@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 04:27+0000\n"
-"PO-Revision-Date: 2013-05-02 21:15+0000\n"
-"Last-Translator: HungryHobo <HungryHobo@i2pmail.org>\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
+"PO-Revision-Date: 2015-02-04 11:00+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/I2P/language/"
 "hu/)\n"
 "Language: hu\n"
@@ -851,9 +851,8 @@ msgstr ""
 "Senkinek ne mutasd meg a fenti információt! Tartalmazza a prvát kulcsaitdat."
 
 #: src/main/webapp/noIdentities.jsp
-#, fuzzy
 msgid "No Identity"
-msgstr "Új Személyazonosság"
+msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1092,18 +1091,16 @@ msgid "Contributors:"
 msgstr "Közreműködők:"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "Fordítás, Kérdések és válaszok, használhatóság, szakmai visszajelzés"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
 msgstr "Kiegészítők, szakmai visszajelzés"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Seedless integration"
-msgstr "Svéd fordítás"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1208,11 +1205,44 @@ msgid "Settings have been saved."
 msgstr "Beállítások elmentve."
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "Levelek ellenőrzése {0} percenként."
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+#, fuzzy
+msgid "Privacy"
+msgstr "Privát kulcsok:"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr "Angol nyelv használata a kimenő e-mailhez ('Re:', 'wrote:', stb.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Küldés idejének hozzáadása a kimenő levelekhez"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
 msgstr ""
 
 #: src/main/webapp/settings.jsp
@@ -1244,26 +1274,6 @@ msgid "Email Destination of the gateway:"
 msgstr "Átjáró E-mail Célállomássa:"
 
 #: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Angol nyelv használata a kimenő e-mailhez ('Re:', 'wrote:', stb.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Küldés idejének hozzáadása a kimenő levelekhez"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Jelszó Megváltoztatása"
 
@@ -1290,10 +1300,3 @@ msgstr "Hozzáadás a Címjegyzékhez"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Ismeretlen"
-
-#, fuzzy
-#~ msgid "Import Contat"
-#~ msgstr "Névjegy Szerkesztése"
-
-#~ msgid "Seedless"
-#~ msgstr "Táplálás nélküli (seedless)"

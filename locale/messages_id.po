@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 04:27+0000\n"
+"POT-Creation-Date: 2015-02-14 22:12+0000\n"
 "PO-Revision-Date: 2014-08-13 04:53+0000\n"
 "Last-Translator: Khairul Agasta <khairuldroids@gmail.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/projects/p/I2P/language/"
@@ -867,9 +867,8 @@ msgstr ""
 "Anda."
 
 #: src/main/webapp/noIdentities.jsp
-#, fuzzy
 msgid "No Identity"
-msgstr "Identitas Baru"
+msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -1085,9 +1084,8 @@ msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote Versi {0}"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Developers:"
-msgstr "Pengembang Utama:"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1110,18 +1108,16 @@ msgid "Contributors:"
 msgstr "Kontributor:"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "Penerjemahan, QA, kegunaan, umpan balik teknikal"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
 msgstr "Pluginisasi, umpan balik teknikal"
 
 #: src/main/webapp/about.jsp
-#, fuzzy
 msgid "Seedless integration"
-msgstr "Penerjemahan Swedish"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1228,12 +1224,47 @@ msgid "Settings have been saved."
 msgstr "Pengaturan telah disimpan."
 
 #: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
 msgstr "Periksa surat setiap {0} menit"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
 msgstr "Periksa status pengiriman email terkirim"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Aktifkan IMAP pada port {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Tema:"
+
+#: src/main/webapp/settings.jsp
+#, fuzzy
+msgid "Privacy"
+msgstr "Kunci pribadi:"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Gunakan English untuk teks yang ditambahkan ke email keluar ('Re:', "
+"'wrote:', dll.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Sertakan waktu dikirm pada email keluar"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1264,28 +1295,6 @@ msgid "Email Destination of the gateway:"
 msgstr "Gateway Email Tujuan:"
 
 #: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "Aktifkan IMAP pada port {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Gunakan English untuk teks yang ditambahkan ke email keluar ('Re:', "
-"'wrote:', dll.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Sertakan waktu dikirm pada email keluar"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Tema:"
-
-#: src/main/webapp/settings.jsp
 msgid "Change Password"
 msgstr "Ubah Kata Sandi"
 
@@ -1312,10 +1321,3 @@ msgstr "Tambahkan ke Buku Alamat"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Tidak diketahui"
-
-#, fuzzy
-#~ msgid "Import Contat"
-#~ msgstr "Impor Kontak"
-
-#~ msgid "Seedless"
-#~ msgstr "Seedless"
