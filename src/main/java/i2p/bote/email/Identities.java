@@ -71,6 +71,7 @@ public class Identities implements KeyUpdateHandler {
     private static final String PREF_TEXT = "text";
     private static final String PREF_PUBLISHED = "published";
     private static final String PREF_DEFAULT = "default";
+    private static final String CONFIGURATION_PREFIX = "configuration.";
 
     private Log log = new Log(Identities.class);
     private File identitiesFile;
@@ -202,6 +203,8 @@ public class Identities implements KeyUpdateHandler {
                 Fingerprint fingerprint = new Fingerprint(nameHash, identity, Base64.decode(salt.toCharArray()));
                 identity.setFingerprint(fingerprint);
             }
+            identity.loadConfig(properties, prefix + CONFIGURATION_PREFIX);
+
             if (append && replace && identities.contains(identity))
                 identities.remove(identity);
             identities.add(identity);
@@ -287,6 +290,7 @@ public class Identities implements KeyUpdateHandler {
             String text = identity.getText();
             properties.setProperty(prefix + PREF_TEXT, (text==null ? "" : text));
             properties.setProperty(prefix + PREF_PUBLISHED, identity.isPublished() ? "true" : "false");
+            properties.putAll(identity.getConfig().saveToProperties(prefix + CONFIGURATION_PREFIX));
             
             index++;
         }

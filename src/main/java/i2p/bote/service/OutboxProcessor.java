@@ -206,8 +206,13 @@ public class OutboxProcessor extends I2PAppThread {
             logSuffix = "Recipient = '" + recipient + "' Message ID = '" + email.getMessageID() + "'";
             log.info("Sending email: " + logSuffix);
             EmailDestination recipientDest = new EmailDestination(recipient);
-            
-            int hops = configuration.getNumStoreHops();
+
+            EmailIdentity.IdentityConfig identityConfig = senderIdentity.getWrappedConfig(configuration);
+            int hops = identityConfig.getNumStoreHops();
+            long minDelay = identityConfig.getRelayMinDelay() * 60 * 1000;
+            long maxDelay = identityConfig.getRelayMaxDelay() * 60 * 1000;
+            int relayRedundancy = identityConfig.getRelayRedundancy();
+
             int maxPacketSize = getMaxEmailPacketSize(hops);
             Collection<UnencryptedEmailPacket> emailPackets = email.createEmailPackets(senderIdentity, identities, recipient, maxPacketSize);
             
@@ -215,11 +220,11 @@ public class OutboxProcessor extends I2PAppThread {
             EmailMetadata metadata = email.getMetadata();
             for (UnencryptedEmailPacket unencryptedPacket: emailPackets) {
                 EncryptedEmailPacket emailPacket = new EncryptedEmailPacket(unencryptedPacket, recipientDest);
-                send(emailPacket, hops);
+                send(emailPacket, hops, minDelay, maxDelay, relayRedundancy);
                 indexPacket.put(emailPacket);
                 metadata.addPacketInfo(recipientDest, emailPacket.getDhtKey(), emailPacket.getDeleteVerificationHash());
             }
-            send(indexPacket, hops);
+            send(indexPacket, hops, minDelay, maxDelay, relayRedundancy);
             outbox.saveMetadata(email);
         } catch (GeneralSecurityException e) {
             log.error("Invalid recipient address. " + logSuffix, e);
@@ -249,12 +254,10 @@ public class OutboxProcessor extends I2PAppThread {
      * @throws DhtException 
      * @throws InterruptedException 
      */
-    private void send(DhtStorablePacket dhtPacket, int hops) throws DhtException, InterruptedException {
+    private void send(DhtStorablePacket dhtPacket, int hops, long minDelay, long maxDelay, int relayRedundancy) throws DhtException, InterruptedException {
         if (hops > 0) {
-            long minDelay = configuration.getRelayMinDelay() * 60 * 1000;
-            long maxDelay = configuration.getRelayMaxDelay() * 60 * 1000;
             StoreRequest storeRequest = new StoreRequest(dhtPacket);
-            for (int i=0; i<configuration.getRelayRedundancy(); i++) {
+            for (int i=0; i<relayRedundancy; i++) {
                 // TODO don't use the same relay peer twice if there are enough peers
                 RelayRequest packet = RelayRequest.create(storeRequest, peerManager, hops, minDelay, maxDelay);
                 relayPacketFolder.add(packet);

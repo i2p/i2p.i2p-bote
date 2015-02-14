@@ -39,7 +39,6 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -108,10 +107,8 @@ public class EmailChecker extends I2PAppThread {
             lastMailCheckTime = System.currentTimeMillis();
             pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
             mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
-            Iterator<EmailIdentity> iterator = identities.iterator();
-            if (iterator != null) {
-                while (iterator.hasNext()) {
-                    EmailIdentity identity = iterator.next();
+            for (EmailIdentity identity : identities.getAll()) {
+                if (identity.getConfig().getIncludeInGlobalCheck()) {
                     Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder);
                     Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
                     pendingMailCheckTasks.add(task);

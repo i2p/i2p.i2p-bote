@@ -22,20 +22,24 @@
 package i2p.bote.email;
 
 import static i2p.bote.Util._;
+import i2p.bote.Configuration;
 import i2p.bote.Util;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.crypto.PrivateKeyPair;
 import i2p.bote.crypto.PublicKeyPair;
+import i2p.bote.util.SortedProperties;
 
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
+import java.util.Properties;
 
 import net.i2p.crypto.SHA256Generator;
 import net.i2p.data.Hash;
+import net.i2p.util.Log;
 
 import com.lambdaworks.codec.Base64;
 
@@ -52,6 +56,7 @@ public class EmailIdentity extends EmailDestination {
     private Fingerprint fingerprint;
     private boolean published;
     private boolean defaultIdentity;
+    private IdentityConfig identityConfig;
 
     /**
      * Creates a random <code>EmailIdentity</code>.
@@ -231,5 +236,150 @@ public class EmailIdentity extends EmailDestination {
     @Override
     public String toString() {
         return getKey() + " address=<" + getEmailAddress() + "> identity name=<" + getDescription() + "> visible name=<" + getPublicName() + ">";
+    }
+
+    public void loadConfig(Properties properties, String prefix) {
+        identityConfig = new IdentityConfig(properties, prefix);
+    }
+
+    public IdentityConfig getConfig() {
+        return identityConfig;
+    }
+
+    public IdentityConfig getWrappedConfig(Configuration configuration) {
+        return identityConfig.wrap(configuration);
+    }
+
+    public class IdentityConfig {
+        private static final String PARAMETER_INCLUDE_IN_GLOBAL_CHECK_MAIL = "includeInGlobalCheck";
+
+        private static final boolean DEFAULT_INCLUDE_IN_GLOBAL_CHECK_MAIL = true;
+
+        // Overrides for default configuration
+        private static final String PARAMETER_RELAY_REDUNDANCY = "relayRedundancy";
+        private static final String PARAMETER_RELAY_MIN_DELAY = "relayMinDelay";
+        private static final String PARAMETER_RELAY_MAX_DELAY = "relayMaxDelay";
+        private static final String PARAMETER_NUM_STORE_HOPS = "numSendHops";
+
+        private Log log = new Log(IdentityConfig.class);
+        private Properties properties;
+        private Configuration configuration;
+
+        public IdentityConfig(Properties sourceProperties, String prefix) {
+            properties = new Properties();
+
+            for (String key : sourceProperties.stringPropertyNames()) {
+                if (key.startsWith(prefix) && sourceProperties.getProperty(key) != null)
+                    properties.setProperty(key.substring(prefix.length()), sourceProperties.getProperty(key));
+            }
+        }
+
+        private IdentityConfig(Properties properties, Configuration configuration) {
+            this.properties = properties;
+            this.configuration = configuration;
+        }
+
+        public Properties saveToProperties(String prefix) {
+            SortedProperties prefixedProperties = new SortedProperties();
+
+            for (String key : properties.stringPropertyNames()) {
+                if (properties.getProperty(key) != null)
+                    prefixedProperties.setProperty(prefix + key, properties.getProperty(key));
+            }
+
+            return prefixedProperties;
+        }
+
+        public IdentityConfig wrap(Configuration configuration) {
+            return new IdentityConfig(properties, configuration);
+        }
+
+        // Identity-only configuration
+
+        public void setIncludeInGlobalCheck(boolean include) {
+            properties.setProperty(PARAMETER_INCLUDE_IN_GLOBAL_CHECK_MAIL, String.valueOf(include));
+        }
+
+        /**
+         * Controls whether the identity should be checked for email when using
+         * the global "Check mail" button.
+         */
+        public boolean getIncludeInGlobalCheck() {
+            return getBooleanParameter(PARAMETER_INCLUDE_IN_GLOBAL_CHECK_MAIL, DEFAULT_INCLUDE_IN_GLOBAL_CHECK_MAIL);
+        }
+
+        // Per-identity overrides of default configuration
+
+        /**
+         * Returns the number of relay chains that should be used per Relay Request.
+         */
+        public int getRelayRedundancy() {
+            return getIntParameter(PARAMETER_RELAY_REDUNDANCY,
+                    configuration == null ? -1 : configuration.getRelayRedundancy());
+        }
+
+        public void setRelayMinDelay(int minDelay) {
+            if (minDelay < 0)
+                properties.remove(PARAMETER_RELAY_MIN_DELAY);
+            else
+                properties.setProperty(PARAMETER_RELAY_MIN_DELAY, String.valueOf(minDelay));
+        }
+
+        /**
+         * Returns the minimum amount of time in minutes that a Relay Request is delayed.
+         */
+        public int getRelayMinDelay() {
+            return getIntParameter(PARAMETER_RELAY_MIN_DELAY,
+                    configuration == null ? -1 : configuration.getRelayMinDelay());
+        }
+
+        public void setRelayMaxDelay(int maxDelay) {
+            if (maxDelay < 0)
+                properties.remove(PARAMETER_RELAY_MAX_DELAY);
+            else
+                properties.setProperty(PARAMETER_RELAY_MAX_DELAY, String.valueOf(maxDelay));
+        }
+
+        /**
+         * Returns the maximum amount of time in minutes that a Relay Request is delayed.
+         */
+        public int getRelayMaxDelay() {
+            return getIntParameter(PARAMETER_RELAY_MAX_DELAY,
+                    configuration == null ? -1 : configuration.getRelayMaxDelay());
+        }
+
+        public void setNumStoreHops(int numHops) {
+            if (numHops < 0)
+                properties.remove(PARAMETER_NUM_STORE_HOPS);
+            else
+                properties.setProperty(PARAMETER_NUM_STORE_HOPS, String.valueOf(numHops));
+        }
+
+        /**
+         * Returns the number of relays that should be used when sending a DHT store request.
+         * @return -1 if unset, or a non-negative number otherwise.
+         */
+        public int getNumStoreHops() {
+            return getIntParameter(PARAMETER_NUM_STORE_HOPS,
+                    configuration == null ? -1 : configuration.getNumStoreHops());
+        }
+
+        private boolean getBooleanParameter(String parameterName, boolean defaultValue) {
+            try {
+                return Util.getBooleanParameter(properties, parameterName, defaultValue);
+            } catch (IllegalArgumentException e) {
+                log.warn("getBooleanParameter failed, using default", e);
+                return defaultValue;
+            }
+        }
+
+        private int getIntParameter(String parameterName, int defaultValue) {
+            try {
+                return Util.getIntParameter(properties, parameterName, defaultValue);
+            } catch (NumberFormatException e) {
+                log.warn("getIntParameter failed, using default", e);
+                return defaultValue;
+            }
+        }
     }
 }
