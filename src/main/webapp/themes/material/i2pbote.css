@@ -264,6 +264,9 @@ aside {
     margin-left: 28px;
     margin-top: 12px;
 }
+.checkmail img {
+    vertical-align: middle;
+}
 .compose.frame {
     display: none;
 }
