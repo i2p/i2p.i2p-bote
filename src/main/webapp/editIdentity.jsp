@@ -178,6 +178,16 @@
             </c:if>
             <input type="checkbox" name="defaultIdentity" ${disabled} ${checked}/>
         </div>
+
+        <div class="identity-form-label">
+            <ib:message key="Include in global check:"/>
+        </div>
+        <div class="identity-form-checkbox">
+            <c:if test="${empty identity or identity.config.includeInGlobalCheck}">
+                <c:set var="checked" value="checked='checked'"/>
+            </c:if>
+            <input type="checkbox" name="includeInGlobalCheck" ${checked}/>
+        </div>
         
         <c:if test="${not empty param.key}">
             <div class="identity-form-label">
