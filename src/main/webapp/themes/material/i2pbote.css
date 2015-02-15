@@ -759,6 +759,10 @@ td a:link, td a:visited {
     max-width: 600px;
     white-space: nowrap;
 }
+
+.email-form-recipient-value img {
+    vertical-align: middle;
+}
 .email-form-recipient-field {
     width: 475px;
 }
