@@ -86,6 +86,8 @@ public class EmailIdentity extends EmailDestination {
         privateEncryptionKey = encryptionKeys.getPrivate();
         publicSigningKey = signingKeys.getPublic();
         privateSigningKey = signingKeys.getPrivate();
+
+        identityConfig = new IdentityConfig();
     }
 
     /**
@@ -116,6 +118,8 @@ public class EmailIdentity extends EmailDestination {
         privateEncryptionKey = privateKeys.encryptionKey;
         publicSigningKey = publicKeys.signingKey;
         privateSigningKey = privateKeys.signingKey;
+
+        identityConfig = new IdentityConfig();
     }
     
     public PrivateKey getPrivateEncryptionKey() {
@@ -238,8 +242,8 @@ public class EmailIdentity extends EmailDestination {
         return getKey() + " address=<" + getEmailAddress() + "> identity name=<" + getDescription() + "> visible name=<" + getPublicName() + ">";
     }
 
-    public void loadConfig(Properties properties, String prefix) {
-        identityConfig = new IdentityConfig(properties, prefix);
+    public void loadConfig(Properties properties, String prefix, boolean overwrite) {
+        identityConfig.loadFromProperties(properties, prefix, overwrite);
     }
 
     public IdentityConfig getConfig() {
@@ -265,18 +269,23 @@ public class EmailIdentity extends EmailDestination {
         private Properties properties;
         private Configuration configuration;
 
-        public IdentityConfig(Properties sourceProperties, String prefix) {
+        public IdentityConfig() {
             properties = new Properties();
-
-            for (String key : sourceProperties.stringPropertyNames()) {
-                if (key.startsWith(prefix) && sourceProperties.getProperty(key) != null)
-                    properties.setProperty(key.substring(prefix.length()), sourceProperties.getProperty(key));
-            }
         }
 
         private IdentityConfig(Properties properties, Configuration configuration) {
             this.properties = properties;
             this.configuration = configuration;
+        }
+
+        public void loadFromProperties(Properties sourceProperties, String prefix, boolean overwrite) {
+            if (overwrite)
+                properties = new Properties();
+
+            for (String key : sourceProperties.stringPropertyNames()) {
+                if (key.startsWith(prefix) && sourceProperties.getProperty(key) != null)
+                    properties.setProperty(key.substring(prefix.length()), sourceProperties.getProperty(key));
+            }
         }
 
         public Properties saveToProperties(String prefix) {

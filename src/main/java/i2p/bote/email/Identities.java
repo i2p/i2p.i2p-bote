@@ -203,7 +203,7 @@ public class Identities implements KeyUpdateHandler {
                 Fingerprint fingerprint = new Fingerprint(nameHash, identity, Base64.decode(salt.toCharArray()));
                 identity.setFingerprint(fingerprint);
             }
-            identity.loadConfig(properties, prefix + CONFIGURATION_PREFIX);
+            identity.loadConfig(properties, prefix + CONFIGURATION_PREFIX, true);
 
             if (append && replace && identities.contains(identity))
                 identities.remove(identity);
