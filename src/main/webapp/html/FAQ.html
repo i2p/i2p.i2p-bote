@@ -1,6 +1,62 @@
 <h1>Frequently Asked Questions</h1>
 
-<h3>What is I2P-Bote?</h3>
+<nav>
+<p><a href="#What">What is I2P-Bote?</a></p>
+<p><a href="#Name">Why is it named I2P-Bote?</a></p>
+<p><a href="#Why">Why I2P-Bote?</a></p>
+<p><a href="#Sending">What happens with an email after I click 'Send'?</a></p>
+<p><a href="#RandomPeople">Wait a minute, all email I send is saved on some random
+person's hard drive? That sounds like a really dumb idea!</a></p>
+<p><a href="#HowItWorks">How does it work exactly?</a></p>
+<p><a href="#NothingToHide">Why would I use it? I have nothing to hide&hellip;</a></p>
+<p><a href="#GPG">What about PGP and GPG?</a></p>
+<p><a href="#UsingGPG">Can I still use GPG/PGP with I2P-Bote?</a></p>
+<p><a href="#Susimail">How does it compare to Susimail?</a></p>
+<p><a href="#Comparison">Why is I2P-Bote better?</a></p>
+<p><a href="#Safeguards">How is my identity kept safe when I exchange mail with
+someone?</a></p>
+<p><a href="#How">How do I use it?</a></p>
+<p><a href="#EmailClients">Can I use an email program like Thunderbird?</a></p>
+<p><a href="#Attachments">Can I send attachments, and what limits are there?</a></p>
+<p><a href="#CreateIdentity">How do I create an email account?</a></p>
+<p><a href="#EmailDestination">What's an Email Destination? What about email addresses?</a></p>
+<p><a href="#AddressLength">Why are the e-mail addresses so long?</a></p>
+<p><a href="#AddressBook">But I cannot remember those long destinations&hellip;</a></p>
+<p><a href="#MultipleIdentities">What's the point of using multiple mail identities?</a></p>
+<p><a href="#EncryptionTypes">Which encryption type is best?</a></p>
+<p><a href="#Algorithms">What algorithms are used for symmetric encryption, and
+for hashing?</a></p>
+<p><a href="#AntiSpam">Are there any anti-spam measures?</a></p>
+<p><a href="#HTML">How about HTML or styled text?</a></p>
+<p><a href="#Persistence">How long are emails kept around?</a></p>
+<p><a href="#DoIdentitiesExpire">When do Email Identities expire?</a></p>
+<p><a href="#Gateways">Can I send email to, and receive email from normal
+internet email servers?</a></p>
+<p><a href="#Postman">Can I send email to, and receive email from postman's
+traditional I2P mail accounts?</a></p>
+<p><a href="#Know">What does it mean when Know is x'ed for a mail in my
+inbox?</a></p>
+<p><a href="#Terms">What do “BktPfx”, “Distance” and “Locked?” mean?</a></p>
+<p><a href="#Anonymous">What can I do to be more anonymous?</a></p>
+<p><a href="#Timestamps">How do I not send timestamps?</a></p>
+<p><a href="#Backups">How do I migrate my settings and data to another
+computer, or back them up?</a></p>
+<p><a href="#MailRoutes">What is a <em>mail route</em>?</a></p>
+<p><a href="#HighLatency">What does high-latency transport mean?</a></p>
+<p><a href="#Latencies">What latencies are there, and how can they be controlled
+(if at all)?</a></p>
+<p><a href="#WhyI2P">If I2P-Bote generates its own anonymity, why does it
+need I2P?</a></p>
+<p><a href="#WithoutRoutes">How anonymous/secure is I2P-Bote without mail routes?</a></p>
+<p><a href="#OpenSource">Is I2P-Bote open source?</a></p>
+<p><a href="#Credits">Who made I2P-Bote?</a></p>
+<p><a href="#Languages">What languages are available?</a></p>
+<p><a href="#Translate">How can I help translate I2P-Bote into my language?</a></p>
+<p><a href="#Technical">How does it work on a technical level?</a></p>
+<p><a href="#GetInvolved">What are some other ways I can help?</a></p>
+</nav>
+
+<h3 id="What">What is I2P-Bote?</h3>
 <p>A peer-to-peer email program designed to protect your privacy.</p>
 
 <p>I2P-Bote is an end-to-end encrypted, network-internal, fully
@@ -25,10 +81,10 @@ I2P-Bote. For those who do not want high delays: All these settings
 are be user-adjustable, so each user decides on how much anonymity
 he wants.</p>
 
-<h3>Why is it named I2P-Bote?</h3>
+<h3 id="Name">Why is it named I2P-Bote?</h3>
 <p>Bote is the German word for messenger.</p>
 
-<h3>Why I2P-Bote?</h3>
+<h3 id="Why">Why I2P-Bote?</h3>
 <p>Because it's cool. And because I2P was lacking a decentralized
 e-mail service, and seeing the creation of such as an opportunity
 to improve on neglected anonymity aspects, it was decided to add an
@@ -48,12 +104,12 @@ already there.</p>
 military grade encryption and options for extremely strong
 anonymity.</p>
 
-<h3>What happens with an email after I click 'Send'?</h3>
+<h3 id="Sending">What happens with an email after I click 'Send'?</h3>
 <p>It is encrypted and stored on other I2P-Bote participants'
 computers. From there, it is delivered to the recipient when they
 check their email.</p>
 
-<h3>Wait a minute, all email I send is saved on some random
+<h3 id="RandomPeople">Wait a minute, all email I send is saved on some random
 person's hard drive? That sounds like a really dumb idea!</h3>
 <p>All they see is garbage data because it is encrypted with
 "military-grade" encryption. Only you and the recipient know what
@@ -66,14 +122,14 @@ that doesn't respect your privacy</a>, over an internet line that
 <a href="http://www.eff.org/issues/nsa-spying">is being spied on by
 shady agencies</a>, which would you say is more trustworthy?</p>
 
-<h3>How does it work exactly?</h3>
+<h3 id="HowItWorks">How does it work exactly?</h3>
 <p>See the <a href="userGuide.jsp#Technical-Concept">'Technical Concept'</a>
 section of the <a href="userGuide.jsp">User Manual</a>.</p>
 
 <p>In short: I2P-Bote nodes form a P2P-network, relaying mail packets
 for one another and storing them into a DHT.</p>
 
-<h3>Why would I use it? I have nothing to hide&hellip;</h3>
+<h3 id="NothingToHide">Why would I use it? I have nothing to hide&hellip;</h3>
 <p>Because you wouldn't go out to the street naked either, would you?</p>
 
 <p>Well, maybe you would. But the point is, sometimes you want private
@@ -93,7 +149,7 @@ and still enjoy very high anonymity.</p>
 
 <p>You decide - easily with a click of your mouse.</p>
 
-<h3>What about <a href="http://www.pgp.com/">PGP</a> and
+<h3 id="GPG">What about <a href="http://www.pgp.com/">PGP</a> and
 <a href="http://gnupg.org/">GPG</a>?</h3>
 <p>PGP and GPG let you encrypt email and send it through your existing
 email account. They offer strong encryption, but they only encrypt
@@ -111,12 +167,12 @@ relays (similar to <a href=
 "http://mixmaster.sourceforge.net/">Mixmaster</a>), so nobody can
 find out who is sending email to whom.</p>
 
-<h3>Can I still use GPG/PGP with I2P-Bote?</h3>
+<h3 id="UsingGPG">Can I still use GPG/PGP with I2P-Bote?</h3>
 <p>Of course. Either have GPG encrypt your e-mail's text before
 pasting it into the I2P-Bote mail composition field, or use a mail
 app with GPG support.</p>
 
-<h3>How does it compare to Susimail?</h3>
+<h3 id="Susimail">How does it compare to Susimail?</h3>
 <p>I2P-Bote is better because it has a higher version number. Just
 kidding.</p>
 
@@ -125,7 +181,7 @@ I2P-Bote doesn't have yet (see below), and Susimail is more
 bandwidth-efficient because it doesn't store emails
 redundantly.</p>
 
-<h3>Why is I2P-Bote better?</h3>
+<h3 id="Comparison">Why is I2P-Bote better?</h3>
 <p><em>We</em> think it's better for <em>us</em> (and maybe for you, too;
 decide yourself!), than:</p>
 <ul>
@@ -139,7 +195,7 @@ encryption.</p></li>
 and the server admin has too many means to do profiling.</p></li>
 </ul>
 
-<h3>How is my identity kept safe when I exchange mail with
+<h3 id="Safeguards">How is my identity kept safe when I exchange mail with
 someone?</h3>
 <p>Never is your IP address or even your I2P-destination included in
 any e-mail you send.</p>
@@ -158,22 +214,22 @@ see the implementation and check it for bugs.</p>
 
 <p>*[not yet implemented]</p>
 
-<h3>How do I use it?</h3>
+<h3 id="How">How do I use it?</h3>
 <p>Read <a href="userGuide.jsp">the manual</a> or see the other questions and
 answers here!</p>
 
 <p>If you still have unanswered questions, ask on the forum: <a href=
 "http://forum.i2p/viewforum.php?f=35">http://forum.i2p/viewforum.php?f=35</a></p>
 
-<h3>Can I use an email program like Thunderbird?</h3>
+<h3 id="EmailClients">Can I use an email program like Thunderbird?</h3>
 <p>Yes, you can use the e-mail client of your choice, as long as it
 supports IMAP and SMTP.</p>
 
-<h3>Can I send attachments, and what limits are there?</h3>
+<h3 id="Attachments">Can I send attachments, and what limits are there?</h3>
 <p>Yes, attachments are supported as of release 0.2.5. The overall size of
 attached files should be kept small, preferably below 500kB.</p>
 
-<h3>How do I create an email account?</h3>
+<h3 id="CreateIdentity">How do I create an email account?</h3>
 <p>I2P-Bote calls them Email Identities. You can create one in the
 I2P-Bote web interface under the "Identities" link. The reason why
 it's not called an account is that there is no provider like GMail
@@ -186,7 +242,7 @@ address you can be reached at.</p>
 
 <p>Example: <code>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6tDWwjPHYEuoKyWqwxplSdix</code></p>
 
-<h3>What's an Email Destination? What about email addresses?</h3>
+<h3 id="EmailDestination">What's an Email Destination? What about email addresses?</h3>
 <p>Email destinations (aka bote dests) are between 86 and 512
 characters long, depending on the type of encryption. Support for
 easy-to-remember, user-chosen addresses is planned for the near
@@ -221,7 +277,7 @@ has never been necessary.</p>
 I2P-Bote router id with your I2P-Bote mail dests since this might
 destroy the additional anonymity I2P-Bote itself generates!</p>
 
-<h3>Why are the e-mail addresses so long?</h3>
+<h3 id="AddressLength">Why are the e-mail addresses so long?</h3>
 <p>In I2P-Bote every mail is (automatically) encrypted. In order not
 to require you to exchange an e-mail address <b>and</b> a long key,
 we simply made that key the address. This comes with two additional
@@ -237,7 +293,7 @@ secrecy.</p>
 <p>Using the ECC encryption as option will yield shorter e-mail
 destination keys.</p>
 
-<h3>But I cannot remember those long destinations&hellip;</h3>
+<h3 id="AddressBook">But I cannot remember those long destinations&hellip;</h3>
 <p>That's what the integrated address book is there. Once you have
 become more acquainted with I2P-Bote, you will appreciate the
 built-in encryption and authentication, which can only be achieved
@@ -248,7 +304,7 @@ using cryptographic keys.</p>
 <b>and</b> to rely on some authority to map the e-mail addresses to
 some anonymous recipient.</p>
 
-<h3>What's the point of using multiple mail identities?</h3>
+<h3 id="MultipleIdentities">What's the point of using multiple mail identities?</h3>
 <p>I2P-Bote is not an instant messenger, so you can have several
 identities without having to keep many tunnels open. Only for
 fetching requests you'd use up more resources but at the same time
@@ -264,7 +320,7 @@ time. Yet you still want super high anonymity for some of your
 other communications - that's where a different mail identity with
 mail routes, delays and long check intervals comes in handy.</p>
 
-<h3>Which encryption type is best?</h3>
+<h3 id="EncryptionTypes">Which encryption type is best?</h3>
 <p>256-bit <a href=
 "http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a>
 produces short and handy Email Destinations, and it is considered
@@ -281,7 +337,7 @@ cryptographically weakest of the three options. However, ElGamal is
 better researched than ECC, which makes it less likely that there
 is an unknown weakness in ElGamal than in ECC.</p>
 
-<h3>What algorithms are used for symmetric encryption, and
+<h3 id="Algorithms">What algorithms are used for symmetric encryption, and
 for hashing?</h3>
 <p><a href=
 "http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a>
@@ -290,7 +346,7 @@ in <a href=
 CBC</a> mode and <a href=
 "http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.</p>
 
-<h3>Are there any anti-spam measures?</h3>
+<h3 id="AntiSpam">Are there any anti-spam measures?</h3>
 <p>I2P-Bote does no active spam filtering, but the fact that mass
 emails have to be sent individually should discourage spammers.
 Another line of defense is <a href=
@@ -298,30 +354,30 @@ Another line of defense is <a href=
 protocol level and may be implemented in a future version if spam
 becomes a problem.</p>
 
-<h3>How about HTML or styled text?</h3>
+<h3 id="HTML">How about HTML or styled text?</h3>
 <p>The webinterface does not render HTML.</p>
 
-<h3>How long are emails kept around?</h3>
+<h3 id="Persistence">How long are emails kept around?</h3>
 <p>Emails are available for 100 days after they have been sent. Emails
 that have not been downloaded by then are deleted.</p>
 
 <p>Emails you have received stay on your local machine until you
 delete them.</p>
 
-<h3>When do Email Identities expire?</h3>
+<h3 id="DoIdentitiesExpire">When do Email Identities expire?</h3>
 <p>Never.</p>
 
-<h3>Can I send email to, and receive email from normal
+<h3 id="Gateways">Can I send email to, and receive email from normal
 internet email servers?</h3>
 <p>No, but this is being worked on.</p> 
 <!-- Yes. You can both send and receive mails to/from ordinary internet e-mail accounts -->
 
-<h3>Can I send email to, and receive email from postman's
+<h3 id="Postman">Can I send email to, and receive email from postman's
 traditional I2P mail accounts?</h3>
 <p>No, but this too is being worked on.</p> 
 <!-- Yes. You can both send and receive mails to/from some_name@mail.i2p addresses -->
 
-<h3>What does it mean when Know is x'ed for a mail in my
+<h3 id="Know">What does it mean when Know is x'ed for a mail in my
 inbox?</h3>
 <p>When the sender's destination is not known locally the mail is
 marked by an x in the “Know” column or by putting “{UNK}” before
@@ -341,7 +397,7 @@ verified against locally stored keys, you know it's the same user
 when you receive another mail from him and “Know” has a green
 check.</p>
 
-<h3>What do “BktPfx”, “Distance” and “Locked?” mean?</h3>
+<h3 id="Terms">What do “BktPfx”, “Distance” and “Locked?” mean?</h3>
 <ul>
 <li><p>BktPfx = BucketPrefix</p></li>
 <li><p>Distance: the distance of an I2P-Bote node to your
@@ -351,7 +407,7 @@ reason, it is marked as locked, plus the time it has been found
 unreachable.</p></li>
 </ul>
 
-<h3>What can I do to be more anonymous?</h3>
+<h3 id="Anonymous">What can I do to be more anonymous?</h3>
 <ul>
 <li><p>Don't send identifying information about you! (name, address,
 photos, geographic location, time zone, age, sex, websites, login
@@ -378,14 +434,14 @@ usage,</p></li>
 <p>This list is not intended to make you paranoid, but to show you where
 anonymity can be reduced.</p>
 
-<h3>How do I not send timestamps?</h3>
+<h3 id="Timestamps">How do I not send timestamps?</h3>
 <p>Go to settings and disable sending of timestamps. This will have
 the effect that your mail will not contain a date or time of
 sending.</p>
 
 <!-- <p>(When using mailroutes, the timestamps are automatically disabled.) [not yet implemented]</p> -->
 
-<h3>How do I migrate my settings and data to another
+<h3 id="Backups">How do I migrate my settings and data to another
 computer, or back them up?</h3>
 <p>I2P-Bote stores all email and other data in the <code>i2pbote</code>
 folder. On Windows, that folder can be found at
@@ -399,11 +455,11 @@ folder. On Windows, that folder can be found at
 <code>identities.txt</code>. For the address book, copy
 <code>addressBook.txt</code>.</p>
 
-<h3>What is a <em>mail route?</em></h3>
+<h3 id="MailRoutes">What is a <em>mail route</em>?</h3>
 <p>See: What does high-latency transport mean?</p>
 <!-- <p>(When using mail routes, the timestamps are automatically disabled.) [yet to be implemented]</p> -->
 
-<h3>What does high-latency transport mean?</h3>
+<h3 id="HighLatency">What does high-latency transport mean?</h3>
 <p>It means that you can enable an option where e-mail packets are not
 sent directly to storing nodes, but are relayed (forwarded) by
 other peers (who cannot read the e-mails, as they are encrypted
@@ -419,7 +475,7 @@ low-latency environment would be about the time it was sent), in
 order to uncover the real life identities behind I2P-Bote e-mail
 identities.</p>
 
-<h3>What latencies are there, and how can they be controlled
+<h3 id="Latencies">What latencies are there, and how can they be controlled
 (if at all)?</h3>
 <p>I2P-Bote is distributed and running on top of the I2P network, so
 it takes some time. Speed is not our strength, but we compare well
@@ -431,7 +487,7 @@ in the receiver's inbox.</p>
 the minimum number of hops and minimum per-hop delay you can live
 with.</p>
 
-<h3>If I2P-Bote generates its own anonymity, why does it
+<h3 id="WhyI2P">If I2P-Bote generates its own anonymity, why does it
 need I2P?</h3>
 <p>I2P-Bote is built on top of I2P mainly for five reasons:</p>
 <ul>
@@ -449,7 +505,7 @@ it creates a lot of traffic that blends with I2P-Bote traffic.</p></li>
 <li><p>Even I2P-Bote relays are thus location-hidden.</p></li>
 </ul>
 
-<h3>How anonymous/secure is I2P-Bote without mail routes?</h3>
+<h3 id="WithoutRoutes">How anonymous/secure is I2P-Bote without mail routes?</h3>
 <p>Pretty anonymous and very secure.</p>
 
 <p>It then basically enjoys the same anonymity other apps have on I2P,
@@ -461,7 +517,7 @@ not protect you very reliably. I2P-Bote does its best to augment
 I2P anonymity with its high-latency transport option, which make –
 if enabled – I2P-Bote mails <em>paranoidly</em> anonymous.</p>
 
-<h3>Is I2P-Bote open source?</h3>
+<h3 id="OpenSource">Is I2P-Bote open source?</h3>
 <p>Of course!</p>
 
 <blockquote>This software is licensed under the GPL version 3 (see
@@ -471,8 +527,8 @@ licenses/BouncyCastle.txt).</blockquote>
 
 <p>(Both of which are free open source licences.)</p>
 
-<h3>Who made I2P-Bote?</h3>
-<p>(See also Credits!)</p>
+<h3 id="Credits">Who made I2P-Bote?</h3>
+<p>(See also <a href="about.jsp">Credits</a>!)</p>
 
 <p>Conception, technical design, implementation and web user interface
 were/are done by HungryHobo, an anonymous developer. For feedback
@@ -481,19 +537,19 @@ His destination key is:</p>
 
 <p><b>hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n</b></p>
 
-<h3>What languages are available?</h3>
+<h3 id="Languages">What languages are available?</h3>
 <p>English, German, Russian, French, Spanish, Portuguese, Dutch,
 Norwegian, Swedish, Chinese, and Arabic.</p>
 
-<h3>How can I help translate I2P-Bote into my
+<h3 id="Translate">How can I help translate I2P-Bote into my
 language?</h3>
 <p>Translations are done the same way as the rest of I2P. If you would
 like to help and have questions, please <a href="about.jsp">contact the author.</a></p>
 
-<h3>How does it work on a technical level?</h3>
+<h3 id="Technical">How does it work on a technical level?</h3>
 <p>Have a look at the file <code>doc/techdoc.txt</code> in the source code.</p>
 
-<h3>What are some other ways I can help?</h3>
+<h3 id="GetInvolved">What are some other ways I can help?</h3>
 <ul>
 <li><p>Use I2P-Bote and give feedback</p></li>
 <li><p>Tell your friends, family, collegues et al. about I2P-Bote and lend them a hand</p></li>
