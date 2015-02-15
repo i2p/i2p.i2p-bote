@@ -71,7 +71,7 @@
         <td>${identity.description}</td>
         <td class="ellipsis">${identity.key}</td>
         <td><c:choose>
-        <c:when test="${ib:isCheckingForMail(identity)isCheckingForMail(identity)}">
+        <c:when test="${ib:isCheckingForMail(identity)}">
             <img src="${themeDir}/images/wait.gif" alt="<ib:message key='Checking for mail...'/>" title='<ib:message key='Checking for mail...'/>'/>
         </c:when>
         <c:otherwise>
