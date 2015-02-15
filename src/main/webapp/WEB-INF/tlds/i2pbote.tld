@@ -73,6 +73,11 @@
     <name>checkForMail</name>
     <tag-class>i2p.bote.web.CheckMailTag</tag-class>
     <body-content>empty</body-content>
+    <attribute>
+        <name>key</name>
+        <rtexprvalue>true</rtexprvalue>
+        <required>false</required>
+    </attribute>
 </tag>
 
 <tag>
@@ -593,6 +598,18 @@
     <function-class>i2p.bote.web.JSPHelper</function-class>
     <function-signature>
         java.util.List mergeRecipientFields(javax.servlet.ServletRequest)
+    </function-signature>
+</function>
+
+<function>
+    <name>isCheckingForMail</name>
+    <description>
+        Returns true if the specified Email Identity is currently being
+        checked for mail.
+    </description>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
+    <function-signature>
+        boolean isCheckingForMail(i2p.bote.email.EmailIdentity)
     </function-signature>
 </function>
 

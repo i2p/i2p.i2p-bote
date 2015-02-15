@@ -36,14 +36,15 @@ import i2p.bote.network.NetworkStatusSource;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import net.i2p.util.I2PAppThread;
@@ -62,10 +63,11 @@ public class EmailChecker extends I2PAppThread {
     private RelayPeerManager peerManager;
     private ThreadFactory mailCheckThreadFactory;
     private ExecutorService mailCheckExecutor;
-    private Collection<Future<Boolean>> pendingMailCheckTasks;
+    private Map<EmailIdentity, Future<Boolean>> pendingMailCheckTasks;
     private volatile long lastMailCheckTime;   // the time when the last mail check started (completed or not)
     private volatile long previousMailCheckTime;   // the time when the last completed mail check started
     private long interval;   // in milliseconds
+    private volatile boolean newMailReceived;
     
     /**
      * @param identities
@@ -92,6 +94,14 @@ public class EmailChecker extends I2PAppThread {
         this.dht = dht;
         this.peerManager = peerManager;
         mailCheckThreadFactory = Util.createThreadFactory("ChkEmailTask", CheckEmailTask.THREAD_STACK_SIZE);
+        mailCheckExecutor = new ThreadPoolExecutor(
+                0,
+                configuration.getMaxConcurIdCheckMail(),
+                30,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<Runnable>(),
+                mailCheckThreadFactory);
+        pendingMailCheckTasks = Collections.synchronizedMap(new HashMap<EmailIdentity, Future<Boolean>>());
         interval = configuration.getMailCheckInterval();
         interval = TimeUnit.MINUTES.toMillis(interval);
     }
@@ -105,26 +115,44 @@ public class EmailChecker extends I2PAppThread {
             
             previousMailCheckTime = lastMailCheckTime;
             lastMailCheckTime = System.currentTimeMillis();
-            pendingMailCheckTasks = Collections.synchronizedCollection(new ArrayList<Future<Boolean>>());
-            mailCheckExecutor = Executors.newFixedThreadPool(configuration.getMaxConcurIdCheckMail(), mailCheckThreadFactory);
             for (EmailIdentity identity : identities.getAll()) {
                 if (identity.getConfig().getIncludeInGlobalCheck()) {
-                    Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder);
-                    Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
-                    pendingMailCheckTasks.add(task);
+                    checkForMail(identity);
                 }
             }
-            mailCheckExecutor.shutdown();   // finish all tasks, then shut down
         }
         else
             log.info("Not checking for mail because the last mail check hasn't finished.");
     }
 
+    public synchronized void checkForMail(String key) throws PasswordException, IOException, GeneralSecurityException {
+        EmailIdentity identity = identities.get(key);
+        if (identity != null)
+            checkForMail(identity);
+    }
+
+    public synchronized void checkForMail(EmailIdentity identity) {
+        if (!pendingMailCheckTasks.containsKey(identity)) {
+            Callable<Boolean> checkMailTask = new CheckEmailTask(identity, dht, peerManager, sendQueue, incompleteEmailFolder, emailDhtStorageFolder, indexPacketDhtStorageFolder);
+            Future<Boolean> task = mailCheckExecutor.submit(checkMailTask);
+            pendingMailCheckTasks.put(identity, task);
+        }
+    }
+
+    /**
+     * @return true if any EmailIdentities are being checked for mail.
+     */
     public synchronized boolean isCheckingForMail() {
-        if (mailCheckExecutor == null)
-            return false;
-        
-        return !mailCheckExecutor.isTerminated();
+        updatePendingTasks();
+        return !pendingMailCheckTasks.isEmpty();
+    }
+
+    /**
+     * @param identity The EmailIdentity to test.
+     * @return true if this EmailIdentity is being checked for mail.
+     */
+    public synchronized boolean isCheckingForMail(EmailIdentity identity) {
+        return isCheckingForMail() && pendingMailCheckTasks.containsKey(identity);
     }
     
     /**
@@ -149,23 +177,29 @@ public class EmailChecker extends I2PAppThread {
             return false;
         if (isCheckingForMail())
             return false;
-        
+
+        if (newMailReceived) {
+            newMailReceived = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    private synchronized void updatePendingTasks() {
         try {
-            for (Future<Boolean> result: pendingMailCheckTasks)
-                if (result.get(1, TimeUnit.MILLISECONDS)) {
-                    pendingMailCheckTasks = null;
-                    return true;
+            for (Map.Entry<EmailIdentity, Future<Boolean>> entry: pendingMailCheckTasks.entrySet())
+                if (entry.getValue().get(1, TimeUnit.MILLISECONDS)) {
+                    newMailReceived = true;
+                    pendingMailCheckTasks.remove(entry.getKey());
                 }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } catch (Exception e) {
             log.error("Error while checking whether new mail has arrived.", e);
         }
-        
-        pendingMailCheckTasks = null;
-        return false;
     }
-    
+
     @Override
     public void run() {
         while (!Thread.interrupted()) {
@@ -194,9 +228,8 @@ public class EmailChecker extends I2PAppThread {
                 log.error("Exception caught in EmailChecker loop", e);
             }
         }
-        
-        if (mailCheckExecutor != null)
-            mailCheckExecutor.shutdownNow();
+
+        mailCheckExecutor.shutdownNow();
         log.debug("EmailChecker interrupted, thread exiting.");
     }
 }

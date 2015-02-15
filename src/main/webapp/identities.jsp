@@ -47,6 +47,7 @@
             <th class="header-column-public-name"><ib:message key="Public Name"/></th>
             <th class="header-column-description"><ib:message key="Description"/></th>
             <th class="header-column-id-email-dest"><ib:message key="Email Destination"/></th>
+            <th class="header-column-check-email"></th>
         </tr>
     </c:if>
     <c:forEach items="${identities}" var="identity" varStatus="status">
@@ -69,6 +70,14 @@
         </td>
         <td>${identity.description}</td>
         <td class="ellipsis">${identity.key}</td>
+        <td><c:choose>
+        <c:when test="${ib:isCheckingForMail(identity)isCheckingForMail(identity)}">
+            <img src="${themeDir}/images/wait.gif" alt="<ib:message key='Checking for mail...'/>" title='<ib:message key='Checking for mail...'/>'/>
+        </c:when>
+        <c:otherwise>
+            <a href="checkMail.jsp?identity=${identity.key}"><img src="${themeDir}/images/refresh.png" alt="<ib:message key='Check Mail'/>" title='<ib:message key='Check mail for this identity'/>'/></a>
+        </c:otherwise>
+        </c:choose></td>
         </tr>
     </c:forEach>
     </table>

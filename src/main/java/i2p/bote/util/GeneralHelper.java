@@ -319,6 +319,10 @@ public class GeneralHelper {
         return I2PBote.getInstance().isCheckingForMail();
     }
 
+    public static boolean isCheckingForMail(EmailIdentity identity) {
+        return I2PBote.getInstance().isCheckingForMail(identity);
+    }
+
     /**
      * @see EmailChecker#getLastMailCheckTime()
      */

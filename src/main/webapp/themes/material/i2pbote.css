@@ -260,6 +260,7 @@ aside {
     word-wrap: none;
 }
 .checkmail {
+    font-size: 1.2em;
     margin-left: 28px;
     margin-top: 12px;
 }
@@ -517,20 +518,20 @@ td a:link, td a:visited {
 
 /* Identities */
 
-.header-column-default {
-    width: 8%;
+.header-column-default, .header-column-check-mail {
+    width: 24px;
 }
 .data-column-default {
     text-align: center;
 }
 .header-column-public-name {
-    width: 30%;
+    width: 20%;
 }
 .header-column-description {
-    width: 35%;
+    width: 30%;
 }
 .header-column-id-email-dest {
-    width: 27%;
+    width: 40%;
 }
 .header-column-check {
     width: 3%;

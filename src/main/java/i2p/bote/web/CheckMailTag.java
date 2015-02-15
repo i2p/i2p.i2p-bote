@@ -27,13 +27,25 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 public class CheckMailTag extends SimpleTagSupport {
+    private String key;
 
     @Override
     public void doTag() throws JspException {
         try {
-            I2PBote.getInstance().checkForMail();
+            if (key == null || key.isEmpty())
+                I2PBote.getInstance().checkForMail();
+            else
+                I2PBote.getInstance().checkForMail(key);
         } catch (Exception e) {
             throw new JspException(e);
         }
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

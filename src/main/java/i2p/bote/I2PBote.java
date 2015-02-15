@@ -526,6 +526,10 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         emailChecker.checkForMail();
     }
 
+    public synchronized void checkForMail(String key) throws PasswordException, IOException, GeneralSecurityException {
+        emailChecker.checkForMail(key);
+    }
+
     /**
      * @see EmailChecker#isCheckingForMail()
      */
@@ -534,6 +538,16 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
             return false;
         else
             return emailChecker.isCheckingForMail();
+    }
+
+    /**
+     * @see EmailChecker#isCheckingForMail(EmailIdentity)
+     */
+    public synchronized boolean isCheckingForMail(EmailIdentity identity) {
+        if (emailChecker == null)
+            return false;
+        else
+            return emailChecker.isCheckingForMail(identity);
     }
 
     /**
