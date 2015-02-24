@@ -2,18 +2,22 @@ Fixes:
 - Auto-comma the To: field when it loses focus
 - Fix tick over selected emails
 - Delete/read/unread/move actions on view email page that don't break everything
+- Prevent router option being changed while Bote is running
+- Remove internal router
 
 Tasks:
 - Show logged-in status in persistent notification
 - Intro and setup
   - More layouts (tune for each screen size)
 - Subclass EmailListFragment for each default mailbox
+- First-run content of inbox should tell users about pull-to-refresh.
 - Cache Identicons for speed
 - Refactor code
   - Reorganize for clarity
   - Optimize use of Android lifecycles
 
 Features:
+- Search
 - Fingerprints that users can compare to validate
 - Public address book lookup
 - "Write email" link in address book
