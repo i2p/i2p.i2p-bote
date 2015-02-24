@@ -10,9 +10,10 @@ Bote is an Android port of I2P-Bote.
 - Apache Ant 1.8.0 or higher
 - [I2P source](https://github.com/i2p/i2p.i2p)
 - [I2P-Bote source](https://github.com/i2p/i2p.i2p-bote)
-- Android SDK (tested with Rev 22.6.4 and platform-tools version 19.1)
+- Android SDK 21
+- Android Build Tools 21.1.1
 - Android Support Repository
-- Gradle 1.12
+- Gradle 2.2.1
 
 ### Gradle
 
