@@ -3,7 +3,7 @@ apply plugin: 'witness'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '21.1.1'
+    buildToolsVersion '21.1.2'
     defaultConfig {
         versionCode 11
         versionName '0.5'
@@ -21,6 +21,10 @@ android {
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
     lintOptions {
         abortOnError false
@@ -46,14 +50,14 @@ dependencies {
 
     // Remote dependencies
     compile 'net.i2p.android:client:0.4@aar'
-    compile 'net.i2p.android.ext:floatingactionbutton:1.5.1'
+    compile 'net.i2p.android.ext:floatingactionbutton:1.8.0'
     compile 'com.madgag.spongycastle:core:1.51.0.0'
     compile 'com.madgag.spongycastle:prov:1.51.0.0'
     compile ('com.mcxiaoke.viewpagerindicator:library:2.4.1') {
         exclude group: 'com.android.support', module: 'support-v4'
     }
-    compile 'com.google.zxing:core:3.1.0'
-    compile 'com.google.zxing:android-integration:3.1.0'
+    compile 'com.google.zxing:core:3.2.0'
+    compile 'com.google.zxing:android-integration:3.2.0'
     compile 'com.androidplot:androidplot-core:0.6.1'
     compile 'com.pnikosis:materialish-progress:1.2'
 
@@ -69,12 +73,12 @@ dependencyVerification {
             'com.android.support:appcompat-v7:5dbeb5316d0a6027d646ae552804c3baa5e3bd53f7f33db50904d51505c8a0e5',
             'com.android.support:recyclerview-v7:e525ad3f33c84bb12b73d2dc975b55364a53f0f2d0697e043efba59ba73e22d2',
             'net.i2p.android:client:9176b5e32f74929856eeedf1dbe7e9f0a64fbb8a58a62b13f929c362353773d3',
-            'net.i2p.android.ext:floatingactionbutton:ea904b3f290498d6184c5b9affa87949ed5dfe76c5b6a0a307f62313ec094249',
+            'net.i2p.android.ext:floatingactionbutton:a20d1f0cae15f8965b81486ba31245937968ae6ee5fa6e8a3ea21d7f6c6243ab',
             'com.madgag.spongycastle:core:8d6240b974b0aca4d3da9c7dd44d42339d8a374358aca5fc98e50a995764511f',
             'com.madgag.spongycastle:prov:b8c3fec3a59aac1aa04ccf4dad7179351e54ef7672f53f508151b614c131398a',
             'com.mcxiaoke.viewpagerindicator:library:470bbd2bec1ede64ad21efd6f02676807d22f1b526c4ac6a5b41a428c6e47e67',
-            'com.google.zxing:core:f00b32f7a1b0edc914a8f74301e8dc34f189afc4698e9c8cc54e5d46772734a5',
-            'com.google.zxing:android-integration:89e56aadf1164bd71e57949163c53abf90af368b51669c0d4a47a163335f95c4',
+            'com.google.zxing:core:7fe5a8ff437635a540e56317649937b768b454795ce999ed5f244f83373dee7b',
+            'com.google.zxing:android-integration:0de037a73138033c4a03cdbca5d5728ef65a026ffb89afce071105f43a98ee0e',
             'com.androidplot:androidplot-core:777b54dd98b8dedc5f3fcc95018eece1188f6c692dcbd5b7744af175e15d70bd',
             'com.pnikosis:materialish-progress:301efbc93b5c10b1798911fc610bbeb0f07c80582c299476ed7cd36e5eb23947'
     ]
