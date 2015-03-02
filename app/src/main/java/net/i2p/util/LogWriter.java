@@ -18,7 +18,11 @@ import i2p.bote.android.Constants;
  * @author zzz
  */
 class LogWriter implements Runnable {
+    /** every 10 seconds? why? Just have the gui force a reread after a change?? */
     private final static long CONFIG_READ_ITERVAL = 10 * 1000;
+    final static long FLUSH_INTERVAL = 29 * 1000;
+    private final static long MIN_FLUSH_INTERVAL = 2*1000;
+    private final static long MAX_FLUSH_INTERVAL = 5*60*1000;
     private long _lastReadConfig = 0;
     private long _numBytesInCurrentFile = 0;
     private OutputStream _currentOut; // = System.out
@@ -28,6 +32,8 @@ class LogWriter implements Runnable {
     private LogManager _manager;
 
     private boolean _write;
+    // ms
+    private volatile long _flushInterval = FLUSH_INTERVAL;
 
     private LogWriter() { // nop
     }
@@ -38,6 +44,14 @@ class LogWriter implements Runnable {
 
     public void stopWriting() {
         _write = false;
+    }
+
+    /**
+     *  @param interval in ms
+     *  @since 0.9.18
+     */
+    public void setFlushInterval(long interval) {
+        _flushInterval = Math.min(MAX_FLUSH_INTERVAL, Math.max(MIN_FLUSH_INTERVAL, interval));
     }
 
     public void run() {
@@ -79,7 +93,7 @@ class LogWriter implements Runnable {
             if (shouldWait) {
                 try {
                     synchronized (this) {
-                        this.wait(10*1000);
+                        this.wait(_flushInterval);
                     }
                 } catch (InterruptedException ie) { // nop
                 }
