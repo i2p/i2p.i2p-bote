@@ -26,8 +26,8 @@
                 android:layout_height="80dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                app:barColor="@color/accent"
-                app:progressIndeterminate="true"/>
+                app:matProg_barColor="@color/accent"
+                app:matProg_progressIndeterminate="true"/>
         </RelativeLayout>
     </FrameLayout>
 
