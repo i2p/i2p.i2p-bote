@@ -1,7 +1,7 @@
+<div>
 <h1>User Guide</h1>
 
-<nav>
-<p><a href="#Introduction">1. Introduction</a></p>
+<nav><p><a href="#Introduction">1. Introduction</a></p>
 <p><a href="#How-To">2. How to use I2P-Bote</a></p>
 <p><a href="#Starting">2.1. Starting I2P-Bote</a></p>
 <p><a href="#Creating-Identities">2.2. Creating an Identity</a></p>
@@ -14,9 +14,7 @@
 <p><a href="#Technical-Details">5. Technical Details</a></p>
 <p><a href="#Terminology">6. Terminology/Glossary of Terms</a></p>
 <p><a href="#Credits">7. Credits</a></p>
-</nav>
-
-<h2 id="Introduction">1. Introduction</h2>
+</nav><h2 id="Introduction">1. Introduction</h2>
 
 <p>I2P-Bote is an easy-to-use, highly anonymous secure e-mail application for
 I2P. It is a serverless, fully decentralized system that establishes/forms a
@@ -288,7 +286,6 @@ so go to
 <a href="http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</a>
 and provide the requested information.</p></li>
 </ol>
-
 <p>Now all e-mails sent to that address
 (<a href="mailto:name@i2pmail.org">name@i2pmail.org</a> from the outer internet
 or <a href="mailto:name@mail.i2p">name@mail.i2p</a> for mails from other postman
@@ -337,7 +334,6 @@ times, [not yet <em>fully</em> implemented]</p></li>
 <li><p>use a long local delay for own packets,</p></li>
 <li><p>use a big check interval randomization. [not yet implemented]</p></li>
 </ul>
-
 <p>You can suppress the sending of date and time in the e-mails' header.</p>
 
 <p>When you reply to an e-mail, certain markers, such as 'Re: [subject of the
@@ -446,15 +442,16 @@ choses not to send his destination, not even the recipient will know it.</p>
 <li><p>the fact that you receive a mail</p></li>
 <li><p>the time you send a mail</p></li>
 <li><p>the time you receive a mail</p></li>
-<li><p>the upper limit of number of mails an unknown user receives</p>
+<li>
+<p>the upper limit of number of mails an unknown user receives</p>
 <ul>
 <li><p>an abstract user, no concrete one, just concluding its existence from
 the existence of the mail identity as he could always have more than one e-mail
 identity</p></li>
-</ul></li>
+</ul>
+</li>
 <li><p>the lower limit, as an identity also sends out test and dummy messages</p></li>
 </ul>
-
 <h3>What I2P-Bote <em>hides partially</em>:</h3>
 
 <p>The I2P-Bote address of the recipient will only be known to sender and
@@ -477,7 +474,6 @@ implemented]</p></li>
 <li><p>If the sender suppresses timestamps only the sender himself will know when
 he sent a mail.</p></li>
 </ul>
-
 <h3>What I2P-Bote <em>cannot hide</em>:</h3>
 <p>I2P-Bote cannot hide the frequency a given identity checks for new mails nor
 the number of mails a given identity receives.</p>
@@ -508,16 +504,14 @@ end-to-end encryption of e-mails, header information and attachments.</p>
 
 <p>An I2P-Bote e-mail destination is a Base64 string containing a public
 encryption key and a signature verification key. Example:</p>
-<pre>
-    uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
+<pre>    uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
     In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
     FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da
     -nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9
     HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ
     gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3
     SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp
-    HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD
-</pre>
+    HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD</pre>
 
 <p>I2P-Bote router/node id and I2P-Bote e-mail destinations look similar, but
 are completely independent of each other.</p>
@@ -546,7 +540,6 @@ a name for this destination in his local address book.</p>
 <li><p>a description which is not shown to anybody but you (it helps you remember
 which e-mail identity you use for which purpose).</p></li>
 </ul>
-
 <p>An e-mail identity is not required for sending emails (although then only
 'Anonymous' can be selected for the 'sender' field).</p>
 
@@ -564,3 +557,4 @@ its destination too soon. It will, of course, take longer - up to several days!<
 <p>See <a href="about.jsp">the About page</a>.</p>
 
 <h2>ENJOY THE BOTE FEELING!!</h2>
+</div>

@@ -1,7 +1,7 @@
+<div>
 <h1>Guide de l'utilisateur</h1>
 
-<nav>
-<p><a href="#Introduction">1. Introduction</a></p>
+<nav><p><a href="#Introduction">1. Introduction</a></p>
 <p><a href="#How-To">2. How to use I2P-Bote</a></p>
 <p><a href="#Starting">2.1. Starting I2P-Bote</a></p>
 <p><a href="#Creating-Identities">2.2. Création d'une identité</a></p>
@@ -14,9 +14,7 @@
 <p><a href="#Technical-Details">5. Détails techniques</a></p>
 <p><a href="#Terminology">6. Terminologie/Glossaire</a></p>
 <p><a href="#Credits">7. Remerciements</a></p>
-</nav>
-
-<h2 id="Introduction">1. Introduction</h2>
+</nav><h2 id="Introduction">1. Introduction</h2>
 
 <p>I2P-Bote est une application de messagerie sécurisée pour I2P, à anonymat
 élevé et simple à utiliser. C'est un système sans serveur,
@@ -318,7 +316,6 @@ allez sur <a href="http://hq.postman.i2p/?page_id=74">
 http://hq.postman.i2p/?page_id=74</a> et indiquez les informations
 demandées.</p></li>
 </ol>
-
 <p>Maintenant, tous les e-mails envoyés à cette adresse
 (<a href="mailto:nom@i2pmail.org">nom@i2pmail.org</a> depuis l'Internet externe
 ou depuis <a href="mailto:nom@mail.i2p">nom@mail.i2p</a> pour les messages
@@ -376,7 +373,6 @@ aléatoires ou fixes par saut [pas encore <em>complètement</em> implémenté],<
 <li><p>utilisez un long retard pour vos propres paquets,</p></li>
 <li><p>utilisez un large intervalle de relève aléatoire. [pas encore implémenté]</p></li>
 </ul>
-
 <p>Vous pouvez supprimer l'envoi des horodatages des en-têtes de messages.</p>
 
 <p>Quand vous répondez, certains marqueurs comme, 'Rép: [Top secret]' ou
@@ -505,17 +501,18 @@ tenu dans l'ignorance de cette donnée.</p>
 <li><p>le fait que vous recevez un message</p></li>
 <li><p>le moment d'envoi d'un message</p></li>
 <li><p>le moment de réception d'un message</p></li>
-<li><p>la limite supérieure du nombre de messages qu'un utilisateur inconnu
+<li>
+<p>la limite supérieure du nombre de messages qu'un utilisateur inconnu
 reçoit</p>
 <ul>
 <li><p>un utilisateur abstrait, pas un concret, extrapolant simplement son
 existence de celle de la destination de messagerie car il pourrait toujours
 avoir plus d'une identité</p></li>
-</ul></li>
+</ul>
+</li>
 <li><p>la limite basse, car une identité envoie également des messages de test et
 des messages leurres/'bidons'</p></li>
 </ul>
-
 <h3>Ce qu'I2P-Bote <em>masque partiellement</em>:</h3>
 
 <p>L'adresse I2P-Bote du destinataire n'est connue que par l'expéditeur et
@@ -539,7 +536,6 @@ message [pas encore implémenté].</p></li>
 <li><p>Si l'expéditeur supprime les horodatages, seul l'expéditeur sait quand
 il a envoyé un message.</p></li>
 </ul>
-
 <h3>Ce qu'I2P-Bote <em>ne peut pas cacher</em>:</h3>
 <p>I2P-Bote ne peut pas masquer la fréquence à laquelle une identité donnée
 relève les nouveaux messages, ni ne nombre de messages reçus par une identité
@@ -576,16 +572,14 @@ informations d'en-têtes et les pièces jointes.</p>
 <p>Une destination de messagerie I2P-Bote est une chaîne en base 64
 contenant une clé publique de cryptage et une clé de vérification
 de signature, par exemple:</p>
-<pre>
-    uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
+<pre>    uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
     In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
     FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da
     -nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9
     HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ
     gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3
     SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp
-    HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD
-</pre>
+    HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD</pre>
 
 <p>L'identité de routeur/nœud I2P-Bote et la destination de messagerie I2P-Bote
 se ressemblent mais elles sont complètement indépendantes l'une de l'autre.</p>
@@ -617,7 +611,6 @@ quatre éléments:</p>
 l'identité (pour vous aider à vous souvenir de l'usage que vous assignez à
 cette identité).</p></li>
 </ul>
-
 <p>Une identité n'est pas pas nécessaire pour envoyer des messages (dans ce
 cas, seul 'Anonyme' est proposé comme expéditeur dans le champ de sélection).</p>
 
@@ -637,3 +630,4 @@ surpris si vos messages n'arrivent pas rapidement à destination. Ça prendra
 <p>See <a href="about.jsp">the About page</a>.</p>
 
 <h2>ENJOY THE BOTE FEELING!!</h2>
+</div>

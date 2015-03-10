@@ -1,7 +1,7 @@
+<div>
 <h1>Foire aux questions</h1>
 
-<nav>
-<p><a href="#What">I2P-Bote, kesako?</a></p>
+<nav><p><a href="#What">I2P-Bote, kesako?</a></p>
 <p><a href="#Name">Pourquoi ce nom d'I2P-Bote?</a></p>
 <p><a href="#Why">Pourquoi I2P-Bote?</a></p>
 <p><a href="#Sending">Que se passe-t-il quand je clique sur "Envoyer"?</a></p>
@@ -53,9 +53,7 @@ routes?</a></p>
 langue?</a></p>
 <p><a href="#Technical">Fonctionnement technique?</a></p>
 <p><a href="#GetInvolved">D'autres moyens pour aider?</a></p>
-</nav>
-
-<h3 id="What">I2P-Bote, kesako?</h3>
+</nav><h3 id="What">I2P-Bote, kesako?</h3>
 <p>C'est un programme de messagerie P2P conçu pour protéger votre
 vie privée.</p>
 
@@ -200,7 +198,6 @@ cause d'attaques, de problèmes légaux, manque de financement ou
 d'intérêt&hellip;) et car l'administrateur du serveur dispose de trop de
 moyens pour faire de l'espionnage.</p></li>
 </ul>
-
 <h3 id="Safeguards">Comment mon identité est-elle protégée quand j'échange du courrier?</h3>
 <p>Jamais votre adresse IP ni même votre destination I2P n'est
 inclue dans les messages que vous envoyez.</p>
@@ -334,12 +331,14 @@ c'est là qu'une autre identité avec un relayage et des délais différents
 peut être utile.</p>
 
 <h3 id="EncryptionTypes">Quel est le meilleur cryptage?</h3>
-<p><a href="http://fr.wikipedia.org/wiki/Cryptographie_sur_les_courbes_elliptiques">ECC</a>
+<p><a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a>
 à 256 bits produit des adresses destinations courtes et maniables, et
 est considéré comme plus solide que l'ElGamal à 2048 bits.</p>
-<p><a href="http://fr.wikipedia.org/wiki/Cryptographie_sur_les_courbes_elliptiques">ECC</a>
+
+<p><a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a>
 à 521 bits est plus solide que sa version à 256 bits, mais il génère
 des destinations (clés) très longues.</p>
+
 <p><a href="http://fr.wikipedia.org/wiki/Cryptosyst%C3%A8me_de_ElGamal">ElGamal</a>
 à 2048 bits génère des clés encore plus longues, et il est le plus
 faible des trois algorithmes. Cependant, ElGamal fait l'objet de plus
@@ -348,17 +347,16 @@ algorithme passe inaperçue pendant plus longtemps que dans ECC.</p>
 
 <h3 id="Algorithms">Quels algorithmes sont-ils utilisés pour le cryptage symétrique
 et le hachage?</h3>
-<p>
-<a href="http://fr.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a>
-en mode <a href="http://fr.wikipedia.org/wiki/Mode_d%27op%C3%A9ration_%28cryptographie%29#Encha.C3.AEnement_des_blocs_:_.C2.AB_
-Cipher_Block_Chaining_.C2.BB_.28CBC.29">CBC</a>
-et <a href="http://http://fr.wikipedia.org/wiki/Secure_Hash_Algorithm">SHA-256</a>.</p>
+<p><a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a>
+en mode
+<a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">
+CBC</a> et <a href="http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.</p>
 
 <h3 id="AntiSpam">Y a-t-il des protections anti-spam?</h3>
 <p>I2P-Bote ne filtre pas le spam, mais le fait que l'envoi en masse doive
 être fait individuellement devrait décourager les spammers. Un autre
 moyen de défense repose sur des pénalités
-(<a href= "http://www.hashcash.org/">HashCash</a>) qui sont un mécanisme
+(<a href="http://www.hashcash.org/">HashCash</a>) qui sont un mécanisme
 supporté au niveau du protocole, et qui pourrait être implémenté dans
 une version ultérieure si le spam devenait un problème.</p>
 
@@ -381,11 +379,11 @@ habituels.</p>
 
 <h3 id="Gateways">Puis-je recevoir et envoyer des messages de/vers des serveurs
 de l'Internet normal?</h3>
-<p>Non, mais on y travaille.</p>
+<p>Non, mais on y travaille.</p> 
 <!-- Yes. You can both send and receive mails to/from ordinary internet e-mail accounts -->
 
 <h3 id="Postman">Et de/vers les comptes traditionnels de postman?</h3>
-<p>Non plus, mais on y travaille aussi.</p>
+<p>Non plus, mais on y travaille aussi.</p> 
 <!-- Yes. You can both send and receive mails to/from some_name@mail.i2p addresses -->
 
 <h3 id="Know">Que signifient les icônes dans la colonne "Connu" de la boîte
@@ -423,7 +421,6 @@ propre dans l'espace de clés.</p></li>
 raison, il est marqué "Verrouillé", et le temps depuis lequel sa
 défection a été découverte est affiché.</p></li>
 </ul>
-
 <h3 id="Anonymous">Comment rester plus anonyme?</h3>
 <ul>
 <li><p>N'envoyez aucune information à votre sujet! (nom,
@@ -450,7 +447,6 @@ dans votre langue,</p></li>
 périodes d'utilisation,</p></li>
 <li><p>&hellip;</p></li>
 </ul>
-
 <p>Cette liste n'est pas destinée à vous rendre paranoïaque, mais à vous
 montrer par où l'anonymat peut-être amoindri.</p>
 
@@ -474,7 +470,6 @@ ordinateur, ou les sauvegarder?</h3>
 
 <h3 id="MailRoutes">Qu'est-ce qu'une <em>route de messages</em>?</h3>
 <p>Voir: Que signifie "Transport à haute latence"?</p>
-
 <!-- <p>(When using mail routes, the timestamps are automatically disabled.) [yet to be implemented]</p> -->
 
 <h3 id="HighLatency">Que signifie "Transport à haute latence"?</h3>
@@ -522,7 +517,6 @@ peut se camoufler.</p></li>
 <li><p>En conséquence, même les relais I2P-Bote sont
 masqués en terme de localisation.</p></li>
 </ul>
-
 <h3 id="WithoutRoutes">Que valent l'anonymat et la sécurité d'I2P-Bote sans les
 routes?</h3>
 <p>Plutôt bonne pour l'anonymat et très sécurisé.</p>
@@ -575,3 +569,4 @@ langue?</h3>
 <li><p>Ajoutez des fonctionnalités ou corrigez des bogues (<a href="about.jsp">contactez
 tout d'abord l'auteur </a>).</p></li>
 </ul>
+</div>
