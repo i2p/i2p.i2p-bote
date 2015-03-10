@@ -1,0 +1,320 @@
+<h1>Frequently Asked Questions</h1>
+
+<nav>
+<p><a href="#What">¿Qué es I2P-Bote?</a></p>
+<p><a href="#Name">¿Por qué se llama I2P-Bote?</a></p>
+<p><a href="#Why">¿Por qué I2P-Bote?</a></p>
+<p><a href="#Sending">¿Qué ocurre con un correo después de pulsar 'Enviar'?</a></p>
+<p><a href="#RandomPeople">¡Un minuto! ¿Todos los correos son enviados y guardados en el disco duro de personas aleatorias? ¡Eso suena como una muy mala idea!</a></p>
+<p><a href="#HowItWorks">¿Cómo funciona exactamente?</a></p>
+<p><a href="#NothingToHide">¿Por qué debería usarlo? No tengo nada que ocultar&hellip;</a></p>
+<p><a href="#GPG">¿Y qué pasa con PGP y GPG?</a></p>
+<p><a href="#UsingGPG">¿Aún así puedo seguir usando GPG/PGP con I2P-Bote?</a></p>
+<p><a href="#Susimail">¿En qué se parece a Susimail?</a></p>
+<p><a href="#Comparison">¿Por qué I2P-Bote es mejor?</a></p>
+<p><a href="#Safeguards">¿Cómo se mantiene segura mi identidad cuando intercambio correos con alguien?</a></p>
+<p><a href="#How">¿Cómo lo uso?</a></p>
+<p><a href="#EmailClients">¿Puedo usar un programa como Thunderbird?</a></p>
+<p><a href="#Attachments">¿Puedo enviar adjuntos, y cuáles son los límites?</a></p>
+<p><a href="#CreateIdentity">¿Cómo creo una cuenta de correo?</a></p>
+<p><a href="#EmailDestination">¿Qué es una Destinación de Correo? ¿Y qué pasa con las direcciones de correo normales?</a></p>
+<p><a href="#AddressLength">¿Por qué las direcciones de correo son tan largas?</a></p>
+<p><a href="#AddressBook">Pero no puedo recordar esas destinaciones tan largas&hellip;</a></p>
+<p><a href="#MultipleIdentities">¿Para qué sirve tener varias identidades?</a></p>
+<p><a href="#EncryptionTypes">¿Qué tipo de cifrado es el mejor?</a></p>
+<p><a href="#Algorithms">¿Qué algoritmos son usados para los cifrados simétricos y para el hashing?</a></p>
+<p><a href="#AntiSpam">¿Hay algún tipo de medida anti spam?</a></p>
+<p><a href="#HTML">¿Qué pasa con el HTML o el texto con estilos?</a></p>
+<p><a href="#Persistence">¿Por cuánto tiempo se guardan mis correos por ahí?</a></p>
+<p><a href="#DoIdentitiesExpire">¿Cuándo expira un identidad de correo?</a></p>
+<p><a href="#Gateways">Puedo enviar y recibir correos desde un servidor de correo normal en Internet, en la clearnet?</a></p>
+<p><a href="#Postman">¿Puedo enviar y recibir correos a las cuentas del correo tradicionales de postman en i2p?</a></p>
+<p><a href="#Know">¿Qué significa cuando 'Conocido' es marcado con una 'x' en un correo en mi bandeja de entrada?</a></p>
+<p><a href="#Terms">¿Qué significa 'BktPfx' 'Distancia(distance)' y 'Bloqueado(Blocked)'?</a></p>
+<p><a href="#Anonymous">¿Cómo puedo ser más anónimo?</a></p>
+<p><a href="#Timestamps">¿Cómo evito enviar marcas de tiempo?</a></p>
+<p><a href="#Backups">¿Cómo copio mi configuración y datos a otra computadora, o cómo hago una copia de seguridad de ellos?</a></p>
+<p><a href="#MailRoutes">¿Qué es una <em>ruta de correo</em> (mail route)?</a></p>
+<p><a href="#HighLatency">¿Qué significa transporte de alta latencia?</a></p>
+<p><a href="#Latencies">¿Qué latencias hay, y cómo pueden ser controladas (si esto es posible)?</a></p>
+<p><a href="#WhyI2P">¿Si I2P-Bote genera su propio anonimato, por qué necesita I2P?</a></p>
+<p><a href="#WithoutRoutes">¿Cómo es de anónimo I2P-Bote sin las rutas de correo?</a></p>
+<p><a href="#OpenSource">¿Es I2P-Bote de código abierto?</a></p>
+<p><a href="#Credits">¿Quén hizo I2P-Bote?</a></p>
+<p><a href="#Languages">¿En qué idiomas está disponible?</a></p>
+<p><a href="#Translate">¿Cómo puedo ayudar a traducir I2P-Bote a mi idioma?</a></p>
+<p><a href="#Technical">¿Cómo funciona a nivel técnico?</a></p>
+<p><a href="#GetInvolved">¿Hay otras formas en las que pueda ayudar?</a></p>
+</nav>
+
+<h3 id="What">Qué es I2P-Bote?</h3>
+<p>Un programa p2p de correo diseñado para proteger tu privacidad.</p>
+
+<p>I2P-Bote is un sistema de correo totalmente descentralizado (sin servidores), que funciona en su propia red interna y que está cifrado de fin a fin. Soporta diferentes identidades y oculta las cabeceras de los correos. Actualmente todavía está en estado alfa. Puede accederse a través de una web y soporta IMAP y SMTP, por lo que los correos de Bote pueden leerse y escribirse desde clientes de correo normales. Está planeado que garantice un anonimato adicional proporcionando la opción de usar un transporte de alta latencia. Todos los correos de Bote son cifrados automáticamente de fin a fin, por lo que no es necesario configurar el cifrado del correo, (aunque esta opción también existe), y además los correos también serán autentificados automáticamente. Como es descentralizado, no existe ningún servidor de correo que pueda asociar diferentes identidades de correo cuando se comunican con otras identidades: Incluso aquellos nodos enviando correos no conocerán el remitente. Y quitando al remitente y al receptor, sólo el final del túnel de alta latencia y los nodos de almacenaje sabrán a quién (una identidad anónima) está destinado el correo. El remitente original puede haberse desconectado mucho antes de que el correo esté disponible en el otro lado. Esto aumenta el nivel de anonimato de I2P-Bote. Para aquellos que no quieran altos retardos: Todas estas configuraciones son ajustables por el usuario, por lo que cada usuario decide cuanto anonimato quiere.</p>
+
+<h3 id="Name">¿Por qué se llama I2P-Bote?</h3>
+<p>Bote significa 'messenger' (mensajero) en alemán.</p>
+
+<h3 id="Why">¿Por qué I2P-Bote?</h3>
+<p>Porque mola. Y porque a I2P le faltaba un servicio de correo descentralizado, y viendo su creación como una oportunidad para mejorar aspectos del anonimato olvidados, se decidió añadir un transporte de alta latencia opcional. Puedes usar una cuenta de correo normal y cifrar tus correos de fin a fin, pero no serán anónimos. Puedes utilizar servidores de correos anónimos, pero no serán cifrados de fin a fin automáticamente.</p>
+
+<p>O puedes usar I2P-Bote en donde los correos son anónimos y cifrados de fin a fin <em>automáticamente</em>.</p>
+
+<p>Al contrario que con los sistemas de correos normales, no es necesario configurar una aplicación para el manejo de las claves. Todo lo que necesitas está ahí.</p>
+
+<p>A pesar de ser tan simple y fácil de usar, ofrece un cifrado de grado militar y opciones para un anonimato realmente fuerte.</p>
+
+<h3 id="Sending">¿Qué ocurre con un correo después de pulsar 'Enviar'?</h3>
+<p>Es cifrado y almacenado en los ordenadores de otros participantes de I2P-Bote. Desde ahí será enviado a su destinatario cuando éste compruebe su bandeja de entrada.</p>
+
+<h3 id="RandomPeople">¡Un minuto! ¿Todos los correos son enviados y guardados en el disco duro de personas aleatorias? ¡Eso suena como una muy mala idea!</h3>
+<p>Todo lo que ellos ven son datos basura porque están muy bien cifrados. Sólo tú y el destinatario saben lo que hay en el correo. Además, si envías el correo con los retardos activados, no es posible averiguar quién lo mandó.</p>
+
+<p>Entre esto y usar una cuenta de correo en <a href=
+"http://www.theregister.co.uk/2009/12/07/schmidt_on_privacy/">una compañía que no respeta tu privacidad</a>, sobre una conexión a internet que <a href="http://www.eff.org/issues/nsa-spying">está siendo espiada por ciertas agencias</a>, ¿Cuál dirías que es más de fiar?</p>
+
+<h3 id="HowItWorks">¿Cómo funciona exactamente?</h3>
+<p>Mira en la sección <a href="userGuide.jsp#Technical-Concept">'Conceptos técnicos'</a> del <a href="userGuide.jsp">manual de usuario</a>.</p>
+
+<p>En resumen: Los nodos de I2P-Bote crean una red p2p, enviando paquetes de correos de unos a otros y almacenándolos en una DHT.</p>
+
+<h3 id="NothingToHide">¿Por qué debería usarlo? No tengo nada que ocultar&hellip;</h3>
+<p>Porque tampoco irías por la calle desnudo, ¿o sí?</p>
+
+<p>Bueno, quizás sí irías desnudo, pero el punto es que a veces quieres que una comunicación por correo sea secreta y no localizable y no que todo el mundo pueda saber qué dices y a quién.</p>
+
+<p>Y otras veces simplemente deseas comunicarte de forma totalmente anónima con otras personas.</p>
+
+<p>Para esto I2P-Bote es la herramienta ideal, dándote muchísima protección mientras mantiene una gran flexibilidad.</p>
+
+<p>Intenta proporcionar seguridad profesional de grado militar y un manejo a prueba de novatos: puedes tener una configuración realmente paranoica, donde un correo tarda una eternidad en llegar; o tener una comunicación más rápida y todavía disfrutar de un alto anonimato.</p>
+
+<p>Tú decides - tan fácil como hacer un click en tu ratón.</p>
+
+<h3 id="GPG">¿Y qué pasa con <a href="http://www.pgp.com/">PGP</a> y <a href="http://gnupg.org/">GPG</a>?</h3>
+<p>PGP y GPG permiten cifrar el correo y enviarlo a través de una cuenta ya existente. Ofrecen un cifrado robusto, pero sólo pueden cifrar el texto del correo; las cabeceras, que incluyen el texto del asunto del correo, el nombre de tu computadora y otra información no se envían de forma segura.</p>
+
+<p>Otro problema de privacidad es que PGP/GPG no pueden prevenir que otros averigüen quién habla con quién.</p>
+
+<p>I2P-Bote, al contrario, cifra todo excepto el destino del destinatario del correo. (De hecho incluso la destinación del destinatario es visible sólo para los nodos que no saben quién es el remitente del correo). Además tiene la capacidad de enviar el correo a través de varios relays (parecido a <a href="http://mixmaster.sourceforge.net/">Mixmaster</a>), por lo que nadie puede saber quién está enviando correos a quién.</p>
+
+<h3 id="UsingGPG">¿Aún así puedo seguir usando GPG/PGP con I2P-Bote?</h3>
+<p>Por supuesto. Puedes cifrar con GPG el texto de tu correo antes de pegarlo en I2P-Bote, o usar un cliente de correo con soporte para GPG.</p>
+
+<h3 id="Susimail">¿En qué se parece a Susimail?</h3>
+<p>I2P-Bote es mejor porque tiene un número de versión mayor. Sólo bromeaba.</p>
+
+<p>I2P-Bote ofrece más privacidad, pero Susimail ofrece algunas características que I2P-Bote no tiene aún (ver más abajo), y Susimail es más eficiente en el uso del ancho de banda porque no almacena los correos redundantemente.</p>
+
+<h3 id="Comparison">¿Por qué I2P-Bote es mejor?</h3>
+<p><em>Pensamos</em> que es mejor para <em>nosotros</em> (y quizás para ti también; ¡decide tú mismo!), que:</p>
+<ul>
+<li><p>Mixminion, porque es tan fácil de usar y a prueba de novatos como hemos podido hacerlo.</p></li>
+<li><p>Los servicios de correo anónimos no basados en enrutado de destino de clave: ya que estos no ofrecen cifrado de fin a fin.</p></li>
+<li><p>Servicios centralizados, ya que el servidor puede caerse (debido a ataques, problemas legales, falta de fondos o interés, &hellip;) y el administrador del servidor tiene muchas formas de obtener información.</p></li>
+</ul>
+
+<h3 id="Safeguards">¿Cómo se mantiene segura mi identidad cuando intercambio correos con alguien?</h3>
+<p>Ni tu destinación en I2P, ni tu dirección IP son incluidas jamás en los correos que envías.</p>
+
+<p>El transporte de alta latencia evita ataques de sincronización.</p>
+
+<p>El cifrado de fin a fin, el cifrado por cada salto, el reenvío de paquetes a otros nodos, un sólo tamaño de paquete (relleno)*, un ritmo de envío constante (mensajes vacíos y de prueba)*, y un buen equilibrio del ratio de entrada y salida* evitan los ataques de análisis, y en combinación con retardos por cada salto, I2P-Bote ofrece buenas medidas contra los ataques de intersección.</p>
+
+<p>La naturaleza abierta del código de I2P-Bote garantiza que tú mismo puedes ver la implementación y comprobar los errores.</p>
+
+<p>*[aún sin implementar]</p>
+
+<h3 id="How">¿Cómo lo uso?</h3>
+<p>¡Lee <a href="userGuide.jsp">el manual</a> o mira las otras preguntas y respuestas de este manual!</p>
+
+<p>Si todavía tienes cuestiones sin responder puedes preguntar en <a href=
+"http://forum.i2p/viewforum.php?f=35">http://forum.i2p/viewforum.php?f=35</a></p>
+
+<h3 id="EmailClients">¿Puedo usar un programa como Thunderbird?</h3>
+<p>Sí, puedes usar cualquier cliente de correo mientras soporte IMAP y SMTP.</p>
+
+<h3 id="Attachments">¿Puedo enviar adjuntos, y cuáles son los límites?</h3>
+<p>Sí, los archivos adjuntos están soportados desde la versión 0.2.5. Los archivos adjuntos deben ser de pequeño tamaño, preferiblemente por debajo de 500KB.</p>
+
+<h3 id="CreateIdentity">¿Cómo creo una cuenta de correo?</h3>
+<p>En I2P-Bote se llaman identidades de correo. Puedes crear una en la interfaz web de I2P-Bote dentro del enlace ¨Identidades". La razón por la que no se llama cuenta es porque no hay un proveedor como GMail o GMX. Tú guardas tus propias claves (de cifrado) para tu Identidad de Correo.</p>
+
+<p>Cuando creas un Identidad de Correo I2P-Bote genera un grupo de números y letras llamado Destinación de Correo. Ésta es la dirección donde puedes ser contactado.</p>
+
+<p>Por ejemplo: <code>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6tDWwjPHYEuoKyWqwxplSdix</code></p>
+
+<h3 id="EmailDestination">¿Qué es una Destinación de Correo? ¿Y qué pasa con las direcciones de correo normales?</h3>
+<p>Las destinaciones de correo (aka destinaciones de Bote) son de 86 a 512 carácteres de largo, dependiendo del tipo de cifrado. La posibilidad de que el usuario elija su propia dirección 'fácil de recordar' está planeada para un futuro.</p>
+
+<p>Las identidades de correo consisten en claves públicas y privadas, además del nombre elegido por el usuario. La parte pública es tu destinación de correo, tu identidad pseudónima. Y un usuario real puede tener más de una identidad de éstas. Sirven para enviar los correos a ciertos usuarios seleccionados - por lo que nos referimos a ellas como 'destinación' o para acortar 'dest'- además de para cifrar los correos con ellas. Por lo tanto, tu destinación de correo es la clave con la que otros usuarios cifran los correos que te envían, y también la forma de verificar la autenticidad e integridad de los correos recibidos por ti.</p>
+
+<p>Es seguro dar tu destinación de correo a cualquier persona de la que quieras recibir correos.</p>
+
+<p>¡Es importante diferenciar entre la destinación de correo y el ID del ruter! Tu identidad de I2P-Bote no está relacionada con el ID de tu ruter/nodo de I2P-Bote, el cual es usado por los nodos de I2P-Bote para contactar entre ellos dentro de la red de Bote.</p>
+
+<p>Si tienes problemas con I2P-Bote, -en el extraño caso de que sea necesario- puedes decir el ID de tu ruter I2P-Bote en irc2p, canales de IRC de I2P o en el foro, o manualmente añadir los IDs de otros usuarios para poder conectarte, aunque hasta ahora nunca ha sido necesario.</p>
+
+<p>El ID del ruter <b>no está enlazado a tu IP</b>. No obstante, ¡no relaciones el ID de tu ruter I2P-Bote con tu destinación de correo de I2P-Bote ya que esto podría destruir el anonimato adicional de I2P-Bote!</p>
+
+<h3 id="AddressLength">¿Por qué las direcciones de correo son tan largas?</h3>
+<p>En I2P-Bote cada correo es cifrado automáticamente. Para evitar tener que compartir la dirección de correo y una clave larga, simplemente hemos hecho que la clave sea la dirección. Esto viene con beneficios añadidos: No tienes que preocuparte de si una dirección de correo está tomada ya o no (al menos si no envías o recibes correos desde Internet, desde la clearnet) y además no necesitas un gestor de claves extra para trabajar con tus claves.</p>
+
+<p>Es seguro compartir esta clave, ya que es sólo la clave pública que cualquiera puede saber sin comprometer la seguridad de tus correos.</p>
+
+<p>Usando cifrados ECC hará que las claves de destino de los correos sean más cortas.</p>
+
+<h3 id="AddressBook">Pero no puedo recordar esas destinaciones tan largas&hellip;</h3>
+<p>Por esta razón en I2P-Bote está integrado el gestor de contactos o libreta de direcciones. Una vez que te acostumbres a I2P-Bote te alegrarás de que el sistema de autentificación y cifrado estén integrados, lo cual sólo puede conseguirse usando claves de cifrado.</p>
+
+<p>Otra vez, la alternativa sería tener direcciones cortas y fáciles <b>más</b> un larga clave de cifrado y autenticación, <b>y</b> usar alguna autoridad para controlar las direcciones de correo y enviarlas a algún receptor anónimo.</p>
+
+<h3 id="MultipleIdentities">¿Para qué sirve tener varias identidades?</h3>
+<p>I2P-Bote no es mensajería instantánea, por lo que puedes tener varias identidades sin tener que tener varios túneles abiertos. Sólo usas más recursos cuando Bote hace peticiones de descarga, pero al mismo tiempo proporcionas cobertura a otros.</p>
+
+<p>Ahora imagina que te comunicas con tus amigos sin ser observados (ver: leyes de retención de datos) a través de I2P-Bote, y quieres enviar un correo rápidamente indicando que vais a quedar esta noche en un lugar diferente. En este caso no necesitas un super anonimato y puedes renunciar a las rutas de correo y los retardos. Tus amigos, además, querrán tener un intervalo de comprobación de correos nuevos más corto, para poder recibir el correo a tiempo. Aún así quieres un super anonimato para algunas de tus comunicaciones - aquí es donde nos es tan útil tener otras identidades, con retrasos, rutas e intervalos largos de comprobación de nuevos correos.</p>
+
+<h3 id="EncryptionTypes">¿Qué tipo de cifrado es el mejor?</h3>
+<p><a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a> de 256 bits crea destinaciones de email manejables y cortas, y es considerado más seguro que 2048-bit ElGamal.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a> de 521 bits es más seguro que ECC de 254 bits, pero crea destinaciones de correo más largas.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/ElGamal">ElGamal</a> de 2048 bits crea las destinaciones de correos más largas, y es considerado el más débil, criptográficamente hablando, de los tres. ElGamal tiene más estudios sobre él que ECC, lo que hace que sea más difícil encontrar una vulnerabilidad desconocida en ElGamal que en ECC.</p>
+
+<h3 id="Algorithms">¿Qué algoritmos son usados para los cifrados simétricos y para el hashing?</h3>
+<p><a href=
+"http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a>
+en modo <a href=
+"http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">
+CBC</a> y <a href=
+"http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.</p>
+
+<h3 id="AntiSpam">¿Hay algún tipo de medida anti spam?</h3>
+<p>I2P-Bote no filtra el spam activamente, pero el hecho de que para enviar correos masivamente hay que hacerlo individualmente debería desalentar a los spammers. Otra línea de defensa es <a href="http://www.hashcash.org/">HashCash</a>, el cual es soportado a nivel de protocolo y será implementado en una versión futura si el spam se convierte en un problema.</p>
+
+<h3 id="HTML">¿Qué pasa con el HTML o el texto con estilos?</h3>
+<p>La interfaz web no renderiza HTML.</p>
+
+<h3 id="Persistence">¿Por cuánto tiempo se guardan mis correos por ahí?</h3>
+<p>Los correos están disponibles por 100 días después de haber sido enviados. Los correos que no hayan sido descargados para entonces son eliminados.</p>
+
+<p>Los correos que has recibido se almacenan en tu máquina local hasta que los borres.</p>
+
+<h3 id="DoIdentitiesExpire">¿Cuándo expira un identidad de correo?</h3>
+<p>Nunca.</p>
+
+<h3 id="Gateways">Puedo enviar y recibir correos desde un servidor de correo normal en Internet, en la clearnet?</h3>
+<p>No, pero se está trabajando en ello.</p> 
+<!-- Yes. You can both send and receive mails to/from ordinary internet e-mail accounts -->
+
+<h3 id="Postman">¿Puedo enviar y recibir correos a las cuentas del correo tradicionales de postman en i2p?</h3>
+<p>No, pero se está trabajando en ello.</p> 
+<!-- Yes. You can both send and receive mails to/from some_name@mail.i2p addresses -->
+
+<h3 id="Know">¿Qué significa cuando 'Conocido' es marcado con una 'x' en un correo en mi bandeja de entrada?</h3>
+<p>Cuando la destinación del remitente no es conocida, el correo es marcado con una 'x' en la columna de 'Conocido (Know)' o poniendo {UNK} antes de la dirección del remitente en IMAP.</p>
+
+<p>Esto significa que no tienes ninguna prueba de que ese usuarios es quien dice ser, en su nombre de usuario. Por supuesto, si la firma es válida, sabes que posee la clave de destino con la que ha sido firmado el correo, y que el contenido del correo es de esa persona. Pero no puedes fiarte del nombre corto en este caso. En caso de que hayas recibido anteriormente un correo de un usuario con este nombre corto, no puedes estar seguro de que esta vez es el mismo usuario, incluso si la firma es válida. En este caso debes comparar las claves de destino o añadirlas a tu libreta de direcciones. Un usuario desconocido localmente no significa que sea malo, pero no debes creer que es el usuario que piensas que es. Pero, si ha sido verificado contra las claves almacenadas localmente, sabes que es el mismo usuario si recibes otro correo de él y 'Conocido' aparece en verde.</p>
+
+<h3 id="Terms">¿Qué significa 'BktPfx' 'Distancia(distance)' y 'Bloqueado(Blocked)'?</h3>
+<ul>
+<li><p>BktPfx = BucketPrefix</p></li>
+<li><p>Distancia: la distancia desde un nodo de I2P-Bote a tu propio nodo en el 'espacio de claves'</p></li>
+<li><p>Bloqueado: Si un nodo no es accesible por alguna razón se marcará como bloqueado, más el tiempo que lleva inaccesible.</p></li>
+</ul>
+
+<h3 id="Anonymous">¿Cómo puedo ser más anónimo?</h3>
+<ul>
+<li><p>¡No envíes información identificativa sobre ti! (nombre, dirección, fotos, localización, zona horaria, edad, sexo, webs, nombres de usuario, ID del ruter I2P, ID de I2P-Bote, archivos que contengan información sobre ti, &hellip;).</p></li>
+<li><p>No envíes información personal o información que sólo poseas tú,</p></li>
+<li><p>Deja I2P-Bote ejecutado 24/7,</p></li>
+<li><p>Usa rutas de correos aleatorias, retrasos por saltos y/o tiempos fijos de envío por salto, [todavía no implementado totalmente]</p></li>
+<li><p>Usa un intervalo de comprobación de nuevos correos largo,</p></li>
+<li><p>Usa un retardo local largo para los paquetes propios,</p></li>
+<li><p>Usa un intervalo largo aleatorio de comprobación. [todavía no implementado totalmente]</p></li>
+<li><p>Elimina el envío de la fecha y la hora en las cabeceras de los correos,</p></li>
+<li><p>Elimina la traducción de marcadores como 'Re:' a otros lenguajes,</p></li>
+<li><p>Comprueba tu idioma y tu estilo de escritura,</p></li>
+<li><p>Usa diferentes identidades de correo,</p></li>
+<li><p>Considera eliminar las identidades de correo después de largos periodos de uso,</p></li>
+<li><p>&hellip;</p></li>
+</ul>
+
+<p>Esta lista no intenta aumentar tu paranoia, sino mostrar dónde puede reducirse el anonimato.</p>
+
+<h3 id="Timestamps">¿Cómo evito enviar marcas de tiempo?</h3>
+<p>Ve a la configuración y desactiva enviar marcas de tiempo. Esto hará que tus correos no contengan la fecha u hora de envío.</p>
+
+<!-- <p>(When using mailroutes, the timestamps are automatically disabled.) [not yet implemented]</p> -->
+
+<h3 id="Backups">¿Cómo copio mi configuración y datos a otra computadora, o cómo hago una copia de seguridad de ellos?</h3>
+<p>I2P-Bote almacena todos los correos y otros datos en la carpeta <code>i2pbote</code>. En windows esa carpeta puede encontrarse en <code>%APPDATA%\I2P\i2pbote</code>; en Gnu/Linux está en <code>$HOME/.i2p/i2pbote</code>.</p>
+
+<p>Para hacer una copia de seguridad o migrarlo todo, simplemente copia el directorio <code>i2pbote</code>.</p>
+
+<p>Si sólo te interesan tus identidades de correo, copia el archivo <code>identities.txt</code>. Para la lista de direcciones copia <code>addressBook.txt</code>.</p>
+
+<h3 id="MailRoutes">¿Qué es una <em>ruta de correo</em> (mail route)?</h3>
+<p>Ver: ¿Qué significa transporte de alta latencia?</p>
+<!-- <p>(When using mail routes, the timestamps are automatically disabled.) [yet to be implemented]</p> -->
+
+<h3 id="HighLatency">¿Qué significa transporte de alta latencia?</h3>
+<p>Significa que puedes activar una opción donde los paquetes de correo no son enviados directamente a los nodos, sino que son reenviados a otros pares (los cuales no pueden leer los correos, ya que están cifrados en diversas capas y partidos en pequeños trozos), los cuales no los envían inmediatamente, sino después de un tiempo especificado por el usuario - en caso de estar siendo enviados será tal y como lo ha especificado el remitente, en caso de estar siendo recibidos será tal y como lo ha especificado el destinatario.</p>
+
+<p>Además, al correo le toma un tiempo llegar. Por lo que un atacante no puede simplemente usar las estadísticas de los tiempos de un nodo (quién se conecta o cuándo) ni los tiempos de almacenamiento de un mensaje recibido (porque en un sistema de baja latencia sí coincide con el momento en que ha sido enviado), para poder descubrir las identidades reales tras las identidades de un correo de I2P-Bote.</p>
+
+<h3 id="Latencies">¿Qué latencias hay, y cómo pueden ser controladas (si esto es posible)?</h3>
+<p>I2P-Bote se ejecuta y distribuye encima de la red I2P, por lo que tarda un poco. La velocidad no es nuestra fuerza, pero las comparaciones con otros sistemas de correos son buenas. Sin activar las rutas de correo tarda de 3 a 10 minutos desde que se pulsa el botón de 'Enviar' hasta que se muestra en la bandeja de entrada.</p>
+
+<p>Si velocidad es lo que quieres, desactiva completamente las rutas de correo o ponlas en el mínimo número de saltos y mínimo retraso por salto que puedas aceptar.</p>
+
+<h3 id="WhyI2P">¿Si I2P-Bote genera su propio anonimato, por qué necesita I2P?</h3>
+<p>I2P-Bote está construido sobre I2P sobre todo por estas 5 razones:</p>
+<ul>
+<li><p>A I2P le faltaba un sistema de correos descentralizado y yo, HungryHobo, soy un usuario de I2P.</p></li>
+<li><p>I2P ofrece un buen anonimato, es maduro e incorpora años de experiencia.</p></li>
+<li><p>Estando sobre I2P, incluso si I2P-Bote tuviese errores cruciales, tendría un respaldo de anonimato.</p></li>
+<li><p>Flexibilidad: Queremos ofrecer una forma fácil de comunicación por correo anónima de baja latencia que a la vez tenga un alto nivel de protección.</p></li>
+<li><p>I2P junto con otras aplicaciones corriendo sobre I2P crean mucho tráfico que se mezcla con el tráfico de I2P-Bote.</p></li>
+<li><p>Y porque incluso los relays de I2P-Bote están escondidos.</p></li>
+</ul>
+
+<h3 id="WithoutRoutes">¿Cómo es de anónimo I2P-Bote sin las rutas de correo?</h3>
+<p>Bastante anónimo y muy seguro.</p>
+
+<p>En el estado más básico tiene el mismo anonimato que cualquier aplicación de I2P, y el anonimato proporcionado por I2p es bastante fuerte. Aunque I2P es una red de baja latencia, con todos los problemas que una red de baja latencia pueda tener por su naturaleza. Hay ataques contra los que I2P no puede protegerte o protegerte muy poco. I2P-Bote intenta aumentar en lo que puede el anonimato de I2P con su opción de alta latencia, que hace, si está activado, que I2P-Bore sea <em>'paranoicamente anónimo'</em>.</p>
+
+<h3 id="OpenSource">¿Es I2P-Bote de código abierto?</h3>
+<p>¡Por supuesto!</p>
+
+<blockquote>This software is licensed under the GPL version 3 (see
+licenses/GPLv3.txt), except for bcprov-jdk15on-151.jar which is
+licensed under the Bouncy Castle License (see
+licenses/BouncyCastle.txt).</blockquote>
+
+<p>(Ambas licencias son de código abierto.)</p>
+
+<h3 id="Credits">¿Quén hizo I2P-Bote?</h3>
+<p>(¡Ver también <a href="about.jsp">Créditos</a>!)</p>
+
+<p>HungryHobo, un desarrollador anónimo, hizo el concepto, el diseño técnico y el interfaz web. Si quieres contactarle para ofrecer ayuda o enviar feedback puedes contactarle usando I2P-Bote. Si clave de destino es:</p>
+
+<p><b>hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n</b></p>
+
+<h3 id="Languages">¿En qué idiomas está disponible?</h3>
+<p>Inglés, alemán, ruso, francés, español, portugués, holandés, noruego, sueco, chino y árabe.</p>
+
+<h3 id="Translate">¿Cómo puedo ayudar a traducir I2P-Bote a mi idioma?</h3>
+<p>Las traducciones se hacen como con el resto de I2P. Si quieres ayudar y tienes preguntas, por favor, <a href="about.jsp">contacta con el autor.</a></p>
+
+<h3 id="Technical">¿Cómo funciona a nivel técnico?</h3>
+<p>Mira en el archivo <code>doc/techdoc.txt</code> en el código fuente.</p>
+
+<h3 id="GetInvolved">¿Hay otras formas en las que pueda ayudar?</h3>
+<ul>
+<li><p>Usa I2P-Bote y envía feedback.</p></li>
+<li><p>Díselo a tus amigos, familia, colegas y a todos sobre I2P-Bote y échales una mano</p></li>
+<li><p>Menciona I2P-Bote en tu blog, eepsite o web</p></li>
+<li><p>Escribe guías de usuario para mejorar la documentación</p></li>
+<li><p>Añade nuevas características o arregla errores (<a href="about.jsp">contacta al autor primero</a>).</p></li>
+</ul>
