@@ -1,12 +1,13 @@
 #
 # Translators:
 # dich_tran <thnhan@gmail.com>, 2011
+# dich_tran <thnhan@gmail.com>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2015-02-04 11:00+0000\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-02-14 22:33+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/projects/p/I2P/language/"
 "vi/)\n"
@@ -32,31 +33,31 @@ msgstr ""
 msgid "No identity matches the sender/from field: "
 msgstr "Không danh tính nào khớp với hàng người gửi:"
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "Mật khẩu cũ không đúng."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr "Mật khẩu mới và mật khẩu xác nhận không khớp."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr ""
 
@@ -904,6 +905,11 @@ msgid "Description"
 msgstr "Mô tả"
 
 #: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "Xóa danh tính này"
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr "Danh tính mới"
 
@@ -986,6 +992,10 @@ msgstr "Email Đến:"
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
 msgstr "Danh tính mặc định"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1222,9 +1232,8 @@ msgid "Theme:"
 msgstr ""
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Privacy"
-msgstr "Chìa khóa riêng:"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"

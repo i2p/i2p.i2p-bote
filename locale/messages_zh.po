@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2015-02-04 13:23+0000\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-02-15 05:34+0000\n"
 "Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/I2P/"
 "language/zh_CN/)\n"
@@ -34,31 +34,31 @@ msgstr "香草白"
 msgid "No identity matches the sender/from field: "
 msgstr "没有身份密钥与寄件者/收件人相匹配: "
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr "正在检查密码"
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "旧密码不正确。"
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr "新密码与确认密码字段输入相符。"
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr "重新加密身份"
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr "重新加密地址簿"
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr "重新加密文件夹"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr "正在更新密码文件"
 
@@ -912,6 +912,11 @@ msgid "Description"
 msgstr "描述"
 
 #: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "删除此身份"
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr "新身份"
 
@@ -994,6 +999,10 @@ msgstr "邮箱地址:"
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
 msgstr "默認身份:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1209,7 +1218,7 @@ msgstr "设置已保存。"
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "常规"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -1232,9 +1241,8 @@ msgid "Theme:"
 msgstr "主题："
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Privacy"
-msgstr "私钥:"
+msgstr "隐私"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1246,7 +1254,7 @@ msgstr "为发送的邮件添加发送时间戳"
 
 #: src/main/webapp/settings.jsp
 msgid "Routing"
-msgstr ""
+msgstr "路由"
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"

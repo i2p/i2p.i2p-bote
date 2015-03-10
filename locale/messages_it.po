@@ -1,18 +1,23 @@
 #
 # Translators:
-# BadCluster <badcluster@i2pmail.org>, 2012
+# Bad Cluster <badcluster@i2pmail.org>, 2012
+# Bad Cluster <badcluster@i2pmail.org>, 2012
+# blabla <blabla@trash-mail.com>, 2012
 # blabla <blabla@trash-mail.com>, 2012
 # ColomboI2P <inactive+ColomboI2P@transifex.com>, 2012
-# fletcherlynd <fletcherlynd@hotmail.com>, 2013
+# ColomboI2P <inactive+ColomboI2P@transifex.com>, 2012
+# Fletcher Lynd <fletcherlynd@hotmail.com>, 2013
+# Fletcher Lynd <fletcherlynd@hotmail.com>, 2013
+# mkkid <jokjok@hotmail.it>, 2011
 # mkkid <jokjok@hotmail.it>, 2011
 # spawned76 <fswitch20@hotmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2013-11-02 22:59+0000\n"
-"Last-Translator: fletcherlynd <fletcherlynd@hotmail.com>\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-02-14 22:33+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/I2P/language/"
 "it/)\n"
 "Language: it\n"
@@ -37,31 +42,31 @@ msgstr ""
 msgid "No identity matches the sender/from field: "
 msgstr "Nessuna identità fa match con il campo mittente/da:"
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "La vecchia password non è corretta."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr "La nuova password e quella di conferma non sono uguali."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr ""
 
@@ -932,6 +937,11 @@ msgid "Description"
 msgstr "Descrizione"
 
 #: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "Elimina questa identità"
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr "Nuova Identità"
 
@@ -1016,6 +1026,10 @@ msgstr "Destinazione Email:"
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
 msgstr "Identità di Default:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1256,9 +1270,8 @@ msgid "Theme:"
 msgstr "Tema:"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Privacy"
-msgstr "Chiavi private:"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"

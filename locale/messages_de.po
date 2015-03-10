@@ -1,19 +1,24 @@
 #
 # Translators:
 # blabla <blabla@trash-mail.com>, 2012
+# blabla <blabla@trash-mail.com>, 2015
+# blabla <blabla@trash-mail.com>, 2012
 # D.A. Loader <>, 2012
 # ducki2p <ducki2p@gmail.com>, 2011
 # HungryHobo <HungryHobo@i2pmail.org>, 2012-2013
+# HungryHobo <HungryHobo@i2pmail.org>, 2013
+# HungryHobo <HungryHobo@i2pmail.org>, 2012
 # Lars Schimmer <echelon@i2pmail.org>, 2015
 # walking <walking@i2pmail.org>, 2011
+# zeroflag <zeroflag@i2pmail.org>, 2013
 # zeroflag <zeroflag@i2pmail.org>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2015-02-06 11:55+0000\n"
-"Last-Translator: Lars Schimmer <echelon@i2pmail.org>\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-03-07 13:19+0000\n"
+"Last-Translator: blabla <blabla@trash-mail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/I2P/language/"
 "de/)\n"
 "Language: de\n"
@@ -38,31 +43,31 @@ msgstr "Vanille"
 msgid "No identity matches the sender/from field: "
 msgstr "Keine Mailidentität stimmt mit diesem Absenderfeld (\"Von\") überein:"
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr "Prüfe Passwort"
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "Das alte Kennwort ist leider nicht korrekt."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr "Das neue Kennwort und die Kennwortbestätigung stimmen nicht überein."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr "Verschlüssele Identitäten"
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr "Verschlüssele Adressbuch"
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr "Verschlüssele Verzeichnis"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr "Aktualisiere Passwortdatei"
 
@@ -166,16 +171,16 @@ msgstr "in Warteschlange"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:238
 msgid "Sending"
-msgstr "Senden"
+msgstr "Verscicken"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:240
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
-msgstr "An {0} von {1} Empfängern gesendet"
+msgstr "An {0} von {1} Empfängern verschickt"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:243
 msgid "Email sent"
-msgstr "Mail versendet"
+msgstr "Mail verschickt"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:245
 msgid "Gateway disabled"
@@ -184,7 +189,7 @@ msgstr "Durchleitung deaktiviert"
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr "Keine Identität für das Sender/Absender Feld gefunden: {0}"
+msgstr "Keine Identität für das Abender-/Von-Feld gefunden: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -199,7 +204,7 @@ msgstr "Fehler beim Erstellen der Mailpakete: {0}"
 #: src/main/java/i2p/bote/web/JSPHelper.java:254
 #, java-format
 msgid "Error while sending email: {0}"
-msgstr "Fehler beim Senden der Mail: {0}"
+msgstr "Fehler beim Verschicken der Mail: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:256
 #, java-format
@@ -269,7 +274,7 @@ msgstr "Die Mail wurde in die Sendeschlange eingestellt."
 #: src/main/java/i2p/bote/web/SendEmailTag.java:107
 #, java-format
 msgid "Error sending email: {0}"
-msgstr "Fehler beim Senden der Mail: {0}"
+msgstr "Fehler beim Verschicken der Mail: {0}"
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Not Started"
@@ -435,7 +440,7 @@ msgstr "Wähle eine anzuhängende Datei und versuche es erneut!"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Send"
-msgstr "Senden"
+msgstr "Abschicken"
 
 #: src/main/webapp/newEmail.jsp
 msgid "From:"
@@ -938,6 +943,11 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "Diese Identität löschen"
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr "Neue Identität"
 
@@ -1024,6 +1034,10 @@ msgid "Default Identity:"
 msgstr "Beim Senden voreingestellt:"
 
 #: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
 msgstr "Privatschlüssel:"
 
@@ -1101,7 +1115,7 @@ msgstr "Entwickler:"
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
-msgstr "Hier klicken, um eine Mail zu senden"
+msgstr "Hier klicken, um eine Mail zu verschicken"
 
 #: src/main/webapp/about.jsp
 msgid "Feedback on I2P-Bote"
@@ -1241,7 +1255,7 @@ msgstr "Die Einstellungen wurden gespeichert."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "Allgemeines"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -1264,9 +1278,8 @@ msgid "Theme:"
 msgstr "Oberfläche:"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Privacy"
-msgstr "Privatschlüssel:"
+msgstr "Privatsphäre"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1280,7 +1293,7 @@ msgstr "Absendezeit mitschicken"
 
 #: src/main/webapp/settings.jsp
 msgid "Routing"
-msgstr ""
+msgstr "Routing"
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"

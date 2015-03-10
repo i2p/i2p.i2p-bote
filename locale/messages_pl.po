@@ -1,15 +1,19 @@
 #
 # Translators:
+# Warton <businesshehe@yahoo.com>, 2012
+# polacco <polacco@i2pmail.org>, 2014
+# polacco <polacco@i2pmail.org>, 2012
 # polacco <polacco@i2pmail.org>, 2012,2014
+# seb, 2014
 # seb, 2014
 # Warton <businesshehe@yahoo.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2014-11-23 19:56+0000\n"
-"Last-Translator: polacco <polacco@i2pmail.org>\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-02-14 22:33+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/I2P/language/"
 "pl/)\n"
 "Language: pl\n"
@@ -35,31 +39,31 @@ msgstr ""
 msgid "No identity matches the sender/from field: "
 msgstr "Żadna tożsamość nie zgadza się z wysyłającym/z pola Od:"
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "Stare hasło jest nieprawodłowe."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr "Nowe hasło i potwierdzenie hasła nie zgadza się."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr ""
 
@@ -929,6 +933,11 @@ msgid "Description"
 msgstr "Opis"
 
 #: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "Usuń tą tożsamość"
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr "Nowa Tożsamość"
 
@@ -1013,6 +1022,10 @@ msgstr "Cel:"
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
 msgstr "Domyślna Tożsamość:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1252,9 +1265,8 @@ msgid "Theme:"
 msgstr "Motyw:"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Privacy"
-msgstr "Klucze prywatne:"
+msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2015-02-04 12:53+0000\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-02-15 18:59+0000\n"
 "Last-Translator: Towinet\n"
 "Language-Team: French (http://www.transifex.com/projects/p/I2P/language/"
 "fr/)\n"
@@ -37,33 +37,33 @@ msgstr "Vanille"
 msgid "No identity matches the sender/from field: "
 msgstr "Aucune identité ne correspond au champ \"Expéditeur/De\":"
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr "Vérification de mot de passe"
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "L'ancien mot de passe est incorrect."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr ""
 "Le nouveau mot de passe et le mot de passe de confirmation ne correspondent "
 "pas."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr "Re-chiffrement d'identités"
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr "Re-chiffrement de carnet d'adresses"
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr "Re-chiffrement de dossier"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr "Mise à jour du fichier de mot de passe"
 
@@ -944,6 +944,11 @@ msgid "Description"
 msgstr "Description"
 
 #: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "Supprimer cette identité"
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr "Nouvelle identité"
 
@@ -1028,6 +1033,10 @@ msgstr "Destination du courrier:"
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
 msgstr "Identité par défaut:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1250,7 +1259,7 @@ msgstr "Configuration enregistrée."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -1273,9 +1282,8 @@ msgid "Theme:"
 msgstr "Thème :"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Privacy"
-msgstr "Clefs privées"
+msgstr "Vie privée"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1289,7 +1297,7 @@ msgstr "Inclure l'heure d'envoi aux courriers sortants"
 
 #: src/main/webapp/settings.jsp
 msgid "Routing"
-msgstr ""
+msgstr "Routage"
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"

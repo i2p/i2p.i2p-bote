@@ -2,15 +2,19 @@
 # Translators:
 # gringoire <shmt@anapnea.net>, 2011
 # LinuxChata, 2014
+# LinuxChata, 2014
+# madjong <madjong@i2pmail.org>, 2014
 # madjong <madjong@i2pmail.org>, 2014
 # puxud <puxud@alivance.com>, 2014
+# puxud <puxud@alivance.com>, 2014
+# gringoire <shmt@anapnea.net>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2014-12-21 20:47+0000\n"
-"Last-Translator: madjong <madjong@i2pmail.org>\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-02-14 22:33+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/projects/p/I2P/"
 "language/uk_UA/)\n"
 "Language: uk_UA\n"
@@ -36,31 +40,31 @@ msgstr ""
 msgid "No identity matches the sender/from field: "
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "Старий пароль не правильний."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr "Новий пароль та підтвердження не співпадають."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr ""
 
@@ -901,6 +905,10 @@ msgid "Description"
 msgstr "Опис"
 
 #: src/main/webapp/identities.jsp
+msgid "Check mail for this identity"
+msgstr ""
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr ""
 
@@ -982,6 +990,10 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
 msgstr ""
 
 #: src/main/webapp/editIdentity.jsp

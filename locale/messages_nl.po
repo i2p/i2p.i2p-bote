@@ -3,14 +3,17 @@
 # attesor <random901@zoho.com>, 2012
 # ducki2p <ducki2p@gmail.com>, 2011
 # Jrnr601 <jerobben@gmail.com>, 2012
+# Jrnr601 <jerobben@gmail.com>, 2012
 # Nathan Follens, 2015
+# Nathan Follens, 2015
+# attesor <random901@zoho.com>, 2012
 # walking <walking@i2pmail.org>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2015-01-17 23:49+0000\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-03-04 08:19+0000\n"
 "Last-Translator: Nathan Follens\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/I2P/language/nl/)\n"
 "Language: nl\n"
@@ -21,47 +24,47 @@ msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:67
 msgid "Material"
-msgstr ""
+msgstr "Materiaal"
 
 #: src/main/java/i2p/bote/Configuration.java:68
 msgid "Light Blue"
-msgstr ""
+msgstr "Lichtblauw"
 
 #: src/main/java/i2p/bote/Configuration.java:69
 msgid "Vanilla"
-msgstr ""
+msgstr "Vanille"
 
 #: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
 msgstr "Geen identiteit komt overeen met het afzender/van veld: "
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
-msgstr ""
+msgstr "Bezig met controleren van wachtwoord"
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "Het oude wachtwoord is onjuist."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr "Het nieuwe wachtwoord en de bevestiging komen niet overeen."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
-msgstr ""
+msgstr "Bezig met opnieuw versleutelen van identiteiten"
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
-msgstr ""
+msgstr "Bezig met opnieuw versleutelen van adresboek"
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
-msgstr ""
+msgstr "Bezig met opnieuw versleutelen van map"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
-msgstr ""
+msgstr "Bezig met bijwerken van wachtwoordbestand"
 
 #: src/main/java/i2p/bote/crypto/ECDH256_ECDSA256.java:45
 msgid "256-bit Elliptic Curve Encryption"
@@ -179,7 +182,7 @@ msgstr "Gateway uitgeschakeld"
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr ""
+msgstr "Geen identiteit komt overeen met afzender/van-veld: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -219,7 +222,7 @@ msgstr "Bereikbaarheid in %"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:225
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:230
 msgid "Untested"
-msgstr ""
+msgstr "Niet getest"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:138
 msgid "Banned Peers:"
@@ -236,22 +239,22 @@ msgstr "Ban reden"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
 msgid "Reachable"
-msgstr ""
+msgstr "Bereikbaar"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
 msgid "Unreachable"
-msgstr ""
+msgstr "Onbereikbaar"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:221
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:228
 msgid "Good"
-msgstr ""
+msgstr "Goed"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:223
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:229
 msgid "Unreliable"
-msgstr ""
+msgstr "Onbetrouwbaar"
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:73
 msgid "Error: Please add at least one recipient."
@@ -495,10 +498,12 @@ msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
 msgstr ""
+"De e-mail kon niet gevonden worden in deze map. Ze is waarschijnlijk "
+"verplaatst naar de map Verzonden."
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
-msgstr ""
+msgstr "De e-mail kon niet gevonden worden in deze map."
 
 #: src/main/webapp/showEmail.jsp
 msgid "Signature:"
@@ -538,19 +543,19 @@ msgstr "Re:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import Identities"
-msgstr ""
+msgstr "Identiteiten importeren"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Please select an identities file and try again."
-msgstr ""
+msgstr "Gelieve een identiteitenbestand te selecteren en opnieuw te proberen."
 
 #: src/main/webapp/importIdentities.jsp
 msgid "The identities have been imported."
-msgstr ""
+msgstr "De identiteiten zijn geïmporteerd."
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Identities file:"
-msgstr ""
+msgstr "Identiteitenbestand:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -558,15 +563,15 @@ msgstr "Wachtwoord"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "(leave blank if identities not encrypted)"
-msgstr ""
+msgstr "(laat leeg indien identiteiten niet versleuteld zijn)"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Overwrite all existing identities:"
-msgstr ""
+msgstr "Alle bestaande identiteiten overschrijven:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Duplicates: replace existing identity:"
-msgstr ""
+msgstr "Duplicaten: bestaande identiteit vervangen:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import"
@@ -612,11 +617,11 @@ msgstr "E-mail bestemming:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export Identities"
-msgstr ""
+msgstr "Identiteiten exporteren"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
-msgstr ""
+msgstr "(laat leeg om identiteiten niet te versleutelen)"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Confirm:"
@@ -624,7 +629,7 @@ msgstr "Bevestigen"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export"
-msgstr ""
+msgstr "Exporteren"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -872,7 +877,7 @@ msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Identity"
-msgstr ""
+msgstr "Geen identiteit"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -929,6 +934,11 @@ msgstr "Publieke naam"
 #: src/main/webapp/identities.jsp
 msgid "Description"
 msgstr "Omschrijving"
+
+#: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "Verwijder deze identiteit"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
@@ -1006,7 +1016,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
-msgstr ""
+msgstr "(2 tekens duurt enkele seconden, 3 enkele minuten, etc.)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Email Destination:"
@@ -1015,6 +1025,10 @@ msgstr "E-mail-Bestemming:"
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
 msgstr "Standaard Identiteit:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1050,7 +1064,7 @@ msgstr "Wachten a.u.b..."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The Email Identity is being generated. This may take a while."
-msgstr ""
+msgstr "De e-mail-identiteit wordt gegenereerd. Dit kan even duren."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1090,7 +1104,7 @@ msgstr "I2P-Bote, Versie {0}"
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"
-msgstr ""
+msgstr "Ontwikkelaars:"
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1102,11 +1116,11 @@ msgstr "Feedback over I2P-Bote"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, implementation, user interface"
-msgstr ""
+msgstr "Technisch concept, implementatie, gebruikersinterface"
 
 #: src/main/webapp/about.jsp
 msgid "User experience, extended features, Android app"
-msgstr ""
+msgstr "Gebruikerservaring, uitgebreide functies, Android-applicatie"
 
 #: src/main/webapp/about.jsp
 msgid "Contributors:"
@@ -1115,6 +1129,8 @@ msgstr "Contribuanten:"
 #: src/main/webapp/about.jsp
 msgid "Technical concept, translation, QA, usability, technical feedback"
 msgstr ""
+"Technisch concept, vertaling, kwaliteitscontrole, bruikbaarheid, technische "
+"feedback"
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
@@ -1122,7 +1138,7 @@ msgstr "Pluginization, technische feedback"
 
 #: src/main/webapp/about.jsp
 msgid "Seedless integration"
-msgstr ""
+msgstr "Seedless-integratie"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1178,7 +1194,7 @@ msgstr "Hongaarse vertaling"
 
 #: src/main/webapp/about.jsp
 msgid "Alpha testing"
-msgstr ""
+msgstr "Alfa-testen"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes, translation updates from tx"
@@ -1231,7 +1247,7 @@ msgstr "De instellingen zijn opgeslagen."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -1247,16 +1263,15 @@ msgstr "IMAP op poort {0} aanzetten"
 
 #: src/main/webapp/settings.jsp
 msgid "Enable SMTP on port {0}"
-msgstr ""
+msgstr "SMTP aanzetten op poort {0}"
 
 #: src/main/webapp/settings.jsp
 msgid "Theme:"
 msgstr "Thema:"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Privacy"
-msgstr "Privé-sleutels:"
+msgstr "Privacy"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1270,7 +1285,7 @@ msgstr "Voeg verzendtijd toe bij uitgaande e-mail"
 
 #: src/main/webapp/settings.jsp
 msgid "Routing"
-msgstr ""
+msgstr "Routing"
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1306,7 +1321,7 @@ msgstr "Verander wachtwoord"
 
 #: src/main/webapp/faq.jsp
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Veelgestelde vragen"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1318,7 +1333,7 @@ msgstr "{0} emails totaal, {1} nieuw"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
-msgstr ""
+msgstr "{0} onvolledig"
 
 #: src/main/webapp/WEB-INF/tags/address.tag
 msgid "Add to Address Book"

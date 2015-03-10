@@ -1,22 +1,30 @@
 #
 # Translators:
 # Adolfo Jayme Barrientos, 2013
+# Adolfo Jayme Barrientos, 2013
+# Anarkia <anarkia@i2pmail.org>, 2013
 # Anarkia <anarkia@i2pmail.org>, 2013
 # blabla <blabla@trash-mail.com>, 2011-2012,2014
+# blabla <blabla@trash-mail.com>, 2014-2015
+# blabla <blabla@trash-mail.com>, 2011, 2012
 # cedpren <cedpren@gmail.com>, 2011
 # ducki2p <ducki2p@gmail.com>, 2011
 # kytv <killyourtv@i2pmail.org>, 2012
+# kytv <killyourtv@i2pmail.org>, 2012
+# punkibastardo <punkibastardo@gmail.com>, 2011, 2012
 # punkibastardo <punkibastardo@gmail.com>, 2011-2012
+# strel, 2013
 # strel, 2013,2015
+# Trolly, 2013
 # Trolly, 2013
 # walking <walking@i2pmail.org>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2015-02-06 03:32+0000\n"
-"Last-Translator: strel\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-03-07 18:10+0000\n"
+"Last-Translator: blabla <blabla@trash-mail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/I2P/language/"
 "es/)\n"
 "Language: es\n"
@@ -31,41 +39,41 @@ msgstr "Material"
 
 #: src/main/java/i2p/bote/Configuration.java:68
 msgid "Light Blue"
-msgstr "Azul claro"
+msgstr "Celeste"
 
 #: src/main/java/i2p/bote/Configuration.java:69
 msgid "Vanilla"
-msgstr "Predeterminado"
+msgstr "Vainilla"
 
 #: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
-msgstr "Ninguna identidad concuerda con el campo del remitente:"
+msgstr "No existe ninguna identidad que concuerde con el campo remitente:"
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr "Comprobando contraseña"
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "La contraseña antigua no es correcta."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
-msgstr "La nueva contraseña y la confirmación de esta no coinciden."
+msgstr "La nueva contraseña y la confirmación de ésta no coinciden."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr "Volviendo a cifrar identidades"
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr "Volviendo a cifrar libreta de direcciones"
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr "Volviendo a cifrar carpeta"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr "Actualizando fichero de contraseña"
 
@@ -90,7 +98,7 @@ msgstr "Cifrado NTRU-1087"
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
-"La dirección no contiene un destino I2P para el correo electrónico ni una "
+"La dirección no contiene ningún destino para el correo electrónico ni una "
 "dirección externa: {0}"
 
 #: src/main/java/i2p/bote/email/Email.java:505
@@ -105,7 +113,7 @@ msgstr "Ha de introducir contraseña o ha introducido una errónea "
 
 #: src/main/java/i2p/bote/imap/MapperFactory.java:317
 msgid "Deletion of mailboxes is not currently supported."
-msgstr "El borrado de buzones de correo no está soportado actualmente."
+msgstr "Borrar buzones de correo no está soportado actualmente."
 
 #: src/main/java/i2p/bote/network/BanList.java:80
 msgid "Wrong protocol version:"
@@ -167,7 +175,7 @@ msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:236
 msgid "Queued"
-msgstr "En cola"
+msgstr "En la cola"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:238
 msgid "Sending"
@@ -237,7 +245,7 @@ msgstr "Pares excluidos"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:143
 msgid "Destination Hash"
-msgstr "Hash de destino I2P"
+msgstr "Hash del destino I2P"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:144
 msgid "Ban Reason"
@@ -302,7 +310,7 @@ msgstr "Reintentar conexión"
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Connect Now"
-msgstr "Conectarse ahora"
+msgstr "Conectar ya!"
 
 #: src/main/webapp/saveIdentities.jsp
 msgid "Error:"
@@ -318,7 +326,7 @@ msgstr "De"
 
 #: src/main/webapp/outbox.jsp
 msgid "To"
-msgstr "A"
+msgstr "Para"
 
 #: src/main/webapp/outbox.jsp
 msgid "Subject"
@@ -326,7 +334,7 @@ msgstr "Asunto"
 
 #: src/main/webapp/outbox.jsp
 msgid "Create Time"
-msgstr "Hora de creación"
+msgstr "Hora de composición"
 
 #: src/main/webapp/outbox.jsp
 msgid "Status"
@@ -448,7 +456,7 @@ msgstr "De:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "To:"
-msgstr "A:"
+msgstr "Para:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "CC:"
@@ -615,7 +623,7 @@ msgid ""
 msgstr ""
 "Se ha encontrado un registro coincidente en el repositorio de direcciones. "
 "Observe que el directorio de direcciones puede ser manipulado, así que no "
-"pulse &quot;import&quot; a no ser que confie en que ese es el destino I2P de "
+"pulse &quot;import&quot; a no ser que confie en que ese es el destino de "
 "correo correcto."
 
 #: src/main/webapp/importContact.jsp
@@ -624,7 +632,7 @@ msgstr "Huella de validación de claves ('fingerprint'):"
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
-msgstr "Destino I2P de correo electrónico:"
+msgstr "Destino de correo electrónico:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export Identities"
@@ -644,7 +652,7 @@ msgstr "Exportar"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
-msgstr "Añadir destino I2P de correo electrónico al repositorio"
+msgstr "Añadir destino de correo electrónico al repositorio"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "The name exists already. Please choose a different Public Name."
@@ -718,7 +726,7 @@ msgstr "Nombre"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Email Destination"
-msgstr "Destino I2P del correo"
+msgstr "Destino del correo"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -762,7 +770,7 @@ msgid ""
 "send email to the email destination, but only the identity holder can read "
 "it."
 msgstr ""
-"Cada identidad de correo I2P-Bote está asociada a un destino I2P de correo. "
+"Cada identidad de correo I2P-Bote está asociada a un destino de correo. "
 "Cualquiera puede mandar correos a este destino, pero tan sólo el poseedor de "
 "la identidad los puede leer."
 
@@ -792,8 +800,7 @@ msgstr ""
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
 msgstr ""
-"Divulge el destino I2P de su correo para que otros puedan contactar con "
-"usted."
+"Divulge el destino de su correo para que otros puedan contactar con usted."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -810,10 +817,10 @@ msgid ""
 "determines what signing algorithm is used."
 msgstr ""
 "Cuando crea una nueva identidad de correo I2P-Bote puede elegir el tipo de "
-"encriptación que se usará para esa identidad. Aunque todos los algoritmos de "
-"encriptación ofrecidos por I2P-Bote proveen de un alto nivel de privacidad, "
-"la longitud de un destino I2P de correo depende de la encriptación usada. La "
-"elección de la encriptación también determina que algoritmo de firma se usa."
+"cifrado que se usará para esa identidad. Aunque todos los algoritmos de "
+"cifrado ofrecidos por I2P-Bote proveen de un alto nivel de privacidad, la "
+"longitud de un destino de correo depende del cifrado usado. La elección del "
+"cifrado también determina qué algoritmo se usa para firmar."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -948,6 +955,11 @@ msgid "Description"
 msgstr "Descripción"
 
 #: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "Borrar esta identidad"
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr "Nueva identidad"
 
@@ -1027,11 +1039,15 @@ msgstr "(2 caracteres tardan segundos, 3 tardan minutos, etc.)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Email Destination:"
-msgstr "Destino I2P del correo:"
+msgstr "Destino del correo:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
 msgstr "Identidad por defecto:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1255,7 +1271,7 @@ msgstr "Configuración guardada."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -1278,15 +1294,14 @@ msgid "Theme:"
 msgstr "Tema decorativo:"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Privacy"
-msgstr "Claves privadas"
+msgstr "Privacidad"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
 msgstr ""
-"Mantener el inglés para los añadidos en los correos salientes ('Re:', "
-"'wrote:' etc.)"
+"Mantener en inglés los añadidos en los correos salientes ('Re:', 'wrote:' "
+"etc.)"
 
 #: src/main/webapp/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -1294,7 +1309,7 @@ msgstr "Incluir hora de envío en los correos salientes"
 
 #: src/main/webapp/settings.jsp
 msgid "Routing"
-msgstr ""
+msgstr "Enrutado"
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1324,7 +1339,7 @@ msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Email Destination of the gateway:"
-msgstr "Destino I2P de correo de la pasarela ('gateway'):"
+msgstr "Destino de correo de la pasarela ('gateway'):"
 
 #: src/main/webapp/settings.jsp
 msgid "Change Password"

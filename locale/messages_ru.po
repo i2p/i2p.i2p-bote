@@ -5,15 +5,17 @@
 # dimi <zhopa@mita.pp.ru>, 2013
 # ducki2p <ducki2p@gmail.com>, 2011
 # Eugene, 2013
+# Eugene, 2013
 # sfix <anon-9b36b2e@lycos.com>, 2013
 # walking <walking@i2pmail.org>, 2011
+# yume, 2015
 # yume, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2015-02-13 17:31+0000\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-02-21 11:35+0000\n"
 "Last-Translator: yume\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/projects/p/I2P/"
 "language/ru_RU/)\n"
@@ -40,31 +42,31 @@ msgstr "Ванильный"
 msgid "No identity matches the sender/from field: "
 msgstr "Нет соответствующего набора ключей для такого отправителя: "
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr "Проверка пароля"
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "Старый пароль неверен."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr "Новый пароль и пароль для подтверждения не совпадают."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr "Перешифрование идентификатора"
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr "Перешифрование адресной книги"
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr "Перешифрование папки"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr "Обновляется файл с паролями"
 
@@ -933,6 +935,11 @@ msgid "Description"
 msgstr "Описание"
 
 #: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "Удалить этот набор"
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr "Новый набор ключей"
 
@@ -1017,6 +1024,10 @@ msgstr "Bote-адрес:"
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
 msgstr "Набор ключей по-умолчанию:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1236,7 +1247,7 @@ msgstr "Настройки были сохранены."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "Общие"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -1259,9 +1270,8 @@ msgid "Theme:"
 msgstr "Тема:"
 
 #: src/main/webapp/settings.jsp
-#, fuzzy
 msgid "Privacy"
-msgstr "Приватные ключи:"
+msgstr "Приватность"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1275,7 +1285,7 @@ msgstr "Включать время отправки в исходящие со�
 
 #: src/main/webapp/settings.jsp
 msgid "Routing"
-msgstr ""
+msgstr "Маршрутизация"
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"

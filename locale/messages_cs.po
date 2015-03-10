@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-14 22:12+0000\n"
-"PO-Revision-Date: 2014-10-07 20:19+0000\n"
-"Last-Translator: A5h8d0wf0x <littleslyfoxie28@gmail.com>\n"
+"POT-Creation-Date: 2015-03-10 11:26+0000\n"
+"PO-Revision-Date: 2015-02-14 22:33+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/I2P/language/cs/)\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -32,31 +32,31 @@ msgstr ""
 msgid "No identity matches the sender/from field: "
 msgstr "Žádná identita neodpovídá poli odesílatel/od:"
 
-#: src/main/java/i2p/bote/I2PBote.java:705
+#: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:708
+#: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
 msgstr "Staré heslo je špatně zadané."
 
-#: src/main/java/i2p/bote/I2PBote.java:710
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The new password and the confirmation password do not match."
 msgstr "Nové heslo a jeho potvrzení se neshodují."
 
-#: src/main/java/i2p/bote/I2PBote.java:717
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:720
+#: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:723
+#: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
 msgstr ""
 
@@ -909,6 +909,11 @@ msgid "Description"
 msgstr "Popis"
 
 #: src/main/webapp/identities.jsp
+#, fuzzy
+msgid "Check mail for this identity"
+msgstr "Smazat tuto identitu"
+
+#: src/main/webapp/identities.jsp
 msgid "New Identity"
 msgstr "Nová identita"
 
@@ -990,6 +995,10 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
 msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
