@@ -5,6 +5,11 @@ Email composition
 - "Include sent time" as an option, pre-filled with settings default
 Identities
 - Generate dests in background rather than needing a dedicated tab open
+IMAP/SMTP
+- "Force SSL" option
+  - When disabled, users can connect with "insecure" or "STARTTLS"
+  - When enabled, users can connect with "SSL"
+- Separate password cache (IMAP auth should not unlock webui)
 
 Not-yet-implemented
 - Drafts folder
