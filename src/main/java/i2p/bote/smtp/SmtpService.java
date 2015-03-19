@@ -93,9 +93,9 @@ public class SmtpService extends SMTPServer {
 
         // select strong protocols and cipher suites
         s.setEnabledProtocols(StrongTls.intersection(
-                s.getSupportedProtocols(), StrongTls.ENABLED_PROTOCOLS));
+                StrongTls.getRecommendedProtocols(), s.getSupportedProtocols()));
         s.setEnabledCipherSuites(StrongTls.intersection(
-                s.getSupportedCipherSuites(), StrongTls.ENABLED_CIPHER_SUITES));
+                StrongTls.getRecommendedCipherSuites(), s.getSupportedCipherSuites()));
 
         return s;
     }

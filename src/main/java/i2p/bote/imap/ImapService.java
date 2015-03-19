@@ -86,7 +86,7 @@ public class ImapService extends IMAPServer {
         cfg.setProperty("tls.keystore", configuration.getSSLKeyStoreFile().getAbsolutePath());
         cfg.setProperty("tls.secret", configuration.getSSLKeyStorePassword());
         // select strong cipher suites
-        cfg.setProperty("tls.supportedCipherSuites.cipherSuite", StrongTls.ENABLED_CIPHER_SUITES);
+        cfg.setProperty("tls.supportedCipherSuites.cipherSuite", StrongTls.getRecommendedCipherSuites());
 
         configure(cfg);   // use the defaults for the rest
         setListenAddresses(new InetSocketAddress(configuration.getImapAddress(), configuration.getImapPort()));
