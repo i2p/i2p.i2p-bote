@@ -35,7 +35,7 @@ import java.util.Collection;
 import javax.mail.Flags;
 
 import net.i2p.util.Log;
-import nl.jteam.tls.StrongTls;
+import net.i2p.util.StrongTls;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -86,7 +86,7 @@ public class ImapService extends IMAPServer {
         cfg.setProperty("tls.keystore", configuration.getSSLKeyStoreFile().getAbsolutePath());
         cfg.setProperty("tls.secret", configuration.getSSLKeyStorePassword());
         // select strong cipher suites
-        cfg.setProperty("tls.supportedCipherSuites.cipherSuite", StrongTls.getRecommendedCipherSuites());
+        cfg.setProperty("tls.supportedCipherSuites.cipherSuite", StrongTls.getRecommendedCipherSuites(new String[0]));
 
         configure(cfg);   // use the defaults for the rest
         setListenAddresses(new InetSocketAddress(configuration.getImapAddress(), configuration.getImapPort()));

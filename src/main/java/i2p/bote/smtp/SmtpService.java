@@ -43,7 +43,7 @@ import javax.net.ssl.SSLSocketFactory;
 
 import net.i2p.data.DataFormatException;
 import net.i2p.util.Log;
-import nl.jteam.tls.StrongTls;
+import net.i2p.util.StrongTls;
 
 import org.subethamail.smtp.MessageContext;
 import org.subethamail.smtp.MessageHandler;
@@ -92,10 +92,8 @@ public class SmtpService extends SMTPServer {
         s.setUseClientMode(false);
 
         // select strong protocols and cipher suites
-        s.setEnabledProtocols(StrongTls.intersection(
-                StrongTls.getRecommendedProtocols(), s.getSupportedProtocols()));
-        s.setEnabledCipherSuites(StrongTls.intersection(
-                StrongTls.getRecommendedCipherSuites(), s.getSupportedCipherSuites()));
+        s.setEnabledProtocols(StrongTls.getRecommendedProtocols((s.getSupportedProtocols())));
+        s.setEnabledCipherSuites(StrongTls.getRecommendedCipherSuites(s.getSupportedCipherSuites()));
 
         return s;
     }

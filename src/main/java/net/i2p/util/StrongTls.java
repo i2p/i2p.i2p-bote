@@ -1,24 +1,17 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * free (adj.): unencumbered; not under the control of others
+ * Written by str4d in 2015 and released into the public domain 
+ * with no warranty of any kind, either expressed or implied.  
+ * It probably won't make your computer catch on fire, or eat 
+ * your children, but it might.  Use at your own risk.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
-package nl.jteam.tls;
 
+package net.i2p.util;
+
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Constants to use strong protocols and cipher suites with the TLS transport layer.
@@ -39,40 +32,6 @@ import java.util.Set;
  */
 public class StrongTls {
     private static final Double javaVersion = Double.parseDouble(System.getProperty("java.specification.version"));
-
-    /**
-     * Gets the recommended protocols based on the JVM version, per the
-     * MozillaWiki.
-     *
-     * @return the recommended protocols.
-     */
-    public static String[] getRecommendedProtocols() {
-        if (javaVersion >= 1.8)
-            return MODERN_PROTOCOLS;
-        else if (javaVersion == 1.7)
-            return INTERMEDIATE_PROTOCOLS;
-        else if (javaVersion == 1.6)
-            return OLD_PROTOCOLS;
-        else
-            return new String[0];
-    }
-
-    /**
-     * Gets the recommended cipher suites based on the JVM version, per the
-     * MozillaWiki.
-     *
-     * @return the recommended cipher suites.
-     */
-    public static String[] getRecommendedCipherSuites() {
-        if (javaVersion >= 1.8)
-            return MODERN_CIPHER_SUITES;
-        else if (javaVersion == 1.7)
-            return INTERMEDIATE_CIPHER_SUITES;
-        else if (javaVersion == 1.6)
-            return OLD_CIPHER_SUITES;
-        else
-            return new String[0];
-    }
 
     /**
      * Protocols from the "Modern" category.
@@ -265,16 +224,80 @@ public class StrongTls {
     };
 
     /**
-     * Gives the intersection of 2 string arrays.
+     * Gets the recommended protocols based on the JVM version, per the
+     * MozillaWiki.
      *
-     * @param stringSetA a set of strings (not null)
-     * @param stringSetB another set of strings (not null)
-     * @return the intersection of strings in stringSetA and stringSetB
+     * @return the recommended protocols.
      */
-    public static String[] intersection(String[] stringSetA, String[] stringSetB) {
-        Set<String> intersection = new HashSet<String>(Arrays.asList(stringSetA));
-        intersection.retainAll(new HashSet<String>(Arrays.asList(stringSetB)));
-        return intersection.toArray(new String[intersection.size()]);
+    public static String[] getBestProtocolsForJVM() {
+        if (javaVersion >= 1.8)
+            return MODERN_PROTOCOLS;
+        else if (javaVersion == 1.7)
+            return INTERMEDIATE_PROTOCOLS;
+        else if (javaVersion == 1.6)
+            return OLD_PROTOCOLS;
+        else
+            return new String[0];
+    }
+
+    /**
+     * Gets the recommended cipher suites based on the JVM version, per the
+     * MozillaWiki.
+     *
+     * @return the recommended cipher suites.
+     */
+    public static String[] getBestCipherSuitesForJVM() {
+        if (javaVersion >= 1.8)
+            return MODERN_CIPHER_SUITES;
+        else if (javaVersion == 1.7)
+            return INTERMEDIATE_CIPHER_SUITES;
+        else if (javaVersion == 1.6)
+            return OLD_CIPHER_SUITES;
+        else
+            return new String[0];
+    }
+
+    /**
+     * Filter one array based on whether its elements appear in another array.
+     * The ordering of the array is preserved. Duplicates in the array are not
+     * removed.
+     *
+     * @param sourceArray the array of Strings to filter
+     * @param testArray the array of Strings to test against
+     * @return an array of Strings that exist in both sourceArray and testArray
+     */
+    public static String[] filter(String[] sourceArray, String[] testArray) {
+        List<String> test = Arrays.asList(testArray);
+        List<String> ret = new ArrayList<String>();
+        for (String s : sourceArray) {
+            if (test.contains(s))
+                ret.add(s);
+        }
+        return ret.toArray(new String[ret.size()]);
+    }
+
+    /**
+     * Filters the provided array of supported protocols based on the
+     * recommended set for this JVM. The returned array is ordered, with the
+     * most recommended protocol at the start.
+     *
+     * @param supportedProtocols a string array of supported protocols
+     * @return the recommended subset of supportedProtocols
+     */
+    public static String[] getRecommendedProtocols(String[] supportedProtocols) {
+        return filter(getBestProtocolsForJVM(), supportedProtocols);
+    }
+
+    /**
+     * Filters the provided array of supported cipher suites based on the
+     * recommended set for this JVM. The returned array is ordered, with the
+     * most recommended cipher suite at the start.
+     *
+     * @param supportedCipherSuites a string array of supported cipher suites
+     * @return the recommended subset of supportedCipherSuites
+     */
+    public static String[] getRecommendedCipherSuites(String[] supportedCipherSuites) {
+        return filter(getBestCipherSuitesForJVM(), supportedCipherSuites);
     }
 }
 
