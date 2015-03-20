@@ -78,7 +78,7 @@ recipient. There is no need for Public Name to be unique.</p>
 <p>(As you can choose any name here - anyone could call himself HungryHobo
 there - it is not suited to be used by the recipient for telling if two mails
 come from the same sender. This is why the name saved in the local addressbook
-(there can only by one name per destination key) is displayed, if there is any,
+(there can only be one name per destination key) is displayed, if there is any,
 and you will see a green mark in the "Know" column, stating it is the
 locally known name. If there is no entry for a destination in local
 addressbook, the name specified by the sender will be displayed with a prefixed
@@ -92,10 +92,10 @@ identity, you can enter it here.</p>
 
 <p>Email Address - this field is not used yet.</p>
 
-<p>Choose from one of the given encryption algorithms. If in doubt, stick to
-the defaults.</p>
+<p>Choose one of the given encryption algorithms. If in doubt, stick to the
+defaults.</p>
 
-<p>You click on the name of one of your identities and copy the long key
+<p>You can click on the name of one of your identities and copy the long key
 displayed under 'Email Destination'. This is your I2P-Bote e-mail address. If
 you want anybody to be able to send you a bote mail, he need to be given this
 long key.</p>
@@ -117,7 +117,7 @@ or 'Anonymous' under 'From' and enter the recipient's e-mail destination key
 or alternatively an address in the 'To:' line.</p>
 
 <p>(Alternatively, you can hit the 'Addr. Book' button right under this very
-line, in order to chose from e-mail dests stored locally in your address book:
+line, in order to choose from e-mail dests stored locally in your address book:
 Mark the user(s) to which you want your mail to be sent and hit the 'Add
 Recipients' button.)</p>
 
@@ -181,7 +181,7 @@ sender) will have two x's.</p>
 <p>(Due to the distributed nature of I2P-Bote, sending as well as checking for
 and retrieving e-mails takes a few minutes. With mail routes activated
 respectively more. But you need not keep the browser open for that, simply
-leave I2P-Bote running as a background process - this is also benefits your
+leave I2P-Bote running as a background process - this also benefits your
 anonymity.)</p>
 
 <h3 id="Address-Book">2.4. Local Address Book</h3>
@@ -255,8 +255,8 @@ implemented]</p>
 
 <p>Under <em>Mixing anonymity</em> (minimum threshold number of relay
 packets that will be sent) you can specify a threshold. As your node can only
-act reliably as a mix, if there are enough foreign packets to mix and to blend
-own packets with, it will accumulate messages who's delay time is over until
+act reliably as a mix if there are enough foreign packets to mix and to blend
+own packets with, it will accumulate messages whose delay time is over until
 reaching this lower limit. Only when it is surpassed, your node starts sending
 them out in random order. [Not yet implemented]</p>
 
@@ -322,7 +322,7 @@ additional e-mails will be sent back as bounce.</p>
 location, time zone, age, websites you have just visited or blogged about, user
 names, ip numbers, I2P router id, I2P-Bote id, social security number, credit
 card number, &hellip;, copies of your passport, driver's license, home rental
-contract, photos (nude or with clothes) documents that contain your
+contract, photos (nude or with clothes), documents that contain your
 username in author's settings, and many many more)!</p>
 
 <p>If possible,</p>
@@ -336,19 +336,20 @@ times, [not yet <em>fully</em> implemented]</p></li>
 </ul>
 <p>You can suppress the sending of date and time in the e-mails' header.</p>
 
-<p>When you reply to an e-mail, certain markers, such as 'Re: [subject of the
-mail you're replying to]' or '[username] wrote:'. Those are different for
-the languages you can chose from in your language settings. However, if you
-don't want the recipient to know what language you have set, you can suppress
-translation of these markers, so that they will be in English, no matter what
-you language setting is. In order to do so, mark 'Use English for text added
-to outgoing email ('Re:', 'wrote:', etc.)'</p>
+<p>When you reply to an e-mail, certain markers are added to show the recipient
+that this is a reply, such as 'Re: [subject of the mail you're replying to]' or
+'[username] wrote:'. Those are different for the languages you can chose from in
+your language settings. However, if you don't want the recipient to know what
+language you have set, you can suppress translation of these markers, so that
+they will be in English, no matter what you language setting is. In order to do
+so, mark 'Use English for text added to outgoing email ('Re:', 'wrote:',
+etc.)'</p>
 
 <p>Be careful with the contents you send! Don't include personal information or
-information that only you can possess. Don't write I'm going to bed now, it's
-late when including time stamps.</p>
+information that only you can possess. Don't write 'I'm going to bed now, it's
+late' when including time stamps.</p>
 
-<p>The language in which your write your e-mails, your style and formulations
+<p>The language in which you write your e-mails, your style and formulations
 can also be of interest for an attacker.</p>
 
 <p>I2P-Bote also offers the possibility to use different e-mail identities.
@@ -374,10 +375,10 @@ that could link different e-mail identities as communicating with each other
 (<em>profiling</em>): Even the nodes relaying the mails will not know the sender
 and apart from sender and receiver, only the end of the high-latency mail
 tunnel and the storing nodes will know to whom (anonymous identity) the mail is
-destined. The original sender can have gone offline, long before the mail
+destined. The original sender can have gone offline long before the mail
 becomes available on the other side. This adds on the degree of anonymity that
 can be reached with I2P-Bote. For those who do not want high delays: All these
-settings are be user-adjustable, so each user decides on how much anonymity he
+settings are user-adjustable, so each user decides on how much anonymity he
 wants.</p>
 
 <p>I2P-Bote nodes store encrypted e-mails into a Kademlia DHT. Therefore, an
@@ -463,7 +464,7 @@ the mail was addressed to via 'To:' or 'CC:'</p>
 <p>All entries that were under 'BCC:' will only be visible to the sender and
 this very recipient.</p>
 
-<p>The time and sent time will, if at all, only be visible to sender and
+<p>The sent time will, if at all, only be visible to sender and
 recipient.</p>
 
 <h3>What I2P-Bote <em>can hide optionally</em>:</h3>
