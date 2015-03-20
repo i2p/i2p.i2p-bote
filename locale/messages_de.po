@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-03-07 13:19+0000\n"
+"POT-Creation-Date: 2015-03-20 09:22+0000\n"
+"PO-Revision-Date: 2015-03-10 20:48+0000\n"
 "Last-Translator: blabla <blabla@trash-mail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/I2P/language/"
 "de/)\n"
@@ -171,7 +171,7 @@ msgstr "in Warteschlange"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:238
 msgid "Sending"
-msgstr "Verscicken"
+msgstr "Wird verschickt"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:240
 #, java-format

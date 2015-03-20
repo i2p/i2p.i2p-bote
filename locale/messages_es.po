@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-03-07 18:10+0000\n"
-"Last-Translator: blabla <blabla@trash-mail.com>\n"
+"POT-Creation-Date: 2015-03-20 09:22+0000\n"
+"PO-Revision-Date: 2015-03-16 17:29+0000\n"
+"Last-Translator: strel\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/I2P/language/"
 "es/)\n"
 "Language: es\n"
@@ -175,7 +175,7 @@ msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:236
 msgid "Queued"
-msgstr "En la cola"
+msgstr "En cola"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:238
 msgid "Sending"
@@ -866,7 +866,7 @@ msgstr "Papelera"
 
 #: src/main/webapp/folder.jsp
 msgid "Know"
-msgstr "Conoc."
+msgstr "Conocida"
 
 #: src/main/webapp/folder.jsp
 msgid "Sent Time"
