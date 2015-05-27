@@ -20,6 +20,9 @@ public class SummaryEditTextPreference extends EditTextPreference {
 
     @Override
     public CharSequence getSummary() {
-        return String.format((String) super.getSummary(), getText());
+        String summary = (String) super.getSummary();
+        if (summary == null)
+            summary = "%s";
+        return String.format(summary, getText());
     }
 }
