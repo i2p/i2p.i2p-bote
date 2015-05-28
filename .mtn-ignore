@@ -1,6 +1,5 @@
 # General ignores
 ^.settings
-^.tx
 
 # Android-specific ignores
 ^botejars/libs
