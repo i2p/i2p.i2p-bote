@@ -123,6 +123,9 @@ public class EmailListActivity extends ActionBarActivity implements
         // Set the adapter for the list view
         mFolderList.setAdapter(mFolderAdapter);
 
+        // Enable ActionBar app icon to behave as action to toggle nav drawer
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Set up drawer toggle
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.string.drawer_open, R.string.drawer_close) {
