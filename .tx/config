@@ -1,21 +1,25 @@
 [main]
 host = https://www.transifex.com
-lang_map = ru_RU: ru, sv_SE: sv, tr_TR: tr, uk_UA: uk, zh_CN: zh
+lang_map = he: iw, id: in, pt_BR: pt-rBR, ru_RU: ru, sv_SE: sv, tr_TR: tr, uk_UA: uk, yi: ji, zh_CN: zh
 
-[I2P.plugin_i2pbote]
-file_filter = locale/messages_<lang>.po
-source_file = locale/messages_en.po
+[I2P.android_bote]
+file_filter = app/src/main/res/values-<lang>/strings.xml
+source_file = app/src/main/res/values/strings.xml
 source_lang = en
-minimum_perc = 40
-
-[I2P.plugin_i2pbote_userguide]
-file_filter = src/main/webapp/html/userGuide_<lang>.html
-source_file = src/main/webapp/html/userGuide.html
-source_lang = en
+type = ANDROID
 minimum_perc = 50
 
-[I2P.plugin_i2pbote_faq]
-file_filter = src/main/webapp/html/FAQ_<lang>.html
-source_file = src/main/webapp/html/FAQ.html
+[I2P.android_bote_help_start]
+file_filter = app/src/main/res/raw-<lang>/help_start.html
+source_file = app/src/main/res/raw/help_start.html
 source_lang = en
+type = HTML
 minimum_perc = 50
+
+[I2P.android_bote_help_identities]
+file_filter = app/src/main/res/raw-<lang>/help_identities.html
+source_file = app/src/main/res/raw/help_identities.html
+source_lang = en
+type = HTML
+minimum_perc = 50
+
