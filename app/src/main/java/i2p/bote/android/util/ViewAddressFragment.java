@@ -16,7 +16,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -136,7 +136,7 @@ public abstract class ViewAddressFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ActionBarActivity activity = ((ActionBarActivity) getActivity());
+        AppCompatActivity activity = ((AppCompatActivity) getActivity());
 
         // Set the action bar
         activity.setSupportActionBar(mToolbar);

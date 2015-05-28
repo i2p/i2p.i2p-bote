@@ -9,7 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,10 +38,10 @@ import i2p.bote.I2PBote;
 import i2p.bote.android.util.AuthenticatedFragment;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.util.BoteHelper;
-import i2p.bote.android.widget.DividerItemDecoration;
-import i2p.bote.android.widget.LoadingRecyclerView;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.android.util.MultiSelectionUtil;
+import i2p.bote.android.widget.DividerItemDecoration;
+import i2p.bote.android.widget.LoadingRecyclerView;
 import i2p.bote.android.widget.MultiSwipeRefreshLayout;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
@@ -155,7 +155,7 @@ public class EmailListFragment extends AuthenticatedFragment implements
         // ModalChoiceListener (see below)
         mModalChoiceListener = new ModalChoiceListener();
         mMultiSelectController = MultiSelectionUtil
-                .attachMultiSelectionController(mEmailsList, (ActionBarActivity) getActivity(),
+                .attachMultiSelectionController(mEmailsList, (AppCompatActivity) getActivity(),
                         mModalChoiceListener);
 
         // Allow the Controller to restore itself

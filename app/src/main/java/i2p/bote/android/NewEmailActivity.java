@@ -1,11 +1,11 @@
 package i2p.bote.android;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-public class NewEmailActivity extends ActionBarActivity implements
+public class NewEmailActivity extends AppCompatActivity implements
         NewEmailFragment.Callbacks {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

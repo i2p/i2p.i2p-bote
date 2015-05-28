@@ -1,19 +1,20 @@
 package i2p.bote.android.addressbook;
 
-import i2p.bote.android.Constants;
-import i2p.bote.android.InitActivities;
-import i2p.bote.android.R;
-import i2p.bote.packet.dht.Contact;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class AddressBookActivity extends ActionBarActivity implements
+import i2p.bote.android.Constants;
+import i2p.bote.android.InitActivities;
+import i2p.bote.android.R;
+import i2p.bote.packet.dht.Contact;
+
+public class AddressBookActivity extends AppCompatActivity implements
         AddressBookFragment.OnContactSelectedListener {
     static final int ALTER_CONTACT_LIST = 1;
 

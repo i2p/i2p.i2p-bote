@@ -18,7 +18,7 @@
 package i2p.bote.android.util;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * Utilities for handling multiple selection in list views. Contains functionality similar to {@link
- * AbsListView#CHOICE_MODE_MULTIPLE_MODAL} which works with {@link ActionBarActivity} and
+ * AbsListView#CHOICE_MODE_MULTIPLE_MODAL} which works with {@link AppCompatActivity} and
  * backward-compatible action bars.
  */
 public class MultiSelectionUtil {
@@ -48,7 +48,7 @@ public class MultiSelectionUtil {
      * @return the attached Controller instance.
      */
     public static Controller attachMultiSelectionController(final RecyclerView recyclerView,
-            final ActionBarActivity activity, final MultiChoiceModeListener listener) {
+            final AppCompatActivity activity, final MultiChoiceModeListener listener) {
         if (!(recyclerView.getAdapter() instanceof SelectableAdapter))
             throw new IllegalArgumentException("Adapter must extend SelectableAdapter");
 
@@ -68,7 +68,7 @@ public class MultiSelectionUtil {
 
         private final RecyclerView mRecyclerView;
         private final SelectableAdapter mAdapter;
-        private final ActionBarActivity mActivity;
+        private final AppCompatActivity mActivity;
         private final MultiChoiceModeListener mListener;
         private final Callbacks mCallbacks;
 
@@ -78,7 +78,7 @@ public class MultiSelectionUtil {
         // Keeps record of any items that should be checked on the next action mode creation
         private HashSet<Pair<Integer, Long>> mItemsToCheck;
 
-        private Controller(RecyclerView recyclerView, ActionBarActivity activity,
+        private Controller(RecyclerView recyclerView, AppCompatActivity activity,
                            MultiChoiceModeListener listener) {
             mRecyclerView = recyclerView;
             mAdapter = (SelectableAdapter) recyclerView.getAdapter();
@@ -129,7 +129,7 @@ public class MultiSelectionUtil {
         }
 
         /**
-         * This method should be called from your {@link ActionBarActivity} or
+         * This method should be called from your {@link AppCompatActivity} or
          * {@link android.support.v4.app.Fragment Fragment} to allow the controller to restore any
          * instance state.
          *
@@ -150,7 +150,7 @@ public class MultiSelectionUtil {
 
         /**
          * This method should be called from
-         * {@link ActionBarActivity#onSaveInstanceState(android.os.Bundle)} or
+         * {@link AppCompatActivity#onSaveInstanceState(android.os.Bundle)} or
          * {@link android.support.v4.app.Fragment#onSaveInstanceState(android.os.Bundle)
          * Fragment.onSaveInstanceState(Bundle)} to allow the controller to save its instance
          * state.

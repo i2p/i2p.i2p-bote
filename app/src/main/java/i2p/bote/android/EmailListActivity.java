@@ -16,8 +16,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -45,7 +45,7 @@ import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.FolderListener;
 import i2p.bote.network.NetworkStatusListener;
 
-public class EmailListActivity extends ActionBarActivity implements
+public class EmailListActivity extends AppCompatActivity implements
         FolderListAdapter.OnFolderSelectedListener,
         EmailListFragment.OnEmailSelectedListener,
         MoveToDialogFragment.MoveToDialogListener,

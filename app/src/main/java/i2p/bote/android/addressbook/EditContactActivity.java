@@ -6,7 +6,7 @@ import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import i2p.bote.android.Constants;
 import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 
-public class EditContactActivity extends ActionBarActivity {
+public class EditContactActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

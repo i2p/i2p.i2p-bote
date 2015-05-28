@@ -1,13 +1,14 @@
 package i2p.bote.android.config;
 
-import i2p.bote.android.InitActivities;
-import i2p.bote.android.R;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-public class SetPasswordActivity extends ActionBarActivity implements
+import i2p.bote.android.InitActivities;
+import i2p.bote.android.R;
+
+public class SetPasswordActivity extends AppCompatActivity implements
         SetPasswordFragment.Callbacks {
     @Override
     public void onCreate(Bundle savedInstanceState) {

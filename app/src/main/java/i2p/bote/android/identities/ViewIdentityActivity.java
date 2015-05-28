@@ -6,11 +6,11 @@ import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import i2p.bote.android.InitActivities;
 
-public class ViewIdentityActivity extends ActionBarActivity {
+public class ViewIdentityActivity extends AppCompatActivity {
     NfcAdapter mNfcAdapter;
 
     @SuppressLint("NewApi")
