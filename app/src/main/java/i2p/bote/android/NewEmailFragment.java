@@ -2,7 +2,6 @@ package i2p.bote.android;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -47,9 +47,9 @@ import javax.mail.internet.InternetAddress;
 
 import i2p.bote.I2PBote;
 import i2p.bote.android.util.BoteHelper;
-import i2p.bote.android.widget.ContactsCompletionView;
 import i2p.bote.android.util.ContentAttachment;
 import i2p.bote.android.util.Person;
+import i2p.bote.android.widget.ContactsCompletionView;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;

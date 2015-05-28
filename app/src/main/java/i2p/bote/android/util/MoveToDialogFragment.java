@@ -1,19 +1,20 @@
 package i2p.bote.android.util;
 
-import i2p.bote.I2PBote;
-import i2p.bote.android.R;
-import i2p.bote.folder.EmailFolder;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import i2p.bote.I2PBote;
+import i2p.bote.android.R;
+import i2p.bote.folder.EmailFolder;
 
 public class MoveToDialogFragment extends DialogFragment {
     public static final String CURRENT_FOLDER = "current_folder";
