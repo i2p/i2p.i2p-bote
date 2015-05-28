@@ -59,7 +59,7 @@ public class IdentityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (position == 0)
             return R.layout.listitem_text;
 
-        return R.layout.listitem_contact;
+        return R.layout.listitem_identity;
     }
 
     // Create new views (invoked by the layout manager)
