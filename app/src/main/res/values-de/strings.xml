@@ -6,8 +6,8 @@
   <string name="swipe_to_start">Wischen zum Starten</string>
   <string name="i_know_what_to_do">Ich weiß, was zu tun ist</string>
   <string name="intro_1_1">Traditionelle E-Mails sind unsicher. Sie waren nicht dazu gedacht, Leute vor Fangnetzüberwachung zu schützen.</string>
-  <string name="intro_1_2">Sogar wenn Sie die Inhalte Ihrer E-Mails verschlüsseln, können die Metadaten der E-Mails überwacht werden, um so große Mengen an Informationen über Sie und die, mit denen Sie kommunizieren, zu sammeln.</string>
-  <string name="intro_2_1">Bote ist eine neue Art von E-Mail, die komplette Ende-zu-Ende-Privatsphäre und -sicherheit bietet. Bote läuft im I2P-Netzwerk, welches Ihre Aktivitäten geheim hält.</string>
+  <string name="intro_1_2">Sogar wenn Sie die Inhalte Ihrer E-Mails verschlüsseln, können die Metadaten der E-Mails überwacht werden, um so viele Informationen über Sie und die, mit denen Sie kommunizieren, zu sammeln.</string>
+  <string name="intro_2_1">Bote ist eine neue Art von E-Mail, die komplette Ende-zu-Ende-Privatsphäre und Sicherheit bietet. Bote läuft im I2P-Netzwerk, welches Ihre Aktivitäten geheim hält.</string>
   <string name="intro_2_2">Wenn Sie eine E-Mail in Bote senden, ist alles verschlüsselt - auch die E-Mail-Metadaten. Nur der Empfänger kann die E-Mail herunterladen und lesen.</string>
   <string name="intro_3_1">Bei traditionellen E-Mails muss man einem zentralen Server vertrauen. Und wenn dieser gesperrt ist, können Sie keine E-Mails verschicken oder empfangen.</string>
   <string name="intro_3_2">Bote verwendet ein dezentrales, verteiltes Peer-to-Peer-Netzwerk, ähnlich wie BitTorrent. Verschlüsselte E-Mails werden aufgespaltet und bei vielen anderen Bote-Nutzern gespeichert.</string>
@@ -38,7 +38,7 @@
   <string name="action_new_email">Neue E-Mail</string>
   <string name="action_attach_file">Datei hinzufügen</string>
   <string name="select_attachment">Datei zum Hinzufügen aussuchen</string>
-  <string name="action_send_email">E-Mail senden</string>
+  <string name="action_send_email">E-Mail verschicken</string>
   <string name="action_start_bote">Mit dem Netzwerk verbinden</string>
   <string name="action_stop_bote">Netzwerkverbindung trennen</string>
   <string name="action_settings">Einstellungen</string>
@@ -90,7 +90,7 @@
   <!--Argument 1: how many recipients the email has been sent to so far.
      Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to">An %1$d von %2$d Empfängern gesendet</string>
-  <string name="email_sent">E-Mail gesendet</string>
+  <string name="email_sent">E-Mail verschickt</string>
   <string name="gateway_disabled">Gateway deaktiviert</string>
   <string name="no_identity_matches">Keine Identität passt zum Absender/Von Eintrag: %s</string>
   <string name="invalid_recipient">Ungültige Empfängeradresse: %s</string>
@@ -176,8 +176,8 @@
   <string name="pref_title_hideLocale">Lokale verstecken</string>
   <string name="pref_summ_hideLocale">Englisch für den hinzuzufügenden Text an ausgehenden E-Mails verwenden (\"Re:\", \"wrote:\", usw.)</string>
   <string name="pref_summ_hideLocale_off">Systemsprache für den hinzuzufügenden Text an ausgehenden E-Mails verwenden (\"Antw:\", \"schrieb:\", usw.)</string>
-  <string name="pref_title_sentTime">Sendezeitpunkt</string>
-  <string name="pref_summ_sentTime">Zeitpunkt des Verschickens in ausgehender Mail anhängen</string>
+  <string name="pref_title_sentTime">Absendezeit</string>
+  <string name="pref_summ_sentTime">Absendezeit in ausgehender Mail anhängen</string>
   <string name="pref_title_routing">Routing</string>
   <string name="pref_title_numSendHops">Zwischenstationen werden gesendet</string>
   <plurals name="pref_summ_numHops">
@@ -232,7 +232,7 @@
   <string name="about">Über</string>
   <string name="version">Version</string>
   <!--As in software license, e.g. Apache License v2-->
-  <string name="license">Lizens: %s</string>
+  <string name="license">Lizenz: %s</string>
   <!--Software libraries-->
   <string name="libraries">Bibliotheken</string>
 </resources>

@@ -116,6 +116,8 @@
   <string name="compose">Composer</string>
   <string name="subject">Objet</string>
   <string name="compose_email">Composer un courrier électronique</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
+  <string name="attachment_size_warning">Vous avez plus de %s de pièces jointes. L\'envoi d\'email peut donc être lent.</string>
   <string name="add_one_recipient">Ajouter un destinataire au minimum</string>
   <string name="stop_composing_email">Cesser de composer l\'email ?</string>
   <string name="all_changes_will_be_discarded">Toutes les modifications seront annulés.</string>
