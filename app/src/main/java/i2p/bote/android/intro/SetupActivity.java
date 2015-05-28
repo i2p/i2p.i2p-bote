@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import i2p.bote.android.R;
-import i2p.bote.android.config.EditIdentityActivity;
+import i2p.bote.android.identities.EditIdentityActivity;
 import i2p.bote.android.config.SetPasswordActivity;
 
 public class SetupActivity extends ActionBarActivity {

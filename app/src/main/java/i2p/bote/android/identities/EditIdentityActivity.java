@@ -1,23 +1,18 @@
-package i2p.bote.android.config;
+package i2p.bote.android.identities;
 
+import i2p.bote.android.InitActivities;
+import i2p.bote.android.R;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-import i2p.bote.android.InitActivities;
-import i2p.bote.android.R;
-
-public class IdentityShipActivity extends ActionBarActivity implements
-        IdentityShipFragment.Callbacks {
-    public static final String EXPORTING = "exporting";
-
-    boolean mExporting;
-
+public class EditIdentityActivity extends ActionBarActivity implements
+        EditIdentityFragment.Callbacks {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_identity_ship);
+        setContentView(R.layout.activity_edit_identity);
 
         // Initialize I2P settings
         InitActivities init = new InitActivities(this);
@@ -31,21 +26,22 @@ public class IdentityShipActivity extends ActionBarActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
+            String key = null;
             Bundle args = getIntent().getExtras();
-            mExporting = args.getBoolean(EXPORTING);
-            IdentityShipFragment f = IdentityShipFragment.newInstance(mExporting);
+            if (args != null)
+                key = args.getString(EditIdentityFragment.IDENTITY_KEY);
+            if (key != null)
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            EditIdentityFragment f = EditIdentityFragment.newInstance(key);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.identity_ship_frag, f).commit();
+                .add(R.id.edit_identity_frag, f).commit();
         }
     }
 
-    // IdentityShipFragment.Callbacks
+    // EditIdentityFragment.Callbacks
 
     public void onTaskFinished() {
-        Toast.makeText(this,
-                mExporting ?
-                        R.string.identities_exported :
-                        R.string.identities_imported,
+        Toast.makeText(this, R.string.identity_saved,
                 Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();

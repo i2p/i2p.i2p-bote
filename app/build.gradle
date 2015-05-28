@@ -60,6 +60,9 @@ dependencies {
     compile 'com.google.zxing:android-integration:3.2.0'
     compile 'com.androidplot:androidplot-core:0.6.1'
     compile 'com.pnikosis:materialish-progress:1.4'
+    compile ('com.android.support:support-v4-preferencefragment:1.0.0@aar'){
+        exclude module: 'support-v4'
+    }
 
     // Testing-only dependencies
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
@@ -80,7 +83,8 @@ dependencyVerification {
             'com.google.zxing:core:7fe5a8ff437635a540e56317649937b768b454795ce999ed5f244f83373dee7b',
             'com.google.zxing:android-integration:0de037a73138033c4a03cdbca5d5728ef65a026ffb89afce071105f43a98ee0e',
             'com.androidplot:androidplot-core:777b54dd98b8dedc5f3fcc95018eece1188f6c692dcbd5b7744af175e15d70bd',
-            'com.pnikosis:materialish-progress:5dd770a78047d8dbf2690deb686675fe2b242a6d06bb52ef425c829454ca54b8'
+            'com.pnikosis:materialish-progress:5dd770a78047d8dbf2690deb686675fe2b242a6d06bb52ef425c829454ca54b8',
+            'com.android.support:support-v4-preferencefragment:5470f5872514a6226fa1fc6f4e000991f38805691c534cf0bd2778911fc773ad',
     ]
 }
 

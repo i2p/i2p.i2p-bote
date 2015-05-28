@@ -117,26 +117,34 @@
                 android:value="i2p.bote.android.config.SettingsActivity"/>
         </activity>
         <activity
-            android:name=".config.ViewIdentityActivity"
+            android:name=".identities.IdentityListActivity"
+            android:label="@string/pref_title_identities"
             android:parentActivityName=".config.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="i2p.bote.android.config.SettingsActivity"/>
         </activity>
         <activity
-            android:name=".config.EditIdentityActivity"
+            android:name=".identities.ViewIdentityActivity"
+            android:parentActivityName=".identities.IdentityListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="i2p.bote.android.identities.IdentityListActivity"/>
+        </activity>
+        <activity
+            android:name=".identities.EditIdentityActivity"
             android:label="@string/title_new_identity"
-            android:parentActivityName=".config.ViewIdentityActivity">
+            android:parentActivityName=".identities.ViewIdentityActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.config.ViewIdentityActivity"/>
+                android:value=".identities.ViewIdentityActivity"/>
         </activity>
         <activity
-            android:name=".config.IdentityShipActivity"
-            android:parentActivityName=".config.SettingsActivity">
+            android:name=".identities.IdentityShipActivity"
+            android:parentActivityName=".identities.IdentityListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="i2p.bote.android.config.SettingsActivity"/>
+                android:value="i2p.bote.android.identities.IdentityListActivity"/>
         </activity>
         <activity
             android:name=".HelpActivity"

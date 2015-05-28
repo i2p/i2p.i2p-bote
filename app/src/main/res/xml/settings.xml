@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="preference_category_general"
+        android:title="@string/pref_title_general"/>
+    <Preference
+        android:key="preference_category_change_password"
+        android:title="@string/pref_title_change_password"/>
+    <Preference
+        android:key="preference_category_identities"
+        android:title="@string/pref_title_identities"/>
+</PreferenceScreen>

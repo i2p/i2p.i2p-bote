@@ -1,4 +1,4 @@
-package i2p.bote.android.config;
+package i2p.bote.android.identities;
 
 import android.annotation.SuppressLint;
 import android.nfc.NdefMessage;

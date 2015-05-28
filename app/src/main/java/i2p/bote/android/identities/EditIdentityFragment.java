@@ -1,4 +1,4 @@
-package i2p.bote.android.config;
+package i2p.bote.android.identities;
 
 import android.app.Activity;
 import android.content.Context;

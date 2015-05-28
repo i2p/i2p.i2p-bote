@@ -11,6 +11,9 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
+        maven {
+            url "https://raw.github.com/whispersystems/maven/master/preferencefragment/releases/"
+        }
         mavenCentral()
     }
 }
