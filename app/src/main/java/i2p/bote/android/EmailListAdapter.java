@@ -184,19 +184,19 @@ public class EmailListAdapter extends MultiSelectionUtil.SelectableAdapter<Recyc
                 evh.picture.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        selectEmail(evh.getPosition(), evh.getItemId(), true);
+                        selectEmail(evh.getAdapterPosition(), evh.getItemId(), true);
                     }
                 });
                 evh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        selectEmail(evh.getPosition(), evh.getItemId(), false);
+                        selectEmail(evh.getAdapterPosition(), evh.getItemId(), false);
                     }
                 });
                 evh.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
-                        selectEmail(evh.getPosition(), evh.getItemId(), true);
+                        selectEmail(evh.getAdapterPosition(), evh.getItemId(), true);
                         return true;
                     }
                 });

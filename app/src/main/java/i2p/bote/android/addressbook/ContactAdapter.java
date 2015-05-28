@@ -102,7 +102,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 cvh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mListener.onContactSelected(mContacts.get(cvh.getPosition()));
+                        mListener.onContactSelected(mContacts.get(cvh.getAdapterPosition()));
                     }
                 });
                 break;
