@@ -204,6 +204,9 @@
     <string name="pref_summ_minDelay">%s minutes</string>
     <string name="pref_title_maxDelay">Maximum delay per hop</string>
     <string name="pref_summ_maxDelay">%s minutes</string>
+    <string name="settings_label_app_protection">App protection</string>
+    <string name="screen_security">Screen security</string>
+    <string name="screen_security_summ">Block screenshots in the recents list and inside the app</string>
     <string name="settings_label_appearance">Appearance</string>
     <string name="settings_label_language">Language</string>
     <string name="settings_default">Default</string>
