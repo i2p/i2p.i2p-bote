@@ -1,14 +1,14 @@
 package i2p.bote.android.identities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import i2p.bote.android.BoteActivityBase;
 import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 
-public class IdentityShipActivity extends AppCompatActivity implements
+public class IdentityShipActivity extends BoteActivityBase implements
         IdentityShipFragment.Callbacks {
     public static final String EXPORTING = "exporting";
 
@@ -18,10 +18,6 @@ public class IdentityShipActivity extends AppCompatActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identity_ship);
-
-        // Initialize I2P settings
-        InitActivities init = new InitActivities(this);
-        init.initialize();
 
         // Set the action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);

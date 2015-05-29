@@ -3,18 +3,18 @@ package i2p.bote.android.intro;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import i2p.bote.android.BoteActivityBase;
 import i2p.bote.android.R;
 import i2p.bote.android.config.SetPasswordActivity;
 import i2p.bote.android.identities.EditIdentityActivity;
 
-public class SetupActivity extends AppCompatActivity {
+public class SetupActivity extends BoteActivityBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

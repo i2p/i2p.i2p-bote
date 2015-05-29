@@ -6,24 +6,19 @@ import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import java.util.Arrays;
 
+import i2p.bote.android.BoteActivityBase;
 import i2p.bote.android.Constants;
-import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 
-public class EditContactActivity extends AppCompatActivity {
+public class EditContactActivity extends BoteActivityBase {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
-
-        // Initialize I2P settings
-        InitActivities init = new InitActivities(this);
-        init.initialize();
 
         // Set the action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);

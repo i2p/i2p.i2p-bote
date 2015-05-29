@@ -3,18 +3,17 @@ package i2p.bote.android.addressbook;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import i2p.bote.android.BoteActivityBase;
 import i2p.bote.android.Constants;
-import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 import i2p.bote.packet.dht.Contact;
 
-public class AddressBookActivity extends AppCompatActivity implements
+public class AddressBookActivity extends BoteActivityBase implements
         AddressBookFragment.OnContactSelectedListener {
     static final int ALTER_CONTACT_LIST = 1;
 
@@ -22,10 +21,6 @@ public class AddressBookActivity extends AppCompatActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
-
-        // Initialize I2P settings
-        InitActivities init = new InitActivities(this);
-        init.initialize();
 
         // Set the action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);

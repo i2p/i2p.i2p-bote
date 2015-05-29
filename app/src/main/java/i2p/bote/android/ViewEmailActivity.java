@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import java.security.GeneralSecurityException;
@@ -23,7 +22,7 @@ import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.FolderListener;
 
-public class ViewEmailActivity extends AppCompatActivity implements
+public class ViewEmailActivity extends BoteActivityBase implements
         LoaderManager.LoaderCallbacks<List<String>> {
     public static final String FOLDER_NAME = "folder_name";
     public static final String MESSAGE_ID = "message_id";
@@ -40,10 +39,6 @@ public class ViewEmailActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_email);
-
-        // Initialize I2P settings
-        InitActivities init = new InitActivities(this);
-        init.initialize();
 
         // Set the action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);

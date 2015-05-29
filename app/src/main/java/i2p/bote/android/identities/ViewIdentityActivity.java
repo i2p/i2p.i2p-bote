@@ -6,21 +6,16 @@ import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-import i2p.bote.android.InitActivities;
+import i2p.bote.android.BoteActivityBase;
 
-public class ViewIdentityActivity extends AppCompatActivity {
+public class ViewIdentityActivity extends BoteActivityBase {
     NfcAdapter mNfcAdapter;
 
     @SuppressLint("NewApi")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize I2P settings
-        InitActivities init = new InitActivities(this);
-        init.initialize();
 
         if (savedInstanceState == null) {
             String key = null;

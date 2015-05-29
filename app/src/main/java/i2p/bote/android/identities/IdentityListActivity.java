@@ -3,14 +3,13 @@ package i2p.bote.android.identities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import i2p.bote.android.InitActivities;
+import i2p.bote.android.BoteActivityBase;
 import i2p.bote.android.R;
 import i2p.bote.email.EmailIdentity;
 
-public class IdentityListActivity extends AppCompatActivity implements
+public class IdentityListActivity extends BoteActivityBase implements
         IdentityListFragment.IdentityListListener {
     static final int ALTER_IDENTITY_LIST = 1;
 
@@ -18,10 +17,6 @@ public class IdentityListActivity extends AppCompatActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
-
-        // Initialize I2P settings
-        InitActivities init = new InitActivities(this);
-        init.initialize();
 
         // Set the action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);

@@ -7,24 +7,20 @@ import android.preference.Preference;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.preference.PreferenceFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import i2p.bote.android.BoteActivityBase;
 import i2p.bote.android.EmailListActivity;
-import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 import i2p.bote.android.identities.IdentityListActivity;
-import i2p.bote.android.util.LocaleManager;
 
-public class SettingsActivity extends AppCompatActivity implements
+public class SettingsActivity extends BoteActivityBase implements
         SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String PREFERENCE_CATEGORY = "preference_category";
     public static final String PREFERENCE_CATEGORY_GENERAL = "preference_category_general";
     public static final String PREFERENCE_CATEGORY_CHANGE_PASSWORD = "preference_category_change_password";
     public static final String PREFERENCE_CATEGORY_IDENTITIES = "preference_category_identities";
     public static final String PREFERENCE_CATEGORY_APPEARANCE = "preference_category_appearance";
-
-    private final LocaleManager localeManager = new LocaleManager();
 
 
     //
@@ -33,13 +29,8 @@ public class SettingsActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        localeManager.onCreate(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
-
-        // Initialize I2P settings
-        InitActivities init = new InitActivities(this);
-        init.initialize();
 
         // Set the action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
@@ -59,12 +50,6 @@ public class SettingsActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        localeManager.onResume(this);
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
@@ -81,7 +66,7 @@ public class SettingsActivity extends AppCompatActivity implements
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("pref_language")) {
-            localeManager.onResume(this);
+            notifyLocaleChanged();
         }
     }
 
