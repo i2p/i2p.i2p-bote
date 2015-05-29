@@ -11,6 +11,8 @@
     <color name="uva_color">#c31756</color>
     <color name="error_color">#f00</color>
 
+    <color name="grey_600">#757575</color>
+
     <color name="green">#4caf50</color>
     <color name="red">#f44336</color>
 

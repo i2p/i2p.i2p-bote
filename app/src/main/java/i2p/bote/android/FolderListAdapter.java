@@ -1,8 +1,8 @@
 package i2p.bote.android;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,8 +100,12 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final EmailFolder folder = mFolders.get(position);
+        final boolean isSelected = position == mSelectedFolder;
 
-        holder.mIcon.setImageDrawable(BoteHelper.getFolderIcon(mCtx, folder));
+        Drawable folderIcon = DrawableCompat.wrap(BoteHelper.getFolderIcon(mCtx, folder));
+        DrawableCompat.setTintList(folderIcon, mCtx.getResources().getColorStateList(R.color.folder_icon));
+        holder.mIcon.setImageDrawable(folderIcon);
+
         try {
             holder.mName.setText(BoteHelper.getFolderDisplayNameWithNew(mCtx, folder));
         } catch (PasswordException e) {
@@ -109,9 +113,9 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
             holder.mName.setText(BoteHelper.getFolderDisplayName(mCtx, folder));
         }
 
-        holder.itemView.setSelected(position == mSelectedFolder);
+        holder.itemView.setSelected(isSelected);
 
-        holder.mName.setTextAppearance(mCtx, position == mSelectedFolder ?
+        holder.mName.setTextAppearance(mCtx, isSelected ?
                 R.style.TextAppearance_AppCompat_NavDrawer_Selected :
                 R.style.TextAppearance_AppCompat_NavDrawer);
 
@@ -119,16 +123,10 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                boolean alreadySelected = position == mSelectedFolder;
                 setSelected(position);
-                mListener.onDrawerFolderSelected(folder, alreadySelected);
+                mListener.onDrawerFolderSelected(folder, isSelected);
             }
         });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            holder.mIcon.setImageTintList(position == mSelectedFolder ?
-                    new ColorStateList(new int[][]{{}},
-                    new int[]{mCtx.getResources().getColor(R.color.primary)}) : null);
     }
 
     // Return the size of the dataset (invoked by the layout manager)
