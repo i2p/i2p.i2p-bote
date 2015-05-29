@@ -22,6 +22,7 @@ public class SettingsActivity extends BoteActivityBase implements
     public static final String PREFERENCE_CATEGORY_GENERAL = "preference_category_general";
     public static final String PREFERENCE_CATEGORY_CHANGE_PASSWORD = "preference_category_change_password";
     public static final String PREFERENCE_CATEGORY_IDENTITIES = "preference_category_identities";
+    public static final String PREFERENCE_CATEGORY_PRIVACY = "preference_category_privacy";
     public static final String PREFERENCE_CATEGORY_APPEARANCE = "preference_category_appearance";
     public static final String PREFERENCE_CATEGORY_ADVANCED = "preference_category_advanced";
 
@@ -93,6 +94,8 @@ public class SettingsActivity extends BoteActivityBase implements
                     .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_CHANGE_PASSWORD));
             findPreference(PREFERENCE_CATEGORY_IDENTITIES)
                     .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_IDENTITIES));
+            findPreference(PREFERENCE_CATEGORY_PRIVACY)
+                    .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_PRIVACY));
             findPreference(PREFERENCE_CATEGORY_APPEARANCE)
                     .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_APPEARANCE));
             findPreference(PREFERENCE_CATEGORY_ADVANCED)
@@ -143,6 +146,8 @@ public class SettingsActivity extends BoteActivityBase implements
         switch (category) {
             case PREFERENCE_CATEGORY_GENERAL:
                 return new GeneralPreferenceFragment();
+            case PREFERENCE_CATEGORY_PRIVACY:
+                return new PrivacyPreferenceFragment();
             case PREFERENCE_CATEGORY_APPEARANCE:
                 return new AppearancePreferenceFragment();
             case PREFERENCE_CATEGORY_ADVANCED:

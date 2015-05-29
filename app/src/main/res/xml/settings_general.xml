@@ -19,39 +19,4 @@
         android:summary="@string/pref_summ_delivery"
         android:title="@string/pref_title_delivery" />
 
-    <PreferenceCategory android:title="@string/pref_title_privacy" >
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="hideLocale"
-            android:summaryOn="@string/pref_summ_hideLocale"
-            android:summaryOff="@string/pref_summ_hideLocale_off"
-            android:title="@string/pref_title_hideLocale" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="includeSentTime"
-            android:summary="@string/pref_summ_sentTime"
-            android:title="@string/pref_title_sentTime" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_title_routing" >
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/setting0to3"
-            android:entryValues="@array/setting0to3"
-            android:key="numSendHops"
-            android:title="@string/pref_title_numSendHops" />
-
-        <i2p.bote.android.widget.IntEditTextPreference
-            android:defaultValue="5"
-            android:dependency="numSendHops"
-            android:key="relayMinDelay"
-            android:summary="@string/pref_summ_minDelay"
-            android:title="@string/pref_title_minDelay" />
-        <i2p.bote.android.widget.IntEditTextPreference
-            android:defaultValue="40"
-            android:dependency="numSendHops"
-            android:key="relayMaxDelay"
-            android:summary="@string/pref_summ_maxDelay"
-            android:title="@string/pref_title_maxDelay" />
-    </PreferenceCategory>
-
 </PreferenceScreen>

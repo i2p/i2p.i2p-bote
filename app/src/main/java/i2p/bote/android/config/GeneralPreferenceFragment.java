@@ -2,8 +2,6 @@ package i2p.bote.android.config;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v4.preference.PreferenceFragment;
 
@@ -18,7 +16,6 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
     public void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
         addPreferencesFromResource(R.xml.settings_general);
-        setupGeneralSettings();
     }
 
     @Override
@@ -41,37 +38,11 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
                 config.setMailCheckInterval(prefs.getInt(x, 30));
             else if ("deliveryCheckEnabled".equals(x))
                 config.setDeliveryCheckEnabled(prefs.getBoolean(x, true));
-            else if ("hideLocale".equals(x))
-                config.setHideLocale(prefs.getBoolean(x, true));
-            else if ("includeSentTime".equals(x))
-                config.setIncludeSentTime(prefs.getBoolean(x, true));
-            else if ("numSendHops".equals(x))
-                config.setNumStoreHops(Integer.parseInt(prefs.getString(x, "0")));
-            else if ("relayMinDelay".equals(x))
-                config.setRelayMinDelay(prefs.getInt(x, 5));
-            else if ("relayMaxDelay".equals(x))
-                config.setRelayMaxDelay(prefs.getInt(x, 40));
         }
 
         config.save();
 
         // Store the settings in Android
         super.onPause();
-    }
-
-    private void setupGeneralSettings() {
-        ListPreference numSendHops = (ListPreference) findPreference("numSendHops");
-        int value = Integer.valueOf(numSendHops.getValue());
-        numSendHops.setSummary(getResources().getQuantityString(R.plurals.pref_summ_numHops,
-                value, value));
-        numSendHops.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                int value = Integer.valueOf((String) newValue);
-                preference.setSummary(getResources().getQuantityString(R.plurals.pref_summ_numHops,
-                        value, value));
-                return true;
-            }
-        });
     }
 }
