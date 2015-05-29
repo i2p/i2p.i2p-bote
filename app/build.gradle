@@ -53,14 +53,14 @@ dependencies {
     compile 'net.i2p.android.ext:floatingactionbutton:1.8.0'
     compile 'com.madgag.spongycastle:core:1.51.0.0'
     compile 'com.madgag.spongycastle:prov:1.51.0.0'
-    compile ('com.mcxiaoke.viewpagerindicator:library:2.4.1') {
+    compile('com.mcxiaoke.viewpagerindicator:library:2.4.1') {
         exclude group: 'com.android.support', module: 'support-v4'
     }
     compile 'com.google.zxing:core:3.2.0'
     compile 'com.google.zxing:android-integration:3.2.0'
     compile 'com.androidplot:androidplot-core:0.6.1'
     compile 'com.pnikosis:materialish-progress:1.4'
-    compile ('com.android.support:support-v4-preferencefragment:1.0.0@aar'){
+    compile('com.android.support:support-v4-preferencefragment:1.0.0@aar') {
         exclude module: 'support-v4'
     }
 
@@ -87,5 +87,43 @@ dependencyVerification {
             'com.android.support:support-v4-preferencefragment:5470f5872514a6226fa1fc6f4e000991f38805691c534cf0bd2778911fc773ad',
     ]
 }
+
+project.ext.i2pbase = '../i2p.i2p'
+def Properties props = new Properties()
+def propFile = new File(project(':botejars').projectDir, 'local.properties')
+
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null &&
+            props.containsKey('i2psrc')) {
+        i2pbase = props['i2psrc']
+    } else {
+        println 'local.properties found but some entries are missing'
+    }
+} else {
+    println 'local.properties not found'
+}
+
+task certificatesZip(type: Zip) {
+    archiveName = 'certificates_zip'
+    into('reseed') {
+        from files('' + i2pbase + '/installer/resources/certificates/reseed')
+    }
+    into('ssl') {
+        from files('' + i2pbase + '/installer/resources/certificates/ssl')
+    }
+}
+task copyI2PResources(type: Copy) {
+    // Force this to always run: Copy only detects source changes, not if missing in destination
+    outputs.upToDateWhen { false }
+    into 'src/main/res/raw'
+    from certificatesZip
+}
+task cleanI2PResources(type: Delete) {
+    delete file('src/main/res/raw/certificates_zip')
+}
+preBuild.dependsOn copyI2PResources
+clean.dependsOn cleanI2PResources
 
 apply from: "${project.rootDir}/gradle/signing.gradle"

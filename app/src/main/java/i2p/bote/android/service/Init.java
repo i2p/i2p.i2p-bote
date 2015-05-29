@@ -4,18 +4,25 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import net.i2p.android.ui.I2PAndroidHelper;
 import net.i2p.client.I2PClient;
 import net.i2p.data.DataHelper;
+import net.i2p.util.FileUtil;
 import net.i2p.util.OrderedProperties;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
+import i2p.bote.android.Constants;
 import i2p.bote.android.R;
 
 public class Init {
@@ -44,8 +51,6 @@ public class Init {
         System.setProperty("i2p.dir.base", myDir);
         System.setProperty("i2p.dir.config", myDir);
         System.setProperty("wrapper.logfile", myDir + "/wrapper.log");
-
-        mergeResourceToFile(R.raw.router_config, "router.config", null);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         RouterChoice routerChoice;
@@ -76,6 +81,22 @@ public class Init {
         // Set the I2CP host/port
         System.setProperty(I2PClient.PROP_TCP_HOST, i2cpHost);
         System.setProperty(I2PClient.PROP_TCP_PORT, i2cpPort);
+
+        if (routerChoice == RouterChoice.INTERNAL) {
+            mergeResourceToFile(R.raw.router_config, "router.config", null);
+
+            File certDir = new File(myDir, "certificates");
+            certDir.mkdir();
+            File certificates = new File(myDir, "certificates");
+            File[] allcertificates = certificates.listFiles();
+            if ( allcertificates != null) {
+                for (File f : allcertificates) {
+                    Log.d(Constants.ANDROID_LOG_TAG, "Deleting old certificate file/dir " + f);
+                    FileUtil.rmdir(f, false);
+                }
+            }
+            unzipResourceToDir(R.raw.certificates_zip, "certificates");
+        }
 
         return routerChoice;
     }
@@ -120,6 +141,54 @@ public class Init {
                 fin.close();
             } catch (IOException ioe) {
             }
+        }
+    }
+
+    /**
+     *  @param folder relative to base dir
+     */
+    private void unzipResourceToDir(int resID, String folder) {
+        InputStream in = null;
+        FileOutputStream out = null;
+        ZipInputStream zis = null;
+
+        Log.d(Constants.ANDROID_LOG_TAG, "Creating files in '" + myDir + "/" + folder + "/' from resource");
+        try {
+            // Context methods
+            in = ctx.getResources().openRawResource(resID);
+            zis = new ZipInputStream((in));
+            ZipEntry ze;
+            while ((ze = zis.getNextEntry()) != null) {
+                out = null;
+                try {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    int count;
+                    while ((count = zis.read(buffer)) != -1) {
+                        baos.write(buffer, 0, count);
+                    }
+                    String name = ze.getName();
+                    File f = new File(myDir + "/" + folder +"/" + name);
+                    if (ze.isDirectory()) {
+                        Log.d(Constants.ANDROID_LOG_TAG, "Creating directory " + myDir + "/" + folder +"/" + name + " from resource");
+                        f.mkdir();
+                    } else {
+                        Log.d(Constants.ANDROID_LOG_TAG, "Creating file " + myDir + "/" + folder +"/" + name + " from resource");
+                        byte[] bytes = baos.toByteArray();
+                        out = new FileOutputStream(f);
+                        out.write(bytes);
+                    }
+                } catch (IOException ioe) {
+                } finally {
+                    if (out != null) { try { out.close(); } catch (IOException ioe) {} out = null; }
+                }
+            }
+        } catch (IOException ioe) {
+        } catch (Resources.NotFoundException nfe) {
+        } finally {
+            if (in != null) try { in.close(); } catch (IOException ioe) {}
+            if (out != null) try { out.close(); } catch (IOException ioe) {}
+            if (zis != null) try { zis.close(); } catch (IOException ioe) {}
         }
     }
 }

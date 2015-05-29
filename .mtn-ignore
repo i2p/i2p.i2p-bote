@@ -16,3 +16,6 @@ signing.properties
 #Gradle
 ^.gradle
 build
+
+# I2P-specific ignores
+^app/src/main/res/raw/certificates_zip
