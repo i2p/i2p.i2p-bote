@@ -179,8 +179,7 @@
     <string name="also_check_i2p_android">If that doesn\'t help, check that I2P is running. You can see I2P\'s current status in the notification drawer, or by opening the I2P app. If it isn\'t running properly, restart I2P (in the app, click "Stop", and then click "Start" when it appears). Wait for I2P to be fully running, and then start Bote.</string>
     <string name="bote_connection_error">Bote connection error</string>
     <string name="full_error_copied_to_clipboard">Full error copied to clipboard</string>
-    <string name="pref_title_general">General</string>
-    <string name="pref_summ_general">General settings and default identity settings</string>
+    <string name="settings_label_network">Network</string>
     <string name="pref_title_autoMail">Auto-check mail</string>
     <string name="pref_title_checkInterval">Check interval</string>
     <string name="pref_summ_checkInterval">%s minutes</string>

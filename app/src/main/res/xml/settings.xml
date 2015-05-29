@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <Preference
-        android:key="preference_category_general"
-        android:title="@string/pref_title_general"/>
+        android:key="preference_category_network"
+        android:title="@string/settings_label_network"/>
     <Preference
         android:key="preference_category_identities"
         android:title="@string/pref_title_identities"/>
     <Preference
         android:key="preference_category_privacy"
-        android:title="@string/pref_title_privacy" />
+        android:title="@string/pref_title_privacy"/>
     <Preference
         android:key="preference_category_app_protection"
         android:title="@string/settings_label_app_protection"/>
     <Preference
         android:key="preference_category_appearance"
-        android:title="@string/settings_label_appearance" />
+        android:title="@string/settings_label_appearance"/>
     <Preference
         android:key="preference_category_advanced"
-        android:title="@string/settings_label_advanced" />
+        android:title="@string/settings_label_advanced"/>
 </PreferenceScreen>

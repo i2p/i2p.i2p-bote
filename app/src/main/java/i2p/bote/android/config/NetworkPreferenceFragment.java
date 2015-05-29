@@ -11,18 +11,18 @@ import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
 import i2p.bote.android.R;
 
-public class GeneralPreferenceFragment extends PreferenceFragment {
+public class NetworkPreferenceFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
-        addPreferencesFromResource(R.xml.settings_general);
+        addPreferencesFromResource(R.xml.settings_network);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         //noinspection ConstantConditions
-        ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.pref_title_general);
+        ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.settings_label_network);
     }
 
     @Override

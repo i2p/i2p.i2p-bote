@@ -19,7 +19,7 @@ import i2p.bote.android.service.BoteService;
 public class SettingsActivity extends BoteActivityBase implements
         SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String PREFERENCE_CATEGORY = "preference_category";
-    public static final String PREFERENCE_CATEGORY_GENERAL = "preference_category_general";
+    public static final String PREFERENCE_CATEGORY_NETWORK = "preference_category_network";
     public static final String PREFERENCE_CATEGORY_IDENTITIES = "preference_category_identities";
     public static final String PREFERENCE_CATEGORY_PRIVACY = "preference_category_privacy";
     public static final String PREFERENCE_CATEGORY_APP_PROTECTION = "preference_category_app_protection";
@@ -88,8 +88,8 @@ public class SettingsActivity extends BoteActivityBase implements
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings);
 
-            findPreference(PREFERENCE_CATEGORY_GENERAL)
-                    .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_GENERAL));
+            findPreference(PREFERENCE_CATEGORY_NETWORK)
+                    .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_NETWORK));
             findPreference(PREFERENCE_CATEGORY_IDENTITIES)
                     .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_IDENTITIES));
             findPreference(PREFERENCE_CATEGORY_PRIVACY)
@@ -139,8 +139,8 @@ public class SettingsActivity extends BoteActivityBase implements
 
     private static Fragment getFragmentForCategory(String category) {
         switch (category) {
-            case PREFERENCE_CATEGORY_GENERAL:
-                return new GeneralPreferenceFragment();
+            case PREFERENCE_CATEGORY_NETWORK:
+                return new NetworkPreferenceFragment();
             case PREFERENCE_CATEGORY_PRIVACY:
                 return new PrivacyPreferenceFragment();
             case PREFERENCE_CATEGORY_APP_PROTECTION:
