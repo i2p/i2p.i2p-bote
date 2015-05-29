@@ -1,6 +1,7 @@
 package i2p.bote.android.config;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.support.v4.app.Fragment;
@@ -13,12 +14,17 @@ import i2p.bote.android.EmailListActivity;
 import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
 import i2p.bote.android.identities.IdentityListActivity;
+import i2p.bote.android.util.LocaleManager;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements
+        SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String PREFERENCE_CATEGORY = "preference_category";
     public static final String PREFERENCE_CATEGORY_GENERAL = "preference_category_general";
     public static final String PREFERENCE_CATEGORY_CHANGE_PASSWORD = "preference_category_change_password";
     public static final String PREFERENCE_CATEGORY_IDENTITIES = "preference_category_identities";
+    public static final String PREFERENCE_CATEGORY_APPEARANCE = "preference_category_appearance";
+
+    private final LocaleManager localeManager = new LocaleManager();
 
 
     //
@@ -27,6 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        localeManager.onCreate(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
 
@@ -52,6 +59,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        localeManager.onResume(this);
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
@@ -63,6 +76,13 @@ public class SettingsActivity extends AppCompatActivity {
             finish();
         }
         return true;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("pref_language")) {
+            localeManager.onResume(this);
+        }
     }
 
 
@@ -82,6 +102,8 @@ public class SettingsActivity extends AppCompatActivity {
                     .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_CHANGE_PASSWORD));
             findPreference(PREFERENCE_CATEGORY_IDENTITIES)
                     .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_IDENTITIES));
+            findPreference(PREFERENCE_CATEGORY_APPEARANCE)
+                    .setOnPreferenceClickListener(new CategoryClickListener(PREFERENCE_CATEGORY_APPEARANCE));
         }
 
         @Override
@@ -127,6 +149,8 @@ public class SettingsActivity extends AppCompatActivity {
         switch (category) {
             case PREFERENCE_CATEGORY_GENERAL:
                 return new GeneralPreferenceFragment();
+            case PREFERENCE_CATEGORY_APPEARANCE:
+                return new AppearancePreferenceFragment();
             default:
                 throw new AssertionError();
         }

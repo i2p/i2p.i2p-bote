@@ -16,4 +16,36 @@
         <item>I2P Android</item>
         <item>@string/remote_i2p_router</item>
     </string-array>
+    <string-array name="languages">
+        <item>zz</item>
+        <item>en</item>
+        <item>zh</item>
+        <item>de</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>in</item>
+        <item>nb</item>
+        <item>nl</item>
+        <item>pl</item>
+        <item>pt</item>
+        <item>ro</item>
+        <item>ru</item>
+        <item>sq</item>
+    </string-array>
+    <string-array name="language_names">
+        <item>@string/settings_default</item>
+        <item>English</item>
+        <item>Chinese 中国的</item>
+        <item>Deutsch</item>
+        <item>Español</item>
+        <item>Français</item>
+        <item>Indonesia</item>
+        <item>Norwegian Bokmål</item>
+        <item>Nederlands</item>
+        <item>Polski</item>
+        <item>Português</item>
+        <item>Română</item>
+        <item>Russian Pусский</item>
+        <item>Shqip</item>
+    </string-array>
 </resources>

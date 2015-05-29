@@ -9,4 +9,7 @@
     <Preference
         android:key="preference_category_identities"
         android:title="@string/pref_title_identities"/>
+    <Preference
+        android:key="preference_category_appearance"
+        android:title="@string/settings_label_appearance" />
 </PreferenceScreen>
