@@ -128,7 +128,7 @@ public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.Vi
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             holder.mIcon.setImageTintList(position == mSelectedFolder ?
                     new ColorStateList(new int[][]{{}},
-                    new int[]{mCtx.getResources().getColor(R.color.accent_dark)}) : null);
+                    new int[]{mCtx.getResources().getColor(R.color.primary)}) : null);
     }
 
     // Return the size of the dataset (invoked by the layout manager)
