@@ -204,6 +204,10 @@
     <string name="pref_summ_minDelay">%s minutes</string>
     <string name="pref_title_maxDelay">Maximum delay per hop</string>
     <string name="pref_summ_maxDelay">%s minutes</string>
+    <string name="settings_label_appearance">Appearance</string>
+    <string name="settings_label_language">Language</string>
+    <string name="settings_default">Default</string>
+    <string name="settings_label_advanced">Advanced</string>
     <string name="router_settings">Router settings</string>
     <string name="auto">Auto</string>
     <string name="manual">Manual</string>
@@ -213,9 +217,6 @@
     <string name="pref_dialog_title_router">Router to use</string>
     <string name="pref_title_i2cp_host">I2CP host</string>
     <string name="pref_title_i2cp_port">I2CP port</string>
-    <string name="settings_label_appearance">Appearance</string>
-    <string name="settings_label_language">Language</string>
-    <string name="settings_default">Default</string>
     <string name="pref_title_change_password">Change password</string>
     <string name="old_password">Old password</string>
     <string name="new_password">New password</string>

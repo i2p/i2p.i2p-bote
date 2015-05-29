@@ -53,16 +53,5 @@
             android:summary="@string/pref_summ_maxDelay"
             android:title="@string/pref_title_maxDelay" />
     </PreferenceCategory>
-    <PreferenceCategory
-        android:key="i2pCategory"
-        android:title="I2P" >
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:disableDependentsState="true"
-            android:key="i2pbote.router.auto"
-            android:summaryOff="@string/manual"
-            android:summaryOn="@string/auto"
-            android:title="@string/router_settings" />
-    </PreferenceCategory>
 
 </PreferenceScreen>

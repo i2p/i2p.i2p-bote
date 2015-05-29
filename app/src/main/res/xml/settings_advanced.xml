@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="i2pCategory"
+        android:title="I2P" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:disableDependentsState="true"
+            android:key="i2pbote.router.auto"
+            android:summaryOff="@string/manual"
+            android:summaryOn="@string/auto"
+            android:title="@string/router_settings" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

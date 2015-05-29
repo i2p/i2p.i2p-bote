@@ -12,4 +12,7 @@
     <Preference
         android:key="preference_category_appearance"
         android:title="@string/settings_label_appearance" />
+    <Preference
+        android:key="preference_category_advanced"
+        android:title="@string/settings_label_advanced" />
 </PreferenceScreen>
