@@ -4,14 +4,17 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 
 import net.i2p.android.router.service.IRouterState;
 import net.i2p.android.router.service.IRouterStateCallback;
@@ -35,6 +38,7 @@ import i2p.bote.android.R;
 import i2p.bote.android.ViewEmailActivity;
 import i2p.bote.android.service.Init.RouterChoice;
 import i2p.bote.android.util.BoteHelper;
+import i2p.bote.android.util.LocaleManager;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
@@ -43,12 +47,32 @@ import i2p.bote.network.NetworkStatus;
 import i2p.bote.network.NetworkStatusListener;
 
 public class BoteService extends Service implements NetworkStatusListener, NewEmailListener {
+    /**
+     * The locale has just changed.
+     */
+    public static final String LOCAL_BROADCAST_LOCALE_CHANGED = "i2p.bote.android.LOCAL_BROADCAST_LOCALE_CHANGED";
+
     public static final String ROUTER_CHOICE = "router_choice";
     public static final int NOTIF_ID_SERVICE = 8073;
     public static final int NOTIF_ID_NEW_EMAIL = 80739047;
 
+    private LocaleManager localeManager = new LocaleManager();
+
     RouterChoice mRouterChoice;
     NotificationCompat.Builder mStatusBuilder;
+
+    @Override
+    public void onCreate() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(onLocaleChanged, new IntentFilter(LOCAL_BROADCAST_LOCALE_CHANGED));
+    }
+
+    private BroadcastReceiver onLocaleChanged = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            localeManager.updateServiceLocale(BoteService.this);
+            networkStatusChanged();
+        }
+    };
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -103,6 +127,8 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
             unbindService(mStateConnection);
         }
         mTriedBindState = false;
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(onLocaleChanged);
 
         I2PBote.getInstance().removeNetworkStatusListener(this);
         I2PBote.getInstance().removeNewEmailListener(this);

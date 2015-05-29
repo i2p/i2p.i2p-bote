@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.preference.PreferenceFragment;
 import android.support.v7.widget.Toolbar;
 
@@ -13,6 +14,7 @@ import i2p.bote.android.BoteActivityBase;
 import i2p.bote.android.EmailListActivity;
 import i2p.bote.android.R;
 import i2p.bote.android.identities.IdentityListActivity;
+import i2p.bote.android.service.BoteService;
 
 public class SettingsActivity extends BoteActivityBase implements
         SharedPreferences.OnSharedPreferenceChangeListener {
@@ -67,6 +69,8 @@ public class SettingsActivity extends BoteActivityBase implements
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("pref_language")) {
             notifyLocaleChanged();
+            Intent intent = new Intent(BoteService.LOCAL_BROADCAST_LOCALE_CHANGED);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
     }
 
