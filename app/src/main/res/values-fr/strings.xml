@@ -165,8 +165,6 @@
   <string name="also_check_i2p_android">Si cela ne vous aide pas, assurez-vous que I2P est en marche. Vous pouvez voir le statut actuel d\'I2P dans le tiroir de notification, ou en ouvrant l\'app I2P. Si cela ne marche pas correctement, redémarrez I2P (dans l\'app, cliquez \"Arrêter\", puis cliquez \"Démarrer\" quand il apparaît). Attendez que I2P soit complètement en marche, puis démarrez Bote.</string>
   <string name="bote_connection_error">Erreur de connexion Bote</string>
   <string name="full_error_copied_to_clipboard">L\'erreur entière a été copiée dans le presse-papiers</string>
-  <string name="pref_title_general">Général</string>
-  <string name="pref_summ_general">Paramètres généraux et paramètres d\'identité prédéfinie</string>
   <string name="pref_title_autoMail">Auto-chercher le courrier</string>
   <string name="pref_title_checkInterval">Intervalle de recherche</string>
   <string name="pref_summ_checkInterval">%s minutes</string>

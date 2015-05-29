@@ -73,6 +73,7 @@
   <string name="compose">Compune</string>
   <string name="subject">Subiect</string>
   <string name="compose_email">Compune email</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
   <string name="add_one_recipient">Adăugați cel puțin un destinatar.</string>
   <string name="all_changes_will_be_discarded">Toate modificările vor fi eliminate.</string>
   <!--Used in email replies above quoted text, like "Bob wrote:"-->
@@ -93,7 +94,6 @@
   <string name="not_set">Ne configurat</string>
   <string name="relay_peers">Parteneri releu:</string>
   <string name="banned_peers">Parteneri interziși:</string>
-  <string name="pref_title_general">General</string>
   <string name="pref_summ_checkInterval">%s minute</string>
   <string name="pref_summ_minDelay">%s minute</string>
   <string name="pref_summ_maxDelay">%s minute</string>
@@ -130,4 +130,6 @@
   <string name="no_identities_found_maybe_encrypted">Nu s-au găsit identități. Fișierul este criptat?</string>
   <string name="identities_imported">Identități importate</string>
   <string name="this_field_is_required">Acest câmp este necesar</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <!--Software libraries-->
 </resources>

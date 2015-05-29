@@ -49,6 +49,7 @@
   <plurals name="incomplete_emails">
     <item quantity="one">Одно незаконченное письмо</item>
     <item quantity="few">%d незаконченных письма</item>
+    <item quantity="many">%d незаконченных писем</item>
     <item quantity="other">%d незаконченных писем</item>
   </plurals>
   <!--Argument is a number-->
@@ -82,6 +83,7 @@
   <plurals name="n_new_emails">
     <item quantity="one">Одно новое письмо</item>
     <item quantity="few">%d новых письма</item>
+    <item quantity="many">%d новых писем</item>
     <item quantity="other">%d новых писем</item>
   </plurals>
   <string name="queued">В очереди</string>
@@ -168,8 +170,6 @@
 Если есть проблемы, то перезапустите I2P (в приложении нажмите \"Остановить\", а затем нажмите, когда появится, \"Запустить\"). Подождите, пока I2P полностью запустится, и затем запустите Bote.</string>
   <string name="bote_connection_error">Ошибка соединения </string>
   <string name="full_error_copied_to_clipboard">Полный текст ошибки скопирован в буфер</string>
-  <string name="pref_title_general">Общие</string>
-  <string name="pref_summ_general">Общие настройки и настройки идентификатора по умолчанию</string>
   <string name="pref_title_autoMail">Автоматическая проверка почты</string>
   <string name="pref_title_checkInterval">Интервал проверки</string>
   <string name="pref_summ_checkInterval">%s мин.</string>
@@ -186,6 +186,7 @@
   <plurals name="pref_summ_numHops">
     <item quantity="one">%s ретранслятор</item>
     <item quantity="few">%s ретранслятора</item>
+    <item quantity="many">%s ретрансляторов</item>
     <item quantity="other">%s ретрансляторов</item>
   </plurals>
   <string name="pref_title_minDelay">Минимальная задержка при каждом прыжке</string>

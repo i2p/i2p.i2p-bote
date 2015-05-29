@@ -165,8 +165,6 @@
   <string name="also_check_i2p_android">Als dat niet helpt, controleer dan of I2P draait. Je kan de huidige status van I2P zien in de meldingslade, of door de I2P-app te openen. Als het niet correct draait, herstart dan I2P (klik op \"Stop\" en vervolgens op \"Start\" in de app). Wacht tot I2P volledig draait, en start dan Bote.</string>
   <string name="bote_connection_error">Bote verbindingsfout</string>
   <string name="full_error_copied_to_clipboard">Volledige fout gekopieerd naar klembord</string>
-  <string name="pref_title_general">Algemeen</string>
-  <string name="pref_summ_general">Algemene instellingen en standaard identiteitsinstellingen</string>
   <string name="pref_title_autoMail">Automatisch controleren op mail</string>
   <string name="pref_title_checkInterval">Controle-interval</string>
   <string name="pref_summ_checkInterval">%s minuten</string>

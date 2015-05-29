@@ -163,8 +163,6 @@
   <string name="also_check_i2p_android">如果这没有效果，请检查 I2P 是否正在运行。您可以在通知抽屉中看到 I2P 的连接状态，或者打开 I2P 应用查看也可以。如果它并未正常运行，重启 I2P（在应用中点击“停止”，然后等待并点击“开始”）。等待 I2P 完全运行，然后启动 Bote。</string>
   <string name="bote_connection_error">Bote 连接出错</string>
   <string name="full_error_copied_to_clipboard">完整的错误信息已复制到剪贴板</string>
-  <string name="pref_title_general">常规</string>
-  <string name="pref_summ_general">常规设置和默认身份设置</string>
   <string name="pref_title_autoMail">自动检查邮件</string>
   <string name="pref_title_checkInterval">检查间隔</string>
   <string name="pref_summ_checkInterval">%s 分钟</string>

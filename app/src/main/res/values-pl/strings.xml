@@ -118,6 +118,7 @@
   <string name="compose">Utwórz</string>
   <string name="subject">Temat</string>
   <string name="compose_email">Napisz email</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
   <string name="add_one_recipient">Dodaj przynajmniej jednego odbiorcę.</string>
   <string name="stop_composing_email">Zatrzymać tworzenie emaila?</string>
   <string name="all_changes_will_be_discarded">Wszystkie zmiany zostaną odrzucone.</string>
@@ -165,8 +166,6 @@
   <string name="also_check_i2p_android">Jeśli to nie pomoże, sprawdź czy I2P jest włączone. Możesz sprawdzić status I2P w szufladzie notyfikacji, lub poprzez otwarcie aplikacji I2P. Jeśli nie działa ono poprawnie, to zrestartuj I2P (w aplikacji kliknij \"Stop\", a następnie kliknij \"Start\" kiedy się pojawi). Poczekaj aż I2P będzie w pełni uruchomione i wtedy uruchom Bote.</string>
   <string name="bote_connection_error">Błąd połączenia Bote</string>
   <string name="full_error_copied_to_clipboard">Cały błąd został skopiowany do schowka</string>
-  <string name="pref_title_general">Generalne</string>
-  <string name="pref_summ_general">Ustawienia generalne i ustawienia domyślne tożsamości</string>
   <string name="pref_title_autoMail">Auto-Sprawdź czy są nowe e-maile</string>
   <string name="pref_title_checkInterval">Czas sprawdzania</string>
   <string name="pref_summ_checkInterval">%s minut</string>
@@ -227,4 +226,6 @@
   <string name="this_field_is_required">Te pole jest wymagane</string>
   <string name="bote_dest_for">Adres Bote dla %s</string>
   <string name="copied_to_clipboard">Skopiowano do schowka</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <!--Software libraries-->
 </resources>

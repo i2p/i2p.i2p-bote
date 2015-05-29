@@ -165,8 +165,6 @@
   <string name="also_check_i2p_android">Wenn das nicht hilft, überprüfen sie, ob I2P läuft. Sie können den gegenwärtigen Status von I2P im notification drawer sehen oder indem Sie die I2P App öffen. Falls es nicht richtig läuft, starten Sie I2P neu (in der App \"Stop\" klicken und dann \"Start\" wenn es erscheint). Warten Sie, bis I2P vollständig läuft, dann starten Sie Bote.</string>
   <string name="bote_connection_error">Bote-Verbindungsfehler</string>
   <string name="full_error_copied_to_clipboard">Vollständiger Fehler in die Zwischenablage kopiert</string>
-  <string name="pref_title_general">Allgemein</string>
-  <string name="pref_summ_general">Allgemeine Einstellungen und Standard-Identitätseinstellungen</string>
   <string name="pref_title_autoMail">Automatisch auf neue E-Mails prüfen</string>
   <string name="pref_title_checkInterval">Abrufintervall</string>
   <string name="pref_summ_checkInterval">%s Minuten</string>

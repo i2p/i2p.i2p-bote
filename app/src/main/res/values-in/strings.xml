@@ -20,7 +20,6 @@
   <string name="please_finish_setup">Silahkan menyelesaikan pengaturan Bote.</string>
   <string name="skip">Lewati</string>
   <string name="set_password">Setel kata sandi</string>
-  <string name="setup_set_password_1">Anda dapat menyetel kata sandi untuk Bote. Hal ini akan mencegah pengguna lain membaca email Anda, dan akan mengenkripsi semua file pada disk.</string>
   <string name="setup_set_password_2">Jika Anda menyetela kata sandi, pemeriksaan email otomatis akan dinonaktifkan. Anda dapat memeriksan email secara manual ketika Anda telah mengontentikasikan dengan menarik kebawah pada Kotak masuk.</string>
   <string name="setup_set_password_3">Jika Anda tidak ingin menyetel kata sandi sekarang, Anda dapat melakukannya nanti dari menu Pengaturan.</string>
   <string name="create_identity">Membuat identitas</string>
@@ -96,6 +95,7 @@
   <string name="compose">Buat baru</string>
   <string name="subject">Subyek</string>
   <string name="compose_email">Membuat email</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
   <string name="add_one_recipient">Tambahkan minimal satu penerima.</string>
   <string name="email_queued_for_sending">Email diantrikan untuk dikirm</string>
   <string name="subject_prefix_fwd">Fwd:</string>
@@ -124,8 +124,6 @@
   <string name="not_set">Belum disetel</string>
   <string name="relay_peers">Relay Peers:</string>
   <string name="banned_peers">Banned Peers:</string>
-  <string name="pref_title_general">Umum</string>
-  <string name="pref_summ_general">Pengaturan umum dan pengaturan identitas default</string>
   <string name="pref_title_autoMail">Oto-memeriksa surat</string>
   <string name="pref_title_checkInterval">Interval pemeriksaan</string>
   <string name="pref_summ_checkInterval">%s menit</string>
@@ -175,4 +173,6 @@
   <string name="no_identities_found">Tidak ada identitas yang ditemukan.</string>
   <string name="no_identities_found_maybe_encrypted">Tidak ada identitas yang ditemukan. Apakah file ini dienkripsi?</string>
   <string name="identities_imported">Identitas diimpor</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <!--Software libraries-->
 </resources>

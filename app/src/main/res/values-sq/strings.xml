@@ -20,7 +20,6 @@
   <string name="please_finish_setup">Ju lutem përfundoni të vendosni Bote\'në. </string>
   <string name="skip">Anashkalo/kapërce</string>
   <string name="set_password">Fute fjalëkalimin</string>
-  <string name="setup_set_password_1">Mund të krijosh një fjalëkalim për Bote. Kjo do të pamundësonte potencialin e përgjimit të e-postëve tuaj nga përdorësit tjerë, dhe do te inkriptonte të gjitha filet on-disk (në disk).</string>
   <string name="setup_set_password_2">Nëse e krijoni fjalëkalimin, kontrollimi automatik i e-posteve do të ndalet. Mundeni manualisht të shikoni e-postet pasi që të jeni autentikuar duke e tërhequr poshtë Inbox\'in. </string>
   <string name="setup_set_password_3">Nëse nuk krijoni fjalëkalim menjëherë, mund ta bëni më vonë nga Cilësimet, </string>
   <string name="create_identity">Krijo identitet </string>
@@ -97,6 +96,7 @@
   <string name="compose">Krijo</string>
   <string name="subject">Tema</string>
   <string name="compose_email">Krijo e-postin</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
   <string name="add_one_recipient">Prano të paktën një marrës. </string>
   <string name="email_queued_for_sending">E-posti i radhitur për dërgim</string>
   <string name="subject_prefix_fwd">Fwd:</string>
@@ -125,8 +125,6 @@
   <string name="not_set">E pakryer. </string>
   <string name="relay_peers">Peersët ritransmetues:</string>
   <string name="banned_peers">Peers\'ët e dëbuar:</string>
-  <string name="pref_title_general">Të përgjithshme</string>
-  <string name="pref_summ_general">Cilësimet e përgjithshme dhe cilësimet e identitetit rëndom. </string>
   <string name="pref_title_autoMail">Auto-shiko postën</string>
   <string name="pref_title_checkInterval">Vëzhgoj intervalet</string>
   <string name="pref_summ_checkInterval">%s minuta</string>
@@ -175,4 +173,6 @@
   <string name="no_identities_found">Asnjë identitet nuk u gjet.</string>
   <string name="no_identities_found_maybe_encrypted">Asnjë identitet nuk u gjet. A është fili i inkriptuar?</string>
   <string name="identities_imported">Identitete u importuan</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <!--Software libraries-->
 </resources>
