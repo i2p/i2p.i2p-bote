@@ -65,8 +65,6 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
     }
 
     private void setupGeneralSettings() {
-        addPreferencesFromResource(R.xml.settings_general);
-
         ListPreference numSendHops = (ListPreference) findPreference("numSendHops");
         int value = Integer.valueOf(numSendHops.getValue());
         numSendHops.setSummary(getResources().getQuantityString(R.plurals.pref_summ_numHops,
