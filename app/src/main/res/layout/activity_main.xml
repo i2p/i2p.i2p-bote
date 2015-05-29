@@ -78,7 +78,7 @@
                     android:paddingRight="@dimen/nav_horizontal_margin"
                     android:paddingStart="@dimen/listitem_text_left_margin"
                     android:text="@string/address_book"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Primary" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.NavDrawer" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -108,7 +108,7 @@
                     android:paddingRight="@dimen/nav_horizontal_margin"
                     android:paddingStart="@dimen/listitem_text_left_margin"
                     android:text="@string/network_status"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Primary" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.NavDrawer" />
             </RelativeLayout>
 
         </LinearLayout>

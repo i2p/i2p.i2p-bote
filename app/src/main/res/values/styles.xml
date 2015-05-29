@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Base" />
+    <style name="Base"/>
 
     <style name="Theme.Bote" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Here we setting appcompat’s actionBarStyle -->
@@ -41,9 +41,7 @@
         <item name="android:textSize">@dimen/text_size_secondary</item>
     </style>
 
-    <style name="TextAppearance.AppCompat.NavDrawer" parent="Base.TextAppearance.AppCompat.NavDrawer">
-        <item name="android:textStyle">bold</item>
-    </style>
+    <style name="TextAppearance.AppCompat.NavDrawer" parent="Base.TextAppearance.AppCompat.NavDrawer"/>
 
     <style name="TextAppearance.AppCompat.NavDrawer.Selected" parent="TextAppearance.AppCompat.NavDrawer">
         <item name="android:textColor">@color/primary</item>
