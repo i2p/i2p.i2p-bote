@@ -19,6 +19,7 @@ public class SetPasswordActivity extends BoteActivityBase implements
         setSupportActionBar(toolbar);
 
         // Enable ActionBar app icon to behave as action to go back
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

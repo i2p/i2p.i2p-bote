@@ -37,6 +37,7 @@ public class SettingsActivity extends BoteActivityBase implements
         // Set the action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Fragment fragment;
@@ -98,6 +99,7 @@ public class SettingsActivity extends BoteActivityBase implements
         @Override
         public void onResume() {
             super.onResume();
+            //noinspection ConstantConditions
             ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.action_settings);
         }
 

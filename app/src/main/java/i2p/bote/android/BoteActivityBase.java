@@ -1,10 +1,12 @@
 package i2p.bote.android;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import i2p.bote.android.util.LocaleManager;
 
+@SuppressLint("Registered")
 public class BoteActivityBase extends AppCompatActivity {
     private final LocaleManager localeManager = new LocaleManager();
 

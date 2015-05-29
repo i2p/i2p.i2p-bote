@@ -17,10 +17,6 @@
 
 package org.sufficientlysecure.htmltextview;
 
-import java.util.Vector;
-
-import org.xml.sax.XMLReader;
-
 import android.text.Editable;
 import android.text.Html;
 import android.text.Layout;
@@ -31,12 +27,16 @@ import android.text.style.LeadingMarginSpan;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
 
+import org.xml.sax.XMLReader;
+
+import java.util.Vector;
+
 /**
  * Some parts of this code are based on android.text.Html
  */
 public class HtmlTagHandler implements Html.TagHandler {
     private int mListItemCount = 0;
-    private Vector<String> mListParents = new Vector<String>();
+    private Vector<String> mListParents = new Vector<>();
 
     private static class Code {
     }
