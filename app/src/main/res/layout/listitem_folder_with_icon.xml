@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/listitem_background">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/listitem_background">
 
     <ImageView
         android:id="@+id/folder_icon"
@@ -21,7 +22,7 @@
         android:paddingLeft="@dimen/listitem_text_left_margin"
         android:paddingRight="@dimen/nav_horizontal_margin"
         android:paddingStart="@dimen/listitem_text_left_margin"
-        android:text="Folder Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Primary" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Primary"
+        tools:text="Folder Name"/>
 
 </RelativeLayout>
