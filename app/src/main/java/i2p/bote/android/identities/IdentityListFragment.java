@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.zxing.integration.android.IntentIntegrator;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ import java.util.Collection;
 
 import i2p.bote.I2PBote;
 import i2p.bote.android.R;
-import i2p.bote.android.addressbook.EditContactActivity;
 import i2p.bote.android.util.AuthenticatedFragment;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.widget.DividerItemDecoration;
@@ -34,13 +32,14 @@ import i2p.bote.fileencryption.PasswordException;
 
 public class IdentityListFragment extends AuthenticatedFragment implements
         LoaderManager.LoaderCallbacks<Collection<EmailIdentity>> {
-    IdentityListListener mCallback;
+    OnIdentitySelectedListener mCallback;
     private LoadingRecyclerView mIdentitiesList;
     private IdentityAdapter mAdapter;
 
+    private View mNewIdentity;
+
     // Container Activity must implement this interface
-    public interface IdentityListListener {
-        void onNewIdentity();
+    public interface OnIdentitySelectedListener {
         void onIdentitySelected(EmailIdentity identity);
     }
 
@@ -51,7 +50,7 @@ public class IdentityListFragment extends AuthenticatedFragment implements
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mCallback = (IdentityListListener) activity;
+            mCallback = (OnIdentitySelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnIdentitySelectedListener");
@@ -74,6 +73,14 @@ public class IdentityListFragment extends AuthenticatedFragment implements
         View empty = v.findViewById(R.id.empty);
         ProgressWheel loading = (ProgressWheel) v.findViewById(R.id.loading);
         mIdentitiesList.setLoadingView(empty, loading);
+
+        mNewIdentity = v.findViewById(R.id.action_new_identity);
+        mNewIdentity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNewIdentity();
+            }
+        });
 
         return v;
     }
@@ -119,6 +126,7 @@ public class IdentityListFragment extends AuthenticatedFragment implements
         boolean passwordRequired = I2PBote.getInstance().isPasswordRequired();
         menu.findItem(R.id.export_identities).setVisible(!passwordRequired);
         menu.findItem(R.id.import_identities).setVisible(!passwordRequired);
+        mNewIdentity.setVisibility(passwordRequired ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -139,17 +147,12 @@ public class IdentityListFragment extends AuthenticatedFragment implements
         }
     }
 
-    private void startNewContact() {
-        Intent nci = new Intent(getActivity(), EditContactActivity.class);
-        getActivity().startActivityForResult(nci, IdentityListActivity.ALTER_IDENTITY_LIST);
+    private void startNewIdentity() {
+        Intent nii = new Intent(getActivity(), EditIdentityActivity.class);
+        getActivity().startActivityForResult(nii, IdentityListActivity.ALTER_IDENTITY_LIST);
     }
 
-    private void startScanQrCode() {
-        IntentIntegrator integrator = new IntentIntegrator(getActivity());
-        integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
-    }
-
-    protected void updateContactList() {
+    protected void updateIdentityList() {
         getLoaderManager().restartLoader(0, null, this);
     }
 

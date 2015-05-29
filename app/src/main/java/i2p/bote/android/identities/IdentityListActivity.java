@@ -10,7 +10,7 @@ import i2p.bote.android.R;
 import i2p.bote.email.EmailIdentity;
 
 public class IdentityListActivity extends BoteActivityBase implements
-        IdentityListFragment.IdentityListListener {
+        IdentityListFragment.OnIdentitySelectedListener {
     static final int ALTER_IDENTITY_LIST = 1;
 
     @Override
@@ -33,12 +33,6 @@ public class IdentityListActivity extends BoteActivityBase implements
     }
 
     @Override
-    public void onNewIdentity() {
-        Intent i = new Intent(this, EditIdentityActivity.class);
-        startActivityForResult(i, ALTER_IDENTITY_LIST);
-    }
-
-    @Override
     public void onIdentitySelected(EmailIdentity identity) {
         Intent i = new Intent(this, ViewIdentityActivity.class);
         i.putExtra(ViewIdentityFragment.ADDRESS, identity.getKey());
@@ -50,7 +44,7 @@ public class IdentityListActivity extends BoteActivityBase implements
         if (requestCode == ALTER_IDENTITY_LIST) {
             if (resultCode == Activity.RESULT_OK) {
                 IdentityListFragment f = (IdentityListFragment) getSupportFragmentManager().findFragmentById(R.id.container);
-                f.updateContactList();
+                f.updateIdentityList();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

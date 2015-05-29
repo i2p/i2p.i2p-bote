@@ -19,7 +19,7 @@ import i2p.bote.email.EmailIdentity;
 public class IdentityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mCtx;
     private List<EmailIdentity> mIdentities;
-    private IdentityListFragment.IdentityListListener mListener;
+    private IdentityListFragment.OnIdentitySelectedListener mListener;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         public SimpleViewHolder(View itemView) {
@@ -38,7 +38,7 @@ public class IdentityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public IdentityAdapter(Context context, IdentityListFragment.IdentityListListener listener) {
+    public IdentityAdapter(Context context, IdentityListFragment.OnIdentitySelectedListener listener) {
         mCtx = context;
         mListener = listener;
         setHasStableIds(true);
@@ -56,8 +56,8 @@ public class IdentityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0)
-            return R.layout.listitem_text;
+        if (mIdentities == null || mIdentities.isEmpty())
+            return R.layout.listitem_empty;
 
         return R.layout.listitem_identity;
     }
@@ -80,20 +80,14 @@ public class IdentityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
-            case R.layout.listitem_text:
+            case R.layout.listitem_empty:
                 ((TextView) holder.itemView).setText(
-                        mCtx.getResources().getString(R.string.new_identity));
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mListener.onNewIdentity();
-                    }
-                });
+                        mCtx.getResources().getString(R.string.no_identities));
                 break;
 
             case R.layout.listitem_identity:
                 final IdentityViewHolder cvh = (IdentityViewHolder) holder;
-                EmailIdentity identity = mIdentities.get(position - 1);
+                EmailIdentity identity = mIdentities.get(position);
 
                 String pic = identity.getPictureBase64();
                 if (pic != null && !pic.isEmpty())
@@ -108,7 +102,7 @@ public class IdentityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 cvh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mListener.onIdentitySelected(mIdentities.get(cvh.getAdapterPosition() - 1));
+                        mListener.onIdentitySelected(mIdentities.get(cvh.getAdapterPosition()));
                     }
                 });
                 break;
@@ -121,14 +115,17 @@ public class IdentityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     // Return the size of the dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mIdentities.size() + 1;
+        if (mIdentities == null || mIdentities.isEmpty())
+            return 1;
+
+        return mIdentities.size();
     }
 
     public long getItemId(int position) {
-        if (position == 0)
+        if (mIdentities == null || mIdentities.isEmpty())
             return 0;
 
-        EmailIdentity identity = mIdentities.get(position - 1);
+        EmailIdentity identity = mIdentities.get(position);
         return identity.getHash().hashCode();
     }
 }
