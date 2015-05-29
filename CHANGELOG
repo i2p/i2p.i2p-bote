@@ -1,4 +1,8 @@
 0.5.1
+ * Language can be configured
+ * Block screenshots by default
+ * Fixed internal router
+ * Reorganized settings
  * UI improvements, bug fixes, translation updates
 
 0.5 / 2015-01-13 / f5eaab42b6faa25450b2772315c7849f1eb4a03a
