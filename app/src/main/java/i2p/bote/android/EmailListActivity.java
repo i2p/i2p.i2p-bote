@@ -443,7 +443,7 @@ public class EmailListActivity extends BoteActivityBase implements
                 profiles.add(new ProfileDrawerItem()
                         .withIdentifier(ID_ALL_MAIL)
                         .withTag(null)
-                        .withName(getContext().getString(R.string.all_mail))
+                        .withEmail(getContext().getString(R.string.all_mail))
                         .withIcon(getContext().getResources().getDrawable(R.drawable.ic_contact_picture))
                 );
                 for (EmailIdentity identity : identities) {
@@ -464,8 +464,8 @@ public class EmailListActivity extends BoteActivityBase implements
             return new ProfileDrawerItem()
                     .withIdentifier(identity.hashCode())
                     .withTag(identity)
-                    .withName(identity.getPublicName())
-                    .withEmail(identity.getDescription())
+                    .withName(identity.getDescription())
+                    .withEmail(identity.getPublicName() + " <" + identity.getKey().substring(0, 4) + ">")
                     .withIcon(BoteHelper.getIdentityPicture(identity, identiconSize, identiconSize));
         }
 
