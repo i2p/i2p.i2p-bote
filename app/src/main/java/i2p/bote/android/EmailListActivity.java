@@ -528,7 +528,7 @@ public class EmailListActivity extends BoteActivityBase implements
                     .withTag(folder)
                     .withIconTintingEnabled(true)
                     .withSelectedIconColorRes(R.color.primary)
-                    .withIcon(BoteHelper.getFolderIcon(getContext(), folder))
+                    .withIcon(BoteHelper.getFolderIcon(folder))
                     .withName(BoteHelper.getFolderDisplayName(getContext(), folder));
 
             try {
