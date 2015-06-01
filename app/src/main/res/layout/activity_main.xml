@@ -1,117 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EmailListActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".EmailListActivity">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/main_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-        <!-- The mail list view -->
-        <FrameLayout
-            android:id="@+id/list_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-    <!-- The navigation drawer -->
-    <RelativeLayout
-        android:id="@+id/drawer_outer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/background_floating_material_light">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/drawer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/fixed_actions"
-            android:layout_alignParentTop="true"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp" />
-
-        <LinearLayout
-            android:id="@+id/fixed_actions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/address_book"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/listitem_background">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingEnd="@dimen/nav_horizontal_margin"
-                    android:paddingLeft="@dimen/listitem_horizontal_margin"
-                    android:paddingRight="@dimen/nav_horizontal_margin"
-                    android:paddingStart="@dimen/listitem_horizontal_margin"
-                    android:src="@drawable/ic_contacts_grey600_24dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/nav_entry_height"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="@dimen/nav_horizontal_margin"
-                    android:paddingLeft="@dimen/listitem_text_left_margin"
-                    android:paddingRight="@dimen/nav_horizontal_margin"
-                    android:paddingStart="@dimen/listitem_text_left_margin"
-                    android:text="@string/address_book"
-                    android:textAppearance="@style/TextAppearance.AppCompat.NavDrawer" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/network_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/listitem_background">
-
-                <ImageView
-                    android:id="@+id/network_status_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingEnd="@dimen/nav_horizontal_margin"
-                    android:paddingLeft="@dimen/nav_horizontal_margin"
-                    android:paddingRight="@dimen/nav_horizontal_margin"
-                    android:paddingStart="@dimen/nav_horizontal_margin"
-                    android:src="@drawable/ic_cloud_off_grey600_24dp" />
-
-                <TextView
-                    android:id="@+id/network_status_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/nav_entry_height"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="@dimen/nav_horizontal_margin"
-                    android:paddingLeft="@dimen/listitem_text_left_margin"
-                    android:paddingRight="@dimen/nav_horizontal_margin"
-                    android:paddingStart="@dimen/listitem_text_left_margin"
-                    android:text="@string/network_status"
-                    android:textAppearance="@style/TextAppearance.AppCompat.NavDrawer" />
-            </RelativeLayout>
-
-        </LinearLayout>
-    </RelativeLayout>
-
-</android.support.v4.widget.DrawerLayout>
+    <!-- The mail list view -->
+    <FrameLayout
+        android:id="@+id/list_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

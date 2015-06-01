@@ -3,7 +3,7 @@
 
     <style name="Base"/>
 
-    <style name="Theme.Bote" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Bote" parent="MaterialDrawerTheme.Light.DarkToolbar">
         <!-- Here we setting appcompat’s actionBarStyle -->
         <!--<item name="actionBarStyle">@style/MyActionBarStyle</item>-->
 
