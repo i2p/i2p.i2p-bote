@@ -67,6 +67,7 @@
     <string name="checking_password">Checking password…</string>
     <string name="password_incorrect">Password was incorrect</string>
     <string name="password_file_error">Could not read password verification file</string>
+    <string name="all_mail">All mail</string>
     <string name="folder_inbox">Inbox</string>
     <string name="folder_outbox">Outbox</string>
     <string name="folder_sent">Sent</string>

@@ -80,6 +80,7 @@ public class EmailListActivity extends BoteActivityBase implements
 
     private static final int ID_ADDRESS_BOOK = 1;
     private static final int ID_NET_STATUS = 2;
+    private static final int ID_ALL_MAIL = 3;
 
     private static final int LOADER_IDENTITIES = 0;
     private static final int LOADER_DRAWER_FOLDERS = 1;
@@ -326,7 +327,8 @@ public class EmailListActivity extends BoteActivityBase implements
     private void identitySelected(IProfile profile) {
         EmailIdentity identity = (EmailIdentity) ((ProfileDrawerItem) profile).getTag();
         mSharedPrefs.edit()
-                .putString(Constants.PREF_SELECTED_IDENTITY, identity.getKey())
+                .putString(Constants.PREF_SELECTED_IDENTITY,
+                        identity == null ? null : identity.getKey())
                 .apply();
         EmailListFragment f = (EmailListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.list_fragment);
@@ -407,16 +409,14 @@ public class EmailListActivity extends BoteActivityBase implements
         public void onLoadFinished(Loader<ArrayList<IProfile>> loader, ArrayList<IProfile> data) {
             mAccountHeader.setProfiles(data);
             String selectedIdentity = mSharedPrefs.getString(Constants.PREF_SELECTED_IDENTITY, null);
-            if (selectedIdentity != null) {
-                for (IProfile profile : data) {
-                    EmailIdentity identity = (EmailIdentity) ((ProfileDrawerItem) profile).getTag();
-                    if (selectedIdentity.equals(identity.getKey())) {
-                        mAccountHeader.setActiveProfile(profile, true);
-                        break;
-                    }
+            for (IProfile profile : data) {
+                EmailIdentity identity = (EmailIdentity) ((ProfileDrawerItem) profile).getTag();
+                if ((identity == null && selectedIdentity == null) ||
+                        (identity != null && identity.getKey().equals(selectedIdentity))) {
+                    mAccountHeader.setActiveProfile(profile, true);
+                    break;
                 }
-            } else // AccountHeader selects the first one by default
-                identitySelected(data.get(0));
+            }
         }
 
         @Override
@@ -438,7 +438,14 @@ public class EmailListActivity extends BoteActivityBase implements
         public ArrayList<IProfile> loadInBackground() {
             ArrayList<IProfile> profiles = new ArrayList<>();
             try {
+                // Fetch the identities first, so we trigger any exceptions
                 Collection<EmailIdentity> identities = I2PBote.getInstance().getIdentities().getAll();
+                profiles.add(new ProfileDrawerItem()
+                        .withIdentifier(ID_ALL_MAIL)
+                        .withTag(null)
+                        .withName(getContext().getString(R.string.all_mail))
+                        .withIcon(getContext().getResources().getDrawable(R.drawable.ic_contact_picture))
+                );
                 for (EmailIdentity identity : identities) {
                     profiles.add(getIdentityDrawerItem(identity));
                 }
