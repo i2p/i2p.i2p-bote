@@ -478,16 +478,16 @@ public class EmailListActivity extends BoteActivityBase implements
         }
     }
 
-    private class DrawerFolderLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<IDrawerItem>> {
+    private class DrawerFolderLoaderCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<IDrawerItem>> {
         @Override
-        public Loader<List<IDrawerItem>> onCreateLoader(int id, Bundle args) {
+        public Loader<ArrayList<IDrawerItem>> onCreateLoader(int id, Bundle args) {
             return new DrawerFolderLoader(EmailListActivity.this, I2PBote.getInstance().getEmailFolders());
         }
 
         @Override
-        public void onLoadFinished(Loader<List<IDrawerItem>> loader, List<IDrawerItem> data) {
+        public void onLoadFinished(Loader<ArrayList<IDrawerItem>> loader, ArrayList<IDrawerItem> data) {
             if (mDrawer.getDrawerItems() == null || mDrawer.getDrawerItems().size() == 0)
-                mDrawer.setItems((ArrayList<IDrawerItem>) data);
+                mDrawer.setItems(data);
             else {
                 // Assumes that no folders have been added or removed
                 // TODO change this if necessary when user folders are implemented
@@ -498,12 +498,12 @@ public class EmailListActivity extends BoteActivityBase implements
         }
 
         @Override
-        public void onLoaderReset(Loader<List<IDrawerItem>> loader) {
+        public void onLoaderReset(Loader<ArrayList<IDrawerItem>> loader) {
             mDrawer.removeAllItems();
         }
     }
 
-    private static class DrawerFolderLoader extends BetterAsyncTaskLoader<List<IDrawerItem>> implements FolderListener {
+    private static class DrawerFolderLoader extends BetterAsyncTaskLoader<ArrayList<IDrawerItem>> implements FolderListener {
         private List<EmailFolder> mFolders;
 
         public DrawerFolderLoader(Context context, List<EmailFolder> folders) {
@@ -512,7 +512,7 @@ public class EmailListActivity extends BoteActivityBase implements
         }
 
         @Override
-        public List<IDrawerItem> loadInBackground() {
+        public ArrayList<IDrawerItem> loadInBackground() {
             ArrayList<IDrawerItem> drawerItems = new ArrayList<>();
 
             for (EmailFolder folder : mFolders) {
@@ -562,7 +562,7 @@ public class EmailListActivity extends BoteActivityBase implements
         }
 
         @Override
-        protected void releaseResources(List<IDrawerItem> data) {
+        protected void releaseResources(ArrayList<IDrawerItem> data) {
         }
 
         // FolderListener
