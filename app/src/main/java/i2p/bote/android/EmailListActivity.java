@@ -49,7 +49,6 @@ import i2p.bote.folder.FolderListener;
 import i2p.bote.network.NetworkStatusListener;
 
 public class EmailListActivity extends BoteActivityBase implements
-        LoaderManager.LoaderCallbacks<List<IDrawerItem>>,
         EmailListFragment.OnEmailSelectedListener,
         MoveToDialogFragment.MoveToDialogListener,
         PasswordCacheListener,
@@ -194,7 +193,7 @@ public class EmailListActivity extends BoteActivityBase implements
     @Override
     public void onResume() {
         super.onResume();
-        getSupportLoaderManager().initLoader(0, null, this);
+        getSupportLoaderManager().initLoader(0, null, new DrawerFolderLoaderCallbacks());
     }
 
     @Override
@@ -349,14 +348,32 @@ public class EmailListActivity extends BoteActivityBase implements
 
 
     //
-    // Interfaces
+    // Loaders
     //
 
-    // LoaderManager.LoaderCallbacks<List<IDrawerItem>>
+    private class DrawerFolderLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<IDrawerItem>> {
+        @Override
+        public Loader<List<IDrawerItem>> onCreateLoader(int id, Bundle args) {
+            return new DrawerFolderLoader(EmailListActivity.this, I2PBote.getInstance().getEmailFolders());
+        }
 
-    @Override
-    public Loader<List<IDrawerItem>> onCreateLoader(int id, Bundle args) {
-        return new DrawerFolderLoader(this, I2PBote.getInstance().getEmailFolders());
+        @Override
+        public void onLoadFinished(Loader<List<IDrawerItem>> loader, List<IDrawerItem> data) {
+            if (mDrawer.getDrawerItems() == null || mDrawer.getDrawerItems().size() == 0)
+                mDrawer.setItems((ArrayList<IDrawerItem>) data);
+            else {
+                // Assumes that no folders have been added or removed
+                // TODO change this if necessary when user folders are implemented
+                for (IDrawerItem item : data) {
+                    mDrawer.updateItem(item);
+                }
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<List<IDrawerItem>> loader) {
+            mDrawer.removeAllItems();
+        }
     }
 
     private static class DrawerFolderLoader extends BetterAsyncTaskLoader<List<IDrawerItem>> implements FolderListener {
@@ -438,23 +455,10 @@ public class EmailListActivity extends BoteActivityBase implements
         }
     }
 
-    @Override
-    public void onLoadFinished(Loader<List<IDrawerItem>> loader, List<IDrawerItem> data) {
-        if (mDrawer.getDrawerItems() == null || mDrawer.getDrawerItems().size() == 0)
-            mDrawer.setItems((ArrayList<IDrawerItem>) data);
-        else {
-            // Assumes that no folders have been added or removed
-            // TODO change this if necessary when user folders are implemented
-            for (IDrawerItem item : data) {
-                mDrawer.updateItem(item);
-            }
-        }
-    }
 
-    @Override
-    public void onLoaderReset(Loader<List<IDrawerItem>> loader) {
-        mDrawer.removeAllItems();
-    }
+    //
+    // Interfaces
+    //
 
     // FolderFragment.OnEmailSelectedListener
 
@@ -481,13 +485,13 @@ public class EmailListActivity extends BoteActivityBase implements
     @Override
     public void passwordProvided() {
         // Trigger the loader to show the drawer badges
-        getSupportLoaderManager().restartLoader(0, null, this);
+        getSupportLoaderManager().restartLoader(0, null, new DrawerFolderLoaderCallbacks());
     }
 
     @Override
     public void passwordCleared() {
         // Trigger the loader to hide the drawer badges
-        getSupportLoaderManager().restartLoader(0, null, this);
+        getSupportLoaderManager().restartLoader(0, null, new DrawerFolderLoaderCallbacks());
     }
 
     // NetworkStatusListener
