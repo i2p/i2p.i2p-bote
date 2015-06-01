@@ -29,8 +29,10 @@ import net.i2p.util.Log;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Address;
 import javax.mail.Flags.Flag;
 import javax.mail.MessagingException;
 
@@ -370,6 +372,12 @@ public class EmailListFragment extends AuthenticatedFragment implements
         }
     }
 
+    // Called by EmailListActivity.onIdentitySelected()
+
+    public void onIdentitySelected() {
+        getLoaderManager().restartLoader(EMAIL_LIST_LOADER, null, this);
+    }
+
     // Called by EmailListActivity.onFolderSelected()
 
     public void onFolderSelected(EmailFolder newFolder) {
@@ -384,26 +392,61 @@ public class EmailListFragment extends AuthenticatedFragment implements
     // LoaderManager.LoaderCallbacks<List<Email>>
 
     public Loader<List<Email>> onCreateLoader(int id, Bundle args) {
-        return new EmailListLoader(getActivity(), mFolder);
+        return new EmailListLoader(getActivity(), mFolder,
+                getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0)
+                        .getString(Constants.PREF_SELECTED_IDENTITY, null));
     }
 
     private static class EmailListLoader extends BetterAsyncTaskLoader<List<Email>> implements
             FolderListener {
         private EmailFolder mFolder;
+        private String mSelectedIdentityKey;
 
-        public EmailListLoader(Context context, EmailFolder folder) {
+        public EmailListLoader(Context context, EmailFolder folder, String selectedIdentityKey) {
             super(context);
             mFolder = folder;
+            mSelectedIdentityKey = selectedIdentityKey;
         }
 
         @Override
         public List<Email> loadInBackground() {
             List<Email> emails = null;
             try {
-                emails = BoteHelper.getEmails(mFolder, null, true);
+                List<Email> allEmails = BoteHelper.getEmails(mFolder, null, true);
+
+                if (mSelectedIdentityKey != null) {
+                    emails = new ArrayList<>();
+
+                    for (Email email : allEmails) {
+                        boolean add = false;
+                        if (BoteHelper.isSentEmail(email)) {
+                            String senderDest = BoteHelper.extractEmailDestination(email.getOneFromAddress());
+                            if (mSelectedIdentityKey.equals(senderDest))
+                                add = true;
+                        } else {
+                            for (Address recipient : email.getAllRecipients()) {
+                                String recipientDest = BoteHelper.extractEmailDestination(recipient.toString());
+                                if (mSelectedIdentityKey.equals(recipientDest)) {
+                                    add = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (add)
+                            emails.add(email);
+                    }
+                } else
+                    emails = allEmails;
             } catch (PasswordException pe) {
                 // XXX: Should not get here.
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
             return emails;
         }
 

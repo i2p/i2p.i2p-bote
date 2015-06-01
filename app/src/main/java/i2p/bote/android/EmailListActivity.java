@@ -23,12 +23,19 @@ import android.widget.AdapterView;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import net.i2p.android.ui.I2PAndroidHelper;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import i2p.bote.I2PBote;
@@ -42,6 +49,7 @@ import i2p.bote.android.service.Init.RouterChoice;
 import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.MoveToDialogFragment;
+import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordCacheListener;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
@@ -61,10 +69,10 @@ public class EmailListActivity extends BoteActivityBase implements
     /**
      * Navigation drawer variables
      */
+    private AccountHeader mAccountHeader;
     private Drawer mDrawer;
     private int mSelected;
 
-    private static final String SHARED_PREFS = "i2p.bote";
     private static final String PREF_FIRST_START = "firstStart";
 
     private static final int SHOW_INTRODUCTION = 1;
@@ -72,6 +80,9 @@ public class EmailListActivity extends BoteActivityBase implements
 
     private static final int ID_ADDRESS_BOOK = 1;
     private static final int ID_NET_STATUS = 2;
+
+    private static final int LOADER_IDENTITIES = 0;
+    private static final int LOADER_DRAWER_FOLDERS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +95,21 @@ public class EmailListActivity extends BoteActivityBase implements
 
         // Initialize variables
         mHelper = new I2PAndroidHelper(this);
-        mSharedPrefs = getSharedPreferences(SHARED_PREFS, 0);
+        mSharedPrefs = getSharedPreferences(Constants.SHARED_PREFS, 0);
+
+        mAccountHeader = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.drawer_header_background)
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        if (!currentProfile)
+                            identitySelected(profile);
+                        return false;
+                    }
+                })
+                .withSavedInstance(savedInstanceState)
+                .build();
 
         IDrawerItem addressBook = new PrimaryDrawerItem()
                 .withIdentifier(ID_ADDRESS_BOOK)
@@ -109,6 +134,7 @@ public class EmailListActivity extends BoteActivityBase implements
                 .withToolbar(toolbar)
                 .withDrawerWidthPx(drawerWidth)
                 .withShowDrawerOnFirstLaunch(true)
+                .withAccountHeader(mAccountHeader)
                 .addStickyDrawerItems(addressBook, networkStatus)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -160,6 +186,7 @@ public class EmailListActivity extends BoteActivityBase implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        mAccountHeader.saveInstanceState(outState);
         mDrawer.saveInstanceState(outState);
     }
 
@@ -193,7 +220,16 @@ public class EmailListActivity extends BoteActivityBase implements
     @Override
     public void onResume() {
         super.onResume();
-        getSupportLoaderManager().initLoader(0, null, new DrawerFolderLoaderCallbacks());
+
+        if (I2PBote.getInstance().isPasswordRequired()) {
+            // Ensure any existing data is destroyed.
+            getSupportLoaderManager().destroyLoader(LOADER_IDENTITIES);
+        } else {
+            // Password is cached, or not set.
+            getSupportLoaderManager().initLoader(LOADER_IDENTITIES, null, new IdentityLoaderCallbacks());
+        }
+
+        getSupportLoaderManager().initLoader(LOADER_DRAWER_FOLDERS, null, new DrawerFolderLoaderCallbacks());
     }
 
     @Override
@@ -287,6 +323,16 @@ public class EmailListActivity extends BoteActivityBase implements
                 .withSelectedIconColorRes(R.color.primary);
     }
 
+    private void identitySelected(IProfile profile) {
+        EmailIdentity identity = (EmailIdentity) ((ProfileDrawerItem) profile).getTag();
+        mSharedPrefs.edit()
+                .putString(Constants.PREF_SELECTED_IDENTITY, identity.getKey())
+                .apply();
+        EmailListFragment f = (EmailListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.list_fragment);
+        f.onIdentitySelected();
+    }
+
     private void drawerFolderSelected(EmailFolder folder, boolean alreadySelected) {
         if (!alreadySelected) {
             // Create the new fragment
@@ -351,6 +397,87 @@ public class EmailListActivity extends BoteActivityBase implements
     // Loaders
     //
 
+    private class IdentityLoaderCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<IProfile>> {
+        @Override
+        public Loader<ArrayList<IProfile>> onCreateLoader(int id, Bundle args) {
+            return new DrawerIdentityLoader(EmailListActivity.this);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<ArrayList<IProfile>> loader, ArrayList<IProfile> data) {
+            mAccountHeader.setProfiles(data);
+            String selectedIdentity = mSharedPrefs.getString(Constants.PREF_SELECTED_IDENTITY, null);
+            if (selectedIdentity != null) {
+                for (IProfile profile : data) {
+                    EmailIdentity identity = (EmailIdentity) ((ProfileDrawerItem) profile).getTag();
+                    if (selectedIdentity.equals(identity.getKey())) {
+                        mAccountHeader.setActiveProfile(profile, true);
+                        break;
+                    }
+                }
+            } else // AccountHeader selects the first one by default
+                identitySelected(data.get(0));
+        }
+
+        @Override
+        public void onLoaderReset(Loader<ArrayList<IProfile>> loader) {
+            mAccountHeader.clear();
+        }
+    }
+
+    private static class DrawerIdentityLoader extends BetterAsyncTaskLoader<ArrayList<IProfile>> {
+        private int identiconSize;
+
+        public DrawerIdentityLoader(Context context) {
+            super(context);
+            identiconSize = context.getResources().getDimensionPixelSize(
+                    com.mikepenz.materialdrawer.R.dimen.material_drawer_item_profile_icon);
+        }
+
+        @Override
+        public ArrayList<IProfile> loadInBackground() {
+            ArrayList<IProfile> profiles = new ArrayList<>();
+            try {
+                Collection<EmailIdentity> identities = I2PBote.getInstance().getIdentities().getAll();
+                for (EmailIdentity identity : identities) {
+                    profiles.add(getIdentityDrawerItem(identity));
+                }
+            } catch (PasswordException e) {
+                // TODO handle, but should not get here
+                e.printStackTrace();
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return profiles;
+        }
+
+        private IProfile getIdentityDrawerItem(EmailIdentity identity) {
+            return new ProfileDrawerItem()
+                    .withIdentifier(identity.hashCode())
+                    .withTag(identity)
+                    .withName(identity.getPublicName())
+                    .withEmail(identity.getDescription())
+                    .withIcon(BoteHelper.getIdentityPicture(identity, identiconSize, identiconSize));
+        }
+
+        @Override
+        protected void onStartMonitoring() {
+
+        }
+
+        @Override
+        protected void onStopMonitoring() {
+
+        }
+
+        @Override
+        protected void releaseResources(ArrayList<IProfile> data) {
+
+        }
+    }
+
     private class DrawerFolderLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<IDrawerItem>> {
         @Override
         public Loader<List<IDrawerItem>> onCreateLoader(int id, Bundle args) {
@@ -405,6 +532,7 @@ public class EmailListActivity extends BoteActivityBase implements
                     .withName(BoteHelper.getFolderDisplayName(getContext(), folder));
 
             try {
+                // TODO change this when per-identity new emails can be determined
                 int numNew = folder.getNumNewEmails();
                 if (numNew > 0)
                     item.withBadge("" + numNew);
@@ -484,14 +612,20 @@ public class EmailListActivity extends BoteActivityBase implements
 
     @Override
     public void passwordProvided() {
-        // Trigger the loader to show the drawer badges
-        getSupportLoaderManager().restartLoader(0, null, new DrawerFolderLoaderCallbacks());
+        // Password is cached, or not set.
+        getSupportLoaderManager().restartLoader(LOADER_IDENTITIES, null, new IdentityLoaderCallbacks());
+        // Trigger the drawer folder loader to show the drawer badges
+        getSupportLoaderManager().restartLoader(LOADER_DRAWER_FOLDERS, null, new DrawerFolderLoaderCallbacks());
     }
 
     @Override
     public void passwordCleared() {
-        // Trigger the loader to hide the drawer badges
-        getSupportLoaderManager().restartLoader(0, null, new DrawerFolderLoaderCallbacks());
+        if (mAccountHeader.isSelectionListShown())
+            mAccountHeader.toggleSelectionList(this);
+        // Ensure any existing data is destroyed.
+        getSupportLoaderManager().destroyLoader(LOADER_IDENTITIES);
+        // Trigger the drawer folder loader to hide the drawer badges
+        getSupportLoaderManager().restartLoader(LOADER_DRAWER_FOLDERS, null, new DrawerFolderLoaderCallbacks());
     }
 
     // NetworkStatusListener

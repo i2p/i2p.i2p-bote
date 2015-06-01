@@ -89,13 +89,8 @@ public class IdentityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 final IdentityViewHolder cvh = (IdentityViewHolder) holder;
                 EmailIdentity identity = mIdentities.get(position);
 
-                String pic = identity.getPictureBase64();
-                if (pic != null && !pic.isEmpty())
-                    cvh.mPicture.setImageBitmap(BoteHelper.decodePicture(pic));
-                else {
-                    ViewGroup.LayoutParams lp = cvh.mPicture.getLayoutParams();
-                    cvh.mPicture.setImageBitmap(BoteHelper.getIdenticonForAddress(identity.getKey(), lp.width, lp.height));
-                }
+                ViewGroup.LayoutParams lp = cvh.mPicture.getLayoutParams();
+                cvh.mPicture.setImageBitmap(BoteHelper.getIdentityPicture(identity, lp.width, lp.height));
 
                 cvh.mName.setText(identity.getPublicName());
 

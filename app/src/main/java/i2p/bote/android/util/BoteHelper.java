@@ -208,6 +208,14 @@ public class BoteHelper extends GeneralHelper {
         return bitmap;
     }
 
+    public static Bitmap getIdentityPicture(EmailIdentity identity, int identiconWidth, int identiconHeight) {
+        String pic = identity.getPictureBase64();
+        if (pic != null && !pic.isEmpty())
+            return BoteHelper.decodePicture(pic);
+        else
+            return BoteHelper.getIdenticonForAddress(identity.getKey(), identiconWidth, identiconHeight);
+    }
+
     private static final String PROPERTY_SENT = "sent";
     public static void setEmailSent(Email email, boolean isSent) {
         email.getMetadata().setProperty(PROPERTY_SENT, isSent ? "true" : "false");
