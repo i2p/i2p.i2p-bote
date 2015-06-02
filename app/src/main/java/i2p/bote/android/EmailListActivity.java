@@ -83,6 +83,7 @@ public class EmailListActivity extends BoteActivityBase implements
     private static final int ID_ADDRESS_BOOK = 1;
     private static final int ID_NET_STATUS = 2;
     private static final int ID_ALL_MAIL = 3;
+    private static final int ID_LOCKED = 4;
 
     private static final int LOADER_IDENTITIES = 0;
     private static final int LOADER_DRAWER_FOLDERS = 1;
@@ -103,10 +104,14 @@ public class EmailListActivity extends BoteActivityBase implements
         mAccountHeader = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.drawer_header_background)
+                .withSelectionListEnabledForSingleProfile(false)
+                .addProfiles(getLockedProfile())
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        if (!currentProfile)
+                        if (profile.getIdentifier() == ID_LOCKED)
+                            findViewById(R.id.action_log_in).performClick();
+                        else if (!currentProfile)
                             identitySelected(profile);
                         return false;
                     }
@@ -317,6 +322,13 @@ public class EmailListActivity extends BoteActivityBase implements
     // Helpers
     //
 
+    private IProfile getLockedProfile() {
+        return new ProfileDrawerItem()
+                .withIdentifier(ID_LOCKED)
+                .withEmail(getString(R.string.touch_lock_to_log_in))
+                .withIcon(getResources().getDrawable(R.drawable.ic_lock_white_24dp));
+    }
+
     private IDrawerItem getNetStatusItem(int nameRes, int icRes) {
         return new PrimaryDrawerItem()
                 .withIdentifier(ID_NET_STATUS)
@@ -426,6 +438,7 @@ public class EmailListActivity extends BoteActivityBase implements
         @Override
         public void onLoaderReset(Loader<ArrayList<IProfile>> loader) {
             mAccountHeader.clear();
+            mAccountHeader.addProfiles(getLockedProfile());
         }
     }
 
@@ -632,12 +645,13 @@ public class EmailListActivity extends BoteActivityBase implements
 
     @Override
     public void passwordCleared() {
-        if (mAccountHeader.isSelectionListShown())
-            mAccountHeader.toggleSelectionList(this);
         // Ensure any existing data is destroyed.
         getSupportLoaderManager().destroyLoader(LOADER_IDENTITIES);
         // Trigger the drawer folder loader to hide the drawer badges
         getSupportLoaderManager().restartLoader(LOADER_DRAWER_FOLDERS, null, new DrawerFolderLoaderCallbacks());
+        // Hide account selection list
+        if (mAccountHeader.isSelectionListShown())
+            mAccountHeader.toggleSelectionList(this);
     }
 
     // NetworkStatusListener
