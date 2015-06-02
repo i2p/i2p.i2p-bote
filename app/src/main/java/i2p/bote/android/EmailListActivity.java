@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -21,6 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.typeface.IIcon;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -122,11 +126,11 @@ public class EmailListActivity extends BoteActivityBase implements
         IDrawerItem addressBook = new PrimaryDrawerItem()
                 .withIdentifier(ID_ADDRESS_BOOK)
                 .withName(R.string.address_book)
-                .withIcon(R.drawable.ic_contacts_grey600_24dp)
+                .withIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_contacts).colorRes(R.color.md_grey_600).sizeDp(24))
                 .withIconTintingEnabled(true)
                 .withSelectedIconColorRes(R.color.primary);
         IDrawerItem networkStatus = getNetStatusItem(
-                R.string.network_status, R.drawable.ic_cloud_off_grey600_24dp);
+                R.string.network_status, GoogleMaterial.Icon.gmd_cloud_off, R.color.md_grey_600);
 
         // Set the drawer width per Material design spec
         // http://www.google.com/design/spec/layout/structure.html#structure-side-nav-1
@@ -326,14 +330,14 @@ public class EmailListActivity extends BoteActivityBase implements
         return new ProfileDrawerItem()
                 .withIdentifier(ID_LOCKED)
                 .withEmail(getString(R.string.touch_lock_to_log_in))
-                .withIcon(getResources().getDrawable(R.drawable.ic_lock_white_24dp));
+                .withIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_lock).color(Color.WHITE).sizeRes(com.mikepenz.materialdrawer.R.dimen.material_drawer_item_profile_icon));
     }
 
-    private IDrawerItem getNetStatusItem(int nameRes, int icRes) {
+    private IDrawerItem getNetStatusItem(int nameRes, IIcon icon, int iconColorRes) {
         return new PrimaryDrawerItem()
                 .withIdentifier(ID_NET_STATUS)
                 .withName(nameRes)
-                .withIcon(icRes)
+                .withIcon(new IconicsDrawable(this, icon).colorRes(iconColorRes).sizeDp(24))
                 .withIconTintingEnabled(true)
                 .withSelectedIconColorRes(R.color.primary);
     }
@@ -552,7 +556,7 @@ public class EmailListActivity extends BoteActivityBase implements
                     .withTag(folder)
                     .withIconTintingEnabled(true)
                     .withSelectedIconColorRes(R.color.primary)
-                    .withIcon(BoteHelper.getFolderIcon(folder))
+                    .withIcon(new IconicsDrawable(getContext(), BoteHelper.getFolderIcon(folder)).colorRes(R.color.md_grey_600).sizeDp(24))
                     .withName(BoteHelper.getFolderDisplayName(getContext(), folder));
 
             try {
@@ -660,34 +664,37 @@ public class EmailListActivity extends BoteActivityBase implements
     public void networkStatusChanged() {
         // Update network status
         final int statusText;
-        final int statusIcon;
+        final IIcon statusIcon;
+        int colorRes = R.color.md_grey_600;
         switch (I2PBote.getInstance().getNetworkStatus()) {
             case DELAY:
                 statusText = R.string.connect_delay;
-                statusIcon = R.drawable.ic_av_timer_grey600_24dp;
+                statusIcon = GoogleMaterial.Icon.gmd_av_timer;
                 break;
             case CONNECTING:
                 statusText = R.string.connecting;
-                statusIcon = R.drawable.ic_cloud_queue_grey600_24dp;
+                statusIcon = GoogleMaterial.Icon.gmd_cloud_queue;
                 break;
             case CONNECTED:
                 statusText = R.string.connected;
-                statusIcon = R.drawable.ic_cloud_done_grey600_24dp;
+                statusIcon = GoogleMaterial.Icon.gmd_cloud_done;
                 break;
             case ERROR:
                 statusText = R.string.error;
-                statusIcon = R.drawable.ic_error_red_24dp;
+                statusIcon = GoogleMaterial.Icon.gmd_error;
+                colorRes = R.color.red;
                 break;
             case NOT_STARTED:
             default:
                 statusText = R.string.not_started;
-                statusIcon = R.drawable.ic_cloud_off_grey600_24dp;
+                statusIcon = GoogleMaterial.Icon.gmd_cloud_off;
         }
+        final int statusIconColorRes = colorRes;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 // TODO change this when #378 is resolved
-                mDrawer.updateItem(getNetStatusItem(statusText, statusIcon));
+                mDrawer.updateItem(getNetStatusItem(statusText, statusIcon, statusIconColorRes));
             }
         });
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/listitem_height_three_lines"
     android:background="@drawable/listitem_background">
@@ -105,21 +106,23 @@
         android:layout_marginEnd="@dimen/listitem_horizontal_margin"
         android:layout_marginRight="@dimen/listitem_horizontal_margin">
 
-        <ImageView
+        <com.mikepenz.iconics.view.IconicsImageView
             android:id="@+id/email_attachment"
             android:layout_width="@dimen/listitem_icon_size"
             android:layout_height="match_parent"
             android:scaleType="fitEnd"
-            android:src="@drawable/ic_attachment_grey600_24dp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:iiv_color="@color/md_grey_600"
+            app:iiv_icon="gmd-attachment"/>
 
-        <ImageView
+        <com.mikepenz.iconics.view.IconicsImageView
             android:id="@+id/email_delivered"
             android:layout_width="@dimen/listitem_icon_size"
             android:layout_height="match_parent"
             android:scaleType="fitEnd"
-            android:src="@drawable/ic_beenhere_grey600_24dp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:iiv_color="@color/md_grey_600"
+            app:iiv_icon="gmd-beenhere"/>
     </LinearLayout>
 
 </RelativeLayout>

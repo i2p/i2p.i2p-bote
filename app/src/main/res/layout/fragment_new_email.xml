@@ -38,8 +38,7 @@
                 android:layout_width="@dimen/listitem_icon_size"
                 android:layout_height="@dimen/listitem_picture_size"
                 android:layout_gravity="center_vertical"
-                android:scaleType="center"
-                android:src="@drawable/ic_unfold_more_grey600_24dp"/>
+                android:scaleType="center"/>
         </LinearLayout>
 
         <i2p.bote.android.widget.ContactsCompletionView

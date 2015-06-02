@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.tokenautocomplete.FilteredArrayAdapter;
 
 import net.i2p.data.DataFormatException;
@@ -211,14 +213,16 @@ public class NewEmailFragment extends Fragment {
         mSpinner.setSelection(mDefaultPos);
 
         // Set up Cc/Bcc button
+        mMore.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_unfold_more).colorRes(R.color.md_grey_600).sizeDp(20));
         mMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCc.setVisibility(mMoreVisible ? View.GONE : View.VISIBLE);
                 mBcc.setVisibility(mMoreVisible ? View.GONE : View.VISIBLE);
-                mMore.setImageResource(mMoreVisible ?
-                        R.drawable.ic_unfold_more_grey600_24dp :
-                        R.drawable.ic_unfold_less_grey600_24dp);
+                mMore.setImageDrawable(new IconicsDrawable(getActivity(), mMoreVisible ?
+                        GoogleMaterial.Icon.gmd_unfold_more : GoogleMaterial.Icon.gmd_unfold_less)
+                        .colorRes(R.color.md_grey_600)
+                        .sizeDp(mMoreVisible ? 20 : 18));
                 mMoreVisible = !mMoreVisible;
             }
         });
@@ -456,7 +460,9 @@ public class NewEmailFragment extends Fragment {
             v.setTag(attachment);
             ((TextView) v.findViewById(R.id.filename)).setText(attachment.getFileName());
             ((TextView) v.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
-            v.findViewById(R.id.attachment_action).setOnClickListener(new View.OnClickListener() {
+            ImageView attachmentAction = (ImageView) v.findViewById(R.id.attachment_action);
+            attachmentAction.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_clear).colorRes(R.color.md_grey_600).sizeDp(14));
+            attachmentAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     updateAttachmentSizeCount(attachment.getSize(), false);

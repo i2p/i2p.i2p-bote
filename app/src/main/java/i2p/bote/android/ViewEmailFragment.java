@@ -19,6 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -181,7 +184,7 @@ public class ViewEmailFragment extends Fragment {
                     ((TextView) a.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
 
                     final ImageView action = (ImageView) a.findViewById(R.id.attachment_action);
-                    action.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_more_vert_grey600_24dp));
+                    action.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_more_vert).colorRes(R.color.md_grey_600).sizeDp(16));
                     action.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

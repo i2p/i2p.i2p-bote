@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="8dp"
@@ -9,10 +10,11 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <ImageView
+    <com.mikepenz.iconics.view.IconicsImageView
         android:layout_width="@dimen/listitem_icon_size"
         android:layout_height="@dimen/listitem_icon_size"
-        android:src="@drawable/ic_error_red_24dp"/>
+        app:iiv_color="@color/error_red"
+        app:iiv_icon="gmd-error"/>
 
     <TextView
         android:id="@+id/attachment_warning_text"

@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.lambdaworks.codec.Base64;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.typeface.IIcon;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -120,18 +122,18 @@ public class BoteHelper extends GeneralHelper {
         return displayName;
     }
 
-    public static int getFolderIcon(EmailFolder folder) {
+    public static IIcon getFolderIcon(EmailFolder folder) {
         String name = folder.getName();
         if ("inbox".equals(name))
-            return R.drawable.ic_inbox_grey600_24dp;
+            return GoogleMaterial.Icon.gmd_inbox;
         else if ("outbox".equals(name))
-            return R.drawable.ic_cloud_upload_grey600_24dp;
+            return GoogleMaterial.Icon.gmd_cloud_upload;
         else if ("sent".equals(name))
-            return R.drawable.ic_send_grey600_24dp;
+            return GoogleMaterial.Icon.gmd_send;
         else if ("trash".equals(name))
-            return R.drawable.ic_delete_grey600_24dp;
+            return GoogleMaterial.Icon.gmd_delete;
         else
-            return 0;
+            return null;
     }
 
     public static String getDisplayAddress(String address) throws PasswordException, IOException, GeneralSecurityException, MessagingException {
