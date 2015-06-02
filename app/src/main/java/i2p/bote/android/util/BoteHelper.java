@@ -51,6 +51,33 @@ import i2p.bote.util.GeneralHelper;
 import im.delight.android.identicons.Identicon;
 
 public class BoteHelper extends GeneralHelper {
+    public static int getNumNewEmails(Context ctx, EmailFolder folder) throws PasswordException, GeneralSecurityException, IOException, MessagingException {
+        String selectedIdentityKey = ctx.getSharedPreferences(Constants.SHARED_PREFS, 0)
+                .getString(Constants.PREF_SELECTED_IDENTITY, null);
+        if (selectedIdentityKey == null)
+            return folder.getNumNewEmails();
+
+        int numNew = 0;
+        for (Email email : BoteHelper.getEmails(folder, null, true)) {
+            if (email.getMetadata().isUnread()) {
+                if (BoteHelper.isSentEmail(email)) {
+                    String senderDest = BoteHelper.extractEmailDestination(email.getOneFromAddress());
+                    if (selectedIdentityKey.equals(senderDest))
+                        numNew++;
+                } else {
+                    for (Address recipient : email.getAllRecipients()) {
+                        String recipientDest = BoteHelper.extractEmailDestination(recipient.toString());
+                        if (selectedIdentityKey.equals(recipientDest)) {
+                            numNew++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return numNew;
+    }
+
     /**
      * Get the translated name of the folder.
      * Built-in folders are special-cased; other folders are created by the
@@ -83,10 +110,10 @@ public class BoteHelper extends GeneralHelper {
      * @return The name of the folder.
      * @throws PasswordException
      */
-    public static String getFolderDisplayNameWithNew(Context ctx, EmailFolder folder) throws PasswordException {
+    public static String getFolderDisplayNameWithNew(Context ctx, EmailFolder folder) throws PasswordException, GeneralSecurityException, IOException, MessagingException {
         String displayName = getFolderDisplayName(ctx, folder);
 
-        int numNew = folder.getNumNewEmails();
+        int numNew = getNumNewEmails(ctx, folder);
         if (numNew > 0)
             displayName = displayName + " (" + numNew + ")";
 

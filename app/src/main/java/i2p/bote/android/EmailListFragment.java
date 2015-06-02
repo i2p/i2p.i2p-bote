@@ -498,6 +498,8 @@ public class EmailListFragment extends AuthenticatedFragment implements
             Log log = I2PAppContext.getGlobalContext().logManager().getLog(EmailListFragment.class);
             if (log.shouldLog(Log.WARN))
                 log.warn("Email list loader finished, but password is no longer cached", e);
+        } catch (MessagingException | GeneralSecurityException | IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import i2p.bote.I2PBote;
 import i2p.bote.android.addressbook.AddressBookActivity;
 import i2p.bote.android.config.SettingsActivity;
@@ -330,6 +332,8 @@ public class EmailListActivity extends BoteActivityBase implements
                 .putString(Constants.PREF_SELECTED_IDENTITY,
                         identity == null ? null : identity.getKey())
                 .apply();
+        // Trigger the drawer folder loader to update the drawer badges
+        getSupportLoaderManager().restartLoader(LOADER_DRAWER_FOLDERS, null, new DrawerFolderLoaderCallbacks());
         EmailListFragment f = (EmailListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.list_fragment);
         f.onIdentitySelected();
@@ -441,10 +445,10 @@ public class EmailListActivity extends BoteActivityBase implements
                 // Fetch the identities first, so we trigger any exceptions
                 Collection<EmailIdentity> identities = I2PBote.getInstance().getIdentities().getAll();
                 profiles.add(new ProfileDrawerItem()
-                        .withIdentifier(ID_ALL_MAIL)
-                        .withTag(null)
-                        .withEmail(getContext().getString(R.string.all_mail))
-                        .withIcon(getContext().getResources().getDrawable(R.drawable.ic_contact_picture))
+                                .withIdentifier(ID_ALL_MAIL)
+                                .withTag(null)
+                                .withEmail(getContext().getString(R.string.all_mail))
+                                .withIcon(getContext().getResources().getDrawable(R.drawable.ic_contact_picture))
                 );
                 for (EmailIdentity identity : identities) {
                     profiles.add(getIdentityDrawerItem(identity));
@@ -539,12 +543,13 @@ public class EmailListActivity extends BoteActivityBase implements
                     .withName(BoteHelper.getFolderDisplayName(getContext(), folder));
 
             try {
-                // TODO change this when per-identity new emails can be determined
-                int numNew = folder.getNumNewEmails();
+                int numNew = BoteHelper.getNumNewEmails(getContext(), folder);
                 if (numNew > 0)
                     item.withBadge("" + numNew);
             } catch (PasswordException e) {
                 // Password fetching is handled in EmailListFragment
+            } catch (MessagingException | GeneralSecurityException | IOException e) {
+                e.printStackTrace();
             }
 
             return item;
