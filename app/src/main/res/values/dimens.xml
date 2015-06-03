@@ -37,4 +37,6 @@
     <dimen name="qr_code_size">200dp</dimen>
 
     <dimen name="pie_size">300dp</dimen>
+
+    <dimen name="pref_icon">30dp</dimen>
 </resources>

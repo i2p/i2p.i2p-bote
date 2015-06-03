@@ -17,4 +17,5 @@
 
     <color name="black_semi_transparent">#B2000000</color>
 
+    <color name="pref_icon">@android:color/black</color>
 </resources>

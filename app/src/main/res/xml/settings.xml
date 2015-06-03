@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <Preference
-        android:icon="@drawable/ic_settings_ethernet_black_36dp"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
+    <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_network"
-        android:title="@string/settings_label_network"/>
-    <Preference
-        android:icon="@drawable/ic_account_box_black_36dp"
+        android:title="@string/settings_label_network"
+        app:ip_color="@color/pref_icon"
+        app:ip_icon="gmd-settings-ethernet"
+        app:ip_size="@dimen/pref_icon"/>
+    <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_identities"
-        android:title="@string/pref_title_identities"/>
-    <Preference
-        android:icon="@drawable/ic_visibility_black_36dp"
+        android:title="@string/pref_title_identities"
+        app:ip_color="@color/pref_icon"
+        app:ip_icon="gmd-account-box"
+        app:ip_size="@dimen/pref_icon"/>
+    <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_privacy"
-        android:title="@string/pref_title_privacy"/>
-    <Preference
-        android:icon="@drawable/ic_lock_black_36dp"
+        android:title="@string/pref_title_privacy"
+        app:ip_color="@color/pref_icon"
+        app:ip_icon="gmd-visibility"
+        app:ip_size="@dimen/pref_icon"/>
+    <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_app_protection"
-        android:title="@string/settings_label_app_protection"/>
-    <Preference
-        android:icon="@drawable/ic_settings_display_black_36dp"
+        android:title="@string/settings_label_app_protection"
+        app:ip_color="@color/pref_icon"
+        app:ip_icon="gmd-lock"
+        app:ip_size="@dimen/pref_icon"/>
+    <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_appearance"
-        android:title="@string/settings_label_appearance"/>
-    <Preference
-        android:icon="@drawable/ic_settings_black_36dp"
+        android:title="@string/settings_label_appearance"
+        app:ip_color="@color/pref_icon"
+        app:ip_icon="gmd-settings-display"
+        app:ip_size="@dimen/pref_icon"/>
+    <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_advanced"
-        android:title="@string/settings_label_advanced"/>
+        android:title="@string/settings_label_advanced"
+        app:ip_color="@color/pref_icon"
+        app:ip_icon="gmd-settings"
+        app:ip_size="@dimen/pref_icon"/>
 </PreferenceScreen>
