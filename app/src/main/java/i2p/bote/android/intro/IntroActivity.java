@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.viewpagerindicator.LinePageIndicator;
 
 import i2p.bote.android.BoteActivityBase;
@@ -131,10 +133,19 @@ public class IntroActivity extends BoteActivityBase {
                         }
                     });
                     return v5;
+
                 default:
                     View v0 = inflater.inflate(R.layout.fragment_intro_0, container, false);
                     TextView tv = (TextView) v0.findViewById(R.id.intro_app_name);
                     tv.append(".");
+
+                    TextView swipe = (TextView) v0.findViewById(R.id.intro_swipe_to_start);
+                    swipe.setCompoundDrawablesWithIntrinsicBounds(
+                            new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_arrow_back)
+                                    .colorRes(R.color.md_grey_600).sizeDp(24).paddingDp(4),
+                            null, null, null
+                    );
+
                     return v0;
             }
         }

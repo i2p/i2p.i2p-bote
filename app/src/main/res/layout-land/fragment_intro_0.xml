@@ -64,11 +64,11 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/intro_swipe_to_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/swipe_to_start"
-        android:drawableLeft="@drawable/ic_arrow_back_grey600_24dp"
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal" />
 
