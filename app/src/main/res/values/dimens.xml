@@ -38,5 +38,5 @@
 
     <dimen name="pie_size">300dp</dimen>
 
-    <dimen name="pref_icon">30dp</dimen>
+    <dimen name="pref_icon">32dp</dimen>
 </resources>

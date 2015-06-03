@@ -6,35 +6,41 @@
         android:title="@string/settings_label_network"
         app:ip_color="@color/pref_icon"
         app:ip_icon="gmd-settings-ethernet"
+        app:ip_padding="1dp"
         app:ip_size="@dimen/pref_icon"/>
     <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_identities"
         android:title="@string/pref_title_identities"
         app:ip_color="@color/pref_icon"
         app:ip_icon="gmd-account-box"
+        app:ip_padding="4dp"
         app:ip_size="@dimen/pref_icon"/>
     <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_privacy"
         android:title="@string/pref_title_privacy"
         app:ip_color="@color/pref_icon"
         app:ip_icon="gmd-visibility"
+        app:ip_padding="1dp"
         app:ip_size="@dimen/pref_icon"/>
     <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_app_protection"
         android:title="@string/settings_label_app_protection"
         app:ip_color="@color/pref_icon"
         app:ip_icon="gmd-lock"
+        app:ip_padding="2dp"
         app:ip_size="@dimen/pref_icon"/>
     <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_appearance"
         android:title="@string/settings_label_appearance"
         app:ip_color="@color/pref_icon"
         app:ip_icon="gmd-settings-display"
+        app:ip_padding="1dp"
         app:ip_size="@dimen/pref_icon"/>
     <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_advanced"
         android:title="@string/settings_label_advanced"
         app:ip_color="@color/pref_icon"
         app:ip_icon="gmd-settings"
+        app:ip_padding="3dp"
         app:ip_size="@dimen/pref_icon"/>
 </PreferenceScreen>

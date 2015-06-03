@@ -4,6 +4,7 @@
         <attr name="ip_icon" format="string"/>
         <attr name="ip_color" format="color"/>
         <attr name="ip_size" format="dimension"/>
+        <attr name="ip_padding" format="dimension"/>
     </declare-styleable>
 
     <!-- Declare custom theme attributes that allow changing which styles are

@@ -37,6 +37,9 @@ public class IconicsPreference extends Preference {
         int size = a.getDimensionPixelSize(R.styleable.IconicsPreference_ip_size, 0);
         if (size != 0)
             icon.sizePx(size);
+        int padding = a.getDimensionPixelSize(R.styleable.IconicsPreference_ip_padding, 0);
+        if (padding != 0)
+            icon.paddingPx(padding);
 
         a.recycle();
         setIcon(icon);
