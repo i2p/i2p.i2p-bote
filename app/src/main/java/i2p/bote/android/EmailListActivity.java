@@ -130,7 +130,7 @@ public class EmailListActivity extends BoteActivityBase implements
                 .withIconTintingEnabled(true)
                 .withSelectedIconColorRes(R.color.primary);
         IDrawerItem networkStatus = getNetStatusItem(
-                R.string.network_status, GoogleMaterial.Icon.gmd_cloud_off, R.color.md_grey_600);
+                R.string.network_status, GoogleMaterial.Icon.gmd_cloud_off, R.color.md_grey_600, 0);
 
         // Set the drawer width per Material design spec
         // http://www.google.com/design/spec/layout/structure.html#structure-side-nav-1
@@ -333,11 +333,11 @@ public class EmailListActivity extends BoteActivityBase implements
                 .withIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_lock).color(Color.WHITE).sizeRes(com.mikepenz.materialdrawer.R.dimen.material_drawer_item_profile_icon));
     }
 
-    private IDrawerItem getNetStatusItem(int nameRes, IIcon icon, int iconColorRes) {
+    private IDrawerItem getNetStatusItem(int nameRes, IIcon icon, int iconColorRes, int padding) {
         return new PrimaryDrawerItem()
                 .withIdentifier(ID_NET_STATUS)
                 .withName(nameRes)
-                .withIcon(new IconicsDrawable(this, icon).colorRes(iconColorRes).sizeDp(24))
+                .withIcon(new IconicsDrawable(this, icon).colorRes(iconColorRes).sizeDp(24).paddingDp(padding))
                 .withIconTintingEnabled(true)
                 .withSelectedIconColorRes(R.color.primary);
     }
@@ -556,7 +556,7 @@ public class EmailListActivity extends BoteActivityBase implements
                     .withTag(folder)
                     .withIconTintingEnabled(true)
                     .withSelectedIconColorRes(R.color.primary)
-                    .withIcon(new IconicsDrawable(getContext(), BoteHelper.getFolderIcon(folder)).colorRes(R.color.md_grey_600).sizeDp(24))
+                    .withIcon(BoteHelper.getFolderIcon(getContext(), folder))
                     .withName(BoteHelper.getFolderDisplayName(getContext(), folder));
 
             try {
@@ -665,36 +665,45 @@ public class EmailListActivity extends BoteActivityBase implements
         // Update network status
         final int statusText;
         final IIcon statusIcon;
-        int colorRes = R.color.md_grey_600;
+        final int colorRes;
+        final int padding;
         switch (I2PBote.getInstance().getNetworkStatus()) {
             case DELAY:
                 statusText = R.string.connect_delay;
                 statusIcon = GoogleMaterial.Icon.gmd_av_timer;
+                colorRes = R.color.md_grey_600;
+                padding = 3;
                 break;
             case CONNECTING:
                 statusText = R.string.connecting;
                 statusIcon = GoogleMaterial.Icon.gmd_cloud_queue;
+                colorRes = R.color.md_grey_600;
+                padding = 0;
                 break;
             case CONNECTED:
                 statusText = R.string.connected;
                 statusIcon = GoogleMaterial.Icon.gmd_cloud_done;
+                colorRes = R.color.md_grey_600;
+                padding = 0;
                 break;
             case ERROR:
                 statusText = R.string.error;
                 statusIcon = GoogleMaterial.Icon.gmd_error;
                 colorRes = R.color.red;
+                padding = 2;
                 break;
             case NOT_STARTED:
             default:
                 statusText = R.string.not_started;
                 statusIcon = GoogleMaterial.Icon.gmd_cloud_off;
+                colorRes = R.color.md_grey_600;
+                padding = 0;
         }
-        final int statusIconColorRes = colorRes;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 // TODO change this when #378 is resolved
-                mDrawer.updateItem(getNetStatusItem(statusText, statusIcon, statusIconColorRes));
+                mDrawer.updateItem(getNetStatusItem(statusText, statusIcon, colorRes, padding));
             }
         });
     }

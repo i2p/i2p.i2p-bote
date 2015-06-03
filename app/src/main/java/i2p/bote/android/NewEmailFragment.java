@@ -213,7 +213,7 @@ public class NewEmailFragment extends Fragment {
         mSpinner.setSelection(mDefaultPos);
 
         // Set up Cc/Bcc button
-        mMore.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_unfold_more).colorRes(R.color.md_grey_600).sizeDp(20));
+        mMore.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_unfold_more).colorRes(R.color.md_grey_600).sizeDp(24).paddingDp(3));
         mMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,7 +222,8 @@ public class NewEmailFragment extends Fragment {
                 mMore.setImageDrawable(new IconicsDrawable(getActivity(), mMoreVisible ?
                         GoogleMaterial.Icon.gmd_unfold_more : GoogleMaterial.Icon.gmd_unfold_less)
                         .colorRes(R.color.md_grey_600)
-                        .sizeDp(mMoreVisible ? 20 : 18));
+                        .sizeDp(24)
+                        .paddingDp(mMoreVisible ? 3 : 4));
                 mMoreVisible = !mMoreVisible;
             }
         });
@@ -461,7 +462,7 @@ public class NewEmailFragment extends Fragment {
             ((TextView) v.findViewById(R.id.filename)).setText(attachment.getFileName());
             ((TextView) v.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
             ImageView attachmentAction = (ImageView) v.findViewById(R.id.attachment_action);
-            attachmentAction.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_clear).colorRes(R.color.md_grey_600).sizeDp(14));
+            attachmentAction.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_clear).colorRes(R.color.md_grey_600).sizeDp(24).paddingDp(5));
             attachmentAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

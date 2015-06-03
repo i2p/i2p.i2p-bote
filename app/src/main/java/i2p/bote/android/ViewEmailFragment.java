@@ -184,7 +184,7 @@ public class ViewEmailFragment extends Fragment {
                     ((TextView) a.findViewById(R.id.size)).setText(attachment.getHumanReadableSize());
 
                     final ImageView action = (ImageView) a.findViewById(R.id.attachment_action);
-                    action.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_more_vert).colorRes(R.color.md_grey_600).sizeDp(16));
+                    action.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_more_vert).colorRes(R.color.md_grey_600).sizeDp(24).paddingDp(4));
                     action.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

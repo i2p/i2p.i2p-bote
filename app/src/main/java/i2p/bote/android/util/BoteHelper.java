@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 import com.lambdaworks.codec.Base64;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.IIcon;
 
 import java.io.ByteArrayOutputStream;
@@ -122,18 +124,31 @@ public class BoteHelper extends GeneralHelper {
         return displayName;
     }
 
-    public static IIcon getFolderIcon(EmailFolder folder) {
-        String name = folder.getName();
-        if ("inbox".equals(name))
-            return GoogleMaterial.Icon.gmd_inbox;
-        else if ("outbox".equals(name))
-            return GoogleMaterial.Icon.gmd_cloud_upload;
-        else if ("sent".equals(name))
-            return GoogleMaterial.Icon.gmd_send;
-        else if ("trash".equals(name))
-            return GoogleMaterial.Icon.gmd_delete;
-        else
-            return null;
+    public static Drawable getFolderIcon(Context ctx, EmailFolder folder) {
+        IIcon icon;
+        int padding;
+        switch (folder.getName()) {
+            case "inbox":
+                icon = GoogleMaterial.Icon.gmd_inbox;
+                padding = 3;
+                break;
+            case "outbox":
+                icon = GoogleMaterial.Icon.gmd_cloud_upload;
+                padding = 0;
+                break;
+            case "sent":
+                icon = GoogleMaterial.Icon.gmd_send;
+                padding = 1;
+                break;
+            case "trash":
+                icon = GoogleMaterial.Icon.gmd_delete;
+                padding = 3;
+                break;
+            default:
+                icon = null;
+                padding = 0;
+        }
+        return new IconicsDrawable(ctx, icon).colorRes(R.color.md_grey_600).sizeDp(24).paddingDp(padding);
     }
 
     public static String getDisplayAddress(String address) throws PasswordException, IOException, GeneralSecurityException, MessagingException {
