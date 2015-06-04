@@ -165,6 +165,7 @@
   <string name="also_check_i2p_android">Si cela ne vous aide pas, assurez-vous que I2P est en marche. Vous pouvez voir le statut actuel d\'I2P dans le tiroir de notification, ou en ouvrant l\'app I2P. Si cela ne marche pas correctement, redémarrez I2P (dans l\'app, cliquez \"Arrêter\", puis cliquez \"Démarrer\" quand il apparaît). Attendez que I2P soit complètement en marche, puis démarrez Bote.</string>
   <string name="bote_connection_error">Erreur de connexion Bote</string>
   <string name="full_error_copied_to_clipboard">L\'erreur entière a été copiée dans le presse-papiers</string>
+  <string name="settings_label_network">Réseau</string>
   <string name="pref_title_autoMail">Auto-chercher le courrier</string>
   <string name="pref_title_checkInterval">Intervalle de recherche</string>
   <string name="pref_summ_checkInterval">%s minutes</string>
@@ -186,6 +187,13 @@
   <string name="pref_summ_minDelay">%s minutes</string>
   <string name="pref_title_maxDelay">Délai maximum par étape</string>
   <string name="pref_summ_maxDelay">%s minutes</string>
+  <string name="settings_label_app_protection">Protection app</string>
+  <string name="screen_security">Sécurité d\'écran</string>
+  <string name="screen_security_summ">Bloquer les captures d\'écran dans les listes récentes et dans l\'app</string>
+  <string name="settings_label_appearance">Apparence</string>
+  <string name="settings_label_language">Langue</string>
+  <string name="settings_default">Par défaut</string>
+  <string name="settings_label_advanced">Avancé</string>
   <string name="router_settings">Paramètres du routeur</string>
   <string name="auto">Auto</string>
   <string name="manual">Manuel</string>
@@ -202,6 +210,7 @@
   <string name="remove_password_info">Pour retirer le mot de passe, laissez vide le champ \'Nouveau mot de passe\'.</string>
   <string name="password_changed">Mot de passe modifié avec succès</string>
   <string name="pref_title_identities">Identités</string>
+  <string name="no_identities">Pas d\'identités</string>
   <string name="new_identity">Nouvelle identité ...</string>
   <string name="edit_identity">Éditer l\'identité</string>
   <string name="title_new_identity">Nouvelle identité</string>
