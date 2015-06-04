@@ -4,13 +4,11 @@
 
     <item
         android:id="@+id/action_attach_file"
-        android:icon="@drawable/ic_attach_file_white_24dp"
         android:title="@string/action_attach_file"
         i2pandroid:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_send_email"
-        android:icon="@drawable/ic_send_white_24dp"
         android:title="@string/action_send_email"
         i2pandroid:showAsAction="ifRoom"/>
 

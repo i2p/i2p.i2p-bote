@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import net.i2p.I2PAppContext;
@@ -345,14 +346,23 @@ public class EmailListFragment extends AuthenticatedFragment implements
             // Inflate the menu for the CAB
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.email_list_context, menu);
+            MenuItem markRead = menu.findItem(R.id.action_mark_read);
+            MenuItem markUnread = menu.findItem(R.id.action_mark_unread);
+            MenuItem moveTo = menu.findItem(R.id.action_move_to);
+
+            menu.findItem(R.id.action_delete).setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_delete));
+            markRead.setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_drafts));
+            markUnread.setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_markunread));
+            moveTo.setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_folder));
+
             if (BoteHelper.isOutbox(mFolder)) {
-                menu.findItem(R.id.action_mark_read).setVisible(false);
-                menu.findItem(R.id.action_mark_unread).setVisible(false);
+                markRead.setVisible(false);
+                markUnread.setVisible(false);
             }
             // Only allow moving from the trash
             // TODO change this when user folders are implemented
             if (!BoteHelper.isTrash(mFolder))
-                menu.findItem(R.id.action_move_to).setVisible(false);
+                moveTo.setVisible(false);
             return true;
         }
 

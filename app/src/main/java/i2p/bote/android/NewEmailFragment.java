@@ -374,6 +374,8 @@ public class NewEmailFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.new_email, menu);
+        menu.findItem(R.id.action_attach_file).setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_attach_file));
+        menu.findItem(R.id.action_send_email).setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_send));
     }
 
     @Override

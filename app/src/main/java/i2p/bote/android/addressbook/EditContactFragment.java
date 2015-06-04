@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -150,6 +152,7 @@ public class EditContactFragment extends EditPictureFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.edit_contact, menu);
+        menu.findItem(R.id.action_save_contact).setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_save));
     }
 
     @Override

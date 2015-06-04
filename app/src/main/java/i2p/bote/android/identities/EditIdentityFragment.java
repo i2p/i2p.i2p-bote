@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
@@ -169,6 +171,8 @@ public class EditIdentityFragment extends EditPictureFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.edit_identity, menu);
         mSave = menu.findItem(R.id.action_save_identity);
+
+        mSave.setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_save));
 
         IdentityWaiterFrag f = (IdentityWaiterFrag) getFragmentManager().findFragmentByTag(IDENTITY_WAITER_TAG);
         if (f != null)

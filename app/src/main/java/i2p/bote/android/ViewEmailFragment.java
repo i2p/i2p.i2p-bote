@@ -283,8 +283,14 @@ public class ViewEmailFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_email, menu);
+        MenuItem reply = menu.findItem(R.id.action_reply);
+
+        reply.setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_reply));
+        menu.findItem(R.id.action_reply_all).setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_reply_all));
+        menu.findItem(R.id.action_forward).setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_forward));
+
         if (mIsAnonymous)
-            menu.findItem(R.id.action_reply).setVisible(false);
+            reply.setVisible(false);
     }
 
     @Override

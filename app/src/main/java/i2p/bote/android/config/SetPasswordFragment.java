@@ -15,9 +15,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+
 import i2p.bote.I2PBote;
 import i2p.bote.StatusListener;
 import i2p.bote.android.R;
+import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.RobustAsyncTask;
 import i2p.bote.android.util.TaskFragment;
 
@@ -92,6 +95,8 @@ public class SetPasswordFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.set_password, menu);
         mSave = menu.findItem(R.id.action_set_password);
+
+        mSave.setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_save));
 
         // If task is running, disable the save button.
         PasswordWaiterFrag f = (PasswordWaiterFrag) getFragmentManager().findFragmentByTag(PASSWORD_WAITER_TAG);

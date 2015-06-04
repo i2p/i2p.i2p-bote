@@ -4,22 +4,18 @@
 
     <item
         android:id="@+id/action_delete"
-        android:icon="@drawable/ic_delete_white_24dp"
         android:title="@string/action_delete"
         i2pandroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_mark_read"
-        android:icon="@drawable/ic_drafts_white_24dp"
         android:title="@string/action_mark_read"
         i2pandroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_mark_unread"
-        android:icon="@drawable/ic_markunread_white_24dp"
         android:title="@string/action_mark_unread"
         i2pandroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_move_to"
-        android:icon="@drawable/ic_folder_white_24dp"
         android:title="@string/action_move_to"
         i2pandroid:showAsAction="ifRoom"/>
 

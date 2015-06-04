@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.AnimatorSet;
@@ -163,17 +164,18 @@ public abstract class ViewAddressFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.view_identity, menu);
+        inflater.inflate(R.menu.view_address, menu);
+        menu.findItem(R.id.action_edit_address).setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_create));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_edit_identity:
+            case R.id.action_edit_address:
                 onEditAddress();
                 return true;
 
-            case R.id.action_delete_identity:
+            case R.id.action_delete_address:
                 DialogFragment df = new DialogFragment() {
                     @Override
                     @NonNull

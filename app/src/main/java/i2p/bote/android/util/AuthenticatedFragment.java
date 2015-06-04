@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+
 import i2p.bote.I2PBote;
 import i2p.bote.android.R;
 
@@ -58,6 +60,9 @@ public abstract class AuthenticatedFragment extends Fragment {
         inflater.inflate(R.menu.authenticated_fragment, menu);
         mLogIn = menu.findItem(R.id.action_log_in);
         mClearPassword = menu.findItem(R.id.action_log_out);
+
+        mLogIn.setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_lock));
+        mClearPassword.setIcon(BoteHelper.getMenuIcon(getActivity(), GoogleMaterial.Icon.gmd_lock_open));
     }
 
     @Override

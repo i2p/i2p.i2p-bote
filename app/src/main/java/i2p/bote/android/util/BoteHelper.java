@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -151,6 +152,41 @@ public class BoteHelper extends GeneralHelper {
         return new IconicsDrawable(ctx, icon).colorRes(R.color.md_grey_600).sizeDp(24).paddingDp(padding);
     }
 
+    public static Drawable getMenuIcon(Context ctx, GoogleMaterial.Icon icon) {
+        IconicsDrawable iconic = new IconicsDrawable(ctx, icon).color(Color.WHITE).sizeDp(24);
+        switch (icon) {
+            case gmd_attach_file:
+            case gmd_lock:
+            case gmd_lock_open:
+            case gmd_person_add:
+            case gmd_send:
+                iconic.paddingDp(1);
+                break;
+
+            case gmd_drafts:
+            case gmd_folder:
+            case gmd_markunread:
+                iconic.paddingDp(2);
+                break;
+
+            case gmd_create:
+            case gmd_delete:
+            case gmd_reply:
+            case gmd_save:
+                iconic.paddingDp(3);
+                break;
+
+            case gmd_forward:
+                iconic.paddingDp(4);
+                break;
+
+            case gmd_reply_all:
+            default:
+                break;
+        }
+        return iconic;
+    }
+
     public static String getDisplayAddress(String address) throws PasswordException, IOException, GeneralSecurityException, MessagingException {
         String fullAdr = getNameAndDestination(address);
         String emailDest = extractEmailDestination(fullAdr);
@@ -260,6 +296,7 @@ public class BoteHelper extends GeneralHelper {
     }
 
     private static final String PROPERTY_SENT = "sent";
+
     public static void setEmailSent(Email email, boolean isSent) {
         email.getMetadata().setProperty(PROPERTY_SENT, isSent ? "true" : "false");
     }
@@ -558,13 +595,18 @@ public class BoteHelper extends GeneralHelper {
     }
 
     public static String getHumanReadableSize(Context context, long size) {
-        int unit = (63-Long.numberOfLeadingZeros(size)) / 10;   // 0 if totalBytes<1K, 1 if 1K<=totalBytes<1M, etc.
-        double value = (double)size / (1<<(10*unit));
+        int unit = (63 - Long.numberOfLeadingZeros(size)) / 10;   // 0 if totalBytes<1K, 1 if 1K<=totalBytes<1M, etc.
+        double value = (double) size / (1 << (10 * unit));
         int formatStr;
         switch (unit) {
-            case 0: formatStr = R.string.n_bytes; break;
-            case 1: formatStr = R.string.n_kilobytes; break;
-            default: formatStr = R.string.n_megabytes;
+            case 0:
+                formatStr = R.string.n_bytes;
+                break;
+            case 1:
+                formatStr = R.string.n_kilobytes;
+                break;
+            default:
+                formatStr = R.string.n_megabytes;
         }
         NumberFormat formatter = NumberFormat.getInstance(Locale.getDefault());
         if (value < 100)
