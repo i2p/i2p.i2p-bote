@@ -31,7 +31,7 @@
         </RelativeLayout>
     </FrameLayout>
 
-    <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+    <i2p.bote.android.widget.IconicsFloatingActionButton
         android:id="@+id/promoted_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,5 +43,8 @@
         android:layout_marginRight="@dimen/listitem_horizontal_margin"
         app:fab_colorNormal="@color/accent"
         app:fab_colorPressed="@color/accent_dark"
-        app:fab_icon="@drawable/ic_create_white_24dp"/>
+        app:ifab_color="@android:color/white"
+        app:ifab_icon="gmd-create"
+        app:ifab_padding="3dp"
+        app:ifab_size="24dp"/>
 </RelativeLayout>

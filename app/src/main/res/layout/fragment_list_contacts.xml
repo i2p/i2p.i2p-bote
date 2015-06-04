@@ -54,13 +54,16 @@
             app:fab_icon="@drawable/ic_scan_qr_code_white_24dp"
             app:fab_title="@string/action_scan_qr_code"/>
 
-        <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+        <i2p.bote.android.widget.IconicsFloatingActionButton
             android:id="@+id/action_new_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/accent"
             app:fab_colorPressed="@color/accent_dark"
-            app:fab_icon="@drawable/ic_person_add_white_24dp"
-            app:fab_title="@string/action_new_contact"/>
+            app:fab_title="@string/action_new_contact"
+            app:ifab_color="@android:color/white"
+            app:ifab_icon="gmd-person-add"
+            app:ifab_padding="1dp"
+            app:ifab_size="24dp"/>
     </net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>

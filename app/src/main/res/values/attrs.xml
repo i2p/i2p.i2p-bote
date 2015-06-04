@@ -1,5 +1,12 @@
 <resources>
 
+    <declare-styleable name="IconicsFloatingActionButton">
+        <attr name="ifab_icon" format="string"/>
+        <attr name="ifab_color" format="color"/>
+        <attr name="ifab_size" format="dimension"/>
+        <attr name="ifab_padding" format="dimension"/>
+    </declare-styleable>
+
     <declare-styleable name="IconicsPreference">
         <attr name="ip_icon" format="string"/>
         <attr name="ip_color" format="color"/>
