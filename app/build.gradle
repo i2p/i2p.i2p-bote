@@ -49,7 +49,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.1.1'
 
     // Remote dependencies
-    compile 'net.i2p.android:client:0.5.1@aar'
+    compile 'net.i2p.android:client:0.7@aar'
     compile 'net.i2p.android.ext:floatingactionbutton:1.8.0'
     compile 'com.madgag.spongycastle:core:1.51.0.0'
     compile 'com.madgag.spongycastle:prov:1.51.0.0'
@@ -75,7 +75,7 @@ dependencyVerification {
             'com.android.support:support-v4:1e2e4d35ac7fd30db5ce3bc177b92e4d5af86acef2ef93e9221599d733346f56',
             'com.android.support:appcompat-v7:9a2355537c2f01cf0b95523605c18606b8d824017e6e94a05c77b0cfc8f21c96',
             'com.android.support:recyclerview-v7:aaecd962eff758b716cef6ecef8d9237be10be3e2cb5ece4d5780e609e40246d',
-            'net.i2p.android:client:b700c1b8b69556bb832eb5f11054d0d2a4b1c5ab8eb133d108131bed12833970',
+            'net.i2p.android:client:61f5a54b3c8464a5d2a4df65d00cc32a40cef935cad57e0075e98a4b5625ff30',
             'net.i2p.android.ext:floatingactionbutton:a20d1f0cae15f8965b81486ba31245937968ae6ee5fa6e8a3ea21d7f6c6243ab',
             'com.madgag.spongycastle:core:8d6240b974b0aca4d3da9c7dd44d42339d8a374358aca5fc98e50a995764511f',
             'com.madgag.spongycastle:prov:b8c3fec3a59aac1aa04ccf4dad7179351e54ef7672f53f508151b614c131398a',
