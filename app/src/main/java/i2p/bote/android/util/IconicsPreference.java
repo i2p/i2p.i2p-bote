@@ -1,6 +1,6 @@
 package i2p.bote.android.util;
 
-import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -13,19 +13,23 @@ import i2p.bote.android.R;
 
 public class IconicsPreference extends Preference {
     public IconicsPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init(context, attrs);
     }
 
-    @SuppressLint("NewApi")
     public IconicsPreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs);
+        super(context, attrs, defStyle);
+        init(context, attrs);
+    }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private void init(Context context, AttributeSet attrs) {
         // Icons only work on API 11+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
             return;
 
         TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.IconicsPreference, defStyle, 0);
+                R.styleable.IconicsPreference, 0, 0);
         String iconName = a.getString(R.styleable.IconicsPreference_ip_icon);
         if (iconName == null)
             return;
