@@ -1,4 +1,5 @@
-0.5.1
+0.6
+ * Identity switcher
  * Language can be configured
  * Block screenshots by default
  * Fixed internal router
