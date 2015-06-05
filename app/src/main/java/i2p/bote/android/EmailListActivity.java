@@ -451,8 +451,8 @@ public class EmailListActivity extends BoteActivityBase implements
 
         public DrawerIdentityLoader(Context context) {
             super(context);
-            identiconSize = context.getResources().getDimensionPixelSize(
-                    com.mikepenz.materialdrawer.R.dimen.material_drawer_item_profile_icon);
+            // Must be a multiple of nine
+            identiconSize = context.getResources().getDimensionPixelSize(R.dimen.identicon);
         }
 
         @Override

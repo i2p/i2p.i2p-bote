@@ -26,6 +26,8 @@
 
     <dimen name="listitem_height_three_lines">88dp</dimen>
 
+    <dimen name="identicon">54dp</dimen>
+
     <dimen name="notification_large_icon_width">64dp</dimen>
     <dimen name="notification_large_icon_height">64dp</dimen>
 
