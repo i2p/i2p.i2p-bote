@@ -165,6 +165,7 @@
   <string name="also_check_i2p_android">Wenn das nicht hilft, überprüfen sie, ob I2P läuft. Sie können den gegenwärtigen Status von I2P im notification drawer sehen oder indem Sie die I2P App öffen. Falls es nicht richtig läuft, starten Sie I2P neu (in der App \"Stop\" klicken und dann \"Start\" wenn es erscheint). Warten Sie, bis I2P vollständig läuft, dann starten Sie Bote.</string>
   <string name="bote_connection_error">Bote-Verbindungsfehler</string>
   <string name="full_error_copied_to_clipboard">Vollständiger Fehler in die Zwischenablage kopiert</string>
+  <string name="settings_label_network">Netzwerk</string>
   <string name="pref_title_autoMail">Automatisch auf neue E-Mails prüfen</string>
   <string name="pref_title_checkInterval">Abrufintervall</string>
   <string name="pref_summ_checkInterval">%s Minuten</string>
@@ -186,6 +187,13 @@
   <string name="pref_summ_minDelay">%s Minuten</string>
   <string name="pref_title_maxDelay">Maximale Verzögerung je Zwischenstation</string>
   <string name="pref_summ_maxDelay">%s Minuten</string>
+  <string name="settings_label_app_protection">App-Sicherheit</string>
+  <string name="screen_security">Bildschirmsicherheit</string>
+  <string name="screen_security_summ">Screenshots der Verlaufsliste und in der App blockieren</string>
+  <string name="settings_label_appearance">Erscheinungsbild</string>
+  <string name="settings_label_language">Sprache</string>
+  <string name="settings_default">Standard</string>
+  <string name="settings_label_advanced">Erweitert</string>
   <string name="router_settings">Routereinstellungen</string>
   <string name="auto">Automatisch</string>
   <string name="manual">Manuell</string>
@@ -202,6 +210,7 @@
   <string name="remove_password_info">Um das Passwort zu entfernen, lassen Sie das \'Neues Passwort\'-Feld leer.</string>
   <string name="password_changed">Passwort erfolgreich geändert</string>
   <string name="pref_title_identities">Identitäten</string>
+  <string name="no_identities">Keine Identitäten</string>
   <string name="new_identity">Neue Identität …</string>
   <string name="edit_identity">Identität bearbeiten</string>
   <string name="title_new_identity">Neue Identität</string>

@@ -165,6 +165,7 @@
   <string name="also_check_i2p_android">Si eso no ayuda, compruebe que I2P está ejecutándose. Puede ver el estado actual de I2P en la bandeja de notificación, o al abrir la aplicación I2P. Si no está ejecutándose adecuadamente, reinicie I2P (en la aplicación, haga clic en \"Detener\", y luego, cuando aparezca, clic en \"Iniciar\"). Espere a que I2P esté ejecutándose completamente, y luego inicie Bote.</string>
   <string name="bote_connection_error">Error de conexión de Bote</string>
   <string name="full_error_copied_to_clipboard">Error completo copiado al portapapeles</string>
+  <string name="settings_label_network">Red</string>
   <string name="pref_title_autoMail">Auto-comprobar correo</string>
   <string name="pref_title_checkInterval">Intervalo de comprobación</string>
   <string name="pref_summ_checkInterval">%s minutos</string>
@@ -186,6 +187,13 @@
   <string name="pref_summ_minDelay">%s minutos</string>
   <string name="pref_title_maxDelay">Retardo máximo por salto</string>
   <string name="pref_summ_maxDelay">%s minutos</string>
+  <string name="settings_label_app_protection">Protección de la aplicación</string>
+  <string name="screen_security">Seguridad de la pantalla</string>
+  <string name="screen_security_summ">Bloquear capturas de pantalla en las listas recientes y dentro de la aplicación</string>
+  <string name="settings_label_appearance">Apariencia</string>
+  <string name="settings_label_language">Idioma</string>
+  <string name="settings_default">Predeterminada</string>
+  <string name="settings_label_advanced">Avanzada</string>
   <string name="router_settings">Configuraciones del router I2P</string>
   <string name="auto">Auto</string>
   <string name="manual">Manual</string>
@@ -202,6 +210,7 @@
   <string name="remove_password_info">Para eliminar la contraseña, deje en blanco los campos \'Nueva contraseña\'.</string>
   <string name="password_changed">Contraseña cambiada con éxito</string>
   <string name="pref_title_identities">Identidades</string>
+  <string name="no_identities">No hay identidades</string>
   <string name="new_identity">Nueva identidad...</string>
   <string name="edit_identity">Editar identidad</string>
   <string name="title_new_identity">Nueva identidad</string>
