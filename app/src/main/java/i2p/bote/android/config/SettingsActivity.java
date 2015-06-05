@@ -10,11 +10,13 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.preference.PreferenceFragment;
 import android.support.v7.widget.Toolbar;
 
+import i2p.bote.I2PBote;
 import i2p.bote.android.BoteActivityBase;
 import i2p.bote.android.EmailListActivity;
 import i2p.bote.android.R;
 import i2p.bote.android.identities.IdentityListActivity;
 import i2p.bote.android.service.BoteService;
+import i2p.bote.android.util.BoteHelper;
 
 public class SettingsActivity extends BoteActivityBase implements
         SharedPreferences.OnSharedPreferenceChangeListener {
@@ -124,15 +126,36 @@ public class SettingsActivity extends BoteActivityBase implements
                         startActivity(ili);
                         break;
 
+                    case PREFERENCE_CATEGORY_PRIVACY:
+                    case PREFERENCE_CATEGORY_APP_PROTECTION:
+                        if (I2PBote.getInstance().isPasswordRequired()) {
+                            BoteHelper.requestPassword(getActivity(), new BoteHelper.RequestPasswordListener() {
+                                @Override
+                                public void onPasswordVerified() {
+                                    loadCategory();
+                                }
+
+                                @Override
+                                public void onPasswordCanceled() {
+                                }
+                            });
+                        } else
+                            loadCategory();
+                        break;
+
                     default:
-                        Fragment fragment = getFragmentForCategory(category);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, fragment)
-                                .addToBackStack(null)
-                                .commit();
+                        loadCategory();
                 }
 
                 return true;
+            }
+
+            private void loadCategory() {
+                Fragment fragment = getFragmentForCategory(category);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         }
     }
