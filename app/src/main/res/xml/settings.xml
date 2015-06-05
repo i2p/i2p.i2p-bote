@@ -26,8 +26,8 @@
         android:key="preference_category_app_protection"
         android:title="@string/settings_label_app_protection"
         app:ip_color="@color/pref_icon"
-        app:ip_icon="gmd-lock"
-        app:ip_padding="2dp"
+        app:ip_icon="gmd-security"
+        app:ip_padding="1dp"
         app:ip_size="@dimen/pref_icon"/>
     <i2p.bote.android.util.IconicsPreference
         android:key="preference_category_appearance"
