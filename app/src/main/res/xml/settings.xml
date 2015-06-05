@@ -33,7 +33,7 @@
         android:key="preference_category_appearance"
         android:title="@string/settings_label_appearance"
         app:ip_color="@color/pref_icon"
-        app:ip_icon="gmd-settings-display"
+        app:ip_icon="gmd-settings-brightness"
         app:ip_padding="1dp"
         app:ip_size="@dimen/pref_icon"/>
     <i2p.bote.android.util.IconicsPreference

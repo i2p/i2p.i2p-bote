@@ -63,8 +63,8 @@ dependencies {
     compile('com.android.support:support-v4-preferencefragment:1.0.0@aar') {
         exclude module: 'support-v4'
     }
-    compile 'com.mikepenz:iconics:1.0.1@aar'
-    compile('com.mikepenz:materialdrawer:3.0.5@aar') {
+    compile 'com.mikepenz:iconics:1.0.2@aar'
+    compile('com.mikepenz:materialdrawer:3.0.6@aar') {
         transitive = true
     }
 
@@ -89,8 +89,8 @@ dependencyVerification {
             'com.androidplot:androidplot-core:777b54dd98b8dedc5f3fcc95018eece1188f6c692dcbd5b7744af175e15d70bd',
             'com.pnikosis:materialish-progress:5dd770a78047d8dbf2690deb686675fe2b242a6d06bb52ef425c829454ca54b8',
             'com.android.support:support-v4-preferencefragment:5470f5872514a6226fa1fc6f4e000991f38805691c534cf0bd2778911fc773ad',
-            'com.mikepenz:iconics:38b4094d8a3f2a084a10d7789d017408e3d95908810a21eec3b29241d04afe49',
-            'com.mikepenz:materialdrawer:f97570f4b4ea133a3f78737f78f4d1e7b947c0fecfb2b541741cd26000c38694',
+            'com.mikepenz:iconics:c1a02203d8e0d638959463c00af3ab9096e0a7c1ad5928762eb10ef5ce8a63cd',
+            'com.mikepenz:materialdrawer:79544700d4324451deeb0ad09ab335dd0b5e02c96d5f9611ee86a977278e7323',
     ]
 }
 

@@ -702,8 +702,7 @@ public class EmailListActivity extends BoteActivityBase implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // TODO change this when #378 is resolved
-                mDrawer.updateItem(getNetStatusItem(statusText, statusIcon, colorRes, padding));
+                mDrawer.updateFooterItem(getNetStatusItem(statusText, statusIcon, colorRes, padding));
             }
         });
     }
