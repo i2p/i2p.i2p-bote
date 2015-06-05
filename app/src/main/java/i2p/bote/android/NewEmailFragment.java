@@ -606,10 +606,17 @@ public class NewEmailFragment extends Fragment {
             try {
                 Collection<EmailIdentity> identities = I2PBote.getInstance().getIdentities().getAll();
                 mDefaultPos = 0;
+                String selectedIdentity = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0)
+                        .getString(Constants.PREF_SELECTED_IDENTITY, null);
                 for (EmailIdentity identity : identities) {
                     add(identity);
-                    if ((mSenderKey == null && identity.isDefaultIdentity()) ||
-                            (mSenderKey != null && identity.getKey().equals(mSenderKey)))
+                    boolean isDefaultIdentity = selectedIdentity == null ?
+                            identity.isDefaultIdentity() :
+                            identity.getKey().equals(selectedIdentity);
+                    boolean selectByDefault = mSenderKey == null ?
+                            isDefaultIdentity :
+                            identity.getKey().equals(mSenderKey);
+                    if (selectByDefault)
                         mDefaultPos = getPosition(identity);
                 }
             } catch (PasswordException e) {
