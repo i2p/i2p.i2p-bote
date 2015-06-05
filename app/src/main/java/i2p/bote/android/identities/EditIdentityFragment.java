@@ -141,6 +141,16 @@ public class EditIdentityFragment extends EditPictureFragment {
             mCryptoField.setAdapter(adapter);
             mCryptoField.setSelection(mDefaultPos);
             mCryptoField.setVisibility(View.VISIBLE);
+            // If no identities, set this as default by default
+            try {
+                mDefaultField.setChecked(I2PBote.getInstance().getIdentities().size() == 0);
+            } catch (PasswordException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            }
         } else {
             // Load the identity to edit
             try {
