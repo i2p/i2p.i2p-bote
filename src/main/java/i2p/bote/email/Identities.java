@@ -44,6 +44,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -76,6 +77,7 @@ public class Identities implements KeyUpdateHandler {
     private Log log = new Log(Identities.class);
     private File identitiesFile;
     private PasswordHolder passwordHolder;
+    private Collection<IdentitiesListener> identitiesListeners;
     private SortedSet<EmailIdentity> identities;   // null until file has been read successfully
     private EmailIdentity defaultIdentity;
 
@@ -88,6 +90,7 @@ public class Identities implements KeyUpdateHandler {
     public Identities(File identitiesFile, PasswordHolder passwordHolder) {
         this.identitiesFile = identitiesFile;
         this.passwordHolder = passwordHolder;
+        identitiesListeners = new ArrayList<IdentitiesListener>();
     }
 
     private void initializeIfNeeded() throws PasswordException, IOException, GeneralSecurityException {
@@ -307,6 +310,9 @@ public class Identities implements KeyUpdateHandler {
         if (identities.isEmpty())
             identity.setDefaultIdentity(true);
         identities.add(identity);
+
+        for (IdentitiesListener listener : identitiesListeners)
+            listener.identityAdded(identity.getKey());
     }
     
     public void remove(String key) throws PasswordException, IOException, GeneralSecurityException {
@@ -323,6 +329,9 @@ public class Identities implements KeyUpdateHandler {
             // when the last identity is deleted, remove the file; see isEmpty()
             if (identities.isEmpty() && !identitiesFile.delete())
                 log.error("Can't delete file: " + identitiesFile.getAbsolutePath());
+
+            for (IdentitiesListener listener : identitiesListeners)
+                listener.identityRemoved(key);
         }
     }
     
@@ -524,5 +533,13 @@ public class Identities implements KeyUpdateHandler {
     @Override
     public void updateKey() throws GeneralSecurityException, PasswordException, IOException {
         save();
+    }
+
+    public void addIdentitiesListener(IdentitiesListener identitiesListener) {
+        identitiesListeners.add(identitiesListener);
+    }
+
+    public void removeIdentitiesListener(IdentitiesListener identitiesListener) {
+        identitiesListeners.remove(identitiesListener);
     }
 }
