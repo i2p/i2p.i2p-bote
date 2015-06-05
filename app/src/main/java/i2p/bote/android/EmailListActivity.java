@@ -56,6 +56,7 @@ import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.MoveToDialogFragment;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.IdentitiesListener;
 import i2p.bote.fileencryption.PasswordCacheListener;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
@@ -446,7 +447,7 @@ public class EmailListActivity extends BoteActivityBase implements
         }
     }
 
-    private static class DrawerIdentityLoader extends BetterAsyncTaskLoader<ArrayList<IProfile>> {
+    private static class DrawerIdentityLoader extends BetterAsyncTaskLoader<ArrayList<IProfile>> implements IdentitiesListener {
         private int identiconSize;
 
         public DrawerIdentityLoader(Context context) {
@@ -492,17 +493,33 @@ public class EmailListActivity extends BoteActivityBase implements
 
         @Override
         protected void onStartMonitoring() {
-
+            I2PBote.getInstance().getIdentities().addIdentitiesListener(this);
         }
 
         @Override
         protected void onStopMonitoring() {
-
+            I2PBote.getInstance().getIdentities().removeIdentitiesListener(this);
         }
 
         @Override
         protected void releaseResources(ArrayList<IProfile> data) {
+        }
 
+        // IdentitiesListener
+
+        @Override
+        public void identityAdded(String s) {
+            onContentChanged();
+        }
+
+        @Override
+        public void identityUpdated(String s) {
+            onContentChanged();
+        }
+
+        @Override
+        public void identityRemoved(String s) {
+            onContentChanged();
         }
     }
 

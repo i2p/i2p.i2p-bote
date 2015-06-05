@@ -28,6 +28,7 @@ import i2p.bote.android.util.BetterAsyncTaskLoader;
 import i2p.bote.android.widget.DividerItemDecoration;
 import i2p.bote.android.widget.LoadingRecyclerView;
 import i2p.bote.email.EmailIdentity;
+import i2p.bote.email.IdentitiesListener;
 import i2p.bote.fileencryption.PasswordException;
 
 public class IdentityListFragment extends AuthenticatedFragment implements
@@ -149,7 +150,7 @@ public class IdentityListFragment extends AuthenticatedFragment implements
 
     private void startNewIdentity() {
         Intent nii = new Intent(getActivity(), EditIdentityActivity.class);
-        getActivity().startActivityForResult(nii, IdentityListActivity.ALTER_IDENTITY_LIST);
+        getActivity().startActivity(nii);
     }
 
     protected void updateIdentityList() {
@@ -162,7 +163,7 @@ public class IdentityListFragment extends AuthenticatedFragment implements
         return new IdentityLoader(getActivity());
     }
 
-    private static class IdentityLoader extends BetterAsyncTaskLoader<Collection<EmailIdentity>> {
+    private static class IdentityLoader extends BetterAsyncTaskLoader<Collection<EmailIdentity>> implements IdentitiesListener {
         public IdentityLoader(Context context) {
             super(context);
         }
@@ -185,14 +186,33 @@ public class IdentityListFragment extends AuthenticatedFragment implements
 
         @Override
         protected void onStartMonitoring() {
+            I2PBote.getInstance().getIdentities().addIdentitiesListener(this);
         }
 
         @Override
         protected void onStopMonitoring() {
+            I2PBote.getInstance().getIdentities().removeIdentitiesListener(this);
         }
 
         @Override
         protected void releaseResources(Collection<EmailIdentity> data) {
+        }
+
+        // IdentitiesListener
+
+        @Override
+        public void identityAdded(String s) {
+            onContentChanged();
+        }
+
+        @Override
+        public void identityUpdated(String s) {
+            onContentChanged();
+        }
+
+        @Override
+        public void identityRemoved(String s) {
+            onContentChanged();
         }
     }
 
