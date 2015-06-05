@@ -170,6 +170,7 @@ public class GeneralHelper {
             identity.setDescription(description);
             identity.setPictureBase64(pictureBase64);
             identity.setEmailAddress(emailAddress);
+            identities.identityUpdated(key);
         }
 
         // update the default identity

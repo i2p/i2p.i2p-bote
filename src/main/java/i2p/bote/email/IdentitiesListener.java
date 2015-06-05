@@ -23,5 +23,7 @@ public interface IdentitiesListener {
 
     void identityAdded(String key);
 
+    void identityUpdated(String key);
+
     void identityRemoved(String key);
 }

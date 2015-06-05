@@ -535,6 +535,11 @@ public class Identities implements KeyUpdateHandler {
         save();
     }
 
+    public void identityUpdated(String key) {
+        for (IdentitiesListener listener : identitiesListeners)
+            listener.identityUpdated(key);
+    }
+
     public void addIdentitiesListener(IdentitiesListener identitiesListener) {
         identitiesListeners.add(identitiesListener);
     }
