@@ -330,7 +330,7 @@ public class EmailListActivity extends BoteActivityBase implements
         return new ProfileDrawerItem()
                 .withIdentifier(ID_LOCKED)
                 .withEmail(getString(R.string.touch_lock_to_log_in))
-                .withIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_lock).color(Color.WHITE).sizeRes(com.mikepenz.materialdrawer.R.dimen.material_drawer_item_profile_icon));
+                .withIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_lock).color(Color.WHITE).sizeRes(com.mikepenz.materialdrawer.R.dimen.material_drawer_account_header_selected));
     }
 
     private IDrawerItem getNetStatusItem(int nameRes, IIcon icon, int iconColorRes, int padding) {
