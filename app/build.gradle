@@ -50,21 +50,21 @@ dependencies {
 
     // Remote dependencies
     compile 'net.i2p.android:client:0.7@aar'
-    compile 'net.i2p.android.ext:floatingactionbutton:1.8.0'
-    compile 'com.madgag.spongycastle:core:1.51.0.0'
-    compile 'com.madgag.spongycastle:prov:1.51.0.0'
+    compile 'net.i2p.android.ext:floatingactionbutton:1.9.0'
+    compile 'com.madgag.spongycastle:core:1.52.0.0'
+    compile 'com.madgag.spongycastle:prov:1.52.0.0'
     compile('com.mcxiaoke.viewpagerindicator:library:2.4.1') {
         exclude group: 'com.android.support', module: 'support-v4'
     }
     compile 'com.google.zxing:core:3.2.0'
     compile 'com.google.zxing:android-integration:3.2.0'
     compile 'com.androidplot:androidplot-core:0.6.1'
-    compile 'com.pnikosis:materialish-progress:1.4'
+    compile 'com.pnikosis:materialish-progress:1.5'
     compile('com.android.support:support-v4-preferencefragment:1.0.0@aar') {
         exclude module: 'support-v4'
     }
     compile 'com.mikepenz:iconics:1.0.2@aar'
-    compile('com.mikepenz:materialdrawer:3.0.6@aar') {
+    compile('com.mikepenz:materialdrawer:3.0.7@aar') {
         transitive = true
     }
 
@@ -80,17 +80,17 @@ dependencyVerification {
             'com.android.support:appcompat-v7:2d5867698410b41f75140c91d6c1e58da74ae0f97baf6e0bdd1f7cc1017ceb2c',
             'com.android.support:recyclerview-v7:3a8da14585fa1c81f06e7cef4d93a7641f0323d8f984ff9a7bd7a6e416b46888',
             'net.i2p.android:client:61f5a54b3c8464a5d2a4df65d00cc32a40cef935cad57e0075e98a4b5625ff30',
-            'net.i2p.android.ext:floatingactionbutton:a20d1f0cae15f8965b81486ba31245937968ae6ee5fa6e8a3ea21d7f6c6243ab',
-            'com.madgag.spongycastle:core:8d6240b974b0aca4d3da9c7dd44d42339d8a374358aca5fc98e50a995764511f',
-            'com.madgag.spongycastle:prov:b8c3fec3a59aac1aa04ccf4dad7179351e54ef7672f53f508151b614c131398a',
+            'net.i2p.android.ext:floatingactionbutton:b41eae5fe6be599e3fade00273521b0914f2e199d5f04c50fa34cfe935347f76',
+            'com.madgag.spongycastle:core:07a401edbe26e1028e2324754557b741cc57306008df7b71a9e12ec32d65be8f',
+            'com.madgag.spongycastle:prov:becbb70797b0103517693d2a97ce93174cc4d1f732897ed965a24e32dd99503e',
             'com.mcxiaoke.viewpagerindicator:library:470bbd2bec1ede64ad21efd6f02676807d22f1b526c4ac6a5b41a428c6e47e67',
             'com.google.zxing:core:7fe5a8ff437635a540e56317649937b768b454795ce999ed5f244f83373dee7b',
             'com.google.zxing:android-integration:0de037a73138033c4a03cdbca5d5728ef65a026ffb89afce071105f43a98ee0e',
             'com.androidplot:androidplot-core:777b54dd98b8dedc5f3fcc95018eece1188f6c692dcbd5b7744af175e15d70bd',
-            'com.pnikosis:materialish-progress:5dd770a78047d8dbf2690deb686675fe2b242a6d06bb52ef425c829454ca54b8',
+            'com.pnikosis:materialish-progress:d71d80e00717a096784482aee21001a9d299fec3833e4ebd87739ed36cf77c54',
             'com.android.support:support-v4-preferencefragment:5470f5872514a6226fa1fc6f4e000991f38805691c534cf0bd2778911fc773ad',
             'com.mikepenz:iconics:c1a02203d8e0d638959463c00af3ab9096e0a7c1ad5928762eb10ef5ce8a63cd',
-            'com.mikepenz:materialdrawer:79544700d4324451deeb0ad09ab335dd0b5e02c96d5f9611ee86a977278e7323',
+            'com.mikepenz:materialdrawer:3331ec671630fc1b1a54c4ff4da9d2a0cee45a2c129dd7f2adb337fa814b9497',
     ]
 }
 
