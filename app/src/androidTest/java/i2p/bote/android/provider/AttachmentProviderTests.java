@@ -37,6 +37,7 @@ import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.ContentAttachment;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
+import i2p.bote.folder.EmailFolder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -203,6 +204,10 @@ public class AttachmentProviderTests extends ProviderTestCase2<AttachmentProvide
     @After
     public void tearDown() throws Exception {
         super.tearDown();
+        EmailFolder inbox = I2PBote.getInstance().getInbox();
+        for (Email email : BoteHelper.getEmails(inbox, null, true)) {
+            inbox.delete(email.getMessageID());
+        }
         System.setProperty("i2pbote.initialized", "false");
     }
 }
