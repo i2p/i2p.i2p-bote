@@ -1,7 +1,6 @@
 package i2p.bote.android;
 
 import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.intent.matcher.IntentMatchers;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +19,7 @@ import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
@@ -62,20 +62,20 @@ public class EmailListActivityTest {
     @Test
     public void newEmail() {
         onView(withId(R.id.promoted_action)).perform(click());
-        intended(IntentMatchers.hasComponent(NewEmailActivity.class.getName()));
+        intended(hasComponent(NewEmailActivity.class.getName()));
     }
 
     @Test
     public void openSettings() {
         openActionBarOverflowOrOptionsMenu(mActivityRule.getActivity());
         onView(withText(R.string.action_settings)).perform(click());
-        intended(IntentMatchers.hasComponent(SettingsActivity.class.getName()));
+        intended(hasComponent(SettingsActivity.class.getName()));
     }
 
     @Test
     public void openHelp() {
         openActionBarOverflowOrOptionsMenu(mActivityRule.getActivity());
         onView(withText(R.string.help)).perform(click());
-        intended(IntentMatchers.hasComponent(HelpActivity.class.getName()));
+        intended(hasComponent(HelpActivity.class.getName()));
     }
 }
