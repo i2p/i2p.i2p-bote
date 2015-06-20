@@ -10,6 +10,7 @@ android {
         minSdkVersion 10
         targetSdkVersion 22
 
+        // For Espresso
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -69,7 +70,7 @@ dependencies {
     }
 
     // Testing-only dependencies
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
 }
 
