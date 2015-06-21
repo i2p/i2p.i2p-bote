@@ -68,7 +68,7 @@
   <string name="address_book">通讯录</string>
   <string name="network_status">网络状态</string>
   <string name="not_started">尚未开始</string>
-  <string name="connect_delay">请等待3分钟…</string>
+  <string name="connect_delay">等待3分钟…</string>
   <string name="connecting">正在连接…</string>
   <string name="connected">已连接</string>
   <string name="error">错误</string>
@@ -207,6 +207,7 @@
   <string name="remove_password_info">若要移除密码，请将“新密码”留空。</string>
   <string name="password_changed">密码更改成功</string>
   <string name="pref_title_identities">身份</string>
+  <string name="no_identities">无身份</string>
   <string name="new_identity">新建身份…</string>
   <string name="edit_identity">编辑身份</string>
   <string name="title_new_identity">新建身份</string>

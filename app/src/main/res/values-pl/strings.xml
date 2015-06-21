@@ -119,6 +119,7 @@
   <string name="subject">Temat</string>
   <string name="compose_email">Napisz email</string>
   <!--Argument is a file size, e.g. "500 KB"-->
+  <string name="attachment_size_warning">Masz więcej niż %s załączników. Wysyłanie tego maila może być wolne.</string>
   <string name="add_one_recipient">Dodaj przynajmniej jednego odbiorcę.</string>
   <string name="stop_composing_email">Zatrzymać tworzenie emaila?</string>
   <string name="all_changes_will_be_discarded">Wszystkie zmiany zostaną odrzucone.</string>
@@ -166,6 +167,7 @@
   <string name="also_check_i2p_android">Jeśli to nie pomoże, sprawdź czy I2P jest włączone. Możesz sprawdzić status I2P w szufladzie notyfikacji, lub poprzez otwarcie aplikacji I2P. Jeśli nie działa ono poprawnie, to zrestartuj I2P (w aplikacji kliknij \"Stop\", a następnie kliknij \"Start\" kiedy się pojawi). Poczekaj aż I2P będzie w pełni uruchomione i wtedy uruchom Bote.</string>
   <string name="bote_connection_error">Błąd połączenia Bote</string>
   <string name="full_error_copied_to_clipboard">Cały błąd został skopiowany do schowka</string>
+  <string name="settings_label_network">Sieć</string>
   <string name="pref_title_autoMail">Auto-Sprawdź czy są nowe e-maile</string>
   <string name="pref_title_checkInterval">Czas sprawdzania</string>
   <string name="pref_summ_checkInterval">%s minut</string>
@@ -188,6 +190,13 @@
   <string name="pref_summ_minDelay">%s minut</string>
   <string name="pref_title_maxDelay">Maksymalne opóźnienie dla przeskoku</string>
   <string name="pref_summ_maxDelay">%s minut</string>
+  <string name="settings_label_app_protection">Ochrona aplikacji</string>
+  <string name="screen_security">Ochrona ekranu</string>
+  <string name="screen_security_summ">Blokuj robienie rzutów ekranu w obecnej liście, oraz w środku aplikacji</string>
+  <string name="settings_label_appearance">Wygląd</string>
+  <string name="settings_label_language">Język</string>
+  <string name="settings_default">Domyślny</string>
+  <string name="settings_label_advanced">Zaawansowany</string>
   <string name="router_settings">Ustawienia Routera</string>
   <string name="auto">Auto</string>
   <string name="manual">Manualne</string>
@@ -204,6 +213,7 @@
   <string name="remove_password_info">Aby usunąć hasło, pole \'Nowe hasło\' zostaw puste.</string>
   <string name="password_changed">Hasło zostało zmienione</string>
   <string name="pref_title_identities">Tożsamości</string>
+  <string name="no_identities">Brak tożsamości</string>
   <string name="new_identity">Nowa tożsamość...</string>
   <string name="edit_identity">Edytuj tożsamość</string>
   <string name="title_new_identity">Nowa tożsamość</string>
@@ -226,6 +236,13 @@
   <string name="this_field_is_required">Te pole jest wymagane</string>
   <string name="bote_dest_for">Adres Bote dla %s</string>
   <string name="copied_to_clipboard">Skopiowano do schowka</string>
+  <string name="help">Pomoc</string>
+  <string name="start">Start</string>
+  <string name="changelog">Lista zmian</string>
+  <string name="about">O aplikacji</string>
+  <string name="version">Wersja</string>
   <!--As in software license, e.g. Apache License v2-->
+  <string name="license">Licencja: %s</string>
   <!--Software libraries-->
+  <string name="libraries">Biblioteki</string>
 </resources>
