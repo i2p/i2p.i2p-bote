@@ -1,4 +1,4 @@
-#
+# Translators:
 # Translators:
 # dich_tran <thnhan@gmail.com>, 2011
 # dich_tran <thnhan@gmail.com>, 2011
@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-02-14 22:33+0000\n"
+"POT-Creation-Date: 2015-07-21 08:46+0000\n"
+"PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/projects/p/I2P/language/"
 "vi/)\n"
@@ -905,9 +905,8 @@ msgid "Description"
 msgstr "Mô tả"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "Xóa danh tính này"
+msgstr ""
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"

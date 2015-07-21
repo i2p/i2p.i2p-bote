@@ -1,4 +1,4 @@
-#
+# Translators:
 # Translators:
 # Adolfo Jayme Barrientos, 2013
 # Adolfo Jayme Barrientos, 2013
@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-20 09:22+0000\n"
-"PO-Revision-Date: 2015-03-16 17:29+0000\n"
+"POT-Creation-Date: 2015-07-21 08:45+0000\n"
+"PO-Revision-Date: 2015-03-22 02:20+0000\n"
 "Last-Translator: strel\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/I2P/language/"
 "es/)\n"
@@ -98,8 +98,8 @@ msgstr "Cifrado NTRU-1087"
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
-"La dirección no contiene ningún destino para el correo electrónico ni una "
-"dirección externa: {0}"
+"La dirección no contiene ningún destino I2P de correo electrónico ni una "
+"dirección de correo externa: {0}"
 
 #: src/main/java/i2p/bote/email/Email.java:505
 #, java-format
@@ -472,7 +472,7 @@ msgstr "Responder a:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Addr. Book..."
-msgstr "Libreta direcc."
+msgstr "Lib. de dir..."
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -623,8 +623,8 @@ msgid ""
 msgstr ""
 "Se ha encontrado un registro coincidente en el repositorio de direcciones. "
 "Observe que el directorio de direcciones puede ser manipulado, así que no "
-"pulse &quot;import&quot; a no ser que confie en que ese es el destino de "
-"correo correcto."
+"pulse &quot;importar&quot; a no ser que confie en que ese es el destino I2P "
+"de correo correcto."
 
 #: src/main/webapp/importContact.jsp
 msgid "Fingerprint:"
@@ -632,7 +632,7 @@ msgstr "Huella de validación de claves ('fingerprint'):"
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
-msgstr "Destino de correo electrónico:"
+msgstr "Destino I2P de correo:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export Identities"
@@ -652,7 +652,7 @@ msgstr "Exportar"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
-msgstr "Añadir destino de correo electrónico al repositorio"
+msgstr "Añadir destino I2P de correo electrónico al repositorio"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "The name exists already. Please choose a different Public Name."
@@ -726,7 +726,7 @@ msgstr "Nombre"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Email Destination"
-msgstr "Destino del correo"
+msgstr "Destino I2P de correo"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -770,9 +770,9 @@ msgid ""
 "send email to the email destination, but only the identity holder can read "
 "it."
 msgstr ""
-"Cada identidad de correo I2P-Bote está asociada a un destino de correo. "
-"Cualquiera puede mandar correos a este destino, pero tan sólo el poseedor de "
-"la identidad los puede leer."
+"Cada identidad de correo I2P-Bote está asociada a un destino I2P de correo "
+"electrónico. Cualquiera puede mandar correos a este destino, pero tan sólo "
+"el poseedor de la identidad los puede leer."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -800,7 +800,8 @@ msgstr ""
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
 msgstr ""
-"Divulge el destino de su correo para que otros puedan contactar con usted."
+"Divulge el destino I2P de su correo electrónico para que otros puedan "
+"contactar con usted."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -828,9 +829,9 @@ msgid ""
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
 msgstr ""
-"Se recomienda generalmente elegir encriptación de curva elíptica de 256 bits "
-"porque produce el destino de correo más corto (86 caracteres) aunque "
-"continúa siendo altamente seguro."
+"Se recomienda generalmente elegir el cifrado de curva elíptica de 256 bits "
+"porque produce los destinos I2P de correo electrónico más cortos (86 "
+"caracteres) mientras continúa siendo altamente seguro."
 
 #: src/main/webapp/network.jsp
 msgid "Network"
@@ -866,7 +867,7 @@ msgstr "Papelera"
 
 #: src/main/webapp/folder.jsp
 msgid "Know"
-msgstr "Conocida"
+msgstr "Conocido"
 
 #: src/main/webapp/folder.jsp
 msgid "Sent Time"
@@ -955,9 +956,8 @@ msgid "Description"
 msgstr "Descripción"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "Borrar esta identidad"
+msgstr "Comprobar el correo para esta identidad"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
@@ -1039,7 +1039,7 @@ msgstr "(2 caracteres tardan segundos, 3 tardan minutos, etc.)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Email Destination:"
-msgstr "Destino del correo:"
+msgstr "Destino I2P de correo:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
@@ -1047,7 +1047,7 @@ msgstr "Identidad por defecto:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Include in global check:"
-msgstr ""
+msgstr "Incluir en la comprobación global:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1339,7 +1339,7 @@ msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Email Destination of the gateway:"
-msgstr "Destino de correo de la pasarela ('gateway'):"
+msgstr "Destino I2P del correo electrónico de la pasarela ('gateway'):"
 
 #: src/main/webapp/settings.jsp
 msgid "Change Password"

@@ -1,12 +1,13 @@
-#
 # Translators:
+# Translators:
+# benewfy <benewfy@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-02-14 22:33+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2015-07-21 08:45+0000\n"
+"PO-Revision-Date: 2015-06-30 14:57+0000\n"
+"Last-Translator: benewfy <benewfy@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/I2P/language/"
 "hu/)\n"
 "Language: hu\n"
@@ -21,7 +22,7 @@ msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:68
 msgid "Light Blue"
-msgstr ""
+msgstr "Világoskék"
 
 #: src/main/java/i2p/bote/Configuration.java:69
 msgid "Vanilla"
@@ -166,7 +167,7 @@ msgstr "Elüldve {0} számára a {1} címzettből"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:243
 msgid "Email sent"
-msgstr ""
+msgstr "E-mail elküldve"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:245
 msgid "Gateway disabled"
@@ -352,7 +353,7 @@ msgstr ""
 
 #: src/main/webapp/buttonFrame.jsp
 msgid "Last checked:"
-msgstr ""
+msgstr "Utoljára ellenőrizve:"
 
 #: src/main/webapp/header.jsp
 msgid "- I2P-Bote"
@@ -566,7 +567,7 @@ msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import"
-msgstr ""
+msgstr "Importálás"
 
 #: src/main/webapp/deleteIdentity.jsp
 msgid "The email identity has been deleted."
@@ -911,9 +912,8 @@ msgid "Description"
 msgstr "Leírás"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "Személyazonosság törlése"
+msgstr ""
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"

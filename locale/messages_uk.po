@@ -1,4 +1,4 @@
-#
+# Translators:
 # Translators:
 # gringoire <shmt@anapnea.net>, 2011
 # LinuxChata, 2014
@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-02-14 22:33+0000\n"
+"POT-Creation-Date: 2015-07-21 08:46+0000\n"
+"PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/projects/p/I2P/"
 "language/uk_UA/)\n"

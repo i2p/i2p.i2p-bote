@@ -1,4 +1,4 @@
-#
+# Translators:
 # Translators:
 # A5h8d0wf0x <littleslyfoxie28@gmail.com>, 2014
 # Waseihou Watashi <waseihou@gmail.com>, 2012
@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-02-14 22:33+0000\n"
+"POT-Creation-Date: 2015-07-21 08:45+0000\n"
+"PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/I2P/language/cs/)\n"
 "Language: cs\n"
@@ -909,9 +909,8 @@ msgid "Description"
 msgstr "Popis"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "Smazat tuto identitu"
+msgstr ""
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"

@@ -1,4 +1,4 @@
-#
+# Translators:
 # Translators:
 # blabla <blabla@trash-mail.com>, 2012
 # blabla <blabla@trash-mail.com>, 2015
@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-20 09:22+0000\n"
-"PO-Revision-Date: 2015-03-10 20:48+0000\n"
-"Last-Translator: blabla <blabla@trash-mail.com>\n"
+"POT-Creation-Date: 2015-07-21 08:45+0000\n"
+"PO-Revision-Date: 2015-04-09 09:05+0000\n"
+"Last-Translator: Lars Schimmer <echelon@i2pmail.org>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/I2P/language/"
 "de/)\n"
 "Language: de\n"
@@ -943,9 +943,8 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "Diese Identität löschen"
+msgstr "Auf neue Mails für diese Identität prüfen"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
@@ -1035,7 +1034,7 @@ msgstr "Beim Senden voreingestellt:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Include in global check:"
-msgstr ""
+msgstr "Im globalen Check inkludieren:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"

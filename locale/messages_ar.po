@@ -1,4 +1,4 @@
-#
+# Translators:
 # Translators:
 # ducki2p <ducki2p@gmail.com>, 2011
 # hamada <hamada@mail.i2p>, 2011
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-02-14 22:33+0000\n"
+"POT-Creation-Date: 2015-07-21 08:45+0000\n"
+"PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/I2P/language/"
 "ar/)\n"
@@ -906,9 +906,8 @@ msgid "Description"
 msgstr "وصف"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "حذف هذه الهوية"
+msgstr ""
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"

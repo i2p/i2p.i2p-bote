@@ -1,4 +1,4 @@
-#
+# Translators:
 # Translators:
 # walking <waling@mail.i2p>, 2013
 # walking <walking@i2pmail.org>, 2011
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-02-15 05:34+0000\n"
+"POT-Creation-Date: 2015-07-21 08:46+0000\n"
+"PO-Revision-Date: 2015-06-07 15:52+0000\n"
 "Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/I2P/"
 "language/zh_CN/)\n"
@@ -642,7 +642,7 @@ msgstr "要上传的图片："
 
 #: src/main/webapp/publishDestination.jsp
 msgid "(optional, 7.5 kBytes max)"
-msgstr "(可选,最大 7.5 Kb)"
+msgstr "(可选，最大 7.5 KB)"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Text to include:"
@@ -912,9 +912,8 @@ msgid "Description"
 msgstr "描述"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "删除此身份"
+msgstr "检查此身份的邮件"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
@@ -1002,7 +1001,7 @@ msgstr "默認身份:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Include in global check:"
-msgstr ""
+msgstr "包括在全局检查中:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"

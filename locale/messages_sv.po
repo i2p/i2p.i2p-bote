@@ -1,6 +1,7 @@
-#
+# Translators:
 # Translators:
 # ducki2p <ducki2p@gmail.com>, 2011
+# cacapo <handelsehorisont@gmail.com>, 2015
 # hottuna <i2p@robertfoss.se>, 2011,2013
 # hottuna <i2p@robertfoss.se>, 2013
 # hottuna <i2p@robertfoss.se>, 2011
@@ -9,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-02-14 22:33+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2015-07-21 08:46+0000\n"
+"PO-Revision-Date: 2015-04-09 18:00+0000\n"
+"Last-Translator: cacapo <handelsehorisont@gmail.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/projects/p/I2P/"
 "language/sv_SE/)\n"
 "Language: sv_SE\n"
@@ -22,15 +23,15 @@ msgstr ""
 
 #: src/main/java/i2p/bote/Configuration.java:67
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: src/main/java/i2p/bote/Configuration.java:68
 msgid "Light Blue"
-msgstr ""
+msgstr "Ljusblå"
 
 #: src/main/java/i2p/bote/Configuration.java:69
 msgid "Vanilla"
-msgstr ""
+msgstr "Vanilj"
 
 #: src/main/java/i2p/bote/I2PBote.java:515
 msgid "No identity matches the sender/from field: "
@@ -38,7 +39,7 @@ msgstr "Ingen identitet överensstämmer med avsändare/från fältet:"
 
 #: src/main/java/i2p/bote/I2PBote.java:719
 msgid "Checking password"
-msgstr ""
+msgstr "Kontrollerar lösenord"
 
 #: src/main/java/i2p/bote/I2PBote.java:722
 msgid "The old password is not correct."
@@ -50,19 +51,19 @@ msgstr "Det nya lösenordet och bekräftelselösenordet matchar inte."
 
 #: src/main/java/i2p/bote/I2PBote.java:731
 msgid "Re-encrypting identities"
-msgstr ""
+msgstr "Återkrypterar identiteter"
 
 #: src/main/java/i2p/bote/I2PBote.java:734
 msgid "Re-encrypting addressbook"
-msgstr ""
+msgstr "Återkrypterar adressbok"
 
 #: src/main/java/i2p/bote/I2PBote.java:737
 msgid "Re-encrypting folder"
-msgstr ""
+msgstr "Återkrypterar katalog"
 
 #: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Updating password file"
-msgstr ""
+msgstr "Uppdaterar lösenordsfil"
 
 #: src/main/java/i2p/bote/crypto/ECDH256_ECDSA256.java:45
 msgid "256-bit Elliptic Curve Encryption"
@@ -181,7 +182,7 @@ msgstr "Gateway avslagen"
 #: src/main/java/i2p/bote/web/JSPHelper.java:247
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
-msgstr ""
+msgstr "Ingen identitet matchar sändaren/från fält:{0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 #, java-format
@@ -221,7 +222,7 @@ msgstr "Nåbarhet %"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:225
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:230
 msgid "Untested"
-msgstr ""
+msgstr "Otestad"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:138
 msgid "Banned Peers:"
@@ -238,22 +239,22 @@ msgstr "Anledning för ban"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
 msgid "Reachable"
-msgstr ""
+msgstr "Nåbar"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
 msgid "Unreachable"
-msgstr ""
+msgstr "Icke nåbar"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:221
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:228
 msgid "Good"
-msgstr ""
+msgstr "Bra"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:223
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:229
 msgid "Unreliable"
-msgstr ""
+msgstr "Opålitlig"
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:73
 msgid "Error: Please add at least one recipient."
@@ -497,10 +498,12 @@ msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
 msgstr ""
+"Detta email kunde inte hittas i den här katalogen. Det har förmodligen "
+"flyttats till Skickat."
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
-msgstr ""
+msgstr "Detta email kunde inte hittas i den här katalogen."
 
 #: src/main/webapp/showEmail.jsp
 msgid "Signature:"
@@ -540,19 +543,19 @@ msgstr "Åter:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import Identities"
-msgstr ""
+msgstr "Importera identiteter"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Please select an identities file and try again."
-msgstr ""
+msgstr "Var vänlig välj en identitetsfil och försök igen."
 
 #: src/main/webapp/importIdentities.jsp
 msgid "The identities have been imported."
-msgstr ""
+msgstr "Identiteterna har importerats"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Identities file:"
-msgstr ""
+msgstr "Identitetsfil:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Password:"
@@ -560,15 +563,15 @@ msgstr "Lösenord:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "(leave blank if identities not encrypted)"
-msgstr ""
+msgstr "(lämna blank om identiteterna inte är krypterade)"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Overwrite all existing identities:"
-msgstr ""
+msgstr "Skriv över alla existerande identiteter:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Duplicates: replace existing identity:"
-msgstr ""
+msgstr "Duplicera: ersätt extisterande identiteter:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import"
@@ -614,11 +617,11 @@ msgstr "Epost-destinationen:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export Identities"
-msgstr ""
+msgstr "Exportera identiteter"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
-msgstr ""
+msgstr "(lämna blank för att inte kryptera identiteter)"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Confirm:"
@@ -626,7 +629,7 @@ msgstr "Bekräfta:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export"
-msgstr ""
+msgstr "Exportera"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -868,7 +871,7 @@ msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Identity"
-msgstr ""
+msgstr "Ingen identitet"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -927,9 +930,8 @@ msgid "Description"
 msgstr "Beskrivning"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "Ta bort denhär identiteten"
+msgstr "Kontrollera mail för denna identitet"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
@@ -1002,11 +1004,11 @@ msgstr "(Om osäker, låt vara standard)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Vanity Destination:"
-msgstr ""
+msgstr "Vanity Destination:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
-msgstr ""
+msgstr "(2 chars tar sekunder, 3 tar minuter, etc.)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Email Destination:"
@@ -1018,7 +1020,7 @@ msgstr "Standardidentitet"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Include in global check:"
-msgstr ""
+msgstr "Inkludera i global kontroll:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1054,7 +1056,7 @@ msgstr "Var god vänta..."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The Email Identity is being generated. This may take a while."
-msgstr ""
+msgstr "Emailidentiteten genereras. Detta kan ta en stund."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1094,7 +1096,7 @@ msgstr "I2P-Bote Version {0}"
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"
-msgstr ""
+msgstr "Utvecklare:"
 
 #: src/main/webapp/about.jsp
 msgid "Click to send an email"
@@ -1106,11 +1108,11 @@ msgstr "Feedback om I2P-Bote"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, implementation, user interface"
-msgstr ""
+msgstr "Tekniskt koncept, implementation, användargränssnitt"
 
 #: src/main/webapp/about.jsp
 msgid "User experience, extended features, Android app"
-msgstr ""
+msgstr "Användarupplevelse, utvidgade egenskaper, Android app"
 
 #: src/main/webapp/about.jsp
 msgid "Contributors:"
@@ -1118,7 +1120,7 @@ msgstr "Bidragare:"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr ""
+msgstr "Tekniskt koncept, översättning, QA, användbarhet, teknisk feedback"
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
@@ -1126,7 +1128,7 @@ msgstr "Pluginization, teknisk feedback"
 
 #: src/main/webapp/about.jsp
 msgid "Seedless integration"
-msgstr ""
+msgstr "Seedless integration"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1182,7 +1184,7 @@ msgstr "Ungersk översättning"
 
 #: src/main/webapp/about.jsp
 msgid "Alpha testing"
-msgstr ""
+msgstr "Alpha testing"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes, translation updates from tx"
@@ -1235,7 +1237,7 @@ msgstr "Inställningar har sparats"
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "Generell"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -1251,7 +1253,7 @@ msgstr "Slå på IMAP på port {0}"
 
 #: src/main/webapp/settings.jsp
 msgid "Enable SMTP on port {0}"
-msgstr ""
+msgstr "Aktivera SMTP på port {0}"
 
 #: src/main/webapp/settings.jsp
 msgid "Theme:"
@@ -1259,7 +1261,7 @@ msgstr "Tema:"
 
 #: src/main/webapp/settings.jsp
 msgid "Privacy"
-msgstr ""
+msgstr "Integritet"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -1273,7 +1275,7 @@ msgstr "Inkludera avsändningstidpunkt i utgående epost"
 
 #: src/main/webapp/settings.jsp
 msgid "Routing"
-msgstr ""
+msgstr "Routing"
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -1309,7 +1311,7 @@ msgstr "Byt lösenord"
 
 #: src/main/webapp/faq.jsp
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Vanliga Frågor"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1321,7 +1323,7 @@ msgstr "{0} epost totalt, {1} nya"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
-msgstr ""
+msgstr "{0} inkomplett"
 
 #: src/main/webapp/WEB-INF/tags/address.tag
 msgid "Add to Address Book"

@@ -1,4 +1,4 @@
-#
+# Translators:
 # Translators:
 # Boxoa590, 2012-2013
 # ducki2p <ducki2p@gmail.com>, 2011
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-02-15 18:59+0000\n"
+"POT-Creation-Date: 2015-07-21 08:45+0000\n"
+"PO-Revision-Date: 2015-03-23 14:51+0000\n"
 "Last-Translator: Towinet\n"
 "Language-Team: French (http://www.transifex.com/projects/p/I2P/language/"
 "fr/)\n"
@@ -944,9 +944,8 @@ msgid "Description"
 msgstr "Description"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "Supprimer cette identité"
+msgstr "Vérifiez le courrier pour cette identité"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
@@ -1036,7 +1035,7 @@ msgstr "Identité par défaut:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Include in global check:"
-msgstr ""
+msgstr "Inclure dans le contrôle global :"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"

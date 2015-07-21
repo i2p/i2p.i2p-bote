@@ -1,4 +1,4 @@
-#
+# Translators:
 # Translators:
 # Warton <businesshehe@yahoo.com>, 2012
 # polacco <polacco@i2pmail.org>, 2014
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 11:26+0000\n"
-"PO-Revision-Date: 2015-02-14 22:33+0000\n"
+"POT-Creation-Date: 2015-07-21 08:45+0000\n"
+"PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/I2P/language/"
 "pl/)\n"
@@ -933,9 +933,8 @@ msgid "Description"
 msgstr "Opis"
 
 #: src/main/webapp/identities.jsp
-#, fuzzy
 msgid "Check mail for this identity"
-msgstr "Usuń tą tożsamość"
+msgstr ""
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
