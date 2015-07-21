@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
@@ -49,7 +50,7 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
 
     public BucketManager(Hash localDestinationHash) {
         this.localDestinationHash = localDestinationHash;
-        kBuckets = Collections.synchronizedList(new ArrayList<KBucket>());
+        kBuckets = new CopyOnWriteArrayList<KBucket>();
         kBuckets.add(new KBucket(AbstractBucket.MIN_HASH_VALUE, AbstractBucket.MAX_HASH_VALUE, 0));   // this is the root bucket, so depth=0
         sBucket = new SBucket(localDestinationHash);
     }
