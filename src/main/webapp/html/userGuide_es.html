@@ -19,29 +19,29 @@
 <p>I2P-Bote es una aplicación de correo electrónico para I2P segura, altamente
 anónima y fácil de usar. Es un sistema sin servidores, completamente
 descentralizado, que establece/forma una red entre pares (P2P) construida
-sobre la vanguardista red de anonimización de baja-latencia I2P; añadiendo a
-esta un transporte de alta-latencia tipo-mixminion opcional evitando así los
-inconvenientes de las redes de baja-latencia.</p>
+sobre la vanguardista red de anonimización de baja latencia I2P; añadiendo a
+ésta un opcional transporte de alta latencia tipo mixminion, evitando así los
+inconvenientes de las redes de baja latencia.</p>
 
-<p>Por tanto, I2P-Bote hace un uso pleno del anonimato proporcionado por I2P,
+<p>Por tanto, I2P-Bote hace un uso pleno del anonimato proporcionado por I2P;
 además genera su propio anonimato al añadir otra capa de anonimización
 (red superpuesta).</p>
 
 <p>Este concepto de anonimato por capas es lo que hace a I2P-Bote tan flexible:
 puede configurarlo para que sea extremadamente anónimo y lento, o menos
-anónimo pero más-rápido/más-eficiente. En cualquier caso, I2P-Bote siempre
+anónimo pero más rápido / más eficiente. En cualquier caso, I2P-Bote siempre
 proporciona un muy buen anonimato para ambos, remitente y receptor, además
 de cifrado extremo-a-extremo. A menos que envíe o reciba correos electrónicos
 de la Internet regular, TODOS los correos electrónicos - el cuerpo del correo,
-adjuntos y la cabecera excepto la dirección del receptor (asunto, fecha, hora,
-dirección del remitente, &hellip;) - se cifran automática y transparentemente
+adjuntos y la cabecera (asunto, fecha, hora,
+dirección del remitente, &hellip;) excepto la dirección del receptor - se cifran automática y transparentemente
 de extremo-a-extremo. La dirección del receptor sólo es visible por el último
 nodo de la ruta de correo que almacena los paquetes en la red kad, y los
-respectivos nodos de almacenamiento, pero estos no pueden leer el contenido
-del correo, tampoco quien lo envió ni quien lo descargó.</p>
+respectivos nodos de almacenaje, pero estos no pueden leer el contenido del
+correo, tampoco quién lo envió ni quién lo descargó.</p>
 
 <p>I2P-Bote ofrece la opción de hacer sus comunicaciones aún más anónimas, al
-habilitar las rutas de correo de alta-latencia - sacrificando, sin embargo, el
+habilitar las rutas de correo de alta latencia - sacrificando, sin embargo, el
 rendimiento. Los usuarios que quieran que sus correos anónimos lleguen tan
 rápido como sea posible, querrán deshabilitar las rutas de correo y usar el envío
 'directo' a través de I2P. Está garantizado que usted nunca estará menos
@@ -49,11 +49,11 @@ anonimizado que el anonimato proporcionado por las conexiones I2P estándar.</p>
 
 <p>Para lograr una alta usabilidad, lo hemos habilitado para que sea utilizado con
 clientes de correo estándar tales como Thunderbird, Evolution, o Kmail, sin
-tener que preocuparse acerca de que información extra envían estas
+tener que preocuparse acerca de qué información extra envían estas
 aplicaciones en sus cabeceras. Más aún, hay una interfaz web que le permite
 enviar y leer correos electrónicos, o administrar su configuración e identidades.</p>
 
-<h2 id="How-To">2. Como usar I2P-Bote</h2>
+<h2 id="How-To">2. Cómo usar I2P-Bote</h2>
 
 <h3 id="Starting">2.1. Iniciar I2P-Bote</h3>
 <p>Después de iniciar I2P-Bote (por defecto está configurado para
@@ -78,15 +78,14 @@ con los que se comunique, o para diversos propósitos) y se enviará como
 'nombre del remitente' al receptor del correo. No hay necesidad de que el
 nombre público sea único.</p>
 
-<p>(Como aquí puede elegir cualquier nombre - cualquiera podría ahí llamarse a si
-mismo HungryHobo (suplantándole) - no es adecuado para que lo utilice el
-receptor para distinguir si dos correos vienen del mismo remitente. Este es el
-motivo por el que se muestra el nombre guardado en la libreta de direcciones
-local (sólo puede haber un nombre por cada clave de destino I2P), si hay
-alguno, y verá una marca verde en la columna "Conocidos" indicando que ese
-es el nombre localmente conocido. Si no hay entrada para un destino I2P en
-la libreta de direcciones local, el nombre especificado por el remitente se
-mostrará con un prefijo {UNK}, de desconocido, en los clientes de correo).</p>
+<p>(Como aquí puede escoger cualquier nombre - cualquiera podría llamarse ahí a si
+mismo HungryHobo (suplantándole) - no es adecuado para que lo use el receptor
+para distinguir si dos correos provienen del mismo remitente. Este es el porqué
+se muestra el nombre guardado en la libreta de direcciones local, si hay alguno,
+y verá una marca verde en la columna "Conocido", indicando que ese es el
+nombre localmente conocido. Si no hay una entrada para un destino I2P en la
+libreta de direcciones local, el nombre especificado por el remitente se mostrará
+con un prefijo {UNK} en los clientes de correo).</p>
 
 <p>También puede rellenar los otros campos, si lo desea:</p>
 
@@ -96,13 +95,13 @@ usted mismo acerca de esa identidad, puede introducirla aquí.</p>
 
 <p>Dirección de correo electrónico - este campo no se ha usado aún.</p>
 
-<p>Elija uno de los algoritmos de cifrado ofrecidos. Si tiene dudas quédese
-con el predeterminado.</p>
+<p>Escoja uno de los algoritmos de cifrado dados. Si tiene dudas, quédese
+con la configuración por defecto.</p>
 
 <p>Puede hacer clic sobre el nombre de una de sus identidades y copiar la clave
 larga mostrada bajo 'Destino I2P de correo electrónico'. Esta es su dirección
 de correo electrónico de I2P-Bote. Si quiere que alguien pueda enviarle un
-correo Bote, este necesitará que se le dé esa clave larga.</p>
+correo Bote, este necesitará que se le proporcione esta clave larga.</p>
 
 <p>Ahora puede enviar y recibir correos de I2P-Bote.</p>
 
@@ -121,11 +120,10 @@ remitente o 'Anónimo' bajo el epígrafe 'Desde', e introduzca la clave del
 destino I2P del correo electrónico del receptor o una dirección de email en
 su defecto en la línea 'Para:'.</p>
 
-<p>(Como alternativa, puede pulsar el botón 'Lib. de direcc.' justo debajo de
-esta misma línea, para elegir entre los destinos I2P de correo electrónico
-almacenados localmente en su libreta de direcciones: Marque el(los)
-usuario(s) a los que quiera que se les envíe su correo y pulse el botón
-'Añadir receptores'.)</p>
+<p>(Como alternativa, puede pulsar el botón 'Lib. de dir...' bajo esta misma
+línea, para elegir entre los destinos I2P de correo electrónico almacenados
+localmente en su libreta de direcciones: Marque el(los) usuario(s) a los que
+quiere que su correo sea enviado y pulse el botón 'Añadir destinatarios'.)</p>
 
 <p>Puede añadir varios receptores y cambiar el 'Para:' a 'CC:' o 'CCO:'.</p>
 
@@ -191,10 +189,10 @@ Entrada abrirá el correo.</p>
 <p>Lo mismo se aplica a todas las demás carpetas.</p>
 
 <p>(Debido a la naturaleza distribuida de I2P-Bote, enviar así como comprobar
-si hay correos y descargarlos lleva unos pocos minutos. Respectivamente
-más con rutas de correo activadas. Pero no necesita mantener el navegador
-abierto para eso, simplemente deje I2P-Bote ejecutándose como un proceso
-en segundo plano - esto también es beneficioso para su anonimato.)</p>
+y descargar correos lleva unos pocos minutos. Respectivamente más con
+las rutas de correo activadas. Pero no necesita mantener el navegador
+abierto para eso, simplemente deje I2P-Bote ejecutándose como un
+proceso en segundo plano - esto además beneficia su anonimato.)</p>
 
 <h3 id="Address-Book">2.4. Libreta de direcciones local</h3>
 <p>Si tiene la clave de correo electrónico I2P-Bote de alguien a quien quiera
@@ -272,13 +270,13 @@ ese horario fijo sin importar cuando llegó, ej. mediodía UTC.
 <p>(Al usar rutas de correo, las marcas de tiempo se deshabilitan automáticamente.)
 [aún no implementado]</p>
 
-<p>Bajo <em>Anonimato mixto</em> (número de umbral mínimo de paquetes
-de repetidor que se enviarán) puede especificar un umbral. Como su nodo
-sólo puede actuar con fiabilidad de forma mixta, si hay suficientes paquetes
-ajenos con los que mezclar y combinar los paquetes propios, acumulará
-mensajes cuyo tiempo de retardo haya vencido hasta alcanzar este límite
-inferior. Sólo cuando se sobrepase, su nodo comenzará a enviarlos fuera
-en orden aleatorio. [Aún no implementado]</p>
+<p>Bajo <em>Mezclar anonimato</em> puede especificar un umbral (número
+mínimo de paquetes de repetidor que se enviarán). Como su nodo sólo puede
+actuar con fiabilidad de forma mixta, si hay suficientes paquetes externos
+con los que mezclar y combinar los suyos propios, acumulará mensajes cuyo
+periodo de retardo haya vencido hasta alcanzar este límite inferior. Sólo
+cuando este sea sobrepasado, su nodo comenzará a enviarlos en orden
+aleatorio. [Aún no implementado]</p>
 
 <p><em>excluir identidad de la comprobación global</em> [Aún no implementado]</p>
 
@@ -339,14 +337,13 @@ correo postman: Si un usuario de I2P-Bote excede la cuota con correos
 salientes, los correos adicionales se enviarán rebotados de vuelta.</p>
 
 <h2 id="Considerations">3. Consideraciones sobre anonimato</h2>
-<p>¡No envíe información identificadora sobre usted (nombre, dirección, ubicación
+<p>¡No envíe información identificativa sobre usted (nombre, dirección, ubicación
 geográfica, zona horaria, edad, sitios web que acaba de visitar o sobre los que
-ha escrito en un blog, nombres de usuario, números de IP, identificación de
-router I2P, identificación de I2P-Bote, número de la seguridad social, número
-de tarjeta de crédito, &hellip;, copias de su pasaporte, permiso de conducir,
-contrato de arrendamiento de vivienda, fotos (con o sin ropa), documentos
-que contengan su nombre de usuario en la configuración del autor, y muchos
-muchos más)!</p>
+acaba de escribir en un blog, nombres de usuario, números IP, identificación de
+router I2P, identificación de I2P-Bote, número de seguridad social, número de
+tarjeta de crédito, &hellip;, copias de su pasaporte, permiso de conducir, contrato
+de alquiler de vivienda, fotos (con o sin ropa), documentos que contengan su
+nombre de usuario en la configuración del autor, y muchas muchas más)!</p>
 
 <p>Si es posible,</p>
 <ul>
@@ -359,21 +356,21 @@ de envío por-salto, [aún no <em>completamente</em> implementado]</p></li>
 </ul>
 <p>Puede suprimir el envío de fecha y hora en la cabecera de los correos electrónicos</p>
 
-<p>Cuando responde a un correo electrónico, ciertos marcadores como
-'Re: [asunto del correo que está respondiendo]' o '[nombre de usuario] escribió:'.
-son diferentes para los idiomas entre los que puede escoger en su configuración
-de idioma. Sin embargo, si no quiere que el receptor conozca qué idioma tiene
-configurado, puede suprimir la traducción de estos marcadores, de forma que
-estarán en inglés, sin importar cual sea su configuración de idioma. Para
-hacerlo así, marque 'Usar inglés para el texto añadido al correo saliente
-('Re:', 'wrote:', etc.)'</p>
+<p>Cuando responde a un correo electrónico, se añaden ciertos marcadores para
+mostrar al destinatario que este es una respuesta, como 'Re: [asunto del correo
+al que está respondiendo]' o '[nombre de usuario] escribió:'. Estos son distintos
+para los diferentes idiomas que puede escoger en su configuración de idioma.
+Sin embargo, si no quiere que el receptor sepa qué idioma ha configurado,
+puede suprimir la traducción de estos marcadores, de forma que permanecerán
+en inglés, sin importar cual sea su configuración de idioma. Para hacerlo así,
+marque 'Usar inglés para el texto añadido a correos salientes ('Re:', 'wrote:', etc.)'</p>
 
 <p>¡Tenga cuidado con los contenidos que envía! No incluya información
-personal o información que sólo usted pueda poseer. No escriba 'me voy a
-la cama ahora, es tarde' cuando incluya marcas de tiempo.</p>
+personal o información que sólo usted posea. No escriba 'Me voy a la
+cama ahora, es tarde' cuando incluya marcas de tiempo.</p>
 
-<p>El idioma en el que escribe sus correos, su estilo y expresiones, también
-pueden ser de interés para un atacante.</p>
+<p>El idioma en el que escribe sus correos electrónicos, su estilo y
+expresiones, también pueden ser de interés para un atacante.</p>
 
 <p>I2P-Bote también ofrece la posibilidad de usar distintas identidades de
 correo electrónico. Suponga que uno de sus contactos averigua su identidad,
@@ -386,27 +383,26 @@ dirección Bote, sabrán quien es usted. No ocurriría así si usted utiliza una
 dirección distinta para enviarles correos.</p>
 
 <h2 id="Technical-Concept">4. Concepto técnico</h2>
-<p>I2P-Bote es un sistema de correo electrónico cifrado de extremo-a-extremo,
-interno a la red I2P, y completamente descentralizado (es decir, sin servidores).
-Soporta distintas identidades y no expone las cabeceras del correo electrónico.
-Actualmente aún es un software en versión alfa. Puede accederse a él
-mediante consola web, y tiene soporte IMAP y SMTP, así que los correos-Bote
-pueden ser leídos y escritos por clientes de correo normales. Está planeado
-garantizar un anonimato adicional al proporcionar una opción de tranporte de
-alta-latencia. Todos los correos-Bote se cifran automáticamente de
-extremo-a-extremo, así que no hay necesidad de establecer un cifrado de
-correo extra (aunque puede hacer eso), y los correos-Bote se autentificarán
-automáticamente. Como es descentralizado, no hay sevidor de correo
-que pueda vincular distintas identidades de correo electrónico como
-comunicantes entre si (<em>perfilado/profiling</em>): incluso los nodos que
-están repitiendo los correos no conocerán al remitente, y aparte del remitente
-y el receptor, sólo el nodo al final del túnel de correo de alta-latencia y los
-nodos de almacenamiento, sabrán a quién (identidad anónima) está dirigido el
-correo. El remitente original puede haber desconectado mucho antes de que
-el correo llegue a estar disponible al otro lado. Esto se añade al grado de
-anonimato que puede alcanzarse con I2P-Bote. Para aquellos que no quieren 
-retardos altos: todas estas configuraciones son ajustables por el usuario, de
-forma que cada usuario decide cuanto anonimato quiere.</p>
+<p>I2P-Bote es un sistema de correo electrónico completamente descentralizado
+(es decir, sin servidores), con red interna propia, cifrado de extremo-a-extremo.
+Soporta distintas identidades y no expone las cabeceras del correo.
+Actualmente aún es un software en versión alfa. Puede accederse a él vía
+consola web, y tiene soporte IMAP y SMTP, así que los correos-Bote pueden
+leerse y escribirse por clientes de correo regulares. Está planeado garantizar un
+anonimato adicional al proporcionar una opción de transporte de alta-latencia.
+Todos los correos-Bote se cifran automáticamente de extremo-a-extremo, así
+que no hay necesidad de establecer cifrado extra del correo (aunque puede
+hacer esto), y lo correos-Bote se autentificarán automáticamente. Como es
+descentralizado, no hay servidor de email que pueda vincular distintas
+identidades de correo electrónico como comunicantes entre si  
+(<em>profiling</em>): Incluso los nodos que repiten los correos no conocerán
+el remitente, y aparte del remitente y el receptor sólo el nodo al final del túnel
+de alta-latencia de correo y los nodos de almacenaje sabrán a quién (con
+identidad anónima) se dirige el correo. El remitente original puede haber
+desconectado mucho antes de que el correo llegue a estar disponible al otro
+lado. Esto se añade al grado de anonimato que puede alcanzarse con I2P-Bote.
+Para aquellos que no quieren retardos altos: Todas estas configuraciones son
+ajustables por el usuario, así que cada uno decide cuanto anonimato quiere.</p>
 
 <p>Los nodos de I2P-Bote almacenan correos electrónicos cifrados en una
 DHT (tabla distribuida de hashes/identificadores) tipo Kademlia. Por tanto,
@@ -458,8 +454,8 @@ o de quién está enviando o recibiendo, o dónde están ubicados sus contactos.
 
 <p>I2P-Bote oculta ambas, la identidad y ubicación del remitente y la del
 receptor, así como las de los nodos intermediarios (nodos repetidores, y de
-almacenamiento), el contenido de sus correos, sus tamaños, y el número
-de correos que envió.</p>
+almacenaje), el contenido de sus correos, sus tamaños, y el número de
+correos que envió.</p>
 
 <p>Sólo el receptor puede conocer el destino I2P del correo Bote del remitente,
 y si este elige no enviar su destino I2P, ni siquiera el receptor lo conocerá.</p>
@@ -494,8 +490,8 @@ receptores a los que el correo estuviera dirigido vía 'Para:' o "CC:'</p>
 <p>Todas las entradas que estaban bajo 'CCO:' sólo serán visibles por el
 remitente y este mismo receptor.</p>
 
-<p>La hora de recepción y de envío sólo serán visibles, en su caso,
-por el remitente y el receptor.</p>
+<p>La hora de envío sólo será visible, si acaso, para remitente
+y receptor.</p>
 
 <h3>Lo que I2P-Bote <em>puede opcionalmente ocultar</em>:</h3>
 <ul>

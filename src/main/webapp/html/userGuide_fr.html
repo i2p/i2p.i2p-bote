@@ -79,20 +79,7 @@ vous en avez plusieurs, pour communiquer avec différents groupes d'utilisateurs
 ou pour des besoins différents) et il sera envoyé aux destinataires en tant que
 'nom d'expéditeur'. Il n'est pas nécessaire qu'il soit unique.</p>
 
-<p>(Comme on peut choisir ici n'importe quel nom – n'importe qui pourrait
-choisir ici HungryHobo comme nom public – ce champ n'est pas conçu
-pour apporter au destinataire la certitude que deux messages
-proviennent du même expéditeur. C'est pourquoi c'est le nom
-sauvegardé dans le carnet d'adresses local [il ne peut y avoir qu'un
-seul nom par clé de destination] qui est affiché dans la boîte de
-réception si l'expéditeur en a sélectionné un lors de l'envoi
-[envoi non anonyme], et vous verrez alors une marque verte dans la
-colonne 'Connu' même si le nom public spécifié par
-l'expéditeur est différent pour cette sienne identité, indiquant
-ainsi qu'il s'agit bien de la destination connue localement. S'il n'y
-a pas d'entrée pour une destination donnée dans le carnet
-d'adresses, le nom indiqué par l'expéditeur est affiché précédé
-du préfixe [UNK] dans les logiciels clients de messagerie).</p>
+<p>(Comme vous pouvez choisir un nom ici - n'importe qui pourrait s'appeler HungryHobo ici - cela ne convient pas pour être utilisable par le destinataire pour dire si deux courriers viennent du même expéditeur. C'est pourquoi le nom sauvegardé dans le carnet d'adresses local (il peut seulement y avoir un nom par clé de destination) est affiché, s'il y en a un, et vous verrez une marque verte dans la colonne "Connu", afin d'exposer si c'est le nom connu localement. S'il n'y a aucune entrée pour une destination dans le carnet d'adresses local, le nom indiqué par l'expéditeur sera affiché avec un préfixe {UNK} dans les clients de courrier).</p>
 
 <p>Vous pouvez aussi compléter les autres champs, si vous le souhaitez :</p>
 
@@ -102,13 +89,9 @@ sujet de cette identité, ce champ est prévu pour cela.</p>
 
 <p>Adresse e-mail - champ pas encore utilisé.</p>
 
-<p>Choisissez un algorithme de cryptage parmi ceux proposés. Dans le doute,
-gardez celui proposé par défaut.</p>
+<p>Choisissez un des algorithmes de chiffrement proposés. En cas de doute, gardez celui qui est prédéfini.</p>
 
-<p>Vous pouvez cliquer sur une de vos identités et copier la longue clé
-affichée sous 'Destination de messagerie'. C'est votre
-adresse e-mail I2P-Bote. Si vous voulez recevoir des messages de
-quelqu'un, il faudra la lui transmettre.</p>
+<p>Vous pouvez cliquer sur le nom d'une de vos identités puis copier la longue clé affichée sous 'Destination de courrier électronique'. Ceci est votre adresse électronique I2P-Bote. Si vous voulez que quelqu'un puisse vous envoyer un courrier de bote, il faut qu'il lui soit donné cette longue clé.</p>
 
 <p>Vous pouvez maintenant envoyer et recevoir des messages I2P-Bote.</p>
 
@@ -126,11 +109,7 @@ correspondant à qui vous voulez envoyer un message bote.</p>
 d'expéditeur ou 'Anonyme' dans le champ 'De :' et entrez la destination du
 destinataire dans le champ 'À :', ou une adresse mail.</p>
 
-<p>(Vous pouvez aussi cliquer sur le bouton 'Carnet d'adresses'
-tout proche de ce champ, pour choisir une destination stockée
-localement dans votre carnet d'adresses : cochez le/les
-utilisateur(s) destinataires et cliquez sur le bouton 'Ajouter les
-destinataires'.)</p>
+<p>(autrement, vous pouvez presser le bouton "Carnet d'adresses" situé juste sous cette ligne, afin de choisir de quelle destination de courrier électronique stockée localement dans votre carnet d'adresses: marquer le/les utilisateur(s) auquel(s) vous voulez que votre courrier soit envoyé et pressez le bouton ''Ajouter des destinataires'.)</p>
 
 <p>Vous pouvez ajouter plusieurs destinataires et changer l'attribut 'À:' pour
 'Cc:' ou 'Cci:'.</p>
@@ -202,12 +181,7 @@ comme expéditeur) sera repéré par deux marques 'x'.</p>
 
 <p>Ceci vaut pour tous les autres dossiers.</p>
 
-<p>(De par la nature décentralisée d'I2P-Bote, l'envoi comme la relève
-prennent quelques minutes. Sensiblement plus lorsque les routes de
-messages sont activées. Mais vous n'avez pas besoin de garder le
-navigateur ouvert: il suffit de laisser tourner I2P-Bote en
-tant que processus d'arrière plan - ce dont profite aussi votre
-anonymat.)</p>
+<p>(En raison de la nature distribuée d'I2P-Bote, cela prend quelques minutes d'envoyer aussi bien que de vérifier s'il y a de nouveaux courriers et de les recevoir). Avec les parcours de courrier (mail routes) activées cela en prend respectivement plus. Mais vous n'avez pas besoin de garder le navigateur ouvert pour cela, laissez simplement I2P-Bote s'exécuter en tant que processus de fond - ceci bénéficie aussi à votre anonymat.)</p>
 
 <h3 id="Address-Book">2.4. Carnet d'adresses local</h3>
 <p>Si vous avez la clé de destination I2P-Bote de quelqu'un à qui vous
@@ -282,13 +256,7 @@ moment où il est arrivé [heure fixe pas encore implémentée].]</p>
 <p>(Quand vous utilisez les routes de messagerie, les horodatages sont
 automatiquement désactivés.) [pas encore implémenté]</p>
 
-<p>Sous <em>Minimum dans la messagerie</em> (nombre minimum de paquets relayés
-à envoyer), vous pouvez indiquer un seuil. Comme votre instance I2P-Bote peut
-fonctionner comme un relais mélangeur, s'il y a suffisamment de paquets
-étrangers à mélanger et avec lesquels camoufler les vôtres, elle va accumuler
-les messages pour lesquels le retard demandé n'est pas échu jusqu'à
-atteindre ce seuil. Une fois atteint, votre bote commence à les
-transférer aléatoirement. [pas encore implémenté]</p>
+<p>En dessous de <em>Mixing anonimity<em> (nombre seuil minimal de paquets de relais qui seront envoyés) vous pouvez spécifier un seuil. Vu que votre noeud peut seulement agir de façon fiable sous forme de mélange s'il y a suffisamment de paquets étrangers afin de les mélanger et de mélanger avec vos propres paquets, il accumulera des messages dont le temps de d'attente est au delà, jusqu'à ce qu'il atteigne cette limite inférieure. Puis seulement quand cela sera dépassé, votre noeud commencera à les envoyer en ordre aléatoire. [Pas encore mis en œuvre]</em></em></p>
 
 <p><em>Exclure l'identité de la relève globale</em> [pas encore implémenté]</p>
 
@@ -353,16 +321,7 @@ messages envoyés, les messages supplémentaires sont retournés à
 l'envoyeur.</p>
 
 <h2 id="Considerations">3. Considérations sur l'anonymat</h2>
-<p>N'envoyez
-pas d'informations susceptibles de vous identifier (nom, adresse,
-situation géographique, fuseau horaire, horodatages, âge, sites web
-que vous venez de visiter ou sur lesquels vous venez de parler sur un
-blog, noms d'utilisateurs, adresses IP, identités de routeur I2P
-routeur, de nœud I2P-Bote, numéros de sécurité sociale, de carte
-de crédit, &hellip;, copies de passeport, de permis de conduire, de
-contrats de location, de photos - nu ou habillé, documents qui
-contiennent votre nom comme auteur dans les réglages, et une
-multitude d'autres)!</p>
+<p>N'envoyez pas d'informations d'identification vous concernant ! (ex: nom, adresse, emplacement géographique, fuseau horaire, âge, sites Web vous venez de visiter ou au sujet desquels vous avez bloggé, nom d'utilisateur, adresses IP, ID de routeur I2P, ID deI2P-Bote, numéro de sécurité sociale, numéro de carte de crédit, …, copies de votre passeport, permis de conduire, contrat de location habitation, photos (nu ou avec des vêtements), documents qui contiennent votre nom d'utilisateur dans les paramètres d'auteur, et beaucoup beaucoup plus)</p>
 
 <p>Si possible,</p>
 <ul>
@@ -375,25 +334,11 @@ aléatoires ou fixes par saut [pas encore <em>complètement</em> implémenté],<
 </ul>
 <p>Vous pouvez supprimer l'envoi des horodatages des en-têtes de messages.</p>
 
-<p>Quand vous répondez, certains marqueurs comme, 'Rép: [Top secret]' ou
-'[mégaphone] a écrit:' sont ajoutés à votre réponse. Ils diffèrent d'une langue
-à l'autre, suivant vos préférences de réglage de langue de l'interface
-d'I2P-Bote. Cependant, si vous ne voulez pas que vos destinataires
-puissent savoir comment vous avez effectué ce réglage (révélateur
-de votre langue et peut-être de votre nationalité), vous pouvez
-désactiver la traduction de ces marqueurs pour qu'il restent en
-anglais, quelle que soit votre réglage de langue: Cochez la
-case 'Utiliser l'anglais pour les titres d'en-têtes de
-messages sortants ('Re', 'wrote', etc.)'.</p>
+<p>Quand vous répondez à un courrier électronique, certains marqueurs sont ajoutés afin de montrer au destinataire que c'est une réponse, par exemple "Re: [le sujet du courrier auquel vous répondez]" ou "[nom d'utilisateur] a écrit:". Ceux-ci sont différents selon les langues parmi lesquelles vous pouvez choisir dans vos paramètres de langue. Cependant, si vous ne voulez pas que le destinataire sache quelle est la langue vous avez mis, vous pouvez supprimer la traduction de ces marqueurs, afin que ceux-ci soient en anglais uniquement, quel que soit votre votre paramétrage de langue. Pour faire cela, cochez "Utiliser l'anglais pour le texte ajouté aux emails sortants ('Re:', 'wrote:  etc.)"</p>
 
-<p>Soyez prudent sur le contenu de vos envois! N'incluez pas d'information
-personnelles ou des informations que vous seul pouvez posséder.
-N'écrivez pas 'je vais me coucher, il est tard',
-lorsque les tampons horaires ne sont pas désactivés.</p>
+<p>Soyez prudent avec le contenu que vous envoyez ! N'incluez pas d'informations personnelles ou d'informations que vous seul possédez. N'écrivez pas "je vais au lit maintenant, il est tard" si vous incluez l'horodatage.</p>
 
-<p>La langue dans laquelle vous écrivez, votre style et vos particularités
-d'expression sont autant d'autres éléments qui pourraient intéresser un
-attaquant.</p>
+<p>La langue dans laquelle vous écrivez vos courriers électroniques, votre style et formulations peuvent aussi être intéressantes pour un attaquant.</p>
 
 <p>I2P-Bote permet aussi l'utilisation d'identités multiples. Supposez qu'un de
 vos contacts découvre votre identité, car vous avez oublié
@@ -407,30 +352,7 @@ pourraient pas si vous aviez utilisé une identité différente pour
 vous adresser à eux.</p>
 
 <h2 id="Technical-Concept">4. Concept technique</h2>
-<p>I2P-Bote est un système de messagerie totalement décentralisé (sans
-serveur) intra réseau crypté de bout en bout. Il supporte
-l'utilisation d'identités multiples et n'expose pas les en-têtes de
-messages. Il est actuellement encore en version alpha et ne peut être
-utilisé que par son interface web intégré à la console du routeur
-I2P. Il disposera bientôt du support de POP3, et il est prévu qu'il
-garantisse un niveau d'anonymat supplémentaire via une option de
-transport à haute latence. Tous les messages bote sont cryptés
-automatiquement de bout en bout, de telle sorte qu'il ne soit pas
-nécessaire d'utiliser un autre système de cryptage (bien que ça
-soit possible), et les messages sont automatiquement authentifiés.
-Comme il est décentralisé, il n'y a pas de serveur de messagerie
-qui puisse établir de relation entre différentes identités en tant
-qu'elles communiqueraient les unes avec les autres (profilage) : même
-les nœuds relayant les messages ne connaissent pas l'expéditeur, et
-hormis l'expéditeur et le destinataire, seuls le point terminal du
-tunnel de messages à haute latence et les nœuds de stockage savent
-à qui (identité anonyme) le message est destiné. L'expéditeur
-peut être passé hors ligne depuis longtemps lorsque le message
-devient disponible côté destinataire. Ceci améliore la classe
-d'anonymat qui peut être atteinte par I2P-Bote. Pour ceux qui ne
-veulent pas de longs retards, tous ces réglages sont accessibles à
-l'utilisateur et chacun peut ainsi ajuster le niveau d'anonymat à
-ses désirs.</p>
+<p>I2P-Bote est un système de messagerie électronique qui : est chiffré de bout en bout, interne au réseau, entièrement décentralisé (c'est-à-dire sans serveur). Il supporte différentes identités et n'expose pas d'en-têtes de courrier électronique. Actuellement, il a encore un statut de logiciel alpha. Il est accessible via la console Web, et supporte IMAP et SMTP, par conséquent les courriers-bote peuvent être lus et écrits par des logiciels clients classiques de courrier électronique. Il est prévu de garantir de l'anonymat supplémentaire en fournissant une option de transport à haute latence. Tous les courriers-bote sont chiffrés automatiquement de bout en bout, pour qu'il n'y ait aucun besoin de configurer du chiffrage de courrier électronique supplémentaire (quoique vous puissiez le faire), et les courriers-bote sont authentifiés automatiquement. Comme il est décentralisé, il n'y a aucun serveur de courrier électronique qui pourrait lier des identités de courrier électronique différentes comme communiquant l'une avec l'autre (<em>profiling<em>) : même les noeuds retransmettant les courriers ne connaîtront pas l'expéditeur en dehors de l'expéditeur du destinataire, seuls le bout du tunnel de courrier à haute latence et les noeuds de stockage sauront à qui (identité anonyme) le courrier est destiné. Il est donc possible que l'expéditeur original soit parti hors connexion longtemps avant que le courrier devienne disponible de l'autre côté. Ceci augmente le degré d'anonymat qu'il est possible d'atteindre avec I2P-Bote. Pour les utilisateurs qui ne veulent pas de délais élevés : tous ces paramètres sont réglables par l'utilisateur, donc chaque utilisateur choisit finalement combien d'anonymat il veut.</em></em></p>
 
 <p>Les nœuds I2P-Bote stockent les messages cryptés dans une table de
 hachage décentralisée (DHT) Kademlia. En conséquence, un message
@@ -524,8 +446,7 @@ dont les adresses ont été indiquées en 'A:' ou 'Cc:'.</p>
 <p>Toutes les entrées 'Cci:' ne sont visibles qu'à l'expéditeur et au
 destinataire spécifique.</p>
 
-<p>Le moment de l'envoi, s'il est précisé, n'est visible que par l'expéditeur
-et le destinataire.</p>
+<p>L'heure d'expédition sera, le cas échéant, seulement visible par l'expéditeur et le destinataire.</p>
 
 <h3>Ce qu'I2P-Bote <em>peut masquer optionnellement</em>:</h3>
 <ul>
@@ -572,7 +493,7 @@ informations d'en-têtes et les pièces jointes.</p>
 <p>Une destination de messagerie I2P-Bote est une chaîne en base 64
 contenant une clé publique de cryptage et une clé de vérification
 de signature, par exemple:</p>
-<pre>    uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
+<pre>uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
     In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
     FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da
     -nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9
