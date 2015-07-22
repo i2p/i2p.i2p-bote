@@ -167,7 +167,8 @@ public abstract class Folder<T> {
                     log.debug("Reading file: '" + filePath + "'");
                     try {
                         nextElement = createFolderElement(currentFile);
-                        return;
+                        if (nextElement != null)
+                            return;
                     }
                     catch (PasswordException e) {
                         throw e;
@@ -192,7 +193,8 @@ public abstract class Folder<T> {
     /**
      * Reads a file from the filesystem and returns it as an object of type <code>T</code>.
      * @param file
-     * @throws Exception
+     * @return the object, or null if it could not be created but an error shouldn't be logged.
+     * @throws Exception to be logged if the object could not be created.
      */
     protected abstract T createFolderElement(File file) throws Exception;
     

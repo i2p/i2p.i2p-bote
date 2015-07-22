@@ -72,7 +72,7 @@ public class RelayPacketFolder extends PacketFolder<RelayRequest> {
     }
     
     @Override
-    protected RelayRequest createFolderElement(File file) throws IOException, MalformedPacketException {
+    protected RelayRequest createFolderElement(File file) throws IOException {
         RelayRequest packet = super.createFolderElement(file);
         try {
             long sendTime = getSendTime(file.getName());

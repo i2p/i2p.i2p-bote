@@ -80,8 +80,15 @@ public class PacketFolder<PacketType extends I2PBotePacket> extends Folder<Packe
     
     @Override
     @SuppressWarnings("unchecked")
-    protected PacketType createFolderElement(File file) throws IOException, MalformedPacketException {
-        return (PacketType)I2PBotePacket.createPacket(file);
+    protected PacketType createFolderElement(File file) throws IOException {
+        try {
+            return (PacketType)I2PBotePacket.createPacket(file);
+        } catch (MalformedPacketException e) {
+            log.error("Found malformed packet, deleting file: " + file.getAbsolutePath() + " (file size=" + file.length() + ")", e);
+            if (!file.delete())
+                log.error("Can't delete malformed packet");
+            return null;
+        }
     }
 
     @Override
