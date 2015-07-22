@@ -73,12 +73,13 @@ public class RelayPacketFolder extends PacketFolder<RelayRequest> {
     @Override
     protected RelayRequest createFolderElement(File file) throws IOException {
         RelayRequest packet = super.createFolderElement(file);
-        try {
-            long sendTime = getSendTime(file.getName());
-            packet.setSendTime(sendTime);
-        }
-        catch (NumberFormatException e) {
-            log.error("Invalid send time in filename: <" + file.getAbsolutePath() + ">", e);
+        if (packet != null) {
+            try {
+                long sendTime = getSendTime(file.getName());
+                packet.setSendTime(sendTime);
+            } catch (NumberFormatException e) {
+                log.error("Invalid send time in filename: <" + file.getAbsolutePath() + ">", e);
+            }
         }
         return packet;
     }
