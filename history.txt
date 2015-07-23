@@ -2,12 +2,21 @@ I2P-Bote Version History
 ------------------------
 
 0.2.11
+  * New default theme based on Material design
+  * New features:
+     o Exclude individual identities from global email checking
+     o Manual per-identity email checking
+     o Import and export identities
   * Strip prefixes, spaces and newlines from email destinations (to better
     handle destinations pasted from different sources). Supported prefixes:
      o mailto:
      o bote:
      o i2pbote:
+  * Translations for user guide and FAQ
+  * Use I2P XSSFilter on inputs
+  * Bundle BouncyCastle 1.51 crypto provider
   * In-app update notification removed
+  * Bug fixes
 
 0.2.10 (Released on Jul 23, 2014)
   * Vanity destinations
