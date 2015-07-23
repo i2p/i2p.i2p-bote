@@ -271,7 +271,11 @@ public class EmailFolder extends Folder<Email> {
             log.error("Cannot move email file <" + oldEmailFile.getAbsolutePath() + "> to <" + newEmailFile.getAbsolutePath() + ">", e);
             success = false;
         }
-        
+
+        // We don't want to move the metadata file if we couldn't move the email file
+        if (!success)
+            return false;
+
         File oldMetaFile = getMetadataFile(oldEmailFile);
         if (oldMetaFile.exists()) {
             File newMetaFile = getMetadataFile(newEmailFile);
