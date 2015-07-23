@@ -110,7 +110,9 @@ public class EmailFolder extends Folder<Email> {
     public void changePassword(byte[] oldPassword, DerivedKey newKey) throws FileNotFoundException, IOException, GeneralSecurityException, PasswordException {
         for (File emailFile: getFilenames()) {   // getFilenames() only returns email files but not metadata files
             FileEncryptionUtil.changePassword(emailFile, oldPassword, newKey);
-            FileEncryptionUtil.changePassword(getMetadataFile(emailFile), oldPassword, newKey);
+            File metadataFile = getMetadataFile(emailFile);
+            if (metadataFile.exists())
+                FileEncryptionUtil.changePassword(metadataFile, oldPassword, newKey);
         }
     }
     
@@ -501,8 +503,10 @@ public class EmailFolder extends Folder<Email> {
         InputStream emailStream = null;
         try {
             emailStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(emailFile), passwordHolder));
+            InputStream metadataStream = null;
             File metadataFile = getMetadataFile(emailFile);
-            InputStream metadataStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(metadataFile), passwordHolder));
+            if (metadataFile.exists())
+                metadataStream = new BufferedInputStream(new EncryptedInputStream(new FileInputStream(metadataFile), passwordHolder));
             Email email = new Email(emailStream, metadataStream, passwordHolder);
             
             String messageIdString = emailFile.getName().substring(0, 44);
