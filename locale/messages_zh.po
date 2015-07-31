@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-21 08:46+0000\n"
+"POT-Creation-Date: 2015-07-31 04:00+0000\n"
 "PO-Revision-Date: 2015-06-07 15:52+0000\n"
 "Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/I2P/"
@@ -1074,6 +1074,14 @@ msgstr "关于 I2P-Bote"
 #: src/main/webapp/about.jsp
 msgid "I2P-Bote Version {0}"
 msgstr "I2P-Bote, 版本 {0}"
+
+#: src/main/webapp/about.jsp
+msgid "To submit bug reports or feature requests:"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "click here"
+msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"

@@ -34,7 +34,8 @@
             <ib:param value="${jspHelperBean.appVersion}"/>
         </ib:message>
     </h2>
-    <br/>
+
+    <p><ib:message key="To submit bug reports or feature requests:"/> <a href="http://trac.i2p2.i2p/newticket?component=apps/plugins&keywords=I2P-Bote"><ib:message key="click here"/></a>.</p>
     
     <div class="contributor-category"><ib:message key="Developers:"/></div>
     <div>
