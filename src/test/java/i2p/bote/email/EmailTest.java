@@ -1,4 +1,5 @@
 /**
+ * Copyright (C) 2015  str4d@mail.i2p
  * Copyright (C) 2009  HungryHobo@mail.i2p
  * 
  * The GPG fingerprint for HungryHobo@mail.i2p is:
@@ -21,9 +22,11 @@
 
 package i2p.bote.email;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import i2p.bote.TestUtil;
 import i2p.bote.TestUtil.TestIdentity;
@@ -32,11 +35,13 @@ import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.packet.I2PBotePacket;
 import i2p.bote.packet.dht.UnencryptedEmailPacket;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -46,11 +51,14 @@ import java.util.Random;
 import javax.mail.MessagingException;
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MailDateFormat;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class EmailTest {
+    private static final String TEST_EMAIL_WITH_TIMEZONE = "From: alice@example.com\r\nTo: bob@example.com\r\nDate: Date: Sat, 1 Aug 2015 13:37:00 -0700\r\n\r\nTest email.";
+
     private Map<Email, EmailIdentity> identities;
     private List<Email> emails;
     private String bccEmailDestination;
@@ -195,6 +203,28 @@ public class EmailTest {
         KeyUpdateHandler keyUpdateHandler = TestUtil.createDummyKeyUpdateHandler();
         Collection<UnencryptedEmailPacket> packets = newEmail.createEmailPackets(bccIdentity, keyUpdateHandler, null, I2PBotePacket.MAX_DATAGRAM_SIZE);
         assertEquals("The email was not compressed into one email packet.", 1, packets.size());
+    }
+
+    @Test
+    public void testDefaultDateIsUTC() throws Exception {
+        Email email = new Email(true);
+        assertNull(email.getSentDate());
+
+        email.updateHeaders();
+        assertNotNull(email.getSentDate());
+        assertThat(email.getHeader("Date", null), endsWith("+0000 (GMT)"));
+    }
+
+    @Test
+    public void testProvidedDateIsConvertedToUTC() throws Exception {
+        ByteArrayInputStream in = new ByteArrayInputStream(TEST_EMAIL_WITH_TIMEZONE.getBytes());
+        Email email = new Email(in, false);
+        assertNotNull(email.getSentDate());
+        assertThat(email.getHeader("Date", null), endsWith("-0700"));
+
+        email.updateHeaders();
+        assertNotNull(email.getSentDate());
+        assertThat(email.getHeader("Date", null), endsWith("+0000 (GMT)"));
     }
     
     // TODO test an uncompressible email
