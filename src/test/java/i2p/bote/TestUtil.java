@@ -23,6 +23,7 @@ package i2p.bote;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.crypto.ECDH256_ECDSA256;
 import i2p.bote.crypto.ECDH521_ECDSA521;
@@ -53,6 +54,10 @@ import org.jmock.lib.concurrent.Synchroniser;
 import org.jmock.lib.legacy.ClassImposteriser;
 
 public class TestUtil {
+    static {
+        // To load BouncyCastle provider
+        CryptoFactory.getInstances();
+    }
     
     public static void assertEquals(String message, Email email1, Email email2) throws IOException, MessagingException {
         assertTrue(message, equals(email1, email2));
