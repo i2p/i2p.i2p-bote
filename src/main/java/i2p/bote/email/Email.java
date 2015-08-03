@@ -260,12 +260,13 @@ public class Email extends MimeMessage {
         
         // Depending on includeSendTime, set the send time or remove the send time field
         if (includeSendTime) {
-            if (getSentDate() == null) {
-                // Set the "Date" field in UTC time, using the English locale.
-                MailDateFormat formatter = new MailDateFormat();
-                formatter.setTimeZone(TimeZone.getTimeZone("GMT"));   // always use UTC for outgoing mail
+            // Ensure the "Date" field is set in UTC time, using the English locale.
+            MailDateFormat formatter = new MailDateFormat();
+            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));   // always use UTC for outgoing mail
+            if (getSentDate() == null)
                 setHeader("Date", formatter.format(new Date()));
-            }
+            else
+                setHeader("Date", formatter.format(getSentDate()));
         }
         else
             removeHeader("Date");
