@@ -44,6 +44,7 @@
         <include name="commons-configuration-1.9.jar"/>
         <include name="commons-io-2.4.jar"/>
         <include name="commons-lang-2.6.jar"/>
+        <include name="james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar"/>
         <include name="james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar"/>
         <include name="james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar"/>
         <include name="james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar"/>
@@ -597,6 +598,7 @@
                 <include name="**/commons-configuration-1.9.jar"/>
                 <include name="**/commons-io-2.4.jar"/>
                 <include name="**/commons-lang-2.6.jar"/>
+                <include name="**/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar"/>
                 <include name="**/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar"/>
                 <include name="**/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar"/>
                 <include name="**/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar"/>

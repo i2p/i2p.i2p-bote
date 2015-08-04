@@ -27,18 +27,25 @@ import i2p.bote.fileencryption.PasswordVerifier;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.EmailFolderManager;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
 import javax.mail.Flags;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 import net.i2p.util.Log;
 import net.i2p.util.StrongTls;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.james.filesystem.api.FileSystem;
 import org.apache.james.imap.api.display.HumanReadableText;
 import org.apache.james.imap.api.display.Locales;
 import org.apache.james.imap.api.display.Localizer;
@@ -70,9 +77,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ImapService extends IMAPServer {
     private final static String IMAP_USER = "bote";
+    private static final String SSL_KEYSTORE_FILE = "file:///BoteSSLKeyStore";
     
     private Log log = new Log(ImapService.class);
     private EmailFolderManager folderManager;
+    private File sslKeyStore;
     private MapperFactory mailboxSessionMapperFactory;
 
     public ImapService(Configuration configuration, final PasswordVerifier passwordVerifier, EmailFolderManager folderManager) throws ConfigurationException {
@@ -80,15 +89,50 @@ public class ImapService extends IMAPServer {
         
         setLog(LoggerFactory.getLogger(ImapService.class));
 
-        HierarchicalConfiguration cfg = new HierarchicalConfiguration();
-        // enable STARTTLS
-        cfg.setProperty("tls.[@startTLS]", true);
-        cfg.setProperty("tls.keystore", configuration.getSSLKeyStoreFile().getAbsolutePath());
-        cfg.setProperty("tls.secret", configuration.getSSLKeyStorePassword());
-        // select strong cipher suites
-        cfg.setProperty("tls.supportedCipherSuites.cipherSuite", StrongTls.getRecommendedCipherSuites(new String[0]));
+        // Set up the keystore for the SSL certificate
+        sslKeyStore = configuration.getSSLKeyStoreFile();
+        setFileSystem(new FileSystem() {
+            @Override
+            public InputStream getResource(String resource) throws IOException {
+                return null;
+            }
+            
+            @Override
+            public File getFile(String fileURL) throws FileNotFoundException {
+                if (fileURL.equals(SSL_KEYSTORE_FILE))
+                    return sslKeyStore;
+                return null;
+            }
+            
+            @Override
+            public File getBasedir() throws FileNotFoundException {
+                return null;
+            }
+        });
 
+        HierarchicalConfiguration cfg = new HierarchicalConfiguration();
+        SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocket s = null;
+        try {
+            // Create an unconnected socket for getting supported cipher suites
+            s = (SSLSocket) sf.createSocket();
+            // enable STARTTLS using the above keystore
+            cfg.setProperty("tls.[@startTLS]", true);
+            cfg.setProperty("tls.keystore", SSL_KEYSTORE_FILE);
+            cfg.setProperty("tls.secret", configuration.getSSLKeyStorePassword());
+            // select strong cipher suites
+            cfg.setProperty("tls.supportedCipherSuites.cipherSuite",
+                    StrongTls.getRecommendedCipherSuites(s.getSupportedCipherSuites()));
+        } catch (IOException e) {
+            log.error("Couldn't determine supported cipher suites", e);
+        } finally {
+            if (s != null)
+                try {
+                    s.close();
+                } catch (IOException e) {}
+        }
         configure(cfg);   // use the defaults for the rest
+
         setListenAddresses(new InetSocketAddress(configuration.getImapAddress(), configuration.getImapPort()));
 
         mailboxSessionMapperFactory = new MapperFactory(folderManager);
@@ -206,15 +250,30 @@ public class ImapService extends IMAPServer {
     /** Starts the IMAP server in a new thread and returns. */
     @Override
     public boolean start() {
-        boolean started = super.start();
-        log.info("IMAP service listening on " + Arrays.toString(getBoundAddresses()));
-        return started;
+        try {
+            super.init();
+            log.info("IMAP service listening on " + Arrays.toString(getBoundAddresses()));
+            return true;
+        } catch (Exception e) {
+            log.error("IMAP service failed to start", e);
+        }
+        return false;
+    }
+
+    @Override
+    protected void registerMBean() {
+        // no-op to prevent RuntimeException
     }
 
     @Override
     public boolean stop() {
         mailboxSessionMapperFactory.stopListening();
-        boolean stopped = super.stop();
-        return stopped;
+        super.destroy();
+        return true;
+    }
+
+    @Override
+    protected void unregisterMBean() {
+        // no-op to prevent RuntimeException
     }
 }
