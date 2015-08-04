@@ -41,6 +41,7 @@ import org.apache.james.mailbox.MailboxSession;
 import org.apache.james.mailbox.exception.MailboxException;
 import org.apache.james.mailbox.exception.MailboxNotFoundException;
 import org.apache.james.mailbox.exception.SubscriptionException;
+import org.apache.james.mailbox.model.MailboxACL;
 import org.apache.james.mailbox.model.MailboxPath;
 import org.apache.james.mailbox.model.MessageMetaData;
 import org.apache.james.mailbox.model.MessageRange;
@@ -315,6 +316,12 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             @Override
             public void delete(Mailbox<String> mailbox) throws MailboxException {
                 throw new MailboxException(_("Deletion of mailboxes is not currently supported."));
+            }
+
+            @Override
+            public void updateACL(Mailbox<String> mailbox, MailboxACL.MailboxACLCommand mailboxACLCommand)
+                    throws MailboxException {
+                mailbox.setACL(mailbox.getACL().apply(mailboxACLCommand));
             }
         };
     }
