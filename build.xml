@@ -17,6 +17,9 @@
     <property name="jmock.archive" value="jmock-2.6.0-jars.zip"/>
     <property name="jmockcp" value="${lib}/jmock-2.6.0.jar:${lib}/hamcrest-core-1.3.jar:${lib}/hamcrest-library-1.3.jar:${lib}/jmock-legacy-2.6.0.jar:${lib}/cglib-nodep-2.2.3.jar:${lib}/objenesis-1.0.jar"/>
     <property name="jmock.url" value="http://jmock.org/downloads/${jmock.archive}"/>
+    <!-- BouncyCastle Provider -->
+    <property name="bcprov.filename" value="bcprov-jdk15on-152.jar"/>
+    <property name="bcprov.url" value="http://downloads.bouncycastle.org/java/bcprov-jdk15on-152.jar"/>
     <!-- Just one of the James .jars for checking presence of James, the .zip contains this and dependencies -->
     <property name="james.filename" value="apache-james-mailbox-api-0.6-20150508.040939-710.jar"/>
     <property name="james.archive" value="james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip"/>
@@ -73,7 +76,7 @@
         <pathelement location="${i2plib}/jstl.jar" />
         <pathelement location="${i2plib}/standard.jar" />
         <pathelement location="${lib}/mailapi.jar" />
-        <pathelement location="${lib}/bcprov-jdk15on-151.jar" />
+        <pathelement location="${lib}/${bcprov.filename}" />
         <pathelement location="${lib}/ntruenc-1.2.jar" />
         <pathelement location="${lib}/scrypt-1.4.0.jar" />
         <pathelement location="${lib}/lzma-9.20.jar" />
@@ -123,6 +126,8 @@
 
     <!-- compiles everything under src/main/java, but not src/test/ or src/build/ -->
     <target name="compile" depends="checki2pbase">
+        <available property="bcprovexists" file="${lib}/${bcprov.filename}" type="file"/>
+        <ant target="downloadbcprov"/>
         <available property="jamesexists" file="${lib}/${james.filename}" type="file"/>
         <ant target="downloadjames"/>
         <available property="subethaexists" file="${lib}/${subetha.filename}" type="file"/>
@@ -186,7 +191,7 @@
             <webinf dir="src/main/webapp/WEB-INF/tlds" includes="*.tld"/>
             <lib file="${lib}/i2pbote.jar"/>
             <lib file="${lib}/mailapi.jar"/>
-            <lib file="${lib}/bcprov-jdk15on-151.jar"/>
+            <lib file="${lib}/${bcprov.filename}"/>
             <lib file="${lib}/ntruenc-1.2.jar"/>
             <lib file="${lib}/scrypt-1.4.0.jar"/>
             <lib file="${lib}/lzma-9.20.jar"/>
@@ -259,8 +264,8 @@
             <arg value="--effort=9"/>
             <arg value="--modification-time=latest"/>
             <arg value="--segment-limit=-1"/>
-            <arg value="plugin/plugin.tmp/lib/bcprov-jdk15on-151.jar.pack"/>
-            <arg value="${lib}/bcprov-jdk15on-151.jar"/>
+            <arg value="plugin/plugin.tmp/lib/${bcprov.filename}.pack"/>
+            <arg value="${lib}/${bcprov.filename}"/>
         </exec>
         <exec executable="pack200" failonerror="true">
             <arg value="--no-gzip"/>
@@ -439,7 +444,7 @@
         <copy file="plugin/webapps.config" todir="${i2pinstallerplugindir}/console"/>
         <copy file="${lib}/i2pbote.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/mailapi.jar" todir="${i2pinstallerplugindir}/lib"/>
-        <copy file="${lib}/bcprov-jdk15on-151.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/${bcprov.filename}" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/ntruenc-1.2.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/scrypt-1.4.0.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/lzma-9.20.jar" todir="${i2pinstallerplugindir}/lib"/>
@@ -577,6 +582,16 @@
             </mapper>
         </unzip>
         <delete file="${lib}/${jmock.archive}"/>
+    </target>
+
+    <target name="downloadbcprov" unless="bcprovexists">
+        <input message="BouncyCastle Provider not found, download now?" validargs="y,n" addproperty="userinput.bcprov"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.bcprov}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${bcprov.url}" verbose="true" dest="${lib}/${bcprov.filename}"/>
     </target>
 
     <target name="downloadjames" unless="jamesexists">
