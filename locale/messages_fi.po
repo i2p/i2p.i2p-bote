@@ -1,0 +1,1303 @@
+# Translators:
+# Translators:
+# Jorma Karvonen <karvonen.jorma@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: I2P\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"PO-Revision-Date: 2015-06-11 17:41+0000\n"
+"Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
+"Language-Team: Finnish (http://www.transifex.com/projects/p/I2P/language/"
+"fi/)\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/main/java/i2p/bote/Configuration.java:67
+msgid "Material"
+msgstr "Materiaali"
+
+#: src/main/java/i2p/bote/Configuration.java:68
+msgid "Light Blue"
+msgstr "Vaaleansininen"
+
+#: src/main/java/i2p/bote/Configuration.java:69
+msgid "Vanilla"
+msgstr ""
+
+#: src/main/java/i2p/bote/I2PBote.java:515
+msgid "No identity matches the sender/from field: "
+msgstr ""
+
+#: src/main/java/i2p/bote/I2PBote.java:719
+msgid "Checking password"
+msgstr "Tarkistetaan salasana"
+
+#: src/main/java/i2p/bote/I2PBote.java:722
+msgid "The old password is not correct."
+msgstr "Vanha salasana ei ole oikea."
+
+#: src/main/java/i2p/bote/I2PBote.java:724
+msgid "The new password and the confirmation password do not match."
+msgstr "Uusi salasana ja vahvistussalasana eivät täsmää."
+
+#: src/main/java/i2p/bote/I2PBote.java:731
+msgid "Re-encrypting identities"
+msgstr ""
+
+#: src/main/java/i2p/bote/I2PBote.java:734
+msgid "Re-encrypting addressbook"
+msgstr ""
+
+#: src/main/java/i2p/bote/I2PBote.java:737
+msgid "Re-encrypting folder"
+msgstr ""
+
+#: src/main/java/i2p/bote/I2PBote.java:741
+msgid "Updating password file"
+msgstr "Päivitetään salasanatiedosto"
+
+#: src/main/java/i2p/bote/crypto/ECDH256_ECDSA256.java:45
+msgid "256-bit Elliptic Curve Encryption"
+msgstr ""
+
+#: src/main/java/i2p/bote/crypto/ECDH521_ECDSA521.java:50
+msgid "521-bit Elliptic Curve Encryption"
+msgstr ""
+
+#: src/main/java/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
+msgid "2048-bit ElGamal Encryption"
+msgstr "2048-bit ElGamal-salaus"
+
+#: src/main/java/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
+msgid "NTRU-1087 Encryption"
+msgstr "NTRU-1087-salaus"
+
+#: src/main/java/i2p/bote/email/Email.java:471
+#: src/main/java/i2p/bote/email/Email.java:483
+msgid ""
+"Address doesn't contain an Email Destination or an external address: {0}"
+msgstr ""
+
+#: src/main/java/i2p/bote/email/Email.java:505
+#, java-format
+msgid "Invalid address: {0}"
+msgstr "Virheellinen osoite: {0}"
+
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:100
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:114
+msgid "Password required or invalid password provided"
+msgstr "Salasana vaadittu tai virheellinen salasana tarjottu"
+
+#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+msgid "Deletion of mailboxes is not currently supported."
+msgstr "Poistilaatikkojen poistamista ei nykyisin tueta."
+
+#: src/main/java/i2p/bote/network/BanList.java:80
+msgid "Wrong protocol version:"
+msgstr "Väärä yhteyskäytäntöversio:"
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "BktPfx"
+msgstr "BktPfx"
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "Distance"
+msgstr ""
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "First Seen"
+msgstr ""
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:117
+msgid "I2P Destination"
+msgstr "I2P-kohde"
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+msgid "Locked?"
+msgstr "Lukittu?"
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:116
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:142
+msgid "Peer"
+msgstr ""
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:175
+msgid "No"
+msgstr "Ei"
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
+msgid "Yes"
+msgstr "Kyllä"
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:84
+msgid "(None)"
+msgstr "(EI mitään)"
+
+#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:89
+msgid "(S)"
+msgstr ""
+
+#: src/main/java/i2p/bote/util/GeneralHelper.java:100
+msgid "Not set."
+msgstr "Ei ole asetettu."
+
+#: src/main/java/i2p/bote/util/GeneralHelper.java:150
+msgid "Invalid ID number for CryptoImplementation: "
+msgstr ""
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:236
+msgid "Queued"
+msgstr "Laitettu jonoon"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:238
+msgid "Sending"
+msgstr "Lähetetään"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:240
+#, java-format
+msgid "Sent to {0} out of {1} recipients"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:243
+msgid "Email sent"
+msgstr "Sähköposti lähetetty"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:245
+msgid "Gateway disabled"
+msgstr "Yhdyskäytävä otettu pois käytöstä"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:247
+#, java-format
+msgid "No identity matches the sender/from field: {0}"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:250
+#, java-format
+msgid "Invalid recipient address: {0}"
+msgstr "Virheellinen vastaanottajaosoite: {0}"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:252
+#, java-format
+msgid "Error creating email packets: {0}"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:254
+#, java-format
+msgid "Error while sending email: {0}"
+msgstr "Virhe lähetetttäessä sähköpostiviestiä: {0}"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:256
+#, java-format
+msgid "Error saving email metadata: {0}"
+msgstr "Virhe tallennettaessa sähköpostimetatietoja: {0}"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:88
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:194
+msgid "Kademlia Peers:"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:112
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:236
+msgid "Relay Peers:"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:118
+msgid "Reachability %"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:127
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:225
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:230
+msgid "Untested"
+msgstr "Testaamaton"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:138
+msgid "Banned Peers:"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:143
+msgid "Destination Hash"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:144
+msgid "Ban Reason"
+msgstr "Kieltosyy"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:182
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:187
+msgid "Reachable"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:184
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:188
+msgid "Unreachable"
+msgstr ""
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:221
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:228
+msgid "Good"
+msgstr "Hyvä"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:223
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:229
+msgid "Unreliable"
+msgstr "Epäluotettava"
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:73
+msgid "Error: Please add at least one recipient."
+msgstr "Virhe: Lisää vähintään yksi vastaanottaja."
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:101
+msgid "The email has been queued for sending."
+msgstr ""
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:107
+#, java-format
+msgid "Error sending email: {0}"
+msgstr ""
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Not Started"
+msgstr ""
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr ""
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connecting..."
+msgstr "Yhdistetään..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connected"
+msgstr "Yhdistetty"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Error"
+msgstr "Virhe"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr ""
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connect Now"
+msgstr "Yhdistä nyt"
+
+#: src/main/webapp/saveIdentities.jsp
+msgid "Error:"
+msgstr "Virhe:"
+
+#: src/main/webapp/outbox.jsp
+msgid "Outbox"
+msgstr "Lähtevät"
+
+#: src/main/webapp/outbox.jsp
+msgid "From"
+msgstr "Lähettäjä"
+
+#: src/main/webapp/outbox.jsp
+msgid "To"
+msgstr "Vastaanottaja"
+
+#: src/main/webapp/outbox.jsp
+msgid "Subject"
+msgstr "Aihe"
+
+#: src/main/webapp/outbox.jsp
+msgid "Create Time"
+msgstr "Luo aika"
+
+#: src/main/webapp/outbox.jsp
+msgid "Status"
+msgstr "Tila"
+
+#: src/main/webapp/outbox.jsp
+msgid "Anonymous"
+msgstr "Anonyymi"
+
+#: src/main/webapp/outbox.jsp
+msgid "(No subject)"
+msgstr "(Ei aihetta)"
+
+#: src/main/webapp/outbox.jsp
+msgid "Delete"
+msgstr "Poista"
+
+#: src/main/webapp/outbox.jsp
+msgid "Delete this email"
+msgstr "Poista tämä sähköposti"
+
+#: src/main/webapp/userGuide.jsp
+msgid "User Guide"
+msgstr "Käyttöopas"
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Checking for mail..."
+msgstr "Tarkistetaan postia..."
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Check Mail"
+msgstr "Tarkista posti"
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Compose"
+msgstr ""
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Last checked:"
+msgstr "Viimeksi tarkistettu:"
+
+#: src/main/webapp/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr "Salasana on välimuistissa. Napsauta salasanavälimuistin nollaamiseksi."
+
+#: src/main/webapp/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Secure Distributed Email"
+msgstr ""
+
+#: src/main/webapp/header.jsp
+msgid "Addresses"
+msgstr "Osoitteet"
+
+#: src/main/webapp/header.jsp
+msgid "Identities"
+msgstr ""
+
+#: src/main/webapp/header.jsp
+msgid "Address Book"
+msgstr "Osoitekirja"
+
+#: src/main/webapp/header.jsp
+msgid "Configuration"
+msgstr "Asetukset"
+
+#: src/main/webapp/header.jsp
+msgid "Settings"
+msgstr "Asetukset"
+
+#: src/main/webapp/header.jsp
+msgid "Network Status"
+msgstr "Verkkotila"
+
+#: src/main/webapp/header.jsp
+msgid "Help"
+msgstr "Opaste"
+
+#: src/main/webapp/header.jsp
+msgid "FAQ"
+msgstr "UKK"
+
+#: src/main/webapp/header.jsp
+msgid "About"
+msgstr "Ohjelmasta"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "Salasana nollattu"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "Salasana nollattu välimuistista."
+
+#: src/main/webapp/newEmail.jsp
+msgid "New Email"
+msgstr "Uusi sähköposti"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Send"
+msgstr "Lähetä"
+
+#: src/main/webapp/newEmail.jsp
+msgid "From:"
+msgstr "Lähettäjä:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "To:"
+msgstr "Vastaanottaja:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "CC:"
+msgstr "Kopio:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "BCC:"
+msgstr "Piilokopio:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Reply To:"
+msgstr "Vastaa vastaanottajalle:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Addr. Book..."
+msgstr "Osoitekirja..."
+
+#: src/main/webapp/newEmail.jsp
+msgid "Subject:"
+msgstr "Aihe:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attachments:"
+msgstr "Liitteet:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "Poista tämä liite"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another attachment"
+msgstr "Lisää toinen liite"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attach"
+msgstr "Liitä"
+
+#: src/main/webapp/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "On suositeltua pitää liitteet alle 500 kilotavun kokoisina."
+
+#: src/main/webapp/newEmail.jsp
+msgid "Message:"
+msgstr "Viesti:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} kirjoitti:"
+
+#: src/main/webapp/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid ""
+"The email could not be found in this folder. It was probably moved to the "
+"Sent folder."
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "The email could not be found in this folder."
+msgstr "Sähköpostin löytäminen tästä kansiosta epäonnistui."
+
+#: src/main/webapp/showEmail.jsp
+msgid "Signature:"
+msgstr "Allekirjoitus:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Valid"
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr "- (lähettäjä on anonyymi)"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "Virheellinen tai puuttuva"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Sent:"
+msgstr "Lähetetty:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Received:"
+msgstr "Vastaanotettu:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Status:"
+msgstr "Tila:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply"
+msgstr "Vastaa"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Re:"
+msgstr "Vast:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Import Identities"
+msgstr "Tuo identiteetteja"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Please select an identities file and try again."
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "The identities have been imported."
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Identities file:"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Password:"
+msgstr "Salasana:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "(leave blank if identities not encrypted)"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Overwrite all existing identities:"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Duplicates: replace existing identity:"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Import"
+msgstr "Tuo"
+
+#: src/main/webapp/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr ""
+
+#: src/main/webapp/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr ""
+
+#: src/main/webapp/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr ""
+
+#: src/main/webapp/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr ""
+
+#: src/main/webapp/importContact.jsp
+msgid "Import Contact"
+msgstr "Tuo yhteystieto"
+
+#: src/main/webapp/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+
+#: src/main/webapp/importContact.jsp
+msgid "Fingerprint:"
+msgstr "Sormenjälki:"
+
+#: src/main/webapp/importContact.jsp
+msgid "Email Destination: "
+msgstr ""
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export Identities"
+msgstr ""
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "(leave blank to not encrypt identities)"
+msgstr ""
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "Confirm:"
+msgstr "Vahvista:"
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export"
+msgstr "Vie"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr ""
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr "Nimi on jo olemassa. Valitse eri julkinen nimi."
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr ""
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr "Palvelimelle kopioitava kuva:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr ""
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Text to include:"
+msgstr "Sisällytettävä teksti:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr ""
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish"
+msgstr "Julkaise"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr ""
+
+#: src/main/webapp/debug.jsp
+msgid "Debug"
+msgstr "Vikajäljitä"
+
+#: src/main/webapp/debug.jsp
+msgid "Debug Page"
+msgstr "Vikajäljityssivu"
+
+#: src/main/webapp/debug.jsp
+msgid "Test encrypted files"
+msgstr ""
+
+#: src/main/webapp/debug.jsp
+msgid "No file encryption problems found."
+msgstr ""
+
+#: src/main/webapp/debug.jsp
+msgid "Undecryptable files:"
+msgstr ""
+
+#: src/main/webapp/addressBook.jsp
+msgid "Private Address Book"
+msgstr "Yksityinen osoitekirja"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Select One or More Entries"
+msgstr ""
+
+#: src/main/webapp/addressBook.jsp
+msgid "The address book is empty."
+msgstr "Osoitekirja on tyhjä."
+
+#: src/main/webapp/addressBook.jsp
+msgid "Name"
+msgstr "Nimi"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Email Destination"
+msgstr "Sähköpostikohde"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Delete this contact"
+msgstr "Poista tämä yhteystieto"
+
+#: src/main/webapp/addressBook.jsp
+msgid "New Contact"
+msgstr "Uusi yhteystieto"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Add Recipients"
+msgstr "Lisää vastaanottajat"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Return"
+msgstr ""
+
+#: src/main/webapp/addressBook.jsp
+msgid "Import from the public address directory"
+msgstr ""
+
+#: src/main/webapp/addressBook.jsp
+msgid "Name:"
+msgstr "Nimi:"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Lookup"
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
+msgstr ""
+
+#: src/main/webapp/network.jsp
+msgid "Network"
+msgstr "Verkko"
+
+#: src/main/webapp/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr ""
+
+#: src/main/webapp/network.jsp
+msgid "Local destination:"
+msgstr "Paikallinen kohde:"
+
+#: src/main/webapp/folders.jsp
+msgid "Folders"
+msgstr "Kansiot"
+
+#: src/main/webapp/folders.jsp
+msgid "Inbox"
+msgstr "Tulevat"
+
+#: src/main/webapp/folders.jsp
+msgid "Sent"
+msgstr "Lähetetty"
+
+#: src/main/webapp/folders.jsp
+msgid "Trash"
+msgstr "Roskakori"
+
+#: src/main/webapp/folder.jsp
+msgid "Know"
+msgstr ""
+
+#: src/main/webapp/folder.jsp
+msgid "Sent Time"
+msgstr ""
+
+#: src/main/webapp/folder.jsp
+msgid "Delivered"
+msgstr "Lähetetyt"
+
+#: src/main/webapp/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr "Allekirjoitus on virheellinen tai puuttuu"
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Identity"
+msgstr ""
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Email Identity for {0}:"
+msgstr ""
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid ""
+"Do not show the above information to anyone! It contains your private keys."
+msgstr ""
+
+#: src/main/webapp/noIdentities.jsp
+msgid "No Identity"
+msgstr ""
+
+#: src/main/webapp/noIdentities.jsp
+msgid "No Email Identity Defined"
+msgstr ""
+
+#: src/main/webapp/noIdentities.jsp
+msgid "Create a New Email Identity"
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "Error Details"
+msgstr "Virhelisätiedot"
+
+#: src/main/webapp/password.jsp
+msgid "Password Required"
+msgstr "Salasana vaadittu"
+
+#: src/main/webapp/password.jsp
+msgid "Wrong password. Try again."
+msgstr "Väärä salasana. Yritä uudelleen."
+
+#: src/main/webapp/password.jsp
+msgid "Password required"
+msgstr "Salasana vaadittu"
+
+#: src/main/webapp/password.jsp
+msgid "OK"
+msgstr "Valmis"
+
+#: src/main/webapp/deleteEmail.jsp
+msgid "Error: Couldn't delete email."
+msgstr "Virhe: Sähköpostin poistaminen epäonnistui."
+
+#: src/main/webapp/sendEmail.jsp
+msgid "Go to inbox"
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "Email Identities"
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "No email identities are defined."
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "Def."
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "Public Name"
+msgstr "Julkinen nimi"
+
+#: src/main/webapp/identities.jsp
+msgid "Description"
+msgstr "Kuvaus"
+
+#: src/main/webapp/identities.jsp
+msgid "Check mail for this identity"
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "New Identity"
+msgstr "Uusi identiteetti"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "More..."
+msgstr "Enemmän..."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Less..."
+msgstr "Vähemmän..."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "New Email Identity"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Create"
+msgstr "Luo"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Edit Email Identity"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Save"
+msgstr "Tallenna"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "An Email Identity lets you receive email from other I2P-Bote users."
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Public Name:"
+msgstr "Julkinen nimi:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(required field, shown to recipients)"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Description:"
+msgstr "Kuvaus:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(optional, kept private)"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Picture:"
+msgstr "Kuva:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Text:"
+msgstr "Teksti:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Encryption:"
+msgstr "Salaus:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(If unsure, leave the default)"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Vanity Destination:"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Email Destination:"
+msgstr "Sähköpostikohde:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Default Identity:"
+msgstr "Oletusidentiteetti:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Private keys:"
+msgstr "Yksityiset avaimet:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(Never reveal to anyone!)"
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Show"
+msgstr "Näytä"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Cancel"
+msgstr "Peru"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Cannot publish until connected."
+msgstr ""
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Delete this identity"
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "Odota..."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The Email Identity is being generated. This may take a while."
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr ""
+
+#: src/main/webapp/editContact.jsp
+msgid "Please fill in the Destination field."
+msgstr ""
+
+#: src/main/webapp/editContact.jsp
+msgid "Please fill in the Name field."
+msgstr ""
+
+#: src/main/webapp/editContact.jsp
+msgid "The contact has been saved."
+msgstr ""
+
+#: src/main/webapp/editContact.jsp
+msgid "Add"
+msgstr "Lisää"
+
+#: src/main/webapp/editContact.jsp
+msgid "Edit Contact"
+msgstr "Muokkaa yhteystietoa"
+
+#: src/main/webapp/editContact.jsp
+msgid "(required field)"
+msgstr "(vaadittu kenttä)"
+
+#: src/main/webapp/about.jsp
+msgid "About I2P-Bote"
+msgstr "Ohjelmasta I2P-Bote"
+
+#: src/main/webapp/about.jsp
+msgid "I2P-Bote Version {0}"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "To submit bug reports or feature requests:"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "click here"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "Developers:"
+msgstr "Kehittäjät:"
+
+#: src/main/webapp/about.jsp
+msgid "Click to send an email"
+msgstr "Napsauta sähköpostin lähettämiseksi"
+
+#: src/main/webapp/about.jsp
+msgid "Feedback on I2P-Bote"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "Technical concept, implementation, user interface"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "User experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "Contributors:"
+msgstr "Avustajat:"
+
+#: src/main/webapp/about.jsp
+msgid "Technical concept, translation, QA, usability, technical feedback"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "Pluginization, technical feedback"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "Seedless integration"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "Russian translation"
+msgstr "Venäjänkielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "French translation"
+msgstr "Ranskankielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Dutch translation"
+msgstr "Hollanninkielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Norwegian translation"
+msgstr "Norjankielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Swedish translation"
+msgstr "Ruotsinkielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Chinese translation"
+msgstr "Kiinankielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Arabic translation"
+msgstr "Arabiankielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Czech translation"
+msgstr "Tsekinkielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "German translation"
+msgstr "Saksankielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Polish translation"
+msgstr "Puolankielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Italian translation"
+msgstr "Italiankielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Ukrainian translation"
+msgstr "Ukrainankielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Hungarian translation"
+msgstr "Unkarinkielinen käännös"
+
+#: src/main/webapp/about.jsp
+msgid "Alpha testing"
+msgstr "Alfatestaus"
+
+#: src/main/webapp/about.jsp
+msgid "Code fixes, translation updates from tx"
+msgstr ""
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set Password"
+msgstr "Aseta salasana"
+
+#: src/main/webapp/setPassword.jsp
+msgid "The password has been changed."
+msgstr "Salasana on vaihtunut."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait"
+msgstr "Odota"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr "Odota kun salasanaa vaihdetaan..."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Aseta uusi salasana"
+
+#: src/main/webapp/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "Jos et ole asettanut salasanaa, jätä vanha salasana tyhjäksi."
+
+#: src/main/webapp/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+
+#: src/main/webapp/setPassword.jsp
+msgid "Old password:"
+msgstr "Vanha salasana:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "New password:"
+msgstr "Uusi salasana:"
+
+#: src/main/webapp/settings.jsp
+msgid "Settings have been saved."
+msgstr "Asetukset on tallennettu."
+
+#: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Ota käyttöön IMAP portissa {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr "Ota käyttöön SMTP portissa {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Teema:"
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "None"
+msgstr "Ei mitään"
+
+#: src/main/webapp/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "and"
+msgstr "ja"
+
+#: src/main/webapp/settings.jsp
+msgid "minutes"
+msgstr "minuuttia"
+
+#: src/main/webapp/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Change Password"
+msgstr "Vaihda salasana"
+
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr "Usein Kysytyt Kysymykset"
+
+#: src/main/webapp/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total"
+msgstr "{0} sähköpostia yhteensä"
+
+#: src/main/webapp/WEB-INF/tags/folderLink.tag
+msgid "{0} emails total, {1} new"
+msgstr "{0} sähköpostia yhteensä, {1} uusi"
+
+#: src/main/webapp/WEB-INF/tags/folderLink.tag
+msgid "{0} incomplete"
+msgstr "{0} vaillinainen"
+
+#: src/main/webapp/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Lisää osoitekirjaan"
+
+#: src/main/webapp/WEB-INF/tags/printDate.tag
+msgid "Unknown"
+msgstr "Tuntematon"
