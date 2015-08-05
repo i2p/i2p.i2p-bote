@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-06-26 21:03+0000\n"
 "Last-Translator: khanjant <khanjant@riseup.net>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/I2P/language/"
@@ -87,14 +87,14 @@ msgstr "Cifratura con ElGamal 2048-bit"
 msgid "NTRU-1087 Encryption"
 msgstr "Cifratura NTRU-1087"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
 "L'indirizzo non contiene una Destinazione Email o un indirizzo esterno: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Indirizzo non valido: {0}"
@@ -104,7 +104,7 @@ msgstr "Indirizzo non valido: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Password necessaria o password fornita non valida"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "L'eliminazione delle caselle di posta non è al momento supportata."
 
@@ -460,8 +460,24 @@ msgid "Reply To:"
 msgstr "Rispondi A:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Rubrica..."
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Rimuovi questo allegato"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "Il nome è stato importato nella rubrica."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Re-criptando la rubrica"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Aggiungi un altro allegato"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1353,3 +1369,6 @@ msgstr "Aggiungi a Rubrica"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Sconosciuto"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Rubrica..."

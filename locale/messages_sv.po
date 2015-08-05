@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:44+0000\n"
 "PO-Revision-Date: 2015-04-09 18:00+0000\n"
 "Last-Translator: cacapo <handelsehorisont@gmail.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/projects/p/I2P/"
@@ -81,14 +81,14 @@ msgstr "2048-bitars ElGamal kryptering"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 kryptering"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
 "Adressen innehåller inte en epost-destination eller en extern adress: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Ogiltig address: {0}"
@@ -98,7 +98,7 @@ msgstr "Ogiltig address: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Lösenord krävs eller fel lösenord angavs"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Borttagning av brevlådor stöds för tillfället ej"
 
@@ -454,8 +454,24 @@ msgid "Reply To:"
 msgstr "Svara till:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Adressbok"
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Ta bort denhär bifogningen"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "Namnet har importerats till adressboken."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Återkrypterar adressbok"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Lägg till en bifogning till"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1340,3 +1356,6 @@ msgstr "Lägg till i adressbok"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Okänd"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Adressbok"

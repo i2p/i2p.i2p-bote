@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-03-23 14:51+0000\n"
 "Last-Translator: Towinet\n"
 "Language-Team: French (http://www.transifex.com/projects/p/I2P/language/"
@@ -83,15 +83,15 @@ msgstr "Cryptage ElGamal à 2048 bits"
 msgid "NTRU-1087 Encryption"
 msgstr "Cryptage NTRU-1087"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
 "L'adresse ne contient ni une destination de courrier ni une adresse externe: "
 "{0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Adresse invalide: {0}"
@@ -101,7 +101,7 @@ msgstr "Adresse invalide: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Mot de passe requis, ou le mot de passe fourni est invalide"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr ""
 "La suppression de boîtes aux lettres n'est actuellement pas prise en charge."
@@ -458,8 +458,24 @@ msgid "Reply To:"
 msgstr "Répondre à:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Carnet d'adresses"
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Enlever cette pièce jointe"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "Le nom a été importé dans le carnet d'adresses."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Re-chiffrement de carnet d'adresses"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Ajouter une autre pièce jointe"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1361,3 +1377,6 @@ msgstr "Ajouter au carnet d'adresses"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Inconnu"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Carnet d'adresses"

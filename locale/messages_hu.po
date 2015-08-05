@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-06-30 14:57+0000\n"
 "Last-Translator: benewfy <benewfy@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/I2P/language/"
@@ -76,13 +76,13 @@ msgstr "2048 bites ElGamal Titkosítás"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 Titkosítás"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Cím nem tartalmaz e-mail célállomást vagy külső címet: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Érvénytelen cím: {0}"
@@ -92,7 +92,7 @@ msgstr "Érvénytelen cím: {0}"
 msgid "Password required or invalid password provided"
 msgstr ""
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr ""
 
@@ -448,8 +448,24 @@ msgid "Reply To:"
 msgstr "Válasz a következőnek:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Címjegyzék"
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Melléklet eltávolítása"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "Névjegy törölve a címjegyzékből."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Érvénytelen fogadó cím: {0}"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Újabb melléklet hozzáadása"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1316,3 +1332,6 @@ msgstr "Hozzáadás a Címjegyzékhez"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Ismeretlen"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Címjegyzék"

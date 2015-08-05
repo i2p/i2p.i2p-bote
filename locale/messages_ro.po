@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Romanian (http://www.transifex.com/projects/p/I2P/language/"
@@ -76,13 +76,13 @@ msgstr "2048-bit criptare ElGamal"
 msgid "NTRU-1087 Encryption"
 msgstr "Criptarea NTRU-1087"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Adresa nu conține o destinație e-mail sau o adresă externă: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Adresă nevalidă: {0}"
@@ -92,7 +92,7 @@ msgstr "Adresă nevalidă: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Este necesara parola sau parola introdusa este incorecta"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Ștergerea de căsuțe poștale nu este susținută în prezent."
 
@@ -448,8 +448,24 @@ msgid "Reply To:"
 msgstr "Răspunde către:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Agendă..."
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Elimină atașament"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "Numele a fost importat în agendă."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Adresa destinatarului nevalidă: {0}"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Adauga un alt atașament"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1340,3 +1356,6 @@ msgstr "Adaugă în cartea de adrese"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Necunoscut"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Agendă..."

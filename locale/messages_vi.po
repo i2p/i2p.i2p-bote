@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 04:00+0000\n"
+"POT-Creation-Date: 2015-08-05 01:44+0000\n"
 "PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/projects/p/I2P/language/"
@@ -77,13 +77,13 @@ msgstr "Mã hóa dạng 2048-bit Elliptic Curve"
 msgid "NTRU-1087 Encryption"
 msgstr "Mã hóa dạng NTRU-1087"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Địa chỉ không có Email Đến hoặc email ngoài: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Địa chỉ không đúng: {0}"
@@ -93,7 +93,7 @@ msgstr "Địa chỉ không đúng: {0}"
 msgid "Password required or invalid password provided"
 msgstr ""
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr ""
 
@@ -449,8 +449,24 @@ msgid "Reply To:"
 msgstr "Trả lời đến:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "SổĐịaChỉ"
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Xóa đính kèm này"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "Địa chỉ liên lạc đã được xóa khỏi sổ."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Địa chỉ người nhận sai: {0}"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Thêm một đính kèm khác"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1309,3 +1325,6 @@ msgstr "Thêm vào Sổ Địa Chỉ"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Không rõ"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "SổĐịaChỉ"

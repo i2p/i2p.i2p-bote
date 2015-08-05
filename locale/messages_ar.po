@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/I2P/language/"
@@ -79,13 +79,13 @@ msgstr "تشفير نوع ElGamal sur 2048 Bit"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 تشفير"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "العنوان لا يحتوي على وجهة البريد او عنوان خارجي: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "عنوان غير صحيح: {0}"
@@ -95,7 +95,7 @@ msgstr "عنوان غير صحيح: {0}"
 msgid "Password required or invalid password provided"
 msgstr ""
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr ""
 
@@ -451,8 +451,24 @@ msgid "Reply To:"
 msgstr "إجابة الى:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "دفتر العناوين"
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "حذف هذا المرفق"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "تم حذف العنوان من دفتر العناوين."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "عنوان غير صحيح: {0}"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "أضف مرفق آخر"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1310,3 +1326,6 @@ msgstr "أضف الى دفتر العناوين"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "غير معروف"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "دفتر العناوين"

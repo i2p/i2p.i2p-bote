@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:44+0000\n"
 "PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/I2P/language/"
@@ -77,13 +77,13 @@ msgstr "2048-bitové šifrovanie ElGamal"
 msgid "NTRU-1087 Encryption"
 msgstr "Šifrovanie NTRU-1087"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Adresa neobsahuje cieľ emailu alebo externú adresu: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Neplatná adresa: {0}"
@@ -93,7 +93,7 @@ msgstr "Neplatná adresa: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Je vyžadované heslo, prípadne bolo poskytnuté neplatné"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Odstraňovanie emailových schránok v súčasnosti nie je podporované."
 
@@ -449,8 +449,24 @@ msgid "Reply To:"
 msgstr "Odpovedať na:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Adresár..."
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Odstrániť túto prílohu"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "Názov bol importovaný do adresára."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Neplatná adresa príjemcu: {0}"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Pridať ďalšiu prílohu"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1337,3 +1353,6 @@ msgstr "Pridať do adresára"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Neznáme"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Adresár..."

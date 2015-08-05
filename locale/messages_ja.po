@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-05-16 13:33+0000\n"
 "Last-Translator: g3600303 <g3600303@trbvm.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/I2P/language/"
@@ -77,13 +77,13 @@ msgstr "2048-bit ElGamal暗号"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 暗号"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "アドレスに宛先あるいは外部アドレスが含まれていません: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "不正なアドレス:  {0}"
@@ -93,7 +93,7 @@ msgstr "不正なアドレス:  {0}"
 msgid "Password required or invalid password provided"
 msgstr "パスワードが必要か、あるいは入力されたパスワードが間違っています"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "メールボックスの削除は現在のところ実装されていません。"
 
@@ -449,8 +449,24 @@ msgid "Reply To:"
 msgstr "返信先:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "アドレス帳…"
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "この添付ファイルを削除"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "名前がアドレス帳に読み込まれました。"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "アドレス帳を再暗号化しています"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "添付ファイルを追加"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1327,3 +1343,6 @@ msgstr "アドレス帳に追加"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "不明"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "アドレス帳…"

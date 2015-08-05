@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Indonesian (http://www.transifex.com/projects/p/I2P/language/"
@@ -76,13 +76,13 @@ msgstr "2048-bit ElGamal Encryption"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 Encryption"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Alamat tidak berisi Email Tujuan atau alamat eksternal: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Alamat tidak valid: {0}"
@@ -92,7 +92,7 @@ msgstr "Alamat tidak valid: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Kata sandi diperlukan atau kata sandi yang diberikan tidak valid"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Penghapusan kotak surat saat ini tidak didukung."
 
@@ -448,8 +448,24 @@ msgid "Reply To:"
 msgstr "Balas Ke:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Buku Almt..."
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Hapus tautan ini"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "Nama telah diimpor ke buku alamat."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Alamat penerima tidak valid: {0}"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Tambahkan tautan lainnya"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1336,3 +1352,6 @@ msgstr "Tambahkan ke Buku Alamat"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Tidak diketahui"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Buku Almt..."

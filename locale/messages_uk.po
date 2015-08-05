@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 04:00+0000\n"
+"POT-Creation-Date: 2015-08-05 01:44+0000\n"
 "PO-Revision-Date: 2015-03-20 09:25+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/projects/p/I2P/"
@@ -84,13 +84,13 @@ msgstr "2048-бітне шифрування Ель-Гамаля"
 msgid "NTRU-1087 Encryption"
 msgstr "Шифрування NTRU-1087"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Невірна електронна адреса: {0}"
@@ -100,7 +100,7 @@ msgstr "Невірна електронна адреса: {0}"
 msgid "Password required or invalid password provided"
 msgstr ""
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr ""
 
@@ -456,8 +456,20 @@ msgid "Reply To:"
 msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Адр. книга"
+msgid "Remove this recipient"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add this recipient to the address book"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Select recipients from address book"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another recipient field"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1309,3 +1321,6 @@ msgstr "Додати до адресної книги"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr ""
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Адр. книга"

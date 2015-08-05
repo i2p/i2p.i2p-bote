@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-06-11 17:41+0000\n"
 "Last-Translator: Jorma Karvonen <karvonen.jorma@gmail.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/projects/p/I2P/language/"
@@ -76,13 +76,13 @@ msgstr "2048-bit ElGamal-salaus"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087-salaus"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Virheellinen osoite: {0}"
@@ -92,7 +92,7 @@ msgstr "Virheellinen osoite: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Salasana vaadittu tai virheellinen salasana tarjottu"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Poistilaatikkojen poistamista ei nykyisin tueta."
 
@@ -448,8 +448,23 @@ msgid "Reply To:"
 msgstr "Vastaa vastaanottajalle:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Osoitekirja..."
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Poista tämä liite"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add this recipient to the address book"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Virheellinen vastaanottajaosoite: {0}"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Lisää toinen liite"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1301,3 +1316,6 @@ msgstr "Lisää osoitekirjaan"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Tuntematon"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Osoitekirja..."

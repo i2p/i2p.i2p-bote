@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:44+0000\n"
 "PO-Revision-Date: 2015-04-03 12:54+0000\n"
 "Last-Translator: yume\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/projects/p/I2P/"
@@ -87,13 +87,13 @@ msgstr "2048-битное шифрование Эль-Гамаля"
 msgid "NTRU-1087 Encryption"
 msgstr "Шифрование NTRU-1087"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Адрес не содержит ни Bote-адреса, ни внешнего адреса: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Некорректный адрес: {0}"
@@ -103,7 +103,7 @@ msgstr "Некорректный адрес: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Нужен пароль или пароль неправильный"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Удаление почтовых ящиков сейчас не поддерживается."
 
@@ -459,8 +459,24 @@ msgid "Reply To:"
 msgstr "Ответ:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Адресная книга..."
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Убрать это вложение"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "Имя добавлено в адресную книгу"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Перешифрование адресной книги"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Добавить другое вложение"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1350,3 +1366,6 @@ msgstr "Добавить в адресную книгу"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Неизвестно"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Адресная книга..."

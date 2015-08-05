@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-02-14 22:33+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: English (http://www.transifex.com/projects/p/I2P/language/"
@@ -77,14 +77,14 @@ msgstr "2048-bit ElGamal Encryption"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 Encryption"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Invalid address: {0}"
@@ -94,7 +94,7 @@ msgstr "Invalid address: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Password required or invalid password provided"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Deletion of mailboxes is not currently supported."
 
@@ -450,8 +450,24 @@ msgid "Reply To:"
 msgstr "Reply To:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Addr. Book..."
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Remove this attachment"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "The name has been imported to the address book."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Re-encrypting addressbook"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Add another attachment"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1335,3 +1351,6 @@ msgstr "Add to Address Book"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Unknown"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Addr. Book..."

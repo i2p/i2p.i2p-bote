@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 04:00+0000\n"
+"POT-Creation-Date: 2015-08-05 01:44+0000\n"
 "PO-Revision-Date: 2015-06-07 15:52+0000\n"
 "Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/I2P/"
@@ -78,13 +78,13 @@ msgstr "2048位 El-Gamal 加密"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 加密"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "地址中缺少Bote邮件地址或外部的公网邮件地址: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "无效地址: {0}"
@@ -94,7 +94,7 @@ msgstr "无效地址: {0}"
 msgid "Password required or invalid password provided"
 msgstr "需要密码或密码输入错误"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "尚不支持删除邮箱。"
 
@@ -450,8 +450,24 @@ msgid "Reply To:"
 msgstr "回复:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "地址簿..."
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "移除附件"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "名称已导入至地址簿。"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "重新加密地址簿"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "添加其他附件"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1318,3 +1334,6 @@ msgstr "添加至地址簿"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "未知"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "地址簿..."

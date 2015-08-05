@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 03:59+0000\n"
+"POT-Creation-Date: 2015-08-05 01:43+0000\n"
 "PO-Revision-Date: 2015-03-21 18:13+0000\n"
 "Last-Translator: Nathan Follens\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/I2P/language/nl/)\n"
@@ -82,13 +82,13 @@ msgstr "El-Gamal encryptie, 2048 Bit"
 msgid "NTRU-1087 Encryption"
 msgstr "NTRU-1087 Encryptie"
 
-#: src/main/java/i2p/bote/email/Email.java:471
-#: src/main/java/i2p/bote/email/Email.java:483
+#: src/main/java/i2p/bote/email/Email.java:472
+#: src/main/java/i2p/bote/email/Email.java:484
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr "Het adres bevat geen mail bestemming of extern adres.: {0}"
 
-#: src/main/java/i2p/bote/email/Email.java:505
+#: src/main/java/i2p/bote/email/Email.java:506
 #, java-format
 msgid "Invalid address: {0}"
 msgstr "Ongeldig adres: {0}"
@@ -98,7 +98,7 @@ msgstr "Ongeldig adres: {0}"
 msgid "Password required or invalid password provided"
 msgstr "Wachtwoord vereist of ongeldig wachtwoord opgegeven"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:317
+#: src/main/java/i2p/bote/imap/MapperFactory.java:318
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Verwijderen van postbussen wordt momenteel niet ondersteund."
 
@@ -454,8 +454,24 @@ msgid "Reply To:"
 msgstr "Beantwoorden naar:"
 
 #: src/main/webapp/newEmail.jsp
-msgid "Addr. Book..."
-msgstr "Adresboek..."
+#, fuzzy
+msgid "Remove this recipient"
+msgstr "Verwijder deze bijlage"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add this recipient to the address book"
+msgstr "De naam is in het adresboek geïmporteerd."
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Select recipients from address book"
+msgstr "Bezig met opnieuw versleutelen van adresboek"
+
+#: src/main/webapp/newEmail.jsp
+#, fuzzy
+msgid "Add another recipient field"
+msgstr "Nog een bijlage toevoegen"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1349,3 +1365,6 @@ msgstr "Toevoegen aan adresboek"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Onbekend"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Adresboek..."
