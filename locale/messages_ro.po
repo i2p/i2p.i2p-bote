@@ -4,11 +4,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 01:43+0000\n"
-"PO-Revision-Date: 2015-03-20 09:25+0000\n"
+"POT-Creation-Date: 2015-08-05 12:59+0000\n"
+"PO-Revision-Date: 2015-08-05 01:52+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
-"Language-Team: Romanian (http://www.transifex.com/projects/p/I2P/language/"
-"ro/)\n"
+"Language-Team: Romanian (http://www.transifex.com/otf/I2P/language/ro/)\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -448,24 +447,20 @@ msgid "Reply To:"
 msgstr "Răspunde către:"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Remove this recipient"
-msgstr "Elimină atașament"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add this recipient to the address book"
-msgstr "Numele a fost importat în agendă."
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Select recipients from address book"
-msgstr "Adresa destinatarului nevalidă: {0}"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add another recipient field"
-msgstr "Adauga un alt atașament"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1358,4 +1353,4 @@ msgid "Unknown"
 msgstr "Necunoscut"
 
 #~ msgid "Addr. Book..."
-#~ msgstr "Agendă..."
+#~ msgstr "Addr. Book..."

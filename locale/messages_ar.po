@@ -7,11 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 01:43+0000\n"
-"PO-Revision-Date: 2015-03-20 09:25+0000\n"
+"POT-Creation-Date: 2015-08-05 12:58+0000\n"
+"PO-Revision-Date: 2015-08-05 01:52+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
-"Language-Team: Arabic (http://www.transifex.com/projects/p/I2P/language/"
-"ar/)\n"
+"Language-Team: Arabic (http://www.transifex.com/otf/I2P/language/ar/)\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -451,24 +450,20 @@ msgid "Reply To:"
 msgstr "إجابة الى:"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Remove this recipient"
-msgstr "حذف هذا المرفق"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add this recipient to the address book"
-msgstr "تم حذف العنوان من دفتر العناوين."
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Select recipients from address book"
-msgstr "عنوان غير صحيح: {0}"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add another recipient field"
-msgstr "أضف مرفق آخر"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1328,4 +1323,4 @@ msgid "Unknown"
 msgstr "غير معروف"
 
 #~ msgid "Addr. Book..."
-#~ msgstr "دفتر العناوين"
+#~ msgstr "Addr. Book..."

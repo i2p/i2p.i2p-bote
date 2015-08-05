@@ -10,11 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 01:43+0000\n"
-"PO-Revision-Date: 2015-03-23 14:51+0000\n"
-"Last-Translator: Towinet\n"
-"Language-Team: French (http://www.transifex.com/projects/p/I2P/language/"
-"fr/)\n"
+"POT-Creation-Date: 2015-08-05 12:58+0000\n"
+"PO-Revision-Date: 2015-08-05 01:52+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"Language-Team: French (http://www.transifex.com/otf/I2P/language/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -458,24 +457,20 @@ msgid "Reply To:"
 msgstr "Répondre à:"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Remove this recipient"
-msgstr "Enlever cette pièce jointe"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add this recipient to the address book"
-msgstr "Le nom a été importé dans le carnet d'adresses."
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Select recipients from address book"
-msgstr "Re-chiffrement de carnet d'adresses"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add another recipient field"
-msgstr "Ajouter une autre pièce jointe"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1379,4 +1374,4 @@ msgid "Unknown"
 msgstr "Inconnu"
 
 #~ msgid "Addr. Book..."
-#~ msgstr "Carnet d'adresses"
+#~ msgstr "Addr. Book..."

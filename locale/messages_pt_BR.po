@@ -5,10 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 01:43+0000\n"
-"PO-Revision-Date: 2015-06-09 13:32+0000\n"
-"Last-Translator: blueboy\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/I2P/"
+"POT-Creation-Date: 2015-08-05 12:59+0000\n"
+"PO-Revision-Date: 2015-08-05 01:52+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/otf/I2P/"
 "language/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -448,24 +448,20 @@ msgid "Reply To:"
 msgstr "Responder para:"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Remove this recipient"
-msgstr "Remover esse anexo"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add this recipient to the address book"
-msgstr "O nome foi importado para o livro de endereços."
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Select recipients from address book"
-msgstr "Recriptografando o livro de endereços"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add another recipient field"
-msgstr "Adicionar um outro anexo"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1338,3 +1334,6 @@ msgstr "Adicionar ao livro de endereços"
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Desconhecido"
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Addr. Book..."

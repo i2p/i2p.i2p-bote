@@ -16,11 +16,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 01:43+0000\n"
-"PO-Revision-Date: 2015-04-09 09:05+0000\n"
-"Last-Translator: Lars Schimmer <echelon@i2pmail.org>\n"
-"Language-Team: German (http://www.transifex.com/projects/p/I2P/language/"
-"de/)\n"
+"POT-Creation-Date: 2015-08-05 12:58+0000\n"
+"PO-Revision-Date: 2015-08-05 01:52+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"Language-Team: German (http://www.transifex.com/otf/I2P/language/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +32,7 @@ msgstr "Material"
 
 #: src/main/java/i2p/bote/Configuration.java:68
 msgid "Light Blue"
-msgstr "sanftes Blau"
+msgstr "hellblau"
 
 #: src/main/java/i2p/bote/Configuration.java:69
 msgid "Vanilla"
@@ -463,24 +462,20 @@ msgid "Reply To:"
 msgstr "Antwort an:"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Remove this recipient"
-msgstr "Diesen Anhang entfernen"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add this recipient to the address book"
-msgstr "Der Name wurde im Adressbuch gespeichert."
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Select recipients from address book"
-msgstr "Verschlüssele Adressbuch"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add another recipient field"
-msgstr "Weiteren Anhang hinzufügen"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -524,7 +519,7 @@ msgid ""
 "Sent folder."
 msgstr ""
 "Die Email konnte in diesem Verzeichnis nicht gefunden werden. Sie wurde "
-"möglicherweise in den Gesendet Bereich verschoben."
+"möglicherweise in den Ordner \"Gesendet\" verschoben."
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
@@ -648,7 +643,7 @@ msgstr "Exportiere Identitäten"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
-msgstr "(leer lassen um Identitäten nicht zu verschlüsseln)"
+msgstr "(leer lassen, um Identitäten nicht zu verschlüsseln)"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Confirm:"
@@ -656,7 +651,7 @@ msgstr "Bestätigen:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export"
-msgstr "Export"
+msgstr "Exportieren"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -1034,7 +1029,7 @@ msgstr "(Im Zweifelsfall die Voreinstellung belassen)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Vanity Destination:"
-msgstr "Übergangsziel:"
+msgstr "Vanity-Destination:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
@@ -1050,7 +1045,7 @@ msgstr "Beim Senden voreingestellt:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Include in global check:"
-msgstr "Im globalen Check inkludieren:"
+msgstr "In globalen Check einbeziehen:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Private keys:"
@@ -1086,7 +1081,7 @@ msgstr "Bitte warten ..."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The Email Identity is being generated. This may take a while."
-msgstr "Die Email Identität wird generiert. Dieses benötigt ein wenig Zeit."
+msgstr "Die Email-Identität wird generiert. Dieses benötigt ein wenig Zeit."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1146,11 +1141,11 @@ msgstr "Rückmeldung zu I2P-Bote"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, implementation, user interface"
-msgstr "Technisches Konzept, Implementation, User Interface"
+msgstr "Technisches Konzept, Implementation, Benutzeroberfläche"
 
 #: src/main/webapp/about.jsp
 msgid "User experience, extended features, Android app"
-msgstr "Benutzeroberfläche, erweiterte Funktionen, Android Applikation"
+msgstr "Benutzercomfort, erweiterte Funktionen, Android Applikation"
 
 #: src/main/webapp/about.jsp
 msgid "Contributors:"
@@ -1168,7 +1163,7 @@ msgstr "Umsetzung als Zusatzprogramm, technische Rückmeldungen"
 
 #: src/main/webapp/about.jsp
 msgid "Seedless integration"
-msgstr "Seedless Integration"
+msgstr "Seedless-Integration"
 
 #: src/main/webapp/about.jsp
 msgid "Russian translation"
@@ -1224,7 +1219,7 @@ msgstr "Übersetzung ins Ungarische"
 
 #: src/main/webapp/about.jsp
 msgid "Alpha testing"
-msgstr "Alpha Test"
+msgstr "Alpha-Tests"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes, translation updates from tx"
@@ -1375,4 +1370,4 @@ msgid "Unknown"
 msgstr "unbekannt"
 
 #~ msgid "Addr. Book..."
-#~ msgstr "Adressbuch ..."
+#~ msgstr "Addr. Book..."

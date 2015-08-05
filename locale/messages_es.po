@@ -22,11 +22,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 01:43+0000\n"
-"PO-Revision-Date: 2015-03-22 02:20+0000\n"
+"POT-Creation-Date: 2015-08-05 12:58+0000\n"
+"PO-Revision-Date: 2015-08-05 03:21+0000\n"
 "Last-Translator: strel\n"
-"Language-Team: Spanish (http://www.transifex.com/projects/p/I2P/language/"
-"es/)\n"
+"Language-Team: Spanish (http://www.transifex.com/otf/I2P/language/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,7 +97,7 @@ msgstr "Cifrado NTRU-1087"
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
 msgstr ""
-"La dirección no contiene ningún destino I2P de correo electrónico ni una "
+"La dirección no contiene ningún destino de correo electrónico ni una "
 "dirección de correo externa: {0}"
 
 #: src/main/java/i2p/bote/email/Email.java:506
@@ -245,7 +244,7 @@ msgstr "Pares excluidos"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:143
 msgid "Destination Hash"
-msgstr "Hash del destino I2P"
+msgstr "Hash del destino"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:144
 msgid "Ban Reason"
@@ -318,7 +317,7 @@ msgstr "Error:"
 
 #: src/main/webapp/outbox.jsp
 msgid "Outbox"
-msgstr "Bandeja de salida"
+msgstr "Salida"
 
 #: src/main/webapp/outbox.jsp
 msgid "From"
@@ -471,24 +470,20 @@ msgid "Reply To:"
 msgstr "Responder a:"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Remove this recipient"
-msgstr "Eliminar este adjunto"
+msgstr "Eliminar este destinatario"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add this recipient to the address book"
-msgstr "El nombre ha sido importado a la libreta de direcciones."
+msgstr "Añadir este destinatario a la libreta de direcciones"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Select recipients from address book"
-msgstr "Volviendo a cifrar libreta de direcciones"
+msgstr "Seleccionar destinatarios de la libreta de direcciones"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add another recipient field"
-msgstr "Añadir otro fichero"
+msgstr "Añadir otro campo de destinatario"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -639,8 +634,8 @@ msgid ""
 msgstr ""
 "Se ha encontrado un registro coincidente en el repositorio de direcciones. "
 "Observe que el directorio de direcciones puede ser manipulado, así que no "
-"pulse &quot;importar&quot; a no ser que confie en que ese es el destino I2P "
-"de correo correcto."
+"pulse &quot;importar&quot; a no ser que confie en que ese es el destino de "
+"correo correcto."
 
 #: src/main/webapp/importContact.jsp
 msgid "Fingerprint:"
@@ -648,7 +643,7 @@ msgstr "Huella de validación de claves ('fingerprint'):"
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
-msgstr "Destino I2P de correo:"
+msgstr "Destino de correo:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export Identities"
@@ -668,7 +663,7 @@ msgstr "Exportar"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
-msgstr "Añadir destino I2P de correo electrónico al repositorio"
+msgstr "Añadir destino de correo electrónico al repositorio"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "The name exists already. Please choose a different Public Name."
@@ -742,7 +737,7 @@ msgstr "Nombre"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Email Destination"
-msgstr "Destino I2P de correo"
+msgstr "Destino de correo"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -786,7 +781,7 @@ msgid ""
 "send email to the email destination, but only the identity holder can read "
 "it."
 msgstr ""
-"Cada identidad de correo I2P-Bote está asociada a un destino I2P de correo "
+"Cada identidad de correo I2P-Bote está asociada a un destino de correo "
 "electrónico. Cualquiera puede mandar correos a este destino, pero tan sólo "
 "el poseedor de la identidad los puede leer."
 
@@ -816,8 +811,8 @@ msgstr ""
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
 msgstr ""
-"Divulge el destino I2P de su correo electrónico para que otros puedan "
-"contactar con usted."
+"Divulge el destino de su correo electrónico para que otros puedan contactar "
+"con usted."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -871,7 +866,7 @@ msgstr "Carpetas"
 
 #: src/main/webapp/folders.jsp
 msgid "Inbox"
-msgstr "Bandeja de entrada"
+msgstr "Entrada"
 
 #: src/main/webapp/folders.jsp
 msgid "Sent"
@@ -1055,7 +1050,7 @@ msgstr "(2 caracteres tardan segundos, 3 tardan minutos, etc.)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Email Destination:"
-msgstr "Destino I2P de correo:"
+msgstr "Destino de correo:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
@@ -1141,11 +1136,11 @@ msgstr "I2P-Bote, Versión {0}"
 
 #: src/main/webapp/about.jsp
 msgid "To submit bug reports or feature requests:"
-msgstr ""
+msgstr "Para entregar informes de fallos o peticiones de características:"
 
 #: src/main/webapp/about.jsp
 msgid "click here"
-msgstr ""
+msgstr "pulse aquí"
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"
@@ -1363,7 +1358,7 @@ msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Email Destination of the gateway:"
-msgstr "Destino I2P del correo electrónico de la pasarela ('gateway'):"
+msgstr "Destino del correo electrónico de la pasarela ('gateway'):"
 
 #: src/main/webapp/settings.jsp
 msgid "Change Password"
@@ -1394,4 +1389,4 @@ msgid "Unknown"
 msgstr "Desconocido"
 
 #~ msgid "Addr. Book..."
-#~ msgstr "Lib. de dir..."
+#~ msgstr "Addr. Book..."

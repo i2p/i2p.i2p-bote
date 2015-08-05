@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 01:44+0000\n"
-"PO-Revision-Date: 2015-03-20 09:25+0000\n"
+"POT-Creation-Date: 2015-08-05 12:59+0000\n"
+"PO-Revision-Date: 2015-08-05 01:52+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
-"Language-Team: Slovak (http://www.transifex.com/projects/p/I2P/language/"
-"sk/)\n"
+"Language-Team: Slovak (http://www.transifex.com/otf/I2P/language/sk/)\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -449,24 +448,20 @@ msgid "Reply To:"
 msgstr "Odpovedať na:"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Remove this recipient"
-msgstr "Odstrániť túto prílohu"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add this recipient to the address book"
-msgstr "Názov bol importovaný do adresára."
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Select recipients from address book"
-msgstr "Neplatná adresa príjemcu: {0}"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add another recipient field"
-msgstr "Pridať ďalšiu prílohu"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1355,4 +1350,4 @@ msgid "Unknown"
 msgstr "Neznáme"
 
 #~ msgid "Addr. Book..."
-#~ msgstr "Adresár..."
+#~ msgstr "Addr. Book..."

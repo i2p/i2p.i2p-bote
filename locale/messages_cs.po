@@ -6,10 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 01:43+0000\n"
-"PO-Revision-Date: 2015-03-20 09:25+0000\n"
+"POT-Creation-Date: 2015-08-05 12:58+0000\n"
+"PO-Revision-Date: 2015-08-05 01:52+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
-"Language-Team: Czech (http://www.transifex.com/projects/p/I2P/language/cs/)\n"
+"Language-Team: Czech (http://www.transifex.com/otf/I2P/language/cs/)\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -456,9 +456,8 @@ msgid "Add this recipient to the address book"
 msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Select recipients from address book"
-msgstr "Neplatný příjemce: {0}"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another recipient field"
@@ -1328,3 +1327,6 @@ msgstr ""
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr ""
+
+#~ msgid "Addr. Book..."
+#~ msgstr "Addr. Book..."

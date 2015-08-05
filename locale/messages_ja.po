@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 01:43+0000\n"
-"PO-Revision-Date: 2015-05-16 13:33+0000\n"
-"Last-Translator: g3600303 <g3600303@trbvm.com>\n"
-"Language-Team: Japanese (http://www.transifex.com/projects/p/I2P/language/"
-"ja/)\n"
+"POT-Creation-Date: 2015-08-05 12:59+0000\n"
+"PO-Revision-Date: 2015-08-05 01:52+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"Language-Team: Japanese (http://www.transifex.com/otf/I2P/language/ja/)\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -449,24 +448,20 @@ msgid "Reply To:"
 msgstr "返信先:"
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Remove this recipient"
-msgstr "この添付ファイルを削除"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add this recipient to the address book"
-msgstr "名前がアドレス帳に読み込まれました。"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Select recipients from address book"
-msgstr "アドレス帳を再暗号化しています"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
-#, fuzzy
 msgid "Add another recipient field"
-msgstr "添付ファイルを追加"
+msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1345,4 +1340,4 @@ msgid "Unknown"
 msgstr "不明"
 
 #~ msgid "Addr. Book..."
-#~ msgstr "アドレス帳…"
+#~ msgstr "Addr. Book..."
