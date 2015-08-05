@@ -125,22 +125,26 @@
                 </select>
             </div>
             <div class="email-form-recipient-value">
+                <ib:message key="Remove this recipient" var="removeRecipientTitle"/>
                 <input type="text" size="48" class="email-form-recipient-field" name="${recipientField}" value="${ib:escapeQuotes(recipient.address)}"/>
                 <c:choose>
                     <c:when test="${status.last}">
                         <input type="hidden" name="destparamname" value="${recipientField}"/>
-                        <button type="submit" name="action" value="addToAddrBook">&#x2794;<img src="${themeDir}/images/addressbook.png"/></button>
+                        <ib:message key="Add this recipient to the address book" var="addToAddrBookTitle"/>
+                        <button type="submit" name="action" value="addToAddrBook" title="${addToAddrBookTitle}">&#x1F872;<img src="${themeDir}/images/addressbook.png"/></button>
                     </c:when>
                     <c:otherwise>
-                        <button type="submit" name="action" value="removeRecipient${status.index}">-</button>
+                        <button type="submit" name="action" value="removeRecipient${status.index}" title="${removeRecipientTitle}">-</button>
                     </c:otherwise>
                 </c:choose>
             </div>
         </c:forEach>
 
         <div class="email-form-button-row">
-            <button type="submit" name="action" value="addRecipientField">+</button>
-            <button type="submit" name="action" value="lookup"><ib:message key="Addr. Book..."/></button>
+            <ib:message key="Select recipients from address book" var="lookupTitle"/>
+            <button type="submit" name="action" value="lookup" title="${lookupTitle}">&#x1F870;<img src="${themeDir}/images/addressbook.png"/></button>
+            <ib:message key="Add another recipient field" var="addRecipientFieldTitle"/>
+            <button type="submit" name="action" value="addRecipientField" title="${addRecipientFieldTitle}">+</button>
         </div>
         
         <div class="email-form-label">

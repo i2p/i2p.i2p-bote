@@ -760,7 +760,7 @@ td a:link, td a:visited {
     white-space: nowrap;
 }
 
-.email-form-recipient-value img {
+.email-form-recipient-value img, .email-form-button-row img {
     vertical-align: middle;
 }
 .email-form-recipient-field {
