@@ -130,17 +130,20 @@
         <fail unless="i2pbase" message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p."/>
     </target>
 
-    <!-- compiles everything under src/main/java, but not src/test/ or src/build/ -->
-    <target name="compile" depends="checki2pbase">
+    <target name="checkdependencies">
         <available property="mailapiexists" file="${lib}/${mailapi.filename}" type="file"/>
-        <ant target="downloadmailapi"/>
         <available property="bcprovexists" file="${lib}/${bcprov.filename}" type="file"/>
-        <ant target="downloadbcprov"/>
         <available property="jamesexists" file="${lib}/${james.filename}" type="file"/>
-        <ant target="downloadjames"/>
         <available property="subethaexists" file="${lib}/${subetha.filename}" type="file"/>
-        <ant target="downloadsubetha"/>
 
+        <ant target="downloadmailapi"/>
+        <ant target="downloadbcprov"/>
+        <ant target="downloadjames"/>
+        <ant target="downloadsubetha"/>
+    </target>
+
+    <!-- compiles everything under src/main/java, but not src/test/ or src/build/ -->
+    <target name="compile" depends="checki2pbase, checkdependencies">
         <mkdir dir="./ant_build" />
         <mkdir dir="./ant_build/classes" />
         <javac
