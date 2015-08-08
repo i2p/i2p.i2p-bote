@@ -21,9 +21,11 @@
     <!-- Dependencies -->
     <!-- JavaMail -->
     <property name="mailapi.filename" value="mailapi-1.5.4.jar"/>
+    <property name="mailapi.hash" value="6786437244ec10d05601c52ee418b33e31f7ce5ed2cad8c8893139b28cb18ac3"/>
     <property name="mailapi.url" value="https://maven.java.net/content/repositories/releases/com/sun/mail/mailapi/1.5.4/mailapi-1.5.4.jar"/>
     <!-- BouncyCastle Provider -->
     <property name="bcprov.filename" value="bcprov-jdk15on-152.jar"/>
+    <property name="bcprov.hash" value="0dc4d181e4d347893c2ddbd2e6cd5d7287fc651c03648fa64b2341c7366b1773"/>
     <property name="bcprov.url" value="http://downloads.bouncycastle.org/java/bcprov-jdk15on-152.jar"/>
     <!-- Just one of the James .jars for checking presence of James, the .zip contains this and dependencies -->
     <property name="james.filename" value="apache-james-mailbox-api-0.6-20150508.040939-710.jar"/>
@@ -35,6 +37,7 @@
     <property name="james.url" value="http://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip"/>
     <!-- SubEtha SMTP -->
     <property name="subetha.filename" value="subethasmtp-3.1.7.jar"/>
+    <property name="subetha.hash" value="95cf031f1bc1b1a69b08554fbf8970bad994b32db32388d482c6afb482f1db76"/>
     <property name="subetha.archive" value="subethasmtp-3.1.7.zip"/>
     <property name="subetha.url" value="http://subethasmtp.googlecode.com/files/subethasmtp-3.1.7.zip"/>
 
@@ -140,6 +143,25 @@
         <ant target="downloadbcprov"/>
         <ant target="downloadjames"/>
         <ant target="downloadsubetha"/>
+
+        <checksum file="${lib}/${mailapi.filename}" algorithm="SHA-256" property="mailapi.hash" verifyProperty="hashValid"/>
+        <fail message="The JavaMail library has an invalid hash.">
+            <condition>
+                <isfalse value="${hashValid}"/>
+            </condition>
+        </fail>
+        <checksum file="${lib}/${bcprov.filename}" algorithm="SHA-256" property="bcprov.hash" verifyProperty="hashValid"/>
+        <fail message="The BouncyCastle Provider library has an invalid hash.">
+            <condition>
+                <isfalse value="${hashValid}"/>
+            </condition>
+        </fail>
+        <checksum file="${lib}/${subetha.filename}" algorithm="SHA-256" property="subetha.hash" verifyProperty="hashValid"/>
+        <fail message="The SubEthaSMTP library has an invalid hash.">
+            <condition>
+                <isfalse value="${hashValid}"/>
+            </condition>
+        </fail>
     </target>
 
     <!-- compiles everything under src/main/java, but not src/test/ or src/build/ -->
