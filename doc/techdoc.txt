@@ -591,7 +591,7 @@ Here is a simplified diagram of how a Relay Return Packet is sent from one hop t
 6.2. Included .jar files and third-party source code
 
   bcprov-jdk15on-152.jar     The BouncyCastle library and SecurityProvider.
-  mailapi.jar                Part of JavaMail 1.5.1
+  mailapi-1.5.4.jar          Part of JavaMail 1.5.4
   lzma-9.20.jar              An LZMA implementation from http://www.7-zip.org/sdk.html
   ntruenc-1.2.jar            An NTRU implementation from http://sf.net/projects/ntru/
                              (only the NTRUEncrypt part, not NTRUSign)
