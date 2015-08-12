@@ -144,19 +144,19 @@
         <ant target="downloadjames"/>
         <ant target="downloadsubetha"/>
 
-        <checksum file="${lib}/${mailapi.filename}" algorithm="SHA-256" property="mailapi.hash" verifyProperty="hashValid"/>
+        <checksum file="${lib}/${mailapi.filename}" algorithm="SHA-256" property="${mailapi.hash}" verifyProperty="hashValid"/>
         <fail message="The JavaMail library has an invalid hash.">
             <condition>
                 <isfalse value="${hashValid}"/>
             </condition>
         </fail>
-        <checksum file="${lib}/${bcprov.filename}" algorithm="SHA-256" property="bcprov.hash" verifyProperty="hashValid"/>
+        <checksum file="${lib}/${bcprov.filename}" algorithm="SHA-256" property="${bcprov.hash}" verifyProperty="hashValid"/>
         <fail message="The BouncyCastle Provider library has an invalid hash.">
             <condition>
                 <isfalse value="${hashValid}"/>
             </condition>
         </fail>
-        <checksum file="${lib}/${subetha.filename}" algorithm="SHA-256" property="subetha.hash" verifyProperty="hashValid"/>
+        <checksum file="${lib}/${subetha.filename}" algorithm="SHA-256" property="${subetha.hash}" verifyProperty="hashValid"/>
         <fail message="The SubEthaSMTP library has an invalid hash.">
             <condition>
                 <isfalse value="${hashValid}"/>
