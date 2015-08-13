@@ -44,7 +44,7 @@
     <c:if test="${param.action eq 'start'}">
         <%-- If the user changed the Public Name to try a new name that isn't taken, update it so they don't have to click save first --%>
         <ib:requirePassword>
-            ${ib:modifyIdentity(param.key, param.publicName, param.description, null, param.emailAddress, false)}
+            ${ib:modifyIdentity(param.key, param.publicName, param.description, null, param.emailAddress, null, false)}
         </ib:requirePassword>
         <c:set var="result" value="${ib:lookupInDirectory(param.publicName)}"/>
         <c:if test="${not empty result}">

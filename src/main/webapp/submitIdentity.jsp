@@ -105,17 +105,18 @@
         <c:set var="forwardUrl" value="submitIdentity.jsp?${actionParam}counter=${param.counter}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;vanityPrefix=${param.vanityPrefix}&amp;publicName=${param.publicName}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}&amp;includeInGlobalCheck=${param.includeInGlobalCheck}"/>
         <ib:requirePassword forwardUrl="${forwardUrl}">
             <c:catch var="exception">
-                <c:set var="errorMessage" value="${ib:createOrModifyIdentity(param.createNew, param.cryptoImpl, param.vanityPrefix, param.key, publicName, param.description, null, param.emailAddress, param.defaultIdentity=='on')}"/>
+                <%
+                java.util.Properties identityConfig = new java.util.Properties();
+                identityConfig.setProperty("includeInGlobalCheck", request.getParameter("includeInGlobalCheck") != null ? "true" : "false");
+                pageContext.setAttribute("identityConfig", identityConfig);
+                %>
+                <c:set var="errorMessage" value="${ib:createOrModifyIdentity(param.createNew, param.cryptoImpl, param.vanityPrefix, param.key, publicName, param.description, null, param.emailAddress, identityConfig, param.defaultIdentity=='on')}"/>
             </c:catch>
             <c:if test="${exception.cause['class'].name eq 'i2p.bote.email.IllegalDestinationParametersException'}">
                 <jsp:forward page="editIdentity.jsp">
                     <jsp:param name="errorMessage" value="${exception.cause.localizedMessage}"/>
                 </jsp:forward>
             </c:if>
-
-            <c:set var="identity" value="${ib:getIdentity(param.key)}"/>
-            <c:set var="identityConfig" value="${identity.config}"/>
-            <jsp:setProperty name="identityConfig" property="includeInGlobalCheck" value="${param.includeInGlobalCheck eq 'on' ? 'true' : 'false'}"/>
 
             <c:if test="${not empty param.counter}">
                 <c:set var="keygenCounter" value="${param.counter}" scope="session"/>

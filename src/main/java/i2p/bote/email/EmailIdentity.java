@@ -279,6 +279,8 @@ public class EmailIdentity extends EmailDestination {
         }
 
         public void loadFromProperties(Properties sourceProperties, String prefix, boolean overwrite) {
+            if (prefix == null)
+                prefix = "";
             if (overwrite)
                 properties = new Properties();
 
