@@ -274,14 +274,23 @@
 
     <macrodef name="packdep">
         <attribute name="dep"/>
+        <element name="exec-args" optional="yes" implicit="yes"/>
         <sequential>
             <exec executable="pack200" failonerror="true">
                 <arg value="--no-gzip"/>
                 <arg value="--effort=9"/>
                 <arg value="--modification-time=latest"/>
+                <exec-args/>
                 <arg value="plugin/plugin.tmp/lib/${@{dep}.filename}.pack"/>
                 <arg value="${lib}/${@{dep}.filename}"/>
             </exec>
+        </sequential>
+    </macrodef>
+    <macrodef name="removepack">
+        <attribute name="dep"/>
+        <sequential>
+            <delete file="plugin/plugin.tmp/lib/${@{dep}.filename}"/>
+            <delete file="plugin/plugin.tmp/lib/${@{dep}.filename}.pack"/>
         </sequential>
     </macrodef>
 
@@ -427,71 +436,58 @@
         <packdep dep="ntruenc"/>
     </target>
     <target name="removepack.ntruenc">
-        <delete file="plugin/plugin.tmp/lib/${ntruenc.filename}"/>
-        <delete file="plugin/plugin.tmp/lib/${ntruenc.filename}.pack"/>
+        <removepack dep="ntruenc"/>
     </target>
 
     <target name="packdep.scrypt">
         <packdep dep="scrypt"/>
     </target>
     <target name="removepack.scrypt">
-        <delete file="plugin/plugin.tmp/lib/${scrypt.filename}"/>
-        <delete file="plugin/plugin.tmp/lib/${scrypt.filename}.pack"/>
+        <removepack dep="scrypt"/>
     </target>
 
     <target name="packdep.lzma">
         <packdep dep="lzma"/>
     </target>
     <target name="removepack.lzma">
-        <delete file="plugin/plugin.tmp/lib/${lzma.filename}"/>
-        <delete file="plugin/plugin.tmp/lib/${lzma.filename}.pack"/>
+        <removepack dep="lzma"/>
     </target>
 
     <target name="packdep.gmss">
         <packdep dep="gmss"/>
     </target>
     <target name="removepack.gmss">
-        <delete file="plugin/plugin.tmp/lib/${gmss.filename}"/>
-        <delete file="plugin/plugin.tmp/lib/${gmss.filename}.pack"/>
+        <removepack dep="gmss"/>
     </target>
 
     <target name="packdep.jcommon">
         <packdep dep="jcommon"/>
     </target>
     <target name="removepack.jcommon">
-        <delete file="plugin/plugin.tmp/lib/${jcommon.filename}"/>
-        <delete file="plugin/plugin.tmp/lib/${jcommon.filename}.pack"/>
+        <removepack dep="jcommon"/>
     </target>
 
     <target name="packdep.jfreechart">
         <packdep dep="jfreechart"/>
     </target>
     <target name="removepack.jfreechart">
-        <delete file="plugin/plugin.tmp/lib/${jfreechart.filename}"/>
-        <delete file="plugin/plugin.tmp/lib/${jfreechart.filename}.pack"/>
+        <removepack dep="jfreechart"/>
     </target>
 
     <target name="packdep.mailapi">
         <packdep dep="mailapi"/>
     </target>
     <target name="removepack.mailapi">
-        <delete file="plugin/plugin.tmp/lib/${mailapi.filename}"/>
-        <delete file="plugin/plugin.tmp/lib/${mailapi.filename}.pack"/>
+        <removepack dep="mailapi"/>
     </target>
 
     <target name="packdep.bcprov">
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
+        <packdep dep="bcprov">
             <arg value="--segment-limit=-1"/>
-            <arg value="plugin/plugin.tmp/lib/${bcprov.filename}.pack"/>
-            <arg value="${lib}/${bcprov.filename}"/>
-        </exec>
+        </packdep>
     </target>
     <target name="removepack.bcprov">
-        <delete file="plugin/plugin.tmp/lib/${bcprov.filename}"/>
-        <delete file="plugin/plugin.tmp/lib/${bcprov.filename}.pack"/>
+        <removepack dep="bcprov"/>
     </target>
 
     <target name="packdep.james">
@@ -522,8 +518,7 @@
         <packdep dep="subetha"/>
     </target>
     <target name="removepack.subetha">
-        <delete file="plugin/plugin.tmp/lib/${subetha.filename}"/>
-        <delete file="plugin/plugin.tmp/lib/${subetha.filename}.pack"/>
+        <removepack dep="subetha"/>
     </target>
 
     <target name="bundle" depends="compile">
