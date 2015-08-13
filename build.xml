@@ -19,6 +19,13 @@
     <property name="jmock.url" value="http://jmock.org/downloads/${jmock.archive}"/>
 
     <!-- Dependencies -->
+    <!-- Local -->
+    <property name="ntruenc.filename" value="ntruenc-1.2.jar"/>
+    <property name="scrypt.filename" value="scrypt-1.4.0.jar"/>
+    <property name="lzma.filename" value="lzma-9.20.jar"/>
+    <property name="gmss.filename" value="flexi-gmss-1.7p1.jar"/>
+    <property name="jcommon.filename" value="jcommon-1.0.23.jar"/>
+    <property name="jfreechart.filename" value="jfreechart-1.0.19.jar"/>
     <!-- JavaMail -->
     <property name="mailapi.filename" value="mailapi-1.5.4.jar"/>
     <property name="mailapi.hash" value="6786437244ec10d05601c52ee418b33e31f7ce5ed2cad8c8893139b28cb18ac3"/>
@@ -91,13 +98,13 @@
         <pathelement location="${i2plib}/standard.jar" />
         <pathelement location="${lib}/${mailapi.filename}" />
         <pathelement location="${lib}/${bcprov.filename}" />
-        <pathelement location="${lib}/ntruenc-1.2.jar" />
-        <pathelement location="${lib}/scrypt-1.4.0.jar" />
-        <pathelement location="${lib}/lzma-9.20.jar" />
-        <pathelement location="${lib}/flexi-gmss-1.7p1.jar" />
+        <pathelement location="${lib}/${ntruenc.filename}" />
+        <pathelement location="${lib}/${scrypt.filename}" />
+        <pathelement location="${lib}/${lzma.filename}" />
+        <pathelement location="${lib}/${gmss.filename" />
         <pathelement location="${lib}/${subetha.filename}" />
-        <pathelement location="${lib}/jcommon-1.0.23.jar" />
-        <pathelement location="${lib}/jfreechart-1.0.19.jar" />
+        <pathelement location="${lib}/${jcommon.filename}" />
+        <pathelement location="${lib}/${jfreechart.filename}" />
         <pathelement location="src/main/webapp/WEB-INF/classes" />
         <fileset refid="imaplibs"/>
     </path>
@@ -230,12 +237,12 @@
             <lib file="${lib}/i2pbote.jar"/>
             <lib file="${lib}/${mailapi.filename}"/>
             <lib file="${lib}/${bcprov.filename}"/>
-            <lib file="${lib}/ntruenc-1.2.jar"/>
-            <lib file="${lib}/scrypt-1.4.0.jar"/>
-            <lib file="${lib}/lzma-9.20.jar"/>
-            <lib file="${lib}/flexi-gmss-1.7p1.jar"/>
-            <lib file="${lib}/jcommon-1.0.23.jar" />
-            <lib file="${lib}/jfreechart-1.0.19.jar" />
+            <lib file="${lib}/${ntruenc.filename}"/>
+            <lib file="${lib}/${scrypt.filename}"/>
+            <lib file="${lib}/${lzma.filename"/>
+            <lib file="${lib}/${gmss.filename}"/>
+            <lib file="${lib}/${jcommon.filename}" />
+            <lib file="${lib}/${jfreechart.filename}" />
             <zipfileset dir="src/main/webapp/html" prefix="html"/>
           <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
         </war>
@@ -258,7 +265,20 @@
             <metainf file="src/main/webapp/META-INF/mime.types"/>
         </jar>
     </target>
-    
+
+    <macrodef name="packdep">
+        <attribute name="dep"/>
+        <sequential>
+            <exec executable="pack200" failonerror="true">
+                <arg value="--no-gzip"/>
+                <arg value="--effort=9"/>
+                <arg value="--modification-time=latest"/>
+                <arg value="plugin/plugin.tmp/lib/${@{dep}.filename}.pack"/>
+                <arg value="${lib}/${@{dep}.filename}"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <!--
       - Make two plugins, one for initial installs and one for updates.
       - Only the initial install includes mailapi.jar.
@@ -288,48 +308,14 @@
             <arg value="plugin/plugin.tmp/lib/i2pbote.jar.pack"/>
             <arg value="${lib}/i2pbote.jar"/>
         </exec>
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/ntruenc-1.2.jar.pack"/>
-            <arg value="${lib}/ntruenc-1.2.jar"/>
-        </exec>
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/scrypt-1.4.0.jar.pack"/>
-            <arg value="${lib}/scrypt-1.4.0.jar"/>
-        </exec>
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/lzma-9.20.jar.pack"/>
-            <arg value="${lib}/lzma-9.20.jar"/>
-        </exec>
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/flexi-gmss-1.7p1.jar.pack"/>
-            <arg value="${lib}/flexi-gmss-1.7p1.jar"/>
-        </exec>
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/jcommon-1.0.23.jar.pack"/>
-            <arg value="${lib}/jcommon-1.0.23.jar"/>
-        </exec>
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/jfreechart-1.0.19.jar.pack"/>
-            <arg value="${lib}/jfreechart-1.0.19.jar"/>
-        </exec>
+
+        <!-- pack local dependencies -->
+        <packdep dep="ntruenc"/>
+        <packdep dep="scrypt"/>
+        <packdep dep="lzma"/>
+        <packdep dep="gmss"/>
+        <packdep dep="jcommon"/>
+        <packdep dep="jfreechart"/>
 
         <!-- pack remote dependencies in updater -->
         <includedep updater="true" dep="mailapi"/>
@@ -426,15 +412,10 @@
     </macrodef>
 
     <target name="packdep.mailapi">
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/${mailapi.filename}.pack"/>
-            <arg value="${lib}/${mailapi.filename}"/>
-        </exec>
+        <packdep dep="mailapi"/>
     </target>
     <target name="removepack.mailapi">
+        <delete file="plugin/plugin.tmp/lib/${mailapi.filename}"/>
         <delete file="plugin/plugin.tmp/lib/${mailapi.filename}.pack"/>
     </target>
 
@@ -449,6 +430,7 @@
         </exec>
     </target>
     <target name="removepack.bcprov">
+        <delete file="plugin/plugin.tmp/lib/${bcprov.filename}"/>
         <delete file="plugin/plugin.tmp/lib/${bcprov.filename}.pack"/>
     </target>
 
@@ -465,6 +447,11 @@
     </target>
     <target name="removepack.james">
         <apply executable="rm" dest="plugin/plugin.tmp/lib/" addsourcefile="false">
+            <targetfile/>
+            <fileset refid="imaplibs"/>
+            <flattenmapper/>
+        </apply>
+        <apply executable="rm" dest="plugin/plugin.tmp/lib/" addsourcefile="false">
             <targetfile suffix=".pack"/>
             <fileset refid="imaplibs"/>
             <flattenmapper/>
@@ -472,15 +459,10 @@
     </target>
 
     <target name="packdep.subetha">
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/${subetha.filename}.pack"/>
-            <arg value="${lib}/${subetha.filename}"/>
-        </exec>
+        <packdep dep="subetha"/>
     </target>
     <target name="removepack.subetha">
+        <delete file="plugin/plugin.tmp/lib/${subetha.filename}"/>
         <delete file="plugin/plugin.tmp/lib/${subetha.filename}.pack"/>
     </target>
 
