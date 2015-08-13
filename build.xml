@@ -21,11 +21,17 @@
     <!-- Dependencies -->
     <!-- Local -->
     <property name="ntruenc.filename" value="ntruenc-1.2.jar"/>
+    <property name="ntruenc.includeinupdate" value="false"/>
     <property name="scrypt.filename" value="scrypt-1.4.0.jar"/>
+    <property name="scrypt.includeinupdate" value="false"/>
     <property name="lzma.filename" value="lzma-9.20.jar"/>
+    <property name="lzma.includeinupdate" value="false"/>
     <property name="gmss.filename" value="flexi-gmss-1.7p1.jar"/>
+    <property name="gmss.includeinupdate" value="false"/>
     <property name="jcommon.filename" value="jcommon-1.0.23.jar"/>
+    <property name="jcommon.includeinupdate" value="false"/>
     <property name="jfreechart.filename" value="jfreechart-1.0.19.jar"/>
+    <property name="jfreechart.includeinupdate" value="false"/>
     <!-- JavaMail -->
     <property name="mailapi.filename" value="mailapi-1.5.4.jar"/>
     <property name="mailapi.hash" value="6786437244ec10d05601c52ee418b33e31f7ce5ed2cad8c8893139b28cb18ac3"/>
@@ -281,7 +287,6 @@
 
     <!--
       - Make two plugins, one for initial installs and one for updates.
-      - Only the initial install includes mailapi.jar.
       - Neither includes jstl.jar or standard.jar, as any i2p version that has
       - plugin support has these two jars pulled out of susidns.war and put in
       - $I2P/lib. We set the classpath in webapps.config to find them.
@@ -309,14 +314,13 @@
             <arg value="${lib}/i2pbote.jar"/>
         </exec>
 
-        <!-- pack local dependencies -->
-        <packdep dep="ntruenc"/>
-        <packdep dep="scrypt"/>
-        <packdep dep="lzma"/>
-        <packdep dep="gmss"/>
-        <packdep dep="jcommon"/>
-        <packdep dep="jfreechart"/>
-
+        <!-- pack local dependencies in updater -->
+        <includedep updater="true" dep="ntruenc"/>
+        <includedep updater="true" dep="scrypt"/>
+        <includedep updater="true" dep="lzma"/>
+        <includedep updater="true" dep="gmss"/>
+        <includedep updater="true" dep="jcommon"/>
+        <includedep updater="true" dep="jfreechart"/>
         <!-- pack remote dependencies in updater -->
         <includedep updater="true" dep="mailapi"/>
         <includedep updater="true" dep="bcprov"/>
@@ -353,12 +357,20 @@
         <move file="i2pbote.xpi2p" tofile="i2pbote-update.xpi2p" />
         <move file="i2pbote.su3" tofile="i2pbote-update.su3" />
 
-        <!-- make the install xpi2p -->
+        <!-- pack local dependencies in installer -->
+        <includedep dep="ntruenc"/>
+        <includedep dep="scrypt"/>
+        <includedep dep="lzma"/>
+        <includedep dep="gmss"/>
+        <includedep dep="jcommon"/>
+        <includedep dep="jfreechart"/>
+        <!-- pack remote dependencies in installer -->
         <includedep dep="mailapi"/>
         <includedep dep="bcprov"/>
         <includedep dep="james"/>
         <includedep dep="subetha"/>
 
+        <!-- make the install xpi2p -->
         <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
         <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="version=${version}-b${build.number}" />
@@ -410,6 +422,54 @@
             <ant target="removepack.@{dep}" if:true="${removePack}"/>
         </sequential>
     </macrodef>
+
+    <target name="packdep.ntruenc">
+        <packdep dep="ntruenc"/>
+    </target>
+    <target name="removepack.ntruenc">
+        <delete file="plugin/plugin.tmp/lib/${ntruenc.filename}"/>
+        <delete file="plugin/plugin.tmp/lib/${ntruenc.filename}.pack"/>
+    </target>
+
+    <target name="packdep.scrypt">
+        <packdep dep="scrypt"/>
+    </target>
+    <target name="removepack.scrypt">
+        <delete file="plugin/plugin.tmp/lib/${scrypt.filename}"/>
+        <delete file="plugin/plugin.tmp/lib/${scrypt.filename}.pack"/>
+    </target>
+
+    <target name="packdep.lzma">
+        <packdep dep="lzma"/>
+    </target>
+    <target name="removepack.lzma">
+        <delete file="plugin/plugin.tmp/lib/${lzma.filename}"/>
+        <delete file="plugin/plugin.tmp/lib/${lzma.filename}.pack"/>
+    </target>
+
+    <target name="packdep.gmss">
+        <packdep dep="gmss"/>
+    </target>
+    <target name="removepack.gmss">
+        <delete file="plugin/plugin.tmp/lib/${gmss.filename}"/>
+        <delete file="plugin/plugin.tmp/lib/${gmss.filename}.pack"/>
+    </target>
+
+    <target name="packdep.jcommon">
+        <packdep dep="jcommon"/>
+    </target>
+    <target name="removepack.jcommon">
+        <delete file="plugin/plugin.tmp/lib/${jcommon.filename}"/>
+        <delete file="plugin/plugin.tmp/lib/${jcommon.filename}.pack"/>
+    </target>
+
+    <target name="packdep.jfreechart">
+        <packdep dep="jfreechart"/>
+    </target>
+    <target name="removepack.jfreechart">
+        <delete file="plugin/plugin.tmp/lib/${jfreechart.filename}"/>
+        <delete file="plugin/plugin.tmp/lib/${jfreechart.filename}.pack"/>
+    </target>
 
     <target name="packdep.mailapi">
         <packdep dep="mailapi"/>
