@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="help" name="I2P-Bote">
+<project basedir="." default="help" name="I2P-Bote" xmlns:if="ant:if" xmlns:unless="ant:unless">
     <property environment="env"/>
     <condition property="i2pbase" value="${env.I2P}">
         <isset property="env.I2P"/>
@@ -23,10 +23,13 @@
     <property name="mailapi.filename" value="mailapi-1.5.4.jar"/>
     <property name="mailapi.hash" value="6786437244ec10d05601c52ee418b33e31f7ce5ed2cad8c8893139b28cb18ac3"/>
     <property name="mailapi.url" value="https://maven.java.net/content/repositories/releases/com/sun/mail/mailapi/1.5.4/mailapi-1.5.4.jar"/>
+    <property name="mailapi.includeinupdate" value="false"/>
     <!-- BouncyCastle Provider -->
     <property name="bcprov.filename" value="bcprov-jdk15on-152.jar"/>
     <property name="bcprov.hash" value="0dc4d181e4d347893c2ddbd2e6cd5d7287fc651c03648fa64b2341c7366b1773"/>
     <property name="bcprov.url" value="http://downloads.bouncycastle.org/java/bcprov-jdk15on-152.jar"/>
+    <property name="bcprov.includeinupdate" value="false"/>
+    <!-- Apache James IMAP server -->
     <!-- Just one of the James .jars for checking presence of James, the .zip contains this and dependencies -->
     <property name="james.filename" value="apache-james-mailbox-api-0.6-20150508.040939-710.jar"/>
     <property name="james.archive" value="james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip"/>
@@ -35,11 +38,13 @@
       To be replaced with a repository.apache.org URL once beta5 is out.
     -->
     <property name="james.url" value="http://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip"/>
+    <property name="james.includeinupdate" value="false"/>
     <!-- SubEtha SMTP -->
     <property name="subetha.filename" value="subethasmtp-3.1.7.jar"/>
     <property name="subetha.hash" value="95cf031f1bc1b1a69b08554fbf8970bad994b32db32388d482c6afb482f1db76"/>
     <property name="subetha.archive" value="subethasmtp-3.1.7.zip"/>
     <property name="subetha.url" value="http://subethasmtp.googlecode.com/files/subethasmtp-3.1.7.zip"/>
+    <property name="subetha.includeinupdate" value="false"/>
 
     <!-- the following are only used by win32installer -->
     <property name="i2p.mtn" value="../i2p.mtn"/>
@@ -287,14 +292,6 @@
             <arg value="--no-gzip"/>
             <arg value="--effort=9"/>
             <arg value="--modification-time=latest"/>
-            <arg value="--segment-limit=-1"/>
-            <arg value="plugin/plugin.tmp/lib/${bcprov.filename}.pack"/>
-            <arg value="${lib}/${bcprov.filename}"/>
-        </exec>
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
             <arg value="plugin/plugin.tmp/lib/ntruenc-1.2.jar.pack"/>
             <arg value="${lib}/ntruenc-1.2.jar"/>
         </exec>
@@ -333,24 +330,12 @@
             <arg value="plugin/plugin.tmp/lib/jfreechart-1.0.19.jar.pack"/>
             <arg value="${lib}/jfreechart-1.0.19.jar"/>
         </exec>
-        <!-- pack all IMAP jars -->
-        <apply executable="pack200" failonerror="true" parallel="false" dest="plugin/plugin.tmp/lib/">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <targetfile/>
-            <srcfile/>
-            <fileset refid="imaplibs"/>
-            <mapper type="glob" from="*.jar" to="*.jar.pack"/>
-        </apply>
-        <!-- pack the SMTP jar -->
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/${subetha.filename}.pack"/>
-            <arg value="${lib}/${subetha.filename}"/>
-        </exec>
+
+        <!-- pack remote dependencies in updater -->
+        <includedep updater="true" dep="mailapi"/>
+        <includedep updater="true" dep="bcprov"/>
+        <includedep updater="true" dep="james"/>
+        <includedep updater="true" dep="subetha"/>
 
         <copy file="src/main/scripts/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
         <copy file="src/main/scripts/decrypt.sh" todir="plugin/plugin.tmp/lib"/>
@@ -358,9 +343,6 @@
         <copy file="src/main/scripts/encrypt.bat" todir="plugin/plugin.tmp/lib"/>
         <copy file="src/main/scripts/decrypt.bat" todir="plugin/plugin.tmp/lib"/>
         <copy file="src/main/scripts/fileinfo.bat" todir="plugin/plugin.tmp/lib"/>
-
-        <delete file="plugin/plugin.tmp/lib/${mailapi.filename}" />
-        <delete file="plugin/plugin.tmp/lib/${mailapi.filename}.pack" />
 
         <!-- get build number -->
         <buildnumber file="plugin/build.number" />
@@ -386,13 +368,11 @@
         <move file="i2pbote.su3" tofile="i2pbote-update.su3" />
 
         <!-- make the install xpi2p -->
-        <exec executable="pack200" failonerror="true">
-            <arg value="--no-gzip"/>
-            <arg value="--effort=9"/>
-            <arg value="--modification-time=latest"/>
-            <arg value="plugin/plugin.tmp/lib/${mailapi.filename}.pack"/>
-            <arg value="${lib}/${mailapi.filename}"/>
-        </exec>
+        <includedep dep="mailapi"/>
+        <includedep dep="bcprov"/>
+        <includedep dep="james"/>
+        <includedep dep="subetha"/>
+
         <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
         <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="version=${version}-b${build.number}" />
@@ -414,7 +394,96 @@
             <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
         </war>
     </target>
-    
+
+    <macrodef name="includedep">
+        <attribute name="updater" default="false"/>
+        <attribute name="dep"/>
+        <sequential>
+            <local name="packDep"/>
+            <local name="removePack"/>
+            <condition property="packDep" else="false">
+                <or>
+                    <and>
+                        <istrue value="@{updater}"/>
+                        <istrue value="${@{dep}.includeinupdate}"/>
+                    </and>
+                    <and>
+                        <isfalse value="@{updater}"/>
+                        <isfalse value="${@{dep}.includeinupdate}"/>
+                    </and>
+                </or>
+            </condition>
+            <condition property="removePack" else="false">
+                <and>
+                    <istrue value="@{updater}"/>
+                    <isfalse value="${@{dep}.includeinupdate}"/>
+                </and>
+            </condition>
+
+            <ant target="packdep.@{dep}" if:true="${packDep}"/>
+            <ant target="removepack.@{dep}" if:true="${removePack}"/>
+        </sequential>
+    </macrodef>
+
+    <target name="packdep.mailapi">
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/${mailapi.filename}.pack"/>
+            <arg value="${lib}/${mailapi.filename}"/>
+        </exec>
+    </target>
+    <target name="removepack.mailapi">
+        <delete file="plugin/plugin.tmp/lib/${mailapi.filename}.pack"/>
+    </target>
+
+    <target name="packdep.bcprov">
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="--segment-limit=-1"/>
+            <arg value="plugin/plugin.tmp/lib/${bcprov.filename}.pack"/>
+            <arg value="${lib}/${bcprov.filename}"/>
+        </exec>
+    </target>
+    <target name="removepack.bcprov">
+        <delete file="plugin/plugin.tmp/lib/${bcprov.filename}.pack"/>
+    </target>
+
+    <target name="packdep.james">
+        <apply executable="pack200" failonerror="true" parallel="false" dest="plugin/plugin.tmp/lib/">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <targetfile/>
+            <srcfile/>
+            <fileset refid="imaplibs"/>
+            <mapper type="glob" from="*.jar" to="*.jar.pack"/>
+        </apply>
+    </target>
+    <target name="removepack.james">
+        <apply executable="rm" dest="plugin/plugin.tmp/lib/" addsourcefile="false">
+            <targetfile suffix=".pack"/>
+            <fileset refid="imaplibs"/>
+            <flattenmapper/>
+        </apply>
+    </target>
+
+    <target name="packdep.subetha">
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/${subetha.filename}.pack"/>
+            <arg value="${lib}/${subetha.filename}"/>
+        </exec>
+    </target>
+    <target name="removepack.subetha">
+        <delete file="plugin/plugin.tmp/lib/${subetha.filename}.pack"/>
+    </target>
+
     <target name="bundle" depends="compile">
         <!-- Update the messages_*.po files.
              We need to supply the bat file for windows, and then change the fail property to true -->
