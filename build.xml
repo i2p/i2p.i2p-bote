@@ -101,7 +101,7 @@
         <pathelement location="${lib}/${ntruenc.filename}" />
         <pathelement location="${lib}/${scrypt.filename}" />
         <pathelement location="${lib}/${lzma.filename}" />
-        <pathelement location="${lib}/${gmss.filename" />
+        <pathelement location="${lib}/${gmss.filename}" />
         <pathelement location="${lib}/${subetha.filename}" />
         <pathelement location="${lib}/${jcommon.filename}" />
         <pathelement location="${lib}/${jfreechart.filename}" />
