@@ -613,8 +613,8 @@ table td, th {
     width: 30px;
 }
 
-.header-column-default {
-    width: 8%;
+.header-column-default, .header-column-check-mail {
+    width: 24px;
 }
 
 .data-column-default {
@@ -622,15 +622,15 @@ table td, th {
 }
 
 .header-column-public-name {
-    width: 30%;
+    width: 20%;
 }
 
 .header-column-description {
-    width: 35%;
+    width: 30%;
 }
 
 .header-column-id-email-dest {
-    width: 27%;
+    width: 40%;
 }
 
 .header-column-check {
