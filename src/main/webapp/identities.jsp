@@ -74,8 +74,10 @@
         <c:when test="${ib:isCheckingForMail(identity)}">
             <img src="${themeDir}/images/wait.gif" alt="<ib:message key='Checking for mail...'/>" title='<ib:message key='Checking for mail...'/>'/>
         </c:when>
-        <c:otherwise>
+        <c:when test="${jspHelperBean.connected}">
             <a href="checkMail.jsp?identity=${identity.key}"><img src="${themeDir}/images/refresh.png" alt="<ib:message key='Check Mail'/>" title='<ib:message key='Check mail for this identity'/>'/></a>
+        </c:when>
+        <c:otherwise>
         </c:otherwise>
         </c:choose></td>
         </tr>

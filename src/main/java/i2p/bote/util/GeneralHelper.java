@@ -320,6 +320,10 @@ public class GeneralHelper {
         return getInstance().getAddressBook().get(destination);
     }
 
+    public boolean isConnected() {
+        return I2PBote.getInstance().isConnected();
+    }
+
     public boolean isCheckingForMail() {
         return I2PBote.getInstance().isCheckingForMail();
     }
