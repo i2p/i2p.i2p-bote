@@ -84,7 +84,7 @@
         <form action="${url}" ${frame} method="GET">
             <input type="hidden" name="checkMail" value="1"/>
             <c:set var="disable" value=""/>
-            <c:if test="${connStatus == DELAY}">
+            <c:if test="${connStatus != CONNECTED}">
                 <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
             </c:if>
             <button type="submit" value="Check Mail" ${disable}><ib:message key="Check Mail"/></button>

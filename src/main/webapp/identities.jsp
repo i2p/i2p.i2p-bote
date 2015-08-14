@@ -30,6 +30,8 @@
 <c:set var="navSelected" value="identities" scope="request"/>
 <jsp:include page="header.jsp"/>
 
+<jsp:include page="getStatus.jsp"/>
+
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
     <h1><ib:message key="Email Identities"/></h1>
 
@@ -74,7 +76,7 @@
         <c:when test="${ib:isCheckingForMail(identity)}">
             <img src="${themeDir}/images/wait.gif" alt="<ib:message key='Checking for mail...'/>" title='<ib:message key='Checking for mail...'/>'/>
         </c:when>
-        <c:when test="${jspHelperBean.connected}">
+        <c:when test="${connStatus eq CONNECTED}">
             <a href="checkMail.jsp?identity=${identity.key}"><img src="${themeDir}/images/refresh.png" alt="<ib:message key='Check Mail'/>" title='<ib:message key='Check mail for this identity'/>'/></a>
         </c:when>
         <c:otherwise>
