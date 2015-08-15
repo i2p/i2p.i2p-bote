@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 12:58+0000\n"
-"PO-Revision-Date: 2015-08-05 01:52+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2015-08-15 02:00+0000\n"
+"PO-Revision-Date: 2015-08-06 12:54+0000\n"
+"Last-Translator: Towinet\n"
 "Language-Team: French (http://www.transifex.com/otf/I2P/language/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -153,11 +153,11 @@ msgstr "(Néant)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:100
+#: src/main/java/i2p/bote/util/GeneralHelper.java:101
 msgid "Not set."
 msgstr "Non paramétré."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:150
+#: src/main/java/i2p/bote/util/GeneralHelper.java:151
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Numero d'implémentation cryptographique incorrect:"
 
@@ -458,19 +458,19 @@ msgstr "Répondre à:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Remove this recipient"
-msgstr ""
+msgstr "Retirer ce destinataire"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add this recipient to the address book"
-msgstr ""
+msgstr "Ajouter ce destinataire au carnet d'adresses"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Select recipients from address book"
-msgstr ""
+msgstr "Sélectionner des destinataire à partir du carnet d'adresses"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another recipient field"
-msgstr ""
+msgstr "Ajouter un autre champ destinataire"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1125,10 +1125,11 @@ msgstr "I2P-Bote version {0}"
 #: src/main/webapp/about.jsp
 msgid "To submit bug reports or feature requests:"
 msgstr ""
+"Pour soumettre des rapports de bugs ou des suggestions de fonctionnalités :"
 
 #: src/main/webapp/about.jsp
 msgid "click here"
-msgstr ""
+msgstr "cliquez ici"
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"

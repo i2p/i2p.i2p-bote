@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 12:58+0000\n"
+"POT-Creation-Date: 2015-08-15 02:00+0000\n"
 "PO-Revision-Date: 2015-08-05 01:52+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Finnish (http://www.transifex.com/otf/I2P/language/fi/)\n"
@@ -143,11 +143,11 @@ msgstr "(EI mitään)"
 msgid "(S)"
 msgstr ""
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:100
+#: src/main/java/i2p/bote/util/GeneralHelper.java:101
 msgid "Not set."
 msgstr "Ei ole asetettu."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:150
+#: src/main/java/i2p/bote/util/GeneralHelper.java:151
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr ""
 

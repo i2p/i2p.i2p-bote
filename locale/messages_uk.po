@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 12:59+0000\n"
-"PO-Revision-Date: 2015-08-05 01:52+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2015-08-15 02:01+0000\n"
+"PO-Revision-Date: 2015-08-07 17:14+0000\n"
+"Last-Translator: Denis Lysenko <gribua@gmail.com>\n"
 "Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/otf/I2P/"
 "language/uk_UA/)\n"
 "Language: uk_UA\n"
@@ -152,11 +152,11 @@ msgstr "(-)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:100
+#: src/main/java/i2p/bote/util/GeneralHelper.java:101
 msgid "Not set."
 msgstr ""
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:150
+#: src/main/java/i2p/bote/util/GeneralHelper.java:151
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr ""
 
