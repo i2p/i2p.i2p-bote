@@ -33,11 +33,13 @@
     <property name="jfreechart.filename" value="jfreechart-1.0.19.jar"/>
     <property name="jfreechart.includeinupdate" value="false"/>
     <!-- JavaMail -->
+    <property name="mailapi.name" value="JavaMail"/>
     <property name="mailapi.filename" value="mailapi-1.5.4.jar"/>
     <property name="mailapi.hash" value="6786437244ec10d05601c52ee418b33e31f7ce5ed2cad8c8893139b28cb18ac3"/>
     <property name="mailapi.url" value="https://maven.java.net/content/repositories/releases/com/sun/mail/mailapi/1.5.4/mailapi-1.5.4.jar"/>
     <property name="mailapi.includeinupdate" value="false"/>
     <!-- BouncyCastle Provider -->
+    <property name="bcprov.name" value="BouncyCastle Provider"/>
     <property name="bcprov.filename" value="bcprov-jdk15on-152.jar"/>
     <property name="bcprov.hash" value="0dc4d181e4d347893c2ddbd2e6cd5d7287fc651c03648fa64b2341c7366b1773"/>
     <property name="bcprov.url" value="http://downloads.bouncycastle.org/java/bcprov-jdk15on-152.jar"/>
@@ -53,6 +55,7 @@
     <property name="james.url" value="http://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip"/>
     <property name="james.includeinupdate" value="false"/>
     <!-- SubEtha SMTP -->
+    <property name="subetha.name" value="SubEtha SMTP"/>
     <property name="subetha.filename" value="subethasmtp-3.1.7.jar"/>
     <property name="subetha.hash" value="95cf031f1bc1b1a69b08554fbf8970bad994b32db32388d482c6afb482f1db76"/>
     <property name="subetha.archive" value="subethasmtp-3.1.7.zip"/>
@@ -151,6 +154,19 @@
         <fail unless="i2pbase" message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p."/>
     </target>
 
+    <macrodef name="checkdep">
+        <attribute name="dep"/>
+        <sequential>
+            <local name="hashValid"/>
+            <checksum file="${lib}/${@{dep}.filename}" algorithm="SHA-256" property="${@{dep}.hash}" verifyProperty="hashValid"/>
+            <fail message="The ${@{dep}.name} library has an invalid hash.">
+                <condition>
+                    <isfalse value="${hashValid}"/>
+                </condition>
+            </fail>
+        </sequential>
+    </macrodef>
+
     <target name="checkdependencies">
         <available property="mailapiexists" file="${lib}/${mailapi.filename}" type="file"/>
         <available property="bcprovexists" file="${lib}/${bcprov.filename}" type="file"/>
@@ -162,24 +178,9 @@
         <ant target="downloadjames"/>
         <ant target="downloadsubetha"/>
 
-        <checksum file="${lib}/${mailapi.filename}" algorithm="SHA-256" property="${mailapi.hash}" verifyProperty="hashValid"/>
-        <fail message="The JavaMail library has an invalid hash.">
-            <condition>
-                <isfalse value="${hashValid}"/>
-            </condition>
-        </fail>
-        <checksum file="${lib}/${bcprov.filename}" algorithm="SHA-256" property="${bcprov.hash}" verifyProperty="hashValid"/>
-        <fail message="The BouncyCastle Provider library has an invalid hash.">
-            <condition>
-                <isfalse value="${hashValid}"/>
-            </condition>
-        </fail>
-        <checksum file="${lib}/${subetha.filename}" algorithm="SHA-256" property="${subetha.hash}" verifyProperty="hashValid"/>
-        <fail message="The SubEthaSMTP library has an invalid hash.">
-            <condition>
-                <isfalse value="${hashValid}"/>
-            </condition>
-        </fail>
+        <checkdep dep="mailapi"/>
+        <checkdep dep="bcprov"/>
+        <checkdep dep="subetha"/>
     </target>
 
     <!-- compiles everything under src/main/java, but not src/test/ or src/build/ -->
