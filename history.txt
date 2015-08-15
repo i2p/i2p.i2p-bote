@@ -1,7 +1,7 @@
 I2P-Bote Version History
 ------------------------
 
-0.2.11
+0.3 (Released on Aug 15, 2015)
   * New default theme based on Material design
   * New features:
      o Exclude individual identities from global email checking
@@ -16,6 +16,7 @@ I2P-Bote Version History
   * Use I2P XSSFilter on inputs
   * Bundle BouncyCastle 1.51 crypto provider
   * In-app update notification removed
+  * IMAP temporarily disabled due to bug
   * Bug fixes
 
 0.2.10 (Released on Jul 23, 2014)
