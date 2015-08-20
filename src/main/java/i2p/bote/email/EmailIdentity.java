@@ -56,7 +56,7 @@ public class EmailIdentity extends EmailDestination {
     private Fingerprint fingerprint;
     private boolean published;
     private boolean defaultIdentity;
-    private IdentityConfig identityConfig;
+    private IdentityConfigImpl identityConfig;
 
     /**
      * Creates a random <code>EmailIdentity</code>.
@@ -87,7 +87,7 @@ public class EmailIdentity extends EmailDestination {
         publicSigningKey = signingKeys.getPublic();
         privateSigningKey = signingKeys.getPrivate();
 
-        identityConfig = new IdentityConfig();
+        identityConfig = new IdentityConfigImpl();
     }
 
     /**
@@ -119,7 +119,7 @@ public class EmailIdentity extends EmailDestination {
         publicSigningKey = publicKeys.signingKey;
         privateSigningKey = privateKeys.signingKey;
 
-        identityConfig = new IdentityConfig();
+        identityConfig = new IdentityConfigImpl();
     }
     
     public PrivateKey getPrivateEncryptionKey() {
@@ -246,6 +246,10 @@ public class EmailIdentity extends EmailDestination {
         identityConfig.loadFromProperties(properties, prefix, overwrite);
     }
 
+    public Properties saveConfig(String prefix) {
+        return identityConfig.saveToProperties(prefix);
+    }
+
     public IdentityConfig getConfig() {
         return identityConfig;
     }
@@ -254,7 +258,25 @@ public class EmailIdentity extends EmailDestination {
         return identityConfig.wrap(configuration);
     }
 
-    public class IdentityConfig {
+    public void setIncludeInGlobalCheck(boolean include) {
+        identityConfig.setIncludeInGlobalCheck(include);
+    }
+
+    public boolean getIncludeInGlobalCheck() {
+        return identityConfig.getIncludeInGlobalCheck();
+    }
+
+    public interface IdentityConfig {
+        public int getRelayRedundancy();
+        public void setRelayMinDelay(int minDelay);
+        public int getRelayMinDelay();
+        public void setRelayMaxDelay(int maxDelay);
+        public int getRelayMaxDelay();
+        public void setNumStoreHops(int numHops);
+        public int getNumStoreHops();
+    }
+
+    private class IdentityConfigImpl implements IdentityConfig {
         private static final String PARAMETER_INCLUDE_IN_GLOBAL_CHECK_MAIL = "includeInGlobalCheck";
 
         private static final boolean DEFAULT_INCLUDE_IN_GLOBAL_CHECK_MAIL = true;
@@ -269,11 +291,11 @@ public class EmailIdentity extends EmailDestination {
         private Properties properties;
         private Configuration configuration;
 
-        public IdentityConfig() {
+        public IdentityConfigImpl() {
             properties = new Properties();
         }
 
-        private IdentityConfig(Properties properties, Configuration configuration) {
+        private IdentityConfigImpl(Properties properties, Configuration configuration) {
             this.properties = properties;
             this.configuration = configuration;
         }
@@ -302,7 +324,7 @@ public class EmailIdentity extends EmailDestination {
         }
 
         public IdentityConfig wrap(Configuration configuration) {
-            return new IdentityConfig(properties, configuration);
+            return new IdentityConfigImpl(properties, configuration);
         }
 
         // Identity-only configuration

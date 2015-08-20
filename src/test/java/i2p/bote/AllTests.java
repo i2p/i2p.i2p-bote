@@ -52,6 +52,7 @@ import i2p.bote.packet.dht.StoreRequestTest;
 import i2p.bote.packet.dht.UnencryptedEmailPacketTest;
 import i2p.bote.packet.relay.RelayRequestTest;
 import i2p.bote.packet.relay.ReturnChainTest;
+import i2p.bote.service.OutboxProcessorTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -84,7 +85,10 @@ import org.junit.runners.Suite;
     IncompleteEmailFolderTest.class,
     IndexPacketFolderTest.class,
     RelayPacketFolderTest.class,
-    
+
+    // Services
+    OutboxProcessorTest.class,
+
     // Other
     EmailTest.class,
     EmailMetadataTest.class,

@@ -293,7 +293,7 @@ public class Identities implements KeyUpdateHandler {
             String text = identity.getText();
             properties.setProperty(prefix + PREF_TEXT, (text==null ? "" : text));
             properties.setProperty(prefix + PREF_PUBLISHED, identity.isPublished() ? "true" : "false");
-            properties.putAll(identity.getConfig().saveToProperties(prefix + CONFIGURATION_PREFIX));
+            properties.putAll(identity.saveConfig(prefix + CONFIGURATION_PREFIX));
             
             index++;
         }

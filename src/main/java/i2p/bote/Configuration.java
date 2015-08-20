@@ -22,6 +22,7 @@
 package i2p.bote;
 
 import static i2p.bote.Util._;
+import i2p.bote.email.EmailIdentity.IdentityConfig;
 import i2p.bote.packet.dht.Contact;
 
 import java.io.File;
@@ -39,7 +40,7 @@ import net.i2p.util.Log;
 import net.i2p.util.SecureFile;
 import net.i2p.util.SystemVersion;
 
-public class Configuration {
+public class Configuration implements IdentityConfig {
     public static final String KEY_DERIVATION_PARAMETERS_FILE = "derivparams";   // name of the KDF parameter cache file, relative to I2P_BOTE_SUBDIR
 
     private static final String I2P_BOTE_SUBDIR = "i2pbote";       // relative to the I2P app dir

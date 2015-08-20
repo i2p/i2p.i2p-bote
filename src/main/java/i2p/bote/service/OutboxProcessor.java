@@ -207,7 +207,11 @@ public class OutboxProcessor extends I2PAppThread {
             log.info("Sending email: " + logSuffix);
             EmailDestination recipientDest = new EmailDestination(recipient);
 
-            EmailIdentity.IdentityConfig identityConfig = senderIdentity.getWrappedConfig(configuration);
+            EmailIdentity.IdentityConfig identityConfig;
+            if (email.isAnonymous())
+                identityConfig = configuration;
+            else
+                identityConfig = senderIdentity.getWrappedConfig(configuration);
             int hops = identityConfig.getNumStoreHops();
             long minDelay = identityConfig.getRelayMinDelay() * 60 * 1000;
             long maxDelay = identityConfig.getRelayMaxDelay() * 60 * 1000;

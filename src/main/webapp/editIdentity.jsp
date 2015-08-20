@@ -183,7 +183,7 @@
             <ib:message key="Include in global check:"/>
         </div>
         <div class="identity-form-checkbox">
-            <c:if test="${empty identity or identity.config.includeInGlobalCheck}">
+            <c:if test="${empty identity or identity.includeInGlobalCheck}">
                 <c:set var="checked" value="checked='checked'"/>
             </c:if>
             <input type="checkbox" name="includeInGlobalCheck" ${checked}/>

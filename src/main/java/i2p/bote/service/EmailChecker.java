@@ -116,7 +116,7 @@ public class EmailChecker extends I2PAppThread {
             previousMailCheckTime = lastMailCheckTime;
             lastMailCheckTime = System.currentTimeMillis();
             for (EmailIdentity identity : identities.getAll()) {
-                if (identity.getConfig().getIncludeInGlobalCheck()) {
+                if (identity.getIncludeInGlobalCheck()) {
                     checkForMail(identity);
                 }
             }
