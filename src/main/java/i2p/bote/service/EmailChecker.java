@@ -127,6 +127,10 @@ public class EmailChecker extends I2PAppThread {
     }
 
     public synchronized void checkForMail(String key) throws PasswordException, IOException, GeneralSecurityException {
+        if (!isCheckingForMail()) {
+            previousMailCheckTime = lastMailCheckTime;
+            lastMailCheckTime = System.currentTimeMillis();
+        }
         EmailIdentity identity = identities.get(key);
         if (identity != null)
             checkForMail(identity);
