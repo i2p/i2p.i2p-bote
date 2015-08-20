@@ -46,6 +46,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import net.i2p.util.I2PAppThread;
 import net.i2p.util.Log;
@@ -188,11 +189,16 @@ public class EmailChecker extends I2PAppThread {
 
     private synchronized void updatePendingTasks() {
         try {
-            for (Map.Entry<EmailIdentity, Future<Boolean>> entry: pendingMailCheckTasks.entrySet())
-                if (entry.getValue().get(1, TimeUnit.MILLISECONDS)) {
-                    newMailReceived = true;
+            for (Map.Entry<EmailIdentity, Future<Boolean>> entry: pendingMailCheckTasks.entrySet()) {
+                try {
+                    boolean newMailForIdentity = entry.getValue().get(1, TimeUnit.MILLISECONDS);
                     pendingMailCheckTasks.remove(entry.getKey());
+                    if (newMailForIdentity)
+                        newMailReceived = true;
+                } catch (TimeoutException e) {
+                    log.debug("CheckEmailTask not finished for Identity " + entry.getKey());
                 }
+            }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } catch (Exception e) {
