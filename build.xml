@@ -12,6 +12,8 @@
     
     <property name="junit.filename" value="junit-4.8.1.jar"/>
     <property name="junit.url" value="http://sourceforge.net/projects/junit/files/junit/4.8.1/junit-4.8.1.jar/download"/>
+    <property name="mockito.filename" value="mockito-core-2.0.31-beta.jar"/>
+    <property name="mockito.url" value="https://bintray.com/artifact/download/szczepiq/maven/org/mockito/mockito-core/2.0.31-beta/mockito-core-2.0.31-beta.jar"/>
     <!-- Just the main jMock .jar, the .zip contains this and dependencies -->
     <property name="jmock.filename" value="jmock-2.6.0.jar"/>
     <property name="jmock.archive" value="jmock-2.6.0-jars.zip"/>
@@ -650,11 +652,14 @@
     <target name="junit" depends="compile">
         <available property="junitexists" file="${lib}/${junit.filename}" type="file"/>
         <ant target="downloadjunit"/>
+        <available property="mockitoexists" file="${lib}/${mockito.filename}" type="file"/>
+        <ant target="downloadmockito"/>
         <available property="jmockexists" file="${lib}/${jmock.filename}" type="file"/>
         <ant target="downloadjmock"/>
         
         <path id="junitcp">
             <pathelement location="${lib}/${junit.filename}"/>
+            <pathelement location="${lib}/${mockito.filename}"/>
             <pathelement path="${jmockcp}"/>
             <pathelement location="./ant_build/classes"/>
             <path refid="cp"/>
@@ -700,6 +705,16 @@
             </condition>
         </fail>
         <get src="${junit.url}" verbose="true" dest="${lib}/${junit.filename}"/>
+    </target>
+
+    <target name="downloadmockito" unless="mockitoexists">
+        <input message="Mockito not found, download now?" validargs="y,n" addproperty="userinput.mockito"/>
+        <fail message="OK, aborting build." >
+            <condition>
+                <equals arg1="${userinput.mockito}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${mockito.url}" verbose="true" dest="${lib}/${mockito.filename}"/>
     </target>
 
     <target name="downloadjmock" unless="jmockexists">
