@@ -150,7 +150,7 @@ public class OutboxProcessor extends I2PAppThread {
      * @throws IOException 
      * @throws InterruptedException 
      */
-    private void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException, IOException, InterruptedException {
+    void sendEmail(Email email) throws MessagingException, DhtException, GeneralSecurityException, PasswordException, IOException, InterruptedException {
         EmailIdentity senderIdentity = null;
         if (!email.isAnonymous()) {
             String sender = email.getOneFromAddress();
