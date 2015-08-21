@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -193,14 +194,18 @@ public class EmailChecker extends I2PAppThread {
 
     private synchronized void updatePendingTasks() {
         try {
-            for (Map.Entry<EmailIdentity, Future<Boolean>> entry: pendingMailCheckTasks.entrySet()) {
-                try {
-                    boolean newMailForIdentity = entry.getValue().get(1, TimeUnit.MILLISECONDS);
-                    pendingMailCheckTasks.remove(entry.getKey());
-                    if (newMailForIdentity)
-                        newMailReceived = true;
-                } catch (TimeoutException e) {
-                    log.debug("CheckEmailTask not finished for Identity " + entry.getKey());
+            synchronized (pendingMailCheckTasks) {
+                Iterator<Map.Entry<EmailIdentity, Future<Boolean>>> iter = pendingMailCheckTasks.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Map.Entry<EmailIdentity, Future<Boolean>> entry = iter.next();
+                    try {
+                        boolean newMailForIdentity = entry.getValue().get(1, TimeUnit.MILLISECONDS);
+                        iter.remove();
+                        if (newMailForIdentity)
+                            newMailReceived = true;
+                    } catch (TimeoutException e) {
+                        log.debug("CheckEmailTask not finished for Identity " + entry.getKey());
+                    }
                 }
             }
         } catch (InterruptedException e) {

@@ -1,6 +1,9 @@
 I2P-Bote Version History
 ------------------------
 
+0.4.1
+  * Bug fixes
+
 0.4 (Released on Aug 21, 2015)
   * Fixed bugs:
     o Email checking would get stuck if no new mail was found
