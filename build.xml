@@ -352,7 +352,7 @@
         <!-- make the update xpi2p -->
         <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
         <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
-            <arg value="version=${version}-b${build.number}" />
+            <arg value="version=${version}" />
         </exec>
         <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
             <arg value="update-only=true" />
@@ -385,7 +385,7 @@
         <!-- make the install xpi2p -->
         <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
         <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
-            <arg value="version=${version}-b${build.number}" />
+            <arg value="version=${version}" />
         </exec>
         <exec executable="${makeplugin}" inputstring="${release.password.su3}" failonerror="true" >
             <arg value="plugin/plugin.tmp" />
