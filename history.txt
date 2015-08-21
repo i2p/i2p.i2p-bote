@@ -1,6 +1,15 @@
 I2P-Bote Version History
 ------------------------
 
+0.4 (Released on Aug 21, 2015)
+  * Fixed bugs:
+    o Email checking would get stuck if no new mail was found
+    o "Last checked" time was inconsistent for manual checks
+    o Anonymous emails would never send
+  * Removed build number from version
+  * Skipped 0.3.* series
+    o 0.3.1 is less than 0.3-b195; would need to go to 0.3.196
+
 0.3 (Released on Aug 15, 2015)
   * New default theme based on Material design
   * New features:
