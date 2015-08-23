@@ -35,7 +35,7 @@
         </ib:message>
     </h2>
 
-    <p><ib:message key="To submit bug reports or feature requests:"/> <a href="http://trac.i2p2.i2p/newticket?component=apps/plugins&keywords=I2P-Bote"><ib:message key="click here"/></a>.</p>
+    <p><ib:message key="To submit bug reports or feature requests:"/> <a href="http://trac.i2p2.i2p/newticket?component=apps/plugins&keywords=I2P-Bote&owner=str4d"><ib:message key="click here"/></a>.</p>
     
     <div class="contributor-category"><ib:message key="Developers:"/></div>
     <div>
