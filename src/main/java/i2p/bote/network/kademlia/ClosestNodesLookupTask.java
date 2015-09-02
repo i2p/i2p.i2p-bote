@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -135,8 +136,11 @@ public class ClosestNodesLookupTask implements Callable<List<Destination>> {
                 TimeUnit.SECONDS.sleep(1);
             } while (!isDone());
             log.debug("Node lookup for " + key + " found " + responses.size() + " nodes (may include local node).");
-            for (Destination node: responses)
-                log.debug("  Node: " + Util.toBase32(node));
+            synchronized (responses) {
+                Iterator<Destination> i = responses.iterator();
+                while (i.hasNext())
+                    log.debug("  Node: " + Util.toBase32(i.next()));
+            }
         }
         finally {
             i2pReceiver.removePacketListener(packetListener);
@@ -207,10 +211,13 @@ public class ClosestNodesLookupTask implements Callable<List<Destination>> {
      */
     private List<Destination> getResults() {
         List<Destination> resultsList = new ArrayList<Destination>();
-        for (Destination destination: responses) {
-            resultsList.add(destination);
-            if (resultsList.size() >= K)
-                break;
+        synchronized (responses) {
+            Iterator<Destination> i = responses.iterator();
+            while (i.hasNext()) {
+                resultsList.add(i.next());
+                if (resultsList.size() >= K)
+                    break;
+            }
         }
         return resultsList;
     }
