@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-15 02:01+0000\n"
+"POT-Creation-Date: 2015-09-12 14:29+0000\n"
 "PO-Revision-Date: 2015-08-05 02:14+0000\n"
 "Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/"
@@ -18,47 +18,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/main/java/i2p/bote/Configuration.java:67
+#: src/main/java/i2p/bote/Configuration.java:68
 msgid "Material"
 msgstr "纸张"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Light Blue"
 msgstr "亮蓝"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Vanilla"
 msgstr "香草白"
 
-#: src/main/java/i2p/bote/I2PBote.java:515
+#: src/main/java/i2p/bote/I2PBote.java:516
 msgid "No identity matches the sender/from field: "
 msgstr "没有身份密钥与寄件者/收件人相匹配: "
 
-#: src/main/java/i2p/bote/I2PBote.java:719
+#: src/main/java/i2p/bote/I2PBote.java:721
 msgid "Checking password"
 msgstr "正在检查密码"
 
-#: src/main/java/i2p/bote/I2PBote.java:722
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The old password is not correct."
 msgstr "旧密码不正确。"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The new password and the confirmation password do not match."
 msgstr "新密码与确认密码字段输入相符。"
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:733
 msgid "Re-encrypting identities"
 msgstr "重新加密身份"
 
-#: src/main/java/i2p/bote/I2PBote.java:734
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting addressbook"
 msgstr "重新加密地址簿"
 
-#: src/main/java/i2p/bote/I2PBote.java:737
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting folder"
 msgstr "重新加密文件夹"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:743
 msgid "Updating password file"
 msgstr "正在更新密码文件"
 

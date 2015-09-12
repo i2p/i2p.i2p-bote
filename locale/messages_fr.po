@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-15 02:00+0000\n"
+"POT-Creation-Date: 2015-09-12 14:28+0000\n"
 "PO-Revision-Date: 2015-08-06 12:54+0000\n"
 "Last-Translator: Towinet\n"
 "Language-Team: French (http://www.transifex.com/otf/I2P/language/fr/)\n"
@@ -20,49 +20,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/main/java/i2p/bote/Configuration.java:67
+#: src/main/java/i2p/bote/Configuration.java:68
 msgid "Material"
 msgstr "Matériau"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Light Blue"
 msgstr "Bleu clair"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Vanilla"
 msgstr "Vanille"
 
-#: src/main/java/i2p/bote/I2PBote.java:515
+#: src/main/java/i2p/bote/I2PBote.java:516
 msgid "No identity matches the sender/from field: "
 msgstr "Aucune identité ne correspond au champ \"Expéditeur/De\":"
 
-#: src/main/java/i2p/bote/I2PBote.java:719
+#: src/main/java/i2p/bote/I2PBote.java:721
 msgid "Checking password"
 msgstr "Vérification de mot de passe"
 
-#: src/main/java/i2p/bote/I2PBote.java:722
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The old password is not correct."
 msgstr "L'ancien mot de passe est incorrect."
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The new password and the confirmation password do not match."
 msgstr ""
 "Le nouveau mot de passe et le mot de passe de confirmation ne correspondent "
 "pas."
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:733
 msgid "Re-encrypting identities"
 msgstr "Re-chiffrement d'identités"
 
-#: src/main/java/i2p/bote/I2PBote.java:734
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting addressbook"
 msgstr "Re-chiffrement de carnet d'adresses"
 
-#: src/main/java/i2p/bote/I2PBote.java:737
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting folder"
 msgstr "Re-chiffrement de dossier"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:743
 msgid "Updating password file"
 msgstr "Mise à jour du fichier de mot de passe"
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-15 02:01+0000\n"
+"POT-Creation-Date: 2015-09-12 14:29+0000\n"
 "PO-Revision-Date: 2015-08-05 01:52+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Romanian (http://www.transifex.com/otf/I2P/language/ro/)\n"
@@ -15,47 +15,47 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
 "2:1));\n"
 
-#: src/main/java/i2p/bote/Configuration.java:67
+#: src/main/java/i2p/bote/Configuration.java:68
 msgid "Material"
 msgstr ""
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Light Blue"
 msgstr ""
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Vanilla"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:515
+#: src/main/java/i2p/bote/I2PBote.java:516
 msgid "No identity matches the sender/from field: "
 msgstr "Nici o identitate nu se potrivește cu expeditorul / din câmp:"
 
-#: src/main/java/i2p/bote/I2PBote.java:719
+#: src/main/java/i2p/bote/I2PBote.java:721
 msgid "Checking password"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:722
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The old password is not correct."
 msgstr "Parola veche nu este corectă."
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The new password and the confirmation password do not match."
 msgstr "Parolă noua și parola de confirmare nu coincid."
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:733
 msgid "Re-encrypting identities"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:734
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting addressbook"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:737
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting folder"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:743
 msgid "Updating password file"
 msgstr ""
 

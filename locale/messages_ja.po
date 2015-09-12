@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-15 02:00+0000\n"
+"POT-Creation-Date: 2015-09-12 14:28+0000\n"
 "PO-Revision-Date: 2015-08-05 01:52+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/otf/I2P/language/ja/)\n"
@@ -16,47 +16,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/main/java/i2p/bote/Configuration.java:67
+#: src/main/java/i2p/bote/Configuration.java:68
 msgid "Material"
 msgstr "素材"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Light Blue"
 msgstr "ライトブルー"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Vanilla"
 msgstr "バニラ"
 
-#: src/main/java/i2p/bote/I2PBote.java:515
+#: src/main/java/i2p/bote/I2PBote.java:516
 msgid "No identity matches the sender/from field: "
 msgstr "送信者/差出人欄と一致するIDが見つかりませんでした:"
 
-#: src/main/java/i2p/bote/I2PBote.java:719
+#: src/main/java/i2p/bote/I2PBote.java:721
 msgid "Checking password"
 msgstr "パスワードを確認しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:722
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The old password is not correct."
 msgstr "古いパスワードが間違っています。"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The new password and the confirmation password do not match."
 msgstr "新しいパスワードと確認用のパスワードが一致しません。"
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:733
 msgid "Re-encrypting identities"
 msgstr "IDを再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:734
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting addressbook"
 msgstr "アドレス帳を再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:737
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting folder"
 msgstr "フォルダを再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:743
 msgid "Updating password file"
 msgstr "パスワードファイルを更新しています"
 

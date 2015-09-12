@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-15 02:01+0000\n"
-"PO-Revision-Date: 2015-08-05 01:52+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2015-09-12 14:29+0000\n"
+"PO-Revision-Date: 2015-08-26 18:03+0000\n"
+"Last-Translator: cacapo <handelsehorisont@gmail.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/otf/I2P/language/"
 "sv_SE/)\n"
 "Language: sv_SE\n"
@@ -21,47 +21,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main/java/i2p/bote/Configuration.java:67
+#: src/main/java/i2p/bote/Configuration.java:68
 msgid "Material"
 msgstr "Material"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Light Blue"
 msgstr "Ljusblå"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Vanilla"
 msgstr "Vanilj"
 
-#: src/main/java/i2p/bote/I2PBote.java:515
+#: src/main/java/i2p/bote/I2PBote.java:516
 msgid "No identity matches the sender/from field: "
 msgstr "Ingen identitet överensstämmer med avsändare/från fältet:"
 
-#: src/main/java/i2p/bote/I2PBote.java:719
+#: src/main/java/i2p/bote/I2PBote.java:721
 msgid "Checking password"
 msgstr "Kontrollerar lösenord"
 
-#: src/main/java/i2p/bote/I2PBote.java:722
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "The old password is not correct."
 msgstr "Det gamla lösenordet är inte rätt."
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The new password and the confirmation password do not match."
 msgstr "Det nya lösenordet och bekräftelselösenordet matchar inte."
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:733
 msgid "Re-encrypting identities"
 msgstr "Återkrypterar identiteter"
 
-#: src/main/java/i2p/bote/I2PBote.java:734
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting addressbook"
 msgstr "Återkrypterar adressbok"
 
-#: src/main/java/i2p/bote/I2PBote.java:737
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting folder"
 msgstr "Återkrypterar katalog"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:743
 msgid "Updating password file"
 msgstr "Uppdaterar lösenordsfil"
 
@@ -455,19 +455,19 @@ msgstr "Svara till:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Remove this recipient"
-msgstr ""
+msgstr "Tag bort mottagare"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add this recipient to the address book"
-msgstr ""
+msgstr "Lägg till mottagare till adressbok"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Select recipients from address book"
-msgstr ""
+msgstr "Välj mottagare från adressbok"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another recipient field"
-msgstr ""
+msgstr "Lägg till ett annat mottagarfält"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -475,15 +475,15 @@ msgstr "Ämne:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Attachments:"
-msgstr "Bifogningar:"
+msgstr "Bilagor:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Remove this attachment"
-msgstr "Ta bort denhär bifogningen"
+msgstr "Tag bort denna bilaga"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another attachment"
-msgstr "Lägg till en bifogning till"
+msgstr "Lägg till en bilaga"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Attach"
@@ -491,7 +491,7 @@ msgstr "Bifoga"
 
 #: src/main/webapp/newEmail.jsp
 msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "Det rekomenderas att bifogningar är mindre än 500kB."
+msgstr "Bilagorna bör vara mindre än 500kB."
 
 #: src/main/webapp/newEmail.jsp
 msgid "Message:"
@@ -1108,11 +1108,11 @@ msgstr "I2P-Bote Version {0}"
 
 #: src/main/webapp/about.jsp
 msgid "To submit bug reports or feature requests:"
-msgstr ""
+msgstr "För att rapportera buggar eller begär funktioner:"
 
 #: src/main/webapp/about.jsp
 msgid "click here"
-msgstr ""
+msgstr "Klicka här"
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"
