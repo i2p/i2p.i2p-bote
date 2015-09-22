@@ -21,7 +21,7 @@
 
 package i2p.bote.web;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.I2PBote;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
@@ -70,7 +70,7 @@ public class SendEmailTag extends BodyTagSupport {
         Email email = new Email(includeSentTime);
         String statusMessage;
         if (recipients.isEmpty())
-            statusMessage = _("Error: Please add at least one recipient.");
+            statusMessage = _t("Error: Please add at least one recipient.");
         else
             try {
                 // set addresses
@@ -98,13 +98,13 @@ public class SendEmailTag extends BodyTagSupport {
                         log.error("Can't clean up attachment: <" + attachment + ">");
                 }
                 
-                statusMessage = _("The email has been queued for sending.");
+                statusMessage = _t("The email has been queued for sending.");
             }
             catch (PasswordException e) {
                 throw new JspException(e);
             }
             catch (Exception e) {
-                statusMessage = _("Error sending email: {0}", e.getLocalizedMessage());
+                statusMessage = _t("Error sending email: {0}", e.getLocalizedMessage());
                 log.error("Error sending email", e);
             }
 

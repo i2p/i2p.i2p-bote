@@ -21,7 +21,7 @@
 
 package i2p.bote.imap;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.EmailFolderManager;
 
@@ -315,7 +315,7 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
 
             @Override
             public void delete(Mailbox<String> mailbox) throws MailboxException {
-                throw new MailboxException(_("Deletion of mailboxes is not currently supported."));
+                throw new MailboxException(_t("Deletion of mailboxes is not currently supported."));
             }
 
             @Override

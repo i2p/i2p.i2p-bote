@@ -27,7 +27,7 @@ public class ECUtils {
             ECPoint point,
             boolean withCompression) {
         org.bouncycastle.math.ec.ECPoint bcPoint = EC5Util.convertPoint(ecSpec, point, withCompression);
-        return bcPoint.getEncoded();
+        return bcPoint.getEncoded(true);
     }
 
     public static ECPoint decodePoint(

@@ -21,7 +21,7 @@
 
 package i2p.bote.email;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.UniqueId;
 import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
@@ -469,7 +469,7 @@ public class Email extends MimeMessage {
             try {
                 checkSender(address);
             } catch (AddressException e) {
-                String errorMessage = _("Address doesn't contain an Email Destination or an external address: {0}", address);
+                String errorMessage = _t("Address doesn't contain an Email Destination or an external address: {0}", address);
                 log.debug(errorMessage, e);
                 throw new DataFormatException(errorMessage);
             }
@@ -481,7 +481,7 @@ public class Email extends MimeMessage {
             try {
                 checkRecipient(address);
             } catch (AddressException e) {
-                String errorMessage = _("Address doesn't contain an Email Destination or an external address: {0}", address);
+                String errorMessage = _t("Address doesn't contain an Email Destination or an external address: {0}", address);
                 log.debug(errorMessage, e);
                 throw new DataFormatException(errorMessage);
             }
@@ -503,7 +503,7 @@ public class Email extends MimeMessage {
             // check for external address
             // InternetAddress accepts addresses without a domain, so check that there is a '.' after the '@'
             if (addr.indexOf('@') >= addr.indexOf('.'))
-                throw new AddressException(_("Invalid address: {0}", addr));
+                throw new AddressException(_t("Invalid address: {0}", addr));
         }
     }
     /*

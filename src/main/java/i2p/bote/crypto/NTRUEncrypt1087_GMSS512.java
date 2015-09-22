@@ -112,7 +112,7 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
     
     @Override
     public String getName() {
-        return Util._("NTRU-1087 Encryption");
+        return Util._t("NTRU-1087 Encryption");
     }
     
     @Override

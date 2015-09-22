@@ -21,7 +21,7 @@
 
 package i2p.bote.network;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.packet.I2PBotePacket;
 
 import java.util.ArrayList;
@@ -77,6 +77,6 @@ public class BanList {
         if (packet.isProtocolVersionOk())
             unban(peer);
         else
-            ban(peer, _("Wrong protocol version:") + " " + packet.getProtocolVersion());
+            ban(peer, _t("Wrong protocol version:") + " " + packet.getProtocolVersion());
     }
 }

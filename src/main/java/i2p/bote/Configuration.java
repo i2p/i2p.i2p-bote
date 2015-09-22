@@ -21,7 +21,7 @@
 
 package i2p.bote;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.email.EmailIdentity.IdentityConfig;
 import i2p.bote.packet.dht.Contact;
 
@@ -65,9 +65,9 @@ public class Configuration implements IdentityConfig {
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
     private static final List<Theme> BUILT_IN_THEMES = Arrays.asList(new Theme[] {   // theme IDs correspond to a theme directory in the .war
-            new Theme("material", _("Material")),
-            new Theme("lblue", _("Light Blue")),
-            new Theme("vanilla", _("Vanilla"))
+            new Theme("material", _t("Material")),
+            new Theme("lblue", _t("Light Blue")),
+            new Theme("vanilla", _t("Vanilla"))
     });
     private static final String THEME_SUBDIR = "themes";   // relative to I2P_BOTE_SUBDIR
 

@@ -21,7 +21,7 @@
 
 package i2p.bote;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.crypto.wordlist.WordListAnchor;
 import i2p.bote.debug.DebugSupport;
@@ -513,7 +513,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
             String sender = email.getOneFromAddress();
             EmailIdentity senderIdentity = identities.extractIdentity(sender);
             if (senderIdentity == null)
-                throw new MessagingException(_("No identity matches the sender/from field: " + sender));
+                throw new MessagingException(_t("No identity matches the sender/from field: " + sender));
             email.sign(senderIdentity, identities);
         }
         
@@ -718,29 +718,29 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
             StatusListener lsnr) throws IOException, GeneralSecurityException, PasswordException {
         File passwordFile = configuration.getPasswordFile();
 
-        lsnr.updateStatus(_("Checking password"));
+        lsnr.updateStatus(_t("Checking password"));
 
         if (!FileEncryptionUtil.isPasswordCorrect(oldPassword, passwordFile))
-            throw new PasswordException(_("The old password is not correct."));
+            throw new PasswordException(_t("The old password is not correct."));
         if (!Arrays.equals(newPassword, confirmNewPassword))
-            throw new PasswordException(_("The new password and the confirmation password do not match."));
+            throw new PasswordException(_t("The new password and the confirmation password do not match."));
 
         // lock so no files are encrypted with the old password while the password is being changed
         synchronized(passwordCache) {
             passwordCache.setPassword(newPassword);
             DerivedKey newKey = passwordCache.getKey();
 
-            lsnr.updateStatus(_("Re-encrypting identities"));
+            lsnr.updateStatus(_t("Re-encrypting identities"));
             identities.changePassword(oldPassword, newKey);
 
-            lsnr.updateStatus(_("Re-encrypting addressbook"));
+            lsnr.updateStatus(_t("Re-encrypting addressbook"));
             addressBook.changePassword(oldPassword, newKey);
             for (EmailFolder folder: getEmailFolders()) {
-                lsnr.updateStatus(_("Re-encrypting folder") + " " + folder.getName());
+                lsnr.updateStatus(_t("Re-encrypting folder") + " " + folder.getName());
                 folder.changePassword(oldPassword, newKey);
             }
 
-            lsnr.updateStatus(_("Updating password file"));
+            lsnr.updateStatus(_t("Updating password file"));
             FileEncryptionUtil.writePasswordFile(passwordFile, passwordCache.getPassword(), newKey);
         }
     }

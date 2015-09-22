@@ -47,7 +47,7 @@ public class ECDH521_ECDSA521 extends ECDH_ECDSA {
     
     @Override
     public String getName() {
-        return Util._("521-bit Elliptic Curve Encryption");
+        return Util._t("521-bit Elliptic Curve Encryption");
     }
     
     @Override

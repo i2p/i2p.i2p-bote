@@ -42,7 +42,7 @@ public class ECDH256_ECDSA256 extends ECDH_ECDSA {
     
     @Override
     public String getName() {
-        return Util._("256-bit Elliptic Curve Encryption");
+        return Util._t("256-bit Elliptic Curve Encryption");
     }
     
     @Override

@@ -21,7 +21,7 @@
 
 package i2p.bote.web;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.email.Email;
 import i2p.bote.folder.Outbox.EmailStatus;
 import i2p.bote.util.GeneralHelper;
@@ -233,27 +233,27 @@ public class JSPHelper extends GeneralHelper {
         EmailStatus emailStatus = getEmailStatus(email);
         switch (emailStatus.getStatus()) {
         case QUEUED:
-            return _("Queued");
+            return _t("Queued");
         case SENDING:
-            return _("Sending");
+            return _t("Sending");
         case SENT_TO:
-            return _("Sent to {0} out of {1} recipients",
+            return _t("Sent to {0} out of {1} recipients",
                     emailStatus.getParam1(), emailStatus.getParam2());
         case EMAIL_SENT:
-            return _("Email sent");
+            return _t("Email sent");
         case GATEWAY_DISABLED:
-            return _("Gateway disabled");
+            return _t("Gateway disabled");
         case NO_IDENTITY_MATCHES:
-            return _("No identity matches the sender/from field: {0}",
+            return _t("No identity matches the sender/from field: {0}",
                     emailStatus.getParam1());
         case INVALID_RECIPIENT:
-            return _("Invalid recipient address: {0}", emailStatus.getParam1());
+            return _t("Invalid recipient address: {0}", emailStatus.getParam1());
         case ERROR_CREATING_PACKETS:
-            return _("Error creating email packets: {0}", emailStatus.getParam1());
+            return _t("Error creating email packets: {0}", emailStatus.getParam1());
         case ERROR_SENDING:
-            return _("Error while sending email: {0}", emailStatus.getParam1());
+            return _t("Error while sending email: {0}", emailStatus.getParam1());
         case ERROR_SAVING_METADATA:
-            return _("Error saving email metadata: {0}", emailStatus.getParam1());
+            return _t("Error saving email metadata: {0}", emailStatus.getParam1());
         default:
             return "";
         }

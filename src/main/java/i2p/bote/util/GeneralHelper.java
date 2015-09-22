@@ -98,7 +98,7 @@ public class GeneralHelper {
         Destination dest = I2PBote.getInstance().getLocalDestination();
         if (dest != null)
             return Util.toBase32(dest);
-        return Util._("Not set.");
+        return Util._t("Not set.");
     }
 
     /**
@@ -148,7 +148,7 @@ public class GeneralHelper {
         if (createNew) {
             CryptoImplementation cryptoImpl = CryptoFactory.getInstance(cryptoImplId);
             if (cryptoImpl == null) {
-                String errorMsg = Util._("Invalid ID number for CryptoImplementation: " + cryptoImplId);
+                String errorMsg = Util._t("Invalid ID number for CryptoImplementation: " + cryptoImplId);
                 log.error(errorMsg);
                 throw new IllegalArgumentException(errorMsg);
             }

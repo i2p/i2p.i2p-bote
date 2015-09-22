@@ -21,7 +21,7 @@
 
 package i2p.bote.network.kademlia;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.I2PBote;
 import i2p.bote.Util;
 import i2p.bote.network.DhtPeerStats;
@@ -44,7 +44,7 @@ class KademliaPeerStats implements DhtPeerStats {
     private List<List<String>> data;
     
     KademliaPeerStats(SBucket sBucket, List<KBucket> kBuckets, Hash localDestinationHash) {
-        String[] headerArray = new String[] {_("Peer"), _("I2P Destination"), _("BktPfx"), _("Distance"), _("Locked?"), _("First Seen")};
+        String[] headerArray = new String[] {_t("Peer"), _t("I2P Destination"), _t("BktPfx"), _t("Distance"), _t("Locked?"), _t("First Seen")};
         header = Arrays.asList(headerArray);
         
         data = new ArrayList<List<String>>();
@@ -64,7 +64,7 @@ class KademliaPeerStats implements DhtPeerStats {
             row.add(getBucketPrefix(bucket));
             BigInteger distance = KademliaUtil.getDistance(localDestinationHash, peer.calculateHash());
             row.add(distance.shiftRight((Hash.HASH_LENGTH-2)*8).toString());   // show the 2 most significant bytes
-            row.add(String.valueOf(peer.isLocked() ? _("Yes")+"("+(peer.getConsecTimeouts())+")" : _("No")));
+            row.add(String.valueOf(peer.isLocked() ? _t("Yes")+"("+(peer.getConsecTimeouts())+")" : _t("No")));
             String firstSeen = formatter.format(peer.getFirstSeen());
             row.add(String.valueOf(firstSeen));
             data.add(row);
@@ -81,12 +81,12 @@ class KademliaPeerStats implements DhtPeerStats {
             KBucket kBucket = (KBucket)bucket;
             String prefix = kBucket.getBucketPrefix();
             if (prefix.isEmpty())
-                return _("(None)");
+                return _t("(None)");
             else
                 return prefix;
         }
         else
-            return _("(S)");
+            return _t("(S)");
     }
     
     @Override

@@ -21,7 +21,7 @@
 
 package i2p.bote.imap;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
@@ -97,7 +97,7 @@ public class BoteMailbox extends SimpleMailbox<String> {
                 messageMap.put(email, new BoteMessage(email, getFolderName()));
             updateMessages();
         } catch (PasswordException e) {
-            throw new RuntimeException(_("Password required or invalid password provided"), e);
+            throw new RuntimeException(_t("Password required or invalid password provided"), e);
         }
     }
 
@@ -111,7 +111,7 @@ public class BoteMailbox extends SimpleMailbox<String> {
                     messageMap.put(email, new BoteMessage(email, getFolderName()));
                     updateMessages();
                 } catch (PasswordException e) {
-                    throw new RuntimeException(_("Password required or invalid password provided"), e);
+                    throw new RuntimeException(_t("Password required or invalid password provided"), e);
                 } catch (MessagingException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

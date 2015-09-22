@@ -22,7 +22,7 @@
 
 package i2p.bote.web;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 import i2p.bote.I2PBote;
 import i2p.bote.Util;
 import i2p.bote.network.BannedPeer;
@@ -85,7 +85,7 @@ public class PeerInfoTag extends SimpleTagSupport {
             out.println("</div>");
             out.println("<br>");
 
-            out.println("<span class=\"subheading\">" + _("Kademlia Peers:") + " " + numDhtPeers + "</span>");
+            out.println("<span class=\"subheading\">" + _t("Kademlia Peers:") + " " + numDhtPeers + "</span>");
             if (numDhtPeers > 0) {
                 out.println("<table");
                 
@@ -109,13 +109,13 @@ public class PeerInfoTag extends SimpleTagSupport {
             out.println("<br/>");
             
             // Print relay peer info
-            out.println("<span class=\"subheading\">" + _("Relay Peers:") + " " + relayPeers.length + "</span>");
+            out.println("<span class=\"subheading\">" + _t("Relay Peers:") + " " + relayPeers.length + "</span>");
             if (relayPeers.length > 0) {
                 out.println("<table");
                 out.println("<tr>");
-                out.println("<th>" + _("Peer") + "</th>");
-                out.println("<th>" + _("I2P Destination") + "</th>");
-                out.println("<th>" + _("Reachability %") + "</th>");
+                out.println("<th>" + _t("Peer") + "</th>");
+                out.println("<th>" + _t("I2P Destination") + "</th>");
+                out.println("<th>" + _t("Reachability %") + "</th>");
                 out.println("</tr>");
                 
                 int i = 1;
@@ -124,7 +124,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                     out.println("<td>" + i + "</td>");
                     out.println("<td class=\"ellipsis\">" + Util.toBase32(peer) + "</td>");
                     int reachability = peer.getReachability();
-                    out.println("<td>" + (reachability == 0 ? _("Untested") : reachability) + "</td>");
+                    out.println("<td>" + (reachability == 0 ? _t("Untested") : reachability) + "</td>");
                     out.println("</tr>");
                     i++;
                 }
@@ -135,13 +135,13 @@ public class PeerInfoTag extends SimpleTagSupport {
             
             // List banned peers
             Collection<BannedPeer> bannedPeers = I2PBote.getInstance().getBannedPeers();
-            out.println("<span class=\"subheading\">" + _("Banned Peers:") + " " + bannedPeers.size() + "</span>");
+            out.println("<span class=\"subheading\">" + _t("Banned Peers:") + " " + bannedPeers.size() + "</span>");
             if (bannedPeers.size() > 0) {
                 out.println("<table>");
                 out.println("<tr>");
-                out.println("<th>" + _("Peer") + "</th>");
-                out.println("<th>" + _("Destination Hash") + "</th>");
-                out.println("<th>" + _("Ban Reason") + "</th>");
+                out.println("<th>" + _t("Peer") + "</th>");
+                out.println("<th>" + _t("Destination Hash") + "</th>");
+                out.println("<th>" + _t("Ban Reason") + "</th>");
                 out.println("</tr>");
                 
                 int peerIndex = 1;
@@ -172,26 +172,26 @@ public class PeerInfoTag extends SimpleTagSupport {
         } else {
             int reachable = 0;
             for (List<String> row : dhtStats.getData()) {
-                if (_("No").equals(row.get(4)))
+                if (_t("No").equals(row.get(4)))
                     reachable += 1;
             }
             int unreachable = numDhtPeers - reachable;
 
             DefaultPieDataset dataset = new DefaultPieDataset();
             if (reachable > 0)
-                dataset.setValue(_("Reachable"), reachable);
+                dataset.setValue(_t("Reachable"), reachable);
             if (unreachable > 0)
-                dataset.setValue(_("Unreachable"), unreachable);
+                dataset.setValue(_t("Unreachable"), unreachable);
 
             plot = new RingPlot(dataset);
-            plot.setSectionPaint(_("Reachable"), Color.green);
-            plot.setSectionPaint(_("Unreachable"), Color.red);
+            plot.setSectionPaint(_t("Reachable"), Color.green);
+            plot.setSectionPaint(_t("Unreachable"), Color.red);
         }
         plot.setLabelGenerator(null);
         plot.setShadowGenerator(null);
 
         JFreeChart dhtChart = new JFreeChart(
-                _("Kademlia Peers:"), JFreeChart.DEFAULT_TITLE_FONT,
+                _t("Kademlia Peers:"), JFreeChart.DEFAULT_TITLE_FONT,
                 plot, numDhtPeers == 0 ? false : true);
         return ServletUtilities.saveChartAsPNG(dhtChart, 400, 300, null);
     }
@@ -218,22 +218,22 @@ public class PeerInfoTag extends SimpleTagSupport {
 
             DefaultPieDataset dataset = new DefaultPieDataset();
             if (good > 0)
-                dataset.setValue(_("Good"), good);
+                dataset.setValue(_t("Good"), good);
             if (bad > 0)
-                dataset.setValue(_("Unreliable"), bad);
+                dataset.setValue(_t("Unreliable"), bad);
             if (untested > 0)
-                dataset.setValue(_("Untested"), untested);
+                dataset.setValue(_t("Untested"), untested);
 
             plot = new RingPlot(dataset);
-            plot.setSectionPaint(_("Good"), Color.green);
-            plot.setSectionPaint(_("Unreliable"), Color.red);
-            plot.setSectionPaint(_("Untested"), Color.orange);
+            plot.setSectionPaint(_t("Good"), Color.green);
+            plot.setSectionPaint(_t("Unreliable"), Color.red);
+            plot.setSectionPaint(_t("Untested"), Color.orange);
         }
         plot.setLabelGenerator(null);
         plot.setShadowGenerator(null);
 
         JFreeChart chart = new JFreeChart(
-                _("Relay Peers:"), JFreeChart.DEFAULT_TITLE_FONT,
+                _t("Relay Peers:"), JFreeChart.DEFAULT_TITLE_FONT,
                 plot, relayPeers.length == 0 ? false : true);
         return ServletUtilities.saveChartAsPNG(chart, 400, 300, null);
     }
