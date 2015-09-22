@@ -473,6 +473,9 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     
     public Contact lookupInDirectory(String name) throws InterruptedException {
         Hash key = EmailIdentity.calculateHash(name);
+        if(null == dht){
+            return null;
+        }
         DhtResults results = dht.findOne(key, Contact.class);
         if (!results.isEmpty()) {
             DhtStorablePacket packet = results.getPackets().iterator().next();
