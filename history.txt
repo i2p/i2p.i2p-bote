@@ -1,8 +1,10 @@
 I2P-Bote Version History
 ------------------------
 
-0.4.1
-  * Bug fixes
+0.4.1 (Released on Sep 12, 2015)
+  * Fixed bugs:
+    o ConcurrentModificationException errors in logs
+    o User guide and FAQ not loading translations
 
 0.4 (Released on Aug 21, 2015)
   * Fixed bugs:
