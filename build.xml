@@ -911,7 +911,7 @@
         </java>
         
         <javadoc
-                sourcepath="src"
+                sourcepath="src/main/java"
                 destdir="javadoc"
                 classpathref="cp"
                 windowtitle="I2P-Bote"
