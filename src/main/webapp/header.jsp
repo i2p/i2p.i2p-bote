@@ -83,9 +83,13 @@
     <iframe src="buttonFrame.jsp" class="button-frame"></iframe>
 </div>
 
+<div class="menubox-divider"></div>
+
 <div class="menubox">
     <iframe src="folders.jsp?selected=${navSelected}" class="folders-frame"></iframe>
 </div>
+
+<div class="menubox-divider"></div>
 
 <div class="menubox">
     <h2><ib:message key="Addresses"/></h2>
@@ -105,6 +109,8 @@
     --%>
 </div>
 
+<div class="menubox-divider"></div>
+
 <div class="menubox">
     <h2><ib:message key="Configuration"/></h2>
     <a class="menuitem${navSelected == 'settings' ? ' selected' : '' } settings" href="settings.jsp">
@@ -113,10 +119,14 @@
     </a>
 </div>
 
+<div class="menubox-divider"></div>
+
 <div class="menubox">
     <h2><ib:message key="Network Status"/></h2>
     <iframe src="statusFrame.jsp?selected=${navSelected}" class="status-frame"></iframe>
 </div>
+
+<div class="menubox-divider"></div>
 
 <div class="menubox">
     <h2><ib:message key="Help"/></h2>

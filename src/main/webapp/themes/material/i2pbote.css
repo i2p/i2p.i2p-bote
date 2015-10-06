@@ -214,19 +214,25 @@ aside {
 }
 .menubox h2, .folderbox h2 {
     color: rgba(0, 0, 0, 0.54); /* 54% #000000 */
-    font-size: 0.857143em;
+    font-size: 1em;
     font-weight: 500;
-    line-height: 16px;
-    margin: 16px 0 4px;
+    height: 48px;
+    line-height: 48px;
+    margin: 0 16px 0 28px;
     overflow: hidden;
-    padding: 7px 0 0 28px;
-    text-transform: uppercase;
+    text-transform: none;
+}
+.menubox-divider {
+    border-bottom: 1px solid #eeeeee;
+    margin: 8px 0;
 }
 .menuitem {
     color: rgba(0, 0, 0, 0.87) !important; /* 87% #000000 */
     display: block;
     font-weight: 500;
-    padding: 13px 0 13px 28px;
+    height: 24px;
+    line-height: 24px;
+    padding: 12px 0 12px 28px;
 }
 .menuitem:hover, .menuitem.selected {
     background: #e8e8e8; /* Grey 300 */
