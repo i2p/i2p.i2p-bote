@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-12 14:28+0000\n"
-"PO-Revision-Date: 2015-08-05 01:52+0000\n"
+"POT-Creation-Date: 2015-10-17 02:39+0000\n"
+"PO-Revision-Date: 2015-10-17 02:24+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/otf/I2P/language/ja/)\n"
 "Language: ja\n"
@@ -28,35 +28,35 @@ msgstr "ライトブルー"
 msgid "Vanilla"
 msgstr "バニラ"
 
-#: src/main/java/i2p/bote/I2PBote.java:516
+#: src/main/java/i2p/bote/I2PBote.java:519
 msgid "No identity matches the sender/from field: "
 msgstr "送信者/差出人欄と一致するIDが見つかりませんでした:"
 
-#: src/main/java/i2p/bote/I2PBote.java:721
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "Checking password"
 msgstr "パスワードを確認しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:727
 msgid "The old password is not correct."
 msgstr "古いパスワードが間違っています。"
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The new password and the confirmation password do not match."
 msgstr "新しいパスワードと確認用のパスワードが一致しません。"
 
-#: src/main/java/i2p/bote/I2PBote.java:733
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting identities"
 msgstr "IDを再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting addressbook"
 msgstr "アドレス帳を再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:742
 msgid "Re-encrypting folder"
 msgstr "フォルダを再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:743
+#: src/main/java/i2p/bote/I2PBote.java:746
 msgid "Updating password file"
 msgstr "パスワードファイルを更新しています"
 
@@ -144,11 +144,11 @@ msgstr "(なし)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:101
+#: src/main/java/i2p/bote/util/GeneralHelper.java:103
 msgid "Not set."
 msgstr "未定"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:151
+#: src/main/java/i2p/bote/util/GeneralHelper.java:153
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "暗号化アルゴリズムのIDが不正です:"
 
@@ -406,6 +406,16 @@ msgstr "よくある質問"
 #: src/main/webapp/header.jsp
 msgid "About"
 msgstr "I2P-Boteについて"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr ""
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"

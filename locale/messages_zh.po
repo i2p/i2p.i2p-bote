@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-12 14:29+0000\n"
-"PO-Revision-Date: 2015-08-05 02:14+0000\n"
+"POT-Creation-Date: 2015-10-17 02:47+0000\n"
+"PO-Revision-Date: 2015-10-17 02:42+0000\n"
 "Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/"
 "zh_CN/)\n"
@@ -30,35 +30,35 @@ msgstr "亮蓝"
 msgid "Vanilla"
 msgstr "香草白"
 
-#: src/main/java/i2p/bote/I2PBote.java:516
+#: src/main/java/i2p/bote/I2PBote.java:519
 msgid "No identity matches the sender/from field: "
 msgstr "没有身份密钥与寄件者/收件人相匹配: "
 
-#: src/main/java/i2p/bote/I2PBote.java:721
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "Checking password"
 msgstr "正在检查密码"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:727
 msgid "The old password is not correct."
 msgstr "旧密码不正确。"
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The new password and the confirmation password do not match."
 msgstr "新密码与确认密码字段输入相符。"
 
-#: src/main/java/i2p/bote/I2PBote.java:733
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting identities"
 msgstr "重新加密身份"
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting addressbook"
 msgstr "重新加密地址簿"
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:742
 msgid "Re-encrypting folder"
 msgstr "重新加密文件夹"
 
-#: src/main/java/i2p/bote/I2PBote.java:743
+#: src/main/java/i2p/bote/I2PBote.java:746
 msgid "Updating password file"
 msgstr "正在更新密码文件"
 
@@ -146,11 +146,11 @@ msgstr "(无)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:101
+#: src/main/java/i2p/bote/util/GeneralHelper.java:103
 msgid "Not set."
 msgstr "未设置"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:151
+#: src/main/java/i2p/bote/util/GeneralHelper.java:153
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "加密算法的ID无效："
 
@@ -408,6 +408,18 @@ msgstr "常见问题解答"
 #: src/main/webapp/header.jsp
 msgid "About"
 msgstr "关于"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+"为了 I2P-Bote JCE 正常运行，您必须下载 JCE 无限强度司法政策文件，并将其移动到"
+"下列文件夹："
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr "向导"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"

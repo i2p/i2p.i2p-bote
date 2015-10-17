@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-12 14:28+0000\n"
-"PO-Revision-Date: 2015-08-06 12:54+0000\n"
-"Last-Translator: Towinet\n"
+"POT-Creation-Date: 2015-10-17 02:39+0000\n"
+"PO-Revision-Date: 2015-10-17 02:24+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: French (http://www.transifex.com/otf/I2P/language/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -32,37 +32,37 @@ msgstr "Bleu clair"
 msgid "Vanilla"
 msgstr "Vanille"
 
-#: src/main/java/i2p/bote/I2PBote.java:516
+#: src/main/java/i2p/bote/I2PBote.java:519
 msgid "No identity matches the sender/from field: "
 msgstr "Aucune identité ne correspond au champ \"Expéditeur/De\":"
 
-#: src/main/java/i2p/bote/I2PBote.java:721
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "Checking password"
 msgstr "Vérification de mot de passe"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:727
 msgid "The old password is not correct."
 msgstr "L'ancien mot de passe est incorrect."
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The new password and the confirmation password do not match."
 msgstr ""
 "Le nouveau mot de passe et le mot de passe de confirmation ne correspondent "
 "pas."
 
-#: src/main/java/i2p/bote/I2PBote.java:733
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting identities"
 msgstr "Re-chiffrement d'identités"
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting addressbook"
 msgstr "Re-chiffrement de carnet d'adresses"
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:742
 msgid "Re-encrypting folder"
 msgstr "Re-chiffrement de dossier"
 
-#: src/main/java/i2p/bote/I2PBote.java:743
+#: src/main/java/i2p/bote/I2PBote.java:746
 msgid "Updating password file"
 msgstr "Mise à jour du fichier de mot de passe"
 
@@ -153,11 +153,11 @@ msgstr "(Néant)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:101
+#: src/main/java/i2p/bote/util/GeneralHelper.java:103
 msgid "Not set."
 msgstr "Non paramétré."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:151
+#: src/main/java/i2p/bote/util/GeneralHelper.java:153
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Numero d'implémentation cryptographique incorrect:"
 
@@ -415,6 +415,16 @@ msgstr "FAQ"
 #: src/main/webapp/header.jsp
 msgid "About"
 msgstr "À propos"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr ""
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"

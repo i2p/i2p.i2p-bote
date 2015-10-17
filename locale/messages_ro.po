@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-12 14:29+0000\n"
-"PO-Revision-Date: 2015-08-05 01:52+0000\n"
+"POT-Creation-Date: 2015-10-17 02:39+0000\n"
+"PO-Revision-Date: 2015-10-17 02:24+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Romanian (http://www.transifex.com/otf/I2P/language/ro/)\n"
 "Language: ro\n"
@@ -27,35 +27,35 @@ msgstr ""
 msgid "Vanilla"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:516
+#: src/main/java/i2p/bote/I2PBote.java:519
 msgid "No identity matches the sender/from field: "
 msgstr "Nici o identitate nu se potrivește cu expeditorul / din câmp:"
 
-#: src/main/java/i2p/bote/I2PBote.java:721
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "Checking password"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:727
 msgid "The old password is not correct."
 msgstr "Parola veche nu este corectă."
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The new password and the confirmation password do not match."
 msgstr "Parolă noua și parola de confirmare nu coincid."
 
-#: src/main/java/i2p/bote/I2PBote.java:733
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting identities"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting addressbook"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:742
 msgid "Re-encrypting folder"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:743
+#: src/main/java/i2p/bote/I2PBote.java:746
 msgid "Updating password file"
 msgstr ""
 
@@ -143,11 +143,11 @@ msgstr "(Nimic)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:101
+#: src/main/java/i2p/bote/util/GeneralHelper.java:103
 msgid "Not set."
 msgstr "Nu este setat."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:151
+#: src/main/java/i2p/bote/util/GeneralHelper.java:153
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Număr ID Incorect pentru CryptoImplementation:"
 
@@ -405,6 +405,16 @@ msgstr "FAQ"
 #: src/main/webapp/header.jsp
 msgid "About"
 msgstr "Despre"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr ""
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"

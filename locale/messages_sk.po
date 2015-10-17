@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-12 14:29+0000\n"
-"PO-Revision-Date: 2015-08-05 01:52+0000\n"
+"POT-Creation-Date: 2015-10-17 02:40+0000\n"
+"PO-Revision-Date: 2015-10-17 02:24+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Slovak (http://www.transifex.com/otf/I2P/language/sk/)\n"
 "Language: sk\n"
@@ -28,35 +28,35 @@ msgstr ""
 msgid "Vanilla"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:516
+#: src/main/java/i2p/bote/I2PBote.java:519
 msgid "No identity matches the sender/from field: "
 msgstr "Odosielateľovi nezodpovedá žiadna identita/z poľa:"
 
-#: src/main/java/i2p/bote/I2PBote.java:721
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "Checking password"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:727
 msgid "The old password is not correct."
 msgstr "Staré heslo nie je správne."
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The new password and the confirmation password do not match."
 msgstr "Nové heslo a potvrdzovacie heslo sa nezhodujú."
 
-#: src/main/java/i2p/bote/I2PBote.java:733
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting identities"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting addressbook"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:742
 msgid "Re-encrypting folder"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:743
+#: src/main/java/i2p/bote/I2PBote.java:746
 msgid "Updating password file"
 msgstr ""
 
@@ -144,11 +144,11 @@ msgstr "(Žiadne)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:101
+#: src/main/java/i2p/bote/util/GeneralHelper.java:103
 msgid "Not set."
 msgstr "Nenastavené."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:151
+#: src/main/java/i2p/bote/util/GeneralHelper.java:153
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Neplatné číslo ID pre CryptoImplementation:"
 
@@ -406,6 +406,16 @@ msgstr "FAQ"
 #: src/main/webapp/header.jsp
 msgid "About"
 msgstr "O projekte"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr ""
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"

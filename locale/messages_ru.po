@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-12 14:29+0000\n"
-"PO-Revision-Date: 2015-08-05 01:52+0000\n"
+"POT-Creation-Date: 2015-10-17 02:39+0000\n"
+"PO-Revision-Date: 2015-10-17 02:24+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/otf/I2P/language/"
 "ru_RU/)\n"
@@ -39,35 +39,35 @@ msgstr "Голубой"
 msgid "Vanilla"
 msgstr "Ванильный"
 
-#: src/main/java/i2p/bote/I2PBote.java:516
+#: src/main/java/i2p/bote/I2PBote.java:519
 msgid "No identity matches the sender/from field: "
 msgstr "Нет соответствующего набора ключей для такого отправителя: "
 
-#: src/main/java/i2p/bote/I2PBote.java:721
+#: src/main/java/i2p/bote/I2PBote.java:724
 msgid "Checking password"
 msgstr "Проверка пароля"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:727
 msgid "The old password is not correct."
 msgstr "Старый пароль неверен."
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The new password and the confirmation password do not match."
 msgstr "Новый пароль и пароль для подтверждения не совпадают."
 
-#: src/main/java/i2p/bote/I2PBote.java:733
+#: src/main/java/i2p/bote/I2PBote.java:736
 msgid "Re-encrypting identities"
 msgstr "Перешифрование идентификатора"
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:739
 msgid "Re-encrypting addressbook"
 msgstr "Перешифрование адресной книги"
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:742
 msgid "Re-encrypting folder"
 msgstr "Перешифрование папки"
 
-#: src/main/java/i2p/bote/I2PBote.java:743
+#: src/main/java/i2p/bote/I2PBote.java:746
 msgid "Updating password file"
 msgstr "Обновляется файл с паролями"
 
@@ -155,11 +155,11 @@ msgstr "-"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:101
+#: src/main/java/i2p/bote/util/GeneralHelper.java:103
 msgid "Not set."
 msgstr "Не задано."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:151
+#: src/main/java/i2p/bote/util/GeneralHelper.java:153
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Неверный идентификатор для CryptoImplementation: "
 
@@ -418,6 +418,16 @@ msgstr "FAQ"
 msgid "About"
 msgstr "О I2P-Bote"
 
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr ""
+
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"
 msgstr "Пароль удален"
@@ -460,19 +470,19 @@ msgstr "Ответ:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Remove this recipient"
-msgstr ""
+msgstr "Убрать этого получателя"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add this recipient to the address book"
-msgstr ""
+msgstr "Добавить этого получателя в адресную книгу"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Select recipients from address book"
-msgstr ""
+msgstr "Выбрать получателей из адресной книги"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another recipient field"
-msgstr ""
+msgstr "Добавить другое поле получателя"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -991,7 +1001,7 @@ msgstr "Отображаемое имя:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(required field, shown to recipients)"
-msgstr "(обязательное поле, отображается полечателям)"
+msgstr "(обязательное поле, отображается получателям)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Description:"
@@ -1115,11 +1125,11 @@ msgstr "I2P-Bote, версия {0}"
 
 #: src/main/webapp/about.jsp
 msgid "To submit bug reports or feature requests:"
-msgstr ""
+msgstr "Для отправки сообщений об ошибках и предложений:"
 
 #: src/main/webapp/about.jsp
 msgid "click here"
-msgstr ""
+msgstr "нажмите сюда"
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"
