@@ -10,10 +10,11 @@
 <p><a href="#Settings">2.5. Inställningar (och vad de betyder)</a></p>
 <p><a href="#Gateway">2.6. Email till och från internet</a></p>
 <p><a href="#Considerations">3. Överväganden kring anonymitet</a></p>
-<p><a href="#Technical-Concept">4. Tekniskt koncept</a></p>
-<p><a href="#Technical-Details">5. Tekniska detaljer</a></p>
-<p><a href="#Terminology">6. Terminologi/Ordlista</a></p>
-<p><a href="#Credits">7. Erkännanden</a></p>
+<p><a href="#Troubleshooting">4. Troubleshooting</a></p>
+<p><a href="#Technical-Concept">5. Tekniskt koncept</a></p>
+<p><a href="#Technical-Details">6. Tekniska detaljer</a></p>
+<p><a href="#Terminology">7. Terminologi/Ordlista</a></p>
+<p><a href="#Credits">8. Erkännanden</a></p>
 </nav><h2 id="Introduction">1. Introduktion</h2>
 
 <p>I2P-Bote är ett användarvänligt mycket anonymt säkert emailprogram för 
@@ -301,7 +302,24 @@ Så, om du kommunicerar med dessa andra användande samma Bote-adress, kommer de
 att kunna veta vem du är. Det går inte om du använder en annan adress för att
 skicka mail till dem.</p>
 
-<h2 id="Technical-Concept">4. Tekniska koncept</h2>
+<h2 id="Troubleshooting">4. Troubleshooting</h2>
+<h3 id="Unlimited-Strength-Crypto">4.1. Notification about JCE Unlimited Strength Jurisdiction Policy files</h3>
+<p>If you have a notification at the bottom of your screen about JCE Unlimited
+Strength Jurisdiction Policy files, it means that your Java installation is
+restricted from using the strong cryptography that I2P-Bote requires.</p>
+
+<p>You can enable the strong cryptography by following the steps below:</p>
+<ol>
+<li><p>Download the JCE Unlimited Strength Jurisdiction Policy files from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Oracle's website</a>. You may need to use your regular browser.</p></li>
+<li><p>Unzip the downloaded zip file.</p></li>
+<li><p>Move the files <code>local_policy.jar</code> and <code>US_export_policy.jar</code> into the folder shown in the notification on your screen. Overwrite any existing files with the same names.</p></li>
+<li><p>Restart I2P.</p></li>
+</ol>
+<p>Some countries have restrictions on the allowed strengths of cryptographic
+software. If you are unsure about the restrictions in your country, consult
+with a lawyer.</p>
+
+<h2 id="Technical-Concept">5. Tekniska koncept</h2>
 <p>I2P-Bote är ett punkt-till-punkt krypterat, nätverksinternt, helt decentraliserat
 (d.v.s serverlöst) email-system. Det stöder olika identiteter och avslöjar inte
 email-headers. För närvarande är det fortfarande alpha software. Det kan användas
@@ -400,10 +418,10 @@ en existerande mail-identitet eftersom hen kan ha mer än en mail-identitet</p><
 <p>I2P-Bote kan inte dölja hur ofta en given identitet kontrollerar nya mail eller
 antalet mail en given identitet tar emot.</p>
 
-<h2 id="Technical-Details">5. Tekniska detaljer</h2>
+<h2 id="Technical-Details">6. Tekniska detaljer</h2>
 <p>Se techdoc.txt</p>
 
-<h2 id="Terminology">6. Terminologi/Ordlista</h2>
+<h2 id="Terminology">7. Terminologi/Ordlista</h2>
 
 <h3>I2P-Bote (router/nod) id:</h3>
 <p>Detta är den id en I2P-Bote router är känd. Det används för att kontakta
@@ -470,7 +488,7 @@ inställningar för indviduella fördröjningar implementerade]</p>
 hopp och/eller lång fördröjning skall du inte bli förvånad om mailet inte kommer fram snart. Det kommer,
 naturligtvis att ta längre tid - kanske flera dagar!</p>
 
-<h2 id="Credits">7. Erkännanden</h2>
+<h2 id="Credits">8. Erkännanden</h2>
 <p>Se <a href="about.jsp">sidan Om</a>.</p>
 
 <h2>NJUT AV BOTE-KÄNSLAN!!</h2>

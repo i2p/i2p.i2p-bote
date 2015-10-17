@@ -143,6 +143,13 @@
 <section class="main">
 </c:if>
 
+<c:if test="${not jspHelperBean.requiredCryptoStrengthSatisfied}">
+  <ib:message key="For I2P-Bote to function properly, you must download the JCE Unlimited Strength Jurisdiction Policy files and move them into this folder:" var="infoMessage"/>
+  <c:set var="errorMessage" value="${jspHelperBean.JREHome}/lib/security"/>
+  <c:set var="snackbarAction" value="userGuide.jsp#Unlimited-Strength-Crypto"/>
+  <ib:message key="Guide" var="snackbarActionText"/>
+</c:if>
+
 <c:if test="${empty infoMessage}"><c:set var="infoMessage" value="${param.infoMessage}"/></c:if>
 <c:if test="${empty errorMessage}"><c:set var="errorMessage" value="${param.errorMessage}"/></c:if>
 
@@ -154,7 +161,12 @@
 </div>
 
 <c:if test="${not empty snackbarAction}">
+  <c:if test="${empty snackbarActionTarget}">
   <a href="${snackbarAction}" class="action">${fn:escapeXml(snackbarActionText)}</a>
+  </c:if>
+  <c:if test="${not empty snackbarActionTarget}">
+  <a href="${snackbarAction}" class="action" target="${snackbarActionTarget}">${fn:escapeXml(snackbarActionText)}</a>
+  </c:if>
 </c:if>
 </div></div>
 </c:if>

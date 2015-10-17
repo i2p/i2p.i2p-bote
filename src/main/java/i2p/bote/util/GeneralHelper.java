@@ -49,12 +49,14 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import javax.crypto.Cipher;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 
@@ -583,5 +585,18 @@ public class GeneralHelper {
 
     public static String getFileSize(String filename) {
         return Util.getHumanReadableSize(new File(filename));
+    }
+
+    public boolean getRequiredCryptoStrengthSatisfied() {
+        try {
+            return Cipher.getMaxAllowedKeyLength("AES") >= 256;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public String getJREHome() {
+        return System.getProperty("java.home");
     }
 }

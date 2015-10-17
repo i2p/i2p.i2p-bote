@@ -10,10 +10,11 @@
 <p><a href="#Settings">2.5. Configuraciones (y lo que significan)</a></p>
 <p><a href="#Gateway">2.6. Correos electrónicos hacia y desde Internet</a></p>
 <p><a href="#Considerations">3. Consideraciones sobre anonimato</a></p>
-<p><a href="#Technical-Concept">4. Concepto técnico</a></p>
-<p><a href="#Technical-Details">5. Detalles técnicos</a></p>
-<p><a href="#Terminology">6. Terminología/Glosario de términos</a></p>
-<p><a href="#Credits">7. Reconocimientos</a></p>
+<p><a href="#Troubleshooting">4. Troubleshooting</a></p>
+<p><a href="#Technical-Concept">5. Concepto técnico</a></p>
+<p><a href="#Technical-Details">6. Detalles técnicos</a></p>
+<p><a href="#Terminology">7. Terminología/Glosario de términos</a></p>
+<p><a href="#Credits">8. Reconocimientos</a></p>
 </nav><h2 id="Introduction">1. Introducción</h2>
 
 <p>I2P-Bote es una aplicación de correo electrónico para I2P segura, altamente
@@ -382,7 +383,24 @@ de usted. De ese modo, si usted se comunica con esos otros usando la misma
 dirección Bote, sabrán quién es usted. No ocurriría así si usted utilizase una
 dirección distinta para enviarles correos.</p>
 
-<h2 id="Technical-Concept">4. Concepto técnico</h2>
+<h2 id="Troubleshooting">4. Troubleshooting</h2>
+<h3 id="Unlimited-Strength-Crypto">4.1. Notification about JCE Unlimited Strength Jurisdiction Policy files</h3>
+<p>If you have a notification at the bottom of your screen about JCE Unlimited
+Strength Jurisdiction Policy files, it means that your Java installation is
+restricted from using the strong cryptography that I2P-Bote requires.</p>
+
+<p>You can enable the strong cryptography by following the steps below:</p>
+<ol>
+<li><p>Download the JCE Unlimited Strength Jurisdiction Policy files from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Oracle's website</a>. You may need to use your regular browser.</p></li>
+<li><p>Unzip the downloaded zip file.</p></li>
+<li><p>Move the files <code>local_policy.jar</code> and <code>US_export_policy.jar</code> into the folder shown in the notification on your screen. Overwrite any existing files with the same names.</p></li>
+<li><p>Restart I2P.</p></li>
+</ol>
+<p>Some countries have restrictions on the allowed strengths of cryptographic
+software. If you are unsure about the restrictions in your country, consult
+with a lawyer.</p>
+
+<h2 id="Technical-Concept">5. Concepto técnico</h2>
 <p>I2P-Bote es un sistema de correo electrónico completamente descentralizado
 (es decir, sin servidores), con red interna propia, cifrado de extremo-a-extremo.
 Soporta distintas identidades y no expone las cabeceras del correo.
@@ -507,10 +525,10 @@ cuando envió un correo.</p></li>
 comprueba si hay nuevos correos, ni el número de correos que una identidad
 determinada recibe.</p>
 
-<h2 id="Technical-Details">5. Detalles técnicos</h2>
+<h2 id="Technical-Details">6. Detalles técnicos</h2>
 <p>Vea techdoc.txt</p>
 
-<h2 id="Terminology">6. Terminología/Glosario de Términos</h2>
+<h2 id="Terminology">7. Terminología/Glosario de Términos</h2>
 
 <h3>Identificación de (router-I2P/nodo) I2P-Bote:</h3>
 <p>Ésta es la identificación con la que se conoce a un router I2P-Bote.
@@ -591,7 +609,7 @@ muchos saltos y/o tiempos de retardo largos, no se sorprenda si su correo
 no alcanza su destino demasiado pronto. Por supuesto le llevará más
 tiempo -  ¡hasta varios días!</p>
 
-<h2 id="Credits">7. Reconocimientos</h2>
+<h2 id="Credits">8. Reconocimientos</h2>
 <p>Vea <a href="about.jsp">la página Acerca de</a>.</p>
 
 <h2>¡¡ DISFRUTE DE LA EMOCIÓN DE BOTE !!</h2>
