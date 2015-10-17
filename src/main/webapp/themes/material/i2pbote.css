@@ -19,9 +19,9 @@ a:active {
     text-decoration: underline;
 }
 body {
-    background: white;
+    background: #cccccc;
     color: #202020;
-    font: 62.5%/130% "Roboto", arial, sans-serif;
+    font: 62.5%/150% "Roboto", arial, sans-serif;
     margin: 0;
     padding: 0em;
 }
@@ -152,7 +152,7 @@ iframe {
     width: 100%;
 }
 .folders-frame {
-    height: 259px;
+    height: 266px;
     width: 100%;
 }
 .status-frame {
@@ -172,7 +172,9 @@ iframe {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     color: white;
     min-height: 64px;
+    position: relative;
     white-space: normal;
+    z-index: 8;
 }
 .title {
     font-size: 2em;
@@ -201,10 +203,12 @@ iframe {
 /* Side menu */
 
 aside {
-    background: ;
+    background: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     float: left;
+    position: relative;
     width: 240px;
+    z-index: 8;
 }
 .menubox {
     clear: left;
@@ -230,8 +234,8 @@ aside {
     color: rgba(0, 0, 0, 0.87) !important; /* 87% #000000 */
     display: block;
     font-weight: 500;
-    height: 24px;
     line-height: 24px;
+    min-height: 24px;
     padding: 12px 0 12px 28px;
 }
 .menuitem:hover, .menuitem.selected {
@@ -324,18 +328,33 @@ See also .menu-icon
 /* Main content */
 
 .main {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #202020;
-    font-size: 1.3em;
+    font-size: 1.4em;
+    line-height: 1.4em;
     margin: 0px 0px 0px 240px;
-    padding: 16px 16px 16px 28px;
+    padding: 16px 28px 16px 28px;
     text-align: left;
 }
 .main nav {
+    background: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     float: right;
     margin: -16px -16px 16px 16px;
     max-width: 240px;
     padding-right: 1em;
+}
+@media screen and (min-width: 960px) {
+     .main {
+         margin-right: 240px;
+     }
+    .main nav {
+        margin-right: -256px;
+    }
+    .foldermain, .emailmain {
+        margin-right: 120px;
+    }
 }
 .main form {
     color: #202020;
@@ -470,13 +489,15 @@ td a:link, td a:visited {
     width: 24px;
 }
 .emailmain {
+    background: none;
+    box-shadow: none;
     padding: 0;
 }
 .emailtext {
     background: white;
     border: medium none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-    margin: 40px 80px 20px 80px;
+    margin: 40px 60px 20px;
     padding: 0 15px 15px 25px;
 }
 .header-column-replied {
@@ -507,7 +528,7 @@ td a:link, td a:visited {
     width: 100px;
 }
 .header-column-trash {
-    width: 20px;
+    width: 24px;
 }
 .sig-invalid {
     color: red;
@@ -552,8 +573,8 @@ td a:link, td a:visited {
 .header-column-id-email-dest {
     width: 40%;
 }
-.header-column-check {
-    width: 3%;
+.header-column-check-email {
+    width: 24px;
 }
 .header-column-name {
     width: 30%;

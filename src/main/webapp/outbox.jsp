@@ -41,7 +41,7 @@
     <c:set var="refreshInterval" value="20" scope="request"/>
 </c:if>
 <ib:message key="Outbox" var="title" scope="request"/>
-<c:set var="mainClass" value="foldermain" scope="request"/>
+<c:set var="contentClass" value="main foldermain" scope="request"/>
 <c:set var="navSelected" value="Outbox" scope="request"/>
 <jsp:include page="header.jsp"/>
 
