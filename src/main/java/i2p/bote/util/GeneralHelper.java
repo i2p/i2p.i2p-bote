@@ -72,6 +72,7 @@ public class GeneralHelper {
     private static GeneralHelper instance;
     private static final boolean _isUnlimited;
 
+    // TODO: Remove this and bump min-i2p-version to 0.9.23
     static {
         boolean unlimited = false;
         try {
