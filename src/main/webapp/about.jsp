@@ -47,7 +47,9 @@
         <div class="contributor-role"><ib:message key="Technical concept, implementation, user interface"/></div>
     </div>
     <div>
-        <div class="contributor-name">str4d</div>
+        <div class="contributor-name">
+            <a href="newEmail.jsp?nofilter_recipient0=TzKO~FlShiQEOPkPn7eIOkxqBy6pGxk1NDkVLLwzGk~kNPwo8qvHoyk4vKOZVZNGklsU7iOndYeQofMZtADm5yqbUxhogTmxyu7VcNsw6mXBub26FAUEQADf4Uj4Ph0dGAMyPbWzDEFUibdJyjpLYS9AaHgf~EU8B49DP8rpkh8d0T&amp;recipientType0=to&amp;subject=${subject}" title="${linkTitle}">str4d</a>
+        </div>
         <div class="contributor-role"><ib:message key="User experience, extended features, Android app"/></div>
     </div>
     <br/>
