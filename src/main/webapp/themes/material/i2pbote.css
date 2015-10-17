@@ -19,7 +19,7 @@ a:active {
     text-decoration: underline;
 }
 body {
-    background: #cccccc;
+    background: #f5f5f5; /* Grey 100 */
     color: #202020;
     font: 62.5%/150% "Roboto", arial, sans-serif;
     margin: 0;
