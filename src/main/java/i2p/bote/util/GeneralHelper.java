@@ -49,17 +49,16 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import javax.crypto.Cipher;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 
+import net.i2p.crypto.CryptoCheck;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
@@ -588,12 +587,7 @@ public class GeneralHelper {
     }
 
     public boolean getRequiredCryptoStrengthSatisfied() {
-        try {
-            return Cipher.getMaxAllowedKeyLength("AES") >= 256;
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return CryptoCheck.isUnlimited();
     }
 
     public String getJREHome() {
