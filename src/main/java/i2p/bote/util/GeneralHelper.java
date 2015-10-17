@@ -55,10 +55,11 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 
-import net.i2p.crypto.CryptoCheck;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
@@ -69,6 +70,26 @@ import net.i2p.util.RandomSource;
 public class GeneralHelper {
     private static AddressDisplayFilter ADDRESS_DISPLAY_FILTER;
     private static GeneralHelper instance;
+    private static final boolean _isUnlimited;
+
+    static {
+        boolean unlimited = false;
+        try {
+            unlimited = Cipher.getMaxAllowedKeyLength("AES") >= 256;
+        } catch (GeneralSecurityException gse) {
+            // a NoSuchAlgorithmException
+        } catch (NoSuchMethodError nsme) {
+            // JamVM, gij
+            try {
+                Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
+                SecretKeySpec key = new SecretKeySpec(new byte[32], "AES");
+                cipher.init(Cipher.ENCRYPT_MODE, key);
+                unlimited = true;
+            } catch (GeneralSecurityException gse) {
+            }
+        }
+        _isUnlimited = unlimited;
+    }
 
     public GeneralHelper() {
     }
@@ -587,7 +608,7 @@ public class GeneralHelper {
     }
 
     public boolean getRequiredCryptoStrengthSatisfied() {
-        return CryptoCheck.isUnlimited();
+        return _isUnlimited;
     }
 
     public String getJREHome() {
