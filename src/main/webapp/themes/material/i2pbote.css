@@ -354,24 +354,34 @@ See also .menu-icon
 }
 .main noscript {
 }
-.infoMessage {
-    background-color: #606060;
-    color: white;
-    margin-bottom: 0.5em;
-    padding: 0.5em;
+.snackbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     text-align: center;
+    z-index: 10;
 }
-.errorMessage {
-    background-color: #606060;
+.snackbar > div {
+    align-items: center;
+    background-color: #323232;
+    border-radius: 2px;
     color: white;
-    margin-bottom: 0.5em;
-    padding: 0.5em;
+    display: inline-flex;
+    font-size: 1.07692em;
+    justify-content: space-between;
+    line-height: 1.69231em;
+    max-width: 568px;
+    min-height: 20px;
+    min-width: 288px;
+    padding: 14px 24px;
+    text-align: left;
 }
-.errorMessage:before {
-    content: url("images/warning.png");
-    display: inline-block;
-    margin-right: 0.5em;
-    vertical-align: middle;
+.snackbar > div > .action {
+    color:  #ffab40; /* Orange A200 */
+    font-weight: 500;
+    margin-left: 48px;
+    text-transform: uppercase;
 }
 .stackTrace {
     white-space: pre;

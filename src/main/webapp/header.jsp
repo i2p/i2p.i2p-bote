@@ -144,7 +144,17 @@
 </c:if>
 
 <c:if test="${empty infoMessage}"><c:set var="infoMessage" value="${param.infoMessage}"/></c:if>
-<c:if test="${not empty infoMessage}"><div class="infoMessage">${fn:escapeXml(infoMessage)}</div></c:if>
-
 <c:if test="${empty errorMessage}"><c:set var="errorMessage" value="${param.errorMessage}"/></c:if>
+
+<c:if test="${not empty infoMessage or not empty errorMessage}">
+<div class="snackbar"><div>
+<div class="message">
+<c:if test="${not empty infoMessage}"><div class="infoMessage">${fn:escapeXml(infoMessage)}</div></c:if>
 <c:if test="${not empty errorMessage}"><div class="errorMessage">${fn:escapeXml(errorMessage)}</div></c:if>
+</div>
+
+<c:if test="${not empty snackbarAction}">
+  <a href="${snackbarAction}" class="action">${fn:escapeXml(snackbarActionText)}</a>
+</c:if>
+</div></div>
+</c:if>
