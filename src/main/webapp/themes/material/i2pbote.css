@@ -1,4 +1,5 @@
 @import url("roboto.css");
+@import url("noto.css");
 
 /* General */
 
@@ -21,7 +22,7 @@ a:active {
 body {
     background: #f5f5f5; /* Grey 100 */
     color: #202020;
-    font: 62.5%/150% "Roboto", arial, sans-serif;
+    font: 62.5%/150% "Roboto", "NotoSans", arial, sans-serif;
     margin: 0;
     padding: 0em;
 }
@@ -576,6 +577,9 @@ td a:link, td a:visited {
 .header-column-check-email {
     width: 24px;
 }
+.header-column-check {
+    width: 20px;
+}
 .header-column-name {
     width: 30%;
 }
@@ -755,6 +759,7 @@ td a:link, td a:visited {
     right: 56px;
     top: 22px;
     width: 24px;
+    z-index: 10;
 }
 .email-form-button-send button {
     background: none;
