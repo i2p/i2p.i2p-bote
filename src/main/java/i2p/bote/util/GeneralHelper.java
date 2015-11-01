@@ -63,6 +63,7 @@ import javax.mail.MessagingException;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 import net.i2p.util.RandomSource;
+import net.i2p.util.SystemVersion;
 
 /**
  * General helper functions used by all UIs.
@@ -503,6 +504,13 @@ public class GeneralHelper {
         else if (getInstance().getAddressBook().contains(destination))
             return true;
         else return I2PBote.getInstance().getIdentities().contains(destination);
+    }
+
+    public static String machineDateFormat() {
+        if (SystemVersion.isJava7() && !SystemVersion.isAndroid())
+            return "yyyy-MM-dd HH:mmXXX";
+        else
+            return "yyyy-MM-dd HH:mmZZZZZ";
     }
 
     public static String getNameAndDestination(String address) throws PasswordException, IOException, GeneralSecurityException {

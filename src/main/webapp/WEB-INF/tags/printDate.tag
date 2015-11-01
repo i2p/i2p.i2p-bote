@@ -40,7 +40,7 @@
     <c:if test="${empty type}">
         <c:set var="type" value="both"/>
     </c:if>
-    <fmt:formatDate value="${date}" var="datestr" type="${type}" pattern="yyyy-MM-dd HH:mmX"/>
+    <fmt:formatDate value="${date}" var="datestr" type="${type}" pattern="${ib:machineDateFormat()}"/>
     <fmt:formatDate value="${date}" var="date" type="${type}" timeStyle="${timeStyle}"/>
 </c:if>
 <c:if test="${empty date and printUnknown eq true}">

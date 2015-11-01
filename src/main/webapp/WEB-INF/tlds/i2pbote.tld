@@ -638,6 +638,17 @@
 </function>
 
 <function>
+    <name>machineDateFormat</name>
+    <description>
+        Returns a machine-readable Date format string.
+    </description>
+    <function-class>i2p.bote.util.GeneralHelper</function-class>
+    <function-signature>
+        java.lang.String machineDateFormat()
+    </function-signature>
+</function>
+
+<function>
     <name>tryPassword</name>
     <description>
         Tests whether a password is correct. If it is, it is
