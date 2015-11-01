@@ -151,5 +151,9 @@
         <div class="contributor-name">KillYourTV</div>
         <div class="contributor-role"><ib:message key="Code fixes, translation updates from tx"/></div>
     </div>
+    <div>
+        <div class="contributor-name">kay</div>
+        <div class="contributor-role"><ib:message key="Code fixes"/></div>
+    </div>
 
 <jsp:include page="footer.jsp"/>
