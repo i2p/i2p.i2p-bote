@@ -96,7 +96,9 @@ class MigrateTo028 {
             else
                 return true;
         }
-        return firstLine.startsWith("Default=") || firstLine.startsWith("identity0.");
+        return firstLine.startsWith("Default=") ||
+                firstLine.startsWith("default=") ||
+                firstLine.startsWith("identity0.");
     }
     
     /**
