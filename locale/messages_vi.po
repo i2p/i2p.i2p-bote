@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-17 02:40+0000\n"
+"POT-Creation-Date: 2015-11-01 10:33+0000\n"
 "PO-Revision-Date: 2015-10-17 02:24+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/otf/I2P/language/vi/)\n"
@@ -144,59 +144,64 @@ msgstr "(Không)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:103
+#: src/main/java/i2p/bote/util/GeneralHelper.java:124
 msgid "Not set."
 msgstr ""
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:153
+#: src/main/java/i2p/bote/util/GeneralHelper.java:174
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Số ID không đúng để làm mã hóa:"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:236
+#: src/main/java/i2p/bote/web/JSPHelper.java:241
 msgid "Queued"
 msgstr "Xếp hàng"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:238
+#: src/main/java/i2p/bote/web/JSPHelper.java:243
 msgid "Sending"
 msgstr "Gửi"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:240
+#: src/main/java/i2p/bote/web/JSPHelper.java:245
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Gửi đến {0} trong số {1} người nhận"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:243
+#: src/main/java/i2p/bote/web/JSPHelper.java:248
 msgid "Email sent"
 msgstr ""
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:245
+#: src/main/java/i2p/bote/web/JSPHelper.java:250
 msgid "Gateway disabled"
 msgstr "Cổng ra không chạy"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:247
+#: src/main/java/i2p/bote/web/JSPHelper.java:252
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
 msgstr ""
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:250
+#: src/main/java/i2p/bote/web/JSPHelper.java:255
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Địa chỉ người nhận sai: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:252
+#: src/main/java/i2p/bote/web/JSPHelper.java:257
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Có lỗi khi tạo ra cái gói thư: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:254
+#: src/main/java/i2p/bote/web/JSPHelper.java:259
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Có lỗi khi gửi thư ra: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:256
+#: src/main/java/i2p/bote/web/JSPHelper.java:261
 #, java-format
 msgid "Error saving email metadata: {0}"
 msgstr ""
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:282
+#, fuzzy
+msgid "New email received"
+msgstr "Danh tính Email mới"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194

@@ -5,6 +5,7 @@
 # blabla <blabla@trash-mail.com>, 2012
 # D.A. Loader <>, 2012
 # ducki2p <ducki2p@gmail.com>, 2011
+# Ettore Atalan <atalanttore@googlemail.com>, 2015
 # HungryHobo <HungryHobo@i2pmail.org>, 2012-2013
 # HungryHobo <HungryHobo@i2pmail.org>, 2013
 # HungryHobo <HungryHobo@i2pmail.org>, 2012
@@ -16,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-17 02:39+0000\n"
-"PO-Revision-Date: 2015-10-17 02:24+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2015-11-01 10:32+0000\n"
+"PO-Revision-Date: 2015-10-28 10:45+0000\n"
+"Last-Translator: Lars Schimmer <echelon@i2pmail.org>\n"
 "Language-Team: German (http://www.transifex.com/otf/I2P/language/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -156,59 +157,64 @@ msgstr "-"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:103
+#: src/main/java/i2p/bote/util/GeneralHelper.java:124
 msgid "Not set."
 msgstr "nicht festgelegt"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:153
+#: src/main/java/i2p/bote/util/GeneralHelper.java:174
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "ungültige Identnummer für CryptoImplementation:"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:236
+#: src/main/java/i2p/bote/web/JSPHelper.java:241
 msgid "Queued"
 msgstr "in Warteschlange"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:238
+#: src/main/java/i2p/bote/web/JSPHelper.java:243
 msgid "Sending"
 msgstr "Wird verschickt"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:240
+#: src/main/java/i2p/bote/web/JSPHelper.java:245
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "An {0} von {1} Empfängern verschickt"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:243
+#: src/main/java/i2p/bote/web/JSPHelper.java:248
 msgid "Email sent"
 msgstr "Mail verschickt"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:245
+#: src/main/java/i2p/bote/web/JSPHelper.java:250
 msgid "Gateway disabled"
 msgstr "Durchleitung deaktiviert"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:247
+#: src/main/java/i2p/bote/web/JSPHelper.java:252
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
 msgstr "Keine Identität für das Abender-/Von-Feld gefunden: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:250
+#: src/main/java/i2p/bote/web/JSPHelper.java:255
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Ungültige Empfängeradresse: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:252
+#: src/main/java/i2p/bote/web/JSPHelper.java:257
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Fehler beim Erstellen der Mailpakete: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:254
+#: src/main/java/i2p/bote/web/JSPHelper.java:259
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Fehler beim Verschicken der Mail: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:256
+#: src/main/java/i2p/bote/web/JSPHelper.java:261
 #, java-format
 msgid "Error saving email metadata: {0}"
 msgstr "Fehler beim Speichern der Metadaten: {0}"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:282
+#, fuzzy
+msgid "New email received"
+msgstr "Neue Identität"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
@@ -426,10 +432,13 @@ msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
 msgstr ""
+"Damit I2P-Bote richtig funktioniert, sollten Sie die JCE  Unlimited Strength "
+"Jurisdiction Policy Datei herunterladen und in folgendes Verzeichnis "
+"verschieben:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
-msgstr ""
+msgstr "Handbuch"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"

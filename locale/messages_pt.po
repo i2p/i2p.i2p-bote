@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-17 02:39+0000\n"
+"POT-Creation-Date: 2015-11-01 10:32+0000\n"
 "PO-Revision-Date: 2015-10-17 02:24+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Portuguese (http://www.transifex.com/otf/I2P/language/pt/)\n"
@@ -152,59 +152,64 @@ msgstr "(Nenhum)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:103
+#: src/main/java/i2p/bote/util/GeneralHelper.java:124
 msgid "Not set."
 msgstr "Não defenido."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:153
+#: src/main/java/i2p/bote/util/GeneralHelper.java:174
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "O identificador da implementatação criptográfica é inválido:"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:236
+#: src/main/java/i2p/bote/web/JSPHelper.java:241
 msgid "Queued"
 msgstr "Em fila"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:238
+#: src/main/java/i2p/bote/web/JSPHelper.java:243
 msgid "Sending"
 msgstr "A Enviar"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:240
+#: src/main/java/i2p/bote/web/JSPHelper.java:245
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Enviado para {0} de {1} destinatários"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:243
+#: src/main/java/i2p/bote/web/JSPHelper.java:248
 msgid "Email sent"
 msgstr "Email enviado"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:245
+#: src/main/java/i2p/bote/web/JSPHelper.java:250
 msgid "Gateway disabled"
 msgstr "Ponte de ligação desativada"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:247
+#: src/main/java/i2p/bote/web/JSPHelper.java:252
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
 msgstr "Não existem identidades correspondentes ao campo de remetente: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:250
+#: src/main/java/i2p/bote/web/JSPHelper.java:255
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Endereço de destinatário inválido: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:252
+#: src/main/java/i2p/bote/web/JSPHelper.java:257
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Erro ao criar pacotes: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:254
+#: src/main/java/i2p/bote/web/JSPHelper.java:259
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Erro ao enviar email: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:256
+#: src/main/java/i2p/bote/web/JSPHelper.java:261
 #, java-format
 msgid "Error saving email metadata: {0}"
 msgstr "Erro ao guardar metadados do email: {0}"
+
+#: src/main/java/i2p/bote/web/JSPHelper.java:282
+#, fuzzy
+msgid "New email received"
+msgstr "Nova Identidade"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194

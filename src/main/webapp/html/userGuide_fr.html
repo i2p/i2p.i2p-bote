@@ -10,11 +10,11 @@
 <p><a href="#Settings">2.5. Les préférences de réglages (et ce qu'elles signifient)</a></p>
 <p><a href="#Gateway">2.6. E-mails de et vers l'Internet</a></p>
 <p><a href="#Considerations">3. Considérations sur l'anonymat</a></p>
-<p><a href="#Troubleshooting">4. Troubleshooting</a></p>
+<p><a href="#Troubleshooting">4. Diagnostic des pannes</a></p>
 <p><a href="#Technical-Concept">5. Concept technique</a></p>
 <p><a href="#Technical-Details">6. Détails techniques</a></p>
 <p><a href="#Terminology">7. Terminologie/Glossaire</a></p>
-<p><a href="#Credits">8. Remerciements</a></p>
+<p><a href="#Credits">8. Crédits</a></p>
 </nav><h2 id="Introduction">1. Introduction</h2>
 
 <p>I2P-Bote est une application de messagerie sécurisée pour I2P, à anonymat
@@ -352,22 +352,18 @@ avec ces autres avec la même adresse il vous reconnaitrons. Ils ne
 pourraient pas si vous aviez utilisé une identité différente pour
 vous adresser à eux.</p>
 
-<h2 id="Troubleshooting">4. Troubleshooting</h2>
-<h3 id="Unlimited-Strength-Crypto">4.1. Notification about JCE Unlimited Strength Jurisdiction Policy files</h3>
-<p>If you have a notification at the bottom of your screen about JCE Unlimited
-Strength Jurisdiction Policy files, it means that your Java installation is
-restricted from using the strong cryptography that I2P-Bote requires.</p>
+<h2 id="Troubleshooting">4. Diagnostic des pannes</h2>
+<h3 id="Unlimited-Strength-Crypto">4.1. Notification au sujet de "JCE Unlimited Strength Jurisdiction Policy files"</h3>
+<p>Si vous avez une notification au bas de votre écran au sujet de "JCE Unlimited Strength Jurisdiction Policy files", cela signifie que votre installation Java est restreinte à ne pas pouvoir utiliser la cryptographie forte qu'I2P-Bote exige.</p>
 
-<p>You can enable the strong cryptography by following the steps below:</p>
+<p>Vous pouvez permettre la cryptographie forte en suivant les étapes ci-dessous :</p>
 <ol>
-<li><p>Download the JCE Unlimited Strength Jurisdiction Policy files from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Oracle's website</a>. You may need to use your regular browser.</p></li>
-<li><p>Unzip the downloaded zip file.</p></li>
-<li><p>Move the files <code>local_policy.jar</code> and <code>US_export_policy.jar</code> into the folder shown in the notification on your screen. Overwrite any existing files with the same names.</p></li>
-<li><p>Restart I2P.</p></li>
+<li><p>Télécharger les fichiers "JCE Unlimited Strength Jurisdiction Policy" depuis le <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">site web d'Oracle</a>. Vous pourriez avoir besoin d'utiliser votre navigateur classique.</p></li>
+<li><p>Décompressez le fichier zip téléchargé.</p></li>
+<li><p>Déplacez les fichiers <code>local_policy.jar</code> et <code>US_export_policy.jar</code> dans le dossier montré dans la notification sur votre écran. Écrasez n'importe quels fichiers existants qui auraient les mêmes noms.</p></li>
+<li><p>Redémarrer I2P</p></li>
 </ol>
-<p>Some countries have restrictions on the allowed strengths of cryptographic
-software. If you are unsure about the restrictions in your country, consult
-with a lawyer.</p>
+<p>Certains pays ont des restrictions concernant la force autorisée aux logiciels cryptographiques. Si vous n'êtes pas sûrs des restrictions dans votre pays, consultez un avocat.</p>
 
 <h2 id="Technical-Concept">5. Concept technique</h2>
 <p>I2P-Bote est un système de messagerie électronique qui : est chiffré de bout en bout, interne au réseau, entièrement décentralisé (c'est-à-dire sans serveur). Il supporte différentes identités et n'expose pas d'en-têtes de courrier électronique. Actuellement, il a encore un statut de logiciel alpha. Il est accessible via la console Web, et supporte IMAP et SMTP, par conséquent les courriers-bote peuvent être lus et écrits par des logiciels clients classiques de courrier électronique. Il est prévu de garantir de l'anonymat supplémentaire en fournissant une option de transport à haute latence. Tous les courriers-bote sont chiffrés automatiquement de bout en bout, pour qu'il n'y ait aucun besoin de configurer du chiffrage de courrier électronique supplémentaire (quoique vous puissiez le faire), et les courriers-bote sont authentifiés automatiquement. Comme il est décentralisé, il n'y a aucun serveur de courrier électronique qui pourrait lier des identités de courrier électronique différentes comme communiquant l'une avec l'autre (<em>profiling<em>) : même les noeuds retransmettant les courriers ne connaîtront pas l'expéditeur en dehors de l'expéditeur du destinataire, seuls le bout du tunnel de courrier à haute latence et les noeuds de stockage sauront à qui (identité anonyme) le courrier est destiné. Il est donc possible que l'expéditeur original soit parti hors connexion longtemps avant que le courrier devienne disponible de l'autre côté. Ceci augmente le degré d'anonymat qu'il est possible d'atteindre avec I2P-Bote. Pour les utilisateurs qui ne veulent pas de délais élevés : tous ces paramètres sont réglables par l'utilisateur, donc chaque utilisateur choisit finalement combien d'anonymat il veut.</em></em></p>
@@ -565,7 +561,7 @@ particulièrement avec de nombreux sauts et/ou de longs retards, ne soyez pas
 surpris si vos messages n'arrivent pas rapidement à destination. Ça prendra
 évidemment plus de temps - jusqu'à plusieurs jours!</p>
 
-<h2 id="Credits">8. Remerciements</h2>
+<h2 id="Credits">8. Crédits</h2>
 <p>See <a href="about.jsp">the About page</a>.</p>
 
 <h2>ENJOY THE BOTE FEELING!!</h2>
