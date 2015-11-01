@@ -22,14 +22,18 @@
 package i2p.bote.web;
 
 import static i2p.bote.Util._t;
+import i2p.bote.I2PBote;
 import i2p.bote.email.Email;
+import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.Outbox.EmailStatus;
 import i2p.bote.util.GeneralHelper;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,6 +43,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 
@@ -257,5 +262,24 @@ public class JSPHelper extends GeneralHelper {
         default:
             return "";
         }
+    }
+
+    public String getNewEmailNotificationContent() {
+        String title = "I2P-Bote";
+        String body = "";
+        try {
+            Email email = I2PBote.getInstance().getInbox().getLatestUnreadEmail();
+            if (email != null) {
+                title = "I2P-Bote: " + getNameAndShortDestination(email.getOneFromAddress());
+                body = email.getSubject();
+            }
+        } catch (PasswordException e) {
+        } catch (MessagingException e) {
+        } catch (IOException e) {
+        } catch (GeneralSecurityException e) {
+        }
+        if (body == "")
+            body = _t("New email received");
+        return "<script>\nnotifTitle=\"" + title + "\";\nnotifBody=\"" + body + "\";\n</script>";
     }
 }

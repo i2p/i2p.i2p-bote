@@ -399,6 +399,14 @@ public class EmailFolder extends Folder<Email> {
         return numNew;
     }
 
+    public Email getLatestUnreadEmail() throws PasswordException {
+        for (Email email : getElements()) {
+            if (email.isUnread())
+                return email;
+        }
+        return null;
+    }
+
     public void setRecent(String messageId, boolean isRecent) throws PasswordException, GeneralSecurityException {
         EmailMetadata metadata = getMetadata(messageId);
         metadata.setRecent(isRecent);

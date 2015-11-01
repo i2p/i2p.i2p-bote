@@ -91,12 +91,38 @@
         </form>
     </div>
     <c:if test="${jspHelperBean.newMailReceived}">
+        ${jspHelperBean.newEmailNotificationContent}
         <script language="Javascript">
-            // refresh folder list to update the new message count
-            parent.frames[1].location.href = 'folders.jsp';
-            // If inbox is being displayed, reload so the new email(s) show
-            if (parent.document.getElementById('inboxFlag'))
-                parent.location.href = 'folder.jsp?path=Inbox';
+            function notifyUser() {
+                var options = {
+                        body: notifBody
+                    }
+                    var n = new Notification(notifTitle, options);
+                    setTimeout(n.close.bind(n), 5000);
+            }
+            function checkNotification() {
+                if ('Notification' in window) {
+                    if (Notification.permission === 'granted') {
+                        notifyUser();
+                    }
+                    else if (Notification.permission !== 'denied') {
+                        Notification.requestPermission(function (permission) {
+                            if (permission === 'granted') {
+                                notifyUser();
+                            }
+                        });
+                    }
+            	}
+            }
+            function refreshUI() {
+                // refresh folder list to update the new message count
+                parent.frames[1].location.href = 'folders.jsp';
+                // If inbox is being displayed, reload so the new email(s) show
+                if (parent.document.getElementById('inboxFlag'))
+                    parent.location.href = 'folder.jsp?path=Inbox';
+            }
+            checkNotification();
+            refreshUI();
         </script>
     </c:if>
 </c:if>
