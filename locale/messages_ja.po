@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-01 10:32+0000\n"
-"PO-Revision-Date: 2015-10-26 01:34+0000\n"
+"POT-Creation-Date: 2015-11-01 11:05+0000\n"
+"PO-Revision-Date: 2015-11-01 10:36+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/otf/I2P/language/ja/)\n"
 "Language: ja\n"
@@ -1210,6 +1210,10 @@ msgstr "開発版テスト"
 #: src/main/webapp/about.jsp
 msgid "Code fixes, translation updates from tx"
 msgstr "コード修正、翻訳の更新"
+
+#: src/main/webapp/about.jsp
+msgid "Code fixes"
+msgstr ""
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"

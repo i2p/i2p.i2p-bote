@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-01 10:33+0000\n"
-"PO-Revision-Date: 2015-10-30 10:07+0000\n"
-"Last-Translator: Anders Nilsson <locally@devode.se>\n"
+"POT-Creation-Date: 2015-11-01 11:06+0000\n"
+"PO-Revision-Date: 2015-11-01 10:36+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/otf/I2P/language/"
 "sv_SE/)\n"
 "Language: sv_SE\n"
@@ -206,9 +206,8 @@ msgid "Error saving email metadata: {0}"
 msgstr "Fel när metadata för e-posten sparades {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
-#, fuzzy
 msgid "New email received"
-msgstr "Ny epostidentitet"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
@@ -1227,6 +1226,10 @@ msgstr "Alpha testing"
 #: src/main/webapp/about.jsp
 msgid "Code fixes, translation updates from tx"
 msgstr "Kod fixar, översättningsuppdateringar från tx"
+
+#: src/main/webapp/about.jsp
+msgid "Code fixes"
+msgstr ""
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"

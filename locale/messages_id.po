@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-01 10:32+0000\n"
-"PO-Revision-Date: 2015-10-17 02:24+0000\n"
+"POT-Creation-Date: 2015-11-01 11:05+0000\n"
+"PO-Revision-Date: 2015-11-01 10:36+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Indonesian (http://www.transifex.com/otf/I2P/language/id/)\n"
 "Language: id\n"
@@ -198,9 +198,8 @@ msgid "Error saving email metadata: {0}"
 msgstr "Kesalahan dalam menyimpan metadat email: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
-#, fuzzy
 msgid "New email received"
-msgstr "Identitas Email Baru"
+msgstr ""
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
@@ -1220,6 +1219,10 @@ msgstr ""
 #: src/main/webapp/about.jsp
 msgid "Code fixes, translation updates from tx"
 msgstr "Perbaikan kode, pembaruan terjemahan dari tx"
+
+#: src/main/webapp/about.jsp
+msgid "Code fixes"
+msgstr ""
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
