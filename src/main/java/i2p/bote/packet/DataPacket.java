@@ -90,6 +90,11 @@ public abstract class DataPacket extends I2PBotePacket {
      * @throws MalformedPacketException If the byte array does not contain a valid <code>DataPacket</code>.
      */
     public static DataPacket createPacket(byte[] data) throws MalformedPacketException {
+        if (data == null)
+            throw new MalformedPacketException("Packet data is null");
+        if (data.length < HEADER_LENGTH)
+            throw new MalformedPacketException("Packet is too short to be a DataPacket");
+
         char packetTypeCode = (char)data[0];   // first byte of a data packet is the packet type code
         Class<? extends I2PBotePacket> packetType = decodePacketTypeCode(packetTypeCode);
         if (packetType==null || !DataPacket.class.isAssignableFrom(packetType))

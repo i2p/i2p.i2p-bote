@@ -81,6 +81,17 @@ public abstract class CommunicationPacket extends I2PBotePacket {
      * @throws MalformedPacketException
      */
     public static CommunicationPacket createPacket(byte[] data) throws MalformedPacketException {
+        if (data == null) {
+            Log log = new Log(CommunicationPacket.class);
+            log.error("Packet data is null");
+            return null;
+        }
+        if (data.length < HEADER_LENGTH) {
+            Log log = new Log(CommunicationPacket.class);
+            log.error("Packet is too short to be a CommunicationPacket");
+            return null;
+        }
+
         char packetTypeCode = (char)data[4];   // byte 4 of a communication packet is the packet type code
         Class<? extends I2PBotePacket> packetType = decodePacketTypeCode(packetTypeCode);
         if (packetType==null || !CommunicationPacket.class.isAssignableFrom(packetType)) {
@@ -118,6 +129,8 @@ public abstract class CommunicationPacket extends I2PBotePacket {
      * @param packet
      */
     static boolean isPrefixValid(byte[] packet) {
+        if (packet == null || packet.length < PACKET_PREFIX.length)
+            return false;
         for (int i=0; i<PACKET_PREFIX.length; i++)
             if (packet[i] != PACKET_PREFIX[i])
                 return false;
