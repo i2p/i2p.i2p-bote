@@ -527,11 +527,13 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     }
 
     public synchronized void checkForMail() throws PasswordException, IOException, GeneralSecurityException {
-        emailChecker.checkForMail();
+        if (emailChecker != null)
+            emailChecker.checkForMail();
     }
 
     public synchronized void checkForMail(String key) throws PasswordException, IOException, GeneralSecurityException {
-        emailChecker.checkForMail(key);
+        if (emailChecker != null)
+            emailChecker.checkForMail(key);
     }
 
     /**
