@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.i2p.data.Destination;
 import net.i2p.data.Hash;
@@ -46,7 +47,7 @@ abstract class AbstractBucket implements Iterable<KademliaPeer> {
     protected int capacity;
     
     public AbstractBucket(int capacity) {
-        peers = Collections.synchronizedList(new ArrayList<KademliaPeer>());
+        peers = new CopyOnWriteArrayList<KademliaPeer>();
         this.capacity = capacity;
     }
 
