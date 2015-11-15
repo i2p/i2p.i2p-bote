@@ -11,15 +11,15 @@
 <p><a href="#Gateway">2.6. Email till och från internet</a></p>
 <p><a href="#Considerations">3. Överväganden kring anonymitet</a></p>
 <p><a href="#Troubleshooting">4. Troubleshooting</a></p>
-<p><a href="#Technical-Concept">5. Tekniskt koncept</a></p>
-<p><a href="#Technical-Details">6. Tekniska detaljer</a></p>
-<p><a href="#Terminology">7. Terminologi/Ordlista</a></p>
-<p><a href="#Credits">8. Erkännanden</a></p>
+<p><a href="#Technical-Concept">5. Technical Concept</a></p>
+<p><a href="#Technical-Details">6. Technical Details</a></p>
+<p><a href="#Terminology">7. Terminology/Glossary of Terms</a></p>
+<p><a href="#Credits">8. Credits</a></p>
 </nav><h2 id="Introduction">1. Introduktion</h2>
 
-<p>I2P-Bote är ett användarvänligt mycket anonymt säkert emailprogram för 
+<p>I2P-Bote är ett användarvänligt, mycket anonymt och säkert epostprogram för 
 I2P. Det är ett serverlöst, helt decentraliserat system som etablerar/formerar ett 
-peer-till-peer nätverk överlagrat det helt moderna 
+peer-till-peer-nätverk ovanpå det moderna 
 låglatens-anonymiseringsnätverket 
 I2P; dessutom lägger det till en valbar mixminion-liknande höglatens-transport och
 undviker därigenom låglatens-nätverkens tillkortakommanden.</p>
@@ -191,8 +191,8 @@ minut, utan snarare varje (XX+-offset*XX)minuter, d.v.s efter en slumpmässigt v
 
 <p>(Om du är osäker om de här inställningarna, använd förvalen. De borde fungera för dig).</p>
 
-<p><em>Mail routes</em> är kedjor av I2P-Botenoder som agerar relays/routers för
-andra peers och följer fördröjningar per-hopp, och på så sätt erbjuder en transport med hög latens
+<p><em>E-postreläer</em> är kedjor av I2P-Botenoder som agerar relä/router för
+andra noder och följer fördröjningar per hopp, och erbjuder på så sätt en transport med hög latens
 för ökad anonymitet.</p>
 
 <p>Du kan specificera antalet noder (här kallde hopp) som skall kedjas ihop
@@ -308,10 +308,10 @@ skicka mail till dem.</p>
 Strength Jurisdiction Policy files, it means that your Java installation is
 restricted from using the strong cryptography that I2P-Bote requires.</p>
 
-<p>You can enable the strong cryptography by following the steps below:</p>
+<p>Du kan aktivera stark kryptering genom att följa stegen nedan:</p>
 <ol>
 <li><p>Download the JCE Unlimited Strength Jurisdiction Policy files from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Oracle's website</a>. You may need to use your regular browser.</p></li>
-<li><p>Unzip the downloaded zip file.</p></li>
+<li><p>Packa upp den nedladdade zip-filen.</p></li>
 <li><p>Move the files <code>local_policy.jar</code> and <code>US_export_policy.jar</code> into the folder shown in the notification on your screen. Overwrite any existing files with the same names.</p></li>
 <li><p>Restart I2P.</p></li>
 </ol>
@@ -319,7 +319,7 @@ restricted from using the strong cryptography that I2P-Bote requires.</p>
 software. If you are unsure about the restrictions in your country, consult
 with a lawyer.</p>
 
-<h2 id="Technical-Concept">5. Tekniska koncept</h2>
+<h2 id="Technical-Concept">5. Tekniskt koncept</h2>
 <p>I2P-Bote är ett punkt-till-punkt krypterat, nätverksinternt, helt decentraliserat
 (d.v.s serverlöst) email-system. Det stöder olika identiteter och avslöjar inte
 email-headers. För närvarande är det fortfarande alpha software. Det kan användas

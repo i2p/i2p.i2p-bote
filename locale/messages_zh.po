@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-01 11:06+0000\n"
-"PO-Revision-Date: 2015-11-01 10:55+0000\n"
+"POT-Creation-Date: 2015-11-15 06:18+0000\n"
+"PO-Revision-Date: 2015-11-12 00:05+0000\n"
 "Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/"
 "zh_CN/)\n"
@@ -34,31 +34,31 @@ msgstr "香草白"
 msgid "No identity matches the sender/from field: "
 msgstr "没有身份密钥与寄件者/收件人相匹配: "
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "Checking password"
 msgstr "正在检查密码"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The old password is not correct."
 msgstr "旧密码不正确。"
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "The new password and the confirmation password do not match."
 msgstr "新密码与确认密码字段输入相符。"
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting identities"
 msgstr "重新加密身份"
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting addressbook"
 msgstr "重新加密地址簿"
 
-#: src/main/java/i2p/bote/I2PBote.java:742
+#: src/main/java/i2p/bote/I2PBote.java:744
 msgid "Re-encrypting folder"
 msgstr "重新加密文件夹"
 
-#: src/main/java/i2p/bote/I2PBote.java:746
+#: src/main/java/i2p/bote/I2PBote.java:748
 msgid "Updating password file"
 msgstr "正在更新密码文件"
 
@@ -146,11 +146,11 @@ msgstr "(无)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:124
+#: src/main/java/i2p/bote/util/GeneralHelper.java:125
 msgid "Not set."
 msgstr "未设置"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:174
+#: src/main/java/i2p/bote/util/GeneralHelper.java:175
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "加密算法的ID无效："
 

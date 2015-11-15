@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-01 11:06+0000\n"
+"POT-Creation-Date: 2015-11-15 06:18+0000\n"
 "PO-Revision-Date: 2015-11-01 10:36+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Romanian (http://www.transifex.com/otf/I2P/language/ro/)\n"
@@ -31,31 +31,31 @@ msgstr ""
 msgid "No identity matches the sender/from field: "
 msgstr "Nici o identitate nu se potrivește cu expeditorul / din câmp:"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "Checking password"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The old password is not correct."
 msgstr "Parola veche nu este corectă."
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "The new password and the confirmation password do not match."
 msgstr "Parolă noua și parola de confirmare nu coincid."
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting identities"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting addressbook"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:742
+#: src/main/java/i2p/bote/I2PBote.java:744
 msgid "Re-encrypting folder"
 msgstr ""
 
-#: src/main/java/i2p/bote/I2PBote.java:746
+#: src/main/java/i2p/bote/I2PBote.java:748
 msgid "Updating password file"
 msgstr ""
 
@@ -143,11 +143,11 @@ msgstr "(Nimic)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:124
+#: src/main/java/i2p/bote/util/GeneralHelper.java:125
 msgid "Not set."
 msgstr "Nu este setat."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:174
+#: src/main/java/i2p/bote/util/GeneralHelper.java:175
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Număr ID Incorect pentru CryptoImplementation:"
 

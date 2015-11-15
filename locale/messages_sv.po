@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-01 11:06+0000\n"
-"PO-Revision-Date: 2015-11-01 10:36+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2015-11-15 06:18+0000\n"
+"PO-Revision-Date: 2015-11-08 21:29+0000\n"
+"Last-Translator: Anders Nilsson <locally@devode.se>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/otf/I2P/language/"
 "sv_SE/)\n"
 "Language: sv_SE\n"
@@ -38,31 +38,31 @@ msgstr "Vanilj"
 msgid "No identity matches the sender/from field: "
 msgstr "Ingen identitet överensstämmer med avsändare/från fältet:"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "Checking password"
 msgstr "Kontrollerar lösenord"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The old password is not correct."
 msgstr "Det gamla lösenordet är inte rätt."
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "The new password and the confirmation password do not match."
 msgstr "Det nya lösenordet och bekräftelselösenordet matchar inte."
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting identities"
 msgstr "Återkrypterar identiteter"
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting addressbook"
 msgstr "Återkrypterar adressbok"
 
-#: src/main/java/i2p/bote/I2PBote.java:742
+#: src/main/java/i2p/bote/I2PBote.java:744
 msgid "Re-encrypting folder"
 msgstr "Återkrypterar katalog"
 
-#: src/main/java/i2p/bote/I2PBote.java:746
+#: src/main/java/i2p/bote/I2PBote.java:748
 msgid "Updating password file"
 msgstr "Uppdaterar lösenordsfil"
 
@@ -132,7 +132,7 @@ msgstr "Låst?"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:116
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:142
 msgid "Peer"
-msgstr "Peer"
+msgstr "Nod"
 
 #: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:175
@@ -151,11 +151,11 @@ msgstr "(Inga)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:124
+#: src/main/java/i2p/bote/util/GeneralHelper.java:125
 msgid "Not set."
 msgstr "Inte satt."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:174
+#: src/main/java/i2p/bote/util/GeneralHelper.java:175
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Ogiltigt ID for krypteringsimplementation:"
 
@@ -207,17 +207,17 @@ msgstr "Fel när metadata för e-posten sparades {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
 msgid "New email received"
-msgstr ""
+msgstr "Nytt e-postmeddelande mottaget"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
 msgid "Kademlia Peers:"
-msgstr "Kademlia peers:"
+msgstr "Kademlia-noder:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:112
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:236
 msgid "Relay Peers:"
-msgstr "Vidarebefodringande peers:"
+msgstr "Vidarebefordrande noder:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:118
 msgid "Reachability %"
@@ -231,7 +231,7 @@ msgstr "Otestad"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:138
 msgid "Banned Peers:"
-msgstr "Bannade peers:"
+msgstr "Bannade noder:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:143
 msgid "Destination Hash"

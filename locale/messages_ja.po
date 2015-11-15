@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-01 11:05+0000\n"
+"POT-Creation-Date: 2015-11-15 06:17+0000\n"
 "PO-Revision-Date: 2015-11-01 10:36+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/otf/I2P/language/ja/)\n"
@@ -32,31 +32,31 @@ msgstr "バニラ"
 msgid "No identity matches the sender/from field: "
 msgstr "送信者/差出人欄と一致するIDが見つかりませんでした:"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "Checking password"
 msgstr "パスワードを確認しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The old password is not correct."
 msgstr "古いパスワードが間違っています。"
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "The new password and the confirmation password do not match."
 msgstr "新しいパスワードと確認用のパスワードが一致しません。"
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting identities"
 msgstr "IDを再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting addressbook"
 msgstr "アドレス帳を再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:742
+#: src/main/java/i2p/bote/I2PBote.java:744
 msgid "Re-encrypting folder"
 msgstr "フォルダを再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:746
+#: src/main/java/i2p/bote/I2PBote.java:748
 msgid "Updating password file"
 msgstr "パスワードファイルを更新しています"
 
@@ -144,11 +144,11 @@ msgstr "(なし)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:124
+#: src/main/java/i2p/bote/util/GeneralHelper.java:125
 msgid "Not set."
 msgstr "未定"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:174
+#: src/main/java/i2p/bote/util/GeneralHelper.java:175
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "暗号化アルゴリズムのIDが不正です:"
 

@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-01 11:05+0000\n"
-"PO-Revision-Date: 2015-11-01 10:36+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2015-11-15 06:17+0000\n"
+"PO-Revision-Date: 2015-11-05 17:57+0000\n"
+"Last-Translator: Towinet\n"
 "Language-Team: French (http://www.transifex.com/otf/I2P/language/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -36,33 +36,33 @@ msgstr "Vanille"
 msgid "No identity matches the sender/from field: "
 msgstr "Aucune identité ne correspond au champ \"Expéditeur/De\":"
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "Checking password"
 msgstr "Vérification de mot de passe"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The old password is not correct."
 msgstr "L'ancien mot de passe est incorrect."
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "The new password and the confirmation password do not match."
 msgstr ""
 "Le nouveau mot de passe et le mot de passe de confirmation ne correspondent "
 "pas."
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting identities"
 msgstr "Re-chiffrement d'identités"
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting addressbook"
 msgstr "Re-chiffrement de carnet d'adresses"
 
-#: src/main/java/i2p/bote/I2PBote.java:742
+#: src/main/java/i2p/bote/I2PBote.java:744
 msgid "Re-encrypting folder"
 msgstr "Re-chiffrement de dossier"
 
-#: src/main/java/i2p/bote/I2PBote.java:746
+#: src/main/java/i2p/bote/I2PBote.java:748
 msgid "Updating password file"
 msgstr "Mise à jour du fichier de mot de passe"
 
@@ -153,11 +153,11 @@ msgstr "(Néant)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:124
+#: src/main/java/i2p/bote/util/GeneralHelper.java:125
 msgid "Not set."
 msgstr "Non paramétré."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:174
+#: src/main/java/i2p/bote/util/GeneralHelper.java:175
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Numero d'implémentation cryptographique incorrect:"
 
@@ -209,7 +209,7 @@ msgstr "Erreur en enregistrant la métadonnée de messagerie: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
 msgid "New email received"
-msgstr ""
+msgstr "Nouvel email reçu"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194

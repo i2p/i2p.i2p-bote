@@ -7,6 +7,7 @@
 # Eugene, 2013
 # Eugene, 2013
 # sfix <anon-9b36b2e@lycos.com>, 2013
+# vertnis <vertnis@i2pmail.org>, 2015
 # brianhopes <voganc-12@live.ru>, 2015
 # walking <walking@i2pmail.org>, 2011
 # yume, 2015
@@ -15,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-01 11:06+0000\n"
-"PO-Revision-Date: 2015-11-01 10:36+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2015-11-15 06:18+0000\n"
+"PO-Revision-Date: 2015-11-14 11:51+0000\n"
+"Last-Translator: vertnis <vertnis@i2pmail.org>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/otf/I2P/language/"
 "ru_RU/)\n"
 "Language: ru_RU\n"
@@ -44,31 +45,31 @@ msgstr "Ванильный"
 msgid "No identity matches the sender/from field: "
 msgstr "Нет соответствующего набора ключей для такого отправителя: "
 
-#: src/main/java/i2p/bote/I2PBote.java:724
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "Checking password"
 msgstr "Проверка пароля"
 
-#: src/main/java/i2p/bote/I2PBote.java:727
+#: src/main/java/i2p/bote/I2PBote.java:729
 msgid "The old password is not correct."
 msgstr "Старый пароль неверен."
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:731
 msgid "The new password and the confirmation password do not match."
 msgstr "Новый пароль и пароль для подтверждения не совпадают."
 
-#: src/main/java/i2p/bote/I2PBote.java:736
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting identities"
 msgstr "Перешифрование идентификатора"
 
-#: src/main/java/i2p/bote/I2PBote.java:739
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting addressbook"
 msgstr "Перешифрование адресной книги"
 
-#: src/main/java/i2p/bote/I2PBote.java:742
+#: src/main/java/i2p/bote/I2PBote.java:744
 msgid "Re-encrypting folder"
 msgstr "Перешифрование папки"
 
-#: src/main/java/i2p/bote/I2PBote.java:746
+#: src/main/java/i2p/bote/I2PBote.java:748
 msgid "Updating password file"
 msgstr "Обновляется файл с паролями"
 
@@ -156,11 +157,11 @@ msgstr "(нет)"
 msgid "(S)"
 msgstr "(S)"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:124
+#: src/main/java/i2p/bote/util/GeneralHelper.java:125
 msgid "Not set."
 msgstr "Не задано."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:174
+#: src/main/java/i2p/bote/util/GeneralHelper.java:175
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Неверный идентификатор для CryptoImplementation: "
 
@@ -212,7 +213,7 @@ msgstr "Ошибка при сохранении метаданных email-a: {
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
 msgid "New email received"
-msgstr ""
+msgstr "Получено новое письмо"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
@@ -428,6 +429,9 @@ msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
 msgstr ""
+"Для того, чтобы I2P-Bote функционировал должным образом, Вы должны скачать "
+"файлы Java-расширения JCE Unlimited Strength Jurisdiction Policy и "
+"переместить их в эту папку:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
