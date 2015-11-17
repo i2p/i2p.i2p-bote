@@ -10,10 +10,10 @@
 <p><a href="#Settings">2.5. Inställningar (och vad de betyder)</a></p>
 <p><a href="#Gateway">2.6. Email till och från internet</a></p>
 <p><a href="#Considerations">3. Överväganden kring anonymitet</a></p>
-<p><a href="#Troubleshooting">4. Troubleshooting</a></p>
-<p><a href="#Technical-Concept">5. Technical Concept</a></p>
-<p><a href="#Technical-Details">6. Technical Details</a></p>
-<p><a href="#Terminology">7. Terminology/Glossary of Terms</a></p>
+<p><a href="#Troubleshooting">4. Felsökning</a></p>
+<p><a href="#Technical-Concept">5. Tekniska Koncept</a></p>
+<p><a href="#Technical-Details">6. Tekniska Detaljer</a></p>
+<p><a href="#Terminology">7. Terminologi/Ordlista</a></p>
 <p><a href="#Credits">8. Credits</a></p>
 </nav><h2 id="Introduction">1. Introduktion</h2>
 
@@ -302,22 +302,20 @@ Så, om du kommunicerar med dessa andra användande samma Bote-adress, kommer de
 att kunna veta vem du är. Det går inte om du använder en annan adress för att
 skicka mail till dem.</p>
 
-<h2 id="Troubleshooting">4. Troubleshooting</h2>
-<h3 id="Unlimited-Strength-Crypto">4.1. Notification about JCE Unlimited Strength Jurisdiction Policy files</h3>
-<p>If you have a notification at the bottom of your screen about JCE Unlimited
-Strength Jurisdiction Policy files, it means that your Java installation is
-restricted from using the strong cryptography that I2P-Bote requires.</p>
+<h2 id="Troubleshooting">4. Felsökning</h2>
+<h3 id="Unlimited-Strength-Crypto">4.1 Meddelande om JCE Unlimited Strength Jurisdiction Policy files.</h3>
+<p>Om du har ett meddelande längst ner på skärmen om JCE Unlimited
+Strength Jurisdiction Policy files, så betyder det att din Javainstallation är förhindrad att använda den starka kryptografi som I2P-Bote kräver.</p>
 
 <p>Du kan aktivera stark kryptering genom att följa stegen nedan:</p>
 <ol>
-<li><p>Download the JCE Unlimited Strength Jurisdiction Policy files from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Oracle's website</a>. You may need to use your regular browser.</p></li>
+<li><p>Ladda nerJCE Unlimited Strength Jurisdiction Policy files från<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Oracles website</a>. Du kanske måste använda en vanlig webläsare.</p></li>
 <li><p>Packa upp den nedladdade zip-filen.</p></li>
-<li><p>Move the files <code>local_policy.jar</code> and <code>US_export_policy.jar</code> into the folder shown in the notification on your screen. Overwrite any existing files with the same names.</p></li>
-<li><p>Restart I2P.</p></li>
+<li><p>Flytta filerna <code>local_policy.jar</code> och <code>US_export_plicy.jar</code> till mappen som anges i meddalande på din skärm. Skriv över existerande filer med samma namn.</p></li>
+<li><p>Starta om I2P</p></li>
 </ol>
-<p>Some countries have restrictions on the allowed strengths of cryptographic
-software. If you are unsure about the restrictions in your country, consult
-with a lawyer.</p>
+<p>Vissa länder har restriktioner på den tillåtna kryptografiska styrkan 
+på mjukvara. Om du är osäker om restriktioner i ditt land, rådfråga juridisk expertis.</p>
 
 <h2 id="Technical-Concept">5. Tekniskt koncept</h2>
 <p>I2P-Bote är ett punkt-till-punkt krypterat, nätverksinternt, helt decentraliserat
