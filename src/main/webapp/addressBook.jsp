@@ -57,6 +57,7 @@
         <tr>
             <c:if test="${param.select}"><th class="header-column-check"></th></c:if>
             <th class="header-column-name"><ib:message key="Name"/></th>
+            <th class="header-column-text"><ib:message key="Text"/></th>
             <th class="header-column-addr-email-dest"><ib:message key="Email Destination"/></th>
             <c:if test="${not param.select}"><th class="header-column-trash"></th></c:if>
         </tr>
@@ -83,6 +84,9 @@
             <c:if test="${!param.select}">
                 </a>
             </c:if>
+        </td>
+        <td>
+            ${fn:escapeXml(contact.text)}
         </td>
         <td class="ellipsis">
             ${contact.destination}

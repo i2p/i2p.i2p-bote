@@ -581,10 +581,13 @@ td a:link, td a:visited {
     width: 20px;
 }
 .header-column-name {
+    width: 20%;
+}
+.header-column-text {
     width: 30%;
 }
 .header-column-addr-email-dest {
-    width: 72%;
+    width: 40%;
 }
 
 

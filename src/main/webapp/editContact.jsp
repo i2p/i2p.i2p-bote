@@ -134,8 +134,9 @@
         <div class="contact-form-label">
             <div class="field-label"><ib:message key="Text:"/></div>
         </div>
-        <div class="contact-form-text">${fn:escapeXml(contact.text)}</div>
-        <input type="hidden" name="text" value="${contact.text}"/>
+        <div class="contact-form-value">
+            <input type="text" size="40" name="text" value="${ib:escapeQuotes(contact.text)}"/>
+        </div>
         
         <p>&nbsp;</p>
         <button name="action" value="save">${submitButtonText}</button>
