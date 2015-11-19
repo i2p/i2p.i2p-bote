@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-15 06:18+0000\n"
-"PO-Revision-Date: 2015-11-01 10:36+0000\n"
+"POT-Creation-Date: 2015-11-19 04:56+0000\n"
+"PO-Revision-Date: 2015-11-19 04:44+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Slovak (http://www.transifex.com/otf/I2P/language/sk/)\n"
 "Language: sk\n"
@@ -721,6 +721,11 @@ msgstr "Adresár je prázdny."
 #: src/main/webapp/addressBook.jsp
 msgid "Name"
 msgstr "Meno"
+
+#: src/main/webapp/addressBook.jsp
+#, fuzzy
+msgid "Text"
+msgstr "Text:"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Email Destination"

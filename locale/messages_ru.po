@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-15 06:18+0000\n"
-"PO-Revision-Date: 2015-11-14 11:51+0000\n"
-"Last-Translator: vertnis <vertnis@i2pmail.org>\n"
+"POT-Creation-Date: 2015-11-19 04:56+0000\n"
+"PO-Revision-Date: 2015-11-19 04:44+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/otf/I2P/language/"
 "ru_RU/)\n"
 "Language: ru_RU\n"
@@ -737,6 +737,11 @@ msgstr "Адресная книга пуста."
 #: src/main/webapp/addressBook.jsp
 msgid "Name"
 msgstr "Имя"
+
+#: src/main/webapp/addressBook.jsp
+#, fuzzy
+msgid "Text"
+msgstr "Текст:"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Email Destination"

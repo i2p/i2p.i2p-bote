@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-15 06:18+0000\n"
-"PO-Revision-Date: 2015-11-12 00:05+0000\n"
-"Last-Translator: YF <yfdyh000@gmail.com>\n"
+"POT-Creation-Date: 2015-11-19 04:57+0000\n"
+"PO-Revision-Date: 2015-11-19 04:44+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -723,6 +723,11 @@ msgstr "地址簿为空。"
 #: src/main/webapp/addressBook.jsp
 msgid "Name"
 msgstr "联系人名称"
+
+#: src/main/webapp/addressBook.jsp
+#, fuzzy
+msgid "Text"
+msgstr "文本："
 
 #: src/main/webapp/addressBook.jsp
 msgid "Email Destination"

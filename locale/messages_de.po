@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-15 06:17+0000\n"
-"PO-Revision-Date: 2015-11-07 13:11+0000\n"
-"Last-Translator: blabla <blabla@trash-mail.com>\n"
+"POT-Creation-Date: 2015-11-19 04:55+0000\n"
+"PO-Revision-Date: 2015-11-19 04:44+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: German (http://www.transifex.com/otf/I2P/language/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -742,6 +742,11 @@ msgstr "Das Adressbuch ist leer."
 #: src/main/webapp/addressBook.jsp
 msgid "Name"
 msgstr "Name"
+
+#: src/main/webapp/addressBook.jsp
+#, fuzzy
+msgid "Text"
+msgstr "Text:"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Email Destination"
