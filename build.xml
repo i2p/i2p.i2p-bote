@@ -936,6 +936,8 @@
         <delete dir="plugin/plugin.tmp" />
         <delete file="i2pbote.xpi2p" />
         <delete file="i2pbote-update.xpi2p" />
+        <delete file="i2pbote.su3" />
+        <delete file="i2pbote-update.su3" />
         <delete file="src.zip" />
         <delete file="i2pinstall.exe" />
         <delete dir="javadoc" />
