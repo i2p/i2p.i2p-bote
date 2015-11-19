@@ -1,6 +1,18 @@
 I2P-Bote Version History
 ------------------------
 
+0.4.2 (Released on Nov 19, 2015)
+  * Added UI notification and guide about unlimited strength crypto policy files
+  * New: desktop notification when a new email arrives (only when JS enabled)
+  * Fixed bugs:
+    o AIOOBE on empty packets (ticket #1603)
+    o Crashing with Java 6 (ticket #1644)
+    o NPE when network and DHT aren't present (ticket #1662)
+    o Couldn't edit contact's text field (ticket #1667)
+    o Migrator running incorrectly (ticket #1693)
+    o CME when checking email (ticket #1703)
+    o NPE when checking email in text browser before init (ticket #1704)
+
 0.4.1 (Released on Sep 12, 2015)
   * Fixed bugs:
     o ConcurrentModificationException errors in logs
