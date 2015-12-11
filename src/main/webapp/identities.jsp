@@ -64,14 +64,15 @@
                 <img src="${themeDir}/images/default.png"/>
             </c:if>
         </td>
+        <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
+        <c:set var="editIdentityURL" value="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&amp;createNew=false&amp;key=${identity.key}&amp;cryptoImpl=${identity.cryptoImpl}&amp;publicName=${ib:escapeQuotes(identity.publicName)}&amp;description=${ib:escapeQuotes(identity.description)}&amp;emailAddress=${ib:escapeQuotes(identity.emailAddress)}&amp;defaultIdentity=${identity.defaultIdentity}"/>
         <td>
-            <%-- Insert a random number into the request string so others can't see contacts or identities using the CSS history hack --%>
-            <a href="editIdentity.jsp?rnd=${jspHelperBean.randomNumber}&amp;createNew=false&amp;key=${identity.key}&amp;cryptoImpl=${identity.cryptoImpl}&amp;publicName=${ib:escapeQuotes(identity.publicName)}&amp;description=${ib:escapeQuotes(identity.description)}&amp;emailAddress=${ib:escapeQuotes(identity.emailAddress)}&amp;defaultIdentity=${identity.defaultIdentity}">
+            <a href="${editIdentityURL}" title="Click to see identity details">
                 ${fn:escapeXml(identity.publicName)}
             </a>
         </td>
         <td>${identity.description}</td>
-        <td class="ellipsis">${identity.key}</td>
+        <td class="ellipsis"><a href="${editIdentityURL}" title="Click to see identity details">${identity.key}</a></td>
         <td><c:choose>
         <c:when test="${ib:isCheckingForMail(identity)}">
             <img src="${themeDir}/images/wait.gif" alt="<ib:message key='Checking for mail...'/>" title='<ib:message key='Checking for mail...'/>'/>
