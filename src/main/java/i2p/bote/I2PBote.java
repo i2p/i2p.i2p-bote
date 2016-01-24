@@ -401,8 +401,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         backgroundThreads.add(connectTask);
         connectTask.start();
 
-        // TODO Fix log4j loading so IMAP can start
-        if (false && configuration.isImapEnabled())
+        if (configuration.isImapEnabled())
             startImap();
         if (configuration.isSmtpEnabled())
             startSmtp();
@@ -581,8 +580,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
     public void setImapEnabled(boolean enabled) {
         configuration.setImapEnabled(enabled);
         if (imapService==null || !imapService.isStarted()) {
-            // TODO Fix log4j loading so IMAP can start
-            if (false && enabled)
+            if (enabled)
                 startImap();
         }
         else if (imapService!=null && imapService.isStarted() && !enabled)

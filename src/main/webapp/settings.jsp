@@ -85,7 +85,7 @@
         <c:set var="imapPortField" value="<input type='text' name='imapPort' size='5' value='${configuration.imapPort}'/>"/>
         <ib:message key="Enable IMAP on port {0}">
             <ib:param value="${imapPortField}"/>
-        </ib:message> (Currently ignored because IMAP support is temporarily broken)
+        </ib:message>
         <br/>
 
         <%-- SMTP --%>
