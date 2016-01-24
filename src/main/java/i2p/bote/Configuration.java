@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import net.i2p.I2PAppContext;
@@ -72,7 +73,6 @@ public class Configuration implements IdentityConfig {
     private static final String THEME_SUBDIR = "themes";   // relative to I2P_BOTE_SUBDIR
 
     // Parameter names in the config file
-    private static final String PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED = "i2cpDomainSocketEnabled";
     private static final String PARAMETER_STORAGE_SPACE_INBOX = "storageSpaceInbox";
     private static final String PARAMETER_STORAGE_SPACE_RELAY = "storageSpaceRelay";
     private static final String PARAMETER_STORAGE_TIME = "storageTime";
@@ -108,7 +108,6 @@ public class Configuration implements IdentityConfig {
     private static final String PARAMETER_THEME = "theme";
 
     // Defaults for each parameter
-    private static final boolean DEFAULT_I2CP_DOMAIN_SOCKET_ENABLED = false;
     private static final int DEFAULT_STORAGE_SPACE_INBOX = 1024 * 1024 * 1024;
     private static final int DEFAULT_STORAGE_SPACE_RELAY = 100 * 1024 * 1024;
     private static final int DEFAULT_STORAGE_TIME = 31;   // in days
@@ -141,6 +140,21 @@ public class Configuration implements IdentityConfig {
     private static final String DEFAULT_UPDATE_URL = "http://tjgidoycrw6s3guetge3kvrvynppqjmvqsosmtbmgqasa6vmsf6a.b32.i2p/i2pbote-update.xpi2p";
     private static final int DEFAULT_UPDATE_CHECK_INTERVAL = 60;   // in minutes
     private static final String DEFAULT_THEME = "material";
+    
+    // I2CP parameters allowed in the config file
+    // Undefined parameters use the I2CP defaults
+    private static final String PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED = "i2cp.domainSocket";
+    private static final List<String> I2CP_PARAMETERS = Arrays.asList(new String[] {
+            PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED,
+            "inbound.length",
+            "inbound.lengthVariance",
+            "inbound.quantity",
+            "inbound.backupQuantity",
+            "outbound.length",
+            "outbound.lengthVariance",
+            "outbound.quantity",
+            "outbound.backupQuantity",
+    });
 
     private Log log = new Log(Configuration.class);
     private Properties properties;
@@ -230,15 +244,16 @@ public class Configuration implements IdentityConfig {
     }
 
     /**
-     * @return false if not on Android.
-     * @since 0.2.10
+     * @return a Properties containing the current I2CP options.
+     * @since 0.4.3
      */
-    public boolean isI2CPDomainSocketEnabled() {
-        return SystemVersion.isAndroid() ?
-                getBooleanParameter(
-                        PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED,
-                        DEFAULT_I2CP_DOMAIN_SOCKET_ENABLED) :
-                false;
+    public Properties getI2CPOptions() {
+        Properties opts = new Properties();
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            if (I2CP_PARAMETERS.contains(entry.getKey()))
+                opts.put(entry.getKey(), entry.getValue());
+        }
+        return opts;
     }
 
     public File getDestinationKeyFile() {
