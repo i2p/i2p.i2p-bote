@@ -57,8 +57,8 @@ import net.i2p.util.Log;
  * The same is true for hashing which uses SHA-256 regardless of the ECDH/ECDSA key length.
  * <p/>
  * This class uses BouncyCastle for everything related to ECC (key encoding and decoding,
- * asymmetric encryption, signing, asymmetric key generation), and the AES implementation
- * in I2P for symmetric encryption.
+ * asymmetric encryption, signing, asymmetric key generation), as well as for symmetric
+ * encryption with AES.
  * <p/>
  * Because the first 6 bits are always zero for all currently existing subclasses, public
  * and private keys produced by this class always start with an upper case A when
