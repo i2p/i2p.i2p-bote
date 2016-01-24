@@ -111,6 +111,9 @@ public class ImapService extends IMAPServer {
         });
 
         HierarchicalConfiguration cfg = new HierarchicalConfiguration();
+        // set address and port from config in order to avoid binding the default port.
+        cfg.setProperty("bind", configuration.getImapAddress() + ":" + configuration.getImapPort());
+
         SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
         SSLSocket s = null;
         try {
@@ -132,8 +135,6 @@ public class ImapService extends IMAPServer {
                 } catch (IOException e) {}
         }
         configure(cfg);   // use the defaults for the rest
-
-        setListenAddresses(new InetSocketAddress(configuration.getImapAddress(), configuration.getImapPort()));
 
         mailboxSessionMapperFactory = new MapperFactory(folderManager);
         MailboxACLResolver aclResolver = createMailboxACLResolver();
