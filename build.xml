@@ -58,6 +58,10 @@
     -->
     <property name="james.url" value="http://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip"/>
     <property name="james.includeinupdate" value="false"/>
+    <!-- Commons Logging from Apache James IMAP server -->
+    <property name="commonslogging.name" value="Commons Logging"/>
+    <property name="commonslogging.filename" value="commons-logging-1.0.3.jar"/>
+    <property name="commonslogging.includeinupdate" value="true"/>
     <!-- SubEtha SMTP -->
     <property name="subetha.name" value="SubEtha SMTP"/>
     <property name="subetha.filename" value="subethasmtp-3.1.7.jar"/>
@@ -81,6 +85,7 @@
         <include name="commons-configuration-1.9.jar"/>
         <include name="commons-io-2.4.jar"/>
         <include name="commons-lang-2.6.jar"/>
+        <include name="commons-logging-1.0.3.jar"/>
         <include name="james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar"/>
         <include name="james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar"/>
         <include name="james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar"/>
@@ -339,6 +344,8 @@
         <includedep updater="true" dep="mailapi"/>
         <includedep updater="true" dep="bcprov"/>
         <includedep updater="true" dep="james"/>
+        <!-- commons-logging handled separately, was added later -->
+        <includedep updater="true" dep="commonslogging"/>
         <includedep updater="true" dep="subetha"/>
 
         <copy file="src/main/scripts/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
@@ -517,6 +524,13 @@
             <fileset refid="imaplibs"/>
             <flattenmapper/>
         </apply>
+    </target>
+
+    <target name="packdep.commonslogging">
+        <packdep dep="commonslogging"/>
+    </target>
+    <target name="removepack.commonslogging">
+        <removepack dep="commonslogging"/>
     </target>
 
     <target name="packdep.subetha">
@@ -788,6 +802,7 @@
                 <include name="**/commons-configuration-1.9.jar"/>
                 <include name="**/commons-io-2.4.jar"/>
                 <include name="**/commons-lang-2.6.jar"/>
+                <include name="**/commons-logging-1.0.3.jar"/>
                 <include name="**/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar"/>
                 <include name="**/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar"/>
                 <include name="**/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar"/>
