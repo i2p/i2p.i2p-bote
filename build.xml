@@ -62,6 +62,13 @@
     <property name="commonslogging.name" value="Commons Logging"/>
     <property name="commonslogging.filename" value="commons-logging-1.0.3.jar"/>
     <property name="commonslogging.includeinupdate" value="true"/>
+    <!-- Apacke Mime4J from Apache James IMAP server -->
+    <property name="mime4j.name" value="Apache Mime4J"/>
+    <property name="mime4j.filename" value="apache-mime4j-core-0.7.2.jar"/>
+    <property name="mime4j.hash" value="4d7434c68f94b81a253c12f28e6bbb4d6239c361d6086a46e22e594bb43ac660"/>
+    <property name="mime4j.archive" value="apache-mime4j-0.7.2-bin.zip"/>
+    <property name="mime4j.url" value="http://ftp.halifax.rwth-aachen.de/apache/james/mime4j/0.7.2/apache-mime4j-0.7.2-bin.zip"/>
+    <property name="mime4j.includeinupdate" value="true"/>
     <!-- SubEtha SMTP -->
     <property name="subetha.name" value="SubEtha SMTP"/>
     <property name="subetha.filename" value="subethasmtp-3.1.7.jar"/>
@@ -78,8 +85,11 @@
     <fileset dir="${lib}" id="imaplibs">
         <include name="apache-james-mailbox-api-0.6-20150508.040939-710.jar"/>
         <include name="apache-james-mailbox-store-0.6-20150508.041003-704.jar"/>
+        <!-- Temporarily replaced
         <include name="apache-mime4j-core-0.8.0-20150617.024907-738.jar"/>
         <include name="apache-mime4j-dom-0.8.0-20150617.024927-735.jar"/>
+        -->
+        <include name="apache-mime4j-core-0.7.2.jar"/>
         <include name="commons-codec-1.7.jar"/>
         <include name="commons-collections-3.2.1.jar"/>
         <include name="commons-configuration-1.9.jar"/>
@@ -180,15 +190,18 @@
         <available property="mailapiexists" file="${lib}/${mailapi.filename}" type="file"/>
         <available property="bcprovexists" file="${lib}/${bcprov.filename}" type="file"/>
         <available property="jamesexists" file="${lib}/${james.filename}" type="file"/>
+        <available property="mime4jexists" file="${lib}/${mime4j.filename}" type="file"/>
         <available property="subethaexists" file="${lib}/${subetha.filename}" type="file"/>
 
         <ant target="downloadmailapi"/>
         <ant target="downloadbcprov"/>
         <ant target="downloadjames"/>
+        <ant target="downloadmime4j"/>
         <ant target="downloadsubetha"/>
 
         <checkdep dep="mailapi"/>
         <checkdep dep="bcprov"/>
+        <checkdep dep="mime4j"/>
         <checkdep dep="subetha"/>
     </target>
 
@@ -346,6 +359,8 @@
         <includedep updater="true" dep="james"/>
         <!-- commons-logging handled separately, was added later -->
         <includedep updater="true" dep="commonslogging"/>
+        <!-- mime4j handled separately temporarily -->
+        <includedep updater="true" dep="mime4j"/>
         <includedep updater="true" dep="subetha"/>
 
         <copy file="src/main/scripts/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
@@ -531,6 +546,13 @@
     </target>
     <target name="removepack.commonslogging">
         <removepack dep="commonslogging"/>
+    </target>
+
+    <target name="packdep.mime4j">
+        <packdep dep="mime4j"/>
+    </target>
+    <target name="removepack.mime4j">
+        <removepack dep="mime4j"/>
     </target>
 
     <target name="packdep.subetha">
@@ -795,8 +817,10 @@
             <patternset>
                 <include name="**/apache-james-mailbox-api-0.6-20150508.040939-710.jar"/>
                 <include name="**/apache-james-mailbox-store-0.6-20150508.041003-704.jar"/>
+                <!-- Handled separately temporarily
                 <include name="**/apache-mime4j-core-0.8.0-20150617.024907-738.jar"/>
                 <include name="**/apache-mime4j-dom-0.8.0-20150617.024927-735.jar"/>
+                -->
                 <include name="**/commons-codec-1.7.jar"/>
                 <include name="**/commons-collections-3.2.1.jar"/>
                 <include name="**/commons-configuration-1.9.jar"/>
@@ -822,6 +846,23 @@
             </mapper>
         </unzip>
         <delete file="${lib}/${james.archive}"/>
+    </target>
+
+    <target name="downloadmime4j" unless="mime4jexists">
+        <input message="Apache Mime4J not found, download now?" validargs="y,n" addproperty="userinput.junit"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.junit}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${mime4j.url}" verbose="true" dest="${lib}/${mime4j.archive}"/>
+        <unzip src="${lib}/${mime4j.archive}" dest="${lib}">
+            <patternset includes="**/${mime4j.filename}"/>
+            <mapper>
+                <flattenmapper/>
+            </mapper>
+        </unzip>
+        <!--<delete file="${lib}/${mime4j.archive}"/>-->
     </target>
 
     <target name="downloadsubetha" unless="subethaexists">
