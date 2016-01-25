@@ -1,6 +1,11 @@
 I2P-Bote Version History
 ------------------------
 
+0.4.3
+  * Re-enabled IMAP (ticket #1678)
+  * Only bind IMAP to the configured address and port (ticket #1680)
+  * Enable I2CP tunnel options to be configured in i2pbote.config (ticket #1708)
+
 0.4.2 (Released on Nov 19, 2015)
   * Added UI notification and guide about unlimited strength crypto policy files
   * New: desktop notification when a new email arrives (only when JS enabled)
