@@ -33,6 +33,7 @@ commons-collections-.*.jar
 commons-configuration-.*.jar
 commons-io-.*.jar
 commons-lang-.*.jar
+commons-logging-.*.jar
 james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar
 james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar
 james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar
