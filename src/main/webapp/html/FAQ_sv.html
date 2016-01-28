@@ -1,0 +1,343 @@
+<div>
+<h1>Vanliga frågor</h1>
+
+<nav><p><a href="#What">Vad är I2P-Bote?</a></p>
+<p><a href="#Name">Varför heter det I2P-Bote?</a></p>
+<p><a href="#Why">Varför I2P-Bote?</a></p>
+<p><a href="#Sending">Vad händer med ett email after att jag klickat på 'Skicka'?</a></p>
+<p><a href="#RandomPeople">Vänta nu, alla mail jag skickar lagras på någon okänd persons hårddisk? Det låter som en riktigt dålig idé</a></p>
+<p><a href="#HowItWorks">Hur fungerar det egentligen?</a></p>
+<p><a href="#NothingToHide">Varför skall jag använda det? Jag har ingenting att dölja&hellip;</a></p>
+<p><a href="#GPG">Hur är det med PGP och GPG?</a></p>
+<p><a href="#UsingGPG">Kan jag använda PGP/GPG med I2P-Bote?</a></p>
+<p><a href="#Susimail">Vad är skillnaden mot Susimail??</a></p>
+<p><a href="#Comparison">Varför är I2P-Bote bättre?</a></p>
+<p><a href="#Safeguards">Hur skyddas min identitet när jag skickar mail till någon?</a></p>
+<p><a href="#How">Hur andvänder jag det?</a></p>
+<p><a href="#EmailClients">Kan jag använda ett mailprogram som Thunderbird?</a></p>
+<p><a href="#Attachments">Kan jag skicka bilagor och vilka begränsningar finns det?</a></p>
+<p><a href="#CreateIdentity">Hur skapar jag ett email-konto?</a></p>
+<p><a href="#EmailDestination">Vad är en email-destination? Hur är det med email-adresser?</a></p>
+<p><a href="#AddressLength">Varför är email-adresserna så långa?</a></p>
+<p><a href="#AddressBook">Men jag kan inte komma ihåg dom långa destinationerna&hellip;</a></p>
+<p><a href="#MultipleIdentities">Vad är poängen med att använda flera mail-identiteter??</a></p>
+<p><a href="#EncryptionTypes">Vilken typ av kryptering är bäst?</a></p>
+<p><a href="#Algorithms">Vilka algoritmer används för symmmetrisk kryptering och för hashing?</a></p>
+<p><a href="#AntiSpam">Finns det några motåtgärder mot spam?</a></p>
+<p><a href="#HTML">Hur är det med HTML och formaterad text?</a></p>
+<p><a href="#Persistence">Hur länge lagras email?</a></p>
+<p><a href="#DoIdentitiesExpire">När går email-identiteter ut?</a></p>
+<p><a href="#Gateways">Kan jag skicka och ta emot mail från vanliga email-servrar på internet?</a></p>
+<p><a href="#Postman">Kan jag skicka och ta emot mail från postmans traditionella I2P mail-konton?</a></p>
+<p><a href="#Know">Vad betyder det när Känd är förkryssad i min inbox?</a></p>
+<p><a href="#Terms">Vad betyder “BktPfx”, “Distance” and “Locked?”</a></p>
+<p><a href="#Anonymous">Hur kan jag bli mer anonym?</a></p>
+<p><a href="#Timestamps">Hur undviker jag att skicka timestamps?</a></p>
+<p><a href="#Backups">Hur flyttar jag mina inställningar och data till en annan dator? Hur gör jag en backup?</a></p>
+<p><a href="#MailRoutes">Vad är en <em>mailrutt</em>?</a></p>
+<p><a href="#HighLatency">Vad betyder transport med hög latens?</a></p>
+<p><a href="#Latencies">Vilka latenser finns det och hur kan de kontrolleras (om alls)?</a></p>
+<p><a href="#WhyI2P">Om Bote skapar sin egen anonymitet varför behöver den I2P?</a></p>
+<p><a href="#WithoutRoutes">Hur anonym/säker är I2P-Bote utan mail-rutter?</a></p>
+<p><a href="#OpenSource">Är I2P-Bote open source?</a></p>
+<p><a href="#Credits">Vem har skapat I2P-Bote?</a></p>
+<p><a href="#Languages">Vilka språk finns tillgängliga?</a></p>
+<p><a href="#Translate">Hur kan jag hjälpa till med översättningen av I2P-Bote till mitt språk?</a></p>
+<p><a href="#Technical">Hur fungerar det på en teknisk nivå?</a></p>
+<p><a href="#GetInvolved">Finns det andra sätt att hjälpa till?</a></p>
+</nav><h3 id="What">Vad är I2P-Bote?</h3>
+<p>Ett peer-to-peer email-program konstruerat för att skydda din integritet.</p>
+
+<p>I2P-Bote är ett email-system som är krypterat från början till slut, inkapslat och helt 
+decentraliserat (serverlöst). Det stödjer olika identiter och döljer email-headers. 
+Det kan når via webkonsoll och det har IMAP och SMTP-stöd så Bote-mail
+kan hanteras av vanliga mailprogram. Det kommer senare att stödja ytterligare anonymisering
+genom tillval av transport med hög latens. Alla Bote-mail krypteras hela vägen så man behöver
+inte kryptera meddelandet själv (även om den möjligheten finns kvar), och Bote-mail
+autentiseras automatiskt. Eftersom Bote är decentraliserat finns det ingen emailserver
+som kan koppla samman identiteter via mail (profiling). Inte ens noderna
+som fungerar som relä för trafiken kommer att känna till vem som är avsändare och
+förutom sändare och mottagare kommer endast slutpunkten på mail-tunneln med hög latens
+och lagringsnoderna att känna till vem som är (den anonyma) adressaten.
+Den ursprungliga avsändaren kan vara offline långt innan mailet blir
+tillgängligt på den andra sidan. Detta ökar anonymitetsgraden när man 
+använder I2P-Bote. För dom som inte vill ha långa fördröjningar kan allt
+detta ändras av användaren. Var och en bestämmer själv hur mycket anonymitet som behövs.  </p>
+
+<h3 id="Name">Varför heter det I2P-Bote?</h3>
+<p>Bote betyder budbärare på tyska.</p>
+
+<h3 id="Why">Varför I2P-Bote?</h3>
+<p>För att det är cool och för att I2P saknade en decentraliserad email. Skapandet av
+en sådan för att förbättra integreteten ledde också till höglatenstransprt som tillval. Vanliga email
+som krypteras är ändå inte anonyma och mail över anonyma mailservrar är inte automatiskt krypterade.</p>
+
+<p>Alternativet är att använda I2P-Bote där alla mail är anonyma och <em>automatiskt</em> krypterade från början till slut.</p>
+
+<p>I motsats till vanliga email-system finns det inget behov av att sätta upp en extra applikation för att handera nycklar. Allting du behöver är redan på plats.</p>
+
+<p>Men trots att det är enkelt att använda erbjuder I2P-Bote kryptering på professionell nivå och alternativ för extremt stark anonymitet.&gt;</p>
+
+<h3 id="Sending">Vad händer med ett email after att jag klickat på 'Skicka'?</h3>
+<p>Det krypteras och lagras på andra I2P-Boteanvändares datorer. Därifrån levereras det till mottagaren när hen kollar sin mail.</p>
+
+<h3 id="RandomPeople">Vänta nu, alla mail jag skickar lagras på datorn hos vem som helst? Det låter som en mycket dålig idé!</h3>
+<p>Det enda dom ser är skräpdata eftersom det är krypterat med "mycket stark" kryptering. Endast du och mottagaren vet vad som finns i mailet.
+Om du dessutom skicka mailet med relän påslagna är det inte ens möjligt att se vem som skickat det.</p>
+
+<p>I valet mellan detta och att använda ett email-konto hos ett                                                                                                            
+<a href="http://www.theregister.co.uk/2009/12/07/schmidt_on_privacy/">företag som inte respekterar din integritet</a>, och en internetlina
+<a href="http://www.eff.org/issues/nsa-spying">som avlyssnas av skumma myndigheter</a>, vilket är mest trovärdigt?</p>
+
+<h3 id="HowItWorks">Hur fungerar det egentligen?</h3>
+<p>See <a href="userGuide.jsp#Technical-Concept">'Technical Concept'</a>
+section of the <a href="userGuide.jsp">User Manual</a>.</p>
+
+<p>I korthet: I2P-Botes noder bildar ett P2P-nätverk som reläar mailpaket för varandra och lagrar dem i en DHT.</p>
+
+<h3 id="NothingToHide">Varför skall jag använda det? Jag har ingenting att dölja.</h3>
+<p>Går du ut på stan utan kläder?</p>
+
+<p>Nå, det kanske du gör, men poängen är att ibland vill att vår privata kommunikation skall vara just privat och ospårbar, och vi vill inte annonsera vad vi säger till vem.</p>
+
+<p>Ibland vill vi bara kommunicera helt anonymt med andra.</p>
+
+<p>Därför är I2P-Bote ett idealiskt verktyg som ger dig ett mycket starkt skydd samtidigt som det bevarar flexibiliteten.</p>
+
+<p>Det syftar till att ge mycket hög profesionell säkerhet och n00b-säker användbarhet: du kan ha riktigt paranoida inställningar där det tar en evighet för ett mail att komma fram; eller snabbare kommunikation och ändå väldigt stark anonymitet.</p>
+
+<p>Du bestämmer - enkelt med ett musklick.</p>
+
+<h3 id="GPG">Hur är det med <a href="http://www.pgp.com/">PGP</a> och
+<a href="http://gnupg.org/">GPG</a>?</h3>
+<p>PGP och GPG låter dig kryptera dina mail och skicka dem genom ditt vanliga emailkonto. De erbjuder stark kryptering, men de kryptererar bara emailtexten, inte headers så ämnesraden, datornamn och annan information inte är säker.</p>
+
+<p>En annan säkerhetsaspekt är att PGP/GPG inte hindrar någon från att se vem som kommunicerar med vem.</p>
+
+<p>I2P-Bote, i motsats, krypterar allting utom mottagrens destination. (I själva verket är till och med denna endast synlig för noder som inte vet vem avsändaren var.) Det har också förmåga att skicka ett email genom flera reläer (ungefär som <a href="http://mixmaster.sourceforge.net/">Mixmaster</a>), så att ingen kan räkna ut vem som skickar mail till vem.</p>
+
+<h3 id="UsingGPG">Kan jag fortsätta använda GPG/PGP med I2P-Bote?</h3>
+<p>Naturligtvis. Antingen kan du GPG-kryptera dina email innan du kopierar in det i I2P-Botes textfält, eller använda mail-app med GPG-stöd.</p>
+
+<h3 id="Susimail">Hur skiljer det sig från Susimail?</h3>
+<p>I2P-Bote är bättre eftersom det har högre versionsnummer. Nä, bara på skoj.</p>
+
+<p>I2P-Bote erbjuder högre integritet, men Susimail har några egenskaper som I2P-Bote inte har ännu (se nedan), och Susimail är mer bandbreddseffektivt eftersom det inte lagrar stora mail redundant.</p>
+
+<h3 id="Comparison">Varför är I2P-Bote bättre?</h3>
+<p><em>Vi</em> tycker det är bättre för  <em>oss</em> (och kanske för dig också), än:</p>
+<ul>
+<li><p>Mixminion eftersom det är enkelt att använda och så n00b-säkert som vi kunda få det.</p></li>
+<li><p>anonyma email-tjänster som inte baseras på destination key-routing, eftersom dessa inte levererar inbyggd kryptering från början till slut.</p></li>
+<li><p>centraliserade tjänster, eftersom servern kan gå ner (p.g.a attacker, legala problem, brist på medel, &hellip;)
+och admin har för många sätt att ägna sig åt profiling.</p></li>
+</ul>
+<h3 id="Safeguards">Hur hålls min identitet säker när jag kommunicerar med andra?</h3>
+<p>Din IP-adress och din I2P-destination är aldrig inkluderade något mail du skickar.</p>
+
+<p>Counter timing attacks mot transporter med hög latens.</p>
+
+<p> Kryptering från början till slut, kryptering per hopp, paketrelä för andra noder, enhetlig paketstorlek* (padding), konstant sändhastighet (test och dummy meddelanden)*, och ett ganska balanserat in/ut-förhållande motarbetar attacker baserade på trafikanalys.</p>
+
+<p>I2P-Bote är open source vilket garanterar att du själv kan granska koden.</p>
+
+<p>*[inte implementerat ännu]</p>
+
+<h3 id="How">Hur använder jag det?</h3>
+<p>Läs <a href="userGuide.jsp">användarguiden</a> och se de andra frågorna och svaren här!</p>
+
+<p>Om du har fler frågor, fråga på forumet:<a href="http://forum.i2p/viewforum.php?f=35">http://forum.i2p/viewforum.php?f=35</a></p>
+
+<h3 id="EmailClients">Kan jag använda ett mailprogram som Thunderbird?</h3>
+<p> Ja du kan använda vilket mailprogram du vill så länge det stödjer IMAP och SMTP.</p>
+
+<h3 id="Attachments">Kan jag skicka bilagor och vilka begränsningar finns det?</h3>
+<p>Ja, bilagor stöds från och med 0.2.5. Den sammanlagda storleken på bifogade filer bör hållas liten, helst under 500kB.</p>
+
+<h3 id="CreateIdentity">Hur skapar jag ett e-mailkonto?</h3>
+<p>I2P-Bote kallar dem Email-Identiteter. Du kan skapa en i I2P-Botes webkonsoll under länken "Identiteter". 
+Orsaken till att det kallas konto är att det inte finns någon leverantör som GMail elle GMX. Endast du har tillgång till de (kryptografiska) nycklarna till Identiteten.</p>
+
+<p>När du skapar en Identitet genererar I2P-Bote en sträng av siffror och bokstäver som kallas en Destination. Detta är adressen du kan nås på.</p>
+
+<p>Exempel: <code>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6tDWwjPHYEuoKyWqwxplSdix</code></p>
+
+<h3 id="EmailDestination">Vad är en Destination? Hur är det med email-adresser?</h3>
+<p>Destinationer (aka bote dests) är mellan 86 och 512 tecken långa beroende på vilken typ av kryptering du använder. Adresser valda av användarna finns i planerna.</p>
+
+<p>Identiteterna består av offentliga och privata nycklar, samt det namn användaren väljer för dem.
+Den offentliga delen är din email-destination, din pseudonyma identitet. En användare kan ha fler än en identitet.
+De tjänar som adresser för angivna användare - därför kallas de för 'destinationer' eller ' dest' - på samma gång som de
+krypterar mailen för dem. Därför är din email-destination nyckeln andra använder för att bekräfta giltigheten och integriteten i mail de tar emot från dig.</p>
+
+<p>Är det säkert att ge sin email-destination till någon man vill ha mail ifrån?</p>
+
+<p>Det är viktigt att skilja mellan mail-destinationen och routerns identitet! Din I2P-Bote mail-identitet är inte kopplad till din I2P-Bote router/node id som används
+för att kontakta andra I2P-Bote noder.</p>
+
+<p>Om du har problem med din I2P-Bote - sök hjälp på I2Ps IRC.</p>
+
+<p>??</p>
+
+<h3 id="AddressLength">Varför är email-adresserna så långa?</h3>
+<p>I I2P-Bote krypteras varje mail automatiskt. För att du inte skall behöva utväxla både en adress och en lång nyckel har vi helt enkelt gjort nyckeln till adressen.</p>
+
+<p>Det är ofarligt att ge bort den här nyckeln eftersom det är den offentliga nyckeln som alla kan ha utan att riskera integriteten på dina medddelanden.</p>
+
+<p>Om man använder ECC-kryptering kommer man att få kortare destinationer.</p>
+
+<h3 id="AddressBook">Men jag kan inte komma ihåg dom långa destinationerna&hellip;</h3>
+<p>Det är skälet till att den integrerade adressboken finns. När du har blivit mer bekant med I2P-Bote kommer du att uppskatta den inbyggda krypteringen och autentiseringen som bara kan uppnås med kryptografiska nycklar.</p>
+
+<p>Återigen, alternativet vore korta och enkla adresser PLUS en lång nyckel för kryptering och autentisering OCH förlita sig på någon auktoritet som förbinder email-adressen med någon anonym mottagare.</p>
+
+<h3 id="MultipleIdentities">Vad är poängen med att använda flera olika mail-identiteter</h3>
+<p>I2P-Bote är inte en IM-applikation, så du kan ha många olika identiteter utan att ha många öppna tunnlar.
+Det är bara när du hämtar förfrågningar som du använder mer resurser men på samma gång ger du mer anonymitet för andra.</p>
+
+<p>Tänk dig att du kommunicerar med dina vänner utan att någon kan spionera på dig(se: Datalagringsdirektivet) via I2P-Bote, och snabbt behöver skicka ut ett mail att du vill möta dem på ett annat ställe i kväll. Då behöver du super-anonymitet och kan välja bort mail-rutter och fördröjningar. Dina vänner å andra sidan kommer att behöva tätare kontrollintervall få att de får mailet i tid. Du vill fortfarande ha superhög anonymitet för några andra av dina kommunikationer - och det är här olika mail-identiteter med mail-rutter, fördröjningar och lång kontrollintervall kommer väl till handa.</p>
+
+<h3 id="EncryptionTypes">Vilken typ av kryptering är bäst?</h3>
+<p>256-bit <a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a>                                                         
+producerar korta och bekväma destinationer, och det anses starkare än 2048-bit ElGamal.</p>
+
+<p>521-bit <a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a>är starkare än 256-bit ECC, men gör destinationerna längre.</p>
+
+<p>2048-bit <a href="http://en.wikipedia.org/wiki/ElGamal">ElGamal</a>
+producerar ännu längre destinationer det är den svagaste av de tre alternativen. Emellertid, ElGamal är bättre granskad än ECC, vilket gör det mindre troligt att det finns en okänd svaghet i IlGamal än i ECC.</p>
+
+<h3 id="Algorithms">Vilka algoritmer används för symmetrisk kryptering och hashing?</h3>
+<p><a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a>
+in <a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">
+CBC</a> mode and <a href="http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.</p>
+
+<h3 id="AntiSpam">Finns det några motåtgärder mot spam?</h3>
+<p>I2P-Bote gör ingen aktiv spam-filtrering, men det faktum att massmail emails måste sändas individuellt borde avskräcka spammare.
+En annan försvarslinje är <a href="http://www.hashcash.org/">HashCash</a> som stöds på protokollnivå och kan komma att implementeras om spam blir ett problem.</p>
+
+<h3 id="HTML">Hur är det med HTML och formaterad text?</h3>
+<p>Webkonsollen återger inte HTML.</p>
+
+<h3 id="Persistence">Hur länge lagras email?</h3>
+<p>Email är tillgängliga i 100 dagar efter att de sänts. Mail som inte laddats ner då readeras.</p>
+
+<p>Email som du har hämtat stannar på din lokala dator tills du raderar dem.</p>
+
+<h3 id="DoIdentitiesExpire">När går email-identiteter ut?</h3>
+<p>Aldrig.</p>
+
+<h3 id="Gateways">Kan jag skicka och ta emot mail från vanliga email-servrar på internet?</h3>
+<p>Nej men det är under arbete.</p> 
+<!-- Yes. You can both send and receive mails to/from ordinary internet e-mail accounts -->
+
+<h3 id="Postman">Kan jag skicka och ta emot mail från postmans traditionella I2P mail-konton?</h3>
+<p>Nej, men detta är också under arbete.</p> 
+<!-- Yes. You can both send and receive mails to/from some_name@mail.i2p addresses -->
+
+<h3 id="Know">Vad betyder det när Känd är förkryssad i min inbox?</h3>
+<p>När avsändarens destination inte är känd lokalt markeras mailet med ett x i kolumnen "Känd" eller genom ett "{UNK}" före avsändarens adress i IMAP.</p>
+
+<p>Det betyder att du inte har något som bevisar att användaren verkligen är den han påstår sig vara med sitt namn. Om signaturen är giltig vet du att han har tillgång till destinationsnyckeln med vilken mailet signerats och att mailets innehåll är från den personen, men du kan inte lita på kort-namnet här. Om du hade fått ett mail från en användare med detta namn tidigare, kan du inte vara säker på att det är samma användare denna gång även om signaturen är giltig. I det här fallet måste du jämföra destinationsnycklarna eller lägga till dem till din adressbok. En användare som inte är känd lokalt är inte nödvändigtvis ond men du bör inte lita på att det är den användare du tror att det är. Men, om den verifieras mot lokalt lagrade nycklar, vet du att det är samma användare när du får ett annat mail från honom och "Känd" har en grön bock.</p>
+
+<h3 id="Terms">Vad betyder "BktPfx", "Distance" och "Locked"?</h3>
+<ul>
+<li><p>BktPfx = BucketPrefix</p></li>
+<li><p>Distance: avståndet till en I2P-Bote nod i nyckelrymden.</p></li>
+<li><p>Locked: Om en nod inte är nåbar av någon anledning markeras den som låst samt tiden den varit onåbar.</p></li>
+</ul>
+<h3 id="Anonymous">Hur kan jag bli mer anonym?</h3>
+<ul>
+<li><p>Skicka inte någon information om dig själv! (namn, adress, foto, plats, tidzon, ålder, kön, websites, login-namn, I2P router id, I2P-Bote id, Filer som innehåller uppgifter om dig &hellip;)</p></li>
+<li><p>skicka ingen personlig information eller information bara du känner till,</p></li>
+<li><p>lämna I2P-Bote på 24/7</p></li>
+<li><p>använd mailrutter som slumpar per-hopp fördröjningar och/eller per-hopp fasta sänd-tider, [ännu inte implementerat]</p></li>
+<li><p>andvänd långa kontrollintervall,</p></li>
+<li><p>använd en lång lokal fördröjning för egna paket,</p></li>
+<li><p>använd stora slumpade kontroll-intervall. [inte implementerat]</p></li>
+<li><p>undertryck sändandet av datum och tid i email-header,</p></li>
+<li><p>välj inte översättning av markörer som "Re:" till andra språk,</p></li>
+<li><p>var vakam på språk och stil,</p></li>
+<li><p>använd olika email-identiteter,</p></li>
+<li><p>överväg att kassera email-identiteter efter en längre tids användning,</p></li>
+<li><p>&hellip;</p></li>
+</ul>
+<p>Den här listan är inte avsedd att göra dig paranoid, men att visa på var din anonymitet kan reduceras.</p>
+
+<h3 id="Timestamps">Hur undviker jag att skicka timestamps?</h3>
+<p>I inställningarna är det möjligt att välja bort timestamps. Detta har till effekt att ditt mail inte kommer att innehålla datum eller tid för avsändandet.</p>
+
+<!-- <p>(When using mailroutes, the timestamps are automatically disabled.) [not yet implemented]</p> -->
+
+<h3 id="Backups">Hur flyttar jag mina inställningar och data till en annan dator? Hur gör jag en backup?</h3>
+<p>I2P-Bote lagrar alla email och all data i mappen <code>i2pbote</code>.
+På Windows kan den mappen hittas i
+<code>%APPDATA%\I2P\i2pbote</code>; on Linux, it is
+<code>$HOME/.i2p/i2pbote</code>.</p>
+
+<p>För att göra backup eller flytta allting, bara kopiera hela <code>i2pbote</code>mappen.</p>
+
+<p>Om du bara är intresserad av email-identiteter, kopiera filen
+<code>identities.txt</code>. För adressboken kopiera
+<code>addressBook.txt</code>.</p>
+
+<h3 id="MailRoutes">Vad är en <em>mailrutt</em>?</h3>
+<p>Se: Vad betyder transport med hög latens?</p>
+<!-- <p>(When using mail routes, the timestamps are automatically disabled.) [yet to be implemented]</p> -->
+
+<h3 id="HighLatency">Vad betyder transport med hög latens?</h3>
+<p>Det betyder att du kan aktivera en inställning som gör att email-paket inte skickas direkt till lagringsnoderna, utan reläas av andra peerer (som inte kan läsa mailen eftersom de är krypterade med flera lager och rivna i småbitar), vilka inte skickar dem vidare direkt utan väntar en av sändaren angiven tid, vid mottagning specificerad av mottagaren.</p>
+
+<p>Därför tar det lite tid för mailet att komma fram. På så sätt kan en fiende inte helt enkelt köra stats på upptiderna hos en nod (vem var uppkopplad när) och tidpunkterna när ett meddelande togs emot och lagrades (vilket i en låglatensmiljö skulle vara det samma som tiden det sändes), för att avslöja de verkliga personerna bakom I2P-Botes identiteter.</p>
+
+<h3 id="Latencies">Vilka latenser finns det och hur kan de kontrolleras (om alls)?</h3>
+<p>I2P-Bote är distribuerat och kör ovanpå nätverket I2P så det tar lite tid. Hastighet är inte vår starka sida, men vi klarar jämförelsen med andra anonyma mailsystem väl. Utan mailrutter aktiverade tar det mellan 3 och 10 minuter från det att du trycker på "Skicka" tills det finns tillgängligt för mottagaren.</p>
+
+<p>Om hastighet är det viktigaste för dig bör du avaktivera mailrutter eller sätta dem till minimivärdet för hopp och per-hopp fördröjning som du kan leva med.</p>
+
+<h3 id="WhyI2P">Om Bote skapar sin egen anonymitet varför behöver den I2P?</h3>
+<p>I2P-Bote är byggt ovanpå I2P av huvudakligen 5 skäl:</p>
+<ul>
+<li><p>I2P saknade en decentraliserad email och HungryHobo är en I2P-användare.</p></li>
+<li><p>I2P erbjuder mycket god anonymitet, det är moget och bär på år av erfarenhet.</p></li>
+<li><p>Så att bygga ovanpå det reprensenterar en slags fall-back om det skulle finnas några kritiska buggar i I2P-Bote.</p></li>
+<li><p>Flexibilitet: Vi vill erbjuda ett enkelt sätt att använda anonym låglatenskommunikation för email som bibehåller en hög nivå av skydd.</p></li>
+<li><p>I2P har många andra applikationer som genererar mycket trafik som blandar upp I2P-Botes trafik.</p></li>
+<li><p>Till och med Bote-reläer är därför dolda vad gäller plats.</p></li>
+</ul>
+<h3 id="WithoutRoutes">Hur anonym/säker är I2P-Bote utan mail-rutter?</h3>
+<p>Rätt så anonym och mycket säker.</p>
+
+<p>I det fallet har den samma anonymitet som andra applikationer på I2P, d.v.s anonymiteten som I2P-routern ger - vilket redan det är en mycket hög anonymitet. Emellertid, I2P är ett låglatens-nätverk, med alla de tillkortakommanden det innebär. Det finns attacker I2P inte kan skydda dig helt eller delvis emot. I2P-Bote gör sitt bästa för att med sina höglatens-alternativ förstärka och öka den anonymitet I2P erbjuder och vilka gör I2P-Botes mail anonyma på gränsen till paranoida.</p>
+
+<h3 id="OpenSource">Är I2P-Bote open source?</h3>
+<p>Naturligtvis!</p>
+
+<blockquote>Denna mjukvara är licensierad under GPL version 3 (se licenses/GPLv3.txt), utom för BouncyCastle som licencieras under Bouncy Castle-licensen (se licenses/BouncyCastle.txt).</blockquote>
+
+<p>(Vilka båda är fria open source bibliotek.)</p>
+
+<h3 id="Credits">Vem har skapat I2P-Bote?</h3>
+<p>Koncept, teknisk design, implementation och ursprungligt webinterface gjordes av HungryHobo, en anonym utvecklare.</p>
+
+<p>Nuvarande utvecklare av I2P-Bote är str4d.</p>
+
+<p>För feedback eller om du vill hjälpa till, se <a href="http://www.hashcash.org/">HashCash</a> för detaljer.</p>
+
+<h3 id="Languages">Vilka språk finns tillgängliga?</h3>
+<p>Engelska, tyska, ryska, franska, spanska, portugisiska, holländska, norska, svenska, kinesiska och arabiska.</p>
+
+<h3 id="Translate">Hur kan jag hjälpa till med översättningen av I2P-Bote till mitt språk?</h3>
+<p>Översättningar görs på samma sätt som resten av I2P. Om du vill hjälpa till och har frågor, <a href="about.jsp">kontakta författaren.</a></p>
+
+<h3 id="Technical">Hur fungerar det på en teknisk nivå?</h3>
+<p>Ta en titt på filen <code>doc/techdoc.txt</code> i källkoden.</p>
+
+<h3 id="GetInvolved">Finns det andra sätt att hjälpa till?</h3>
+<ul>
+<li><p>Använd I2P-Bote och ge feedback.</p></li>
+<li><p>Berätta för dina vänner, familj, kollegor och andra om I2P-Bote och ge dem en hjälpa hand.</p></li>
+<li><p>Nämn I2P-Bote på din blogg, eepsite eller websajt</p></li>
+<li><p>Skriv en användar-handbok eller förbättra den tekniska dokumentationen.</p></li>
+<li><p>Lägg till nya funktioner.</p></li>
+</ul>
+</div>
