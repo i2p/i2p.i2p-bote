@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-19 04:55+0000\n"
-"PO-Revision-Date: 2015-11-19 04:44+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2016-01-28 03:31+0000\n"
+"PO-Revision-Date: 2016-01-17 18:04+0000\n"
+"Last-Translator: strel\n"
 "Language-Team: Spanish (http://www.transifex.com/otf/I2P/language/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -32,47 +32,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Material"
 msgstr "Material"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Light Blue"
 msgstr "Celeste"
 
-#: src/main/java/i2p/bote/Configuration.java:70
+#: src/main/java/i2p/bote/Configuration.java:71
 msgid "Vanilla"
 msgstr "Vainilla"
 
-#: src/main/java/i2p/bote/I2PBote.java:519
+#: src/main/java/i2p/bote/I2PBote.java:517
 msgid "No identity matches the sender/from field: "
 msgstr "No existe ninguna identidad que concuerde con el campo remitente:"
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:723
 msgid "Checking password"
 msgstr "Comprobando contraseña"
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The old password is not correct."
 msgstr "La contraseña antigua no es correcta."
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:728
 msgid "The new password and the confirmation password do not match."
 msgstr "La nueva contraseña y la confirmación de ésta no coinciden."
 
-#: src/main/java/i2p/bote/I2PBote.java:738
+#: src/main/java/i2p/bote/I2PBote.java:735
 msgid "Re-encrypting identities"
 msgstr "Volviendo a cifrar identidades"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting addressbook"
 msgstr "Volviendo a cifrar libreta de direcciones"
 
-#: src/main/java/i2p/bote/I2PBote.java:744
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting folder"
 msgstr "Volviendo a cifrar carpeta"
 
-#: src/main/java/i2p/bote/I2PBote.java:748
+#: src/main/java/i2p/bote/I2PBote.java:745
 msgid "Updating password file"
 msgstr "Actualizando fichero de contraseña"
 
@@ -220,7 +220,7 @@ msgstr "Error guardando metadatos de correo: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
 msgid "New email received"
-msgstr ""
+msgstr "Se recibió nuevo correo electrónico"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
@@ -438,10 +438,12 @@ msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
 msgstr ""
+"Para que I2P-Bote funcione adecuadamente, debe descargar los ficheros de JCE "
+"Unlimited Strenght Jurisdiction Policy, y moverlos a esta carpeta:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
-msgstr ""
+msgstr "Guía"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"
@@ -1264,7 +1266,7 @@ msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes"
-msgstr ""
+msgstr "Correcciones al código"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"

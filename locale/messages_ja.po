@@ -2,13 +2,14 @@
 # Translators:
 # a1678991 <nfgantanku@yahoo.co.jp>, 2015
 # g3600303 <g3600303@trbvm.com>, 2015
+# heizi <lv.kjsn.29yr@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-19 04:56+0000\n"
-"PO-Revision-Date: 2015-11-19 04:44+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2016-01-28 03:36+0000\n"
+"PO-Revision-Date: 2016-01-25 18:13+0000\n"
+"Last-Translator: heizi <lv.kjsn.29yr@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otf/I2P/language/ja/)\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -16,47 +17,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Material"
 msgstr "素材"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Light Blue"
 msgstr "ライトブルー"
 
-#: src/main/java/i2p/bote/Configuration.java:70
+#: src/main/java/i2p/bote/Configuration.java:71
 msgid "Vanilla"
 msgstr "バニラ"
 
-#: src/main/java/i2p/bote/I2PBote.java:519
+#: src/main/java/i2p/bote/I2PBote.java:517
 msgid "No identity matches the sender/from field: "
 msgstr "送信者/差出人欄と一致するIDが見つかりませんでした:"
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:723
 msgid "Checking password"
 msgstr "パスワードを確認しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The old password is not correct."
 msgstr "古いパスワードが間違っています。"
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:728
 msgid "The new password and the confirmation password do not match."
 msgstr "新しいパスワードと確認用のパスワードが一致しません。"
 
-#: src/main/java/i2p/bote/I2PBote.java:738
+#: src/main/java/i2p/bote/I2PBote.java:735
 msgid "Re-encrypting identities"
 msgstr "IDを再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting addressbook"
 msgstr "アドレス帳を再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:744
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting folder"
 msgstr "フォルダを再暗号化しています"
 
-#: src/main/java/i2p/bote/I2PBote.java:748
+#: src/main/java/i2p/bote/I2PBote.java:745
 msgid "Updating password file"
 msgstr "パスワードファイルを更新しています"
 
@@ -200,7 +201,7 @@ msgstr "メールメタデータの保存に失敗しました: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
 msgid "New email received"
-msgstr ""
+msgstr "新着メールがあります"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
@@ -463,19 +464,19 @@ msgstr "返信先:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Remove this recipient"
-msgstr ""
+msgstr "この宛先を消去"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add this recipient to the address book"
-msgstr ""
+msgstr "この宛先をアドレス帳に追加"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Select recipients from address book"
-msgstr ""
+msgstr "アドレス帳から宛先を選ぶ"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another recipient field"
-msgstr ""
+msgstr "宛先を追加する"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -697,15 +698,15 @@ msgstr "デバッグページ"
 
 #: src/main/webapp/debug.jsp
 msgid "Test encrypted files"
-msgstr ""
+msgstr "暗号化したファイルをテストする"
 
 #: src/main/webapp/debug.jsp
 msgid "No file encryption problems found."
-msgstr ""
+msgstr "ファイルの暗号化に問題はありません。"
 
 #: src/main/webapp/debug.jsp
 msgid "Undecryptable files:"
-msgstr ""
+msgstr "復号不能はファイル:"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
@@ -840,7 +841,7 @@ msgstr ""
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
-msgstr ""
+msgstr "ローカルの宛先:"
 
 #: src/main/webapp/folders.jsp
 msgid "Folders"
@@ -901,31 +902,31 @@ msgstr "新しいIDを作成"
 
 #: src/main/webapp/connectError.jsp
 msgid "Error Details"
-msgstr ""
+msgstr "エラーの詳細"
 
 #: src/main/webapp/password.jsp
 msgid "Password Required"
-msgstr ""
+msgstr "パスワードが必要です"
 
 #: src/main/webapp/password.jsp
 msgid "Wrong password. Try again."
-msgstr ""
+msgstr "パスワードが違います。もう一度試してください。"
 
 #: src/main/webapp/password.jsp
 msgid "Password required"
-msgstr ""
+msgstr "パスワードが必要です"
 
 #: src/main/webapp/password.jsp
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: src/main/webapp/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
-msgstr ""
+msgstr "エラー：メールを削除できませんでした"
 
 #: src/main/webapp/sendEmail.jsp
 msgid "Go to inbox"
-msgstr ""
+msgstr "受信箱に移動"
 
 #: src/main/webapp/identities.jsp
 msgid "Email Identities"
@@ -949,7 +950,7 @@ msgstr ""
 
 #: src/main/webapp/identities.jsp
 msgid "Check mail for this identity"
-msgstr ""
+msgstr "このアイデンティのメールを確認する"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
@@ -957,11 +958,11 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
-msgstr ""
+msgstr "もっと表示する"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Less..."
-msgstr ""
+msgstr "おりたたむ"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "New Email Identity"
@@ -1017,7 +1018,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(If unsure, leave the default)"
-msgstr ""
+msgstr "(わからない時はデフォルトのままにしてください)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Vanity Destination:"
@@ -1109,15 +1110,15 @@ msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "I2P-Bote Version {0}"
-msgstr ""
+msgstr "I2P-Boteのバージョン {0}"
 
 #: src/main/webapp/about.jsp
 msgid "To submit bug reports or feature requests:"
-msgstr ""
+msgstr "バグリポートや要望を送る"
 
 #: src/main/webapp/about.jsp
 msgid "click here"
-msgstr ""
+msgstr "ここをクリック"
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"

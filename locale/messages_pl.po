@@ -1,20 +1,22 @@
 # Translators:
 # Translators:
 # Warton <businesshehe@yahoo.com>, 2012
+# Jakub Goldberg <zenji.yamada.nihon@gmail.com>, 2015
 # polacco <polacco@i2pmail.org>, 2014
 # polacco <polacco@i2pmail.org>, 2012
 # polacco <polacco@i2pmail.org>, 2012,2014
 # seb, 2014
-# seb, 2014
+# sebx, 2014
 # Taporpo Ne <taporpone@gmail.com>, 2015
+# Verdulo :-) <cybertomek@openmailbox.org>, 2016
 # Warton <businesshehe@yahoo.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-19 04:56+0000\n"
-"PO-Revision-Date: 2015-11-19 04:44+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2016-01-28 03:37+0000\n"
+"PO-Revision-Date: 2016-01-24 01:12+0000\n"
+"Last-Translator: Verdulo :-) <cybertomek@openmailbox.org>\n"
 "Language-Team: Polish (http://www.transifex.com/otf/I2P/language/pl/)\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -23,47 +25,47 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Material"
 msgstr "Materiał"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Light Blue"
 msgstr "Jasnoniebieski"
 
-#: src/main/java/i2p/bote/Configuration.java:70
+#: src/main/java/i2p/bote/Configuration.java:71
 msgid "Vanilla"
 msgstr "Wanilia"
 
-#: src/main/java/i2p/bote/I2PBote.java:519
+#: src/main/java/i2p/bote/I2PBote.java:517
 msgid "No identity matches the sender/from field: "
 msgstr "Żadna tożsamość nie zgadza się z wysyłającym/z pola Od:"
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:723
 msgid "Checking password"
 msgstr "Sprawdzanie hasła"
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The old password is not correct."
 msgstr "Stare hasło jest nieprawodłowe."
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:728
 msgid "The new password and the confirmation password do not match."
 msgstr "Nowe hasło i potwierdzenie hasła nie zgadza się."
 
-#: src/main/java/i2p/bote/I2PBote.java:738
+#: src/main/java/i2p/bote/I2PBote.java:735
 msgid "Re-encrypting identities"
 msgstr "Ponowne szyfrowanie tożsamości"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting addressbook"
 msgstr "Ponowne szyfrowanie książki adresowej"
 
-#: src/main/java/i2p/bote/I2PBote.java:744
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting folder"
 msgstr "Ponowne szyfrowanie folderu"
 
-#: src/main/java/i2p/bote/I2PBote.java:748
+#: src/main/java/i2p/bote/I2PBote.java:745
 msgid "Updating password file"
 msgstr "Aktualizacja pliku hasła"
 
@@ -207,7 +209,7 @@ msgstr "Wystąpił błąd podczas zapisywania metadanych: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
 msgid "New email received"
-msgstr ""
+msgstr "Otrzymano nowe wiadomości"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
@@ -423,10 +425,12 @@ msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
 msgstr ""
+"Aby I2P-Bote zadziałał poprawnie, musisz pobrać pliki JCE Unlimited Strength "
+"Jurisdiction Policy i przenieść je do następującego folderu:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
-msgstr ""
+msgstr "Przewodnik"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"
@@ -1041,7 +1045,7 @@ msgstr "(Jeśli jesteś niepewny to ustaw jako domyślne)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Vanity Destination:"
-msgstr ""
+msgstr "Kustomowy (Vanity) adres:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
@@ -1237,7 +1241,7 @@ msgstr "Poprawki kodu, aktualizacje tłumaczeń z Transifex"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes"
-msgstr ""
+msgstr "Poprawki kodu"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"

@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-19 04:55+0000\n"
-"PO-Revision-Date: 2015-11-19 04:44+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2016-01-28 03:30+0000\n"
+"PO-Revision-Date: 2016-01-17 17:18+0000\n"
+"Last-Translator: Lars Schimmer <echelon@i2pmail.org>\n"
 "Language-Team: German (http://www.transifex.com/otf/I2P/language/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -27,47 +27,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Material"
 msgstr "Material"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Light Blue"
 msgstr "hellblau"
 
-#: src/main/java/i2p/bote/Configuration.java:70
+#: src/main/java/i2p/bote/Configuration.java:71
 msgid "Vanilla"
 msgstr "Vanille"
 
-#: src/main/java/i2p/bote/I2PBote.java:519
+#: src/main/java/i2p/bote/I2PBote.java:517
 msgid "No identity matches the sender/from field: "
 msgstr "Keine Mailidentität stimmt mit diesem Absenderfeld (\"Von\") überein:"
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:723
 msgid "Checking password"
 msgstr "Prüfe Passwort"
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The old password is not correct."
 msgstr "Das alte Kennwort ist leider nicht korrekt."
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:728
 msgid "The new password and the confirmation password do not match."
 msgstr "Das neue Kennwort und die Kennwortbestätigung stimmen nicht überein."
 
-#: src/main/java/i2p/bote/I2PBote.java:738
+#: src/main/java/i2p/bote/I2PBote.java:735
 msgid "Re-encrypting identities"
 msgstr "Verschlüssele Identitäten"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting addressbook"
 msgstr "Verschlüssele Adressbuch"
 
-#: src/main/java/i2p/bote/I2PBote.java:744
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting folder"
 msgstr "Verschlüssele Verzeichnis"
 
-#: src/main/java/i2p/bote/I2PBote.java:748
+#: src/main/java/i2p/bote/I2PBote.java:745
 msgid "Updating password file"
 msgstr "Aktualisiere Passwortdatei"
 
@@ -1250,7 +1250,7 @@ msgstr "Fehlerbehebungen, Aktualisierungen der Übersetzungen aus Transifex"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes"
-msgstr ""
+msgstr "Code Verbesserungen"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"

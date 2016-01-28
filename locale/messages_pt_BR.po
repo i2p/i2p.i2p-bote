@@ -1,13 +1,14 @@
 # Translators:
 # Translators:
 # blueboy, 2015
+# Victor Maximiliano <VicBrd09@mail2tor.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-19 04:56+0000\n"
-"PO-Revision-Date: 2015-11-19 04:44+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2016-01-28 03:37+0000\n"
+"PO-Revision-Date: 2015-12-23 00:14+0000\n"
+"Last-Translator: Victor Maximiliano <VicBrd09@mail2tor.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otf/I2P/"
 "language/pt_BR/)\n"
 "Language: pt_BR\n"
@@ -16,47 +17,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Material"
 msgstr "Material"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Light Blue"
 msgstr "Azul claro"
 
-#: src/main/java/i2p/bote/Configuration.java:70
+#: src/main/java/i2p/bote/Configuration.java:71
 msgid "Vanilla"
 msgstr "Baunilha"
 
-#: src/main/java/i2p/bote/I2PBote.java:519
+#: src/main/java/i2p/bote/I2PBote.java:517
 msgid "No identity matches the sender/from field: "
 msgstr "Nenhuma identidade confere com o campo remetente/de:"
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:723
 msgid "Checking password"
 msgstr "Verificando senha"
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The old password is not correct."
 msgstr "A senha antiga não está correta."
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:728
 msgid "The new password and the confirmation password do not match."
 msgstr "A nova senha e a senha de confirmação não conferem."
 
-#: src/main/java/i2p/bote/I2PBote.java:738
+#: src/main/java/i2p/bote/I2PBote.java:735
 msgid "Re-encrypting identities"
 msgstr "Recriptografando as identidades"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting addressbook"
 msgstr "Recriptografando o livro de endereços"
 
-#: src/main/java/i2p/bote/I2PBote.java:744
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting folder"
 msgstr "Recriptografando a pasta"
 
-#: src/main/java/i2p/bote/I2PBote.java:748
+#: src/main/java/i2p/bote/I2PBote.java:745
 msgid "Updating password file"
 msgstr "Atualizando arquivo de senha"
 
@@ -110,7 +111,7 @@ msgstr "Distância"
 
 #: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 msgid "First Seen"
-msgstr ""
+msgstr "Visto primeiro"
 
 #: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:117
@@ -200,7 +201,7 @@ msgstr ""
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
 msgid "New email received"
-msgstr ""
+msgstr "Novo email recebido"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
@@ -237,22 +238,22 @@ msgstr "Motivo do banimento"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
 msgid "Reachable"
-msgstr ""
+msgstr "Alcançável "
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:188
 msgid "Unreachable"
-msgstr ""
+msgstr "Inalcançavel"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:221
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:228
 msgid "Good"
-msgstr ""
+msgstr "Bom"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:223
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:229
 msgid "Unreliable"
-msgstr ""
+msgstr "Não confiável "
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:73
 msgid "Error: Please add at least one recipient."
@@ -289,7 +290,7 @@ msgstr "Erro"
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Retry Connecting"
-msgstr ""
+msgstr "Conectar Novamente"
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Connect Now"
@@ -317,7 +318,7 @@ msgstr "Assunto"
 
 #: src/main/webapp/outbox.jsp
 msgid "Create Time"
-msgstr ""
+msgstr "Criar tempo"
 
 #: src/main/webapp/outbox.jsp
 msgid "Status"
@@ -416,10 +417,12 @@ msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
 msgstr ""
+"Para que o I2P-Bote funcione corretamente, você deve baixar os arquivos da "
+"JCE Unlimited Strenght Jurisdiction Policy e move-los para essa pasta:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
-msgstr ""
+msgstr "Guia"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"
@@ -463,19 +466,19 @@ msgstr "Responder para:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Remove this recipient"
-msgstr ""
+msgstr "Remover este anexo"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add this recipient to the address book"
-msgstr ""
+msgstr "Adicionar este anexo para o livro de endereços"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Select recipients from address book"
-msgstr ""
+msgstr "Selecionar anexos para o livro de endereços"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another recipient field"
-msgstr ""
+msgstr "Adicionar outro anexo"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -591,7 +594,7 @@ msgstr "Sobrescrever todas as identidades existentes:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Duplicates: replace existing identity:"
-msgstr ""
+msgstr "Duplicar: Substitui a identidade existente:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import"
@@ -623,10 +626,14 @@ msgid ""
 "directory is not secure against manipulation, so do not click &quot;"
 "import&quot; unless you trust that it is the right email destination."
 msgstr ""
+"Um registro correspondente foi encontrado em um diretório de endereços. Note "
+"que o diretório de endereços não é seguro contra manipulação, então não "
+"clique em &quot;importar&quot; a menos que você tenha certeza de que este é "
+"o destinatário correto."
 
 #: src/main/webapp/importContact.jsp
 msgid "Fingerprint:"
-msgstr ""
+msgstr "Digital"
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
@@ -662,7 +669,7 @@ msgstr "O nome já existe. Por favor, escolha um Nome Público diferente."
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Picture to upload:"
-msgstr ""
+msgstr "Fotos para enviar:"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "(optional, 7.5 kBytes max)"
@@ -702,7 +709,7 @@ msgstr "Nenhum problema de criptografia de arquivo foi encontrado."
 
 #: src/main/webapp/debug.jsp
 msgid "Undecryptable files:"
-msgstr ""
+msgstr "Arquivos descriptografáveis: "
 
 #: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
@@ -781,6 +788,10 @@ msgid ""
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
 msgstr ""
+"De certo modo, as identidades de email são equivalentes a uma conta "
+"tradicional de email - exceto que não há um fornecedor que possa ler todos "
+"os seus emails porque o I2P-Bote armazena todos os emails criptografados na "
+"rede."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -788,10 +799,16 @@ msgid ""
 "you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
 msgstr ""
+"I2p-Bote automaticamente descriptografa os emails enviados para você, usando "
+"a identidade de email que você criou. Identidades de email são armazenadas "
+"em um arquivo chamado identidades; não forneça esse arquivo para ninguém ou "
+"eles serão capazes de ler todos os seus emails."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
 msgstr ""
+"Forneça o destinatário do email assim outros poderão entrar em contato com "
+"você."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -809,6 +826,11 @@ msgid ""
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
 msgstr ""
+"Quando você cria uma nova identidade de email, você pode escolher o tipo de "
+"criptografia que será usada pela identidade de email. Enquanto todos os "
+"algoritmos oferecidos pelo i2P-Bote oferecem um alto nível de privacidade, o "
+"tamanho de um destinatário de email depende da encriptação usada. A escolha "
+"da encriptação também determina qual algoritmo de assinatura é usado."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -885,7 +907,7 @@ msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Identity"
-msgstr ""
+msgstr "Sem identidade"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
@@ -999,11 +1021,11 @@ msgstr "(opcional, mantido privado)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Picture:"
-msgstr ""
+msgstr "Foto"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(published to the address directory)"
-msgstr ""
+msgstr "(publicado para o endereço do diretório)"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Text:"
@@ -1111,11 +1133,11 @@ msgstr "Versão {0} do I2P-Bote"
 
 #: src/main/webapp/about.jsp
 msgid "To submit bug reports or feature requests:"
-msgstr ""
+msgstr "Para reportar bugs ou sugerir novas funções:"
 
 #: src/main/webapp/about.jsp
 msgid "click here"
-msgstr ""
+msgstr "clique aqui"
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"
@@ -1215,7 +1237,7 @@ msgstr "Correções de código, traduções atualizadas a partir de tx"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes"
-msgstr ""
+msgstr "Correções no código"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"

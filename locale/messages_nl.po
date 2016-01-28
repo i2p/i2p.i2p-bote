@@ -2,6 +2,7 @@
 # Translators:
 # attesor <random901@zoho.com>, 2012
 # ducki2p <ducki2p@gmail.com>, 2011
+# Jakob Wuhrer <pinoaffe@gmail.com>, 2016
 # Jrnr601 <jerobben@gmail.com>, 2012
 # Jrnr601 <jerobben@gmail.com>, 2012
 # Nathan Follens, 2015
@@ -12,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-19 04:56+0000\n"
-"PO-Revision-Date: 2015-11-19 04:44+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2016-01-28 03:36+0000\n"
+"PO-Revision-Date: 2016-01-26 15:34+0000\n"
+"Last-Translator: Jakob Wuhrer <pinoaffe@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/otf/I2P/language/nl/)\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -22,47 +23,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Material"
 msgstr "Materiaal"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Light Blue"
 msgstr "Lichtblauw"
 
-#: src/main/java/i2p/bote/Configuration.java:70
+#: src/main/java/i2p/bote/Configuration.java:71
 msgid "Vanilla"
 msgstr "Vanille"
 
-#: src/main/java/i2p/bote/I2PBote.java:519
+#: src/main/java/i2p/bote/I2PBote.java:517
 msgid "No identity matches the sender/from field: "
 msgstr "Geen identiteit komt overeen met het afzender/van veld: "
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:723
 msgid "Checking password"
 msgstr "Bezig met controleren van wachtwoord"
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The old password is not correct."
 msgstr "Het oude wachtwoord is onjuist."
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:728
 msgid "The new password and the confirmation password do not match."
 msgstr "Het nieuwe wachtwoord en de bevestiging komen niet overeen."
 
-#: src/main/java/i2p/bote/I2PBote.java:738
+#: src/main/java/i2p/bote/I2PBote.java:735
 msgid "Re-encrypting identities"
 msgstr "Bezig met opnieuw versleutelen van identiteiten"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting addressbook"
 msgstr "Bezig met opnieuw versleutelen van adresboek"
 
-#: src/main/java/i2p/bote/I2PBote.java:744
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting folder"
 msgstr "Bezig met opnieuw versleutelen van map"
 
-#: src/main/java/i2p/bote/I2PBote.java:748
+#: src/main/java/i2p/bote/I2PBote.java:745
 msgid "Updating password file"
 msgstr "Bezig met bijwerken van wachtwoordbestand"
 
@@ -206,7 +207,7 @@ msgstr "Fout bij het opslaan van de e-mail-metadata: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:282
 msgid "New email received"
-msgstr ""
+msgstr "Nieuwe email ontvangen"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
@@ -422,10 +423,12 @@ msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
 msgstr ""
+"Zodat I2P-Bote goed werkt, moet je de JCE Unlimited Strength Jurisdiction "
+"Policy bestanden downloaden en in deze map zetten:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
-msgstr ""
+msgstr "Handleiding"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"
@@ -469,19 +472,19 @@ msgstr "Beantwoorden naar:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Remove this recipient"
-msgstr ""
+msgstr "Verwijder deze ontvanger"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add this recipient to the address book"
-msgstr ""
+msgstr "Voeg deze ontvanger toe aan je adresboek"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Select recipients from address book"
-msgstr ""
+msgstr "Selecteer ontvangers uit je adresboek"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another recipient field"
-msgstr ""
+msgstr "Voeg een veld toe voor een andere ontvanger"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
@@ -1134,11 +1137,11 @@ msgstr "I2P-Bote, Versie {0}"
 
 #: src/main/webapp/about.jsp
 msgid "To submit bug reports or feature requests:"
-msgstr ""
+msgstr "Om fouten te melden of om te vragen naar nieuwe functies:"
 
 #: src/main/webapp/about.jsp
 msgid "click here"
-msgstr ""
+msgstr "klik hier"
 
 #: src/main/webapp/about.jsp
 msgid "Developers:"
@@ -1240,7 +1243,7 @@ msgstr "Code fixes, vertalingsupdates van tx"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes"
-msgstr ""
+msgstr "Opgeloste fouten in de code"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
