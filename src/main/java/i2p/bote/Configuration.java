@@ -143,9 +143,9 @@ public class Configuration implements IdentityConfig {
     
     // I2CP parameters allowed in the config file
     // Undefined parameters use the I2CP defaults
-    private static final String PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED = "i2cp.domainSocket";
+    private static final String PARAMETER_I2CP_DOMAIN_SOCKET = "i2cp.domainSocket";
     private static final List<String> I2CP_PARAMETERS = Arrays.asList(new String[] {
-            PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED,
+            PARAMETER_I2CP_DOMAIN_SOCKET,
             "inbound.length",
             "inbound.lengthVariance",
             "inbound.quantity",
@@ -236,11 +236,10 @@ public class Configuration implements IdentityConfig {
      * @param enabled ignored if not on Android.
      * @since 0.2.10
      */
-    public void setI2CPDomainSocketEnabled(boolean enabled) {
+    public void setI2CPDomainSocket(String name) {
         if (SystemVersion.isAndroid())
             properties.setProperty(
-                    PARAMETER_I2CP_DOMAIN_SOCKET_ENABLED,
-                    String.valueOf(enabled));
+                    PARAMETER_I2CP_DOMAIN_SOCKET, name);
     }
 
     /**
