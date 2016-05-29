@@ -20,6 +20,7 @@ import net.i2p.android.router.service.IRouterState;
 import net.i2p.android.router.service.IRouterStateCallback;
 import net.i2p.android.router.service.State;
 import net.i2p.android.ui.I2PAndroidHelper;
+import net.i2p.client.DomainSocketFactory;
 import net.i2p.router.Router;
 import net.i2p.router.RouterContext;
 import net.i2p.router.RouterLaunch;
@@ -81,7 +82,7 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
             new Thread(new RouterStarter()).start();
 
         I2PBote bote = I2PBote.getInstance();
-        bote.getConfiguration().setI2CPDomainSocketEnabled(mRouterChoice == RouterChoice.ANDROID);
+        bote.getConfiguration().setI2CPDomainSocket(DomainSocketFactory.I2CP_SOCKET_ADDRESS);
         bote.startUp();
         bote.addNewEmailListener(this);
 
