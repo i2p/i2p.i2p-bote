@@ -22,6 +22,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
+import java.util.Properties;
 
 import i2p.bote.I2PBote;
 import i2p.bote.StatusListener;
@@ -394,6 +395,7 @@ public class EditIdentityFragment extends EditPictureFragment {
                         (String) params[5],
                         (String) params[6],
                         (String) params[7],
+                        new Properties(),
                         (Boolean) params[8],
                         lsnr);
                 lsnr.updateStatus("Saving identity");

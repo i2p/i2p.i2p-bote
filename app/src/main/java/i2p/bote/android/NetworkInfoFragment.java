@@ -29,7 +29,7 @@ import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.RelayPeer;
 
-import static i2p.bote.Util._;
+import static i2p.bote.Util._t;
 
 public class NetworkInfoFragment extends Fragment {
     private Exception mConnectError;
@@ -110,7 +110,7 @@ public class NetworkInfoFragment extends Fragment {
             } else {
                 int reachable = 0;
                 for (List<String> row : dhtStats.getData()) {
-                    if (_("No").equals(row.get(4)))
+                    if (_t("No").equals(row.get(4)))
                         reachable += 1;
                 }
                 int unreachable = dhtStats.getData().size() - reachable;
