@@ -27,13 +27,14 @@ package i2p.bote.service.seedless;
 import i2p.bote.I2PBote;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.util.List;
 
 import net.i2p.data.Base64;
 import net.i2p.data.Hash;
-import net.i2p.router.RouterContext;
-import net.i2p.router.startup.ClientAppConfig;
 import net.i2p.util.Log;
 
 class SeedlessParameters {
@@ -66,16 +67,6 @@ class SeedlessParameters {
     private void init() {
         Log log = new Log(SeedlessParameters.class);
         
-        /*
-         * Of course we can do reflection, but...
-         * Reflection is powerful, but should not be used indiscriminately.
-         * If it is possible to perform an operation without using reflection,
-         * then it is preferable to avoid using it. The following concerns
-         * should be kept in mind when accessing code via reflection.
-         *
-         * http://java.sun.com/docs/books/tutorial/reflect/index.html
-         *
-         */
         ContextHelper ctx = new ContextHelper(null);
         // 1: Get the console IP:port
         addr = ctx.getConsoleAddress();
@@ -176,59 +167,84 @@ class SeedlessParameters {
     }
     
     private static class ContextHelper {
-        RouterContext _context;
+        Object _context;
 
         public ContextHelper(String contextId) {
             _context = getContext(contextId);
         }
 
-        private RouterContext getContext(String contextId) {
+        private Object getContext(String contextId) {
             Log log = new Log(ContextHelper.class);
-            
-            List<RouterContext>contexts = RouterContext.listContexts();
-            if((contexts == null) || (contexts.isEmpty())) {
-                log.warn("No contexts. This is usually because the router is either starting up or shutting down, " +
-                        "or because I2P-Bote is running in a different JVM than the router.");
-                return null;
-            }
-            if((contextId == null) || (contextId.trim().length() <= 0)) {
-                return (RouterContext)contexts.get(0);
-            }
-            for(int i = 0; i < contexts.size(); i++) {
-                RouterContext context = (RouterContext)contexts.get(i);
-                Hash hash = context.routerHash();
-                if(hash == null) {
-                    continue;
+
+            try {
+                Class<?> clazz = Class.forName("net.i2p.router.RouterContext");
+                Method listContexts = clazz.getDeclaredMethod("listContexts");
+                List<Object> contexts = (List<Object>) listContexts.invoke(null);
+                if((contexts == null) || (contexts.isEmpty())) {
+                    log.warn("No contexts. This is usually because the router is either starting up or shutting down, " +
+                            "or because I2P-Bote is running in a different JVM than the router.");
+                    return null;
                 }
-                if(hash.toBase64().startsWith(contextId)) {
-                    return context;
+                if((contextId == null) || (contextId.trim().length() <= 0)) {
+                    return contexts.get(0);
                 }
+                for(int i = 0; i < contexts.size(); i++) {
+                    Object context = contexts.get(i);
+                    Method routerHash = clazz.getDeclaredMethod("routerHash");
+                    Hash hash = (Hash) routerHash.invoke(context);
+                    if(hash == null) {
+                        continue;
+                    }
+                    if(hash.toBase64().startsWith(contextId)) {
+                        return context;
+                    }
+                }
+                // not found, so just give them the first we can find
+                return contexts.get(0);
+            } catch (ClassNotFoundException e) {
+            } catch (NoSuchMethodException e) {
+            } catch (IllegalAccessException e) {
+            } catch (InvocationTargetException e) {
             }
-            // not found, so just give them the first we can find
-            return (RouterContext)contexts.get(0);
+
+            return null;
         }
 
         private String getConsoleAddress() {
             String host = null;
             String port = null;
             if (_context != null) {
-                List<ClientAppConfig> clients = ClientAppConfig.getClientApps(_context);
-                for(int cur = 0; cur < clients.size(); cur++) {
-                    ClientAppConfig ca = clients.get(cur);
+                try {
+                    Class<?> clazz = Class.forName("net.i2p.router.startup.ClientAppConfig");
+                    Class<?> clazzRC = Class.forName("net.i2p.router.RouterContext");
+                    Method getClientApps = clazz.getDeclaredMethod("getClientApps", clazzRC);
+                    List<Object> clients = (List<Object>) getClientApps.invoke(null, _context);
+                    for(int cur = 0; cur < clients.size(); cur++) {
+                        Object ca = clients.get(cur);
+                        Field fClassName = clazz.getField("className");
+                        String className = (String) fClassName.get(ca);
 
-                    if("net.i2p.router.web.RouterConsoleRunner".equals(ca.className)) {
-                        port = ca.args.split(" ")[0];
-                        host = ca.args.split(" ")[1];
-                        if(host.contains(",")) {
-                            String checks[] = host.split(",");
-                            host = null;
-                            for(int h = 0; h < checks.length; h++) {
-                                if(!checks[h].contains(":")) {
-                                    host = checks[h];
+                        if("net.i2p.router.web.RouterConsoleRunner".equals(className)) {
+                            Field fArgs = clazz.getField("args");
+                            String args = (String) fArgs.get(ca);
+                            port = args.split(" ")[0];
+                            host = args.split(" ")[1];
+                            if(host.contains(",")) {
+                                String checks[] = host.split(",");
+                                host = null;
+                                for(int h = 0; h < checks.length; h++) {
+                                    if(!checks[h].contains(":")) {
+                                        host = checks[h];
+                                    }
                                 }
                             }
                         }
                     }
+                } catch (ClassNotFoundException e) {
+                } catch (NoSuchMethodException e) {
+                } catch (NoSuchFieldException e) {
+                } catch (IllegalAccessException e) {
+                } catch (InvocationTargetException e) {
                 }
             }
             return (host != null && port != null) ? host + ":" + port : null;
@@ -239,9 +255,18 @@ class SeedlessParameters {
             if (_context == null)
                 return null;
 
-            String password = _context.getProperty("consolePassword");
-            if(password != null) {
-                password = password.trim();
+            String password = null;
+            try {
+                Class<?> clazz = Class.forName("net.i2p.router.RouterContext");
+                Method getProperty = clazz.getDeclaredMethod("getProperty", String.class);
+                password = (String) getProperty.invoke(_context, "consolePassword");
+                if (password != null) {
+                    password = password.trim();
+                }
+            } catch (ClassNotFoundException e) {
+            } catch (NoSuchMethodException e) {
+            } catch (IllegalAccessException e) {
+            } catch (InvocationTargetException e) {
             }
             return password;
         }
