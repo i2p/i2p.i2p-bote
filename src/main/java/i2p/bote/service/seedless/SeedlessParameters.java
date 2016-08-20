@@ -37,13 +37,11 @@ import net.i2p.router.startup.ClientAppConfig;
 import net.i2p.util.Log;
 
 class SeedlessParameters {
-    private static final String DEFAULT_HOST = "localhost";
-    private static final String DEFAULT_PORT = "7657";
+    private static final String DEFAULT_ADDR = "localhost:7657";
     private static SeedlessParameters instance;
     
     private boolean ready;
-    private String host;
-    private String port;
+    private String addr;
     private String svcURL;
     private String cpass;
     private String peersReqHeader;
@@ -78,44 +76,22 @@ class SeedlessParameters {
          * http://java.sun.com/docs/books/tutorial/reflect/index.html
          *
          */
-        RouterContext _context = ContextHelper.getContext(null);
-        String apass = null;
+        ContextHelper ctx = new ContextHelper(null);
         // 1: Get the console IP:port
-        if (_context != null) {
-            List<ClientAppConfig> clients = ClientAppConfig.getClientApps(_context);
-            for(int cur = 0; cur < clients.size(); cur++) {
-                ClientAppConfig ca = clients.get(cur);
-    
-                if("net.i2p.router.web.RouterConsoleRunner".equals(ca.className)) {
-                    port = ca.args.split(" ")[0];
-                    host = ca.args.split(" ")[1];
-                    if(host.contains(",")) {
-                        String checks[] = host.split(",");
-                        host = null;
-                        for(int h = 0; h < checks.length; h++) {
-                            if(!checks[h].contains(":")) {
-                                host = checks[h];
-                            }
-                        }
-    
-                    }
-                }
-            }
-        }
-        if(port == null || host == null) {
-            log.error("No router console found, trying default host/port: " + DEFAULT_HOST + ":" + DEFAULT_PORT);
-            host = DEFAULT_HOST;
-            port = DEFAULT_PORT;
+        addr = ctx.getConsoleAddress();
+        if(addr == null) {
+            log.error("No router console found, trying default host/port: " + DEFAULT_ADDR);
+            addr = DEFAULT_ADDR;
         }
         else {
             ready = false;
         }
         // 2: Get console password
-        apass = getPassword();
+        String apass = ctx.getConsolePassword();
         log.info("Testing Seedless API");
         // 3: Check for the console API, if it exists, wait 'till it's status is ready.
         // and set the needed settings. Repeat test 10 times with some delay between when it fails.
-        String url = "http://" + host + ":" + port + "/SeedlessConsole/";
+        String url = "http://" + addr + "/SeedlessConsole/";
         String svcurl = url + "Service";
         int tries = 10;
         HttpURLConnection h;
@@ -178,28 +154,6 @@ class SeedlessParameters {
             serversLocHeader = "locate " + Base64.encode("seedless i2p-bote");
         }
     }
-
-    // Tobad this isn't public... oh well, I steal it :-)
-    private static String getPassword() {
-        List<RouterContext> contexts = RouterContext.listContexts();
-        if(contexts != null) {
-            for(int i = 0; i < contexts.size(); i++) {
-                RouterContext ctx = contexts.get(i);
-                String password = ctx.getProperty("consolePassword");
-                if(password != null) {
-                    password = password.trim();
-                    if(password.length() > 0) {
-                        return password;
-                    }
-                }
-            }
-            // no password in any context
-            return null;
-        } else {
-            // no contexts?!
-            return null;
-        }
-    }
     
     String getSeedlessUrl() {
         return svcURL;
@@ -222,9 +176,13 @@ class SeedlessParameters {
     }
     
     private static class ContextHelper {
+        RouterContext _context;
 
-        /** @throws IllegalStateException if no context available */
-        public static RouterContext getContext(String contextId) {
+        public ContextHelper(String contextId) {
+            _context = getContext(contextId);
+        }
+
+        private RouterContext getContext(String contextId) {
             Log log = new Log(ContextHelper.class);
             
             List<RouterContext>contexts = RouterContext.listContexts();
@@ -248,6 +206,44 @@ class SeedlessParameters {
             }
             // not found, so just give them the first we can find
             return (RouterContext)contexts.get(0);
+        }
+
+        private String getConsoleAddress() {
+            String host = null;
+            String port = null;
+            if (_context != null) {
+                List<ClientAppConfig> clients = ClientAppConfig.getClientApps(_context);
+                for(int cur = 0; cur < clients.size(); cur++) {
+                    ClientAppConfig ca = clients.get(cur);
+
+                    if("net.i2p.router.web.RouterConsoleRunner".equals(ca.className)) {
+                        port = ca.args.split(" ")[0];
+                        host = ca.args.split(" ")[1];
+                        if(host.contains(",")) {
+                            String checks[] = host.split(",");
+                            host = null;
+                            for(int h = 0; h < checks.length; h++) {
+                                if(!checks[h].contains(":")) {
+                                    host = checks[h];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return (host != null && port != null) ? host + ":" + port : null;
+        }
+
+        // Too bad this isn't public... oh well, I steal it :-)
+        private String getConsolePassword() {
+            if (_context == null)
+                return null;
+
+            String password = _context.getProperty("consolePassword");
+            if(password != null) {
+                password = password.trim();
+            }
+            return password;
         }
     }
 }
