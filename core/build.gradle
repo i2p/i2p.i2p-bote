@@ -33,3 +33,7 @@ dependencyVerification {
         'org.bouncycastle:bcprov-jdk15on:0dc4d181e4d347893c2ddbd2e6cd5d7287fc651c03648fa64b2341c7366b1773',
     ]
 }
+
+test {
+    exclude 'i2p/bote/AllTests.class'
+}
