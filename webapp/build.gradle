@@ -2,6 +2,41 @@ apply plugin: 'war'
 
 archivesBaseName = 'i2pbote'
 
+configurations {
+    jasper
+}
+
+def jspcDir = "$buildDir/jspc"
+def webXmlFrag = "$buildDir/web-fragment.xml"
+
+task precompileJsp {
+    outputs.dir(jspcDir)
+    doLast {
+        ant.taskdef(classname: 'org.apache.jasper.JspC',
+                    name: 'jasper',
+                    classpath: sourceSets.jsp.compileClasspath.asPath)
+        ant.jasper(validateXml: false,
+                   package: 'i2p.bote.jsp',
+                   uriRoot: webAppDir,
+                   webXmlFragment: webXmlFrag,
+                   outputDir: jspcDir)
+    }
+}
+
+sourceSets {
+    jsp {
+        compileClasspath += configurations.compile +
+                            sourceSets.main.output +
+                            configurations.jasper
+        java {
+            srcDir jspcDir
+        }
+    }
+}
+
+precompileJsp.dependsOn compileJava
+compileJspJava.dependsOn precompileJsp
+
 def jamesArchive = 'libs/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
 // James snapshots are only kept for a few days. The URL below points to a copy
 // of the 6/27/2015 snapshot.
@@ -30,6 +65,9 @@ task extractJames(dependsOn: downloadJames, type: Copy) {
 }
 
 dependencies {
+    jasper 'org.apache.tomcat:jasper:6.0.44'
+    jasper 'javax.servlet:jstl:1.2'
+
     compile project(':core')
 
     compile 'org.eclipse.jetty.orbit:javax.servlet.jsp:2.2.0.v201112011158'
@@ -93,6 +131,17 @@ dependencyVerification {
 }
 
 war {
+    exclude '*.jsp'
+    exclude 'WEB-INF/tags*'
+    exclude 'WEB-INF/tlds*'
+    classpath sourceSets.jsp.output
+    dependsOn jspClasses
+    filter { String line ->
+        if (line == '    <!-- precompiled servlets -->')
+            new File(webXmlFrag).text
+        else
+            line
+    }
     webInf {
         from 'src/main/webapp/WEB-INF/tlds'
     }

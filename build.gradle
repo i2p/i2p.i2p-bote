@@ -23,7 +23,8 @@ subprojects {
     targetCompatibility = 1.6
     // Set bootClasspath=/path/to/rt.jar:/path/to/jce.jar in gradle.properties if needed
     if (bootClasspath) {
-        compileJava.options.bootClasspath = bootClasspath
-        compileTestJava.options.bootClasspath = bootClasspath
+        project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
+            ac.options.bootClasspath = bootClasspath
+        })
     }
 }
