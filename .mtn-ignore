@@ -10,6 +10,8 @@ i2pbote-update.xpi2p
 # Temporary/build dirs
 ^ant_build
 ^plugin/plugin.tmp
+^core/build/
+^webapp/build/
 
 # Build property overrides
 override.properties

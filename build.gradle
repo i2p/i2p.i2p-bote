@@ -1,0 +1,29 @@
+buildscript {
+    dependencies {
+        classpath files('gradle/libs/gradle-witness.jar')
+    }
+}
+
+subprojects {
+    apply plugin: 'witness'
+    apply plugin: 'java'
+
+    repositories {
+        jcenter()
+    }
+
+    version = '0.4.3'
+    jar {
+        manifest {
+            attributes 'Implementation-Version': version
+        }
+    }
+
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
+    // Set bootClasspath=/path/to/rt.jar:/path/to/jce.jar in gradle.properties if needed
+    if (bootClasspath) {
+        compileJava.options.bootClasspath = bootClasspath
+        compileTestJava.options.bootClasspath = bootClasspath
+    }
+}

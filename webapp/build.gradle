@@ -1,0 +1,99 @@
+apply plugin: 'war'
+
+archivesBaseName = 'i2pbote'
+
+def jamesArchive = 'libs/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
+// James snapshots are only kept for a few days. The URL below points to a copy
+// of the 6/27/2015 snapshot.
+// To be replaced with a repository.apache.org URL once beta5 is out.
+def jamesUrl = 'http://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
+
+task downloadJames {
+    println 'Downloading Apache James...'
+    ant.get(src: jamesUrl, dest: jamesArchive, verbose: 'on', skipexisting: 'true')
+}
+
+task extractJames(dependsOn: downloadJames, type: Copy) {
+    outputs.dir('libs')
+    from zipTree(jamesArchive).files
+    into 'libs'
+    include '**/apache-james-mailbox-api-0.6-20150508.040939-710.jar'
+    include '**/apache-james-mailbox-store-0.6-20150508.041003-704.jar'
+    include '**/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/james-server-util-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/protocols-api-1.6.4-20150617.121129-1080.jar'
+    include '**/protocols-imap-1.6.4-20150617.121245-927.jar'
+    include '**/protocols-netty-1.6.4-20150617.121137-1044.jar'
+}
+
+dependencies {
+    compile project(':core')
+
+    compile 'org.eclipse.jetty.orbit:javax.servlet.jsp:2.2.0.v201112011158'
+    compile 'org.jfree:jcommon:1.0.23'
+    compile 'org.jfree:jfreechart:1.0.19'
+    compile 'org.subethamail:subethasmtp:3.1.7'
+
+    // Apache James IMAP server
+    compile files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
+        builtBy tasks.extractJames
+    }
+    compile files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
+        builtBy tasks.extractJames
+    }
+    compile files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    compile files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    compile files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    compile files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    compile files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    compile files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
+        builtBy tasks.extractJames
+    }
+    compile files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
+        builtBy tasks.extractJames
+    }
+    compile files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
+        builtBy tasks.extractJames
+    }
+
+    // Apache James IMAP server dependencies
+    compile 'com.beetstra.jutf7:jutf7:1.0.0'
+    compile 'commons-codec:commons-codec:1.7'
+    compile 'commons-collections:commons-collections:3.2.1'
+    compile 'commons-configuration:commons-configuration:1.9'
+    compile 'commons-io:commons-io:2.4'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-logging:commons-logging:1.0.3'
+    compile 'io.netty:netty:3.3.1.Final'
+    compile 'log4j:log4j:1.2.17'
+    compile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
+    compile 'org.slf4j:slf4j-api:1.7.2'
+    compile 'org.slf4j:slf4j-log4j12:1.7.2'
+}
+
+dependencyVerification {
+    verify = [
+        'org.jfree:jcommon:1e670402809484c71ec74d55b40022a4c4939c7911bd39ee5a0cfb3aaf56397c',
+        'org.jfree:jfreechart:153d077d6399776a45de97c555ad026eb6201d4bd8af86cfce7b8b4ccfa66263',
+        'org.subethamail:subethasmtp:5196a0da2c5a33d1a04e88fc7a9cc109501bc265b5bac8edd9984a1885070ad4',
+    ]
+}
+
+war {
+    webInf {
+        from 'src/main/webapp/WEB-INF/tlds'
+    }
+}

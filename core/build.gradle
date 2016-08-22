@@ -1,0 +1,35 @@
+apply plugin: 'java'
+
+archivesBaseName = 'i2pbote'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+
+    compile 'net.i2p:i2p:0.9.26'
+    compile 'net.i2p.client:mstreaming:0.9.26'
+    compile 'net.i2p.client:streaming:0.9.26'
+
+    compile 'com.lambdaworks:scrypt:1.4.0'
+    compile 'com.sun.mail:mailapi:1.5.4'
+    compile 'org.apache.james:apache-mime4j-core:0.7.2'
+    compile 'org.b1.pack:lzma-sdk-4j:9.22.0'
+    compile 'org.bouncycastle:bcprov-jdk15on:1.52'
+
+    testCompile 'junit:junit:4.+'
+    testCompile 'org.jmock:jmock:2.6.0'
+    testCompile 'org.jmock:jmock-legacy:2.6.0'
+    testCompile 'org.mockito:mockito-core:2.0.+'
+}
+
+dependencyVerification {
+    verify = [
+        'net.i2p:i2p:5e0f5efa8849e2abe72efaf1530bdf4a090717d49acfdfbe92911a14d4b4e511',
+        'net.i2p.client:mstreaming:1f343a640f79707f6652bbf344f65b42215ae3f7a221a3ee8ddd70ff59e812ae',
+        'net.i2p.client:streaming:5add7390de089f3c3c4f4005f0daa83014418416e890ed6c475e15cef51ba3c7',
+        'com.lambdaworks:scrypt:9a82d218099fb14c10c0e86e7eefeebd8c104de920acdc47b8b4b7a686fb73b4',
+        'com.sun.mail:mailapi:6786437244ec10d05601c52ee418b33e31f7ce5ed2cad8c8893139b28cb18ac3',
+        'org.apache.james:apache-mime4j-core:4d7434c68f94b81a253c12f28e6bbb4d6239c361d6086a46e22e594bb43ac660',
+        'org.b1.pack:lzma-sdk-4j:6da258d8fecc5359a95922b236166d903146f589e3c806856124008c78596d55',
+        'org.bouncycastle:bcprov-jdk15on:0dc4d181e4d347893c2ddbd2e6cd5d7287fc651c03648fa64b2341c7366b1773',
+    ]
+}
