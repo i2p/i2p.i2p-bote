@@ -390,8 +390,9 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
             while (!Thread.interrupted())
                 try {
                     // add any known seedless peers
-                    for (Destination destination: externalPeerSource.getPeers())
-                        initialPeers.add(new KademliaPeer(destination));
+                    if (externalPeerSource != null)
+                        for (Destination destination: externalPeerSource.getPeers())
+                            initialPeers.add(new KademliaPeer(destination));
                     
                     for (KademliaPeer bootstrapNode: initialPeers) {
                         bootstrapNode.setFirstSeen(System.currentTimeMillis());   // Set the "first seen" time to the current time before every bootstrap attempt
