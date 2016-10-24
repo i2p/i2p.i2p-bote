@@ -25,7 +25,7 @@ task precompileJsp {
 
 sourceSets {
     jsp {
-        compileClasspath += configurations.compile +
+        compileClasspath += configurations.providedCompile +
                             sourceSets.main.output +
                             configurations.jasper
         java {
@@ -68,58 +68,58 @@ dependencies {
     jasper 'org.apache.tomcat:jasper:6.0.44'
     jasper 'javax.servlet:jstl:1.2'
 
-    compile project(':core')
+    providedCompile project(':core')
 
-    compile 'org.eclipse.jetty.orbit:javax.servlet.jsp:2.2.0.v201112011158'
-    compile 'org.jfree:jcommon:1.0.23'
-    compile 'org.jfree:jfreechart:1.0.19'
-    compile 'org.subethamail:subethasmtp:3.1.7'
+    providedCompile 'org.eclipse.jetty.orbit:javax.servlet.jsp:2.2.0.v201112011158'
+    providedCompile 'org.jfree:jcommon:1.0.23'
+    providedCompile 'org.jfree:jfreechart:1.0.19'
+    providedCompile 'org.subethamail:subethasmtp:3.1.7'
 
     // Apache James IMAP server
-    compile files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
+    providedCompile files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
+    providedCompile files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
+    providedCompile files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
+    providedCompile files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
+    providedCompile files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
+    providedCompile files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
+    providedCompile files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
+    providedCompile files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
+    providedCompile files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
+    providedCompile files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
         builtBy tasks.extractJames
     }
 
     // Apache James IMAP server dependencies
-    compile 'com.beetstra.jutf7:jutf7:1.0.0'
-    compile 'commons-codec:commons-codec:1.7'
-    compile 'commons-collections:commons-collections:3.2.1'
-    compile 'commons-configuration:commons-configuration:1.9'
-    compile 'commons-io:commons-io:2.4'
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'commons-logging:commons-logging:1.0.3'
-    compile 'io.netty:netty:3.3.1.Final'
-    compile 'log4j:log4j:1.2.17'
-    compile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
-    compile 'org.slf4j:slf4j-api:1.7.2'
-    compile 'org.slf4j:slf4j-log4j12:1.7.2'
+    providedCompile 'com.beetstra.jutf7:jutf7:1.0.0'
+    providedCompile 'commons-codec:commons-codec:1.7'
+    providedCompile 'commons-collections:commons-collections:3.2.1'
+    providedCompile 'commons-configuration:commons-configuration:1.9'
+    providedCompile 'commons-io:commons-io:2.4'
+    providedCompile 'commons-lang:commons-lang:2.6'
+    providedCompile 'commons-logging:commons-logging:1.0.3'
+    providedCompile 'io.netty:netty:3.3.1.Final'
+    providedCompile 'log4j:log4j:1.2.17'
+    providedCompile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
+    providedCompile 'org.slf4j:slf4j-api:1.7.2'
+    providedCompile 'org.slf4j:slf4j-log4j12:1.7.2'
 }
 
 dependencyVerification {
@@ -131,6 +131,7 @@ dependencyVerification {
 }
 
 war {
+    archiveName 'i2pbote.war'
     exclude '*.jsp'
     exclude 'WEB-INF/tags*'
     exclude 'WEB-INF/tlds*'
@@ -146,5 +147,28 @@ war {
     }
     webInf {
         from 'src/main/webapp/WEB-INF/tlds'
+    }
+}
+
+apply from: "${project.rootDir}/gradle/i2p-make-plugin.gradle"
+
+i2p {
+    plugin {
+        name 'i2pbote'
+        signer 'str4d@mail.i2p'
+        version project.version
+
+        author 'str4d@mail.i2p'
+        websiteUrl 'http://bote.i2p/'
+        updateUrl 'http://bote.i2p/i2pbote-update.xpi2p'
+        su3UpdateUrl 'http://bote.i2p/i2pbote-update.su3'
+        license 'GPLv3'
+
+        minI2PVersion '0.9.24'
+        minJavaVersion '1.6'
+
+        webapp {
+            includeTaglib true
+        }
     }
 }
