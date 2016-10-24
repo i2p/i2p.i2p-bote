@@ -136,11 +136,13 @@ war {
     exclude 'WEB-INF/tlds*'
     classpath sourceSets.jsp.output
     dependsOn jspClasses
-    filter { String line ->
-        if (line == '    <!-- precompiled servlets -->')
-            new File(webXmlFrag).text
-        else
-            line
+    filesMatching('**/*.xml') {
+        filter { String line ->
+            if (line == '    <!-- precompiled servlets -->')
+                new File(webXmlFrag).text
+            else
+                line
+        }
     }
     webInf {
         from 'src/main/webapp/WEB-INF/tlds'
