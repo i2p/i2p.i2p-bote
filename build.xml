@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="help" name="I2P-Bote" xmlns:if="ant:if" xmlns:unless="ant:unless">
+    <property environment="env"/>
+    <condition property="i2pbase" value="${env.I2P}">
+        <isset property="env.I2P"/>
+    </condition>
+
+    <property name="i2plib" value="${i2pbase}/lib"/>
+    <property name="jstllib" value="${i2pbase}/apps/susidns/src/WEB-INF/lib"/>
+    <property name="lib" value="lib"/>
+    <property name="makeplugin" value="../i2p.scripts/plugin/makeplugin.sh"/>
+    
+    <property name="junit.filename" value="junit-4.8.1.jar"/>
+    <property name="junit.url" value="http://sourceforge.net/projects/junit/files/junit/4.8.1/junit-4.8.1.jar/download"/>
+    <property name="bytebuddy.filename" value="byte-buddy-0.6.14.jar"/>
+    <property name="bytebuddy.url" value="https://search.maven.org/remotecontent?filepath=net/bytebuddy/byte-buddy/0.6.14/byte-buddy-0.6.14.jar" />
+    <property name="mockito.filename" value="mockito-core-2.0.31-beta.jar"/>
+    <property name="mockito.url" value="https://bintray.com/artifact/download/szczepiq/maven/org/mockito/mockito-core/2.0.31-beta/mockito-core-2.0.31-beta.jar"/>
+    <!-- Just the main jMock .jar, the .zip contains this and dependencies -->
+    <property name="jmock.filename" value="jmock-2.6.0.jar"/>
+    <property name="jmock.archive" value="jmock-2.6.0-jars.zip"/>
+    <property name="jmockcp" value="${lib}/jmock-2.6.0.jar:${lib}/hamcrest-core-1.3.jar:${lib}/hamcrest-library-1.3.jar:${lib}/jmock-legacy-2.6.0.jar:${lib}/cglib-nodep-2.2.3.jar:${lib}/objenesis-1.0.jar"/>
+    <property name="jmock.url" value="http://www.jmock.org/downloads/${jmock.archive}"/>
+
+    <!-- Dependencies -->
+    <!-- Local -->
+    <property name="ntruenc.filename" value="ntruenc-1.2.jar"/>
+    <property name="ntruenc.includeinupdate" value="false"/>
+    <property name="scrypt.filename" value="scrypt-1.4.0.jar"/>
+    <property name="scrypt.includeinupdate" value="false"/>
+    <property name="lzma.filename" value="lzma-9.20.jar"/>
+    <property name="lzma.includeinupdate" value="false"/>
+    <property name="gmss.filename" value="flexi-gmss-1.7p1.jar"/>
+    <property name="gmss.includeinupdate" value="false"/>
+    <property name="jcommon.filename" value="jcommon-1.0.23.jar"/>
+    <property name="jcommon.includeinupdate" value="false"/>
+    <property name="jfreechart.filename" value="jfreechart-1.0.19.jar"/>
+    <property name="jfreechart.includeinupdate" value="false"/>
+    <!-- JavaMail -->
+    <property name="mailapi.name" value="JavaMail"/>
+    <property name="mailapi.filename" value="mailapi-1.5.4.jar"/>
+    <property name="mailapi.hash" value="6786437244ec10d05601c52ee418b33e31f7ce5ed2cad8c8893139b28cb18ac3"/>
+    <property name="mailapi.url" value="https://maven.java.net/content/repositories/releases/com/sun/mail/mailapi/1.5.4/mailapi-1.5.4.jar"/>
+    <property name="mailapi.includeinupdate" value="false"/>
+    <!-- BouncyCastle Provider -->
+    <property name="bcprov.name" value="BouncyCastle Provider"/>
+    <property name="bcprov.filename" value="bcprov-jdk15on-152.jar"/>
+    <property name="bcprov.hash" value="0dc4d181e4d347893c2ddbd2e6cd5d7287fc651c03648fa64b2341c7366b1773"/>
+    <property name="bcprov.url" value="http://downloads.bouncycastle.org/java/bcprov-jdk15on-152.jar"/>
+    <property name="bcprov.includeinupdate" value="false"/>
+    <!-- Apache James IMAP server -->
+    <!-- Just one of the James .jars for checking presence of James, the .zip contains this and dependencies -->
+    <property name="james.filename" value="apache-james-mailbox-api-0.6-20150508.040939-710.jar"/>
+    <property name="james.archive" value="james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip"/>
+    <!--
+      James snapshots are only kept for a few days. The URL below points to a copy of the 6/27/2015 snapshot.
+      To be replaced with a repository.apache.org URL once beta5 is out.
+    -->
+    <property name="james.url" value="http://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip"/>
+    <property name="james.includeinupdate" value="false"/>
+    <!-- Commons Logging from Apache James IMAP server -->
+    <property name="commonslogging.name" value="Commons Logging"/>
+    <property name="commonslogging.filename" value="commons-logging-1.0.3.jar"/>
+    <property name="commonslogging.includeinupdate" value="true"/>
+    <!-- Apacke Mime4J from Apache James IMAP server -->
+    <property name="mime4j.name" value="Apache Mime4J"/>
+    <property name="mime4j.filename" value="apache-mime4j-core-0.7.2.jar"/>
+    <property name="mime4j.hash" value="4d7434c68f94b81a253c12f28e6bbb4d6239c361d6086a46e22e594bb43ac660"/>
+    <property name="mime4j.archive" value="apache-mime4j-0.7.2-bin.zip"/>
+    <property name="mime4j.url" value="http://ftp.halifax.rwth-aachen.de/apache/james/mime4j/0.7.2/apache-mime4j-0.7.2-bin.zip"/>
+    <property name="mime4j.includeinupdate" value="true"/>
+    <!-- SubEtha SMTP -->
+    <property name="subetha.name" value="SubEtha SMTP"/>
+    <property name="subetha.filename" value="subethasmtp-3.1.7.jar"/>
+    <property name="subetha.hash" value="95cf031f1bc1b1a69b08554fbf8970bad994b32db32388d482c6afb482f1db76"/>
+    <property name="subetha.archive" value="subethasmtp-3.1.7.zip"/>
+    <property name="subetha.url" value="http://subethasmtp.googlecode.com/files/subethasmtp-3.1.7.zip"/>
+    <property name="subetha.includeinupdate" value="false"/>
+
+    <!-- the following are only used by win32installer -->
+    <property name="i2p.mtn" value="../i2p.mtn"/>
+    <property name="win32launcherurl" value="http://dist.codehaus.org/izpack/native-launcher/izpack-launcher-1.3.zip"/>
+    <property name="win32jreurl" value="http://javadl.sun.com/webapps/download/AutoDL?BundleId=47363"/>
+	
+    <fileset dir="${lib}" id="imaplibs">
+        <include name="apache-james-mailbox-api-0.6-20150508.040939-710.jar"/>
+        <include name="apache-james-mailbox-store-0.6-20150508.041003-704.jar"/>
+        <!-- Temporarily replaced
+        <include name="apache-mime4j-core-0.8.0-20150617.024907-738.jar"/>
+        <include name="apache-mime4j-dom-0.8.0-20150617.024927-735.jar"/>
+        -->
+        <include name="apache-mime4j-core-0.7.2.jar"/>
+        <include name="commons-codec-1.7.jar"/>
+        <include name="commons-collections-3.2.1.jar"/>
+        <include name="commons-configuration-1.9.jar"/>
+        <include name="commons-io-2.4.jar"/>
+        <include name="commons-lang-2.6.jar"/>
+        <include name="commons-logging-1.0.3.jar"/>
+        <include name="james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar"/>
+        <include name="james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar"/>
+        <include name="james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar"/>
+        <include name="james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar"/>
+        <include name="james-server-util-3.0.0-beta5-SNAPSHOT.jar"/>
+        <include name="jutf7-1.0.0.jar"/>
+        <include name="log4j-1.2.17.jar"/>
+        <include name="netty-3.3.1.Final.jar"/>
+        <include name="protocols-api-1.6.4-20150617.121129-1080.jar"/>
+        <include name="protocols-imap-1.6.4-20150617.121245-927.jar"/>
+        <include name="protocols-netty-1.6.4-20150617.121137-1044.jar"/>
+        <include name="slf4j-api-1.7.2.jar"/>
+        <include name="slf4j-log4j12-1.7.2.jar"/>
+    </fileset>
+    <path id="cp">
+        <pathelement path="${java.class.path}" />
+        <pathelement location="${i2plib}/i2p.jar" />
+        <pathelement location="${i2plib}/mstreaming.jar" />
+        <pathelement location="${i2plib}/streaming.jar" />
+        <pathelement location="${i2plib}/org.mortbay.jetty.jar"/>
+        <pathelement location="${i2plib}/jasper-compiler.jar" />
+        <pathelement location="${i2plib}/jasper-runtime.jar" />
+        <pathelement location="${i2plib}/javax.servlet.jar" />
+        <pathelement location="${i2plib}/commons-logging.jar" />
+        <pathelement location="${i2plib}/commons-el.jar" />
+        <pathelement location="${i2plib}/jstl.jar" />
+        <pathelement location="${i2plib}/standard.jar" />
+        <pathelement location="${lib}/${mailapi.filename}" />
+        <pathelement location="${lib}/${bcprov.filename}" />
+        <pathelement location="${lib}/${ntruenc.filename}" />
+        <pathelement location="${lib}/${scrypt.filename}" />
+        <pathelement location="${lib}/${lzma.filename}" />
+        <pathelement location="${lib}/${gmss.filename}" />
+        <pathelement location="${lib}/${subetha.filename}" />
+        <pathelement location="${lib}/${jcommon.filename}" />
+        <pathelement location="${lib}/${jfreechart.filename}" />
+        <pathelement location="src/main/webapp/WEB-INF/classes" />
+        <fileset refid="imaplibs"/>
+    </path>
+
+    <pathconvert property="manifest.classpath" pathsep=" ">
+        <path refid="cp" />
+        <mapper>
+            <flattenmapper />
+        </mapper>
+    </pathconvert>
+
+
+    <target name="help">
+        <echo message="Useful targets:" />
+        <echo message="  war:      Makes a .war file" />
+        <echo message="  plugin:   Makes a I2P plugin. Only runs on Linux." />
+        <echo message="            Requires the i2p.scripts branch to be checked out" />
+        <echo message="            alongside this directory (for makeplugin.sh)." />
+        <echo message="  all:      src + war + plugin" />
+        <echo message="  win32installer: Makes a Windows-only installer that installs" />
+        <echo message="            I2P, I2P-Bote, and optionally a JRE. Needs 7z and" />
+        <echo message="            mtn on the path, and a mtn DB containing i2p.i2p." />
+        <echo message="            Requires Ant 1.8.0 or higher." />
+        <echo message="  poupdate: Updates the messages_*.po files from the source code," />
+        <echo message="            adding any untranslated strings. Depends on additional" />
+        <echo message="            software, see bundle-messages.sh." />
+        <echo message="            This task only runs on Linux at the moment." />
+        <echo message="  src:      Zips up the source code" />
+        <echo message="  junit:    Runs all unit tests" />
+        <echo message="  javadoc:  Generates code documentation in the javadoc dir" />
+        <echo message="  clean:    Removes all generated files and directories" />
+        <echo message="  distclean: Removes all generated files and directories, and all downloaded libraries" />
+    </target>
+
+    <target name="all" depends="clean, src, war, plugin" />
+
+    <target name="checki2pbase">
+        <fail unless="i2pbase" message="The I2P environment variable is not set.${line.separator}It must point to an I2P installation. It is usually a path of the form ${line.separator}/xxx/yyy/i2p."/>
+    </target>
+
+    <macrodef name="checkdep">
+        <attribute name="dep"/>
+        <sequential>
+            <local name="hashValid"/>
+            <checksum file="${lib}/${@{dep}.filename}" algorithm="SHA-256" property="${@{dep}.hash}" verifyProperty="hashValid"/>
+            <fail message="The ${@{dep}.name} library has an invalid hash.">
+                <condition>
+                    <isfalse value="${hashValid}"/>
+                </condition>
+            </fail>
+        </sequential>
+    </macrodef>
+
+    <target name="checkdependencies">
+        <available property="mailapiexists" file="${lib}/${mailapi.filename}" type="file"/>
+        <available property="bcprovexists" file="${lib}/${bcprov.filename}" type="file"/>
+        <available property="jamesexists" file="${lib}/${james.filename}" type="file"/>
+        <available property="mime4jexists" file="${lib}/${mime4j.filename}" type="file"/>
+        <available property="subethaexists" file="${lib}/${subetha.filename}" type="file"/>
+
+        <ant target="downloadmailapi"/>
+        <ant target="downloadbcprov"/>
+        <ant target="downloadjames"/>
+        <ant target="downloadmime4j"/>
+        <ant target="downloadsubetha"/>
+
+        <checkdep dep="mailapi"/>
+        <checkdep dep="bcprov"/>
+        <checkdep dep="mime4j"/>
+        <checkdep dep="subetha"/>
+    </target>
+
+    <!-- compiles everything under src/main/java, but not src/test/ or src/build/ -->
+    <target name="compile" depends="checki2pbase, checkdependencies">
+        <mkdir dir="./ant_build" />
+        <mkdir dir="./ant_build/classes" />
+        <javac
+            srcdir="./src/main/java"
+            debug="true"
+            deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
+            destdir="./ant_build/classes"
+            classpathref="cp"
+            failonerror="true" />
+    </target>
+
+    <target name="precompilejsp">
+        <mkdir dir="ant_build" />
+        <mkdir dir="ant_build/jspjava" />
+        <path id="jspcp">
+            <path refid="cp" />
+            <pathelement location="ant_build/classes" />
+        </path>
+        <java classname="org.apache.jasper.JspC" fork="true" classpathref="jspcp" failonerror="true">
+            <arg value="-d" />
+            <arg value="ant_build/jspjava" />
+            <arg value="-v" />
+            <arg value="-p" />
+            <arg value="i2p.bote.jsp" />
+            <arg value="-webinc" />
+            <arg value="ant_build/web-fragment.xml" />
+            <arg value="-webapp" />
+            <arg value="src/main/webapp" />
+        </java>
+
+        <javac
+            debug="true"
+            deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
+            destdir="ant_build/classes"
+            srcdir="./ant_build/jspjava"
+            includes="**/*.java"
+            classpathref="jspcp"
+            failonerror="true" />
+        <copy file="src/main/webapp/WEB-INF/web.xml" tofile="ant_build/web.xml" />
+        <loadfile property="jspc.web.fragment" srcfile="ant_build/web-fragment.xml" />
+        <replace file="ant_build/web.xml">
+            <replacefilter token="&lt;!-- precompiled servlets --&gt;" value="${jspc.web.fragment}" />
+        </replace>
+    </target>
+
+    <target name="war" depends="jar"> 
+        <mkdir dir="ant_build" />
+        <war destfile="i2pbote.war" webxml="ant_build/web.xml">
+            <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
+            <fileset dir="src/main/webapp" includes="*.html"/>
+            <fileset dir="src/main/webapp/" includes="*.xml"/>
+            <webinf dir="src/main/webapp/WEB-INF/tlds" includes="*.tld"/>
+            <lib file="${lib}/i2pbote.jar"/>
+            <lib file="${lib}/${mailapi.filename}"/>
+            <lib file="${lib}/${bcprov.filename}"/>
+            <lib file="${lib}/${ntruenc.filename}"/>
+            <lib file="${lib}/${scrypt.filename}"/>
+            <lib file="${lib}/${lzma.filename}"/>
+            <lib file="${lib}/${gmss.filename}"/>
+            <lib file="${lib}/${jcommon.filename}" />
+            <lib file="${lib}/${jfreechart.filename}" />
+            <zipfileset dir="src/main/webapp/html" prefix="html"/>
+          <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
+        </war>
+
+        <echo message="SHA256 sum:"/>
+        <exec executable="sha256sum">
+            <arg value="i2pbote.war"/>
+        </exec>
+    </target>
+    
+    <target name="jar" depends="compile,precompilejsp,bundle"> 
+        <mkdir dir="ant_build" />
+        <jar destfile="${lib}/i2pbote.jar">
+            <fileset dir="ant_build/classes" excludes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/** codec/** **/*Test.class"/>
+            <fileset dir="src/main/java" includes="i2p/bote/network/built-in-peers.txt"/>
+            <fileset dir="src/main/java" includes="i2p/bote/crypto/wordlist/"/>
+            <manifest>
+                <attribute name="Class-Path" value="${manifest.classpath}" />
+            </manifest>
+            <metainf file="src/main/webapp/META-INF/mime.types"/>
+        </jar>
+    </target>
+
+    <macrodef name="packdep">
+        <attribute name="dep"/>
+        <element name="exec-args" optional="yes" implicit="yes"/>
+        <sequential>
+            <exec executable="pack200" failonerror="true">
+                <arg value="--no-gzip"/>
+                <arg value="--effort=9"/>
+                <arg value="--modification-time=latest"/>
+                <exec-args/>
+                <arg value="plugin/plugin.tmp/lib/${@{dep}.filename}.pack"/>
+                <arg value="${lib}/${@{dep}.filename}"/>
+            </exec>
+        </sequential>
+    </macrodef>
+    <macrodef name="removepack">
+        <attribute name="dep"/>
+        <sequential>
+            <delete file="plugin/plugin.tmp/lib/${@{dep}.filename}"/>
+            <delete file="plugin/plugin.tmp/lib/${@{dep}.filename}.pack"/>
+        </sequential>
+    </macrodef>
+
+    <!--
+      - Make two plugins, one for initial installs and one for updates.
+      - Neither includes jstl.jar or standard.jar, as any i2p version that has
+      - plugin support has these two jars pulled out of susidns.war and put in
+      - $I2P/lib. We set the classpath in webapps.config to find them.
+    -->
+    <target name="plugin" depends="pluginwar,getversion"> 
+        <mkdir dir="plugin/plugin.tmp/lib" />
+        <mkdir dir="plugin/plugin.tmp/console/webapps" />
+        <copy file="plugin/webapps.config" todir="plugin/plugin.tmp/console/" />
+
+        <!-- run all .jars and i2pbote-plugin.war through pack200 -->
+        <move file="i2pbote-plugin.war" tofile="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/console/webapps/i2pbote.war.pack"/>
+            <arg value="plugin/plugin.tmp/console/webapps/i2pbote.jar"/>
+        </exec>
+        <delete file="plugin/plugin.tmp/console/webapps/i2pbote.jar" />
+        <exec executable="pack200" failonerror="true">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <arg value="plugin/plugin.tmp/lib/i2pbote.jar.pack"/>
+            <arg value="${lib}/i2pbote.jar"/>
+        </exec>
+
+        <!-- pack local dependencies in updater -->
+        <includedep updater="true" dep="ntruenc"/>
+        <includedep updater="true" dep="scrypt"/>
+        <includedep updater="true" dep="lzma"/>
+        <includedep updater="true" dep="gmss"/>
+        <includedep updater="true" dep="jcommon"/>
+        <includedep updater="true" dep="jfreechart"/>
+        <!-- pack remote dependencies in updater -->
+        <includedep updater="true" dep="mailapi"/>
+        <includedep updater="true" dep="bcprov"/>
+        <includedep updater="true" dep="james"/>
+        <!-- commons-logging handled separately, was added later -->
+        <includedep updater="true" dep="commonslogging"/>
+        <!-- mime4j handled separately temporarily -->
+        <includedep updater="true" dep="mime4j"/>
+        <includedep updater="true" dep="subetha"/>
+
+        <copy file="src/main/scripts/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/decrypt.sh" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/fileinfo.sh" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/encrypt.bat" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/decrypt.bat" todir="plugin/plugin.tmp/lib"/>
+        <copy file="src/main/scripts/fileinfo.bat" todir="plugin/plugin.tmp/lib"/>
+
+        <!-- get build number -->
+        <buildnumber file="plugin/build.number" />
+
+        <!-- make the update xpi2p -->
+        <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
+        <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
+            <arg value="version=${version}" />
+        </exec>
+        <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
+            <arg value="update-only=true" />
+        </exec>
+        <input message="Enter key password for plugin-su3-keystore.ks:" addproperty="release.password.su3" />
+        <fail message="You must enter a password." >
+            <condition>
+                <equals arg1="${release.password.su3}" arg2=""/>
+            </condition>
+        </fail>
+        <exec executable="${makeplugin}" inputstring="${release.password.su3}" failonerror="true" >
+            <arg value="plugin/plugin.tmp" />
+        </exec>
+        <move file="i2pbote.xpi2p" tofile="i2pbote-update.xpi2p" />
+        <move file="i2pbote.su3" tofile="i2pbote-update.su3" />
+
+        <!-- pack local dependencies in installer -->
+        <includedep dep="ntruenc"/>
+        <includedep dep="scrypt"/>
+        <includedep dep="lzma"/>
+        <includedep dep="gmss"/>
+        <includedep dep="jcommon"/>
+        <includedep dep="jfreechart"/>
+        <!-- pack remote dependencies in installer -->
+        <includedep dep="mailapi"/>
+        <includedep dep="bcprov"/>
+        <includedep dep="james"/>
+        <includedep dep="subetha"/>
+
+        <!-- make the install xpi2p -->
+        <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
+        <exec executable="echo" osfamily="unix" failonerror="true" output="plugin/plugin.tmp/plugin.config" append="true">
+            <arg value="version=${version}" />
+        </exec>
+        <exec executable="${makeplugin}" inputstring="${release.password.su3}" failonerror="true" >
+            <arg value="plugin/plugin.tmp" />
+        </exec>
+    </target>
+
+    <!-- same as war but without the library jars -->
+    <target name="pluginwar" depends="compile,jar,precompilejsp,bundle"> 
+        <mkdir dir="ant_build" />
+        <war destfile="i2pbote-plugin.war" webxml="ant_build/web.xml">
+            <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
+            <fileset dir="src/main/webapp" includes="*.html"/>
+            <fileset dir="src/main/webapp/" includes="*.xml"/>
+            <webinf dir="src/main/webapp/WEB-INF/tlds" includes="*.tld"/>
+            <zipfileset dir="src/main/webapp/html" prefix="html"/>
+            <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
+        </war>
+    </target>
+
+    <macrodef name="includedep">
+        <attribute name="updater" default="false"/>
+        <attribute name="dep"/>
+        <sequential>
+            <local name="packDep"/>
+            <local name="removePack"/>
+            <condition property="packDep" else="false">
+                <or>
+                    <and>
+                        <istrue value="@{updater}"/>
+                        <istrue value="${@{dep}.includeinupdate}"/>
+                    </and>
+                    <and>
+                        <isfalse value="@{updater}"/>
+                        <isfalse value="${@{dep}.includeinupdate}"/>
+                    </and>
+                </or>
+            </condition>
+            <condition property="removePack" else="false">
+                <and>
+                    <istrue value="@{updater}"/>
+                    <isfalse value="${@{dep}.includeinupdate}"/>
+                </and>
+            </condition>
+
+            <ant target="packdep.@{dep}" if:true="${packDep}"/>
+            <ant target="removepack.@{dep}" if:true="${removePack}"/>
+        </sequential>
+    </macrodef>
+
+    <target name="packdep.ntruenc">
+        <packdep dep="ntruenc"/>
+    </target>
+    <target name="removepack.ntruenc">
+        <removepack dep="ntruenc"/>
+    </target>
+
+    <target name="packdep.scrypt">
+        <packdep dep="scrypt"/>
+    </target>
+    <target name="removepack.scrypt">
+        <removepack dep="scrypt"/>
+    </target>
+
+    <target name="packdep.lzma">
+        <packdep dep="lzma"/>
+    </target>
+    <target name="removepack.lzma">
+        <removepack dep="lzma"/>
+    </target>
+
+    <target name="packdep.gmss">
+        <packdep dep="gmss"/>
+    </target>
+    <target name="removepack.gmss">
+        <removepack dep="gmss"/>
+    </target>
+
+    <target name="packdep.jcommon">
+        <packdep dep="jcommon"/>
+    </target>
+    <target name="removepack.jcommon">
+        <removepack dep="jcommon"/>
+    </target>
+
+    <target name="packdep.jfreechart">
+        <packdep dep="jfreechart"/>
+    </target>
+    <target name="removepack.jfreechart">
+        <removepack dep="jfreechart"/>
+    </target>
+
+    <target name="packdep.mailapi">
+        <packdep dep="mailapi"/>
+    </target>
+    <target name="removepack.mailapi">
+        <removepack dep="mailapi"/>
+    </target>
+
+    <target name="packdep.bcprov">
+        <packdep dep="bcprov">
+            <arg value="--segment-limit=-1"/>
+        </packdep>
+    </target>
+    <target name="removepack.bcprov">
+        <removepack dep="bcprov"/>
+    </target>
+
+    <target name="packdep.james">
+        <apply executable="pack200" failonerror="true" parallel="false" dest="plugin/plugin.tmp/lib/">
+            <arg value="--no-gzip"/>
+            <arg value="--effort=9"/>
+            <arg value="--modification-time=latest"/>
+            <targetfile/>
+            <srcfile/>
+            <fileset refid="imaplibs"/>
+            <mapper type="glob" from="*.jar" to="*.jar.pack"/>
+        </apply>
+    </target>
+    <target name="removepack.james">
+        <apply executable="rm" dest="plugin/plugin.tmp/lib/" addsourcefile="false">
+            <targetfile/>
+            <fileset refid="imaplibs"/>
+            <flattenmapper/>
+        </apply>
+        <apply executable="rm" dest="plugin/plugin.tmp/lib/" addsourcefile="false">
+            <targetfile suffix=".pack"/>
+            <fileset refid="imaplibs"/>
+            <flattenmapper/>
+        </apply>
+    </target>
+
+    <target name="packdep.commonslogging">
+        <packdep dep="commonslogging"/>
+    </target>
+    <target name="removepack.commonslogging">
+        <removepack dep="commonslogging"/>
+    </target>
+
+    <target name="packdep.mime4j">
+        <packdep dep="mime4j"/>
+    </target>
+    <target name="removepack.mime4j">
+        <removepack dep="mime4j"/>
+    </target>
+
+    <target name="packdep.subetha">
+        <packdep dep="subetha"/>
+    </target>
+    <target name="removepack.subetha">
+        <removepack dep="subetha"/>
+    </target>
+
+    <target name="bundle" depends="compile">
+        <!-- Update the messages_*.po files.
+             We need to supply the bat file for windows, and then change the fail property to true -->
+        <exec executable="sh" osfamily="unix" failifexecutionfails="false" >
+            <arg value="src/build/scripts/bundle-messages.sh" />
+        </exec>
+        <exec executable="sh" osfamily="mac" failifexecutionfails="false" >
+            <arg value="src/build/scripts/bundle-messages.sh" />
+        </exec>
+        <exec executable="sh" osfamily="windows" failifexecutionfails="false" >
+            <arg value="src/build/scripts/bundle-messages.sh" />
+        </exec>
+    </target>
+
+    <!-- depends on compileantclasses for SearchAndInsert.class -->
+    <target name="win32installer" depends="pluginwar, compileantclasses">
+        <property name="installerdir" value="ant_build/win32installer"/>
+        <property name="installerresources" value="${installerdir}/resources"/>
+        <property name="i2pinstallerdir" value="${installerdir}/i2p.i2p/installer"/>
+        <property name="i2pinstallerplugindir" value="${installerdir}/i2p.i2p/plugins/i2pbote"/>
+        <mkdir dir="${installerdir}"/>
+        
+        <!-- get 7z_extra.7z and extract 7zS.sfx -->
+        <get src="http://sourceforge.net/projects/sevenzip/files/7-Zip/9.19/7z919_extra.7z/download" dest="${installerdir}/7z_extra.7z" skipexisting="true"/>
+        <exec executable="7z" dir="${installerdir}">
+            <arg value="e"/>
+            <arg value="-y"/>
+            <arg value="7z_extra.7z"/>
+            <arg value="7zS.sfx"/>
+        </exec>
+
+        <!-- check out i2p.i2p from mtn, add i2pbote, and build install.jar -->
+        <delete dir="${installerdir}/i2p.i2p" />
+        <exec executable="mtn" dir="${installerdir}" failonerror="true">
+            <arg value="--db" />
+            <arg value="../../${i2p.mtn}" />
+            <arg value="--branch" />
+            <arg value="i2p.i2p" />
+            <arg value="co" />
+        </exec>
+        <!-- add I2P-Bote to install.xml -->
+        <java classname="i2p.bote.ant.SearchAndInsert" classpathref="cp" classpath="./ant_build/classes" failonerror="true">
+            <arg value="-before"/>
+            <arg value="${i2pinstallerdir}/install.xml"/>
+            <arg value="${i2pinstallerdir}/install.xml.new"/>
+            <arg value="&lt;/packs&gt;"/>
+            <arg value="win32installer/i2pbote_pack.txt"/>
+        </java>
+        <move file="${i2pinstallerdir}/install.xml.new" tofile="${i2pinstallerdir}/install.xml"/>
+        <!-- make the plugins dir -->
+        <mkdir dir="${i2pinstallerplugindir}/console/webapps"/>
+        <mkdir dir="${i2pinstallerplugindir}/lib"/>
+        <copy file="plugin/plugin.config" todir="${i2pinstallerplugindir}"/>
+        <copy file="i2pbote-plugin.war" tofile="${i2pinstallerplugindir}/console/webapps/i2pbote.war"/>
+        <copy file="plugin/webapps.config" todir="${i2pinstallerplugindir}/console"/>
+        <copy file="${lib}/i2pbote.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/${mailapi.filename}" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/${bcprov.filename}" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/ntruenc-1.2.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/scrypt-1.4.0.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/lzma-9.20.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/flexi-gmss-1.7p1.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/jcommon-1.0.23.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/jfreechart-1.0.19.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <!-- build the I2P + I2P-Bote install.jar -->
+        <ant antfile="${installerdir}/i2p.i2p/build.xml" target="installer" inheritAll="false"/>
+        <copy file="${installerdir}/i2p.i2p/install.jar" todir="${installerresources}"/>
+
+        <!-- download Windows JRE -->
+        <get src="${win32jreurl}" verbose="true" dest="${installerresources}/jre.exe" skipexisting="true"/>
+        <copy file="win32installer/jreinstall.bat" todir="${installerresources}"/>
+        <copy file="win32installer/launcher.ini" todir="${installerresources}"/>
+        <copy file="win32installer/config.txt" todir="${installerdir}"/>
+
+        <!-- download the launcher .zip and unzip dist/* to resources/ -->
+        <get src="${win32launcherurl}" verbose="true" dest="${installerdir}/izpack-launcher.zip" skipexisting="true"/>
+        <unzip src="${installerdir}/izpack-launcher.zip" dest="${installerresources}">
+            <patternset>
+                <include name="*/dist/*"/>
+            </patternset>
+            <flattenmapper/>
+        </unzip>
+
+        <exec executable="7z" dir="${installerresources}" failonerror="true">
+            <arg value="a"/>
+            <arg value="../files.7z"/>
+            <arg value="*"/>
+        </exec>
+
+        <concat destfile="i2pinstall.exe" binary="true">
+            <fileset dir="${installerdir}" includes="7zS.sfx, config.txt, files.7z"/>
+        </concat>
+    </target>
+
+    <!-- depends on compileantclasses for JspStrings.class -->
+    <target name="poupdate" depends="compileantclasses">
+        <!-- Update the messages_*.po files.  -->
+        <exec executable="sh" osfamily="unix" failonerror="true" >
+            <arg value="src/build/scripts/bundle-messages.sh" />
+            <arg value="-p" />
+        </exec>
+        <exec executable="sh" osfamily="mac" failonerror="true" >
+            <arg value="src/build/scripts/bundle-messages.sh" />
+            <arg value="-p" />
+        </exec>
+        <exec executable="sh" osfamily="windows" failifexecutionfails="true" >
+            <arg value="src/build/scripts/bundle-messages.sh" />
+            <arg value="-p" />
+        </exec>
+    </target>
+
+    <!-- compiles the Java code in the ant directory -->
+    <target name="compileantclasses" depends="compile">
+        <javac
+            srcdir="./src/build/java"
+            debug="true"
+            deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
+            destdir="./ant_build/classes"
+            classpathref="cp"
+            classpath="./ant_build/classes"
+            failonerror="true" />
+    </target>
+
+    <target name="junit" depends="compile">
+        <available property="junitexists" file="${lib}/${junit.filename}" type="file"/>
+        <ant target="downloadjunit"/>
+        <available property="bytebuddyexists" file="${lib}/${bytebuddy.filename}" type="file"/>
+        <ant target="downloadbytebuddy"/>
+        <available property="mockitoexists" file="${lib}/${mockito.filename}" type="file"/>
+        <ant target="downloadmockito"/>
+        <available property="jmockexists" file="${lib}/${jmock.filename}" type="file"/>
+        <ant target="downloadjmock"/>
+        
+        <path id="junitcp">
+            <pathelement location="${lib}/${junit.filename}"/>
+            <pathelement location="${lib}/${mockito.filename}"/>
+            <pathelement location="${lib}/${bytebuddy.filename}"/>
+            <pathelement path="${jmockcp}"/>
+            <pathelement location="./ant_build/classes"/>
+            <path refid="cp"/>
+        </path>
+
+        <javac
+            srcdir="./src/test/java"
+            debug="true"
+            deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
+            destdir="./ant_build/classes"
+            classpathref="junitcp"
+            failonerror="true" />
+        <copy file="src/test/java/i2p/bote/packet/dht/Struwwelpeter.jpg" tofile="ant_build/classes/i2p/bote/packet/dht/Struwwelpeter.jpg"/>
+        <copy file="src/main/java/i2p/bote/crypto/wordlist/words_de.txt" tofile="ant_build/classes/i2p/bote/crypto/wordlist/words_de.txt"/>
+        <copy file="src/main/java/i2p/bote/crypto/wordlist/words_en.txt" tofile="ant_build/classes/i2p/bote/crypto/wordlist/words_en.txt"/>
+
+        <echo message="Running JUnit tests..."/>
+        <junit printsummary="off" failureproperty="failed">
+            <classpath>
+                <path refid="junitcp"/>
+            </classpath>
+            <batchtest fork="true" todir="./ant_build">
+                <fileset dir="./ant_build/classes" includes="**/*Test.class"/>
+                <formatter type="plain"/>
+            </batchtest>
+        </junit>
+        <condition property="result"
+            value="At least one unit test failed."
+            else="All unit tests were successful.">
+            <isset property="failed"/>
+        </condition>
+        <echo message="${result}"/>
+        <echo message="For details, see ant_build/TEST*"/>
+    </target>
+
+    <target name="downloadjunit" unless="junitexists">
+        <input message="JUnit not found, download now?" validargs="y,n" addproperty="userinput.junit"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.junit}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${junit.url}" verbose="true" dest="${lib}/${junit.filename}"/>
+    </target>
+
+    <target name="downloadbytebuddy" unless="bytebuddyexists">
+        <input message="ByteBuddy not found, download now?" validargs="y,n" addproperty="userinput.bytebuddy"/>
+        <fail message="OK, aborting build." >
+            <condition>
+                <equals arg1="${userinput.bytebuddy}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${bytebuddy.url}" verbose="true" dest="${lib}/${bytebuddy.filename}"/>
+    </target>
+
+    <target name="downloadmockito" unless="mockitoexists">
+        <input message="Mockito not found, download now?" validargs="y,n" addproperty="userinput.mockito"/>
+        <fail message="OK, aborting build." >
+            <condition>
+                <equals arg1="${userinput.mockito}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${mockito.url}" verbose="true" dest="${lib}/${mockito.filename}"/>
+    </target>
+
+    <target name="downloadjmock" unless="jmockexists">
+        <input message="jMock not found, download now?" validargs="y,n" addproperty="userinput.jmock"/>
+        <fail message="OK, aborting build." >
+            <condition>
+                <equals arg1="${userinput.jmock}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${jmock.url}" verbose="true" dest="${lib}/${jmock.archive}"/>
+        <unzip src="${lib}/${jmock.archive}" dest="${lib}">
+            <patternset includes="**/*.jar"/>
+            <mapper>
+                <flattenmapper/>
+            </mapper>
+        </unzip>
+        <delete file="${lib}/${jmock.archive}"/>
+    </target>
+
+    <target name="downloadmailapi" unless="mailapiexists">
+        <input message="JavaMail not found, download now?" validargs="y,n" addproperty="userinput.mailapi"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.mailapi}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${mailapi.url}" verbose="true" dest="${lib}/${mailapi.filename}"/>
+    </target>
+
+    <target name="downloadbcprov" unless="bcprovexists">
+        <input message="BouncyCastle Provider not found, download now?" validargs="y,n" addproperty="userinput.bcprov"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.bcprov}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${bcprov.url}" verbose="true" dest="${lib}/${bcprov.filename}"/>
+    </target>
+
+    <target name="downloadjames" unless="jamesexists">
+        <input message="Apache James not found, download now?" validargs="y,n" addproperty="userinput.junit"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.junit}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${james.url}" verbose="true" dest="${lib}/${james.archive}"/>
+        <unzip src="${lib}/${james.archive}" dest="${lib}">
+            <patternset>
+                <include name="**/apache-james-mailbox-api-0.6-20150508.040939-710.jar"/>
+                <include name="**/apache-james-mailbox-store-0.6-20150508.041003-704.jar"/>
+                <!-- Handled separately temporarily
+                <include name="**/apache-mime4j-core-0.8.0-20150617.024907-738.jar"/>
+                <include name="**/apache-mime4j-dom-0.8.0-20150617.024927-735.jar"/>
+                -->
+                <include name="**/commons-codec-1.7.jar"/>
+                <include name="**/commons-collections-3.2.1.jar"/>
+                <include name="**/commons-configuration-1.9.jar"/>
+                <include name="**/commons-io-2.4.jar"/>
+                <include name="**/commons-lang-2.6.jar"/>
+                <include name="**/commons-logging-1.0.3.jar"/>
+                <include name="**/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar"/>
+                <include name="**/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar"/>
+                <include name="**/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar"/>
+                <include name="**/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar"/>
+                <include name="**/james-server-util-3.0.0-beta5-SNAPSHOT.jar"/>
+                <include name="**/jutf7-1.0.0.jar"/>
+                <include name="**/log4j-1.2.17.jar"/>
+                <include name="**/netty-3.3.1.Final.jar"/>
+                <include name="**/protocols-api-1.6.4-20150617.121129-1080.jar"/>
+                <include name="**/protocols-imap-1.6.4-20150617.121245-927.jar"/>
+                <include name="**/protocols-netty-1.6.4-20150617.121137-1044.jar"/>
+                <include name="**/slf4j-api-1.7.2.jar"/>
+                <include name="**/slf4j-log4j12-1.7.2.jar"/>
+            </patternset>
+            <mapper>
+                <flattenmapper/>
+            </mapper>
+        </unzip>
+        <delete file="${lib}/${james.archive}"/>
+    </target>
+
+    <target name="downloadmime4j" unless="mime4jexists">
+        <input message="Apache Mime4J not found, download now?" validargs="y,n" addproperty="userinput.junit"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.junit}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${mime4j.url}" verbose="true" dest="${lib}/${mime4j.archive}"/>
+        <unzip src="${lib}/${mime4j.archive}" dest="${lib}">
+            <patternset includes="**/${mime4j.filename}"/>
+            <mapper>
+                <flattenmapper/>
+            </mapper>
+        </unzip>
+        <!--<delete file="${lib}/${mime4j.archive}"/>-->
+    </target>
+
+    <target name="downloadsubetha" unless="subethaexists">
+        <input message="SubEtha SMTP not found, download now?" validargs="y,n" addproperty="userinput.junit"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.junit}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${subetha.url}" verbose="true" dest="${lib}/${subetha.archive}"/>
+        <unzip src="${lib}/${subetha.archive}" dest="${lib}">
+            <patternset includes="**/${subetha.filename}"/>
+            <mapper>
+                <flattenmapper/>
+            </mapper>
+        </unzip>
+        <delete file="${lib}/${subetha.archive}"/>
+    </target>
+
+    <!-- Write the app version into ${version} -->
+    <!-- Depends on compile b/c it gets the app version from I2PBote.class -->
+    <target name="getversion" depends="compile">
+        <javac
+            srcdir="./src/build/java"
+            debug="true"
+            deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
+            destdir="./ant_build/classes"
+            classpathref="cp"
+            classpath="./ant_build/classes"
+            failonerror="true" />
+        <java
+            classname="i2p.bote.ant.PrintAppVersion"
+            classpathref="cp"
+            classpath="./ant_build/classes"
+            outputproperty="version"
+            failonerror="true"/>
+        <delete dir="./ant_build/classes/i2p/bote/ant" />
+        <echo message="I2P-Bote version is ${version}"/>
+    </target>
+
+    <target name="src" depends="getversion">
+        <property name="subdir" value="i2pbote-${version}-src"/>
+        <zip destfile="src.zip">
+            <zipfileset dir="src" prefix="${subdir}/src" followsymlinks="false"/>
+            <zipfileset dir="doc" prefix="${subdir}/doc"/>
+            <zipfileset dir="plugin" prefix="${subdir}/plugin">
+                <exclude name="plugin.tmp/**"/>
+            </zipfileset>
+            <zipfileset file="build.xml" prefix="${subdir}"/>
+            <zipfileset file="locale/messages_de.po" prefix="${subdir}/locale"/>
+            <zipfileset file="src/build/scripts/bundle-messages.sh" prefix="${subdir}"/>
+            <zipfileset file="history.txt" prefix="${subdir}"/>
+            <zipfileset file="license.txt" prefix="${subdir}"/>
+        </zip>
+
+        <echo message="SHA256 sum:"/>
+        <exec executable="sha256sum">
+            <arg value="src.zip"/>
+        </exec>
+    </target>
+
+    <target name="javadoc" depends="getversion">
+        <!--
+           Instead of eepgetting the package list, it would be easier to just let Ant
+           do it through the eeproxy:
+           
+           <javadoc ...>
+               <link href="http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/api/"/>
+             
+           But Ant falls back to no proxy if a proxied download fails, so eepget is preferable.
+        -->
+        <mkdir dir="ant_build" />
+        <property name="pkglistdir" value="ant_build/package_lists"/>
+        <mkdir dir="${pkglistdir}" />
+        <echo message="Downloading package lists"/>
+        
+        <mkdir dir="${pkglistdir}/jdk"/>
+        <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
+            <arg value="-o"/>
+            <arg value="${pkglistdir}/jdk/package-list"/>
+            <arg value="http://docs.oracle.com/javase/6/docs/api/package-list"/>
+        </java>
+        <mkdir dir="${pkglistdir}/servlet"/>
+        <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
+            <arg value="-o"/>
+            <arg value="${pkglistdir}/servlet/package-list"/>
+            <arg value="http://docs.oracle.com/javaee/1.4/api/package-list"/>
+        </java>
+        <mkdir dir="${pkglistdir}/javamail"/>
+        <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
+            <arg value="-o"/>
+            <arg value="${pkglistdir}/javamail/package-list"/>
+            <arg value="http://java.sun.com/products/javamail/javadocs/package-list"/>
+        </java>
+        <mkdir dir="${pkglistdir}/bouncycastle"/>
+        <java classname="net.i2p.util.EepGet" classpath="${i2plib}/i2p.jar">
+            <arg value="-o"/>
+            <arg value="${pkglistdir}/bouncycastle/package-list"/>
+            <arg value="http://bouncycastle.org/docs/docs1.6/package-list"/>
+        </java>
+        
+        <javadoc
+                sourcepath="src/main/java"
+                destdir="javadoc"
+                classpathref="cp"
+                windowtitle="I2P-Bote"
+                doctitle="I2P-Bote ${version} Javadoc"
+                use="true"
+                linksource="yes">
+            <arg value="-J-Dhttp.proxyHost=localhost"/>
+            <arg value="-J-Dhttp.proxyPort=4444"/>
+            <link href="http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/api/" offline="true" packagelistloc="${pkglistdir}/jdk"/>
+            <link href="http://download.oracle.com/docs/cd/E17477_01/javaee/1.4/api/" offline="true" packagelistloc="${pkglistdir}/servlet"/>
+            <link href="http://java.sun.com/products/javamail/javadocs/" offline="true" packagelistloc="${pkglistdir}/javamail"/>
+            <link href="http://bouncycastle.org/docs/docs1.6/" offline="true" packagelistloc="${pkglistdir}/bouncycastle"/>
+            <link href="http://i2p-javadocs.i2p/"/>
+        </javadoc>
+    </target>
+
+    <target name="clean">
+        <delete dir="ant_build" />
+        <delete file="${lib}/i2pbote.jar" />
+        <delete file="i2pbote.war" />
+        <delete file="i2pbote-plugin.war" />
+        <delete dir="plugin/plugin.tmp" />
+        <delete file="i2pbote.xpi2p" />
+        <delete file="i2pbote-update.xpi2p" />
+        <delete file="i2pbote.su3" />
+        <delete file="i2pbote-update.su3" />
+        <delete file="src.zip" />
+        <delete file="i2pinstall.exe" />
+        <delete dir="javadoc" />
+    </target>
+
+    <target name="distclean" depends="clean">
+        <delete>
+            <fileset refid="imaplibs"/>
+        </delete>
+        <delete file="${lib}/${subetha.filename}" />
+    </target>
+</project>

@@ -1,0 +1,25 @@
+[main]
+host = https://www.transifex.com
+lang_map = he: iw, id: in, pt_BR: pt-rBR, ru_RU: ru, sv_SE: sv, tr_TR: tr, uk_UA: uk, yi: ji, zh_CN: zh
+
+[I2P.android_bote]
+file_filter = app/src/main/res/values-<lang>/strings.xml
+source_file = app/src/main/res/values/strings.xml
+source_lang = en
+type = ANDROID
+minimum_perc = 50
+
+[I2P.android_bote_help_start]
+file_filter = app/src/main/res/raw-<lang>/help_start.html
+source_file = app/src/main/res/raw/help_start.html
+source_lang = en
+type = HTML
+minimum_perc = 50
+
+[I2P.android_bote_help_identities]
+file_filter = app/src/main/res/raw-<lang>/help_identities.html
+source_file = app/src/main/res/raw/help_identities.html
+source_lang = en
+type = HTML
+minimum_perc = 50
+

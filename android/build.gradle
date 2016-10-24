@@ -1,0 +1,19 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath files('gradle/libs/gradle-witness.jar')
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://raw.github.com/whispersystems/maven/master/preferencefragment/releases/"
+        }
+        mavenCentral()
+    }
+}

@@ -1,0 +1,70 @@
+Fixes:
+- Auto-comma the To: field when it loses focus
+- Fix tick over selected emails
+- Delete/read/unread/move actions on view email page that don't break everything
+- Prevent router option being changed while Bote is running
+- Remove internal router
+
+Tasks:
+- Show logged-in status in persistent notification
+- Intro and setup
+  - More layouts (tune for each screen size)
+- Subclass EmailListFragment for each default mailbox
+- First-run content of inbox should tell users about pull-to-refresh.
+- Cache Identicons for speed
+- Refactor code
+  - Reorganize for clarity
+  - Optimize use of Android lifecycles
+
+Silent Store approval checks to confirm/implement:
+- Known Vulnerabilities
+  - Apps will be tested to ensure that they are not susceptible to known
+    publicly disclosed vulnerabilities. For example:
+    - Heartbleed
+    - Poodle
+    - MasterKey
+    - Common Path Traversal attacks
+    - Common SQL Injection attacks
+- Network Security Protocols
+  - All Apps that require transmission of data from the App to a system that
+    does not exist on the device must use, at a minimum, TLS1.1 standards.
+    However, Blackphone would prefer the usage of TLS1.2.
+  - Apps must not use algorithms for cryptographic purposes that are considered
+    obsolete or outdated i.e. MD5, SHA1, RC4, DES, or any encryption algorithm
+    that is weaker than AES128.
+- Transport Layer Protection
+  - All network communication should be encrypted
+  - Not vulnerable to SSl Strip
+- Data Leakage
+  - No storage of sensitive data outside of application sandbox
+  - Files should not be created with MODE_WORLD_READABLE or MODE_WORLD_WRITABLE
+  - Copy & Paste will be evaluated on a case by case basis
+  - App logs should not contain sensitive information
+- Authentication and Authorization
+  - Validate that authentication credentials are not stored on the device
+  - Must use an approved password-based key derivation function ie. PBKDF2, scrypt
+- Data-at-rest Encryption
+  - Must use at a minimum AES128 with modes CCM or GCM
+  - Should not store the encryption key on the file system
+- Permission Checks
+  - The App must function with all permissions disabled
+  - Apps must not hard crash if a permission is disabled
+  - Apps should ask users to enable permissions that are disabled if needed to
+    function properly and explain why the permission is necessary
+- Privacy Policy
+  - Apps must have a privacy policy that details how customer data is used,
+    stored, shared, etc...
+  - Apps must be configured with the customer opted out by default
+  - App logs should not contain PII
+- Error Handling
+  - Apps should follow best-practices for error handling and logging
+
+Features:
+- Search
+- Fingerprints that users can compare to validate
+- Public address book lookup
+- "Write email" link in address book
+- "Empty trash" option in Trash folder
+- Overlay to explain
+- Option to run only when connected to an outlet
+- Option to run only when connected to wifi
