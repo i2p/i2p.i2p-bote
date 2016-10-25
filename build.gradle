@@ -1,14 +1,21 @@
 buildscript {
+    repositories {
+        jcenter()
+    }
     dependencies {
         classpath files('gradle/libs/gradle-witness.jar')
+        classpath 'com.android.tools.build:gradle:2.1.0'
     }
 }
 
 subprojects {
     apply plugin: 'witness'
-    apply plugin: 'java'
 
     repositories {
+        mavenLocal()
+        maven {
+            url "https://raw.github.com/whispersystems/maven/master/preferencefragment/releases/"
+        }
         jcenter()
     }
 
