@@ -3,7 +3,7 @@ apply plugin: 'java'
 archivesBaseName = 'i2pbote'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile project(':crypto')
 
     compile 'net.i2p:i2p:0.9.26'
     compile 'net.i2p.client:mstreaming:0.9.26'

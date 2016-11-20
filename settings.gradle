@@ -1,1 +1,1 @@
-include 'core', 'webapp', 'android'
+include 'crypto', 'core', 'webapp', 'android'
