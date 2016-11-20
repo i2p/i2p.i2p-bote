@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'witness'
 
 android {
     compileSdkVersion 22
@@ -14,8 +15,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             applicationIdSuffix '.debug'
@@ -33,13 +34,23 @@ android {
         exclude 'LICENSE.txt'
     }
     dexOptions {
+        javaMaxHeapSize '2g'
         jumboMode = true
     }
 }
 
 dependencies {
     // Local dependencies
-    compile project(':botejars')
+    compile(project(':core')) {
+        // Regular JavaMail currently doesn't work on Android
+        exclude group: 'com.sun.mail', module: 'mailapi'
+        // BouncyCastle is replaced with SpongyCastle
+        exclude group: 'org.bouncycastle'
+        // We use the I2P Android client library instead to get native libs
+        exclude group: 'net.i2p'
+        exclude group: 'net.i2p.client'
+    }
+    compile project(':crypto')
     compile fileTree(dir: 'libs', include: '*.jar')
 
     // Android Support Repository dependencies
@@ -49,7 +60,11 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.0'
 
     // Remote dependencies
-    compile 'net.i2p.android:client:0.7@aar'
+    compile 'net.i2p:router:0.9.27'
+    compile('net.i2p.android:client:0.9.27@aar') {
+        transitive = true
+    }
+    compile 'net.i2p.android:helper:0.9.1@aar'
     compile 'net.i2p.android.ext:floatingactionbutton:1.9.0'
     compile 'com.madgag.spongycastle:core:1.52.0.0'
     compile 'com.madgag.spongycastle:prov:1.52.0.0'
@@ -81,11 +96,13 @@ dependencyVerification {
             'com.android.support:support-v4:7bb6e40a18774aa2595e4d8f9fe0ae14e61670f71a1279272fb0b79b8be71180',
             'com.android.support:appcompat-v7:2d5867698410b41f75140c91d6c1e58da74ae0f97baf6e0bdd1f7cc1017ceb2c',
             'com.android.support:recyclerview-v7:3a8da14585fa1c81f06e7cef4d93a7641f0323d8f984ff9a7bd7a6e416b46888',
-            'net.i2p.android:client:61f5a54b3c8464a5d2a4df65d00cc32a40cef935cad57e0075e98a4b5625ff30',
+            'net.i2p:router:74fa6ee310f5e089c0ccf7d9e844ccf0e180f23bf33e068778e7288aa9e6509a',
+            'net.i2p.android:client:88de00330c0f7a47adffb4b6f156e661c819df7073bbafe2d48249e38577df85',
+            'net.i2p.android:helper:a1087507fa28ef3570e6f6ad0169bc36f6160726a58c4ece39387bbc0249a1a0',
             'net.i2p.android.ext:floatingactionbutton:b41eae5fe6be599e3fade00273521b0914f2e199d5f04c50fa34cfe935347f76',
             'com.madgag.spongycastle:core:07a401edbe26e1028e2324754557b741cc57306008df7b71a9e12ec32d65be8f',
             'com.madgag.spongycastle:prov:becbb70797b0103517693d2a97ce93174cc4d1f732897ed965a24e32dd99503e',
-            'com.mcxiaoke.viewpagerindicator:library:470bbd2bec1ede64ad21efd6f02676807d22f1b526c4ac6a5b41a428c6e47e67',
+            'com.mcxiaoke.viewpagerindicator:library:1e8aad664137f68abdfee94889f6da3dc98be652a235176a403965a07a25de62',
             'com.google.zxing:core:7fe5a8ff437635a540e56317649937b768b454795ce999ed5f244f83373dee7b',
             'com.google.zxing:android-integration:0de037a73138033c4a03cdbca5d5728ef65a026ffb89afce071105f43a98ee0e',
             'com.androidplot:androidplot-core:777b54dd98b8dedc5f3fcc95018eece1188f6c692dcbd5b7744af175e15d70bd',
@@ -98,7 +115,7 @@ dependencyVerification {
 
 project.ext.i2pbase = '../i2p.i2p'
 def Properties props = new Properties()
-def propFile = new File(project(':botejars').projectDir, 'local.properties')
+def propFile = new File(project(':android').projectDir, 'local.properties')
 
 if (propFile.canRead()) {
     props.load(new FileInputStream(propFile))

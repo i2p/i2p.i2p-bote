@@ -4,13 +4,11 @@ buildscript {
     }
     dependencies {
         classpath files('gradle/libs/gradle-witness.jar')
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.2.2'
     }
 }
 
-subprojects {
-    apply plugin: 'witness'
-
+allprojects {
     repositories {
         mavenLocal()
         maven {
@@ -18,7 +16,9 @@ subprojects {
         }
         jcenter()
     }
+}
 
+configure([project(':core'), project(':webapp')]) { project.afterEvaluate {
     version = '0.4.3'
     jar {
         manifest {
@@ -34,4 +34,4 @@ subprojects {
             ac.options.bootClasspath = bootClasspath
         })
     }
-}
+}}

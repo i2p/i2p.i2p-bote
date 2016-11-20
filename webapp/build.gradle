@@ -1,4 +1,5 @@
 apply plugin: 'war'
+apply plugin: 'witness'
 
 archivesBaseName = 'i2pbote'
 

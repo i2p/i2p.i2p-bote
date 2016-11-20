@@ -38,13 +38,12 @@ Gradle will pull dependencies over the clearnet by default. To use Tor, create a
 
 2. Download the Android SDK. The simplest method is to download Android Studio.
 
-3. Check out the `i2p.i2p-bote` and `i2p.i2p-bote.android` repositories.
+3. Check out the `i2p.i2p-bote` repository.
 
-4. Create a `local.properties` file in `i2p.i2p-bote.android/botejars` containing:
+4. Create a `local.properties` file in `i2p.i2p-bote/android` containing:
 
     ```
     i2pbase=/path/to/installed/i2p
-    botesrc=/path/to/i2p.i2p-bote
     ```
 
 5. If you want to use a local copy of the I2P Android client library, install it in your local Maven repository with:
@@ -56,7 +55,7 @@ Gradle will pull dependencies over the clearnet by default. To use Tor, create a
 
 ### Building from the command line
 
-1. Create a `local.properties` file in `i2p.i2p-bote.android` containing:
+1. Create a `local.properties` file in `i2p.i2p-bote` containing:
 
     ```
     sdk.dir=/path/to/android-studio/sdk
@@ -64,17 +63,17 @@ Gradle will pull dependencies over the clearnet by default. To use Tor, create a
 
 2. `gradle assembleDebug`
 
-3. The APK will be placed in `i2p.i2p-bote.android/app/build/apk`.
+3. The APK will be placed in `i2p.i2p-bote/android/build/apk`.
 
 ### Building with Android Studio
 
-1. Import `i2p.i2p-bote.android` into Android Studio. (This creates the `local.properties` file automatically).
+1. Import `i2p.i2p-bote` into Android Studio. (This creates the `local.properties` file automatically).
 
 2. Build and run the app (`Shift+F10`).
 
 ### Signing release builds
 
-1. Create a `signing.properties` file in `i2p.i2p-bote.android` containing:
+1. Create a `signing.properties` file in `i2p.i2p-bote` containing:
 
     ```
     STORE_FILE=/path/to/android.keystore
