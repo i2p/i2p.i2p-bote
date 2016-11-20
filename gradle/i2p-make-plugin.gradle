@@ -83,6 +83,8 @@ class I2PPlugin implements Plugin<Project> {
         project.configurations.runtime.filter { lib -> !(
             // These are all in the standard classpath
             lib.name.startsWith('i2p-') ||
+            lib.name.startsWith('javax.servlet-') ||
+            lib.name.startsWith('javax.servlet.jsp-') ||
             lib.name.startsWith('mstreaming-') ||
             lib.name.startsWith('streaming-')
         )}
