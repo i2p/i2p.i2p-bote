@@ -168,8 +168,10 @@ i2p {
         minI2PVersion '0.9.24'
         minJavaVersion '1.6'
 
-        webapp {
-            includeTaglib true
+        console {
+            webapp {
+                includeTaglib true
+            }
         }
     }
 }

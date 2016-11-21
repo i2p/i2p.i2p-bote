@@ -123,7 +123,8 @@ class I2PPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.extensions.create('i2p', I2PExtension)
         project.i2p.extensions.create('plugin', I2PPluginExtension)
-        project.i2p.plugin.extensions.create('webapp', I2PPluginWebappExtension)
+        project.i2p.plugin.extensions.create('console', I2PPluginConsoleExtension)
+        project.i2p.plugin.console.extensions.create('webapp', I2PPluginConsoleWebappExtension)
 
         def pluginBuildDir = "$project.buildDir/plugin.tmp"
         def tmpPluginConfig = "$pluginBuildDir/plugin.config"
@@ -173,7 +174,7 @@ class I2PPlugin implements Plugin<Project> {
             project.delete(tmpWebappsConfig)
             File file = new File(tmpWebappsConfig)
             file << 'webapps.' << project.archivesBaseName << '.classpath='
-            if (project.i2p.plugin.webapp.includeTaglib) {
+            if (project.i2p.plugin.console.webapp.includeTaglib) {
                 file << '$I2P/lib/jstl.jar,$I2P/lib/standard.jar,'
             }
             file << pluginLibs(project).collect { lib ->
@@ -181,7 +182,7 @@ class I2PPlugin implements Plugin<Project> {
             }.join(',')
             file << System.getProperty('line.separator')
             file << 'webapps.' << project.archivesBaseName << '.startOnLoad='
-            file << project.i2p.plugin.webapp.startOnLoad
+            file << project.i2p.plugin.console.webapp.startOnLoad
         }
 
         project.task('packWebapp', type: Pack200Task) {
@@ -349,7 +350,10 @@ class I2PPluginExtension {
     def String maxInstalledVersion
 }
 
-class I2PPluginWebappExtension {
+class I2PPluginConsoleExtension {
+}
+
+class I2PPluginConsoleWebappExtension {
     def boolean startOnLoad = true
     def boolean includeTaglib = false
 }
