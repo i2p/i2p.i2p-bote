@@ -3,6 +3,7 @@
 -dontpreverify
 -dontshrink
 
+-dontwarn com.sun.mail.handlers.handler_base
 -dontwarn java.awt.**
 -dontwarn java.beans.Beans
 -dontwarn javax.naming.**

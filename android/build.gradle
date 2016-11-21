@@ -42,8 +42,8 @@ android {
 dependencies {
     // Local dependencies
     compile(project(':core')) {
-        // Regular JavaMail currently doesn't work on Android
-        exclude group: 'com.sun.mail', module: 'mailapi'
+        // Replaced with Android-specific JavaMail
+        exclude group: 'com.sun.mail'
         // BouncyCastle is replaced with SpongyCastle
         exclude group: 'org.bouncycastle'
         // We use the I2P Android client library instead to get native libs
@@ -60,6 +60,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.0'
 
     // Remote dependencies
+    compile 'com.sun.mail:android-mail:1.5.6'
+    compile 'com.sun.mail:android-activation:1.5.6'
     compile 'net.i2p:router:0.9.27'
     compile('net.i2p.android:client:0.9.27@aar') {
         transitive = true
@@ -96,6 +98,8 @@ dependencyVerification {
             'com.android.support:support-v4:7bb6e40a18774aa2595e4d8f9fe0ae14e61670f71a1279272fb0b79b8be71180',
             'com.android.support:appcompat-v7:2d5867698410b41f75140c91d6c1e58da74ae0f97baf6e0bdd1f7cc1017ceb2c',
             'com.android.support:recyclerview-v7:3a8da14585fa1c81f06e7cef4d93a7641f0323d8f984ff9a7bd7a6e416b46888',
+            'com.sun.mail:android-activation:61c18cfff09374e90d5168daf40b3d50d77bed8bc0b071124c064ecc3b157506',
+            'com.sun.mail:android-mail:ab177c3119400c661a026febe0ed84b8661ca61dbde8cbaad1a3ab507d4e5fb8',
             'net.i2p:router:74fa6ee310f5e089c0ccf7d9e844ccf0e180f23bf33e068778e7288aa9e6509a',
             'net.i2p.android:client:88de00330c0f7a47adffb4b6f156e661c819df7073bbafe2d48249e38577df85',
             'net.i2p.android:helper:a1087507fa28ef3570e6f6ad0169bc36f6160726a58c4ece39387bbc0249a1a0',
