@@ -1,0 +1,562 @@
+<div>
+<h1>Benutzerhandbuch</h1>
+
+<nav><p><a href="#Introduction">1. Einführung</a></p>
+<p><a href="#How-To">2. I2P-Bote anwenden</a></p>
+<p><a href="#Starting">2.1. I2P-Bote starten</a></p>
+<p><a href="#Creating-Identities">2.2. Erstellen einer Identität</a></p>
+<p><a href="#Sending-Receiving">2.3. E-Mails senden und empfangen</a></p>
+<p><a href="#Address-Book">2.4. Lokales Adressbuch</a></p>
+<p><a href="#Settings">2.5. Einstellungen (und was sie bedeuten)</a></p>
+<p><a href="#Gateway">2.6. E-Mail-Gateway ins Internet</a></p>
+<p><a href="#Considerations">3. Mögliche Anonymität</a></p>
+<p><a href="#Troubleshooting">4. Problemlösung</a></p>
+<p><a href="#Technical-Concept">5. Technisches Konzept</a></p>
+<p><a href="#Technical-Details">6. Technische Details</a></p>
+<p><a href="#Terminology">7. Terminologie/Übersicht der Themen</a></p>
+<p><a href="#Credits">8. Dank an</a></p>
+</nav><h2 id="Introduction">1. Einführung</h2>
+
+<p>I2P-Bote ist eine einfach zu verwendende, hoch-anonyme, sichere, E-Mail-Anwendung für I2P.  Sie ist ein voll dezentralisiertes System, welches ein 
+Peer-to-Peer-Netzwerk formt / erstellt und unabhängig von Servern ist. 
+Sie basiert auf der aktuellsten Version des Anonymisierungsnetzwerk I2P 
+mit niedriger Latenz bei letzten Wissensstand. I2P fügt dabei optional ein 
+Mixminion-ähnlichen Netzwerklayer mit hoher Latenz hinzu und das bei 
+gleichzeitiger Vermeidung der Nachteile eines Niedrig-Latenz-Netzwerkes. </p>
+
+<p>Daher profitiert I2P-Bote von der Anonymität, die durch I2P bereitgestellt 
+wird und es generiert seine eigene Anonymität durch Hinzufügen einer 
+weiteren Netzwerkschicht (overlay network).</p>
+
+<p>Dieses Konzept der geschichteten Anonymität ist, was I2P-Bote so flexibel 
+macht: es kann so konfiguriert werden, dass es extrem anonym und langsam
+ ist, oder weniger anonym, aber schneller und effizienter. Auf jeden Fall stellt 
+I2P-Bote für beide, den Sender und Empfägner immer ein hohes Mass an 
+Anonymität so wie Ende-Zu-Ende-Verschlüsselung bereit. Falls nicht 
+vorgesehen ist, E-Mails vom regulären Internet zu senden oder zu 
+emfpangen, dann werden von ALLEN E-Mails - dem Körper, Anhänge und 
+der Kopf (Betreff, Datum, Zeit, Senderadresse, [&hellip; ?]), ausser der 
+Empfängeradresse automatisch und transparent Ende-zu-Ende-Verschlüsselt. 
+Die Empfängeradresse ist nur für den letzten Node der Mail-Route sichtbar, 
+der die Pakete in das KAD-Netzwerk speichert und für die entsprechenden 
+peichernden Nodes, aber sie können den Inhalt der Mail nicht lesen, noch 
+wer sie sandte oder empfängt. </p>
+
+<p>I2P-Bote bietet die Option, Ihre Kommunikation sogar noch sicherer zu machen, 
+und zwar durch die Einstellung der Mail-Routen mit hoher Latenz, dies jedoch zu 
+Lasten der Performance. Anwender, deren Ziel es ist, dass Ihre Mails so schnell wie 
+möglich ankommen, können die Mail Routen abschalten und verwenden das 'direkte' 
+Senden über I2P. Es ist garantiert, dass Sie niemals weniger anonym sind, als es über 
+die Standard I2P Verbindungen gegeben ist. 
+
+</p>
+
+<p>Um ein hohes Mass an Alltagstautlichkeit zu gewährleisten, haben wir die Möglichkeit des Einsatzes von Email-Clients wie Thunderbird, Evolution oder Kmail  geschaffen, so dass man sich keine Gedanken darüber machen müss, welche zusätzlichen Informationen diese Programme in Ihren Kopfzeilen versenden.  Darüber hinaus gibt es ein Web Interface, welches es ermöglicht, Ihre eigenen Einstellungen und Identitäten zu verwalten. </p>
+
+<h2 id="How-To">2. I2P-Bote benutzen</h2>
+
+<h3 id="Starting">2.1. I2P-Bote starten</h3>
+<p>Nach dem Start von I2P-Bote (Standard ist Start nach jedem Hochfahren 
+des I2P-Routers) dauert es knapp über drei Minuten, bis alles läuft.  </p>
+
+<p>Also siehe 'Netzwerkstatus' auf der linken Seite. Er sollte 'Connected' 
+anzeigen. </p>
+
+<p>Um I2P-Bote zu verwenden, muss zunächst eine neue Identität
+erstellt werden.</p>
+
+<h3 id="Creating-Identities">2.2. Erstellen einer Identität</h3>
+<p>Clicke auf 'Identitäten' auf der linken Seite, dann drücke den Button 
+'Neue Identität'</p>
+
+<p>Geben Sie mindestens einen 'öffentlichen Name' ein und drücken Sie 'Erstellen'. Das ist alles, was es braucht, um eine Identität zu erstellen. </p>
+
+<p>Der öffentliche Name ist der Name, den Sie für diese Identität sehen. Dies 
+ist nützlich wenn Sie über unterschiedliche Identitäten verfügen um mit 
+unterschiedlichen Benutzern zu kommunizieren oder aufgrund anderer Ziele. 
+Er wird als Sendername an den Email-Empfänger gesendet. Es besteht dabei 
+keine Notwendigkeit, Unverwechselbarkeit. </p>
+
+<p>(Da Sie hier jeden Namen wählen können - kann jeder sich HungryHobo 
+nennen) - es ist für den Empfänger nicht geeignet, um festzustellen, ob 
+zwei Mails vom gleichen Abstender stammen. Aus diesem Grund wird 
+der Name im lokalen Adressbuch gespeichert (es gibt nur genau einen 
+Name je Zeiladresse), der, sofern gegeben, angezeigt wird. In der 
+"Bekannt"-Zeile erscheint eine grüne Markierung, die aufzeigt, dass es sich 
+sich um den lokal bekannten Name handelt. Wenn im lokalen Adressbuch 
+keine Ziel-Adresse gespeichert ist, dann wird der vom Sender spezifizierte 
+Name mit einem Präfix im Mail Client angezeigt. 
+</p>
+
+<p>Falls gewünscht, können jetzt die anderen Felder ausgefüllt werden. </p>
+
+<p>'Beschreibung' - dieses Feld ist lokal und zur Verfügung des Anwenders. 
+Wenn zusätzliche Information zu dieser Identität hinzugefügt werden, 
+soll, dann kann dies hier erfolgen. </p>
+
+<p>Email-Adresse - dieses Feld wird noch nicht verwendet.</p>
+
+<p>Wähle eine der gegebenen Verschlüsselungs-Algorithmen. Im Zweifel, 
+kann der Standard belassen werden. </p>
+
+<p>Sie können auf den Name einer Ihre Identitäten klicken und den langen 
+Schlüssel kopieren, der unter 'Email-Zieladresse' angezeigt ist. Dies ist 
+Ihre I2P-Bote E-Mail-Adresse. Wenn Sie es jemand ermöglichen wollen, 
+Ihnen eine Email zu schreiben, dann müssen Sie ihm diesen langen 
+Schlüssel geben. </p>
+
+<p>Sie können nun I2P-Bote-Mails senden und empfangen.</p>
+
+<p>Aber es sollte ein Blick auf die I2P-Bote-Einstellungen geworfen werden, um zu sehen, ob Sie Ihren Ansprüchen entsprechen. </p>
+
+<p>(Sie können ebenfalls unterschiedliche Identitäten erstellen und jeder 
+dieser individuelle Einstellungen zordnen.)</p>
+
+<h3 id="Sending-Receiving">2.3. E-Mails senden und empfangen</h3>
+<p>Sie müssen die I2P-Bote E-Mail-Ziel-Adresse des Nutzers haben, dem 
+Sie eine Mail zusenden wollen. </p>
+
+<p>Um eine Nachricht zu senden clicken sie auf 'Neu', wählen Sie im Feld 
+'Von' Ihre eigene Sender-Identität oder 'Anonym'; geben Sie dann im Feld 
+'Von' die E-Mail-Zieladresse in das Empfängerfeld oder alternativ eine 
+Adresse ein.  </p>
+
+<p>(Alternativ können Sie den 'Adressbuch'-Button unmittelbar unter der 
+Linie klicken um von Email-Destinationen auszusuchen, die lokal in Ihrem 
+Adressbuch gespeichert sind. Markieren Sie dein / die Benutzer, an den 
+Sie Ihre Mail senden wollen und drücken Sie den 'Empfänger 
+hinzufügen'-Button.)</p>
+
+<p>Sie können mehrfache Empfänger hinzufügen und 'An' ändern in 'CC' oder 'BCC'.</p>
+
+<p>Die Schaltfläche '+' fügt zusätzliche Empfängerzeilen hinzu.</p>
+
+<p>Schreiben Sie jetzt Ihre Bote Mail und drücken Sie 'Senden' zum senden 
+oder 'Speichern',um sie als Entwurf in Ihrem 'Entwürfe'-Ordner oder 
+einem anderen Ordner [noch nicht implementiert] zu speichern.</p>
+
+<p>Klick auf 'Senden' placiert Ihre Email im Outbox-Ordner und Sie können 
+I2p-Bote weiter verwenden, z.B. um eine weitere EMail zu schreiben oder 
+andere Dinge zu tun; I2P-Bote sendet Ihre Email nun. Wenn gesendet, dann 
+wird die Nachricht automatisch in Outbox entfernt und im Ordner Gesendet 
+eingestellt. Dies bedeutet, Ihre Email ist absolut auf dem Weg zu Ihrem Ziel 
+(eventuell verzögert durch eine Delay-Time, die aber als Standard-Einstellung
+ nicht gesetzt ist)</p>
+
+<p>I2P-Bote-Emails sind automatisch  unterschrieben, es sei denn Sie senden 
+ohne Absenderidentität. </p>
+
+<p>You can also send e-mails without specifying <em>any</em> sender
+identity/destination/address, just select 'Anonymous' in the scroll-down
+menu 'From:'.</p>
+
+<p>In der Standardeinstellung wird I2P-Bote automatisch neue Nachrichten abfragen und alles was Sie machen müssen um zu sehen, ob Nachrichten eingegangen sind, ist in Ihrer Inbox nachzusehen (Link 'Inbox' links).</p>
+
+<p>Sie können manuell prüfen, ob Emails vorhanden sind, indem Sie auf den 'Check Mail' Button klicken. Dies ist eine globale Prüfung auf Emails für alle Ihre Identitäten, ausser denen, die Sie für diese Funktion ausgeschlossen haben [letztere Funktion ist noch nicht implementiert].</p>
+
+<p>Die Anzahl der ungelesenen Emails wird in Klammern neben dem Ordnername in der Seitenleiste angezeigt. </p>
+
+<p>Clicken Sie auf 'Inbox', um die Liste der eingegangenen Emails angezeigt zu bekommen. Sie sehen zwei Spalten mit x'en oder gründen Haken. Letztere zeigen Ihnen ob eine Email eine gültige Signatur enthält und ob sich authentisch ist und ob die Email-Destinatination des Senders lokal bekannt ist (Signatur), üblicherweise in Ihrem Adressbuch enthalten ist. Darüber hinaus bedeuten zwei grüne Haken neben Ihrer Email-Eingabe, dass die Email über eine gültige Signatur verfügt und dass diese Signatur lokal bekannt ist. </p>
+
+<p>Wenn Sie einen bestimmten Name in Ihrem Adress-Buch haben und Sie eine Mail von dieser Identität erhalten, in dem Wissen, dass der grüne Haken nicht angezeigt wird, dann ist es eine andere Adresse, die die Mails gesendet und signiert hat; der Absender hat dann einfach nur den gleichen Name gewählt, den Sie Ihren Kontakten zugewiesen haben.&nbsp;</p>
+
+<p>Wenn ein grüner Haken für 'Sig' angezeigt wird, dann wurde die Mail korrekt für den Sender signiert und Sie können den Absender Ihrem Adressbuch unter einem neuen Name hinzfügen; dieser wird ab sofort als der Sender angezeigt.&nbsp; &lt;br&gt;</p>
+
+<p>Natürlich hat eine Mail ohne Sender-Angabe ('Anonym' ist als Sender angezeigt) hat zwei x'e.</p>
+
+<p>Clicken einer der in Ihrer Inbox angezeiten Emails öffnet die Mail.</p>
+
+<p>Das gleiche gilt für andere Ordner. </p>
+
+<p>(Aufgrund der verteilten Natur von I2P-Bote dauert es eine Zeit um auf Emails zu prüfen oder sie herungerzuladen; bei aktivierten Mail-Routen noch länger. Es ist nicht erforderlich den Browser offen zu lassen, lassen Sie I2P-Bote einfach als Hintergrundprozess laufen - dieses unterstützt auch Ihre Anonymität. ) &lt;br&gt;</p>
+
+<h3 id="Address-Book">2.4. Lokales Adressbuch</h3>
+<p>Wenn Sie den I2P-Bote-Email-Schlüssel von jemandem erhalten haben, dem Sie öfters schreiben wollen, dann geht es gut von der Hand, diesen Schlüssel in Ihr lokales Adress-Buch aufzunehmen (Link auf der linken Seite), und zwar unter einem Name Ihrer eigenen Wahl für diesen Kontakt. Fügen Sie die betreffende Email-Zeil-Adresse in die entsprechenden Zeilen ein, dann speichern. &lt;br&gt;</p>
+
+<p>You should normally save destinations to your address book, so that next time
+you get a mail from the same sender it will be shown to be from the same,
+locally known sender ('Loc' is checked) and a mail sent by someone else who
+is just using the same user name will be marked as NOT known locally (an x in
+web-UI's 'Know' column or {UNK} before the sender address in IMAP), so you know
+it's a new/different one.</p>
+
+<h3 id="Settings">2.5. Einstellungen (und was sie bedeuten)</h3>
+<p>Under settings you can choose the I2P-Bote interface's <em>language</em>
+(currently English or German) and decide whether even with a non-English
+language setting everything that will be automatically added to an e-mail when
+replying will nonetheless stay in English, so that the recipient does not know
+your I2P-Bote is set to a different language. Otherwise the recipient could
+guess about your nationality which would decrease your anonymity.</p>
+
+<p>Here you can also adjust the interval for <em>automatic checking</em> of
+e-mails and decide whether or not to send any <em>time stamp</em> with your
+mails, indicating date and time when the mail was sent. The time stamps are
+always in UTC.</p>
+
+<p>(When using mail routes, the timestamps are automatically disabled.) [not
+yet implemented]</p>
+
+<p>automatischer Abruf von E-Mails:</p>
+
+<p>For more comfort there is the 'Check for mail every XX minutes'
+option.</p>
+
+<p>Here you can specify how often your I2P-Bote app should try to fetch unread
+mails for your identities. This can be set on a per-identity basis [not yet
+implemented]</p>
+
+<p>If you specify a random offset, then it will not check _exactly_ every XX
+minutes, but rather every (XX+-offset*XX) minutes, i.e. after a randomly chosen
+time between (1-offset)XX minutes and (1+offset)XX minutes. [not yet
+implemented]</p>
+
+<p>You can also totally disable the automatic checking for a given
+identity.</p>
+
+<p>(If you are not sure about these settings, the defaults should be ok for
+you.)</p>
+
+<p><em>Mail routes</em> are chains of I2P-Bote nodes acting as relays/routers for
+other peers and obeying to per-hop delays, thus providing the high-latency
+transport for increased anonymity.</p>
+
+<p>You can specify the number of nodes (here called hops) that should be
+chained to form a mail route. Then each of the e-mail packets sent by the
+identity that has mail routes enabled will go through a mail route of n hops
+before being stored. You can set a delay for each hop individually, as no hop
+should know the time a packet will wait at the next hop, making the timing
+unpredictable. [individual per-hop and per-identity setting of delays not yet
+implemented]</p>
+
+<p>As delay you can specify a time frame (e.g. 60-600 minutes) - then a
+random wait time between the two values will be chosen for the packet at that
+hop - or a fix time, then the packet will be forwarded at that fix time, e.
+g. noon UTC, no matter when it arrived. [fix time not yet implemented]</p>
+
+<p>(When using mail routes, the timestamps are automatically disabled.) [not yet
+implemented]</p>
+
+<p>Under <em>Mixing anonymity</em> (minimum threshold number of relay
+packets that will be sent) you can specify a threshold. As your node can only
+act reliably as a mix if there are enough foreign packets to mix and to blend
+own packets with, it will accumulate messages whose delay time is over until
+reaching this lower limit. Only when it is surpassed, your node starts sending
+them out in random order. [Not yet implemented]</p>
+
+<p><em>exclude identity from global checking</em> [Not yet implemented]</p>
+
+<p>If you enable this option for one of your identities, then this one will not
+be affected by the global manual checking for mails nor by any global automatic
+mail checking.</p>
+
+<h3 id="Gateway">2.6. E-Mail-Gateway ins Internet</h3>
+<p>[NOCH NICHT VOLLSTÄNDIG IMPLEMENTIERT!]</p>
+
+<p>In order to be able to send bote mails to the internet and to receive
+e-mails from the internet with your I2P-Bote application, you must first
+register with an appropriate mail gateway. Currently there is only one:
+postman.</p>
+
+<ol>
+<li><p>First, go to
+<a href="http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?page_id=16</a>
+and register an account. If you already have an account or if you have just
+created one as described, proceed with #2.</p></li>
+
+<li><p>For an existing account you can add your I2P-Bote mail destination, so
+that e-mails coming from the internet are forwarded to your I2P-Bote app. To do
+so go to
+<a href="http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</a>
+and provide the requested information.</p></li>
+</ol>
+<p>Now all e-mails sent to that address
+(<a href="mailto:name@i2pmail.org">name@i2pmail.org</a> from the outer internet
+or <a href="mailto:name@mail.i2p">name@mail.i2p</a> for mails from other postman
+subscribers) will be forwarded via the I2P-Bote network to your I2P-Bote
+app.</p>
+
+<p>(N.B. When using the <a href="mailto:name@mail.i2p">name@mail.i2p</a> or
+<a href="mailto:name@i2pmail.org">name@i2pmail.org</a> addresses instead of the
+long addresses, e-mails are no longer end-to-end encrypted. Therefore, it is
+recommended to exchange the I2P-Bote mail destination keys for communicating
+within the network. Postman has offered high quality services in I2P for quite
+a while already, but be aware that it's a centralized point that might go
+offline one day, or worse be taken over by an evildoer that will manipulate
+mails. As for network-internal e-mail communication, I2P-Bote makes sure that
+if you use the address keys, nobody can tamper with the mails you send or
+receive.)</p>
+
+<p>If you want not only to receive e-mails from the internet, but also enable
+sending e-mails from I2P-Bote to the internet, you must provide your I2P-Bote
+client with the gateway's mail destination key, so that your I2P-Bote knows
+where to send those mails to.</p>
+
+<p>You can do this under 'Settings'. This gateway will allow I2P-Bote users
+to communicate with the standard e-mail users on the internet as well as with
+users of postman's classical i2pmail service (@mail.i2p).</p>
+
+<p>In order to fight abuse, there will be a limitation of the number of e-mails
+you can send out to the internet; just like for normal postman mail service
+users: If an I2P-Bote user exceeds the quota with outgoing e-mails, the
+additional e-mails will be sent back as bounce.</p>
+
+<h2 id="Considerations">3. Überlegungen über Anonymität</h2>
+<p>Don't send identifying information about you (name, address, geographic
+location, time zone, age, websites you have just visited or blogged about, user
+names, ip numbers, I2P router id, I2P-Bote id, social security number, credit
+card number, &hellip;, copies of your passport, driver's license, home rental
+contract, photos (nude or with clothes), documents that contain your
+username in author's settings, and many many more)!</p>
+
+<p>Wenn möglich,</p>
+<ul>
+<li><p>lassen Sie I2P-Bote 24/7 laufen,</p></li>
+<li><p>use mailroutes with randomized per-hop delays and/or per-hop fixed send
+times, [not yet <em>fully</em> implemented]</p></li>
+<li><p>verwenden Sie ein langes Abrufintervall,</p></li>
+<li><p>verwenden Sie eine lange lokale Verzögerung für eigene Pakete,</p></li>
+<li><p>verwende große Intervalle nach zufälligem Muster [noch nicht 
+implementiert]</p></li>
+</ul>
+<p>You can suppress the sending of date and time in the e-mails' header.</p>
+
+<p>When you reply to an e-mail, certain markers are added to show the recipient
+that this is a reply, such as 'Re: [subject of the mail you're replying to]' or
+'[username] wrote:'. Those are different for the languages you can chose from in
+your language settings. However, if you don't want the recipient to know what
+language you have set, you can suppress translation of these markers, so that
+they will be in English, no matter what you language setting is. In order to do
+so, mark 'Use English for text added to outgoing email ('Re:', 'wrote:',
+etc.)'</p>
+
+<p>Be careful with the contents you send! Don't include personal information or
+information that only you can possess. Don't write 'I'm going to bed now, it's
+late' when including time stamps.</p>
+
+<p>The language in which you write your e-mails, your style and formulations
+can also be of interest for an attacker.</p>
+
+<p>I2P-Bote also offers the possibility to use different e-mail identities.
+Suppose one of you contacts learns about your identity, as you forgot to erase
+identifying information in a secret document you have sent to him. Now if this
+e-mail's recipient was to collaborate with others you are in contact with, he
+could tell them the real world identity belonging to the Bote address he knows
+from you. Thusly, if you communicate with those others using the same Bote
+address, they will know who you are. Not so, if you used a different address
+for sending mails to them.</p>
+
+<h2 id="Troubleshooting">4. Problemlösung</h2>
+<h3 id="Unlimited-Strength-Crypto">4.1. Notification about JCE Unlimited Strength Jurisdiction Policy files</h3>
+<p>If you have a notification at the bottom of your screen about JCE Unlimited
+Strength Jurisdiction Policy files, it means that your Java installation is
+restricted from using the strong cryptography that I2P-Bote requires.</p>
+
+<p>You can enable the strong cryptography by following the steps below:</p>
+<ol>
+<li><p>Download the JCE Unlimited Strength Jurisdiction Policy files from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Oracle's website</a>. You may need to use your regular browser.</p></li>
+<li><p>Packen Sie die heruntergeladene ZIP-Datei aus.</p></li>
+<li><p>Move the files <code>local_policy.jar</code> and <code>US_export_policy.jar</code> into the folder shown in the notification on your screen. Overwrite any existing files with the same names.</p></li>
+<li><p>I2P neu starten.</p></li>
+</ol>
+<p>Some countries have restrictions on the allowed strengths of cryptographic
+software. If you are unsure about the restrictions in your country, consult
+with a lawyer.</p>
+
+<h2 id="Technical-Concept">5. Technisches Konzept</h2>
+<p>I2P-Bote is an end-to-end encrypted, network-internal, fully decentralized
+(i.e. serverless) e-mail system. It supports different identities and does not
+expose e-mail headers. Currently, it is still alpha software. It can be
+accessed via web console, and it has IMAP and SMTP support, so bote-mails can
+be read and written by regular email clients. It is planned to guarantee
+additional anonymity by providing a high-latency transport option. All
+bote-mails are automatically end-to-end encrypted, so that there's no need to
+set up extra e-mail encryption (though you can do that), and bote-mails will be
+authenticated automatically. As it is decentralized, there is no e-mail server
+that could link different e-mail identities as communicating with each other
+(<em>profiling</em>): Even the nodes relaying the mails will not know the sender
+and apart from sender and receiver, only the end of the high-latency mail
+tunnel and the storing nodes will know to whom (anonymous identity) the mail is
+destined. The original sender can have gone offline long before the mail
+becomes available on the other side. This adds on the degree of anonymity that
+can be reached with I2P-Bote. For those who do not want high delays: All these
+settings are user-adjustable, so each user decides on how much anonymity he
+wants.</p>
+
+<p>I2P-Bote nodes store encrypted e-mails into a Kademlia DHT. Therefore, an
+e-mail can be sent through a number of other nodes (relays) for increased
+security, or directly to a set of storage nodes for faster delivery. The same
+applies to retrieving email.</p>
+
+<p>(When using mail routes, timestamps are automatically disabled.) [Retrieving
+via relays not yet implemented]</p>
+
+<p>All nodes are created equal: There are no 'supernodes' or designated
+relay/storage nodes. Everybody acts as a potential relay and storage node. The
+maximum amount of disk space used for relayed/stored email packets can be
+configured by the user.</p>
+
+<p>Before an email is sent to a relay, it is broken up into packets and
+encrypted with the recipient's public key. These packets are stored redundantly
+in a distributed hash table (DHT).</p>
+
+<p>They are kept for at least 100 days, during which the recipient can download
+them.</p>
+
+<p>Relay packets also expire after 100 days or more.</p>
+
+<p>If a node runs out of email storage space, and there are no old packets that
+can be deleted, the node refuses storage requests.</p>
+
+<p>Furthermore, I2P-Bote sanitizes the mail headers and does not allow any
+unneeded information to be transmitted, thus allowing the use of e-mail clients
+without prior checks of what this client sends in the mail headers.</p>
+
+<p>All the encryption, path choosing and profiling is done locally so that
+there is no trusted party involved.</p>
+
+<p>Not even for bootstrapping I2P-Bote depends on a central node, as it uses
+Seedless.</p>
+
+<p>Using I2P-Bote appropriately, that means keeping in mind the considerations
+given above and showing some common sense, nobody will be able to find out who
+or where you are. And if you are already being observed and your internet
+connection sniffed, the observer will not be able to find out what you send or
+receive or to whom you are sending to or receiving from or where your contacts
+are located.</p>
+
+<p>Let's go a bit more into detail:</p>
+
+<h3>Was I2P-Bote <em>versteckt</em>:</h3>
+
+<p>I2P-Bote hides both, the identity and location of sender and receiver, as
+well as those of intermediary nodes (relays and storing nodes), the content of
+your mails, their size, the number of mails you send.</p>
+
+<p>Only the recipient can know the sender's bote mail destination, and if he
+choses not to send his destination, not even the recipient will know it.</p>
+
+<p>Even if you send time stamps, your time zone will not be disclosed.</p>
+
+<p>Darüberhinaus verbirgt I2P-Bote:</p>
+<ul>
+<li><p>the fact that you run I2P-Bote</p></li>
+<li><p>the fact that you send a mail</p></li>
+<li><p>the fact that you receive a mail</p></li>
+<li><p>the time you send a mail</p></li>
+<li><p>the time you receive a mail</p></li>
+<li>
+<p>the upper limit of number of mails an unknown user receives</p>
+<ul>
+<li><p>an abstract user, no concrete one, just concluding its existence from
+the existence of the mail identity as he could always have more than one e-mail
+identity</p></li>
+</ul>
+</li>
+<li><p>the lower limit, as an identity also sends out test and dummy messages</p></li>
+</ul>
+<h3>What I2P-Bote <em>hides partially</em>:</h3>
+
+<p>The I2P-Bote address of the recipient will only be known to sender and
+recipient(s).</p>
+
+<p>In case of multiple recipients, each one will see all other recipients that
+the mail was addressed to via 'To:' or 'CC:'</p>
+
+<p>All entries that were under 'BCC:' will only be visible to the sender and
+this very recipient.</p>
+
+<p>The sent time will, if at all, only be visible to sender and
+recipient.</p>
+
+<h3>What I2P-Bote <em>can hide optionally</em>:</h3>
+<ul>
+<li><p>If mail routes are used, the time a bote mail is sent</p></li>
+<li><p>If mail routes are used, the time a bote mail is fetched. [not yet
+implemented]</p></li>
+<li><p>If the sender suppresses timestamps only the sender himself will know when
+he sent a mail.</p></li>
+</ul>
+<h3>Was I2P-Bote <em>nicht verstecken kann</em>:</h3>
+<p>I2P-Bote cannot hide the frequency a given identity checks for new mails nor
+the number of mails a given identity receives.</p>
+
+<h2 id="Technical-Details">6. Technische Details</h2>
+<p>Siehe techdoc.txt</p>
+
+<h2 id="Terminology">7. Terminology/Glossary of Terms</h2>
+
+<h3>I2P-Bote (Router-/Knoten-)Kennung:</h3>
+<p>This is the id an I2P-Bote router is known as. It is used for contacting
+this router, for storing, relaying and fetching mails, but also used in the
+hop-to-hop encryption and for simply contacting it via I2P, as it is at the
+same the I2P-Bote router's I2P tunnel destination. It is displayed to represent
+an I2P-Bote node in the stats.</p>
+
+<p>So the router id corresponds to the I2P destination (the address of an
+I2P-Bote node on the I2P network - there is no need to know it unless you are
+having problems connecting to other I2P-Bote nodes).</p>
+
+<h3>I2P-Bote E-Mail-Ziel:</h3>
+<p>The I2P-Bote e-mail destination (key) is an identifier by which somebody can
+be reached via I2P-Bote, so as the name states: an e-mail destination. Thus it
+is for I2P-Bote what an e-mail address is for standard e-mail system: The
+e-mail destination is the actual address for sending e-mails, for storing them
+into and for fetching them from the DHT. At the same time it used for the
+end-to-end encryption of e-mails, header information and attachments.</p>
+
+<p>An I2P-Bote e-mail destination is a Base64 string containing a public
+encryption key and a signature verification key. Example:</p>
+<pre>uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
+    In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
+    FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da
+    -nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9
+    HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ
+    gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3
+    SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp
+    HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD</pre>
+
+<p>I2P-Bote router/node id and I2P-Bote e-mail destinations look similar, but
+are completely independent of each other.</p>
+
+<h3>E-Mail-Adresse:</h3>
+<p>E-Mail-Adressen in I2P-Bote sind Verknüpfungen für E-Mail-Ziele.</p>
+
+<p>The e-mail address &lt;--&gt; e-mail destination mappings are stored in two
+places: the local address book and the distributed address directory [the
+latter not yet implemented].</p>
+
+<h3>I2P-Bote E-Mail-Identität:</h3>
+<p>The I2P-Bote e-mail identity is a set of an I2P-Bote e-mail destination key,
+the corresponding private keys and a name given to it by the user. This name
+will be sent with the destination key if you do not suppress sending
+information about the sender.</p>
+
+<p>However it will only be displayed for the recipient in case he does not have
+a name for this destination in his local address book.</p>
+
+<p>So technically speaking, an e-mail identity consists of four things:</p>
+<ul>
+<li><p>ein E-Mail-Ziel (z.B. zwei öffentliche Schlüssel)</p></li>
+<li><p>zwei private Schlüssel für das E-Mail-Ziel</p></li>
+<li><p>ein öffentlicher Name, der anderen Leuten in E-Mails gezeigt werden kann</p></li>
+<li><p>a description which is not shown to anybody but you (it helps you remember
+which e-mail identity you use for which purpose).</p></li>
+</ul>
+<p>An e-mail identity is not required for sending emails (although then only
+'Anonymous' can be selected for the 'sender' field).</p>
+
+<h3>Mailrouten:</h3>
+<p>Mail routes are an additional high-latency transport for I2P-Bote. For this,
+a chain of I2P-Bote nodes is built, acting as relays/routers for packets and
+obeying to individual per-hop delays. [still no individual setting for delays
+implemented]</p>
+
+<p><strong>BEWARE!</strong> If you choose this option - especially with many
+hops and / or long delay times, don't be surprised if your mail does not reach
+its destination too soon. It will, of course, take longer - up to several days!</p>
+
+<h2 id="Credits">8. Credits</h2>
+<p>Siehe die Seite <a href="about.jsp">Über</a>.</p>
+
+<h2>GENIESSEN SIE DAS BOTE-GEFÜHL!!</h2>
+</div>
