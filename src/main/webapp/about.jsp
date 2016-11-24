@@ -155,5 +155,9 @@
         <div class="contributor-name">kay</div>
         <div class="contributor-role"><ib:message key="Code fixes"/></div>
     </div>
+    <div>
+        <div class="contributor-name">Jonathan Cross</div>
+        <div class="contributor-role"><ib:message key="Usability improvement"/></div>
+    </div>
 
 <jsp:include page="footer.jsp"/>

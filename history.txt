@@ -1,6 +1,9 @@
 I2P-Bote Version History
 ------------------------
 
+0.4.4
+  * Improve identities list usability (thanks Jonathan!)
+
 0.4.3 (Released on Jan 28, 2016)
   * Re-enabled IMAP (ticket #1678)
   * Only bind IMAP to the configured address and port (ticket #1680)
