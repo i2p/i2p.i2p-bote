@@ -12,8 +12,7 @@
 <p><a href="#UsingGPG">Могу ли я использовать GPG/PGP с I2P-Bote?</a></p>
 <p><a href="#Susimail">Чем это отличается от Susimail?</a></p>
 <p><a href="#Comparison">Почему I2P-Bote лучше?</a></p>
-<p><a href="#Safeguards">How is my identity kept safe when I exchange mail with
-someone?</a></p>
+<p><a href="#Safeguards">Находится ли мой идентификатор в безопасности , когда я обмениваюсь с кем-либо почтой ?</a></p>
 <p><a href="#How">Как им пользоваться?</a></p>
 <p><a href="#EmailClients">Могу ли я пользоваться программами наподобие Thunderbird?</a></p>
 <p><a href="#Attachments">Могу ли я прикреплять файлы, и какое ограничение на них?</a></p>
@@ -21,7 +20,7 @@ someone?</a></p>
 <p><a href="#EmailDestination">Что, Destination  это моя электронная почта? Как насчет обычных адресов электронной почты?</a></p>
 <p><a href="#AddressLength">Почему адрес у почты такой длинный?</a></p>
 <p><a href="#AddressBook">Но я не могу запомнить тех длинных адресатов&hellip;</a></p>
-<p><a href="#MultipleIdentities">What's the point of using multiple mail identities?</a></p>
+<p><a href="#MultipleIdentities">В чём смысл использования нескольких почтовых идентификаторов?</a></p>
 <p><a href="#EncryptionTypes">Какой тип шифрования является наилучшим?</a></p>
 <p><a href="#Algorithms">Какие алгоритмы используются для симметричного шифрования, а какие для хеширования ?</a></p>
 <p><a href="#AntiSpam">У них есть анти-спам?</a></p>
@@ -38,7 +37,7 @@ inbox?</a></p>
 <p><a href="#Backups">Как я могу переместить свои параметры и и данные на другой 
 компьютер, или сделать резервную копию?</a></p>
 <p><a href="#MailRoutes">Каков <em>почтовый маршрут</em>?</a></p>
-<p><a href="#HighLatency">What does high-latency transport mean?</a></p>
+<p><a href="#HighLatency">Что такое high-latency transport?</a></p>
 <p><a href="#Latencies">Что здесь с задержками и как можно ими управлять (если вообще возможно)?</a></p>
 <p><a href="#WhyI2P">Если I2P-Bote сам по себе обеспечивает анонимность, зачем ему нужен I2P?</a></p>
 <p><a href="#WithoutRoutes">Насколько анонимно/безопасно I2P-Bote без почтовых маршрутов</a></p>
@@ -85,8 +84,7 @@ account and end-to-end encrypt your mails, but they are still not
 anonymous. You can use anonymous server-bound e-mails, yet they are
 not automatically end-to-end encrypted.</p>
 
-<p>Or you can use I2P-Bote in which your mails are anonymous and
-<em>automatically</em> end-to-end-encrypted.</p>
+<p>Или вы можете использовать I2P-Bote, в котором ваши почтовые сообщения анонимны и <em>автоматически</em> шифруются сквозным шифрованием.</p>
 
 <p>В отличие от стандартных почтовых систем нет никакой необходимости устанавливать дополнительное приложение для управления ключами. Все, в чем Вы нуждаетесь, уже там.</p>
 
@@ -104,9 +102,9 @@ that doesn't respect your privacy</a>, over an internet line that
 <a href="http://www.eff.org/issues/nsa-spying">is being spied on by
 shady agencies</a>, which would you say is more trustworthy?</p>
 
-<h3 id="HowItWorks">How does it work exactly?</h3>
-<p>See the <a href="userGuide.jsp#Technical-Concept">'Technical Concept'</a>
-section of the <a href="userGuide.jsp">User Manual</a>.</p>
+<h3 id="HowItWorks">Как это конкретно работает?</h3>
+<p>Смотри главу <a href="userGuide.jsp#Technical-Concept">'Техническую концепцию'</a>
+ <a href="userGuide.jsp">Руководства пользователя</a>.</p>
 
 <p>In short: I2P-Bote nodes form a P2P-network, relaying mail packets
 for one another and storing them into a DHT.</p>
@@ -176,7 +174,7 @@ intersection attacks.</p>
 <p>Способ распространения I2P-Bote - open source, гарантирует, что Вы сами можете 
 посмотреть его реализацию и проверить его на ошибки.</p>
 
-<p>*[not yet implemented]</p>
+<p>*[пока не реализовано]</p>
 
 <h3 id="How">Как им пользоваться?</h3>
 <p>Читайте <a href="userGuide.jsp">мануал</a> или смотрите другие вопросы и ответы здесь!</p>
@@ -238,7 +236,7 @@ has never been necessary.</p>
 I2P-Bote router id with your I2P-Bote mail dests since this might
 destroy the additional anonymity I2P-Bote itself generates!</p>
 
-<h3 id="AddressLength">Why are the e-mail addresses so long?</h3>
+<h3 id="AddressLength">Почему e-mail адреса такие длинные?</h3>
 <p>In I2P-Bote every mail is (automatically) encrypted. In order not
 to require you to exchange an e-mail address <b>and</b> a long key,
 we simply made that key the address. This comes with two additional
@@ -302,7 +300,7 @@ for hashing?</h3>
 in <a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">
 CBC</a> mode and <a href="http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.</p>
 
-<h3 id="AntiSpam">Are there any anti-spam measures?</h3>
+<h3 id="AntiSpam">У них есть анти-спам?</h3>
 <p>I2P-Bote does no active spam filtering, but the fact that mass
 emails have to be sent individually should discourage spammers.
 Another line of defense is
@@ -408,10 +406,10 @@ anonymity can be reduced.</p>
 <code>addressBook.txt</code>.</p>
 
 <h3 id="MailRoutes">Каков <em>почтовый маршрут</em>?</h3>
-<p>See: What does high-latency transport mean?</p>
+<p>Смотри: Что такое high-latency transport?</p>
 <!-- <p>(When using mail routes, the timestamps are automatically disabled.) [yet to be implemented]</p> -->
 
-<h3 id="HighLatency">What does high-latency transport mean?</h3>
+<h3 id="HighLatency">Что такое high-latency transport?</h3>
 <p>It means that you can enable an option where e-mail packets are not
 sent directly to storing nodes, but are relayed (forwarded) by
 other peers (who cannot read the e-mails, as they are encrypted
@@ -456,7 +454,7 @@ high level of protection.</p></li>
 it creates a lot of traffic that blends with I2P-Bote traffic.</p></li>
 <li><p>Even I2P-Bote relays are thus location-hidden.</p></li>
 </ul>
-<h3 id="WithoutRoutes">How anonymous/secure is I2P-Bote without mail routes?</h3>
+<h3 id="WithoutRoutes">Насколько анонимен/безопасен I2P-Bote без почтовых маршрутов?</h3>
 <p>Pretty anonymous and very secure.</p>
 
 <p>It then basically enjoys the same anonymity other apps have on I2P,
@@ -468,17 +466,20 @@ not protect you very reliably. I2P-Bote does its best to augment
 I2P anonymity with its high-latency transport option, which make –
 if enabled – I2P-Bote mails <em>paranoidly</em> anonymous.</p>
 
-<h3 id="OpenSource">Is I2P-Bote open source?</h3>
+<h3 id="OpenSource">У I2P-Bote открытый исходный код?</h3>
 <p>Естественно!</p>
 
-<blockquote>This software is licensed under the GPL version 3 (see
-licenses/GPLv3.txt), except for the BouncyCastle Provider which is
-licensed under the Bouncy Castle License (see
+<blockquote>Это программное обеспечение распространяется под лицензией GPL версии 3 (см.
+licenses/GPLv3.txt), кроме BouncyCastle Provider который распространяется под the Bouncy Castle License (см.
 licenses/BouncyCastle.txt).</blockquote>
 
-<p>(Both of which are free open source licences.)</p>
+<p>(Оба под свободными лицензиями)</p>
 
-<h3 id="Credits">Who made I2P-Bote?</h3>
+<p>The source code can be found in the <code>i2p.i2p-bote</code> branch of
+<a href="https://geti2p.net/en/get-involved/guides/new-developers#monotone">the I2P Monotone repository</a>.
+There is also a <a href="https://github.com/i2p/i2p.i2p-bote">GitHub mirror</a>
+which can be used to view the code.</p>
+<h3 id="Credits">Кто сделал I2P-Bote?</h3>
 <p>Conception, technical design, implementation and original web user interface
 were done by HungryHobo, an anonymous developer.</p>
 
@@ -487,20 +488,19 @@ were done by HungryHobo, an anonymous developer.</p>
 <p>For feedback or if you want to offer help, see
 <a href="about.jsp">the About page</a> for contact details.</p>
 
-<h3 id="Languages">What languages are available?</h3>
+<h3 id="Languages">Какие языки доступны?</h3>
 <p>Английский, немецкий, русский, французский, испанский, португальский, нидерландский, шведский,  китайский и арабский.</p>
 
-<h3 id="Translate">How can I help translate I2P-Bote into my
-language?</h3>
+<h3 id="Translate">Как я могу помочь перевести I2P-Bote на мой язык?</h3>
 <p>Translations are done the same way as the rest of I2P. If you would
 like to help and have questions, please <a href="about.jsp">contact the author.</a></p>
 
-<h3 id="Technical">How does it work on a technical level?</h3>
+<h3 id="Technical">Как это работает на техническом уровне?</h3>
 <p>Have a look at the file <code>doc/techdoc.txt</code> in the source code.</p>
 
-<h3 id="GetInvolved">What are some other ways I can help?</h3>
+<h3 id="GetInvolved">Какими способами я еще могу помочь?</h3>
 <ul>
-<li><p>Use I2P-Bote and give feedback</p></li>
+<li><p>Используйте I2P-Bote и оставьте свой отзыв</p></li>
 <li><p>Tell your friends, family, collegues et al. about I2P-Bote and lend them a hand</p></li>
 <li><p>Mention I2P-Bote on your blog, eepsite or website</p></li>
 <li><p>Write a user's guide or improve the technical documentation</p></li>

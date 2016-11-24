@@ -22,8 +22,8 @@ de personnes choisies aléatoirement ? C'est une idée de fou !</a></p>
 <p><a href="#AddressLength">Pourquoi les adresses sont-elles si longues ?</a></p>
 <p><a href="#AddressBook">Mais je n'arrive pas à mémoriser de si longues destinations&hellip;</a></p>
 <p><a href="#MultipleIdentities">Quel est l'intérêt d'utiliser de multiples identités ?</a></p>
-<p><a href="#EncryptionTypes">Quel est le meilleur cryptage ?</a></p>
-<p><a href="#Algorithms">Quels algorithmes sont-ils utilisés pour le cryptage symétrique
+<p><a href="#EncryptionTypes">Quel est le meilleur chiffrement ?</a></p>
+<p><a href="#Algorithms">Quels algorithmes sont utilisés pour le chiffrement symétrique
 et le hachage ?</a></p>
 <p><a href="#AntiSpam">Y a-t-il des protections anti-spam ?</a></p>
 <p><a href="#HTML">Et au sujet du HTML et du formatage de texte ?</a></p>
@@ -63,8 +63,8 @@ identités multiples et n'expose pas les en-têtes de messages. Il est
 encore en phase de développement et n'est accessible que via la console
 du routeur I2P. Il sera bientôt doté de la prise en charge de POP3, et
 de davantage d'anonymat via une option de transport à haute latence. Tous
-les messages bote sont automatiquement cryptés de bout en bout sans
-avoir à régler de cryptage de mails (bien que cette option soit
+les messages bote sont automatiquement chiffrés de bout en bout sans
+avoir à régler de chiffrement de courrier électronique (bien que cette option soit
 disponible), et ils sont authentifiés automatiquement. Comme il est
 décentralisé, aucun serveur de mail ne peut faire de rapprochement
 entre expéditeur et destinataire (profilage) : même les nœuds relayant
@@ -100,18 +100,18 @@ besoin est déjà prêt.</p>
 
 <p>Et ne vous y trompez pas, malgré son apparente simplicité et sa
 réelle facilité d'utilisation, I2P-bote vous offre un niveau de
-cryptage de qualité militaire et des options d'anonymat extrêmement
+chiffrement de qualité militaire et des options d'anonymat extrêmement
 efficaces.</p>
 
 <h3 id="Sending">Que se passe-t-il quand je clique sur "Envoyer"?</h3>
-<p>Le message est crypté et stocké sur des ordinateurs d'autres
+<p>Le message est chiffré et stocké sur les ordinateurs d'autres
 utilisateurs d'I2P-Bote. À partir de là, il est expédié au destinataire
 quand il relève son courrier.</p>
 
 <h3 id="RandomPeople">Une minute! Tous mes envois sont stockés dans les ordinateurs
 de personnes choisies aléatoirement? C'est une idée de fou!</h3>
 <p>Tout ce qu'elles peuvent voir n'est qu'un tas d'ordures car les
-données sont cryptée à un niveau militaire. Seuls vous et le
+données sont chiffrées à un niveau militaire. Seuls vous et le
 destinataire savez ce qu'il y a dans le message. De plus, si vous
 envoyez en ayant activé le relayage, il ne leur est même pas possible
 de savoir qui l'a envoyé.</p>
@@ -155,8 +155,8 @@ un fort niveau d'anonymat.</p>
 
 <h3 id="GPG">Et au sujet de <a href="http://www.pgp.com/">PGP</a> et
 <a href="http://gnupg.org/">GPG</a>?</h3>
-<p>PGP et GPG vous permettent de crypter le courrier et de l'envoyer
-par votre compte de messagerie existant. Il offrent du cryptage fort,
+<p>PGP et GPG vous permettent de chiffrer le courrier et de l'envoyer
+par votre compte de messagerie existant. Il offrent du chiffrement fort,
 mais uniquement du corps du message, pas des en-têtes, ce qui veut dire
 que les champs "Objet", le nom de votre ordinateur, et d'autres
 informations ne sont pas protégées.</p>
@@ -164,14 +164,14 @@ informations ne sont pas protégées.</p>
 <p>Une autre faiblesse de PGP/GPG est qu'ils ne peuvent pas empêcher
 de trouver qui parle à qui.</p>
 
-<p>I2P-Bote, au contraire, crypte tout sauf la destination (en fait, même
+<p>I2P-Bote, au contraire, chiffre tout sauf la destination (en fait, même
 la destination n'est visible que par les nœuds qui ignorent de qui
 vient le message). Il peut aussi envoyer le message via plusieurs
 relais (comme <a href="http://mixmaster.sourceforge.net/">Mixmaster</a>),
 de sorte que personne ne puisse trouver qui envoie à qui.</p>
 
 <h3 id="UsingGPG">Puis-je toujours utiliser GPG/PGP avec I2P-Bote?</h3>
-<p>Bien sûr. Cryptez le texte de votre message avec GPG avant de le coller
+<p>Bien sûr. Chiffrez le texte de votre message avec GPG avant de le coller
 dans le corps du message I2P-Bote, ou utilisez une application de
 messagerie compatible GPG.</p>
 
@@ -191,7 +191,7 @@ peut-être pour vous, aussi; décidez vous-même!), que:</p>
 <li><p>mixminion car il est facile à utiliser et aussi simple à prendre
 en main que nous avons pu.</p></li>
 <li><p>les services de mail anonymes n'utilisant pas le routage basé sur
-des clés de destination, car ils ne permettent pas le cryptage de bout en
+des clés de destination, car ils ne permettent pas le chiffrement de bout en
 bout.</p></li>
 <li><p>les services centralisés, car que le serveur pourrait s'arrêter (à
 cause d'attaques, de problèmes légaux, manque de financement ou
@@ -205,7 +205,7 @@ inclue dans les messages que vous envoyez.</p>
 <p>Les compteurs de transports à haute latence protègent des
 attaques de timing.</p>
 
-<p>Le cryptage de bout en bout et par saut, le relayage des paquets
+<p>Le chiffrement de bout en bout et par saut, le relayage des paquets
 pour d'autres nœuds, les paquets à taille unique* (bourrage/padding),
 le débit d'envoi constant (messages de test et bidons/dummy)*, et un
 rapport assez équilibré des taux d'envoi/réception* protègent des
@@ -249,7 +249,7 @@ joindre.</p>
 
 <h3 id="EmailDestination">Qu'est-ce qu'une destination? Et l'adresse mail?</h3>
 <p>La longueur des destinations est comprise entre 86 et 512
-caractères, suivant le type de cryptage. La prise en charge d'adresses
+caractères, suivant le type de chiffrement. La prise en charge d'adresses
 faciles à mémoriser et choisies par l'utilisateur est au programme d'un
 futur proche.</p>
 
@@ -257,17 +257,17 @@ futur proche.</p>
 nom que l'utilisateur lui attribue. La clé publique est la destination,
 votre identité pseudonymique. Un utilisateur réel peut en avoir
 plusieurs. Elles servent à envoyer des messages à certains utilisateurs
-- donc aussi appelés “destinations” - tout comme pour crypter les
-messages qui leur sont&hellip; destinés. Votre destination est donc
+- donc aussi appelés “destinations” - tout comme pour chiffrer les
+messages qui leur sont destinés. Votre destination est donc
 pour les autres aussi la clé qu'ils utilisent pour crypter les messages
 qu'ils vous envoient et pour pour vérifier l'intégrité et
-l'authenticité de ceux qu'ils reçoivent&hellip; de vous.</p>
+l'authenticité de ceux qu'ils reçoivent de vous.</p>
 
 <p>Il est sans danger (et indispensable) de donner votre destination
 à toute personne de laquelle vous voulez recevoir du courrier.</p>
 
 <p>Il est important de faire la distinction entre votre destination
-de messagerie et la destination de votre routeur I2P! Votre identité de
+de messagerie et la destination de votre routeur I2P ! Votre identité de
 messagerie n'a rien à voir avec l'identité de votre nœud/routeur
 I2P-Bote qui est utilisée pour permettre aux nœuds I2P-Bote de se
 contacter les uns les autres pour constituer le réseau Bote.</p>
@@ -286,8 +286,8 @@ réduirait à néant le niveau d'anonymat supplémentaire qu'I2P-Bote porte
 en lui-même!</p>
 
 <h3 id="AddressLength">Pourquoi les adresses sont-elles si longues?</h3>
-<p>Dans I2P-Bote chaque message est (automatiquement) crypté. Pour vous
-éviter d'avoir à échanger votre adresse <b>ET</b> de très longues clés
+<p>Dans I2P-Bote chaque message est (automatiquement) chiffré. Pour vous
+éviter d'avoir à échanger votre adresse <b>et</b> de très longues clés
 publiques, on a simplement fait de ces clés les adresses. Deux autres
 avantages en découlent: vous n'avez pas à vous soucier de la
 préexistence de votre adresse (au moins tant que vous ne recevez ni
@@ -299,16 +299,16 @@ elle n'est que la clé publique, que certains peuvent avoir à connaître,
 sans pour autant que cela compromette la confidentialité de vos
 messages.</p>
 
-<p>L'utilisation du cryptage ECC conduit à des clés plus courtes.</p>
+<p>L'utilisation du chiffrement ECC conduit à des clés plus courtes.</p>
 
 <h3 id="AddressBook">Mais je n'arrive pas à mémoriser de si longues destinations&hellip;</h3>
 <p>Le carnet d'adresses est là pour ça. Une fois convaincu par le
-principe d'I2P-Bote, vous apprécierez le cryptage et l'authentification
+principe d'I2P-Bote, vous apprécierez le chiffrement et l'authentification
 intégrés, qui ne peuvent être atteints que par l'utilisation de clés
 cryptographiques.</p>
 
 <p>Encore une fois, l'alternative serait d'avoir des adresses courtes et
-simples <b>plus</b> de longues clés de cryptage et authentification, <b>ET</b>
+simples <b>plus</b> de longues clés pour le chiffrement et l'authentification, <b>et</b>
 de se reposer sur quelqu'autorité pour faire la relation entre
 l'adresse et un destinataire anonyme.</p>
 
@@ -330,12 +330,12 @@ de communications, vous avez besoin d'un super niveau d'anonymat, et
 c'est là qu'une autre identité avec un relayage et des délais différents
 peut être utile.</p>
 
-<h3 id="EncryptionTypes">Quel est le meilleur cryptage?</h3>
-<p><a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a>
+<h3 id="EncryptionTypes">Quel est le meilleur chiffrement ?</h3>
+<p><a href="https://fr.wikipedia.org/wiki/Cryptographie_sur_les_courbes_elliptiques">ECC</a>
 à 256 bits produit des adresses destinations courtes et maniables, et
 est considéré comme plus solide que l'ElGamal à 2048 bits.</p>
 
-<p><a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a>
+<p><a href="https://fr.wikipedia.org/wiki/Cryptographie_sur_les_courbes_elliptiques">ECC</a>
 à 521 bits est plus solide que sa version à 256 bits, mais il génère
 des destinations (clés) très longues.</p>
 
@@ -345,12 +345,12 @@ faible des trois algorithmes. Cependant, ElGamal fait l'objet de plus
 recherches que ECC, ce qui rend moins probable qu'une faiblesse de cet
 algorithme passe inaperçue pendant plus longtemps que dans ECC.</p>
 
-<h3 id="Algorithms">Quels algorithmes sont-ils utilisés pour le cryptage symétrique
-et le hachage?</h3>
-<p><a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a>
+<h3 id="Algorithms">Quels algorithmes sont utilisés pour le chiffrement symétrique
+et le hachage ?</h3>
+<p><a href="https://fr.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a>
 en mode
 <a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">
-CBC</a> et <a href="http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.</p>
+CBC</a> et <a href="https://fr.wikipedia.org/wiki/SHA-2">SHA-256</a>.</p>
 
 <h3 id="AntiSpam">Y a-t-il des protections anti-spam?</h3>
 <p>I2P-Bote ne filtre pas le spam, mais le fait que l'envoi en masse doive
@@ -540,6 +540,10 @@ licenses/BouncyCastle.txt).</blockquote>
 
 <p>(Toutes deux sont des licences libres et ouvertes).</p>
 
+<p>The source code can be found in the <code>i2p.i2p-bote</code> branch of
+<a href="https://geti2p.net/en/get-involved/guides/new-developers#monotone">the I2P Monotone repository</a>.
+There is also a <a href="https://github.com/i2p/i2p.i2p-bote">GitHub mirror</a>
+which can be used to view the code.</p>
 <h3 id="Credits">Qui a créé I2P-Bote?</h3>
 <p>La conception, le design technique, la mise en œuvre et l'interface web utilisateur d'origine
 ont été faits par HungryHobo, un développeur anonyme.</p>

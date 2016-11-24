@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-15 06:17+0000\n"
-"PO-Revision-Date: 2016-08-01 15:17+0000\n"
-"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
+"POT-Creation-Date: 2016-11-24 02:51+0000\n"
+"PO-Revision-Date: 2016-11-24 02:51+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/otf/I2P/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,47 +16,47 @@ msgstr ""
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/main/java/i2p/bote/Configuration.java:68
+#: src/main/java/i2p/bote/Configuration.java:69
 msgid "Material"
 msgstr "Material"
 
-#: src/main/java/i2p/bote/Configuration.java:69
+#: src/main/java/i2p/bote/Configuration.java:70
 msgid "Light Blue"
 msgstr "Açık Mavi"
 
-#: src/main/java/i2p/bote/Configuration.java:70
+#: src/main/java/i2p/bote/Configuration.java:71
 msgid "Vanilla"
 msgstr "Vanilya"
 
-#: src/main/java/i2p/bote/I2PBote.java:519
+#: src/main/java/i2p/bote/I2PBote.java:517
 msgid "No identity matches the sender/from field: "
 msgstr "Kimden/Kime alanıyla eşleşen bir kimlik yok:"
 
-#: src/main/java/i2p/bote/I2PBote.java:726
+#: src/main/java/i2p/bote/I2PBote.java:723
 msgid "Checking password"
 msgstr "Parola denetleniyor"
 
-#: src/main/java/i2p/bote/I2PBote.java:729
+#: src/main/java/i2p/bote/I2PBote.java:726
 msgid "The old password is not correct."
 msgstr "Eski parola doğru değil."
 
-#: src/main/java/i2p/bote/I2PBote.java:731
+#: src/main/java/i2p/bote/I2PBote.java:728
 msgid "The new password and the confirmation password do not match."
 msgstr "Yeni parola ile parola doğrulaması eşleşmiyor."
 
-#: src/main/java/i2p/bote/I2PBote.java:738
+#: src/main/java/i2p/bote/I2PBote.java:735
 msgid "Re-encrypting identities"
 msgstr "Kimlikler yeniden şifreleniyor"
 
-#: src/main/java/i2p/bote/I2PBote.java:741
+#: src/main/java/i2p/bote/I2PBote.java:738
 msgid "Re-encrypting addressbook"
 msgstr "Adres defteri yeniden şifreleniyor"
 
-#: src/main/java/i2p/bote/I2PBote.java:744
+#: src/main/java/i2p/bote/I2PBote.java:741
 msgid "Re-encrypting folder"
 msgstr "Klasör yeniden şifreleniyor"
 
-#: src/main/java/i2p/bote/I2PBote.java:748
+#: src/main/java/i2p/bote/I2PBote.java:745
 msgid "Updating password file"
 msgstr "Parola dosyası güncelleniyor"
 
@@ -267,75 +267,67 @@ msgstr "E-posta gönderilmek üzere kuyruğa eklendi."
 msgid "Error sending email: {0}"
 msgstr "E-posta gönderilirken bir sorun çıktı: {0}"
 
-#: src/main/webapp/statusFrame.jsp
-msgid "Not Started"
-msgstr "Başlatılmamış"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export Identities"
+msgstr "Kimlikleri Ver"
 
-#: src/main/webapp/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
-msgstr "3 Dakika Bekleniyor..."
+#: src/main/webapp/exportIdentities.jsp
+msgid "Password:"
+msgstr "Parola:"
 
-#: src/main/webapp/statusFrame.jsp
-msgid "Connecting..."
-msgstr "Bağlanıyor..."
+#: src/main/webapp/exportIdentities.jsp
+msgid "(leave blank to not encrypt identities)"
+msgstr "(kimliklerin şifrelenmemesi için boş bırakın)"
 
-#: src/main/webapp/statusFrame.jsp
-msgid "Connected"
-msgstr "Bağlandı"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Confirm:"
+msgstr "Onayla:"
 
-#: src/main/webapp/statusFrame.jsp
-msgid "Error"
-msgstr "Hata"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export"
+msgstr "Ver"
 
-#: src/main/webapp/statusFrame.jsp
-msgid "Retry Connecting"
-msgstr "Yeniden Bağlanma Deneniyor"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connect Now"
-msgstr "Bağlan"
-
-#: src/main/webapp/saveIdentities.jsp
-msgid "Error:"
-msgstr "Hata:"
-
-#: src/main/webapp/outbox.jsp
-msgid "Outbox"
-msgstr "Giden Kutusu"
-
-#: src/main/webapp/outbox.jsp
+#: src/main/webapp/folder.jsp
 msgid "From"
 msgstr "Kimden"
 
-#: src/main/webapp/outbox.jsp
+#: src/main/webapp/folder.jsp
+msgid "Know"
+msgstr "Bil"
+
+#: src/main/webapp/folder.jsp
 msgid "To"
 msgstr "Kime"
 
-#: src/main/webapp/outbox.jsp
+#: src/main/webapp/folder.jsp
 msgid "Subject"
 msgstr "Konu"
 
-#: src/main/webapp/outbox.jsp
-msgid "Create Time"
-msgstr "Oluşturulma Zamanı"
+#: src/main/webapp/folder.jsp
+msgid "Sent Time"
+msgstr "Gönderim Zamanı"
 
-#: src/main/webapp/outbox.jsp
-msgid "Status"
-msgstr "Durum"
+#: src/main/webapp/folder.jsp
+msgid "Delivered"
+msgstr "Aktarıldı"
 
-#: src/main/webapp/outbox.jsp
+#: src/main/webapp/folder.jsp
 msgid "Anonymous"
 msgstr "İsimsiz"
 
-#: src/main/webapp/outbox.jsp
+#: src/main/webapp/folder.jsp
 msgid "(No subject)"
 msgstr "(Konu yok)"
 
-#: src/main/webapp/outbox.jsp
+#: src/main/webapp/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr "İmza geçersiz ya da eksik"
+
+#: src/main/webapp/folder.jsp
 msgid "Delete"
 msgstr "Sil"
 
-#: src/main/webapp/outbox.jsp
+#: src/main/webapp/folder.jsp
 msgid "Delete this email"
 msgstr "Bu e-postayı sil"
 
@@ -359,292 +351,133 @@ msgstr "Yeni"
 msgid "Last checked:"
 msgstr "Son denetleme:"
 
-#: src/main/webapp/header.jsp
-msgid "- I2P-Bote"
-msgstr "- I2P-Bote"
-
-#: src/main/webapp/header.jsp
-msgid "Password is cached. Click to clear the password cache."
-msgstr "Parola önbelleğe kaydedilmiş. Parola önbelleğini temizlemek için tıklayın."
-
-#: src/main/webapp/header.jsp
-msgid "I2P-Bote"
-msgstr "I2P-Bote"
-
-#: src/main/webapp/header.jsp
-msgid "Secure Distributed Email"
-msgstr "Güvenli Dağıtılmış E-posta"
-
-#: src/main/webapp/header.jsp
-msgid "Addresses"
-msgstr "Adresler"
-
-#: src/main/webapp/header.jsp
-msgid "Identities"
-msgstr "Kimlikler"
-
-#: src/main/webapp/header.jsp
-msgid "Address Book"
-msgstr "Adres Defteri"
-
-#: src/main/webapp/header.jsp
-msgid "Configuration"
-msgstr "Ayarlar"
-
-#: src/main/webapp/header.jsp
-msgid "Settings"
-msgstr "Ayarlar"
-
-#: src/main/webapp/header.jsp
-msgid "Network Status"
-msgstr "Ağ Durumu"
-
-#: src/main/webapp/header.jsp
-msgid "Help"
-msgstr "Yardım"
-
-#: src/main/webapp/header.jsp
-msgid "FAQ"
-msgstr "SSS"
-
-#: src/main/webapp/header.jsp
-msgid "About"
-msgstr "Hakkında"
-
-#: src/main/webapp/header.jsp
-msgid ""
-"For I2P-Bote to function properly, you must download the JCE Unlimited "
-"Strength Jurisdiction Policy files and move them into this folder:"
-msgstr "I2P-Bote yazılımının doğru şekilde çalışabilmesi için JCE Unlimited Strength Jurisdiction Policy dosyalarını indirip bu klasöre yüklemelisiniz."
-
-#: src/main/webapp/header.jsp
-msgid "Guide"
-msgstr "Kılavuz"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "Password Cleared"
-msgstr "Parola Temizlendi"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr "Parola önbellekten silindi."
-
-#: src/main/webapp/newEmail.jsp
-msgid "New Email"
-msgstr "Yeni E-posta"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr "Eklenecek dosyayı seçip yeniden deneyin."
-
-#: src/main/webapp/newEmail.jsp
-msgid "Send"
-msgstr "Gönder"
-
-#: src/main/webapp/newEmail.jsp
-msgid "From:"
-msgstr "Kimden:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "To:"
-msgstr "Kime:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "CC:"
-msgstr "Kopya:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "BCC:"
-msgstr "Gizli Kopya:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Reply To:"
-msgstr "Yanıt:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this recipient"
-msgstr "Bu alıcıyı sil"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add this recipient to the address book"
-msgstr "Bu alıcıyı adres defterine ekle"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Select recipients from address book"
-msgstr "Adres defterinden alıcıları seçin"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another recipient field"
-msgstr "Başka bir alıcı alanı ekle"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Subject:"
-msgstr "Konu:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attachments:"
-msgstr "Ekler:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "Bu eki sil"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another attachment"
-msgstr "Bir dosya daha ekle"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attach"
-msgstr "Ekle"
-
-#: src/main/webapp/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "Eklenecek dosya boyutunun 500 kBayt altında olması önerilir."
-
-#: src/main/webapp/newEmail.jsp
-msgid "Message:"
-msgstr "İleti:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} yazmış:"
-
 #: src/main/webapp/deleteContact.jsp
 msgid "The contact has been deleted from the address book."
 msgstr "Kişi adres defterinden silindi."
 
-#: src/main/webapp/showEmail.jsp
-msgid ""
-"The email could not be found in this folder. It was probably moved to the "
-"Sent folder."
-msgstr "E-posta bu klasörde bulunamadı. Büyük olasılıkla Gönderilmiş Ögeler klasörüne taşındı."
+#: src/main/webapp/deleteContact.jsp
+msgid "Error"
+msgstr "Hata"
 
-#: src/main/webapp/showEmail.jsp
-msgid "The email could not be found in this folder."
-msgstr "E-posta bu klasörde bulunamadı."
+#: src/main/webapp/editContact.jsp
+msgid "Please fill in the Destination field."
+msgstr "Lütfen hedef alanını doldurun."
 
-#: src/main/webapp/showEmail.jsp
-msgid "Signature:"
-msgstr "İmza:"
+#: src/main/webapp/editContact.jsp
+msgid "Please fill in the Name field."
+msgstr "Lütfen ad alanını doldurun."
 
-#: src/main/webapp/showEmail.jsp
-msgid "Valid"
-msgstr "Geçerli"
+#: src/main/webapp/editContact.jsp
+msgid "The contact has been saved."
+msgstr "Kişi kaydedildi."
 
-#: src/main/webapp/showEmail.jsp
-msgid "N/A (sender is anonymous)"
-msgstr "YOK (gönderen isimsiz)"
+#: src/main/webapp/editContact.jsp
+msgid "New Contact"
+msgstr "Kişi Ekle"
 
-#: src/main/webapp/showEmail.jsp
-msgid "Invalid or missing"
-msgstr "Geçersiz ya da eksik"
+#: src/main/webapp/editContact.jsp
+msgid "Add"
+msgstr "Ekle"
 
-#: src/main/webapp/showEmail.jsp
-msgid "Sent:"
-msgstr "Gönderilen:"
+#: src/main/webapp/editContact.jsp
+msgid "Edit Contact"
+msgstr "Kişiyi Düzenle"
 
-#: src/main/webapp/showEmail.jsp
-msgid "Received:"
-msgstr "Alınan:"
+#: src/main/webapp/editContact.jsp
+msgid "Save"
+msgstr "Kaydet"
 
-#: src/main/webapp/showEmail.jsp
-msgid "Status:"
-msgstr "Durum:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Reply"
-msgstr "Yanıtla"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Re:"
-msgstr "Ynt:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Import Identities"
-msgstr "Kimlikleri Al"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Please select an identities file and try again."
-msgstr "Lütfen bir kimlik dosyası seçerek yeniden deneyin."
-
-#: src/main/webapp/importIdentities.jsp
-msgid "The identities have been imported."
-msgstr "Kimlikler alındı."
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Identities file:"
-msgstr "Kimlik dosyası:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Password:"
-msgstr "Parola:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "(leave blank if identities not encrypted)"
-msgstr "(kimlikler şifreli değilse boş bırakın)"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Overwrite all existing identities:"
-msgstr "Varolan tüm kimliklerin üzerine yazılsın:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Duplicates: replace existing identity:"
-msgstr "Çift kayıtlar: Varolan kimlik değiştirilsin:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Import"
-msgstr "Al"
-
-#: src/main/webapp/deleteIdentity.jsp
-msgid "The email identity has been deleted."
-msgstr "E-posta kimliği silindi."
-
-#: src/main/webapp/importContact.jsp
-msgid "Address Directory Lookup"
-msgstr "Adres Dizini Tarama"
-
-#: src/main/webapp/importContact.jsp
-msgid "The name has been imported to the address book."
-msgstr "Ad adres defterine eklendi."
-
-#: src/main/webapp/importContact.jsp
-msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr "Dizinde &quot;{0}&quot; adı bulunamadı."
-
-#: src/main/webapp/importContact.jsp
-msgid "Import Contact"
-msgstr "Kişi Al"
-
-#: src/main/webapp/importContact.jsp
-msgid ""
-"A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click "
-"&quot;import&quot; unless you trust that it is the right email destination."
-msgstr "Adres dizininde eşleşen bir kayıt bulundu. Adres dizininin değişikliğe açık olduğunu unutmayın. Bu nedenle güvenmediğiniz e-posta adresleri için &quot;Al&quot; düğmesine tıklamayın."
-
-#: src/main/webapp/importContact.jsp
-msgid "Fingerprint:"
-msgstr "Parmak izi:"
-
-#: src/main/webapp/importContact.jsp
-msgid "Email Destination: "
+#: src/main/webapp/editContact.jsp
+msgid "Email Destination:"
 msgstr "E-posta Hedefi:"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export Identities"
-msgstr "Kimlikleri Ver"
+#: src/main/webapp/editContact.jsp
+msgid "(required field)"
+msgstr "(zorunlu alan)"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "(leave blank to not encrypt identities)"
-msgstr "(kimliklerin şifrelenmemesi için boş bırakın)"
+#: src/main/webapp/editContact.jsp
+msgid "Name:"
+msgstr "Ad:"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Confirm:"
-msgstr "Onayla:"
+#: src/main/webapp/editContact.jsp
+msgid "Picture:"
+msgstr "Görsel:"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export"
-msgstr "Ver"
+#: src/main/webapp/editContact.jsp
+msgid "Text:"
+msgstr "Metin:"
+
+#: src/main/webapp/editContact.jsp
+msgid "Cancel"
+msgstr "İptal"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Address Book"
+msgstr "Adres Defteri"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Private Address Book"
+msgstr "Kişisel Adres Defteri"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Select One or More Entries"
+msgstr "Bir ya da Birkaç Kayıt Seçin"
+
+#: src/main/webapp/addressBook.jsp
+msgid "The address book is empty."
+msgstr "Adres defteri boş."
+
+#: src/main/webapp/addressBook.jsp
+msgid "Name"
+msgstr "Ad"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Text"
+msgstr ""
+
+#: src/main/webapp/addressBook.jsp
+msgid "Email Destination"
+msgstr "E-posta Hedefi"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Delete this contact"
+msgstr "Bu kişiyi sil"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Add Recipients"
+msgstr "Alıcılar Ekle"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Return"
+msgstr "Geri Dön"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Import from the public address directory"
+msgstr "Herkese açık adres dizininden al"
+
+#: src/main/webapp/addressBook.jsp
+msgid "Lookup"
+msgstr "Tara"
+
+#: src/main/webapp/saveIdentities.jsp
+msgid "Error:"
+msgstr "Hata:"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "Lütfen Herkese Açık Ad alanını doldurun."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "Lütfen bekleyin..."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The Email Identity is being generated. This may take a while."
+msgstr "E-posta kimliği oluşturuluyor, biraz zaman alabilir."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "E-posta kimliği kaydedildi."
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Add Email Destination to Directory"
@@ -682,6 +515,22 @@ msgstr "Yayınla"
 msgid "The identity has been added to the address directory."
 msgstr "Kimlik adres dizinine eklendi."
 
+#: src/main/webapp/noIdentities.jsp
+msgid "No Identity"
+msgstr "Henüz Bir Kimlik Yok"
+
+#: src/main/webapp/noIdentities.jsp
+msgid "No Email Identity Defined"
+msgstr "Henüz Bir E-posta Kimliği Tanımlanmamış"
+
+#: src/main/webapp/noIdentities.jsp
+msgid "Create a New Email Identity"
+msgstr "Yeni E-posta Kimliği Oluşturun"
+
+#: src/main/webapp/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr "E-posta kimliği silindi."
+
 #: src/main/webapp/debug.jsp
 msgid "Debug"
 msgstr "Hata Ayıklama"
@@ -702,53 +551,179 @@ msgstr "Herhangi bir dosya şifreleme sorunu bulunamadı."
 msgid "Undecryptable files:"
 msgstr "Şifresi çözülemeyen dosyalar:"
 
-#: src/main/webapp/addressBook.jsp
-msgid "Private Address Book"
-msgstr "Kişisel Adres Defteri"
+#: src/main/webapp/editIdentity.jsp
+msgid "More..."
+msgstr "Ayrıntıları Görüntüle..."
 
-#: src/main/webapp/addressBook.jsp
-msgid "Select One or More Entries"
-msgstr "Bir ya da Birkaç Kayıt Seçin"
+#: src/main/webapp/editIdentity.jsp
+msgid "Less..."
+msgstr "Ayrıntıları Gizle..."
 
-#: src/main/webapp/addressBook.jsp
-msgid "The address book is empty."
-msgstr "Adres defteri boş."
+#: src/main/webapp/editIdentity.jsp
+msgid "New Email Identity"
+msgstr "Yeni E-posta Kimliği"
 
-#: src/main/webapp/addressBook.jsp
-msgid "Name"
-msgstr "Ad"
+#: src/main/webapp/editIdentity.jsp
+msgid "Create"
+msgstr "Oluştur"
 
-#: src/main/webapp/addressBook.jsp
-msgid "Email Destination"
-msgstr "E-posta Hedefi"
+#: src/main/webapp/editIdentity.jsp
+msgid "Edit Email Identity"
+msgstr "E-posta Kimliğini Düzenle"
 
-#: src/main/webapp/addressBook.jsp
-msgid "Delete this contact"
-msgstr "Bu kişiyi sil"
+#: src/main/webapp/editIdentity.jsp
+msgid "An Email Identity lets you receive email from other I2P-Bote users."
+msgstr "Bir e-posta kimliği diğer I2P-Bote kullanıcılarından e-posta alabilmenizi sağlar."
 
-#: src/main/webapp/addressBook.jsp
-msgid "New Contact"
-msgstr "Kişi Ekle"
+#: src/main/webapp/editIdentity.jsp
+msgid "Public Name:"
+msgstr "Herkese Açık Ad:"
 
-#: src/main/webapp/addressBook.jsp
-msgid "Add Recipients"
-msgstr "Alıcılar Ekle"
+#: src/main/webapp/editIdentity.jsp
+msgid "(required field, shown to recipients)"
+msgstr "(zorunlu alan, alıcılara görüntülenir)"
 
-#: src/main/webapp/addressBook.jsp
-msgid "Return"
-msgstr "Geri Dön"
+#: src/main/webapp/editIdentity.jsp
+msgid "Description:"
+msgstr "Açıklama:"
 
-#: src/main/webapp/addressBook.jsp
-msgid "Import from the public address directory"
-msgstr "Herkese açık adres dizininden al"
+#: src/main/webapp/editIdentity.jsp
+msgid "(optional, kept private)"
+msgstr "(isteğe bağlı, gizli tutun)"
 
-#: src/main/webapp/addressBook.jsp
-msgid "Name:"
-msgstr "Ad:"
+#: src/main/webapp/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr "(adres dizininde yayınlanır)"
 
-#: src/main/webapp/addressBook.jsp
-msgid "Lookup"
-msgstr "Tara"
+#: src/main/webapp/editIdentity.jsp
+msgid "Encryption:"
+msgstr "Şifreleme:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(If unsure, leave the default)"
+msgstr "(emin değilseniz boş bırakın)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Vanity Destination:"
+msgstr "Boşluk Hedefi:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
+msgstr "(2 karakter saniyeler, 3 karakter dakikalar sürer)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Fingerprint:"
+msgstr "Parmak izi:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Default Identity:"
+msgstr "Varsayılan Kimlik:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr "Genel denetime katılsın:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Private keys:"
+msgstr "Kişisel anahtarlar:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(Never reveal to anyone!)"
+msgstr "(Asla kimse ile paylaşmayın)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Show"
+msgstr "Görüntüle"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Cannot publish until connected."
+msgstr "Bağlantı kurulana kadar yayınlanamaz."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Delete this identity"
+msgstr "Bu kimliği sil"
+
+#: src/main/webapp/faq.jsp
+msgid "FAQ"
+msgstr "SSS"
+
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr "Sık Sorulan Sorular"
+
+#: src/main/webapp/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr "Parola önbelleğe kaydedilmiş. Parola önbelleğini temizlemek için tıklayın."
+
+#: src/main/webapp/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Secure Distributed Email"
+msgstr "Güvenli Dağıtılmış E-posta"
+
+#: src/main/webapp/header.jsp
+msgid "Addresses"
+msgstr "Adresler"
+
+#: src/main/webapp/header.jsp
+msgid "Identities"
+msgstr "Kimlikler"
+
+#: src/main/webapp/header.jsp
+msgid "Configuration"
+msgstr "Ayarlar"
+
+#: src/main/webapp/header.jsp
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: src/main/webapp/header.jsp
+msgid "Network Status"
+msgstr "Ağ Durumu"
+
+#: src/main/webapp/header.jsp
+msgid "Help"
+msgstr "Yardım"
+
+#: src/main/webapp/header.jsp
+msgid "About"
+msgstr "Hakkında"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr "I2P-Bote yazılımının doğru şekilde çalışabilmesi için JCE Unlimited Strength Jurisdiction Policy dosyalarını indirip bu klasöre yüklemelisiniz."
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr "Kılavuz"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "Parola Temizlendi"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "Parola önbellekten silindi."
+
+#: src/main/webapp/outbox.jsp
+msgid "Outbox"
+msgstr "Giden Kutusu"
+
+#: src/main/webapp/outbox.jsp
+msgid "Create Time"
+msgstr "Oluşturulma Zamanı"
+
+#: src/main/webapp/outbox.jsp
+msgid "Status"
+msgstr "Durum"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -803,80 +778,131 @@ msgid ""
 "still being highly secure."
 msgstr "En kısa e-posta hedeflerini (86 karakter) oluşturduğu ve buna rağmen yüksek düzeyde güvenli olduğu için genellikle 256 bit eliptik eğri şifrelemesinin kullanılması önerilir."
 
-#: src/main/webapp/network.jsp
-msgid "Network"
-msgstr "Ağ"
-
-#: src/main/webapp/network.jsp
+#: src/main/webapp/showEmail.jsp
 msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "I2P-Bote henüz ağa bağlanmak üzere başlatılmadığı için ağ bilgileri bilinmiyor."
+"The email could not be found in this folder. It was probably moved to the "
+"Sent folder."
+msgstr "E-posta bu klasörde bulunamadı. Büyük olasılıkla Gönderilmiş Ögeler klasörüne taşındı."
 
-#: src/main/webapp/network.jsp
-msgid "Local destination:"
-msgstr "Yerel hedef:"
+#: src/main/webapp/showEmail.jsp
+msgid "The email could not be found in this folder."
+msgstr "E-posta bu klasörde bulunamadı."
 
-#: src/main/webapp/folders.jsp
-msgid "Folders"
-msgstr "Klasörler"
+#: src/main/webapp/showEmail.jsp
+msgid "From:"
+msgstr "Kimden:"
 
-#: src/main/webapp/folders.jsp
-msgid "Inbox"
-msgstr "Gelen Kutusu"
+#: src/main/webapp/showEmail.jsp
+msgid "Signature:"
+msgstr "İmza:"
 
-#: src/main/webapp/folders.jsp
-msgid "Sent"
-msgstr "Gönderilmiş"
+#: src/main/webapp/showEmail.jsp
+msgid "Valid"
+msgstr "Geçerli"
 
-#: src/main/webapp/folders.jsp
-msgid "Trash"
-msgstr "Çöp"
+#: src/main/webapp/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr "YOK (gönderen isimsiz)"
 
-#: src/main/webapp/folder.jsp
-msgid "Know"
-msgstr "Bil"
+#: src/main/webapp/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "Geçersiz ya da eksik"
 
-#: src/main/webapp/folder.jsp
-msgid "Sent Time"
-msgstr "Gönderim Zamanı"
+#: src/main/webapp/showEmail.jsp
+msgid "Reply To:"
+msgstr "Yanıt:"
 
-#: src/main/webapp/folder.jsp
-msgid "Delivered"
-msgstr "Aktarıldı"
+#: src/main/webapp/showEmail.jsp
+msgid "To:"
+msgstr "Kime:"
 
-#: src/main/webapp/folder.jsp
-msgid "Signature is invalid or missing"
-msgstr "İmza geçersiz ya da eksik"
+#: src/main/webapp/showEmail.jsp
+msgid "CC:"
+msgstr "Kopya:"
 
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Identity"
-msgstr "Tam Kimlik"
+#: src/main/webapp/showEmail.jsp
+msgid "BCC:"
+msgstr "Gizli Kopya:"
 
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Email Identity for {0}:"
-msgstr "{0} için tam e-posta kimliği:"
+#: src/main/webapp/showEmail.jsp
+msgid "Sent:"
+msgstr "Gönderilen:"
 
-#: src/main/webapp/showFullIdentity.jsp
-msgid ""
-"Do not show the above information to anyone! It contains your private keys."
-msgstr "İçinde kişisel anahtarlarınız bulunduğundan, yukarıdaki bilgileri hiç kimse ile paylaşmayın."
+#: src/main/webapp/showEmail.jsp
+msgid "Received:"
+msgstr "Alınan:"
 
-#: src/main/webapp/noIdentities.jsp
-msgid "No Identity"
-msgstr "Henüz Bir Kimlik Yok"
+#: src/main/webapp/showEmail.jsp
+msgid "Subject:"
+msgstr "Konu:"
 
-#: src/main/webapp/noIdentities.jsp
-msgid "No Email Identity Defined"
-msgstr "Henüz Bir E-posta Kimliği Tanımlanmamış"
+#: src/main/webapp/showEmail.jsp
+msgid "Message:"
+msgstr "İleti:"
 
-#: src/main/webapp/noIdentities.jsp
-msgid "Create a New Email Identity"
-msgstr "Yeni E-posta Kimliği Oluşturun"
+#: src/main/webapp/showEmail.jsp
+msgid "Attachments:"
+msgstr "Ekler:"
 
-#: src/main/webapp/connectError.jsp
-msgid "Error Details"
-msgstr "Hata Ayrıntıları"
+#: src/main/webapp/showEmail.jsp
+msgid "Status:"
+msgstr "Durum:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply"
+msgstr "Yanıtla"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Re:"
+msgstr "Ynt:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "New Email"
+msgstr "Yeni E-posta"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "Eklenecek dosyayı seçip yeniden deneyin."
+
+#: src/main/webapp/newEmail.jsp
+msgid "Send"
+msgstr "Gönder"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this recipient"
+msgstr "Bu alıcıyı sil"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add this recipient to the address book"
+msgstr "Bu alıcıyı adres defterine ekle"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Select recipients from address book"
+msgstr "Adres defterinden alıcıları seçin"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another recipient field"
+msgstr "Başka bir alıcı alanı ekle"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "Bu eki sil"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another attachment"
+msgstr "Bir dosya daha ekle"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attach"
+msgstr "Ekle"
+
+#: src/main/webapp/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "Eklenecek dosya boyutunun 500 kBayt altında olması önerilir."
+
+#: src/main/webapp/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} yazmış:"
 
 #: src/main/webapp/password.jsp
 msgid "Password Required"
@@ -894,13 +920,177 @@ msgstr "Parola zorunludur"
 msgid "OK"
 msgstr "Tamam"
 
-#: src/main/webapp/deleteEmail.jsp
-msgid "Error: Couldn't delete email."
-msgstr "Hata: E-posta silinemedi"
+#: src/main/webapp/settings.jsp
+msgid "Settings have been saved."
+msgstr "Ayarlar kaydedildi."
 
-#: src/main/webapp/sendEmail.jsp
-msgid "Go to inbox"
-msgstr "Gelen kutusuna git"
+#: src/main/webapp/settings.jsp
+msgid "General"
+msgstr "Genel"
+
+#: src/main/webapp/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "E-postalar {0} dakikada bir denetlensin"
+
+#: src/main/webapp/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr "Gönderilen e-postaların aktarılma durumu denetlensin"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "IMAP için {0} numaralı kapı kullanılsın"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr "SMTP için {0} numaralı kapı kullanılsın"
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Tema:"
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr "Gizlilik"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr "Giden e-postalar için eklenecek İngilizce metni yazın ('Re:', 'wrote' gibi)."
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Giden e-postalara gönderilme zamanı eklensin"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr "Yöneltme"
+
+#: src/main/webapp/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "E-posta gönderilirken aktarıcılar kullanılsın:"
+
+#: src/main/webapp/settings.jsp
+msgid "None"
+msgstr "Yok"
+
+#: src/main/webapp/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr "Bir aktarıcı sıçraması gecikmesi: Şununla"
+
+#: src/main/webapp/settings.jsp
+msgid "and"
+msgstr "şunun arasında"
+
+#: src/main/webapp/settings.jsp
+msgid "minutes"
+msgstr "dakika"
+
+#: src/main/webapp/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "I2P olmayan e-posta adreslerine gönderim yapılırken ağ geçidi kullanılsın"
+
+#: src/main/webapp/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "Ağ geçidindeki e-posta hedefi:"
+
+#: src/main/webapp/settings.jsp
+msgid "Change Password"
+msgstr "Parolayı Değiştir"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set Password"
+msgstr "Parola Ayarla"
+
+#: src/main/webapp/setPassword.jsp
+msgid "The password has been changed."
+msgstr "Parola değiştirildi."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait"
+msgstr "Lütfen bekleyin"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr "Lütfen parola değiştirilirken bekleyin..."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Yeni bir parola ayarla"
+
+#: src/main/webapp/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "Yeni bir parola ayarlamak istemiyorsanız, eski parola alanını boş bırakın."
+
+#: src/main/webapp/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr "Bir parola ayarlandığında, e-postaların otomatik olarak denetlenemeyeceğini unutmayın. Bunun için E-postaları Denetle düğmesine tıklanması gerekir."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Old password:"
+msgstr "Eski parola:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "New password:"
+msgstr "Yeni parola:"
+
+#: src/main/webapp/network.jsp
+msgid "Network"
+msgstr "Ağ"
+
+#: src/main/webapp/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr "I2P-Bote henüz ağa bağlanmak üzere başlatılmadığı için ağ bilgileri bilinmiyor."
+
+#: src/main/webapp/network.jsp
+msgid "Local destination:"
+msgstr "Yerel hedef:"
+
+#: src/main/webapp/connectError.jsp
+msgid "Error Details"
+msgstr "Hata Ayrıntıları"
+
+#: src/main/webapp/folders.jsp
+msgid "Folders"
+msgstr "Klasörler"
+
+#: src/main/webapp/folders.jsp
+msgid "Inbox"
+msgstr "Gelen Kutusu"
+
+#: src/main/webapp/folders.jsp
+msgid "Sent"
+msgstr "Gönderilmiş"
+
+#: src/main/webapp/folders.jsp
+msgid "Trash"
+msgstr "Çöp"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Not Started"
+msgstr "Başlatılmamış"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr "3 Dakika Bekleniyor..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connecting..."
+msgstr "Bağlanıyor..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connected"
+msgstr "Bağlandı"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr "Yeniden Bağlanma Deneniyor"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connect Now"
+msgstr "Bağlan"
 
 #: src/main/webapp/identities.jsp
 msgid "Email Identities"
@@ -930,153 +1120,68 @@ msgstr "Bu kimliğin e-postalarını denetle"
 msgid "New Identity"
 msgstr "Yeni Kimlik"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "More..."
-msgstr "Ayrıntıları Görüntüle..."
+#: src/main/webapp/identities.jsp
+msgid "Import Identities"
+msgstr "Kimlikleri Al"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "Less..."
-msgstr "Ayrıntıları Gizle..."
+#: src/main/webapp/sendEmail.jsp
+msgid "Go to inbox"
+msgstr "Gelen kutusuna git"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "New Email Identity"
-msgstr "Yeni E-posta Kimliği"
+#: src/main/webapp/importIdentities.jsp
+msgid "Please select an identities file and try again."
+msgstr "Lütfen bir kimlik dosyası seçerek yeniden deneyin."
 
-#: src/main/webapp/editIdentity.jsp
-msgid "Create"
-msgstr "Oluştur"
+#: src/main/webapp/importIdentities.jsp
+msgid "The identities have been imported."
+msgstr "Kimlikler alındı."
 
-#: src/main/webapp/editIdentity.jsp
-msgid "Edit Email Identity"
-msgstr "E-posta Kimliğini Düzenle"
+#: src/main/webapp/importIdentities.jsp
+msgid "Identities file:"
+msgstr "Kimlik dosyası:"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "Save"
-msgstr "Kaydet"
+#: src/main/webapp/importIdentities.jsp
+msgid "(leave blank if identities not encrypted)"
+msgstr "(kimlikler şifreli değilse boş bırakın)"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr "Bir e-posta kimliği diğer I2P-Bote kullanıcılarından e-posta alabilmenizi sağlar."
+#: src/main/webapp/importIdentities.jsp
+msgid "Overwrite all existing identities:"
+msgstr "Varolan tüm kimliklerin üzerine yazılsın:"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "Public Name:"
-msgstr "Herkese Açık Ad:"
+#: src/main/webapp/importIdentities.jsp
+msgid "Duplicates: replace existing identity:"
+msgstr "Çift kayıtlar: Varolan kimlik değiştirilsin:"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "(required field, shown to recipients)"
-msgstr "(zorunlu alan, alıcılara görüntülenir)"
+#: src/main/webapp/importIdentities.jsp
+msgid "Import"
+msgstr "Al"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "Description:"
-msgstr "Açıklama:"
+#: src/main/webapp/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr "Adres Dizini Tarama"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "(optional, kept private)"
-msgstr "(isteğe bağlı, gizli tutun)"
+#: src/main/webapp/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr "Ad adres defterine eklendi."
 
-#: src/main/webapp/editIdentity.jsp
-msgid "Picture:"
-msgstr "Görsel:"
+#: src/main/webapp/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr "Dizinde &quot;{0}&quot; adı bulunamadı."
 
-#: src/main/webapp/editIdentity.jsp
-msgid "(published to the address directory)"
-msgstr "(adres dizininde yayınlanır)"
+#: src/main/webapp/importContact.jsp
+msgid "Import Contact"
+msgstr "Kişi Al"
 
-#: src/main/webapp/editIdentity.jsp
-msgid "Text:"
-msgstr "Metin:"
+#: src/main/webapp/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "Adres dizininde eşleşen bir kayıt bulundu. Adres dizininin değişikliğe açık olduğunu unutmayın. Bu nedenle güvenmediğiniz e-posta adresleri için &quot;Al&quot; düğmesine tıklamayın."
 
-#: src/main/webapp/editIdentity.jsp
-msgid "Encryption:"
-msgstr "Şifreleme:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "(If unsure, leave the default)"
-msgstr "(emin değilseniz boş bırakın)"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Vanity Destination:"
-msgstr "Boşluk Hedefi:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
-msgstr "(2 karakter saniyeler, 3 karakter dakikalar sürer)"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Email Destination:"
+#: src/main/webapp/importContact.jsp
+msgid "Email Destination: "
 msgstr "E-posta Hedefi:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Default Identity:"
-msgstr "Varsayılan Kimlik:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Include in global check:"
-msgstr "Genel denetime katılsın:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Private keys:"
-msgstr "Kişisel anahtarlar:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "(Never reveal to anyone!)"
-msgstr "(Asla kimse ile paylaşmayın)"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Show"
-msgstr "Görüntüle"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Cancel"
-msgstr "İptal"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Cannot publish until connected."
-msgstr "Bağlantı kurulana kadar yayınlanamaz."
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Delete this identity"
-msgstr "Bu kimliği sil"
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "Lütfen Herkese Açık Ad alanını doldurun."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "Lütfen bekleyin..."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The Email Identity is being generated. This may take a while."
-msgstr "E-posta kimliği oluşturuluyor, biraz zaman alabilir."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "E-posta kimliği kaydedildi."
-
-#: src/main/webapp/editContact.jsp
-msgid "Please fill in the Destination field."
-msgstr "Lütfen hedef alanını doldurun."
-
-#: src/main/webapp/editContact.jsp
-msgid "Please fill in the Name field."
-msgstr "Lütfen ad alanını doldurun."
-
-#: src/main/webapp/editContact.jsp
-msgid "The contact has been saved."
-msgstr "Kişi kaydedildi."
-
-#: src/main/webapp/editContact.jsp
-msgid "Add"
-msgstr "Ekle"
-
-#: src/main/webapp/editContact.jsp
-msgid "Edit Contact"
-msgstr "Kişiyi Düzenle"
-
-#: src/main/webapp/editContact.jsp
-msgid "(required field)"
-msgstr "(zorunlu alan)"
 
 #: src/main/webapp/about.jsp
 msgid "About I2P-Bote"
@@ -1194,123 +1299,26 @@ msgstr "Kod düzeltmeleri, Transifex çeviri güncellemeleri"
 msgid "Code fixes"
 msgstr "Kod düzeltmeleri"
 
-#: src/main/webapp/setPassword.jsp
-msgid "Set Password"
-msgstr "Parola Ayarla"
+#: src/main/webapp/about.jsp
+msgid "Usability improvement"
+msgstr ""
 
-#: src/main/webapp/setPassword.jsp
-msgid "The password has been changed."
-msgstr "Parola değiştirildi."
+#: src/main/webapp/deleteEmail.jsp
+msgid "Error: Couldn't delete email."
+msgstr "Hata: E-posta silinemedi"
 
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait"
-msgstr "Lütfen bekleyin"
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Identity"
+msgstr "Tam Kimlik"
 
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait while the password is being changed..."
-msgstr "Lütfen parola değiştirilirken bekleyin..."
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Email Identity for {0}:"
+msgstr "{0} için tam e-posta kimliği:"
 
-#: src/main/webapp/setPassword.jsp
-msgid "Set a new Password"
-msgstr "Yeni bir parola ayarla"
-
-#: src/main/webapp/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "Yeni bir parola ayarlamak istemiyorsanız, eski parola alanını boş bırakın."
-
-#: src/main/webapp/setPassword.jsp
+#: src/main/webapp/showFullIdentity.jsp
 msgid ""
-"Please note that if a password is set, emails cannot be checked "
-"automatically but only when the Check Mail button is clicked."
-msgstr "Bir parola ayarlandığında, e-postaların otomatik olarak denetlenemeyeceğini unutmayın. Bunun için E-postaları Denetle düğmesine tıklanması gerekir."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Old password:"
-msgstr "Eski parola:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "New password:"
-msgstr "Yeni parola:"
-
-#: src/main/webapp/settings.jsp
-msgid "Settings have been saved."
-msgstr "Ayarlar kaydedildi."
-
-#: src/main/webapp/settings.jsp
-msgid "General"
-msgstr "Genel"
-
-#: src/main/webapp/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "E-postalar {0} dakikada bir denetlensin"
-
-#: src/main/webapp/settings.jsp
-msgid "Check delivery status of sent emails"
-msgstr "Gönderilen e-postaların aktarılma durumu denetlensin"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "IMAP için {0} numaralı kapı kullanılsın"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr "SMTP için {0} numaralı kapı kullanılsın"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Tema:"
-
-#: src/main/webapp/settings.jsp
-msgid "Privacy"
-msgstr "Gizlilik"
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Giden e-postalar için eklenecek İngilizce metni yazın ('Re:', 'wrote' gibi)."
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Giden e-postalara gönderilme zamanı eklensin"
-
-#: src/main/webapp/settings.jsp
-msgid "Routing"
-msgstr "Yöneltme"
-
-#: src/main/webapp/settings.jsp
-msgid "Use relays when sending mail:"
-msgstr "E-posta gönderilirken aktarıcılar kullanılsın:"
-
-#: src/main/webapp/settings.jsp
-msgid "None"
-msgstr "Yok"
-
-#: src/main/webapp/settings.jsp
-msgid "Delay per relay hop: Between"
-msgstr "Bir aktarıcı sıçraması gecikmesi: Şununla"
-
-#: src/main/webapp/settings.jsp
-msgid "and"
-msgstr "şunun arasında"
-
-#: src/main/webapp/settings.jsp
-msgid "minutes"
-msgstr "dakika"
-
-#: src/main/webapp/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "I2P olmayan e-posta adreslerine gönderim yapılırken ağ geçidi kullanılsın"
-
-#: src/main/webapp/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr "Ağ geçidindeki e-posta hedefi:"
-
-#: src/main/webapp/settings.jsp
-msgid "Change Password"
-msgstr "Parolayı Değiştir"
-
-#: src/main/webapp/faq.jsp
-msgid "Frequently Asked Questions"
-msgstr "Sık Sorulan Sorular"
+"Do not show the above information to anyone! It contains your private keys."
+msgstr "İçinde kişisel anahtarlarınız bulunduğundan, yukarıdaki bilgileri hiç kimse ile paylaşmayın."
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1324,13 +1332,13 @@ msgstr "toplam {0} e-posta, {1} yeni"
 msgid "{0} incomplete"
 msgstr "{0} tamamlanmamış"
 
-#: src/main/webapp/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "Adres Defterine Ekle"
-
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
 msgstr "Bilinmiyor"
+
+#: src/main/webapp/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Adres Defterine Ekle"
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."
