@@ -22,22 +22,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
+
+<c:set var="action" value="${param.action}" scope="request"/>
+<c:if test="${not empty action and pageContext.request.method ne 'POST'}">
+    <c:set var="action" value="" scope="request"/>
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+</c:if>
 
 <ib:message key="Debug" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
     <h1><ib:message key="Debug Page"/></h1>
     
-    <c:if test="${empty param.action}">
-        <form action="debug.jsp">
+    <c:if test="${empty action}">
+        <csrf:form action="debug.jsp" method="POST">
             <input type="hidden" name="action" value="checkFiles"/>
             <ib:message key="Test encrypted files" var="submitButtonText"/>
             <input type="submit" value="${submitButtonText}"/>
-        </form>
+        </csrf:form>
     </c:if>
     
-    <c:if test="${param.action eq 'checkFiles'}">
+    <c:if test="${action eq 'checkFiles'}">
         <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
         <ib:requirePassword>
             <c:set var="undecryptableFiles" value="${jspHelperBean.undecryptableFiles}"/>

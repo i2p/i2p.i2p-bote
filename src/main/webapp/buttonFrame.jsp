@@ -24,11 +24,12 @@
 <!DOCTYPE html>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <jsp:include page="getStatus.jsp"/>
 
-<c:if test="${param.checkMail eq 1}">
+<c:if test="${pageContext.request.method eq 'POST' and param.checkMail eq 1}">
     <ib:requirePassword forwardUrl="checkMail.jsp">
         <ib:checkForMail/>
     </ib:requirePassword>
@@ -60,11 +61,11 @@
 </c:if>
 <c:if test="${!checkingForMail}">
     <div class="checkmail">
-        <c:set var="frame" value=""/>
+        <c:set var="frame" value="_self"/>
         <c:choose>
             <c:when test="${jspHelperBean.identities.none}">
                 <c:set var="url" value="noIdentities.jsp"/>
-                <c:set var="frame" value='target="_parent"'/>
+                <c:set var="frame" value="_parent"/>
             </c:when>
             <c:otherwise>
                 <%--
@@ -72,7 +73,7 @@
                     to checkMail.jsp and use the entire browser window
                 --%>
                 <c:if test="${jspHelperBean.passwordRequired}">
-                    <c:set var="frame" value='target="_parent"'/>
+                    <c:set var="frame" value="_parent"/>
                     <c:set var="url" value="checkMail.jsp"/>
                 </c:if>
                 <c:if test="${not jspHelperBean.passwordRequired}">
@@ -81,14 +82,14 @@
             </c:otherwise>
         </c:choose>
         
-        <form action="${url}" ${frame} method="GET">
+        <csrf:form action="${url}" target="${frame}" method="POST">
             <input type="hidden" name="checkMail" value="1"/>
             <c:set var="disable" value=""/>
             <c:if test="${connStatus != CONNECTED}">
                 <c:set var="disable" value="disabled=&quot;disabled&quot;"/>
             </c:if>
             <button type="submit" value="Check Mail" ${disable}><ib:message key="Check Mail"/></button>
-        </form>
+        </csrf:form>
     </div>
     <c:if test="${jspHelperBean.newMailReceived}">
         ${jspHelperBean.newEmailNotificationContent}
@@ -128,9 +129,9 @@
 </c:if>
 
 <div class="compose frame">
-    <form action="newEmail.jsp" target="_top" method="GET">
+    <csrf:form action="newEmail.jsp" target="_top" method="GET">
         <button type="submit" value="New"><ib:message key="Compose"/></button>
-    </form>
+    </csrf:form>
 </div>
 
 <div class="lastcheck">

@@ -20,6 +20,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <%--
@@ -34,6 +35,12 @@
         replace           - True if duplicate identities should overwrite the existing ones
 --%>
 
+<c:set var="action" value="${param.action}" scope="request"/>
+<c:if test="${not empty action and pageContext.request.method ne 'POST'}">
+    <c:set var="action" value="" scope="request"/>
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+</c:if>
+
 <%--
     The identitiesFile request attribute contains a UploadedFile object, see MultipartFilter.java.
     When action='attach', originalIdentitiesFilename contains the name of the file selected by the user.
@@ -41,7 +48,7 @@
 <c:set var="originalIdentitiesFilename" value="${requestScope['identitiesFile'].originalFilename}"/>
 
 <ib:message key="Import Identities" var="title" scope="request"/>
-<c:if test="${param.action eq 'import' and empty originalIdentitiesFilename}">
+<c:if test="${action eq 'import' and empty originalIdentitiesFilename}">
     <ib:message key="Please select an identities file and try again." var="noIdentitiesMsg"/>
     <c:set var="errorMessage" value="${noIdentitiesMsg}" scope="request"/>
 </c:if>
@@ -49,14 +56,17 @@
 
 <ib:requirePassword>
     <c:choose>
-        <c:when test="${param.action eq 'import' and not empty originalIdentitiesFilename}">
+        <c:when test="${action eq 'import' and not empty originalIdentitiesFilename}">
             <c:set var="identitiesFilename" value="${requestScope['identitiesFile'].tempFilename}"/>
             <ib:importIdentities identitiesFilename="${identitiesFilename}" password="${param.nofilter_password}" overwrite="${param.overwrite}" replace="${param.replace}"/>
             <ib:message var="infoMessage" scope="request" key="The identities have been imported."/>
             <jsp:forward page="identities.jsp"/>
         </c:when>
         <c:otherwise>
-            <form action="importIdentities.jsp?action=import" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+            <c:set var="csrf_tokenname"><csrf:tokenname/></c:set>
+            <c:set var="csrf_tokenvalue"><csrf:tokenvalue uri="importIdentities.jsp"/></c:set>
+            <form action="importIdentities.jsp?${csrf_tokenname}=${csrf_tokenvalue}" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+                <input type="hidden" name="action" value="import"/>
                 <div class="import-form-label">
                     <ib:message key="Identities file:"/>
                 </div>

@@ -22,6 +22,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <ib:message key="Full Identity" var="title" scope="request"/>
@@ -43,10 +44,10 @@
     <p/>
     <div class="warning"><b><ib:message key="Do not show the above information to anyone! It contains your private keys."/></b></div>
     <p/>
-    <form action="editIdentity.jsp">
+    <csrf:form action="editIdentity.jsp" method="POST">
         <input type="hidden" name="key" value="${key}"/>
         <button type="submit"><ib:message key="Return"/></button>
-    </form>
+    </csrf:form>
 </ib:requirePassword>
 
 <jsp:include page="footer.jsp"/>

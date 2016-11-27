@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
@@ -46,9 +47,9 @@
 <jsp:include page="header.jsp"/>
 
 <div class="compose float">
-    <form action="newEmail.jsp" method="GET">
+    <csrf:form action="newEmail.jsp" method="POST">
         <button type="submit" value="New"><img src="${themeDir}/images/compose.png"/></button>
-    </form>
+    </csrf:form>
 </div>
 
 <c:set var="sortcolumn" value="${CREATE_TIME}"/>

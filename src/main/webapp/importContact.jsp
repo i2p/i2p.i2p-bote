@@ -23,12 +23,18 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 
 <ib:message key="Address Directory Lookup" var="title" scope="request"/>
+
+<c:if test="${pageContext.request.method ne 'POST'}">
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+    <jsp:forward page="addressBook.jsp"/>
+</c:if>
 
     <c:if test="${param.confirm eq true}">
         <ib:requirePassword>
@@ -87,7 +93,7 @@
                 ${result.destination}
             </div>
             
-            <form action="importContact.jsp" method="post">
+            <csrf:form action="importContact.jsp" method="post">
                 <input type="hidden" name="confirm" value="true"/>
                 <input type="hidden" name="name" value="${param.name}"/>
                 <input type="hidden" name="destination" value="${result.destination}"/>
@@ -95,7 +101,7 @@
                 <input type="hidden" name="text" value="${fn:escapeXml(result.text)}"/>
                 <ib:message key="Import" var="import" scope="request"/>
                 <input type="submit" value="${import}"/>
-            </form>
+            </csrf:form>
         </c:if>
     </c:if>
 

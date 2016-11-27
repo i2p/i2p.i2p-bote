@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
@@ -117,7 +118,7 @@
     
     <br/>
     <div class="show-email-reply">
-    <form action="newEmail.jsp" method="post">
+    <csrf:form action="newEmail.jsp" method="POST">
         <c:set var="replyDisabled" value="${email.anonymous ? 'disabled=&quot;disabled&quot;' : ''}"/>
         <button type="submit"${replyDisabled}><ib:message key="Reply"/></button>
         <input type="hidden" name="nofilter_sender" value="${ib:escapeQuotes(ib:getOneLocalRecipient(email))}"/>
@@ -134,14 +135,14 @@
         
         <input type="hidden" name="quoteMsgFolder" value="${param.folder}"/>
         <input type="hidden" name="quoteMsgId" value="${param.messageID}"/>
-    </form>
+    </csrf:form>
     </div>
     <div class="show-email-delete">
-    <form action="deleteEmail.jsp" method="post">
+    <csrf:form action="deleteEmail.jsp" method="POST">
         <button type="submit"><ib:message key="Delete"/></button>
         <input type="hidden" name="folder" value="${param.folder}"/>
         <input type="hidden" name="messageID" value="${email.messageID}"/>
-    </form>
+    </csrf:form>
     </div>
 </article>
 

@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
@@ -88,14 +89,15 @@
     </table>
     
     <p/>
-    <form class="onebutton" action="editIdentity.jsp?createNew=true" method="POST">
+    <csrf:form class="onebutton" action="editIdentity.jsp" method="POST">
+        <input type="hidden" name="createNew" value="true"/>
         <button type="submit" value="New"><ib:message key="New Identity"/></button>
-    </form>
-    <form class="onebutton" action="importIdentities.jsp" method="POST">
+    </csrf:form>
+    <csrf:form class="onebutton" action="importIdentities.jsp" method="POST">
         <button type="submit"><ib:message key="Import Identities"/></button>
-    </form>
-    <form class="onebutton" action="exportIdentities.jsp" method="POST">
+    </csrf:form>
+    <csrf:form class="onebutton" action="exportIdentities.jsp" method="POST">
         <button type="submit"><ib:message key="Export Identities"/></button>
-    </form>
+    </csrf:form>
 
 <jsp:include page="footer.jsp"/>

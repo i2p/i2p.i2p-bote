@@ -159,5 +159,9 @@
         <div class="contributor-name">Jonathan Cross</div>
         <div class="contributor-role"><ib:message key="Usability improvement"/></div>
     </div>
+    <div>
+        <div class="contributor-name">Beardog</div>
+        <div class="contributor-role"><ib:message key="Bug hunting"/></div>
+    </div>
 
 <jsp:include page="footer.jsp"/>

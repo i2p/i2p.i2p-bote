@@ -22,10 +22,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
+<c:set var="action" value="${param.action}" scope="request"/>
+<c:if test="${not empty action and pageContext.request.method ne 'POST'}">
+    <c:set var="action" value="" scope="request"/>
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+</c:if>
+
 <ib:message key="Set Password" var="title" scope="request"/>
-<c:if test="${param.action eq 'wait'}">
+<c:if test="${action eq 'wait'}">
     <c:catch var="exception">
         <ib:waitForPasswordChange/>
     </c:catch>
@@ -37,7 +44,7 @@
         <c:set var="errorMessage" value="${exception.cause.localizedMessage}" scope="request"/>
     </c:if>
 </c:if>
-<c:if test="${param.action eq 'set'}">
+<c:if test="${action eq 'set'}">
     <c:set var="refreshUrl" value="setPassword.jsp?action=wait" scope="request"/>
     <c:set var="refreshInterval" value="0" scope="request"/>
     <ib:setPassword oldPassword="${param.nofilter_oldPassword}" newPassword="${param.nofilter_newPassword}" confirmNewPassword="${param.nofilter_confirm}"/>
@@ -45,13 +52,13 @@
 
 <jsp:include page="header.jsp"/>
 
-    <c:if test="${param.action eq 'set'}">
+    <c:if test="${action eq 'set'}">
         <h2><ib:message key="Please wait"/></h2>
         <p>
         <img src="${themeDir}/images/wait.gif"/> <ib:message key="Please wait while the password is being changed..."/>
         </p>
     </c:if>
-    <c:if test="${param.action ne 'set'}">
+    <c:if test="${action ne 'set'}">
         <h1><ib:message key="Set a new Password"/></h1>
         
         <p>
@@ -63,7 +70,7 @@
         </ib:message>
         </p><br/>
         
-        <form name="form" action="setPassword.jsp" method="POST">
+        <csrf:form name="form" action="setPassword.jsp" method="POST">
             <input type="hidden" name="action" value="set"/>
             
             <div class="password-label"><ib:message key="Old password:"/></div>
@@ -77,7 +84,7 @@
             
             <p/>
             <button type="submit"><ib:message key="OK"/></button>
-        </form>
+        </csrf:form>
     
         <script type="text/javascript" language="JavaScript">
             document.forms['form'].elements['nofilter_oldPassword'].focus();

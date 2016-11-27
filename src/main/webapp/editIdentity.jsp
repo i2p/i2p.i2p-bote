@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
@@ -58,7 +59,7 @@
             <jsp:include page="identitiesHelp.jsp"/>
         </ib:expandable>
     </c:if>
-    <form name="form" method="post" action="submitIdentity.jsp">
+    <csrf:form name="form" method="POST" action="submitIdentity.jsp">
         <div class="identity-form-label">
             <div class="field-label"><ib:message key="Public Name:"/></div>
             <div class="addtl-text"><ib:message key="(required field, shown to recipients)"/></div>
@@ -217,7 +218,7 @@
                 <button name="action" value="delete" title="<ib:message key='Delete this identity'/>"><ib:message key="Delete"/></button>
             </div>
         </c:if>
-    </form>
+    </csrf:form>
 
     <script type="text/javascript" language="JavaScript">
         document.forms['form'].elements['publicName'].focus();

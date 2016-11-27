@@ -76,6 +76,12 @@
     <property name="subetha.archive" value="subethasmtp-3.1.7.zip"/>
     <property name="subetha.url" value="http://subethasmtp.googlecode.com/files/subethasmtp-3.1.7.zip"/>
     <property name="subetha.includeinupdate" value="false"/>
+    <!-- OWASP CSRFGuard -->
+    <property name="csrf.name" value="OWASP CSRFGuard"/>
+    <property name="csrf.filename" value="csrfguard-3.1.0.jar"/>
+    <property name="csrf.hash" value="b9dc95baa44ede02a74192f4b50d6c68f3b5c53b5de05bb22acef5098e39511c"/>
+    <property name="csrf.url" value="https://repo1.maven.org/maven2/org/owasp/csrfguard/3.1.0/csrfguard-3.1.0.jar"/>
+    <property name="csrf.includeinupdate" value="true"/>
 
     <!-- the following are only used by win32installer -->
     <property name="i2p.mtn" value="../i2p.mtn"/>
@@ -133,6 +139,7 @@
         <pathelement location="${lib}/${subetha.filename}" />
         <pathelement location="${lib}/${jcommon.filename}" />
         <pathelement location="${lib}/${jfreechart.filename}" />
+        <pathelement location="${lib}/${csrf.filename}" />
         <pathelement location="src/main/webapp/WEB-INF/classes" />
         <fileset refid="imaplibs"/>
     </path>
@@ -192,17 +199,20 @@
         <available property="jamesexists" file="${lib}/${james.filename}" type="file"/>
         <available property="mime4jexists" file="${lib}/${mime4j.filename}" type="file"/>
         <available property="subethaexists" file="${lib}/${subetha.filename}" type="file"/>
+        <available property="csrfexists" file="${lib}/${csrf.filename}" type="file"/>
 
         <ant target="downloadmailapi"/>
         <ant target="downloadbcprov"/>
         <ant target="downloadjames"/>
         <ant target="downloadmime4j"/>
         <ant target="downloadsubetha"/>
+        <ant target="downloadcsrf"/>
 
         <checkdep dep="mailapi"/>
         <checkdep dep="bcprov"/>
         <checkdep dep="mime4j"/>
         <checkdep dep="subetha"/>
+        <checkdep dep="csrf"/>
     </target>
 
     <!-- compiles everything under src/main/java, but not src/test/ or src/build/ -->
@@ -260,6 +270,7 @@
         <mkdir dir="ant_build" />
         <war destfile="i2pbote.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
+            <classes dir="src/main/webapp/WEB-INF/classes" includes="*.properties"/>
             <fileset dir="src/main/webapp" includes="*.html"/>
             <fileset dir="src/main/webapp/" includes="*.xml"/>
             <webinf dir="src/main/webapp/WEB-INF/tlds" includes="*.tld"/>
@@ -272,6 +283,7 @@
             <lib file="${lib}/${gmss.filename}"/>
             <lib file="${lib}/${jcommon.filename}" />
             <lib file="${lib}/${jfreechart.filename}" />
+            <lib file="${lib}/${csrf.filename}"/>
             <zipfileset dir="src/main/webapp/html" prefix="html"/>
           <zipfileset dir="src/main/webapp/themes" prefix="themes"/>
         </war>
@@ -362,6 +374,7 @@
         <!-- mime4j handled separately temporarily -->
         <includedep updater="true" dep="mime4j"/>
         <includedep updater="true" dep="subetha"/>
+        <includedep updater="true" dep="csrf"/>
 
         <copy file="src/main/scripts/encrypt.sh" todir="plugin/plugin.tmp/lib"/>
         <copy file="src/main/scripts/decrypt.sh" todir="plugin/plugin.tmp/lib"/>
@@ -405,6 +418,7 @@
         <includedep dep="bcprov"/>
         <includedep dep="james"/>
         <includedep dep="subetha"/>
+        <includedep dep="csrf"/>
 
         <!-- make the install xpi2p -->
         <copy file="plugin/plugin.config" todir="plugin/plugin.tmp" overwrite="true" />
@@ -421,6 +435,7 @@
         <mkdir dir="ant_build" />
         <war destfile="i2pbote-plugin.war" webxml="ant_build/web.xml">
             <classes dir="ant_build/classes" includes="i2p/bote/web/** i2p/bote/jsp/** org/apache/jsp/**" />
+            <classes dir="src/main/webapp/WEB-INF/classes" includes="*.properties"/>
             <fileset dir="src/main/webapp" includes="*.html"/>
             <fileset dir="src/main/webapp/" includes="*.xml"/>
             <webinf dir="src/main/webapp/WEB-INF/tlds" includes="*.tld"/>
@@ -562,6 +577,13 @@
         <removepack dep="subetha"/>
     </target>
 
+    <target name="packdep.csrf">
+        <packdep dep="csrf"/>
+    </target>
+    <target name="removepack.csrf">
+        <removepack dep="csrf"/>
+    </target>
+
     <target name="bundle" depends="compile">
         <!-- Update the messages_*.po files.
              We need to supply the bat file for windows, and then change the fail property to true -->
@@ -626,6 +648,7 @@
         <copy file="${lib}/flexi-gmss-1.7p1.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/jcommon-1.0.23.jar" todir="${i2pinstallerplugindir}/lib"/>
         <copy file="${lib}/jfreechart-1.0.19.jar" todir="${i2pinstallerplugindir}/lib"/>
+        <copy file="${lib}/${csrf.filename}" todir="${i2pinstallerplugindir}/lib"/>
         <!-- build the I2P + I2P-Bote install.jar -->
         <ant antfile="${installerdir}/i2p.i2p/build.xml" target="installer" inheritAll="false"/>
         <copy file="${installerdir}/i2p.i2p/install.jar" todir="${installerresources}"/>
@@ -880,6 +903,16 @@
             </mapper>
         </unzip>
         <delete file="${lib}/${subetha.archive}"/>
+    </target>
+
+    <target name="downloadcsrf" unless="csrfexists">
+        <input message="OWASP CSRFGuard not found, download now?" validargs="y,n" addproperty="userinput.csrf"/>
+        <fail message="OK, aborting build.">
+            <condition>
+                <equals arg1="${userinput.csrf}" arg2="n"/>
+            </condition>
+        </fail>
+        <get src="${csrf.url}" verbose="true" dest="${lib}/${csrf.filename}"/>
     </target>
 
     <!-- Write the app version into ${version} -->

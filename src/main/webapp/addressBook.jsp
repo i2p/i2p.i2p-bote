@@ -28,6 +28,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
@@ -49,6 +50,7 @@
     
     <c:if test="${param.select}">
         <form action="${param.forwardUrl}" method="POST">
+        <input type="hidden" name="<csrf:tokenname/>" value="<csrf:tokenvalue uri='${param.forwardUrl}'/>"/>
         <ib:copyParams paramsToCopy="${param.nofilter_paramsToCopy}"/>
     </c:if>
     
@@ -104,10 +106,10 @@
     <table>
         <c:if test="${!param.select}">
             <tr><td>
-                <form action="editContact.jsp" method="POST">
+                <csrf:form action="editContact.jsp" method="POST">
                     <input type="hidden" name="createNew" value="true"/>
                     <button type="submit" value="New"><ib:message key="New Contact"/></button>
-                </form>
+                </csrf:form>
             </td></tr>
         </c:if>
         <c:if test="${param.select}">
@@ -129,11 +131,11 @@
     <c:if test="${not param.select}">
         <p/><br/>
         <b><ib:message key="Import from the public address directory"/></b><br/>
-        <form action="importContact.jsp" method="POST">
+        <csrf:form action="importContact.jsp" method="POST">
             <ib:message key="Name:"/>
             <input type="text" name="name"/>
             <button type="submit"><ib:message key="Lookup"/></button>
-        </form><br/>
+        </csrf:form><br/>
         Note that only exact matches are found.
     </c:if>
 </ib:requirePassword>

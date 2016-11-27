@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
@@ -41,7 +42,14 @@
 --%>
 
 <ib:requirePassword>
-<c:if test="${param.action eq 'cancel'}">
+
+<c:set var="action" value="${param.action}" scope="request"/>
+<c:if test="${not empty action and pageContext.request.method ne 'POST'}">
+    <c:set var="action" value="" scope="request"/>
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+</c:if>
+
+<c:if test="${action eq 'cancel'}">
     <c:set var="backUrl" value="${param.backUrl}"/>
     <c:if test="${empty backUrl}">
         <c:set var="backUrl" value="addressBook.jsp"/>
@@ -51,7 +59,7 @@
     </jsp:forward>
 </c:if>
 
-<c:if test="${param.action eq 'save'}">
+<c:if test="${action eq 'save'}">
     <c:choose>
         <c:when test="${empty param.destination}">
             <ib:message key="Please fill in the Destination field." var="errorMessage"/>
@@ -100,7 +108,7 @@
 </c:choose>
 <jsp:include page="header.jsp"/>
 
-    <form name="form" action="editContact.jsp" method="post">
+    <csrf:form name="form" action="editContact.jsp" method="POST">
         <ib:copyParams paramsToCopy="${param.paramsToCopy}"/>
         
         <div class="contact-form-label">
@@ -141,7 +149,7 @@
         <p>&nbsp;</p>
         <button name="action" value="save">${submitButtonText}</button>
         <button name="action" value="cancel"><ib:message key="Cancel"/></button>
-    </form>
+    </csrf:form>
 
     <script type="text/javascript" language="JavaScript">
         if (document.forms['form'].elements['destination'].value == "")

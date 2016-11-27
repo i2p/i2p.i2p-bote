@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <%--
@@ -38,10 +39,16 @@
         text        - Text to include in the DHT record
 --%>
 
+<c:set var="action" value="${param.action}" scope="request"/>
+<c:if test="${not empty action and pageContext.request.method ne 'POST'}">
+    <c:set var="action" value="" scope="request"/>
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+</c:if>
+
 <ib:message key="Add Email Destination to Directory" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-    <c:if test="${param.action eq 'start'}">
+    <c:if test="${action eq 'start'}">
         <%-- If the user changed the Public Name to try a new name that isn't taken, update it so they don't have to click save first --%>
         <ib:requirePassword>
             ${ib:modifyIdentity(param.key, param.publicName, param.description, null, param.emailAddress, null, false)}
@@ -59,9 +66,12 @@
             </jsp:forward>
         </c:if>
     </c:if>
-    <c:if test="${param.action eq 'step2'}">
+    <c:if test="${action eq 'step2'}">
         <h1><ib:message key="Publish to the Address Directory"/></h1>
-        <form action="publishDestination.jsp?action=store" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+        <c:set var="csrf_tokenname"><csrf:tokenname/></c:set>
+        <c:set var="csrf_tokenvalue"><csrf:tokenvalue uri="publishDestination.jsp"/></c:set>
+        <form action="publishDestination.jsp?${csrf_tokenname}=${csrf_tokenvalue}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+            <input type="hidden" name="action" value="store"/>
             <input type="hidden" name="name" value="${param.publicName}"/>
             <input type="hidden" name="destination" value="${param.key}"/>
             <div class="publish-form-label">
@@ -81,7 +91,7 @@
             <button type="submit"><ib:message key="Publish"/></button>
         </form>
     </c:if>
-    <c:if test="${param.action eq 'store'}">
+    <c:if test="${action eq 'store'}">
         <c:set var="picFilename" value="${requestScope['picture'].tempFilename}"/>
         <ib:publishDestination destination="${param.destination}" pictureFilename="${picFilename}" text="${param.text}"/>
         <ib:message var="infoMessage" scope="request" key="The identity has been added to the address directory."/>

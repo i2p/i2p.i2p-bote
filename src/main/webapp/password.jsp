@@ -22,12 +22,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
+
+<c:set var="action" value="${param.passwordJspAction}" scope="request"/>
+<c:if test="${not empty action and pageContext.request.method ne 'POST'}">
+    <c:set var="action" value="" scope="request"/>
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+</c:if>
 
 <ib:message key="Password Required" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
-<c:if test="${param.passwordJspAction eq 'check'}">
+<c:if test="${action eq 'check'}">
     <c:choose>
         <c:when test="${ib:tryPassword(param.nofilter_password)}">
             <jsp:forward page="${param.passwordJspForwardUrl}"/>
@@ -40,11 +47,12 @@
 
     <h1><ib:message key="Password required"/></h1>
     
-    <form name="form" action="password.jsp?passwordJspAction=check" method="POST">
+    <csrf:form name="form" action="password.jsp" method="POST">
+        <input type="hidden" name="passwordJspAction" value="check"/>
         <ib:copyParams paramsToCopy="*" paramsToExclude="nofilter_password"/>
         <ib:message key="Password:"/> <input type="password" name="nofilter_password"/>
         <button type="submit"><ib:message key="OK"/></button>
-    </form>
+    </csrf:form>
 
     <script type="text/javascript" language="JavaScript">
         document.forms['form'].elements['nofilter_password'].focus();

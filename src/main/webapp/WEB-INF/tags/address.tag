@@ -22,6 +22,7 @@
 <%@ attribute name="address" required="true" description="The email address to display" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
@@ -33,7 +34,7 @@
     <c:set var="emailDestination" value="${ib:extractEmailDestination(address)}"/>
     <c:set var="name" value="${ib:extractName(address)}"/>
     
-    <form action="editContact.jsp" method="POST">
+    <csrf:form action="editContact.jsp" method="POST">
         <input type="hidden" name="new" value="true"/>
         <input type="hidden" name="destination" value="${emailDestination}"/>
         <input type="hidden" name="name" value="${ib:escapeQuotes(name)}"/>
@@ -70,5 +71,5 @@
                 </c:if>
             </ib:expandable>
         </c:if>
-    </form>
+    </csrf:form>
 </div>

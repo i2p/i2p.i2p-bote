@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
@@ -41,11 +42,17 @@
         new    - true for new contact, false for existing contact
 --%>
 
+<c:set var="action" value="${param.action}" scope="request"/>
+<c:if test="${not empty action and pageContext.request.method ne 'POST'}">
+    <c:set var="action" value="" scope="request"/>
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+</c:if>
+
 <c:choose>
-    <c:when test="${param.action eq 'send'}">
+    <c:when test="${action eq 'send'}">
         <jsp:forward page="sendEmail.jsp"/>
     </c:when>
-    <c:when test="${param.action eq 'addToAddrBook'}">
+    <c:when test="${action eq 'addToAddrBook'}">
         <c:set var="destparam" value="${param.destparamname}"/>
         <jsp:forward page="editContact.jsp">
             <jsp:param name="new" value="true"/>
@@ -55,7 +62,7 @@
             <jsp:param name="paramsToCopy" value="nofilter_sender,nofilter_recipient*,to*,cc*,bcc*,replyto*,subject,message,attachmentNameOrig*,attachmentNameTemp*,forwardUrl,backUrl,paramsToCopy"/>
         </jsp:forward>
     </c:when>
-    <c:when test="${param.action eq 'lookup'}">
+    <c:when test="${action eq 'lookup'}">
         <jsp:forward page="addressBook.jsp">
             <jsp:param name="select" value="true"/>
             <jsp:param name="forwardUrl" value="newEmail.jsp"/>
@@ -71,14 +78,16 @@
 <c:set var="originalAttachmentFilename" value="${requestScope['newAttachment'].originalFilename}"/>
 
 <ib:message key="New Email" var="title" scope="request"/>
-<c:if test="${param.action eq 'attach' and empty originalAttachmentFilename}">
+<c:if test="${action eq 'attach' and empty originalAttachmentFilename}">
     <ib:message key="Please select a file to attach and try again." var="noAttachmentMsg"/>
     <c:set var="errorMessage" value="${noAttachmentMsg}" scope="request"/>
 </c:if>
 <jsp:include page="header.jsp"/>
 
 <ib:requirePassword>
-    <form id="emailform" action="newEmail.jsp" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+    <c:set var="csrf_tokenname"><csrf:tokenname/></c:set>
+    <c:set var="csrf_tokenvalue"><csrf:tokenvalue uri="newEmail.jsp"/></c:set>
+    <form id="emailform" action="newEmail.jsp?${csrf_tokenname}=${csrf_tokenvalue}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
         <div class="email-form-button-send">
             <button type="submit" name="action" value="send">&#x2794; <ib:message key="Send"/></button>
         </div>
@@ -164,7 +173,7 @@
                 <c:if test="${fn:startsWith(parameter.key, 'attachmentNameOrig')}">
                     <c:set var="attachmentIndex" value="${fn:substringAfter(parameter.key, 'attachmentNameOrig')}"/>
                     <c:set var="removeAction" value="removeAttachment${attachmentIndex}"/>
-                    <c:set var="removed" value="${param.action eq removeAction}"/>
+                    <c:set var="removed" value="${action eq removeAction}"/>
                     <c:if test="${!removed}">
                         <c:if test="${attachmentIndex gt maxAttachmentIndex}">
                             <c:set var="maxAttachmentIndex" value="${attachmentIndex}"/>
@@ -189,7 +198,7 @@
                 </c:if>
             </c:forEach>
             
-            <c:if test="${param.action eq 'attach' and not empty originalAttachmentFilename}">
+            <c:if test="${action eq 'attach' and not empty originalAttachmentFilename}">
                 <c:set var="tempAttachmentFilename" value="${requestScope['newAttachment'].tempFilename}"/>
                 <c:set var="maxAttachmentIndex" value="${maxAttachmentIndex + 1}"/>
                 <div class="email-form-attach-files">

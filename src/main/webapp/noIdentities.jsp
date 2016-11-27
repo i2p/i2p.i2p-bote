@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <ib:message key="No Identity" var="title" scope="request"/>
@@ -32,8 +33,9 @@
     <h1><ib:message key="No Email Identity Defined"/></h1>
     <p>
     <jsp:include page="identitiesHelp.jsp"/>
-    <form action="editIdentity.jsp?new=true" method="POST">
+    <csrf:form action="editIdentity.jsp" method="POST">
+        <input type="hidden" name="createNew" value="true"/>
         <button type="submit" value="New"><ib:message key="Create a New Email Identity"/></button>
-    </form>
+    </csrf:form>
 
 <jsp:include page="footer.jsp"/>

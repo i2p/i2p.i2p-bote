@@ -23,9 +23,15 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
  
+<c:if test="${pageContext.request.method ne 'POST'}">
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+    <jsp:forward page="newEmail.jsp"/>
+</c:if>
+
 <ib:message key="New Email" var="title" scope="request"/>
 <jsp:include page="header.jsp"/>
 
@@ -56,12 +62,12 @@
     <ib:setEmailReplied messageId="${param.quoteMsgId}" folder="${ib:getMailFolder(param.quoteMsgFolder)}" replied="true"/>
     
     <br/><p/>
-    <form action="deleteEmail.jsp" method="post">
+    <csrf:form action="deleteEmail.jsp" method="POST">
         Delete original email?
         <input type="hidden" name="folder" value="${param.quoteMsgFolder}"/>
         <input type="hidden" name="messageID" value="${param.quoteMsgId}"/>
         <button type="submit" name="action" value="Delete">Delete</button>
-    </form>
+    </csrf:form>
 </c:if>
 </ib:requirePassword>
 

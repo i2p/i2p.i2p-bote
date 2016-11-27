@@ -22,11 +22,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
 <c:set var="configuration" value="${jspHelperBean.configuration}"/>
-<c:if test="${param.action eq 'save'}">
+
+<c:set var="action" value="${param.action}" scope="request"/>
+<c:if test="${not empty action and pageContext.request.method ne 'POST'}">
+    <c:set var="action" value="" scope="request"/>
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+</c:if>
+
+<c:if test="${action eq 'save'}">
     <jsp:setProperty name="configuration" property="autoMailCheckEnabled" value="${param.autoMailCheckEnabled eq 'on' ? 'true' : 'false'}"/>
     <jsp:setProperty name="configuration" property="mailCheckInterval" value="${param.mailCheckInterval}"/>
     <jsp:setProperty name="configuration" property="deliveryCheckEnabled" value="${param.deliveryCheckEnabled eq 'on' ? 'true' : 'false'}"/>
@@ -62,7 +70,7 @@
 
     <h1><ib:message key="Settings"/></h1>
 
-    <form action="settings.jsp" method="post">
+    <csrf:form action="settings.jsp" method="POST">
         <input type="hidden" name="action" value="save"/>
 
         <h3><ib:message key="General"/></h3>
@@ -163,7 +171,7 @@
 
         <p/>
         <button type="submit"><ib:message key="Save"/></button>
-    </form> 
+    </csrf:form> 
 
     <p><br/></p>
     <p><a href="setPassword.jsp"><ib:message key="Change Password"/></a></p>

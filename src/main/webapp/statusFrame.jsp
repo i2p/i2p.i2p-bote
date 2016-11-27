@@ -24,6 +24,7 @@
 <!DOCTYPE html>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
@@ -78,7 +79,7 @@
         <%-- Show the connect button --%>
         <div class="status-frame-connect">
             <%-- When the connect button is clicked, refresh the entire page so the buttons in buttonFrame.jsp are enabled --%>
-            <form action="connect.jsp" target="_top" method="GET">
+            <csrf:form action="connect.jsp" target="_top" method="POST">
                 <button type="submit">
                     <c:if test="${connStatus eq ERROR}">
                         <ib:message key="Retry Connecting"/>
@@ -87,7 +88,7 @@
                         <ib:message key="Connect Now"/>
                     </c:if>
                 </button>
-            </form>
+            </csrf:form>
         </div>
     </c:if>
 </a>

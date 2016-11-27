@@ -2,6 +2,7 @@ I2P-Bote Version History
 ------------------------
 
 0.4.4
+  * Added CSRF guards to all forms (thanks Beardog for raising the issue!)
   * Improve identities list usability (thanks Jonathan!)
 
 0.4.3 (Released on Jan 28, 2016)
