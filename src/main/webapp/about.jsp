@@ -41,16 +41,19 @@
     <div>
         <div class="contributor-name">
             <ib:message key="Click to send an email" var="linkTitle"/>
+            <a href="newEmail.jsp?nofilter_recipient0=TzKO~FlShiQEOPkPn7eIOkxqBy6pGxk1NDkVLLwzGk~kNPwo8qvHoyk4vKOZVZNGklsU7iOndYeQofMZtADm5yqbUxhogTmxyu7VcNsw6mXBub26FAUEQADf4Uj4Ph0dGAMyPbWzDEFUibdJyjpLYS9AaHgf~EU8B49DP8rpkh8d0T&amp;recipientType0=to&amp;subject=${subject}" title="${linkTitle}">str4d</a>
+        </div>
+        <div class="contributor-role"><ib:message key="Maintenance, user experience, extended features, Android app"/></div>
+    </div>
+    <br/>
+
+    <div class="contributor-category"><ib:message key="Past developers:"/></div>
+    <div>
+        <div class="contributor-name">
             <ib:message key="Feedback on I2P-Bote" var="subject"/>
             <a href="newEmail.jsp?nofilter_recipient0=hobo37SEJsEMfQHwcpVlvEgnrERGFz34GC1yjVyuRvl1QHnTi0UAoOtrLP~qkFY0oL59BBqj5sCep0RA8I5G8n&amp;recipientType0=to&amp;subject=${subject}" title="${linkTitle}">HungryHobo</a>
         </div>
         <div class="contributor-role"><ib:message key="Technical concept, implementation, user interface"/></div>
-    </div>
-    <div>
-        <div class="contributor-name">
-            <a href="newEmail.jsp?nofilter_recipient0=TzKO~FlShiQEOPkPn7eIOkxqBy6pGxk1NDkVLLwzGk~kNPwo8qvHoyk4vKOZVZNGklsU7iOndYeQofMZtADm5yqbUxhogTmxyu7VcNsw6mXBub26FAUEQADf4Uj4Ph0dGAMyPbWzDEFUibdJyjpLYS9AaHgf~EU8B49DP8rpkh8d0T&amp;recipientType0=to&amp;subject=${subject}" title="${linkTitle}">str4d</a>
-        </div>
-        <div class="contributor-role"><ib:message key="User experience, extended features, Android app"/></div>
     </div>
     <br/>
     
