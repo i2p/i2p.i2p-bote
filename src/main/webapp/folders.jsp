@@ -33,7 +33,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="${themeDir}/i2pbote.css" />
+    <link rel="stylesheet" href="${themeDir}/i2pbote.css?v=${jspHelperBean.appVersion}" />
     <c:set var="refreshInterval" value="120"/>
     <c:if test="${ib:getMailFolder('Outbox').numElements gt 0}">
         <c:set var="refreshInterval" value="20"/>

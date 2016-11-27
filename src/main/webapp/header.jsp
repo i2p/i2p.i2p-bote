@@ -57,7 +57,7 @@
         <meta http-equiv="refresh" content="${refreshInterval};url=${refreshUrl}" />
     </c:if>
     
-    <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css" />
+    <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css?v=${jspHelperBean.appVersion}" />
     <link rel="icon" type="image/png" href="${themeDir}/images/favicon.png" />
     <c:if test="${!empty title}">
         <title>${title} <ib:message key="- I2P-Bote"/></title>

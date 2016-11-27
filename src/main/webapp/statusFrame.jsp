@@ -34,7 +34,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css" />
+    <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css?v=${jspHelperBean.appVersion}" />
     <c:if test="${connStatus ne CONNECTED and connStatus ne ERROR}">
         <meta http-equiv="refresh" content="20" />
     </c:if>

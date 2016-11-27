@@ -44,7 +44,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css" />
+    <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css?v=${jspHelperBean.appVersion}" />
     
     <%-- Refresh until the Check Mail button becomes ungreyed --%>
     <c:if test="${checkingForMail or connStatus eq NOT_STARTED or connStatus eq DELAY}">
