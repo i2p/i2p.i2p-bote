@@ -403,6 +403,12 @@ See also .menu-icon
     margin-left: 48px;
     text-transform: uppercase;
 }
+.errorMessage::before {
+    content: url("images/connect_error.png");
+    display: block;
+    float: left;
+    margin-right: 0.5em;
+}
 .stackTrace {
     white-space: pre;
 }
