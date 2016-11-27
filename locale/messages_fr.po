@@ -5,15 +5,15 @@
 # Boxoa590, 2013
 # Boxoa590, 2012
 # syl_, 2016
-# Towinet, 2013-2015
+# Towinet, 2013-2016
 # walking <walking@i2pmail.org>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-24 02:51+0000\n"
-"PO-Revision-Date: 2016-11-24 02:51+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"PO-Revision-Date: 2016-11-25 22:59+0000\n"
+"Last-Translator: Towinet\n"
 "Language-Team: French (http://www.transifex.com/otf/I2P/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -438,7 +438,7 @@ msgstr "Nom"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Texte"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Email Destination"
@@ -1306,7 +1306,7 @@ msgstr "Corrections de code"
 
 #: src/main/webapp/about.jsp
 msgid "Usability improvement"
-msgstr ""
+msgstr "Amélioration de la facilité d'utilisation"
 
 #: src/main/webapp/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
