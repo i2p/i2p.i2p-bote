@@ -5,14 +5,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-24 02:51+0000\n"
-"PO-Revision-Date: 2016-11-24 02:51+0000\n"
+"POT-Creation-Date: 2016-11-27 09:58+0000\n"
+"PO-Revision-Date: 2016-11-27 09:57+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Indonesian (http://www.transifex.com/otf/I2P/language/id/)\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/main/java/i2p/bote/Configuration.java:69
@@ -151,53 +151,53 @@ msgstr "Belum disetel."
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "Nomor ID untuk CryptoImplementation tidak valid:"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:241
+#: src/main/java/i2p/bote/web/JSPHelper.java:264
 msgid "Queued"
 msgstr "Mengantri"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:243
+#: src/main/java/i2p/bote/web/JSPHelper.java:266
 msgid "Sending"
 msgstr "Mengirim"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:245
+#: src/main/java/i2p/bote/web/JSPHelper.java:268
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Mengirim ke {0} dari {1} penerima"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:248
+#: src/main/java/i2p/bote/web/JSPHelper.java:271
 msgid "Email sent"
 msgstr "Email terkirim"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:250
+#: src/main/java/i2p/bote/web/JSPHelper.java:273
 msgid "Gateway disabled"
 msgstr "Gateaway dinonaktifkan"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:252
+#: src/main/java/i2p/bote/web/JSPHelper.java:275
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
 msgstr ""
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:255
+#: src/main/java/i2p/bote/web/JSPHelper.java:278
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Alamat penerima tidak valid: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:257
+#: src/main/java/i2p/bote/web/JSPHelper.java:280
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Kesalahan dalam membuat paket email: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:259
+#: src/main/java/i2p/bote/web/JSPHelper.java:282
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Kesalahan saat mengirim email: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:261
+#: src/main/java/i2p/bote/web/JSPHelper.java:284
 #, java-format
 msgid "Error saving email metadata: {0}"
 msgstr "Kesalahan dalam menyimpan metadat email: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:282
+#: src/main/java/i2p/bote/web/JSPHelper.java:305
 msgid "New email received"
 msgstr ""
 
@@ -266,97 +266,123 @@ msgstr "Email telah diantrikan untuk mengirim."
 msgid "Error sending email: {0}"
 msgstr "Kesalahan dalam mengirim email: {0}"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export Identities"
-msgstr ""
+#: src/main/webapp/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Password:"
-msgstr "Kata sandi:"
+#: src/main/webapp/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr "Kata sandi tercache. Klik untuk membersihkan cache kata sandi."
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "(leave blank to not encrypt identities)"
-msgstr ""
+#: src/main/webapp/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Confirm:"
-msgstr "Konfirmasi:"
+#: src/main/webapp/header.jsp
+msgid "Secure Distributed Email"
+msgstr "Amankan Pendistrubisian Email"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export"
-msgstr ""
+#: src/main/webapp/header.jsp
+msgid "Addresses"
+msgstr "Alamat"
 
-#: src/main/webapp/folder.jsp
-msgid "From"
-msgstr "Dari:"
+#: src/main/webapp/header.jsp
+msgid "Identities"
+msgstr "Identitas"
 
-#: src/main/webapp/folder.jsp
-msgid "Know"
-msgstr "Diketahui"
+#: src/main/webapp/header.jsp
+msgid "Address Book"
+msgstr "Buku Alamat"
 
-#: src/main/webapp/folder.jsp
-msgid "To"
-msgstr "Ke"
+#: src/main/webapp/header.jsp
+msgid "Configuration"
+msgstr "Konfigurasi"
 
-#: src/main/webapp/folder.jsp
-msgid "Subject"
-msgstr "Subyek"
+#: src/main/webapp/header.jsp
+msgid "Settings"
+msgstr "Pengaturan"
 
-#: src/main/webapp/folder.jsp
-msgid "Sent Time"
-msgstr "Waktu Dikirim"
+#: src/main/webapp/header.jsp
+msgid "Network Status"
+msgstr "Status Jaringan"
 
-#: src/main/webapp/folder.jsp
-msgid "Delivered"
-msgstr "Terkirim"
+#: src/main/webapp/header.jsp
+msgid "Help"
+msgstr "Bantuan"
 
-#: src/main/webapp/folder.jsp
-msgid "Anonymous"
-msgstr "Anonim"
-
-#: src/main/webapp/folder.jsp
-msgid "(No subject)"
-msgstr "(Tidak ada subyek)"
-
-#: src/main/webapp/folder.jsp
-msgid "Signature is invalid or missing"
-msgstr "Tanda tangan tidak valid atau hilang"
-
-#: src/main/webapp/folder.jsp
-msgid "Delete"
-msgstr "Hapus"
-
-#: src/main/webapp/folder.jsp
-msgid "Delete this email"
-msgstr "Hapus email ini"
-
-#: src/main/webapp/userGuide.jsp
+#: src/main/webapp/header.jsp
 msgid "User Guide"
 msgstr "Panduan Pengguna"
 
-#: src/main/webapp/buttonFrame.jsp
+#: src/main/webapp/header.jsp
+msgid "FAQ"
+msgstr "FAQ"
+
+#: src/main/webapp/header.jsp
+msgid "About"
+msgstr "Tentang"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "Email Identities"
+msgstr "Identitas Email"
+
+#: src/main/webapp/identities.jsp
+msgid "No email identities are defined."
+msgstr "Tidak ada identitas email yang didefinisikan."
+
+#: src/main/webapp/identities.jsp
+msgid "Def."
+msgstr "Def."
+
+#: src/main/webapp/identities.jsp
+msgid "Public Name"
+msgstr "Nama Publik"
+
+#: src/main/webapp/identities.jsp
+msgid "Description"
+msgstr "Deskripsi"
+
+#: src/main/webapp/identities.jsp
+msgid "Email Destination"
+msgstr "Email Tujuan"
+
+#: src/main/webapp/identities.jsp
 msgid "Checking for mail..."
 msgstr "Memeriksa surat..."
 
-#: src/main/webapp/buttonFrame.jsp
+#: src/main/webapp/identities.jsp
 msgid "Check Mail"
 msgstr "Periksa Surat"
 
-#: src/main/webapp/buttonFrame.jsp
-msgid "Compose"
-msgstr "Buat"
+#: src/main/webapp/identities.jsp
+msgid "Check mail for this identity"
+msgstr ""
 
-#: src/main/webapp/buttonFrame.jsp
-msgid "Last checked:"
-msgstr "Terakhir diperiksa:"
+#: src/main/webapp/identities.jsp
+msgid "New Identity"
+msgstr "Identitas Baru"
 
-#: src/main/webapp/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
-msgstr "Kontak telah dihapus dari buku alamat."
+#: src/main/webapp/identities.jsp
+msgid "Import Identities"
+msgstr ""
 
-#: src/main/webapp/deleteContact.jsp
-msgid "Error"
-msgstr "Kesalahan"
+#: src/main/webapp/identities.jsp
+msgid "Export Identities"
+msgstr ""
+
+#: src/main/webapp/editContact.jsp
+msgid "Form must be submitted using POST."
+msgstr ""
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -411,10 +437,6 @@ msgid "Cancel"
 msgstr "Batalkan"
 
 #: src/main/webapp/addressBook.jsp
-msgid "Address Book"
-msgstr "Buku Alamat"
-
-#: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
 msgstr "Buku Alamat Pribadi"
 
@@ -435,8 +457,8 @@ msgid "Text"
 msgstr ""
 
 #: src/main/webapp/addressBook.jsp
-msgid "Email Destination"
-msgstr "Email Tujuan"
+msgid "Delete"
+msgstr "Hapus"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -458,61 +480,61 @@ msgstr "Impor dari direktori alamat publik"
 msgid "Lookup"
 msgstr "Lookup"
 
-#: src/main/webapp/saveIdentities.jsp
-msgid "Error:"
-msgstr "Kesalahan:"
+#: src/main/webapp/network.jsp
+msgid "Network"
+msgstr "Jaringan"
 
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "Silahkan isi field Nama Publik."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "Mohon tunggu..."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The Email Identity is being generated. This may take a while."
+#: src/main/webapp/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
 msgstr ""
+"Informasi jaringan tidak tersedia karena I2P-Bote saat ini belum memulai "
+"menghubungkan ke jaringan."
 
-#: src/main/webapp/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "Identitas email telah disimpan."
+#: src/main/webapp/network.jsp
+msgid "Local destination:"
+msgstr "Tujuan lokal:"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Add Email Destination to Directory"
-msgstr "Tambahkan Email Tujuan ke Direktori"
+#: src/main/webapp/folder.jsp
+msgid "From"
+msgstr "Dari:"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "The name exists already. Please choose a different Public Name."
-msgstr "Nama sudah ada. Silahkan memilih Nama Publik berbeda."
+#: src/main/webapp/folder.jsp
+msgid "Know"
+msgstr "Diketahui"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Publish to the Address Directory"
-msgstr "Terbitkan ke Direktori Alamat"
+#: src/main/webapp/folder.jsp
+msgid "To"
+msgstr "Ke"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Picture to upload:"
-msgstr "Gambar untuk diunggah:"
+#: src/main/webapp/folder.jsp
+msgid "Subject"
+msgstr "Subyek"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 7.5 kBytes max)"
-msgstr "(opsional, maks 7.5 kBytes)"
+#: src/main/webapp/folder.jsp
+msgid "Sent Time"
+msgstr "Waktu Dikirim"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Text to include:"
-msgstr "Teks untuk disertakan:"
+#: src/main/webapp/folder.jsp
+msgid "Delivered"
+msgstr "Terkirim"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 2000 chars max)"
-msgstr "(opsional, maks 2000 kar)"
+#: src/main/webapp/folder.jsp
+msgid "Anonymous"
+msgstr "Anonim"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Publish"
-msgstr "Terbitkan"
+#: src/main/webapp/folder.jsp
+msgid "(No subject)"
+msgstr "(Tidak ada subyek)"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "The identity has been added to the address directory."
-msgstr "Identitas telah ditambahkan ke direktori alamat."
+#: src/main/webapp/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr "Tanda tangan tidak valid atau hilang"
+
+#: src/main/webapp/folder.jsp
+msgid "Delete this email"
+msgstr "Hapus email ini"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Identity"
@@ -526,29 +548,479 @@ msgstr "Tidak Ada Identitas Email Yang Didefinisikan"
 msgid "Create a New Email Identity"
 msgstr "Buat Identitas Email Baru"
 
+#: src/main/webapp/buttonFrame.jsp
+msgid "Compose"
+msgstr "Buat"
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Last checked:"
+msgstr "Terakhir diperiksa:"
+
+#: src/main/webapp/csrfError.jsp
+msgid "Security Violation"
+msgstr ""
+
+#: src/main/webapp/csrfError.jsp
+msgid "CSRF Security Violation"
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr ""
+"Agar dapat menerima email dari orang lain, Anda harus membuat identitas "
+"email terlebih dahulu."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr ""
+"Setiap identitas email diasosiasikan dengan sebuah email tujuan. Siapapun "
+"dapat mengirim email ke email tujuan, tetapi hanya pemegang identitas yang "
+"dapat membacanya."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+"Dalam arti, identitas email sama seperti akun email tradisional - kecuali "
+"tidak ada penyedia layanan yang dapat membaca semua email Anda karena I2P-"
+"Bote menyimpan semua email dengan enkripsi pada jaringan."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
+msgstr ""
+"I2P-Bote secara otomatis mendekripsi email yang dikirimkan kepada Anda, "
+"menggunakan identitas email yang Anda buat. Identitas email disimpan dalam "
+"sebuah file dengan nama identitas; jangan pernah memberikan file ini kepada "
+"siapapun atau mereka akan dapat membaca semua email Anda."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr "Berikan email tujuan agar orang lain dapat menghubungi Anda."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr ""
+"Mudah sekali untuk membuat identitas ganda untuk tujuan berbeda, atau kontak "
+"berbeda."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
+msgstr ""
+"Ketika Anda membuat sebuah identitas email baru, Anda dapat memilih jenis "
+"enkripsi yang akan digunakan oleh identitas email. Sementara semua algoritma "
+"enkripsi yang ditawarkan oleh I2P-Bote memeberikan privasi tingkat tinggi, "
+"panjang email tujuan bergantung pada enkripsi yang digunakan. Enkripsi yang "
+"dipilih juga menentukan algoritma penandatanganan apa yang digunakan."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
+msgstr ""
+"Umumnya direkomendasikan untuk memilih 256-bit elliptic curve encryption "
+"karena enkripsi ini membuat email tujuan yang lebih singkat (86 karakter) "
+"sementara tetap sangat aman."
+
+#: src/main/webapp/sendEmail.jsp
+msgid "New Email"
+msgstr "Email Baru"
+
+#: src/main/webapp/sendEmail.jsp
+msgid "Go to inbox"
+msgstr "Menuju kotak masuk"
+
+#: src/main/webapp/outbox.jsp
+msgid "Outbox"
+msgstr "Kotak keluar"
+
+#: src/main/webapp/outbox.jsp
+msgid "Create Time"
+msgstr "Waktu Dibuat"
+
+#: src/main/webapp/outbox.jsp
+msgid "Status"
+msgstr "Status"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Not Started"
+msgstr "Belum Memulai"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr "Menunggu 3 menit..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connecting..."
+msgstr "Menghubungkan..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connected"
+msgstr "Terhubung"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Error"
+msgstr "Kesalahan"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr "Coba Lagi Menyambung"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connect Now"
+msgstr "Hubungkan Sekarang"
+
 #: src/main/webapp/deleteIdentity.jsp
 msgid "The email identity has been deleted."
 msgstr "Identitas email telah dihapus."
 
-#: src/main/webapp/debug.jsp
-msgid "Debug"
-msgstr "Debug"
+#: src/main/webapp/deleteIdentity.jsp
+msgid "Error:"
+msgstr "Kesalahan:"
 
-#: src/main/webapp/debug.jsp
-msgid "Debug Page"
-msgstr "Laman Debug"
+#: src/main/webapp/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "Silahkan pilih file untuk ditautkan dan coba lagi."
 
-#: src/main/webapp/debug.jsp
-msgid "Test encrypted files"
-msgstr "Uji file terenkripsi"
+#: src/main/webapp/newEmail.jsp
+msgid "Send"
+msgstr "Kirim"
 
-#: src/main/webapp/debug.jsp
-msgid "No file encryption problems found."
-msgstr "Tidak ada masalah enkripsi file yang ditemukan."
+#: src/main/webapp/newEmail.jsp
+msgid "From:"
+msgstr "Dari:"
 
-#: src/main/webapp/debug.jsp
-msgid "Undecryptable files:"
-msgstr "File tidak dapat didekripsi:"
+#: src/main/webapp/newEmail.jsp
+msgid "To:"
+msgstr "Ke:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "CC:"
+msgstr "CC:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "BCC:"
+msgstr "BCC:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Reply To:"
+msgstr "Balas Ke:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this recipient"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add this recipient to the address book"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Select recipients from address book"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another recipient field"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Subject:"
+msgstr "Subyek:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attachments:"
+msgstr "Tautan:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "Hapus tautan ini"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another attachment"
+msgstr "Tambahkan tautan lainnya"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attach"
+msgstr "Tautkan"
+
+#: src/main/webapp/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "Sangat direkomendasikan agar tautan tetap dibawah 500 kBytes."
+
+#: src/main/webapp/newEmail.jsp
+msgid "Message:"
+msgstr "Pesan:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} menulis:"
+
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: src/main/webapp/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr "Kontak telah dihapus dari buku alamat."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set Password"
+msgstr "Setel Kata Sandi"
+
+#: src/main/webapp/setPassword.jsp
+msgid "The password has been changed."
+msgstr "Kata sandi telah diubah."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait"
+msgstr "Mohon tunggu"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr "Mohon tunggu sementara kata sandi sedang diubah..."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Setelh Kata Sandi baru"
+
+#: src/main/webapp/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "Jika Anda tidak menyetel kata sandi, biarkan kosong kata sandi lama."
+
+#: src/main/webapp/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+"Harap dicatat bahwa jika kata sandi sudah disetel, email tidak dapat "
+"diperiksa secara otomatis tetapi hanya ketika tombol Periksa Surat diklik."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Old password:"
+msgstr "Kata sandi lama:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "New password:"
+msgstr "Kata sandi baru:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Confirm:"
+msgstr "Konfirmasi:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "OK"
+msgstr "OK"
+
+#: src/main/webapp/showEmail.jsp
+msgid ""
+"The email could not be found in this folder. It was probably moved to the "
+"Sent folder."
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "The email could not be found in this folder."
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "Signature:"
+msgstr "Tanda Tangan:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Valid"
+msgstr "Valid"
+
+#: src/main/webapp/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr "N/A (pengirim anonim)"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "Tidak valid atau hilang"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Sent:"
+msgstr "Dikirim:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Received:"
+msgstr "Diterima:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Status:"
+msgstr "Status:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply"
+msgstr "Balas"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Re:"
+msgstr "Re:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Please select an identities file and try again."
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "The identities have been imported."
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Identities file:"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Password:"
+msgstr "Kata sandi:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "(leave blank if identities not encrypted)"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Overwrite all existing identities:"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Duplicates: replace existing identity:"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Import"
+msgstr "impor"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "Kata Sandi Dibersihkan"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "Kata sandi telah dibersihkan dari cache."
+
+#: src/main/webapp/settings.jsp
+msgid "Settings have been saved."
+msgstr "Pengaturan telah disimpan."
+
+#: src/main/webapp/settings.jsp
+msgid "General"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "Periksa surat setiap {0} menit"
+
+#: src/main/webapp/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr "Periksa status pengiriman email terkirim"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Aktifkan IMAP pada port {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Tema:"
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Gunakan English untuk teks yang ditambahkan ke email keluar ('Re:', "
+"'wrote:', dll.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Sertakan waktu dikirm pada email keluar"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "Gunakan relay ketika mengirim email:"
+
+#: src/main/webapp/settings.jsp
+msgid "None"
+msgstr "Tidak ada"
+
+#: src/main/webapp/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr "Delay per relay hop: Antara"
+
+#: src/main/webapp/settings.jsp
+msgid "and"
+msgstr "dan"
+
+#: src/main/webapp/settings.jsp
+msgid "minutes"
+msgstr "Menit"
+
+#: src/main/webapp/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "Gunakan gateway ketika mengirim ke alamat email non-I2P"
+
+#: src/main/webapp/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "Gateway Email Tujuan:"
+
+#: src/main/webapp/settings.jsp
+msgid "Change Password"
+msgstr "Ubah Kata Sandi"
+
+#: src/main/webapp/folders.jsp
+msgid "Folders"
+msgstr "Folder"
+
+#: src/main/webapp/folders.jsp
+msgid "Inbox"
+msgstr "Kotak masuk"
+
+#: src/main/webapp/folders.jsp
+msgid "Sent"
+msgstr "Terkirim"
+
+#: src/main/webapp/folders.jsp
+msgid "Trash"
+msgstr "Sampah"
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Identity"
+msgstr "Identitas Penuh"
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Email Identity for {0}:"
+msgstr "Identitas Email Penuh untuk {0}:"
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid ""
+"Do not show the above information to anyone! It contains your private keys."
+msgstr ""
+"Jangan tampilkan informasi diatas kepada siapapun! Itu berisi kunci pribadi "
+"Anda."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -572,7 +1044,8 @@ msgstr "Edit Identitas Email"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr "Identitas Email memungkinkan Anda menerima email dari pengguna I2P-Bote lain."
+msgstr ""
+"Identitas Email memungkinkan Anda menerima email dari pengguna I2P-Bote lain."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Public Name:"
@@ -639,269 +1112,24 @@ msgid "Cannot publish until connected."
 msgstr "Tidak dapat menerbitkan sampai terhubung."
 
 #: src/main/webapp/editIdentity.jsp
+msgid "Publish"
+msgstr "Terbitkan"
+
+#: src/main/webapp/editIdentity.jsp
 msgid "Delete this identity"
 msgstr "Hapus identitas ini."
 
-#: src/main/webapp/faq.jsp
-msgid "FAQ"
-msgstr "FAQ"
+#: src/main/webapp/connectError.jsp
+msgid "Error Details"
+msgstr "Rincian Kesalahan"
 
-#: src/main/webapp/faq.jsp
-msgid "Frequently Asked Questions"
+#: src/main/webapp/exportIdentities.jsp
+msgid "(leave blank to not encrypt identities)"
 msgstr ""
 
-#: src/main/webapp/header.jsp
-msgid "- I2P-Bote"
-msgstr "- I2P-Bote"
-
-#: src/main/webapp/header.jsp
-msgid "Password is cached. Click to clear the password cache."
-msgstr "Kata sandi tercache. Klik untuk membersihkan cache kata sandi."
-
-#: src/main/webapp/header.jsp
-msgid "I2P-Bote"
-msgstr "I2P-Bote"
-
-#: src/main/webapp/header.jsp
-msgid "Secure Distributed Email"
-msgstr "Amankan Pendistrubisian Email"
-
-#: src/main/webapp/header.jsp
-msgid "Addresses"
-msgstr "Alamat"
-
-#: src/main/webapp/header.jsp
-msgid "Identities"
-msgstr "Identitas"
-
-#: src/main/webapp/header.jsp
-msgid "Configuration"
-msgstr "Konfigurasi"
-
-#: src/main/webapp/header.jsp
-msgid "Settings"
-msgstr "Pengaturan"
-
-#: src/main/webapp/header.jsp
-msgid "Network Status"
-msgstr "Status Jaringan"
-
-#: src/main/webapp/header.jsp
-msgid "Help"
-msgstr "Bantuan"
-
-#: src/main/webapp/header.jsp
-msgid "About"
-msgstr "Tentang"
-
-#: src/main/webapp/header.jsp
-msgid ""
-"For I2P-Bote to function properly, you must download the JCE Unlimited "
-"Strength Jurisdiction Policy files and move them into this folder:"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export"
 msgstr ""
-
-#: src/main/webapp/header.jsp
-msgid "Guide"
-msgstr ""
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "Password Cleared"
-msgstr "Kata Sandi Dibersihkan"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr "Kata sandi telah dibersihkan dari cache."
-
-#: src/main/webapp/outbox.jsp
-msgid "Outbox"
-msgstr "Kotak keluar"
-
-#: src/main/webapp/outbox.jsp
-msgid "Create Time"
-msgstr "Waktu Dibuat"
-
-#: src/main/webapp/outbox.jsp
-msgid "Status"
-msgstr "Status"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In order to receive email from other people, you need to create an email "
-"identity first."
-msgstr "Agar dapat menerima email dari orang lain, Anda harus membuat identitas email terlebih dahulu."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"Every email identity is associated with an email destination. Anybody can "
-"send email to the email destination, but only the identity holder can read "
-"it."
-msgstr "Setiap identitas email diasosiasikan dengan sebuah email tujuan. Siapapun dapat mengirim email ke email tujuan, tetapi hanya pemegang identitas yang dapat membacanya."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In a sense, email identities are the equivalent to traditional email "
-"accounts - except that there is no provider that can read all your email "
-"because I2P-Bote stores all emails encrypted on the network."
-msgstr "Dalam arti, identitas email sama seperti akun email tradisional - kecuali tidak ada penyedia layanan yang dapat membaca semua email Anda karena I2P-Bote menyimpan semua email dengan enkripsi pada jaringan."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities; never "
-"give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote secara otomatis mendekripsi email yang dikirimkan kepada Anda, menggunakan identitas email yang Anda buat. Identitas email disimpan dalam sebuah file dengan nama identitas; jangan pernah memberikan file ini kepada siapapun atau mereka akan dapat membaca semua email Anda."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid "Do give out the email destination so others can contact you."
-msgstr "Berikan email tujuan agar orang lain dapat menghubungi Anda."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is easy to create multiple identities for different purposes, or "
-"different contacts."
-msgstr "Mudah sekali untuk membuat identitas ganda untuk tujuan berbeda, atau kontak berbeda."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"When you create a new email identity, you can choose the type of encryption "
-"that will be used by the email identity. While all encryption algorithms "
-"offered by I2P-Bote provide a high level of privacy, the length of an email "
-"destination depends on the encryption used. The choice of encryption also "
-"determines what signing algorithm is used."
-msgstr "Ketika Anda membuat sebuah identitas email baru, Anda dapat memilih jenis enkripsi yang akan digunakan oleh identitas email. Sementara semua algoritma enkripsi yang ditawarkan oleh I2P-Bote memeberikan privasi tingkat tinggi, panjang email tujuan bergantung pada enkripsi yang digunakan. Enkripsi yang dipilih juga menentukan algoritma penandatanganan apa yang digunakan."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is generally recommended to choose 256-bit elliptic curve encryption "
-"because it produces the shortest email destinations (86 characters) while "
-"still being highly secure."
-msgstr "Umumnya direkomendasikan untuk memilih 256-bit elliptic curve encryption karena enkripsi ini membuat email tujuan yang lebih singkat (86 karakter) sementara tetap sangat aman."
-
-#: src/main/webapp/showEmail.jsp
-msgid ""
-"The email could not be found in this folder. It was probably moved to the "
-"Sent folder."
-msgstr ""
-
-#: src/main/webapp/showEmail.jsp
-msgid "The email could not be found in this folder."
-msgstr ""
-
-#: src/main/webapp/showEmail.jsp
-msgid "From:"
-msgstr "Dari:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Signature:"
-msgstr "Tanda Tangan:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Valid"
-msgstr "Valid"
-
-#: src/main/webapp/showEmail.jsp
-msgid "N/A (sender is anonymous)"
-msgstr "N/A (pengirim anonim)"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Invalid or missing"
-msgstr "Tidak valid atau hilang"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Reply To:"
-msgstr "Balas Ke:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "To:"
-msgstr "Ke:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "CC:"
-msgstr "CC:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "BCC:"
-msgstr "BCC:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Sent:"
-msgstr "Dikirim:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Received:"
-msgstr "Diterima:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Subject:"
-msgstr "Subyek:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Message:"
-msgstr "Pesan:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Attachments:"
-msgstr "Tautan:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Status:"
-msgstr "Status:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Reply"
-msgstr "Balas"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Re:"
-msgstr "Re:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "New Email"
-msgstr "Email Baru"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr "Silahkan pilih file untuk ditautkan dan coba lagi."
-
-#: src/main/webapp/newEmail.jsp
-msgid "Send"
-msgstr "Kirim"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this recipient"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add this recipient to the address book"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Select recipients from address book"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another recipient field"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "Hapus tautan ini"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another attachment"
-msgstr "Tambahkan tautan lainnya"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attach"
-msgstr "Tautkan"
-
-#: src/main/webapp/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "Sangat direkomendasikan agar tautan tetap dibawah 500 kBytes."
-
-#: src/main/webapp/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} menulis:"
 
 #: src/main/webapp/password.jsp
 msgid "Password Required"
@@ -914,273 +1142,6 @@ msgstr "Kata sandi salah. Coba lagi."
 #: src/main/webapp/password.jsp
 msgid "Password required"
 msgstr "Kata sandi diperlukan"
-
-#: src/main/webapp/password.jsp
-msgid "OK"
-msgstr "OK"
-
-#: src/main/webapp/settings.jsp
-msgid "Settings have been saved."
-msgstr "Pengaturan telah disimpan."
-
-#: src/main/webapp/settings.jsp
-msgid "General"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "Periksa surat setiap {0} menit"
-
-#: src/main/webapp/settings.jsp
-msgid "Check delivery status of sent emails"
-msgstr "Periksa status pengiriman email terkirim"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "Aktifkan IMAP pada port {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Tema:"
-
-#: src/main/webapp/settings.jsp
-msgid "Privacy"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Gunakan English untuk teks yang ditambahkan ke email keluar ('Re:', 'wrote:', dll.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Sertakan waktu dikirm pada email keluar"
-
-#: src/main/webapp/settings.jsp
-msgid "Routing"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use relays when sending mail:"
-msgstr "Gunakan relay ketika mengirim email:"
-
-#: src/main/webapp/settings.jsp
-msgid "None"
-msgstr "Tidak ada"
-
-#: src/main/webapp/settings.jsp
-msgid "Delay per relay hop: Between"
-msgstr "Delay per relay hop: Antara"
-
-#: src/main/webapp/settings.jsp
-msgid "and"
-msgstr "dan"
-
-#: src/main/webapp/settings.jsp
-msgid "minutes"
-msgstr "Menit"
-
-#: src/main/webapp/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "Gunakan gateway ketika mengirim ke alamat email non-I2P"
-
-#: src/main/webapp/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr "Gateway Email Tujuan:"
-
-#: src/main/webapp/settings.jsp
-msgid "Change Password"
-msgstr "Ubah Kata Sandi"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set Password"
-msgstr "Setel Kata Sandi"
-
-#: src/main/webapp/setPassword.jsp
-msgid "The password has been changed."
-msgstr "Kata sandi telah diubah."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait"
-msgstr "Mohon tunggu"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait while the password is being changed..."
-msgstr "Mohon tunggu sementara kata sandi sedang diubah..."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set a new Password"
-msgstr "Setelh Kata Sandi baru"
-
-#: src/main/webapp/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "Jika Anda tidak menyetel kata sandi, biarkan kosong kata sandi lama."
-
-#: src/main/webapp/setPassword.jsp
-msgid ""
-"Please note that if a password is set, emails cannot be checked "
-"automatically but only when the Check Mail button is clicked."
-msgstr "Harap dicatat bahwa jika kata sandi sudah disetel, email tidak dapat diperiksa secara otomatis tetapi hanya ketika tombol Periksa Surat diklik."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Old password:"
-msgstr "Kata sandi lama:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "New password:"
-msgstr "Kata sandi baru:"
-
-#: src/main/webapp/network.jsp
-msgid "Network"
-msgstr "Jaringan"
-
-#: src/main/webapp/network.jsp
-msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "Informasi jaringan tidak tersedia karena I2P-Bote saat ini belum memulai menghubungkan ke jaringan."
-
-#: src/main/webapp/network.jsp
-msgid "Local destination:"
-msgstr "Tujuan lokal:"
-
-#: src/main/webapp/connectError.jsp
-msgid "Error Details"
-msgstr "Rincian Kesalahan"
-
-#: src/main/webapp/folders.jsp
-msgid "Folders"
-msgstr "Folder"
-
-#: src/main/webapp/folders.jsp
-msgid "Inbox"
-msgstr "Kotak masuk"
-
-#: src/main/webapp/folders.jsp
-msgid "Sent"
-msgstr "Terkirim"
-
-#: src/main/webapp/folders.jsp
-msgid "Trash"
-msgstr "Sampah"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Not Started"
-msgstr "Belum Memulai"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
-msgstr "Menunggu 3 menit..."
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connecting..."
-msgstr "Menghubungkan..."
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connected"
-msgstr "Terhubung"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Retry Connecting"
-msgstr "Coba Lagi Menyambung"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connect Now"
-msgstr "Hubungkan Sekarang"
-
-#: src/main/webapp/identities.jsp
-msgid "Email Identities"
-msgstr "Identitas Email"
-
-#: src/main/webapp/identities.jsp
-msgid "No email identities are defined."
-msgstr "Tidak ada identitas email yang didefinisikan."
-
-#: src/main/webapp/identities.jsp
-msgid "Def."
-msgstr "Def."
-
-#: src/main/webapp/identities.jsp
-msgid "Public Name"
-msgstr "Nama Publik"
-
-#: src/main/webapp/identities.jsp
-msgid "Description"
-msgstr "Deskripsi"
-
-#: src/main/webapp/identities.jsp
-msgid "Check mail for this identity"
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "New Identity"
-msgstr "Identitas Baru"
-
-#: src/main/webapp/identities.jsp
-msgid "Import Identities"
-msgstr ""
-
-#: src/main/webapp/sendEmail.jsp
-msgid "Go to inbox"
-msgstr "Menuju kotak masuk"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Please select an identities file and try again."
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "The identities have been imported."
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Identities file:"
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "(leave blank if identities not encrypted)"
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Overwrite all existing identities:"
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Duplicates: replace existing identity:"
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Import"
-msgstr "impor"
-
-#: src/main/webapp/importContact.jsp
-msgid "Address Directory Lookup"
-msgstr "Lookup Direktori Alamat"
-
-#: src/main/webapp/importContact.jsp
-msgid "The name has been imported to the address book."
-msgstr "Nama telah diimpor ke buku alamat."
-
-#: src/main/webapp/importContact.jsp
-msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr "Nama &quot;{0}&quot; tidak ditemukan dalam direktori."
-
-#: src/main/webapp/importContact.jsp
-msgid "Import Contact"
-msgstr "Impor Kontak"
-
-#: src/main/webapp/importContact.jsp
-msgid ""
-"A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click "
-"&quot;import&quot; unless you trust that it is the right email destination."
-msgstr "Rekaman yang cocok telah ditemukan dalam direktori alamat. Harap dicatat bahwa direktori alamat tidak aman terhadap manipulasi, jadi jangan mengklik &quot;import&quot; kecuali Anda yakin bahwa itu adalah email tujuan yang benar."
-
-#: src/main/webapp/importContact.jsp
-msgid "Email Destination: "
-msgstr "Email Tujuan:"
 
 #: src/main/webapp/about.jsp
 msgid "About I2P-Bote"
@@ -1207,15 +1168,19 @@ msgid "Click to send an email"
 msgstr "Klik untuk mengirim email"
 
 #: src/main/webapp/about.jsp
+msgid "Maintenance, user experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "Past developers:"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Feedback on I2P-Bote"
 msgstr "Umpan balik pada I2P-Bote"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, implementation, user interface"
-msgstr ""
-
-#: src/main/webapp/about.jsp
-msgid "User experience, extended features, Android app"
 msgstr ""
 
 #: src/main/webapp/about.jsp
@@ -1302,22 +1267,120 @@ msgstr ""
 msgid "Usability improvement"
 msgstr ""
 
+#: src/main/webapp/about.jsp
+msgid "Bug hunting"
+msgstr ""
+
+#: src/main/webapp/debug.jsp
+msgid "Debug"
+msgstr "Debug"
+
+#: src/main/webapp/debug.jsp
+msgid "Debug Page"
+msgstr "Laman Debug"
+
+#: src/main/webapp/debug.jsp
+msgid "Test encrypted files"
+msgstr "Uji file terenkripsi"
+
+#: src/main/webapp/debug.jsp
+msgid "No file encryption problems found."
+msgstr "Tidak ada masalah enkripsi file yang ditemukan."
+
+#: src/main/webapp/debug.jsp
+msgid "Undecryptable files:"
+msgstr "File tidak dapat didekripsi:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr "Tambahkan Email Tujuan ke Direktori"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr "Nama sudah ada. Silahkan memilih Nama Publik berbeda."
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr "Terbitkan ke Direktori Alamat"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr "Gambar untuk diunggah:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr "(opsional, maks 7.5 kBytes)"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Text to include:"
+msgstr "Teks untuk disertakan:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr "(opsional, maks 2000 kar)"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr "Identitas telah ditambahkan ke direktori alamat."
+
+#: src/main/webapp/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr "Lookup Direktori Alamat"
+
+#: src/main/webapp/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr "Nama telah diimpor ke buku alamat."
+
+#: src/main/webapp/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr "Nama &quot;{0}&quot; tidak ditemukan dalam direktori."
+
+#: src/main/webapp/importContact.jsp
+msgid "Import Contact"
+msgstr "Impor Kontak"
+
+#: src/main/webapp/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+"Rekaman yang cocok telah ditemukan dalam direktori alamat. Harap dicatat "
+"bahwa direktori alamat tidak aman terhadap manipulasi, jadi jangan mengklik "
+"&quot;import&quot; kecuali Anda yakin bahwa itu adalah email tujuan yang "
+"benar."
+
+#: src/main/webapp/importContact.jsp
+msgid "Email Destination: "
+msgstr "Email Tujuan:"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "Silahkan isi field Nama Publik."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "Mohon tunggu..."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The Email Identity is being generated. This may take a while."
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "Identitas email telah disimpan."
+
 #: src/main/webapp/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
 msgstr "Kesalahan: Tidak dapat menghapus email"
 
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Identity"
-msgstr "Identitas Penuh"
+#: src/main/webapp/WEB-INF/tags/printDate.tag
+msgid "Unknown"
+msgstr "Tidak diketahui"
 
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Email Identity for {0}:"
-msgstr "Identitas Email Penuh untuk {0}:"
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid ""
-"Do not show the above information to anyone! It contains your private keys."
-msgstr "Jangan tampilkan informasi diatas kepada siapapun! Itu berisi kunci pribadi Anda."
+#: src/main/webapp/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Tambahkan ke Buku Alamat"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1330,14 +1393,6 @@ msgstr "{0} total email, {1} baru"
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
 msgstr ""
-
-#: src/main/webapp/WEB-INF/tags/printDate.tag
-msgid "Unknown"
-msgstr "Tidak diketahui"
-
-#: src/main/webapp/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "Tambahkan ke Buku Alamat"
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

@@ -6,14 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-24 02:51+0000\n"
-"PO-Revision-Date: 2016-11-24 06:01+0000\n"
-"Last-Translator: Yeon-Ung Choi <kqwe1859@gmail.com>\n"
+"POT-Creation-Date: 2016-11-27 09:59+0000\n"
+"PO-Revision-Date: 2016-11-27 09:57+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Korean (http://www.transifex.com/otf/I2P/language/ko/)\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/main/java/i2p/bote/Configuration.java:69
@@ -152,53 +152,53 @@ msgstr "설정안됨."
 msgid "Invalid ID number for CryptoImplementation: "
 msgstr "올바르지 않은 CryptoImplementation ID number:"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:241
+#: src/main/java/i2p/bote/web/JSPHelper.java:264
 msgid "Queued"
 msgstr "대기됨"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:243
+#: src/main/java/i2p/bote/web/JSPHelper.java:266
 msgid "Sending"
 msgstr "보내는중"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:245
+#: src/main/java/i2p/bote/web/JSPHelper.java:268
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "{1} 를 제외한 {0} 에게 보내기 "
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:248
+#: src/main/java/i2p/bote/web/JSPHelper.java:271
 msgid "Email sent"
 msgstr "이메일 전송됨"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:250
+#: src/main/java/i2p/bote/web/JSPHelper.java:273
 msgid "Gateway disabled"
 msgstr "게이트워이 비활성화"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:252
+#: src/main/java/i2p/bote/web/JSPHelper.java:275
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
 msgstr "발신/수신 신원이 일치하지 않습니다: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:255
+#: src/main/java/i2p/bote/web/JSPHelper.java:278
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "잘못된 수신자 주소입니다: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:257
+#: src/main/java/i2p/bote/web/JSPHelper.java:280
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "이메일 패킷을 만드는데 실패했습니다: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:259
+#: src/main/java/i2p/bote/web/JSPHelper.java:282
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "메일을 보내는데 실패했습니다: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:261
+#: src/main/java/i2p/bote/web/JSPHelper.java:284
 #, java-format
 msgid "Error saving email metadata: {0}"
 msgstr "이메일 메타데이터를 저장하는데 실패했습니다: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:282
+#: src/main/java/i2p/bote/web/JSPHelper.java:305
 msgid "New email received"
 msgstr "새 이메일 받음"
 
@@ -267,97 +267,126 @@ msgstr "이메일이 송신 대기열에 추가되었습니다."
 msgid "Error sending email: {0}"
 msgstr "이메일을 보내는데 실패했습니다: {0}"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export Identities"
-msgstr "신원 내보내기"
+#: src/main/webapp/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Password:"
-msgstr "패스워드:"
+#: src/main/webapp/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr ""
+"패스워드가 캐시에 임시 저장되었습니다. 패스워드 캐시를 지우려면 클릭하세요."
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "(leave blank to not encrypt identities)"
-msgstr "(암호화하지 않으려면 공란으로 두십시오)"
+#: src/main/webapp/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Confirm:"
-msgstr "확인:"
+#: src/main/webapp/header.jsp
+msgid "Secure Distributed Email"
+msgstr "안전한 분산 이메일"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export"
-msgstr "내보내기"
+#: src/main/webapp/header.jsp
+msgid "Addresses"
+msgstr "주소"
 
-#: src/main/webapp/folder.jsp
-msgid "From"
-msgstr "으로부터"
+#: src/main/webapp/header.jsp
+msgid "Identities"
+msgstr "신원"
 
-#: src/main/webapp/folder.jsp
-msgid "Know"
-msgstr "아는"
+#: src/main/webapp/header.jsp
+msgid "Address Book"
+msgstr "주소록"
 
-#: src/main/webapp/folder.jsp
-msgid "To"
-msgstr "에게"
+#: src/main/webapp/header.jsp
+msgid "Configuration"
+msgstr "설정"
 
-#: src/main/webapp/folder.jsp
-msgid "Subject"
-msgstr "제목"
+#: src/main/webapp/header.jsp
+msgid "Settings"
+msgstr "설정"
 
-#: src/main/webapp/folder.jsp
-msgid "Sent Time"
-msgstr "보낸 시간"
+#: src/main/webapp/header.jsp
+msgid "Network Status"
+msgstr "네트워크  상태"
 
-#: src/main/webapp/folder.jsp
-msgid "Delivered"
-msgstr "도착한"
+#: src/main/webapp/header.jsp
+msgid "Help"
+msgstr "도움말"
 
-#: src/main/webapp/folder.jsp
-msgid "Anonymous"
-msgstr "익명"
-
-#: src/main/webapp/folder.jsp
-msgid "(No subject)"
-msgstr "(제목 없음)"
-
-#: src/main/webapp/folder.jsp
-msgid "Signature is invalid or missing"
-msgstr "시그니처가 잘못됬거나 없습니다"
-
-#: src/main/webapp/folder.jsp
-msgid "Delete"
-msgstr "삭제"
-
-#: src/main/webapp/folder.jsp
-msgid "Delete this email"
-msgstr "이 이메일 삭제"
-
-#: src/main/webapp/userGuide.jsp
+#: src/main/webapp/header.jsp
 msgid "User Guide"
 msgstr "유저 가이드"
 
-#: src/main/webapp/buttonFrame.jsp
+#: src/main/webapp/header.jsp
+msgid "FAQ"
+msgstr "FAQ"
+
+#: src/main/webapp/header.jsp
+msgid "About"
+msgstr "알아보기"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+"I2P-Bote를 올바르게 작동하기 위해 JCE Unlimited Strength Jurisdiction Policy "
+"파일들을 다운받아 이 폴더에 옮겨주십시오:"
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr "가이드"
+
+#: src/main/webapp/identities.jsp
+msgid "Email Identities"
+msgstr "이메일 신원"
+
+#: src/main/webapp/identities.jsp
+msgid "No email identities are defined."
+msgstr "신원이 정의되지 않았습니다."
+
+#: src/main/webapp/identities.jsp
+msgid "Def."
+msgstr "Def."
+
+#: src/main/webapp/identities.jsp
+msgid "Public Name"
+msgstr "공개 이름"
+
+#: src/main/webapp/identities.jsp
+msgid "Description"
+msgstr "설명"
+
+#: src/main/webapp/identities.jsp
+msgid "Email Destination"
+msgstr "이메일 목적지"
+
+#: src/main/webapp/identities.jsp
 msgid "Checking for mail..."
 msgstr "이메일 확인중..."
 
-#: src/main/webapp/buttonFrame.jsp
+#: src/main/webapp/identities.jsp
 msgid "Check Mail"
 msgstr "이메일 확인"
 
-#: src/main/webapp/buttonFrame.jsp
-msgid "Compose"
-msgstr "작성"
+#: src/main/webapp/identities.jsp
+msgid "Check mail for this identity"
+msgstr "이 신원을 위해 메일 확인"
 
-#: src/main/webapp/buttonFrame.jsp
-msgid "Last checked:"
-msgstr "마지막 확인:"
+#: src/main/webapp/identities.jsp
+msgid "New Identity"
+msgstr "새 신원"
 
-#: src/main/webapp/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
-msgstr "주소록에서 연락처가 지워졌습니다."
+#: src/main/webapp/identities.jsp
+msgid "Import Identities"
+msgstr "신원 불러오기"
 
-#: src/main/webapp/deleteContact.jsp
-msgid "Error"
-msgstr "오류"
+#: src/main/webapp/identities.jsp
+msgid "Export Identities"
+msgstr "신원 내보내기"
+
+#: src/main/webapp/editContact.jsp
+msgid "Form must be submitted using POST."
+msgstr ""
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -412,10 +441,6 @@ msgid "Cancel"
 msgstr "취소"
 
 #: src/main/webapp/addressBook.jsp
-msgid "Address Book"
-msgstr "주소록"
-
-#: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
 msgstr "개인 주소록"
 
@@ -436,8 +461,8 @@ msgid "Text"
 msgstr "텍스트"
 
 #: src/main/webapp/addressBook.jsp
-msgid "Email Destination"
-msgstr "이메일 목적지"
+msgid "Delete"
+msgstr "삭제"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -459,61 +484,60 @@ msgstr "공개 주소 디렉토리에서 불러오기"
 msgid "Lookup"
 msgstr "검색"
 
-#: src/main/webapp/saveIdentities.jsp
-msgid "Error:"
-msgstr "오류:"
+#: src/main/webapp/network.jsp
+msgid "Network"
+msgstr "네트워크"
 
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "공개 이름 필드를 작성해주세요."
+#: src/main/webapp/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr ""
+"네트워크 정보를 읽을 수 없습니다. I2P-Bote가 네트워크에 연결되지 않았습니다."
 
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "기다려주세요..."
+#: src/main/webapp/network.jsp
+msgid "Local destination:"
+msgstr "로컬 목적지:"
 
-#: src/main/webapp/submitIdentity.jsp
-msgid "The Email Identity is being generated. This may take a while."
-msgstr "이메일 신원이 만들어지고 있습니다. 약간의 시간이 걸립니다."
+#: src/main/webapp/folder.jsp
+msgid "From"
+msgstr "으로부터"
 
-#: src/main/webapp/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "이메일 신원이 저장되었습니다."
+#: src/main/webapp/folder.jsp
+msgid "Know"
+msgstr "아는"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Add Email Destination to Directory"
-msgstr "디렉토리로 이메일 목적지 추가"
+#: src/main/webapp/folder.jsp
+msgid "To"
+msgstr "에게"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "The name exists already. Please choose a different Public Name."
-msgstr "이미 존재하는 이름입니다. 다른 공개 이름을 입력하세요."
+#: src/main/webapp/folder.jsp
+msgid "Subject"
+msgstr "제목"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Publish to the Address Directory"
-msgstr "주소 디렉토리로 게시"
+#: src/main/webapp/folder.jsp
+msgid "Sent Time"
+msgstr "보낸 시간"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Picture to upload:"
-msgstr "업로드할 사진:"
+#: src/main/webapp/folder.jsp
+msgid "Delivered"
+msgstr "도착한"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 7.5 kBytes max)"
-msgstr "(선택적, 최대 7.5kBytes)"
+#: src/main/webapp/folder.jsp
+msgid "Anonymous"
+msgstr "익명"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Text to include:"
-msgstr "포함할 텍스트"
+#: src/main/webapp/folder.jsp
+msgid "(No subject)"
+msgstr "(제목 없음)"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 2000 chars max)"
-msgstr "(선택적, 2000자 제한)"
+#: src/main/webapp/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr "시그니처가 잘못됬거나 없습니다"
 
-#: src/main/webapp/publishDestination.jsp
-msgid "Publish"
-msgstr "게시"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "The identity has been added to the address directory."
-msgstr "주소 디렉토리로 신원이 추가되었습니다."
+#: src/main/webapp/folder.jsp
+msgid "Delete this email"
+msgstr "이 이메일 삭제"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Identity"
@@ -527,29 +551,473 @@ msgstr "이메일 신원 정의안됨"
 msgid "Create a New Email Identity"
 msgstr "새 이메일 신원 만들기"
 
+#: src/main/webapp/buttonFrame.jsp
+msgid "Compose"
+msgstr "작성"
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Last checked:"
+msgstr "마지막 확인:"
+
+#: src/main/webapp/csrfError.jsp
+msgid "Security Violation"
+msgstr ""
+
+#: src/main/webapp/csrfError.jsp
+msgid "CSRF Security Violation"
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr "이메일을 받으려면 새 신원을 작성해야 합니다."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr ""
+"모든 이메일 신원은 이메일 목적지와 관련되어 있습니다. 모든사람이 이메일을 보"
+"낼 수 있지만, 읽을 수 있는 사람은 신원을 가진 사람 뿐입니다."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+"이메일 신원은 어느정도 기존의 이메일 서비스 아이디와 유사합니다. 다른점은, 이"
+"메일 신원의 경우 그 어떤 회사도 당신의 이메일을 열람할 수 없다는 겁니다. 왜나"
+"혀면 I2P-Bote는 모든 이메일을 암호화 된 채로 네트워크에 저장하기 때문입니다."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
+msgstr ""
+"I2P-Bote는 당신에게 보내진 이메일을 자동으로 복호화합니다. 당신이 만든 신원"
+"을 통해서요. 이메일 신원은 파일로 저장됩니다. 그 어떤 누구에게도 해당 파일을 "
+"주지 마십시오! 신원을 가지고 있으면 당신의 이메일을 열람할 수 있습니다."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr "다른 사람들이 연락할 수  있도록 이메일 목적지를 보내주세요."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr ""
+"여러개의 신원을 만드는 것은 쉽습니다. 여러 목적과, 여러 연락처를 위해서요."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
+msgstr ""
+"신원을 새로 만들 때, 암호화 알고리즘을 선택할 수 있습니다. I2P-Bote가 제공하"
+"는 모든 암호화 알고리즘은 높은 수준의 기법이지만 이메일 목적지의 길이에 따라 "
+"각각의 유용성이 달라질 수 있습니다. 또한 암호화 기법은 서명 알고리즘도 결정합"
+"니다."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
+msgstr ""
+"256-bit elliptic curve 알고리즘을 추천합니다. 가장 짧은 이메일 목적지를 생성"
+"하면서도 (86 자) 매우 안전합니다."
+
+#: src/main/webapp/sendEmail.jsp
+msgid "New Email"
+msgstr "새 이메일"
+
+#: src/main/webapp/sendEmail.jsp
+msgid "Go to inbox"
+msgstr "편지함으로"
+
+#: src/main/webapp/outbox.jsp
+msgid "Outbox"
+msgstr "임시 보관함"
+
+#: src/main/webapp/outbox.jsp
+msgid "Create Time"
+msgstr "만든 시간"
+
+#: src/main/webapp/outbox.jsp
+msgid "Status"
+msgstr "상태"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Not Started"
+msgstr "시작되지 않음"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr "3분정도 소요됩니다..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connecting..."
+msgstr "접속중..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connected"
+msgstr "접속됨"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Error"
+msgstr "오류"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr "연결 재시도"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connect Now"
+msgstr "지금 연결"
+
 #: src/main/webapp/deleteIdentity.jsp
 msgid "The email identity has been deleted."
 msgstr "이메일 신원이 삭제되었습니다."
 
-#: src/main/webapp/debug.jsp
-msgid "Debug"
-msgstr "디버그"
+#: src/main/webapp/deleteIdentity.jsp
+msgid "Error:"
+msgstr "오류:"
 
-#: src/main/webapp/debug.jsp
-msgid "Debug Page"
-msgstr "디버그 페이지"
+#: src/main/webapp/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "첨부할 파일을 선택하고 재시도하세요."
 
-#: src/main/webapp/debug.jsp
-msgid "Test encrypted files"
-msgstr "암호화된 파일 테스트"
+#: src/main/webapp/newEmail.jsp
+msgid "Send"
+msgstr "보내기"
 
-#: src/main/webapp/debug.jsp
-msgid "No file encryption problems found."
-msgstr "암호화 문제가 발견되지 않았습니다."
+#: src/main/webapp/newEmail.jsp
+msgid "From:"
+msgstr "보낸이:"
 
-#: src/main/webapp/debug.jsp
-msgid "Undecryptable files:"
-msgstr "복호화 할 수 없는 파일:"
+#: src/main/webapp/newEmail.jsp
+msgid "To:"
+msgstr "보낼이:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "CC:"
+msgstr "CC:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "BCC:"
+msgstr "BCC:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Reply To:"
+msgstr "답장할 사람:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this recipient"
+msgstr "이 수신자 삭제"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add this recipient to the address book"
+msgstr "이 수신자 주소록에 추가"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Select recipients from address book"
+msgstr "주소록에서 수신자를 선택하세요"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another recipient field"
+msgstr "다른 수신자 필드 추가"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Subject:"
+msgstr "제목:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attachments:"
+msgstr "첨부:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "이 첨부파일을 삭제"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another attachment"
+msgstr "다른 첨부파일 추가"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attach"
+msgstr "첨부"
+
+#: src/main/webapp/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "500 Kbytes 이하로 첨부하는 것을 추천합니다."
+
+#: src/main/webapp/newEmail.jsp
+msgid "Message:"
+msgstr "메세지:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} 작성됨:"
+
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr "자주 묻는 질문들"
+
+#: src/main/webapp/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr "주소록에서 연락처가 지워졌습니다."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set Password"
+msgstr "패스워드 설정"
+
+#: src/main/webapp/setPassword.jsp
+msgid "The password has been changed."
+msgstr "패스워드가 변경되었습니다."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait"
+msgstr "기다려주세요"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr "패스워드가 변경되는 동안 기다려주세요..."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set a new Password"
+msgstr "새 패스워드 설정"
+
+#: src/main/webapp/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "기존 패스워드가 없다면 공란으로 두십시오."
+
+#: src/main/webapp/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+"패스워드를 설정하면 자동 확인이 불가능합니다. 확인버튼을 눌러 수동으로 확인하"
+"세요."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Old password:"
+msgstr "예전 패스워드:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "New password:"
+msgstr "새 패스워드:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Confirm:"
+msgstr "확인:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "OK"
+msgstr "OK"
+
+#: src/main/webapp/showEmail.jsp
+msgid ""
+"The email could not be found in this folder. It was probably moved to the "
+"Sent folder."
+msgstr ""
+"해당 폴더에서 이메일을 찾을 수 없습니다. 보낸 이메일함으로 옮겨졌을 수 있습니"
+"다."
+
+#: src/main/webapp/showEmail.jsp
+msgid "The email could not be found in this folder."
+msgstr "해당 폴더에서 이메일을 찾을 수 없습니다."
+
+#: src/main/webapp/showEmail.jsp
+msgid "Signature:"
+msgstr "시그니처:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Valid"
+msgstr "유효한"
+
+#: src/main/webapp/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr "N/A (익명으로 보내졌습니다)"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "잘못됬거나 없음"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Sent:"
+msgstr "보냄:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Received:"
+msgstr "받음:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Status:"
+msgstr "상태:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply"
+msgstr "답장"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Re:"
+msgstr "답장:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Please select an identities file and try again."
+msgstr "신원 파일을 선택하고 재시도하세요."
+
+#: src/main/webapp/importIdentities.jsp
+msgid "The identities have been imported."
+msgstr "신원을 성공적으로 불러왔습니다."
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Identities file:"
+msgstr "신원 파일:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Password:"
+msgstr "패스워드:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "(leave blank if identities not encrypted)"
+msgstr "(신원이 암호화되지 않았다면 공란으로 두십시오)"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Overwrite all existing identities:"
+msgstr "모든 존재하는 신원 덮어쓰기"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Duplicates: replace existing identity:"
+msgstr "중복됨! 기존의 신원을 대체합니다:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Import"
+msgstr "불러오기"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "패스워드 지워짐"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "패스워드 캐시를 성공적으로 지웠습니다."
+
+#: src/main/webapp/settings.jsp
+msgid "Settings have been saved."
+msgstr "설정이 저장되었습니다."
+
+#: src/main/webapp/settings.jsp
+msgid "General"
+msgstr "일반"
+
+#: src/main/webapp/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "{0}분마다 이메일 확인"
+
+#: src/main/webapp/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr "보낸 이메일의 도착 여부 확인"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "이 포트에서 IMAP 활성화: {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr "이 포트에서 SMTP 활성화: {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "테마:"
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr "사생활"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"발신 메일에 포함된 텍스트들은 영어를 사용하세요 ('Re:', 'wrote:', etc.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "발신 메일에 보낸 시간 포함하기"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr "라우팅"
+
+#: src/main/webapp/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "이메일 보낼때 릴레이 사용"
+
+#: src/main/webapp/settings.jsp
+msgid "None"
+msgstr "없음"
+
+#: src/main/webapp/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr "릴레이마다 딜레이: Between"
+
+#: src/main/webapp/settings.jsp
+msgid "and"
+msgstr "그리고"
+
+#: src/main/webapp/settings.jsp
+msgid "minutes"
+msgstr "분"
+
+#: src/main/webapp/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "I2P 이메일이 아닌 주소로 보낼때 게이트웨이 사용"
+
+#: src/main/webapp/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "게이트웨이의 이메일 목적지"
+
+#: src/main/webapp/settings.jsp
+msgid "Change Password"
+msgstr "패스워드 변경"
+
+#: src/main/webapp/folders.jsp
+msgid "Folders"
+msgstr "폴더"
+
+#: src/main/webapp/folders.jsp
+msgid "Inbox"
+msgstr "편지함"
+
+#: src/main/webapp/folders.jsp
+msgid "Sent"
+msgstr "보낸"
+
+#: src/main/webapp/folders.jsp
+msgid "Trash"
+msgstr "휴지통"
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Identity"
+msgstr "완전판 신원"
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Email Identity for {0}:"
+msgstr "{0}를 위한 완전판 이메일 신원:"
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid ""
+"Do not show the above information to anyone! It contains your private keys."
+msgstr ""
+"위의 정보를 누구에게도 공개하지 마십시오. 당신의 private key가 포함되어 있습"
+"니다."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -640,269 +1108,24 @@ msgid "Cannot publish until connected."
 msgstr "연결하지 않으면 게시할 수 없습니다"
 
 #: src/main/webapp/editIdentity.jsp
+msgid "Publish"
+msgstr "게시"
+
+#: src/main/webapp/editIdentity.jsp
 msgid "Delete this identity"
 msgstr "이 신원 삭제"
 
-#: src/main/webapp/faq.jsp
-msgid "FAQ"
-msgstr "FAQ"
+#: src/main/webapp/connectError.jsp
+msgid "Error Details"
+msgstr "오류 세부정보"
 
-#: src/main/webapp/faq.jsp
-msgid "Frequently Asked Questions"
-msgstr "자주 묻는 질문들"
+#: src/main/webapp/exportIdentities.jsp
+msgid "(leave blank to not encrypt identities)"
+msgstr "(암호화하지 않으려면 공란으로 두십시오)"
 
-#: src/main/webapp/header.jsp
-msgid "- I2P-Bote"
-msgstr "- I2P-Bote"
-
-#: src/main/webapp/header.jsp
-msgid "Password is cached. Click to clear the password cache."
-msgstr "패스워드가 캐시에 임시 저장되었습니다. 패스워드 캐시를 지우려면 클릭하세요."
-
-#: src/main/webapp/header.jsp
-msgid "I2P-Bote"
-msgstr "I2P-Bote"
-
-#: src/main/webapp/header.jsp
-msgid "Secure Distributed Email"
-msgstr "안전한 분산 이메일"
-
-#: src/main/webapp/header.jsp
-msgid "Addresses"
-msgstr "주소"
-
-#: src/main/webapp/header.jsp
-msgid "Identities"
-msgstr "신원"
-
-#: src/main/webapp/header.jsp
-msgid "Configuration"
-msgstr "설정"
-
-#: src/main/webapp/header.jsp
-msgid "Settings"
-msgstr "설정"
-
-#: src/main/webapp/header.jsp
-msgid "Network Status"
-msgstr "네트워크  상태"
-
-#: src/main/webapp/header.jsp
-msgid "Help"
-msgstr "도움말"
-
-#: src/main/webapp/header.jsp
-msgid "About"
-msgstr "알아보기"
-
-#: src/main/webapp/header.jsp
-msgid ""
-"For I2P-Bote to function properly, you must download the JCE Unlimited "
-"Strength Jurisdiction Policy files and move them into this folder:"
-msgstr "I2P-Bote를 올바르게 작동하기 위해 JCE Unlimited Strength Jurisdiction Policy 파일들을 다운받아 이 폴더에 옮겨주십시오:"
-
-#: src/main/webapp/header.jsp
-msgid "Guide"
-msgstr "가이드"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "Password Cleared"
-msgstr "패스워드 지워짐"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr "패스워드 캐시를 성공적으로 지웠습니다."
-
-#: src/main/webapp/outbox.jsp
-msgid "Outbox"
-msgstr "임시 보관함"
-
-#: src/main/webapp/outbox.jsp
-msgid "Create Time"
-msgstr "만든 시간"
-
-#: src/main/webapp/outbox.jsp
-msgid "Status"
-msgstr "상태"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In order to receive email from other people, you need to create an email "
-"identity first."
-msgstr "이메일을 받으려면 새 신원을 작성해야 합니다."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"Every email identity is associated with an email destination. Anybody can "
-"send email to the email destination, but only the identity holder can read "
-"it."
-msgstr "모든 이메일 신원은 이메일 목적지와 관련되어 있습니다. 모든사람이 이메일을 보낼 수 있지만, 읽을 수 있는 사람은 신원을 가진 사람 뿐입니다."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In a sense, email identities are the equivalent to traditional email "
-"accounts - except that there is no provider that can read all your email "
-"because I2P-Bote stores all emails encrypted on the network."
-msgstr "이메일 신원은 어느정도 기존의 이메일 서비스 아이디와 유사합니다. 다른점은, 이메일 신원의 경우 그 어떤 회사도 당신의 이메일을 열람할 수 없다는 겁니다. 왜나혀면 I2P-Bote는 모든 이메일을 암호화 된 채로 네트워크에 저장하기 때문입니다."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities; never "
-"give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote는 당신에게 보내진 이메일을 자동으로 복호화합니다. 당신이 만든 신원을 통해서요. 이메일 신원은 파일로 저장됩니다. 그 어떤 누구에게도 해당 파일을 주지 마십시오! 신원을 가지고 있으면 당신의 이메일을 열람할 수 있습니다."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid "Do give out the email destination so others can contact you."
-msgstr "다른 사람들이 연락할 수  있도록 이메일 목적지를 보내주세요."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is easy to create multiple identities for different purposes, or "
-"different contacts."
-msgstr "여러개의 신원을 만드는 것은 쉽습니다. 여러 목적과, 여러 연락처를 위해서요."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"When you create a new email identity, you can choose the type of encryption "
-"that will be used by the email identity. While all encryption algorithms "
-"offered by I2P-Bote provide a high level of privacy, the length of an email "
-"destination depends on the encryption used. The choice of encryption also "
-"determines what signing algorithm is used."
-msgstr "신원을 새로 만들 때, 암호화 알고리즘을 선택할 수 있습니다. I2P-Bote가 제공하는 모든 암호화 알고리즘은 높은 수준의 기법이지만 이메일 목적지의 길이에 따라 각각의 유용성이 달라질 수 있습니다. 또한 암호화 기법은 서명 알고리즘도 결정합니다."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is generally recommended to choose 256-bit elliptic curve encryption "
-"because it produces the shortest email destinations (86 characters) while "
-"still being highly secure."
-msgstr "256-bit elliptic curve 알고리즘을 추천합니다. 가장 짧은 이메일 목적지를 생성하면서도 (86 자) 매우 안전합니다."
-
-#: src/main/webapp/showEmail.jsp
-msgid ""
-"The email could not be found in this folder. It was probably moved to the "
-"Sent folder."
-msgstr "해당 폴더에서 이메일을 찾을 수 없습니다. 보낸 이메일함으로 옮겨졌을 수 있습니다."
-
-#: src/main/webapp/showEmail.jsp
-msgid "The email could not be found in this folder."
-msgstr "해당 폴더에서 이메일을 찾을 수 없습니다."
-
-#: src/main/webapp/showEmail.jsp
-msgid "From:"
-msgstr "보낸이:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Signature:"
-msgstr "시그니처:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Valid"
-msgstr "유효한"
-
-#: src/main/webapp/showEmail.jsp
-msgid "N/A (sender is anonymous)"
-msgstr "N/A (익명으로 보내졌습니다)"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Invalid or missing"
-msgstr "잘못됬거나 없음"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Reply To:"
-msgstr "답장할 사람:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "To:"
-msgstr "보낼이:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "CC:"
-msgstr "CC:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "BCC:"
-msgstr "BCC:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Sent:"
-msgstr "보냄:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Received:"
-msgstr "받음:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Subject:"
-msgstr "제목:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Message:"
-msgstr "메세지:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Attachments:"
-msgstr "첨부:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Status:"
-msgstr "상태:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Reply"
-msgstr "답장"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Re:"
-msgstr "답장:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "New Email"
-msgstr "새 이메일"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr "첨부할 파일을 선택하고 재시도하세요."
-
-#: src/main/webapp/newEmail.jsp
-msgid "Send"
-msgstr "보내기"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this recipient"
-msgstr "이 수신자 삭제"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add this recipient to the address book"
-msgstr "이 수신자 주소록에 추가"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Select recipients from address book"
-msgstr "주소록에서 수신자를 선택하세요"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another recipient field"
-msgstr "다른 수신자 필드 추가"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "이 첨부파일을 삭제"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another attachment"
-msgstr "다른 첨부파일 추가"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attach"
-msgstr "첨부"
-
-#: src/main/webapp/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "500 Kbytes 이하로 첨부하는 것을 추천합니다."
-
-#: src/main/webapp/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} 작성됨:"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export"
+msgstr "내보내기"
 
 #: src/main/webapp/password.jsp
 msgid "Password Required"
@@ -915,273 +1138,6 @@ msgstr "잘못된 패스워드입니다. 재시도하세요."
 #: src/main/webapp/password.jsp
 msgid "Password required"
 msgstr "패스워드가 필요함"
-
-#: src/main/webapp/password.jsp
-msgid "OK"
-msgstr "OK"
-
-#: src/main/webapp/settings.jsp
-msgid "Settings have been saved."
-msgstr "설정이 저장되었습니다."
-
-#: src/main/webapp/settings.jsp
-msgid "General"
-msgstr "일반"
-
-#: src/main/webapp/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "{0}분마다 이메일 확인"
-
-#: src/main/webapp/settings.jsp
-msgid "Check delivery status of sent emails"
-msgstr "보낸 이메일의 도착 여부 확인"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "이 포트에서 IMAP 활성화: {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr "이 포트에서 SMTP 활성화: {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "테마:"
-
-#: src/main/webapp/settings.jsp
-msgid "Privacy"
-msgstr "사생활"
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "발신 메일에 포함된 텍스트들은 영어를 사용하세요 ('Re:', 'wrote:', etc.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "발신 메일에 보낸 시간 포함하기"
-
-#: src/main/webapp/settings.jsp
-msgid "Routing"
-msgstr "라우팅"
-
-#: src/main/webapp/settings.jsp
-msgid "Use relays when sending mail:"
-msgstr "이메일 보낼때 릴레이 사용"
-
-#: src/main/webapp/settings.jsp
-msgid "None"
-msgstr "없음"
-
-#: src/main/webapp/settings.jsp
-msgid "Delay per relay hop: Between"
-msgstr "릴레이마다 딜레이: Between"
-
-#: src/main/webapp/settings.jsp
-msgid "and"
-msgstr "그리고"
-
-#: src/main/webapp/settings.jsp
-msgid "minutes"
-msgstr "분"
-
-#: src/main/webapp/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "I2P 이메일이 아닌 주소로 보낼때 게이트웨이 사용"
-
-#: src/main/webapp/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr "게이트웨이의 이메일 목적지"
-
-#: src/main/webapp/settings.jsp
-msgid "Change Password"
-msgstr "패스워드 변경"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set Password"
-msgstr "패스워드 설정"
-
-#: src/main/webapp/setPassword.jsp
-msgid "The password has been changed."
-msgstr "패스워드가 변경되었습니다."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait"
-msgstr "기다려주세요"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait while the password is being changed..."
-msgstr "패스워드가 변경되는 동안 기다려주세요..."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set a new Password"
-msgstr "새 패스워드 설정"
-
-#: src/main/webapp/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "기존 패스워드가 없다면 공란으로 두십시오."
-
-#: src/main/webapp/setPassword.jsp
-msgid ""
-"Please note that if a password is set, emails cannot be checked "
-"automatically but only when the Check Mail button is clicked."
-msgstr "패스워드를 설정하면 자동 확인이 불가능합니다. 확인버튼을 눌러 수동으로 확인하세요."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Old password:"
-msgstr "예전 패스워드:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "New password:"
-msgstr "새 패스워드:"
-
-#: src/main/webapp/network.jsp
-msgid "Network"
-msgstr "네트워크"
-
-#: src/main/webapp/network.jsp
-msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "네트워크 정보를 읽을 수 없습니다. I2P-Bote가 네트워크에 연결되지 않았습니다."
-
-#: src/main/webapp/network.jsp
-msgid "Local destination:"
-msgstr "로컬 목적지:"
-
-#: src/main/webapp/connectError.jsp
-msgid "Error Details"
-msgstr "오류 세부정보"
-
-#: src/main/webapp/folders.jsp
-msgid "Folders"
-msgstr "폴더"
-
-#: src/main/webapp/folders.jsp
-msgid "Inbox"
-msgstr "편지함"
-
-#: src/main/webapp/folders.jsp
-msgid "Sent"
-msgstr "보낸"
-
-#: src/main/webapp/folders.jsp
-msgid "Trash"
-msgstr "휴지통"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Not Started"
-msgstr "시작되지 않음"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
-msgstr "3분정도 소요됩니다..."
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connecting..."
-msgstr "접속중..."
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connected"
-msgstr "접속됨"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Retry Connecting"
-msgstr "연결 재시도"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connect Now"
-msgstr "지금 연결"
-
-#: src/main/webapp/identities.jsp
-msgid "Email Identities"
-msgstr "이메일 신원"
-
-#: src/main/webapp/identities.jsp
-msgid "No email identities are defined."
-msgstr "신원이 정의되지 않았습니다."
-
-#: src/main/webapp/identities.jsp
-msgid "Def."
-msgstr "Def."
-
-#: src/main/webapp/identities.jsp
-msgid "Public Name"
-msgstr "공개 이름"
-
-#: src/main/webapp/identities.jsp
-msgid "Description"
-msgstr "설명"
-
-#: src/main/webapp/identities.jsp
-msgid "Check mail for this identity"
-msgstr "이 신원을 위해 메일 확인"
-
-#: src/main/webapp/identities.jsp
-msgid "New Identity"
-msgstr "새 신원"
-
-#: src/main/webapp/identities.jsp
-msgid "Import Identities"
-msgstr "신원 불러오기"
-
-#: src/main/webapp/sendEmail.jsp
-msgid "Go to inbox"
-msgstr "편지함으로"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Please select an identities file and try again."
-msgstr "신원 파일을 선택하고 재시도하세요."
-
-#: src/main/webapp/importIdentities.jsp
-msgid "The identities have been imported."
-msgstr "신원을 성공적으로 불러왔습니다."
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Identities file:"
-msgstr "신원 파일:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "(leave blank if identities not encrypted)"
-msgstr "(신원이 암호화되지 않았다면 공란으로 두십시오)"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Overwrite all existing identities:"
-msgstr "모든 존재하는 신원 덮어쓰기"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Duplicates: replace existing identity:"
-msgstr "중복됨! 기존의 신원을 대체합니다:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Import"
-msgstr "불러오기"
-
-#: src/main/webapp/importContact.jsp
-msgid "Address Directory Lookup"
-msgstr "주소록 검색"
-
-#: src/main/webapp/importContact.jsp
-msgid "The name has been imported to the address book."
-msgstr "주소록에서 이름을 불러왔습니다."
-
-#: src/main/webapp/importContact.jsp
-msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr "주소록에서 찾을 수 없습니다: &quot;{0}&quot;"
-
-#: src/main/webapp/importContact.jsp
-msgid "Import Contact"
-msgstr "연락처 불러오기"
-
-#: src/main/webapp/importContact.jsp
-msgid ""
-"A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click "
-"&quot;import&quot; unless you trust that it is the right email destination."
-msgstr "주소록에서 일치하는 기록이 검색되지 않습니다. 주소록은 언제나 조작될 수 있음을 유의하세요. 해당 이메일 목적지가 올바른지 확인 후 &quot;불러오기&quot; 를 눌러주시기 바랍니다."
-
-#: src/main/webapp/importContact.jsp
-msgid "Email Destination: "
-msgstr "이메일 목적지:"
 
 #: src/main/webapp/about.jsp
 msgid "About I2P-Bote"
@@ -1208,16 +1164,20 @@ msgid "Click to send an email"
 msgstr "이메일 보내기"
 
 #: src/main/webapp/about.jsp
+msgid "Maintenance, user experience, extended features, Android app"
+msgstr ""
+
+#: src/main/webapp/about.jsp
+msgid "Past developers:"
+msgstr ""
+
+#: src/main/webapp/about.jsp
 msgid "Feedback on I2P-Bote"
 msgstr "I2P-Bote 피드백하기"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, implementation, user interface"
 msgstr "기술적 컨셉, 완성도, 인터페이스"
-
-#: src/main/webapp/about.jsp
-msgid "User experience, extended features, Android app"
-msgstr "유저 인터페이스, 확장 기능, 안드로이드 앱"
 
 #: src/main/webapp/about.jsp
 msgid "Contributors:"
@@ -1303,22 +1263,119 @@ msgstr "코드 픽스"
 msgid "Usability improvement"
 msgstr "사용성 개선"
 
+#: src/main/webapp/about.jsp
+msgid "Bug hunting"
+msgstr ""
+
+#: src/main/webapp/debug.jsp
+msgid "Debug"
+msgstr "디버그"
+
+#: src/main/webapp/debug.jsp
+msgid "Debug Page"
+msgstr "디버그 페이지"
+
+#: src/main/webapp/debug.jsp
+msgid "Test encrypted files"
+msgstr "암호화된 파일 테스트"
+
+#: src/main/webapp/debug.jsp
+msgid "No file encryption problems found."
+msgstr "암호화 문제가 발견되지 않았습니다."
+
+#: src/main/webapp/debug.jsp
+msgid "Undecryptable files:"
+msgstr "복호화 할 수 없는 파일:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr "디렉토리로 이메일 목적지 추가"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr "이미 존재하는 이름입니다. 다른 공개 이름을 입력하세요."
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr "주소 디렉토리로 게시"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr "업로드할 사진:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr "(선택적, 최대 7.5kBytes)"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Text to include:"
+msgstr "포함할 텍스트"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr "(선택적, 2000자 제한)"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr "주소 디렉토리로 신원이 추가되었습니다."
+
+#: src/main/webapp/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr "주소록 검색"
+
+#: src/main/webapp/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr "주소록에서 이름을 불러왔습니다."
+
+#: src/main/webapp/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr "주소록에서 찾을 수 없습니다: &quot;{0}&quot;"
+
+#: src/main/webapp/importContact.jsp
+msgid "Import Contact"
+msgstr "연락처 불러오기"
+
+#: src/main/webapp/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+"주소록에서 일치하는 기록이 검색되지 않습니다. 주소록은 언제나 조작될 수 있음"
+"을 유의하세요. 해당 이메일 목적지가 올바른지 확인 후 &quot;불러오기&quot; 를 "
+"눌러주시기 바랍니다."
+
+#: src/main/webapp/importContact.jsp
+msgid "Email Destination: "
+msgstr "이메일 목적지:"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "공개 이름 필드를 작성해주세요."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "기다려주세요..."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The Email Identity is being generated. This may take a while."
+msgstr "이메일 신원이 만들어지고 있습니다. 약간의 시간이 걸립니다."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "이메일 신원이 저장되었습니다."
+
 #: src/main/webapp/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
 msgstr "오류: 이메일을 삭제할 수 없습니다."
 
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Identity"
-msgstr "완전판 신원"
+#: src/main/webapp/WEB-INF/tags/printDate.tag
+msgid "Unknown"
+msgstr "알수없는"
 
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Email Identity for {0}:"
-msgstr "{0}를 위한 완전판 이메일 신원:"
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid ""
-"Do not show the above information to anyone! It contains your private keys."
-msgstr "위의 정보를 누구에게도 공개하지 마십시오. 당신의 private key가 포함되어 있습니다."
+#: src/main/webapp/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "주소록에 저장"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1331,14 +1388,6 @@ msgstr "총 이메일: {0}, 새 이메일: {1}"
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
 msgstr "진행중: {0}"
-
-#: src/main/webapp/WEB-INF/tags/printDate.tag
-msgid "Unknown"
-msgstr "알수없는"
-
-#: src/main/webapp/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "주소록에 저장"
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."
