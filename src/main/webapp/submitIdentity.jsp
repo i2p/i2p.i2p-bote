@@ -31,6 +31,16 @@
     at generating keys, a "wait" page is displayed.
 --%>
 
+<c:if test="${pageContext.request.method ne 'POST'}">
+    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+    <c:if test="${empty param.key}">
+        <jsp:forward page="editIdentity.jsp?createNew=true"/>
+    </c:if>
+    <c:if test="${not empty param.key}">
+        <jsp:forward page="editIdentity.jsp"/>
+    </c:if>
+</c:if>
+
 <c:if test="${param.action == 'cancel'}">
     <jsp:forward page="identities.jsp"/>
 </c:if>
