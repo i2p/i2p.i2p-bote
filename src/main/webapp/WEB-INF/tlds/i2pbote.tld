@@ -367,6 +367,17 @@
 </tag>
 
 <function>
+    <name>csrfErrorMsg</name>
+    <description>
+        Returns the CSRF error message.
+    </description>
+    <function-class>i2p.bote.web.JSPHelper</function-class>
+    <function-signature>
+        java.lang.String csrfErrorMsg()
+    </function-signature>
+</function>
+
+<function>
     <name>createOrModifyIdentity</name>
     <function-class>i2p.bote.util.GeneralHelper</function-class>
     <function-signature>

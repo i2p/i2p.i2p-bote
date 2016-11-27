@@ -56,7 +56,30 @@ import net.i2p.util.Translate;
  * and serves as a bean for JSPs.
  */
 public class JSPHelper extends GeneralHelper {
+    private static final String CONSOLE_BUNDLE_NAME = "net.i2p.router.web.messages";
     private static final String RECIPIENT_KEY_PREFIX = "nofilter_recipient";
+
+    /**
+     * @since 0.4.4
+     */
+    public static String csrfErrorMsg() {
+        I2PAppContext ctx = I2PAppContext.getGlobalContext();
+        return "<p>" + consoleGetString(
+                "Invalid form submission, probably because you used the 'back' or 'reload' button on your browser. Please resubmit.",
+                ctx
+            ) + "</p><p>" + consoleGetString(
+                "If the problem persists, verify that you have cookies enabled in your browser.",
+                ctx
+            ) + "</p>";
+    }
+
+    /**
+     * Translate with the console bundle.
+     * @since 0.4.4
+     */
+    private static String consoleGetString(String s, I2PAppContext ctx) {
+        return Translate.getString(s, ctx, CONSOLE_BUNDLE_NAME);
+    }
 
     /**
      * Returns a new <code>SortedMap<String, String></code> that contains only those
