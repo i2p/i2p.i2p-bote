@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-27 09:59+0000\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2016-11-28 03:31+0000\n"
+"PO-Revision-Date: 2016-11-27 13:09+0000\n"
+"Last-Translator: Sebastiano Pistore <olatusrooc@virgilio.it>\n"
 "Language-Team: Italian (http://www.transifex.com/otf/I2P/language/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -158,7 +158,7 @@ msgstr "(S)"
 
 #: src/main/java/i2p/bote/util/GeneralHelper.java:125
 msgid "Not set."
-msgstr "Non Impostato."
+msgstr "Non impostato."
 
 #: src/main/java/i2p/bote/util/GeneralHelper.java:175
 msgid "Invalid ID number for CryptoImplementation: "
@@ -170,7 +170,7 @@ msgstr "In coda"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:266
 msgid "Sending"
-msgstr "Invio in Corso"
+msgstr "Invio in corso"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:268
 #, java-format
@@ -217,12 +217,12 @@ msgstr "È stata ricevuta un'email"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:88
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:194
 msgid "Kademlia Peers:"
-msgstr "Peers Kademlia:"
+msgstr "Peer Kad:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:112
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:236
 msgid "Relay Peers:"
-msgstr "Peers Ripetitori:"
+msgstr "Peers ripetitori:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:118
 msgid "Reachability %"
@@ -236,7 +236,7 @@ msgstr "Non testato"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:138
 msgid "Banned Peers:"
-msgstr "Peers Interdetti:"
+msgstr "Peers interdetti:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:143
 msgid "Destination Hash"
@@ -244,7 +244,7 @@ msgstr "Hash Destinazione"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:144
 msgid "Ban Reason"
-msgstr "Ragione Interdizione"
+msgstr "Motivo interdizione"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:182
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:187
@@ -317,7 +317,7 @@ msgstr "Impostazioni"
 
 #: src/main/webapp/header.jsp
 msgid "Network Status"
-msgstr "Stato della Rete"
+msgstr "Stato della rete"
 
 #: src/main/webapp/header.jsp
 msgid "Help"
@@ -325,7 +325,7 @@ msgstr "Aiuto"
 
 #: src/main/webapp/header.jsp
 msgid "User Guide"
-msgstr "Guida Utente"
+msgstr "Guida dell'utente"
 
 #: src/main/webapp/header.jsp
 msgid "FAQ"
@@ -333,7 +333,7 @@ msgstr "FAQ"
 
 #: src/main/webapp/header.jsp
 msgid "About"
-msgstr "Riguardo A"
+msgstr "Informazioni"
 
 #: src/main/webapp/header.jsp
 msgid ""
@@ -347,7 +347,7 @@ msgstr "Guida"
 
 #: src/main/webapp/identities.jsp
 msgid "Email Identities"
-msgstr "Identità Email"
+msgstr "Identità email"
 
 #: src/main/webapp/identities.jsp
 msgid "No email identities are defined."
@@ -359,7 +359,7 @@ msgstr "Def."
 
 #: src/main/webapp/identities.jsp
 msgid "Public Name"
-msgstr "Nome Pubblico"
+msgstr "Nome pubblico"
 
 #: src/main/webapp/identities.jsp
 msgid "Description"
@@ -367,15 +367,15 @@ msgstr "Descrizione"
 
 #: src/main/webapp/identities.jsp
 msgid "Email Destination"
-msgstr "Destinazione Email"
+msgstr "Destinazione email"
 
 #: src/main/webapp/identities.jsp
 msgid "Checking for mail..."
-msgstr "Controllando la posta..."
+msgstr "Controllo della posta in corso..."
 
 #: src/main/webapp/identities.jsp
 msgid "Check Mail"
-msgstr "Controlla Posta"
+msgstr "Controlla la posta"
 
 #: src/main/webapp/identities.jsp
 msgid "Check mail for this identity"
@@ -383,7 +383,7 @@ msgstr "Controlla email per questa identità"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
-msgstr "Nuova Identità"
+msgstr "Nuova identità"
 
 #: src/main/webapp/identities.jsp
 msgid "Import Identities"
@@ -411,7 +411,7 @@ msgstr "Il contatto è stato salvato."
 
 #: src/main/webapp/editContact.jsp
 msgid "New Contact"
-msgstr "Nuovo Contatto"
+msgstr "Nuovo contatto"
 
 #: src/main/webapp/editContact.jsp
 msgid "Add"
@@ -419,7 +419,7 @@ msgstr "Aggiungi"
 
 #: src/main/webapp/editContact.jsp
 msgid "Edit Contact"
-msgstr "Modifica Contatto"
+msgstr "Modifica contatto"
 
 #: src/main/webapp/editContact.jsp
 msgid "Save"
@@ -427,7 +427,7 @@ msgstr "Salva"
 
 #: src/main/webapp/editContact.jsp
 msgid "Email Destination:"
-msgstr "Destinazione Email:"
+msgstr "Destinazione email:"
 
 #: src/main/webapp/editContact.jsp
 msgid "(required field)"
@@ -455,7 +455,7 @@ msgstr "Rubrica Privata"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Select One or More Entries"
-msgstr "Selezione Una o Più Voci"
+msgstr "Selezione una o più voci"
 
 #: src/main/webapp/addressBook.jsp
 msgid "The address book is empty."
@@ -467,7 +467,7 @@ msgstr "Nome"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Testo"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete"
@@ -479,7 +479,7 @@ msgstr "Elimina questo contatto"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Add Recipients"
-msgstr "Aggiungi Destinatari"
+msgstr "Aggiungi destinatari"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Return"
@@ -555,11 +555,11 @@ msgstr "Nessuna identità"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Email Identity Defined"
-msgstr "Nessuna Identità Email Definita"
+msgstr "Nessuna identità email definita"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "Create a New Email Identity"
-msgstr "Crea una Nuova Identità Email"
+msgstr "Crea una nuova identità email"
 
 #: src/main/webapp/buttonFrame.jsp
 msgid "Compose"
@@ -571,7 +571,7 @@ msgstr "Ultimo controllo:"
 
 #: src/main/webapp/csrfError.jsp
 msgid "Security Violation"
-msgstr ""
+msgstr "Violazione della sicurezza"
 
 #: src/main/webapp/csrfError.jsp
 msgid "CSRF Security Violation"
@@ -654,7 +654,7 @@ msgstr ""
 
 #: src/main/webapp/sendEmail.jsp
 msgid "New Email"
-msgstr "Nuova Email"
+msgstr "Nuova email"
 
 #: src/main/webapp/sendEmail.jsp
 msgid "Go to inbox"
@@ -662,7 +662,7 @@ msgstr "Accedi alla casella di posta"
 
 #: src/main/webapp/outbox.jsp
 msgid "Outbox"
-msgstr "Posta in Uscita"
+msgstr "Posta in uscita"
 
 #: src/main/webapp/outbox.jsp
 msgid "Create Time"
@@ -674,7 +674,7 @@ msgstr "Stato"
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Not Started"
-msgstr "Non Avviato"
+msgstr "Non avviato"
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Waiting 3 Minutes..."
@@ -682,7 +682,7 @@ msgstr "3 Minuti in Attesa..."
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Connecting..."
-msgstr "Connessione in Corso..."
+msgstr "Connessione in corso..."
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Connected"
@@ -694,11 +694,11 @@ msgstr "Errore"
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Retry Connecting"
-msgstr "Ritento Connessione"
+msgstr "Ritento connessione"
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Connect Now"
-msgstr "Connetti Ora"
+msgstr "Connetti ora"
 
 #: src/main/webapp/deleteIdentity.jsp
 msgid "The email identity has been deleted."
@@ -730,11 +730,11 @@ msgstr "CC:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "BCC:"
-msgstr "BCC:"
+msgstr "CCN:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Reply To:"
-msgstr "Rispondi A:"
+msgstr "Rispondi a:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Remove this recipient"
@@ -750,11 +750,11 @@ msgstr "Seleziona i destinatari dalla rubrica"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another recipient field"
-msgstr "Aggiungi un ulteriore campo Destinatario"
+msgstr "Aggiungi un ulteriore campo destinatario"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Subject:"
-msgstr "Soggetto:"
+msgstr "Oggetto:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Attachments:"
@@ -774,7 +774,7 @@ msgstr "Allega"
 
 #: src/main/webapp/newEmail.jsp
 msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "E' consigliato mantenere gli allegati sotto la soglia dei 500 kBytes."
+msgstr "È consigliato mantenere gli allegati sotto la soglia dei 500 kBytes."
 
 #: src/main/webapp/newEmail.jsp
 msgid "Message:"
@@ -782,7 +782,7 @@ msgstr "Messaggio:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "{0} wrote:"
-msgstr "{0} scrisse:"
+msgstr "{0} ha scritto:"
 
 #: src/main/webapp/faq.jsp
 msgid "Frequently Asked Questions"
@@ -794,7 +794,7 @@ msgstr "Il contatto è stato eliminato dalla rubrica."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
-msgstr "Imposta Password"
+msgstr "Imposta password"
 
 #: src/main/webapp/setPassword.jsp
 msgid "The password has been changed."
@@ -810,7 +810,7 @@ msgstr "Rimani in attesa mentre la password viene cambiata..."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set a new Password"
-msgstr "Imposta una nuova Password"
+msgstr "Imposta una nuova password"
 
 #: src/main/webapp/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."

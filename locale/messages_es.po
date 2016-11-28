@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-27 09:58+0000\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2016-11-28 03:31+0000\n"
+"PO-Revision-Date: 2016-11-27 16:31+0000\n"
+"Last-Translator: strel\n"
 "Language-Team: Spanish (http://www.transifex.com/otf/I2P/language/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -407,7 +407,7 @@ msgstr "Exportar identidades"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
-msgstr ""
+msgstr "El formulario se debe enviar usando POST."
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -583,11 +583,11 @@ msgstr "Última comprobación"
 
 #: src/main/webapp/csrfError.jsp
 msgid "Security Violation"
-msgstr ""
+msgstr "Violación de seguridad"
 
 #: src/main/webapp/csrfError.jsp
 msgid "CSRF Security Violation"
-msgstr ""
+msgstr "Violación de seguridad CSRF"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -1202,10 +1202,12 @@ msgstr "Pulse para enviar un correo"
 #: src/main/webapp/about.jsp
 msgid "Maintenance, user experience, extended features, Android app"
 msgstr ""
+"Mantenimiento, experiencia del usuario, características extendidas, "
+"aplicación Android"
 
 #: src/main/webapp/about.jsp
 msgid "Past developers:"
-msgstr ""
+msgstr "Desarrolladores anteriores:"
 
 #: src/main/webapp/about.jsp
 msgid "Feedback on I2P-Bote"
@@ -1305,7 +1307,7 @@ msgstr "Mejora de usabilidad"
 
 #: src/main/webapp/about.jsp
 msgid "Bug hunting"
-msgstr ""
+msgstr "Búsqueda de fallo"
 
 #: src/main/webapp/debug.jsp
 msgid "Debug"
