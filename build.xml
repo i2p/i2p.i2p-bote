@@ -596,6 +596,16 @@
         <exec executable="sh" osfamily="windows" failifexecutionfails="false" >
             <arg value="src/build/scripts/bundle-messages.sh" />
         </exec>
+        <javac
+            srcdir="./ant_build/messages-src"
+            debug="true"
+            deprecation="on"
+            source="1.6" target="1.6" 
+            includeAntRuntime="false"
+            destdir="./ant_build/classes"
+            classpathref="cp"
+            classpath="./ant_build/classes"
+            failonerror="true" />
     </target>
 
     <!-- depends on compileantclasses for SearchAndInsert.class -->

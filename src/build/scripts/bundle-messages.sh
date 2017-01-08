@@ -16,6 +16,7 @@ JAVA=java
 CLASS=i2p.bote.locale.Messages
 TMPFILE=ant_build/javafiles.txt
 export TZ=UTC
+RC=0
 
 if [ "$1" = "-p" ]
 then
@@ -23,7 +24,7 @@ then
 fi
 
 # on windows, one must specify the path of commnad find
-# since windows has its own retarded version of find.
+# since windows has its own version of find.
 if which find|grep -q -i windows ; then
 	export PATH=.:/bin:/usr/local/bin:$PATH
 fi
@@ -49,7 +50,7 @@ do
 	then
 		# make list of java files newer than the .po file
 		find $JPATHS -name *.java -newer $i > $TMPFILE
-        find $JSPPATHS -name *.java -newer $i >> $TMPFILE
+		find $JSPPATHS -name *.java -newer $i >> $TMPFILE
 	fi
 
 	if [ -s ant_build/classes/i2p/bote/locale/messages_$LG.class -a \
@@ -74,17 +75,19 @@ do
 		         -o ${i}t
 		if [ $? -ne 0 ]
 		then
-			echo 'Warning - xgettext failed, not updating translations'
+			echo "ERROR - xgettext failed on ${i}, not updating translations"
 			rm -f ${i}t
+			RC=1
 			break
 		fi
 		
 		# extract strings from jsp files
-                $JAVA -cp ant_build/classes:$I2P/lib/i2p.jar i2p.bote.ant.JspStrings $JSPPATHS >> ${i}t
+		$JAVA -cp ant_build/classes:$I2P/lib/i2p.jar i2p.bote.ant.JspStrings $JSPPATHS >> ${i}t
 		if [ $? -ne 0 ]
 		then
-			echo 'Warning - JspStrings failed, not updating translations'
+			echo "ERROR - JspStrings failed on ${i}, not updating translations"
 			rm -f ${i}t
+			RC=1
 			break
 		fi
 
@@ -92,8 +95,9 @@ do
 		msgmerge -U --backup=none $i ${i}t
 		if [ $? -ne 0 ]
 		then
-			echo 'Warning - msgmerge failed, not updating translations'
+			echo "ERROR - msgmerge failed on ${i}, not updating translations"
 			rm -f ${i}t
+			RC=1
 			break
 		fi
 		rm -f ${i}t
@@ -106,15 +110,42 @@ do
         # only generate for non-source language
         echo "Generating ${CLASS}_$LG ResourceBundle..."
 
-        # convert to class files in ant_build/classes
-        msgfmt --java --statistics -r $CLASS -l $LG -d ant_build/classes $i
+        msgfmt -V | grep -q '0\.19'
         if [ $? -ne 0 ]
         then
-            echo 'Warning - msgfmt failed, not updating translations'
-            break
+            # slow way
+            # convert to class files in ant_build/classes
+            msgfmt --java --statistics -r $CLASS -l $LG -d ant_build/classes $i
+            if [ $? -ne 0 ]
+            then
+                echo "ERROR - msgfmt failed on ${i}, not updating translations"
+                # msgfmt leaves the class file there so the build would work the next time
+                find ant_build -name Messages_${LG}.class -exec rm -f {} \;
+                RC=1
+                break
+            fi
+        else
+            # fast way
+            # convert to java files in ant_build/messages-src
+            TD=ant_build/messages-src-tmp
+            TDX=$TD/i2p/bote/locale
+            TD2=ant_build/messages-src
+            TDY=$TD2/i2p/bote/locale
+            rm -rf $TD
+            mkdir -p $TD $TDY
+            msgfmt --java --statistics --source -r $CLASS -l $LG -d $TD $i
+            if [ $? -ne 0 ]
+            then
+                echo "ERROR - msgfmt failed on ${i}, not updating translations"
+                # msgfmt leaves the class file there so the build would work the next time
+                find ant_build/obj -name Messages_${LG}.class -exec rm -f {} \;
+                RC=1
+                break
+            fi
+            mv $TDX/Messages_$LG.java $TDY
+            rm -rf $TD
         fi
     fi
 done
 rm -f $TMPFILE
-# todo: return failure
-exit 0
+exit $RC
