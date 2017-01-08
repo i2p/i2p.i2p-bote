@@ -23,6 +23,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="csrf" uri="http://www.owasp.org/index.php/Category:OWASP_CSRFGuard_Project/Owasp.CsrfGuard.tld" %>
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <%--
@@ -31,7 +32,7 @@
     at generating keys, a "wait" page is displayed.
 --%>
 
-<c:if test="${pageContext.request.method ne 'POST'}">
+<ib:csrfCheck>
     <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
     <c:if test="${empty param.key}">
         <jsp:forward page="editIdentity.jsp?createNew=true"/>
@@ -39,7 +40,7 @@
     <c:if test="${not empty param.key}">
         <jsp:forward page="editIdentity.jsp"/>
     </c:if>
-</c:if>
+</ib:csrfCheck>
 
 <c:if test="${param.action == 'cancel'}">
     <jsp:forward page="identities.jsp"/>
@@ -67,6 +68,9 @@
     <c:set var="slow" value="true"/>
 </c:if>
 
+<c:set var="csrf_tokenname"><csrf:tokenname/></c:set>
+<c:set var="csrf_tokenvalue"><csrf:tokenvalue uri="submitIdentity.jsp"/></c:set>
+<c:set var="csrfParam" value="${csrf_tokenname}=${csrf_tokenvalue}&amp;"/>
 <c:choose>
     <c:when test="${empty param.publicName}">
         <ib:message key="Please fill in the Public Name field." var="errorMessage" scope="request"/>
@@ -92,7 +96,7 @@
     <c:when test="${param.action eq 'wait'}">
         <c:set var="counterParam" value="${keygenCounter+1}"/>
         <%-- The double URL encoding prevents GET from breaking special chars --%>
-        <c:set var="refreshUrl" value="submitIdentity.jsp?counter=${counterParam}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;vanityPrefix=${param.vanityPrefix}&amp;publicName=${ib:urlEncode(ib:urlEncode(param.publicName))}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}" scope="request"/>
+        <c:set var="refreshUrl" value="submitIdentity.jsp?${csrfParam}counter=${counterParam}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;vanityPrefix=${param.vanityPrefix}&amp;publicName=${ib:urlEncode(ib:urlEncode(param.publicName))}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}" scope="request"/>
         <c:set var="refreshInterval" value="0" scope="request"/>
         <jsp:include page="header.jsp"/>
         <div class="main">
@@ -112,7 +116,7 @@
         <c:if test="${param.createNew eq 'true' and slow}">
             <c:set var="actionParam" value="action=wait&amp;"/>
         </c:if>
-        <c:set var="forwardUrl" value="submitIdentity.jsp?${actionParam}counter=${param.counter}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;vanityPrefix=${param.vanityPrefix}&amp;publicName=${param.publicName}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}&amp;includeInGlobalCheck=${param.includeInGlobalCheck}"/>
+        <c:set var="forwardUrl" value="submitIdentity.jsp?${csrfParam}${actionParam}counter=${param.counter}&amp;createNew=${param.createNew}&amp;cryptoImpl=${param.cryptoImpl}&amp;vanityPrefix=${param.vanityPrefix}&amp;publicName=${param.publicName}&amp;description=${param.description}&amp;emailAddress=${param.emailAddress}&amp;defaultIdentity=${param.defaultIdentity}&amp;includeInGlobalCheck=${param.includeInGlobalCheck}"/>
         <ib:requirePassword forwardUrl="${forwardUrl}">
             <c:catch var="exception">
                 <%

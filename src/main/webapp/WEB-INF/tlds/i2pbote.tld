@@ -6,6 +6,17 @@
 <uri>I2pBoteTags</uri>
 
 <tag>
+    <name>csrfCheck</name>
+    <info>
+        Checks whether non-POST requests to the current page
+        have a valid CSRF token.
+        Runs the tag body if there is no valid token.
+    </info>
+    <tag-class>i2p.bote.web.CSRFCheckTag</tag-class>
+    <body-content>JSP</body-content>
+</tag>
+
+<tag>
     <name>sendEmail</name>
     <tag-class>i2p.bote.web.SendEmailTag</tag-class>
     <body-content>JSP</body-content>
