@@ -1,6 +1,9 @@
 I2P-Bote Version History
 ------------------------
 
+0.4.5
+  * Catch IAEs when sorting a Folder (ticket #1931)
+
 0.4.4 (Released on Nov 28, 2016)
   * Add CSRF guards to all forms (thanks Beardog for raising the issue!)
   * Tweak error message to avoid XSS filter (ticket #1815)

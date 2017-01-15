@@ -93,14 +93,22 @@ public abstract class Folder<T> {
         if (files == null) {
             log.error("Cannot list files in directory <" + storageDir + ">");
             files = new File[0];
-        } else
+        } else {
             // sort files by date, newest first
-            Arrays.sort(files, new Comparator<File>() {
-                @Override
-                public int compare(File f1, File f2) {
-                    return (int)Math.signum(f2.lastModified() - f1.lastModified());
-                }
-            });
+            // This sort may be unstable, as the lastModified time of the files
+            // may change during sorting (e.g. by a different thread), causing
+            // Java's TimSort to throw an IAE.
+            try {
+                Arrays.sort(files, new Comparator<File>() {
+                    @Override
+                    public int compare(File f1, File f2) {
+                        return (int)Math.signum(f2.lastModified() - f1.lastModified());
+                    }
+                });
+            } catch (IllegalArgumentException iae) {
+                log.warn("Error while sorting files in " + storageDir + ", order will be unstable", iae);
+            }
+        }
         
         return files;
     }
