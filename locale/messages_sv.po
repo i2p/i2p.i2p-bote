@@ -1,5 +1,6 @@
 # Translators:
 # Translators:
+# Anders Nilsson <anders@devode.se>, 2016
 # Anders Nilsson <anders@devode.se>, 2015
 # ducki2p <ducki2p@gmail.com>, 2011
 # cacapo <handelsehorisont@gmail.com>, 2015
@@ -11,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-27 09:59+0000\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-01-20 15:41+0000\n"
+"PO-Revision-Date: 2016-12-19 13:29+0000\n"
+"Last-Translator: Anders Nilsson <anders@devode.se>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/otf/I2P/language/"
 "sv_SE/)\n"
 "Language: sv_SE\n"
@@ -392,7 +393,7 @@ msgstr "Exportera identiteter"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
-msgstr ""
+msgstr "Formuläret måste skickas via POST."
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -464,7 +465,7 @@ msgstr "Namn"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete"
@@ -568,11 +569,11 @@ msgstr "Senast kontrollerad:"
 
 #: src/main/webapp/csrfError.jsp
 msgid "Security Violation"
-msgstr ""
+msgstr "Säkerhetsöverträdelse"
 
 #: src/main/webapp/csrfError.jsp
 msgid "CSRF Security Violation"
-msgstr ""
+msgstr "CSRF-säkerhetsöverträdelse"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -1178,11 +1179,11 @@ msgstr "Klicka för att skicka epost"
 
 #: src/main/webapp/about.jsp
 msgid "Maintenance, user experience, extended features, Android app"
-msgstr ""
+msgstr "Underhåll, användarupplevelse, utökade egenskaper, Android-app"
 
 #: src/main/webapp/about.jsp
 msgid "Past developers:"
-msgstr ""
+msgstr "Tidigare utvecklare:"
 
 #: src/main/webapp/about.jsp
 msgid "Feedback on I2P-Bote"
@@ -1274,7 +1275,7 @@ msgstr "Kodfixar"
 
 #: src/main/webapp/about.jsp
 msgid "Usability improvement"
-msgstr ""
+msgstr "Förbättrad användbarhet"
 
 #: src/main/webapp/about.jsp
 msgid "Bug hunting"

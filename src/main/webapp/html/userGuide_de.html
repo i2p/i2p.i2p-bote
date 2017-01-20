@@ -173,60 +173,31 @@ menu 'From:'.</p>
 <h3 id="Address-Book">2.4. Lokales Adressbuch</h3>
 <p>Wenn Sie den I2P-Bote-Email-Schlüssel von jemandem erhalten haben, dem Sie öfters schreiben wollen, dann geht es gut von der Hand, diesen Schlüssel in Ihr lokales Adress-Buch aufzunehmen (Link auf der linken Seite), und zwar unter einem Name Ihrer eigenen Wahl für diesen Kontakt. Fügen Sie die betreffende Email-Zeil-Adresse in die entsprechenden Zeilen ein, dann speichern. &lt;br&gt;</p>
 
-<p>You should normally save destinations to your address book, so that next time
-you get a mail from the same sender it will be shown to be from the same,
-locally known sender ('Loc' is checked) and a mail sent by someone else who
-is just using the same user name will be marked as NOT known locally (an x in
-web-UI's 'Know' column or {UNK} before the sender address in IMAP), so you know
-it's a new/different one.</p>
+<p>Sie sollten Destinationen normalerweise in Ihrem Adressbuch abspeichern, so daß diese beim nächsten mal, wenn Sie von dort her Mail erhalten, als der gleiche Sender angezeigt wird, wie lokal bekannt ('Loc' ist geprüft) und eine Email, die von jemand anderem gesandt wurde und nur den gleichen Benutzername verwendet hat, wird als NICHT bekannt markiert; angezeigt durch ein x in einer Spalte des Web-User-Interfaces oder [UNK] vor der Senderadresse bei IMAP, so daß Sie wissen, daß es sich um jemand anderes handelt.  </p>
 
 <h3 id="Settings">2.5. Einstellungen (und was sie bedeuten)</h3>
-<p>Under settings you can choose the I2P-Bote interface's <em>language</em>
-(currently English or German) and decide whether even with a non-English
-language setting everything that will be automatically added to an e-mail when
-replying will nonetheless stay in English, so that the recipient does not know
-your I2P-Bote is set to a different language. Otherwise the recipient could
-guess about your nationality which would decrease your anonymity.</p>
+<p>Unter Einstellungen können Sie die I2P-Bote <em>Sprache</em> der Benutzeroberfläche einstellen (momentan Englisch oder Deutsch). Sie können sich für eine andere Sprache als Englisch entscheiden, selbst dann wird alles, was Emails automatisch hinzugefügt wird, in englischer Sprache bleiben, so daß der Empfänger nicht feststellen kann, daß Ihr I2P-Bote auf eine andere Sprache ingestellt ist. Der Empfänger hätte ansonsten die Möglichkeit, Ihre Nationalität zu schätzen, was Ihre Anonymität verringern würde. 
+</p>
 
-<p>Here you can also adjust the interval for <em>automatic checking</em> of
-e-mails and decide whether or not to send any <em>time stamp</em> with your
-mails, indicating date and time when the mail was sent. The time stamps are
-always in UTC.</p>
+<p>Hier können Sie auch das Intervall für die <em>automatische Prüfung</em> nach Emails einstellen und entscheiden, ob Zeitstempel mit Ihren Mails gesandt werden, die Datum und Zeit beinhalten. Zeitstempel sind immer in UTC.  </p>
 
-<p>(When using mail routes, the timestamps are automatically disabled.) [not
-yet implemented]</p>
+<p>(Wenn Sie Mail-Routen verwenden, dann sind Zeitstempel automatisch abgestellt. [noch nicht implementiert])</p>
 
 <p>automatischer Abruf von E-Mails:</p>
 
-<p>For more comfort there is the 'Check for mail every XX minutes'
-option.</p>
+<p>Für mehr Komfort gibt es die 'Prüfe auf Mails alle XX Minuten'-Option</p>
 
-<p>Here you can specify how often your I2P-Bote app should try to fetch unread
-mails for your identities. This can be set on a per-identity basis [not yet
-implemented]</p>
+<p>Hier können Sie festlegen, wie oft Ihre I2P-Bote-Anwendung versuchen soll, ungelesene Mails für Ihre Identitäten zu laden. Dies kann auf der Ebene einzelner Identitäten engestellt werden [noch nicht implementiert].  </p>
 
-<p>If you specify a random offset, then it will not check _exactly_ every XX
-minutes, but rather every (XX+-offset*XX) minutes, i.e. after a randomly chosen
-time between (1-offset)XX minutes and (1+offset)XX minutes. [not yet
-implemented]</p>
+<p>Wenn Sie einen zufälligen Versatz einstellen, dann wird nicht _exakt_ alle XX Minuten geprüft, vielmehr alle (XX+-Versatz*XX) Minuten, bzw. nach einer zufällig ausgewählten Zeit zwischen (1-Versatz)*XX Minuten und (1+Versatz)*XX Minuten [noch nicht implementiert].</p>
 
-<p>You can also totally disable the automatic checking for a given
-identity.</p>
+<p>Sie können die automatische Prüfung auf Emails für einzelne Identitäten abschalten. </p>
 
-<p>(If you are not sure about these settings, the defaults should be ok for
-you.)</p>
+<p>(Wenn Sie über diese Einstellungen unsicher sind, dann sollten die Standards für Sie ok sein.)</p>
 
-<p><em>Mail routes</em> are chains of I2P-Bote nodes acting as relays/routers for
-other peers and obeying to per-hop delays, thus providing the high-latency
-transport for increased anonymity.</p>
+<p><em>Mail Routen</em>sind Reihen von I2P-Bote Nodes, die als Relays / Router für andere Peeres arbeiten, dabei die per-hop Verzögerungen realisieren und dennoch den Transport mit hoher Latenz (Verzögerung) realiseren, was die Anonymität erhöht.    </p>
 
-<p>You can specify the number of nodes (here called hops) that should be
-chained to form a mail route. Then each of the e-mail packets sent by the
-identity that has mail routes enabled will go through a mail route of n hops
-before being stored. You can set a delay for each hop individually, as no hop
-should know the time a packet will wait at the next hop, making the timing
-unpredictable. [individual per-hop and per-identity setting of delays not yet
-implemented]</p>
+<p>Sie können die Anzahl von Nodes (hier genannt Hops) spezifizieren, die aufeinanderfolgen, um eine Mail-Route zu definieren. Jedes E-Mail-Paket, welches über eine Identität abgesetzt wird, für die Mail Routen aktiviert sind, wird über eine Mail-Route mit n Hops gesandt, bevor es gespeichert wird. Sie können eine Verzögerung für jeden Hop individuell einstellen, so daß kein Hop Kenntnis über die Haltezeit beim nächsten Hop hat, was ein Timing unvorhersagbar macht [individuelle per-Hop und per-Identity Einstellungen der Delays noch nicht implementiert].</p>
 
 <p>As delay you can specify a time frame (e.g. 60-600 minutes) - then a
 random wait time between the two values will be chosen for the packet at that

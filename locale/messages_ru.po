@@ -1,5 +1,6 @@
 # Translators:
 # Translators:
+# Алексей Выскубов <viskubov@gmail.com>, 2016
 # Alexander <a_i_pahom@mail.ru>, 2013
 # sfix <anon-9b36b2e@lycos.com>, 2013
 # dimi <zhopa@mita.pp.ru>, 2013
@@ -16,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-27 09:59+0000\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-01-20 15:41+0000\n"
+"PO-Revision-Date: 2016-12-01 08:16+0000\n"
+"Last-Translator: Алексей Выскубов <viskubov@gmail.com>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/otf/I2P/language/"
 "ru_RU/)\n"
 "Language: ru_RU\n"
@@ -399,7 +400,7 @@ msgstr "Экспортировать идентификаторы"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
-msgstr ""
+msgstr "Форма должна быть отправлена с использованием POST"
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -471,7 +472,7 @@ msgstr "Имя"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete"
@@ -575,11 +576,11 @@ msgstr "Последняя проверка:"
 
 #: src/main/webapp/csrfError.jsp
 msgid "Security Violation"
-msgstr ""
+msgstr "Нарушение безопасности"
 
 #: src/main/webapp/csrfError.jsp
 msgid "CSRF Security Violation"
-msgstr ""
+msgstr "CSRF-нарушение безопасности"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -1188,10 +1189,12 @@ msgstr "Кликните чтобы отправить письмо"
 #: src/main/webapp/about.jsp
 msgid "Maintenance, user experience, extended features, Android app"
 msgstr ""
+"Обслуживание, пользовательский опыт, расширенные возможности, приложение для "
+"Android"
 
 #: src/main/webapp/about.jsp
 msgid "Past developers:"
-msgstr ""
+msgstr "Бывшие разработчики:"
 
 #: src/main/webapp/about.jsp
 msgid "Feedback on I2P-Bote"
@@ -1285,11 +1288,11 @@ msgstr "Исправления кода"
 
 #: src/main/webapp/about.jsp
 msgid "Usability improvement"
-msgstr ""
+msgstr "Повышение удобства использования"
 
 #: src/main/webapp/about.jsp
 msgid "Bug hunting"
-msgstr ""
+msgstr "Поиск ошибок"
 
 #: src/main/webapp/debug.jsp
 msgid "Debug"

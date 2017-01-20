@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-27 09:59+0000\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-01-20 15:41+0000\n"
+"PO-Revision-Date: 2016-12-06 23:44+0000\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/otf/I2P/language/"
 "tr_TR/)\n"
 "Language: tr_TR\n"
@@ -387,7 +387,7 @@ msgstr "Kimlikleri Ver"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
-msgstr ""
+msgstr "Form POST kullanılarak gönderilmelidir."
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -563,11 +563,11 @@ msgstr "Son denetleme:"
 
 #: src/main/webapp/csrfError.jsp
 msgid "Security Violation"
-msgstr ""
+msgstr "Güvenlik İhlali"
 
 #: src/main/webapp/csrfError.jsp
 msgid "CSRF Security Violation"
-msgstr ""
+msgstr "CSRF Güvenlik İhlali"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -1178,11 +1178,11 @@ msgstr "E-posta göndermek için tıklayın"
 
 #: src/main/webapp/about.jsp
 msgid "Maintenance, user experience, extended features, Android app"
-msgstr ""
+msgstr "Bakım, kullanıcı deneyimi, gelişmiş özellikler, Android uygulaması"
 
 #: src/main/webapp/about.jsp
 msgid "Past developers:"
-msgstr ""
+msgstr "Önceki geliştiriciler:"
 
 #: src/main/webapp/about.jsp
 msgid "Feedback on I2P-Bote"
@@ -1280,7 +1280,7 @@ msgstr "Kullanılabilirlik geliştirmesi"
 
 #: src/main/webapp/about.jsp
 msgid "Bug hunting"
-msgstr ""
+msgstr "Hata yakalama"
 
 #: src/main/webapp/debug.jsp
 msgid "Debug"
