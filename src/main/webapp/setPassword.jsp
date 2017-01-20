@@ -26,10 +26,16 @@
 <%@ taglib prefix="ib" uri="I2pBoteTags" %>
 
 <c:set var="action" value="${param.action}" scope="request"/>
-<c:if test="${not empty action and pageContext.request.method ne 'POST'}">
-    <c:set var="action" value="" scope="request"/>
-    <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+<c:if test="${not empty action}">
+    <ib:csrfCheck>
+        <c:set var="action" value="" scope="request"/>
+        <ib:message key="Form must be submitted using POST." var="errorMessage" scope="request"/>
+    </ib:csrfCheck>
 </c:if>
+
+<c:set var="csrf_tokenname"><csrf:tokenname/></c:set>
+<c:set var="csrf_tokenvalue"><csrf:tokenvalue uri="setPassword.jsp"/></c:set>
+<c:set var="csrfParam" value="${csrf_tokenname}=${csrf_tokenvalue}&amp;"/>
 
 <ib:message key="Set Password" var="title" scope="request"/>
 <c:if test="${action eq 'wait'}">
@@ -45,7 +51,7 @@
     </c:if>
 </c:if>
 <c:if test="${action eq 'set'}">
-    <c:set var="refreshUrl" value="setPassword.jsp?action=wait" scope="request"/>
+    <c:set var="refreshUrl" value="setPassword.jsp?${csrfParam}action=wait" scope="request"/>
     <c:set var="refreshInterval" value="0" scope="request"/>
     <ib:setPassword oldPassword="${param.nofilter_oldPassword}" newPassword="${param.nofilter_newPassword}" confirmNewPassword="${param.nofilter_confirm}"/>
 </c:if>
