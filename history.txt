@@ -1,7 +1,7 @@
 I2P-Bote Version History
 ------------------------
 
-0.4.5
+0.4.5 (Released on Jan 20, 2017)
   * Security changes:
     * Add a Content Security Policy to all pages
     * Escape attachment filenames in emails (thanks Beardog!)
