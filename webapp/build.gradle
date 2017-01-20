@@ -1,0 +1,181 @@
+apply plugin: 'war'
+apply plugin: 'witness'
+
+archivesBaseName = 'i2pbote'
+
+configurations {
+    jasper
+}
+
+def jspcDir = "$buildDir/jspc"
+def webXmlFrag = "$buildDir/web-fragment.xml"
+
+task precompileJsp {
+    outputs.dir(jspcDir)
+    doLast {
+        ant.taskdef(classname: 'org.apache.jasper.JspC',
+                    name: 'jasper',
+                    classpath: sourceSets.jsp.compileClasspath.asPath)
+        ant.jasper(validateXml: false,
+                   package: 'i2p.bote.jsp',
+                   uriRoot: webAppDir,
+                   webXmlFragment: webXmlFrag,
+                   outputDir: jspcDir)
+    }
+}
+
+sourceSets {
+    jsp {
+        compileClasspath += configurations.providedCompile +
+                            sourceSets.main.output +
+                            configurations.jasper
+        java {
+            srcDir jspcDir
+        }
+    }
+}
+
+precompileJsp.dependsOn compileJava
+compileJspJava.dependsOn precompileJsp
+
+def jamesArchive = 'libs/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
+// James snapshots are only kept for a few days. The URL below points to a copy
+// of the 6/27/2015 snapshot.
+// To be replaced with a repository.apache.org URL once beta5 is out.
+def jamesUrl = 'http://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
+
+task downloadJames {
+    println 'Downloading Apache James...'
+    ant.get(src: jamesUrl, dest: jamesArchive, verbose: 'on', skipexisting: 'true')
+}
+
+task extractJames(dependsOn: downloadJames, type: Copy) {
+    outputs.dir('libs')
+    from zipTree(jamesArchive).files
+    into 'libs'
+    include '**/apache-james-mailbox-api-0.6-20150508.040939-710.jar'
+    include '**/apache-james-mailbox-store-0.6-20150508.041003-704.jar'
+    include '**/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/james-server-util-3.0.0-beta5-SNAPSHOT.jar'
+    include '**/protocols-api-1.6.4-20150617.121129-1080.jar'
+    include '**/protocols-imap-1.6.4-20150617.121245-927.jar'
+    include '**/protocols-netty-1.6.4-20150617.121137-1044.jar'
+}
+
+dependencies {
+    jasper 'org.apache.tomcat:jasper:6.0.44'
+    jasper 'javax.servlet:jstl:1.2'
+
+    providedCompile project(':core')
+
+    providedCompile 'org.eclipse.jetty.orbit:javax.servlet.jsp:2.2.0.v201112011158'
+    providedCompile 'org.jfree:jcommon:1.0.23'
+    providedCompile 'org.jfree:jfreechart:1.0.19'
+    providedCompile('org.subethamail:subethasmtp:3.1.7') {
+        exclude group: 'javax.mail', module: 'mail'
+        exclude group: 'javax.activation', module: 'activation'
+    }
+    providedCompile 'com.sun.mail:smtp:1.5.6'
+
+    // Apache James IMAP server
+    providedCompile files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
+        builtBy tasks.extractJames
+    }
+    providedCompile files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
+        builtBy tasks.extractJames
+    }
+    providedCompile files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    providedCompile files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    providedCompile files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    providedCompile files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    providedCompile files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
+        builtBy tasks.extractJames
+    }
+    providedCompile files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
+        builtBy tasks.extractJames
+    }
+    providedCompile files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
+        builtBy tasks.extractJames
+    }
+    providedCompile files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
+        builtBy tasks.extractJames
+    }
+
+    // Apache James IMAP server dependencies
+    providedCompile 'com.beetstra.jutf7:jutf7:1.0.0'
+    providedCompile 'commons-codec:commons-codec:1.7'
+    providedCompile 'commons-collections:commons-collections:3.2.1'
+    providedCompile 'commons-configuration:commons-configuration:1.9'
+    providedCompile 'commons-io:commons-io:2.4'
+    providedCompile 'commons-lang:commons-lang:2.6'
+    providedCompile 'commons-logging:commons-logging:1.0.3'
+    providedCompile 'io.netty:netty:3.3.1.Final'
+    providedCompile 'log4j:log4j:1.2.17'
+    providedCompile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
+    providedCompile 'org.slf4j:slf4j-api:1.7.2'
+    providedCompile 'org.slf4j:slf4j-log4j12:1.7.2'
+}
+
+dependencyVerification {
+    verify = [
+        'org.jfree:jcommon:1e670402809484c71ec74d55b40022a4c4939c7911bd39ee5a0cfb3aaf56397c',
+        'org.jfree:jfreechart:153d077d6399776a45de97c555ad026eb6201d4bd8af86cfce7b8b4ccfa66263',
+        'org.subethamail:subethasmtp:5196a0da2c5a33d1a04e88fc7a9cc109501bc265b5bac8edd9984a1885070ad4',
+    ]
+}
+
+war {
+    archiveName 'i2pbote.war'
+    exclude '*.jsp'
+    exclude 'WEB-INF/tags*'
+    exclude 'WEB-INF/tlds*'
+    classpath sourceSets.jsp.output
+    dependsOn jspClasses
+    filesMatching('**/*.xml') {
+        filter { String line ->
+            if (line == '    <!-- precompiled servlets -->')
+                new File(webXmlFrag).text
+            else
+                line
+        }
+    }
+    webInf {
+        from 'src/main/webapp/WEB-INF/tlds'
+    }
+}
+
+apply from: "${project.rootDir}/gradle/i2p-make-plugin.gradle"
+
+i2p {
+    plugin {
+        name 'i2pbote'
+        signer 'str4d@mail.i2p'
+        version project.version
+
+        author 'str4d@mail.i2p'
+        websiteUrl 'http://bote.i2p/'
+        updateUrl 'http://bote.i2p/i2pbote-update.xpi2p'
+        su3UpdateUrl 'http://bote.i2p/i2pbote-update.su3'
+        license 'GPLv3'
+
+        minI2PVersion '0.9.24'
+        minJavaVersion '1.6'
+
+        console {
+            webapp {
+                includeTaglib true
+            }
+        }
+    }
+}

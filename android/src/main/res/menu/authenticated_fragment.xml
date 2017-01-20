@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:i2pandroid="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/action_log_in"
+        android:orderInCategory="1"
+        android:title="@string/log_in"
+        android:visible="false"
+        i2pandroid:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_log_out"
+        android:orderInCategory="1"
+        android:title="@string/log_out"
+        android:visible="false"
+        i2pandroid:showAsAction="always"/>
+
+</menu>

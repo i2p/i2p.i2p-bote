@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="autoMailCheckEnabled"
+        android:title="@string/pref_title_autoMail" />
+
+    <i2p.bote.android.widget.IntEditTextPreference
+        android:defaultValue="30"
+        android:dependency="autoMailCheckEnabled"
+        android:key="mailCheckInterval"
+        android:summary="@string/pref_summ_checkInterval"
+        android:title="@string/pref_title_checkInterval" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="deliveryCheckEnabled"
+        android:summary="@string/pref_summ_delivery"
+        android:title="@string/pref_title_delivery" />
+
+</PreferenceScreen>

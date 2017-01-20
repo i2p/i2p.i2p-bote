@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <i2p.bote.android.widget.LoadingRecyclerView
+            android:id="@+id/contacts_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+
+        <RelativeLayout
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.pnikosis.materialishprogress.ProgressWheel
+                android:id="@+id/loading"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                app:matProg_barColor="@color/accent"
+                app:matProg_progressIndeterminate="true"/>
+        </RelativeLayout>
+    </FrameLayout>
+
+    <net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/promoted_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/listitem_horizontal_margin"
+        android:layout_marginEnd="@dimen/listitem_horizontal_margin"
+        android:layout_marginRight="@dimen/listitem_horizontal_margin"
+        app:fab_addButtonColorNormal="@color/accent"
+        app:fab_addButtonColorPressed="@color/accent_dark"
+        app:fab_labelStyle="@style/menu_labels_style">
+
+        <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_scan_qr_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/accent"
+            app:fab_colorPressed="@color/accent_dark"
+            app:fab_icon="@drawable/ic_scan_qr_code_white_24dp"
+            app:fab_title="@string/action_scan_qr_code"/>
+
+        <i2p.bote.android.widget.IconicsFloatingActionButton
+            android:id="@+id/action_new_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/accent"
+            app:fab_colorPressed="@color/accent_dark"
+            app:fab_title="@string/action_new_contact"
+            app:ifab_color="@android:color/white"
+            app:ifab_icon="gmd-person-add"
+            app:ifab_padding="1dp"
+            app:ifab_size="24dp"/>
+    </net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu>
+</RelativeLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:i2pandroid="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/action_delete"
+        android:title="@string/action_delete"
+        i2pandroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_mark_read"
+        android:title="@string/action_mark_read"
+        i2pandroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_mark_unread"
+        android:title="@string/action_mark_unread"
+        i2pandroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_move_to"
+        android:title="@string/action_move_to"
+        i2pandroid:showAsAction="ifRoom"/>
+
+</menu>

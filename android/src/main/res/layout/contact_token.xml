@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/contact_chip_height"
+    android:background="@drawable/token_background"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/contact_picture"
+        android:layout_width="@dimen/contact_chip_height"
+        android:layout_height="@dimen/contact_chip_height"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_contact_picture"/>
+
+    <TextView
+        android:id="@+id/contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/contact_chip_height"
+        android:layout_marginEnd="@dimen/contact_chip_right_margin"
+        android:layout_marginLeft="@dimen/contact_chip_main_margins"
+        android:layout_marginRight="@dimen/contact_chip_right_margin"
+        android:layout_marginStart="@dimen/contact_chip_main_margins"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"/>
+
+</LinearLayout>

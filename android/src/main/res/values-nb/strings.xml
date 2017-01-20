@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="intro_private">Privat.</string>
+  <string name="intro_distributed">Distribuert.</string>
+  <string name="intro_secure">Sikker.</string>
+  <string name="swipe_to_start">Sveip for å starte</string>
+  <string name="i_know_what_to_do">Jeg vet hva jeg skal gjøre</string>
+  <string name="intro_1_1">Tradisjonell e-post er usikker. Det ble aldri tatt høyde for å beskytte folk mot tråler-overvåkning.</string>
+  <string name="intro_1_2">Selv når du krypterer e-postinnholdet, er e-post metadataen gjenstand for overvåkning, hvilket tilkjennegir store mengder informasjon om deg og dem du snakker med.</string>
+  <string name="intro_2_1">Bote er en ny sort e-post som gir komplett ende-til-ende sikkerhetsbeskyttelse og personvern. Den kjører på I2P-anonymiserings-nettverket, noe som skjuler din aktivitet.</string>
+  <string name="intro_2_2">Når du sender en e-post i Bote, er alt kryptert - inkludert e-post-metadata. Bare mottaaker kan laste ned og lese e-posten.</string>
+  <string name="intro_3_1">Med tradisjonell e-post er du avhengig av en tiltro til en sentral tjener. Når den er blokkert, kan du ikke sende eller motta e-poster.</string>
+  <string name="intro_3_2">Bote bruker en peer-til-peer nettverk, ligner til BpitTorrent. Krypterte e-poster er delt og lagret med mange andre Bote brukere.</string>
+  <string name="intro_4_1">Motparten kan bare se att en e-post har blitt sendt. Dem kan ikke se den sanne identiteten til senderen eller mottakeren.</string>
+  <string name="intro_4_2">Og e-postene til Bote kan bli sendt med en forsinkelse; senderen kunne vært borte lenge før den krypterte e-posten er lagret inn på nettverket, på den måten unngå timing attacks.</string>
+  <string name="intro_5_1">Fordi Bote er noe annerledes enn den tradisjonelle e-posten, det er få ting å sette opp før du kan sette i gang med å bruke det. </string>
+  <string name="intro_5_2">Setup wizard vil ta et par minutter, og da vil alt være klart, </string>
+  <string name="lets_get_started">La oss komme i gang</string>
+  <string name="title_activity_setup">Oppsett</string>
+  <string name="skip">Hopp over</string>
+  <string name="set_password">Velg passord</string>
+  <string name="setup_set_password_1">Du kan velge et passord for Bote. Dette forhindrer andre fra å lese dine e-poster, og vil kryptere alle filene, på disken.</string>
+  <string name="setup_set_password_2">Hvis du velger deg et passord, vil automatisk e-post-sjekk bli avskrudd. Du kan manuellt sjekke e-post når du har bekreftet din identitet ved å hente ned innboksen.</string>
+  <string name="setup_set_password_3">Hvvis du ikke velger et passord nå, kan du gjøre det senere fra innstillings-menyen.</string>
+  <string name="create_identity">Opprett identitet</string>
+  <string name="setup_create_identity_1">For å motta e-poster, trenger du en identitet. Dette er et knippe kryptografiske nøkler som lar deg kryptere og dekryptere e-poster.</string>
+  <string name="setup_create_identity_2">Èn destinasjon er den offentlige delen av en Identitet. Dette er adressen som du skal gi til dine kontakter slik at dem kan sende deg e-post. Når du sender en e-post mens under en Identitet, dets Destinajon er inkludert i From feltet sånn at mottakeren kan svare.</string>
+  <string name="setup_finished">Oppsett ferdig</string>
+  <string name="setup_finished_1">Bote er satt opp og klart til bruk.</string>
+  <string name="go_to_inbox">Gå til innboks</string>
+  <string name="action_new_email">Ny e-post</string>
+  <string name="action_send_email">Send e-post</string>
+  <string name="action_start_bote">Koble til nettverk</string>
+  <string name="action_stop_bote">Koble fra nettverk</string>
+  <string name="action_settings">Innstillinger</string>
+  <string name="start_i2p_android">Det later til at I2P for Android ikke kjører. Vil du starte det?</string>
+  <!--Argument is a number-->
+  <string name="items_selected">%s valgt</string>
+  <string name="action_delete">Slett</string>
+  <string name="action_mark_read">Marker som lest</string>
+  <string name="action_mark_unread">Marker som ulest</string>
+  <string name="action_move_to">Flytt til</string>
+  <string name="enter_password">Skriv inn passord:</string>
+  <string name="checking_password">Sjekker passord...</string>
+  <string name="password_incorrect">Passordet var feil</string>
+  <string name="folder_inbox">Innboks</string>
+  <string name="folder_outbox">Utboks</string>
+  <string name="folder_sent">Sendt</string>
+  <string name="address_book">Adressebok</string>
+  <string name="network_status">Nettverksstatus</string>
+  <string name="not_started">Ikke startet</string>
+  <string name="connect_delay">Venter 3 minutter...</string>
+  <string name="connecting">Kobler til...</string>
+  <string name="connected">Tilkoblet</string>
+  <string name="error">Feil</string>
+  <string name="folder_empty">Mappen er top</string>
+  <string name="folder_does_not_exist">Mappen finnes ikke</string>
+  <string name="waiting_for_network">Venter på I2P</string>
+  <string name="connecting_to_network">Kobler til Bote nettverket. </string>
+  <string name="connected_to_network">Koblet til Bote nettverket. </string>
+  <string name="queued">Satt på kø</string>
+  <string name="sending">Sender</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
+  <string name="email_sent">E-post sendt</string>
+  <string name="email_not_found">E-posten ikke funnet</string>
+  <string name="email_from">Fra;</string>
+  <string name="email_to">Til:</string>
+  <string name="label_sent">Sendt:</string>
+  <string name="email_received">Mottatt:</string>
+  <string name="email_status">Status:</string>
+  <string name="reply">Svar</string>
+  <string name="compose">Lage</string>
+  <string name="subject">Emnetittel</string>
+  <string name="compose_email">Lage e-post</string>
+  <string name="add_one_recipient">Legg til minst én mottaker.</string>
+  <string name="email_queued_for_sending">E-posten satt i kø for å sendes</string>
+  <!--Used in email replies above quoted text, like "Bob wrote:"-->
+  <string name="response_quote_wrote">%s skrev:</string>
+  <string name="address_book_empty">Addresseboka er tom</string>
+  <string name="share">Del</string>
+  <string name="action_new_contact">Ny kontakt</string>
+  <string name="select_a_picture">Velg ett bilde</string>
+  <string name="contact_name">Kontaktnavn</string>
+  <string name="email_destination">E-post-forsendelsesmål</string>
+  <string name="save_contact">Lagre kontakt</string>
+  <string name="delete_contact">Slett kontakt?</string>
+  <string name="pref_title_change_password">Bytt passord</string>
+  <string name="old_password">Gammelt passord</string>
+  <string name="new_password">Nytt passord</string>
+  <string name="confirm_new_password">Bekreft nytt passord</string>
+  <string name="password_changed">Passord endret</string>
+</resources>

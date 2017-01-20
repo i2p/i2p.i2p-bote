@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/listitem_background">
+
+    <TextView
+        android:id="@+id/folder_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/nav_entry_height"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/nav_horizontal_margin"
+        android:paddingLeft="@dimen/nav_horizontal_margin"
+        android:paddingRight="@dimen/nav_horizontal_margin"
+        android:paddingStart="@dimen/nav_horizontal_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Primary"
+        tools:text="Folder Name"/>
+
+</RelativeLayout>

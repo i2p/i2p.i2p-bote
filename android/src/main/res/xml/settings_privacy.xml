@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="hideLocale"
+        android:summaryOff="@string/pref_summ_hideLocale_off"
+        android:summaryOn="@string/pref_summ_hideLocale"
+        android:title="@string/pref_title_hideLocale"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="includeSentTime"
+        android:summary="@string/pref_summ_sentTime"
+        android:title="@string/pref_title_sentTime"/>
+
+    <PreferenceCategory android:title="@string/pref_title_routing">
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/setting0to3"
+            android:entryValues="@array/setting0to3"
+            android:key="numSendHops"
+            android:title="@string/pref_title_numSendHops"/>
+
+        <i2p.bote.android.widget.IntEditTextPreference
+            android:defaultValue="5"
+            android:dependency="numSendHops"
+            android:key="relayMinDelay"
+            android:summary="@string/pref_summ_minDelay"
+            android:title="@string/pref_title_minDelay"/>
+        <i2p.bote.android.widget.IntEditTextPreference
+            android:defaultValue="40"
+            android:dependency="numSendHops"
+            android:key="relayMaxDelay"
+            android:summary="@string/pref_summ_maxDelay"
+            android:title="@string/pref_title_maxDelay"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

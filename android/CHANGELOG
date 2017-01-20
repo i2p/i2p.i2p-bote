@@ -1,0 +1,53 @@
+0.6 / 2015-06-21 / 77d67b4f2d465a5c528fb31af5785d176276b94b
+ * Identity switcher
+ * Language can be configured
+ * Block screenshots by default
+ * Fixed internal router
+ * Reorganized settings
+ * UI improvements, bug fixes, translation updates
+
+0.5 / 2015-01-13 / f5eaab42b6faa25450b2772315c7849f1eb4a03a
+ * Attachments!
+ * Email content can be selected/copied (API 11+)
+ * Cc: and Bcc: fields
+ * Improved performance of email and contact lists
+ * Use ripple effect on API 21+
+ * Much better support for legacy devices
+ * Help and About screens
+ * UI improvements, bug fixes, translation updates
+
+0.4 / 2014-12-19 / fdc9c619eff53745d49c987b353ce5b04278dfd6
+ * New email notifications!
+ * Fixed crash when clicking "Create new contact" button
+ * Fixed crash when sending email
+ * Fixed occasional crashes when Bote connects to / disconnects from the network
+ * Added "Copy to clipboard" button to identities and contacts
+ * Added labels to the address book actions menu
+ * UI improvements, bug fixes, translation updates
+
+0.3 / 2014-12-01 / ebba8aac78d50eda9d25f936e8bd348553966649
+ * Migrated to new Material design from Android Lollipop
+ * Overhauled password usability
+ * Identicons for contacts without pictures
+ * Use new-style swipe for checking emails
+ * Users can now check emails from menu, or swipe on empty inbox
+ * "Forward" and "Reply all" actions for emails
+ * QR codes for sharing identities
+ * Separated viewing and editing contacts
+ * Improved network information page
+ * Bug fixes, translation updates
+
+0.3-rc3 / 2014-08-23 / 6e7655836552d13d6fa6b7512e7dcf77cb3d413b
+ * Test release to Norway on Google Play
+
+0.2 / 2014-07-10 / 6c9c580bf6272db575091a1b48f66315535380e0
+ * Fixed locale hiding in replies
+ * New notification icons
+ * New translation
+ * UI improvements and bug fixes
+
+0.1.1 / 2014-06-20 / a9c83d573dc3c5fbeeb288b347f996f440b33621
+ * Fixed bugs in identity creation and password setting
+
+0.1 / 2014-06-19 / 8457f58f367a2f362bdacd470c792b4bcd6d42f6
+ * Initial release

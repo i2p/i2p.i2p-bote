@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="intro_private">Privat</string>
+  <string name="intro_distributed">Distribuit</string>
+  <string name="intro_secure">Securizat.</string>
+  <string name="i_know_what_to_do">Stiu ce sa fac</string>
+  <string name="title_activity_setup">Configurare</string>
+  <string name="please_finish_setup">Finalizați configurarea Bote.</string>
+  <string name="skip">Omite</string>
+  <string name="set_password">Seteaza parola</string>
+  <string name="create_identity">Creaza identitate</string>
+  <string name="setup_finished">Configurare terminată</string>
+  <string name="setup_finished_1">Bote este configurat si gata de folosire.</string>
+  <string name="go_to_inbox">Mergi la inbox</string>
+  <string name="log_in">Autentificare</string>
+  <string name="log_out">Deautentificare</string>
+  <string name="action_new_email">Email nou</string>
+  <string name="action_send_email">Trimite email</string>
+  <string name="action_start_bote">Conecare la retea</string>
+  <string name="action_stop_bote">Deconectat de la retea</string>
+  <string name="action_settings">Setari</string>
+  <string name="check_email">Verifică email</string>
+  <!--Argument is a number-->
+  <!--Argument is a number-->
+  <string name="items_selected">%s selectat</string>
+  <string name="action_delete">Sterge</string>
+  <string name="action_mark_read">Marcheaza ca citit</string>
+  <string name="action_mark_unread">Marcheaza ca necitit</string>
+  <string name="action_move_to">Multa la</string>
+  <string name="drawer_open">Deschide nav</string>
+  <string name="drawer_close">Inchide nav</string>
+  <string name="enter_password">Introdu parola:</string>
+  <string name="checking_password">Se verifica parola...</string>
+  <string name="password_incorrect">Parola nu a fost corecta</string>
+  <string name="password_file_error">Nu s-a putut citi fisierul de verificare al parolei</string>
+  <string name="folder_inbox">Primite</string>
+  <string name="folder_sent">Trimite</string>
+  <string name="folder_trash">Gunoi</string>
+  <string name="address_book">Agendă</string>
+  <string name="network_status">Stare retea</string>
+  <string name="not_started">Nu este pornit</string>
+  <string name="connect_delay">Așteptați 3 minute...</string>
+  <string name="connecting">Conectare...</string>
+  <string name="connected">Conectat</string>
+  <string name="error">Eroare</string>
+  <string name="folder_empty">Dosarul este gol</string>
+  <string name="folder_does_not_exist">Dosarul nu există</string>
+  <string name="waiting_for_network">Se așteaptă I2P</string>
+  <string name="connecting_to_network">Se conectează la rețeaua Bote</string>
+  <string name="connected_to_network">Conectat la rețeaua Bote</string>
+  <plurals name="n_new_emails">
+    <item quantity="one">Un email nou</item>
+    <item quantity="few">%d email-uri noi</item>
+    <item quantity="other">%d de email-uri noi</item>
+  </plurals>
+  <string name="sending">Se trimite</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
+  <string name="sent_to_short">Trimis %1$d din %2$d</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
+  <string name="sent_to">Trimis la %1$d din %2$d destinatari</string>
+  <string name="email_sent">Email trimis</string>
+  <string name="email_not_found">Email-ul nu a fost găsit</string>
+  <string name="email_from">De la:</string>
+  <string name="email_to">Pentru:</string>
+  <string name="label_sent">Trimis:</string>
+  <string name="email_received">Primit:</string>
+  <string name="email_status">Stare:</string>
+  <string name="reply">Raspunde</string>
+  <string name="reply_all">Raspunde la toate</string>
+  <string name="forward">Inaintare</string>
+  <string name="compose">Compune</string>
+  <string name="subject">Subiect</string>
+  <string name="compose_email">Compune email</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
+  <string name="add_one_recipient">Adăugați cel puțin un destinatar.</string>
+  <string name="all_changes_will_be_discarded">Toate modificările vor fi eliminate.</string>
+  <!--Used in email replies above quoted text, like "Bob wrote:"-->
+  <string name="response_quote_wrote">%s a scris:</string>
+  <string name="address_book_empty">Agenda este goală</string>
+  <string name="share">Partajare</string>
+  <string name="action_new_contact">Contact nou</string>
+  <string name="edit_contact">Editare contact</string>
+  <string name="select_a_picture">Selectați o imagine</string>
+  <string name="no_image_cropping_app_found">Nu s-a găsit nici o aplicație de decupat imagini</string>
+  <string name="select_a_cropping_app">Selectați o aplicație de decupat imagini</string>
+  <string name="contact_name">Nume contact</string>
+  <string name="label_browse">Navighează</string>
+  <string name="please_install_a_file_manager">Instalați un administrator de fișiere.</string>
+  <string name="save_contact">Salvează contactul</string>
+  <string name="not_a_valid_bote_address">Aceasta nu este o adresă Bote validă</string>
+  <string name="delete_contact">Ștergeți contactul?</string>
+  <string name="not_set">Ne configurat</string>
+  <string name="relay_peers">Parteneri releu:</string>
+  <string name="banned_peers">Parteneri interziși:</string>
+  <string name="pref_summ_checkInterval">%s minute</string>
+  <string name="pref_summ_minDelay">%s minute</string>
+  <string name="pref_summ_maxDelay">%s minute</string>
+  <string name="router_settings">Configurări ruter</string>
+  <string name="auto">Automat</string>
+  <string name="manual">Manual</string>
+  <string name="pref_title_router">Ruter</string>
+  <string name="internal">Intern</string>
+  <string name="remote_i2p_router">Ruter I2P distant</string>
+  <string name="pref_dialog_title_router">Ruter de utilizat</string>
+  <string name="pref_title_i2cp_host">Gazdă I2CP</string>
+  <string name="pref_title_i2cp_port">Port I2CP</string>
+  <string name="pref_title_change_password">Schimbă parola</string>
+  <string name="old_password">Parola veche</string>
+  <string name="new_password">Parola nouă</string>
+  <string name="confirm_new_password">Confirmați parola nouă</string>
+  <string name="password_changed">Parola s-a schimbat cu succes</string>
+  <string name="pref_title_identities">Identități</string>
+  <string name="new_identity">Identitate nouă...</string>
+  <string name="edit_identity">Editare identitate</string>
+  <string name="public_name">Nume public</string>
+  <string name="description">Descriere</string>
+  <string name="default_identity">Identitate implicită</string>
+  <string name="save_identity">Salvare identitate</string>
+  <string name="delete_identity">Ștergeți identitatea?</string>
+  <string name="identity_saved">Identitatea s-a salvat</string>
+  <string name="export_identities">Exportare identități</string>
+  <string name="passwords_do_not_match">Parolele nu se potrivesc</string>
+  <string name="file_exists">Fișierul există</string>
+  <string name="exporting_identities">Se exportă identități</string>
+  <string name="import_identities">Importare identități</string>
+  <string name="importing_identities">Se importă identități</string>
+  <string name="no_identities_found">Nu au fost găsite identități.</string>
+  <string name="no_identities_found_maybe_encrypted">Nu s-au găsit identități. Fișierul este criptat?</string>
+  <string name="identities_imported">Identități importate</string>
+  <string name="this_field_is_required">Acest câmp este necesar</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <!--Software libraries-->
+</resources>

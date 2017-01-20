@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:i2pandroid="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/action_attach_file"
+        android:title="@string/action_attach_file"
+        i2pandroid:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_send_email"
+        android:title="@string/action_send_email"
+        i2pandroid:showAsAction="ifRoom"/>
+
+</menu>

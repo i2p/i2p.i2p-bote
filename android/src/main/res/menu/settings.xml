@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:i2pandroid="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/export_identities"
+        android:title="@string/export_identities"
+        i2pandroid:showAsAction="never" />
+
+    <item
+        android:id="@+id/import_identities"
+        android:title="@string/import_identities"
+        i2pandroid:showAsAction="never" />
+</menu>

@@ -1,3 +1,24 @@
+# General ignores
+^.settings
+
+# Android-specific ignores
+lint.xml
+local.properties
+signing.properties
+
+#IntelliJ IDEA
+^.idea
+.*.iml
+.*.ipr
+.*.iws
+
+#Gradle
+^.gradle
+build
+
+# I2P-specific ignores
+^android/src/main/res/raw/certificates_zip
+
 # Just to try and prevent some noob disasters.
 # Use mtn add --no-respect-ignore foo.jar to ignore this ignore list
 
@@ -10,6 +31,8 @@ i2pbote-update.xpi2p
 # Temporary/build dirs
 ^ant_build
 ^plugin/plugin.tmp
+^core/build/
+^webapp/build/
 
 # Build property overrides
 override.properties

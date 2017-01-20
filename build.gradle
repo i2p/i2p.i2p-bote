@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath files('gradle/libs/gradle-witness.jar')
+        classpath 'com.android.tools.build:gradle:2.2.2'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://raw.github.com/whispersystems/maven/master/preferencefragment/releases/"
+        }
+        jcenter()
+    }
+}
+
+configure([project(':core'), project(':webapp')]) { project.afterEvaluate {
+    version = '0.4.3'
+    jar {
+        manifest {
+            attributes 'Implementation-Version': version
+        }
+    }
+
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
+    // Set bootClasspath=/path/to/rt.jar:/path/to/jce.jar in gradle.properties if needed
+    if (bootClasspath) {
+        project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
+            ac.options.bootClasspath = bootClasspath
+        })
+    }
+}}

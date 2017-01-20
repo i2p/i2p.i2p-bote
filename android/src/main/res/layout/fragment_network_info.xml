@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kademlia_peers"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subject"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.androidplot.pie.PieChart
+                android:id="@+id/kademlia_peers_pie"
+                android:layout_width="@dimen/pie_size"
+                android:layout_height="@dimen/pie_size"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:id="@+id/kademlia_peers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="0"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/relay_peers"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subject"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.androidplot.pie.PieChart
+                android:id="@+id/relay_peers_pie"
+                android:layout_width="@dimen/pie_size"
+                android:layout_height="@dimen/pie_size"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:id="@+id/relay_peers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="0"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/banned_peers"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subject"/>
+
+        <TextView
+            android:id="@+id/banned_peers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
+
+    </LinearLayout>
+</ScrollView>

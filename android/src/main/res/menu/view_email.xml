@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:i2pandroid="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/action_reply"
+        android:title="@string/reply"
+        i2pandroid:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_reply_all"
+        android:title="@string/reply_all"
+        i2pandroid:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_forward"
+        android:title="@string/forward"
+        i2pandroid:showAsAction="ifRoom"/>
+
+</menu>

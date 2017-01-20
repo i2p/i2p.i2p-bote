@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" >
+
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_contact_picture" />
+
+    <EditText
+        android:id="@+id/public_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/picture"
+        android:layout_toRightOf="@+id/picture"
+        android:ems="10"
+        android:hint="@string/public_name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/picture"
+        android:ems="10"
+        android:hint="@string/description"
+        android:inputType="text" />
+
+    <Spinner
+        android:id="@+id/crypto_impl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/description"
+        android:layout_below="@+id/description"
+        android:visibility="gone" />
+
+    <CheckBox
+        android:id="@+id/default_identity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/crypto_impl"
+        android:layout_below="@+id/crypto_impl"
+        android:text="@string/default_identity" />
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/default_identity"
+        android:textColor="@color/error_color" />
+
+</RelativeLayout>

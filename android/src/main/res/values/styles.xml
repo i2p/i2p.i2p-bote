@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base"/>
+
+    <style name="Theme.Bote" parent="MaterialDrawerTheme.Light.DarkToolbar">
+        <!-- Here we setting appcompat’s actionBarStyle -->
+        <!--<item name="actionBarStyle">@style/MyActionBarStyle</item>-->
+
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/primary</item>
+
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated
+         which is used to tint widgets -->
+        <item name="colorAccent">@color/accent</item>
+
+        <!-- You can also set colorControlNormal, colorControlActivated
+             colorControlHighlight & colorSwitchThumbNormal. -->
+
+        <!--
+        This causes the CAB to overlay the nav drawer too. Waiting on a fix:
+        https://stackoverflow.com/q/27663853/3317191
+        -->
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Headline.Inverse" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/primary_text_default_material_dark</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Primary" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/primary_text_default_material_light</item>
+        <item name="android:textSize">@dimen/text_size_primary</item>
+    </style>
+
+    <style name="Base.TextAppearance.AppCompat.NavDrawer">
+        <item name="android:textColor">@color/primary_text_default_material_light</item>
+        <item name="android:textSize">@dimen/text_size_secondary</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.NavDrawer" parent="Base.TextAppearance.AppCompat.NavDrawer"/>
+
+    <style name="TextAppearance.AppCompat.NavDrawer.Selected" parent="TextAppearance.AppCompat.NavDrawer">
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Subject" parent="TextAppearance.AppCompat.Primary">
+        <item name="android:textSize">@dimen/text_size_subject</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Secondary" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/secondary_text_default_material_light</item>
+        <item name="android:textSize">@dimen/text_size_secondary</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Secondary.Inverse" parent="TextAppearance.AppCompat.Secondary">
+        <item name="android:textColor">@color/secondary_text_default_material_dark</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="Divider.Horizontal" parent="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dip</item>
+    </style>
+
+    <style name="Divider.Vertical" parent="Divider">
+        <item name="android:layout_width">1dip</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Help.About.Text" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+</resources>

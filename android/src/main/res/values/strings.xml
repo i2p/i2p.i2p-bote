@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">Bote</string>
+    <string name="intro_private">Private.</string>
+    <string name="intro_distributed">Distributed.</string>
+    <string name="intro_secure">Secure.</string>
+    <string name="swipe_to_start">Swipe to start</string>
+    <string name="i_know_what_to_do">I know what to do</string>
+    <string name="intro_1_1">Traditional email is insecure. It was not designed to protect people from dragnet surveillance.</string>
+    <string name="intro_1_2">Even if you encrypt your email contents, the email metadata can be monitored to reveal large amounts of information about you and the people you talk to.</string>
+    <string name="intro_2_1">Bote is a new kind of email that provides complete end-to-end privacy and security. It runs on the I2P anonymity network, which hides your activity.</string>
+    <string name="intro_2_2">When you send an email in Bote, everything is encrypted - including the email metadata. Only the recipient can download and read the email.</string>
+    <string name="intro_3_1">With traditional email, you need to trust a central server. And if it is blocked, you can\'t send or receive emails.</string>
+    <string name="intro_3_2">Bote uses a distributed peer-to-peer network, similar to BitTorrent. Encrypted emails are split up and stored with many other Bote users.</string>
+    <string name="intro_4_1">Adversaries can only see that an email has been sent. They can\'t see the real identity of the sender or recipient.</string>
+    <string name="intro_4_2">And Bote emails can be sent with a delay; the sender could be long gone before the encrypted email is stored in the network, preventing timing attacks.</string>
+    <string name="intro_5_1">Because Bote is a little different to traditional email, there are a few things to set up before you can start using it.</string>
+    <string name="intro_5_2">The setup wizard will take a couple of minutes, and then everything will be ready.</string>
+    <string name="lets_get_started">Let\'s get started</string>
+    <string name="title_activity_setup">Setup</string>
+    <string name="please_finish_setup">Please finish setting up Bote.</string>
+    <string name="skip">Skip</string>
+    <string name="set_password">Set password</string>
+    <string name="setup_set_password_1">You can set a password for Bote. This will prevent other users from reading your emails, and will encrypt all Bote files on your device.</string>
+    <string name="setup_set_password_2">If you set a password, automatic email checking will be disabled. You can manually check for emails once you have authenticated by pulling down on the Inbox.</string>
+    <string name="setup_set_password_3">If you do not set a password now, you can do so later from the Settings menu.</string>
+    <string name="create_identity">Create identity</string>
+    <string name="setup_create_identity_1">To receive emails, you need an Identity. This is a set of cryptographic keys that enables you to encrypt and decrypt emails.</string>
+    <string name="setup_create_identity_2">A Destination is the public part of an Identity. This is the address that you will give to your contacts so they can send emails to you. When you send emails using an Identity, its Destination is included in the From field so the recipient can reply.</string>
+    <string name="setup_create_identity_3">If you do not create an Identity now, you can do so later from the Settings menu. If you only want to send emails, you do not need an Identity, because Bote emails can be sent anonymously. However the recipient will be unable to reply to you.</string>
+    <string name="setup_finished">Setup finished</string>
+    <string name="setup_finished_1">Bote is configured and ready to use.</string>
+    <string name="setup_finished_2">To send and receive emails, Bote needs to connect to the distributed network. You can do this from the menu.</string>
+    <string name="setup_finished_3">While Bote is offline, you can read emails that have already been downloaded. You can also write emails and put them in the Outbox; they will be sent the next time Bote is online.</string>
+    <string name="go_to_inbox">Go to inbox</string>
+    <string name="log_in">Log in</string>
+    <string name="log_out">Log out</string>
+    <string name="touch_lock_to_log_in">Touch the lock icon to log in.</string>
+    <string name="action_new_email">New email</string>
+    <string name="action_attach_file">Attach file</string>
+    <string name="select_attachment">Select a file to attach</string>
+    <string name="n_bytes" translatable="false">%s B</string>
+    <string name="n_kilobytes" translatable="false">%s KB</string>
+    <string name="n_megabytes" translatable="false">%s MB</string>
+    <string name="action_send_email">Send email</string>
+    <string name="action_start_bote">Connect to network</string>
+    <string name="action_stop_bote">Disconnect from network</string>
+    <string name="action_settings">Settings</string>
+    <string name="check_email">Check email</string>
+    <string name="checking_email">Checking email…</string>
+    <string name="bote_needs_to_be_connected">Bote needs to be connected to the network</string>
+    <!-- Argument is a number -->
+    <plurals name="incomplete_emails">
+        <item quantity="one">One incomplete email</item>
+        <item quantity="other">%d incomplete emails</item>
+    </plurals>
+    <!-- Argument is a number -->
+    <string name="items_selected">%s selected</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_mark_read">Mark read</string>
+    <string name="action_mark_unread">Mark unread</string>
+    <string name="action_move_to">Move to</string>
+    <string name="drawer_open">Open nav</string>
+    <string name="drawer_close">Close nav</string>
+    <string name="enter_password">Enter password:</string>
+    <string name="checking_password">Checking password…</string>
+    <string name="password_incorrect">Password was incorrect</string>
+    <string name="password_file_error">Could not read password verification file</string>
+    <string name="all_mail">All mail</string>
+    <string name="folder_inbox">Inbox</string>
+    <string name="folder_outbox">Outbox</string>
+    <string name="folder_sent">Sent</string>
+    <string name="folder_trash">Trash</string>
+    <string name="address_book">Address book</string>
+    <string name="network_status">Network status</string>
+    <string name="not_started">Not started</string>
+    <string name="connect_delay">Waiting 3 minutes…</string>
+    <string name="connecting">Connecting…</string>
+    <string name="connected">Connected</string>
+    <string name="error">Error</string>
+    <string name="folder_empty">Folder is empty</string>
+    <string name="folder_does_not_exist">Folder does not exist</string>
+    <string name="waiting_for_network">Waiting on I2P</string>
+    <string name="connecting_to_network">Connecting to the Bote network</string>
+    <string name="connected_to_network">Connected to the Bote network</string>
+
+    <plurals name="n_new_emails">
+        <item quantity="one">One new email</item>
+        <item quantity="other">%d new emails</item>
+    </plurals>
+
+    <string name="queued">Queued</string>
+    <string name="sending">Sending</string>
+    <!--
+     Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.
+    -->
+    <string name="sent_to_short">Sent %1$d of %2$d</string>
+    <!--
+     Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.
+    -->
+    <string name="sent_to">Sent to %1$d out of %2$d recipients</string>
+    <string name="email_sent">Email sent</string>
+    <string name="gateway_disabled">Gateway disabled</string>
+    <string name="no_identity_matches">No identity matches the sender/from field: %s</string>
+    <string name="invalid_recipient">Invalid recipient address: %s</string>
+    <string name="error_creating_packets">Error creating email packets: %s</string>
+    <string name="error_sending">Error while sending email: %s</string>
+    <string name="error_saving_metadata">Error saving email metadata: %s</string>
+    <string name="email_not_found">Email not found</string>
+    <string name="signature_invalid">This email does not have a valid signature. It was probably not sent by %s.</string>
+    <string name="email_from">From:</string>
+    <string name="email_to">To:</string>
+    <string name="email_cc">Cc:</string>
+    <string name="email_bcc">Bcc:</string>
+    <string name="label_sent">Sent:</string>
+    <string name="email_received">Received:</string>
+    <string name="email_status">Status:</string>
+    <string name="reply">Reply</string>
+    <string name="reply_all">Reply all</string>
+    <string name="forward">Forward</string>
+    <string name="save">Save</string>
+    <string name="file_exists_in_downloads">File already exists in Downloads folder</string>
+    <string name="saved_to_downloads">%s saved to Downloads folder</string>
+    <string name="could_not_save_to_downloads">Could not save file to Downloads folder</string>
+    <string name="compose">Compose</string>
+    <string name="subject">Subject</string>
+    <string name="compose_email">Compose email</string>
+    <!-- Argument is a file size, e.g. "500 KB" -->
+    <string name="attachment_size_warning">You have more than %s of attachments. Email sending may be slow.</string>
+    <string name="add_one_recipient">Add at least one recipient.</string>
+    <string name="stop_composing_email">Stop composing email?</string>
+    <string name="all_changes_will_be_discarded">All changes will be discarded.</string>
+    <string name="email_queued_for_sending">Email queued for sending</string>
+    <string name="subject_prefix_fwd">Fwd:</string>
+    <string name="subject_prefix_fwd_hide" translatable="false">Fwd:</string>
+    <string name="response_prefix_re">Re:</string>
+    <string name="response_prefix_re_hide" translatable="false">Re:</string>
+    <!-- Used in email replies above quoted text, like "Bob wrote:" -->
+    <string name="response_quote_wrote">%s wrote:</string>
+    <string name="response_quote_wrote_hide" translatable="false">%s wrote:</string>
+    <string name="address_book_empty">Address book is empty</string>
+    <string name="share">Share</string>
+    <string name="address_info">Address information</string>
+    <string name="copy">Copy</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="action_new_contact">New contact</string>
+    <string name="action_scan_qr_code">Scan QR code</string>
+    <string name="edit_contact">Edit contact</string>
+    <string name="select_a_picture">Select a picture</string>
+    <string name="no_image_cropping_app_found">No image cropping app found</string>
+    <string name="select_a_cropping_app">Select a cropping app</string>
+    <string name="contact_name">Contact name</string>
+    <string name="email_destination">Email destination</string>
+    <string name="label_browse">Browse</string>
+    <string name="select_email_destination_file">Select file containing Email Destination</string>
+    <string name="please_install_a_file_manager">Please install a File Manager.</string>
+    <string name="failed_to_read_email_destination_file">Failed to read Email Destination file.</string>
+    <string name="could_not_find_email_destination_file">Could not find Email Destination file.</string>
+    <string name="save_contact">Save contact</string>
+    <string name="not_a_valid_bote_address">This is not a valid Bote address</string>
+    <string name="delete_contact">Delete contact?</string>
+    <string name="network_info_unavailable">Network information is not available because Bote hasn\'t started connecting to the network yet.</string>
+    <string name="network_info_unavailable_delay">Bote is waiting for the I2P router to start up and be ready.</string>
+    <string name="local_destination">Local Destination:</string>
+    <string name="not_set">Not set</string>
+    <string name="kademlia_peers">Network Peers:</string>
+    <string name="reachable">Reachable</string>
+    <string name="unreachable">Unreachable</string>
+    <string name="relay_peers">Relay Peers:</string>
+    <string name="good">Good</string>
+    <string name="unreliable">Unreliable</string>
+    <string name="untested">Untested</string>
+    <string name="banned_peers">Banned Peers:</string>
+    <string name="connect_error_occurred">Oh dear! Bote couldn\'t connect to the network.</string>
+    <string name="this_is_the_error">This is the error that happened:</string>
+    <string name="most_errors_fixed_on_restart">You can fix most problems by restarting Bote. To do this, go back to the main Bote page, then click "Disconnect from network" in the menu, and then click "Connect to network" in the menu again.</string>
+    <string name="also_check_i2p_android">If that doesn\'t help, check that I2P is running. You can see I2P\'s current status in the notification drawer, or by opening the I2P app. If it isn\'t running properly, restart I2P (in the app, click "Stop", and then click "Start" when it appears). Wait for I2P to be fully running, and then start Bote.</string>
+    <string name="bote_connection_error">Bote connection error</string>
+    <string name="full_error_copied_to_clipboard">Full error copied to clipboard</string>
+    <string name="settings_label_network">Network</string>
+    <string name="pref_title_autoMail">Auto-check mail</string>
+    <string name="pref_title_checkInterval">Check interval</string>
+    <string name="pref_summ_checkInterval">%s minutes</string>
+    <string name="pref_title_delivery">Delivery status</string>
+    <string name="pref_summ_delivery">Check delivery status of sent emails</string>
+    <string name="pref_title_privacy">Privacy</string>
+    <string name="pref_title_hideLocale">Hide locale</string>
+    <string name="pref_summ_hideLocale">Use English for text added to outgoing emails (\'Re:\', \'wrote:\', etc.)</string>
+    <string name="pref_summ_hideLocale_off">Use system language for text added to outgoing emails (\'Re:\', \'wrote:\', etc.)</string>
+    <string name="pref_title_sentTime">Sent time</string>
+    <string name="pref_summ_sentTime">Include sent time in outgoing emails</string>
+    <string name="pref_title_routing">Routing</string>
+    <string name="pref_title_numSendHops">Sending hops</string>
+
+    <plurals name="pref_summ_numHops">
+        <item quantity="one">%s relay</item>
+        <item quantity="other">%s relays</item>
+    </plurals>
+
+    <string name="pref_title_minDelay">Minimum delay per hop</string>
+    <string name="pref_summ_minDelay">%s minutes</string>
+    <string name="pref_title_maxDelay">Maximum delay per hop</string>
+    <string name="pref_summ_maxDelay">%s minutes</string>
+    <string name="settings_label_app_protection">App protection</string>
+    <string name="screen_security">Screen security</string>
+    <string name="screen_security_summ">Block screenshots in the recents list and inside the app</string>
+    <string name="settings_label_appearance">Appearance</string>
+    <string name="settings_label_language">Language</string>
+    <string name="settings_default">Default</string>
+    <string name="settings_label_advanced">Advanced</string>
+    <string name="router_settings">Router settings</string>
+    <string name="auto">Auto</string>
+    <string name="manual">Manual</string>
+    <string name="pref_title_router">Router</string>
+    <string name="internal">Internal</string>
+    <string name="remote_i2p_router">Remote I2P router</string>
+    <string name="pref_dialog_title_router">Router to use</string>
+    <string name="pref_title_i2cp_host">I2CP host</string>
+    <string name="pref_title_i2cp_port">I2CP port</string>
+    <string name="pref_title_change_password">Change password</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="remove_password_info">To remove the password, leave the \'New password\' fields blank.</string>
+    <string name="password_changed">Password changed successfully</string>
+    <string name="pref_title_identities">Identities</string>
+    <string name="no_identities">No identities</string>
+    <string name="new_identity">New identity…</string>
+    <string name="edit_identity">Edit identity</string>
+    <string name="title_new_identity">New identity</string>
+    <string name="public_name">Public name</string>
+    <string name="description">Description</string>
+    <string name="default_identity">Default identity</string>
+    <string name="save_identity">Save identity</string>
+    <string name="delete_identity">Delete identity?</string>
+    <string name="identity_saved">Identity saved</string>
+    <string name="export_identities">Export identities</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="file_exists">File exists</string>
+    <string name="exporting_identities">Exporting identities</string>
+    <string name="identities_exported">Identities exported to Downloads folder</string>
+    <string name="import_identities">Import identities</string>
+    <string name="importing_identities">Importing identities</string>
+    <string name="no_identities_found">No identities were found.</string>
+    <string name="no_identities_found_maybe_encrypted">No identities were found. Is the file encrypted?</string>
+    <string name="identities_imported">Identities imported</string>
+    <string name="this_field_is_required">This field is required</string>
+    <string name="bote_dest_for">Bote address for %s</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="help">Help</string>
+    <string name="start">Start</string>
+    <string name="changelog">Changelog</string>
+    <string name="about">About</string>
+    <string name="version">Version</string>
+    <string name="help_about_url" translatable="false">https://github.com/i2p/i2p.i2p-bote.android</string>
+    <!-- As in software license, e.g. Apache License v2 -->
+    <string name="license">License: %s</string>
+    <!-- Software libraries -->
+    <string name="libraries">Libraries</string>
+
+</resources>

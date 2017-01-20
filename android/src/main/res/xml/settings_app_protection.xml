@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="pref_change_password"
+        android:title="@string/pref_title_change_password"/>
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_screen_security"
+        android:summary="@string/screen_security_summ"
+        android:title="@string/screen_security"/>
+
+</PreferenceScreen>
