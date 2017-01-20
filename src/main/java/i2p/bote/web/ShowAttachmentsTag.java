@@ -34,6 +34,8 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
+import org.apache.taglibs.standard.functions.Functions;
+
 /** See <code>i2pbote.tld</code> for a description */
 public class ShowAttachmentsTag extends SimpleTagSupport {
     private Email email;
@@ -50,7 +52,7 @@ public class ShowAttachmentsTag extends SimpleTagSupport {
             for (int partIndex=0; partIndex<parts.size(); partIndex++) {
                 Part part = parts.get(partIndex);
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-                    String filename = part.getFileName();
+                    String filename = Functions.escapeXml(part.getFileName());
                     out.println("<a href=\"showAttachment?messageID=" + email.getMessageID() + "&folder=" + folder + "&part=" + partIndex + "\">" +
                             filename + "</a> (" + Util.getHumanReadableSize(part) + ") <br/>");
                 }
