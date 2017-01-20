@@ -60,7 +60,7 @@
     <link rel="stylesheet" href="themes/${jspHelperBean.configuration.theme}/i2pbote.css?v=${jspHelperBean.appVersion}" />
     <link rel="icon" type="image/png" href="${themeDir}/images/favicon.png" />
     <c:if test="${!empty title}">
-        <title>${title} <ib:message key="- I2P-Bote"/></title>
+        <title>${fn:escapeXml(title)} <ib:message key="- I2P-Bote"/></title>
     </c:if>
 </head>
 
@@ -75,7 +75,7 @@
     </c:if>
     <div class="title"><ib:message key="I2P-Bote"/></div>
     <div class="subtitle"><ib:message key="Secure Distributed Email"/></div>
-    <c:if test="${!empty pagetitle}"><div class="pagetitle">${pagetitle}</div></c:if>
+    <c:if test="${!empty pagetitle}"><div class="pagetitle">${fn:escapeXml(pagetitle)}</div></c:if>
 </header>
 
 <aside>
