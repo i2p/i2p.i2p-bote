@@ -20,6 +20,10 @@
     </listener>
 
     <filter>
+        <filter-name>CSPApplier</filter-name>
+        <filter-class>i2p.bote.web.CSPApplier</filter-class>
+    </filter>
+    <filter>
         <filter-name>SameOriginFilter</filter-name>
         <filter-class>i2p.bote.web.SameOriginFilter</filter-class>
     </filter>
@@ -58,6 +62,10 @@
         </init-param>
     </filter>
 
+    <filter-mapping>
+        <filter-name>CSPApplier</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>SameOriginFilter</filter-name>
         <url-pattern>/*</url-pattern>
