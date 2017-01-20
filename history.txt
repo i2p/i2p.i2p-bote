@@ -2,6 +2,11 @@ I2P-Bote Version History
 ------------------------
 
 0.4.5
+  * Security changes:
+    * Add a Content Security Policy to all pages
+    * Escape attachment filenames in emails (thanks Beardog!)
+    * Escape title on all pages
+  * Fix bugs caused by CSRF guards (ticket #1929)
   * Catch IAEs when sorting a Folder (ticket #1931)
 
 0.4.4 (Released on Nov 28, 2016)
