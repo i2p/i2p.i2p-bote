@@ -19,7 +19,7 @@ allprojects {
 }
 
 configure([project(':core'), project(':webapp')]) { project.afterEvaluate {
-    version = '0.4.3'
+    version = '0.4.5'
     jar {
         manifest {
             attributes 'Implementation-Version': version
