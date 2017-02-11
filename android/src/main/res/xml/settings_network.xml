@@ -6,7 +6,7 @@
         android:key="autoMailCheckEnabled"
         android:title="@string/pref_title_autoMail" />
 
-    <i2p.bote.android.widget.IntEditTextPreference
+    <i2p.bote.android.config.util.IntEditTextPreference
         android:defaultValue="30"
         android:dependency="autoMailCheckEnabled"
         android:key="mailCheckInterval"

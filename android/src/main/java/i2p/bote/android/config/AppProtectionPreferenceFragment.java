@@ -3,15 +3,14 @@ package i2p.bote.android.config;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.support.v4.preference.PreferenceFragment;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
 
 import i2p.bote.android.R;
 
-public class AppProtectionPreferenceFragment extends PreferenceFragment {
+public class AppProtectionPreferenceFragment extends PreferenceFragmentCompat {
     @Override
-    public void onCreate(Bundle paramBundle) {
-        super.onCreate(paramBundle);
+    public void onCreatePreferences(Bundle paramBundle, String s) {
         addPreferencesFromResource(R.xml.settings_app_protection);
         setupAppProtectionSettings();
     }

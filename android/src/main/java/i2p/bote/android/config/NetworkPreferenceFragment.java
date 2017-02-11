@@ -3,18 +3,17 @@ package i2p.bote.android.config;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.preference.PreferenceFragment;
 
 import java.util.Map;
 
 import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
 import i2p.bote.android.R;
+import i2p.bote.android.config.util.CustomPreferenceFragment;
 
-public class NetworkPreferenceFragment extends PreferenceFragment {
+public class NetworkPreferenceFragment extends CustomPreferenceFragment {
     @Override
-    public void onCreate(Bundle paramBundle) {
-        super.onCreate(paramBundle);
+    public void onCreatePreferences(Bundle paramBundle, String s) {
         addPreferencesFromResource(R.xml.settings_network);
     }
 

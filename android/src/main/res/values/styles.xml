@@ -3,7 +3,7 @@
 
     <style name="Base"/>
 
-    <style name="Theme.Bote" parent="MaterialDrawerTheme.Light.DarkToolbar">
+    <style name="Base.Theme.Bote" parent="MaterialDrawerTheme.Light.DarkToolbar">
         <!-- Here we setting appcompat’s actionBarStyle -->
         <!--<item name="actionBarStyle">@style/MyActionBarStyle</item>-->
 
@@ -25,6 +25,10 @@
         https://stackoverflow.com/q/27663853/3317191
         -->
         <item name="windowActionModeOverlay">true</item>
+    </style>
+    
+    <style name="Theme.Bote" parent="Base.Theme.Bote">
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
     <style name="TextAppearance.AppCompat.Headline.Inverse" parent="TextAppearance.AppCompat.Headline">

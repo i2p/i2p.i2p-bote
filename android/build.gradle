@@ -67,6 +67,8 @@ dependencies {
     compile "com.android.support:support-annotations:$supportVersion"
     compile "com.android.support:support-v4:$supportVersion"
     compile "com.android.support:appcompat-v7:$supportVersion"
+    compile "com.android.support:preference-v7:$supportVersion"
+    compile "com.android.support:preference-v14:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
 
     // Remote dependencies
@@ -87,9 +89,6 @@ dependencies {
     compile 'com.google.zxing:android-integration:3.2.0'
     compile 'com.androidplot:androidplot-core:0.6.1'
     compile 'com.pnikosis:materialish-progress:1.5'
-    compile('com.android.support:support-v4-preferencefragment:1.0.0@aar') {
-        exclude module: 'support-v4'
-    }
     compile 'com.mikepenz:iconics:1.0.2@aar'
     compile('com.mikepenz:materialdrawer:3.0.7@aar') {
         transitive = true
@@ -109,6 +108,8 @@ dependencyVerification {
             'com.android.support:support-annotations:e91a88dd0c5e99069b7f09d4a46b5e06f1e9c4c72fc0a8e987e25d86af480f01',
             'com.android.support:support-v4:a0d002465c0f611eedaaef2b2530707d2e9fb3a5c7ed66f53c556a12f714f43a',
             'com.android.support:appcompat-v7:d3d96637b0e8e61046567b8c87b667dcf3cd31c7447f651cb58d6e6e744adfba',
+            'com.android.support:preference-v7:b834787ee64db6c7c53ed7490537eeef52245b7862d4069c06e12b24b77ebbc4',
+            'com.android.support:preference-v14:21c55edf74928a96fa816e32c0c4d0c98e2280002e84d2b10b458b4a36be9615',
             'com.android.support:recyclerview-v7:24465b2ba90dc5ed7e2c05f1c87fe4256c27df6d3cd69b6177f3cb447b05c021',
             'com.sun.mail:android-activation:61c18cfff09374e90d5168daf40b3d50d77bed8bc0b071124c064ecc3b157506',
             'com.sun.mail:android-mail:ab177c3119400c661a026febe0ed84b8661ca61dbde8cbaad1a3ab507d4e5fb8',
@@ -123,7 +124,6 @@ dependencyVerification {
             'com.google.zxing:android-integration:0de037a73138033c4a03cdbca5d5728ef65a026ffb89afce071105f43a98ee0e',
             'com.androidplot:androidplot-core:777b54dd98b8dedc5f3fcc95018eece1188f6c692dcbd5b7744af175e15d70bd',
             'com.pnikosis:materialish-progress:d71d80e00717a096784482aee21001a9d299fec3833e4ebd87739ed36cf77c54',
-            'com.android.support:support-v4-preferencefragment:5470f5872514a6226fa1fc6f4e000991f38805691c534cf0bd2778911fc773ad',
             'com.mikepenz:iconics:c1a02203d8e0d638959463c00af3ab9096e0a7c1ad5928762eb10ef5ce8a63cd',
             'com.mikepenz:materialdrawer:3331ec671630fc1b1a54c4ff4da9d2a0cee45a2c129dd7f2adb337fa814b9497',
     ]

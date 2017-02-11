@@ -2,21 +2,20 @@ package i2p.bote.android.config;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.support.v4.preference.PreferenceFragment;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
 
 import java.util.Map;
 
 import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
 import i2p.bote.android.R;
+import i2p.bote.android.config.util.CustomPreferenceFragment;
 
-public class PrivacyPreferenceFragment extends PreferenceFragment {
+public class PrivacyPreferenceFragment extends CustomPreferenceFragment {
     @Override
-    public void onCreate(Bundle paramBundle) {
-        super.onCreate(paramBundle);
+    public void onCreatePreferences(Bundle paramBundle, String s) {
         addPreferencesFromResource(R.xml.settings_privacy);
         setupPrivacySettings();
     }

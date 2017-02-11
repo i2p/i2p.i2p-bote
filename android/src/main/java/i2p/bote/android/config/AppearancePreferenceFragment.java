@@ -1,14 +1,13 @@
 package i2p.bote.android.config;
 
 import android.os.Bundle;
-import android.support.v4.preference.PreferenceFragment;
+import android.support.v7.preference.PreferenceFragmentCompat;
 
 import i2p.bote.android.R;
 
-public class AppearancePreferenceFragment extends PreferenceFragment {
+public class AppearancePreferenceFragment extends PreferenceFragmentCompat {
     @Override
-    public void onCreate(Bundle paramBundle) {
-        super.onCreate(paramBundle);
+    public void onCreatePreferences(Bundle paramBundle, String s) {
         addPreferencesFromResource(R.xml.settings_appearance);
     }
 

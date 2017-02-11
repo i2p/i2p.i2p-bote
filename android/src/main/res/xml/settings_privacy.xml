@@ -21,13 +21,13 @@
             android:key="numSendHops"
             android:title="@string/pref_title_numSendHops"/>
 
-        <i2p.bote.android.widget.IntEditTextPreference
+        <i2p.bote.android.config.util.IntEditTextPreference
             android:defaultValue="5"
             android:dependency="numSendHops"
             android:key="relayMinDelay"
             android:summary="@string/pref_summ_minDelay"
             android:title="@string/pref_title_minDelay"/>
-        <i2p.bote.android.widget.IntEditTextPreference
+        <i2p.bote.android.config.util.IntEditTextPreference
             android:defaultValue="40"
             android:dependency="numSendHops"
             android:key="relayMaxDelay"

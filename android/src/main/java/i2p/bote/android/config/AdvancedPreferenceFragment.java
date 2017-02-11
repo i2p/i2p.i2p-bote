@@ -3,20 +3,19 @@ package i2p.bote.android.config;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.support.v4.preference.PreferenceFragment;
+import android.support.v7.preference.CheckBoxPreference;
+import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceCategory;
+import android.support.v7.preference.PreferenceFragmentCompat;
 
 import i2p.bote.android.R;
-import i2p.bote.android.widget.SummaryEditTextPreference;
+import i2p.bote.android.config.util.SummaryEditTextPreference;
 
-public class AdvancedPreferenceFragment extends PreferenceFragment {
+public class AdvancedPreferenceFragment extends PreferenceFragmentCompat {
     @Override
-    public void onCreate(Bundle paramBundle) {
-        super.onCreate(paramBundle);
+    public void onCreatePreferences(Bundle paramBundle, String s) {
         addPreferencesFromResource(R.xml.settings_advanced);
         setupAdvancedSettings();
     }
@@ -29,18 +28,19 @@ public class AdvancedPreferenceFragment extends PreferenceFragment {
     }
 
     private void setupAdvancedSettings() {
+        final Context ctx = getPreferenceManager().getContext();
         final PreferenceCategory i2pCat = (PreferenceCategory) findPreference("i2pCategory");
         CheckBoxPreference routerAuto = (CheckBoxPreference) findPreference("i2pbote.router.auto");
 
         if (!routerAuto.isChecked()) {
-            setupI2PCategory(getActivity(), i2pCat);
+            setupI2PCategory(ctx, i2pCat);
         }
 
         routerAuto.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 final Boolean checked = (Boolean) newValue;
                 if (!checked) {
-                    setupI2PCategory(getActivity(), i2pCat);
+                    setupI2PCategory(ctx, i2pCat);
                 } else {
                     Preference p1 = i2pCat.findPreference("i2pbote.router.use");
                     Preference p2 = i2pCat.findPreference("i2pbote.i2cp.tcp.host");

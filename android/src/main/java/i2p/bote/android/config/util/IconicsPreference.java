@@ -1,10 +1,10 @@
-package i2p.bote.android.util;
+package i2p.bote.android.config.util;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.preference.Preference;
+import android.support.v7.preference.Preference;
 import android.util.AttributeSet;
 
 import com.mikepenz.iconics.IconicsDrawable;

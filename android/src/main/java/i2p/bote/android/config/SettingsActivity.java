@@ -3,11 +3,11 @@ package i2p.bote.android.config;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.preference.PreferenceFragment;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
 
 import i2p.bote.I2PBote;
@@ -84,10 +84,9 @@ public class SettingsActivity extends BoteActivityBase implements
     // Settings pages
     //
 
-    public static class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onCreatePreferences(Bundle paramBundle, String s) {
             addPreferencesFromResource(R.xml.settings);
 
             findPreference(PREFERENCE_CATEGORY_NETWORK)
