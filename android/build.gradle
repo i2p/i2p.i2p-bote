@@ -9,6 +9,7 @@ android {
         versionName '0.6'
         minSdkVersion 10
         targetSdkVersion 22
+        multiDexEnabled true
 
         // For Espresso
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -62,6 +63,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 
     // Android Support Repository dependencies
+    compile 'com.android.support:multidex:1.0.1'
     compile "com.android.support:support-annotations:$supportVersion"
     compile "com.android.support:support-v4:$supportVersion"
     compile "com.android.support:appcompat-v7:$supportVersion"
@@ -103,6 +105,7 @@ dependencies {
 
 dependencyVerification {
     verify = [
+            'com.android.support:multidex:60df8e7153fabdcf3a6a48a2ce5980b599cf25cbeb3b689b7b615975ca731840',
             'com.android.support:support-annotations:e91a88dd0c5e99069b7f09d4a46b5e06f1e9c4c72fc0a8e987e25d86af480f01',
             'com.android.support:support-v4:a0d002465c0f611eedaaef2b2530707d2e9fb3a5c7ed66f53c556a12f714f43a',
             'com.android.support:appcompat-v7:d3d96637b0e8e61046567b8c87b667dcf3cd31c7447f651cb58d6e6e744adfba',
