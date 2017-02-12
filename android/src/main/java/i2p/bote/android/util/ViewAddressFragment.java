@@ -1,9 +1,7 @@
 package i2p.bote.android.util;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -12,10 +10,8 @@ import android.nfc.NdefRecord;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -41,7 +37,8 @@ import com.nineoldandroids.view.ViewHelper;
 import i2p.bote.android.Constants;
 import i2p.bote.android.R;
 
-public abstract class ViewAddressFragment extends Fragment {
+public abstract class ViewAddressFragment extends Fragment implements
+        DeleteAddressDialogFragment.DeleteAddressDialogListener {
     public static final String ADDRESS = "address";
 
     protected String mAddress;
@@ -132,7 +129,7 @@ public abstract class ViewAddressFragment extends Fragment {
 
     protected abstract void onEditAddress();
 
-    protected abstract void onDeleteAddress();
+    public abstract void onDeleteAddress();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -176,26 +173,8 @@ public abstract class ViewAddressFragment extends Fragment {
                 return true;
 
             case R.id.action_delete_address:
-                DialogFragment df = new DialogFragment() {
-                    @Override
-                    @NonNull
-                    public Dialog onCreateDialog(Bundle savedInstanceState) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(getDeleteAddressMessage())
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        onDeleteAddress();
-                                    }
-                                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        return builder.create();
-                    }
-                };
-                df.show(getActivity().getSupportFragmentManager(), "deleteaddress");
+                DialogFragment df = DeleteAddressDialogFragment.newInstance(getDeleteAddressMessage());
+                df.show(getChildFragmentManager(), "deleteaddress");
                 return true;
 
             default:

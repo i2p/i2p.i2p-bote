@@ -373,21 +373,7 @@ public class EmailListActivity extends BoteActivityBase implements
             case DELAY:
                 boteNotStartedMessage = R.string.network_info_unavailable_delay;
             case NOT_STARTED:
-                final int message = boteNotStartedMessage;
-                DialogFragment df = new DialogFragment() {
-                    @Override
-                    @NonNull
-                    public Dialog onCreateDialog(Bundle savedInstanceState) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(message)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        return builder.create();
-                    }
-                };
+                DialogFragment df = NetStatusDialogFragment.newInstance(boteNotStartedMessage);
                 df.show(getSupportFragmentManager(), "noinfo");
                 break;
             default:
@@ -411,6 +397,30 @@ public class EmailListActivity extends BoteActivityBase implements
         start.putExtra(BoteService.ROUTER_CHOICE, mRouterChoice);
         startService(start);
         supportInvalidateOptionsMenu();
+    }
+
+    public static class NetStatusDialogFragment extends DialogFragment {
+        public static DialogFragment newInstance(int message) {
+            DialogFragment f = new NetStatusDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("message", message);
+            f.setArguments(args);
+            return f;
+        }
+
+        @Override
+        @NonNull
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            int message = getArguments().getInt("message");
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(message)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            return builder.create();
+        }
     }
 
 

@@ -82,7 +82,7 @@ public class ViewContactFragment extends ViewAddressFragment {
     }
 
     @Override
-    protected void onDeleteAddress() {
+    public void onDeleteAddress() {
         try {
             String err = BoteHelper.deleteContact(mAddress);
             if (err == null) {

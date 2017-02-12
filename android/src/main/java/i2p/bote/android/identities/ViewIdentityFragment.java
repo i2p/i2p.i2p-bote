@@ -88,7 +88,7 @@ public class ViewIdentityFragment extends ViewAddressFragment {
     }
 
     @Override
-    protected void onDeleteAddress() {
+    public void onDeleteAddress() {
         try {
             BoteHelper.deleteIdentity(mAddress);
             getActivity().setResult(Activity.RESULT_OK);
