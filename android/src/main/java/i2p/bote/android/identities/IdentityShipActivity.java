@@ -1,41 +1,18 @@
 package i2p.bote.android.identities;
 
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-import i2p.bote.android.BoteActivityBase;
-import i2p.bote.android.InitActivities;
 import i2p.bote.android.R;
+import i2p.bote.android.util.DataShipActivity;
+import i2p.bote.android.util.DataShipFragment;
 
-public class IdentityShipActivity extends BoteActivityBase implements
-        IdentityShipFragment.Callbacks {
-    public static final String EXPORTING = "exporting";
-
-    boolean mExporting;
-
+public class IdentityShipActivity extends DataShipActivity {
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_identity_ship);
-
-        // Set the action bar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-
-        // Enable ActionBar app icon to behave as action to go back
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        if (savedInstanceState == null) {
-            Bundle args = getIntent().getExtras();
-            mExporting = args.getBoolean(EXPORTING);
-            IdentityShipFragment f = IdentityShipFragment.newInstance(mExporting);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.identity_ship_frag, f).commit();
-        }
+    protected DataShipFragment getDataShipFragment() {
+        return IdentityShipFragment.newInstance(mExporting);
     }
 
-    // IdentityShipFragment.Callbacks
+    // DataShipFragment.Callbacks
 
     public void onTaskFinished() {
         Toast.makeText(this,

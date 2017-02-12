@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="i2p.bote.android.identities.IdentityShipFragment$ImportIdentitiesFragment">
+    tools:context="i2p.bote.android.util.DataShipFragment$ImportDataFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,14 +25,14 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Overwrite all existing identities"
+        android:text="Overwrite all existing entries"
         android:id="@+id/overwrite"
         android:checked="false" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Duplicates: replace existing identity"
+        android:text="Duplicates: replace existing entries"
         android:id="@+id/replace"
         android:checked="false" />
 
@@ -40,7 +40,6 @@
         android:id="@+id/error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/default_identity"
         android:textColor="@color/error_color" />
 
     <Button

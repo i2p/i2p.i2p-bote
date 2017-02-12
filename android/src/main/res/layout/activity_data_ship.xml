@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/identity_ship_frag"
+                android:id="@+id/data_ship_frag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
