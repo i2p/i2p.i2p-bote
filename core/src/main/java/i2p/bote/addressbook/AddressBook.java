@@ -98,30 +98,7 @@ public class AddressBook {
             Properties properties = new Properties();
             properties.load(new InputStreamReader(encryptedStream));
             
-            contacts = new TreeSet<Contact>(new ContactComparator());
-            int index = 0;
-            while (true) {
-                String prefix = "contact" + index + ".";
-                String name = properties.getProperty(prefix + "name");
-                if (name == null)
-                    break;
-                
-                String destBase64 = properties.getProperty(prefix + "destination");
-                if (destBase64 == null)
-                    continue;
-                try {
-                    EmailDestination destination = new EmailDestination(destBase64);
-                    String pictureBase64 = properties.getProperty(prefix + "picture");
-                    String text = properties.getProperty(prefix + "text");
-                    Contact contact = new Contact(name, destination, pictureBase64, text);
-                    contacts.add(contact);
-                }
-                catch (GeneralSecurityException e) {
-                    log.error("Not a valid Email Destination: <" + destBase64 + ">", e);
-                }
-                
-                index++;
-            }
+            loadFromProperties(properties);
         } catch (PasswordException e) {
             throw e;
         } catch (Exception e) {
@@ -137,25 +114,40 @@ public class AddressBook {
                 }
         }
     }
+
+    private void loadFromProperties(Properties properties) {
+        contacts = new TreeSet<Contact>(new ContactComparator());
+        int index = 0;
+        while (true) {
+            String prefix = "contact" + index + ".";
+            String name = properties.getProperty(prefix + "name");
+            if (name == null)
+                break;
+
+            String destBase64 = properties.getProperty(prefix + "destination");
+            if (destBase64 == null)
+                continue;
+            try {
+                EmailDestination destination = new EmailDestination(destBase64);
+                String pictureBase64 = properties.getProperty(prefix + "picture");
+                String text = properties.getProperty(prefix + "text");
+                Contact contact = new Contact(name, destination, pictureBase64, text);
+                contacts.add(contact);
+            }
+            catch (GeneralSecurityException e) {
+                log.error("Not a valid Email Destination: <" + destBase64 + ">", e);
+            }
+
+            index++;
+        }
+    }
     
     public void save() throws IOException, PasswordException, GeneralSecurityException {
         initializeIfNeeded();
         
         OutputStream encryptedStream = new EncryptedOutputStream(new SecureFileOutputStream(addressFile), passwordHolder);
-        SortedProperties properties = new SortedProperties();
         try {
-            int index = 0;
-            for (Contact contact: contacts) {
-                String prefix = "contact" + index + ".";
-                properties.setProperty(prefix + "name", contact.getName());
-                String base64Dest = contact.getDestination().toBase64();
-                properties.setProperty(prefix + "destination", base64Dest);
-                String pictureBase64 = contact.getPictureBase64();
-                properties.setProperty(prefix + "picture", (pictureBase64==null ? "" : pictureBase64));
-                String text = contact.getText();
-                properties.setProperty(prefix + "text", (text==null ? "" : text));
-                index++;
-            }
+            Properties properties = saveToProperties();
             properties.store(new OutputStreamWriter(encryptedStream, "UTF-8"), null);
         } catch (IOException e) {
             log.error("Can't save email identities to file <" + addressFile.getAbsolutePath() + ">.", e);
@@ -163,6 +155,23 @@ public class AddressBook {
         } finally {
             encryptedStream.close();
         }
+    }
+
+    private Properties saveToProperties() {
+        SortedProperties properties = new SortedProperties();
+        int index = 0;
+        for (Contact contact: contacts) {
+            String prefix = "contact" + index + ".";
+            properties.setProperty(prefix + "name", contact.getName());
+            String base64Dest = contact.getDestination().toBase64();
+            properties.setProperty(prefix + "destination", base64Dest);
+            String pictureBase64 = contact.getPictureBase64();
+            properties.setProperty(prefix + "picture", (pictureBase64==null ? "" : pictureBase64));
+            String text = contact.getText();
+            properties.setProperty(prefix + "text", (text==null ? "" : text));
+            index++;
+        }
+        return properties;
     }
     
     public void add(Contact contact) throws PasswordException {
