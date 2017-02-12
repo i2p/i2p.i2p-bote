@@ -29,6 +29,7 @@ import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
 import i2p.bote.packet.dht.Contact;
+import i2p.bote.util.ExportableData;
 import i2p.bote.util.SortedProperties;
 
 import java.io.BufferedReader;
@@ -54,7 +55,7 @@ import net.i2p.util.SecureFileOutputStream;
  * which are sorted by name.<br/>
  * Contacts can be written to, and read from, a password-encrypted file.
  */
-public class AddressBook {
+public class AddressBook extends ExportableData {
     private Log log = new Log(AddressBook.class);
     private File addressFile;
     private PasswordHolder passwordHolder;
@@ -70,7 +71,7 @@ public class AddressBook {
         this.passwordHolder = passwordHolder;
     }
  
-    private void initializeIfNeeded() throws PasswordException {
+    protected void initializeIfNeeded() throws PasswordException {
         if (contacts == null)
             readContacts();
     }
@@ -98,7 +99,7 @@ public class AddressBook {
             Properties properties = new Properties();
             properties.load(new InputStreamReader(encryptedStream));
             
-            loadFromProperties(properties);
+            loadFromProperties(properties, false, false);
         } catch (PasswordException e) {
             throw e;
         } catch (Exception e) {
@@ -115,8 +116,10 @@ public class AddressBook {
         }
     }
 
-    private void loadFromProperties(Properties properties) {
-        contacts = new TreeSet<Contact>(new ContactComparator());
+    protected boolean loadFromProperties(Properties properties, boolean append, boolean replace) {
+        if (contacts == null || !append) {
+            contacts = new TreeSet<Contact>(new ContactComparator());
+        }
         int index = 0;
         while (true) {
             String prefix = "contact" + index + ".";
@@ -132,6 +135,10 @@ public class AddressBook {
                 String pictureBase64 = properties.getProperty(prefix + "picture");
                 String text = properties.getProperty(prefix + "text");
                 Contact contact = new Contact(name, destination, pictureBase64, text);
+
+                if (append && replace && contacts.contains(contact)) {
+                    contacts.remove(contact);
+                }
                 contacts.add(contact);
             }
             catch (GeneralSecurityException e) {
@@ -140,6 +147,7 @@ public class AddressBook {
 
             index++;
         }
+        return index > 0;
     }
     
     public void save() throws IOException, PasswordException, GeneralSecurityException {
@@ -157,7 +165,7 @@ public class AddressBook {
         }
     }
 
-    private Properties saveToProperties() {
+    protected Properties saveToProperties() {
         SortedProperties properties = new SortedProperties();
         int index = 0;
         for (Contact contact: contacts) {
