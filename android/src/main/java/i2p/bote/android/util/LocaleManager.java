@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import java.util.Locale;
 
 public class LocaleManager {
+    private static final String DEFAULT_LANGUAGE = "zz";
+
     private Locale currentLocale;
 
     public void onCreate(Activity activity) {
@@ -36,13 +38,12 @@ public class LocaleManager {
     }
 
     private static Locale getSelectedLocale(Context context) {
-        String defaultLanguage = "zz";
         String selectedLanguage = PreferenceManager.getDefaultSharedPreferences(context).getString(
-                "pref_language", defaultLanguage
+                "pref_language", DEFAULT_LANGUAGE
         );
         String language[] = TextUtils.split(selectedLanguage, "_");
 
-        if (language[0].equals(defaultLanguage))
+        if (language[0].equals(DEFAULT_LANGUAGE))
             return Resources.getSystem().getConfiguration().locale;
         else if (language.length == 2)
             return new Locale(language[0], language[1]);
