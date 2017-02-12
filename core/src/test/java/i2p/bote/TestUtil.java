@@ -297,6 +297,7 @@ public class TestUtil {
             encryptionKeys = new KeyPair(publicKeys.encryptionKey, privateKeys.encryptionKey);
             
             identity = new EmailIdentity(base64PublicKeyPair + base64PrivateKeyPair);
+            identity.setPublicName(cryptoImpl.getName());
         }
     }
 }
