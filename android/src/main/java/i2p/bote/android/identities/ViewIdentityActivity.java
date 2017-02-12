@@ -34,17 +34,15 @@ public class ViewIdentityActivity extends BoteActivityBase {
                 .add(android.R.id.content, f).commit();
         }
 
-        // NFC send only works on API 10+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-            if (mNfcAdapter != null &&
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-                mNfcAdapter.setNdefPushMessageCallback(new NfcAdapter.CreateNdefMessageCallback() {
-                    @Override
-                    public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
-                        return getNdefMessage();
-                    }
-                }, this);
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (mNfcAdapter != null &&
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            mNfcAdapter.setNdefPushMessageCallback(new NfcAdapter.CreateNdefMessageCallback() {
+                @Override
+                public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
+                    return getNdefMessage();
+                }
+            }, this);
         }
     }
 
