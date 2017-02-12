@@ -298,7 +298,11 @@ public abstract class DataShipFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                    i.setType("text/plain");
+                    if (mPassword.getText().toString().isEmpty()) {
+                        i.setType("text/plain");
+                    } else {
+                        i.setType("*/*");
+                    }
                     i.addCategory(Intent.CATEGORY_OPENABLE);
                     try {
                         startActivityForResult(i, SELECT_IMPORT_FILE);
