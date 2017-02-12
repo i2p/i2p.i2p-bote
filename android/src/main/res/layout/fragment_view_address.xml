@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,10 +16,10 @@
             android:layout_height="@dimen/toolbar_height_with_picture"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <RelativeLayout
                 android:id="@+id/picture_layout"
@@ -36,7 +35,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_contact_picture"/>
+                    android:src="@drawable/ic_contact_picture" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -53,14 +52,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/public_name"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline.Inverse"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Headline.Inverse" />
 
                     <TextView
                         android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/description"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary.Inverse"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary.Inverse" />
                 </LinearLayout>
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
@@ -83,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/address_info"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subject"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subject" />
 
                 <TextView
                     android:id="@+id/crypto_impl_name"
@@ -91,14 +90,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Crypto implementation"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Primary"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Primary" />
 
                 <ImageView
                     android:id="@+id/email_dest_qr_code"
                     android:layout_width="@dimen/qr_code_size"
                     android:layout_height="@dimen/qr_code_size"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="8dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Key"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Secondary" />
 
                     <Button
                         android:id="@+id/copy_key"
@@ -121,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
-                        android:text="@string/copy"/>
+                        android:text="@string/copy" />
                 </LinearLayout>
 
                 <TextView
@@ -131,7 +130,7 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/fingerprint"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subject"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/fingerprint"
@@ -140,7 +139,7 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/fingerprint"
                     android:textAppearance="@style/TextAppearance.AppCompat.Primary"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
 
         </ScrollView>
@@ -150,5 +149,5 @@
         android:id="@+id/expanded_qr_code"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 </FrameLayout>
