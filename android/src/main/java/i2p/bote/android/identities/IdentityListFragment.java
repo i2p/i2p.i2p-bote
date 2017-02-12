@@ -118,7 +118,7 @@ public class IdentityListFragment extends AuthenticatedFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.settings, menu);
+        inflater.inflate(R.menu.identity_list, menu);
     }
 
     @Override

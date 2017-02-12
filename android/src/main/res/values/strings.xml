@@ -248,6 +248,14 @@
     <string name="no_identities_found_maybe_encrypted">No identities were found. Is the file encrypted?</string>
     <string name="identities_imported">Identities imported</string>
     <string name="this_field_is_required">This field is required</string>
+    <string name="export_address_book">Export address book</string>
+    <string name="exporting_address_book">Exporting address book</string>
+    <string name="address_book_exported">Address book exported to Downloads folder</string>
+    <string name="import_address_book">Import address book</string>
+    <string name="importing_address_book">Importing address book</string>
+    <string name="no_contacts_found">No contacts were found.</string>
+    <string name="no_contacts_found_maybe_encrypted">No contacts were found. Is the file encrypted?</string>
+    <string name="address_book_imported">Address book imported</string>
     <string name="bote_dest_for">Bote address for %s</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="help">Help</string>

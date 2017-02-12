@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -125,13 +126,34 @@ public class AddressBookFragment extends AuthenticatedFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.address_book, menu);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         boolean passwordRequired = I2PBote.getInstance().isPasswordRequired();
+        menu.findItem(R.id.export_address_book).setVisible(!passwordRequired);
+        menu.findItem(R.id.import_address_book).setVisible(!passwordRequired);
         mPromotedActions.setVisibility(passwordRequired ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.export_address_book:
+                Intent ei = new Intent(getActivity(), AddressBookShipActivity.class);
+                ei.putExtra(AddressBookShipActivity.EXPORTING, true);
+                startActivity(ei);
+                return true;
+            case R.id.import_address_book:
+                Intent ii = new Intent(getActivity(), AddressBookShipActivity.class);
+                ii.putExtra(AddressBookShipActivity.EXPORTING, false);
+                startActivity(ii);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void startNewContact() {

@@ -97,6 +97,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".addressbook.AddressBookShipActivity"
+            android:parentActivityName=".addressbook.AddressBookActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="i2p.bote.android.addressbook.AddressBookActivity"/>
+        </activity>
+        <activity
             android:name=".NetworkInfoActivity"
             android:label="@string/network_status"
             android:parentActivityName=".EmailListActivity">
