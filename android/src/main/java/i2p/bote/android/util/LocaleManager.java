@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
@@ -42,7 +43,7 @@ public class LocaleManager {
         String language[] = TextUtils.split(selectedLanguage, "_");
 
         if (language[0].equals(defaultLanguage))
-            return Locale.getDefault();
+            return Resources.getSystem().getConfiguration().locale;
         else if (language.length == 2)
             return new Locale(language[0], language[1]);
         else
