@@ -25,10 +25,10 @@ import android.widget.AdapterView;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.IIcon;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
-import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -78,7 +78,7 @@ public class EmailListActivity extends BoteActivityBase implements
      */
     private AccountHeader mAccountHeader;
     private Drawer mDrawer;
-    private int mSelected;
+    private long mSelected;
 
     private static final String PREF_FIRST_START = "firstStart";
 
@@ -151,24 +151,22 @@ public class EmailListActivity extends BoteActivityBase implements
                 .addStickyDrawerItems(addressBook, networkStatus)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
-                    public boolean onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-                        switch (iDrawerItem.getIdentifier()) {
-                            case ID_ADDRESS_BOOK:
-                                mDrawer.setSelection(mSelected, false);
-                                mDrawer.closeDrawer();
-                                Intent ai = new Intent(EmailListActivity.this, AddressBookActivity.class);
-                                startActivity(ai);
-                                return true;
-
-                            case ID_NET_STATUS:
-                                mDrawer.setSelection(mSelected, false);
-                                netStatusSelected();
-                                return true;
-
-                            default:
-                                drawerFolderSelected((EmailFolder) iDrawerItem.getTag(), mSelected == i);
-                                mSelected = mDrawer.getCurrentSelection();
-                                return false;
+                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+                        long id = iDrawerItem.getIdentifier();
+                        if (id == ID_ADDRESS_BOOK) {
+                            mDrawer.setSelection(mSelected, false);
+                            mDrawer.closeDrawer();
+                            Intent ai = new Intent(EmailListActivity.this, AddressBookActivity.class);
+                            startActivity(ai);
+                            return true;
+                        } else if (id == ID_NET_STATUS) {
+                            mDrawer.setSelection(mSelected, false);
+                            netStatusSelected();
+                            return true;
+                        } else {
+                            drawerFolderSelected((EmailFolder) iDrawerItem.getTag(), mSelected == i);
+                            mSelected = mDrawer.getCurrentSelection();
+                            return false;
                         }
                     }
                 })
@@ -463,10 +461,10 @@ public class EmailListActivity extends BoteActivityBase implements
                 // Fetch the identities first, so we trigger any exceptions
                 Collection<EmailIdentity> identities = I2PBote.getInstance().getIdentities().getAll();
                 profiles.add(new ProfileDrawerItem()
-                                .withIdentifier(ID_ALL_MAIL)
-                                .withTag(null)
-                                .withEmail(getContext().getString(R.string.all_mail))
-                                .withIcon(getContext().getResources().getDrawable(R.drawable.ic_contact_picture))
+                        .withIdentifier(ID_ALL_MAIL)
+                        .withTag(null)
+                        .withEmail(getContext().getString(R.string.all_mail))
+                        .withIcon(getContext().getResources().getDrawable(R.drawable.ic_contact_picture))
                 );
                 for (EmailIdentity identity : identities) {
                     profiles.add(getIdentityDrawerItem(identity));
@@ -719,7 +717,7 @@ public class EmailListActivity extends BoteActivityBase implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mDrawer.updateFooterItem(getNetStatusItem(statusText, statusIcon, colorRes, padding));
+                mDrawer.updateStickyFooterItem(getNetStatusItem(statusText, statusIcon, colorRes, padding));
             }
         });
     }

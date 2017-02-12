@@ -79,18 +79,19 @@ dependencies {
         transitive = true
     }
     compile 'net.i2p.android:helper:0.9.1@aar'
-    compile 'net.i2p.android.ext:floatingactionbutton:1.9.0'
+    compile 'net.i2p.android.ext:floatingactionbutton:1.10.1'
     compile 'com.madgag.spongycastle:core:1.52.0.0'
     compile 'com.madgag.spongycastle:prov:1.52.0.0'
     compile('com.mcxiaoke.viewpagerindicator:library:2.4.1') {
         exclude group: 'com.android.support', module: 'support-v4'
     }
-    compile 'com.google.zxing:core:3.2.0'
-    compile 'com.google.zxing:android-integration:3.2.0'
-    compile 'com.androidplot:androidplot-core:0.6.1'
-    compile 'com.pnikosis:materialish-progress:1.5'
-    compile 'com.mikepenz:iconics:1.0.2@aar'
-    compile('com.mikepenz:materialdrawer:3.0.7@aar') {
+    compile 'com.google.zxing:core:3.3.0'
+    compile 'com.google.zxing:android-integration:3.3.0'
+    compile 'com.androidplot:androidplot-core:1.4.1'
+    compile 'com.pnikosis:materialish-progress:1.7'
+    compile 'com.mikepenz:iconics-core:2.7.2@aar'
+    compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
+    compile('com.mikepenz:materialdrawer:5.4.0@aar') {
         transitive = true
     }
     compile 'org.sufficientlysecure:html-textview:3.1'
@@ -116,16 +117,17 @@ dependencyVerification {
             'net.i2p:router:74fa6ee310f5e089c0ccf7d9e844ccf0e180f23bf33e068778e7288aa9e6509a',
             'net.i2p.android:client:88de00330c0f7a47adffb4b6f156e661c819df7073bbafe2d48249e38577df85',
             'net.i2p.android:helper:a1087507fa28ef3570e6f6ad0169bc36f6160726a58c4ece39387bbc0249a1a0',
-            'net.i2p.android.ext:floatingactionbutton:b41eae5fe6be599e3fade00273521b0914f2e199d5f04c50fa34cfe935347f76',
+            'net.i2p.android.ext:floatingactionbutton:09d43e2d4ac04a91bf7a37e1ec48a8d220204e3a55dca72cd36cd9fa27461ade',
             'com.madgag.spongycastle:core:07a401edbe26e1028e2324754557b741cc57306008df7b71a9e12ec32d65be8f',
             'com.madgag.spongycastle:prov:becbb70797b0103517693d2a97ce93174cc4d1f732897ed965a24e32dd99503e',
             'com.mcxiaoke.viewpagerindicator:library:1e8aad664137f68abdfee94889f6da3dc98be652a235176a403965a07a25de62',
-            'com.google.zxing:core:7fe5a8ff437635a540e56317649937b768b454795ce999ed5f244f83373dee7b',
-            'com.google.zxing:android-integration:0de037a73138033c4a03cdbca5d5728ef65a026ffb89afce071105f43a98ee0e',
-            'com.androidplot:androidplot-core:777b54dd98b8dedc5f3fcc95018eece1188f6c692dcbd5b7744af175e15d70bd',
-            'com.pnikosis:materialish-progress:d71d80e00717a096784482aee21001a9d299fec3833e4ebd87739ed36cf77c54',
-            'com.mikepenz:iconics:c1a02203d8e0d638959463c00af3ab9096e0a7c1ad5928762eb10ef5ce8a63cd',
-            'com.mikepenz:materialdrawer:3331ec671630fc1b1a54c4ff4da9d2a0cee45a2c129dd7f2adb337fa814b9497',
+            'com.google.zxing:core:bba7724e02a997cec38213af77133ee8e24b0d5cf5fa7ecbc16a4fa93f11ee0d',
+            'com.google.zxing:android-integration:dc6d6da7d4f4a7dffa6a049e62db6d0cd4c28aa14524968e41460e559a444e84',
+            'com.androidplot:androidplot-core:7670da5838ce2ae2b0b5faabeb9d6a1f2787d30d3fe9f0952adc5611910d18c0',
+            'com.pnikosis:materialish-progress:da089a90d1dab61e9b50038c09081019398f81190d12b0b567ce94b83ef8cf93',
+            'com.mikepenz:iconics-core:212425278ba9894cc8482c486a7cc7c37d7dc69b33e39373d9d3092280c6c061',
+            'com.mikepenz:google-material-typeface:f27c629ba5d2a90ecfbd7f221ff98cd363e1ee6be06b099b82bae490766e14a5',
+            'com.mikepenz:materialdrawer:242a140297be79f6053d540f58e1cfe62aff5479f2cde93c045b54fc683d79fe',
     ]
 }
 

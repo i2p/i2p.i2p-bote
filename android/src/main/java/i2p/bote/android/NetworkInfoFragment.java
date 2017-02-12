@@ -102,9 +102,8 @@ public class NetworkInfoFragment extends Fragment {
             if (dhtStats.getData().size() == 0) {
                 Segment n = new Segment("", 100);
 
-                SegmentFormatter nf = new SegmentFormatter();
+                SegmentFormatter nf = new SegmentFormatter(getResources().getColor(android.R.color.darker_gray));
                 setupSegmentFormatter(nf);
-                nf.getFillPaint().setColor(getResources().getColor(android.R.color.darker_gray));
 
                 mKademliaPie.addSeries(n, nf);
             } else {
@@ -120,9 +119,8 @@ public class NetworkInfoFragment extends Fragment {
                 if (reachable > 0) {
                     Segment r = new Segment(getString(R.string.reachable), reachable);
 
-                    SegmentFormatter rf = new SegmentFormatter();
+                    SegmentFormatter rf = new SegmentFormatter(getResources().getColor(R.color.green));
                     setupSegmentFormatter(rf);
-                    rf.getFillPaint().setColor(getResources().getColor(R.color.green));
 
                     mKademliaPie.addSeries(r, rf);
                 }
@@ -130,9 +128,8 @@ public class NetworkInfoFragment extends Fragment {
                 if (unreachable > 0) {
                     Segment u = new Segment(getString(R.string.unreachable), dhtStats.getData().size() - reachable);
 
-                    SegmentFormatter uf = new SegmentFormatter();
+                    SegmentFormatter uf = new SegmentFormatter(getResources().getColor(R.color.error_color));
                     setupSegmentFormatter(uf);
-                    uf.getFillPaint().setColor(getResources().getColor(R.color.error_color));
 
                     mKademliaPie.addSeries(u, uf);
                 }
@@ -150,9 +147,8 @@ public class NetworkInfoFragment extends Fragment {
         if (relayPeers.size() == 0) {
             Segment n = new Segment("", 100);
 
-            SegmentFormatter nf = new SegmentFormatter();
+            SegmentFormatter nf = new SegmentFormatter(getResources().getColor(android.R.color.darker_gray));
             setupSegmentFormatter(nf);
-            nf.getFillPaint().setColor(getResources().getColor(android.R.color.darker_gray));
 
             mRelayPie.addSeries(n, nf);
         } else {
@@ -170,9 +166,8 @@ public class NetworkInfoFragment extends Fragment {
             if (good > 0) {
                 Segment g = new Segment(getString(R.string.good), good);
 
-                SegmentFormatter gf = new SegmentFormatter();
+                SegmentFormatter gf = new SegmentFormatter(getResources().getColor(R.color.green));
                 setupSegmentFormatter(gf);
-                gf.getFillPaint().setColor(getResources().getColor(R.color.green));
 
                 mRelayPie.addSeries(g, gf);
             }
@@ -180,9 +175,8 @@ public class NetworkInfoFragment extends Fragment {
             if (bad > 0) {
                 Segment b = new Segment(getString(R.string.unreliable), bad);
 
-                SegmentFormatter bf = new SegmentFormatter();
+                SegmentFormatter bf = new SegmentFormatter(getResources().getColor(R.color.red));
                 setupSegmentFormatter(bf);
-                bf.getFillPaint().setColor(getResources().getColor(R.color.red));
 
                 mRelayPie.addSeries(b, bf);
             }
@@ -190,9 +184,8 @@ public class NetworkInfoFragment extends Fragment {
             if (untested > 0) {
                 Segment u = new Segment(getString(R.string.untested), untested);
 
-                SegmentFormatter uf = new SegmentFormatter();
+                SegmentFormatter uf = new SegmentFormatter(getResources().getColor(R.color.accent));
                 setupSegmentFormatter(uf);
-                uf.getFillPaint().setColor(getResources().getColor(R.color.accent));
 
                 mRelayPie.addSeries(u, uf);
             }
