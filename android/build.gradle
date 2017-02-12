@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'witness'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
     defaultConfig {
         versionCode 13
         versionName '0.6'
@@ -40,7 +40,7 @@ android {
     }
 }
 
-def supportVersion = '23.4.0'
+def supportVersion = '25.1.1'
 
 configurations.all {
     resolutionStrategy {
@@ -105,12 +105,12 @@ dependencies {
 dependencyVerification {
     verify = [
             'com.android.support:multidex:60df8e7153fabdcf3a6a48a2ce5980b599cf25cbeb3b689b7b615975ca731840',
-            'com.android.support:support-annotations:e91a88dd0c5e99069b7f09d4a46b5e06f1e9c4c72fc0a8e987e25d86af480f01',
-            'com.android.support:support-v4:a0d002465c0f611eedaaef2b2530707d2e9fb3a5c7ed66f53c556a12f714f43a',
-            'com.android.support:appcompat-v7:d3d96637b0e8e61046567b8c87b667dcf3cd31c7447f651cb58d6e6e744adfba',
-            'com.android.support:preference-v7:b834787ee64db6c7c53ed7490537eeef52245b7862d4069c06e12b24b77ebbc4',
-            'com.android.support:preference-v14:21c55edf74928a96fa816e32c0c4d0c98e2280002e84d2b10b458b4a36be9615',
-            'com.android.support:recyclerview-v7:24465b2ba90dc5ed7e2c05f1c87fe4256c27df6d3cd69b6177f3cb447b05c021',
+            'com.android.support:support-annotations:46cc01378ddbefa9d0a6bd46bb3c10b35b06e06e375d41a357c3769ba563e9c6',
+            'com.android.support:support-v4:b9b0b9220b7ece40cd621ee839d36d8094694151c7d7021ae91e3e7b76c1300f',
+            'com.android.support:appcompat-v7:c485c421d73fa5b257fa4c39a31f7e24aeada62451f84b44250b8285b0dc95ae',
+            'com.android.support:preference-v7:444c586ddfe186c61bf89a5d77e07a7237307a8b2b3b08bb7802713f144b1218',
+            'com.android.support:preference-v14:3a404b1e1e6a66d2e7d614c170da497aaaec55002fe5fb808635ac1c88812e63',
+            'com.android.support:recyclerview-v7:e3b519f59f05e9765fdc93b88286e4a7b9430f64b6440a03bacb5847daa8e13c',
             'com.sun.mail:android-activation:61c18cfff09374e90d5168daf40b3d50d77bed8bc0b071124c064ecc3b157506',
             'com.sun.mail:android-mail:ab177c3119400c661a026febe0ed84b8661ca61dbde8cbaad1a3ab507d4e5fb8',
             'net.i2p:router:74fa6ee310f5e089c0ccf7d9e844ccf0e180f23bf33e068778e7288aa9e6509a',
