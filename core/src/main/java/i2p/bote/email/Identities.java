@@ -30,6 +30,7 @@ import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordCache;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.fileencryption.PasswordHolder;
+import i2p.bote.util.ExportableData;
 import i2p.bote.util.SortedProperties;
 
 import java.io.BufferedReader;
@@ -62,7 +63,7 @@ import com.lambdaworks.codec.Base64;
  * Holds a set of {@link EmailIdentity} objects that are sorted by name.<br/>
  * The Email Identities can be written to, and read from, a password-encrypted file.
  */
-public class Identities implements KeyUpdateHandler {
+public class Identities extends ExportableData implements KeyUpdateHandler {
     private static final String IDENTITY_PREFIX = "identity";
     private static final String PREF_KEY = "key";
     private static final String PREF_PUBLIC_NAME = "publicName";
@@ -93,7 +94,7 @@ public class Identities implements KeyUpdateHandler {
         identitiesListeners = new ArrayList<IdentitiesListener>();
     }
 
-    private void initializeIfNeeded() throws PasswordException, IOException, GeneralSecurityException {
+    protected void initializeIfNeeded() throws PasswordException, IOException, GeneralSecurityException {
         if (identities == null)
             readIdentities();
     }
@@ -146,41 +147,7 @@ public class Identities implements KeyUpdateHandler {
         }
     }
 
-    /**
-     * Imports identities.
-     * @param importFileDescriptor
-     * @param password
-     * @param append Set to false if existing identities should be dropped.
-     * @param replace Set to false to ignore duplicates, true to import and replace existing.
-     * @return true if the import succeeded, false if there were no identities found.
-     * @throws PasswordException if the provided password is invalid.
-     * @throws IOException
-     * @throws GeneralSecurityException
-     */
-    public boolean importFromFileDescriptor(FileDescriptor importFileDescriptor, String password,
-            boolean append, boolean replace) throws PasswordException, IOException, GeneralSecurityException {
-        initializeIfNeeded();
-
-        InputStream importStream = new FileInputStream(importFileDescriptor);
-        if (password != null)
-            importStream = new EncryptedInputStream(importStream, password.getBytes());
-
-        try {
-            Properties properties = new Properties();
-            properties.load(new InputStreamReader(importStream));
-
-            if (loadFromProperties(properties, append, replace)) {
-                // Save the new identities
-                save();
-                return true;
-            } else // No identities found
-                return false;
-        } finally {
-            importStream.close();
-        }
-    }
-
-    private boolean loadFromProperties(Properties properties, boolean append, boolean replace) throws GeneralSecurityException {
+    protected boolean loadFromProperties(Properties properties, boolean append, boolean replace) throws GeneralSecurityException {
         String defaultIdentityStr = properties.getProperty(PREF_DEFAULT);
         if (identities == null || !append)
             identities = new TreeSet<EmailIdentity>(new IdentityComparator());
@@ -238,40 +205,7 @@ public class Identities implements KeyUpdateHandler {
         }
     }
 
-    public void export(File exportFile, String password) throws IOException, GeneralSecurityException, PasswordException {
-        initializeIfNeeded();
-
-        OutputStream exportStream = new FileOutputStream(exportFile);
-        try {
-            export(exportStream, password);
-        } catch (IOException e) {
-            log.error("Can't export email identities to file <" + exportFile.getAbsolutePath() + ">.", e);
-            throw e;
-        } finally {
-            exportStream.close();
-        }
-    }
-
-    public void export(OutputStream exportStream, String password) throws IOException, GeneralSecurityException, PasswordException {
-        initializeIfNeeded();
-
-        OutputStreamWriter writer;
-        if (password != null) {
-            // Use same salt and parameters as the on-disk files
-            PasswordCache cache = new PasswordCache(I2PBote.getInstance().getConfiguration());
-            cache.setPassword(password.getBytes());
-            DerivedKey derivedKey = cache.getKey();
-            writer = new OutputStreamWriter(new EncryptedOutputStream(exportStream, derivedKey), "UTF-8");
-        } else
-            writer = new OutputStreamWriter(exportStream, "UTF-8");
-
-        Properties properties = saveToProperties();
-        properties.store(writer, null);
-        // If a password was provided, this call triggers the encryption
-        writer.close();
-    }
-
-    private Properties saveToProperties() throws GeneralSecurityException {
+    protected Properties saveToProperties() throws GeneralSecurityException {
         SortedProperties properties = new SortedProperties();
         int index = 0;
         String defaultIdentityStr = null;
