@@ -475,6 +475,8 @@ public class NewEmailFragment extends Fragment {
             });
             mAttachments.addView(v);
             updateAttachmentSizeCount(attachment.getSize(), true);
+        } catch (IllegalArgumentException iae) {
+            Log.e(Constants.ANDROID_LOG_TAG, "Failed to get attachment", iae);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Log.e(Constants.ANDROID_LOG_TAG, "File not found: " + uri);

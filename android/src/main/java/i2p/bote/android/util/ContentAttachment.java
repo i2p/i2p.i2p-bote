@@ -34,11 +34,14 @@ public class ContentAttachment implements Attachment {
                 uri,
                 new String[]{OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE},
                 null, null, null);
+        if (returnCursor == null) {
+            throw new IllegalArgumentException("Query for URI " + uri + " returned null");
+        } else if (!returnCursor.moveToFirst()) {
+            throw new FileNotFoundException();
+        }
+
         int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
         int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
-
-        if (!returnCursor.moveToFirst())
-            throw new FileNotFoundException();
 
         mFileName = returnCursor.getString(nameIndex);
         mSize = returnCursor.getLong(sizeIndex);
