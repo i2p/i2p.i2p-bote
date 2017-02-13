@@ -11,14 +11,14 @@
 # mkkid <jokjok@hotmail.it>, 2011
 # khanjant <khanjant@riseup.net>, 2015
 # mkkid <jokjok@hotmail.it>, 2011
-# Sebastiano Pistore <olatusrooc@virgilio.it>, 2016
+# Sebastiano Pistore <olatusrooc@virgilio.it>, 2016-2017
 # spawned76 <fswitch20@hotmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-28 03:31+0000\n"
-"PO-Revision-Date: 2016-11-27 13:09+0000\n"
+"POT-Creation-Date: 2017-02-13 00:29+0000\n"
+"PO-Revision-Date: 2017-01-30 11:26+0000\n"
 "Last-Translator: Sebastiano Pistore <olatusrooc@virgilio.it>\n"
 "Language-Team: Italian (http://www.transifex.com/otf/I2P/language/it/)\n"
 "Language: it\n"
@@ -395,7 +395,7 @@ msgstr "Esporta identità"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
-msgstr ""
+msgstr "Il form deve essere inviato usando POST."
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -575,7 +575,7 @@ msgstr "Violazione della sicurezza"
 
 #: src/main/webapp/csrfError.jsp
 msgid "CSRF Security Violation"
-msgstr ""
+msgstr "Violazione di sicurezza CSRF"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -1190,7 +1190,7 @@ msgstr ""
 
 #: src/main/webapp/about.jsp
 msgid "Past developers:"
-msgstr ""
+msgstr "Sviluppatori non più nel progetto:"
 
 #: src/main/webapp/about.jsp
 msgid "Feedback on I2P-Bote"
@@ -1283,11 +1283,11 @@ msgstr "Correzioni del codice"
 
 #: src/main/webapp/about.jsp
 msgid "Usability improvement"
-msgstr ""
+msgstr "Miglioramento dell'usabilità"
 
 #: src/main/webapp/about.jsp
 msgid "Bug hunting"
-msgstr ""
+msgstr "Bug hunting"
 
 #: src/main/webapp/debug.jsp
 msgid "Debug"
