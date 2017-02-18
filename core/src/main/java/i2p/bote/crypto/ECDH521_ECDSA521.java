@@ -21,7 +21,8 @@
 
 package i2p.bote.crypto;
 
-import i2p.bote.Util;
+import net.i2p.data.Base64;
+import net.i2p.util.Log;
 
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
@@ -31,9 +32,6 @@ import java.security.spec.ECPoint;
 import java.security.spec.ECPublicKeySpec;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
-
-import net.i2p.data.Base64;
-import net.i2p.util.Log;
 
 /**
  * TODO document the 66-byte format
@@ -47,7 +45,7 @@ public class ECDH521_ECDSA521 extends ECDH_ECDSA {
     
     @Override
     public String getName() {
-        return Util._t("521-bit Elliptic Curve Encryption");
+        return "ECDH-521 / ECDSA-521";
     }
     
     @Override

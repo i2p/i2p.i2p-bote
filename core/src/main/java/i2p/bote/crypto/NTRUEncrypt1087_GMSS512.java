@@ -21,8 +21,12 @@
 
 package i2p.bote.crypto;
 
-import i2p.bote.Util;
-import i2p.bote.fileencryption.PasswordException;
+import net.i2p.data.Base64;
+import net.sf.ntru.encrypt.EncryptionKeyPair;
+import net.sf.ntru.encrypt.EncryptionParameters;
+import net.sf.ntru.encrypt.EncryptionPrivateKey;
+import net.sf.ntru.encrypt.EncryptionPublicKey;
+import net.sf.ntru.encrypt.NtruEncrypt;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -35,13 +39,6 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
 
-import net.i2p.data.Base64;
-import net.sf.ntru.encrypt.EncryptionKeyPair;
-import net.sf.ntru.encrypt.EncryptionParameters;
-import net.sf.ntru.encrypt.EncryptionPrivateKey;
-import net.sf.ntru.encrypt.EncryptionPublicKey;
-import net.sf.ntru.encrypt.NtruEncrypt;
-
 import de.flexiprovider.api.exceptions.InvalidKeySpecException;
 import de.flexiprovider.api.keys.KeySpec;
 import de.flexiprovider.pki.PKCS8EncodedKeySpec;
@@ -51,6 +48,7 @@ import de.flexiprovider.pqc.hbc.gmss.GMSSParameterSpec;
 import de.flexiprovider.pqc.hbc.gmss.GMSSParameterset;
 import de.flexiprovider.pqc.hbc.gmss.GMSSPublicKeySpec;
 import de.flexiprovider.pqc.hbc.gmss.GMSSSignature;
+import i2p.bote.fileencryption.PasswordException;
 
 /**
  * NTRUEncrypt with N=1087 and GMSS with SHA512.
@@ -112,7 +110,7 @@ public class NTRUEncrypt1087_GMSS512 extends AbstractCryptoImplementation {
     
     @Override
     public String getName() {
-        return Util._t("NTRU-1087 Encryption");
+        return "NTRUEncrypt-1087 / GMSS-512";
     }
     
     @Override

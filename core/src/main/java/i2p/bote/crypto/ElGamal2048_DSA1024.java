@@ -55,7 +55,7 @@ public class ElGamal2048_DSA1024 extends AbstractCryptoImplementation {
 
     @Override
     public String getName() {
-        return Util._t("2048-bit ElGamal Encryption");
+        return "ElGamal-2048 / DSA-1024";
     }
     
     @Override

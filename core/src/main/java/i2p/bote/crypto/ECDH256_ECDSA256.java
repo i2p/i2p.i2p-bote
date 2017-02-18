@@ -21,7 +21,7 @@
 
 package i2p.bote.crypto;
 
-import i2p.bote.Util;
+import net.i2p.data.Base64;
 
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
@@ -32,8 +32,6 @@ import java.security.spec.ECPublicKeySpec;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 
-import net.i2p.data.Base64;
-
 public class ECDH256_ECDSA256 extends ECDH_ECDSA {
 
     public ECDH256_ECDSA256() throws GeneralSecurityException {
@@ -42,7 +40,7 @@ public class ECDH256_ECDSA256 extends ECDH_ECDSA {
     
     @Override
     public String getName() {
-        return Util._t("256-bit Elliptic Curve Encryption");
+        return "ECDH-256 / ECDSA-256";
     }
     
     @Override
