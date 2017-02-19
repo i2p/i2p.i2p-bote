@@ -269,4 +269,12 @@
     <!-- Software libraries -->
     <string name="libraries">Libraries</string>
 
+    <string name="re_encrypting_identities">Re-encrypting identities…</string>
+    <string name="re_encrypting_address_book">Re-encrypting address book…</string>
+    <!-- Argument is a folder name -->
+    <string name="re_encrypting_folder">Re-encrypting folder %s…</string>
+    <string name="updating_password_file">Updating password file…</string>
+    <string name="generating_keys">Generating keys…</string>
+    <string name="saving_identity">Saving identity…</string>
+
 </resources>

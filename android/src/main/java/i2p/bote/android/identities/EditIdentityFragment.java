@@ -21,11 +21,12 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
 import i2p.bote.I2PBote;
-import i2p.bote.StatusListener;
+import i2p.bote.status.StatusListener;
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.EditPictureFragment;
@@ -35,6 +36,7 @@ import i2p.bote.crypto.CryptoFactory;
 import i2p.bote.crypto.CryptoImplementation;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.status.ChangeIdentityStatus;
 
 public class EditIdentityFragment extends EditPictureFragment {
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -349,7 +351,15 @@ public class EditIdentityFragment extends EditPictureFragment {
 
         @Override
         public void updateProgress(String... values) {
-            currentStatus = values[0];
+            ChangeIdentityStatus status = ChangeIdentityStatus.valueOf(values[0]);
+            switch (status) {
+                case GENERATING_KEYS:
+                    currentStatus = getString(R.string.generating_keys);
+                    break;
+                case SAVING_IDENTITY:
+                    currentStatus = getString(R.string.saving_identity);
+                    break;
+            }
             mStatus.setText(currentStatus);
         }
 
@@ -380,9 +390,11 @@ public class EditIdentityFragment extends EditPictureFragment {
 
     private class IdentityWaiter extends RobustAsyncTask<Object, String, String> {
         protected String doInBackground(Object... params) {
-            StatusListener lsnr = new StatusListener() {
-                public void updateStatus(String status) {
-                    publishProgress(status);
+            StatusListener<ChangeIdentityStatus> lsnr = new StatusListener<ChangeIdentityStatus>() {
+                public void updateStatus(ChangeIdentityStatus status, String... args) {
+                    List<String> tmp = Arrays.asList(args);
+                    tmp.add(0, status.name());
+                    publishProgress((String[]) tmp.toArray());
                 }
             };
             try {
@@ -398,7 +410,7 @@ public class EditIdentityFragment extends EditPictureFragment {
                         new Properties(),
                         (Boolean) params[8],
                         lsnr);
-                lsnr.updateStatus("Saving identity");
+                lsnr.updateStatus(ChangeIdentityStatus.SAVING_IDENTITY);
                 I2PBote.getInstance().getIdentities().save();
                 return null;
             } catch (Throwable e) {

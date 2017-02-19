@@ -72,6 +72,8 @@ import i2p.bote.service.OutboxListener;
 import i2p.bote.service.OutboxProcessor;
 import i2p.bote.service.RelayPacketSender;
 import i2p.bote.service.RelayPeerManager;
+import i2p.bote.status.ChangePasswordStatus;
+import i2p.bote.status.StatusListener;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -699,8 +701,8 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
      * @throws PasswordException if the old password is incorrect or two new passwords don't match
      */
     public void changePassword(byte[] oldPassword, byte[] newPassword, byte[] confirmNewPassword) throws IOException, GeneralSecurityException, PasswordException {
-        changePassword(oldPassword, newPassword, confirmNewPassword, new StatusListener() {
-            public void updateStatus(String status) {} // Do nothing
+        changePassword(oldPassword, newPassword, confirmNewPassword, new StatusListener<ChangePasswordStatus>() {
+            public void updateStatus(ChangePasswordStatus status, String... args) {} // Do nothing
         });
     }
 
@@ -715,10 +717,10 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
      * @throws PasswordException if the old password is incorrect or two new passwords don't match
      */
     public void changePassword(byte[] oldPassword, byte[] newPassword, byte[] confirmNewPassword,
-            StatusListener lsnr) throws IOException, GeneralSecurityException, PasswordException {
+            StatusListener<ChangePasswordStatus> lsnr) throws IOException, GeneralSecurityException, PasswordException {
         File passwordFile = configuration.getPasswordFile();
 
-        lsnr.updateStatus(_t("Checking password"));
+        lsnr.updateStatus(ChangePasswordStatus.CHECKING_PASSWORD);
 
         if (!FileEncryptionUtil.isPasswordCorrect(oldPassword, passwordFile))
             throw new PasswordException(_t("The old password is not correct."));
@@ -730,17 +732,17 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
             passwordCache.setPassword(newPassword);
             DerivedKey newKey = passwordCache.getKey();
 
-            lsnr.updateStatus(_t("Re-encrypting identities"));
+            lsnr.updateStatus(ChangePasswordStatus.RE_ENCRYPTING_IDENTITIES);
             identities.changePassword(oldPassword, newKey);
 
-            lsnr.updateStatus(_t("Re-encrypting addressbook"));
+            lsnr.updateStatus(ChangePasswordStatus.RE_ENCRYPTING_ADDRESS_BOOK);
             addressBook.changePassword(oldPassword, newKey);
             for (EmailFolder folder: getEmailFolders()) {
-                lsnr.updateStatus(_t("Re-encrypting folder") + " " + folder.getName());
+                lsnr.updateStatus(ChangePasswordStatus.RE_ENCRYPTING_FOLDER, folder.getName());
                 folder.changePassword(oldPassword, newKey);
             }
 
-            lsnr.updateStatus(_t("Updating password file"));
+            lsnr.updateStatus(ChangePasswordStatus.UPDATING_PASSWORD_FILE);
             FileEncryptionUtil.writePasswordFile(passwordFile, passwordCache.getPassword(), newKey);
         }
     }

@@ -23,7 +23,7 @@ package i2p.bote.util;
 
 import i2p.bote.Configuration;
 import i2p.bote.I2PBote;
-import i2p.bote.StatusListener;
+import i2p.bote.status.StatusListener;
 import i2p.bote.Util;
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.crypto.CryptoFactory;
@@ -43,6 +43,7 @@ import i2p.bote.network.DhtException;
 import i2p.bote.network.NetworkStatus;
 import i2p.bote.packet.dht.Contact;
 import i2p.bote.service.EmailChecker;
+import i2p.bote.status.ChangeIdentityStatus;
 
 import java.io.File;
 import java.io.IOException;
@@ -142,8 +143,8 @@ public class GeneralHelper {
      * @throws IllegalDestinationParametersException if <code>cryptoImpl</code> and <code>vanityPrefix</code> aren't compatible
      */
     public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String vanityPrefix, String key, String publicName, String description, String pictureBase64, String emailAddress, Properties config, boolean setDefault) throws GeneralSecurityException, PasswordException, IOException, IllegalDestinationParametersException {
-        createOrModifyIdentity(createNew, cryptoImplId, vanityPrefix, key, publicName, description, pictureBase64, emailAddress, config, setDefault, new StatusListener() {
-            public void updateStatus(String status) {} // Do nothing
+        createOrModifyIdentity(createNew, cryptoImplId, vanityPrefix, key, publicName, description, pictureBase64, emailAddress, config, setDefault, new StatusListener<ChangeIdentityStatus>() {
+            public void updateStatus(ChangeIdentityStatus status, String... args) {} // Do nothing
         });
     }
 
@@ -164,7 +165,7 @@ public class GeneralHelper {
      * @throws IOException 
      * @throws IllegalDestinationParametersException if <code>cryptoImplId</code> and <code>vanityPrefix</code> aren't compatible
      */
-    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String vanityPrefix, String key, String publicName, String description, String pictureBase64, String emailAddress, Properties config, boolean setDefault, StatusListener lsnr) throws GeneralSecurityException, PasswordException, IOException, IllegalDestinationParametersException {
+    public static void createOrModifyIdentity(boolean createNew, int cryptoImplId, String vanityPrefix, String key, String publicName, String description, String pictureBase64, String emailAddress, Properties config, boolean setDefault, StatusListener<ChangeIdentityStatus> lsnr) throws GeneralSecurityException, PasswordException, IOException, IllegalDestinationParametersException {
         Log log = new Log(GeneralHelper.class);
         Identities identities = I2PBote.getInstance().getIdentities();
         EmailIdentity identity;
@@ -177,7 +178,7 @@ public class GeneralHelper {
                 throw new IllegalArgumentException(errorMsg);
             }
 
-            lsnr.updateStatus("Generating keys");
+            lsnr.updateStatus(ChangeIdentityStatus.GENERATING_KEYS);
             try {
                 identity = new EmailIdentity(cryptoImpl, vanityPrefix);
             } catch (GeneralSecurityException e) {

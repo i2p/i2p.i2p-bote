@@ -17,12 +17,16 @@ import android.widget.TextView;
 
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 
+import java.util.Arrays;
+import java.util.List;
+
 import i2p.bote.I2PBote;
-import i2p.bote.StatusListener;
+import i2p.bote.status.StatusListener;
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
 import i2p.bote.android.util.RobustAsyncTask;
 import i2p.bote.android.util.TaskFragment;
+import i2p.bote.status.ChangePasswordStatus;
 
 public class SetPasswordFragment extends Fragment {
     private Callbacks mCallbacks = sDummyCallbacks;
@@ -182,7 +186,24 @@ public class SetPasswordFragment extends Fragment {
 
         @Override
         public void updateProgress(String... values) {
-            currentStatus = values[0];
+            ChangePasswordStatus status = ChangePasswordStatus.valueOf(values[0]);
+            switch (status) {
+                case CHECKING_PASSWORD:
+                    currentStatus = getString(R.string.checking_password);
+                    break;
+                case RE_ENCRYPTING_IDENTITIES:
+                    currentStatus = getString(R.string.re_encrypting_identities);
+                    break;
+                case RE_ENCRYPTING_ADDRESS_BOOK:
+                    currentStatus = getString(R.string.re_encrypting_address_book);
+                    break;
+                case RE_ENCRYPTING_FOLDER:
+                    currentStatus = getString(R.string.re_encrypting_folder, values[1]);
+                    break;
+                case UPDATING_PASSWORD_FILE:
+                    currentStatus = getString(R.string.updating_password_file);
+                    break;
+            }
             mStatus.setText(currentStatus);
         }
 
@@ -213,9 +234,11 @@ public class SetPasswordFragment extends Fragment {
 
     private class PasswordWaiter extends RobustAsyncTask<String, String, String> {
         protected String doInBackground(String... params) {
-            StatusListener lsnr = new StatusListener() {
-                public void updateStatus(String status) {
-                    publishProgress(status);
+            StatusListener<ChangePasswordStatus> lsnr = new StatusListener<ChangePasswordStatus>() {
+                public void updateStatus(ChangePasswordStatus status, String... args) {
+                    List<String> tmp = Arrays.asList(args);
+                    tmp.add(0, status.name());
+                    publishProgress((String[]) tmp.toArray());
                 }
             };
             try {
