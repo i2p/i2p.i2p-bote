@@ -21,14 +21,11 @@
 
 package i2p.bote.email;
 
-import static i2p.bote.Util._t;
-import i2p.bote.Configuration;
-import i2p.bote.Util;
-import i2p.bote.crypto.CryptoFactory;
-import i2p.bote.crypto.CryptoImplementation;
-import i2p.bote.crypto.PrivateKeyPair;
-import i2p.bote.crypto.PublicKeyPair;
-import i2p.bote.util.SortedProperties;
+import com.lambdaworks.codec.Base64;
+
+import net.i2p.crypto.SHA256Generator;
+import net.i2p.data.Hash;
+import net.i2p.util.Log;
 
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
@@ -37,11 +34,13 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.util.Properties;
 
-import net.i2p.crypto.SHA256Generator;
-import net.i2p.data.Hash;
-import net.i2p.util.Log;
-
-import com.lambdaworks.codec.Base64;
+import i2p.bote.Configuration;
+import i2p.bote.Util;
+import i2p.bote.crypto.CryptoFactory;
+import i2p.bote.crypto.CryptoImplementation;
+import i2p.bote.crypto.PrivateKeyPair;
+import i2p.bote.crypto.PublicKeyPair;
+import i2p.bote.util.SortedProperties;
 
 public class EmailIdentity extends EmailDestination {
     private final static Charset UTF8 = Charset.forName("UTF-8");
@@ -72,8 +71,7 @@ public class EmailIdentity extends EmailDestination {
         if ("".equals(vanityPrefix))
             vanityPrefix = null;
         if (vanityPrefix!=null && !cryptoImpl.getBase64InitialCharacters().contains(vanityPrefix.substring(0, 1))) {
-            String errorMsg = "This encryption type does not support destinations that start with {0}. Valid initial characters are {1}.";
-            throw new IllegalDestinationParametersException(_t(errorMsg, vanityPrefix.charAt(0), cryptoImpl.getBase64InitialCharacters()));
+            throw new IllegalDestinationParametersException(vanityPrefix.charAt(0), cryptoImpl.getBase64InitialCharacters());
         }
         
         KeyPair encryptionKeys;

@@ -27,7 +27,20 @@ package i2p.bote.email;
 public class IllegalDestinationParametersException extends Exception {
     private static final long serialVersionUID = 8276866734402342858L;
 
-    IllegalDestinationParametersException(String message) {
-        super(message);
+    private char badChar;
+    private String validChars;
+
+    IllegalDestinationParametersException(char badChar, String validChars) {
+        super();
+        this.badChar = badChar;
+        this.validChars = validChars;
+    }
+
+    public char getBadChar() {
+        return badChar;
+    }
+
+    public String getValidChars() {
+        return validChars;
     }
 }

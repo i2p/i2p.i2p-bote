@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Properties;
 
 import i2p.bote.I2PBote;
+import i2p.bote.email.IllegalDestinationParametersException;
 import i2p.bote.status.StatusListener;
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
@@ -289,7 +290,7 @@ public class EditIdentityFragment extends EditPictureFragment {
         }
     }
 
-    public static class IdentityWaiterFrag extends TaskFragment<Object, String, String> {
+    public static class IdentityWaiterFrag extends TaskFragment<Object, String, Throwable> {
         static final String CREATE_NEW = "create_new";
         static final String CRYPTO_IMPL_ID = "crypto_impl_id";
         static final String VANITY_PREFIX = "vanity_prefix";
@@ -365,32 +366,36 @@ public class EditIdentityFragment extends EditPictureFragment {
         }
 
         @Override
-        public void taskFinished(String result) {
-            super.taskFinished(result);
+        public void taskFinished(Throwable ignored) {
+            super.taskFinished(ignored);
 
             if (getTargetFragment() != null) {
                 Intent i = new Intent();
-                i.putExtra("result", result);
                 getTargetFragment().onActivityResult(
                         getTargetRequestCode(), Activity.RESULT_OK, i);
             }
         }
 
         @Override
-        public void taskCancelled(String error) {
+        public void taskCancelled(Throwable error) {
             super.taskCancelled(error);
 
             if (getTargetFragment() != null) {
                 Intent i = new Intent();
-                i.putExtra("error", error);
+                if (error instanceof IllegalDestinationParametersException) {
+                    IllegalDestinationParametersException e = (IllegalDestinationParametersException) error;
+                    i.putExtra("error", getString(R.string.invalid_vanity_chars, e.getBadChar(), e.getValidChars()));
+                } else {
+                    i.putExtra("error", error.getLocalizedMessage());
+                }
                 getTargetFragment().onActivityResult(
                         getTargetRequestCode(), Activity.RESULT_CANCELED, i);
             }
         }
     }
 
-    private class IdentityWaiter extends RobustAsyncTask<Object, String, String> {
-        protected String doInBackground(Object... params) {
+    private class IdentityWaiter extends RobustAsyncTask<Object, String, Throwable> {
+        protected Throwable doInBackground(Object... params) {
             StatusListener<ChangeIdentityStatus> lsnr = new StatusListener<ChangeIdentityStatus>() {
                 public void updateStatus(ChangeIdentityStatus status, String... args) {
                     ArrayList<String> tmp = new ArrayList<>(Arrays.asList(args));
@@ -416,7 +421,7 @@ public class EditIdentityFragment extends EditPictureFragment {
                 return null;
             } catch (Throwable e) {
                 cancel(false);
-                return e.getMessage();
+                return e;
             }
         }
     }

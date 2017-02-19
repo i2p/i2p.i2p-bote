@@ -127,8 +127,12 @@
                 <c:set var="errorMessage" value="${ib:createOrModifyIdentity(param.createNew, param.cryptoImpl, param.vanityPrefix, param.key, publicName, param.description, null, param.emailAddress, identityConfig, param.defaultIdentity=='on')}"/>
             </c:catch>
             <c:if test="${exception.cause['class'].name eq 'i2p.bote.email.IllegalDestinationParametersException'}">
+                <ib:message key="This encryption type does not support destinations that start with {0}. Valid initial characters are {1}." var="errorMessage">
+                    <ib:param value="${exception.cause.badChar}"/>
+                    <ib:param value="${exception.cause.validChars}"/>
+                </ib:message>
                 <jsp:forward page="editIdentity.jsp">
-                    <jsp:param name="errorMessage" value="${exception.cause.localizedMessage}"/>
+                    <jsp:param name="errorMessage" value="${errorMessage}"/>
                 </jsp:forward>
             </c:if>
 
