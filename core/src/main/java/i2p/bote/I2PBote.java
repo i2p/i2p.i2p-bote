@@ -33,6 +33,8 @@ import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordCache;
 import i2p.bote.fileencryption.PasswordCacheListener;
 import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.fileencryption.PasswordIncorrectException;
+import i2p.bote.fileencryption.PasswordMismatchException;
 import i2p.bote.fileencryption.PasswordVerifier;
 import i2p.bote.folder.DirectoryEntryFolder;
 import i2p.bote.folder.EmailFolder;
@@ -723,9 +725,9 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         lsnr.updateStatus(ChangePasswordStatus.CHECKING_PASSWORD);
 
         if (!FileEncryptionUtil.isPasswordCorrect(oldPassword, passwordFile))
-            throw new PasswordException(_t("The old password is not correct."));
+            throw new PasswordIncorrectException();
         if (!Arrays.equals(newPassword, confirmNewPassword))
-            throw new PasswordException(_t("The new password and the confirmation password do not match."));
+            throw new PasswordMismatchException();
 
         // lock so no files are encrypted with the old password while the password is being changed
         synchronized(passwordCache) {

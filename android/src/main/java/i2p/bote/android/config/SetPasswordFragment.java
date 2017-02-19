@@ -17,10 +17,13 @@ import android.widget.TextView;
 
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import i2p.bote.I2PBote;
+import i2p.bote.fileencryption.PasswordIncorrectException;
+import i2p.bote.fileencryption.PasswordMismatchException;
 import i2p.bote.status.StatusListener;
 import i2p.bote.android.R;
 import i2p.bote.android.util.BoteHelper;
@@ -154,7 +157,7 @@ public class SetPasswordFragment extends Fragment {
         mConfirmField.setEnabled(enabled);
     }
 
-    public static class PasswordWaiterFrag extends TaskFragment<String, String, String> {
+    public static class PasswordWaiterFrag extends TaskFragment<String, String, Throwable> {
         String currentStatus;
         TextView mStatus;
 
@@ -208,32 +211,38 @@ public class SetPasswordFragment extends Fragment {
         }
 
         @Override
-        public void taskFinished(String result) {
-            super.taskFinished(result);
+        public void taskFinished(Throwable ignored) {
+            super.taskFinished(ignored);
 
             if (getTargetFragment() != null) {
                 Intent i = new Intent();
-                i.putExtra("result", result);
                 getTargetFragment().onActivityResult(
                         getTargetRequestCode(), Activity.RESULT_OK, i);
             }
         }
 
         @Override
-        public void taskCancelled(String error) {
+        public void taskCancelled(Throwable error) {
             super.taskCancelled(error);
 
             if (getTargetFragment() != null) {
                 Intent i = new Intent();
-                i.putExtra("error", error);
+                if (error instanceof PasswordIncorrectException) {
+                    i.putExtra("error", getString(R.string.old_password_incorrect));
+                } else if (error instanceof PasswordMismatchException) {
+                    i.putExtra("error", getString(R.string.new_password_mismatch));
+                } else {
+                    i.putExtra("error", error.getLocalizedMessage());
+                }
+                System.out.println("Password error: " + error.toString());
                 getTargetFragment().onActivityResult(
                         getTargetRequestCode(), Activity.RESULT_CANCELED, i);
             }
         }
     }
 
-    private class PasswordWaiter extends RobustAsyncTask<String, String, String> {
-        protected String doInBackground(String... params) {
+    private class PasswordWaiter extends RobustAsyncTask<String, String, Throwable> {
+        protected Throwable doInBackground(String... params) {
             StatusListener<ChangePasswordStatus> lsnr = new StatusListener<ChangePasswordStatus>() {
                 public void updateStatus(ChangePasswordStatus status, String... args) {
                     List<String> tmp = Arrays.asList(args);
@@ -250,7 +259,7 @@ public class SetPasswordFragment extends Fragment {
                 return null;
             } catch (Throwable e) {
                 cancel(false);
-                return e.getMessage();
+                return e;
             }
         }
     }
