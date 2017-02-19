@@ -28,6 +28,24 @@ class Pack200Task extends DefaultTask {
                 }
                 tmp = "$temporaryDir/${jar.file.name}.jar"
             }
+            // Current SCrypt was signed without running pack200 --repack,
+            // so we have to strip the signatures to get pack200 to work
+            if (jar.file.name.startsWith('scrypt')) {
+                def scryptdir = "$temporaryDir/scrypt-filter-dir"
+                tmp = "$temporaryDir/scrypt-filtered.jar"
+                project.copy {
+                    from project.zipTree(jar.file)
+                    into scryptdir
+                    exclude 'META-INF/LAMBDAWO.*'
+                }
+                project.exec {
+                    workingDir scryptdir
+                    executable 'zip'
+                    args '-r',
+                         tmp,
+                         '.'
+                }
+            }
             project.exec {
                 executable 'pack200'
                 args '--no-gzip',
