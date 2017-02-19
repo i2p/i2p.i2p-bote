@@ -25,9 +25,9 @@ import net.i2p.data.Destination;
 
 public class BannedPeer {
     private Destination destination;
-    private String banReason;
+    private BanReason banReason;
 
-    public BannedPeer(Destination destination, String banReason) {
+    public BannedPeer(Destination destination, BanReason banReason) {
         this.destination = destination;
         this.banReason = banReason;
     }
@@ -36,7 +36,7 @@ public class BannedPeer {
         return destination;
     }
     
-    public String getBanReason() {
+    public BanReason getBanReason() {
         return banReason;
     }
 }

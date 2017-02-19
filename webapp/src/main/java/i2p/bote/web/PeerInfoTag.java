@@ -25,6 +25,7 @@ package i2p.bote.web;
 import static i2p.bote.Util._t;
 import i2p.bote.I2PBote;
 import i2p.bote.Util;
+import i2p.bote.network.BanReason;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.RelayPeer;
@@ -149,7 +150,7 @@ public class PeerInfoTag extends SimpleTagSupport {
                     out.println("<tr>");
                     out.println("<td>" + peerIndex++ + "</td>");
                     out.println("<td class=\"ellipsis\">" + Util.toBase32(peer.getDestination()) + "</td>");
-                    out.println("<td>" + (peer.getBanReason()==null?"":peer.getBanReason()) + "</td>");
+                    out.println("<td>" + getBanReason(peer) + "</td>");
                     out.println("</tr>");
                 }
                 
@@ -236,5 +237,18 @@ public class PeerInfoTag extends SimpleTagSupport {
                 _t("Relay Peers:"), JFreeChart.DEFAULT_TITLE_FONT,
                 plot, relayPeers.length == 0 ? false : true);
         return ServletUtilities.saveChartAsPNG(chart, 400, 300, null);
+    }
+
+    private String getBanReason(BannedPeer peer) {
+        BanReason reason = peer.getBanReason();
+        if (reason == null) {
+            return "";
+        }
+        switch (reason.getReason()) {
+            case WRONG_PROTO_VER:
+                return _t("Wrong protocol version:") + " " + reason.getArgs()[0];
+            default:
+                return "";
+        }
     }
 }
