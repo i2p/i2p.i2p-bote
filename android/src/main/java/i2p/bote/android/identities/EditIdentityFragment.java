@@ -21,6 +21,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -392,9 +393,9 @@ public class EditIdentityFragment extends EditPictureFragment {
         protected String doInBackground(Object... params) {
             StatusListener<ChangeIdentityStatus> lsnr = new StatusListener<ChangeIdentityStatus>() {
                 public void updateStatus(ChangeIdentityStatus status, String... args) {
-                    List<String> tmp = Arrays.asList(args);
+                    ArrayList<String> tmp = new ArrayList<>(Arrays.asList(args));
                     tmp.add(0, status.name());
-                    publishProgress((String[]) tmp.toArray());
+                    publishProgress(tmp.toArray(new String[tmp.size()]));
                 }
             };
             try {

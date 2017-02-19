@@ -245,9 +245,9 @@ public class SetPasswordFragment extends Fragment {
         protected Throwable doInBackground(String... params) {
             StatusListener<ChangePasswordStatus> lsnr = new StatusListener<ChangePasswordStatus>() {
                 public void updateStatus(ChangePasswordStatus status, String... args) {
-                    List<String> tmp = Arrays.asList(args);
+                    ArrayList<String> tmp = new ArrayList<>(Arrays.asList(args));
                     tmp.add(0, status.name());
-                    publishProgress((String[]) tmp.toArray());
+                    publishProgress(tmp.toArray(new String[tmp.size()]));
                 }
             };
             try {
