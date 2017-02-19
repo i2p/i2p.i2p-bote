@@ -21,13 +21,61 @@
 
 package i2p.bote;
 
-import static i2p.bote.Util._t;
+import net.i2p.I2PAppContext;
+import net.i2p.I2PException;
+import net.i2p.client.I2PClient;
+import net.i2p.client.I2PClientFactory;
+import net.i2p.client.I2PSession;
+import net.i2p.client.I2PSessionException;
+import net.i2p.client.streaming.I2PSocketManager;
+import net.i2p.client.streaming.I2PSocketManagerFactory;
+import net.i2p.data.Base64;
+import net.i2p.data.DataFormatException;
+import net.i2p.data.Destination;
+import net.i2p.data.Hash;
+import net.i2p.util.I2PAppThread;
+import net.i2p.util.Log;
+import net.i2p.util.SecureFile;
+import net.i2p.util.SecureFileOutputStream;
+
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.lang.Thread.State;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+import javax.mail.MessagingException;
+
 import i2p.bote.addressbook.AddressBook;
 import i2p.bote.crypto.wordlist.WordListAnchor;
 import i2p.bote.debug.DebugSupport;
 import i2p.bote.email.Email;
 import i2p.bote.email.EmailIdentity;
 import i2p.bote.email.Identities;
+import i2p.bote.email.NoIdentityForSenderException;
 import i2p.bote.fileencryption.DerivedKey;
 import i2p.bote.fileencryption.FileEncryptionUtil;
 import i2p.bote.fileencryption.PasswordCache;
@@ -76,54 +124,6 @@ import i2p.bote.service.RelayPacketSender;
 import i2p.bote.service.RelayPeerManager;
 import i2p.bote.status.ChangePasswordStatus;
 import i2p.bote.status.StatusListener;
-
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.lang.Thread.State;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-
-import javax.mail.MessagingException;
-
-import net.i2p.I2PAppContext;
-import net.i2p.I2PException;
-import net.i2p.client.I2PClient;
-import net.i2p.client.I2PClientFactory;
-import net.i2p.client.I2PSession;
-import net.i2p.client.I2PSessionException;
-import net.i2p.client.streaming.I2PSocketManager;
-import net.i2p.client.streaming.I2PSocketManagerFactory;
-import net.i2p.data.Base64;
-import net.i2p.data.DataFormatException;
-import net.i2p.data.Destination;
-import net.i2p.data.Hash;
-import net.i2p.util.I2PAppThread;
-import net.i2p.util.Log;
-import net.i2p.util.SecureFile;
-import net.i2p.util.SecureFileOutputStream;
 
 /**
  * This is the core class of the application. It is implemented as a singleton.
@@ -545,7 +545,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
             String sender = email.getOneFromAddress();
             EmailIdentity senderIdentity = identities.extractIdentity(sender);
             if (senderIdentity == null)
-                throw new MessagingException(_t("No identity matches the sender/from field: " + sender));
+                throw new NoIdentityForSenderException(sender);
             email.sign(senderIdentity, identities);
         }
         

@@ -26,6 +26,7 @@ import i2p.bote.I2PBote;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
 import i2p.bote.email.FileAttachment;
+import i2p.bote.email.NoIdentityForSenderException;
 import i2p.bote.fileencryption.PasswordException;
 
 import java.io.IOException;
@@ -102,6 +103,10 @@ public class SendEmailTag extends BodyTagSupport {
             }
             catch (PasswordException e) {
                 throw new JspException(e);
+            }
+            catch (NoIdentityForSenderException e) {
+                statusMessage = _t("Error sending email: {0}", _t("No identity matches the sender/from field: {0}", e.getSender()));
+                log.error("Error sending email", e);
             }
             catch (Exception e) {
                 statusMessage = _t("Error sending email: {0}", e.getLocalizedMessage());
