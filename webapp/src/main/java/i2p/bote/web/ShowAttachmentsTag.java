@@ -21,8 +21,7 @@
 
 package i2p.bote.web;
 
-import i2p.bote.Util;
-import i2p.bote.email.Email;
+import org.apache.taglibs.standard.functions.Functions;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,7 +33,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import org.apache.taglibs.standard.functions.Functions;
+import i2p.bote.email.Email;
 
 /** See <code>i2pbote.tld</code> for a description */
 public class ShowAttachmentsTag extends SimpleTagSupport {
@@ -54,7 +53,7 @@ public class ShowAttachmentsTag extends SimpleTagSupport {
                 if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
                     String filename = Functions.escapeXml(part.getFileName());
                     out.println("<a href=\"showAttachment?messageID=" + email.getMessageID() + "&folder=" + folder + "&part=" + partIndex + "\">" +
-                            filename + "</a> (" + Util.getHumanReadableSize(part) + ") <br/>");
+                            filename + "</a> (" + JSPHelper.getHumanReadableSize(part) + ") <br/>");
                 }
             }
         } catch (MessagingException e) {

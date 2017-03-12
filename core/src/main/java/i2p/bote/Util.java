@@ -21,6 +21,19 @@
 
 package i2p.bote;
 
+import net.i2p.I2PAppContext;
+import net.i2p.crypto.SHA256Generator;
+import net.i2p.crypto.SessionKeyManager;
+import net.i2p.data.Base32;
+import net.i2p.data.DataFormatException;
+import net.i2p.data.Destination;
+import net.i2p.data.Hash;
+import net.i2p.data.PrivateKey;
+import net.i2p.data.PublicKey;
+import net.i2p.data.SessionKey;
+import net.i2p.util.Log;
+import net.i2p.util.Translate;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -36,31 +49,16 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.ThreadFactory;
 
 import javax.mail.MessagingException;
 import javax.mail.Part;
-
-import net.i2p.I2PAppContext;
-import net.i2p.crypto.SHA256Generator;
-import net.i2p.crypto.SessionKeyManager;
-import net.i2p.data.Base32;
-import net.i2p.data.DataFormatException;
-import net.i2p.data.Destination;
-import net.i2p.data.Hash;
-import net.i2p.data.PrivateKey;
-import net.i2p.data.PublicKey;
-import net.i2p.data.SessionKey;
-import net.i2p.util.Log;
-import net.i2p.util.Translate;
 
 public class Util {
     private static final String BUNDLE_NAME = "i2p.bote.locale.Messages";
@@ -78,18 +76,6 @@ public class Util {
                 byteStream.write(buffer, 0, bytesRead);
         } while (bytesRead > 0);
         return byteStream.toByteArray();
-    }
-
-    public static String getHumanReadableSize(File file) {
-        long size = file.length();
-        return getHumanReadableSize(size);
-    }
-    
-    /** Returns the size of an email attachment in a user-friendly format 
-     * @throws MessagingException 
-     * @throws IOException */
-    public static String getHumanReadableSize(Part part) throws IOException, MessagingException {
-        return getHumanReadableSize(getPartSize(part));
     }
 
     public static long getPartSize(Part part) throws IOException, MessagingException {
@@ -115,25 +101,6 @@ public class Util {
         }
 
         return totalBytes;
-    }
-    
-    private static String getHumanReadableSize(long numBytes) {
-        String language = Translate.getLanguage(I2PAppContext.getGlobalContext());
-        int unit = (63-Long.numberOfLeadingZeros(numBytes)) / 10;   // 0 if totalBytes<1K, 1 if 1K<=totalBytes<1M, etc.
-        double value = (double)numBytes / (1<<(10*unit));
-        String messageKey;
-        switch (unit) {
-        case 0: messageKey = "{0} Bytes"; break;
-        case 1: messageKey = "{0} KBytes"; break;
-        case 2: messageKey = "{0} MBytes"; break;
-        default: messageKey = "{0} GBytes";
-        }
-        NumberFormat formatter = NumberFormat.getInstance(new Locale(language));
-        if (value < 100)
-            formatter.setMaximumFractionDigits(1);
-        else
-            formatter.setMaximumFractionDigits(0);
-        return _t(messageKey, formatter.format(value));
     }
     
     /**
@@ -197,7 +164,7 @@ public class Util {
      * Opens an <code>InputStream</code> and reads one line at a time.
      * Returns the lines as a <code>List</code> of <code>String</code>s.
      * or an empty <code>List</code> if an error occurred.
-     * @param url
+     * @param inputStream
      * @see #readLines(URL)
      */
     public static List<String> readLines(InputStream inputStream) throws IOException {

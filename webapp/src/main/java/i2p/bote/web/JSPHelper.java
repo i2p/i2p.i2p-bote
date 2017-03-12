@@ -23,27 +23,32 @@ package i2p.bote.web;
 
 import static i2p.bote.Util._t;
 import i2p.bote.I2PBote;
+import i2p.bote.Util;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.Outbox.EmailStatus;
 import i2p.bote.util.GeneralHelper;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.mail.MessagingException;
+import javax.mail.Part;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 
@@ -203,6 +208,41 @@ public class JSPHelper extends GeneralHelper {
             return null;
 
         return s.replaceAll("\"", "&quot;").replaceAll("'", "&apos;");
+    }
+
+    private static String getHumanReadableSize(long numBytes) {
+        String language = Translate.getLanguage(I2PAppContext.getGlobalContext());
+        int unit = (63-Long.numberOfLeadingZeros(numBytes)) / 10;   // 0 if totalBytes<1K, 1 if 1K<=totalBytes<1M, etc.
+        double value = (double)numBytes / (1<<(10*unit));
+        String messageKey;
+        switch (unit) {
+            case 0: messageKey = "{0} Bytes"; break;
+            case 1: messageKey = "{0} KBytes"; break;
+            case 2: messageKey = "{0} MBytes"; break;
+            default: messageKey = "{0} GBytes";
+        }
+        NumberFormat formatter = NumberFormat.getInstance(new Locale(language));
+        if (value < 100)
+            formatter.setMaximumFractionDigits(1);
+        else
+            formatter.setMaximumFractionDigits(0);
+        return _t(messageKey, formatter.format(value));
+    }
+
+    public static String getHumanReadableSize(File file) {
+        long size = file.length();
+        return getHumanReadableSize(size);
+    }
+
+    /** Returns the size of an email attachment in a user-friendly format
+     * @throws MessagingException
+     * @throws IOException */
+    public static String getHumanReadableSize(Part part) throws IOException, MessagingException {
+        return getHumanReadableSize(Util.getPartSize(part));
+    }
+
+    public static String getFileSize(String filename) {
+        return getHumanReadableSize(new File(filename));
     }
 
     public static String urlEncode(String input) {

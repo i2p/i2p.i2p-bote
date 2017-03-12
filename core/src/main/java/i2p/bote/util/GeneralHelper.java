@@ -613,10 +613,6 @@ public class GeneralHelper {
         return I2PBote.getInstance().getUndecryptableFiles();
     }
 
-    public static String getFileSize(String filename) {
-        return Util.getHumanReadableSize(new File(filename));
-    }
-
     public boolean getRequiredCryptoStrengthSatisfied() {
         return _isUnlimited;
     }
