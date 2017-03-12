@@ -82,12 +82,10 @@ dependencies {
     compile 'net.i2p.android.ext:floatingactionbutton:1.10.1'
     compile 'com.madgag.spongycastle:core:1.52.0.0'
     compile 'com.madgag.spongycastle:prov:1.52.0.0'
-    compile('com.mcxiaoke.viewpagerindicator:library:2.4.1') {
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
     compile 'com.google.zxing:core:3.3.0'
     compile 'com.google.zxing:android-integration:3.3.0'
     compile 'com.androidplot:androidplot-core:1.4.1'
+    compile 'com.inkapplications.viewpageindicator:library:2.4.4'
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'com.mikepenz:iconics-core:2.7.2@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
@@ -120,10 +118,10 @@ dependencyVerification {
             'net.i2p.android.ext:floatingactionbutton:09d43e2d4ac04a91bf7a37e1ec48a8d220204e3a55dca72cd36cd9fa27461ade',
             'com.madgag.spongycastle:core:07a401edbe26e1028e2324754557b741cc57306008df7b71a9e12ec32d65be8f',
             'com.madgag.spongycastle:prov:becbb70797b0103517693d2a97ce93174cc4d1f732897ed965a24e32dd99503e',
-            'com.mcxiaoke.viewpagerindicator:library:1e8aad664137f68abdfee94889f6da3dc98be652a235176a403965a07a25de62',
             'com.google.zxing:core:bba7724e02a997cec38213af77133ee8e24b0d5cf5fa7ecbc16a4fa93f11ee0d',
             'com.google.zxing:android-integration:dc6d6da7d4f4a7dffa6a049e62db6d0cd4c28aa14524968e41460e559a444e84',
             'com.androidplot:androidplot-core:7670da5838ce2ae2b0b5faabeb9d6a1f2787d30d3fe9f0952adc5611910d18c0',
+            'com.inkapplications.viewpageindicator:library:77b26a7723cd10fa5e29480be239e8d68f431f4bc20d9144169c9ce06ebac2bf',
             'com.pnikosis:materialish-progress:da089a90d1dab61e9b50038c09081019398f81190d12b0b567ce94b83ef8cf93',
             'com.mikepenz:iconics-core:212425278ba9894cc8482c486a7cc7c37d7dc69b33e39373d9d3092280c6c061',
             'com.mikepenz:google-material-typeface:f27c629ba5d2a90ecfbd7f221ff98cd363e1ee6be06b099b82bae490766e14a5',
