@@ -238,7 +238,7 @@
     <string name="default_identity">Default identity</string>
     <string name="save_identity">Save identity</string>
     <string name="delete_identity">Delete identity?</string>
-    <string name="invalid_vanity_chars">This encryption type does not support destinations that start with '%1$s'. Valid initial characters are '%2$s'.</string>
+    <string name="invalid_vanity_chars">This encryption type does not support destinations that start with \'%1$s\'. Valid initial characters are \'%2$s\'.</string>
     <string name="identity_saved">Identity saved</string>
     <string name="export_identities">Export identities</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
