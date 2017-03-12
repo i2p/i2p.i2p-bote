@@ -40,7 +40,7 @@ android {
     }
 }
 
-def supportVersion = '25.1.1'
+def supportVersion = '25.2.0'
 
 configurations.all {
     resolutionStrategy {
@@ -105,12 +105,12 @@ dependencies {
 dependencyVerification {
     verify = [
             'com.android.support:multidex:60df8e7153fabdcf3a6a48a2ce5980b599cf25cbeb3b689b7b615975ca731840',
-            'com.android.support:support-annotations:46cc01378ddbefa9d0a6bd46bb3c10b35b06e06e375d41a357c3769ba563e9c6',
-            'com.android.support:support-v4:b9b0b9220b7ece40cd621ee839d36d8094694151c7d7021ae91e3e7b76c1300f',
-            'com.android.support:appcompat-v7:c485c421d73fa5b257fa4c39a31f7e24aeada62451f84b44250b8285b0dc95ae',
-            'com.android.support:preference-v7:444c586ddfe186c61bf89a5d77e07a7237307a8b2b3b08bb7802713f144b1218',
-            'com.android.support:preference-v14:3a404b1e1e6a66d2e7d614c170da497aaaec55002fe5fb808635ac1c88812e63',
-            'com.android.support:recyclerview-v7:e3b519f59f05e9765fdc93b88286e4a7b9430f64b6440a03bacb5847daa8e13c',
+            'com.android.support:support-annotations:47a2a30eab487a490a8a8f16678007c3d2b6dcae1e09b0485a12bbf921200ec3',
+            'com.android.support:support-v4:cd030f875dc7ee73b58e17598f368a2e12824fb3ceb4ed515ed815a47160228c',
+            'com.android.support:appcompat-v7:120f3ce6cac682d69e53d80ccfa9cee076f0f11ccbe56d4ccd72099a745e81f9',
+            'com.android.support:preference-v7:64a8ca1a4d69efae367e1c57ac61e79b23cac4b973dfae1f175efe670cfe1da7',
+            'com.android.support:preference-v14:f56d184aefc0e950e0256227624a9586cdc9a4dfcb7f1fe6f50aabcc1cba9532',
+            'com.android.support:recyclerview-v7:d6ba2c3a6196cc464eb4d69756229523a46eef7804991e5a8cf2d6306dbff10c',
             'com.sun.mail:android-activation:61c18cfff09374e90d5168daf40b3d50d77bed8bc0b071124c064ecc3b157506',
             'com.sun.mail:android-mail:ab177c3119400c661a026febe0ed84b8661ca61dbde8cbaad1a3ab507d4e5fb8',
             'net.i2p:router:74fa6ee310f5e089c0ccf7d9e844ccf0e180f23bf33e068778e7288aa9e6509a',
