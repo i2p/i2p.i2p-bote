@@ -253,6 +253,7 @@ class I2PPlugin implements Plugin<Project> {
 
             p.task('signXPI2PPlugin', type: JavaExec) {
                 def xpi2pFile = p.file("$pluginDir/${p.i2p.plugin.name}.xpi2p")
+                inputs.files p.pluginZip.outputs.files
                 outputs.files xpi2pFile
                 main = 'net.i2p.crypto.TrustedUpdate'
                 classpath = p.configurations.i2pPluginSign
@@ -271,6 +272,7 @@ class I2PPlugin implements Plugin<Project> {
 
             p.task('signSU3Plugin', type: JavaExec) {
                 def su3File = p.file("$pluginDir/${p.i2p.plugin.name}.su3")
+                inputs.files p.pluginZip.outputs.files
                 outputs.files su3File
                 standardInput = System.in
                 main = 'net.i2p.crypto.SU3File'
