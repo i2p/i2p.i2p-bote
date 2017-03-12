@@ -35,6 +35,7 @@ import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.Message.RecipientType;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -106,6 +107,10 @@ public class SendEmailTag extends BodyTagSupport {
             }
             catch (NoIdentityForSenderException e) {
                 statusMessage = _t("Error sending email: {0}", _t("No identity matches the sender/from field: {0}", e.getSender()));
+                log.error("Error sending email", e);
+            }
+            catch (AddressException e) {
+                statusMessage = _t("Error sending email: {0}", _t("Address doesn't contain an Email Destination or an external address: {0}", e.getRef()));
                 log.error("Error sending email", e);
             }
             catch (Exception e) {

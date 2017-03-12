@@ -45,6 +45,7 @@ import java.util.Locale;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import i2p.bote.I2PBote;
@@ -582,7 +583,7 @@ public class NewEmailFragment extends Fragment {
         } catch (PasswordException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (DataFormatException e) {
+        } catch (AddressException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (MessagingException e) {

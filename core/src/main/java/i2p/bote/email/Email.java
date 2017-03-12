@@ -21,14 +21,11 @@
 
 package i2p.bote.email;
 
-import static i2p.bote.Util._t;
-import i2p.bote.UniqueId;
-import i2p.bote.crypto.CryptoFactory;
-import i2p.bote.crypto.CryptoImplementation;
-import i2p.bote.crypto.KeyUpdateHandler;
-import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.fileencryption.PasswordHolder;
-import i2p.bote.packet.dht.UnencryptedEmailPacket;
+import com.nettgryppa.security.HashCash;
+
+import net.i2p.data.Base64;
+import net.i2p.util.Log;
+import net.i2p.util.SystemVersion;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -64,14 +61,15 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import net.i2p.data.Base64;
-import net.i2p.data.DataFormatException;
-import net.i2p.util.Log;
-import net.i2p.util.SystemVersion;
 import SevenZip.Compression.LZMA.Decoder;
 import SevenZip.Compression.LZMA.Encoder;
-
-import com.nettgryppa.security.HashCash;
+import i2p.bote.UniqueId;
+import i2p.bote.crypto.CryptoFactory;
+import i2p.bote.crypto.CryptoImplementation;
+import i2p.bote.crypto.KeyUpdateHandler;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.fileencryption.PasswordHolder;
+import i2p.bote.packet.dht.UnencryptedEmailPacket;
 
 public class Email extends MimeMessage {
     private static final String SIGNATURE_HEADER = "X-I2PBote-Signature";   // contains the sender's base64-encoded signature
@@ -457,34 +455,21 @@ public class Email extends MimeMessage {
     }
     
     /**
-     * Throws a <code>DataFormatException</code> if one or more address fields contain an invalid
-     * Email Destination. If all addresses are valid, nothing happens.
-     * @throws MessagingException
-     * @throws DataFormatException
+     * If all addresses are valid, nothing happens.
+     * @throws AddressException if one or more address fields contain an invalid address.
+     * @throws MessagingException on underlying failures.
      */
-    public void checkAddresses() throws MessagingException, DataFormatException {
+    public void checkAddresses() throws MessagingException {
         // Check sender
         Collection<Address> fromAddresses = getAllFromAddresses();
         for (Address address : fromAddresses) {
-            try {
-                checkSender(address);
-            } catch (AddressException e) {
-                String errorMessage = _t("Address doesn't contain an Email Destination or an external address: {0}", address);
-                log.debug(errorMessage, e);
-                throw new DataFormatException(errorMessage);
-            }
+            checkSender(address);
         }
 
         // Check all other addresses
         Collection<Address> addresses = getAllAddresses(false);
         for (Address address: addresses) {
-            try {
-                checkRecipient(address);
-            } catch (AddressException e) {
-                String errorMessage = _t("Address doesn't contain an Email Destination or an external address: {0}", address);
-                log.debug(errorMessage, e);
-                throw new DataFormatException(errorMessage);
-            }
+            checkRecipient(address);
         }
     }
     
@@ -503,7 +488,7 @@ public class Email extends MimeMessage {
             // check for external address
             // InternetAddress accepts addresses without a domain, so check that there is a '.' after the '@'
             if (addr.indexOf('@') >= addr.indexOf('.'))
-                throw new AddressException(_t("Invalid address: {0}", addr));
+                throw new AddressException("Address doesn't contain an Email Destination or an external address", addr);
         }
     }
     /*

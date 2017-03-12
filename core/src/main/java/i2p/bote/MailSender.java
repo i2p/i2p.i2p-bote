@@ -33,5 +33,5 @@ import net.i2p.data.DataFormatException;
 
 public interface MailSender {
 
-    void sendEmail(Email email) throws MessagingException, PasswordException, IOException, GeneralSecurityException, DataFormatException;
+    void sendEmail(Email email) throws MessagingException, PasswordException, IOException, GeneralSecurityException;
 }

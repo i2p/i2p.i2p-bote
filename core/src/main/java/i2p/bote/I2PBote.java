@@ -537,7 +537,7 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
             return i2pSession.getMyDestination();
     }
     
-    public void sendEmail(Email email) throws MessagingException, PasswordException, IOException, GeneralSecurityException, DataFormatException {
+    public void sendEmail(Email email) throws MessagingException, PasswordException, IOException, GeneralSecurityException {
         email.checkAddresses();
         
         // sign email unless sender is anonymous
