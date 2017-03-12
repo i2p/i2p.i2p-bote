@@ -53,6 +53,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 
 import net.i2p.I2PAppContext;
+import net.i2p.data.Destination;
 import net.i2p.util.Log;
 import net.i2p.util.Translate;
 
@@ -239,6 +240,13 @@ public class JSPHelper extends GeneralHelper {
      * @throws IOException */
     public static String getHumanReadableSize(Part part) throws IOException, MessagingException {
         return getHumanReadableSize(Util.getPartSize(part));
+    }
+
+    public String getLocalDestination() {
+        Destination dest = I2PBote.getInstance().getLocalDestination();
+        if (dest != null)
+            return Util.toBase32(dest);
+        return Util._t("Not set.");
     }
 
     public static String getFileSize(String filename) {

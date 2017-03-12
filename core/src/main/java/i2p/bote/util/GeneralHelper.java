@@ -119,13 +119,6 @@ public class GeneralHelper {
         return I2PBote.getInstance().getAddressBook();
     }
 
-    public String getLocalDestination() {
-        Destination dest = I2PBote.getInstance().getLocalDestination();
-        if (dest != null)
-            return Util.toBase32(dest);
-        return Util._t("Not set.");
-    }
-
     /**
      * Updates an email identity if <code>createNew</code> is <code>false</code>,
      * or adds a new identity if <code>createNew</code> is <code>true</code>.
@@ -173,9 +166,8 @@ public class GeneralHelper {
         if (createNew) {
             CryptoImplementation cryptoImpl = CryptoFactory.getInstance(cryptoImplId);
             if (cryptoImpl == null) {
-                String errorMsg = Util._t("Invalid ID number for CryptoImplementation: " + cryptoImplId);
-                log.error(errorMsg);
-                throw new IllegalArgumentException(errorMsg);
+                log.error("Invalid ID number for CryptoImplementation: " + cryptoImplId);
+                throw new IllegalArgumentException("Invalid ID number for CryptoImplementation: " + cryptoImplId);
             }
 
             lsnr.updateStatus(ChangeIdentityStatus.GENERATING_KEYS);
