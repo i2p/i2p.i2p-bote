@@ -145,14 +145,14 @@ public class SmtpService extends SMTPServer {
                         email.removeBoteSuffixes();
                         
                         mailSender.sendEmail(email);
-                    } catch(MessagingException e) {
-                        throw new IOException(e);
                     } catch (IOException e) {
                         throw e;
-                    } catch (DataFormatException e) {
+                    } catch (AddressException e) {
                         throw new RejectException(e.getLocalizedMessage());
                     } catch (PasswordException e) {
                         throw new RejectException(e.getLocalizedMessage());
+                    } catch(MessagingException e) {
+                        throw new IOException(e);
                     } catch (GeneralSecurityException e) {
                         throw new IOException(e);
                     }
