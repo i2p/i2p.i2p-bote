@@ -101,6 +101,7 @@ import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.DhtPeerSource;
 import i2p.bote.network.DhtPeerStats;
+import i2p.bote.network.DhtPeerStatsRenderer;
 import i2p.bote.network.DhtResults;
 import i2p.bote.network.I2PPacketDispatcher;
 import i2p.bote.network.I2PSendQueue;
@@ -810,11 +811,11 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         return folders;
     }
     
-    public DhtPeerStats getDhtStats() {
+    public DhtPeerStats getDhtStats(DhtPeerStatsRenderer renderer) {
         if (dht == null)
             return null;
         else
-            return dht.getPeerStats();
+            return dht.getPeerStats(renderer);
     }
     
     public Set<RelayPeer> getRelayPeers() {

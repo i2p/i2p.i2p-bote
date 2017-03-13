@@ -21,15 +21,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import i2p.bote.I2PBote;
 import i2p.bote.network.BannedPeer;
 import i2p.bote.network.DhtPeerStats;
+import i2p.bote.network.DhtPeerStatsRow;
 import i2p.bote.network.RelayPeer;
-
-import static i2p.bote.Util._t;
 
 public class NetworkInfoFragment extends Fragment {
     private Exception mConnectError;
@@ -97,7 +95,7 @@ public class NetworkInfoFragment extends Fragment {
     }
 
     private void setupKademliaPeers() {
-        DhtPeerStats dhtStats = I2PBote.getInstance().getDhtStats();
+        DhtPeerStats dhtStats = I2PBote.getInstance().getDhtStats(new AndroidPeerStatsRenderer());
         if (dhtStats != null) {
             if (dhtStats.getData().size() == 0) {
                 Segment n = new Segment("", 100);
@@ -108,8 +106,8 @@ public class NetworkInfoFragment extends Fragment {
                 mKademliaPie.addSeries(n, nf);
             } else {
                 int reachable = 0;
-                for (List<String> row : dhtStats.getData()) {
-                    if (_t("No").equals(row.get(4)))
+                for (DhtPeerStatsRow row : dhtStats.getData()) {
+                    if (row.isReachable())
                         reachable += 1;
                 }
                 int unreachable = dhtStats.getData().size() - reachable;

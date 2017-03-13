@@ -29,6 +29,7 @@ import i2p.bote.network.DHT;
 import i2p.bote.network.DhtException;
 import i2p.bote.network.DhtPeerSource;
 import i2p.bote.network.DhtPeerStats;
+import i2p.bote.network.DhtPeerStatsRenderer;
 import i2p.bote.network.DhtResults;
 import i2p.bote.network.DhtStorageHandler;
 import i2p.bote.network.I2PPacketDispatcher;
@@ -255,8 +256,8 @@ public class KademliaDHT extends I2PAppThread implements DHT, PacketListener {
     }
 
     @Override
-    public DhtPeerStats getPeerStats() {
-        return bucketManager.getPeerStats();
+    public DhtPeerStats getPeerStats(DhtPeerStatsRenderer renderer) {
+        return bucketManager.getPeerStats(renderer);
     }
     
     private DhtResults find(Hash key, Class<? extends DhtStorablePacket> dataType, boolean exhaustive) throws InterruptedException {

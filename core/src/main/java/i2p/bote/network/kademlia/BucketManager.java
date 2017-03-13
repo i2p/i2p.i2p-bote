@@ -24,6 +24,7 @@ package i2p.bote.network.kademlia;
 import i2p.bote.Util;
 import i2p.bote.network.BanList;
 import i2p.bote.network.DhtPeerStats;
+import i2p.bote.network.DhtPeerStatsRenderer;
 import i2p.bote.network.PacketListener;
 import i2p.bote.packet.CommunicationPacket;
 
@@ -306,8 +307,8 @@ class BucketManager implements PacketListener, Iterable<KBucket> {
     /**
      * @see KademliaDHT.getPeerStats()
      */
-    DhtPeerStats getPeerStats() {
-        return new KademliaPeerStats(sBucket, kBuckets, localDestinationHash);
+    DhtPeerStats getPeerStats(DhtPeerStatsRenderer renderer) {
+        return new KademliaPeerStats(renderer, sBucket, kBuckets, localDestinationHash);
     }
 
     /**

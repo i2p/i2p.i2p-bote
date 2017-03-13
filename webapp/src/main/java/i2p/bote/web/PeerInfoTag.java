@@ -22,31 +22,32 @@
 
 package i2p.bote.web;
 
-import static i2p.bote.Util._t;
-import i2p.bote.I2PBote;
-import i2p.bote.Util;
-import i2p.bote.network.BanReason;
-import i2p.bote.network.BannedPeer;
-import i2p.bote.network.DhtPeerStats;
-import i2p.bote.network.RelayPeer;
-
-import java.awt.Color;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
+import net.i2p.util.Log;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.RingPlot;
 import org.jfree.chart.servlet.ServletUtilities;
 import org.jfree.data.general.DefaultPieDataset;
 
-import net.i2p.util.Log;
+import java.awt.Color;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.SimpleTagSupport;
+
+import i2p.bote.I2PBote;
+import i2p.bote.Util;
+import i2p.bote.network.BanReason;
+import i2p.bote.network.BannedPeer;
+import i2p.bote.network.DhtPeerStats;
+import i2p.bote.network.DhtPeerStatsRow;
+import i2p.bote.network.RelayPeer;
+
+import static i2p.bote.Util._t;
 
 public class PeerInfoTag extends SimpleTagSupport {
     private Log log = new Log(PeerInfoTag.class);
@@ -58,7 +59,7 @@ public class PeerInfoTag extends SimpleTagSupport {
         
         try {
             // Print DHT peer info
-            DhtPeerStats dhtStats = I2PBote.getInstance().getDhtStats();
+            DhtPeerStats dhtStats = I2PBote.getInstance().getDhtStats(new WebappPeerStatsRenderer());
             if (dhtStats == null)
                 return;
 
@@ -97,9 +98,9 @@ public class PeerInfoTag extends SimpleTagSupport {
                 out.println("</tr>");
                 
                 // data
-                for (List<String> row: dhtStats.getData()) {
+                for (DhtPeerStatsRow row: dhtStats.getData()) {
                     out.println("<tr>");
-                    for (String cellData: row)
+                    for (String cellData: row.toStrings())
                         out.println("<td class=\"ellipsis\">" + cellData + "</td>");
                     out.println("</tr>");
                 }
@@ -172,8 +173,8 @@ public class PeerInfoTag extends SimpleTagSupport {
             plot.setSectionPaint("", Color.gray);
         } else {
             int reachable = 0;
-            for (List<String> row : dhtStats.getData()) {
-                if (_t("No").equals(row.get(4)))
+            for (DhtPeerStatsRow row : dhtStats.getData()) {
+                if (row.isReachable())
                     reachable += 1;
             }
             int unreachable = numDhtPeers - reachable;

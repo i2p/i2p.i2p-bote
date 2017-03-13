@@ -59,5 +59,5 @@ public interface DHT {
     /** Returns <code>true</code> if a connection to the DHT has been established. */
     boolean isReady();
 
-    DhtPeerStats getPeerStats();
+    DhtPeerStats getPeerStats(DhtPeerStatsRenderer renderer);
 }
