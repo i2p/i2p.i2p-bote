@@ -33,6 +33,9 @@ sourceSets {
             srcDir jspcDir
         }
     }
+    poupdate {
+        compileClasspath += configurations.providedCompile
+    }
 }
 
 precompileJsp.dependsOn compileJava
@@ -135,6 +138,54 @@ dependencyVerification {
         'org.jfree:jfreechart:153d077d6399776a45de97c555ad026eb6201d4bd8af86cfce7b8b4ccfa66263',
         'org.subethamail:subethasmtp:5196a0da2c5a33d1a04e88fc7a9cc109501bc265b5bac8edd9984a1885070ad4',
     ]
+}
+
+def stringsDir = project.file("$buildDir/strings")
+def potFile = project.file("$stringsDir/test.pot")
+task createStringsDir << {
+    mkdir(stringsDir)
+}
+
+task javaStrings(type: Exec, dependsOn: [createStringsDir, compilePoupdateJava]) {
+    outputs.files potFile
+    executable 'xgettext'
+    args '-F',
+            '-L', 'java',
+            '--from-code=UTF-8',
+            '--keyword=_t',
+            '--keyword=_x',
+            '-o', potFile
+    args sourceSets.main.java.collect { File file ->
+        file.absolutePath.substring(projectDir.absolutePath.length()+1)
+    }
+}
+
+task jspStrings(type: JavaExec, dependsOn: javaStrings) {
+    main = 'i2p.bote.ant.JspStrings'
+    classpath = configurations.providedCompile + sourceSets.poupdate.output
+    args webAppDirName
+    standardOutput = new ByteArrayOutputStream()
+    workingDir projectDir
+
+    doLast {
+        potFile.append(standardOutput.toString())
+        exec {
+            executable 'msguniq'
+            args '-o', potFile, potFile
+        }
+    }
+}
+
+task poupdate(dependsOn: jspStrings) << {
+    fileTree("$projectDir/src/main/locale").include('**/messages_*.po').each { File file ->
+        exec {
+            executable 'msgmerge'
+            args '-U',
+                    '--backup=none',
+                    file,
+                    potFile
+        }
+    }
 }
 
 war {
