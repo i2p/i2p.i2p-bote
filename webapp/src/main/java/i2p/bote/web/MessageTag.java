@@ -77,7 +77,7 @@ public class MessageTag extends BodyTagSupport {
         if (hide && I2PBote.getInstance().getConfiguration().getHideLocale())
             translation = key;
         else
-            translation = Util._t(key);
+            translation = WebappUtil._t(key);
         
         // replace {0}, {1},... with param values
         do {

@@ -21,7 +21,6 @@
 
 package i2p.bote.web;
 
-import static i2p.bote.Util._t;
 import i2p.bote.I2PBote;
 import i2p.bote.Util;
 import i2p.bote.email.Email;
@@ -56,6 +55,8 @@ import net.i2p.I2PAppContext;
 import net.i2p.data.Destination;
 import net.i2p.util.Log;
 import net.i2p.util.Translate;
+
+import static i2p.bote.web.WebappUtil._t;
 
 /**
  * Implements the JSP functions defined in the <code>i2pbote.tld</code> file,
@@ -246,7 +247,7 @@ public class JSPHelper extends GeneralHelper {
         Destination dest = I2PBote.getInstance().getLocalDestination();
         if (dest != null)
             return Util.toBase32(dest);
-        return Util._t("Not set.");
+        return _t("Not set.");
     }
 
     public static String getFileSize(String filename) {

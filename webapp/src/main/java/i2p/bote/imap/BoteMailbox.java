@@ -21,7 +21,6 @@
 
 package i2p.bote.imap;
 
-import static i2p.bote.Util._t;
 import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.folder.EmailFolder;
@@ -46,6 +45,8 @@ import org.apache.james.mailbox.model.MailboxPath;
 import org.apache.james.mailbox.model.MessageRange;
 import org.apache.james.mailbox.store.mail.model.Message;
 import org.apache.james.mailbox.store.mail.model.impl.SimpleMailbox;
+
+import static i2p.bote.web.WebappUtil._t;
 
 /**
  * Implementation of {@link org.apache.james.mailbox.store.mail.model.Mailbox}.

@@ -47,7 +47,7 @@ import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.DhtPeerStatsRow;
 import i2p.bote.network.RelayPeer;
 
-import static i2p.bote.Util._t;
+import static i2p.bote.web.WebappUtil._t;
 
 public class PeerInfoTag extends SimpleTagSupport {
     private Log log = new Log(PeerInfoTag.class);

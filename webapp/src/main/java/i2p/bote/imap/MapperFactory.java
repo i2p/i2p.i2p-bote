@@ -21,7 +21,6 @@
 
 package i2p.bote.imap;
 
-import static i2p.bote.Util._t;
 import i2p.bote.folder.EmailFolder;
 import i2p.bote.folder.EmailFolderManager;
 
@@ -55,6 +54,8 @@ import org.apache.james.mailbox.store.mail.UidProvider;
 import org.apache.james.mailbox.store.mail.model.Mailbox;
 import org.apache.james.mailbox.store.mail.model.Message;
 import org.apache.james.mailbox.store.user.SubscriptionMapper;
+
+import static i2p.bote.web.WebappUtil._t;
 
 /**
  * Concrete subclass of {@link MailboxSessionMapperFactory}.

@@ -21,7 +21,7 @@ package i2p.bote.web;
 import i2p.bote.network.DhtPeerStats;
 import i2p.bote.network.DhtPeerStatsRenderer;
 
-import static i2p.bote.Util._t;
+import static i2p.bote.web.WebappUtil._t;
 
 /**
  * Renders UI strings for DHT peer stats.

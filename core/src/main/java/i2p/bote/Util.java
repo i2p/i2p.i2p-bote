@@ -61,8 +61,6 @@ import javax.mail.MessagingException;
 import javax.mail.Part;
 
 public class Util {
-    private static final String BUNDLE_NAME = "i2p.bote.locale.Messages";
-    
     private Util() { }
     
     /** Reads all data from an <code>InputStream</code> */
@@ -282,18 +280,6 @@ public class Util {
                 collection.add(element);
             return collection;
         }
-    }
-
-    public static String _t(String messageKey) {
-        return Translate.getString(messageKey, I2PAppContext.getGlobalContext(), BUNDLE_NAME);
-    }
-    
-    public static String _t(String messageKey, Object parameter) {
-        return Translate.getString(messageKey, parameter, I2PAppContext.getGlobalContext(), BUNDLE_NAME);
-    }
-    
-    public static String _t(String messageKey, Object parameter1, Object parameter2) {
-        return Translate.getString(messageKey, parameter1, parameter2, I2PAppContext.getGlobalContext(), BUNDLE_NAME);
     }
     
     /**

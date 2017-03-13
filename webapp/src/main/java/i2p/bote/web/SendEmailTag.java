@@ -21,7 +21,6 @@
 
 package i2p.bote.web;
 
-import static i2p.bote.Util._t;
 import i2p.bote.I2PBote;
 import i2p.bote.email.Attachment;
 import i2p.bote.email.Email;
@@ -42,6 +41,8 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.i2p.util.Log;
+
+import static i2p.bote.web.WebappUtil._t;
 
 public class SendEmailTag extends BodyTagSupport {
     private static final long serialVersionUID = 5746062176954959787L;
