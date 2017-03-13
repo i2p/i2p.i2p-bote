@@ -21,9 +21,12 @@
 
 package i2p.bote;
 
-import static i2p.bote.Util._t;
-import i2p.bote.email.EmailIdentity.IdentityConfig;
-import i2p.bote.packet.dht.Contact;
+import net.i2p.I2PAppContext;
+import net.i2p.crypto.KeyStoreUtil;
+import net.i2p.data.DataHelper;
+import net.i2p.util.Log;
+import net.i2p.util.SecureFile;
+import net.i2p.util.SystemVersion;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -34,12 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import net.i2p.I2PAppContext;
-import net.i2p.crypto.KeyStoreUtil;
-import net.i2p.data.DataHelper;
-import net.i2p.util.Log;
-import net.i2p.util.SecureFile;
-import net.i2p.util.SystemVersion;
+import i2p.bote.email.EmailIdentity.IdentityConfig;
+import i2p.bote.packet.dht.Contact;
 
 public class Configuration implements IdentityConfig {
     public static final String KEY_DERIVATION_PARAMETERS_FILE = "derivparams";   // name of the KDF parameter cache file, relative to I2P_BOTE_SUBDIR
@@ -66,9 +65,9 @@ public class Configuration implements IdentityConfig {
     private static final String TRASH_FOLDER_DIR = "trash";         // relative to I2P_BOTE_SUBDIR
     private static final String MIGRATION_VERSION_FILE = "migratedVersion";   // relative to I2P_BOTE_SUBDIR
     private static final List<Theme> BUILT_IN_THEMES = Arrays.asList(new Theme[] {   // theme IDs correspond to a theme directory in the .war
-            new Theme("material", _t("Material")),
-            new Theme("lblue", _t("Light Blue")),
-            new Theme("vanilla", _t("Vanilla"))
+            new Theme("material", "Material"),
+            new Theme("lblue", "Light Blue"),
+            new Theme("vanilla", "Vanilla")
     });
     private static final String THEME_SUBDIR = "themes";   // relative to I2P_BOTE_SUBDIR
 
