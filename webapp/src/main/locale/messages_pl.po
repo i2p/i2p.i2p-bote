@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-20 15:41+0000\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
 "PO-Revision-Date: 2016-11-28 13:58+0000\n"
 "Last-Translator: Verdulo :-) <cybertomek@openmailbox.org>\n"
 "Language-Team: Polish (http://www.transifex.com/otf/I2P/language/pl/)\n"
@@ -25,256 +25,188 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: src/main/java/i2p/bote/Configuration.java:69
-msgid "Material"
-msgstr "Materiał"
-
-#: src/main/java/i2p/bote/Configuration.java:70
-msgid "Light Blue"
-msgstr "Jasnoniebieski"
-
-#: src/main/java/i2p/bote/Configuration.java:71
-msgid "Vanilla"
-msgstr "Wanilia"
-
-#: src/main/java/i2p/bote/I2PBote.java:517
-msgid "No identity matches the sender/from field: "
-msgstr "Żadna tożsamość nie zgadza się z wysyłającym/z pola Od:"
-
-#: src/main/java/i2p/bote/I2PBote.java:723
-msgid "Checking password"
-msgstr "Sprawdzanie hasła"
-
-#: src/main/java/i2p/bote/I2PBote.java:726
-msgid "The old password is not correct."
-msgstr "Stare hasło jest nieprawidłowe."
-
-#: src/main/java/i2p/bote/I2PBote.java:728
-msgid "The new password and the confirmation password do not match."
-msgstr "Nowe hasło i potwierdzenie hasła nie zgadza się."
-
-#: src/main/java/i2p/bote/I2PBote.java:735
-msgid "Re-encrypting identities"
-msgstr "Ponowne szyfrowanie tożsamości"
-
-#: src/main/java/i2p/bote/I2PBote.java:738
-msgid "Re-encrypting addressbook"
-msgstr "Ponowne szyfrowanie książki adresowej"
-
-#: src/main/java/i2p/bote/I2PBote.java:741
-msgid "Re-encrypting folder"
-msgstr "Ponowne szyfrowanie folderu"
-
-#: src/main/java/i2p/bote/I2PBote.java:745
-msgid "Updating password file"
-msgstr "Aktualizacja pliku hasła"
-
-#: src/main/java/i2p/bote/crypto/ECDH256_ECDSA256.java:45
-msgid "256-bit Elliptic Curve Encryption"
-msgstr "Szyfr na krzywych eliptycznych 256-bit"
-
-#: src/main/java/i2p/bote/crypto/ECDH521_ECDSA521.java:50
-msgid "521-bit Elliptic Curve Encryption"
-msgstr "Szyfr na krzywych eliptycznych 521-bit"
-
-#: src/main/java/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
-msgid "2048-bit ElGamal Encryption"
-msgstr "Szyfr ElGamal 2048-bit"
-
-#: src/main/java/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
-msgid "NTRU-1087 Encryption"
-msgstr "Szyfr NTRU-1087"
-
-#: src/main/java/i2p/bote/email/Email.java:472
-#: src/main/java/i2p/bote/email/Email.java:484
-msgid ""
-"Address doesn't contain an Email Destination or an external address: {0}"
-msgstr "Adres nie posiada Celu ani adresu zewnętrznego: {0}"
-
-#: src/main/java/i2p/bote/email/Email.java:506
-#, java-format
-msgid "Invalid address: {0}"
-msgstr "Nieprawidłowy adres: {0}"
-
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:100
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:114
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:101
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:115
 msgid "Password required or invalid password provided"
 msgstr "Hasło wymagane lub podano nieprawidłowe hasło"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:318
+#: src/main/java/i2p/bote/imap/MapperFactory.java:319
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Usunięcie skrzynek pocztowych nie jest obecnie dostępne."
 
-#: src/main/java/i2p/bote/network/BanList.java:80
-msgid "Wrong protocol version:"
-msgstr "Błędna wersja protokołu"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "BktPfx"
-msgstr "BktPfx"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "Distance"
-msgstr "Odległość"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "First Seen"
-msgstr "Widzany pierwszy raz"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:117
-msgid "I2P Destination"
-msgstr "Cel I2P"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "Locked?"
-msgstr "Zablokowane?"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:116
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:142
-msgid "Peer"
-msgstr "Peer"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:175
-msgid "No"
-msgstr "Nie"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
-msgid "Yes"
-msgstr "Tak"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:84
-msgid "(None)"
-msgstr "(brak)"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:89
-msgid "(S)"
-msgstr "(S)"
-
-#: src/main/java/i2p/bote/util/GeneralHelper.java:125
+#: src/main/java/i2p/bote/web/JSPHelper.java:250
 msgid "Not set."
 msgstr "Nie ustawiono."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:175
-msgid "Invalid ID number for CryptoImplementation: "
-msgstr "Nieprawidłowy numer ID za CryptoImplementation:"
-
-#: src/main/java/i2p/bote/web/JSPHelper.java:264
+#: src/main/java/i2p/bote/web/JSPHelper.java:313
 msgid "Queued"
 msgstr "Zakolejkowano"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:266
+#: src/main/java/i2p/bote/web/JSPHelper.java:315
 msgid "Sending"
 msgstr "Wysyłanie"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:268
+#: src/main/java/i2p/bote/web/JSPHelper.java:317
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Wysłano do {0} z {1} odbiorców"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:271
+#: src/main/java/i2p/bote/web/JSPHelper.java:320
 msgid "Email sent"
 msgstr "List wysłany"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:273
+#: src/main/java/i2p/bote/web/JSPHelper.java:322
 msgid "Gateway disabled"
 msgstr "Brama wyłączona"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:275
+#: src/main/java/i2p/bote/web/JSPHelper.java:324
+#: src/main/java/i2p/bote/web/SendEmailTag.java:110
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
 msgstr "Żadna tożsamość nie zgadza się z wysyłającym/z pola: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:278
+#: src/main/java/i2p/bote/web/JSPHelper.java:327
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Nieprawidłowy adres odbiorcy: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:280
+#: src/main/java/i2p/bote/web/JSPHelper.java:329
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Wystąpił błąd podczas tworzenia pakietów listu: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:282
+#: src/main/java/i2p/bote/web/JSPHelper.java:331
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Wystąpił błąd podczas wysyłania listu: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:284
+#: src/main/java/i2p/bote/web/JSPHelper.java:333
 #, java-format
 msgid "Error saving email metadata: {0}"
 msgstr "Wystąpił błąd podczas zapisywania metadanych: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:305
+#: src/main/java/i2p/bote/web/JSPHelper.java:354
 msgid "New email received"
 msgstr "Otrzymano nowe wiadomości"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:88
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:194
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:90
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:196
 msgid "Kademlia Peers:"
 msgstr "Peery kademlia:"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:112
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:236
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:114
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:238
 msgid "Relay Peers:"
 msgstr "Peery przekaźnikowe:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:118
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:144
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:39
+msgid "Peer"
+msgstr "Peer"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:119
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:41
+msgid "I2P Destination"
+msgstr "Cel I2P"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:120
 msgid "Reachability %"
 msgstr "Osiągalność %"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:127
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:225
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:230
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:129
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:227
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:232
 msgid "Untested"
 msgstr "Nietestowane"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:138
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:140
 msgid "Banned Peers:"
 msgstr "Zbanowane peery:"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:143
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:145
 msgid "Destination Hash"
 msgstr "Hash celu"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:144
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:146
 msgid "Ban Reason"
 msgstr "Powód bana"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:182
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:187
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:184
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:189
 msgid "Reachable"
 msgstr "Osiągalny"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:184
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:188
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:186
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:190
 msgid "Unreachable"
 msgstr "Nie osiągalny"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:221
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:228
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:223
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:230
 msgid "Good"
 msgstr "Dobre"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:223
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:229
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:225
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:231
 msgid "Unreliable"
 msgstr "Niepewne"
 
-#: src/main/java/i2p/bote/web/SendEmailTag.java:73
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:250
+msgid "Wrong protocol version:"
+msgstr "Błędna wersja protokołu"
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:76
 msgid "Error: Please add at least one recipient."
 msgstr "Błąd: Proszę podać przynajmniej jednego odbiorcę. "
 
-#: src/main/java/i2p/bote/web/SendEmailTag.java:101
+#: src/main/java/i2p/bote/web/SendEmailTag.java:104
 msgid "The email has been queued for sending."
 msgstr "List został zakolejkowany do wysłania."
 
-#: src/main/java/i2p/bote/web/SendEmailTag.java:107
+#: src/main/java/i2p/bote/web/SendEmailTag.java:110
+#: src/main/java/i2p/bote/web/SendEmailTag.java:114
+#: src/main/java/i2p/bote/web/SendEmailTag.java:118
 #, java-format
 msgid "Error sending email: {0}"
 msgstr "Wystąpił błąd podczas wysyłania listu: {0}"
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:114
+msgid ""
+"Address doesn't contain an Email Destination or an external address: {0}"
+msgstr "Adres nie posiada Celu ani adresu zewnętrznego: {0}"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:43
+msgid "BktPfx"
+msgstr "BktPfx"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:45
+msgid "Distance"
+msgstr "Odległość"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:47
+msgid "Locked?"
+msgstr "Zablokowane?"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:49
+msgid "First Seen"
+msgstr "Widzany pierwszy raz"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:59
+msgid "Yes"
+msgstr "Tak"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:61
+msgid "No"
+msgstr "Nie"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:63
+msgid "(S)"
+msgstr "(S)"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:65
+msgid "(None)"
+msgstr "(brak)"
 
 #: src/main/webapp/header.jsp
 msgid "- I2P-Bote"
@@ -1383,6 +1315,12 @@ msgid "The Email Identity is being generated. This may take a while."
 msgstr "Tożsamość jest generowana. Może to potrwać kilka minut."
 
 #: src/main/webapp/submitIdentity.jsp
+msgid ""
+"This encryption type does not support destinations that start with {0}. "
+"Valid initial characters are {1}."
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
 msgstr "Tożsamość emaila została zapisana."
 
@@ -1409,6 +1347,57 @@ msgstr "{0} wszystkich listów, {1} nowych"
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
 msgstr "{0} niepełnych"
+
+#~ msgid "Material"
+#~ msgstr "Materiał"
+
+#~ msgid "Light Blue"
+#~ msgstr "Jasnoniebieski"
+
+#~ msgid "Vanilla"
+#~ msgstr "Wanilia"
+
+#~ msgid "No identity matches the sender/from field: "
+#~ msgstr "Żadna tożsamość nie zgadza się z wysyłającym/z pola Od:"
+
+#~ msgid "Checking password"
+#~ msgstr "Sprawdzanie hasła"
+
+#~ msgid "The old password is not correct."
+#~ msgstr "Stare hasło jest nieprawidłowe."
+
+#~ msgid "The new password and the confirmation password do not match."
+#~ msgstr "Nowe hasło i potwierdzenie hasła nie zgadza się."
+
+#~ msgid "Re-encrypting identities"
+#~ msgstr "Ponowne szyfrowanie tożsamości"
+
+#~ msgid "Re-encrypting addressbook"
+#~ msgstr "Ponowne szyfrowanie książki adresowej"
+
+#~ msgid "Re-encrypting folder"
+#~ msgstr "Ponowne szyfrowanie folderu"
+
+#~ msgid "Updating password file"
+#~ msgstr "Aktualizacja pliku hasła"
+
+#~ msgid "256-bit Elliptic Curve Encryption"
+#~ msgstr "Szyfr na krzywych eliptycznych 256-bit"
+
+#~ msgid "521-bit Elliptic Curve Encryption"
+#~ msgstr "Szyfr na krzywych eliptycznych 521-bit"
+
+#~ msgid "2048-bit ElGamal Encryption"
+#~ msgstr "Szyfr ElGamal 2048-bit"
+
+#~ msgid "NTRU-1087 Encryption"
+#~ msgstr "Szyfr NTRU-1087"
+
+#~ msgid "Invalid address: {0}"
+#~ msgstr "Nieprawidłowy adres: {0}"
+
+#~ msgid "Invalid ID number for CryptoImplementation: "
+#~ msgstr "Nieprawidłowy numer ID za CryptoImplementation:"
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

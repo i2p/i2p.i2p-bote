@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-27 09:59+0000\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
 "PO-Revision-Date: 2016-11-27 09:57+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Slovak (http://www.transifex.com/otf/I2P/language/sk/)\n"
@@ -17,256 +17,188 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: src/main/java/i2p/bote/Configuration.java:69
-msgid "Material"
-msgstr "Materiál"
-
-#: src/main/java/i2p/bote/Configuration.java:70
-msgid "Light Blue"
-msgstr "Svetlo modrá"
-
-#: src/main/java/i2p/bote/Configuration.java:71
-msgid "Vanilla"
-msgstr ""
-
-#: src/main/java/i2p/bote/I2PBote.java:517
-msgid "No identity matches the sender/from field: "
-msgstr "Odosielateľovi nezodpovedá žiadna identita/z poľa:"
-
-#: src/main/java/i2p/bote/I2PBote.java:723
-msgid "Checking password"
-msgstr "Kontrolujem heslo"
-
-#: src/main/java/i2p/bote/I2PBote.java:726
-msgid "The old password is not correct."
-msgstr "Staré heslo nie je správne."
-
-#: src/main/java/i2p/bote/I2PBote.java:728
-msgid "The new password and the confirmation password do not match."
-msgstr "Nové heslo a potvrdzovacie heslo sa nezhodujú."
-
-#: src/main/java/i2p/bote/I2PBote.java:735
-msgid "Re-encrypting identities"
-msgstr ""
-
-#: src/main/java/i2p/bote/I2PBote.java:738
-msgid "Re-encrypting addressbook"
-msgstr ""
-
-#: src/main/java/i2p/bote/I2PBote.java:741
-msgid "Re-encrypting folder"
-msgstr ""
-
-#: src/main/java/i2p/bote/I2PBote.java:745
-msgid "Updating password file"
-msgstr ""
-
-#: src/main/java/i2p/bote/crypto/ECDH256_ECDSA256.java:45
-msgid "256-bit Elliptic Curve Encryption"
-msgstr "256-bitové šifrovanie Elliptic Curve"
-
-#: src/main/java/i2p/bote/crypto/ECDH521_ECDSA521.java:50
-msgid "521-bit Elliptic Curve Encryption"
-msgstr "521-bitové šifrovanie Elliptic Curve"
-
-#: src/main/java/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
-msgid "2048-bit ElGamal Encryption"
-msgstr "2048-bitové šifrovanie ElGamal"
-
-#: src/main/java/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
-msgid "NTRU-1087 Encryption"
-msgstr "Šifrovanie NTRU-1087"
-
-#: src/main/java/i2p/bote/email/Email.java:472
-#: src/main/java/i2p/bote/email/Email.java:484
-msgid ""
-"Address doesn't contain an Email Destination or an external address: {0}"
-msgstr "Adresa neobsahuje cieľ emailu alebo externú adresu: {0}"
-
-#: src/main/java/i2p/bote/email/Email.java:506
-#, java-format
-msgid "Invalid address: {0}"
-msgstr "Neplatná adresa: {0}"
-
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:100
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:114
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:101
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:115
 msgid "Password required or invalid password provided"
 msgstr "Je vyžadované heslo, prípadne bolo poskytnuté neplatné"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:318
+#: src/main/java/i2p/bote/imap/MapperFactory.java:319
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Odstraňovanie emailových schránok v súčasnosti nie je podporované."
 
-#: src/main/java/i2p/bote/network/BanList.java:80
-msgid "Wrong protocol version:"
-msgstr "Nesprávna verzia protokolu:"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "BktPfx"
-msgstr "BktPfx"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "Distance"
-msgstr "Vzdialenosť"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "First Seen"
-msgstr "Prvýkrát videné"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:117
-msgid "I2P Destination"
-msgstr "I2P cieľ"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "Locked?"
-msgstr "Zamknuté?"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:116
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:142
-msgid "Peer"
-msgstr "Peer"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:175
-msgid "No"
-msgstr "Nie"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
-msgid "Yes"
-msgstr "Áno"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:84
-msgid "(None)"
-msgstr "(Žiadne)"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:89
-msgid "(S)"
-msgstr "(S)"
-
-#: src/main/java/i2p/bote/util/GeneralHelper.java:125
+#: src/main/java/i2p/bote/web/JSPHelper.java:250
 msgid "Not set."
 msgstr "Nenastavené."
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:175
-msgid "Invalid ID number for CryptoImplementation: "
-msgstr "Neplatné číslo ID pre CryptoImplementation:"
-
-#: src/main/java/i2p/bote/web/JSPHelper.java:264
+#: src/main/java/i2p/bote/web/JSPHelper.java:313
 msgid "Queued"
 msgstr "Zaradené"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:266
+#: src/main/java/i2p/bote/web/JSPHelper.java:315
 msgid "Sending"
 msgstr "Posiela sa"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:268
+#: src/main/java/i2p/bote/web/JSPHelper.java:317
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "Poslané {0} z {1} príjemcov"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:271
+#: src/main/java/i2p/bote/web/JSPHelper.java:320
 msgid "Email sent"
 msgstr "Email bol odoslaný"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:273
+#: src/main/java/i2p/bote/web/JSPHelper.java:322
 msgid "Gateway disabled"
 msgstr "Brána zakázaná"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:275
+#: src/main/java/i2p/bote/web/JSPHelper.java:324
+#: src/main/java/i2p/bote/web/SendEmailTag.java:110
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
 msgstr ""
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:278
+#: src/main/java/i2p/bote/web/JSPHelper.java:327
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "Neplatná adresa príjemcu: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:280
+#: src/main/java/i2p/bote/web/JSPHelper.java:329
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "Chyba pri vytváraní emailových paketov: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:282
+#: src/main/java/i2p/bote/web/JSPHelper.java:331
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "Chyba pri posielaní emailu: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:284
+#: src/main/java/i2p/bote/web/JSPHelper.java:333
 #, java-format
 msgid "Error saving email metadata: {0}"
 msgstr "Chyba pri ukladaní metadát emailu: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:305
+#: src/main/java/i2p/bote/web/JSPHelper.java:354
 msgid "New email received"
 msgstr ""
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:88
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:194
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:90
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:196
 msgid "Kademlia Peers:"
 msgstr "Kademlia peerovia:"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:112
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:236
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:114
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:238
 msgid "Relay Peers:"
 msgstr "Relé peerovia:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:118
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:144
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:39
+msgid "Peer"
+msgstr "Peer"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:119
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:41
+msgid "I2P Destination"
+msgstr "I2P cieľ"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:120
 msgid "Reachability %"
 msgstr "Dosiahnuteľnosť %"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:127
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:225
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:230
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:129
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:227
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:232
 msgid "Untested"
 msgstr "Neotestované"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:138
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:140
 msgid "Banned Peers:"
 msgstr "Zabanovaní peerovia:"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:143
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:145
 msgid "Destination Hash"
 msgstr "Hash cieľa"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:144
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:146
 msgid "Ban Reason"
 msgstr "Dôvod banu"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:182
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:187
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:184
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:189
 msgid "Reachable"
 msgstr ""
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:184
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:188
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:186
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:190
 msgid "Unreachable"
 msgstr ""
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:221
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:228
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:223
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:230
 msgid "Good"
 msgstr ""
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:223
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:229
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:225
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:231
 msgid "Unreliable"
 msgstr ""
 
-#: src/main/java/i2p/bote/web/SendEmailTag.java:73
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:250
+msgid "Wrong protocol version:"
+msgstr "Nesprávna verzia protokolu:"
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:76
 msgid "Error: Please add at least one recipient."
 msgstr "Chyba: Prosím pridajte aspoň jedného príjemcu"
 
-#: src/main/java/i2p/bote/web/SendEmailTag.java:101
+#: src/main/java/i2p/bote/web/SendEmailTag.java:104
 msgid "The email has been queued for sending."
 msgstr "Email bol zaradený do fronty na odoslanie"
 
-#: src/main/java/i2p/bote/web/SendEmailTag.java:107
+#: src/main/java/i2p/bote/web/SendEmailTag.java:110
+#: src/main/java/i2p/bote/web/SendEmailTag.java:114
+#: src/main/java/i2p/bote/web/SendEmailTag.java:118
 #, java-format
 msgid "Error sending email: {0}"
 msgstr "Chyba pri posielaní emailu: {0}"
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:114
+msgid ""
+"Address doesn't contain an Email Destination or an external address: {0}"
+msgstr "Adresa neobsahuje cieľ emailu alebo externú adresu: {0}"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:43
+msgid "BktPfx"
+msgstr "BktPfx"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:45
+msgid "Distance"
+msgstr "Vzdialenosť"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:47
+msgid "Locked?"
+msgstr "Zamknuté?"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:49
+msgid "First Seen"
+msgstr "Prvýkrát videné"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:59
+msgid "Yes"
+msgstr "Áno"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:61
+msgid "No"
+msgstr "Nie"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:63
+msgid "(S)"
+msgstr "(S)"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:65
+msgid "(None)"
+msgstr "(Žiadne)"
 
 #: src/main/webapp/header.jsp
 msgid "- I2P-Bote"
@@ -1369,6 +1301,12 @@ msgid "The Email Identity is being generated. This may take a while."
 msgstr ""
 
 #: src/main/webapp/submitIdentity.jsp
+msgid ""
+"This encryption type does not support destinations that start with {0}. "
+"Valid initial characters are {1}."
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
 msgstr "Emailová identita bola uložená."
 
@@ -1395,6 +1333,42 @@ msgstr "{0} emailov celkovo, {1} nových"
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
 msgstr ""
+
+#~ msgid "Material"
+#~ msgstr "Materiál"
+
+#~ msgid "Light Blue"
+#~ msgstr "Svetlo modrá"
+
+#~ msgid "No identity matches the sender/from field: "
+#~ msgstr "Odosielateľovi nezodpovedá žiadna identita/z poľa:"
+
+#~ msgid "Checking password"
+#~ msgstr "Kontrolujem heslo"
+
+#~ msgid "The old password is not correct."
+#~ msgstr "Staré heslo nie je správne."
+
+#~ msgid "The new password and the confirmation password do not match."
+#~ msgstr "Nové heslo a potvrdzovacie heslo sa nezhodujú."
+
+#~ msgid "256-bit Elliptic Curve Encryption"
+#~ msgstr "256-bitové šifrovanie Elliptic Curve"
+
+#~ msgid "521-bit Elliptic Curve Encryption"
+#~ msgstr "521-bitové šifrovanie Elliptic Curve"
+
+#~ msgid "2048-bit ElGamal Encryption"
+#~ msgstr "2048-bitové šifrovanie ElGamal"
+
+#~ msgid "NTRU-1087 Encryption"
+#~ msgstr "Šifrovanie NTRU-1087"
+
+#~ msgid "Invalid address: {0}"
+#~ msgstr "Neplatná adresa: {0}"
+
+#~ msgid "Invalid ID number for CryptoImplementation: "
+#~ msgstr "Neplatné číslo ID pre CryptoImplementation:"
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

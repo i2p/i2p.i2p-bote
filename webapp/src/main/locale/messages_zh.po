@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-27 09:59+0000\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
 "PO-Revision-Date: 2016-11-27 09:57+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/"
@@ -18,256 +18,188 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/main/java/i2p/bote/Configuration.java:69
-msgid "Material"
-msgstr "纸张"
-
-#: src/main/java/i2p/bote/Configuration.java:70
-msgid "Light Blue"
-msgstr "亮蓝"
-
-#: src/main/java/i2p/bote/Configuration.java:71
-msgid "Vanilla"
-msgstr "香草白"
-
-#: src/main/java/i2p/bote/I2PBote.java:517
-msgid "No identity matches the sender/from field: "
-msgstr "没有身份密钥与寄件者/收件人相匹配: "
-
-#: src/main/java/i2p/bote/I2PBote.java:723
-msgid "Checking password"
-msgstr "正在检查密码"
-
-#: src/main/java/i2p/bote/I2PBote.java:726
-msgid "The old password is not correct."
-msgstr "旧密码不正确。"
-
-#: src/main/java/i2p/bote/I2PBote.java:728
-msgid "The new password and the confirmation password do not match."
-msgstr "新密码与确认密码字段输入相符。"
-
-#: src/main/java/i2p/bote/I2PBote.java:735
-msgid "Re-encrypting identities"
-msgstr "重新加密身份"
-
-#: src/main/java/i2p/bote/I2PBote.java:738
-msgid "Re-encrypting addressbook"
-msgstr "重新加密地址簿"
-
-#: src/main/java/i2p/bote/I2PBote.java:741
-msgid "Re-encrypting folder"
-msgstr "重新加密文件夹"
-
-#: src/main/java/i2p/bote/I2PBote.java:745
-msgid "Updating password file"
-msgstr "正在更新密码文件"
-
-#: src/main/java/i2p/bote/crypto/ECDH256_ECDSA256.java:45
-msgid "256-bit Elliptic Curve Encryption"
-msgstr "256位 EllipticCurve 加密"
-
-#: src/main/java/i2p/bote/crypto/ECDH521_ECDSA521.java:50
-msgid "521-bit Elliptic Curve Encryption"
-msgstr "512位 EllipticCurve 加密"
-
-#: src/main/java/i2p/bote/crypto/ElGamal2048_DSA1024.java:58
-msgid "2048-bit ElGamal Encryption"
-msgstr "2048位 El-Gamal 加密"
-
-#: src/main/java/i2p/bote/crypto/NTRUEncrypt1087_GMSS512.java:115
-msgid "NTRU-1087 Encryption"
-msgstr "NTRU-1087 加密"
-
-#: src/main/java/i2p/bote/email/Email.java:472
-#: src/main/java/i2p/bote/email/Email.java:484
-msgid ""
-"Address doesn't contain an Email Destination or an external address: {0}"
-msgstr "地址中缺少Bote邮件地址或外部的公网邮件地址: {0}"
-
-#: src/main/java/i2p/bote/email/Email.java:506
-#, java-format
-msgid "Invalid address: {0}"
-msgstr "无效地址: {0}"
-
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:100
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:114
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:101
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:115
 msgid "Password required or invalid password provided"
 msgstr "需要密码或密码输入错误"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:318
+#: src/main/java/i2p/bote/imap/MapperFactory.java:319
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "尚不支持删除邮箱。"
 
-#: src/main/java/i2p/bote/network/BanList.java:80
-msgid "Wrong protocol version:"
-msgstr "协议版本错误:"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "BktPfx"
-msgstr "K桶"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "Distance"
-msgstr "距离"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "First Seen"
-msgstr "第一次发现"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:117
-msgid "I2P Destination"
-msgstr "I2P 地址"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-msgid "Locked?"
-msgstr "是否锁定?"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:47
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:116
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:142
-msgid "Peer"
-msgstr "节点"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:175
-msgid "No"
-msgstr "否"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:67
-msgid "Yes"
-msgstr "是"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:84
-msgid "(None)"
-msgstr "(无)"
-
-#: src/main/java/i2p/bote/network/kademlia/KademliaPeerStats.java:89
-msgid "(S)"
-msgstr "(S)"
-
-#: src/main/java/i2p/bote/util/GeneralHelper.java:125
+#: src/main/java/i2p/bote/web/JSPHelper.java:250
 msgid "Not set."
 msgstr "未设置"
 
-#: src/main/java/i2p/bote/util/GeneralHelper.java:175
-msgid "Invalid ID number for CryptoImplementation: "
-msgstr "加密算法的ID无效："
-
-#: src/main/java/i2p/bote/web/JSPHelper.java:264
+#: src/main/java/i2p/bote/web/JSPHelper.java:313
 msgid "Queued"
 msgstr "队列中等待发送"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:266
+#: src/main/java/i2p/bote/web/JSPHelper.java:315
 msgid "Sending"
 msgstr "正在发送"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:268
+#: src/main/java/i2p/bote/web/JSPHelper.java:317
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
 msgstr "已发送至{0}位收件人(共{1}位)"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:271
+#: src/main/java/i2p/bote/web/JSPHelper.java:320
 msgid "Email sent"
 msgstr "邮件已发送"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:273
+#: src/main/java/i2p/bote/web/JSPHelper.java:322
 msgid "Gateway disabled"
 msgstr "邮件网关已禁用"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:275
+#: src/main/java/i2p/bote/web/JSPHelper.java:324
+#: src/main/java/i2p/bote/web/SendEmailTag.java:110
 #, java-format
 msgid "No identity matches the sender/from field: {0}"
 msgstr "没有身份与寄件者/收件人相匹配: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:278
+#: src/main/java/i2p/bote/web/JSPHelper.java:327
 #, java-format
 msgid "Invalid recipient address: {0}"
 msgstr "收件人地址无效: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:280
+#: src/main/java/i2p/bote/web/JSPHelper.java:329
 #, java-format
 msgid "Error creating email packets: {0}"
 msgstr "重建邮件数据包时发生错误: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:282
+#: src/main/java/i2p/bote/web/JSPHelper.java:331
 #, java-format
 msgid "Error while sending email: {0}"
 msgstr "发送邮件时发生错误: {0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:284
+#: src/main/java/i2p/bote/web/JSPHelper.java:333
 #, java-format
 msgid "Error saving email metadata: {0}"
 msgstr "保存邮件元信息时出错：{0}"
 
-#: src/main/java/i2p/bote/web/JSPHelper.java:305
+#: src/main/java/i2p/bote/web/JSPHelper.java:354
 msgid "New email received"
 msgstr "收到新邮件"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:88
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:194
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:90
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:196
 msgid "Kademlia Peers:"
 msgstr "Kademlia 节点:"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:112
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:236
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:114
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:238
 msgid "Relay Peers:"
 msgstr "中继节点:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:118
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:144
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:39
+msgid "Peer"
+msgstr "节点"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:119
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:41
+msgid "I2P Destination"
+msgstr "I2P 地址"
+
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:120
 msgid "Reachability %"
 msgstr "可达性 %"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:127
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:225
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:230
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:129
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:227
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:232
 msgid "Untested"
 msgstr "未测试"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:138
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:140
 msgid "Banned Peers:"
 msgstr "屏蔽节点:"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:143
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:145
 msgid "Destination Hash"
 msgstr "地址 Hash (SHA256)"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:144
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:146
 msgid "Ban Reason"
 msgstr "屏蔽原因"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:182
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:187
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:184
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:189
 msgid "Reachable"
 msgstr "可达"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:184
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:188
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:186
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:190
 msgid "Unreachable"
 msgstr "不可达"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:221
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:228
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:223
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:230
 msgid "Good"
 msgstr "良好"
 
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:223
-#: src/main/java/i2p/bote/web/PeerInfoTag.java:229
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:225
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:231
 msgid "Unreliable"
 msgstr "不可靠"
 
-#: src/main/java/i2p/bote/web/SendEmailTag.java:73
+#: src/main/java/i2p/bote/web/PeerInfoTag.java:250
+msgid "Wrong protocol version:"
+msgstr "协议版本错误:"
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:76
 msgid "Error: Please add at least one recipient."
 msgstr "错误: 请指定至少一个收件人。"
 
-#: src/main/java/i2p/bote/web/SendEmailTag.java:101
+#: src/main/java/i2p/bote/web/SendEmailTag.java:104
 msgid "The email has been queued for sending."
 msgstr "邮件进入发送队列等待发送。"
 
-#: src/main/java/i2p/bote/web/SendEmailTag.java:107
+#: src/main/java/i2p/bote/web/SendEmailTag.java:110
+#: src/main/java/i2p/bote/web/SendEmailTag.java:114
+#: src/main/java/i2p/bote/web/SendEmailTag.java:118
 #, java-format
 msgid "Error sending email: {0}"
 msgstr "邮件发送错误: {0}"
+
+#: src/main/java/i2p/bote/web/SendEmailTag.java:114
+msgid ""
+"Address doesn't contain an Email Destination or an external address: {0}"
+msgstr "地址中缺少Bote邮件地址或外部的公网邮件地址: {0}"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:43
+msgid "BktPfx"
+msgstr "K桶"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:45
+msgid "Distance"
+msgstr "距离"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:47
+msgid "Locked?"
+msgstr "是否锁定?"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:49
+msgid "First Seen"
+msgstr "第一次发现"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:59
+msgid "Yes"
+msgstr "是"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:61
+msgid "No"
+msgstr "否"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:63
+msgid "(S)"
+msgstr "(S)"
+
+#: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:65
+msgid "(None)"
+msgstr "(无)"
 
 #: src/main/webapp/header.jsp
 msgid "- I2P-Bote"
@@ -1352,6 +1284,12 @@ msgid "The Email Identity is being generated. This may take a while."
 msgstr "正在生成邮箱的身份标识。这可能需要几分钟。"
 
 #: src/main/webapp/submitIdentity.jsp
+msgid ""
+"This encryption type does not support destinations that start with {0}. "
+"Valid initial characters are {1}."
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
 msgstr "邮箱身份已保存。"
 
@@ -1378,6 +1316,57 @@ msgstr "共 {0} 封邮件，{1} 封新邮件"
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
 msgstr "{0} 封未完成"
+
+#~ msgid "Material"
+#~ msgstr "纸张"
+
+#~ msgid "Light Blue"
+#~ msgstr "亮蓝"
+
+#~ msgid "Vanilla"
+#~ msgstr "香草白"
+
+#~ msgid "No identity matches the sender/from field: "
+#~ msgstr "没有身份密钥与寄件者/收件人相匹配: "
+
+#~ msgid "Checking password"
+#~ msgstr "正在检查密码"
+
+#~ msgid "The old password is not correct."
+#~ msgstr "旧密码不正确。"
+
+#~ msgid "The new password and the confirmation password do not match."
+#~ msgstr "新密码与确认密码字段输入相符。"
+
+#~ msgid "Re-encrypting identities"
+#~ msgstr "重新加密身份"
+
+#~ msgid "Re-encrypting addressbook"
+#~ msgstr "重新加密地址簿"
+
+#~ msgid "Re-encrypting folder"
+#~ msgstr "重新加密文件夹"
+
+#~ msgid "Updating password file"
+#~ msgstr "正在更新密码文件"
+
+#~ msgid "256-bit Elliptic Curve Encryption"
+#~ msgstr "256位 EllipticCurve 加密"
+
+#~ msgid "521-bit Elliptic Curve Encryption"
+#~ msgstr "512位 EllipticCurve 加密"
+
+#~ msgid "2048-bit ElGamal Encryption"
+#~ msgstr "2048位 El-Gamal 加密"
+
+#~ msgid "NTRU-1087 Encryption"
+#~ msgstr "NTRU-1087 加密"
+
+#~ msgid "Invalid address: {0}"
+#~ msgstr "无效地址: {0}"
+
+#~ msgid "Invalid ID number for CryptoImplementation: "
+#~ msgstr "加密算法的ID无效："
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."
