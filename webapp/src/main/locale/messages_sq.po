@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2016-12-10 10:44+0000\n"
-"Last-Translator: Besnik <besnik@programeshqip.org>\n"
+"POT-Creation-Date: 2017-03-26 20:31+1300\n"
+"PO-Revision-Date: 2017-03-26 07:21+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Albanian (http://www.transifex.com/otf/I2P/language/sq/)\n"
 "Language: sq\n"
 "MIME-Version: 1.0\n"
@@ -1350,46 +1350,52 @@ msgstr "{0} të paplotë"
 #~ msgstr "Material"
 
 #~ msgid "Light Blue"
-#~ msgstr "Blu e Çelët"
+#~ msgstr "Light Blue"
+
+#~ msgid "Vanilla"
+#~ msgstr "Vanilla"
 
 #~ msgid "No identity matches the sender/from field: "
-#~ msgstr "Nuk ka përputhje identiteti me fushën dërgues/nga: "
+#~ msgstr "No identity matches the sender/from field: "
 
 #~ msgid "Checking password"
-#~ msgstr "Po kontrollohet fjalëkalimi"
+#~ msgstr "Checking password"
 
 #~ msgid "The old password is not correct."
-#~ msgstr "Fjalëkalimi i vjetër nuk është i saktë."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "Fjalëkalimi i ri dhe konfirmimi i fjalëkalimit nuk përputhen. "
+#~ msgstr "The new password and the confirmation password do not match."
 
 #~ msgid "Re-encrypting identities"
-#~ msgstr "Po rifshehtëzohen identitetet"
+#~ msgstr "Re-encrypting identities"
 
 #~ msgid "Re-encrypting addressbook"
-#~ msgstr "Po rifshehtëzohet libri i adresave"
+#~ msgstr "Re-encrypting addressbook"
+
+#~ msgid "Re-encrypting folder"
+#~ msgstr "Re-encrypting folder"
 
 #~ msgid "Updating password file"
-#~ msgstr "Po përditësohet kartela e fjalëkalimit"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "Fshehtëzim me Kurbë Eliptike 256-bitëshe"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "Fshehtëzim me Kurbë Eliptike 521-bitëshe"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "Fshehtëzim ElGamal 2048-bitësh"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "Fshehtëzim NTRU-1087"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "Adresë e pavlefshme: {0}"
+#~ msgstr "Invalid address: {0}"
 
 #~ msgid "Invalid ID number for CryptoImplementation: "
-#~ msgstr "Numër i pavlefshëm ID-je për for CryptoImplementation: "
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2016-12-10 18:54+0000\n"
-"Last-Translator: Towinet\n"
+"POT-Creation-Date: 2017-03-26 20:31+1300\n"
+"PO-Revision-Date: 2017-03-26 07:21+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: French (http://www.transifex.com/otf/I2P/language/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -1362,57 +1362,55 @@ msgid "{0} incomplete"
 msgstr "{0} incomplet(s)"
 
 #~ msgid "Material"
-#~ msgstr "Matériau"
+#~ msgstr "Material"
 
 #~ msgid "Light Blue"
-#~ msgstr "Bleu clair"
+#~ msgstr "Light Blue"
 
 #~ msgid "Vanilla"
-#~ msgstr "Vanille"
+#~ msgstr "Vanilla"
 
 #~ msgid "No identity matches the sender/from field: "
-#~ msgstr "Aucune identité ne correspond au champ \"Expéditeur/De\":"
+#~ msgstr "No identity matches the sender/from field: "
 
 #~ msgid "Checking password"
-#~ msgstr "Vérification de mot de passe"
+#~ msgstr "Checking password"
 
 #~ msgid "The old password is not correct."
-#~ msgstr "L'ancien mot de passe est incorrect."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr ""
-#~ "Le nouveau mot de passe et le mot de passe de confirmation ne "
-#~ "correspondent pas."
+#~ msgstr "The new password and the confirmation password do not match."
 
 #~ msgid "Re-encrypting identities"
-#~ msgstr "Re-chiffrement d'identités"
+#~ msgstr "Re-encrypting identities"
 
 #~ msgid "Re-encrypting addressbook"
-#~ msgstr "Re-chiffrement de carnet d'adresses"
+#~ msgstr "Re-encrypting addressbook"
 
 #~ msgid "Re-encrypting folder"
-#~ msgstr "Re-chiffrement de dossier"
+#~ msgstr "Re-encrypting folder"
 
 #~ msgid "Updating password file"
-#~ msgstr "Mise à jour du fichier de mot de passe"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "Chiffrement par courbes elliptiques à 256 bits"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "Chiffrement par courbes elliptiques à 521 bits"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "Chiffrement ElGamal à 2048 bits"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "Chiffrement NTRU-1087"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "Adresse invalide: {0}"
+#~ msgstr "Invalid address: {0}"
 
 #~ msgid "Invalid ID number for CryptoImplementation: "
-#~ msgstr "Numero d'implémentation cryptographique incorrect:"
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

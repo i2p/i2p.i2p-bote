@@ -49,6 +49,7 @@
   <plurals name="incomplete_emails">
     <item quantity="one">Jeden niepełny email</item>
     <item quantity="few">%d niepełnych emaili</item>
+    <item quantity="many">%d niepełnych emaili</item>
     <item quantity="other">%d niepełnych emaili</item>
   </plurals>
   <!--Argument is a number-->
@@ -82,6 +83,7 @@
   <plurals name="n_new_emails">
     <item quantity="one">Jeden nowy email</item>
     <item quantity="few">%d nowych emaili</item>
+    <item quantity="many">%d nowych emaili</item>
     <item quantity="other">%d nowych emaili</item>
   </plurals>
   <string name="queued">W kolejce</string>
@@ -184,6 +186,7 @@
   <plurals name="pref_summ_numHops">
     <item quantity="one">%s przekaźnik</item>
     <item quantity="few">%s przekaźników</item>
+    <item quantity="many">%s przekaźników</item>
     <item quantity="other">%s przekaźników</item>
   </plurals>
   <string name="pref_title_minDelay">Minimalne opóźnienie dla przeskoku</string>
@@ -245,4 +248,5 @@
   <string name="license">Licencja: %s</string>
   <!--Software libraries-->
   <string name="libraries">Biblioteki</string>
+  <!--Argument is a folder name-->
 </resources>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
+"POT-Creation-Date: 2017-03-26 20:31+1300\n"
+"PO-Revision-Date: 2017-03-26 07:21+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otf/I2P/"
 "language/pt_BR/)\n"
@@ -1347,52 +1347,52 @@ msgstr "{0} incompleto"
 #~ msgstr "Material"
 
 #~ msgid "Light Blue"
-#~ msgstr "Azul claro"
+#~ msgstr "Light Blue"
 
 #~ msgid "Vanilla"
-#~ msgstr "Baunilha"
+#~ msgstr "Vanilla"
 
 #~ msgid "No identity matches the sender/from field: "
-#~ msgstr "Nenhuma identidade confere com o campo remetente/de:"
+#~ msgstr "No identity matches the sender/from field: "
 
 #~ msgid "Checking password"
-#~ msgstr "Verificando senha"
+#~ msgstr "Checking password"
 
 #~ msgid "The old password is not correct."
-#~ msgstr "A senha antiga não está correta."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "A nova senha e a senha de confirmação não conferem."
+#~ msgstr "The new password and the confirmation password do not match."
 
 #~ msgid "Re-encrypting identities"
-#~ msgstr "Recriptografando as identidades"
+#~ msgstr "Re-encrypting identities"
 
 #~ msgid "Re-encrypting addressbook"
-#~ msgstr "Recriptografando o livro de endereços"
+#~ msgstr "Re-encrypting addressbook"
 
 #~ msgid "Re-encrypting folder"
-#~ msgstr "Recriptografando a pasta"
+#~ msgstr "Re-encrypting folder"
 
 #~ msgid "Updating password file"
-#~ msgstr "Atualizando arquivo de senha"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "Criptografia de curva elíptica de 256 bits"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "Criptografia de curva elíptica de 521 bits"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "Criptografia ElGamal de 2048 bits"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "Criptografia NTRU-1087"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "Endereço inválido: {0}"
+#~ msgstr "Invalid address: {0}"
 
 #~ msgid "Invalid ID number for CryptoImplementation: "
-#~ msgstr "Número ID inválido para CriptoImplementação:"
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

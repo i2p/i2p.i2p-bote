@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2016-11-27 16:31+0000\n"
-"Last-Translator: strel\n"
+"POT-Creation-Date: 2017-03-26 20:31+1300\n"
+"PO-Revision-Date: 2017-03-26 07:21+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/otf/I2P/language/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -1377,54 +1377,52 @@ msgstr "{0} incompleto"
 #~ msgstr "Material"
 
 #~ msgid "Light Blue"
-#~ msgstr "Celeste"
+#~ msgstr "Light Blue"
 
 #~ msgid "Vanilla"
-#~ msgstr "Vainilla"
+#~ msgstr "Vanilla"
 
 #~ msgid "No identity matches the sender/from field: "
-#~ msgstr "No existe ninguna identidad que concuerde con el campo remitente:"
+#~ msgstr "No identity matches the sender/from field: "
 
 #~ msgid "Checking password"
-#~ msgstr "Comprobando contraseña"
+#~ msgstr "Checking password"
 
 #~ msgid "The old password is not correct."
-#~ msgstr "La contraseña antigua no es correcta."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "La nueva contraseña y la confirmación de ésta no coinciden."
+#~ msgstr "The new password and the confirmation password do not match."
 
 #~ msgid "Re-encrypting identities"
-#~ msgstr "Volviendo a cifrar identidades"
+#~ msgstr "Re-encrypting identities"
 
 #~ msgid "Re-encrypting addressbook"
-#~ msgstr "Volviendo a cifrar la libreta de direcciones"
+#~ msgstr "Re-encrypting addressbook"
 
 #~ msgid "Re-encrypting folder"
-#~ msgstr "Volviendo a cifrar carpeta"
+#~ msgstr "Re-encrypting folder"
 
 #~ msgid "Updating password file"
-#~ msgstr "Actualizando fichero de contraseña"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "Cifrado de Curva Elíptica de 256 bits"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "Cifrado de Curva Elíptica de 521 bits"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "Cifrado ElGamal de 2048 bits"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "Cifrado NTRU-1087"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "Dirección no válida: {0}"
+#~ msgstr "Invalid address: {0}"
 
 #~ msgid "Invalid ID number for CryptoImplementation: "
-#~ msgstr ""
-#~ "Número de identificación ('ID') no válido para la interfaz "
-#~ "CryptoImplementation:"
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

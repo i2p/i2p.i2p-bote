@@ -5,6 +5,7 @@
 # hxdcmls, 2013
 # hxdcmls, 2013
 # idevk <kraidx@gmail.com>, 2016
+# Manuela Silva <manuela.silva@sky.com>, 2017
 # rafaelbf, 2013
 # Rafael Ferrari, 2013
 # Rafael Ferrari, 2013
@@ -15,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
+"POT-Creation-Date: 2017-03-26 20:31+1300\n"
+"PO-Revision-Date: 2017-03-26 07:21+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Portuguese (http://www.transifex.com/otf/I2P/language/pt/)\n"
 "Language: pt\n"
@@ -28,11 +29,11 @@ msgstr ""
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:115
 msgid "Password required or invalid password provided"
-msgstr "Senha requerida ou a senha digitada é inválida"
+msgstr "Palavra-passe requerida ou a Palavra-passe inserida é inválida"
 
 #: src/main/java/i2p/bote/imap/MapperFactory.java:319
 msgid "Deletion of mailboxes is not currently supported."
-msgstr "Apagar caixas de email não é suportado atualmente."
+msgstr "A eliminação de caixas de correio não é suportado atualmente."
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 msgid "Not set."
@@ -40,7 +41,7 @@ msgstr "Não defenido."
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:313
 msgid "Queued"
-msgstr "Em fila"
+msgstr "Em Fila"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:315
 msgid "Sending"
@@ -53,11 +54,11 @@ msgstr "Enviado para {0} de {1} destinatários"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:320
 msgid "Email sent"
-msgstr "Email enviado"
+msgstr "Mensagem enviada"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:322
 msgid "Gateway disabled"
-msgstr "Ponte de ligação desativada"
+msgstr "Acesso desativado"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:324
 #: src/main/java/i2p/bote/web/SendEmailTag.java:110
@@ -103,7 +104,7 @@ msgstr "Participantes de tipo encaminhador:"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:144
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:39
 msgid "Peer"
-msgstr "Participante"
+msgstr "Par-a-Par"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:119
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:41
@@ -154,7 +155,7 @@ msgstr "Instáveis"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:250
 msgid "Wrong protocol version:"
-msgstr "Versão de protocolo incompatível:"
+msgstr "Versão de protocolo errada:"
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:76
 msgid "Error: Please add at least one recipient."
@@ -174,7 +175,7 @@ msgstr "Erro ao enviar email: {0}"
 #: src/main/java/i2p/bote/web/SendEmailTag.java:114
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
-msgstr "O endereço nem é um endereço do I2P-Bote nem um endereço externo: {0}"
+msgstr "O endereço não contém um E-mail de Destino ou um endereço externo: {0}"
 
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:43
 msgid "BktPfx"
@@ -190,7 +191,7 @@ msgstr "Bloqueado?"
 
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:49
 msgid "First Seen"
-msgstr "Primeiro contato"
+msgstr "Primeiro contacto"
 
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:59
 msgid "Yes"
@@ -214,7 +215,7 @@ msgstr "- I2P-Bote"
 
 #: src/main/webapp/header.jsp
 msgid "Password is cached. Click to clear the password cache."
-msgstr "Senha memorizada. Clique aqui para apagar."
+msgstr "Palavra-passe memorizada. Clique para limpar a cache da palavra-passe."
 
 #: src/main/webapp/header.jsp
 msgid "I2P-Bote"
@@ -302,15 +303,15 @@ msgstr "Endereço"
 
 #: src/main/webapp/identities.jsp
 msgid "Checking for mail..."
-msgstr "À procura de novos emails..."
+msgstr "A procurar por mensagens..."
 
 #: src/main/webapp/identities.jsp
 msgid "Check Mail"
-msgstr "Procurar novos emails"
+msgstr "Verificar Mensagens"
 
 #: src/main/webapp/identities.jsp
 msgid "Check mail for this identity"
-msgstr "Procurar novos emails para esta identidade"
+msgstr "Procurar nas mensagens por esta identidade"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
@@ -726,11 +727,11 @@ msgstr "O contato foi apagado da lista de endereços."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set Password"
-msgstr "Definir senha"
+msgstr "Definir Palavra-passe"
 
 #: src/main/webapp/setPassword.jsp
 msgid "The password has been changed."
-msgstr "A senha foi guardada."
+msgstr "A palavra-passe foi alterada."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Please wait"
@@ -738,24 +739,26 @@ msgstr "Por favor espere"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Please wait while the password is being changed..."
-msgstr "Favor esperar enquanto a senha está a ser alterada..."
+msgstr "Por favor, aguarde enquanto a palavra-passe está a ser alterada..."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Set a new Password"
-msgstr "Definir nova Senha"
+msgstr "Defina uma nova Palavra-passe"
 
 #: src/main/webapp/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
 msgstr ""
-"Se não tem definida nenhuma senha, deixe o campo \"antiga senha\" vazio."
+"Se não definiu uma palavra-passe, deixe o campo \"palavra-passe antiga\" em "
+"branco."
 
 #: src/main/webapp/setPassword.jsp
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
 msgstr ""
-"Note que com uma senha definida, os novos emails não são descarregados "
-"automaticamente mas apenas quando clica no botão para Procurar novos emails."
+"Por favor, note que se for definida uma palavra-passe, os e-mails não podem "
+"ser transferidos automaticamente mas apenas quando clicar em \"Verificar "
+"Mensagens\"."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -871,11 +874,11 @@ msgstr "Geral"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
-msgstr "Procurar novos emails a cada {0} minutos"
+msgstr "Procurar por mensagens a cada {0} minutos"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
-msgstr "Verificar o estado dos emails enviados"
+msgstr "Verificar o estado de entrega das mensagens enviadas"
 
 #: src/main/webapp/settings.jsp
 msgid "Enable IMAP on port {0}"
@@ -1353,52 +1356,52 @@ msgstr "{0} incompletos"
 #~ msgstr "Material"
 
 #~ msgid "Light Blue"
-#~ msgstr "Azul claro"
+#~ msgstr "Light Blue"
 
 #~ msgid "Vanilla"
-#~ msgstr "Normal"
+#~ msgstr "Vanilla"
 
 #~ msgid "No identity matches the sender/from field: "
-#~ msgstr "Nenhuma identidade coincide com o campo do remetente 'De':"
+#~ msgstr "No identity matches the sender/from field: "
 
 #~ msgid "Checking password"
-#~ msgstr "A verificar a senha..."
+#~ msgstr "Checking password"
 
 #~ msgid "The old password is not correct."
-#~ msgstr "A antiga senha não está correta."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "A nova senha e a sua confirmação não coincidem."
+#~ msgstr "The new password and the confirmation password do not match."
 
 #~ msgid "Re-encrypting identities"
-#~ msgstr "A re-cifrar as identidades"
+#~ msgstr "Re-encrypting identities"
 
 #~ msgid "Re-encrypting addressbook"
-#~ msgstr "A re-cifrar o livro de endereços"
+#~ msgstr "Re-encrypting addressbook"
 
 #~ msgid "Re-encrypting folder"
-#~ msgstr "A re-cifrar a pasta"
+#~ msgstr "Re-encrypting folder"
 
 #~ msgid "Updating password file"
-#~ msgstr "A atualizar o ficheiro de senhas"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "Criptografia de Curva Elíptica de 256 bits"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "Criptografia de Curva Elíptica de 521 bits"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "Criptografia ElGamal de 2048 bits"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "Criptografia NTRU-1087"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "Endereço inválido: {0}"
+#~ msgstr "Invalid address: {0}"
 
 #~ msgid "Invalid ID number for CryptoImplementation: "
-#~ msgstr "O identificador da implementatação criptográfica é inválido:"
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

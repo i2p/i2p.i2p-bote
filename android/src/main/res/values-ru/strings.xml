@@ -170,6 +170,7 @@
 Если есть проблемы, то перезапустите I2P (в приложении нажмите \"Остановить\", а затем нажмите, когда появится, \"Запустить\"). Подождите, пока I2P полностью запустится, и затем запустите Bote.</string>
   <string name="bote_connection_error">Ошибка соединения </string>
   <string name="full_error_copied_to_clipboard">Полный текст ошибки скопирован в буфер</string>
+  <string name="settings_label_network">Сеть</string>
   <string name="pref_title_autoMail">Автоматическая проверка почты</string>
   <string name="pref_title_checkInterval">Интервал проверки</string>
   <string name="pref_summ_checkInterval">%s мин.</string>
@@ -193,6 +194,13 @@
   <string name="pref_summ_minDelay">%s мин.</string>
   <string name="pref_title_maxDelay">Максимальная задержка при каждом прыжке</string>
   <string name="pref_summ_maxDelay">%s мин.</string>
+  <string name="settings_label_app_protection">Защита приложения</string>
+  <string name="screen_security">Безопасность экрана</string>
+  <string name="screen_security_summ">Блокировать снимки экрана в списке последних и внутри приложения</string>
+  <string name="settings_label_appearance">Внешний вид</string>
+  <string name="settings_label_language">Язык</string>
+  <string name="settings_default">По умолчанию</string>
+  <string name="settings_label_advanced">Расширенные</string>
   <string name="router_settings">Настройки маршрутизатора</string>
   <string name="auto">Автоматические</string>
   <string name="manual">Вручную</string>
@@ -209,6 +217,7 @@
   <string name="remove_password_info">Чтобы убрать пароль, оставьте поля \'Новый пароль\' пустыми.</string>
   <string name="password_changed">Пароль успешно изменен</string>
   <string name="pref_title_identities">Идентификаторы</string>
+  <string name="no_identities">Нет идентификаторов</string>
   <string name="new_identity">Новый идентификатор...</string>
   <string name="edit_identity">Редактировать идентификатор</string>
   <string name="title_new_identity">Новый идентификатор</string>
@@ -240,4 +249,5 @@
   <string name="license">Лицензия: %s</string>
   <!--Software libraries-->
   <string name="libraries">Библиотеки</string>
+  <!--Argument is a folder name-->
 </resources>

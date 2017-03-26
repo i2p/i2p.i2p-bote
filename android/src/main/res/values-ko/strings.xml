@@ -239,4 +239,5 @@
   <string name="license">라이선스: %s</string>
   <!--Software libraries-->
   <string name="libraries">라이브러리</string>
+  <!--Argument is a folder name-->
 </resources>

@@ -239,4 +239,5 @@
   <string name="license">许可协议：%s</string>
   <!--Software libraries-->
   <string name="libraries">库</string>
+  <!--Argument is a folder name-->
 </resources>

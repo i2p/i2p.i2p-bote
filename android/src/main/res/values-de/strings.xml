@@ -242,4 +242,5 @@
   <string name="license">Lizenz: %s</string>
   <!--Software libraries-->
   <string name="libraries">Bibliotheken</string>
+  <!--Argument is a folder name-->
 </resources>

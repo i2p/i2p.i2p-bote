@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
+"POT-Creation-Date: 2017-03-26 20:31+1300\n"
+"PO-Revision-Date: 2017-03-26 07:21+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Arabic (http://www.transifex.com/otf/I2P/language/ar/)\n"
 "Language: ar\n"
@@ -1306,29 +1306,53 @@ msgstr "{0} مجموع الايميلات, {1} جديد/جديدة"
 msgid "{0} incomplete"
 msgstr ""
 
+#~ msgid "Material"
+#~ msgstr "Material"
+
+#~ msgid "Light Blue"
+#~ msgstr "Light Blue"
+
+#~ msgid "Vanilla"
+#~ msgstr "Vanilla"
+
 #~ msgid "No identity matches the sender/from field: "
-#~ msgstr "لا توجد هوية متوافقة مع المرسل:"
+#~ msgstr "No identity matches the sender/from field: "
+
+#~ msgid "Checking password"
+#~ msgstr "Checking password"
 
 #~ msgid "The old password is not correct."
-#~ msgstr "كلمة المرور القديمة غير صحيحة."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "كلمة المرور الجديدة والتأكيد غير صالحة."
+#~ msgstr "The new password and the confirmation password do not match."
+
+#~ msgid "Re-encrypting identities"
+#~ msgstr "Re-encrypting identities"
+
+#~ msgid "Re-encrypting addressbook"
+#~ msgstr "Re-encrypting addressbook"
+
+#~ msgid "Re-encrypting folder"
+#~ msgstr "Re-encrypting folder"
+
+#~ msgid "Updating password file"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "256-bit Elliptic Curve تشفير نوع"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "521-bit Elliptic تشفير نوع"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "تشفير نوع ElGamal sur 2048 Bit"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "NTRU-1087 تشفير"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "عنوان غير صحيح: {0}"
+#~ msgstr "Invalid address: {0}"
 
 #~ msgid "Invalid ID number for CryptoImplementation: "
 #~ msgstr "Invalid ID number for CryptoImplementation: "

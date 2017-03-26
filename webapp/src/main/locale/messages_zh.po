@@ -1,14 +1,15 @@
 # Translators:
 # Translators:
+# K <daleks@foxmail.com>, 2017
 # walking <waling@mail.i2p>, 2013
 # walking <walking@i2pmail.org>, 2011
-# Y.F Yang <yfdyh000@gmail.com>, 2015
+# YF <yfdyh000@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
+"POT-Creation-Date: 2017-03-26 20:31+1300\n"
+"PO-Revision-Date: 2017-03-26 07:21+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/"
 "zh_CN/)\n"
@@ -319,7 +320,7 @@ msgstr "导出身份"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
-msgstr ""
+msgstr "表单必须通过POST提交。"
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
@@ -391,7 +392,7 @@ msgstr "联系人名称"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "文本"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete"
@@ -493,11 +494,11 @@ msgstr "上次查收："
 
 #: src/main/webapp/csrfError.jsp
 msgid "Security Violation"
-msgstr ""
+msgstr "安全违规"
 
 #: src/main/webapp/csrfError.jsp
 msgid "CSRF Security Violation"
-msgstr ""
+msgstr "跨站请求伪造（CSRF）安全违规"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -1088,11 +1089,11 @@ msgstr "点击发送邮件"
 
 #: src/main/webapp/about.jsp
 msgid "Maintenance, user experience, extended features, Android app"
-msgstr ""
+msgstr "维护，用户体验，扩展功能，Android 应用"
 
 #: src/main/webapp/about.jsp
 msgid "Past developers:"
-msgstr ""
+msgstr "过去的开发者："
 
 #: src/main/webapp/about.jsp
 msgid "Feedback on I2P-Bote"
@@ -1184,11 +1185,11 @@ msgstr "代码修复"
 
 #: src/main/webapp/about.jsp
 msgid "Usability improvement"
-msgstr ""
+msgstr "可用性改善"
 
 #: src/main/webapp/about.jsp
 msgid "Bug hunting"
-msgstr ""
+msgstr "漏洞检索"
 
 #: src/main/webapp/debug.jsp
 msgid "Debug"
@@ -1318,55 +1319,55 @@ msgid "{0} incomplete"
 msgstr "{0} 封未完成"
 
 #~ msgid "Material"
-#~ msgstr "纸张"
+#~ msgstr "Material"
 
 #~ msgid "Light Blue"
-#~ msgstr "亮蓝"
+#~ msgstr "Light Blue"
 
 #~ msgid "Vanilla"
-#~ msgstr "香草白"
+#~ msgstr "Vanilla"
 
 #~ msgid "No identity matches the sender/from field: "
-#~ msgstr "没有身份密钥与寄件者/收件人相匹配: "
+#~ msgstr "No identity matches the sender/from field: "
 
 #~ msgid "Checking password"
-#~ msgstr "正在检查密码"
+#~ msgstr "Checking password"
 
 #~ msgid "The old password is not correct."
-#~ msgstr "旧密码不正确。"
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "新密码与确认密码字段输入相符。"
+#~ msgstr "The new password and the confirmation password do not match."
 
 #~ msgid "Re-encrypting identities"
-#~ msgstr "重新加密身份"
+#~ msgstr "Re-encrypting identities"
 
 #~ msgid "Re-encrypting addressbook"
-#~ msgstr "重新加密地址簿"
+#~ msgstr "Re-encrypting addressbook"
 
 #~ msgid "Re-encrypting folder"
-#~ msgstr "重新加密文件夹"
+#~ msgstr "Re-encrypting folder"
 
 #~ msgid "Updating password file"
-#~ msgstr "正在更新密码文件"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "256位 EllipticCurve 加密"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "512位 EllipticCurve 加密"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "2048位 El-Gamal 加密"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "NTRU-1087 加密"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "无效地址: {0}"
+#~ msgstr "Invalid address: {0}"
 
 #~ msgid "Invalid ID number for CryptoImplementation: "
-#~ msgstr "加密算法的ID无效："
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

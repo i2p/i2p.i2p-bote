@@ -239,4 +239,5 @@
   <string name="license">Lisans: %s</string>
   <!--Software libraries-->
   <string name="libraries">Kitaplıklar</string>
+  <!--Argument is a folder name-->
 </resources>

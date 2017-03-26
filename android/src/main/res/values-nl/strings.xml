@@ -165,6 +165,7 @@
   <string name="also_check_i2p_android">Als dat niet helpt, controleer dan of I2P draait. Je kan de huidige status van I2P zien in de meldingslade, of door de I2P-app te openen. Als het niet correct draait, herstart dan I2P (klik op \"Stop\" en vervolgens op \"Start\" in de app). Wacht tot I2P volledig draait, en start dan Bote.</string>
   <string name="bote_connection_error">Bote verbindingsfout</string>
   <string name="full_error_copied_to_clipboard">Volledige fout gekopieerd naar klembord</string>
+  <string name="settings_label_network">Netwerk</string>
   <string name="pref_title_autoMail">Automatisch controleren op mail</string>
   <string name="pref_title_checkInterval">Controle-interval</string>
   <string name="pref_summ_checkInterval">%s minuten</string>
@@ -186,6 +187,13 @@
   <string name="pref_summ_minDelay">%s minuten</string>
   <string name="pref_title_maxDelay">Maximum vertraging per hop</string>
   <string name="pref_summ_maxDelay">%s minuten</string>
+  <string name="settings_label_app_protection">App beveiliging</string>
+  <string name="screen_security">Scherm beveiliging</string>
+  <string name="screen_security_summ">Blokkeer screenshots in de recenten lijst en binnen de applicatie</string>
+  <string name="settings_label_appearance">Uiterlijk</string>
+  <string name="settings_label_language">Taal</string>
+  <string name="settings_default">Standaard</string>
+  <string name="settings_label_advanced">Geavanceerd</string>
   <string name="router_settings">Routerinstellingen</string>
   <string name="auto">Automatisch</string>
   <string name="manual">Handmatig</string>
@@ -202,6 +210,7 @@
   <string name="remove_password_info">Laat de \'Nieuw wachtwoord\'-velden blanco om het wachtwoord te verwijderen.</string>
   <string name="password_changed">Wachtwoordwijziging geslaagd</string>
   <string name="pref_title_identities">Identiteiten</string>
+  <string name="no_identities">Geen identiteiten</string>
   <string name="new_identity">Nieuwe identiteit…</string>
   <string name="edit_identity">Identiteit bewerken</string>
   <string name="title_new_identity">Nieuwe identiteit</string>
@@ -233,4 +242,5 @@
   <string name="license">Licentie: %s</string>
   <!--Software libraries-->
   <string name="libraries">Bibliotheken</string>
+  <!--Argument is a folder name-->
 </resources>

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2016-11-27 09:57+0000\n"
+"POT-Creation-Date: 2017-03-26 20:31+1300\n"
+"PO-Revision-Date: 2017-03-26 07:21+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Slovak (http://www.transifex.com/otf/I2P/language/sk/)\n"
 "Language: sk\n"
@@ -1335,40 +1335,55 @@ msgid "{0} incomplete"
 msgstr ""
 
 #~ msgid "Material"
-#~ msgstr "Materiál"
+#~ msgstr "Material"
 
 #~ msgid "Light Blue"
-#~ msgstr "Svetlo modrá"
+#~ msgstr "Light Blue"
+
+#~ msgid "Vanilla"
+#~ msgstr "Vanilla"
 
 #~ msgid "No identity matches the sender/from field: "
-#~ msgstr "Odosielateľovi nezodpovedá žiadna identita/z poľa:"
+#~ msgstr "No identity matches the sender/from field: "
 
 #~ msgid "Checking password"
-#~ msgstr "Kontrolujem heslo"
+#~ msgstr "Checking password"
 
 #~ msgid "The old password is not correct."
-#~ msgstr "Staré heslo nie je správne."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "Nové heslo a potvrdzovacie heslo sa nezhodujú."
+#~ msgstr "The new password and the confirmation password do not match."
+
+#~ msgid "Re-encrypting identities"
+#~ msgstr "Re-encrypting identities"
+
+#~ msgid "Re-encrypting addressbook"
+#~ msgstr "Re-encrypting addressbook"
+
+#~ msgid "Re-encrypting folder"
+#~ msgstr "Re-encrypting folder"
+
+#~ msgid "Updating password file"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "256-bitové šifrovanie Elliptic Curve"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "521-bitové šifrovanie Elliptic Curve"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "2048-bitové šifrovanie ElGamal"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "Šifrovanie NTRU-1087"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "Neplatná adresa: {0}"
+#~ msgstr "Invalid address: {0}"
 
 #~ msgid "Invalid ID number for CryptoImplementation: "
-#~ msgstr "Neplatné číslo ID pre CryptoImplementation:"
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

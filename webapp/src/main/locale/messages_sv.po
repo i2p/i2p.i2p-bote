@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2017-01-22 18:57+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
+"POT-Creation-Date: 2017-03-26 20:31+1300\n"
+"PO-Revision-Date: 2017-03-26 07:21+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/otf/I2P/language/"
 "sv_SE/)\n"
 "Language: sv_SE\n"
@@ -121,7 +121,7 @@ msgstr "Otestad"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:140
 msgid "Banned Peers:"
-msgstr "Bannade noder:"
+msgstr "Förbjudna noder:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:145
 msgid "Destination Hash"
@@ -1096,7 +1096,7 @@ msgstr "I2P-Bote Version {0}"
 
 #: src/main/webapp/about.jsp
 msgid "To submit bug reports or feature requests:"
-msgstr "För att rapportera buggar eller begär funktioner:"
+msgstr "För att rapportera fel eller begära funktioner:"
 
 #: src/main/webapp/about.jsp
 msgid "click here"
@@ -1216,11 +1216,11 @@ msgstr ""
 
 #: src/main/webapp/debug.jsp
 msgid "Debug"
-msgstr "Debugg"
+msgstr "Felsökning"
 
 #: src/main/webapp/debug.jsp
 msgid "Debug Page"
-msgstr "Debuggsida"
+msgstr "Felsökningssida"
 
 #: src/main/webapp/debug.jsp
 msgid "Test encrypted files"
@@ -1280,7 +1280,7 @@ msgstr "Namnet &quot;{0}&quot; hittades inte i mappen."
 
 #: src/main/webapp/importContact.jsp
 msgid "Import Contact"
-msgstr "Importera Kontakt"
+msgstr "Importera kontakt"
 
 #: src/main/webapp/importContact.jsp
 msgid ""
@@ -1346,52 +1346,52 @@ msgstr "{0} inkomplett"
 #~ msgstr "Material"
 
 #~ msgid "Light Blue"
-#~ msgstr "Ljusblå"
+#~ msgstr "Light Blue"
 
 #~ msgid "Vanilla"
-#~ msgstr "Vanilj"
+#~ msgstr "Vanilla"
 
 #~ msgid "No identity matches the sender/from field: "
-#~ msgstr "Ingen identitet överensstämmer med avsändare/från fältet:"
+#~ msgstr "No identity matches the sender/from field: "
 
 #~ msgid "Checking password"
-#~ msgstr "Kontrollerar lösenord"
+#~ msgstr "Checking password"
 
 #~ msgid "The old password is not correct."
-#~ msgstr "Det gamla lösenordet är inte rätt."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "Det nya lösenordet och bekräftelselösenordet matchar inte."
+#~ msgstr "The new password and the confirmation password do not match."
 
 #~ msgid "Re-encrypting identities"
-#~ msgstr "Återkrypterar identiteter"
+#~ msgstr "Re-encrypting identities"
 
 #~ msgid "Re-encrypting addressbook"
-#~ msgstr "Återkrypterar adressbok"
+#~ msgstr "Re-encrypting addressbook"
 
 #~ msgid "Re-encrypting folder"
-#~ msgstr "Återkrypterar katalog"
+#~ msgstr "Re-encrypting folder"
 
 #~ msgid "Updating password file"
-#~ msgstr "Uppdaterar lösenordsfil"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "256-bitars Elliptisk kurv kryptering"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "521-bitars Elliptisk kurv kryptering"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "2048-bitars ElGamal kryptering"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "NTRU-1087 kryptering"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "Ogiltig address: {0}"
+#~ msgstr "Invalid address: {0}"
 
 #~ msgid "Invalid ID number for CryptoImplementation: "
-#~ msgstr "Ogiltigt ID for krypteringsimplementation:"
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."
