@@ -199,122 +199,57 @@ menu 'From:'.</p>
 
 <p>Sie können die Anzahl von Nodes (hier genannt Hops) spezifizieren, die aufeinanderfolgen, um eine Mail-Route zu definieren. Jedes E-Mail-Paket, welches über eine Identität abgesetzt wird, für die Mail Routen aktiviert sind, wird über eine Mail-Route mit n Hops gesandt, bevor es gespeichert wird. Sie können eine Verzögerung für jeden Hop individuell einstellen, so daß kein Hop Kenntnis über die Haltezeit beim nächsten Hop hat, was ein Timing unvorhersagbar macht [individuelle per-Hop und per-Identity Einstellungen der Delays noch nicht implementiert].</p>
 
-<p>As delay you can specify a time frame (e.g. 60-600 minutes) - then a
-random wait time between the two values will be chosen for the packet at that
-hop - or a fix time, then the packet will be forwarded at that fix time, e.
-g. noon UTC, no matter when it arrived. [fix time not yet implemented]</p>
+<p>Als Verzögerung können Sie ein Zeitfenster vorgeben (z. B. 60-600 Minuten) - danach wird zufällig eine Wartezeit zwischen den beiden Werten für das Paket auf diesem Sprung gewählt - oder eine feste Zeit, dann wird das Paket zu dieser festen Zeit weitergeleitet werden, z. B. mittags UTC, egal wann es ankommt. [feste Zeit nicht eingeschlossen]</p>
 
-<p>(When using mail routes, the timestamps are automatically disabled.) [not yet
-implemented]</p>
+<p>(Falls Mail-Routen benutzt werden, sind die Zeitstempel automatisch abgeschaltet.) [noch nicht implementiert]</p>
 
-<p>Under <em>Mixing anonymity</em> (minimum threshold number of relay
-packets that will be sent) you can specify a threshold. As your node can only
-act reliably as a mix if there are enough foreign packets to mix and to blend
-own packets with, it will accumulate messages whose delay time is over until
-reaching this lower limit. Only when it is surpassed, your node starts sending
-them out in random order. [Not yet implemented]</p>
+<p>Unter <em>Anonymität mischen</em> (kleinster Schwellenwert an Relay-Paketen wird versendet werden) können Sie einen Schwellenwert festlegen. Da Ihr Knoten nur verlässlich als Mixer agieren kann, wenn genügend fremde Pakete zu mischen und eigene Pakete darunter zu mischen sind, wird er Nachrichten, deren Verzögerungszeit überschritten ist, sammeln, bis das untere Limit erreicht ist.  Nur wenn dieses übertroffen wird, startet der Knoten das Versenden in zufälliger Reihenfolge. [Noch nicht implementiert]</p>
 
-<p><em>exclude identity from global checking</em> [Not yet implemented]</p>
+<p><em>Identität von der globalen Prüfung ausschließen</em> [Noch nicht implementiert] </p>
 
-<p>If you enable this option for one of your identities, then this one will not
-be affected by the global manual checking for mails nor by any global automatic
-mail checking.</p>
+<p>Wenn Sie diese Option für eine Ihrer Identitäten aktivieren, wird das weder einen Einfluss auf das globale manuelle Prüfen von Nachrichten noch auf das globale automatische Prüfen von Nachrichten haben.</p>
 
 <h3 id="Gateway">2.6. E-Mail-Gateway ins Internet</h3>
 <p>[NOCH NICHT VOLLSTÄNDIG IMPLEMENTIERT!]</p>
 
-<p>In order to be able to send bote mails to the internet and to receive
-e-mails from the internet with your I2P-Bote application, you must first
-register with an appropriate mail gateway. Currently there is only one:
-postman.</p>
+<p>Um mit bote Nachrichten ins Internet senden und E-Mails aus dem Internet mit I2P-Bote empfangen zu können, müssen Sie sich zuerst bei einem geeigneten E-Mail Gateway anmelden. Zurzeit gibt es nur einen: postman</p>
 
 <ol>
-<li><p>First, go to
-<a href="http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?page_id=16</a>
-and register an account. If you already have an account or if you have just
-created one as described, proceed with #2.</p></li>
+<li><p>Als Erstes gehen dazu zu <a href="http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?page_id=16</a> und registrieren einen Account. Wenn Sie bereits einen Account dort haben oder soeben einen wie oben beschrieben kreiert haben, gehen Sie zu #2.</p></li>
 
-<li><p>For an existing account you can add your I2P-Bote mail destination, so
-that e-mails coming from the internet are forwarded to your I2P-Bote app. To do
-so go to
-<a href="http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</a>
-and provide the requested information.</p></li>
+<li><p>Für einen vorhandenen Account können Sie Ihre I2P-Bote Mail Destination hinzufügen, so dass die E-Mails, die aus dem Internet kommen zu Ihrer I2P-Bote Anwendung weitergeleitet werden. Dafür gehen Sie zu <a href="http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/?page_id=74</a> und geben die erforderlichen Informationen an.</p></li>
 </ol>
-<p>Now all e-mails sent to that address
-(<a href="mailto:name@i2pmail.org">name@i2pmail.org</a> from the outer internet
-or <a href="mailto:name@mail.i2p">name@mail.i2p</a> for mails from other postman
-subscribers) will be forwarded via the I2P-Bote network to your I2P-Bote
-app.</p>
+<p>Nun werden alle E-Mail , die an diese Adresse gesendet werden (<a href="mailto:name@i2pmail.org">name@i2pmail.org</a> aus dem internet oder <a href="mailto:name@mail.i2p">name@mail.i2p</a> von anderen postman Nutzern), über das I2P-Bote Netzwerk zu Ihrer I2P-Bote Anwendung weitergeleitet. </p>
 
-<p>(N.B. When using the <a href="mailto:name@mail.i2p">name@mail.i2p</a> or
-<a href="mailto:name@i2pmail.org">name@i2pmail.org</a> addresses instead of the
-long addresses, e-mails are no longer end-to-end encrypted. Therefore, it is
-recommended to exchange the I2P-Bote mail destination keys for communicating
-within the network. Postman has offered high quality services in I2P for quite
-a while already, but be aware that it's a centralized point that might go
-offline one day, or worse be taken over by an evildoer that will manipulate
-mails. As for network-internal e-mail communication, I2P-Bote makes sure that
-if you use the address keys, nobody can tamper with the mails you send or
-receive.)</p>
+<p>(Anm.: Bei Benutzung von <a href="mailto:name@mail.i2p">name@mail.i2p</a> oder <a href="mailto:name@i2pmail.org">name@i2pmail.org</a> Adressen anstatt der langen Adresse sind E-Mails nicht länger Ende-zu-Ende verschlüsselt. Daher wird empfohlen die I2P-Bote Schlüssel für den Mail Empfang und für die Kommunikation innerhalb des Netzwerks auszutauschen. Postman hat High Quality Services in I2P schon ziemlich lange angeboten, aber beachten Sie, dass dies ein zentralisierter Punkt ist, der eines Tages abgeschaltet oder von Bösewichten zur Manipulation von E-Mails missbraucht werden kann. Für die Netzwerk-Internet E-Mail Kommunikation stellt I2P-Bote sicher, dass bei Benutzung des Adressschlüssels niemand die gesendeten oder empfangenen Mails fälschen kann.)</p>
 
-<p>If you want not only to receive e-mails from the internet, but also enable
-sending e-mails from I2P-Bote to the internet, you must provide your I2P-Bote
-client with the gateway's mail destination key, so that your I2P-Bote knows
-where to send those mails to.</p>
+<p>Wenn Sie nicht nur E-Mails aus dem Internet empfangen sondern auch E-Mails mit I2P-Bote in das Internet senden möchten, müssen Sie im I2P-Bote Client den Mail Destination Schlüssel des Gateways angeben, damit Ihr I2P-Bote weiß, wohin die Mails zu senden sind.</p>
 
-<p>You can do this under 'Settings'. This gateway will allow I2P-Bote users
-to communicate with the standard e-mail users on the internet as well as with
-users of postman's classical i2pmail service (@mail.i2p).</p>
+<p>Sie können diese Einstellung unter 'Einrichtung' vornehmen. Dieses Gateway wird I2P-Bote Nutzern erlauben, mit den normalen E-Mail Nutzern des Internets und auch mit den Nutzern des klassischen I2P-Mail-Service von Postman (@mail.i2p) zu kommunizieren.</p>
 
-<p>In order to fight abuse, there will be a limitation of the number of e-mails
-you can send out to the internet; just like for normal postman mail service
-users: If an I2P-Bote user exceeds the quota with outgoing e-mails, the
-additional e-mails will be sent back as bounce.</p>
+<p>Um Missbrauch zu bekämpfen gibt es eine Limitierung der E-Mail Anzahl, die Sie in das Internet senden können, wie auch für normale Nutzer des Postman Mail Services: Wenn ein I2P-Bote Nutzer diese Quotierung an ausgehenden E-Mails überschreitet, werden die zusätzlichen E-Mails auf einen Schlag zurückgesandt.</p>
 
 <h2 id="Considerations">3. Überlegungen über Anonymität</h2>
-<p>Don't send identifying information about you (name, address, geographic
-location, time zone, age, websites you have just visited or blogged about, user
-names, ip numbers, I2P router id, I2P-Bote id, social security number, credit
-card number, &hellip;, copies of your passport, driver's license, home rental
-contract, photos (nude or with clothes), documents that contain your
-username in author's settings, and many many more)!</p>
+<p>Senden Sie keine Informationen, über die Sie identifiziert werden könnten (Name, Adresse, geographische Lage, Zeitzone, Alter, besuchte oder im Blog erwähnte Webseiten, Nutzernamen, IP-Adressen, I2P Router ID, I2P-Bote ID, Sozialversicherungsnummer, Kreditkartennummer, Kopien Ihres Ausweises, Führerscheins, Mietvertrags, Fotos (Nackt oder bekleidet), Dokumente mit Ihrem Nutzernamen als Autor und vieles mehr)!</p>
 
 <p>Wenn möglich,</p>
 <ul>
 <li><p>lassen Sie I2P-Bote 24/7 laufen,</p></li>
-<li><p>use mailroutes with randomized per-hop delays and/or per-hop fixed send
-times, [not yet <em>fully</em> implemented]</p></li>
+<li><p>Benutzen Sie Mailrouten mit zufälligen Verzögerungen pro Sprung und/oder festgelegten Sendezeiten pro Sprung. [Noch nicht <em>komplett</em> implementiert]</p></li>
 <li><p>verwenden Sie ein langes Abrufintervall,</p></li>
 <li><p>verwenden Sie eine lange lokale Verzögerung für eigene Pakete,</p></li>
 <li><p>verwende große Intervalle nach zufälligem Muster [noch nicht 
 implementiert]</p></li>
 </ul>
-<p>You can suppress the sending of date and time in the e-mails' header.</p>
+<p>Sie können das Mitsenden des Datums und der Uhrzeit im E-Mail-Kopf unterdrücken.</p>
 
-<p>When you reply to an e-mail, certain markers are added to show the recipient
-that this is a reply, such as 'Re: [subject of the mail you're replying to]' or
-'[username] wrote:'. Those are different for the languages you can chose from in
-your language settings. However, if you don't want the recipient to know what
-language you have set, you can suppress translation of these markers, so that
-they will be in English, no matter what you language setting is. In order to do
-so, mark 'Use English for text added to outgoing email ('Re:', 'wrote:',
-etc.)'</p>
+<p>Wenn Sie auf eine E-Mail antworten werden verschiedene Markierungen hinzugefügt, die dem Empfänger zeigen, dass es sich hier um eine Antwort handelt, wie etwa 'Re: [Betreffzeile der ursprünglichen Mail]' oder '[Benutzername] schrieb:'. Diese sind je nach Sprache , die in den Einstellungen gewählt wurde, unterschiedlich. Wenn Sie allerdings nicht möchten, dass der Empfänger erfährt, welche Sprache Sie gewählt haben, können Sie die Übersetzung dieser Markierungen unterdrücken, so dass sie auf englisch sein werden, egal welche Spracheinstellung gewählt wurde. Um das auszuwählen markieren Sie 'Use English for text added to outgoing email ('Re:', 'wrote:', etc.)</p>
 
-<p>Be careful with the contents you send! Don't include personal information or
-information that only you can possess. Don't write 'I'm going to bed now, it's
-late' when including time stamps.</p>
+<p>Seien Sie vorsichtig, welche Inhalte Sie versenden! Fügen Sie keine persönlichen Informationen hinzu oder Informationen, die nur von Ihnen stammen können. Schreiben Sie nicht: "Ich gehe nun ins Bett, es ist spät.", wenn Zeitstempel enthalten sind.</p>
 
-<p>The language in which you write your e-mails, your style and formulations
-can also be of interest for an attacker.</p>
+<p>Die Sprache, in der Sie Ihre E-Mails schreiben, Ihr Schreibstil und Ihre Formulierungen können für einen Angreifer von Interesse sein.</p>
 
-<p>I2P-Bote also offers the possibility to use different e-mail identities.
-Suppose one of you contacts learns about your identity, as you forgot to erase
-identifying information in a secret document you have sent to him. Now if this
-e-mail's recipient was to collaborate with others you are in contact with, he
-could tell them the real world identity belonging to the Bote address he knows
-from you. Thusly, if you communicate with those others using the same Bote
-address, they will know who you are. Not so, if you used a different address
-for sending mails to them.</p>
+<p>I2P-Bote bietet die Möglichkeit, unterschiedliche E-Mail Identitäten zu benutzen. Angenommen, einer Ihrer Kontakte lernt etwas über Ihre Identität, weil Sie vergessen haben, identifizierende Informationen in einem geheimen Dokument, das Sie an ihn gesendet haben, zu löschen. Wenn nun dieser E-Mail Empfänger mit anderen zusammenarbeitete, mit denen Sie in Kontakt stehen, könnte er denen die wahre Identität bezüglich der I2P-Bote Adresse nennen, die er kennt. Daher werden andere wissen, wer Sie sind, wenn Sie die gleiche Bote Adresse mit anderen benutzen. Nicht aber, wenn Sie eine andere Adresse benutzen, um ihnen Mails zu schicken.</p>
 
 <h2 id="Troubleshooting">4. Problemlösung</h2>
 <h3 id="Unlimited-Strength-Crypto">4.1. Notification about JCE Unlimited Strength Jurisdiction Policy files</h3>
