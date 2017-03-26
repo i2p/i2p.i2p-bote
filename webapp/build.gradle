@@ -24,6 +24,7 @@ task precompileJsp {
     }
 }
 
+def messagesDir = project.file("$buildDir/messages-src")
 sourceSets {
     jsp {
         compileClasspath += configurations.providedCompile +
@@ -35,6 +36,11 @@ sourceSets {
     }
     poupdate {
         compileClasspath += configurations.providedCompile
+    }
+    messages {
+        java {
+            srcDir messagesDir
+        }
     }
 }
 
@@ -188,12 +194,38 @@ task poupdate(dependsOn: jspStrings) << {
     }
 }
 
+task generateMessagesJava << {
+    fileTree("$projectDir/src/main/locale").include('**/messages_*.po').each { File file ->
+        def lg = file.name.find(/messages_(.*).po/, { full, lang ->
+            lang
+        })
+        mkdir(messagesDir)
+        exec {
+            executable 'msgfmt'
+            args '--java',
+                    '--statistics',
+                    '--source',
+                    '-r', 'i2p.bote.locale.Messages',
+                    '-l', lg,
+                    '-d', temporaryDir,
+                    file
+        }
+        copy {
+            from temporaryDir
+            into messagesDir
+        }
+        delete(temporaryDir)
+    }
+}
+compileMessagesJava.dependsOn generateMessagesJava
+
 war {
     archiveName 'i2pbote.war'
     exclude '*.jsp'
     exclude 'WEB-INF/tags*'
     exclude 'WEB-INF/tlds*'
     classpath sourceSets.jsp.output
+    classpath sourceSets.messages.output
     dependsOn jspClasses
     filesMatching('**/*.xml') {
         filter { String line ->
