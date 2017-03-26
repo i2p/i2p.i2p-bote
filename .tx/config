@@ -3,8 +3,8 @@ host = https://www.transifex.com
 lang_map = he: iw, id: in, pt_BR: pt-rBR, ru_RU: ru, sv_SE: sv, tr_TR: tr, uk_UA: uk, yi: ji, zh_CN: zh
 
 [I2P.plugin_i2pbote]
-file_filter = locale/messages_<lang>.po
-source_file = locale/messages_en.po
+file_filter = webapp/src/main/locale/messages_<lang>.po
+source_file = webapp/src/main/locale/messages_en.po
 source_lang = en
 minimum_perc = 40
 
