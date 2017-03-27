@@ -112,31 +112,31 @@ class I2PPlugin implements Plugin<Project> {
     def pubKeyFile(Project project) {
         project.file(project.i2p.plugin.pubKeyFile ?
                      project.i2p.plugin.pubKeyFile :
-                     "$project.i2p.plugin.pubKeyDir/$project.i2p.plugin.pubKeyFileName")
+                     "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.pubKeyFileName")
     }
 
     def privKeyFile(Project project) {
         project.file(project.i2p.plugin.privKeyFile ?
                      project.i2p.plugin.privKeyFile :
-                     "$project.i2p.plugin.pubKeyDir/$project.i2p.plugin.privKeyFileName")
+                     "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.privKeyFileName")
     }
 
     def b64KeyFile(Project project) {
         project.file(project.i2p.plugin.b64KeyFile ?
                      project.i2p.plugin.b64KeyFile :
-                     "$project.i2p.plugin.pubKeyDir/$project.i2p.plugin.b64KeyFileName")
+                     "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.b64KeyFileName")
     }
 
     def pubKeyStore(Project project) {
         project.file(project.i2p.plugin.pubKeyStore ?
                      project.i2p.plugin.pubKeyStore :
-                     "$project.i2p.plugin.pubKeyDir/$project.i2p.plugin.pubKeyStoreName")
+                     "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.pubKeyStoreName")
     }
 
     def privKeyStore(Project project) {
         project.file(project.i2p.plugin.privKeyStore ?
                      project.i2p.plugin.privKeyStore :
-                     "$project.i2p.plugin.pubKeyDir/$project.i2p.plugin.privKeyStoreName")
+                     "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.privKeyStoreName")
     }
 
     void apply(Project project) {
@@ -327,7 +327,7 @@ class I2PExtension {
 }
 
 class I2PPluginExtension {
-    def String pubKeyDir = System.getProperty('user.home') + '/.i2p-plugin-keys'
+    def String pluginKeyDir = System.getProperty('user.home') + '/.i2p-plugin-keys'
     def String pubKeyFileName = 'plugin-public-signing.key'
     def String pubKeyFile
     def String privKeyFileName = 'plugin-private-signing.key'
