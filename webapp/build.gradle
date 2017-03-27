@@ -1,5 +1,6 @@
 apply plugin: 'war'
 apply plugin: 'witness'
+apply from: "${project.rootDir}/gradle/i2p-make-plugin.gradle"
 
 archivesBaseName = 'i2pbote'
 
@@ -239,8 +240,6 @@ war {
         from 'src/main/webapp/WEB-INF/tlds'
     }
 }
-
-apply from: "${project.rootDir}/gradle/i2p-make-plugin.gradle"
 
 i2p {
     plugin {
