@@ -97,7 +97,7 @@ class I2PPlugin implements Plugin<Project> {
         'max-installed-version':   ['maxInstalledVersion',   false],
     ]
 
-    def pluginLibs(Project project) {
+    static def pluginLibs(Project project) {
         project.configurations.runtime.filter { lib -> !(
             // These are all in the standard classpath
             lib.name.startsWith('i2p-') ||
@@ -109,31 +109,31 @@ class I2PPlugin implements Plugin<Project> {
         )}
     }
 
-    def pubKeyFile(Project project) {
+    static def pubKeyFile(Project project) {
         project.file(project.i2p.plugin.pubKeyFile ?
                      project.i2p.plugin.pubKeyFile :
                      "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.pubKeyFileName")
     }
 
-    def privKeyFile(Project project) {
+    static def privKeyFile(Project project) {
         project.file(project.i2p.plugin.privKeyFile ?
                      project.i2p.plugin.privKeyFile :
                      "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.privKeyFileName")
     }
 
-    def b64KeyFile(Project project) {
+    static def b64KeyFile(Project project) {
         project.file(project.i2p.plugin.b64KeyFile ?
                      project.i2p.plugin.b64KeyFile :
                      "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.b64KeyFileName")
     }
 
-    def pubKeyStore(Project project) {
+    static def pubKeyStore(Project project) {
         project.file(project.i2p.plugin.pubKeyStore ?
                      project.i2p.plugin.pubKeyStore :
                      "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.pubKeyStoreName")
     }
 
-    def privKeyStore(Project project) {
+    static def privKeyStore(Project project) {
         project.file(project.i2p.plugin.privKeyStore ?
                      project.i2p.plugin.privKeyStore :
                      "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.privKeyStoreName")
