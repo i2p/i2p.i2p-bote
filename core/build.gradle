@@ -16,10 +16,10 @@ dependencies {
     compile 'org.b1.pack:lzma-sdk-4j:9.22.0'
     compile 'org.bouncycastle:bcprov-jdk15on:1.52'
 
-    testCompile 'junit:junit:4.+'
-    testCompile 'org.jmock:jmock:2.6.0'
-    testCompile 'org.jmock:jmock-legacy:2.6.0'
-    testCompile 'org.mockito:mockito-core:2.2.+'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.jmock:jmock:2.8.2'
+    testCompile 'org.jmock:jmock-legacy:2.8.2'
+    testCompile 'org.mockito:mockito-core:2.7.19'
 }
 
 dependencyVerification {
