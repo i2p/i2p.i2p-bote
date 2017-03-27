@@ -314,6 +314,21 @@ class I2PPlugin implements Plugin<Project> {
             }
 
             p.task('plugin') << {
+                // For now, update files are identical to install files
+                p.copy {
+                    into pluginDir
+                    from p.signXPI2PPlugin.outputs.files[0]
+                    rename {
+                        "${p.i2p.plugin.name}-update.xpi2p"
+                    }
+                }
+                p.copy {
+                    into pluginDir
+                    from p.signSU3Plugin.outputs.files[0]
+                    rename {
+                        "${p.i2p.plugin.name}-update.su3"
+                    }
+                }
             }
             p.plugin.dependsOn p.signXPI2PPlugin
             p.plugin.dependsOn p.signSU3Plugin
