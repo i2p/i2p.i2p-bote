@@ -73,7 +73,6 @@ class I2PPlugin implements Plugin<Project> {
         'author':        ['author',       false],
         'description':   ['description',  false],
         'websiteURL':    ['websiteUrl',   false],
-        'updateURL':     ['updateUrl',    false],
         'updateURL.su3': ['su3UpdateUrl', false],
         'license':       ['license',      false],
         'disableStop':   ['disableStop',  false],
@@ -107,24 +106,6 @@ class I2PPlugin implements Plugin<Project> {
             lib.name.startsWith('mstreaming-') ||
             lib.name.startsWith('streaming-')
         )}
-    }
-
-    static def pubKeyFile(Project project) {
-        project.file(project.i2p.plugin.pubKeyFile ?
-                     project.i2p.plugin.pubKeyFile :
-                     "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.pubKeyFileName")
-    }
-
-    static def privKeyFile(Project project) {
-        project.file(project.i2p.plugin.privKeyFile ?
-                     project.i2p.plugin.privKeyFile :
-                     "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.privKeyFileName")
-    }
-
-    static def b64KeyFile(Project project) {
-        project.file(project.i2p.plugin.b64KeyFile ?
-                     project.i2p.plugin.b64KeyFile :
-                     "$project.i2p.plugin.pluginKeyDir/$project.i2p.plugin.b64KeyFileName")
     }
 
     static def pubKeyStore(Project project) {
@@ -185,8 +166,6 @@ class I2PPlugin implements Plugin<Project> {
             }
             file << System.getProperty('line.separator')
             file << 'date=' << System.currentTimeMillis()
-            file << System.getProperty('line.separator')
-            file << 'key=' << b64KeyFile(project).text
         }
 
         project.task('prepareWebappsConfig') << {
@@ -233,11 +212,6 @@ class I2PPlugin implements Plugin<Project> {
         project.pluginZip.dependsOn project.prepareWebappsConfig
 
         project.task('checkKeys') << {
-            def pkf = privKeyFile(project)
-            if (!pkf.exists()) {
-                println 'TODO: Creating new XPI2P DSA keys'
-            }
-
             def pks = privKeyStore(project)
             if (!pks.exists()) {
                 println "TODO: Creating new SU3 $project.i2p.plugin.keyType keys for $project.i2p.plugin.signer"
@@ -250,25 +224,6 @@ class I2PPlugin implements Plugin<Project> {
 
         project.afterEvaluate { p ->
             def pluginDir = p.file("$p.buildDir/plugin")
-
-            p.task('signXPI2PPlugin', type: JavaExec) {
-                def xpi2pFile = p.file("$pluginDir/${p.i2p.plugin.name}.xpi2p")
-                inputs.files p.pluginZip.outputs.files
-                outputs.files xpi2pFile
-                main = 'net.i2p.crypto.TrustedUpdate'
-                classpath = p.configurations.i2pPluginSign
-                args 'sign',
-                     p.pluginZip.outputs.files[0].absolutePath,
-                     xpi2pFile,
-                     privKeyFile(p),
-                     p.i2p.plugin.version
-
-                doFirst {
-                    p.mkdir(pluginDir)
-                }
-            }
-            p.signXPI2PPlugin.dependsOn p.pluginZip
-            p.signXPI2PPlugin.dependsOn p.checkKeys
 
             p.task('signSU3Plugin', type: JavaExec) {
                 def su3File = p.file("$pluginDir/${p.i2p.plugin.name}.su3")
@@ -295,15 +250,6 @@ class I2PPlugin implements Plugin<Project> {
             p.signSU3Plugin.dependsOn p.pluginZip
             p.signSU3Plugin.dependsOn p.checkKeys
 
-            p.task('verifyXPI2PPlugin', type: JavaExec) {
-                def b64Key = b64KeyFile(p).text
-                main = 'net.i2p.crypto.TrustedUpdate'
-                classpath = p.configurations.i2pPluginSign
-                jvmArgs "-Drouter.trustedUpdateKeys=$b64Key"
-                args 'verifysig',
-                     p.signXPI2PPlugin.outputs.files[0].absolutePath
-            }
-
             p.task('verifySU3Plugin', type: JavaExec) {
                 main = 'net.i2p.crypto.SU3File'
                 classpath = p.configurations.i2pPluginSign
@@ -317,22 +263,13 @@ class I2PPlugin implements Plugin<Project> {
                 // For now, update files are identical to install files
                 p.copy {
                     into pluginDir
-                    from p.signXPI2PPlugin.outputs.files[0]
-                    rename {
-                        "${p.i2p.plugin.name}-update.xpi2p"
-                    }
-                }
-                p.copy {
-                    into pluginDir
                     from p.signSU3Plugin.outputs.files[0]
                     rename {
                         "${p.i2p.plugin.name}-update.su3"
                     }
                 }
             }
-            p.plugin.dependsOn p.signXPI2PPlugin
             p.plugin.dependsOn p.signSU3Plugin
-            p.plugin.dependsOn p.verifyXPI2PPlugin
             p.plugin.dependsOn p.verifySU3Plugin
         }
     }
@@ -343,12 +280,6 @@ class I2PExtension {
 
 class I2PPluginExtension {
     def String pluginKeyDir = System.getProperty('user.home') + '/.i2p-plugin-keys'
-    def String pubKeyFileName = 'plugin-public-signing.key'
-    def String pubKeyFile
-    def String privKeyFileName = 'plugin-private-signing.key'
-    def String privKeyFile
-    def String b64KeyFileName = 'plugin-public-signing.txt'
-    def String b64KeyFile
     def String pubKeyStoreName = 'plugin-su3-public-signing.crt'
     def String pubKeyStore
     def String privKeyStoreName = 'plugin-su3-keystore.ks'
@@ -362,7 +293,6 @@ class I2PPluginExtension {
     def String author
     def String description
     def String websiteUrl
-    def String updateUrl
     def String su3UpdateUrl
     def String license
     def String disableStop

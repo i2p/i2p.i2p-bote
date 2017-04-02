@@ -249,7 +249,6 @@ i2p {
 
         author 'str4d@mail.i2p'
         websiteUrl 'http://bote.i2p/'
-        updateUrl 'http://bote.i2p/i2pbote-update.xpi2p'
         su3UpdateUrl 'http://bote.i2p/i2pbote-update.su3'
         license 'GPLv3'
 
