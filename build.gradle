@@ -24,8 +24,8 @@ configure([project(':core'), project(':webapp')]) {
             }
         }
 
-        sourceCompatibility = 1.6
-        targetCompatibility = 1.6
+        sourceCompatibility = 1.7
+        targetCompatibility = 1.7
         // Set bootClasspath=/path/to/rt.jar:/path/to/jce.jar in gradle.properties if needed
         if (bootClasspath) {
             project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
