@@ -14,20 +14,23 @@ allprojects {
     }
 }
 
-configure([project(':core'), project(':webapp')]) { project.afterEvaluate {
-    version = '0.4.5'
-    jar {
-        manifest {
-            attributes 'Implementation-Version': version
+configure([project(':core'), project(':webapp')]) {
+    project.version = '0.4.5'
+
+    project.afterEvaluate {
+        jar {
+            manifest {
+                attributes 'Implementation-Version': project.version
+            }
+        }
+
+        sourceCompatibility = 1.6
+        targetCompatibility = 1.6
+        // Set bootClasspath=/path/to/rt.jar:/path/to/jce.jar in gradle.properties if needed
+        if (bootClasspath) {
+            project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
+                ac.options.bootClasspath = bootClasspath
+            })
         }
     }
-
-    sourceCompatibility = 1.6
-    targetCompatibility = 1.6
-    // Set bootClasspath=/path/to/rt.jar:/path/to/jce.jar in gradle.properties if needed
-    if (bootClasspath) {
-        project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
-            ac.options.bootClasspath = bootClasspath
-        })
-    }
-}}
+}
