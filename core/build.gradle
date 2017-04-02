@@ -6,9 +6,9 @@ archivesBaseName = 'i2pbote'
 dependencies {
     compile project(':crypto')
 
-    compile 'net.i2p:i2p:0.9.26'
-    compile 'net.i2p.client:mstreaming:0.9.26'
-    compile 'net.i2p.client:streaming:0.9.26'
+    compile 'net.i2p:i2p:0.9.29'
+    compile 'net.i2p.client:mstreaming:0.9.29'
+    compile 'net.i2p.client:streaming:0.9.29'
 
     compile 'com.lambdaworks:scrypt:1.4.0'
     compile 'com.sun.mail:mailapi:1.5.6'
@@ -24,9 +24,9 @@ dependencies {
 
 dependencyVerification {
     verify = [
-        'net.i2p:i2p:5e0f5efa8849e2abe72efaf1530bdf4a090717d49acfdfbe92911a14d4b4e511',
-        'net.i2p.client:mstreaming:1f343a640f79707f6652bbf344f65b42215ae3f7a221a3ee8ddd70ff59e812ae',
-        'net.i2p.client:streaming:5add7390de089f3c3c4f4005f0daa83014418416e890ed6c475e15cef51ba3c7',
+        'net.i2p:i2p:43f07888e5919a097a1b84efd32c220cd285485d3d39efaa343df90c025283ce',
+        'net.i2p.client:mstreaming:4bb1177ce2a20769c24f7b7cd1a63c654e7e88cab3ffa1a1e1411f4e9a30ebeb',
+        'net.i2p.client:streaming:d94c185e22360f994e9d6da22b3d6d5e40483b83312e47e853072b996a8a5447',
         'com.lambdaworks:scrypt:9a82d218099fb14c10c0e86e7eefeebd8c104de920acdc47b8b4b7a686fb73b4',
         'com.sun.mail:mailapi:48ef5396bd6743f0204f7c522c782fa88d3c41f730e3525943ff38ec7492dd7a',
         'org.apache.james:apache-mime4j-core:4d7434c68f94b81a253c12f28e6bbb4d6239c361d6086a46e22e594bb43ac660',
