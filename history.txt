@@ -1,6 +1,10 @@
 I2P-Bote Version History
 ------------------------
 
+0.4.6
+  * Merged I2P-Bote and Bote Android codebases
+  * Dependency upgrades
+
 0.4.5 (Released on Jan 20, 2017)
   * Security changes:
     * Add a Content Security Policy to all pages
