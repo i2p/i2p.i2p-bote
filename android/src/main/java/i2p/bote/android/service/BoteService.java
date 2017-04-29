@@ -82,7 +82,9 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
             new Thread(new RouterStarter()).start();
 
         I2PBote bote = I2PBote.getInstance();
-        bote.getConfiguration().setI2CPDomainSocket(DomainSocketFactory.I2CP_SOCKET_ADDRESS);
+        if (mRouterChoice == RouterChoice.ANDROID) {
+            bote.getConfiguration().setI2CPDomainSocket(DomainSocketFactory.I2CP_SOCKET_ADDRESS);
+        }
         bote.startUp();
         bote.addNewEmailListener(this);
 
