@@ -1,8 +1,9 @@
 I2P-Bote Version History
 ------------------------
 
-0.4.6
+0.4.6 (Released on May 3, 2017)
   * Merged I2P-Bote and Bote Android codebases
+  * Migrate plugin to Jetty 9
   * Dependency upgrades
 
 0.4.5 (Released on Jan 20, 2017)
