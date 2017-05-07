@@ -1,1 +1,11 @@
-include 'crypto', 'core', 'webapp', 'android'
+include 'crypto', 'core', 'webapp'
+
+def localPropsFile = new File('local.properties')
+if (localPropsFile.canRead()) {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(localPropsFile))
+
+    if (props != null && props.containsKey('sdk.dir')) {
+        include 'android'
+    }
+}
