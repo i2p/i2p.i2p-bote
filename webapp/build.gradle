@@ -28,7 +28,7 @@ task precompileJsp {
 def messagesDir = project.file("$buildDir/messages-src")
 sourceSets {
     jsp {
-        compileClasspath += configurations.providedCompile +
+        compileClasspath += configurations.compile +
                             sourceSets.main.output +
                             configurations.jasper
         java {
@@ -36,7 +36,7 @@ sourceSets {
         }
     }
     poupdate {
-        compileClasspath += configurations.providedCompile
+        compileClasspath += configurations.compile
     }
     messages {
         java {
@@ -91,66 +91,66 @@ dependencies {
     jasper 'org.mortbay.jasper:apache-el:8.0.33'
     jasper 'org.mortbay.jasper:apache-jsp:8.0.33'
 
-    providedCompile project(':core')
+    compile project(':core')
 
-    providedCompile 'org.apache.tomcat:tomcat-jsp-api:8.0.33'
-    providedCompile 'org.apache.tomcat:tomcat-servlet-api:8.0.33'
-    providedCompile 'org.jfree:jcommon:1.0.23'
-    providedCompile 'org.jfree:jfreechart:1.0.19'
-    providedCompile 'org.owasp:csrfguard:3.1.0'
-    providedCompile('org.subethamail:subethasmtp:3.1.7') {
+    compile 'org.apache.tomcat:tomcat-jsp-api:8.0.33'
+    compile 'org.apache.tomcat:tomcat-servlet-api:8.0.33'
+    compile 'org.jfree:jcommon:1.0.23'
+    compile 'org.jfree:jfreechart:1.0.19'
+    compile 'org.owasp:csrfguard:3.1.0'
+    compile('org.subethamail:subethasmtp:3.1.7') {
         exclude group: 'javax.mail', module: 'mail'
         exclude group: 'javax.activation', module: 'activation'
     }
-    providedCompile 'com.sun.mail:smtp:1.5.6'
+    compile 'com.sun.mail:smtp:1.5.6'
 
-    providedCompile 'javax.servlet:jstl:1.2'
+    compile 'javax.servlet:jstl:1.2'
 
     // Apache James IMAP server
-    providedCompile files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
+    compile files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
         builtBy tasks.extractJames
     }
-    providedCompile files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
+    compile files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
         builtBy tasks.extractJames
     }
-    providedCompile files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    providedCompile files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    providedCompile files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    providedCompile files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    providedCompile files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    providedCompile files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
+    compile files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
         builtBy tasks.extractJames
     }
-    providedCompile files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
+    compile files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
         builtBy tasks.extractJames
     }
-    providedCompile files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
+    compile files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
         builtBy tasks.extractJames
     }
 
     // Apache James IMAP server dependencies
-    providedCompile 'com.beetstra.jutf7:jutf7:1.0.0'
-    providedCompile 'commons-codec:commons-codec:1.7'
-    providedCompile 'commons-collections:commons-collections:3.2.1'
-    providedCompile 'commons-configuration:commons-configuration:1.9'
-    providedCompile 'commons-io:commons-io:2.4'
-    providedCompile 'commons-lang:commons-lang:2.6'
-    providedCompile 'commons-logging:commons-logging:1.0.3'
-    providedCompile 'io.netty:netty:3.3.1.Final'
-    providedCompile 'log4j:log4j:1.2.17'
-    providedCompile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
-    providedCompile 'org.slf4j:slf4j-api:1.7.2'
-    providedCompile 'org.slf4j:slf4j-log4j12:1.7.2'
+    compile 'com.beetstra.jutf7:jutf7:1.0.0'
+    compile 'commons-codec:commons-codec:1.7'
+    compile 'commons-collections:commons-collections:3.2.1'
+    compile 'commons-configuration:commons-configuration:1.9'
+    compile 'commons-io:commons-io:2.4'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-logging:commons-logging:1.0.3'
+    compile 'io.netty:netty:3.3.1.Final'
+    compile 'log4j:log4j:1.2.17'
+    compile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
+    compile 'org.slf4j:slf4j-api:1.7.2'
+    compile 'org.slf4j:slf4j-log4j12:1.7.2'
 }
 
 dependencyVerification {
@@ -183,7 +183,7 @@ task javaStrings(type: Exec, dependsOn: [createStringsDir, compilePoupdateJava])
 
 task jspStrings(type: JavaExec, dependsOn: javaStrings) {
     main = 'i2p.bote.ant.JspStrings'
-    classpath = configurations.providedCompile + sourceSets.poupdate.output
+    classpath = configurations.compile + sourceSets.poupdate.output
     args webAppDirName
     standardOutput = new ByteArrayOutputStream()
     workingDir projectDir
@@ -235,6 +235,27 @@ task generateMessagesJava << {
 compileMessagesJava.dependsOn generateMessagesJava
 
 war {
+    archiveName 'i2pbote.war'
+    exclude '*.jsp'
+    exclude 'WEB-INF/tags*'
+    exclude 'WEB-INF/tlds*'
+    classpath sourceSets.jsp.output
+    classpath sourceSets.messages.output
+    dependsOn jspClasses
+    filesMatching('**/*.xml') {
+        filter { String line ->
+            if (line == '    <!-- precompiled servlets -->')
+                new File(webXmlFrag).text
+            else
+                line
+        }
+    }
+    webInf {
+        from 'src/main/webapp/WEB-INF/tlds'
+    }
+}
+
+thinWar {
     archiveName 'i2pbote.war'
     exclude '*.jsp'
     exclude 'WEB-INF/tags*'

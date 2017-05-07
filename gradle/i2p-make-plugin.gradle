@@ -184,8 +184,13 @@ class I2PPlugin implements Plugin<Project> {
             file << project.i2p.plugin.console.webapp.startOnLoad
         }
 
+        project.task('thinWar', type: War, dependsOn: project.classes) {
+            destinationDir = project.file("$project.buildDir/thinWar")
+            classpath = project.war.classpath.minus(project.configurations.runtime)
+        }
+
         project.task('packWebapp', type: Pack200Task) {
-            inputJars = project.war.outputs.files
+            inputJars = project.thinWar.outputs.files
             outputDir project.file("$project.buildDir/packWebapp")
         }
 
