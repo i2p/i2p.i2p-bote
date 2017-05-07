@@ -1,0 +1,18 @@
+# Config files
+gradle.properties
+local.properties
+signing.properties
+
+# Gradle
+.gradle/
+build/
+android/build
+core/build
+webapp/build
+
+# I2P-specific ignores
+android/src/main/res/raw/certificates_zip
+
+# James Server dependencies
+webapp/cache
+webapp/libs
