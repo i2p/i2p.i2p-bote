@@ -51,6 +51,24 @@ Gradle will pull dependencies over the clearnet by default. To use Tor, create a
 
 2. The plugin will be placed in `i2p.i2p-bote/webapp/build/plugin`.
 
+### Building the standalone WAR
+
+`gradle :webapp:war`
+
+The WAR will be placed in `i2p.i2p-bote/webapp/build/libs`.
+
+### Running the standalone WAR
+
+Ensure you have an I2P router running locally with an I2CP server port open (on port 7654). Then run:
+
+```
+gradle :webapp:tomcatRunWar
+```
+
+This will build and run the WAR. (Jetty currently does not work.)
+
+The data directory will be placed in `i2p.i2p-bote/webapp/i2pbote`; logs will be in `i2p.i2p-bote/webapp/logs`.
+
 ## Android build process
 
 ### Additional dependencies:

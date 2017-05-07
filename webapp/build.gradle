@@ -1,6 +1,7 @@
 apply plugin: 'war'
 apply plugin: 'witness'
 apply from: "${project.rootDir}/gradle/i2p-make-plugin.gradle"
+apply plugin: 'org.akhikhl.gretty'
 
 archivesBaseName = 'i2pbote'
 
@@ -300,3 +301,8 @@ i2p {
         }
     }
 }
+
+gretty {
+    contextPath "/$project.i2p.plugin.name"
+}
+

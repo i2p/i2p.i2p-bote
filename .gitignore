@@ -16,3 +16,7 @@ android/src/main/res/raw/certificates_zip
 # James Server dependencies
 webapp/cache
 webapp/libs
+
+# Standalone WAR user files
+webapp/i2pbote
+webapp/logs
