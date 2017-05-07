@@ -47,13 +47,17 @@ Gradle will pull dependencies over the clearnet by default. To use Tor, create a
 
 ### Building the I2P plugin
 
-1. `gradle :webapp:plugin`
+```
+gradle :webapp:plugin
+```
 
-2. The plugin will be placed in `i2p.i2p-bote/webapp/build/plugin`.
+The plugin will be placed in `i2p.i2p-bote/webapp/build/plugin`.
 
 ### Building the standalone WAR
 
-`gradle :webapp:war`
+```
+gradle :webapp:war
+```
 
 The WAR will be placed in `i2p.i2p-bote/webapp/build/libs`.
 
