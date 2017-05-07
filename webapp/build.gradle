@@ -52,7 +52,7 @@ def jamesArchive = 'libs/james-server-app-3.0.0-beta5-20150627.102412-1076-app.z
 // James snapshots are only kept for a few days. The URL below points to a copy
 // of the 6/27/2015 snapshot.
 // To be replaced with a repository.apache.org URL once beta5 is out.
-def jamesUrl = 'http://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
+def jamesUrl = 'https://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
 
 task downloadJames {
     println 'Downloading Apache James...'
