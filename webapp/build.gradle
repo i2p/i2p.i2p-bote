@@ -48,20 +48,32 @@ sourceSets {
 precompileJsp.dependsOn compileJava
 compileJspJava.dependsOn precompileJsp
 
-def jamesArchive = 'libs/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
+def jamesArchive = 'cache/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
 // James snapshots are only kept for a few days. The URL below points to a copy
 // of the 6/27/2015 snapshot.
 // To be replaced with a repository.apache.org URL once beta5 is out.
 def jamesUrl = 'https://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
 
 task downloadJames {
-    println 'Downloading Apache James...'
-    ant.get(src: jamesUrl, dest: jamesArchive, verbose: 'on', skipexisting: 'true')
+    outputs.file(jamesArchive)
+
+    doLast {
+        println 'Downloading Apache James...'
+        mkdir('cache')
+        ant.get(src: jamesUrl, dest: jamesArchive, verbose: 'on', skipexisting: 'true')
+    }
 }
 
 task extractJames(dependsOn: downloadJames, type: Copy) {
     outputs.dir('libs')
-    from zipTree(jamesArchive).files
+    from {
+        // This additional closure is necessary to prevent Gradle from eagerly
+        // evaluating the zipTree, before the archive has been downloaded
+        def zipFile = downloadJames.outputs.files.filter { zip ->
+            zip.name.startsWith('james-server-app')
+        }[0]
+        zipTree(zipFile).files
+    }
     into 'libs'
     include '**/apache-james-mailbox-api-0.6-20150508.040939-710.jar'
     include '**/apache-james-mailbox-store-0.6-20150508.041003-704.jar'
