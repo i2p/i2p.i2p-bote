@@ -104,6 +104,7 @@ class I2PPlugin implements Plugin<Project> {
             lib.name.startsWith('javax.servlet.jsp-') ||
             lib.name.startsWith('jstl-') ||
             lib.name.startsWith('mstreaming-') ||
+            lib.name.startsWith('servlet-i2p-') ||
             lib.name.startsWith('streaming-') ||
             lib.name.startsWith('tomcat-')
         )}

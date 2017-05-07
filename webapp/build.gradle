@@ -151,6 +151,8 @@ dependencies {
     compile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
     compile 'org.slf4j:slf4j-api:1.7.2'
     compile 'org.slf4j:slf4j-log4j12:1.7.2'
+
+    runtime 'net.i2p:servlet-i2p:0.9.30'
 }
 
 dependencyVerification {
