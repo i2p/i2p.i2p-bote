@@ -96,6 +96,8 @@ dependencies {
 
     implementation project(':core')
 
+    implementation "net.i2p.client:mstreaming:$rootProject.i2pVersion"
+
     implementation 'org.apache.tomcat:tomcat-jsp-api:8.0.33'
     implementation 'org.apache.tomcat:tomcat-servlet-api:8.0.33'
     implementation 'org.jfree:jcommon:1.0.23'
@@ -105,6 +107,7 @@ dependencies {
         exclude group: 'javax.mail', module: 'mail'
         exclude group: 'javax.activation', module: 'activation'
     }
+    implementation 'com.lambdaworks:scrypt:1.4.0'
     implementation 'com.sun.mail:smtp:1.5.6'
 
     implementation 'javax.servlet:jstl:1.2'
