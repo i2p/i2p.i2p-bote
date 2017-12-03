@@ -75,8 +75,8 @@ dependencies {
     // Remote dependencies
     compile 'com.sun.mail:android-mail:1.5.6'
     compile 'com.sun.mail:android-activation:1.5.6'
-    compile 'net.i2p:router:0.9.29'
-    compile('net.i2p.android:client:0.9.29@aar') {
+    compile "net.i2p:router:$rootProject.i2pVersion"
+    compile("net.i2p.android:client:$rootProject.i2pVersion@aar") {
         transitive = true
     }
     compile 'net.i2p.android:helper:0.9.3@aar'

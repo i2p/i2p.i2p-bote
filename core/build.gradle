@@ -6,9 +6,9 @@ archivesBaseName = 'i2pbote'
 dependencies {
     compile project(':crypto')
 
-    compile 'net.i2p:i2p:0.9.29'
-    compile 'net.i2p.client:mstreaming:0.9.29'
-    compile 'net.i2p.client:streaming:0.9.29'
+    compile "net.i2p:i2p:$rootProject.i2pVersion"
+    compile "net.i2p.client:mstreaming:$rootProject.i2pVersion"
+    compile "net.i2p.client:streaming:$rootProject.i2pVersion"
 
     compile 'com.lambdaworks:scrypt:1.4.0'
     compile 'com.sun.mail:mailapi:1.5.6'
