@@ -80,8 +80,8 @@ dependencies {
     }
     implementation 'net.i2p.android:helper:0.9.3@aar'
     implementation 'net.i2p.android.ext:floatingactionbutton:1.10.1'
-    implementation 'com.madgag.spongycastle:core:1.52.0.0'
-    implementation 'com.madgag.spongycastle:prov:1.52.0.0'
+    implementation 'com.madgag.spongycastle:core:1.58.0.0'
+    implementation 'com.madgag.spongycastle:prov:1.58.0.0'
     implementation 'com.lambdaworks:scrypt:1.4.0'
     implementation 'com.google.zxing:core:3.3.0'
     implementation 'com.google.zxing:android-integration:3.3.0'

@@ -70,13 +70,19 @@ public class ECUtils {
         String pkg = getPackage();
         try {
             Class<?> utilClazz = Class.forName(pkg + ".jcajce.provider.asymmetric.util.EC5Util");
+            Class<?> cvClazz = Class.forName(pkg + ".math.ec.ECCurve");
             Class<?> ptClazz = Class.forName(pkg + ".math.ec.ECPoint");
 
-            Method convertPoint = utilClazz.getDeclaredMethod(
-                    "convertPoint", ECParameterSpec.class, ECPoint.class, boolean.class);
+            // Implement EC5Util.convertPoint() ourselves
+            // Workaround for https://github.com/bcgit/bc-java/issues/262
+            Method convertCurve = utilClazz.getDeclaredMethod(
+                    "convertCurve", EllipticCurve.class);
+            Method createPoint = cvClazz.getDeclaredMethod(
+                    "createPoint", BigInteger.class, BigInteger.class, boolean.class);
             Method getEncoded = ptClazz.getDeclaredMethod("getEncoded");
 
-            Object bcPoint = convertPoint.invoke(null, ecSpec, point, withCompression);
+            Object bcCurve = convertCurve.invoke(null, ecSpec.getCurve());
+            Object bcPoint = createPoint.invoke(bcCurve, point.getAffineX(), point.getAffineY(), withCompression);
             return (byte[]) getEncoded.invoke(bcPoint);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("encodePoint() failed", e);

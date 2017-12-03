@@ -13,7 +13,7 @@ dependencies {
     implementation 'com.sun.mail:mailapi:1.5.6'
     implementation 'org.apache.james:apache-mime4j-core:0.7.2'
     implementation 'org.b1.pack:lzma-sdk-4j:9.22.0'
-    implementation 'org.bouncycastle:bcprov-jdk15on:1.52'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.58'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.jmock:jmock:2.8.2'
