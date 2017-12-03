@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'witness'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
     defaultConfig {
         versionCode 13
         versionName '0.6'
@@ -50,7 +48,7 @@ configurations.all {
 
 dependencies {
     // Local dependencies
-    compile(project(':core')) {
+    implementation(project(':core')) {
         // Replaced with Android-specific JavaMail
         exclude group: 'com.sun.mail'
         // BouncyCastle is replaced with SpongyCastle
@@ -59,75 +57,48 @@ dependencies {
         exclude group: 'net.i2p'
         exclude group: 'net.i2p.client'
     }
-    compile project(':crypto')
-    compile fileTree(dir: 'libs', include: '*.jar')
+    implementation project(':crypto')
+    implementation fileTree(dir: 'libs', include: '*.jar')
 
     // Android Support Repository dependencies
     //noinspection GradleCompatible
-    compile 'com.android.support:multidex:1.0.1'
-    compile "com.android.support:support-annotations:$supportVersion"
-    compile "com.android.support:support-v4:$supportVersion"
-    compile "com.android.support:appcompat-v7:$supportVersion"
-    compile "com.android.support:preference-v7:$supportVersion"
-    compile "com.android.support:preference-v14:$supportVersion"
-    compile "com.android.support:recyclerview-v7:$supportVersion"
+    implementation 'com.android.support:multidex:1.0.2'
+    implementation "com.android.support:support-annotations:$supportVersion"
+    implementation "com.android.support:support-v4:$supportVersion"
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+    implementation "com.android.support:preference-v7:$supportVersion"
+    implementation "com.android.support:preference-v14:$supportVersion"
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
 
     // Remote dependencies
-    compile 'com.sun.mail:android-mail:1.5.6'
-    compile 'com.sun.mail:android-activation:1.5.6'
-    compile "net.i2p:router:$rootProject.i2pVersion"
-    compile("net.i2p.android:client:$rootProject.i2pVersion@aar") {
+    implementation 'com.sun.mail:android-mail:1.5.6'
+    implementation 'com.sun.mail:android-activation:1.5.6'
+    implementation "net.i2p:router:$rootProject.i2pVersion"
+    implementation("net.i2p.android:client:$rootProject.i2pVersion@aar") {
         transitive = true
     }
-    compile 'net.i2p.android:helper:0.9.3@aar'
-    compile 'net.i2p.android.ext:floatingactionbutton:1.10.1'
-    compile 'com.madgag.spongycastle:core:1.52.0.0'
-    compile 'com.madgag.spongycastle:prov:1.52.0.0'
-    compile 'com.google.zxing:core:3.3.0'
-    compile 'com.google.zxing:android-integration:3.3.0'
-    compile 'com.androidplot:androidplot-core:1.4.1'
-    compile 'com.inkapplications.viewpageindicator:library:2.4.4'
-    compile 'com.pnikosis:materialish-progress:1.7'
-    compile 'com.mikepenz:iconics-core:2.7.2@aar'
-    compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
-    compile('com.mikepenz:materialdrawer:5.4.0@aar') {
+    implementation 'net.i2p.android:helper:0.9.3@aar'
+    implementation 'net.i2p.android.ext:floatingactionbutton:1.10.1'
+    implementation 'com.madgag.spongycastle:core:1.52.0.0'
+    implementation 'com.madgag.spongycastle:prov:1.52.0.0'
+    implementation 'com.lambdaworks:scrypt:1.4.0'
+    implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.google.zxing:android-integration:3.3.0'
+    implementation 'com.androidplot:androidplot-core:1.4.1'
+    implementation 'com.inkapplications.viewpageindicator:library:2.4.4'
+    implementation 'com.pnikosis:materialish-progress:1.7'
+    implementation 'com.mikepenz:iconics-core:2.7.2@aar'
+    implementation 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
+    implementation('com.mikepenz:materialdrawer:5.4.0@aar') {
         transitive = true
     }
-    compile 'org.sufficientlysecure:html-textview:3.1'
+    implementation 'org.sufficientlysecure:html-textview:3.1'
 
     // Testing-only dependencies
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
-}
-
-dependencyVerification {
-    verify = [
-            'com.android.support:multidex:60df8e7153fabdcf3a6a48a2ce5980b599cf25cbeb3b689b7b615975ca731840',
-            'com.android.support:support-annotations:47a2a30eab487a490a8a8f16678007c3d2b6dcae1e09b0485a12bbf921200ec3',
-            'com.android.support:support-v4:cd030f875dc7ee73b58e17598f368a2e12824fb3ceb4ed515ed815a47160228c',
-            'com.android.support:appcompat-v7:120f3ce6cac682d69e53d80ccfa9cee076f0f11ccbe56d4ccd72099a745e81f9',
-            'com.android.support:preference-v7:64a8ca1a4d69efae367e1c57ac61e79b23cac4b973dfae1f175efe670cfe1da7',
-            'com.android.support:preference-v14:f56d184aefc0e950e0256227624a9586cdc9a4dfcb7f1fe6f50aabcc1cba9532',
-            'com.android.support:recyclerview-v7:d6ba2c3a6196cc464eb4d69756229523a46eef7804991e5a8cf2d6306dbff10c',
-            'com.sun.mail:android-activation:61c18cfff09374e90d5168daf40b3d50d77bed8bc0b071124c064ecc3b157506',
-            'com.sun.mail:android-mail:ab177c3119400c661a026febe0ed84b8661ca61dbde8cbaad1a3ab507d4e5fb8',
-            'net.i2p:router:d5018bb262ab1e070efacb32811a72e149aaabe600dce32fb192d2ddadd285f3',
-            'net.i2p.android:client:4770bccb427c73320373efe51005ed27989b00a2f077517a5fc295e550bd8836',
-            'net.i2p.android:helper:edc202dbffb344dae84f873effdb8bd30f0f297678dce5bd2e4e3d22f2a27a31',
-            'net.i2p.android.ext:floatingactionbutton:09d43e2d4ac04a91bf7a37e1ec48a8d220204e3a55dca72cd36cd9fa27461ade',
-            'com.madgag.spongycastle:core:07a401edbe26e1028e2324754557b741cc57306008df7b71a9e12ec32d65be8f',
-            'com.madgag.spongycastle:prov:becbb70797b0103517693d2a97ce93174cc4d1f732897ed965a24e32dd99503e',
-            'com.google.zxing:core:bba7724e02a997cec38213af77133ee8e24b0d5cf5fa7ecbc16a4fa93f11ee0d',
-            'com.google.zxing:android-integration:dc6d6da7d4f4a7dffa6a049e62db6d0cd4c28aa14524968e41460e559a444e84',
-            'com.androidplot:androidplot-core:7670da5838ce2ae2b0b5faabeb9d6a1f2787d30d3fe9f0952adc5611910d18c0',
-            'com.inkapplications.viewpageindicator:library:77b26a7723cd10fa5e29480be239e8d68f431f4bc20d9144169c9ce06ebac2bf',
-            'com.pnikosis:materialish-progress:da089a90d1dab61e9b50038c09081019398f81190d12b0b567ce94b83ef8cf93',
-            'com.mikepenz:iconics-core:212425278ba9894cc8482c486a7cc7c37d7dc69b33e39373d9d3092280c6c061',
-            'com.mikepenz:google-material-typeface:f27c629ba5d2a90ecfbd7f221ff98cd363e1ee6be06b099b82bae490766e14a5',
-            'com.mikepenz:materialdrawer:242a140297be79f6053d540f58e1cfe62aff5479f2cde93c045b54fc683d79fe',
-    ]
+    androidTestImplementation 'com.android.support.test:runner:0.5'
+    androidTestImplementation 'com.android.support.test:rules:0.5'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:2.2.2'
 }
 
 project.ext.i2pbase = '../i2p.i2p'

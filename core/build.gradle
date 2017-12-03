@@ -1,38 +1,24 @@
 apply plugin: 'java'
-apply plugin: 'witness'
 
 archivesBaseName = 'i2pbote'
 
 dependencies {
-    compile project(':crypto')
+    implementation project(':crypto')
 
-    compile "net.i2p:i2p:$rootProject.i2pVersion"
-    compile "net.i2p.client:mstreaming:$rootProject.i2pVersion"
-    compile "net.i2p.client:streaming:$rootProject.i2pVersion"
+    implementation "net.i2p:i2p:$rootProject.i2pVersion"
+    implementation "net.i2p.client:mstreaming:$rootProject.i2pVersion"
+    implementation "net.i2p.client:streaming:$rootProject.i2pVersion"
 
-    compile 'com.lambdaworks:scrypt:1.4.0'
-    compile 'com.sun.mail:mailapi:1.5.6'
-    compile 'org.apache.james:apache-mime4j-core:0.7.2'
-    compile 'org.b1.pack:lzma-sdk-4j:9.22.0'
-    compile 'org.bouncycastle:bcprov-jdk15on:1.52'
+    implementation 'com.lambdaworks:scrypt:1.4.0'
+    implementation 'com.sun.mail:mailapi:1.5.6'
+    implementation 'org.apache.james:apache-mime4j-core:0.7.2'
+    implementation 'org.b1.pack:lzma-sdk-4j:9.22.0'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.52'
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.jmock:jmock:2.8.2'
-    testCompile 'org.jmock:jmock-legacy:2.8.2'
-    testCompile 'org.mockito:mockito-core:2.7.19'
-}
-
-dependencyVerification {
-    verify = [
-        'net.i2p:i2p:43f07888e5919a097a1b84efd32c220cd285485d3d39efaa343df90c025283ce',
-        'net.i2p.client:mstreaming:4bb1177ce2a20769c24f7b7cd1a63c654e7e88cab3ffa1a1e1411f4e9a30ebeb',
-        'net.i2p.client:streaming:d94c185e22360f994e9d6da22b3d6d5e40483b83312e47e853072b996a8a5447',
-        'com.lambdaworks:scrypt:9a82d218099fb14c10c0e86e7eefeebd8c104de920acdc47b8b4b7a686fb73b4',
-        'com.sun.mail:mailapi:48ef5396bd6743f0204f7c522c782fa88d3c41f730e3525943ff38ec7492dd7a',
-        'org.apache.james:apache-mime4j-core:4d7434c68f94b81a253c12f28e6bbb4d6239c361d6086a46e22e594bb43ac660',
-        'org.b1.pack:lzma-sdk-4j:6da258d8fecc5359a95922b236166d903146f589e3c806856124008c78596d55',
-        'org.bouncycastle:bcprov-jdk15on:0dc4d181e4d347893c2ddbd2e6cd5d7287fc651c03648fa64b2341c7366b1773',
-    ]
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.jmock:jmock:2.8.2'
+    testImplementation 'org.jmock:jmock-legacy:2.8.2'
+    testImplementation 'org.mockito:mockito-core:2.7.19'
 }
 
 test {

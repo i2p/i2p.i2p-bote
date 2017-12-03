@@ -132,7 +132,7 @@ class I2PPlugin implements Plugin<Project> {
         def tmpPluginConfig = "$pluginBuildDir/plugin.config"
         def tmpWebappsConfig = "$pluginBuildDir/webapps.config"
 
-        project.task('preparePluginConfig') << {
+        project.task('preparePluginConfig').doLast {
             def hasProp = []
 
             project.delete(tmpPluginConfig)
@@ -170,7 +170,7 @@ class I2PPlugin implements Plugin<Project> {
             file << 'date=' << System.currentTimeMillis()
         }
 
-        project.task('prepareWebappsConfig') << {
+        project.task('prepareWebappsConfig').doLast {
             project.delete(tmpWebappsConfig)
             File file = new File(tmpWebappsConfig)
             file << 'webapps.' << project.archivesBaseName << '.classpath='
@@ -218,7 +218,7 @@ class I2PPlugin implements Plugin<Project> {
         project.pluginZip.dependsOn project.preparePluginConfig
         project.pluginZip.dependsOn project.prepareWebappsConfig
 
-        project.task('checkKeys') << {
+        project.task('checkKeys').doLast {
             def pks = privKeyStore(project)
             if (!pks.exists()) {
                 println "TODO: Creating new SU3 $project.i2p.plugin.keyType keys for $project.i2p.plugin.signer"
@@ -266,7 +266,7 @@ class I2PPlugin implements Plugin<Project> {
                      p.signSU3Plugin.outputs.files[0].absolutePath
             }
 
-            p.task('plugin') << {
+            p.task('plugin').doLast {
                 // For now, update files are identical to install files
                 p.copy {
                     into pluginDir

@@ -3,7 +3,6 @@ plugins {
   id "org.akhikhl.gretty" version "2.0.0"
 }
 
-apply plugin: 'witness'
 apply from: "${project.rootDir}/gradle/i2p-make-plugin.gradle"
 
 archivesBaseName = 'i2pbote'
@@ -95,82 +94,76 @@ dependencies {
     jasper 'org.mortbay.jasper:apache-el:8.0.33'
     jasper 'org.mortbay.jasper:apache-jsp:8.0.33'
 
-    compile project(':core')
+    implementation project(':core')
 
-    compile 'org.apache.tomcat:tomcat-jsp-api:8.0.33'
-    compile 'org.apache.tomcat:tomcat-servlet-api:8.0.33'
-    compile 'org.jfree:jcommon:1.0.23'
-    compile 'org.jfree:jfreechart:1.0.19'
-    compile 'org.owasp:csrfguard:3.1.0'
-    compile('org.subethamail:subethasmtp:3.1.7') {
+    implementation 'org.apache.tomcat:tomcat-jsp-api:8.0.33'
+    implementation 'org.apache.tomcat:tomcat-servlet-api:8.0.33'
+    implementation 'org.jfree:jcommon:1.0.23'
+    implementation 'org.jfree:jfreechart:1.0.19'
+    implementation 'org.owasp:csrfguard:3.1.0'
+    implementation('org.subethamail:subethasmtp:3.1.7') {
         exclude group: 'javax.mail', module: 'mail'
         exclude group: 'javax.activation', module: 'activation'
     }
-    compile 'com.sun.mail:smtp:1.5.6'
+    implementation 'com.sun.mail:smtp:1.5.6'
 
-    compile 'javax.servlet:jstl:1.2'
+    implementation 'javax.servlet:jstl:1.2'
 
     // Apache James IMAP server
-    compile files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
+    implementation files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
+    implementation files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
+    implementation files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
+    implementation files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
+    implementation files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
+    implementation files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
+    implementation files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
+    implementation files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
+    implementation files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
         builtBy tasks.extractJames
     }
-    compile files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
+    implementation files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
         builtBy tasks.extractJames
     }
 
     // Apache James IMAP server dependencies
-    compile 'com.beetstra.jutf7:jutf7:1.0.0'
-    compile 'commons-codec:commons-codec:1.7'
-    compile 'commons-collections:commons-collections:3.2.1'
-    compile 'commons-configuration:commons-configuration:1.9'
-    compile 'commons-io:commons-io:2.4'
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'commons-logging:commons-logging:1.0.3'
-    compile 'io.netty:netty:3.3.1.Final'
-    compile 'log4j:log4j:1.2.17'
-    compile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
-    compile 'org.slf4j:slf4j-api:1.7.2'
-    compile 'org.slf4j:slf4j-log4j12:1.7.2'
+    implementation 'com.beetstra.jutf7:jutf7:1.0.0'
+    implementation 'commons-codec:commons-codec:1.7'
+    implementation 'commons-collections:commons-collections:3.2.1'
+    implementation 'commons-configuration:commons-configuration:1.9'
+    implementation 'commons-io:commons-io:2.4'
+    implementation 'commons-lang:commons-lang:2.6'
+    implementation 'commons-logging:commons-logging:1.0.3'
+    implementation 'io.netty:netty:3.3.1.Final'
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
+    implementation 'org.slf4j:slf4j-api:1.7.2'
+    implementation 'org.slf4j:slf4j-log4j12:1.7.2'
 
     runtime 'net.i2p:servlet-i2p:0.9.30'
 }
 
-dependencyVerification {
-    verify = [
-        'org.jfree:jcommon:1e670402809484c71ec74d55b40022a4c4939c7911bd39ee5a0cfb3aaf56397c',
-        'org.jfree:jfreechart:153d077d6399776a45de97c555ad026eb6201d4bd8af86cfce7b8b4ccfa66263',
-        'org.subethamail:subethasmtp:5196a0da2c5a33d1a04e88fc7a9cc109501bc265b5bac8edd9984a1885070ad4',
-    ]
-}
-
 def stringsDir = project.file("$buildDir/strings")
 def potFile = project.file("$stringsDir/test.pot")
-task createStringsDir << {
-    mkdir(stringsDir)
+task createStringsDir {
+    doLast {
+        mkdir(stringsDir)
+    }
 }
 
 task javaStrings(type: Exec, dependsOn: [createStringsDir, compilePoupdateJava]) {
@@ -199,43 +192,48 @@ task jspStrings(type: JavaExec, dependsOn: javaStrings) {
         exec {
             executable 'msguniq'
             args '-o', potFile, potFile
+    implementation 'com.lambdaworks:scrypt:1.4.0'
         }
     }
 }
 
-task poupdate(dependsOn: jspStrings) << {
-    fileTree("$projectDir/src/main/locale").include('**/messages_*.po').each { File file ->
-        exec {
-            executable 'msgmerge'
-            args '-U',
-                    '--backup=none',
-                    file,
-                    potFile
+task poupdate(dependsOn: jspStrings) {
+    doLast {
+        fileTree("$projectDir/src/main/locale").include('**/messages_*.po').each { File file ->
+            exec {
+                executable 'msgmerge'
+                args '-U',
+                        '--backup=none',
+                        file,
+                        potFile
+            }
         }
     }
 }
 
-task generateMessagesJava << {
-    fileTree("$projectDir/src/main/locale").include('**/messages_*.po').each { File file ->
-        def lg = file.name.find(/messages_(.*).po/, { full, lang ->
-            lang
-        })
-        mkdir(messagesDir)
-        exec {
-            executable 'msgfmt'
-            args '--java',
-                    '--statistics',
-                    '--source',
-                    '-r', 'i2p.bote.locale.Messages',
-                    '-l', lg,
-                    '-d', temporaryDir,
-                    file
+task generateMessagesJava {
+    doLast {
+        fileTree("$projectDir/src/main/locale").include('**/messages_*.po').each { File file ->
+            def lg = file.name.find(/messages_(.*).po/, { full, lang ->
+                lang
+            })
+            mkdir(messagesDir)
+            exec {
+                executable 'msgfmt'
+                args '--java',
+                        '--statistics',
+                        '--source',
+                        '-r', 'i2p.bote.locale.Messages',
+                        '-l', lg,
+                        '-d', temporaryDir,
+                        file
+            }
+            copy {
+                from temporaryDir
+                into messagesDir
+            }
+            delete(temporaryDir)
         }
-        copy {
-            from temporaryDir
-            into messagesDir
-        }
-        delete(temporaryDir)
     }
 }
 compileMessagesJava.dependsOn generateMessagesJava
