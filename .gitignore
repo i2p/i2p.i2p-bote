@@ -1,5 +1,4 @@
 # Config files
-gradle.properties
 local.properties
 signing.properties
 

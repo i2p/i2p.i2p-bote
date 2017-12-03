@@ -26,10 +26,10 @@ configure([project(':core'), project(':webapp')]) {
 
         sourceCompatibility = 1.7
         targetCompatibility = 1.7
-        // Set bootClasspath=/path/to/rt.jar:/path/to/jce.jar in gradle.properties if needed
-        if (bootClasspath) {
+        // Set i2pBootClasspath=/path/to/rt.jar:/path/to/jce.jar in gradle.properties if needed
+        if (i2pBootClasspath) {
             project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
-                ac.options.bootClasspath = bootClasspath
+                ac.options.bootClasspath = i2pBootClasspath
             })
         }
     }
