@@ -1,5 +1,7 @@
 # I2P-Bote
 
+[![Build Status](https://travis-ci.org/i2p/i2p.i2p-bote.svg?branch=master)](https://travis-ci.org/i2p/i2p.i2p-bote)
+
 I2P-Bote is a plugin for I2P that allows users to send and receive emails while preserving privacy. It does not need a mail server because emails are stored in a distributed hash table. They are automatically encrypted and digitally signed, which ensures no one but the intended recipient can read the email, and third parties cannot forge them.
 
 ## Features
