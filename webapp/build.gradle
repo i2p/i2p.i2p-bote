@@ -100,63 +100,63 @@ dependencies {
 
     implementation 'org.apache.tomcat:tomcat-jsp-api:8.0.33'
     implementation 'org.apache.tomcat:tomcat-servlet-api:8.0.33'
-    implementation 'org.jfree:jcommon:1.0.23'
-    implementation 'org.jfree:jfreechart:1.0.19'
+    compile 'org.jfree:jcommon:1.0.23'
+    compile 'org.jfree:jfreechart:1.0.19'
     compile 'org.owasp:csrfguard:3.1.0'
-    implementation('org.subethamail:subethasmtp:3.1.7') {
+    compile('org.subethamail:subethasmtp:3.1.7') {
         exclude group: 'javax.mail', module: 'mail'
         exclude group: 'javax.activation', module: 'activation'
     }
-    implementation 'com.lambdaworks:scrypt:1.4.0'
-    implementation 'com.sun.mail:smtp:1.5.6'
+    compile 'com.lambdaworks:scrypt:1.4.0'
+    compile 'com.sun.mail:smtp:1.5.6'
 
     compile 'javax.servlet:jstl:1.2'
 
     // Apache James IMAP server
-    implementation files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
+    compile files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
         builtBy tasks.extractJames
     }
-    implementation files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
+    compile files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
         builtBy tasks.extractJames
     }
-    implementation files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    implementation files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    implementation files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    implementation files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    implementation files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
+    compile files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
         builtBy tasks.extractJames
     }
-    implementation files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
+    compile files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
         builtBy tasks.extractJames
     }
-    implementation files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
+    compile files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
         builtBy tasks.extractJames
     }
-    implementation files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
+    compile files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
         builtBy tasks.extractJames
     }
 
     // Apache James IMAP server dependencies
-    implementation 'com.beetstra.jutf7:jutf7:1.0.0'
-    implementation 'commons-codec:commons-codec:1.7'
-    implementation 'commons-collections:commons-collections:3.2.1'
-    implementation 'commons-configuration:commons-configuration:1.9'
-    implementation 'commons-io:commons-io:2.4'
-    implementation 'commons-lang:commons-lang:2.6'
-    implementation 'commons-logging:commons-logging:1.0.3'
-    implementation 'io.netty:netty:3.3.1.Final'
-    implementation 'log4j:log4j:1.2.17'
-    implementation 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
-    implementation 'org.slf4j:slf4j-api:1.7.2'
-    implementation 'org.slf4j:slf4j-log4j12:1.7.2'
+    compile 'com.beetstra.jutf7:jutf7:1.0.0'
+    compile 'commons-codec:commons-codec:1.7'
+    compile 'commons-collections:commons-collections:3.2.1'
+    compile 'commons-configuration:commons-configuration:1.9'
+    compile 'commons-io:commons-io:2.4'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-logging:commons-logging:1.0.3'
+    compile 'io.netty:netty:3.3.1.Final'
+    compile 'log4j:log4j:1.2.17'
+    compile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
+    compile 'org.slf4j:slf4j-api:1.7.2'
+    compile 'org.slf4j:slf4j-log4j12:1.7.2'
 
     runtime 'net.i2p:servlet-i2p:0.9.30'
 }
