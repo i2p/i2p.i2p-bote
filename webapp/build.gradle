@@ -51,45 +51,6 @@ sourceSets {
 precompileJsp.dependsOn compileJava
 compileJspJava.dependsOn precompileJsp
 
-def jamesArchive = 'cache/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
-// James snapshots are only kept for a few days. The URL below points to a copy
-// of the 6/27/2015 snapshot.
-// To be replaced with a repository.apache.org URL once beta5 is out.
-def jamesUrl = 'https://download.i2p2.de/mirror/lib/james-server-app-3.0.0-beta5-20150627.102412-1076-app.zip'
-
-task downloadJames {
-    outputs.file(jamesArchive)
-
-    doLast {
-        println 'Downloading Apache James...'
-        mkdir('cache')
-        ant.get(src: jamesUrl, dest: jamesArchive, verbose: 'on', skipexisting: 'true')
-    }
-}
-
-task extractJames(dependsOn: downloadJames, type: Copy) {
-    outputs.dir('libs')
-    from {
-        // This additional closure is necessary to prevent Gradle from eagerly
-        // evaluating the zipTree, before the archive has been downloaded
-        def zipFile = downloadJames.outputs.files.filter { zip ->
-            zip.name.startsWith('james-server-app')
-        }[0]
-        zipTree(zipFile).files
-    }
-    into 'libs'
-    include '**/apache-james-mailbox-api-0.6-20150508.040939-710.jar'
-    include '**/apache-james-mailbox-store-0.6-20150508.041003-704.jar'
-    include '**/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar'
-    include '**/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar'
-    include '**/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar'
-    include '**/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar'
-    include '**/james-server-util-3.0.0-beta5-SNAPSHOT.jar'
-    include '**/protocols-api-1.6.4-20150617.121129-1080.jar'
-    include '**/protocols-imap-1.6.4-20150617.121245-927.jar'
-    include '**/protocols-netty-1.6.4-20150617.121137-1044.jar'
-}
-
 dependencies {
     jasper 'org.mortbay.jasper:apache-el:8.0.33'
     jasper 'org.mortbay.jasper:apache-jsp:8.0.33'
@@ -113,50 +74,8 @@ dependencies {
     compile 'javax.servlet:jstl:1.2'
 
     // Apache James IMAP server
-    compile files('libs/apache-james-mailbox-api-0.6-20150508.040939-710.jar') {
-        builtBy tasks.extractJames
-    }
-    compile files('libs/apache-james-mailbox-store-0.6-20150508.041003-704.jar') {
-        builtBy tasks.extractJames
-    }
-    compile files('libs/james-server-filesystem-api-3.0.0-beta5-SNAPSHOT.jar') {
-        builtBy tasks.extractJames
-    }
-    compile files('libs/james-server-lifecycle-api-3.0.0-beta5-SNAPSHOT.jar') {
-        builtBy tasks.extractJames
-    }
-    compile files('libs/james-server-protocols-imap4-3.0.0-beta5-SNAPSHOT.jar') {
-        builtBy tasks.extractJames
-    }
-    compile files('libs/james-server-protocols-library-3.0.0-beta5-SNAPSHOT.jar') {
-        builtBy tasks.extractJames
-    }
-    compile files('libs/james-server-util-3.0.0-beta5-SNAPSHOT.jar') {
-        builtBy tasks.extractJames
-    }
-    compile files('libs/protocols-api-1.6.4-20150617.121129-1080.jar') {
-        builtBy tasks.extractJames
-    }
-    compile files('libs/protocols-imap-1.6.4-20150617.121245-927.jar') {
-        builtBy tasks.extractJames
-    }
-    compile files('libs/protocols-netty-1.6.4-20150617.121137-1044.jar') {
-        builtBy tasks.extractJames
-    }
-
-    // Apache James IMAP server dependencies
-    compile 'com.beetstra.jutf7:jutf7:1.0.0'
-    compile 'commons-codec:commons-codec:1.7'
-    compile 'commons-collections:commons-collections:3.2.1'
-    compile 'commons-configuration:commons-configuration:1.9'
-    compile 'commons-io:commons-io:2.4'
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'commons-logging:commons-logging:1.0.3'
-    compile 'io.netty:netty:3.3.1.Final'
-    compile 'log4j:log4j:1.2.17'
-    compile 'org.apache.james:apache-mime4j-core:0.7.2' // Not what is included in the zip
-    compile 'org.slf4j:slf4j-api:1.7.2'
-    compile 'org.slf4j:slf4j-log4j12:1.7.2'
+    compile 'org.apache.james:apache-james-mailbox-store:3.0.1'
+    compile 'org.apache.james:james-server-protocols-imap4:3.0.1'
 
     runtime 'net.i2p:servlet-i2p:0.9.30'
 }

@@ -21,6 +21,13 @@
 
 package i2p.bote.imap;
 
+import org.apache.james.mailbox.MessageUid;
+import org.apache.james.mailbox.model.MailboxId;
+import org.apache.james.mailbox.model.MessageAttachment;
+import org.apache.james.mailbox.model.MessageId;
+import org.apache.james.mailbox.store.mail.model.MailboxMessage;
+import org.apache.james.mailbox.store.mail.model.Property;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,8 +40,8 @@ import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.Flags;
-import javax.mail.Header;
 import javax.mail.Flags.Flag;
+import javax.mail.Header;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Part;
@@ -45,22 +52,19 @@ import i2p.bote.email.Email;
 import i2p.bote.fileencryption.PasswordException;
 import i2p.bote.util.GeneralHelper;
 
-import org.apache.james.mailbox.store.mail.model.Message;
-import org.apache.james.mailbox.store.mail.model.Property;
-
 /**
  * A wrapper around {@link Email} that implements the
- * {@link org.apache.james.mailbox.store.mail.model.Message} interface.
+ * {@link org.apache.james.mailbox.store.mail.model.MailboxMessage} interface.
  */
-public class BoteMessage implements Message<String> {
+public class BoteMessage implements MailboxMessage {
     private static final byte[] CRLF = new byte[] {13, 10};
     
     private Email email;
-    private String folderName;
+    private MailboxId folderName;
     private long modSeq;
-    private long uid;
+    private MessageUid uid;
 
-    BoteMessage(Email email, String folderName) {
+    BoteMessage(Email email, MailboxId folderName) {
         this.email = email;
         this.folderName = folderName;
     }
@@ -79,14 +83,15 @@ public class BoteMessage implements Message<String> {
     Email getEmail() {
         return email;
     }
-    
-    String getMessageID() {
-        return email.getMessageID();
+
+    @Override
+    public MessageId getMessageId() {
+        return new BoteMessageId(email.getMessageID());
     }
     
     @Override
-    public int compareTo(Message<String> anotherMsg) {
-        return Long.valueOf(getUid()).compareTo(anotherMsg.getUid());
+    public int compareTo(MailboxMessage anotherMsg) {
+        return uid.compareTo(anotherMsg.getUid());
     }
 
     @Override
@@ -291,7 +296,7 @@ public class BoteMessage implements Message<String> {
     }
 
     @Override
-    public String getMailboxId() {
+    public MailboxId getMailboxId() {
         return folderName;
     }
 
@@ -315,6 +320,12 @@ public class BoteMessage implements Message<String> {
     }
 
     @Override
+    public List<MessageAttachment> getAttachments() {
+        // TODO: Implement
+        return Collections.emptyList();
+    }
+
+    @Override
     public String getSubType() {
         return "";
     }
@@ -328,12 +339,11 @@ public class BoteMessage implements Message<String> {
         }
     }
 
-    public void setUid(long uid) {
+    public void setUid(MessageUid uid) {
         this.uid = uid;
     }
-    
-    @Override
-    public long getUid() {
+
+    public MessageUid getUid() {
         return uid;
     }
 
