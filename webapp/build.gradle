@@ -115,7 +115,6 @@ task jspStrings(type: JavaExec, dependsOn: javaStrings) {
         exec {
             executable 'msguniq'
             args '-o', potFile, potFile
-    implementation 'com.lambdaworks:scrypt:1.4.0'
         }
     }
 }
