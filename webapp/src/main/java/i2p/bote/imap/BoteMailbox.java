@@ -107,7 +107,6 @@ public class BoteMailbox extends SimpleMailbox {
         nextModSeqLock.writeLock().lock();
         try {
             nextModSeq = System.currentTimeMillis();
-            nextModSeq <<= 32;
         } finally {
             nextModSeqLock.writeLock().unlock();
         }
