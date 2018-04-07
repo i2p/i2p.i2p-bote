@@ -21,10 +21,13 @@
 
 package i2p.bote.imap;
 
-import i2p.bote.email.Email;
-import i2p.bote.fileencryption.PasswordException;
-import i2p.bote.folder.EmailFolder;
-import i2p.bote.folder.FolderListener;
+import com.google.common.base.Optional;
+
+import org.apache.james.mailbox.MessageUid;
+import org.apache.james.mailbox.model.MailboxPath;
+import org.apache.james.mailbox.model.MessageRange;
+import org.apache.james.mailbox.store.mail.model.MailboxMessage;
+import org.apache.james.mailbox.store.mail.model.impl.SimpleMailbox;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -37,30 +40,37 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import javax.mail.MessagingException;
 import javax.mail.Flags.Flag;
+import javax.mail.MessagingException;
 
-import org.apache.james.mailbox.model.MailboxPath;
-import org.apache.james.mailbox.model.MessageRange;
-import org.apache.james.mailbox.store.mail.model.Message;
-import org.apache.james.mailbox.store.mail.model.impl.SimpleMailbox;
+import i2p.bote.email.Email;
+import i2p.bote.fileencryption.PasswordException;
+import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.FolderListener;
 
 import static i2p.bote.web.WebappUtil._t;
 
 /**
  * Implementation of {@link org.apache.james.mailbox.store.mail.model.Mailbox}.
  */
-public class BoteMailbox extends SimpleMailbox<String> {
+public class BoteMailbox extends SimpleMailbox {
     private EmailFolder folder;
     private SortedMap<Email, BoteMessage> messageMap;
     private List<BoteMessage> messages;
-    private Long uid;
-    private long modSeq;
+    private MessageUid lastUid;
+    private MessageUid nextUid;
+    private final ReadWriteLock nextUidLock = new ReentrantReadWriteLock();
+    private long highestModSeq;
+    private long nextModSeq;
+    private final ReadWriteLock nextModSeqLock = new ReentrantReadWriteLock();
     private FolderListener folderListener;
 
-    public BoteMailbox(EmailFolder folder, long uidValidity, long uid) {
-        super(new MailboxPath("I2P-Bote", "bote", folder.getName()), uidValidity);
+    public BoteMailbox(EmailFolder folder, long uidValidity, MessageUid nextUid) {
+        super(new MailboxPath("I2P-Bote", "bote", folder.getName()), uidValidity,
+                new BoteMailboxId(folder.getName()));
         this.folder = folder;
         this.messageMap = Collections.synchronizedSortedMap(new TreeMap<Email, BoteMessage>(new Comparator<Email>() {
             @Override
@@ -86,16 +96,26 @@ public class BoteMailbox extends SimpleMailbox<String> {
                 return email1.getMessageID().compareTo(email2.getMessageID());
             }
         }));
-        this.uid = uid;
-        
-        modSeq = System.currentTimeMillis();
-        modSeq <<= 32;
+        nextUidLock.writeLock().lock();
+        try {
+            this.nextUid = nextUid;
+        } finally {
+            nextUidLock.writeLock().unlock();
+        }
+
+        nextModSeqLock.writeLock().lock();
+        try {
+            nextModSeq = System.currentTimeMillis();
+            nextModSeq <<= 32;
+        } finally {
+            nextModSeqLock.writeLock().unlock();
+        }
 
         startListening();
         try {
             List<Email> emails = folder.getElements();
             for (Email email : emails)
-                messageMap.put(email, new BoteMessage(email, getFolderName()));
+                messageMap.put(email, new BoteMessage(email, getMailboxId()));
             updateMessages();
         } catch (PasswordException e) {
             throw new RuntimeException(_t("Password required or invalid password provided"), e);
@@ -109,7 +129,7 @@ public class BoteMailbox extends SimpleMailbox<String> {
                     // Add new emails to map
                     Email email = folder.getEmail(messageId);
                     email.setFlag(Flag.RECENT, true);
-                    messageMap.put(email, new BoteMessage(email, getFolderName()));
+                    messageMap.put(email, new BoteMessage(email, getMailboxId()));
                     updateMessages();
                 } catch (PasswordException e) {
                     throw new RuntimeException(_t("Password required or invalid password provided"), e);
@@ -145,19 +165,22 @@ public class BoteMailbox extends SimpleMailbox<String> {
         folderListener = null;
     }
     
-    private String getFolderName() {
-        return folder.getName();
-    }
-    
     /** Synchronizes the <code>messages</code> field from the underlying {@link EmailFolder}. */
     private void updateMessages() {
         // Generate the updated list of messages
         messages = Collections.synchronizedList(new ArrayList<BoteMessage>(messageMap.values()));
         // Update UIDs
         for (BoteMessage message : messages) {
-            if (message.getUid() == 0) {
-                message.setUid(uid);
-                uid++;
+            if (message.getUid() == null) {
+                nextUidLock.writeLock().lock();
+                try {
+                    MessageUid curUid = nextUid;
+                    nextUid = nextUid.next();
+                    message.setUid(curUid);
+                    lastUid = curUid;
+                } finally {
+                    nextUidLock.writeLock().unlock();
+                }
             }
         }
     }
@@ -166,15 +189,13 @@ public class BoteMailbox extends SimpleMailbox<String> {
         return messages;
     }
     
-    List<Message<String>> getMessages(MessageRange set, int limit) {
-        List<Message<String>> messageList = new ArrayList<Message<String>>();
-        for (long index: set) {
-            if (index < 1)   // IMAP indices start at 1
-                continue;
-            if (index > messages.size())
+    List<MailboxMessage> getMessages(MessageRange set, int limit) {
+        List<MailboxMessage> messageList = new ArrayList<>();
+        for (BoteMessage message: messages) {
+            if (limit >= 0 && messageList.size() >= limit)
                 break;
-            BoteMessage message = messages.get((int)index - 1);
-            messageList.add(message);
+            if (set.includes(message.getUid()))
+                messageList.add(message);
         }
         return messageList;
     }
@@ -188,20 +209,66 @@ public class BoteMailbox extends SimpleMailbox<String> {
     }
     
     void saveMetadata(BoteMessage message) throws IOException, MessagingException, PasswordException, GeneralSecurityException {
-        folder.saveMetadata(message.getEmail());
-        modSeq++;
+        nextModSeqLock.writeLock().lock();
+        try {
+            folder.saveMetadata(message.getEmail());
+            highestModSeq = nextModSeq;
+            nextModSeq++;
+        } finally {
+            nextModSeqLock.writeLock().unlock();
+        }
     }
     
     EmailFolder getFolder() {
         return folder;
     }
-    
-    long getUid() {
-        return uid;
+
+    void lockNextUid(boolean writeLock) {
+        if (writeLock) {
+            nextUidLock.writeLock().lock();
+        } else {
+            nextUidLock.readLock().lock();
+        }
     }
 
-    long getModSeq() {
-        return modSeq;
+    MessageUid lockedNextUid() {
+        return nextUid;
+    }
+
+    void unlockNextUid(boolean writeLock) {
+        if (writeLock) {
+            nextUidLock.writeLock().unlock();
+        } else {
+            nextUidLock.readLock().unlock();
+        }
+    }
+
+    Optional<MessageUid> lastUid() {
+        return Optional.fromNullable(lastUid);
+    }
+
+    void lockNextModSeq(boolean writeLock) {
+        if (writeLock) {
+            nextModSeqLock.writeLock().lock();
+        } else {
+            nextModSeqLock.readLock().lock();
+        }
+    }
+
+    long lockedNextModSeq() {
+        return nextModSeq;
+    }
+
+    void unlockNextModSeq(boolean writeLock) {
+        if (writeLock) {
+            nextModSeqLock.writeLock().unlock();
+        } else {
+            nextModSeqLock.readLock().unlock();
+        }
+    }
+
+    long highestModSeq() {
+        return highestModSeq;
     }
 
     @Override

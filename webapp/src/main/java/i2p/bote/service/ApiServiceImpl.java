@@ -83,7 +83,7 @@ public class ApiServiceImpl implements ApiService {
             return;
 
         try {
-            imapService = new ImapService(configuration, passwordVerifier, folderManager);
+            imapService = ImapService.create(configuration, passwordVerifier, folderManager);
             if (!imapService.start())
                 log.error("IMAP service failed to start.");
         } catch (ConfigurationException e) {

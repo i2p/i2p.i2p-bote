@@ -204,6 +204,21 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         addressBook = new AddressBook(configuration.getAddressBookFile(), passwordCache);
         initializeFolderAccess(passwordCache);
         initializeExternalThemeDir();
+
+        try {
+            Class<?> clazz = Class.forName("i2p.bote.service.ApiServiceImpl");
+            Constructor<?> ctor =
+                clazz.getDeclaredConstructor(Configuration.class,
+                                             EmailFolderManager.class,
+                                             MailSender.class,
+                                             PasswordVerifier.class);
+            apiService = (ApiService) ctor.newInstance(configuration, this, this, this);
+        } catch (ClassNotFoundException e) {
+        } catch (NoSuchMethodException e) {
+        } catch (InstantiationException e) {
+        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException e) {
+        }
         
         debugSupport = new DebugSupport(configuration, passwordCache);
         
@@ -375,21 +390,6 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
         
         deliveryChecker = new DeliveryChecker(dht, sentFolder, configuration, this);
         backgroundThreads.add(deliveryChecker);
-
-        try {
-            Class<?> clazz = Class.forName("i2p.bote.service.ApiServiceImpl");
-            Constructor<?> ctor =
-                clazz.getDeclaredConstructor(Configuration.class,
-                                             EmailFolderManager.class,
-                                             MailSender.class,
-                                             PasswordVerifier.class);
-            apiService = (ApiService) ctor.newInstance(configuration, this, this, this);
-        } catch (ClassNotFoundException e) {
-        } catch (NoSuchMethodException e) {
-        } catch (InstantiationException e) {
-        } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {
-        }
     }
 
     /**

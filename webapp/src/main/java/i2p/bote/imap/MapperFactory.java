@@ -21,8 +21,38 @@
 
 package i2p.bote.imap;
 
-import i2p.bote.folder.EmailFolder;
-import i2p.bote.folder.EmailFolderManager;
+import com.google.common.base.Optional;
+
+import net.i2p.util.Log;
+
+import org.apache.james.mailbox.MailboxPathLocker;
+import org.apache.james.mailbox.MailboxSession;
+import org.apache.james.mailbox.MessageUid;
+import org.apache.james.mailbox.exception.MailboxException;
+import org.apache.james.mailbox.exception.MailboxNotFoundException;
+import org.apache.james.mailbox.exception.SubscriptionException;
+import org.apache.james.mailbox.model.MailboxACL;
+import org.apache.james.mailbox.model.MailboxId;
+import org.apache.james.mailbox.model.MailboxPath;
+import org.apache.james.mailbox.model.MessageId;
+import org.apache.james.mailbox.model.MessageMetaData;
+import org.apache.james.mailbox.model.MessageRange;
+import org.apache.james.mailbox.store.AbstractMailboxPathLocker;
+import org.apache.james.mailbox.store.MailboxSessionMapperFactory;
+import org.apache.james.mailbox.store.SimpleMessageMetaData;
+import org.apache.james.mailbox.store.mail.AbstractLockingModSeqProvider;
+import org.apache.james.mailbox.store.mail.AbstractLockingUidProvider;
+import org.apache.james.mailbox.store.mail.AbstractMessageMapper;
+import org.apache.james.mailbox.store.mail.AnnotationMapper;
+import org.apache.james.mailbox.store.mail.AttachmentMapper;
+import org.apache.james.mailbox.store.mail.MailboxMapper;
+import org.apache.james.mailbox.store.mail.MessageIdMapper;
+import org.apache.james.mailbox.store.mail.MessageMapper;
+import org.apache.james.mailbox.store.mail.ModSeqProvider;
+import org.apache.james.mailbox.store.mail.UidProvider;
+import org.apache.james.mailbox.store.mail.model.Mailbox;
+import org.apache.james.mailbox.store.mail.model.MailboxMessage;
+import org.apache.james.mailbox.store.user.SubscriptionMapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,58 +64,54 @@ import java.util.Map;
 import javax.mail.Flags;
 import javax.mail.Flags.Flag;
 
-import net.i2p.util.Log;
-
-import org.apache.james.mailbox.MailboxSession;
-import org.apache.james.mailbox.exception.MailboxException;
-import org.apache.james.mailbox.exception.MailboxNotFoundException;
-import org.apache.james.mailbox.exception.SubscriptionException;
-import org.apache.james.mailbox.model.MailboxACL;
-import org.apache.james.mailbox.model.MailboxPath;
-import org.apache.james.mailbox.model.MessageMetaData;
-import org.apache.james.mailbox.model.MessageRange;
-import org.apache.james.mailbox.store.MailboxSessionMapperFactory;
-import org.apache.james.mailbox.store.SimpleMessageMetaData;
-import org.apache.james.mailbox.store.mail.AbstractMessageMapper;
-import org.apache.james.mailbox.store.mail.MailboxMapper;
-import org.apache.james.mailbox.store.mail.MessageMapper;
-import org.apache.james.mailbox.store.mail.ModSeqProvider;
-import org.apache.james.mailbox.store.mail.UidProvider;
-import org.apache.james.mailbox.store.mail.model.Mailbox;
-import org.apache.james.mailbox.store.mail.model.Message;
-import org.apache.james.mailbox.store.user.SubscriptionMapper;
+import i2p.bote.folder.EmailFolder;
+import i2p.bote.folder.EmailFolderManager;
 
 import static i2p.bote.web.WebappUtil._t;
 
 /**
  * Concrete subclass of {@link MailboxSessionMapperFactory}.
  */
-class MapperFactory extends MailboxSessionMapperFactory<String> {
+class MapperFactory extends MailboxSessionMapperFactory {
     private Log log = new Log(MapperFactory.class);
     private EmailFolderManager folderManager;
     private final Map<String, BoteMailbox> mailboxes;
     private long uidValidity;
+    private UidProvider uidProvider;
+    private ModSeqProvider modSeqProvider;
     
     MapperFactory(EmailFolderManager folderManager) {
         this.folderManager = folderManager;
-        mailboxes = new HashMap<String, BoteMailbox>();
+        mailboxes = new HashMap<>();
         uidValidity = System.currentTimeMillis();
         uidValidity <<= 32;
+        uidProvider = createUidProvider();
+        modSeqProvider = createModSeqProvider();
     }
-    
+
+    @Override
+    public UidProvider getUidProvider() {
+        return uidProvider;
+    }
+
+    @Override
+    public ModSeqProvider getModSeqProvider() {
+        return modSeqProvider;
+    }
+
     @Override
     public SubscriptionMapper createSubscriptionMapper(MailboxSession session) throws SubscriptionException {
         // not implemented for now
         return null;
     }
-    
+
     /** Maps mailbox names to mailboxes. */
     private Map<String, BoteMailbox> getMailboxes() {
         // XXX: When user folders are set up, this will need to be updated.
         if (mailboxes.isEmpty()) {
             for (EmailFolder folder: folderManager.getEmailFolders()) {
                 String folderName = folder.getName().toLowerCase();
-                mailboxes.put(folderName, new BoteMailbox(folder, uidValidity, 1));
+                mailboxes.put(folderName, new BoteMailbox(folder, uidValidity, MessageUid.MIN_VALUE));
             }
         }
         return mailboxes;
@@ -96,23 +122,25 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             mailbox.stopListening();
         }
     }
-    
+
     @Override
-    public MessageMapper<String> createMessageMapper(MailboxSession mailboxSession) throws MailboxException {
-        UidProvider<String> uidProvider = createUidProvider();
-        ModSeqProvider<String> modSeqProvider = createModSeqProvider();
-        
-        return new AbstractMessageMapper<String>(mailboxSession, uidProvider, modSeqProvider) {
+    public AnnotationMapper createAnnotationMapper(MailboxSession session) throws MailboxException {
+        return null;
+    }
+
+    @Override
+    public MessageMapper createMessageMapper(MailboxSession mailboxSession) throws MailboxException {
+        return new AbstractMessageMapper(mailboxSession, uidProvider, modSeqProvider) {
 
             @Override
-            public long countMessagesInMailbox(Mailbox<String> mailbox) throws MailboxException {
+            public long countMessagesInMailbox(Mailbox mailbox) throws MailboxException {
                 String mailboxName = mailbox.getName().toLowerCase();
                 BoteMailbox boteMailbox = getMailboxes().get(mailboxName);
                 return boteMailbox==null ? -1 : boteMailbox.getNumMessages();
             }
 
             @Override
-            public long countUnseenMessagesInMailbox(Mailbox<String> mailbox) throws MailboxException {
+            public long countUnseenMessagesInMailbox(Mailbox mailbox) throws MailboxException {
                 int count = 0;
                 BoteMailbox boteMailbox = (BoteMailbox)mailbox;
                 for (BoteMessage message: boteMailbox.getAllMessages())
@@ -122,21 +150,21 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             }
 
             @Override
-            public void delete(Mailbox<String> mailbox, Message<String> message) throws MailboxException {
+            public void delete(Mailbox mailbox, MailboxMessage message) throws MailboxException {
                 EmailFolder folder = ((BoteMailbox)mailbox).getFolder();
-                String messageId = ((BoteMessage)message).getMessageID();
-                boolean deleted = folderManager.deleteEmail(folder, messageId);
+                MessageId messageId = message.getMessageId();
+                boolean deleted = folderManager.deleteEmail(folder, messageId.serialize());
                 if (!deleted)
                     log.error("Can't delete Message " + messageId + " from folder " + folder);
             }
 
             @Override
-            public Map<Long, MessageMetaData> expungeMarkedForDeletionInMailbox(Mailbox<String> mailbox, MessageRange set) throws MailboxException {
-                final Map<Long, MessageMetaData> filteredResult = new HashMap<Long, MessageMetaData>();
+            public Map<MessageUid, MessageMetaData> expungeMarkedForDeletionInMailbox(Mailbox mailbox, MessageRange set) throws MailboxException {
+                final Map<MessageUid, MessageMetaData> filteredResult = new HashMap<>();
 
-                Iterator<Message<String>> it = findInMailbox(mailbox, set, FetchType.Metadata, -1);
+                Iterator<MailboxMessage> it = findInMailbox(mailbox, set, FetchType.Metadata, -1);
                 while (it.hasNext()) {
-                    Message<String> message = it.next();
+                    MailboxMessage message = it.next();
                     if (message.isDeleted()) {
                         filteredResult.put(message.getUid(), new SimpleMessageMetaData(message));
                         delete(mailbox, message);
@@ -147,7 +175,7 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             }
 
             @Override
-            public Long findFirstUnseenMessageUid(Mailbox<String> mailbox) throws MailboxException {
+            public MessageUid findFirstUnseenMessageUid(Mailbox mailbox) throws MailboxException {
                 BoteMailbox boteMailbox = (BoteMailbox)mailbox;
                 for (BoteMessage message: boteMailbox.getAllMessages())
                     if (!message.isSeen())
@@ -156,14 +184,14 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             }
 
             @Override
-            public Iterator<Message<String>> findInMailbox(Mailbox<String> mailbox, MessageRange set, FetchType type, int limit) throws MailboxException {
+            public Iterator<MailboxMessage> findInMailbox(Mailbox mailbox, MessageRange set, FetchType type, int limit) throws MailboxException {
                 BoteMailbox boteBox = (BoteMailbox)mailbox;
                 return boteBox.getMessages(set, limit).iterator();
             }
 
             @Override
-            public List<Long> findRecentMessageUidsInMailbox(Mailbox<String> mailbox) throws MailboxException {
-                final List<Long> results = new ArrayList<Long>();
+            public List<MessageUid> findRecentMessageUidsInMailbox(Mailbox mailbox) throws MailboxException {
+                final List<MessageUid> results = new ArrayList<>();
                 BoteMailbox boteMailbox = (BoteMailbox)mailbox;
                 for (BoteMessage message: boteMailbox.getAllMessages())
                     if (message.isRecent())
@@ -177,7 +205,7 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             }
 
             @Override
-            protected MessageMetaData copy(Mailbox<String> mailbox, long uid, long modSeq, Message<String> original) throws MailboxException {
+            public MessageMetaData copy(Mailbox mailbox, MessageUid uid, long modSeq, MailboxMessage original) throws MailboxException {
                 BoteMailbox boteBox = (BoteMailbox)mailbox;
                 try {
                     BoteMessage newMessage = new BoteMessage((BoteMessage)original);
@@ -196,15 +224,25 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             }
 
             @Override
-            public MessageMetaData move(Mailbox<String> mailbox, Message<String> message) throws MailboxException {
+            public MessageMetaData move(Mailbox mailbox, MailboxMessage message) throws MailboxException {
                 MessageMetaData metadata = copy(mailbox, message);
                 delete(mailbox, message);
                 return metadata;
             }
 
+            @Override
+            public Flags getApplicableFlag(Mailbox mailbox) throws MailboxException {
+                Flags flags = new Flags();
+                flags.add(Flag.ANSWERED);
+                flags.add(Flag.DELETED);
+                flags.add(Flag.RECENT);
+                flags.add(Flag.SEEN);
+                return flags;
+            }
+
             /** Updates the metadata */
             @Override
-            protected MessageMetaData save(Mailbox<String> mailbox, Message<String> message) throws MailboxException {
+            protected MessageMetaData save(Mailbox mailbox, MailboxMessage message) throws MailboxException {
                 // Ignore requests to save non-BoteMessages so email clients don't save messages to the sent folder
                 // (I2P-Bote does this already, plus the email shouldn't show up in "sent" until it's actually been sent to the DHT)
                 if (!(message instanceof BoteMessage))
@@ -237,39 +275,84 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
         };
     }
 
-    private UidProvider<String> createUidProvider() {
-        return new UidProvider<String>() {
-            @Override
-            public long lastUid(MailboxSession session, Mailbox<String> mailbox) throws MailboxException {
-                BoteMailbox boteMailbox = (BoteMailbox)mailbox;
-                return boteMailbox.getUid();
-            }
-
-            @Override
-            public long nextUid(MailboxSession session, Mailbox<String> mailbox) throws MailboxException {
-                return lastUid(session, mailbox) + 1;
-            }
-        };
-    }
-
-    private ModSeqProvider<String> createModSeqProvider() {
-        return new ModSeqProvider<String>() {
-            @Override
-            public long highestModSeq(MailboxSession session, Mailbox<String> mailbox) throws MailboxException {
-                BoteMailbox boteMailbox = (BoteMailbox)mailbox;
-                return boteMailbox.getModSeq();
-            }
-
-            @Override
-            public long nextModSeq(MailboxSession session, Mailbox<String> mailbox) throws MailboxException {
-                return highestModSeq(session, mailbox) + 1;
-            }
-        };
-    }
-    
     @Override
-    public MailboxMapper<String> createMailboxMapper(MailboxSession session) throws MailboxException {
-        return new MailboxMapper<String>() {
+    public MessageIdMapper createMessageIdMapper(MailboxSession session) throws MailboxException {
+        return null;
+    }
+
+    @Override
+    public AttachmentMapper createAttachmentMapper(MailboxSession session) throws MailboxException {
+        return null;
+    }
+
+    private UidProvider createUidProvider() {
+        MailboxPathLocker uidLocker = new AbstractMailboxPathLocker() {
+            @Override
+            protected void lock(MailboxSession session, MailboxPath path, boolean writeLock) throws MailboxException {
+                BoteMailbox mailbox = getMailboxes().get(path.getName().toLowerCase());
+                mailbox.lockNextUid(writeLock);
+            }
+
+            @Override
+            protected void unlock(MailboxSession session, MailboxPath path, boolean writeLock) throws MailboxException {
+                BoteMailbox mailbox = getMailboxes().get(path.getName().toLowerCase());
+                mailbox.unlockNextUid(writeLock);
+            }
+        };
+
+        return new AbstractLockingUidProvider(uidLocker) {
+            @Override
+            protected MessageUid lockedNextUid(MailboxSession session, Mailbox mailbox) throws MailboxException {
+                BoteMailbox boteMailbox = (BoteMailbox)mailbox;
+                return boteMailbox.lockedNextUid();
+            }
+
+            @Override
+            public Optional<MessageUid> lastUid(MailboxSession session, Mailbox mailbox) throws MailboxException {
+                BoteMailbox boteMailbox = (BoteMailbox)mailbox;
+                return boteMailbox.lastUid();
+            }
+        };
+    }
+
+    private ModSeqProvider createModSeqProvider() {
+        MailboxPathLocker modSeqLocker = new AbstractMailboxPathLocker() {
+            @Override
+            protected void lock(MailboxSession session, MailboxPath path, boolean writeLock) throws MailboxException {
+                BoteMailbox mailbox = getMailboxes().get(path.getName().toLowerCase());
+                mailbox.lockNextModSeq(writeLock);
+            }
+
+            @Override
+            protected void unlock(MailboxSession session, MailboxPath path, boolean writeLock) throws MailboxException {
+                BoteMailbox mailbox = getMailboxes().get(path.getName().toLowerCase());
+                mailbox.unlockNextModSeq(writeLock);
+            }
+        };
+
+        return new AbstractLockingModSeqProvider(modSeqLocker) {
+            @Override
+            protected long lockedNextModSeq(MailboxSession session, Mailbox mailbox) throws MailboxException {
+                BoteMailbox boteMailbox = (BoteMailbox)mailbox;
+                return boteMailbox.lockedNextModSeq();
+            }
+
+            @Override
+            public long highestModSeq(MailboxSession session, Mailbox mailbox) throws MailboxException {
+                BoteMailbox boteMailbox = (BoteMailbox)mailbox;
+                return boteMailbox.highestModSeq();
+            }
+
+            @Override
+            public long highestModSeq(MailboxSession session, MailboxId mailboxId) throws MailboxException {
+                return highestModSeq(session, getMailboxes().get(mailboxId.serialize().toLowerCase()));
+            }
+        };
+    }
+
+    @Override
+    public MailboxMapper createMailboxMapper(MailboxSession session) throws MailboxException {
+        return new MailboxMapper() {
             
             @Override
             public <T> T execute(Transaction<T> transaction) throws MailboxException {
@@ -282,25 +365,26 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             }
 
             @Override
-            public void save(Mailbox<String> mailbox) throws MailboxException {
+            public MailboxId save(Mailbox mailbox) throws MailboxException {
                 // nothing to do because changes are written to disk immediately
+                return mailbox.getMailboxId();
             }
 
             @Override
-            public List<Mailbox<String>> list() throws MailboxException {
-                return new ArrayList<Mailbox<String>>(getMailboxes().values());
+            public List<Mailbox> list() throws MailboxException {
+                return new ArrayList<Mailbox>(getMailboxes().values());
             }
 
             @Override
-            public boolean hasChildren(Mailbox<String> mailbox, char delimiter) throws MailboxException, MailboxNotFoundException {
+            public boolean hasChildren(Mailbox mailbox, char delimiter) throws MailboxException, MailboxNotFoundException {
                 return false;  // not currently supported
             }
 
             @Override
-            public List<Mailbox<String>> findMailboxWithPathLike(MailboxPath mailboxPath) throws MailboxException {
+            public List<Mailbox> findMailboxWithPathLike(MailboxPath mailboxPath) throws MailboxException {
                 String regex = mailboxPath.getName().replaceAll("%", ".*");
                 
-                List<Mailbox<String>> results = new ArrayList<Mailbox<String>>();
+                List<Mailbox> results = new ArrayList<>();
                 for (BoteMailbox mailbox: getMailboxes().values()) {
                     String mailboxName = mailbox.getName().toLowerCase();
                     if (mailboxName.matches(regex))
@@ -310,17 +394,23 @@ class MapperFactory extends MailboxSessionMapperFactory<String> {
             }
 
             @Override
-            public Mailbox<String> findMailboxByPath(MailboxPath mailboxName) throws MailboxException, MailboxNotFoundException {
+            public Mailbox findMailboxByPath(MailboxPath mailboxName) throws MailboxException, MailboxNotFoundException {
                 return getMailboxes().get(mailboxName.getName().toLowerCase());
             }
 
             @Override
-            public void delete(Mailbox<String> mailbox) throws MailboxException {
+            public Mailbox findMailboxById(MailboxId mailboxId) throws MailboxException, MailboxNotFoundException {
+                // Assumes mailboxId is a BoteMailboxId, which is serialized to its name
+                return getMailboxes().get(mailboxId.serialize().toLowerCase());
+            }
+
+            @Override
+            public void delete(Mailbox mailbox) throws MailboxException {
                 throw new MailboxException(_t("Deletion of mailboxes is not currently supported."));
             }
 
             @Override
-            public void updateACL(Mailbox<String> mailbox, MailboxACL.MailboxACLCommand mailboxACLCommand)
+            public void updateACL(Mailbox mailbox, MailboxACL.MailboxACLCommand mailboxACLCommand)
                     throws MailboxException {
                 mailbox.setACL(mailbox.getACL().apply(mailboxACLCommand));
             }
