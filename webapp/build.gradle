@@ -28,7 +28,8 @@ task precompileJsp {
     }
 }
 
-def messagesDir = project.file("$buildDir/messages-src")
+def messagesSrcDir = project.file("$buildDir/messages-src")
+def messagesClassesDir = project.file("$buildDir/messages-classes")
 sourceSets {
     jsp {
         compileClasspath += configurations.compile +
@@ -43,7 +44,7 @@ sourceSets {
     }
     messages {
         java {
-            srcDir messagesDir
+            srcDir messagesSrcDir
         }
     }
 }
@@ -133,32 +134,73 @@ task poupdate(dependsOn: jspStrings) {
     }
 }
 
+task msgfmtSupportsSource(type: Exec) {
+    executable 'msgfmt'
+    args '-V'
+    standardOutput = new ByteArrayOutputStream()
+    ext.result = {
+        return standardOutput.toString().contains("0.19")
+    }
+}
+
 task generateMessagesJava {
     doLast {
         fileTree("$projectDir/src/main/locale").include('**/messages_*.po').each { File file ->
             def lg = file.name.find(/messages_(.*).po/, { full, lang ->
                 lang
             })
-            mkdir(messagesDir)
-            exec {
-                executable 'msgfmt'
-                args '--java',
-                        '--statistics',
-                        '--source',
-                        '-r', 'i2p.bote.locale.Messages',
-                        '-l', lg,
-                        '-d', temporaryDir,
-                        file
+            mkdir(messagesSrcDir)
+            if (msgfmtSupportsSource.result()) {
+                // fast way
+                exec {
+                    executable 'msgfmt'
+                    args '--java',
+                            '--statistics',
+                            '--source',
+                            '-r', 'i2p.bote.locale.Messages',
+                            '-l', lg,
+                            '-d', temporaryDir,
+                            file
+                }
+                copy {
+                    from temporaryDir
+                    into messagesSrcDir
+                }
+                delete(temporaryDir)
+            } else {
+                // slow way
+                mkdir(messagesClassesDir)
+                exec {
+                    executable 'msgfmt'
+                    args '--java',
+                            '--statistics',
+                            '-r', 'i2p.bote.locale.Messages',
+                            '-l', lg,
+                            '-d', messagesClassesDir,
+                            file
+                }
             }
-            copy {
-                from temporaryDir
-                into messagesDir
-            }
-            delete(temporaryDir)
         }
     }
 }
+
+task moveClassesMessagesJava {
+    doLast {
+        if (!msgfmtSupportsSource.result()) {
+            // Need to copy these after compileMessagesJava
+            // or they get deleted
+            copy {
+                from messagesClassesDir
+                into sourceSets.messages.output.classesDir
+            }
+        }
+    }
+}
+
+generateMessagesJava.dependsOn msgfmtSupportsSource
 compileMessagesJava.dependsOn generateMessagesJava
+moveClassesMessagesJava.dependsOn compileMessagesJava
+classes.dependsOn moveClassesMessagesJava
 
 war {
     archiveName 'i2pbote.war'
