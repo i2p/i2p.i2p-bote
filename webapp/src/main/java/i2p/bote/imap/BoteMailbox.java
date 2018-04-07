@@ -24,6 +24,7 @@ package i2p.bote.imap;
 import com.google.common.base.Optional;
 
 import org.apache.james.mailbox.MessageUid;
+import org.apache.james.mailbox.model.MailboxConstants;
 import org.apache.james.mailbox.model.MailboxPath;
 import org.apache.james.mailbox.model.MessageRange;
 import org.apache.james.mailbox.store.mail.model.MailboxMessage;
@@ -69,7 +70,7 @@ public class BoteMailbox extends SimpleMailbox {
     private FolderListener folderListener;
 
     public BoteMailbox(EmailFolder folder, long uidValidity, MessageUid nextUid) {
-        super(new MailboxPath("I2P-Bote", "bote", folder.getName()), uidValidity,
+        super(new MailboxPath(MailboxConstants.USER_NAMESPACE, "bote", folder.getName()), uidValidity,
                 new BoteMailboxId(folder.getName()));
         this.folder = folder;
         this.messageMap = Collections.synchronizedSortedMap(new TreeMap<Email, BoteMessage>(new Comparator<Email>() {
