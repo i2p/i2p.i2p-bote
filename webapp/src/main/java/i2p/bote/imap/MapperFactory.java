@@ -84,7 +84,6 @@ class MapperFactory extends MailboxSessionMapperFactory {
         this.folderManager = folderManager;
         mailboxes = new HashMap<>();
         uidValidity = System.currentTimeMillis();
-        uidValidity <<= 32;
         uidProvider = createUidProvider();
         modSeqProvider = createModSeqProvider();
     }
