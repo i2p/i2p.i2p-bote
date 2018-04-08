@@ -78,7 +78,7 @@ dependencies {
     compile 'org.apache.james:apache-james-mailbox-store:3.0.1'
     compile 'org.apache.james:james-server-protocols-imap4:3.0.1'
 
-    runtime 'net.i2p:servlet-i2p:0.9.30'
+    runtime "net.i2p:servlet-i2p:$rootProject.i2pVersion"
 }
 
 def stringsDir = project.file("$buildDir/strings")
