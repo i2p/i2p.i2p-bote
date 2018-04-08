@@ -1,6 +1,9 @@
 I2P-Bote Version History
 ------------------------
 
+0.4.7
+  * Set default number of relay hops to 2
+
 0.4.6 (Released on May 3, 2017)
   * Merged I2P-Bote and Bote Android codebases
   * Migrate plugin to Jetty 9
