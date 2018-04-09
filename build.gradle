@@ -18,7 +18,7 @@ allprojects {
 project.ext.i2pVersion = '0.9.33'
 
 configure([project(':core'), project(':webapp')]) {
-    project.version = '0.4.6'
+    project.version = '0.4.7'
 
     project.afterEvaluate {
         jar {
