@@ -1,6 +1,12 @@
 I2P-Bote Version History
 ------------------------
 
+0.4.7 (Released on April 9, 2018)
+  * Set default number of relay hops to 2
+  * IMAP and SMTP APIs now start immediately instead of waiting for tunnels
+  * Upgraded IMAP backend
+    * Known bug: attachments may not appear in IMAP
+
 0.4.6 (Released on May 3, 2017)
   * Merged I2P-Bote and Bote Android codebases
   * Migrate plugin to Jetty 9

@@ -130,7 +130,7 @@ public class Configuration implements IdentityConfig {
     private static final int DEFAULT_RELAY_REDUNDANCY = 5;   // lower than the DHT redundancy because only the highest-uptime peers are used for relaying
     private static final int DEFAULT_RELAY_MIN_DELAY = 5;   // in minutes
     private static final int DEFAULT_RELAY_MAX_DELAY = 40;   // in minutes
-    private static final int DEFAULT_NUM_STORE_HOPS = 0;
+    private static final int DEFAULT_NUM_STORE_HOPS = 2;
     private static final String DEFAULT_GATEWAY_DESTINATION = "";
     private static final boolean DEFAULT_GATEWAY_ENABLED = true;
     private static final int DEFAULT_PASSWORD_CACHE_DURATION = 10;   // in minutes
