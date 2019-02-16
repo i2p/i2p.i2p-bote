@@ -46,6 +46,7 @@ sourceSets {
         java {
             srcDir messagesSrcDir
         }
+        output.dir(messagesClassesDir, builtBy: 'generateMessagesJava')
     }
 }
 
@@ -183,23 +184,8 @@ task generateMessagesJava {
     }
 }
 
-task moveClassesMessagesJava {
-    doLast {
-        if (!msgfmtSupportsSource.result()) {
-            // Need to copy these after compileMessagesJava
-            // or they get deleted
-            copy {
-                from messagesClassesDir
-                into sourceSets.messages.output.classesDir
-            }
-        }
-    }
-}
-
 generateMessagesJava.dependsOn msgfmtSupportsSource
 compileMessagesJava.dependsOn generateMessagesJava
-moveClassesMessagesJava.dependsOn compileMessagesJava
-classes.dependsOn moveClassesMessagesJava
 
 war {
     archiveName 'i2pbote.war'

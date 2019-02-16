@@ -17,6 +17,23 @@ allprojects {
 
 project.ext.i2pVersion = '0.9.33'
 
+String compat(String src) {
+    if (src.contains('.')) {
+        src.substring(src.lastIndexOf('.') + 1)
+    } else {
+        src
+    }
+}
+
+String javaExecutable(String targetJavaHome, String execName) {
+    def javaExecutablesPath = new File(targetJavaHome, "bin")
+    def executable = new File(javaExecutablesPath, execName)
+    if (!executable.exists()) {
+        throw new IllegalArgumentException("There is no ${execName} executable in ${javaExecutablesPath}")
+    }
+    return executable.toString()
+}
+
 configure([project(':core'), project(':webapp')]) {
     project.version = '0.4.7'
 
@@ -29,11 +46,59 @@ configure([project(':core'), project(':webapp')]) {
 
         sourceCompatibility = 1.7
         targetCompatibility = 1.7
-        // Set i2pBootClasspath=/path/to/rt.jar:/path/to/jce.jar in ~/.gradle/gradle.properties if needed
+
+        def i2pBootClasspath
+        // Set java7BootClasspath=/path/to/rt.jar:/path/to/jce.jar in ~/.gradle/gradle.properties if needed
+        if (java7BootClasspath) {
+            i2pBootClasspath = java7BootClasspath
+        } else {
+            def java7Home = System.getenv("JAVA7_HOME")
+            if (java7Home) {
+                i2pBootClasspath = "${java7Home}/jre/lib/jce.jar:${java7Home}/jre/lib/rt.jar"
+            }
+        }
+
         if (i2pBootClasspath) {
             project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
                 ac.options.bootstrapClasspath = files(i2pBootClasspath)
             })
+        } else {
+            if (JavaVersion.current().java8Compatible && !JavaVersion.current().java9Compatible) {
+                throw new GradleException("Set java7BootClasspath property or JAVA7_HOME environment variable to enable cross-compilation, or run Gradle with JDK 9+")
+            }
+            tasks.withType(JavaCompile) {
+                def version = compat(sourceCompatibility)
+                println "Configuring $name to use --release $version"
+                options.compilerArgs.addAll(['--release', version])
+            }
+        }
+
+        // Set up Java override if configured (used to test with Java 7).
+        def targetJavaHome = System.getenv("TARGET_JAVA_HOME")
+        if (targetJavaHome) {
+            if (JavaVersion.current().java9Compatible) {
+                throw new GradleException("Only set TARGET_JAVA_HOME with JDK 8")
+            }
+
+            println("Target Java home set to ${targetJavaHome}")
+            println("Configuring Gradle to use forked compilation and testing")
+
+            tasks.withType(JavaCompile) {
+                options.fork = true
+                options.forkOptions.javaHome = file(targetJavaHome)
+            }
+
+            tasks.withType(Javadoc) {
+                executable = javaExecutable(targetJavaHome, "javadoc")
+            }
+
+            tasks.withType(Test) {
+                executable = javaExecutable(targetJavaHome, "java")
+            }
+
+            tasks.withType(JavaExec) {
+                executable = javaExecutable(targetJavaHome, "java")
+            }
         }
     }
 }

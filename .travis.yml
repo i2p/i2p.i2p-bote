@@ -1,8 +1,12 @@
 language: java
 
 jdk:
+  - oraclejdk11
   - oraclejdk9
   - oraclejdk8
+  - openjdk11
+  - openjdk10
+  - openjdk9
   - openjdk8
 
 matrix:
@@ -10,9 +14,33 @@ matrix:
     - jdk: openjdk7
       sudo: required
       before_install: # Work around missing crypto in openjdk7
+        - wget http://security.ubuntu.com/ubuntu/pool/main/g/gcc-5/gcc-5-base_5.4.0-6ubuntu1~16.04.10_amd64.deb
+        - wget http://security.ubuntu.com/ubuntu/pool/main/g/gcc-5/libgomp1_5.4.0-6ubuntu1~16.04.10_amd64.deb
+        - wget http://archive.ubuntu.com/ubuntu/pool/main/n/ncurses/libtinfo5_6.0+20160213-1ubuntu1_amd64.deb
+        - wget http://archive.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.19.7-2ubuntu3.1_amd64.deb
+        - sudo dpkg -i gcc-5-base_5.4.0-6ubuntu1~16.04.10_amd64.deb
+        - sudo dpkg -i libgomp1_5.4.0-6ubuntu1~16.04.10_amd64.deb
+        - sudo dpkg -i libtinfo5_6.0+20160213-1ubuntu1_amd64.deb
+        - sudo dpkg -i gettext_0.19.7-2ubuntu3.1_amd64.deb
+        - export JAVA7_HOME=$(jdk_switcher home openjdk7)
         - sudo wget "https://bouncycastle.org/download/bcprov-ext-jdk15on-158.jar" -O "${JAVA_HOME}/jre/lib/ext/bcprov-ext-jdk15on-158.jar"
         - sudo perl -pi.bak -e 's/^(security\.provider\.)([0-9]+)/$1.($2+1)/ge' /etc/java-7-openjdk/security/java.security
         - echo "security.provider.1=org.bouncycastle.jce.provider.BouncyCastleProvider" | sudo tee -a /etc/java-7-openjdk/security/java.security
+      install:
+        - export TARGET_JAVA_HOME=$JAVA_HOME
+        - jdk_switcher use oraclejdk8
+        - ./gradlew assemble
+
+before_install:
+  - wget http://security.ubuntu.com/ubuntu/pool/main/g/gcc-5/gcc-5-base_5.4.0-6ubuntu1~16.04.10_amd64.deb
+  - wget http://security.ubuntu.com/ubuntu/pool/main/g/gcc-5/libgomp1_5.4.0-6ubuntu1~16.04.10_amd64.deb
+  - wget http://archive.ubuntu.com/ubuntu/pool/main/n/ncurses/libtinfo5_6.0+20160213-1ubuntu1_amd64.deb
+  - wget http://archive.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.19.7-2ubuntu3.1_amd64.deb
+  - sudo dpkg -i gcc-5-base_5.4.0-6ubuntu1~16.04.10_amd64.deb
+  - sudo dpkg -i libgomp1_5.4.0-6ubuntu1~16.04.10_amd64.deb
+  - sudo dpkg -i libtinfo5_6.0+20160213-1ubuntu1_amd64.deb
+  - sudo dpkg -i gettext_0.19.7-2ubuntu3.1_amd64.deb
+  - export JAVA7_HOME=$(jdk_switcher home openjdk7)
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
