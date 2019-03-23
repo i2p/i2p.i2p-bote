@@ -2,7 +2,7 @@
 <manifest
     package="i2p.bote.android"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:sharedUserId="net.geti2p">
+    android:sharedUserId="net.i2p">
 
     <uses-sdk xmlns:tools="http://schemas.android.com/tools"
         tools:overrideLibrary="android.support.v14.preference" />
