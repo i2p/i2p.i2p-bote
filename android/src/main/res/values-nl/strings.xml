@@ -7,7 +7,7 @@
   <string name="i_know_what_to_do">Ik weet wat te doen</string>
   <string name="intro_1_1">Traditionele e-mail is onveilig. Het is niet ontworpen om mensen te beschermen van massa-controle.</string>
   <string name="intro_1_2">Zelfs als je de inhoud van je e-mails versleutelt kan de metadata van de e-mail in het oog gehouden worden om grote hoeveelheden informatie over jou en de mensen waarmee je praat te onthullen.</string>
-  <string name="intro_2_1">Bote is een nieuwe soort e-mail die volledige end-to-end privacy en veiligheid biedt. Het draait op het I2P-anonimiteitsnetwerk, dat je activiteit verbergt.</string>
+  <string name="intro_2_1">Bote is een nieuwe soort e-mail die volledige end-to-end-privacy en beveiliging biedt. Het draait op het I2P-anonimiteitsnetwerk, dat je activiteit verbergt.</string>
   <string name="intro_2_2">Wanneer je een e-mail verstuurt in Bote, is alles versleuteld - zelfs de metadata. Alleen de ontvanger kan je e-mail downloaden en lezen.</string>
   <string name="intro_3_1">Bij traditionele e-mail moet je een centrale server vertrouwen, en als deze geblokkeerd wordt kan je geen e-mails verzenden of ontvangen.</string>
   <string name="intro_3_2">Bote maakt gebruik van een gedistribueerd peer-to-peernetwerk gelijkaardig aan BitTorrent. Versleutelde e-mails worden opgedeeld en opgeslagen onder vele andere Bote-gebruikers.</string>
@@ -62,6 +62,7 @@
   <string name="checking_password">Bezig met controleren van wachtwoord…</string>
   <string name="password_incorrect">Verkeerd wachtwoord</string>
   <string name="password_file_error">Kon wachtwoord-verificatiebestand niet lezen</string>
+  <string name="all_mail">Alle email</string>
   <string name="folder_inbox">Postvak IN</string>
   <string name="folder_outbox">Postvak UIT</string>
   <string name="folder_sent">Verzonden</string>
@@ -208,6 +209,8 @@
   <string name="new_password">Nieuw wachtwoord</string>
   <string name="confirm_new_password">Nieuw wachtwoord bevestigen</string>
   <string name="remove_password_info">Laat de \'Nieuw wachtwoord\'-velden blanco om het wachtwoord te verwijderen.</string>
+  <string name="old_password_incorrect">Het oude wachtwoord is onjuist.</string>
+  <string name="new_password_mismatch">Het nieuwe wachtwoord en de bevestiging komen niet overeen.</string>
   <string name="password_changed">Wachtwoordwijziging geslaagd</string>
   <string name="pref_title_identities">Identiteiten</string>
   <string name="no_identities">Geen identiteiten</string>
@@ -219,6 +222,7 @@
   <string name="default_identity">Standaardidentiteit</string>
   <string name="save_identity">Identiteit opslaan</string>
   <string name="delete_identity">Identiteit verwijderen?</string>
+  <string name="invalid_vanity_chars">Dit type encryptie ondersteunt geen bestemmingen die beginnen met \'%1$s\'. Ondersteunde karakters zijn \'%2$s\'.</string>
   <string name="identity_saved">Identiteit opgeslagen</string>
   <string name="export_identities">Identiteiten exporteren</string>
   <string name="passwords_do_not_match">Wachtwoorden komen niet overeen</string>
@@ -231,6 +235,14 @@
   <string name="no_identities_found_maybe_encrypted">Geen identiteiten gevonden. Is het bestand versleuteld?</string>
   <string name="identities_imported">Identiteiten geïmporteerd</string>
   <string name="this_field_is_required">Dit veld is vereist</string>
+  <string name="export_address_book">Exporteer adresboek</string>
+  <string name="exporting_address_book">Bezig met adresboek exporteren</string>
+  <string name="address_book_exported">Adresboek geëxporteerd naar Downloads-map</string>
+  <string name="import_address_book">Importeer adresboek</string>
+  <string name="importing_address_book">Bezig met adresboek importeren</string>
+  <string name="no_contacts_found">Geen contacten gevonden.</string>
+  <string name="no_contacts_found_maybe_encrypted">Geen contacten gevonden. Is het bestand versleuteld?</string>
+  <string name="address_book_imported">Adresboek geïmporteerd</string>
   <string name="bote_dest_for">Bote-adres voor %s</string>
   <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
   <string name="help">Help</string>
@@ -242,5 +254,11 @@
   <string name="license">Licentie: %s</string>
   <!--Software libraries-->
   <string name="libraries">Bibliotheken</string>
+  <string name="re_encrypting_identities">Bezig met opnieuw versleutelen van identiteiten...</string>
+  <string name="re_encrypting_address_book">Bezig met opnieuw versleutelen van adresboek...</string>
   <!--Argument is a folder name-->
+  <string name="re_encrypting_folder">Bezig met opnieuw versleutelen van map %s...</string>
+  <string name="updating_password_file">Bezig met bijwerken van wachtwoordbestand...</string>
+  <string name="generating_keys">Bezig met sleutels genereren...</string>
+  <string name="saving_identity">Bezig met identiteit opslaan...</string>
 </resources>

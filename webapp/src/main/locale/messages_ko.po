@@ -1,19 +1,19 @@
 # Translators:
 # Translators:
-# HelloKS <kqwe1859@gmail.com>, 2016
+# HelloKS <kqwe1859@gmail.com>, 2016-2017
 # SEPT____ <xpressengine3@mail.beo.kr>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2018-11-15 17:07+0000\n"
+"Last-Translator: erinm\n"
 "Language-Team: Korean (http://www.transifex.com/otf/I2P/language/ko/)\n"
-"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
@@ -205,8 +205,7 @@ msgstr "- I2P-Bote"
 
 #: src/main/webapp/header.jsp
 msgid "Password is cached. Click to clear the password cache."
-msgstr ""
-"패스워드가 캐시에 임시 저장되었습니다. 패스워드 캐시를 지우려면 클릭하세요."
+msgstr "패스워드가 캐시에 임시 저장되었습니다. 패스워드 캐시를 지우려면 클릭하세요."
 
 #: src/main/webapp/header.jsp
 msgid "I2P-Bote"
@@ -260,9 +259,7 @@ msgstr "알아보기"
 msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
-msgstr ""
-"I2P-Bote를 올바르게 작동하기 위해 JCE Unlimited Strength Jurisdiction Policy "
-"파일들을 다운받아 이 폴더에 옮겨주십시오:"
+msgstr "I2P-Bote를 올바르게 작동하기 위해 JCE Unlimited Strength Jurisdiction Policy 파일들을 다운받아 이 폴더에 옮겨주십시오:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
@@ -424,8 +421,7 @@ msgstr "네트워크"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"네트워크 정보를 읽을 수 없습니다. I2P-Bote가 네트워크에 연결되지 않았습니다."
+msgstr "네트워크 정보를 읽을 수 없습니다. I2P-Bote가 네트워크에 연결되지 않았습니다."
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -510,29 +506,21 @@ msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"모든 이메일 신원은 이메일 목적지와 관련되어 있습니다. 모든사람이 이메일을 보"
-"낼 수 있지만, 읽을 수 있는 사람은 신원을 가진 사람 뿐입니다."
+msgstr "모든 이메일 신원은 이메일 목적지와 관련되어 있습니다. 모든사람이 이메일을 보낼 수 있지만, 읽을 수 있는 사람은 신원을 가진 사람 뿐입니다."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"이메일 신원은 어느정도 기존의 이메일 서비스 아이디와 유사합니다. 다른점은, 이"
-"메일 신원의 경우 그 어떤 회사도 당신의 이메일을 열람할 수 없다는 겁니다. 왜나"
-"혀면 I2P-Bote는 모든 이메일을 암호화 된 채로 네트워크에 저장하기 때문입니다."
+msgstr "이메일 신원은 어느정도 기존의 이메일 서비스 아이디와 유사합니다. 다른점은, 이메일 신원의 경우 그 어떤 회사도 당신의 이메일을 열람할 수 없다는 겁니다. 왜나혀면 I2P-Bote는 모든 이메일을 암호화 된 채로 네트워크에 저장하기 때문입니다."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Bote는 당신에게 보내진 이메일을 자동으로 복호화합니다. 당신이 만든 신원"
-"을 통해서요. 이메일 신원은 파일로 저장됩니다. 그 어떤 누구에게도 해당 파일을 "
-"주지 마십시오! 신원을 가지고 있으면 당신의 이메일을 열람할 수 있습니다."
+msgstr "I2P-Bote는 당신에게 보내진 이메일을 자동으로 복호화합니다. 당신이 만든 신원을 통해서요. 이메일 신원은 파일로 저장됩니다. 그 어떤 누구에게도 해당 파일을 주지 마십시오! 신원을 가지고 있으면 당신의 이메일을 열람할 수 있습니다."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
@@ -542,8 +530,7 @@ msgstr "다른 사람들이 연락할 수  있도록 이메일 목적지를 보�
 msgid ""
 "It is easy to create multiple identities for different purposes, or "
 "different contacts."
-msgstr ""
-"여러개의 신원을 만드는 것은 쉽습니다. 여러 목적과, 여러 연락처를 위해서요."
+msgstr "여러개의 신원을 만드는 것은 쉽습니다. 여러 목적과, 여러 연락처를 위해서요."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -552,20 +539,14 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr ""
-"신원을 새로 만들 때, 암호화 알고리즘을 선택할 수 있습니다. I2P-Bote가 제공하"
-"는 모든 암호화 알고리즘은 높은 수준의 기법이지만 이메일 목적지의 길이에 따라 "
-"각각의 유용성이 달라질 수 있습니다. 또한 암호화 기법은 서명 알고리즘도 결정합"
-"니다."
+msgstr "신원을 새로 만들 때, 암호화 알고리즘을 선택할 수 있습니다. I2P-Bote가 제공하는 모든 암호화 알고리즘은 높은 수준의 기법이지만 이메일 목적지의 길이에 따라 각각의 유용성이 달라질 수 있습니다. 또한 암호화 기법은 서명 알고리즘도 결정합니다."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr ""
-"256-bit elliptic curve 알고리즘을 추천합니다. 가장 짧은 이메일 목적지를 생성"
-"하면서도 (86 자) 매우 안전합니다."
+msgstr "256-bit elliptic curve 알고리즘을 추천합니다. 가장 짧은 이메일 목적지를 생성하면서도 (86 자) 매우 안전합니다."
 
 #: src/main/webapp/sendEmail.jsp
 msgid "New Email"
@@ -735,9 +716,7 @@ msgstr "기존 패스워드가 없다면 공란으로 두십시오."
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr ""
-"패스워드를 설정하면 자동 확인이 불가능합니다. 확인버튼을 눌러 수동으로 확인하"
-"세요."
+msgstr "패스워드를 설정하면 자동 확인이 불가능합니다. 확인버튼을 눌러 수동으로 확인하세요."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -759,9 +738,7 @@ msgstr "OK"
 msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
-msgstr ""
-"해당 폴더에서 이메일을 찾을 수 없습니다. 보낸 이메일함으로 옮겨졌을 수 있습니"
-"다."
+msgstr "해당 폴더에서 이메일을 찾을 수 없습니다. 보낸 이메일함으로 옮겨졌을 수 있습니다."
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
@@ -877,8 +854,7 @@ msgstr "사생활"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"발신 메일에 포함된 텍스트들은 영어를 사용하세요 ('Re:', 'wrote:', etc.)"
+msgstr "발신 메일에 포함된 텍스트들은 영어를 사용하세요 ('Re:', 'wrote:', etc.)"
 
 #: src/main/webapp/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -947,9 +923,7 @@ msgstr "{0}를 위한 완전판 이메일 신원:"
 #: src/main/webapp/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr ""
-"위의 정보를 누구에게도 공개하지 마십시오. 당신의 private key가 포함되어 있습"
-"니다."
+msgstr "위의 정보를 누구에게도 공개하지 마십시오. 당신의 private key가 포함되어 있습니다."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -1270,12 +1244,9 @@ msgstr "연락처 불러오기"
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-"주소록에서 일치하는 기록이 검색되지 않습니다. 주소록은 언제나 조작될 수 있음"
-"을 유의하세요. 해당 이메일 목적지가 올바른지 확인 후 &quot;불러오기&quot; 를 "
-"눌러주시기 바랍니다."
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "주소록에서 일치하는 기록이 검색되지 않습니다. 주소록은 언제나 조작될 수 있음을 유의하세요. 해당 이메일 목적지가 올바른지 확인 후 &quot;불러오기&quot; 를 눌러주시기 바랍니다."
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
@@ -1297,7 +1268,7 @@ msgstr "이메일 신원이 만들어지고 있습니다. 약간의 시간이 �
 msgid ""
 "This encryption type does not support destinations that start with {0}. "
 "Valid initial characters are {1}."
-msgstr ""
+msgstr "이 암호화 종류는 {0}으로 시작하는 목적지를 지원하지 않습니다. 올바른 최초 문자는 {1}입니다."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."

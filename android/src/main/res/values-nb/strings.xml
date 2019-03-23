@@ -33,7 +33,6 @@
   <string name="action_start_bote">Koble til nettverk</string>
   <string name="action_stop_bote">Koble fra nettverk</string>
   <string name="action_settings">Innstillinger</string>
-  <string name="start_i2p_android">Det later til at I2P for Android ikke kjører. Vil du starte det?</string>
   <!--Argument is a number-->
   <string name="items_selected">%s valgt</string>
   <string name="action_delete">Slett</string>

@@ -1,20 +1,20 @@
 # Translators:
 # Translators:
-# a1678991 <nfgantanku@yahoo.co.jp>, 2015
+# kami <b52c55627324b29125cbcfb101258463_228943>, 2015
 # g3600303 <g3600303@trbvm.com>, 2015
 # heizi <lv.kjsn.29yr@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2018-11-15 13:14+0000\n"
+"Last-Translator: Songbo Gong <isao_ma@on.rim.or.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/otf/I2P/language/ja/)\n"
-"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
@@ -284,7 +284,7 @@ msgstr ""
 
 #: src/main/webapp/identities.jsp
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/main/webapp/identities.jsp
 msgid "Email Destination"
@@ -304,7 +304,7 @@ msgstr "このアイデンティのメールを確認する"
 
 #: src/main/webapp/identities.jsp
 msgid "New Identity"
-msgstr ""
+msgstr "新しい識別子"
 
 #: src/main/webapp/identities.jsp
 msgid "Import Identities"
@@ -336,7 +336,7 @@ msgstr "新しい連絡先"
 
 #: src/main/webapp/editContact.jsp
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 #: src/main/webapp/editContact.jsp
 msgid "Edit Contact"
@@ -344,7 +344,7 @@ msgstr "連絡先を編集"
 
 #: src/main/webapp/editContact.jsp
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: src/main/webapp/editContact.jsp
 msgid "Email Destination:"
@@ -368,7 +368,7 @@ msgstr ""
 
 #: src/main/webapp/editContact.jsp
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
@@ -388,7 +388,7 @@ msgstr "名前"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "テキスト"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete"
@@ -422,9 +422,7 @@ msgstr "ネットワーク"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"I2P-Boteがまだネットワークに接続していないため、ネットワーク情報は表示できま"
-"せん。"
+msgstr "I2P-Boteがまだネットワークに接続していないため、ネットワーク情報は表示できません。"
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -509,29 +507,21 @@ msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"全てのIDは宛先と対応付けられています。誰もが宛先にメールを送信することが出来"
-"ますが、読めるのはそのIDの所有者のみです。"
+msgstr "全てのIDは宛先と対応付けられています。誰もが宛先にメールを送信することが出来ますが、読めるのはそのIDの所有者のみです。"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"ある意味IDは今までのメールアカウントと同じようなものですが、I2P-Boteは全ての"
-"メールを暗号化してネットワーク上に格納しているため、あなたのメールを盗み読む"
-"ことのできるプロバイダのような存在はありません。"
+msgstr "ある意味IDは今までのメールアカウントと同じようなものですが、I2P-Boteは全てのメールを暗号化してネットワーク上に格納しているため、あなたのメールを盗み読むことのできるプロバイダのような存在はありません。"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Boteはあなたの作成したIDを使い、あなた宛のメールを自動的に復号化します。"
-"IDはidentitiesという名前のファイルに保存されています。このファイルを誰かに渡"
-"してしまった場合、その人はあなたのメール全てを読むことが出来てしまいます。"
+msgstr "I2P-Boteはあなたの作成したIDを使い、あなた宛のメールを自動的に復号化します。IDはidentitiesという名前のファイルに保存されています。このファイルを誰かに渡してしまった場合、その人はあなたのメール全てを読むことが出来てしまいます。"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
@@ -550,20 +540,14 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr ""
-"IDを作成するとき、IDに使用される暗号化の種類を選択することができます。I2P-"
-"Boteの用意している暗号化アルゴリズムは全て高いレベルのプライバシーを提供しま"
-"すが、宛先の長さは暗号化の種類によって変わります。選んだ暗号化アルゴリズムは"
-"署名にも用いられます。"
+msgstr "IDを作成するとき、IDに使用される暗号化の種類を選択することができます。I2P-Boteの用意している暗号化アルゴリズムは全て高いレベルのプライバシーを提供しますが、宛先の長さは暗号化の種類によって変わります。選んだ暗号化アルゴリズムは署名にも用いられます。"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr ""
-"一般的には256-bit 楕円曲線暗号を選ぶことが推奨されます。短い宛先(86文字)を生"
-"成でき、依然高い安全性を持つからです。"
+msgstr "一般的には256-bit 楕円曲線暗号を選ぶことが推奨されます。短い宛先(86文字)を生成でき、依然高い安全性を持つからです。"
 
 #: src/main/webapp/sendEmail.jsp
 msgid "New Email"
@@ -727,17 +711,13 @@ msgstr "新しいパスワードを設定"
 
 #: src/main/webapp/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
-msgstr ""
-"パスワードを設定していなかった場合、古いパスワードの欄は空けておいてくださ"
-"い。"
+msgstr "パスワードを設定していなかった場合、古いパスワードの欄は空けておいてください。"
 
 #: src/main/webapp/setPassword.jsp
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr ""
-"パスワードを設定すると、メールの確認は自動ではなく、「メール確認」ボタンが押"
-"された時のみ行われることに注意してください。"
+msgstr "パスワードを設定すると、メールの確認は自動ではなく、「メール確認」ボタンが押された時のみ行われることに注意してください。"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -759,9 +739,7 @@ msgstr "OK"
 msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
-msgstr ""
-"このフォルダにはメールが見つかりませんでした。送信済みフォルダに移動したのか"
-"もしれません。"
+msgstr "このフォルダにはメールが見つかりませんでした。送信済みフォルダに移動したのかもしれません。"
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
@@ -962,7 +940,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Create"
-msgstr ""
+msgstr "作成"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Edit Email Identity"
@@ -982,7 +960,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Description:"
-msgstr ""
+msgstr "説明:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(optional, kept private)"
@@ -994,7 +972,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Encryption:"
-msgstr ""
+msgstr "暗号化:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(If unsure, leave the default)"
@@ -1030,7 +1008,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Show"
-msgstr ""
+msgstr "表示"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Cannot publish until connected."
@@ -1267,12 +1245,9 @@ msgstr "連絡先を読み込む"
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-"一致する宛先が公開アドレス帳に見つかりました。公開アドレス帳は意図的な操作に"
-"対して安全ではないことにご注意ください。この宛先が正しい物だと確信していない"
-"のであれば、&quot;読み込む&quot;をクリックしないでください。"
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "一致する宛先が公開アドレス帳に見つかりました。公開アドレス帳は意図的な操作に対して安全ではないことにご注意ください。この宛先が正しい物だと確信していないのであれば、&quot;読み込む&quot;をクリックしないでください。"
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
@@ -1284,7 +1259,7 @@ msgstr ""
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "Please wait..."
-msgstr ""
+msgstr "しばらくお待ちください..."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The Email Identity is being generated. This may take a while."

@@ -61,6 +61,7 @@
   <string name="checking_password">正在检查密码…</string>
   <string name="password_incorrect">密码不正确</string>
   <string name="password_file_error">无法读取密码验证文件</string>
+  <string name="all_mail">所有邮件</string>
   <string name="folder_inbox">收件箱</string>
   <string name="folder_outbox">发件箱</string>
   <string name="folder_sent">发送</string>
@@ -205,6 +206,8 @@
   <string name="new_password">新密码</string>
   <string name="confirm_new_password">确认新密码</string>
   <string name="remove_password_info">若要移除密码，请将“新密码”留空。</string>
+  <string name="old_password_incorrect">旧密码不正确。</string>
+  <string name="new_password_mismatch">新密码与确认密码字段输入相符。</string>
   <string name="password_changed">密码更改成功</string>
   <string name="pref_title_identities">身份</string>
   <string name="no_identities">无身份</string>
@@ -216,6 +219,7 @@
   <string name="default_identity">默认身份</string>
   <string name="save_identity">保存身份</string>
   <string name="delete_identity">删除身份？</string>
+  <string name="invalid_vanity_chars">此加密类型不支持以\"%1$s\"开头的目标。有效的初始字符是\"%2$s\"</string>
   <string name="identity_saved">身份已保存</string>
   <string name="export_identities">导出身份</string>
   <string name="passwords_do_not_match">密码不匹配</string>
@@ -228,6 +232,14 @@
   <string name="no_identities_found_maybe_encrypted">没有找到身份。这是一个加密文件？</string>
   <string name="identities_imported">身份已导入</string>
   <string name="this_field_is_required">此项必填</string>
+  <string name="export_address_book">导出地址簿</string>
+  <string name="exporting_address_book">正在导出地址簿</string>
+  <string name="address_book_exported">地址簿已导出到下载文件夹</string>
+  <string name="import_address_book">导入地址簿</string>
+  <string name="importing_address_book">正在导入地址簿</string>
+  <string name="no_contacts_found">未找到联系人</string>
+  <string name="no_contacts_found_maybe_encrypted">未找到联系人。文件是加密文件？</string>
+  <string name="address_book_imported">已导入地址簿</string>
   <string name="bote_dest_for">%s 的 Bote 地址</string>
   <string name="copied_to_clipboard">复制到剪贴板</string>
   <string name="help">帮助</string>
@@ -239,5 +251,11 @@
   <string name="license">许可协议：%s</string>
   <!--Software libraries-->
   <string name="libraries">库</string>
+  <string name="re_encrypting_identities">正在重新加密身份...</string>
+  <string name="re_encrypting_address_book">正在重新加密地址簿 ...</string>
   <!--Argument is a folder name-->
+  <string name="re_encrypting_folder">正在重新加密文件夹\"%s\"...</string>
+  <string name="updating_password_file">正在更新密码文件...</string>
+  <string name="generating_keys">正在生成密钥...</string>
+  <string name="saving_identity">正在保存身份...</string>
 </resources>

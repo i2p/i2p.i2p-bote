@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2019-01-15 12:18+0000\n"
+"Last-Translator: erinm\n"
 "Language-Team: Slovak (http://www.transifex.com/otf/I2P/language/sk/)\n"
-"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:115
@@ -388,7 +388,7 @@ msgstr "Meno"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete"
@@ -422,9 +422,7 @@ msgstr "Sieť"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"Informácie o sieti nie sú prístupné, pretože I2P-Bote sa k nej zatiaľ "
-"nezačal pripájať."
+msgstr "Informácie o sieti nie sú prístupné, pretože I2P-Bote sa k nej zatiaľ nezačal pripájať."
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -502,45 +500,32 @@ msgstr ""
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr ""
-"Za účelom obdržania emailu od ostatných ľudí si potrebujete najprv vytvoriť "
-"emailovú identitu."
+msgstr "Za účelom obdržania emailu od ostatných ľudí si potrebujete najprv vytvoriť emailovú identitu."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"Každá emailová identita súvisí s emailovým cieľom. Každý môže na tento cieľ "
-"poslať email, ale iba vlastník identity si ho môže prečítať."
+msgstr "Každá emailová identita súvisí s emailovým cieľom. Každý môže na tento cieľ poslať email, ale iba vlastník identity si ho môže prečítať."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"V istom zmysle sú emailové identity ekvivalentom tradičných emailových "
-"účtov, s výnimkou toho, že tu nie je žiadny poskytovateľ, ktorý by si mohol "
-"prečítať všetky vaše emaily, pretože I2P-Bote ukladá všetky maily "
-"zašifrované v sieti."
+msgstr "V istom zmysle sú emailové identity ekvivalentom tradičných emailových účtov, s výnimkou toho, že tu nie je žiadny poskytovateľ, ktorý by si mohol prečítať všetky vaše emaily, pretože I2P-Bote ukladá všetky maily zašifrované v sieti."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Bote automaticky dešifruje vám zaslané emaily za pomoci vami vytvorenej "
-"emailovej identity. Emailové identity sú uložené v súbore pomenovaných "
-"identít; tento súbor nikdy nikomu nedávajte, v opačnom prípade bude schopný "
-"čítať všetky vaše emaily."
+msgstr "I2P-Bote automaticky dešifruje vám zaslané emaily za pomoci vami vytvorenej emailovej identity. Emailové identity sú uložené v súbore pomenovaných identít; tento súbor nikdy nikomu nedávajte, v opačnom prípade bude schopný čítať všetky vaše emaily."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr ""
-"Rozhláste váš emailový cieľ po okolí, aby vás ostatní mohli kontaktovať."
+msgstr "Rozhláste váš emailový cieľ po okolí, aby vás ostatní mohli kontaktovať."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -555,22 +540,14 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr ""
-"Pri vytváraní emailovej identity si môžete vybrať typ šifrovania, ktorý ňou "
-"bude používaný. Zatiaľ čo všetky šifrovacie algoritmy ponúkané I2P-Bote "
-"poskytujú vysokú úroveň súkromia, dĺžka emailového cieľa závisí na použitom "
-"šifrovaní.\n"
-"Od voľby šifrovania tiež závisí aj použitý podpisovací algoritmus."
+msgstr "Pri vytváraní emailovej identity si môžete vybrať typ šifrovania, ktorý ňou bude používaný. Zatiaľ čo všetky šifrovacie algoritmy ponúkané I2P-Bote poskytujú vysokú úroveň súkromia, dĺžka emailového cieľa závisí na použitom šifrovaní.\nOd voľby šifrovania tiež závisí aj použitý podpisovací algoritmus."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr ""
-"Všeobecne sa odporúča si zvoliť 256-bitové elliptic curve šifrovanie, "
-"pretože produkuje najkratšie emailové ciele (86 znakov), pričom je stále "
-"veľmi bezpečné."
+msgstr "Všeobecne sa odporúča si zvoliť 256-bitové elliptic curve šifrovanie, pretože produkuje najkratšie emailové ciele (86 znakov), pričom je stále veľmi bezpečné."
 
 #: src/main/webapp/sendEmail.jsp
 msgid "New Email"
@@ -740,9 +717,7 @@ msgstr "Ak ste si nenastavili heslo, nechajte pole so starým heslom prázdne."
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr ""
-"Prosím berte na vedomie, že v prípade nastavenia hesla emaily nebudú "
-"kontrolované automaticky, ale iba ak kliknete na tlačidlo Skontrolovať maily."
+msgstr "Prosím berte na vedomie, že v prípade nastavenia hesla emaily nebudú kontrolované automaticky, ale iba ak kliknete na tlačidlo Skontrolovať maily."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -852,7 +827,7 @@ msgstr "Nastavenia boli uložené."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "Všeobecné"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -876,13 +851,11 @@ msgstr "Téma:"
 
 #: src/main/webapp/settings.jsp
 msgid "Privacy"
-msgstr ""
+msgstr "Súkromie"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Použiť angličtinu pre text pridávaný do odchádzajúceho emailu ('Re:', "
-"'wrote:', atď.)"
+msgstr "Použiť angličtinu pre text pridávaný do odchádzajúceho emailu ('Re:', 'wrote:', atď.)"
 
 #: src/main/webapp/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -951,9 +924,7 @@ msgstr "Úplná emailová identita pre {0}:"
 #: src/main/webapp/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr ""
-"Nikomu neukazujte informácie zobrazené vyššie! Môžu obsahovať vaše súkromné "
-"kľúče."
+msgstr "Nikomu neukazujte informácie zobrazené vyššie! Môžu obsahovať vaše súkromné kľúče."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -977,9 +948,7 @@ msgstr "Upraviť emailovú identitu"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr ""
-"Emailová identita vám umožňuje prijímať maily od ostatných užívateľov I2P-"
-"Bote."
+msgstr "Emailová identita vám umožňuje prijímať maily od ostatných užívateľov I2P-Bote."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Public Name:"
@@ -1276,13 +1245,9 @@ msgstr "Importovať kontakt"
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-"V priečinku adries bol nájdený zodpovedajúci záznam. Uvedomte si však, že "
-"priečinok adries nie je zabezpečený proti manipulácii, takže neklikajte na "
-"&quot;importovať&quot; ak neveríte, že sa naozaj jedná o ten pravý cieľ "
-"emailu."
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "V priečinku adries bol nájdený zodpovedajúci záznam. Uvedomte si však, že priečinok adries nie je zabezpečený proti manipulácii, takže neklikajte na &quot;importovať&quot; ak neveríte, že sa naozaj jedná o ten pravý cieľ emailu."
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "

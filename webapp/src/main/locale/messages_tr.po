@@ -1,21 +1,20 @@
 # Translators:
 # Translators:
-# Kaya Zeren <kayazeren@gmail.com>, 2016
-# Ozancan Karataş <ozanc27@icloud.com>, 2015
+# Kaya Zeren <kayazeren@gmail.com>, 2016-2018
+# Ozancan Karataş <ozancankaratas96@outlook.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
-"Language-Team: Turkish (Turkey) (http://www.transifex.com/otf/I2P/language/"
-"tr_TR/)\n"
-"Language: tr_TR\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2018-08-12 21:05+0000\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
+"Language-Team: Turkish (Turkey) (http://www.transifex.com/otf/I2P/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:115
@@ -206,8 +205,7 @@ msgstr "- I2P-Bote"
 
 #: src/main/webapp/header.jsp
 msgid "Password is cached. Click to clear the password cache."
-msgstr ""
-"Parola önbelleğe kaydedilmiş. Parola önbelleğini temizlemek için tıklayın."
+msgstr "Parola önbelleğe kaydedilmiş. Parola önbelleğini temizlemek için tıklayın."
 
 #: src/main/webapp/header.jsp
 msgid "I2P-Bote"
@@ -261,9 +259,7 @@ msgstr "Hakkında"
 msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
-msgstr ""
-"I2P-Bote yazılımının doğru şekilde çalışabilmesi için JCE Unlimited Strength "
-"Jurisdiction Policy dosyalarını indirip bu klasöre yüklemelisiniz."
+msgstr "I2P-Bote yazılımının doğru şekilde çalışabilmesi için JCE Unlimited Strength Jurisdiction Policy dosyalarını indirip bu klasöre yüklemelisiniz."
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
@@ -311,11 +307,11 @@ msgstr "Yeni Kimlik"
 
 #: src/main/webapp/identities.jsp
 msgid "Import Identities"
-msgstr "Kimlikleri Al"
+msgstr "Kimlikleri İçe Aktar"
 
 #: src/main/webapp/identities.jsp
 msgid "Export Identities"
-msgstr "Kimlikleri Ver"
+msgstr "Kimlikleri Dışa Aktar"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
@@ -411,7 +407,7 @@ msgstr "Geri Dön"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Import from the public address directory"
-msgstr "Herkese açık adres dizininden al"
+msgstr "Herkese açık adres dizininden içe aktar"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Lookup"
@@ -425,9 +421,7 @@ msgstr "Ağ"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"I2P-Bote henüz ağa bağlanmak üzere başlatılmadığı için ağ bilgileri "
-"bilinmiyor."
+msgstr "I2P-Bote henüz ağa bağlanmak üzere başlatılmadığı için ağ bilgileri bilinmiyor."
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -459,7 +453,7 @@ msgstr "Aktarıldı"
 
 #: src/main/webapp/folder.jsp
 msgid "Anonymous"
-msgstr "İsimsiz"
+msgstr "Anonim"
 
 #: src/main/webapp/folder.jsp
 msgid "(No subject)"
@@ -505,46 +499,32 @@ msgstr "CSRF Güvenlik İhlali"
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr ""
-"Başka kişilerden e-posta almak için bir e-posta kimlik listesi oluşturmanız "
-"gerekir."
+msgstr "Başka kişilerden e-posta almak için bir e-posta kimlik listesi oluşturmanız gerekir."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"Her bir e-posta kimliği bir e-posta hedefi ile ilişkilidir. Herkes bir e-"
-"posta hedefine e-posta göndereilir ancak yalnız kimliğin sahibi bu e-"
-"postaları okuyabilir."
+msgstr "Her bir e-posta kimliği bir e-posta hedefi ile ilişkilidir. Herkes bir e-posta hedefine e-posta göndereilir ancak yalnız kimliğin sahibi bu e-postaları okuyabilir."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"Bir açıdan, e-posta kimlikleri, geleneksel posta hesapları gibi "
-"düşünülebilir. Ancak I2P-Bote tüm e-postaları ağda şifrelenmiş olarak "
-"tuttuğunda, bütün e-postalarınızı okuyabilecek bir hizmet sağlayıcı yoktur."
+msgstr "Bir açıdan, e-posta kimlikleri, geleneksel posta hesapları gibi düşünülebilir. Ancak I2P-Bote tüm e-postaları ağda şifrelenmiş olarak tuttuğunda, bütün e-postalarınızı okuyabilecek bir hizmet sağlayıcı yoktur."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Bote oluşturduğunuz kimliği kullanarak size gönderilmiş e-postaların "
-"şifrelerini otomatik olarak çözer. E-posta kimlikleri identities adındaki "
-"bir dosyada saklanır. Başkalarının e-postalarınızı okumasına yol açacağından "
-"bu dosyayı asla kimseye vermeyin."
+msgstr "I2P-Bote oluşturduğunuz kimliği kullanarak size gönderilmiş e-postaların şifrelerini otomatik olarak çözer. E-posta kimlikleri identities adındaki bir dosyada saklanır. Başkalarının e-postalarınızı okumasına yol açacağından bu dosyayı asla kimseye vermeyin."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr ""
-"E-posta hedefini verebilirsiniz böylece diğer kişiler sizinle iletişim "
-"kurabilir."
+msgstr "E-posta hedefini verebilirsiniz böylece diğer kişiler sizinle iletişim kurabilir."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -559,22 +539,14 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr ""
-"Yeni bir e-posta kimliği oluşturduğunuzda, kullanılacak şifreleme türünü "
-"seçebilirsiniz. I2P-Bote tarafından sunulan tüm şifreleme algoritmaları "
-"yüksek düzeyde kişisel gizlilik sağlar. Bununla birlikte bir e-posta "
-"hedefinin uzunluğu kullanılan şifrelemeye bağlıdır. Şifreleme seçimi ayrıca "
-"kullanılacak imzalama algoritmasını da belirler."
+msgstr "Yeni bir e-posta kimliği oluşturduğunuzda, kullanılacak şifreleme türünü seçebilirsiniz. I2P-Bote tarafından sunulan tüm şifreleme algoritmaları yüksek düzeyde kişisel gizlilik sağlar. Bununla birlikte bir e-posta hedefinin uzunluğu kullanılan şifrelemeye bağlıdır. Şifreleme seçimi ayrıca kullanılacak imzalama algoritmasını da belirler."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr ""
-"En kısa e-posta hedeflerini (86 karakter) oluşturduğu ve buna rağmen yüksek "
-"düzeyde güvenli olduğu için genellikle 256 bit eliptik eğri şifrelemesinin "
-"kullanılması önerilir."
+msgstr "En kısa e-posta hedeflerini (86 karakter) oluşturduğu ve buna rağmen yüksek düzeyde güvenli olduğu için genellikle 256 bit eliptik eğri şifrelemesinin kullanılması önerilir."
 
 #: src/main/webapp/sendEmail.jsp
 msgid "New Email"
@@ -738,16 +710,13 @@ msgstr "Yeni bir parola ayarla"
 
 #: src/main/webapp/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
-msgstr ""
-"Yeni bir parola ayarlamak istemiyorsanız, eski parola alanını boş bırakın."
+msgstr "Yeni bir parola ayarlamak istemiyorsanız, eski parola alanını boş bırakın."
 
 #: src/main/webapp/setPassword.jsp
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr ""
-"Bir parola ayarlandığında, e-postaların otomatik olarak denetlenemeyeceğini "
-"unutmayın. Bunun için E-postaları Denetle düğmesine tıklanması gerekir."
+msgstr "Bir parola ayarlandığında, e-postaların otomatik olarak denetlenemeyeceğini unutmayın. Bunun için E-postaları Denetle düğmesine tıklanması gerekir."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -769,9 +738,7 @@ msgstr "Tamam"
 msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
-msgstr ""
-"E-posta bu klasörde bulunamadı. Büyük olasılıkla Gönderilmiş Ögeler "
-"klasörüne taşındı."
+msgstr "E-posta bu klasörde bulunamadı. Büyük olasılıkla Gönderilmiş Ögeler klasörüne taşındı."
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
@@ -819,7 +786,7 @@ msgstr "Lütfen bir kimlik dosyası seçerek yeniden deneyin."
 
 #: src/main/webapp/importIdentities.jsp
 msgid "The identities have been imported."
-msgstr "Kimlikler alındı."
+msgstr "Kimlikler içe aktarıldı."
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Identities file:"
@@ -835,15 +802,15 @@ msgstr "(kimlikler şifreli değilse boş bırakın)"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Overwrite all existing identities:"
-msgstr "Varolan tüm kimliklerin üzerine yazılsın:"
+msgstr "Var olan tüm kimliklerin üzerine yazılsın:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Duplicates: replace existing identity:"
-msgstr "Çift kayıtlar: Varolan kimlik değiştirilsin:"
+msgstr "Çift kayıtlar: Var olan kimlik değiştirilsin:"
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import"
-msgstr "Al"
+msgstr "İçe Aktar"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"
@@ -887,8 +854,7 @@ msgstr "Gizlilik"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Giden e-postalar için eklenecek İngilizce metni yazın ('Re:', 'wrote' gibi)."
+msgstr "Giden e-postalar için eklenecek İngilizce metni yazın ('Re:', 'wrote' gibi)."
 
 #: src/main/webapp/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -920,8 +886,7 @@ msgstr "dakika"
 
 #: src/main/webapp/settings.jsp
 msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr ""
-"I2P olmayan e-posta adreslerine gönderim yapılırken ağ geçidi kullanılsın"
+msgstr "I2P olmayan e-posta adreslerine gönderim yapılırken ağ geçidi kullanılsın"
 
 #: src/main/webapp/settings.jsp
 msgid "Email Destination of the gateway:"
@@ -958,9 +923,7 @@ msgstr "{0} için tam e-posta kimliği:"
 #: src/main/webapp/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr ""
-"İçinde kişisel anahtarlarınız bulunduğundan, yukarıdaki bilgileri hiç kimse "
-"ile paylaşmayın."
+msgstr "İçinde kişisel anahtarlarınız bulunduğundan, yukarıdaki bilgileri hiç kimse ile paylaşmayın."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -984,9 +947,7 @@ msgstr "E-posta Kimliğini Düzenle"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr ""
-"Bir e-posta kimliği diğer I2P-Bote kullanıcılarından e-posta alabilmenizi "
-"sağlar."
+msgstr "Bir e-posta kimliği diğer I2P-Bote kullanıcılarından e-posta alabilmenizi sağlar."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Public Name:"
@@ -1070,7 +1031,7 @@ msgstr "(kimliklerin şifrelenmemesi için boş bırakın)"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export"
-msgstr "Ver"
+msgstr "Dışa Aktar"
 
 #: src/main/webapp/password.jsp
 msgid "Password Required"
@@ -1130,9 +1091,7 @@ msgstr "Katkıda Bulunanlar:"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr ""
-"Teknik tasarım, çeviriler, kalite kontrol, kullanılabilirlik, teknik "
-"geribildirimler"
+msgstr "Teknik tasarım, çeviriler, kalite kontrol, kullanılabilirlik, teknik geribildirimler"
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
@@ -1272,7 +1231,7 @@ msgstr "Adres Dizini Tarama"
 
 #: src/main/webapp/importContact.jsp
 msgid "The name has been imported to the address book."
-msgstr "Ad adres defterine eklendi."
+msgstr "Ad adres defteri içine aktarıldı."
 
 #: src/main/webapp/importContact.jsp
 msgid "The name &quot;{0}&quot; was not found in the directory."
@@ -1280,17 +1239,14 @@ msgstr "Dizinde &quot;{0}&quot; adı bulunamadı."
 
 #: src/main/webapp/importContact.jsp
 msgid "Import Contact"
-msgstr "Kişi Al"
+msgstr "Kişi İçe Aktar"
 
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-"Adres dizininde eşleşen bir kayıt bulundu. Adres dizininin değişikliğe açık "
-"olduğunu unutmayın. Bu nedenle güvenmediğiniz e-posta adresleri için &quot;"
-"Al&quot; düğmesine tıklamayın."
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "Adres dizininde eşleşen bir kayıt bulundu. Adres dizininin değişikliğe açık olduğunu unutmayın. Bu nedenle güvenmediğiniz e-posta adresleri için &quot;İçe Aktar&quot; düğmesine tıklamayın."
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
@@ -1312,7 +1268,7 @@ msgstr "E-posta kimliği oluşturuluyor, biraz zaman alabilir."
 msgid ""
 "This encryption type does not support destinations that start with {0}. "
 "Valid initial characters are {1}."
-msgstr ""
+msgstr "Bu şifreleme türü {0} ile başlayan hedefleri desteklemiyor. Geçerli başlangıç karakterleri şunlardır: {1}."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."

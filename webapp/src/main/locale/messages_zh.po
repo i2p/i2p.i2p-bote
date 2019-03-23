@@ -3,20 +3,19 @@
 # K <daleks@foxmail.com>, 2017
 # walking <waling@mail.i2p>, 2013
 # walking <walking@i2pmail.org>, 2011
-# YF <yfdyh000@gmail.com>, 2015
+# YFdyh000 <yfdyh000@gmail.com>, 2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/"
-"zh_CN/)\n"
-"Language: zh_CN\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2018-10-04 00:46+0000\n"
+"Last-Translator: erinm\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
@@ -262,9 +261,7 @@ msgstr "关于"
 msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
-msgstr ""
-"为了 I2P-Bote JCE 正常运行，您必须下载 JCE 无限强度司法政策文件，并将其移动到"
-"下列文件夹："
+msgstr "为了 I2P-Bote JCE 正常运行，您必须下载 JCE 无限强度司法政策文件，并将其移动到下列文件夹："
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
@@ -511,28 +508,21 @@ msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"每个邮箱身份都与一个邮箱地址相关联。人人都可以向已知的邮箱地址发信，但只有身"
-"份密钥的持有者能够阅读这些邮件。"
+msgstr "每个邮箱身份都与一个邮箱地址相关联。人人都可以向已知的邮箱地址发信，但只有身份密钥的持有者能够阅读这些邮件。"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"某种程度上，邮箱身份等同于普通意义上的邮箱账户 - 唯一的不同是您不需要邮件服务"
-"提供商，邮件提供商可以看到您的所有邮件，而I2P-Bote将您的邮件加密存放在网络"
-"中。"
+msgstr "某种程度上，邮箱身份等同于普通意义上的邮箱账户 - 唯一的不同是您不需要邮件服务提供商，邮件提供商可以看到您的所有邮件，而I2P-Bote将您的邮件加密存放在网络中。"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Bote 使用您创建的邮箱身份自动解密发送给您的邮件。邮箱身份存放于名为 "
-"identities 的文件中，不要将此文件给任何人，否则他们将可以读取您的所有邮件。"
+msgstr "I2P-Bote 使用您创建的邮箱身份自动解密发送给您的邮件。邮箱身份存放于名为 identities 的文件中，不要将此文件给任何人，否则他们将可以读取您的所有邮件。"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
@@ -551,18 +541,14 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr ""
-"创建新邮箱身份时，您可以选择身份所使用的加密类型。I2P-Bote提供的所有加密算法"
-"都可以提供高标准的隐私保护，加密算法也决定了所使用的签名算法。"
+msgstr "创建新邮箱身份时，您可以选择身份所使用的加密类型。I2P-Bote提供的所有加密算法都可以提供高标准的隐私保护，加密算法也决定了所使用的签名算法。"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr ""
-"通常推荐选择256-bit的Elliptic Curve加密算法，因为它能在高加密强度下提供最短的"
-"邮箱目标(86字符)。"
+msgstr "通常推荐选择256-bit的Elliptic Curve加密算法，因为它能在高加密强度下提供最短的邮箱目标(86字符)。"
 
 #: src/main/webapp/sendEmail.jsp
 msgid "New Email"
@@ -732,9 +718,7 @@ msgstr "如果您以前没有设置过密码，请将旧密码留空。"
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr ""
-"请注意设置密码后，程序将无法自动查收邮件，只能点击 \"查收邮件\" 按钮手动查"
-"收。"
+msgstr "请注意设置密码后，程序将无法自动查收邮件，只能点击 \"查收邮件\" 按钮手动查收。"
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -1262,11 +1246,9 @@ msgstr "导入联系人"
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-"公共地址列表中发现匹配记录。请注意公共地址列表并不安全，可能被篡改，除非您确"
-"认这是您要找的Email地址，否则请勿点击&quot;导入&quot;。"
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "公共地址列表中发现匹配记录。请注意公共地址列表并不安全，可能被篡改，除非您确认这是您要找的Email地址，否则请勿点击&quot;导入&quot;。"
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
@@ -1288,7 +1270,7 @@ msgstr "正在生成邮箱的身份标识。这可能需要几分钟。"
 msgid ""
 "This encryption type does not support destinations that start with {0}. "
 "Valid initial characters are {1}."
-msgstr ""
+msgstr "此加密类型不支持以 {0} 开头的目标。有效的初始字符为 {1}。"
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."

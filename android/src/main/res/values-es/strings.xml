@@ -62,6 +62,7 @@
   <string name="checking_password">Comprobando la contraseña...</string>
   <string name="password_incorrect">La contraseña era incorrecta</string>
   <string name="password_file_error">No se pudo leer el fichero de verificación de la contraseña</string>
+  <string name="all_mail">Todo el correo</string>
   <string name="folder_inbox">Bandeja de entrada</string>
   <string name="folder_outbox">Bandeja de salida</string>
   <string name="folder_sent">Enviado</string>
@@ -208,6 +209,8 @@
   <string name="new_password">Nueva contraseña</string>
   <string name="confirm_new_password">Confirmar nueva contraseña</string>
   <string name="remove_password_info">Para eliminar la contraseña, deje en blanco los campos \'Nueva contraseña\'.</string>
+  <string name="old_password_incorrect">La contraseña antigua no es correcta.</string>
+  <string name="new_password_mismatch">La nueva contraseña y su confirmación no coinciden.</string>
   <string name="password_changed">Contraseña cambiada con éxito</string>
   <string name="pref_title_identities">Identidades</string>
   <string name="no_identities">No hay identidades</string>
@@ -219,6 +222,7 @@
   <string name="default_identity">Identidad por defecto</string>
   <string name="save_identity">Guardar identidad</string>
   <string name="delete_identity">¿Eliminar identidad?</string>
+  <string name="invalid_vanity_chars">Este tipo de cifrado no soporta destinos I2P que comiencen con \'%1$s\'. Los caracteres iniciales válidos son \'%2$s\'.</string>
   <string name="identity_saved">Identidad guardada</string>
   <string name="export_identities">Exportar identidades</string>
   <string name="passwords_do_not_match">Las contraseñas no coinciden</string>
@@ -231,6 +235,14 @@
   <string name="no_identities_found_maybe_encrypted">No se encontraron identidades. ¿El fichero está cifrado?</string>
   <string name="identities_imported">Identidades importadas</string>
   <string name="this_field_is_required">Este campo es obligatorio</string>
+  <string name="export_address_book">Exportar libreta de direcciones</string>
+  <string name="exporting_address_book">Exportando libreta de direcciones</string>
+  <string name="address_book_exported">La libreta de direcciones se exportó a la carpeta Descargas</string>
+  <string name="import_address_book">Importar libreta de direcciones</string>
+  <string name="importing_address_book">Importando libreta de direcciones</string>
+  <string name="no_contacts_found">No se encontraron contactos</string>
+  <string name="no_contacts_found_maybe_encrypted">No se encontraron contactos. ¿Está cifrado el fichero?</string>
+  <string name="address_book_imported">Se ha importado la libreta de direcciones</string>
   <string name="bote_dest_for">Dirección de Bote para %s</string>
   <string name="copied_to_clipboard">Copiado al portapapeles</string>
   <string name="help">Ayuda</string>
@@ -242,5 +254,11 @@
   <string name="license">Licencia: %s</string>
   <!--Software libraries-->
   <string name="libraries">Librerías</string>
+  <string name="re_encrypting_identities">Recifrando identidades...</string>
+  <string name="re_encrypting_address_book">Recifrando libreta de direcciones...</string>
   <!--Argument is a folder name-->
+  <string name="re_encrypting_folder">Recifrando carpeta %s...</string>
+  <string name="updating_password_file">Actualizando fichero de contraseña...</string>
+  <string name="generating_keys">Generando claves...</string>
+  <string name="saving_identity">Guardando identidad...</string>
 </resources>

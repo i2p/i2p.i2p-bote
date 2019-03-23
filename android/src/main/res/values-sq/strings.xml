@@ -32,10 +32,12 @@
   <string name="setup_finished_3">Ndërsa Bote është jashtë rrjetit, mund ti lexoni e-postet që tashmë janë shkarkuar. Mundeni poashtu të shkruani e-poste dhe t\'i vendosni ato në Outbox; ato do të dërgohen në qastin kur Bote lidhet në rrjet. </string>
   <string name="go_to_inbox">Shko në Inbox</string>
   <string name="action_new_email">E-post i ri</string>
+  <string name="action_attach_file">Bashkëngjitni kartelë</string>
   <string name="action_send_email">Dërgo e-postin</string>
   <string name="action_start_bote">Lidhu në rrjet</string>
   <string name="action_stop_bote">Ndalo lidhjen nga rrjeti</string>
   <string name="action_settings">Cilësimet</string>
+  <string name="checking_email">Duke shqyrtuar e-postet...</string>
   <!--Argument is a number-->
   <!--Argument is a number-->
   <string name="items_selected">%s selektuar</string>
@@ -87,12 +89,14 @@
   <string name="email_not_found">E-posti nuk gjindet</string>
   <string name="email_from">Nga:</string>
   <string name="email_to">Te:</string>
+  <string name="email_bcc">Bcc:</string>
   <string name="label_sent">Dërguar:</string>
   <string name="email_received">Marrur:</string>
   <string name="email_status">Statusi:</string>
   <string name="reply">Pergjegjje</string>
   <string name="reply_all">Përgjigju të gjithëve</string>
   <string name="forward">Përcjelle</string>
+  <string name="save">Ruaje</string>
   <string name="compose">Krijo</string>
   <string name="subject">Tema</string>
   <string name="compose_email">Krijo e-postin</string>
@@ -105,6 +109,8 @@
   <string name="response_quote_wrote">%s shkroi:</string>
   <string name="address_book_empty">Libri i adresave është i thatë</string>
   <string name="share">Shpërndaj</string>
+  <string name="copy">Kopjojeni</string>
+  <string name="fingerprint">Gjurma</string>
   <string name="action_new_contact">Kontakt i ri</string>
   <string name="edit_contact">Ndrysho kontaktin</string>
   <string name="select_a_picture">Zgjedhe një foto</string>
@@ -123,8 +129,12 @@
   <string name="network_info_unavailable_delay">Bote është duke pritur router\'in e I2P\'së të startojë dhe të jetë gati. </string>
   <string name="local_destination">Destinacioni Lokal:</string>
   <string name="not_set">E pakryer. </string>
+  <string name="unreachable">I pakapshëm</string>
   <string name="relay_peers">Peersët ritransmetues:</string>
+  <string name="good">I mirë</string>
+  <string name="untested">E paprovuar</string>
   <string name="banned_peers">Peers\'ët e dëbuar:</string>
+  <string name="settings_label_network">Rrjet</string>
   <string name="pref_title_autoMail">Auto-shiko postën</string>
   <string name="pref_title_checkInterval">Vëzhgoj intervalet</string>
   <string name="pref_summ_checkInterval">%s minuta</string>
@@ -140,6 +150,10 @@
   <string name="pref_summ_minDelay">%s minuta</string>
   <string name="pref_title_maxDelay">Vonesë maksimale për hop</string>
   <string name="pref_summ_maxDelay">%s minuta</string>
+  <string name="settings_label_appearance">Paraqitja</string>
+  <string name="settings_label_language">Gjuhë</string>
+  <string name="settings_default">Parazgjedhje</string>
+  <string name="settings_label_advanced">Të thelluara</string>
   <string name="router_settings">Cilësimet e Router\'it </string>
   <string name="auto">Auto</string>
   <string name="manual">Udhëzues</string>
@@ -153,6 +167,8 @@
   <string name="old_password">Fjalëkalim i vjetër</string>
   <string name="new_password">Fjalëkalim i ri</string>
   <string name="confirm_new_password">Konfirmo fjalëkalimin e ri</string>
+  <string name="old_password_incorrect">Fjalëkalimi i vjetër nuk është i saktë.</string>
+  <string name="new_password_mismatch">Fjalëkalimi i ri dhe konfirmimi i fjalëkalimit nuk përputhen. </string>
   <string name="password_changed">Fjalëkalimi u ndryshua suksesshëm</string>
   <string name="pref_title_identities">Identitetet</string>
   <string name="new_identity">Identitet i ri...</string>
@@ -173,6 +189,11 @@
   <string name="no_identities_found">Asnjë identitet nuk u gjet.</string>
   <string name="no_identities_found_maybe_encrypted">Asnjë identitet nuk u gjet. A është fili i inkriptuar?</string>
   <string name="identities_imported">Identitete u importuan</string>
+  <string name="help">Ndihmë</string>
+  <string name="start">Nisje</string>
+  <string name="changelog">Regjistri i ndryshimeve</string>
+  <string name="about">Rreth</string>
+  <string name="version">Version</string>
   <!--As in software license, e.g. Apache License v2-->
   <!--Software libraries-->
   <!--Argument is a folder name-->

@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="intro_private">Privata.</string>
+  <string name="intro_distributed">Distribuita.</string>
+  <string name="intro_secure">Sicura.</string>
+  <string name="swipe_to_start">Fai click per iniziare</string>
+  <string name="i_know_what_to_do">So cosa sto facendo</string>
+  <string name="intro_1_1">L\'email classica non è sicura. Non è stata progettata per realizzare comunicazioni non facilmente intercettabili.</string>
+  <string name="intro_1_2">Anche se crittografi il testo delle e-mail, i metadati possono essere monitorati per rivelare una grande quantità di informazioni su di te e sulle persone con cui comunichi.</string>
+  <string name="intro_2_1">Bote è un nuovo tipo di e-mail che permette un\'elevata privacy end-to-end e sicurezza nelle comunicazioni elettroniche. Utilizza per le trasmissioni la rete I2P, che è progettata per le comunicazioni riservate.</string>
+  <string name="intro_2_2">Quando un\'email viene inviata utlizzando Bote, tutto il suo contenuto è crittograto - compresi i metadati. Solo il destinatario può leggerne il contenuto in chiaro.</string>
+  <string name="lets_get_started">Iniziamo</string>
+  <string name="title_activity_setup">Impostazioni</string>
+  <string name="please_finish_setup">È necessario finire di impostare Bote.</string>
+  <string name="skip">Salta</string>
+  <string name="set_password">Imposta password</string>
+  <string name="create_identity">Crea identità</string>
+  <string name="setup_finished">Impostazione completata</string>
+  <string name="setup_finished_1">Bote è configurato e pronto all\'uso</string>
+  <string name="go_to_inbox">Accedi alla casella di posta</string>
+  <string name="log_in">Log in</string>
+  <string name="log_out">Log out</string>
+  <string name="action_new_email">Nuova email</string>
+  <string name="action_attach_file">Allega file</string>
+  <string name="select_attachment">Seleziona un file da allegare</string>
+  <string name="action_send_email">Invia email</string>
+  <string name="action_start_bote">Connetti alla rete</string>
+  <string name="action_stop_bote">Disconnetti dalla rete</string>
+  <string name="action_settings">Impostazioni</string>
+  <string name="check_email">Controlla nuove email</string>
+  <string name="checking_email">Ricerca nuove email in corso...</string>
+  <string name="bote_needs_to_be_connected">Bote richiede di essere online su I2P</string>
+  <!--Argument is a number-->
+  <plurals name="incomplete_emails">
+    <item quantity="one">Un\'email incompleta</item>
+    <item quantity="other">%d email incomplete</item>
+  </plurals>
+  <!--Argument is a number-->
+  <string name="items_selected">%s selezionato</string>
+  <string name="action_delete">Cancella</string>
+  <string name="action_mark_read">Segna come letta</string>
+  <string name="action_mark_unread">Segna come da leggere</string>
+  <string name="action_move_to">Sposta in</string>
+  <string name="drawer_open">Apri navigazione</string>
+  <string name="drawer_close">Chiudi navigazione</string>
+  <string name="enter_password">Inserisci password:</string>
+  <string name="checking_password">Controllo password in corso...</string>
+  <string name="password_incorrect">Password errata</string>
+  <string name="folder_inbox">Posta in arrivo</string>
+  <string name="folder_outbox">Posta in uscita</string>
+  <string name="folder_sent">Posta inviata</string>
+  <string name="folder_trash">Cestino</string>
+  <string name="address_book">Rubrica</string>
+  <string name="network_status">Stato della rete</string>
+  <string name="not_started">Non avviata</string>
+  <string name="connecting">Connessione in corso...</string>
+  <string name="connected">Connesso</string>
+  <string name="error">Errore</string>
+  <string name="folder_empty">La cartella è vuota</string>
+  <string name="folder_does_not_exist">La cartella non esiste</string>
+  <plurals name="n_new_emails">
+    <item quantity="one">Una nuova mail</item>
+    <item quantity="other">%d nuove mail</item>
+  </plurals>
+  <string name="queued">In coda</string>
+  <string name="sending">Invio in corso</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
+  <string name="sent_to_short">Inviate %1$d di %2$d</string>
+  <!--Argument 1: how many recipients the email has been sent to so far.
+     Argument 2: the total number of recipients the email will be sent to.-->
+  <string name="email_sent">Email inviata</string>
+  <string name="gateway_disabled">Gateway disabilitato</string>
+  <string name="invalid_recipient">Indirizzo destinatario non valido: %s</string>
+  <string name="error_sending">Errore durante l\'invio dell\'email: %s</string>
+  <string name="email_not_found">Email non trovata</string>
+  <string name="email_from">From:</string>
+  <string name="email_to">To:</string>
+  <string name="email_cc">Cc:</string>
+  <string name="email_bcc">Bcc:</string>
+  <string name="label_sent">Mandata:</string>
+  <string name="email_received">Ricevuta:</string>
+  <string name="email_status">Stato:</string>
+  <string name="reply">Rispondi</string>
+  <string name="reply_all">Rispondi a tutti</string>
+  <string name="forward">Inoltra</string>
+  <string name="save">Salva</string>
+  <string name="compose">Componi</string>
+  <string name="subject">Oggetto</string>
+  <string name="compose_email">Componi email</string>
+  <!--Argument is a file size, e.g. "500 KB"-->
+  <string name="subject_prefix_fwd">Inoltra:</string>
+  <string name="response_prefix_re">Re:</string>
+  <!--Used in email replies above quoted text, like "Bob wrote:"-->
+  <string name="response_quote_wrote">%s ha scritto:</string>
+  <string name="address_book_empty">La rubrica è vuota</string>
+  <string name="share">Condividi</string>
+  <string name="copy">Copia</string>
+  <string name="fingerprint">Fingerprint</string>
+  <string name="action_new_contact">Nuovo contatto</string>
+  <string name="edit_contact">Modifica contatto</string>
+  <string name="contact_name">Nome contatto</string>
+  <string name="label_browse">Sfoglia</string>
+  <string name="save_contact">Salva contatto</string>
+  <string name="delete_contact">Concellare contatto?</string>
+  <string name="not_set">Non impostato</string>
+  <string name="kademlia_peers">Nodi della rete:</string>
+  <string name="reachable">Raggiungibile</string>
+  <string name="unreachable">Non raggiungibile</string>
+  <string name="relay_peers">Peers ripetitori:</string>
+  <string name="good">Buono</string>
+  <string name="unreliable">Inaffidabile</string>
+  <string name="untested">Non verificato</string>
+  <string name="banned_peers">Nodi interdetti:</string>
+  <string name="settings_label_network">Rete</string>
+  <string name="pref_summ_checkInterval">%s minuti</string>
+  <string name="pref_title_delivery">Stato della consegna</string>
+  <string name="pref_summ_delivery">Controlla lo stato di spedizione delle e-mail inviate</string>
+  <string name="pref_title_privacy">Privacy</string>
+  <string name="pref_summ_hideLocale">Usa l\'Inglese per il testo aggiunto a email in uscita (\'Re:\', \'wrote:\', ecc.)</string>
+  <string name="pref_title_routing">Routing</string>
+  <string name="pref_summ_minDelay">%s minuti</string>
+  <string name="pref_summ_maxDelay">%s minuti</string>
+  <string name="settings_label_appearance">Aspetto</string>
+  <string name="settings_label_language">Lingua</string>
+  <string name="settings_default">Default</string>
+  <string name="settings_label_advanced">Avanzate</string>
+  <string name="router_settings">Impostazioni router</string>
+  <string name="auto">Auto</string>
+  <string name="manual">Manuale</string>
+  <string name="pref_title_router">Router</string>
+  <string name="pref_dialog_title_router">Router da utilizzare</string>
+  <string name="pref_title_i2cp_host">Host I2CP</string>
+  <string name="pref_title_i2cp_port">Porta I2CP</string>
+  <string name="pref_title_change_password">Cambia password</string>
+  <string name="old_password">Vecchia password</string>
+  <string name="new_password">Nuova password</string>
+  <string name="confirm_new_password">Confermare nuova password</string>
+  <string name="old_password_incorrect">La vecchia password non è corretta.</string>
+  <string name="new_password_mismatch">La nuova password e quella di conferma non sono uguali.</string>
+  <string name="pref_title_identities">Identità</string>
+  <string name="no_identities">Nessuna identità</string>
+  <string name="new_identity">Nuova identità...</string>
+  <string name="edit_identity">Modifica Identità</string>
+  <string name="title_new_identity">Nuova Identità</string>
+  <string name="description">Descrizione</string>
+  <string name="default_identity">Identità predefinita</string>
+  <string name="save_identity">Salva identità</string>
+  <string name="identity_saved">Identità salvata</string>
+  <string name="help">Aiuto</string>
+  <string name="start">Avvia</string>
+  <string name="changelog">Changelog</string>
+  <string name="about">Informazioni</string>
+  <string name="version">Versione</string>
+  <!--As in software license, e.g. Apache License v2-->
+  <string name="license">Licenza: %s</string>
+  <!--Software libraries-->
+  <!--Argument is a folder name-->
+</resources>
