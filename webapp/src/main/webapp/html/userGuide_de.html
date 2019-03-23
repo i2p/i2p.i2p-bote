@@ -252,21 +252,17 @@ implementiert]</p></li>
 <p>I2P-Bote bietet die Möglichkeit, unterschiedliche E-Mail Identitäten zu benutzen. Angenommen, einer Ihrer Kontakte lernt etwas über Ihre Identität, weil Sie vergessen haben, identifizierende Informationen in einem geheimen Dokument, das Sie an ihn gesendet haben, zu löschen. Wenn nun dieser E-Mail Empfänger mit anderen zusammenarbeitete, mit denen Sie in Kontakt stehen, könnte er denen die wahre Identität bezüglich der I2P-Bote Adresse nennen, die er kennt. Daher werden andere wissen, wer Sie sind, wenn Sie die gleiche Bote Adresse mit anderen benutzen. Nicht aber, wenn Sie eine andere Adresse benutzen, um ihnen Mails zu schicken.</p>
 
 <h2 id="Troubleshooting">4. Problemlösung</h2>
-<h3 id="Unlimited-Strength-Crypto">4.1. Notification about JCE Unlimited Strength Jurisdiction Policy files</h3>
-<p>If you have a notification at the bottom of your screen about JCE Unlimited
-Strength Jurisdiction Policy files, it means that your Java installation is
-restricted from using the strong cryptography that I2P-Bote requires.</p>
+<h3 id="Unlimited-Strength-Crypto">4.1 Mitteilung über die JCE Unlimited Strength Jurisdiction Policy Dateien</h3>
+<p>Wenn Sie im unteren Bereich des Bildschirms eine Mitteilung über die JCE Unlimited Strength Jurisdiction Policy Dateien haben, bedeutet das, dass Ihre Java Installation eingeschränkt die starke Verschlüsselung benutzt, die I2P-Bote erfordert.</p>
 
-<p>You can enable the strong cryptography by following the steps below:</p>
+<p>Sie können die starke Verschlüsselung einschalten, indem Sie diesen Schritten unten folgen:</p>
 <ol>
-<li><p>Download the JCE Unlimited Strength Jurisdiction Policy files from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Oracle's website</a>. You may need to use your regular browser.</p></li>
+<li><p>Laden Sie die JCE Unlimited Strength Jurisdiction Policy Daeien von <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">Oracle's Webseite</a> herunter. Sie benötigen möglicherweise dazu Ihren normalen Browser.</p></li>
 <li><p>Packen Sie die heruntergeladene ZIP-Datei aus.</p></li>
-<li><p>Move the files <code>local_policy.jar</code> and <code>US_export_policy.jar</code> into the folder shown in the notification on your screen. Overwrite any existing files with the same names.</p></li>
+<li><p>Verschieben Sie die Dateien <code>local_policy.jar</code> und <code>US_export_policy.jar</code> in den Ordner, der in der Mitteilung auf dem Bildschirm angezeigt wird. Überschreiben Sie alle vorhandenen Dateien mit dem selben Namen.</p></li>
 <li><p>I2P neu starten.</p></li>
 </ol>
-<p>Some countries have restrictions on the allowed strengths of cryptographic
-software. If you are unsure about the restrictions in your country, consult
-with a lawyer.</p>
+<p>Einige Länder haben Einschränkungen bei der erlaubten Stärke der Verschlüsselung-Software. Wenn Sie sich unsicher über die Einschränkungen in Ihrem Land sind, nehmen Sie Rücksprache mit einem Rechtsanwalt.</p>
 
 <h2 id="Technical-Concept">5. Technisches Konzept</h2>
 <p>I2P-Bote is an end-to-end encrypted, network-internal, fully decentralized
@@ -301,27 +297,28 @@ relay/storage nodes. Everybody acts as a potential relay and storage node. The
 maximum amount of disk space used for relayed/stored email packets can be
 configured by the user.</p>
 
-<p>Before an email is sent to a relay, it is broken up into packets and
-encrypted with the recipient's public key. These packets are stored redundantly
-in a distributed hash table (DHT).</p>
+<p>Bevor eine E-Mail zu einem Relais geschickt wird, wird sie in Pakete
+unterteilt und mit dem öffentlichen Schlüssel des Empfängers verschlüsselt.
+Diese Pakete werden in einer verteilten Hashtabelle (DHT) redundant
+gespeichert.</p>
 
-<p>They are kept for at least 100 days, during which the recipient can download
-them.</p>
+<p>Die Pakete werden für mindestens 100 Tage gehalten, während der sie der
+Empfänger herunterladen kann.</p>
 
-<p>Relay packets also expire after 100 days or more.</p>
+<p>Auch Relais-Pakete verfallen ab 100 Tagen.</p>
 
-<p>If a node runs out of email storage space, and there are no old packets that
-can be deleted, the node refuses storage requests.</p>
+<p>Wenn einem Knoten der Speicherplatz für E-Mails ausgegangen ist, und es
+keine alten Pakete gibt, die er gelöschen kann, verweigert er Speicheranfragen.</p>
 
 <p>Furthermore, I2P-Bote sanitizes the mail headers and does not allow any
 unneeded information to be transmitted, thus allowing the use of e-mail clients
 without prior checks of what this client sends in the mail headers.</p>
 
-<p>All the encryption, path choosing and profiling is done locally so that
-there is no trusted party involved.</p>
+<p>Die komplette Verschlüsselung, Pfadwahl und das Profiling wird lokal ausgeführt, sodass
+dabei keine vertrauenswürdige Partei beteiligt ist.</p>
 
-<p>Not even for bootstrapping I2P-Bote depends on a central node, as it uses
-Seedless.</p>
+<p>Nicht einmal für das Bootstrapping benötigt I2P-Bote einen zentralen Knoten, da es
+Seedless benutzt.</p>
 
 <p>Using I2P-Bote appropriately, that means keeping in mind the considerations
 given above and showing some common sense, nobody will be able to find out who
@@ -330,7 +327,7 @@ connection sniffed, the observer will not be able to find out what you send or
 receive or to whom you are sending to or receiving from or where your contacts
 are located.</p>
 
-<p>Let's go a bit more into detail:</p>
+<p>Detailliertere Erläuterung:</p>
 
 <h3>Was I2P-Bote <em>versteckt</em>:</h3>
 
@@ -341,15 +338,15 @@ your mails, their size, the number of mails you send.</p>
 <p>Only the recipient can know the sender's bote mail destination, and if he
 choses not to send his destination, not even the recipient will know it.</p>
 
-<p>Even if you send time stamps, your time zone will not be disclosed.</p>
+<p>Selbst wenn man Zeitstempel schickt, wird die eigene Zeitzone nicht offengelegt.</p>
 
 <p>Darüberhinaus verbirgt I2P-Bote:</p>
 <ul>
-<li><p>the fact that you run I2P-Bote</p></li>
-<li><p>the fact that you send a mail</p></li>
-<li><p>the fact that you receive a mail</p></li>
-<li><p>the time you send a mail</p></li>
-<li><p>the time you receive a mail</p></li>
+<li><p>die Tatsache, dass man I2P-Bote nutzt</p></li>
+<li><p>die Tatsache, dass man eine Mail schickt</p></li>
+<li><p>die Tatsache, dass man eine Mail empfängt</p></li>
+<li><p>den Zeitpunkt zu dem man eine Mail schickt</p></li>
+<li><p>den Zeitpunkt zu dem man eine Mail empfängt</p></li>
 <li>
 <p>the upper limit of number of mails an unknown user receives</p>
 <ul>
@@ -360,7 +357,7 @@ identity</p></li>
 </li>
 <li><p>the lower limit, as an identity also sends out test and dummy messages</p></li>
 </ul>
-<h3>What I2P-Bote <em>hides partially</em>:</h3>
+<h3>Was I2P-Bote <em>teilweise verbirgt</em>:</h3>
 
 <p>The I2P-Bote address of the recipient will only be known to sender and
 recipient(s).</p>
@@ -374,7 +371,7 @@ this very recipient.</p>
 <p>The sent time will, if at all, only be visible to sender and
 recipient.</p>
 
-<h3>What I2P-Bote <em>can hide optionally</em>:</h3>
+<h3>Was I2P-Bote <em>optional verbergen kann</em>:</h3>
 <ul>
 <li><p>If mail routes are used, the time a bote mail is sent</p></li>
 <li><p>If mail routes are used, the time a bote mail is fetched. [not yet
