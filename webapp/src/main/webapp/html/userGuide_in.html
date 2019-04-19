@@ -1,0 +1,317 @@
+<div>
+<h1>Panduan Pengguna</h1>
+
+<nav><p><a href="#Introduction%20">1. 1.  Pendahuluan</a></p>
+<p><a href="#How-To%20">2.  Cara menggunakan I2P-Bote</a></p>
+<p><a href="#Starting%20">2.1.  Memulai I2P-Bote</a></p>
+<p><a href="#Creating-Identities%20">2.2.  Membuat identitas</a></p>
+<p><a href="#Sending-Receiving%20">2.3.  Mengirim dan menerima E-mail</a></p>
+<p><a href="#Address-Book%20">2.4.  Buku Alamat Lokal</a></p>
+<p><a href="#Settings%20">2.5.  Pengaturan (dan artinya pengaturan)</a></p>
+<p><a href="#Gateway%20">2.6.  E-mail ke dan dari Internet</a></p>
+<p><a href="#Considerations%20">3.  Pertimbangan tentang anonimitas</a></p>
+<p><a href="#Troubleshooting%20">4.  Troubleshooting </a></p>
+<p><a href="#Technical-Concept%20">5.  Konsep teknis</a></p>
+<p><a href="#Technical-Details%20">6.  Rincian teknis</a></p>
+<p><a href="#Terminology%20">7.  Terminologi/Daftar istilah</a></p>
+<p><a href="#Credits%20">8.  Credits </a></p>
+</nav><h2 id="Introduction">1. 1.  Pendahuluan</h2>
+
+<p>I2p-Bote adalah sebuah aplikasi e-mail aman, mudah digunakan, dan sangat anonim untuk I2P. Ini adalah sebuah sistem serverless, sepenuhnya terdesentralisasi yang menetapkan/membuat jaringan peer-to-peer yang dibangun di atas latency rendah canggih yang menganonimkan jaringan I2P; menambahkan pilihan transport latensi tinggi seperti mixminion, dan dengan demikian menghindari kelemahan dari jaringan latency rendah.</p>
+
+<p>Oleh karena itu, I2P-Bote memanfaatkan penuh penggunaan anonimitas yang disediakan oleh I2P, ditambah menghasilkan anonimitas sendiri dengan menambahkan lapisan anonim lain (lapisan jaringan).</p>
+
+<p>Konsep anonimitas berlapis ini yang membuat I2P-Bote begitu fleksibel: anda bisa mengkonfigurasinya untuk menjadi sangat anonim dan lambat, atau kurang anonim tetapi lebih cepat/lebih efisien. Dalam situasi apapun, I2P-Bote selalu menyediakan anonimitas sangat baik untuk pengirim dan penerima, serta enkripsi end-to-end. Kecuali jika anda mengirim atau menerima e-mail dari internet biasa, semua email - body, lampiran dan header kecuali alamat penerima (subjek, tanggal, waktu, alamat pengirim,...) secara otomatis dan transparan dienkripsi end-to-end. Alamat penerima hanya terlihat untuk node terakhir rute email yang menyimpan paket-paket ke jaringan kad, dan masing-masing node menyimpan, tapi mereka tidak bisa membaca konten mail atau siapa yang mengirimkannya atau yang akan mengambilnya.</p>
+
+<p>I2p-Bote menawarkan pilihan untuk membuat komunikasi anda lebih anonim, dengan memungkinkan rute mail latency tinggu - namun mengorbankan kinerja. Pengguna yang ingin e-mail anonim tiba secepat mungkin, sebaiknya menonaktifkan route mail dan menggunakan pengiriman 'direct' melalui I2P. Dijamin anda tidak akan pernah menjadi kurang anonim daripada anonimitas yang disediakan oleh koneksi I2P standar.</p>
+
+<p>Untuk mencapai kegunaan tinggi, kita telah memungkinkan untuk digunakan dengan mail klien standar seperti Thunderbird, Evolution, atau Kmail, tanpa harus khawatir tentang informasi tambahan yang dikirimkan aplikasi ini di header mereka. Selain itu ada sebuah antarmuka web yang memungkinkan anda mengirim dan membaca e-mail atau mengelola pengaturan dan identitas.</p>
+
+<h2 id="How-To">2.  Cara menggunakan I2P-Bote</h2>
+
+<h3 id="Starting">2.1.  Memulai I2P-Bote</h3>
+<p>Setelah memulai I2P-Bote (secara default sudah diatur untuk memulai secara otomatis ketika I2P router dimulai) dibutuhkan sedikitnya lebih dari tiga menit untuk segalanya untuk berjalan.</p>
+
+<p>Jadi lihat 'Network Status' di sebelah kiri. Itu harus menyatakan 'Terhubung'.</p>
+
+<p>Jika anda ingin menggunakan I2P-Bote untuk diri sendiri, pertama anda harus membuat identitas.</p>
+
+<h3 id="Creating-Identities">2.2.  Membuat identitas</h3>
+<p>Klik pada 'Identitas' di sebelah kiri, kemudian tekan tombol 'Identitas baru'.</p>
+
+<p>Masukkan setidaknya 'nama publik' dan tekan 'Buat'. Itu adalah semua yang diperlukan untuk menciptakan identitas.</p>
+
+<p>Nama publik adalah nama yang anda lihat untuk identitas ini (berguna jika anda memiliki identitas yang berbeda untuk set pengguna yang berbeda yang berkomunikasi dengan anda atau tujuan yang berbeda) dan itu akan dikirim sebagai 'nama pengirim' ke penerima pesan. Nama publik tidak perlu unik.</p>
+
+<p>(Anda dapat memilih nama apapun di sini - siapapun bisa menyebut dirinya HungryHobo di sana - hal ini tidak cocok untuk digunakan oleh penerima untuk menentukan jika dua mail berasal dari pengirim yang sama. Inilah sebabnya nama disimpan dalam addressbook lokal (ada hanya dapat satu nama per destination key) ditampilkan, jika ada, dan anda akan melihat tanda hijau di kolom "Know", yang menyatakan itu adalah nama yang dikenal. Jika tidak ada entri untuk tujuan di addressbook lokal, nama yang ditentukan oleh pengirim akan ditampilkan dengan kata {UNK} dalam mail client).</p>
+
+<p>Anda dapat juga mengisi bidang lain, jika anda mau:</p>
+
+<p>Deskripsi - bidang ini akan disimpan secara lokal. Ini adalah hanya untuk kenyamanan anda: jika anda ingin menambahkan beberapa informasi tambahan untuk diri sendiri tentang identitas itu, anda dapat memasukkannya di sini.</p>
+
+<p>Alamat email - bidang ini tidak digunakan.</p>
+
+<p>Pilih salah satu algoritma enkripsi yang ditentukan. Jika ragu, pilih default.</p>
+
+<p>Anda dapat klik pada nama salah satu dokumen identitas anda dan salin long key yang ditampilkan di bawah 'Email tujuan'. Ini adalah alamat e-mail I2P-Bote anda. Jika Anda ingin orang untuk dapat mengirimkan email dengan bote kepada anda, dia perlu diberi tahu long key ini.</p>
+
+<p>Sekarang anda dapat mengirim dan menerima mail I2P-Bote.</p>
+
+<p>Tapi Anda juga harus melihat pengaturan I2P-Bote anda dan melihat apakah itu sesuai dengan kebutuhan anda.</p>
+
+<p>(Anda dapat juga membuat berbagai identitas dan menetapkan pengaturan yang berbeda untuk masing-masing identitas.)</p>
+
+<h3 id="Sending-Receiving">2.3.  Mengirim dan menerima E-mail</h3>
+<p>Anda perlu memiliki I2P-Bote e-mail destination key dari pengguna yang Anda ingin kirimkan email.</p>
+
+<p>Untuk mengirim pesan, klik pada 'New', pilih pengirim identitas anda sendiri atau 'Anonim' di bawah 'From' dan masukkan  destination key dari penerima e-mail atau alternatif alamat di baris 'to:' .</p>
+
+<p>(Atau, Anda dapat menekan tombol ' Addr. Book ' tepat di bawah baris ini, untuk memilih dari e-mail tujuan yang disimpan secara lokal di buku alamat anda: Tandai pengguna yang anda ingin pesan akan dikirim dan tekan tombol 'Add Recipient'.)</p>
+
+<p>Anda dapat menambahkan beberapa penerima dan mengubah 'To:' menjadi ' CC:' atau ' BCC:'.</p>
+
+<p>Tombol '+' menambahkan baris penerima.</p>
+
+<p>Sekarang tulis pesan bote dan tekan 'Send' untuk mengirimnya, atau 'Save' untuk menyimpannya sebagai draft di folder 'draft' atau folder yang ditetapkan oleh pengguna. [belum diterapkan]</p>
+
+<p>Menekan 'Send' akan menempatkan e-mail Anda ke dalam folder Outbox dan anda dapat terus menggunakan I2P-Bote, misalnya menulis e-mail yang lain, atau hanya melakukan hal-hal lain. I2p-Bote sekarang sedang mengirim e-mail anda. Setelah dikirim, email secara otomatis dihapus dari Outbox dan disimpan ke folder Sent. Ini berarti email anda sepenuhnya dalam perjalanan ke tujuan (kecuali jika anda telah mengatur waktu tunda yang dinonaktifkan secara default).</p>
+
+<p>Di I2P-Bote, e-mail secara otomatis ditandatangani(kecuali mengirim tanpa identitas pengirim apapun).</p>
+
+<p>Anda dapat juga mengirim e-mail tanpa menentukan <em>pengirim identitas/tujuan/alamat</em> , cukup pilih 'Anonim' dalam menu scroll-down di 'From:'.</p>
+
+<p>Dalam pengaturan default, I2P-Bote akan secara otomatis memeriksa mail baru, dan semua yang perlu anda lakukan untuk melihat apakah anda mendapat e-mail adalah melihat ke kotak masuk Anda (link 'Inbox' di sebelah kiri).</p>
+
+<p>Anda dapat memaksa cek manual dengan mengklik tombol 'Check Mail'. Ini adalah pemeriksaan global, yang mencoba untuk mengambil mail baru untuk semua identitas anda, kecuali jika anda telah mengecualikan dari pemeriksaan global. [belum diterapkan]</p>
+
+<p>Jumlah e-mail yang belum dibaca akan ditampilkan dalam tanda kurung di sebelah nama folder di sidebar.</p>
+
+<p>Klik pada 'Inbox' untuk melihat daftar e-mail yang diterima. Anda akan melihat dua kolom dengan x atau tanda centang hijau. Ini menunjukkan jika pesan berisi tanda tangan yang valid dan dengan demikian otentik (Sig) dan jika pengirim e-mail destination key dikenal secara lokal, yaitu di addressbook anda (Know). Oleh karena itu, dua centang hijau di samping entri e-mail berarti anda sudah tahu bahwa identitas e-mail dan bahwa surat ditandatangani oleh identitas itu.</p>
+
+<p>Jika anda memiliki nama tertentu di buku alamat anda dan anda mendapatkan mail dari identitas dengan nama itu, namun Know <em>tidak</em> menampilkan cek hijau, maka itu adalah tujuan yang <em>berbeda</em> yang mengirim dan menandatangani surat ini; Dia hanya memilih nama yang sama yang telah dipilih untuk salah satu kontak anda.</p>
+
+<p>Jika ada tanda centang hijau untuk 'Sig', berarti mail benar ditandatangani oleh pengirim dan anda dapat menambahkannya ke addressbook di bawah nama yang berbeda, yang sekarang akan ditampilkan sebagai pengirim.</p>
+
+<p>Tentu saja, mail tanpa tujuan pengirim ('Anonim' ditampilkan sebagai pengirim) akan memiliki dua x</p>
+
+<p>Mengklik salah satu e-mail yang ditampilkan dalam kotak masuk akan membuka surat.</p>
+
+<p>Hal ini juga berlaku untuk semua folder lainnya.</p>
+
+<p>(Karena sifat I2P-Bote yang terdistribusi, mengirim serta memeriksa dan mengambil e-mail membutuhkan waktu beberapa menit. Dengan mail rute diaktifkan, waktunya akan bertambah lama. Tetapi anda perlu menjaga browser terbuka, hanya meninggalkan I2P-Bote sebagai proses latar belakang - ini juga manfaat anonimitas Anda.)</p>
+
+<h3 id="Address-Book">2.4.  Buku Alamat Lokal</h3>
+<p>Jika anda memiliki kunci e-mail I2P-Bote dari seseorang yang anda ingin menulis lebih sering, sebaiknya menyimpan kunci yang secara lokal ke buku alamat anda (link di sebelah kiri), Tentukan nama anda sendiri memilih untuk kontak ini dan paste mail tujuannya di baris yang sesuai, kemudian simpan.</p>
+
+<p>Anda biasanya harus menyimpan tujuan ke buku alamat, sehingga waktu berikutnya anda mendapatkan pesan dari pengirim yang sama akan ditampilkan dari sama, secara lokal dikenal pengirim ('Loc' dicentang) dan e-mail yang dikirim oleh seseorang yang hanya menggunakan nama pengguna yang sama akan ditandai sebagai tidak dikenal secara lokal (x di web-UI kolom 'Know' atau {UNK} sebelum alamat pengirim di IMAP), sehingga anda tahu bahwa ini baru/berbeda.</p>
+
+<h3 id="Settings">2.5.  Pengaturan (dan artinya pengaturan)</h3>
+<p>Di bawah pengaturan anda dapat memilih antarmuka I2P-Bote <em>bahasa</em> (saat ini bahasa Inggris atau Jerman) dan memutuskan apakah dengan bahasa non-Inggris yang mengatur segala sesuatu yang akan secara otomatis ditambahkan ke e-mail, ketika menjawab akan tetap bahasa Inggris, sehingga penerima tidak tahu I2P-Bote diatur untuk bahasa yang berbeda. Jika tidak, penerima bisa menebak tentang kebangsaan anda, yang akan menurunkan anonimitas anda.</p>
+
+<p>Di sini anda juga dapat menyesuaikan interval <em>automatic checking</em> e-mail dan memutuskan apakah atau tidak untuk mengirim setiap <em>time stamp</em> dengan mail anda, menunjukkan tanggal dan waktu ketika pesan dikirim. Time stamp selalu dalam UTC.</p>
+
+<p>(Bila menggunakan mail route, time stamp secara otomatis dinonaktifkan.) [belum diterapkan]</p>
+
+<p>otomatis memeriksa e-mail:</p>
+
+<p>Untuk lebih nyaman, ada opsi 'Periksa e-mail setiap menit XX'.</p>
+
+<p>Di sini anda dapat menentukan seberapa sering app I2P-Bote anda harus mencoba untuk mengambil mail identitas anda yang belum dibaca . Ini dapat diatur pada per-identitas [belum terapkan]</p>
+
+<p>Jika anda menentukan offset acak, maka itu tidak akan memeriksa _exactly_ XX setiap menit, tapi agak setiap (XX +-offset * XX) menit, yaitu setelah waktu yang dipilih secara acak antara (1 + offset) dan menit (1-offset) XX XX menit. [belum diterapkan]</p>
+
+<p>Anda juga benar-benar dapat menonaktifkan pemeriksaan otomatis identitas yang diberikan.</p>
+
+<p>(Jika Anda tidak yakin tentang pengaturan ini, default sudah cukup untuk anda.)</p>
+
+<p><em>Mail route</em> adalah rantai node I2P-Bote yang bertindak sebagai relay router untuk peer lain dan menuruti penundaan per-hop, sehingga memberikan transportasi latency tinggi untuk peningkatan anonimitas.</p>
+
+<p>Anda dapat menentukan jumlah node (di sini disebut hop) yang harus dirantai untuk membentuk mail route. Kemudian masing-masing paket e-mail yang dikirim oleh identitas yang memiliki jalur pesan diaktifkan akan pergi melalui rute mail sebanyak n hop sebelum disimpan. Anda dapat menetapkan penundaan untuk masing-masing hop secara individual, karena hop tidak harus tahu lamanya paket akan menunggu di hop berikutnya, sehingga membuat waktu menjadi tak terduga. [pengaturan penundaan individual per-hop dan per identitas belum diterapkan]</p>
+
+<p>Untuk penundaan, anda dapat menentukan jangka waktu (misalnya 60-600 menit) - maka waktu menunggu akan diacak antara dua nilai yang dipilih untuk paket yang melakukan hop tersebut - atau waktu tetap, maka paket akan diteruskan di waktu yang ditetapkan tersebut. g.  siang UTC, tidak peduli kapan tibanya. [waktu tetap belum diterapkan]</p>
+
+<p>(Bila menggunakan mail route, time stamp secara otomatis dinonaktifkan.) [belum diterapkan]</p>
+
+<p>Di bawah <em>Mixing anonimity</em> (batas minimum jumlah paket relay yang akan dikirim) anda dapat menentukan suatu ambang batas. Karea node anda hanya dapat hanya bertindak andal sebagai campuran jika ada paket asing untuk dicampur dan berbaur dengan paketnya, itu akan menumpuk pesan yang waktu tundanya sudah berakhir sampai mencapai batas bawah ini. Hanya ketika ini dilampaui, node anda mulai mengirim mereka keluar secara acak. [belum diterapkan]</p>
+
+<p><em>mengecualikan identitas dari pemeriksaan global</em> [Belum diterapkan]</p>
+
+<p>jika anda mengaktifkan opsi ini terhadap salah satu identitas, ini tidak akan terpengaruh oleh pemeriksaan global manual terhadap email atau pemeriksaan global otomatis.</p>
+
+<h3 id="Gateway">2.6.  E-mail ke dan dari Internet</h3>
+<p>[BELUM DITERAPKAN SEPENUHNYA!]</p>
+
+<p>Agar dapat mengirim mail bote ke internet dan untuk menerima e-mail dari internet dengan aplikasi I2P-Bote anda, anda harus terlebih dahulu mendaftar kepada gateway yang sesuai. Saat ini hanya ada satu: postman.</p>
+
+<ol>
+<li><p>Pertama, kunjungi<a href="http://hq.postman.i2p/?page_id=16%20">http://hq.postman.i2p/?page_id=16</a> dan daftar akun. Jika anda sudah memiliki akun atau jika anda baru saja membuat satu akun seperti yang sudah dijelaskan, lanjutkan ke #2.</p></li>
+
+<li><p>Untuk account yang sudah ada, anda dapat menambahkan tujuan mail I2P-Bote anda, sehingga e-mail datang dari internet akan diteruskan ke aplikasi I2P-Bote anda. Jadi, kunjungi<a href="http://hq.postman.i2p/?page_id=74%20">http://hq.postman.i2p/?page_id=74</a> dan berikan informasi yang diminta.</p></li>
+</ol>
+<p>Sekarang semua e-mail yang dikirim ke alamat tersebut (<a href="mailto:name@i2pmail.org%20">name@i2pmail.org</a> dari internet luar atau <a href="mailto:name@mail.i2p%20">name@mail.i2p</a> untuk mail dari pengguna postman lain) akan diteruskan melalui jaringan I2P-Bote kepada aplikasi I2P-Bote Anda.</p>
+
+<p>(N.B.  Ketika menggunakan alamat <a href="mailto:name@mail.i2p%20">name@mail.i2p</a> atau <a href="mailto:name@i2pmail.org%20">name@i2pmail.org</a>, bukan alamat panjang, e-mail tidak lagi dienkripsiend-to-end. Oleh karena itu, dianjurkan untuk bertukar I2P-Bote e-mail destination key untuk berkomunikasi dalam jaringan. Tukang pos telah menawarkan layanan kualitas tinggi di I2P sudah cukup lama, tetapi sadari bahwa itu adalah titik terpusat yang mungkin akan offline satu hari nanti, atau lebih buruk diambil alih oleh orang jahat yang akan memanipulasi email. Untuk komunikasi e-mail di jaringan internal, I2P-Bote memastikan bahwa jika anda menggunakan address key, tak seorang pun dapat mengutak-atik mail yang anda kirim atau terima.)</p>
+
+<p>Jika anda ingin tidak hanya untuk menerima e-mail dari internet, tetapi juga memungkinkan pengiriman e-mail dari I2P-Bote ke internet, anda harus menyediakan klien I2P-Bote anda dengan gateway mail destination key, sehingga I2P-Bote anda tahu kema mail akan dikirim.</p>
+
+<p>Anda dapat melakukan ini di bawah 'Pengaturan'. Gateway ini akan memungkinkan pengguna I2P-Bote untuk berkomunikasi dengan pengguna e-mail standar di internet dan juga pengguna di klasikdi layanan i2pmail (@mail.i2p).</p>
+
+<p>Dalam rangka untuk melawan penyalahgunaan, akan ada pembatasan jumlah e-mail yang anda dapat kirim ke internet; seperti untuk pengguna layanan e-mail postman normal: jika I2P-Bote pengguna melebihi kuota dengan e-mail keluar, e-mail tambahan akan dikirim kembali sebagai bouncing.</p>
+
+<h2 id="Considerations">3.  Pertimbangan tentang anonimitas</h2>
+<p>Jangan Kirim informasi identitas tentang anda (nama, alamat, lokasi geografis, zona waktu, usia, situs-situs yang telah anda kunjungi hanya atau bahas di blog, nama pengguna, nomor ip, I2P router id, id I2P-Bote, nomor jaminan sosial, nomor kartu kredit,..., Anda paspor, SIM, rumah sewa kontrak, foto-foto telanjang atau dengan pakaian, dokumen yang berisi username dalam pengaturan penulis, dan banyak banyak lagi)!</p>
+
+<p>Jika mungkin,</p>
+<ul>
+<li><p>biarkan I2P-Bote berjalan 24/7,</p></li>
+<li><p>gunakan mailroutes dengan penundaan acak per-hop dan/atau per-hop tetap, [belum <em>sepenuhnya</em> diterapkan]</p></li>
+<li><p>gunakan interval check panjang,</p></li>
+<li><p>menggunakan penundaan lokal yang lama untuk paket sendiri,</p></li>
+<li><p>menggunakan pengacakan interval cek besar. [belum diterapkan]</p></li>
+</ul>
+<p>Anda dapat menghapus pengiriman tanggal dan waktu di e-mail header.</p>
+
+<p>Bila anda membalas e-mail, penanda tertentu ditambahkan untuk menunjukkan penerima bahwa ini adalah jawaban, seperti 'Balas: [subjek pesan yang anda balas]' atau ' [username] menulis:'. Ini berbeda untuk bahasa yang anda bisa pilih di dalam setelan bahasa. Namun, jika anda tidak ingin penerima tahu bahasa apa yang telah anda tentukan, anda dapat menghapus terjemahan penanda ini, sehingga mereka akan ditulis dalam bahasa Inggris, tidak peduli pengaturan bahasa anda. Untuk melakukannya, menandai 'Gunakan bahasa Inggris untuk teks ditambahkan di email keluar ('Re:', 'wrote:', dll.)'</p>
+
+<p>Berhati-hatilah dengan isi anda kirim! Tidak masukkan informasi pribadi atau informasi yang hanya anda dapat memiliki. Jangan tulis 'aku akan tidur sekarang, sudah larut malam' ketika memasukkan time stamp.</p>
+
+<p>Bahasa yang anda gunakan dalam menulis e-mail, gaya dan formulasi juga dapat digunakan penyerang.</p>
+
+<p>I2p-Bote juga menawarkan kemungkinan untuk menggunakan e-mail yang berbeda identitas. Misalnya, salah satu kontak anda belajar mengetahui identitas anda karena anda lupa untuk menghapus informasi identitas dalam dokumen rahasia yang anda kirim kepadanya. Sekarang, jika penerima e-mail ini berkolaborasi dengan orang lain yang anda berada kontak juga, dia bisa memberitahu mereka identitas dunia nyata milik alamat Bote yang dia tahu dari anda. Sehingga, jika anda berkomunikasi dengan orang-orang lain menggunakan alamat Bote yang sama, mereka akan tahu siapa anda. Tidak begitu jika anda menggunakan alamat yang berbeda untuk mengirimkan mail ke mereka.</p>
+
+<h2 id="Troubleshooting">4.  Troubleshooting</h2>
+<h3 id="Unlimited-Strength-Crypto">4.1.  Pemberitahuan tentang file JCE Unlimited Strength Jurisdiction Policy</h3>
+<p>Jika anda memiliki pemberitahuan di bagian bawah layar anda tentang file JCE Unlimited Strength Jurisdiction Policy, ini berarti bahwa instalasi Java yang anda gunakan, dibatasi dari menggunakan kriptografi yang kuat yang diperlukan I2P-Bote.</p>
+
+<p>Anda dapat mengaktifkan kriptografi yang kuat dengan mengikuti langkah-langkah berikut:</p>
+<ol>
+<li><p>Download file JCE Unlimited Strength Jurisdiction Policy dari <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html%20" target="_blank">situs Oracle</a>. Anda mungkin perlu untuk menggunakan browser biasa.</p></li>
+<li><p>Unzip file zip yang telah didownload.</p></li>
+<li><p>Pindahkan file <code>local_policy.jar</code> dan <code>US_export_policy.jar</code> ke dalam folder yang ditunjukkan di dalam pemberitahuan pada layar Anda. Timpa file yang sudah ada dengan nama yang sama.</p></li>
+<li><p>Mulai ulang I2P.</p></li>
+</ol>
+<p>Beberapa negara memiliki batasan pada kekuatan yang diperbolehkan untuk peranti lunak kriptografi. Jika anda tidak yakin tentang pembatasan di negara anda, konsultasi dengan ahli hukum.</p>
+
+<h2 id="Technical-Concept">5.  Konsep teknis</h2>
+<p>I2p-Bote dienkripsi end-to-end, jaringan-internal dan sepenuhnya sistem e-mail desentralisasi (yaitu serverless). Mendukung identitas yang berbeda dan tidak mengekspos header e-mail. Saat ini, ini adalah perangkat lunak yang masih dalam tahap alpha. Ini dapat diakses melalui web konsol, dan memiliki dukungan IMAP, dan SMTP, sehingga bote-mail dapat dibaca dan ditulis oleh klien email reguler. Ini direncanakan untuk menjamin anonimitas tambahan dengan menyediakan opsi transport latensi tinggi. Semua bote-mail secara otomatis terenkripsi end-to-end, sehingga tidak perlu untuk mengatur enkripsi email tambahan (meskipun anda dapat melakukannya), dan bote-mail akan diotentikasi secara otomatis. Karena terdesentralisasi, tidak ada server e-mail yang mampu me-link e-mail yang berbeda identitas untuk berkomunikasi satu sama lain (<em>melakukan profiling</em>): bahkan node yang menyampaikan mail tidak akan tahu pengirim dan selain pengirim dan penerima, hanya tunnel akhir latensi tinggi dan node penyimpan akan tahu kepada siapa (identitas end-to-end) mail dikirimkan. Pengirim dapat pergi offline jauh sebelum mail sampai di sisi lain. Hal ini menambah tingkat anonimitas yang dapat dicapai dengan I2P-Bote. Bagi mereka yang tidak ingin penundaan tinggi: semua pengaturan ini dapat disesuaikan, sehingga setiap pengguna dapat memutuskan pada berapa banyak anonimitas yang dia inginkan.</p>
+
+<p>I2P-Bote nodes menyimpan e-mail terenkripsi ke dalam Kademlia DHT. Karena itu, e-mail dapat dikirimkan melalui sejumlah node (relay) lain untuk peningkatan keamanan, atau secara langsung dikirim kepada sejumlah node penyimpanan untuk pengiriman yang lebih cepat. Hal yang sama terjadi dalam mengambil email.</p>
+
+<p>(Bila menggunakan mail route, time stamp secara otomatis dinonaktifkan.) [Mengambil email dengan menggunakan relay belum diterapkan]</p>
+
+<p>Semua node diciptakan sama: Tidak ada 'supernodes' atau node relay/penyimpanan khusus. Semua node dapat bertindak sebagai node relay dan penyimpanan. Jumlah maksimum disk space digunakan untuk packet email yang di-relay/simpan dapat diatur pengguna.</p>
+
+<p>Sebelum email dikirim ke sebuah relay, ia dipecah menjadi beberapa packet dan dienkripsi dengan public key milik penerima. Packet-paket tersebut disimpan secara redundant di dalam sebuah distributed hash table (DHT).</p>
+
+<p>Mereka disimpan minimal selama 100 hari, dan selama 100 tersebut, penerima dapat mengunduhnya.</p>
+
+<p>Paket relay juga terhapus setelah 100 hari atau lebih lama.</p>
+
+<p>Jika sebuah node kehabisan ruang penyimpanan, dan tidak ada packet lama yang dapat dihapus, node tersebut menolak permintaan penyimpanan.</p>
+
+<p>Lebih dari itu, I2P-Bote menghapus mail headers dan tidak mengizinkan information yang tidak perlu untuk dikirim, sehingga dapat membuat penggunaan e-mail clients tanpa perlu memeriksa informasi yang dikirim email client di dalam mail headers.</p>
+
+<p>Semua enkripsi, pemilihan path dan profiling dilaksanakan secara lokal sehingga tidak ada pihak terpercaya yang dilibatkan.</p>
+
+<p>Bootstrapping I2P-Bote tidak tergantung pada node pusat, karena menggunakan Seedless.</p>
+
+<p>Jika I2P-Bote digunakan secara benar berarti terus mengingat beberapa pertimbangan yang dijelaskan di atas dan menggunakan akal sehat, tidak akan ada pihak yang dapat mengetahui siapa anda dan di mana anda tinggal. Jika anda sudah diawasi dan koneksi internet anda dimatamatai, pengamat tidak akan dapat mengetahui pesan apa yang dikirim atau diterima atau penerima email atau pengirim email atau di mana kontak anda berada.</p>
+
+<p>Mari kita bahas hal ini secara lebih detail:</p>
+
+<h3>I2P-Bote <em>menyembunyikan</em>:</h3>
+
+<p>I2P-Bote menyembungikan identitas dan lokasi pengirim dan penerima, as well as those of an juga menyembunyikan intermediary nodes (node relay dan penyimpanan), isi mails, besarnya email, dan jumlah emails yang anda kirim.</p>
+
+<p>Hanya penerima email yang mengetahui tujuan email, dan jika penerima tidak mengirimkan tujuannya, bahkan penerima tidak akan mengetahui tujuannya.</p>
+
+<p>Bahkan jika anda mengirimkan time stamp, zona waktu anda tidak akan ditampilkan.</p>
+
+<p>Selain itu, I2P-Bote menyembunyikan:</p>
+<ul>
+<li><p>fakta bahwa anda menggunakan I2P-Bote</p></li>
+<li><p>fakta bahwa anda mengirimkan sebuah email</p></li>
+<li><p>fakta bahwa anda menerima sebuah mail</p></li>
+<li><p>waktu anda mengirim email</p></li>
+<li><p>waktu anda menerima email</p></li>
+<li>
+<p>batas atas jumlah email yang diterima pengguna yang tidak dikenal</p>
+<ul>
+<li><p>pengguna abstrak, bukan yang nyata, hanya menyimpulkan keberadaan email dari adanya identitas email karena ia dapat menggunakan lebih dari satu identitas email</p></li>
+</ul>
+</li>
+<li><p>batas bawahnya, sebuah identitas juga mengirimkan pesat tes dan dummy</p></li>
+</ul>
+<h3>I2P-Bote <em>secara parsial menyembunyikan</em>:</h3>
+
+<p>Alamat I2P-Bote penerima hanya akan diketahui pengirim dan penerima.</p>
+
+<p>Jika penerima ada lebih dari satu, setiap penerima akan melihat semua penerima yang ditulis di 'To:' atau 'CC:'</p>
+
+<p>Semua penerima yang ditulis di 'BCC:' hanya akan terlihat oleh pengirim and penerima yang bersangkutan.</p>
+
+<p>Waktu pengiriman, jika ada, hanya akan terlihat oleh pengirim dan penerima.</p>
+
+<h3>I2P-Bote <em>memiliki opsi dalam menyembunyikan</em>:</h3>
+<ul>
+<li><p>Jika mail routes digunakan, waktu sebuah email dikirimkan akan ditampilkan</p></li>
+<li><p>Jika mail routes digunakan, waktu sebuah email dikirimkan akan diambil [belum diterapkan]</p></li>
+<li><p>Jika pengirim menyembunyikan timestamps, hanya pengirim yang tahu kapan dia mengirinkan email.</p></li>
+</ul>
+<h3>I2P-Bote <em>tidak dapat menyembunyikan</em>:</h3>
+<p>I2P-Bote tidak dapat menyembunyikan sebuah identitas checks untuk email baru ataupun jumlah email yang diterima sebuah identitas.</p>
+
+<h2 id="Technical-Details">6.  Rincian teknis</h2>
+<p>Lihat techdoc.txt</p>
+
+<h2 id="Terminology">7.  Terminologi/Daftar istilah</h2>
+
+<h3>Id I2P-Bote (router/node):</h3>
+<p>Ini adalah id untuk router I2P-Bote yang dikenal. Ini digunakan untuk menghubungi router tersebut, untuk penyimpanan, relay dan mengambil email, dan juga digunakan untuk enkripsi hop-to-hop dan untuk menghubunginya lewat I2P, karena hal ini sama dengan destinasi tunnel milik router I2P-Bote. Ini ditampilkan untuk menunjukkan node I2P-Bote node di dalam statistik.</p>
+
+<p>Sehingga router id berhubungan dengan destinasi I2P (alamat sebuah node I2P-Bote di dalam jaringan I2P - ini tidak perlu diketahui kecuali anda bermasalah dalam berhubungan dengan node I2P-Bote lain).</p>
+
+<h3>Destinasi I2P-Bote e-mail:</h3>
+<p>Destinasi I2P-Bote e-mail (key) adalah identitas yang digunakan untuk menghubungi seseorang lewat I2P-Bote, sehingga namanya adalah: destinasi e-mail. Oleh karena itu, untuk I2P-Bote ini seperti alamat email di sistem email biasa: destinasi email adalah alamat sebenarnya untuk mengirim email, menyimpan ke dan mengambil dari DHT. Pada waktu yang bersamaan, ini digunakan untuk enkripsi end-to-end kepada emaul, header and lampiran email.</p>
+
+<p>Destinasi I2P-Bote e-mail adalah berupa Base64 string yang berisi public encryption key dan signature verification key. Contohnya:</p>
+<pre>uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG 
+    In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa 
+    FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da 
+    -nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9 
+    HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ 
+    gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3 
+    SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp 
+    HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD</pre>
+
+<p>ID router/node I2P-Bote dan destinasi I2P-Bote e-mail terlihat sama, tapi sepenuhnya independen terhadap sesamanya.</p>
+
+<h3>Alamat email:</h3>
+<p>Alamat email di I2P-Bote adalah shortcut untuk destinasi email.</p>
+
+<p>Alamat email &lt;--&gt; e-mail destination mappings disimpan di dua tempat: address book lokal dan distributed address directory [distributed address directory belum terapkan].</p>
+
+<h3>Identitas I2P-Bote e-mail:</h3>
+<p>Identitas I2P-Bote email adalah kumpulan destination key dari sebuah I2P-Bote email, private key yang bersangkutan, nama yang diberikan oleh pengguna. Nama ini akan dikirim bersama destination key jika pengiriman informasi tentang pengirim tidak dinonaktifkan.</p>
+
+<p>Namun ini hanya akan ditampilkan kepada penerima jika ia tidak memberi nama kepada destinasi ini di dalam address book lokalnya.</p>
+
+<p>Jadi secara teknus, identitas email berisi empat hal:</p>
+<ul>
+<li><p>sebuah destinasi email (yaitu dua public key)</p></li>
+<li><p>dua private key untuk destinasi email</p></li>
+<li><p>sebuah nama publik yang dapat ditunjukkan kepada orang lain di dalam emails</p></li>
+<li><p>sebuah desktipsi yang hanya ditunjukkan kepada anda (yang membantu anda mengingat identitas email yang digunakan untuk tujuan tertentu).</p></li>
+</ul>
+<p>sebuah identitas email tidak diperlukan untuk mengirim email (walaupun kemudian kanya 'Anonymous' dapat digunakan di dalam 'sender').</p>
+
+<h3>Mail routes:</h3>
+<p>Mail routes adalah high-latency transport tambahan untuk I2P-Bote. Untuk ini, sebuah rantai nodes I2P-Bote dibangun, berfungsi sebagai relay/router untuk paket dan mengikuti individual per-hop delay. [tidak ada setting individual untuk delay yang diterapkan]</p>
+
+<p><strong>HATI-HATI!</strong> Jika anda memilih opsi ini- khususnya dengan hop banyak dan/atau waktu delay, jangan kaget jika email anda tidak sampai dalam waktu cepat. Tentu saja akan sampai dalam waktu cukup lama- sampai beberapa hari!</p>
+
+<h2 id="Credits">8.  Credits</h2>
+<p>Lihat<a href="about.jsp%20">halaman About</a>.</p>
+
+<h2>NIKMATI THE BOTE FEELING!!</h2>
+</div>

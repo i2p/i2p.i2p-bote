@@ -1,0 +1,306 @@
+<div>
+<h1>Frequently Asked Question</h1>
+
+<nav><p><a href="#What%20">Apa itu I2P-Bote?</a></p>
+<p><a href="#Name%20">Kenapa namanya I2P-Bote?</a></p>
+<p><a href="#Why%20">Kenapa I2P-Bote?</a></p>
+<p><a href="#Sending%20">Apa yang terjadi dengan email setelah saya klik 'Send'?</a></p>
+<p><a href="#RandomPeople%20">Tunggu sebentar, semua email yang saya kirim disimpan di dalam hard drive orang lain? Ini terdengar ide bodoh!</a></p>
+<p><a href="#HowItWorks%20">Bagaimana cara kerjanya?</a></p>
+<p><a href="#NothingToHide%20">Kenapa saya mau menggunakannya? Saya tidak punya apapun yang perlu ditutupi</a></p>
+<p><a href="#GPG%20">Bagaimana tentang PGP dan GPG?</a></p>
+<p><a href="#UsingGPG%20">Apa saya masih dapat menggunakan GPG/PGP dengan I2P-Bote?</a></p>
+<p><a href="#Susimail%20">Bagaimana perbandingannya dengan Susimail?</a></p>
+<p><a href="#Comparison%20">Kenapa I2P-Bote lebih baik?</a></p>
+<p><a href="#Safeguards%20">Bagaimana identitas saya tetap aman walau berkirim email dengan orang lain?</a></p>
+<p><a href="#How%20">Bagaimana cara menggunakannya?</a></p>
+<p><a href="#EmailClients%20">Apa saya dapat menggunakan program email seperti Thunderbird?</a></p>
+<p><a href="#Attachments%20">Apa saya dapat mengirimkan attachment dan apakah ada batasannya?</a></p>
+<p><a href="#CreateIdentity%20">Bagaimana cara membuat akun email?</a></p>
+<p><a href="#EmailDestination%20">Apa itu destinasi email Bagaimana dengan alamat email?</a></p>
+<p><a href="#AddressLength%20">Kenapa alamat email sangat panjang?</a></p>
+<p><a href="#AddressBook%20">Tapi saya tidak mampu mengingat alamat sepanjang itu...</a></p>
+<p><a href="#MultipleIdentities%20">Apa tujuannya menggunakan beberapa identitas email?</a></p>
+<p><a href="#EncryptionTypes%20">Mana metode enkripsi terbaik?</a></p>
+<p><a href="#Algorithms%20">Algoritma mana yang digunakan untuk symmetric encryption dan hashing?</a></p>
+<p><a href="#AntiSpam%20">Apakah ada alat anti-spam?</a></p>
+<p><a href="#HTML%20">Bagaimana dengan HTML atau styled text?</a></p>
+<p><a href="#Persistence%20">Berapa lama email disimpan?</a></p>
+<p><a href="#DoIdentitiesExpire%20">Kapan suatu email menjadi kadaluarsa?</a></p>
+<p><a href="#Gateways%20">Apakah saya dapat mengirim dan menerima email dari server internet biasa?</a></p>
+<p><a href="#Postman%20">Apakah saya dapat mengirim dan menerima email dari akun email I2P tradisional Postman?</a></p>
+<p><a href="#Know%20">Apakah artinya ketika Know adalah x'ed di email di dalam Inbox saya?</a></p>
+<p><a href="#Terms%20">Apakah artinya “BktPfx”, “Distance” dan “Locked?”?</a></p>
+<p><a href="#Anonymous%20">Bagaimana caranya untuk lebih anonim?</a></p>
+<p><a href="#Timestamps%20">Bagaimana caranya untuk tidak mengirim timestamp?</a></p>
+<p><a href="#Backups%20">Bagaimana caranya memindahkan pengaturan dan data ke komputer lain atau melakukan backup?</a></p>
+<p><a href="#MailRoutes%20">Apa itu<em>mail route</em>?</a></p>
+<p><a href="#HighLatency%20">Apa artinya high-latency transport?</a></p>
+<p><a href="#Latencies%20">Latensi seperti apa yang ada dan bagaimana cara mengendalikannya (jika ada)?</a></p>
+<p><a href="#WhyI2P%20">Jika I2P-Bote membangun anonimitasnya sendiri, kenapa memerlukan I2P?</a></p>
+<p><a href="#WithoutRoutes%20">Seberapa anonim/aman I2P-Bote tanpa mail routes?</a></p>
+<p><a href="#OpenSource%20">Apakah I2P-Bote itu open source?</a></p>
+<p><a href="#Credits%20">Siapa yang membuat I2P-Bote?</a></p>
+<p><a href="#Languages%20">I2P-Bote tersedia dalam bahasa apa saja?</a></p>
+<p><a href="#Translate%20">Bagaimana cara saya dapat menerjemahkan I2P-Bote ke dalam bahasa saya?</a></p>
+<p><a href="#Technical%20">Bagaimana cara kerjanya secara teknis?</a></p>
+<p><a href="#GetInvolved%20">Apakah ada cara lain untuk saya dapat membantu?</a></p>
+</nav><h3 id="What">Apa itu I2P-Bote?</h3>
+<p>Program email peer-to-peer yang dibuat untuk melindungi privasi anda.</p>
+
+<p>I2P-Bote dienkripsi end-to-end, network-internal, sistem email terdesentralisasi penuh (serverless). Mendukung banyak identitas dan tidak mengungkapkan e-mail headers. Saat ini, masih dalam tahap alpha software. Dapat diakses dengan web console dan memiliki dukungan IMAP dan SMTP, sehingga email bote dapat dibaca dan ditulis oleh email clients biasa. dibuat untuk memastikan tambahan anonimitas dengan menyediakan opsi high-latency transport. semua bote-mails otomatis dienkripsi end-to-end, sehingga tidak perlu menggunakan enkripsi e-mail (walaupun ada opsi ini), dan bote-mails akan otomatis diotentifikasi. Karena terdesentralisasi, tidak ada server e-mail yang mampu menghubungkan beberapa identitas e-mail saat mereka berkomunikasi (profiling): Bahkan node yang me-relay mail tidak mengetahui pengirim. Dan selain pengirim dan penerima, hanya ujung dari high-latency mail tunnel dan storing nodes akan mengetahui kepada siapa (identitas anomim) mail dikirim. Pengirm dapat offline jauh sebelum email sampai ke tujuan. Ini menambah tingkat anonimitas yang dapat dicapai dengan I2P-Bote. Jika anda tidak menginginkan delay yang lama: semua seting ini dapat disesuaikan, sehingga setiap pengguna memutuskan tingkat anonimitas yang diinginkan.</p>
+
+<h3 id="Name">Kenapa namanya I2P-Bote?</h3>
+<p>Bote bahasa German untuk messenger.</p>
+
+<h3 id="Why">Kenapa I2P-Bote?</h3>
+<p>Karena keren. Dan karena I2P tidak mempunyai servis email terdesentralisasi, dan menyadari menciptaannya adalah kesempatan untuk meningkatkan aspek anonimitas yang terabaikan, diputuskan untuk menambah pilihan high-latency transport. Anda dapat menggunakan akun e-mail biasa dan menggunakan enkripsi end-to-end, namun email anda tetap tidak anonim. Anda dapat menggunakan server email anonim, namun itu tidak otomatis dienkripsi end-to-end.</p>
+
+<p>Atau anda dapat menggunakan I2P-Bote di mana email menjadi anonim dan <em>otomatis</em> dienkripsi end-to-end.</p>
+
+<p>Berbanding terbalik dengan sistem e-mail standar, tidak perlu mengatur aplikasi key management tambahan. Semua hal yang dibutuhkan sudah tersedia.</p>
+
+<p>Walau simpel dan mudah digunakan, ini menawarkan enkripsi tingkat militer dan opsi anonimitas sangat kuat.</p>
+
+<h3 id="Sending">Apa yang terjadi dengan email setelah saya klik 'Send'?</h3>
+<p>Email anda dienkripsi dan disimpan di komputer milik pengguna I2P-Bote lain. Dari sana, email dikirim kepada penerima ketika ia ingin memeriksa akun emailnya.</p>
+
+<h3 id="RandomPeople">Tunggu sebentar, semua email yang saya kirim disimpan di dalam hard drive orang lain? Ini terdengar ide bodoh!</h3>
+<p>Mereka hanya dapat melihat data sampah karena dienkripsi dengan enkripsi "military-grade". Hanya anda dan penerima yang tahu isi emailnya. Tambahan, jika anda ingin mengirim email dengan relay diaktifkan, pengirim tidak mungkin diketahui pihak lain.</p>
+
+<p>Dibandingkan antara ini dan menggunakan akun email dari <a href="http://www.theregister.co.uk/2009/12/07/schmidt_on_privacy/%20">perusahaan yang tidak menghormati privasi anda</a>, lewat jalur internet yang <a href="http://www.eff.org/issues/nsa-spying%20">dimonitor oleh agen rahasia yang jahat</a>, mana yang lebih terpercaya?</p>
+
+<h3 id="HowItWorks">Bagaimana cara kerjanya?</h3>
+<p>Lihat bagian <a href="userGuide.jsp#Technical-Concept%20">'Konsep Teknis'</a> di  section of <a href="userGuide.jsp%20">User Manual</a>.</p>
+
+<p>Singkatnya: node I2P-Bote membentuk jaringan P2P, me-relay paket email ke sesamanya dan menyimpannya ke dalam sebuah DHT.</p>
+
+<h3 id="NothingToHide">Kenapa saya mau menggunakannya? Saya tidak punya apapun yang perlu ditutupi</h3>
+<p>Karena anda tidak mau keluar rumah dengan telanjang, kan?</p>
+
+<p>Yah, mungkin anda memang mau keluar rumah dengan telanjang. Tapi maksudnya, kadang anda ingin komunikasi e-mail pribadi menjadi rahasia dan tidak terlacak dan seluruh dunia tidak tahu kapan anda berbicara sesuatu kepada seseorang.</p>
+
+<p>Dan kadang anda hanya ingin berkomunikasi secara anonim dengan orang lain.</p>
+
+<p>Karena itu I2P-Bote adalah alat yang ideal, yang memberikan perlindungan prima sambil menyediakan fleksibilitas yang tinggi.</p>
+
+<p>Tujuannya adalah menyediakan keamanan setingkat militer professional dan kemudahan tingkat pemula: anda dapat menggunakan pengaturan paranoid, yang membuat email menjadi sangat lama untuk sampai; atau komunikasi lebih cepat dan masih mendapat anonimitas sangat tinggi.</p>
+
+<p>Anda yang memutuskannya - dengan mudah semudah mengklik mouse.</p>
+
+<h3 id="GPG">Bagaimana dengan <a href="http://www.pgp.com/%20">PGP</a> dan <a href="http://gnupg.org/%20">GPG</a>?</h3>
+<p>PGP dan GPG mengenkripsi email dan mengirimkannya melalui akun email anda yang sudah ada. PGP dan GPG menyediakan enkripsi kuat, namun mengenkripsi hanya teks email, bukan header-nya, yang artinya subyek email, nama komputer, dan informasi lain tidak aman.</p>
+
+<p>Masalah privasi yang lain adalah PGP/GPG tidak mampu mencegah orang lain mengetahui siapa mengirimkan email ke siapa.</p>
+
+<p>I2P-Bote, sebaliknya, mengenkripsi semuanya selain destinasi email penerima. (Bahkan destinasi penerima hanya terlihat oleh sekumpulan node yang tidak tahu pengirim email.) I2P-Bote juga mampu mengirim email melalui beberapa relay (mirip dengan<a href="http://mixmaster.sourceforge.net/%20">Mixmaster</a>), sehingga tidak ada yang mampu mengetahui siapa mengirim email kepada siapa.</p>
+
+<h3 id="UsingGPG">Apa saya masih dapat menggunakan GPG/PGP dengan I2P-Bote?</h3>
+<p>Tentu saja. Anda dapat menggunakan enkripsi GPG kepada teks e-mail sebelum mengkopinya ke dalam I2P-Bote, atau menggunakan program email dengan dukungan GPG.</p>
+
+<h3 id="Susimail">Bagaimana perbandingannya dengan Susimail?</h3>
+<p>I2P-Bote lebih baik karena memiliki nomor versi yang lebih tinggi. Hanya bercanda.</p>
+
+<p>I2P-Bote menawarkan privasi lebih banyak, namun Susimail memiliki beberapa fitur yang tidak dimiliki I2P-Bote (lihat di bawah), dan Susimail lebih efisien menggunakan bandwidth karena tidak menyimpan email secara redundant.</p>
+
+<h3 id="Comparison">Kenapa I2P-Bote lebih baik?</h3>
+<p><em>Menurut kami</em> lebih baik untuk <em>kami</em> (dan mungkin untuk anda juga; anda yang memutuskannya!), daripada:</p>
+<ul>
+<li><p>Mixminion juga mudah digunakan dan kami berusaha untuk memastikannya untuk mudah digunakan oleh pemula.</p></li>
+<li><p>Jasa email anonim tidak didasari destination key routing: sehingga tidak menyediakan enkripsi enkripsi end-to-end.</p></li>
+<li><p>servis tersentralisasi, sehingga server dapat tidak berfungsi (karena serangan, masalah hukum, kurang biaya atau keinginan, …) dan admin servernya punya terlalu banyak cara untuk melakukan profiling.</p></li>
+</ul>
+<h3 id="Safeguards">Bagaimana identitas saya tetap aman walau berkirim email dengan orang lain?</h3>
+<p>Alamat IP bahkan I2P-destination dimasukkan ke dalam email yang dikirim.</p>
+
+<p>Transport latensi tinggi melawan timing attacks.</p>
+
+<p>Ekripsi end-to-end, enkripsi per-hop, me-relay paket kepada node lain, one single packet size* (padding), waktu pengiriman yang konstan (pesan test dan dummy)*, dan rasio masuk/keluar yang imbang* melawan serangan analisis traffic, dan dikombinasikan dengan per-hop delays, I2P-Bote menawarkan perlindungan terhadap serangan intersection.</p>
+
+<p>Sifat open source dari I2P-Bote menjamin anda dapat melihat penerapannya dan memeriksanya terhadap bugs.</p>
+
+<p>*[belum diterapkan]</p>
+
+<h3 id="How">Bagaimana cara menggunakannya?</h3>
+<p>Baca <a href="userGuide.jsp%20">manual</a> atau lihat pertanyaan dan jawaban lain di sini!</p>
+
+<p>Jika masih ada pertanyaan, tanyakan di forum: <a href="http://forum.i2p/viewforum.php?f=35%20">http://forum.i2p/viewforum.php?f=35</a></p>
+
+<h3 id="EmailClients">Apa saya dapat menggunakan program email seperti Thunderbird?</h3>
+<p>Ya, anda dapat menggunakan e-mail client pilihan anda, selama itu mendukung IMAP dan SMTP.</p>
+
+<h3 id="Attachments">Apa saya dapat mengirimkan attachment dan apakah ada batasannya?</h3>
+<p>Yes, attachments di dukung mulai dari rilis 0.2.5. Ukuran attachment harus dibuat kecil, sebaiknya di bawah 500kB.</p>
+
+<h3 id="CreateIdentity">Bagaimana cara membuat akun email?</h3>
+<p>I2P-Bote menyebut akun email sebagai identitas email. Anda dapat membuat identitas email di web interface I2P-Bote di bawah tautan "Identities". Kenapa tidak disebut akun karena tidak ada penyedia seperti GMail or GMX. Anda sendiri yang menyimpan (cryptographic) key untuk setiap identitas email.</p>
+
+<p>Ketika anda membuat sebuah identitas email, I2P-Bote membuat sekumpulan angka dan huruf yang disebut Destinasi Email. Ini alamat yang dapat digunakan untuk menghubungi anda.</p>
+
+<p>Contohnya: <code>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6tDWwjPHYEuoKyWqwxplSdix</code></p>
+
+<h3 id="EmailDestination">Apa itu destinasi email Bagaimana dengan alamat email?</h3>
+<p>Destinasi email (atau bote dests) memiliki panjang sebanyak 86 sampai 512, tergantung jenis ekripsi. Dukungan untuk alamat yang mudah diingat dan dipilih pengguna telah direncanakan di masa depan.</p>
+
+<p>Identiras email berisi public dan private keys, dan juga nama yang dipilih pengguna. Bagian publiknya adalah destinasi email, yaitu identitas samaran anda. Dan satu pengguna dapat memiliki lebih dari satu identitas. Identitas digunakan untuk mengirim email ke pengguna tertentu- sehingga disebut 'destinasi' or singkatnya 'dest' - dan juga untuk untuk ekripsi email. Karena itu, destinasi email destination adalah key yang digunakan orang lain untuk mengenkripsi email yang dikirimkan kepada anda, dan untuk mengverifikasi otentitas dan integritas email yang mereka terima dari anda.</p>
+
+<p>Anda aman untuk memberikan destinasi email anda kepada siapapun.</p>
+
+<p>Penting untuk membedakan destinasi email dan router id! Identitas I2P-Bote mail tidak terkait dengan I2P-Bote router/node id, yang digunakan I2P-Bote node untuk menghubungi sesama node dan di dalam jaringan Bote.</p>
+
+<p>Jika anda bermasalah dengan I2P-Bote app – yang sebenarnya sangat kecil kemungkinannya hal ini perlu dilakukan – anda dapat menyebutkan I2P-Bote router id di irc2p, I2P's IRC channels, atau di forum atau secara manual menambahkan peer's id's untuk berhubungan dengan node lain, walau sampai sekarang tidak perlu dilakukan.</p>
+
+<p>Ini <b>tidak dihubungkan dengan alamat IP anda</b>. Walau bagaimanapun, jangan menghubungkan I2P-Bote router id anda dengan I2P-Bote mail dests karena ini akan menghancurkan tambahan anonimitas yang dibuat oleh I2P-Bote!</p>
+
+<h3 id="AddressLength">Kenapa alamat email sangat panjang?</h3>
+<p>Semua email I2P-Bote (secara otomatis) dienkripsi. Supaya anda tidak perlu bertukar alamat email, <b>dan</b> key yang panjang, kami membuat key tersebut menjadi alamat email. Ini ada dua manfaat: Anda tidak perlu kuatir kalau alamat email tersebut sudah diambil orang lain (tidak perlu jika anda tidak ingin mengirim dan menerima email dari internet biasa) dan anda tidak perlu tambahan aplikasi key management yang mengatur key anda.</p>
+
+<p>Anda dapat secara aman menyebarkan key ini, karena ini hanya public key yang boleh diketahui orang lain tanpa menghilangkan kerahasiaanemail anda.</p>
+
+<p>Menggunakan opsi enkripsi ECC akan membuat destination keys email yang lebih pendek.</p>
+
+<h3 id="AddressBook">Tapi saya tidak mampu mengingat alamat sepanjang itu...</h3>
+<p>Karena itu di sini ada address book. Begitu anda biasa menggunakan I2P-Bote, anda akan menyukai enkripsi dan otentifikasinya, yang dicapai dengan menggunakan cryptographic keys.</p>
+
+<p>Seperti yang sudah dijelaskan, alternatifnya adalah menggunakan alamat yang singkat dan mudah diingat <b>ditambah</b> key yang panjang untuk enkripsi dan otentifikasi, <b>dan</b> bergantung kepada sebuah pihak untuk mengirimkan email anda ke penerima anonim.</p>
+
+<h3 id="MultipleIdentities">Apa tujuannya menggunakan beberapa identitas email?</h3>
+<p>I2P-Bote bukan instant messenger, sehingga anda daapat menggunakan beberapa identitas membuat banyak tunnels terbuka. Hanya untuk fetching requests yang menggunakan sumber daya lebih banyak tapi pada saat bersamaa menyediakan perlindungan lebih banyak untuk orang lain.</p>
+
+<p>Sekarang, bayangkan anda berkomunikasi dengan teman tanpa diawasi (lihat: data retention laws) dengan I2P-Bote, dan anda ingin lebih cepat mengirim email yang isinya anda ingin bertemu mereka di tempat lain malam ini. Kalau seperti ini, anda tidak perlu anonimitas super dan tidak perlu menggunakan mail routes dan delays. Teman anda, sebaliknya, menginginkan check interval yang lebih cepat, sehingga mereka menerima mail dengan cepat. Namun, jika anda ingin anonimitas super super tinggi untuk komunikasi lain - ini fungsinya identitas email lain dengan mail routes, delays, dan check intervals yang panjang.</p>
+
+<h3 id="EncryptionTypes">Mana metode enkripsi terbaik?</h3>
+<p>256-bit <a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography%20">ECC</a> membuat destinasi email yang singkat dan mudah diingat, dan dianggap lebih kuat dari 2048-bit ElGamal.</p>
+
+<p>521-bit <a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography%20">ECC</a> lebih kuat daripada 256-bit ECC, tapi membuat destinasi email menjadi lebih panjang.</p>
+
+<p>2048-bit <a href="http://en.wikipedia.org/wiki/ElGamal%20">ElGamal</a> membuat destinasi email yang jauh lebih panjang, dan paling lemah dari ketiga pilihan enkripsi. Namun, ElGamal lebih banyak diteliti daripada ECC, sehingga mungkin lebih sedikit kelemahannya yang tidak diketahui daripada ECC.</p>
+
+<h3 id="Algorithms">Algoritma mana yang digunakan untuk symmetric encryption dan hashing?</h3>
+<p><a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard%20">AES-256</a> di dalam mode<a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29%20"> CBC</a> dan <a href="http://en.wikipedia.org/wiki/SHA-2%20">SHA-256</a>.</p>
+
+<h3 id="AntiSpam">Apakah ada alat anti-spam?</h3>
+<p>I2P-Bote tidak punya filter spam aktif, namun fakta bahwa email masal harus dikirim satu per satu seharusnya tidak menarik untuk spammer. Perlindungan tambahan adalah menggunakan<a href="http://www.hashcash.org/%20">HashCash</a> yang didukung di tingkat protokol dan akan diterapkan di versi masa depan ketika spam menjadi masalah.</p>
+
+<h3 id="HTML">Bagaimana dengan HTML atau styled text?</h3>
+<p>Web interfacenya tidak menampilkan HTML.</p>
+
+<h3 id="Persistence">Berapa lama email disimpan?</h3>
+<p>Email disimpan selama 100 hari setelah dikirim. Email yang belum diunduh dalam 100 hari akan dihapus.</p>
+
+<p>Email yang diterima disimpan di dalam komputer anda sampai dihapus oleh anda.</p>
+
+<h3 id="DoIdentitiesExpire">Kapan suatu email menjadi kadaluarsa?</h3>
+<p>Tidak akan kadaluarsa.</p>
+
+<h3 id="Gateways">Apakah saya dapat mengirim dan menerima email dari server internet biasa?</h3>
+<p>Tidak, tapi ini sedang diusahakan.</p> 
+<!-- Yes. You can both send and receive mails to/from ordinary internet e-mail accounts -->
+
+<h3 id="Postman">Apakah saya dapat mengirim dan menerima email dari akun email I2P tradisional Postman?</h3>
+<p>Tidak, tapi ini juga sedang diusahakan.</p> 
+<!-- Yes. You can both send and receive mails to/from some_name@mail.i2p addresses -->
+
+<h3 id="Know">Apakah artinya ketika Know adalah x'ed di email di dalam Inbox saya?</h3>
+<p>Jika destinasi tidak diketahui oleh komputer anda, emailnya ditandao dengan x di dalam kolom “Know” atau ditandai “{UNK}” sebelum alamat pengirim di IMAP.</p>
+
+<p>Ini artinya anda tidak punya bukti pengguna ini benar-benar orang yang diakuinya di dalam namanya. Tentu saja, jika signaturenya valid, anda tahu dia mempunyai destination key untuk email yang ditandatangai, dan isi emailnya berasal dari orang tersebut. Namun di sini anda tidak dapat bergantung pada nama singkat . Jika anda sudah pernah mendapat email dari nama pengguna ini sebelumnya, anda tidak dapat memastikan bahwa kali ini memang pengguna yang sama, walau jika signaturenya valid. Pada kasus ini, anda harus membandingka destination key-nya atau menambahkannya ke dalam addressbook anda. Pengguna yang tidak dikenal di komputer anda belum tentu berniat jahat, tapi seharusnya anda tidak percaya bahwa dia adalah orang yang dia akui. Namun, jika diverifikasi dengan keys yang disimpan di komputer anda, anda tau bahwa itu adalah orang yang sama yang pernah mengirim email kepada anda ketika anda menerima email dari dia dan “Know” ada tanda cek hijau.</p>
+
+<h3 id="Terms">Apakah artinya “BktPfx”, “Distance” dan “Locked?”?</h3>
+<ul>
+<li><p>BktPfx = BucketPrefix</p></li>
+<li><p>Distance: jarak antara I2P-Bote node dan node anda di keyspace</p></li>
+<li><p>Locked: jika sebuah node tidak bisa dijangkau karena alasan apapun, node tersebut ditandai "locked", dan waktu saat itu tidak dapat dijangkau.</p></li>
+</ul>
+<h3 id="Anonymous">Bagaimana caranya untuk lebih anonim?</h3>
+<ul>
+<li><p>Jangan kirim informasi yang dapat mengidentifikasi anda! (nama, alamat, foto, lokasi geografis, zona waktu, umur, jenis kelamin, situs web, nama login, I2P router id, I2P-Bote id, file yang berisi informasi penulis, …)</p></li>
+<li><p>jangan kirim info pribadi atau info yang hanya dimiliki oleh anda,</p></li>
+<li><p>biarkan I2P-Bote berjalan 24/7,</p></li>
+<li><p>gunakan mailroutes dengan pengacakan per-hop delays dan/atau waktu kirim per-hop tetap, [belum diterapkan penuh]</p></li>
+<li><p>gunakan interval check panjang,</p></li>
+<li><p>gunakan penundaan lokal yang lama untuk paket sendiri,</p></li>
+<li><p>gunakan pengacakan interval cek besar. [belum diterapkan]</p></li>
+<li><p>hapus pengiriman tanggal dan waktu di e-mail header.</p></li>
+<li><p>Jangan ubah tanda “Re:” ke bahasa lain,</p></li>
+<li><p>jaga bahasa dan gaya tulisan anda</p></li>
+<li><p>gunakan identitas email yang berbeda</p></li>
+<li><p>jangan gunakan identitas yang sama dalam waktu yang lama.</p></li>
+<li><p>…</p></li>
+</ul>
+<p>Ini tidak bermaksud untuk membuat anda paranoid, tapi untuk menunjukkan kepada anda di mana anonimitas dapat berkurang.</p>
+
+<h3 id="Timestamps">Bagaimana caranya untuk tidak mengirim timestamp?</h3>
+<p>Kunjungi settings dan nonaktifkan pengiriman timestamps. Ini akan membuat email anda tidak berisi tanggal atau waktu pengiriman.</p>
+
+<!-- <p>(When using mailroutes, the timestamps are automatically disabled.) [not yet implemented]</p> -->
+
+<h3 id="Backups">Bagaimana caranya memindahkan pengaturan dan data ke komputer lain atau melakukan backup?</h3>
+<p>I2P-Bote menyimpan semua email dan data data lain di dalam folder <code>i2pbote</code>. Di Windows, folder tersebut ada di <code>%APPDATA%\I2P\i2pbote</code>; di Linux, ada di <code>$HOME/.i2p/i2pbote</code>.</p>
+
+<p>Untuk backup atau memindahkan semuanya, copy saja semua isi folder <code>i2pbote</code>.</p>
+
+<p>Jika hanya ingin backup identitas email, copy file <code>identities.txt</code>. Untuk backup address book, copy <code>addressBook.txt</code>.</p>
+
+<h3 id="MailRoutes">Apa itu<em>mail route</em>?</h3>
+<p>Lihat: Apa artinya transport latensi tinggi?</p>
+<!-- <p>(When using mail routes, the timestamps are automatically disabled.) [yet to be implemented]</p> -->
+
+<h3 id="HighLatency">Apa artinya high-latency transport?</h3>
+<p>Ini artinya anda dapat mengaktifkan opsi di mana paket email tidak langsung dikirim ke node penyimpanan, namun di-relay (forward) oleh peer lain (yang tidak dapat membaca emails, karena dienkripsi beberapa lapis and dan dipecah menjadi bagian-bagian kecil), yang tidak langsung mengirimkannya tapi menunggu selama jangka waktu yang ditentukan user - jika waktu pengiriman diatur oleh pengirim, jika waktu penerimaan ditentukan penerima.</p>
+
+<p>Karena itu, perlu waktu cukup lama untuk email tiba di tujuan. Karena itu, penyerang tidak dapat melihat statistik dari node uptimes (yang tersambung pada saat apa) dan waktu pesan disimpan (yang di dalam jaringan latensi rendah adalah waktunya dikirimkan), untuk menyingkap identitas asli di balik identitas I2P-Bote e-mail.</p>
+
+<h3 id="Latencies">Latensi seperti apa yang ada dan bagaimana cara mengendalikannya (jika ada)?</h3>
+<p>I2P-Bote terdistribusi dan berjalan di atas jaringan I2P, sehingga akan memakan waktu. Kecepatan bukanlah keunggulan kami, tapi kami dapat dibandingkan dengan sistem email anonim lain. Jika mail routes diaktifkan, perlu 3 sampai 10 menit antara menekan tombol “Send” sampai emailnya sampai di inbox penerima.</p>
+
+<p>Jika anda menginginkan kecepatan, matikan mail routes atau kirimkannya dengan jumlah hops dan per-hop delay paling sedikit yang anda inginkan.</p>
+
+<h3 id="WhyI2P">Jika I2P-Bote membangun anonimitasnya sendiri, kenapa memerlukan I2P?</h3>
+<p>I2P-Bote dibangun di atas I2P karena lima alasan:</p>
+<ul>
+<li><p>I2P tidak punya jasa email terdesentralisasi and HungryHobo adalah pengguna I2P.</p></li>
+<li><p>I2P menawarkan anonimitas yang sangat baik, matang and memiliki pengalaman bertahun-tahun.</p></li>
+<li><p>Selain berjalan di atas I2P, I2P menawarkan jaminan anonimitas jika ada bug parah di I2P-Bote.</p></li>
+<li><p>Fleksibilitas: Kami juga ingin menawarkan cara mudah untuk melakukan komunikasi email latensi rendah, dengan tetap menawarkan proteksi tingkat tinggi.</p></li>
+<li><p>I2P dan banyak aplikasi lain yang berjalan di atasnya membuat banyak lalu lintas yang tercampur dengan lalu lintas I2P-Bote.</p></li>
+<li><p>Bahkan lokasi relay I2P-Bote disembunyikan.</p></li>
+</ul>
+<h3 id="WithoutRoutes">Seberapa anonim/aman I2P-Bote tanpa mail routes?</h3>
+<p>Cukum anonim dan sangat aman.</p>
+
+<p>Memilikinanonimitas yang sama dengan aplikasi lain di I2P, anonimitas yang disediakan oleh I2P router – yang sudah mempunyai anonimitas yang cukup tinggi. Namun, I2P adalah jaringan latensi rendah, sehingga memiliki semua kelemahan dari jaringan berlantensi rendah. Ada beberaoa serangan di mana I2P tidak dapat melindungi anda atau tidak cukup handal melindungi anda. I2P-Bote berusaha terbaik untuk meningkatkan anonimitas  I2P dengan opsi transport latensi tinggi, yang membuat – jika diaktifkan – I2P-Bote mails <em>sangat paranoid</em> menjadi anonim.</p>
+
+<h3 id="OpenSource">Apakah I2P-Bote itu open source?</h3>
+<p>Tentu saja!</p>
+
+<blockquote>Software ini dilisensi dengan GPL versi 3 (lihat licenses/GPLv3.txt), kecuali BouncyCastle Provider yang dilisensi dengan Bouncy Castle License (lihat licenses/BouncyCastle.txt).</blockquote>
+
+<p>(keduanya adalah lisensi free open source.)</p>
+
+<p>Source code dapat diambil dari cabang <code>i2p.i2p-bote</code> dari <a href="https://geti2p.net/en/get-involved/guides/new-developers#monotone%20">I2P Monotone repository</a>. Juga ada<a href="https://github.com/i2p/i2p.i2p-bote%20">GitHub mirror</a> yang dapat digunakan untuk melihat kodenya.</p>
+<h3 id="Credits">Siapa yang membuat I2P-Bote?</h3>
+<p>Idenya, desain teknis, penerapan, dan web user interface awal dibuat oleh HungryHobo, pengembang yang anonim.</p>
+
+<p>Pengembang I2P-Bote saat ini adalah str4d.</p>
+
+<p>Untuk umpan balik atau anda ingin menawarkan bantuan, lihat <a href="about.jsp%20">halaman About</a> untuk kontak.</p>
+
+<h3 id="Languages">I2P-Bote tersedia dalam bahasa apa saja?</h3>
+<p>Bahasa Inggris, Jerman, Rusia, Perancis, Spanyol, Portugis, Belanda, Norwegia, Swedia, Mandarin, dan Arab.</p>
+
+<h3 id="Translate">Bagaimana cara saya dapat menerjemahkan I2P-Bote ke dalam bahasa saya?</h3>
+<p>Penerjemahan dilakukan dengan cara yang sama seperti semua bagian dari I2P. Jika anda ingin membantu atau bertanya, silakan<a href="about.jsp%20">hubungi penulisnya.</a></p>
+
+<h3 id="Technical">Bagaimana cara kerjanya secara teknis?</h3>
+<p>Silakan baca <code>doc/techdoc.txt</code> di dalam source code-nya.</p>
+
+<h3 id="GetInvolved">Apakah ada cara lain untuk saya dapat membantu?</h3>
+<ul>
+<li><p>Gunakan I2P-Bote dan berikan umpan balik</p></li>
+<li><p>Beritahu teman, keluarga, rekan kerja, dll. tentang I2P-Bote dan berikan bantuan</p></li>
+<li><p>Sebut I2P-Bote di blog anda, eepsite or website</p></li>
+<li><p>Tulis user guide atau sempurnakan technical documentation</p></li>
+<li><p>Tambah fitur atau selesaikan bug (<a href="about.jsp%20">kontak penulisnya dulu</a>).</p></li>
+</ul>
+</div>

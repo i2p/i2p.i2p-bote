@@ -5,14 +5,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2019-01-13 22:58+0000\n"
+"Last-Translator: vargaviktor <viktor.varga@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otf/I2P/language/hu/)\n"
-"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
@@ -130,7 +130,7 @@ msgstr ""
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:186
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:190
 msgid "Unreachable"
-msgstr ""
+msgstr "Nem elérhető"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:223
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:230
@@ -386,7 +386,7 @@ msgstr "Név"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Szöveg"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete"
@@ -420,9 +420,7 @@ msgstr "Hálózat"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"Hálózati információ nem elérhető, mert az I2P-Bote még nem kezdte meg a "
-"csatlakozást a hálózathoz."
+msgstr "Hálózati információ nem elérhető, mert az I2P-Bote még nem kezdte meg a csatlakozást a hálózathoz."
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -500,50 +498,38 @@ msgstr ""
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr ""
-"Annak érdekében, hogy másoktól leveleket kapj, először hozz létre egy e-mail "
-"személyazonosságot."
+msgstr "Annak érdekében, hogy másoktól leveleket kapj, először hozz létre egy e-mail személyazonosságot."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"Mindegyik e-mail személyazonosság egy e-mail célállomáshoz van "
-"hozzárendelve. Bárki küldhet e-mailt az e-mail célállomásra, de csak a "
-"személyazonosság tulajdonosa olvashatja azt."
+msgstr "Mindegyik e-mail személyazonosság egy e-mail célállomáshoz van hozzárendelve. Bárki küldhet e-mailt az e-mail célállomásra, de csak a személyazonosság tulajdonosa olvashatja azt."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"Bizonyos értelemben az e-mail személyazonosságok megegyeznek a hagyományos e-"
-"mail fiókokkal - kivéve, hogy nincs e-mail szolgáltató, ami elolvashatja az "
-"összes leveled, mivel az I2P-Bote minden levelet titkosítva tárol a "
-"hálózaton."
+msgstr "Bizonyos értelemben az e-mail személyazonosságok megegyeznek a hagyományos e-mail fiókokkal - kivéve, hogy nincs e-mail szolgáltató, ami elolvashatja az összes leveled, mivel az I2P-Bote minden levelet titkosítva tárol a hálózaton."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
 msgstr ""
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr ""
-"Add ki az e-mail célállomásodat, hogy mások kapcsolatba léphessenek veled."
+msgstr "Add ki az e-mail célállomásodat, hogy mások kapcsolatba léphessenek veled."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is easy to create multiple identities for different purposes, or "
 "different contacts."
-msgstr ""
-"Különböző célokra vagy különböző kapcsolatok számára többféle "
-"személyazonosság készíthető egyszerű módon."
+msgstr "Különböző célokra vagy különböző kapcsolatok számára többféle személyazonosság készíthető egyszerű módon."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -695,7 +681,7 @@ msgstr "{0} írta:"
 
 #: src/main/webapp/faq.jsp
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Gyakran Ismételt Kérdések"
 
 #: src/main/webapp/deleteContact.jsp
 msgid "The contact has been deleted from the address book."
@@ -839,7 +825,7 @@ msgstr "Beállítások elmentve."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "Általános"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -863,7 +849,7 @@ msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "Privacy"
-msgstr ""
+msgstr "Adatvédelem"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
@@ -936,8 +922,7 @@ msgstr "Teljes E-mail Személyazonosság a Következőhöz {0}: "
 #: src/main/webapp/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr ""
-"Senkinek ne mutasd meg a fenti információt! Tartalmazza a prvát kulcsaitdat."
+msgstr "Senkinek ne mutasd meg a fenti információt! Tartalmazza a prvát kulcsaitdat."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -1001,7 +986,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Fingerprint:"
-msgstr ""
+msgstr "Ujjlenyomat:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
@@ -1037,7 +1022,7 @@ msgstr "Személyazonosság törlése"
 
 #: src/main/webapp/connectError.jsp
 msgid "Error Details"
-msgstr ""
+msgstr "Hiba Részletek"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "(leave blank to not encrypt identities)"
@@ -1189,7 +1174,7 @@ msgstr ""
 
 #: src/main/webapp/debug.jsp
 msgid "Debug"
-msgstr ""
+msgstr "Debug"
 
 #: src/main/webapp/debug.jsp
 msgid "Debug Page"
@@ -1258,8 +1243,8 @@ msgstr ""
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
 msgstr ""
 
 #: src/main/webapp/importContact.jsp

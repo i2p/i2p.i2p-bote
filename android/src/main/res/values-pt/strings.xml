@@ -208,6 +208,8 @@
   <string name="new_password">Nova senha</string>
   <string name="confirm_new_password">Confirmar a nova senha</string>
   <string name="remove_password_info">Para remover a senha deixe os campos \"Nova senha\" em branco.</string>
+  <string name="old_password_incorrect">A palavra-passe antiga não está correta.</string>
+  <string name="new_password_mismatch">A nova palavra-passe e a sua confirmação não coincidem.</string>
   <string name="password_changed">Senha alterada com sucesso</string>
   <string name="pref_title_identities">Identidades</string>
   <string name="no_identities">Nenhuma Identidade</string>

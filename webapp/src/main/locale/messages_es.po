@@ -14,7 +14,7 @@
 # punkibastardo <punkibastardo@gmail.com>, 2011, 2012
 # punkibastardo <punkibastardo@gmail.com>, 2011-2012
 # strel, 2013
-# strel, 2013,2015-2016
+# strel, 2013,2015-2017
 # Trolly, 2013
 # Trolly, 2013
 # walking <walking@i2pmail.org>, 2011
@@ -22,14 +22,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2019-03-18 21:46+0000\n"
+"Last-Translator: Anatoli F. Peña Castillo <djanatoli@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otf/I2P/language/es/)\n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
@@ -181,9 +181,7 @@ msgstr "Error al enviar el correo: {0}"
 #: src/main/java/i2p/bote/web/SendEmailTag.java:114
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
-msgstr ""
-"La dirección no contiene ningún destino de correo electrónico ni una "
-"dirección de correo externa: {0}"
+msgstr "La dirección no contiene ningún destino de correo electrónico ni una dirección de correo externa: {0}"
 
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:43
 msgid "BktPfx"
@@ -223,9 +221,7 @@ msgstr "- I2P-Bote"
 
 #: src/main/webapp/header.jsp
 msgid "Password is cached. Click to clear the password cache."
-msgstr ""
-"Contraseña guardada en caché. Pulse aquí para limpiar la caché de "
-"contraseñas."
+msgstr "Contraseña guardada en caché. Pulse aquí para limpiar la caché de contraseñas."
 
 #: src/main/webapp/header.jsp
 msgid "I2P-Bote"
@@ -279,9 +275,7 @@ msgstr "Acerca de"
 msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
-msgstr ""
-"Para que I2P-Bote funcione adecuadamente, debe descargar los ficheros de JCE "
-"Unlimited Strenght Jurisdiction Policy, y moverlos a esta carpeta:"
+msgstr "Para que I2P-Bote funcione adecuadamente, debe descargar los ficheros de JCE Unlimited Strenght Jurisdiction Policy, y moverlos a esta carpeta:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
@@ -443,9 +437,7 @@ msgstr "Red"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"No hay disponible información sobre la red, dado que I2P-Bote aún no está "
-"conectado."
+msgstr "No hay disponible información sobre la red, dado que I2P-Bote aún no está conectado."
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -523,48 +515,32 @@ msgstr "Violación de seguridad CSRF"
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr ""
-"Para poder recibir correos de otras personas, primero tiene que crear una "
-"identidad de correo electrónico I2P-Bote"
+msgstr "Para poder recibir correos de otras personas, primero tiene que crear una identidad de correo electrónico I2P-Bote"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"Cada identidad de correo I2P-Bote está asociada a un destino de correo "
-"electrónico. Cualquiera puede mandar correos a este destino, pero tan sólo "
-"el poseedor de la identidad los puede leer."
+msgstr "Cada identidad de correo I2P-Bote está asociada a un destino de correo electrónico. Cualquiera puede mandar correos a este destino, pero tan sólo el poseedor de la identidad los puede leer."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"De alguna manera, las identidades de correo I2P-Bote son equivalentes a las "
-"cuentas de correo electrónico tradicional - con la importante excepción de "
-"que no hay proveedor de servicio que pueda leer sus correos, dado que I2P-"
-"Bote guarda todos los correos de manera cifrada en los nodos I2P-Bote de la "
-"red."
+msgstr "De alguna manera, las identidades de correo I2P-Bote son equivalentes a las cuentas de correo electrónico tradicional - con la importante excepción de que no hay proveedor de servicio que pueda leer sus correos, dado que I2P-Bote guarda todos los correos de manera cifrada en los nodos I2P-Bote de la red."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Bote descifra automáticamente los correo que usted recibe usando la "
-"identidad de correo electrónico I2P-Bote que creó. Las identidades de correo "
-"electrónico se almacenan en un fichero llamado 'identities'; nunca comparta "
-"este fichero, con nadie, u otros serán capaces de leer sus correos."
+msgstr "I2P-Bote descifra automáticamente los correo que usted recibe usando la identidad de correo electrónico I2P-Bote que creó. Las identidades de correo electrónico se almacenan en un fichero llamado 'identities'; nunca comparta este fichero, con nadie, u otros serán capaces de leer sus correos."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr ""
-"Divulge el destino de su correo electrónico para que otros puedan contactar "
-"con usted."
+msgstr "Divulge el destino de su correo electrónico para que otros puedan contactar con usted."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -579,22 +555,14 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr ""
-"Cuando crea una nueva identidad de correo I2P-Bote puede elegir el tipo de "
-"cifrado que se usará para esa identidad. Aunque todos los algoritmos de "
-"cifrado ofrecidos por I2P-Bote proveen de un alto nivel de privacidad, la "
-"longitud de un destino de correo depende del cifrado usado. La elección del "
-"cifrado también determina qué algoritmo se usa para firmar."
+msgstr "Cuando crea una nueva identidad de correo I2P-Bote puede elegir el tipo de cifrado que se usará para esa identidad. Aunque todos los algoritmos de cifrado ofrecidos por I2P-Bote proveen de un alto nivel de privacidad, la longitud de un destino de correo depende del cifrado usado. La elección del cifrado también determina qué algoritmo se usa para firmar."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr ""
-"Se recomienda generalmente elegir el cifrado de curva elíptica de 256 bits "
-"porque produce los destinos I2P de correo electrónico más cortos (86 "
-"caracteres) mientras continúa siendo altamente seguro."
+msgstr "Se recomienda generalmente elegir el cifrado de curva elíptica de 256 bits porque produce los destinos I2P de correo electrónico más cortos (86 caracteres) mientras continúa siendo altamente seguro."
 
 #: src/main/webapp/sendEmail.jsp
 msgid "New Email"
@@ -764,10 +732,7 @@ msgstr "Si no ha definido contraseña, deje libre el campo Anterior contraseña.
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr ""
-"Por favor, observe que si se establece una contraseña los correos no pueden "
-"comprobarse automáticamente, sólo manualmente al pulsar el botón Comprobar "
-"correo."
+msgstr "Por favor, observe que si se establece una contraseña los correos no pueden comprobarse automáticamente, sólo manualmente al pulsar el botón Comprobar correo."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -789,9 +754,7 @@ msgstr "Aceptar"
 msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
-msgstr ""
-"El correo no se pudo encontrar en esta carpeta. Probablemente fue movido a "
-"la carpeta Enviados."
+msgstr "El correo no se pudo encontrar en esta carpeta. Probablemente fue movido a la carpeta Enviados."
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
@@ -907,9 +870,7 @@ msgstr "Privacidad"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Mantener en inglés los añadidos en los correos salientes ('Re:', 'wrote:' "
-"etc.)"
+msgstr "Mantener en inglés los añadidos en los correos salientes ('Re:', 'wrote:' etc.)"
 
 #: src/main/webapp/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -941,9 +902,7 @@ msgstr "minutos"
 
 #: src/main/webapp/settings.jsp
 msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr ""
-"Usar una pasarela ('gateway') para enviar correos a direcciones de correo  "
-"no-I2P"
+msgstr "Usar una pasarela ('gateway') para enviar correos a direcciones de correo  no-I2P"
 
 #: src/main/webapp/settings.jsp
 msgid "Email Destination of the gateway:"
@@ -980,8 +939,7 @@ msgstr "Identidad de correo electrónico I2P-Bote completa para {0}:"
 #: src/main/webapp/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr ""
-"¡No muestre la información anterior a nadie! Contiene sus claves privadas."
+msgstr "¡No muestre la información anterior a nadie! Contiene sus claves privadas."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -1005,9 +963,7 @@ msgstr "Editar identidad de correo electrónico"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr ""
-"Una identidad de correo I2P-Bote le permite recibir correo electrónico de "
-"otros usuarios de I2P-Bote."
+msgstr "Una identidad de correo I2P-Bote le permite recibir correo electrónico de otros usuarios de I2P-Bote."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Public Name:"
@@ -1131,9 +1087,7 @@ msgstr "Pulse para enviar un correo"
 
 #: src/main/webapp/about.jsp
 msgid "Maintenance, user experience, extended features, Android app"
-msgstr ""
-"Mantenimiento, experiencia del usuario, características extendidas, "
-"aplicación Android"
+msgstr "Mantenimiento, experiencia del usuario, características extendidas, aplicación Android"
 
 #: src/main/webapp/about.jsp
 msgid "Past developers:"
@@ -1153,9 +1107,7 @@ msgstr "Contribuciones por:"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr ""
-"Concepto técnico, traducción, control de calidad (QA), usabilidad, respuesta "
-"técnica del usuario"
+msgstr "Concepto técnico, traducción, control de calidad (QA), usabilidad, respuesta técnica del usuario"
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
@@ -1223,9 +1175,7 @@ msgstr "Versión de pruebas alpha"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes, translation updates from tx"
-msgstr ""
-"Reparaciones de código, actualización de traducciones desde tx (cliente de "
-"línea de comandos Transifex)"
+msgstr "Reparaciones de código, actualización de traducciones desde tx (cliente de línea de comandos Transifex)"
 
 #: src/main/webapp/about.jsp
 msgid "Code fixes"
@@ -1289,9 +1239,7 @@ msgstr "(opcional, 2000 caracteres máx.)"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "The identity has been added to the address directory."
-msgstr ""
-"La identidad de correo I2P-Bote ha sido añadida al repositorio de "
-"direcciones."
+msgstr "La identidad de correo I2P-Bote ha sido añadida al repositorio de direcciones."
 
 #: src/main/webapp/importContact.jsp
 msgid "Address Directory Lookup"
@@ -1303,8 +1251,7 @@ msgstr "El nombre ha sido importado a la libreta de direcciones."
 
 #: src/main/webapp/importContact.jsp
 msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr ""
-"El nombre &quot;{0}&quot; no fue encontrado en el repositorio de direcciones."
+msgstr "El nombre &quot;{0}&quot; no fue encontrado en el repositorio de direcciones."
 
 #: src/main/webapp/importContact.jsp
 msgid "Import Contact"
@@ -1313,13 +1260,9 @@ msgstr "Importar contacto"
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-"Se ha encontrado un registro coincidente en el repositorio de direcciones. "
-"Observe que el directorio de direcciones puede ser manipulado, así que no "
-"pulse &quot;importar&quot; a no ser que confie en que ese es el destino de "
-"correo correcto."
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "Se ha encontrado un registro coincidente en el repositorio de direcciones. Observe que el directorio de direcciones puede ser manipulado, así que no pulse &quot;importar&quot; a no ser que confie en que ese es el destino de correo correcto."
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
@@ -1335,15 +1278,13 @@ msgstr "Por favor espere..."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The Email Identity is being generated. This may take a while."
-msgstr ""
-"La identidad del correo electrónico se está generando. Esto puede llevar un "
-"tiempo."
+msgstr "La identidad del correo electrónico se está generando. Esto puede llevar un tiempo."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid ""
 "This encryption type does not support destinations that start with {0}. "
 "Valid initial characters are {1}."
-msgstr ""
+msgstr "Este tipo de cifrado no soporta destinos I2P que comiencen con {0}. Los caracteres iniciales válidos son {1}."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."

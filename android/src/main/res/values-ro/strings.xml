@@ -15,11 +15,13 @@
   <string name="log_in">Autentificare</string>
   <string name="log_out">Deautentificare</string>
   <string name="action_new_email">Email nou</string>
+  <string name="action_attach_file">Atașare fișier</string>
   <string name="action_send_email">Trimite email</string>
   <string name="action_start_bote">Conecare la retea</string>
   <string name="action_stop_bote">Deconectat de la retea</string>
   <string name="action_settings">Setari</string>
   <string name="check_email">Verifică email</string>
+  <string name="checking_email">Verificare email...</string>
   <!--Argument is a number-->
   <!--Argument is a number-->
   <string name="items_selected">%s selectat</string>
@@ -34,6 +36,7 @@
   <string name="password_incorrect">Parola nu a fost corecta</string>
   <string name="password_file_error">Nu s-a putut citi fisierul de verificare al parolei</string>
   <string name="folder_inbox">Primite</string>
+  <string name="folder_outbox">Netrimise</string>
   <string name="folder_sent">Trimite</string>
   <string name="folder_trash">Gunoi</string>
   <string name="address_book">Agendă</string>
@@ -53,6 +56,7 @@
     <item quantity="few">%d email-uri noi</item>
     <item quantity="other">%d de email-uri noi</item>
   </plurals>
+  <string name="queued">În coadă</string>
   <string name="sending">Se trimite</string>
   <!--Argument 1: how many recipients the email has been sent to so far.
      Argument 2: the total number of recipients the email will be sent to.-->
@@ -61,25 +65,32 @@
      Argument 2: the total number of recipients the email will be sent to.-->
   <string name="sent_to">Trimis la %1$d din %2$d destinatari</string>
   <string name="email_sent">Email trimis</string>
+  <string name="gateway_disabled">poarta de acces dezactivat</string>
   <string name="email_not_found">Email-ul nu a fost găsit</string>
   <string name="email_from">De la:</string>
   <string name="email_to">Pentru:</string>
+  <string name="email_cc">Cc:</string>
+  <string name="email_bcc">Bcc:</string>
   <string name="label_sent">Trimis:</string>
   <string name="email_received">Primit:</string>
   <string name="email_status">Stare:</string>
   <string name="reply">Raspunde</string>
   <string name="reply_all">Raspunde la toate</string>
   <string name="forward">Inaintare</string>
+  <string name="save">Salvează</string>
   <string name="compose">Compune</string>
   <string name="subject">Subiect</string>
   <string name="compose_email">Compune email</string>
   <!--Argument is a file size, e.g. "500 KB"-->
   <string name="add_one_recipient">Adăugați cel puțin un destinatar.</string>
   <string name="all_changes_will_be_discarded">Toate modificările vor fi eliminate.</string>
+  <string name="response_prefix_re">Re:</string>
   <!--Used in email replies above quoted text, like "Bob wrote:"-->
   <string name="response_quote_wrote">%s a scris:</string>
   <string name="address_book_empty">Agenda este goală</string>
   <string name="share">Partajare</string>
+  <string name="copy">Copiază</string>
+  <string name="fingerprint">Amprentă</string>
   <string name="action_new_contact">Contact nou</string>
   <string name="edit_contact">Editare contact</string>
   <string name="select_a_picture">Selectați o imagine</string>
@@ -92,11 +103,20 @@
   <string name="not_a_valid_bote_address">Aceasta nu este o adresă Bote validă</string>
   <string name="delete_contact">Ștergeți contactul?</string>
   <string name="not_set">Ne configurat</string>
+  <string name="reachable">Accesibil</string>
+  <string name="unreachable">Indisponibil</string>
   <string name="relay_peers">Parteneri releu:</string>
   <string name="banned_peers">Parteneri interziși:</string>
+  <string name="settings_label_network">Rețea</string>
   <string name="pref_summ_checkInterval">%s minute</string>
+  <string name="pref_summ_delivery">Verificați starea de livrare de e-mailuri trimise</string>
+  <string name="pref_title_privacy">Securitate</string>
   <string name="pref_summ_minDelay">%s minute</string>
   <string name="pref_summ_maxDelay">%s minute</string>
+  <string name="settings_label_appearance">Aspect</string>
+  <string name="settings_label_language">Limbă</string>
+  <string name="settings_default">Implicit</string>
+  <string name="settings_label_advanced">Avansat</string>
   <string name="router_settings">Configurări ruter</string>
   <string name="auto">Automat</string>
   <string name="manual">Manual</string>
@@ -110,6 +130,8 @@
   <string name="old_password">Parola veche</string>
   <string name="new_password">Parola nouă</string>
   <string name="confirm_new_password">Confirmați parola nouă</string>
+  <string name="old_password_incorrect">Parola veche nu este corectă.</string>
+  <string name="new_password_mismatch">Parolă noua și parola de confirmare nu coincid.</string>
   <string name="password_changed">Parola s-a schimbat cu succes</string>
   <string name="pref_title_identities">Identități</string>
   <string name="new_identity">Identitate nouă...</string>
@@ -130,6 +152,12 @@
   <string name="no_identities_found_maybe_encrypted">Nu s-au găsit identități. Fișierul este criptat?</string>
   <string name="identities_imported">Identități importate</string>
   <string name="this_field_is_required">Acest câmp este necesar</string>
+  <string name="help">Ajutor</string>
+  <string name="start">Start</string>
+  <string name="changelog">Istoria schimbărilor</string>
+  <string name="about">Despre</string>
+  <string name="version">Versiune</string>
   <!--As in software license, e.g. Apache License v2-->
   <!--Software libraries-->
+  <!--Argument is a folder name-->
 </resources>

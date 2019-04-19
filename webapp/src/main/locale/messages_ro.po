@@ -4,16 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2019-01-16 13:43+0000\n"
+"Last-Translator: A C <ana@shiftout.net>\n"
 "Language-Team: Romanian (http://www.transifex.com/otf/I2P/language/ro/)\n"
-"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
-"2:1));\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:115
@@ -125,12 +124,12 @@ msgstr "Motiv de Ban"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:189
 msgid "Reachable"
-msgstr ""
+msgstr "Accesibil"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:186
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:190
 msgid "Unreachable"
-msgstr ""
+msgstr "Indisponibil"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:223
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:230
@@ -262,7 +261,7 @@ msgstr ""
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
-msgstr ""
+msgstr "Ghidaj"
 
 #: src/main/webapp/identities.jsp
 msgid "Email Identities"
@@ -386,7 +385,7 @@ msgstr "Nume"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete"
@@ -420,9 +419,7 @@ msgstr "Rețea"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"Informație de rețea nu este disponibila, deoarece I2P-Bote încă nu a început "
-"conectarea la rețea ."
+msgstr "Informație de rețea nu este disponibila, deoarece I2P-Bote încă nu a început conectarea la rețea ."
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -500,54 +497,38 @@ msgstr ""
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr ""
-"Pentru a primi e-mail-uri de la alte persoane, aveți nevoie în primul rând "
-"de a crea o identitate de e-mail. "
+msgstr "Pentru a primi e-mail-uri de la alte persoane, aveți nevoie în primul rând de a crea o identitate de e-mail. "
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"Fiecare identitate e-mail este asociată cu o destinație e-mail. Oricine "
-"poate trimite e-mail la destinația e-mail, ci numai titularul de identitate "
-"le poate citi."
+msgstr "Fiecare identitate e-mail este asociată cu o destinație e-mail. Oricine poate trimite e-mail la destinația e-mail, ci numai titularul de identitate le poate citi."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"Într-un sens, identități e-mail sunt echivalentul a conturilor de e-mail "
-"traditionale - cu excepția faptului că nu există nici un furnizor care poate "
-"citi toate e-mail-uri, deoarece depozit I2P-Bote toate mesajele de poștă "
-"electronică sunt criptate în rețea."
+msgstr "Într-un sens, identități e-mail sunt echivalentul a conturilor de e-mail traditionale - cu excepția faptului că nu există nici un furnizor care poate citi toate e-mail-uri, deoarece depozit I2P-Bote toate mesajele de poștă electronică sunt criptate în rețea."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Bote decriptează automat e-mailuri trimise la tine, folosind "
-"identitatea  de e-mail ce ați creat. Identități de e-mail sunt stocate într-"
-"un fișier numit identități, nu da acest fișier pentru oricine sau ei vor "
-"putea să citească toate mesajele de poștă electronică."
+msgstr "I2P-Bote decriptează automat e-mailuri trimise la tine, folosind identitatea  de e-mail ce ați creat. Identități de e-mail sunt stocate într-un fișier numit identități, nu da acest fișier pentru oricine sau ei vor putea să citească toate mesajele de poștă electronică."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr ""
-"Nu dati destinația e-mail, astfel încât ceilalți puteți sa va contactati."
+msgstr "Nu dati destinația e-mail, astfel încât ceilalți puteți sa va contactati."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is easy to create multiple identities for different purposes, or "
 "different contacts."
-msgstr ""
-"Este ușor de a crea mai multe identități pentru scopuri diferite, sau "
-"diferite contacte."
+msgstr "Este ușor de a crea mai multe identități pentru scopuri diferite, sau diferite contacte."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -556,22 +537,14 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr ""
-"Când creați o identitate nouă e-mail, puteți alege tipul de criptare, care "
-"va fi utilizat de către identitatea e-mail. În timp ce toate algoritmi de "
-"criptare oferite de I2P-Bote oferă un nivel ridicat de intimitate, durata de "
-"o destinație de e-mail depinde de criptare folosite. Alegerea de criptare "
-"determină, de asemenea, algoritmul de semnare utilizat ."
+msgstr "Când creați o identitate nouă e-mail, puteți alege tipul de criptare, care va fi utilizat de către identitatea e-mail. În timp ce toate algoritmi de criptare oferite de I2P-Bote oferă un nivel ridicat de intimitate, durata de o destinație de e-mail depinde de criptare folosite. Alegerea de criptare determină, de asemenea, algoritmul de semnare utilizat ."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr ""
-"În general, este recomandat sa alegeti tipul de criptare 256-bit curbe "
-"eliptice, deoarece produce cele mai scurte destinațiile de e-mail (86 "
-"caractere), fiind în același timp extrem de sigur."
+msgstr "În general, este recomandat sa alegeti tipul de criptare 256-bit curbe eliptice, deoarece produce cele mai scurte destinațiile de e-mail (86 caractere), fiind în același timp extrem de sigur."
 
 #: src/main/webapp/sendEmail.jsp
 msgid "New Email"
@@ -707,7 +680,7 @@ msgstr "{0} a scris:"
 
 #: src/main/webapp/faq.jsp
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Întrebări frecvente"
 
 #: src/main/webapp/deleteContact.jsp
 msgid "The contact has been deleted from the address book."
@@ -741,10 +714,7 @@ msgstr "Dacă nu ați setat o parolă, lăsați necompletată parola veche."
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr ""
-"Vă rugăm să rețineți că, dacă este setată o parolă, e-mailuri nu pot fi "
-"verificate în mod automat, ci numai atunci când butonul verifica e-mail este "
-"apăsat."
+msgstr "Vă rugăm să rețineți că, dacă este setată o parolă, e-mailuri nu pot fi verificate în mod automat, ci numai atunci când butonul verifica e-mail este apăsat."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -854,7 +824,7 @@ msgstr "Setări au fost salvate."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -878,13 +848,11 @@ msgstr "Teme:"
 
 #: src/main/webapp/settings.jsp
 msgid "Privacy"
-msgstr ""
+msgstr "Securitate"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Utilizați engleză pentru textul adăugat la e-mail de ieșire (\"Re:\", "
-"\"wrote:\", etc)"
+msgstr "Utilizați engleză pentru textul adăugat la e-mail de ieșire (\"Re:\", \"wrote:\", etc)"
 
 #: src/main/webapp/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -953,9 +921,7 @@ msgstr "identitate complet de e-mail pentru {0}:"
 #: src/main/webapp/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr ""
-"Nu afișați informațiile de mai sus pentru oricine! Acesta conține cheile "
-"private."
+msgstr "Nu afișați informațiile de mai sus pentru oricine! Acesta conține cheile private."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -979,9 +945,7 @@ msgstr "Editarea identitatii e-mail "
 
 #: src/main/webapp/editIdentity.jsp
 msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr ""
-"O identitate e-mail vă permite să primiți e-mail de la alți utilizatori I2P-"
-"Bote."
+msgstr "O identitate e-mail vă permite să primiți e-mail de la alți utilizatori I2P-Bote."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Public Name:"
@@ -1065,7 +1029,7 @@ msgstr ""
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export"
-msgstr ""
+msgstr "Exportă"
 
 #: src/main/webapp/password.jsp
 msgid "Password Required"
@@ -1278,13 +1242,9 @@ msgstr "Importă contact"
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-"O înregistrare de potrivire a fost găsit în agenda de adrese. Rețineți că "
-"agenda de adrese nu este sigura împotriva manipulării, așa că nu faceți clic "
-"pe \"import\" dacă nu aveți încredere că aceasta este destinația de e-mail "
-"corecta."
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "O înregistrare de potrivire a fost găsit în agenda de adrese. Rețineți că agenda de adrese nu este sigura împotriva manipulării, așa că nu faceți clic pe \"import\" dacă nu aveți încredere că aceasta este destinația de e-mail corecta."
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "

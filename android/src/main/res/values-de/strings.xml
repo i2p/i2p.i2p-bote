@@ -62,6 +62,7 @@
   <string name="checking_password">Passwort wird überprüft …</string>
   <string name="password_incorrect">Passwort war falsch</string>
   <string name="password_file_error">Konnte Passwortverifikationsdatei nicht lesen</string>
+  <string name="all_mail">Alle Nachrichten</string>
   <string name="folder_inbox">Posteingang</string>
   <string name="folder_outbox">Postausgang</string>
   <string name="folder_sent">Gesendet</string>
@@ -208,6 +209,8 @@
   <string name="new_password">Neues Passwort</string>
   <string name="confirm_new_password">Neues Passwort bestätigen</string>
   <string name="remove_password_info">Um das Passwort zu entfernen, lassen Sie das \'Neues Passwort\'-Feld leer.</string>
+  <string name="old_password_incorrect">Das alte Passwort ist nicht korrekt.</string>
+  <string name="new_password_mismatch">Das neue Passwort und die Bestätigung stimmen nicht überein.</string>
   <string name="password_changed">Passwort erfolgreich geändert</string>
   <string name="pref_title_identities">Identitäten</string>
   <string name="no_identities">Keine Identitäten</string>
@@ -219,6 +222,7 @@
   <string name="default_identity">Standardidentität</string>
   <string name="save_identity">Identität speichern</string>
   <string name="delete_identity">Identität löschen?</string>
+  <string name="invalid_vanity_chars">Diese Verschlüsselungsart unterstützt keine Ziele, die mit \'%1$s\' beginnen. Zulässige Anfangszeichen sind \'%2$s\'.</string>
   <string name="identity_saved">Identität gespeichert</string>
   <string name="export_identities">Identitäten exportieren</string>
   <string name="passwords_do_not_match">Passwörter stimmen nicht überein</string>
@@ -231,6 +235,14 @@
   <string name="no_identities_found_maybe_encrypted">Keine Identitäten gefunden. Ist die Datei verschlüsselt?</string>
   <string name="identities_imported">Identitäten importiert</string>
   <string name="this_field_is_required">Dieses Feld ist erforderlich</string>
+  <string name="export_address_book">Adressbuch exportieren</string>
+  <string name="exporting_address_book">Exportiere Adressbuch</string>
+  <string name="address_book_exported">Adressbuch exportiert zum Download Ordner</string>
+  <string name="import_address_book">Adressbuch importieren</string>
+  <string name="importing_address_book">Importiere Adressbuch</string>
+  <string name="no_contacts_found">Es wurden keine Kontakte gefunden.</string>
+  <string name="no_contacts_found_maybe_encrypted">Es wurden keine Kontakte gefunden. Ist die Datei verschlüsselt?</string>
+  <string name="address_book_imported">Adressbuch importiert</string>
   <string name="bote_dest_for">Bote-Adresse für %s</string>
   <string name="copied_to_clipboard">In die Zwischenablage kopiert</string>
   <string name="help">Hilfe</string>
@@ -242,5 +254,11 @@
   <string name="license">Lizenz: %s</string>
   <!--Software libraries-->
   <string name="libraries">Bibliotheken</string>
+  <string name="re_encrypting_identities">Verschlüssele Identitäten neu...</string>
+  <string name="re_encrypting_address_book">Verschlüssele Adressbuch neu...</string>
   <!--Argument is a folder name-->
+  <string name="re_encrypting_folder">Verschlüssele Ordner %s neu...</string>
+  <string name="updating_password_file">Aktualisierung der Passwortdatei...</string>
+  <string name="generating_keys">Generiere Schlüssel...</string>
+  <string name="saving_identity">Speichere Identität...</string>
 </resources>

@@ -64,6 +64,7 @@
   <string name="checking_password">Sprawdzanie hasła...</string>
   <string name="password_incorrect">Hasło jest nieprawidłowe</string>
   <string name="password_file_error">Nie można było odczytać hasła pliku weryfikacyjnego</string>
+  <string name="all_mail">Wszystkie wiadomości</string>
   <string name="folder_inbox">Odebrane</string>
   <string name="folder_outbox">Do Wysłania</string>
   <string name="folder_sent">Wysłane</string>
@@ -214,6 +215,8 @@
   <string name="new_password">Nowe hasło</string>
   <string name="confirm_new_password">Potwierdź nowe hasło</string>
   <string name="remove_password_info">Aby usunąć hasło, pole \'Nowe hasło\' zostaw puste.</string>
+  <string name="old_password_incorrect">Stare hasło jest nieprawidłowe.</string>
+  <string name="new_password_mismatch">Nowe hasło i potwierdzenie hasła nie zgadzają się.</string>
   <string name="password_changed">Hasło zostało zmienione</string>
   <string name="pref_title_identities">Tożsamości</string>
   <string name="no_identities">Brak tożsamości</string>
@@ -225,6 +228,7 @@
   <string name="default_identity">Domyślna Tożsamość</string>
   <string name="save_identity">Zapisz tożsamość</string>
   <string name="delete_identity">Usunąć tożsamość?</string>
+  <string name="invalid_vanity_chars">Ten typ szyfrowania nie wspiera adresów rozpoczynających się od \'%1$s\'. Powinien rozpoczynać się od: \'%2$s\'.</string>
   <string name="identity_saved">Tożsamość zapisana</string>
   <string name="export_identities">Eksportuj tożsamości</string>
   <string name="passwords_do_not_match">Hasła nie zgadzają się</string>
@@ -237,6 +241,14 @@
   <string name="no_identities_found_maybe_encrypted">Nie znaleziono żadnych tożsamości. Czy plik jest szyfrowany?</string>
   <string name="identities_imported">Tożsamości importowane</string>
   <string name="this_field_is_required">Te pole jest wymagane</string>
+  <string name="export_address_book">Eksportuj książkę adresową</string>
+  <string name="exporting_address_book">Eksportowanie książki adresowej</string>
+  <string name="address_book_exported">Wyeksportowano książkę adresową do katalogu \'Downloads\'</string>
+  <string name="import_address_book">Importuj książkę adresową</string>
+  <string name="importing_address_book">Importowanie książki adresowej</string>
+  <string name="no_contacts_found">Nie znaleziono kontaktów.</string>
+  <string name="no_contacts_found_maybe_encrypted">Nie znaleziono kontaktów. Może plik jest szyfrowany?</string>
+  <string name="address_book_imported">Zaimportowano książkę adresową</string>
   <string name="bote_dest_for">Adres Bote dla %s</string>
   <string name="copied_to_clipboard">Skopiowano do schowka</string>
   <string name="help">Pomoc</string>
@@ -248,5 +260,11 @@
   <string name="license">Licencja: %s</string>
   <!--Software libraries-->
   <string name="libraries">Biblioteki</string>
+  <string name="re_encrypting_identities">Ponowne szyfrowanie tożsamości…</string>
+  <string name="re_encrypting_address_book">Ponowne szyfrowanie książki adresowej…</string>
   <!--Argument is a folder name-->
+  <string name="re_encrypting_folder">Ponowne szyfrowanie katalogu %s…</string>
+  <string name="updating_password_file">Aktualizacja pliku hasła…</string>
+  <string name="generating_keys">Tworzenie kluczy…</string>
+  <string name="saving_identity">Zapisywanie tożsamości…</string>
 </resources>

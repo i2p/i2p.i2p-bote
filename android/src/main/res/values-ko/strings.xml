@@ -61,6 +61,7 @@
   <string name="checking_password">패스워드 확인중...</string>
   <string name="password_incorrect">패스워드가 일치하지 않습니다</string>
   <string name="password_file_error">패스워드 증명 파일을 읽을 수 없습니다</string>
+  <string name="all_mail">모든 메일</string>
   <string name="folder_inbox">받은 편지함</string>
   <string name="folder_outbox">임시 보관함</string>
   <string name="folder_sent">보낸 이메일</string>
@@ -205,6 +206,8 @@
   <string name="new_password">새 패스워드:</string>
   <string name="confirm_new_password">새 패스워드 확인:</string>
   <string name="remove_password_info">패스워드를 지우려면 \'새 패스워드\' 필드를 공란으로 두십시오.</string>
+  <string name="old_password_incorrect">예전 패스워드가 일치하지 않습니다.</string>
+  <string name="new_password_mismatch">패스워드 확인이 일치하지 않습니다.</string>
   <string name="password_changed">패스워드가 성공적으로 변경되었습니다</string>
   <string name="pref_title_identities">신원</string>
   <string name="no_identities">신원 없음</string>
@@ -216,6 +219,7 @@
   <string name="default_identity">기본 신원</string>
   <string name="save_identity">신원 저장</string>
   <string name="delete_identity">신원을 삭제합니까?</string>
+  <string name="invalid_vanity_chars">이 암호화 종류는 \'%1$s\'로 시작하는 목적지를 지원하지 않습니다. 올바른 최초 문자는 \'%2$s\'입니다.</string>
   <string name="identity_saved">신원 저장됨</string>
   <string name="export_identities">신원 내보내기</string>
   <string name="passwords_do_not_match">패스워드가 일치하지 않습니다</string>
@@ -228,6 +232,14 @@
   <string name="no_identities_found_maybe_encrypted">신원이 발견되지 않았습니다. 파일이 암호화되었습니까?</string>
   <string name="identities_imported">신원 불러옴</string>
   <string name="this_field_is_required">해당 필드는 필수입니다</string>
+  <string name="export_address_book">주소록 내보내기</string>
+  <string name="exporting_address_book">주소록을 내보냅니다</string>
+  <string name="address_book_exported">다운로드 폴더에 주소록을 내보냈습니다</string>
+  <string name="import_address_book">주소록 가져오기</string>
+  <string name="importing_address_book">주소록을 가져옵니다</string>
+  <string name="no_contacts_found">찾은 연락처가 없습니다.</string>
+  <string name="no_contacts_found_maybe_encrypted">찾은 연락처가 없습니다. 파일이 암호화 되었나요?</string>
+  <string name="address_book_imported">주소록을 가져왔습니다</string>
   <string name="bote_dest_for">%s를 위한 Bote 주소</string>
   <string name="copied_to_clipboard">클립보드에 복사됬습니다</string>
   <string name="help">도움말</string>
@@ -239,5 +251,11 @@
   <string name="license">라이선스: %s</string>
   <!--Software libraries-->
   <string name="libraries">라이브러리</string>
+  <string name="re_encrypting_identities">신분 다시 암호화 중...</string>
+  <string name="re_encrypting_address_book">주소록 다시 암호화 중...</string>
   <!--Argument is a folder name-->
+  <string name="re_encrypting_folder">%s 폴더 다시 암호화 중...</string>
+  <string name="updating_password_file">비밀번호 파일 업데이트 중...</string>
+  <string name="generating_keys">키 만드는 중...</string>
+  <string name="saving_identity">신분 저장중...</string>
 </resources>

@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2018-11-14 19:47+0000\n"
+"Last-Translator: Klevis Lika <likaklevis@gmail.com>\n"
 "Language-Team: Albanian (http://www.transifex.com/otf/I2P/language/sq/)\n"
-"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sq\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
@@ -85,12 +85,12 @@ msgstr "U mor email i ri"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:90
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:196
 msgid "Kademlia Peers:"
-msgstr ""
+msgstr "Peers'ët Kademlia:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:114
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:238
 msgid "Relay Peers:"
-msgstr ""
+msgstr "Peersët ritransmetues:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:118
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:144
@@ -261,9 +261,7 @@ msgstr "Rreth"
 msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
-msgstr ""
-"Që I2P-Bote të funksionojë si duhet, duhet të shkarkoni kartelat JCE "
-"Unlimited Strength Jurisdiction Policy dhe t’i sillni në këtë dosje:"
+msgstr "Që I2P-Bote të funksionojë si duhet, duhet të shkarkoni kartelat JCE Unlimited Strength Jurisdiction Policy dhe t’i sillni në këtë dosje:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
@@ -407,7 +405,7 @@ msgstr "Shtoni Marrës"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Return"
-msgstr ""
+msgstr "Kthehu"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Import from the public address directory"
@@ -425,9 +423,7 @@ msgstr "Rrjet"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"S’ka të dhëna për rrjetin, ngaqë I2P-Bote s’ka filluar të lidhet me rrjetin "
-"ende."
+msgstr "S’ka të dhëna për rrjetin, ngaqë I2P-Bote s’ka filluar të lidhet me rrjetin ende."
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -505,54 +501,38 @@ msgstr "Cenim Sigurie CSRF"
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr ""
-"Që të mund të merrni email nga persona të tjerë, lypset të krijoni së pari "
-"një identitet email-i."
+msgstr "Që të mund të merrni email nga persona të tjerë, lypset të krijoni së pari një identitet email-i."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"Çdo identitet email është i përshoqëruar me një vendmbërritje email. Kushdo "
-"mund të dërgojë email te një vendmbërritje email-esh, por vetëm i zoti i "
-"identitetit mund ta lexojë."
+msgstr "Çdo identitet email është i përshoqëruar me një vendmbërritje email. Kushdo mund të dërgojë email te një vendmbërritje email-esh, por vetëm i zoti i identitetit mund ta lexojë."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"Në njëfarë kuptimi, identitetet email janë e barasvlershmja e llogarive "
-"tradicionale email - vetëm se nuk ka më furnizues email-esh që mund të "
-"lexojë krejt email-et tuaja, ngaqë I2P-Bote i depoziton të fshehtëzuar tërë "
-"email-et në rrjet."
+msgstr "Në njëfarë kuptimi, identitetet email janë e barasvlershmja e llogarive tradicionale email - vetëm se nuk ka më furnizues email-esh që mund të lexojë krejt email-et tuaja, ngaqë I2P-Bote i depoziton të fshehtëzuar tërë email-et në rrjet."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Bote i shfshehtëzon vetvetiu email-et dërguar për ju, duke përdorur "
-"identitetin email që krijuat. Identitetet email depozitohen në një kartelë "
-"të quajtur identities; mos ia jepni kurrë këtë kartelë kujt, ndryshe ata do "
-"të jenë në gjendje të lexojnë krejt email-et tuaj."
+msgstr "I2P-Bote i shfshehtëzon vetvetiu email-et dërguar për ju, duke përdorur identitetin email që krijuat. Identitetet email depozitohen në një kartelë të quajtur identities; mos ia jepni kurrë këtë kartelë kujt, ndryshe ata do të jenë në gjendje të lexojnë krejt email-et tuaj."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
-msgstr ""
-"Jepuani vendmbërritjen email, që kështu të tjerët të mund të lidhen me ju."
+msgstr "Jepuani vendmbërritjen email, që kështu të tjerët të mund të lidhen me ju."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is easy to create multiple identities for different purposes, or "
 "different contacts."
-msgstr ""
-"Është e lehtë të krijohen identitete të shumta për qëllime të ndryshme, ose "
-"për kontakte të ndryshme."
+msgstr "Është e lehtë të krijohen identitete të shumta për qëllime të ndryshme, ose për kontakte të ndryshme."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -561,23 +541,14 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr ""
-"Kur krijoni një identitet të ri email-esh, mund të zgjidhni llojin e "
-"fshehtëzimit që do të përdoret nga ky identitet email-esh. Ndërkohë që krejt "
-"algoritmet e fshehtëzimeve të ofruar nga I2P-Bote furnizojnë një shkallë të "
-"lartë privatësie, gjatësia e një vendmbërritje email-esh varet nga "
-"fshehtëzimi i përdorur. Nga zgjedhja e fshehtëzimit varet edhe cili "
-"algoritëm nënshkrimesh përdoret."
+msgstr "Kur krijoni një identitet të ri email-esh, mund të zgjidhni llojin e fshehtëzimit që do të përdoret nga ky identitet email-esh. Ndërkohë që krejt algoritmet e fshehtëzimeve të ofruar nga I2P-Bote furnizojnë një shkallë të lartë privatësie, gjatësia e një vendmbërritje email-esh varet nga fshehtëzimi i përdorur. Nga zgjedhja e fshehtëzimit varet edhe cili algoritëm nënshkrimesh përdoret."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr ""
-"Përgjithësisht rekomandohet zgjedhja e fshehtëzimit me kurbë eliptike 256-"
-"bitëshe, ngaqë ky prodhon vendmbërritjet email më të shkurtra (86 shenja) "
-"duke qenë prapë shumë i sigurt."
+msgstr "Përgjithësisht rekomandohet zgjedhja e fshehtëzimit me kurbë eliptike 256-bitëshe, ngaqë ky prodhon vendmbërritjet email më të shkurtra (86 shenja) duke qenë prapë shumë i sigurt."
 
 #: src/main/webapp/sendEmail.jsp
 msgid "New Email"
@@ -741,18 +712,13 @@ msgstr "Caktoni Fjalëkalim të ri"
 
 #: src/main/webapp/setPassword.jsp
 msgid "If you have not set a password, leave the old password blank."
-msgstr ""
-"Nëse nuk keni caktuar një fjalëkalim, lëreni të zbrazët fjalëkalimin e "
-"vjetër."
+msgstr "Nëse nuk keni caktuar një fjalëkalim, lëreni të zbrazët fjalëkalimin e vjetër."
 
 #: src/main/webapp/setPassword.jsp
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr ""
-"Ju lutemi, kini parasysh se nëse caktohet një fjalëkalim, për email-e nuk "
-"mund të kontrollohet automatikisht, por vetëm kur klikohet mbi butonin "
-"Kontrollo Për Postë."
+msgstr "Ju lutemi, kini parasysh se nëse caktohet një fjalëkalim, për email-e nuk mund të kontrollohet automatikisht, por vetëm kur klikohet mbi butonin Kontrollo Për Postë."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -774,9 +740,7 @@ msgstr "OK"
 msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
-msgstr ""
-"Email-i s’u gjet dot në këtë dosje. Ka gjasa të jetë shpënë te dosja Të "
-"dërguar."
+msgstr "Email-i s’u gjet dot në këtë dosje. Ka gjasa të jetë shpënë te dosja Të dërguar."
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
@@ -872,7 +836,7 @@ msgstr "Kontrollo për email çdo {0} minuta"
 
 #: src/main/webapp/settings.jsp
 msgid "Check delivery status of sent emails"
-msgstr ""
+msgstr "Vëzhgo statusin shpërndarës të e-posteve të dërguara"
 
 #: src/main/webapp/settings.jsp
 msgid "Enable IMAP on port {0}"
@@ -892,9 +856,7 @@ msgstr "Privatësi"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Përdor anglishten për tekst shtuar email-it që po dërgohet ('Re:', 'wrote:', "
-"etj.)"
+msgstr "Përdor anglishten për tekst shtuar email-it që po dërgohet ('Re:', 'wrote:', etj.)"
 
 #: src/main/webapp/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -902,7 +864,7 @@ msgstr "Përfshi kohë dërgimi te email-et që dërgohen"
 
 #: src/main/webapp/settings.jsp
 msgid "Routing"
-msgstr ""
+msgstr "Routimi"
 
 #: src/main/webapp/settings.jsp
 msgid "Use relays when sending mail:"
@@ -963,8 +925,7 @@ msgstr "Identitet i Plotë për {0}:"
 #: src/main/webapp/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr ""
-"Mos ia tregoni kujt të dhënat e mësipërme! Përmbajnë kyçet tuaj privatë."
+msgstr "Mos ia tregoni kujt të dhënat e mësipërme! Përmbajnë kyçet tuaj privatë."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -988,9 +949,7 @@ msgstr "Përpunoni Identitet Email-i"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr ""
-"Një Identitet Email-i ju lejon të merrni email prej përdoruesish të tjerë të "
-"I2P-Bote-it."
+msgstr "Një Identitet Email-i ju lejon të merrni email prej përdoruesish të tjerë të I2P-Bote-it."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Public Name:"
@@ -1242,8 +1201,7 @@ msgstr "Shtoni Vendmbërritje Email-i te Drejtoria"
 
 #: src/main/webapp/publishDestination.jsp
 msgid "The name exists already. Please choose a different Public Name."
-msgstr ""
-"Ka tashmë një emër të tillë. Ju lutemi, zgjidhni një tjetër Emër Publik."
+msgstr "Ka tashmë një emër të tillë. Ju lutemi, zgjidhni një tjetër Emër Publik."
 
 #: src/main/webapp/publishDestination.jsp
 msgid "Publish to the Address Directory"
@@ -1288,13 +1246,9 @@ msgstr "Importoni Kontaktin"
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-"Te drejtoria e adresave u gjet një zë me përputhje. Mbani parasysh që "
-"drejtoria e adresave s’është e sigurt kundër manipulimeve, ndaj mos klikoni "
-"mbi &quot;importoje&quot; po qe se nuk i zini besë se është vendmbërritja e "
-"duhur email."
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "Te drejtoria e adresave u gjet një zë me përputhje. Mbani parasysh që drejtoria e adresave s’është e sigurt kundër manipulimeve, ndaj mos klikoni mbi &quot;importoje&quot; po qe se nuk i zini besë se është vendmbërritja e duhur email."
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "

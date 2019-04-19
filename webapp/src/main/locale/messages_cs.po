@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:31+1300\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"PO-Revision-Date: 2019-01-11 14:12+0000\n"
+"Last-Translator: erinm\n"
 "Language-Team: Czech (http://www.transifex.com/otf/I2P/language/cs/)\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:101
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:115
@@ -229,7 +229,7 @@ msgstr "Adresář"
 
 #: src/main/webapp/header.jsp
 msgid "Configuration"
-msgstr ""
+msgstr "Konfigurace"
 
 #: src/main/webapp/header.jsp
 msgid "Settings"
@@ -249,7 +249,7 @@ msgstr "Uživatelská příručka"
 
 #: src/main/webapp/header.jsp
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ"
 
 #: src/main/webapp/header.jsp
 msgid "About"
@@ -335,7 +335,7 @@ msgstr "Nový kontakt"
 
 #: src/main/webapp/editContact.jsp
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #: src/main/webapp/editContact.jsp
 msgid "Edit Contact"
@@ -355,7 +355,7 @@ msgstr ""
 
 #: src/main/webapp/editContact.jsp
 msgid "Name:"
-msgstr ""
+msgstr "Prezdivka:"
 
 #: src/main/webapp/editContact.jsp
 msgid "Picture:"
@@ -367,7 +367,7 @@ msgstr ""
 
 #: src/main/webapp/editContact.jsp
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
@@ -387,7 +387,7 @@ msgstr "Jméno"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete"
@@ -421,9 +421,7 @@ msgstr "Síť"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"Síťové informace nejsou dostupné protože I2P-Bote ještě nespustil připojení "
-"k síti."
+msgstr "Síťové informace nejsou dostupné protože I2P-Bote ještě nespustil připojení k síti."
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -431,7 +429,7 @@ msgstr "Lokální destinace:"
 
 #: src/main/webapp/folder.jsp
 msgid "From"
-msgstr ""
+msgstr "Od"
 
 #: src/main/webapp/folder.jsp
 msgid "Know"
@@ -439,11 +437,11 @@ msgstr ""
 
 #: src/main/webapp/folder.jsp
 msgid "To"
-msgstr ""
+msgstr "Do"
 
 #: src/main/webapp/folder.jsp
 msgid "Subject"
-msgstr ""
+msgstr "Předmět"
 
 #: src/main/webapp/folder.jsp
 msgid "Sent Time"
@@ -501,34 +499,26 @@ msgstr ""
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr ""
-"Abyste mohli přijímat emaily od ostatních lidí, musíte si nejdříve vytvořit "
-"emailovou identitu."
+msgstr "Abyste mohli přijímat emaily od ostatních lidí, musíte si nejdříve vytvořit emailovou identitu."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"Emailová identita je spojena s emailovou destinací. Kdokoliv může poslat "
-"email na emailovou destinaci, ale pouze vlastník identity ho může přečíst."
+msgstr "Emailová identita je spojena s emailovou destinací. Kdokoliv může poslat email na emailovou destinaci, ale pouze vlastník identity ho může přečíst."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"V jistém smyslu je emailová identita podobná tradičnímu emailovému účtu, "
-"jediný rozdíl je v tom že neexistuje žádný poskytovatel této který by mohl "
-"číst vaše emaily protože I2P-Bote uchovává na síti všechny emaily "
-"zašifrované."
+msgstr "V jistém smyslu je emailová identita podobná tradičnímu emailovému účtu, jediný rozdíl je v tom že neexistuje žádný poskytovatel této který by mohl číst vaše emaily protože I2P-Bote uchovává na síti všechny emaily zašifrované."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
 msgstr ""
 
@@ -540,9 +530,7 @@ msgstr "Zveřejnit emailovou destinaci aby vás ostatní mohli kontaktovat."
 msgid ""
 "It is easy to create multiple identities for different purposes, or "
 "different contacts."
-msgstr ""
-"Je jednoduché vytvořit vícero identit za různými účely, nebo pro "
-"kontaktování rozdílných okruhů osob."
+msgstr "Je jednoduché vytvořit vícero identit za různými účely, nebo pro kontaktování rozdílných okruhů osob."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -590,7 +578,7 @@ msgstr ""
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Connecting..."
-msgstr ""
+msgstr "Připojuji se..."
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Connected"
@@ -598,7 +586,7 @@ msgstr ""
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Error"
-msgstr ""
+msgstr "Chyba"
 
 #: src/main/webapp/statusFrame.jsp
 msgid "Retry Connecting"
@@ -622,7 +610,7 @@ msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Send"
-msgstr ""
+msgstr "Odeslat"
 
 #: src/main/webapp/newEmail.jsp
 msgid "From:"
@@ -674,7 +662,7 @@ msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another attachment"
-msgstr ""
+msgstr "Přidat další přílohu"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Attach"
@@ -694,7 +682,7 @@ msgstr ""
 
 #: src/main/webapp/faq.jsp
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Často kladené otázky"
 
 #: src/main/webapp/deleteContact.jsp
 msgid "The contact has been deleted from the address book."
@@ -822,7 +810,7 @@ msgstr ""
 
 #: src/main/webapp/importIdentities.jsp
 msgid "Import"
-msgstr ""
+msgstr "Importovat"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"
@@ -838,7 +826,7 @@ msgstr "Změny byly uloženy."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "Hlavní"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -862,13 +850,11 @@ msgstr "Téma"
 
 #: src/main/webapp/settings.jsp
 msgid "Privacy"
-msgstr ""
+msgstr "Soukromí"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Použít angličtinu pro text přidaný do odchozího emailu ('Re:', 'wrote:', "
-"atd.)"
+msgstr "Použít angličtinu pro text přidaný do odchozího emailu ('Re:', 'wrote:', atd.)"
 
 #: src/main/webapp/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -953,7 +939,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Create"
-msgstr ""
+msgstr "Vytvořit"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Edit Email Identity"
@@ -985,7 +971,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Encryption:"
-msgstr ""
+msgstr "Šifrování:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "(If unsure, leave the default)"
@@ -1001,7 +987,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Fingerprint:"
-msgstr ""
+msgstr "Otisk:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Default Identity:"
@@ -1021,7 +1007,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Show"
-msgstr ""
+msgstr "Ukázat"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Cannot publish until connected."
@@ -1029,7 +1015,7 @@ msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Publish"
-msgstr ""
+msgstr "Publikovat"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Delete this identity"
@@ -1189,7 +1175,7 @@ msgstr ""
 
 #: src/main/webapp/debug.jsp
 msgid "Debug"
-msgstr ""
+msgstr "Ladění"
 
 #: src/main/webapp/debug.jsp
 msgid "Debug Page"
@@ -1258,8 +1244,8 @@ msgstr ""
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
 msgstr ""
 
 #: src/main/webapp/importContact.jsp
@@ -1294,7 +1280,7 @@ msgstr ""
 
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámý"
 
 #: src/main/webapp/WEB-INF/tags/address.tag
 msgid "Add to Address Book"

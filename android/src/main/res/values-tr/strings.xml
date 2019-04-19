@@ -47,6 +47,7 @@
   <string name="bote_needs_to_be_connected">Bote ağa bağlı olmalıdır</string>
   <!--Argument is a number-->
   <plurals name="incomplete_emails">
+    <item quantity="one">%d e-posta tamamlanmamış</item>
     <item quantity="other">%d e-posta tamamlanmamış</item>
   </plurals>
   <!--Argument is a number-->
@@ -61,11 +62,12 @@
   <string name="checking_password">Parola denetleniyor...</string>
   <string name="password_incorrect">Parola hatalı</string>
   <string name="password_file_error">Parola doğrulama dosyası okunamadı</string>
+  <string name="all_mail">Tüm postalar</string>
   <string name="folder_inbox">Gelen Kutusu</string>
   <string name="folder_outbox">Giden Kutusu</string>
   <string name="folder_sent">Gönderilmiş</string>
   <string name="folder_trash">Çöp</string>
-  <string name="address_book">Adres defteri</string>
+  <string name="address_book">Adres Defteri</string>
   <string name="network_status">Ağ durumu</string>
   <string name="not_started">Başlatılmamış</string>
   <string name="connect_delay">3 dakika bekleniyor...</string>
@@ -78,6 +80,7 @@
   <string name="connecting_to_network">Bote ağına bağlanıyor</string>
   <string name="connected_to_network">Bote ağına bağlandı</string>
   <plurals name="n_new_emails">
+    <item quantity="one">%d yeni e-posta</item>
     <item quantity="other">%d yeni e-posta</item>
   </plurals>
   <string name="queued">Kuyrukta</string>
@@ -139,7 +142,7 @@
   <string name="email_destination">E-posta hedefi</string>
   <string name="label_browse">Gözat</string>
   <string name="select_email_destination_file">E-posta hedefini içeren dosyayı seçin</string>
-  <string name="please_install_a_file_manager">Lütfen bir dosya yöneticisi yükleyin.</string>
+  <string name="please_install_a_file_manager">Lütfen bir dosya yöneticisi kurun.</string>
   <string name="failed_to_read_email_destination_file">E-posta hedef dosyası okunamadı.</string>
   <string name="could_not_find_email_destination_file">E-posta hedefi dosyası bulunamadı.</string>
   <string name="save_contact">Kişiyi kaydet</string>
@@ -178,6 +181,7 @@
   <string name="pref_title_routing">Yöneltme</string>
   <string name="pref_title_numSendHops">Gönderme sıçrama sayısı</string>
   <plurals name="pref_summ_numHops">
+    <item quantity="one">%s aktarıcı</item>
     <item quantity="other">%s aktarıcı</item>
   </plurals>
   <string name="pref_title_minDelay">Her sıçrama için en düşük gecikme</string>
@@ -205,6 +209,8 @@
   <string name="new_password">Yeni parola</string>
   <string name="confirm_new_password">Yeni parola onayı</string>
   <string name="remove_password_info">Parolayı kaldırmak için \'Yeni parola ve onayı\' alanlarını boş bırakın.</string>
+  <string name="old_password_incorrect">Eski parola doğru değil.</string>
+  <string name="new_password_mismatch">Yeni parola ile parola onayı eşleşmiyor.</string>
   <string name="password_changed">Parola değiştirildi</string>
   <string name="pref_title_identities">Kimlikler</string>
   <string name="no_identities">Henüz bir kimlik yok</string>
@@ -216,18 +222,27 @@
   <string name="default_identity">Varsayılan kimlik</string>
   <string name="save_identity">Kimliği kaydet</string>
   <string name="delete_identity">Kimlik silinsin mi?</string>
+  <string name="invalid_vanity_chars">Bu şifreleme türü \'%1$s\' ile başlayan hedefleri desteklemiyor. Geçerli başlangıç karakterleri şunlardır: \'%2$s\'.</string>
   <string name="identity_saved">Kimlik kaydedildi</string>
-  <string name="export_identities">Kimlikleri ver</string>
+  <string name="export_identities">Kimlikleri dışa aktar</string>
   <string name="passwords_do_not_match">Parola ve onayı aynı değil</string>
   <string name="file_exists">Dosya zaten var</string>
-  <string name="exporting_identities">Kimlikler veriliyor</string>
-  <string name="identities_exported">Kimlikler Downloads klasörüne kaydedildi</string>
-  <string name="import_identities">Kimlikleri al</string>
-  <string name="importing_identities">Kimlikler alınıyor</string>
+  <string name="exporting_identities">Kimlikler dışa aktarılıyor</string>
+  <string name="identities_exported">Kimlikler İndirmeler klasöründe dışa aktarıldı</string>
+  <string name="import_identities">Kimlikleri içe aktar</string>
+  <string name="importing_identities">Kimlikler içe aktarılıyor</string>
   <string name="no_identities_found">Herhangi bir kimlik bulunamadı.</string>
   <string name="no_identities_found_maybe_encrypted">Herhangi bir kimlik bulunamadı. Dosya şifreli mi?</string>
-  <string name="identities_imported">Kimlikler alındı</string>
+  <string name="identities_imported">Kimlikler içe aktarıldı</string>
   <string name="this_field_is_required">Alanın doldurulması zorunludur</string>
+  <string name="export_address_book">Adres defterini dışa aktar</string>
+  <string name="exporting_address_book">Adres defteri dışa aktarılıyor</string>
+  <string name="address_book_exported">Adres defteri İndirmeler klasöründe dışa aktarıldı</string>
+  <string name="import_address_book">Adres defterini içe aktar</string>
+  <string name="importing_address_book">Adres defteri içe aktarılıyor</string>
+  <string name="no_contacts_found">Herhangi bir kişi bulunamadı.</string>
+  <string name="no_contacts_found_maybe_encrypted">Herhangi bir kişi bulunamadı. Dosya şifrelenmiş mi?</string>
+  <string name="address_book_imported">Adres defteri içe aktarıldı</string>
   <string name="bote_dest_for">%s için Bote adresi</string>
   <string name="copied_to_clipboard">Panoya kopyalandı</string>
   <string name="help">Yardım</string>
@@ -239,5 +254,11 @@
   <string name="license">Lisans: %s</string>
   <!--Software libraries-->
   <string name="libraries">Kitaplıklar</string>
+  <string name="re_encrypting_identities">Kimlikler yeniden şifreleniyor…</string>
+  <string name="re_encrypting_address_book">Adres defteri yeniden şifreleniyor…</string>
   <!--Argument is a folder name-->
+  <string name="re_encrypting_folder">%s klasörü yeniden şifreleniyor…</string>
+  <string name="updating_password_file">Parola dosyası güncelleniyor…</string>
+  <string name="generating_keys">Anahtarlar üretiliyor…</string>
+  <string name="saving_identity">Kimlik kaydediliyor…</string>
 </resources>

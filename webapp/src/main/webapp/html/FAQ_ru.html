@@ -29,8 +29,7 @@
 <p><a href="#DoIdentitiesExpire">Когда истечет почтовый идентификатор?</a></p>
 <p><a href="#Gateways">Могу ли я отправлять, и получать письма из обычного интернета?</a></p>
 <p><a href="#Postman">Могу я посылать электронные письма и получать электронные письма   используя традиционные учетные записи почты postman-а внутри I2P (@mail.i2p)?</a></p>
-<p><a href="#Know">What does it mean when Know is x'ed for a mail in my
-inbox?</a></p>
+<p>Что это значит, когда "Know is x'ed" для писем в моем почтовом ящике?</p>
 <p><a href="#Terms">Что означает “BktPfx”, “Distance” и “Locked?”</a></p>
 <p><a href="#Anonymous">Что я могу сделать для большей анонимности?</a></p>
 <p><a href="#Timestamps">Как мне не отправлять метки времени?</a></p>
@@ -50,39 +49,13 @@ inbox?</a></p>
 </nav><h3 id="What">Что такое I2P-Bote?</h3>
 <p>P2P почтовая программа спроектирована защитить вашу приватность.</p>
 
-<p>I2P-Bote is an end-to-end encrypted, network-internal, fully
-decentralized (serverless) e-mail system. It supports different
-identities and does not expose e-mail headers. Currently, it is
-still alpha software. It can be accessed via web console, and it
-has IMAP and SMTP support, so bote-mails can be read and written by
-regular email clients. It is planned to guarantee additional
-anonymity by providing a high-latency transport option. All
-bote-mails are automatically end-to-end encrypted, so that there's
-no need to set up e-mail encryption (though the option does exist),
-and bote-mails will be authenticated automatically. As it is
-decentralized, there is no e-mail server that could link different
-e-mail identities as communicating with each other (profiling):
-Even the nodes relaying the mails will not know the sender and
-apart from sender and receiver, only the end of the high-latency
-mail tunnel and the storing nodes will know to whom (anonymous
-identity) the mail is destined. The original sender can have gone
-offline, long before the mail becomes available on the other side.
-This adds on the degree of anonymity that can be reached with
-I2P-Bote. For those who do not want high delays: All these settings
-are be user-adjustable, so each user decides on how much anonymity
-he wants.</p>
+<p>I2P-Bote — это работающая поверх i2p, полностью децентрализованная (бессерверная) система обмена электронной почтой, защищённая сквозным шифрованием. Она поддерживает множественные почтовые идентификаторы и не раскрывает заголовки писем. На данный момента система находится на альфа-стадии разработки. Система доступна через веб-консоль, она поддерживает протоколы IMAP и SMTP, так что bote-письма можно получать и отправлять обычными клиентами электронной почты. Мы планируем улучшить анонимность, добавив в программу включаемую функцию отправления с задержкой. Все bote-письма автоматически шифруются сквозным способом, поэтому нет необходимости настраивать дополнительное шифрование (хотя такая опция доступна), проверка подлинности bote-корреспонденции также проводится автоматически. Поскольку система децентрализована, то не существует какого бы то ни было почтового сервера, который бы смог связать разные почтовые идентификаторы, обменивающиеся почтой (т.н. профилирование): даже промежуточные узлы, передающие почтовое сообщение, не знают отправителя, и, помимо отправителя и получателя, только последний элемент туннеля с высокой задержкой и узлы хранения будут знать кому (какому анонимному идентификатору) предназначено письмо. Отправитель может быть давно ушёл в оффлайн, но письмо всё равно достигнет получателя. Это добавляет ещё одну капельку к анонимности, которой можно достичь, используя I2P-Bote. Для тех, кого не заботит высокая задержка: эти функции настраиваемы, поэтому пользователь волен решать сам, какой уровень анонимности ему нужен.</p>
 
 <h3 id="Name">Почему он называется I2P-Bote?</h3>
 <p>Bote — это немецкое слово для обозначения средства рассылки.</p>
 
 <h3 id="Why">Почему I2P-Bote?</h3>
-<p>Because it's cool. And because I2P was lacking a decentralized
-e-mail service, and seeing the creation of such as an opportunity
-to improve on neglected anonymity aspects, it was decided to add an
-optional high-latency transport. You can use a normal e-mail
-account and end-to-end encrypt your mails, but they are still not
-anonymous. You can use anonymous server-bound e-mails, yet they are
-not automatically end-to-end encrypted.</p>
+<p>Потому что это здорово. И потому что I2P не хватало децентрализованного почтового сервиса. Кроме того, видя возможность дальнейшего повышения анонимности, было решено добавить включаемую по желанию функцию отправления с задержкой. Вы можете использовать обычную учётную запись электронной почты и шифровать свою корреспонденцию сквозным шифрованием, но такой подход не подразумевает анонимности. Можно использовать анонимные письма, привязанные к серверу, но они не будут автоматически шифроваться сквозным шифрованием.</p>
 
 <p>Или вы можете использовать I2P-Bote, в котором ваши почтовые сообщения анонимны и <em>автоматически</em> шифруются сквозным шифрованием.</p>
 
@@ -96,18 +69,13 @@ not automatically end-to-end encrypted.</p>
 <h3 id="RandomPeople">Вся почта, которую я отправляю, сохраняется на жестких дисках у каких-то случайных людей? Звучит глупо!</h3>
 <p>Это не так: всё, что они увидят — мусорные, случайные данные, так как используется шифрование военного уровня. Только вы и получатель знают, что содержится в письме. Кроме того, если вы отправляете письмо с использованием ретрансляторов, то становится невозможно определить, кто его отправитель.</p>
 
-<p>Between this and using an email account with a
-<a href="http://www.theregister.co.uk/2009/12/07/schmidt_on_privacy/">company
-that doesn't respect your privacy</a>, over an internet line that
-<a href="http://www.eff.org/issues/nsa-spying">is being spied on by
-shady agencies</a>, which would you say is more trustworthy?</p>
+<p>Между этим с одной стороны и использованием учётной записи почты в <a href="http://www.theregister.co.uk/2009/12/07/schmidt_on_privacy/">организации, не уважающей право на частную жизнь</a>, через <a href="http://www.eff.org/issues/nsa-spying">интернет-соединение, прослушиваемое сомнительными агенствами</a> с другой стороны — чему бы вы доверились? </p>
 
 <h3 id="HowItWorks">Как это конкретно работает?</h3>
 <p>Смотри главу <a href="userGuide.jsp#Technical-Concept">'Техническую концепцию'</a>
  <a href="userGuide.jsp">Руководства пользователя</a>.</p>
 
-<p>In short: I2P-Bote nodes form a P2P-network, relaying mail packets
-for one another and storing them into a DHT.</p>
+<p>Если в двух словах, то узлы I2P-Bote образуют пиринговую сеть, пересылая почтовые пакеты друг другу и храня их в распределённой хэш-таблице.</p>
 
 <h3 id="NothingToHide">Зачем мне пользоваться этим? Мне нечего скрывать&hellip;</h3>
 <p>Потому что Вы бы не выходили на улицу голым, верно?</p>
@@ -118,9 +86,9 @@ for one another and storing them into a DHT.</p>
 
 <p>Следовательно I2P-Bote является идеальным инструментом, дающим вам чертовски большую защиту при сохранении гибкости.</p>
 
-<p>Он направлен на предоставление профессиональной безопасности военного класса и простым юзабилити: у Вас могут быть параноидальные настройки, где он принимает почту вечность, чтобы прибыть; или иметь быструю связь при этом наслаждаться очень высокой анонимностью.</p>
+<p>Он направлен на предоставление безопасности военного уровня и простотой использования: у Вас могут быть параноидальные настройки, где потребуется целая вечность для доставки письма, а могут быть настройки для быстрой связи, при этом всё ещё гарантирующие очень высокую анонимность.</p>
 
-<p>Вам решать - легко с щелчком мыши.</p>
+<p>Вам решать — просто щелчком мыши.</p>
 
 <h3 id="GPG">Что насчет <a href="http://www.pgp.com/">PGP</a> и
 <a href="http://gnupg.org/">GPG</a>?</h3>
@@ -128,13 +96,7 @@ for one another and storing them into a DHT.</p>
 
 <p>Другие ошибки приватности это то, что PGP/GPG не может предотвратить желающего разобраться в том, кто с кем говорит.</p>
 
-<p>I2P-Bote, in contrast, encrypts everything but the recipient's
-Email Destination. (In fact even the recipient's destination is
-only visible to nodes who do not know who the sender of the mail
-was.) It also has the ability to send an email through several
-relays (similar to
-<a href="http://mixmaster.sourceforge.net/">Mixmaster</a>), so nobody can
-find out who is sending email to whom.</p>
+<p>I2P-Bote, напротив, шифрует всё за исключением Destination получателя (на самом деле, даже Destination адресата виден только тем узлам, которые не знают ничего об отправителе письма).</p>
 
 <h3 id="UsingGPG">Могу ли я дальше использовать GPG/PGP с I2P-Bote?</h3>
 <p>Конечно. Либо использовать GPG шифрование вашего текста писем прежде чем вставить его в поле I2P-Bote, либо использовать почтовое приложение с поддержкой GPG. </p>
@@ -148,165 +110,88 @@ find out who is sending email to whom.</p>
 <p><em>Мы</em>думаем он лучше для <em>нас</em> (и возможно для вас тоже;
 решайте сами!), чем:</p>
 <ul>
-<li><p>Mixminion as it is easy to use and as n00b-proof as
-we could get it.</p></li>
-<li><p>anonymous e-mail services not based on destination
-key routing: as those do not deliver built-in end-to-end
-encryption.</p></li>
-<li><p>centralized services, as the server could go down
-(due to attacks, legal problems, lack of funding or interest, &hellip;)
-and the server admin has too many means to do profiling.</p></li>
+<li><p>Mixminion, поскольку I2P-Bote прост в использовании и дружелюбен к новичкам настолько, насколько нам это удалось.</p></li>
+<li><p>анонимные почтовые сервисы, не базирующиеся на маршрутизации по ключу адреса назначения, поскольку они не предоставляют встроенного сквозного шифрования.</p></li>
+<li><p>централизованные сервисы, потому что сервер может упасть (из-за атак, юридических жалоб, недостатка в финансировании или потери интереса) и потому что у админа сервера могут быть свои причины для слежки за пользователями.</p></li>
 </ul>
-<h3 id="Safeguards">How is my identity kept safe when I exchange mail with
-someone?</h3>
-<p>Never is your IP address or even your I2P-destination included in
-any e-mail you send.</p>
+<h3 id="Safeguards">Когда я обмениваюсь почтой с кем-либо, мой личный профиль остаётся в безопасности?</h3>
+<p>Ни Ваш IP-адрес, ни даже Ваш I2P-Destination никогда не передаётся с посылаемой Вами почтой.</p>
 
-<p>The high-latency transport counters timing attacks.</p>
+<p>Передача с высокой задержкой призвана бороться с тайминг-атаками.</p>
 
-<p>End-to-end encryption, per-hop encryption, relaying packets for
-other nodes, one single packet size* (padding), a constant rate of
-sending (test and dummy messages)*, and a rather balanced
-incoming/outgoing ratio* counter traffic analysis attacks, and in
-combination with per-hop delays, I2P-Bote offers good means against
-intersection attacks.</p>
+<p>Сквозное шифрование, per-hop шифрование, ретрансляция пакетов для других узлов, один размер пакета* (padding), постоянная скорость отправки (тестовые и фиктивные сообщения)* и довольно сбалансированное соотношение приема/отправки* анализ атак встречного трафика, а в сочетании с задержками за хоп I2P-Bote предлагает хорошие средства против атак пересечения.</p>
 
-<p>Способ распространения I2P-Bote - open source, гарантирует, что Вы сами можете 
-посмотреть его реализацию и проверить его на ошибки.</p>
+<p>Модель распространения I2P-Bote как приложения с открытом кодом гарантирует, что Вы сами можете прочитать код и проверить его на ошибки.</p>
 
 <p>*[пока не реализовано]</p>
 
 <h3 id="How">Как им пользоваться?</h3>
-<p>Читайте <a href="userGuide.jsp">мануал</a> или смотрите другие вопросы и ответы здесь!</p>
+<p>Читайте <a href="userGuide.jsp">руководство</a> или смотрите другие вопросы и ответы здесь!</p>
 
-<p>Если у вас остались неотвеченные вопросы , спросите их на форуме:
+<p>Если у Вас остались неотвеченные вопросы, задайте их на форуме:
 <a href="http://forum.i2p/viewforum.php?f=35">http://forum.i2p/viewforum.php?f=35</a></p>
 
 <h3 id="EmailClients">Могу ли я пользоваться программами наподобие Thunderbird?</h3>
-<p>Да, вы можете использовать почтовыми программами на ваш выбор, если они поддерживают IMAP и SMTP.</p>
+<p>Да, Вы можете использовать почтовые программы на Ваш выбор, если они поддерживают IMAP и SMTP.</p>
 
 <h3 id="Attachments">Могу ли я прикреплять файлы, и какое ограничение на них?</h3>
 <p>Да, вложения поддерживаются с версии 0.2.5. Общий размер файлов должен быть маленьким, лучше если бы он был меньше 500Кб.</p>
 
-<h3 id="CreateIdentity">Как мне создать аккаунт для электронной почты?</h3>
-<p>I2P-Bote calls them Email Identities. You can create one in the
-I2P-Bote web interface under the "Identities" link. The reason why
-it's not called an account is that there is no provider like GMail
-or GMX. You alone hold the (cryptographic) keys to the Email
-Identity.</p>
+<h3 id="CreateIdentity">Как мне создать учётную запись электронной почты?</h3>
+<p>I2P-Bote называет их идентификаторами электронной почты. Вы можете создать такой, воспользовавшись I2P-Bote веб-интерфейсом по ссылке "Identities". Причиной, по которой они не называются аккаунтами, служит то, что здесь нет провайдеров как Gmail или GMX. Вы единственный держатель (криптографических) ключей к вашему идентификатору электронный почты.</p>
 
-<p>When you create an Email Identity, I2P-Bote generates a string of
-numbers and letters called an Email Destination. This is the
-address you can be reached at.</p>
+<p>Когда вы создаёте идентификатор, I2P-Bote генерирует строку цифр и букв, называемую пунктом назначения электронной почты. Это адрес, по которому к вам можно обращаться.</p>
 
 <p>Пример: <code>wsq-8u5bTWbaOsrS0JuXRKL-RsbTkckV4W7u2mIu0Yrlfetixq1F~03CArnvbd6tDWwjPHYEuoKyWqwxplSdix</code></p>
 
-<h3 id="EmailDestination">What's an Email Destination? What about email addresses?</h3>
-<p>Email destinations (aka bote dests) are between 86 and 512
-characters long, depending on the type of encryption. Support for
-easy-to-remember, user-chosen addresses is planned for the near
-future.</p>
+<h3 id="EmailDestination">Что такое пункт назначения электронной почты? Что насчёт адресов электронной почты?</h3>
+<p>Пункты назначения (т.н. "bote пункты") являются строкой, содержащей от 86 до 512 символов в зависимости от типа шифрования. 
+Поддержка простых для запоминания, задаваемых пользователями адресов планируется в ближайшем будущем. </p>
 
-<p>The e-mail identities consist of public and private keys, as well
-as a name the user chooses for it. The public part is your e-mail
-destination, your pseudonymous identity. And one real user can have
-more than one of those identities. They serve for addressing mails
-to certain users - therefore it is referred to as a
-'destination' or short 'dest' - as well as for encrypting
-the mails for them. Hence, your e-mail destination is the key
-others use in order to encrypt mails which they send to you, and in
-order to verify the authenticity and integrity of mails they
-receive from you.</p>
+<p>Почтовые идентификаторы содержат публичные и приватные ключи, а так же имена, задаваемые пользователем. Публичная часть - это пункт назначения вашей почты, идентификатор вашего псевдонима. Один реальный пользователь может иметь более одного такого идентификатора. Они служат для направления писем конкретным пользователям - поэтому они называются "пунктами назначения" или коротко "пунктами"  - и также для шифрования писем. Следовательно, ваш пункт назначения электронной почты - это ключ, который другие используют для шифрования отправляемых вам писем и для проверки подлинности и целостности писем, получаемых ими от вас.</p>
 
-<p>It is safe to give your e-mail destination to anybody you want to
-get e-mails from.</p>
+<p>Предоставлять свой пункт назначения электронной почты кому-либо, от кого вы хотите получать письма - безопасно.</p>
 
-<p>It is important to distinguish between the mail dest and the router
-id! Your I2P-Bote mail identity is not related to your I2P-Bote
-router/node id, which is used for I2P-Bote nodes to contact each
-other and this way for the Bote network.</p>
+<p>Важно различать почтовые пункты и айди роутера! Ваш I2P-Bote почтовый идентификатор не имеет отношения к вашему I2P-Bote айди роутера/ноды, которые используются для связи нод в сеть различными способами.</p>
 
-<p>If you have problems with your I2P-Bote app – in the highly
-unlikely case it should be necessary – you can tell your I2P-Bote
-router id in irc2p, I2P's IRC channels, or the forum or manually
-add other peer's id's in order to connect, though until now this
-has never been necessary.</p>
+<p>Если у вас есть проблемы с вашим I2P-Bote приложением - в наихудшем случае это может быть необходимо - вы можете сообщить ваш I2P-Bote айди роутера в irc2p, I2P's IRC каналы, на форум или вручную добавить айди других пиров для связи, однако такая необходимость ранее никогда не возникала.</p>
 
-<p>It is <b>not linked to your IP</b>. Nonetheless, do not relate your
-I2P-Bote router id with your I2P-Bote mail dests since this might
-destroy the additional anonymity I2P-Bote itself generates!</p>
+<p>Он <b>не связан с вашим IP адресом</b>. Тем не менее, не передавайте ваш I2P-Bote айди роутера вместе с вашим I2P-Bote пунктом электронной почты поскольку это может разрушить анонимность, создаваемую самим I2P-Bote.</p>
 
 <h3 id="AddressLength">Почему e-mail адреса такие длинные?</h3>
-<p>In I2P-Bote every mail is (automatically) encrypted. In order not
-to require you to exchange an e-mail address <b>and</b> a long key,
-we simply made that key the address. This comes with two additional
-benefits: You won't have to worry if an e-mail address is already
-taken or not (at least not if you do not send or receive e-mails to
-or from the internet) and you don't need a key management app
-apart, for taking care of your keys.</p>
+<p>В I2P-Bote каждая электронная почта (автоматически) зашифрована. Чтобы вам не приходилось обмениваться почтовым адресом <b>и</b> длинным ключом, мы просто сделали этот ключ адресом. Это даёт два дополнительных преимущества: вам не нужно беспокоиться, занят ли уже выбранный вами почтовый адрес (по крайней мере, пока вы не отправляете или получаете письма из интернет) и вам не нужно отдельное приложение для управления ключами.</p>
 
-<p>It is safe to give away this key, as it is only the public key
-which everybody may know about without compromising your e-mails'
-secrecy.</p>
+<p>Предоставлять этот ключ кому-либо - безопасно, поскольку это единственный публичный ключ, который может знать каждый, не компрометируя секретность вашей электронной почты.</p>
 
-<p>Using the ECC encryption as option will yield shorter e-mail
-destination keys.</p>
+<p>Опционально, использование ECC шифрования сократит ваш ключ пункта назначения электронной почты.</p>
 
-<h3 id="AddressBook">But I cannot remember those long destinations&hellip;</h3>
-<p>That's what the integrated address book is there. Once you have
-become more acquainted with I2P-Bote, you will appreciate the
-built-in encryption and authentication, which can only be achieved
-using cryptographic keys.</p>
+<h3 id="AddressBook">Но я не могу вспомнить настолько длинных пунктов назначения&hellip;</h3>
+<p>Вот почему существует адресная книга. Как только вы ближе познакомитесь с I2P-Bote, вы оцените встроенное шифрование и аутентификацию, которых можно достичь только используя криптографические ключи.</p>
 
-<p>Again, the alternative would be to have short and easy addresses
-<b>plus</b> a long key for encryption and authentication,
-<b>and</b> to rely on some authority to map the e-mail addresses to
-some anonymous recipient.</p>
+<p>Ещё раз, альтернативой было бы иметь короткий и простой адрес <b>плюс</b> длинный ключ для шифрования и аутентификации, <b>и</b> полагаться на чей-то авторитет для сопоставления адресов электронной почты с неким анонимным получателем.</p>
 
-<h3 id="MultipleIdentities">What's the point of using multiple mail identities?</h3>
-<p>I2P-Bote is not an instant messenger, so you can have several
-identities without having to keep many tunnels open. Only for
-fetching requests you'd use up more resources but at the same time
-provide more cover for others.</p>
+<h3 id="MultipleIdentities">В чем смысл использования нескольких почтовых идентификаторов?</h3>
+<p>I2P-Bote не является мессенджером, так что вы можете иметь несколько идентификаторов, не поддерживая открытыми множество туннелей. Только для выборки запросов вы будете использовать больше ресурсов, но в то же время это сильнее скроет вас от других.</p>
 
-<p>Now, imagine you communicate with your friends unobservedly (see:
-data retention laws) via I2P-Bote, and want to quickly send out a
-mail that you'll be meeting each other in a different location
-tonight. Then, you need no super-anonymity and can renounce mail
-routes and delays. Your friends, on the other hand, would want to
-have a shorter check interval, so they will receive the mail in
-time. Yet you still want super high anonymity for some of your
-other communications - that's where a different mail identity with
-mail routes, delays and long check intervals comes in handy.</p>
+<p>Теперь представьте, что вы общаетесь со своими друзьями незаметно (см.: законы хранения данных) через I2P-Bote и хотите быстро отправить сообщение о том, что вы встретитесь друг с другом сегодня вечером в другом месте. Тогда вам не нужна супер-анонимность и вы можете отказаться от почтовых маршрутов и задержек. Ваши друзья, с другой стороны, хотели бы иметь более короткий интервал проверки, поэтому они получат почту вовремя. Тем не менее, вы все еще хотите сверхвысокую анонимность для некоторых других ваших сообщений - вот где пригодится другая почтовая идентификация с почтовыми маршрутами, задержками и длинными интервалами проверки.</p>
 
 <h3 id="EncryptionTypes">Какой тип шифрования является лучшим?</h3>
-<p>256-bit <a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a>
-produces short and handy Email Destinations, and it is considered
-stronger than 2048-bit ElGamal.</p>
+<p><a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">Эллиптическая криптография</a> с длиной ключа
+256 бит предоставляет короткие и удобные адреса
+назначений электронной почты и считается более сильной,
+чем 2048-битный Эль-Гамаль.</p>
 
-<p>521-bit <a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">ECC</a>
-is stronger than 256-bit ECC, but it makes Email Destinations
-longer.</p>
+<p><a href="http://en.wikipedia.org/wiki/Elliptic_curve_cryptography">Эллиптическая криптография</a> с длиной ключа
+521 бит сильнее, чем с длиной ключа 256 бит, но делает
+назначения адресов электронной почты длиннее.</p>
 
-<p>2048-bit <a href="http://en.wikipedia.org/wiki/ElGamal">ElGamal</a>
-produces even longer Email Destinations, and it is the
-cryptographically weakest of the three options. However, ElGamal is
-better researched than ECC, which makes it less likely that there
-is an unknown weakness in ElGamal than in ECC.</p>
+<p>2048-битный <a href="http://en.wikipedia.org/wiki/ElGamal">ElGamal</a> создает еще более длинные адреса электронной почты, и это криптографически самый слабый из трех вариантов. Тем не менее, ElGamal лучше исследован, чем ECC, что делает менее вероятным, что в ElGamal слабее, чем ECC.</p>
 
-<h3 id="Algorithms">What algorithms are used for symmetric encryption, and
-for hashing?</h3>
-<p><a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a>
-in <a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">
-CBC</a> mode and <a href="http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.</p>
+<h3 id="Algorithms">Какие алгоритмы используются для симметричного шифрования и для хеширования?</h3>
+<p><a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES-256</a> в режиме <a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29">CBC</a> и <a href="http://en.wikipedia.org/wiki/SHA-2">SHA-256</a>.</p>
 
 <h3 id="AntiSpam">У них есть анти-спам?</h3>
-<p>I2P-Bote does no active spam filtering, but the fact that mass
-emails have to be sent individually should discourage spammers.
-Another line of defense is
-<a href="http://www.hashcash.org/">HashCash</a> which is supported at the
-protocol level and may be implemented in a future version if spam
-becomes a problem.</p>
+<p>I2P-Bote не делает активной фильтрации спама, но тот факт, что массовые электронные письма должны отправляться индивидуально, должен препятствовать спамерам. Другая линия защиты - <a href="http://www.hashcash.org/">HashCash</a>, которая поддерживается на уровне протокола и может быть реализована в будущей версии, если спам станет проблемой.</p>
 
 <h3 id="HTML">Как насчет HTML или стилизованного текста?</h3>
 <p>Веб-интерфейс не представляет HTML.</p>
@@ -330,60 +215,35 @@ becomes a problem.</p>
 <p>Нет, но также ведется работа над этим.</p> 
 <!-- Yes. You can both send and receive mails to/from some_name@mail.i2p addresses -->
 
-<h3 id="Know">What does it mean when Know is x'ed for a mail in my
-inbox?</h3>
-<p>When the sender's destination is not known locally the mail is
-marked by an x in the “Know” column or by putting “{UNK}” before
-the sender's address in IMAP.</p>
+<h3 id="Know">Что это значит, когда "Know is x'ed " для почты в моем почтовом ящике?</h3>
+<p>Когда назначение отправителя не известно локально, почта помечается крестиком в столбце “Know” или пометкой ”{UNK}" перед адресом отправителя в IMAP.</p>
 
-<p>This means that you have no proof this user is really who he claims
-to be, in his user name. Of course, if the signature is valid, you
-know he possesses the destination key with which the mail was
-signed, and that the mail content is from that person. But you
-cannot rely on the short name here. In case you had gotten a mail
-from a user with this name before, you cannot be sure it is the
-same user this time, even if the signature is valid. In this case
-you must compare the destination keys or add them to your
-addressbook. A user not locally known, is not necessarily evil, but
-you shouldn't trust it's the user you might think it is. But, if
-verified against locally stored keys, you know it's the same user
-when you receive another mail from him and “Know” has a green
-check.</p>
+<p>Это означает, что у вас нет доказательств, что этот пользователь действительно тот, чьё имя пользователя он использует. Конечно, если подпись действительна, вы знаете, что у него есть ключ назначения, которым было подписано письмо, и что содержимое письма от этого человека. Но здесь нельзя полагаться на короткое имя. Если вы получили письмо от пользователя с таким именем раньше, вы не можете быть уверены, что на этот раз это тот же пользователь, даже если подпись действительна. В этом случае необходимо сравнить ключи назначения или добавить их в адресную книгу. Пользователь, не известный локально, не обязательно злодей, но вы не можете быть уверены, что это тот пользователь, о котором вы думаете. Но, если вы проверили локально сохраненные ключи, вы знаете, что это тот же пользователь, когда вы получаете от него другое письмо и “Know” имеет зеленую отметку.</p>
 
-<h3 id="Terms">What do “BktPfx”, “Distance” and “Locked?” mean?</h3>
+<h3 id="Terms">Значат “BktPfx”, “Distance” и “Locked?”? </h3>
 <ul>
 <li><p>BktPfx = BucketPrefix</p></li>
-<li><p>Distance: the distance of an I2P-Bote node to your
-own node in keyspace</p></li>
-<li><p>Locked: If a node is not reachable for whatever
-reason, it is marked as locked, plus the time it has been found
-unreachable.</p></li>
+<li><p>Distance: расстояние от узла I2P-Bote до вашего собственного узла</p></li>
+<li><p>Locked: если узел недоступен по какой-либо причине, он помечен как Locked (заблокированный), плюс время, когда он был определен как недоступный.</p></li>
 </ul>
 <h3 id="Anonymous">Что я могу сделать, чтобы быть более анонимным?</h3>
 <ul>
-<li><p>Don't send identifying information about you! (name, address,
-photos, geographic location, time zone, age, sex, websites, login
-names, I2P router id, I2P-Bote id, Files that contain author
-information about you, &hellip;)</p></li>
-<li><p>don't send personal information or information that only you can
-possess,</p></li>
-<li><p>оставьте I2P-Bote работающим 24/7,</p></li>
-<li><p>use mailroutes with randomized per-hop delays and/or per-hop
-fixed send times, [not yet fully implemented]</p></li>
+<li><p>Не отправляйте идентификационную информацию о себе! (имя, адрес, фотографии, географическое положение, часовой пояс, возраст, пол, веб-сайты, имена для входа, I2P router id, I2P-Bote id, файлы, содержащие информацию об авторе, &hellip;)</p></li>
+<li><p>не посылайте личную информацию или информацию, которой можете владеть 
+только Вы</p></li>
+<li><p>оставить I2P-Bote работающим 24/7,</p></li>
+<li><p>используйте mailroutes (почтовые маршруты) с рандомизированными задержками hop и / или фиксированным временем отправки на hop, [еще не полностью реализовано]</p></li>
 <li><p>используйте продолжительный интервал проверки,</p></li>
-<li><p>use a long local delay for own packets,</p></li>
-<li><p>use a big check interval randomization. [not yet implemented]</p></li>
-<li><p>suppress the sending of date and time in the e-mails' header,</p></li>
-<li><p>suppress translation of markers like “Re:” into another
-language,</p></li>
-<li><p>watch your language and writing style,</p></li>
+<li><p>используйте длинную локальную задержку для собственных пакетов,</p></li>
+<li><p>используйте большую рандомизацию интервала проверки. [пока не реализовано]</p></li>
+<li><p>запретите отправку даты и времени в заголовке сообщения,</p></li>
+<li><p>не переводите маркеры типа "Re:" на другой язык,</p></li>
+<li><p>следите за языком и стилем письма,</p></li>
 <li><p>используйте различные почтовые идентификационные данные,</p></li>
-<li><p>consider discarding e-mail identities after longer periods of
-usage,</p></li>
+<li><p>рассмотрите возможность отказа от данных электронной почты после длительных периодов использования,</p></li>
 <li><p>&hellip;</p></li>
 </ul>
-<p>This list is not intended to make you paranoid, but to show you where
-anonymity can be reduced.</p>
+<p>Этот список не предназначен для того, чтобы сделать вас параноиком, но показывает вам, где анонимность может быть снижена.</p>
 
 <h3 id="Timestamps">Как мне не отправлять метки времени?</h3>
 <p>Перейдите к параметрам настройки и отключите отправку меток времени. У будет иметь такой эффект, что Ваша почта не будет содержать дату или время 
@@ -398,25 +258,16 @@ anonymity can be reduced.</p>
 <code>%APPDATA%\I2P\i2pbote</code>; в Linux все это находится по адресу
 <code>$HOME/.i2p/i2pbote</code>.</p>
 
-<p>To back up or migrate everything, just copy the whole
-<code>i2pbote</code> folder.</p>
+<p>Чтобы создать резервную копию или мигрировать данные, просто скопируйте всю папку <code>i2pbote</code>.</p>
 
-<p>If you are only interested in your Email Identities, copy the file
-<code>identities.txt</code>. For the address book, copy
-<code>addressBook.txt</code>.</p>
+<p>Если вас интересуют только ваши данные электронной почты, скопируйте файл <code>identities.txt</code>. Для копирования адресной книги скопируйте файл <code>addressBook.txt</code>.</p>
 
 <h3 id="MailRoutes">Каков <em>почтовый маршрут</em>?</h3>
 <p>Смотри: Что такое high-latency transport?</p>
 <!-- <p>(When using mail routes, the timestamps are automatically disabled.) [yet to be implemented]</p> -->
 
 <h3 id="HighLatency">Что такое high-latency transport?</h3>
-<p>It means that you can enable an option where e-mail packets are not
-sent directly to storing nodes, but are relayed (forwarded) by
-other peers (who cannot read the e-mails, as they are encrypted
-with several layers and ripped into small parts), who do not send
-them on immediately but wait a user-specified time - in case of
-sending specified by the sender, in case of receiving specified by
-recipient.</p>
+<p>Это означает, что вы можете включить опцию, когда пакеты электронной почты не отправляются непосредственно на узлы хранения, а ретранслируются (пересылаются) другими узлами (которые не могут читать электронные письма, поскольку они зашифрованы несколькими слоями и разорваны на мелкие части), которые не отправляют их сразу, а ждут заданного пользователем времени - в случае отправки, указанного отправителем, в случае получения, указанного получателем.</p>
 
 <p>Therefore it takes the mail some time to arrive. Thus an attacker
 cannot simply run stats on node uptimes (who was connected when)
@@ -455,7 +306,7 @@ it creates a lot of traffic that blends with I2P-Bote traffic.</p></li>
 <li><p>Even I2P-Bote relays are thus location-hidden.</p></li>
 </ul>
 <h3 id="WithoutRoutes">Насколько анонимен/безопасен I2P-Bote без почтовых маршрутов?</h3>
-<p>Pretty anonymous and very secure.</p>
+<p>Вполне анонимно и очень безопасно.</p>
 
 <p>It then basically enjoys the same anonymity other apps have on I2P,
 the anonymity provided by the I2P router – which is rather strong
@@ -480,30 +331,27 @@ licenses/BouncyCastle.txt).</blockquote>
 There is also a <a href="https://github.com/i2p/i2p.i2p-bote">GitHub mirror</a>
 which can be used to view the code.</p>
 <h3 id="Credits">Кто сделал I2P-Bote?</h3>
-<p>Conception, technical design, implementation and original web user interface
-were done by HungryHobo, an anonymous developer.</p>
+<p>Задумка, архитектура, реализация в коде и изначальный пользовательский веб-интерфейс сделаны HungryHobo, анонимным разработчиком.</p>
 
-<p>The current developer of I2P-Bote is str4d.</p>
+<p>Текущий разработчик I2P-Bote — это str4d.</p>
 
-<p>For feedback or if you want to offer help, see
-<a href="about.jsp">the About page</a> for contact details.</p>
+<p>Обратная связь а также Ваши предложения о поддержке принимаются на контактные адреса, расположенные на странице <a href="about.jsp">Об I2P-Bote</a>.</p>
 
 <h3 id="Languages">Какие языки доступны?</h3>
 <p>Английский, немецкий, русский, французский, испанский, португальский, нидерландский, шведский,  китайский и арабский.</p>
 
 <h3 id="Translate">Как я могу помочь перевести I2P-Bote на мой язык?</h3>
-<p>Translations are done the same way as the rest of I2P. If you would
-like to help and have questions, please <a href="about.jsp">contact the author.</a></p>
+<p>Переводы возникают тем же самым путём, что и остальной I2P. Если Вы хотите помочь и имеете вопросы, пожалуйста, <a href="about.jsp">свяжитесь с автором.</a></p>
 
 <h3 id="Technical">Как это работает на техническом уровне?</h3>
-<p>Have a look at the file <code>doc/techdoc.txt</code> in the source code.</p>
+<p>Загляните в файл <code>doc/techdoc.txt</code> в исходном коде.</p>
 
 <h3 id="GetInvolved">Какими способами я еще могу помочь?</h3>
 <ul>
 <li><p>Используйте I2P-Bote и оставьте свой отзыв</p></li>
-<li><p>Tell your friends, family, collegues et al. about I2P-Bote and lend them a hand</p></li>
-<li><p>Mention I2P-Bote on your blog, eepsite or website</p></li>
-<li><p>Write a user's guide or improve the technical documentation</p></li>
-<li><p>Add features or fix bugs (<a href="about.jsp">contact the author first</a>).</p></li>
+<li><p>Расскажите друзьям, семье, своим коллегам и другим об I2P-Bote и поддержите их в освоении.</p></li>
+<li><p>Упомяните I2P-Bote в своём блоге, на eepsite или вебсайте.</p></li>
+<li><p>Напишите руководство или улучшите техническую документацию.</p></li>
+<li><p>Добавьте новую функцию или исправьте баг (<a href="about.jsp">предварительно свяжитесь с автором</a>)</p></li>
 </ul>
 </div>
