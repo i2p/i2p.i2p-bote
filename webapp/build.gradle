@@ -1,6 +1,6 @@
 plugins {
-  id 'war'
-  id "org.akhikhl.gretty" version "2.0.0"
+    id 'war'
+    id "org.gretty" version "2.3.1"
 }
 
 apply from: "${project.rootDir}/gradle/i2p-make-plugin.gradle"
