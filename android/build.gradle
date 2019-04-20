@@ -52,6 +52,7 @@ dependencies {
     implementation(project(':core')) {
         // Replaced with Android-specific JavaMail
         exclude group: 'com.sun.mail'
+        exclude group: 'com.sun.activation'
         // BouncyCastle is replaced with SpongyCastle
         exclude group: 'org.bouncycastle'
         // We use the I2P Android client library instead to get native libs
