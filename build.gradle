@@ -66,10 +66,12 @@ configure([project(':core'), project(':webapp')]) {
             if (JavaVersion.current().java8Compatible && !JavaVersion.current().java9Compatible) {
                 throw new GradleException("Set java7BootClasspath property or JAVA7_HOME environment variable to enable cross-compilation, or run Gradle with JDK 9+")
             }
-            tasks.withType(JavaCompile) {
-                def version = compat(sourceCompatibility)
-                println "Configuring $name to use --release $version"
-                options.compilerArgs.addAll(['--release', version])
+            project.afterEvaluate {
+                tasks.withType(JavaCompile) {
+                    def version = compat(sourceCompatibility)
+                    logger.info("Configuring $name to use --release $version")
+                    options.compilerArgs.addAll(['--release', version])
+                }
             }
         }
 
@@ -80,24 +82,26 @@ configure([project(':core'), project(':webapp')]) {
                 throw new GradleException("Only set TARGET_JAVA_HOME with JDK 8")
             }
 
-            println("Target Java home set to ${targetJavaHome}")
-            println("Configuring Gradle to use forked compilation and testing")
+            project.afterEvaluate {
+                logger.info("Target Java home set to ${targetJavaHome}")
+                logger.info("Configuring Gradle to use forked compilation and testing")
 
-            tasks.withType(JavaCompile) {
-                options.fork = true
-                options.forkOptions.javaHome = file(targetJavaHome)
-            }
+                tasks.withType(JavaCompile) {
+                    options.fork = true
+                    options.forkOptions.javaHome = file(targetJavaHome)
+                }
 
-            tasks.withType(Javadoc) {
-                executable = javaExecutable(targetJavaHome, "javadoc")
-            }
+                tasks.withType(Javadoc) {
+                    executable = javaExecutable(targetJavaHome, "javadoc")
+                }
 
-            tasks.withType(Test) {
-                executable = javaExecutable(targetJavaHome, "java")
-            }
+                tasks.withType(Test) {
+                    executable = javaExecutable(targetJavaHome, "java")
+                }
 
-            tasks.withType(JavaExec) {
-                executable = javaExecutable(targetJavaHome, "java")
+                tasks.withType(JavaExec) {
+                    executable = javaExecutable(targetJavaHome, "java")
+                }
             }
         }
     }
