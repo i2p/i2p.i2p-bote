@@ -8,17 +8,17 @@ dependencies {
     api "net.i2p:i2p:$rootProject.i2pVersion"
     implementation "net.i2p.client:streaming:$rootProject.i2pVersion"
 
-    api 'com.sun.mail:mailapi:1.5.6'
+    api 'com.sun.mail:mailapi:1.6.3'
     implementation 'com.sun.activation:jakarta.activation:1.2.1'
     implementation 'com.lambdaworks:scrypt:1.4.0'
-    implementation 'org.apache.james:apache-mime4j-core:0.7.2'
+    implementation 'org.apache.james:apache-mime4j-core:0.8.3'
     implementation 'org.b1.pack:lzma-sdk-4j:9.22.0'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.58'
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.jmock:jmock:2.10.0-RC3'
-    testImplementation 'org.jmock:jmock-legacy:2.10.0-RC3'
-    testImplementation 'org.mockito:mockito-core:2.24.0'
+    testImplementation 'org.jmock:jmock:2.11.0'
+    testImplementation 'org.jmock:jmock-legacy:2.11.0'
+    testImplementation 'org.mockito:mockito-core:2.27.0'
 }
 
 test {

@@ -99,8 +99,7 @@
                 <input type="hidden" name="destination" value="${result.destination}"/>
                 <input type="hidden" name="picture" value="${result.pictureBase64}"/>
                 <input type="hidden" name="text" value="${fn:escapeXml(result.text)}"/>
-                <ib:message key="Import" var="import" scope="request"/>
-                <input type="submit" value="${import}"/>
+                <button type="submit"><ib:message key="Import"/></button>
             </csrf:form>
         </c:if>
     </c:if>

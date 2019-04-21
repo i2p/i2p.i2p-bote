@@ -1,6 +1,6 @@
 plugins {
-  id 'war'
-  id "org.akhikhl.gretty" version "2.0.0"
+    id 'war'
+    id "org.gretty" version "2.3.1"
 }
 
 apply from: "${project.rootDir}/gradle/i2p-make-plugin.gradle"
@@ -54,15 +54,15 @@ precompileJsp.dependsOn compileJava
 compileJspJava.dependsOn precompileJsp
 
 dependencies {
-    jasper 'org.mortbay.jasper:apache-el:8.5.23'
-    jasper 'org.mortbay.jasper:apache-jsp:8.5.23'
+    jasper 'org.mortbay.jasper:apache-el:8.5.40'
+    jasper 'org.mortbay.jasper:apache-jsp:8.5.40'
 
     compile project(':core')
 
     implementation "net.i2p.client:mstreaming:$rootProject.i2pVersion"
 
-    implementation 'org.apache.tomcat:tomcat-jsp-api:8.5.23'
-    implementation 'org.apache.tomcat:tomcat-servlet-api:8.5.23'
+    implementation 'org.apache.tomcat:tomcat-jsp-api:8.5.40'
+    implementation 'org.apache.tomcat:tomcat-servlet-api:8.5.40'
     compile 'org.jfree:jcommon:1.0.23'
     compile 'org.jfree:jfreechart:1.0.19'
     compile 'org.owasp:csrfguard:3.1.0'
