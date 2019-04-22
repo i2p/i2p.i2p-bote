@@ -340,7 +340,8 @@ public class Util {
         I2PAppContext appContext = I2PAppContext.getGlobalContext();
         SessionKeyManager sessionKeyMgr = new net.i2p.crypto.SessionKeyManager(appContext) { };
         SessionKey sessionKey = sessionKeyMgr.createSession(key);
-        return appContext.elGamalAESEngine().encrypt(data, key, sessionKey, null, null, null, 0);
+        ElGamalAESEngine elGamalAESEngine = new ElGamalAESEngine(appContext);
+        return elGamalAESEngine.encrypt(data, key, sessionKey, null, null, null, 0);
     }
     
     /**
@@ -351,7 +352,8 @@ public class Util {
         I2PAppContext appContext = I2PAppContext.getGlobalContext();
         SessionKeyManager sessionKeyMgr = new net.i2p.crypto.SessionKeyManager(appContext) {
         };
-        return appContext.elGamalAESEngine().decrypt(data, key, sessionKeyMgr);
+        ElGamalAESEngine elGamalAESEngine = new ElGamalAESEngine(appContext);
+        return elGamalAESEngine.decrypt(data, key, sessionKeyMgr);
     }
     
     /** Overwrites a <code>byte</code> array with zeros */
