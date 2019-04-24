@@ -16,6 +16,7 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
+import net.i2p.I2PAppContext;
 import net.i2p.android.router.service.IRouterState;
 import net.i2p.android.router.service.IRouterStateCallback;
 import net.i2p.android.router.service.State;
@@ -24,11 +25,13 @@ import net.i2p.client.DomainSocketFactory;
 import net.i2p.router.Router;
 import net.i2p.router.RouterContext;
 import net.i2p.router.RouterLaunch;
+import net.i2p.util.Log;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
@@ -80,6 +83,11 @@ public class BoteService extends Service implements NetworkStatusListener, NewEm
         mRouterChoice = (RouterChoice) intent.getSerializableExtra(ROUTER_CHOICE);
         if (mRouterChoice == RouterChoice.INTERNAL)
             new Thread(new RouterStarter()).start();
+
+        // Set log level for i2p.bote.* to DEBUG, and let Android filter out what it wants.
+        Properties limits = new Properties();
+        limits.setProperty("i2p.bote", Log.STR_DEBUG);
+        I2PAppContext.getGlobalContext().logManager().setLimits(limits);
 
         I2PBote bote = I2PBote.getInstance();
         if (mRouterChoice == RouterChoice.ANDROID) {
