@@ -270,9 +270,15 @@ public class I2PBote implements NetworkStatusSource, EmailFolderManager, MailSen
             fileReader = new FileReader(destinationKeyFile);
             char[] destKeyBuffer = new char[(int)destinationKeyFile.length()];
             fileReader.read(destKeyBuffer);
-            byte[] localDestinationKey = Base64.decode(new String(destKeyBuffer));
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
-            socketManager = I2PSocketManagerFactory.createDisconnectedManager(inputStream, null, 0, sessionProperties);
+            String destKeyStr = new String(destKeyBuffer);
+            byte[] localDestinationKey = Base64.decode(destKeyStr.trim());
+            if (localDestinationKey == null) {
+                log.error("Destination key file contains an invalid Base64 string.");
+            } else {
+                ByteArrayInputStream inputStream = new ByteArrayInputStream(localDestinationKey);
+                socketManager = I2PSocketManagerFactory.createDisconnectedManager(
+                        inputStream, null, 0, sessionProperties);
+            }
         }
         catch (IOException e) {
             log.debug("Destination key file doesn't exist or isn't readable." + e);
