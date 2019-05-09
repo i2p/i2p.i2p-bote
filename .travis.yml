@@ -4,6 +4,7 @@ jdk:
   - oraclejdk11
   - oraclejdk9
   - oraclejdk8
+  - openjdk12
   - openjdk11
   - openjdk10
   - openjdk9
@@ -30,6 +31,8 @@ matrix:
         - export TARGET_JAVA_HOME=$JAVA_HOME
         - jdk_switcher use oraclejdk8
         - ./gradlew assemble
+  allow_failures:
+    - jdk: openjdk12
 
 before_install:
   - wget http://security.ubuntu.com/ubuntu/pool/main/g/gcc-5/gcc-5-base_5.4.0-6ubuntu1~16.04.10_amd64.deb
