@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
     defaultConfig {
-        versionCode 13
-        versionName '0.6'
-        minSdkVersion 10
-        targetSdkVersion 22
+        versionCode 15
+        versionName '0.6.1'
+        minSdkVersion 14
+        targetSdkVersion 26
         multiDexEnabled true
 
         // For Espresso
