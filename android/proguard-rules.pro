@@ -10,6 +10,9 @@
 -dontwarn javax.security.sasl.**
 -dontwarn javax.security.auth.callback.NameCallback
 
+-dontwarn android.test.**
+-dontwarn org.junit.**
+
 -dontwarn net.sf.ntru.**
 
 -keepclassmembers class i2p.bote.crypto.ECUtils {
