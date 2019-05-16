@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 12:16+0100\n"
-"PO-Revision-Date: 2018-12-08 17:42+0000\n"
-"Last-Translator: Chacal Exodius\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
+"Last-Translator: Victor Galdino <altgaldinovictor@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otf/I2P/"
 "language/pt_BR/)\n"
 "Language: pt_BR\n"
@@ -1048,7 +1048,7 @@ msgstr ""
 
 #: src/main/webapp/connectError.jsp
 msgid "This is the error that happened:"
-msgstr ""
+msgstr "Este foi o erro que ocorreu:"
 
 #: src/main/webapp/connectError.jsp
 msgid ""

@@ -2,6 +2,7 @@
 # Translators:
 # Алексей Выскубов <viskubov@gmail.com>, 2016
 # Alexander <a_i_pahom@mail.ru>, 2013
+# Alexander Georgievskiy <galeksandrp@gmail.com>, 2017
 # sfix <anon-9b36b2e@lycos.com>, 2013
 # dimi <zhopa@mita.pp.ru>, 2013
 # ducki2p <ducki2p@gmail.com>, 2011
@@ -17,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 12:16+0100\n"
-"PO-Revision-Date: 2017-03-26 07:21+0000\n"
-"Last-Translator: str4d <str4d@i2pmail.org>\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
+"Last-Translator: yume\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/otf/I2P/language/"
 "ru_RU/)\n"
 "Language: ru_RU\n"
@@ -438,6 +439,8 @@ msgid ""
 "This encryption type does not support destinations that start with {0}. "
 "Valid initial characters are {1}."
 msgstr ""
+"Этот тип шифрования не поддерживает назначения, начинающиеся на {0}. "
+"Поддерживаемые начальные символы {1}."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -1055,7 +1058,7 @@ msgstr ""
 
 #: src/main/webapp/connectError.jsp
 msgid "This is the error that happened:"
-msgstr ""
+msgstr "Произошла ошибка:"
 
 #: src/main/webapp/connectError.jsp
 msgid ""

@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 12:16+0100\n"
-"PO-Revision-Date: 2018-12-11 20:26+0000\n"
-"Last-Translator: Anatol <onon@riseup.net>\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German (http://www.transifex.com/otf/I2P/language/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -1061,7 +1061,7 @@ msgstr ""
 
 #: src/main/webapp/connectError.jsp
 msgid "This is the error that happened:"
-msgstr ""
+msgstr "Dies ist der Fehler, der aufgetreten ist:"
 
 #: src/main/webapp/connectError.jsp
 msgid ""

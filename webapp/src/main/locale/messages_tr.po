@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 12:16+0100\n"
-"PO-Revision-Date: 2019-04-26 05:30+0000\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/otf/I2P/language/"
 "tr_TR/)\n"
@@ -1047,7 +1047,7 @@ msgstr ""
 
 #: src/main/webapp/connectError.jsp
 msgid "This is the error that happened:"
-msgstr ""
+msgstr "Şu sorun çıktı:"
 
 #: src/main/webapp/connectError.jsp
 msgid ""

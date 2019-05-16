@@ -1,7 +1,7 @@
 # Translators:
 # Translators:
 # Adolfo Jayme Barrientos, 2013
-# Adolfo Jayme-Barrientos, 2013
+# Fito JB, 2013
 # Anarkia <anarkia@i2pmail.org>, 2013
 # Anarkia <anarkia@i2pmail.org>, 2013
 # blabla <blabla@trash-mail.com>, 2011-2012,2014
@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 12:16+0100\n"
-"PO-Revision-Date: 2019-03-18 21:46+0000\n"
-"Last-Translator: Anatoli F. Peña Castillo <djanatoli@gmail.com>\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
+"Last-Translator: strel\n"
 "Language-Team: Spanish (http://www.transifex.com/otf/I2P/language/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -1073,7 +1073,7 @@ msgstr ""
 
 #: src/main/webapp/connectError.jsp
 msgid "This is the error that happened:"
-msgstr ""
+msgstr "Este es el error que sucedió:"
 
 #: src/main/webapp/connectError.jsp
 msgid ""

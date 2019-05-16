@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 12:16+0100\n"
-"PO-Revision-Date: 2018-09-15 01:58+0000\n"
-"Last-Translator: Jonatan Nyberg\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
+"Last-Translator: cacapo <handelsehorisont@gmail.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/otf/I2P/language/"
 "sv_SE/)\n"
 "Language: sv_SE\n"
@@ -1052,7 +1052,7 @@ msgstr ""
 
 #: src/main/webapp/connectError.jsp
 msgid "This is the error that happened:"
-msgstr ""
+msgstr "Detta är felet som uppstod:"
 
 #: src/main/webapp/connectError.jsp
 msgid ""

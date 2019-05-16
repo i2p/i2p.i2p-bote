@@ -1,5 +1,6 @@
 # Translators:
 # Translators:
+# asteryx <asteryx82@gmail.com>, 2018
 # gringoire <shmt@anapnea.net>, 2011
 # LinuxChata, 2014
 # LinuxChata, 2014
@@ -12,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 12:16+0100\n"
-"PO-Revision-Date: 2016-11-24 02:51+0000\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/otf/I2P/"
 "language/uk_UA/)\n"
@@ -21,21 +22,23 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:121
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:135
 msgid "Password required or invalid password provided"
-msgstr ""
+msgstr "Необхідний або неправильний пароль"
 
 #: src/main/java/i2p/bote/imap/MapperFactory.java:408
 msgid "Deletion of mailboxes is not currently supported."
-msgstr ""
+msgstr "Видалення поштових скриньок наразі не підтримується."
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 msgid "Not set."
-msgstr ""
+msgstr "Не встановлено."
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:313
 msgid "Queued"
@@ -48,7 +51,7 @@ msgstr "Надсилається... "
 #: src/main/java/i2p/bote/web/JSPHelper.java:317
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
-msgstr ""
+msgstr "Надіслано {0} з {1} одержувачів"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:320
 msgid "Email sent"
@@ -56,7 +59,7 @@ msgstr "Лист відправлено"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:322
 msgid "Gateway disabled"
-msgstr ""
+msgstr "Шлюз вимкнено"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:324
 #: src/main/java/i2p/bote/web/SendEmailTag.java:110
@@ -67,26 +70,26 @@ msgstr ""
 #: src/main/java/i2p/bote/web/JSPHelper.java:327
 #, java-format
 msgid "Invalid recipient address: {0}"
-msgstr ""
+msgstr "Недійсна адреса одержувача: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:329
 #, java-format
 msgid "Error creating email packets: {0}"
-msgstr ""
+msgstr "Помилка створення пакунків електронної пошти: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:331
 #, java-format
 msgid "Error while sending email: {0}"
-msgstr ""
+msgstr "Помилка при відправці повідомлення: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:333
 #, java-format
 msgid "Error saving email metadata: {0}"
-msgstr ""
+msgstr "Помилка збереження метаданих електронної пошти: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:354
 msgid "New email received"
-msgstr ""
+msgstr "Новий лист"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:90
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:196
@@ -107,7 +110,7 @@ msgstr "Пір"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:119
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:41
 msgid "I2P Destination"
-msgstr ""
+msgstr "Місце призначення I2P"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:120
 msgid "Reachability %"
@@ -117,7 +120,7 @@ msgstr "Доступність %"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:227
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:232
 msgid "Untested"
-msgstr ""
+msgstr "Неперевірене"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:140
 msgid "Banned Peers:"
@@ -125,7 +128,7 @@ msgstr "Забанені піри:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:145
 msgid "Destination Hash"
-msgstr ""
+msgstr "Адреса призначення хешу"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:146
 msgid "Ban Reason"
@@ -134,22 +137,22 @@ msgstr "Причина бану"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:189
 msgid "Reachable"
-msgstr ""
+msgstr "Доступність"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:186
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:190
 msgid "Unreachable"
-msgstr ""
+msgstr "Недоступність"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:223
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:230
 msgid "Good"
-msgstr ""
+msgstr "Добре"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:225
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:231
 msgid "Unreliable"
-msgstr ""
+msgstr "Ненадійний"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:250
 msgid "Wrong protocol version:"
@@ -157,11 +160,11 @@ msgstr "Неправильна версія протоколу:"
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:76
 msgid "Error: Please add at least one recipient."
-msgstr ""
+msgstr "Помилка: додайте принаймні одного одержувача."
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:104
 msgid "The email has been queued for sending."
-msgstr ""
+msgstr "Лист був поставлений ​​в чергу для відправки."
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:110
 #: src/main/java/i2p/bote/web/SendEmailTag.java:114
@@ -173,7 +176,7 @@ msgstr "Помилка при відправці повідомлення: {0}"
 #: src/main/java/i2p/bote/web/SendEmailTag.java:114
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
-msgstr ""
+msgstr "Адреса не містить адреси електронної пошти або зовнішньої адреси: {0}"
 
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:43
 msgid "BktPfx"
@@ -225,7 +228,7 @@ msgstr "Підтвердити:"
 
 #: src/main/webapp/exportIdentities.jsp
 msgid "Export"
-msgstr ""
+msgstr "Експортувати"
 
 #: src/main/webapp/folder.jsp
 msgid "From"
@@ -273,15 +276,15 @@ msgstr ""
 
 #: src/main/webapp/userGuide.jsp
 msgid "User Guide"
-msgstr ""
+msgstr "Керівництво користувача"
 
 #: src/main/webapp/buttonFrame.jsp
 msgid "Checking for mail..."
-msgstr ""
+msgstr "Перевірка пошти..."
 
 #: src/main/webapp/buttonFrame.jsp
 msgid "Check Mail"
-msgstr ""
+msgstr "Перевірити пошту"
 
 #: src/main/webapp/buttonFrame.jsp
 msgid "Compose"
@@ -301,11 +304,11 @@ msgstr "Помилка"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
-msgstr ""
+msgstr "Форма повинна бути подана за допомогою POST."
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
-msgstr ""
+msgstr "Будь ласка, заповніть поле призначення."
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Name field."
@@ -313,7 +316,7 @@ msgstr "Будь ласка, заповніть поле Ім’я."
 
 #: src/main/webapp/editContact.jsp
 msgid "The contact has been saved."
-msgstr ""
+msgstr "Контакт збережено."
 
 #: src/main/webapp/editContact.jsp
 msgid "New Contact"
@@ -361,7 +364,7 @@ msgstr "Адресна книга"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
-msgstr ""
+msgstr "Приватна адресна книга"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Select One or More Entries"
@@ -377,11 +380,11 @@ msgstr "Ім’я"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Тескт"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Email Destination"
-msgstr ""
+msgstr "Адреса призначення листа"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -607,7 +610,7 @@ msgstr "FAQ"
 
 #: src/main/webapp/faq.jsp
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Засто задавані питання"
 
 #: src/main/webapp/header.jsp
 msgid "- I2P-Bote"
@@ -615,7 +618,7 @@ msgstr "- I2P-Bote"
 
 #: src/main/webapp/header.jsp
 msgid "Password is cached. Click to clear the password cache."
-msgstr ""
+msgstr "Пароль кешовано. Натисніть, щоб очистити кеш пароля."
 
 #: src/main/webapp/header.jsp
 msgid "I2P-Bote"
@@ -658,10 +661,13 @@ msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
 msgstr ""
+"Щоб функція I2P-Bote функціонувала належним чином, ви повинні завантажити "
+"файли політики JCE Unlimited Strength Jurisdiction Policy і перемістити їх у "
+"цю папку:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
-msgstr ""
+msgstr "Керівництво"
 
 #: src/main/webapp/clearPasswordCache.jsp
 msgid "Password Cleared"
@@ -784,11 +790,11 @@ msgstr ""
 
 #: src/main/webapp/showEmail.jsp
 msgid "Sent:"
-msgstr ""
+msgstr "Відправлено:"
 
 #: src/main/webapp/showEmail.jsp
 msgid "Received:"
-msgstr ""
+msgstr "Отримано:"
 
 #: src/main/webapp/showEmail.jsp
 msgid "Subject:"
@@ -812,7 +818,7 @@ msgstr "Відповісти"
 
 #: src/main/webapp/showEmail.jsp
 msgid "Re:"
-msgstr ""
+msgstr "Re:"
 
 #: src/main/webapp/newEmail.jsp
 msgid "New Email"
@@ -848,7 +854,7 @@ msgstr ""
 
 #: src/main/webapp/newEmail.jsp
 msgid "Add another attachment"
-msgstr ""
+msgstr "Прикріпити інші файли"
 
 #: src/main/webapp/newEmail.jsp
 msgid "Attach"
@@ -884,7 +890,7 @@ msgstr "Налаштування збережено."
 
 #: src/main/webapp/settings.jsp
 msgid "General"
-msgstr ""
+msgstr "Головне"
 
 #: src/main/webapp/settings.jsp
 msgid "Check for mail every {0} minutes"
@@ -928,7 +934,7 @@ msgstr ""
 
 #: src/main/webapp/settings.jsp
 msgid "None"
-msgstr ""
+msgstr "Немає"
 
 #: src/main/webapp/settings.jsp
 msgid "Delay per relay hop: Between"
@@ -1070,11 +1076,11 @@ msgstr "З’єднатись зараз"
 
 #: src/main/webapp/identities.jsp
 msgid "Email Identities"
-msgstr ""
+msgstr "Ідентифікатори електронної пошти"
 
 #: src/main/webapp/identities.jsp
 msgid "No email identities are defined."
-msgstr ""
+msgstr "Ідентифікатори електронної пошти не визначені."
 
 #: src/main/webapp/identities.jsp
 msgid "Def."
@@ -1082,7 +1088,7 @@ msgstr ""
 
 #: src/main/webapp/identities.jsp
 msgid "Public Name"
-msgstr ""
+msgstr "Публічне ім'я"
 
 #: src/main/webapp/identities.jsp
 msgid "Description"
@@ -1318,32 +1324,62 @@ msgstr ""
 
 #: src/main/webapp/WEB-INF/tags/printDate.tag
 msgid "Unknown"
-msgstr ""
+msgstr "Невідомо"
 
 #: src/main/webapp/WEB-INF/tags/address.tag
 msgid "Add to Address Book"
 msgstr "Додати до адресної книги"
 
+#~ msgid "Material"
+#~ msgstr "Material"
+
+#~ msgid "Light Blue"
+#~ msgstr "Light Blue"
+
+#~ msgid "Vanilla"
+#~ msgstr "Vanilla"
+
+#~ msgid "No identity matches the sender/from field: "
+#~ msgstr "No identity matches the sender/from field: "
+
+#~ msgid "Checking password"
+#~ msgstr "Checking password"
+
 #~ msgid "The old password is not correct."
-#~ msgstr "Старий пароль не правильний."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "Новий пароль та підтвердження не співпадають."
+#~ msgstr "The new password and the confirmation password do not match."
+
+#~ msgid "Re-encrypting identities"
+#~ msgstr "Re-encrypting identities"
+
+#~ msgid "Re-encrypting addressbook"
+#~ msgstr "Re-encrypting addressbook"
+
+#~ msgid "Re-encrypting folder"
+#~ msgstr "Re-encrypting folder"
+
+#~ msgid "Updating password file"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "256-бітне шифрування еліптичними кривими"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "521-бітне шифрування еліптичними кривими"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "2048-бітне шифрування Ель-Гамаля"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "Шифрування NTRU-1087"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "Невірна електронна адреса: {0}"
+#~ msgstr "Invalid address: {0}"
+
+#~ msgid "Invalid ID number for CryptoImplementation: "
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."
