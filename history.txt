@@ -1,6 +1,11 @@
 I2P-Bote Version History
 ------------------------
 
+0.4.8 (Released on May 16, 2019)
+  * Fixes to work on I2P 0.9.38 and above
+  * Removed kytv from bootstrap nodes :(
+  * Added a new bootstrap node run by idk (welcome!)
+
 0.4.7 (Released on April 9, 2018)
   * Set default number of relay hops to 2
   * IMAP and SMTP APIs now start immediately instead of waiting for tunnels
