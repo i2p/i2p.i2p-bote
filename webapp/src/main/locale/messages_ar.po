@@ -8,22 +8,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2019-01-23 18:52+0000\n"
-"Last-Translator: ButterflyOfFire ButterflyOfFire\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
+"Last-Translator: Tashigi OP\n"
 "Language-Team: Arabic (http://www.transifex.com/otf/I2P/language/ar/)\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ar\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:101
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:115
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:121
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:135
 msgid "Password required or invalid password provided"
 msgstr "كلمة المرور مطلوبة أو كلمة المرور المقدمة غير صالحة"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:319
+#: src/main/java/i2p/bote/imap/MapperFactory.java:408
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "حذف صناديق البريد غير مدعوم حاليًا."
 
@@ -201,119 +202,97 @@ msgstr "(S)"
 msgid "(None)"
 msgstr "(ﻻشئ)"
 
-#: src/main/webapp/header.jsp
-msgid "- I2P-Bote"
-msgstr "- I2P-Bote"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export Identities"
+msgstr "تصدير الهويات"
 
-#: src/main/webapp/header.jsp
-msgid "Password is cached. Click to clear the password cache."
-msgstr "كلمة السر محفوظة في الذاكرة. انقر هنا لمسحها من الذاكرة."
+#: src/main/webapp/exportIdentities.jsp
+msgid "Password:"
+msgstr "كلمة السر:"
 
-#: src/main/webapp/header.jsp
-msgid "I2P-Bote"
-msgstr "I2P-Bote"
+#: src/main/webapp/exportIdentities.jsp
+msgid "(leave blank to not encrypt identities)"
+msgstr "(اتركه فارغا لعدم تشفير الهويات)"
 
-#: src/main/webapp/header.jsp
-msgid "Secure Distributed Email"
-msgstr "بريد الكتروني آمن وغير ممركز"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Confirm:"
+msgstr "تأكيد:"
 
-#: src/main/webapp/header.jsp
-msgid "Addresses"
-msgstr "عناوين"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export"
+msgstr "تصدير"
 
-#: src/main/webapp/header.jsp
-msgid "Identities"
-msgstr "الهويات"
+#: src/main/webapp/folder.jsp
+msgid "From"
+msgstr "من"
 
-#: src/main/webapp/header.jsp
-msgid "Address Book"
-msgstr "دفتر العناوين"
+#: src/main/webapp/folder.jsp
+msgid "Know"
+msgstr "معروف"
 
-#: src/main/webapp/header.jsp
-msgid "Configuration"
-msgstr "إعدادات"
+#: src/main/webapp/folder.jsp
+msgid "To"
+msgstr "إلى"
 
-#: src/main/webapp/header.jsp
-msgid "Settings"
-msgstr "الإعدادات"
+#: src/main/webapp/folder.jsp
+msgid "Subject"
+msgstr "عنوان"
 
-#: src/main/webapp/header.jsp
-msgid "Network Status"
-msgstr "حالة الشبكة"
+#: src/main/webapp/folder.jsp
+msgid "Sent Time"
+msgstr "وقت الإرسال"
 
-#: src/main/webapp/header.jsp
-msgid "Help"
-msgstr "مساعدة"
+#: src/main/webapp/folder.jsp
+msgid "Delivered"
+msgstr "تم التوصيل"
 
-#: src/main/webapp/header.jsp
+#: src/main/webapp/folder.jsp
+msgid "Anonymous"
+msgstr "مجهول"
+
+#: src/main/webapp/folder.jsp
+msgid "(No subject)"
+msgstr "(بدون عنوان)"
+
+#: src/main/webapp/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr "التوقيع غير صالح أو مفقود"
+
+#: src/main/webapp/folder.jsp
+msgid "Delete"
+msgstr "حذف"
+
+#: src/main/webapp/folder.jsp
+msgid "Delete this email"
+msgstr "حذف هذا البريد"
+
+#: src/main/webapp/userGuide.jsp
 msgid "User Guide"
 msgstr "دليل المستخدم"
 
-#: src/main/webapp/header.jsp
-msgid "FAQ"
-msgstr "الأسئلة المكررة"
-
-#: src/main/webapp/header.jsp
-msgid "About"
-msgstr "حول البرنامج"
-
-#: src/main/webapp/header.jsp
-msgid ""
-"For I2P-Bote to function properly, you must download the JCE Unlimited "
-"Strength Jurisdiction Policy files and move them into this folder:"
-msgstr "لكي يعمل I2P-Bote بشكل صحيح، يجب عليك تنزيل ملفات سياسة JCE Unlimited Strength Jurisdiction و نقلها إلى هذا المجلد:"
-
-#: src/main/webapp/header.jsp
-msgid "Guide"
-msgstr "دليل إرشادي"
-
-#: src/main/webapp/identities.jsp
-msgid "Email Identities"
-msgstr "هويات البريد"
-
-#: src/main/webapp/identities.jsp
-msgid "No email identities are defined."
-msgstr "لم تحدد اية هوية للبريد."
-
-#: src/main/webapp/identities.jsp
-msgid "Def."
-msgstr "تعريف"
-
-#: src/main/webapp/identities.jsp
-msgid "Public Name"
-msgstr "اسم"
-
-#: src/main/webapp/identities.jsp
-msgid "Description"
-msgstr "وصف"
-
-#: src/main/webapp/identities.jsp
-msgid "Email Destination"
-msgstr "بريد الإلكتروني للمتلقي"
-
-#: src/main/webapp/identities.jsp
+#: src/main/webapp/buttonFrame.jsp
 msgid "Checking for mail..."
 msgstr "تحمبل بريد ..."
 
-#: src/main/webapp/identities.jsp
+#: src/main/webapp/buttonFrame.jsp
 msgid "Check Mail"
 msgstr "فحص البريد"
 
-#: src/main/webapp/identities.jsp
-msgid "Check mail for this identity"
-msgstr "تحقق من البريد لهذه الهوية"
+#: src/main/webapp/buttonFrame.jsp
+msgid "Compose"
+msgstr "إنشاء"
 
-#: src/main/webapp/identities.jsp
-msgid "New Identity"
-msgstr "هوية جديدة"
+#: src/main/webapp/buttonFrame.jsp
+msgid "Last checked:"
+msgstr "آخر فحص:"
 
-#: src/main/webapp/identities.jsp
-msgid "Import Identities"
-msgstr "استيراد الهويات"
+#: src/main/webapp/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr "تم حذف العنوان من دفتر العناوين."
 
-#: src/main/webapp/identities.jsp
-msgid "Export Identities"
-msgstr "تصدير الهويات"
+#: src/main/webapp/deleteContact.jsp
+msgid "Error"
+msgstr "خطأ"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
@@ -372,6 +351,10 @@ msgid "Cancel"
 msgstr "إلغاء"
 
 #: src/main/webapp/addressBook.jsp
+msgid "Address Book"
+msgstr "دفتر العناوين"
+
+#: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
 msgstr "دفتر العناوين الخاصة"
 
@@ -392,8 +375,8 @@ msgid "Text"
 msgstr "نص"
 
 #: src/main/webapp/addressBook.jsp
-msgid "Delete"
-msgstr "حذف"
+msgid "Email Destination"
+msgstr "بريد الإلكتروني للمتلقي"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -415,59 +398,77 @@ msgstr "الاستيراد من دليل العناوين العامة"
 msgid "Lookup"
 msgstr "ابحث عن"
 
-#: src/main/webapp/network.jsp
-msgid "Network"
-msgstr "شبكة"
+#: src/main/webapp/saveIdentities.jsp
+msgid "Error:"
+msgstr "حطأ:"
 
-#: src/main/webapp/network.jsp
+#: src/main/webapp/csrfError.jsp
+msgid "Security Violation"
+msgstr "اختراق الأمن"
+
+#: src/main/webapp/csrfError.jsp
+msgid "CSRF Security Violation"
+msgstr "CSRF اختراق اﻷمن"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "املئ حقل الإسم."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "انتظر من فضلك..."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The Email Identity is being generated. This may take a while."
+msgstr "يتم إنشاء هوية البريد الإلكتروني. قد يستغرق هذا بعض الوقت."
+
+#: src/main/webapp/submitIdentity.jsp
 msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "المعلومات حول الشبكة غير متوفرة لأن I2P-Bote غير متصل بعد."
+"This encryption type does not support destinations that start with {0}. "
+"Valid initial characters are {1}."
+msgstr ""
+"لا يدعم نوع التشفير هذا الوجهات التي تبدأ بـ {0}. الأحرف الأولية الصالحة هي "
+"{1}."
 
-#: src/main/webapp/network.jsp
-msgid "Local destination:"
-msgstr "مستقبل محلي:"
+#: src/main/webapp/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "تم تسجيل هذه الهوية."
 
-#: src/main/webapp/folder.jsp
-msgid "From"
-msgstr "من"
+#: src/main/webapp/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr "أضف وجهة البريد الإلكتروني إلى الدليل"
 
-#: src/main/webapp/folder.jsp
-msgid "Know"
-msgstr "معروف"
+#: src/main/webapp/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr "الاسم موجود بالفعل. يرجى اختيار اسم عام مختلف."
 
-#: src/main/webapp/folder.jsp
-msgid "To"
-msgstr "إلى"
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr "النشر إلى دليل العناوين"
 
-#: src/main/webapp/folder.jsp
-msgid "Subject"
-msgstr "عنوان"
+#: src/main/webapp/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr "صورة للتحميل:"
 
-#: src/main/webapp/folder.jsp
-msgid "Sent Time"
-msgstr "وقت الإرسال"
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr "(اختياري ، 7.5 كيلوبايت كحد أقصى)"
 
-#: src/main/webapp/folder.jsp
-msgid "Delivered"
-msgstr "تم التوصيل"
+#: src/main/webapp/publishDestination.jsp
+msgid "Text to include:"
+msgstr "النص المراد تضمينه:"
 
-#: src/main/webapp/folder.jsp
-msgid "Anonymous"
-msgstr "مجهول"
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr "(اختياري ، 2000 حرف كحد أقصى)"
 
-#: src/main/webapp/folder.jsp
-msgid "(No subject)"
-msgstr "(بدون عنوان)"
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish"
+msgstr "نشر"
 
-#: src/main/webapp/folder.jsp
-msgid "Signature is invalid or missing"
-msgstr "التوقيع غير صالح أو مفقود"
-
-#: src/main/webapp/folder.jsp
-msgid "Delete this email"
-msgstr "حذف هذا البريد"
+#: src/main/webapp/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr "تمت إضافة الهوية إلى دليل العناوين."
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Identity"
@@ -481,48 +482,244 @@ msgstr "لم تحدد هوية الكترونية"
 msgid "Create a New Email Identity"
 msgstr "أنشئ هوية جديدة"
 
-#: src/main/webapp/buttonFrame.jsp
-msgid "Compose"
-msgstr "إنشاء"
+#: src/main/webapp/deleteIdentity.jsp
+msgid "The email identity has been deleted."
+msgstr "هوية الايميل تم مسحها"
 
-#: src/main/webapp/buttonFrame.jsp
-msgid "Last checked:"
-msgstr "آخر فحص:"
+#: src/main/webapp/debug.jsp
+msgid "Debug"
+msgstr "التصحيح"
 
-#: src/main/webapp/csrfError.jsp
-msgid "Security Violation"
-msgstr "اختراق الأمن"
+#: src/main/webapp/debug.jsp
+msgid "Debug Page"
+msgstr "صفحة التصحيح"
 
-#: src/main/webapp/csrfError.jsp
-msgid "CSRF Security Violation"
-msgstr "CSRF اختراق اﻷمن"
+#: src/main/webapp/debug.jsp
+msgid "Test encrypted files"
+msgstr "اختبار الملفات المشفرة"
+
+#: src/main/webapp/debug.jsp
+msgid "No file encryption problems found."
+msgstr "لم يتم العثور على مشاكل في تشفير الملفات."
+
+#: src/main/webapp/debug.jsp
+msgid "Undecryptable files:"
+msgstr "الملفات الغير قابلة للبرمجة:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "More..."
+msgstr "المزيد..."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Less..."
+msgstr "أقل..."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "New Email Identity"
+msgstr "هوية جديدة للبريد"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Create"
+msgstr "انشئ"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Edit Email Identity"
+msgstr "حرر هوية البريد"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "An Email Identity lets you receive email from other I2P-Bote users."
+msgstr ""
+"تسمح لك هوية البريد الإلكتروني باستلام البريد الإلكتروني من مستخدمي I2P-Bote "
+"الآخرين."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Public Name:"
+msgstr "اسم:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(required field, shown to recipients)"
+msgstr "(حقل ضروري، ظاهر للمستقبل)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Description:"
+msgstr "وصف:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(optional, kept private)"
+msgstr "(غير ضروري، خاص)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(published to the address directory)"
+msgstr "(تم نشره في دليل العناوين)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Encryption:"
+msgstr "نوع التشفير:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(If unsure, leave the default)"
+msgstr "(ان لم تكن متأكدا، دعه كما هو)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Vanity Destination:"
+msgstr "الوجهة:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
+msgstr "(حرفان - 2 - يأخذان ثواني ، و 3 يأخذون دقائقا ، إلخ.)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Fingerprint:"
+msgstr "البصمة :"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Default Identity:"
+msgstr "الهوية العادية:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Include in global check:"
+msgstr "تضمينه في التحقق العام:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Private keys:"
+msgstr "المفاتيح الخاصة:"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "(Never reveal to anyone!)"
+msgstr "(ﻻ تظهر لأحد!)"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Show"
+msgstr "أظهر"
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Cannot publish until connected."
+msgstr "لا يمكن النشر حتى يتم الاتصال."
+
+#: src/main/webapp/editIdentity.jsp
+msgid "Delete this identity"
+msgstr "حذف هذه الهوية"
+
+#: src/main/webapp/faq.jsp
+msgid "FAQ"
+msgstr "الأسئلة المكررة"
+
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr "الأسئلة المتكررة"
+
+#: src/main/webapp/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr "كلمة السر محفوظة في الذاكرة. انقر هنا لمسحها من الذاكرة."
+
+#: src/main/webapp/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Secure Distributed Email"
+msgstr "بريد الكتروني آمن وغير ممركز"
+
+#: src/main/webapp/header.jsp
+msgid "Addresses"
+msgstr "عناوين"
+
+#: src/main/webapp/header.jsp
+msgid "Identities"
+msgstr "الهويات"
+
+#: src/main/webapp/header.jsp
+msgid "Configuration"
+msgstr "إعدادات"
+
+#: src/main/webapp/header.jsp
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: src/main/webapp/header.jsp
+msgid "Network Status"
+msgstr "حالة الشبكة"
+
+#: src/main/webapp/header.jsp
+msgid "Help"
+msgstr "مساعدة"
+
+#: src/main/webapp/header.jsp
+msgid "About"
+msgstr "حول البرنامج"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+"لكي يعمل I2P-Bote بشكل صحيح، يجب عليك تنزيل ملفات سياسة JCE Unlimited "
+"Strength Jurisdiction و نقلها إلى هذا المجلد:"
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr "دليل إرشادي"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "مسح كلمة السر"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "تم مسح كلمة السر من الذاكرة."
+
+#: src/main/webapp/outbox.jsp
+msgid "Outbox"
+msgstr "المرسلات"
+
+#: src/main/webapp/outbox.jsp
+msgid "Create Time"
+msgstr "ساعة الإنشاء"
+
+#: src/main/webapp/outbox.jsp
+msgid "Status"
+msgstr "الحالة"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr "للتوصل ببريد الكتروني من مستخدمين آخرين، يجب انشاء هوية الكترونية جديدة."
+msgstr ""
+"للتوصل ببريد الكتروني من مستخدمين آخرين، يجب انشاء هوية الكترونية جديدة."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr "كل هوية مرتبطة بعنوان الكتروني. الجميع يمكنه ارسال بريد الى عنوانك، لكن فقط صاحب الهوية هو من يمكنه قرائته."
+msgstr ""
+"كل هوية مرتبطة بعنوان الكتروني. الجميع يمكنه ارسال بريد الى عنوانك، لكن فقط "
+"صاحب الهوية هو من يمكنه قرائته."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr "بطريقة أخرى، الهويات الالكترونية هي مثل البريد الالكتروني التقليدي - الا انه لا توجد شركة تقوم باستضافة البريد وبالتالي لها امكانية قرائته لأن I2P-Bote يقوم بتخزين البريد مشفرا على الشبكة."
+msgstr ""
+"بطريقة أخرى، الهويات الالكترونية هي مثل البريد الالكتروني التقليدي - الا انه "
+"لا توجد شركة تقوم باستضافة البريد وبالتالي لها امكانية قرائته لأن I2P-Bote "
+"يقوم بتخزين البريد مشفرا على الشبكة."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr "يقوم I2P-Bote تلقائيًا بفك تشفير رسائل البريد الإلكتروني المرسلة إليك، وذلك باستخدام هوية البريد الإلكتروني التي قمت بإنشائها. يتم تخزين هويات البريد الإلكتروني في ملف يسمى الهويا ؛ لا تقم بإعطاء هذا الملف لأي شخص أو سيتمكن من قراءة جميع رسائلك الإلكترونية."
+msgstr ""
+"يقوم I2P-Bote تلقائيًا بفك تشفير رسائل البريد الإلكتروني المرسلة إليك، وذلك "
+"باستخدام هوية البريد الإلكتروني التي قمت بإنشائها. يتم تخزين هويات البريد "
+"الإلكتروني في ملف يسمى الهويا ؛ لا تقم بإعطاء هذا الملف لأي شخص أو سيتمكن من "
+"قراءة جميع رسائلك الإلكترونية."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
@@ -541,210 +738,37 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr "عند إنشاء هوية بريد إلكتروني جديدة، يمكنك اختيار نوع التشفير الذي سيتم استخدامه بواسطة هوية البريد الإلكتروني. في حين أن جميع خوارزميات التشفير التي توفرها I2P-Bote توفر مستوًى عاليًا من الخصوصية ، فإن طول وجهة البريد الإلكتروني يعتمد على التشفير المستخدم. يحدد خيار التشفير أيضًا أي خوارزمية مستخدمة."
+msgstr ""
+"عند إنشاء هوية بريد إلكتروني جديدة، يمكنك اختيار نوع التشفير الذي سيتم "
+"استخدامه بواسطة هوية البريد الإلكتروني. في حين أن جميع خوارزميات التشفير "
+"التي توفرها I2P-Bote توفر مستوًى عاليًا من الخصوصية ، فإن طول وجهة البريد "
+"الإلكتروني يعتمد على التشفير المستخدم. يحدد خيار التشفير أيضًا أي خوارزمية "
+"مستخدمة."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr "يُنصح عمومًا باختيار تشفير المنحنى البيضاوي 256 بت لأنه ينتج أقصر وجهات البريد الإلكتروني (86 حرفًا) بينما لا يزال آمنًا إلى حد كبير."
-
-#: src/main/webapp/sendEmail.jsp
-msgid "New Email"
-msgstr "رسالة جديدة"
-
-#: src/main/webapp/sendEmail.jsp
-msgid "Go to inbox"
-msgstr "انتقل إلى البريد الوارد"
-
-#: src/main/webapp/outbox.jsp
-msgid "Outbox"
-msgstr "المرسلات"
-
-#: src/main/webapp/outbox.jsp
-msgid "Create Time"
-msgstr "ساعة الإنشاء"
-
-#: src/main/webapp/outbox.jsp
-msgid "Status"
-msgstr "الحالة"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Not Started"
-msgstr "لم ينطلق"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
-msgstr "إنتظر 3 دقائق ..."
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connecting..."
-msgstr "جاري الإتصال ..."
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connected"
-msgstr "متصل"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Error"
-msgstr "خطأ"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Retry Connecting"
-msgstr "إعادة الاتصال"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connect Now"
-msgstr "إتصل الآن"
-
-#: src/main/webapp/deleteIdentity.jsp
-msgid "The email identity has been deleted."
-msgstr "هوية الايميل تم مسحها"
-
-#: src/main/webapp/deleteIdentity.jsp
-msgid "Error:"
-msgstr "حطأ:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr "اخنر ملف لمشاركته وحاول مرة أخرى."
-
-#: src/main/webapp/newEmail.jsp
-msgid "Send"
-msgstr "أرسل"
-
-#: src/main/webapp/newEmail.jsp
-msgid "From:"
-msgstr "من:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "To:"
-msgstr "إلى:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "CC:"
-msgstr "CC:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "BCC:"
-msgstr "CCI:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Reply To:"
-msgstr "إجابة الى:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this recipient"
-msgstr "قم بإزالة هذا المستلم"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add this recipient to the address book"
-msgstr "أضف هذا المستلم إلى دفتر العناوين"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Select recipients from address book"
-msgstr "حدد المستلمين من دفتر العناوين"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another recipient field"
-msgstr "أضف مجال مستلم آخر"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Subject:"
-msgstr "عنوان:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attachments:"
-msgstr "المرفقات:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "حذف هذا المرفق"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another attachment"
-msgstr "أضف مرفق آخر"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attach"
-msgstr "مرفق"
-
-#: src/main/webapp/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "ينصح يأن لا يتجاوز حجم المرفقات 500 Ko."
-
-#: src/main/webapp/newEmail.jsp
-msgid "Message:"
-msgstr "الرسالة:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} كتب:"
-
-#: src/main/webapp/faq.jsp
-msgid "Frequently Asked Questions"
-msgstr "الأسئلة المتكررة"
-
-#: src/main/webapp/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
-msgstr "تم حذف العنوان من دفتر العناوين."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set Password"
-msgstr "حدد كلمة السر"
-
-#: src/main/webapp/setPassword.jsp
-msgid "The password has been changed."
-msgstr "تم تغيير كلمة السر."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait"
-msgstr "يرجى الإنتظار"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait while the password is being changed..."
-msgstr "الرجاء الانتظار بينما يتم تغيير كلمة المرور..."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set a new Password"
-msgstr "ضع كلمة سر جديدة:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "إن لم تقم يتحديد كلمة سر، اترك حقل كلمة السر القديمة فارغا."
-
-#: src/main/webapp/setPassword.jsp
-msgid ""
-"Please note that if a password is set, emails cannot be checked "
-"automatically but only when the Check Mail button is clicked."
-msgstr "يرجى ملاحظة أنه في حالة تعيين كلمة مرور، لا يمكن التحقق من رسائل البريد الإلكتروني تلقائيًا ولكن فقط عند النقر فوق الزر \"التحقق من البريد\"."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Old password:"
-msgstr "كلمة سر القديمة:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "New password:"
-msgstr "كلمة سر جديدة:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Confirm:"
-msgstr "تأكيد:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "OK"
-msgstr "موافق"
+msgstr ""
+"يُنصح عمومًا باختيار تشفير المنحنى البيضاوي 256 بت لأنه ينتج أقصر وجهات البريد "
+"الإلكتروني (86 حرفًا) بينما لا يزال آمنًا إلى حد كبير."
 
 #: src/main/webapp/showEmail.jsp
 msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
-msgstr "تعذر العثور على البريد الإلكتروني في هذا المجلد. ربما تم نقله إلى مجلد الرسائل المرسلة."
+msgstr ""
+"تعذر العثور على البريد الإلكتروني في هذا المجلد. ربما تم نقله إلى مجلد "
+"الرسائل المرسلة."
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
 msgstr "تعذر العثور على البريد الإلكتروني في هذا المجلد."
+
+#: src/main/webapp/showEmail.jsp
+msgid "From:"
+msgstr "من:"
 
 #: src/main/webapp/showEmail.jsp
 msgid "Signature:"
@@ -763,12 +787,40 @@ msgid "Invalid or missing"
 msgstr "غير صحيح او ناقص"
 
 #: src/main/webapp/showEmail.jsp
+msgid "Reply To:"
+msgstr "إجابة الى:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "To:"
+msgstr "إلى:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "CC:"
+msgstr "CC:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "BCC:"
+msgstr "CCI:"
+
+#: src/main/webapp/showEmail.jsp
 msgid "Sent:"
 msgstr "مرسل:"
 
 #: src/main/webapp/showEmail.jsp
 msgid "Received:"
 msgstr "مستقبل:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Subject:"
+msgstr "عنوان:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Message:"
+msgstr "الرسالة:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Attachments:"
+msgstr "المرفقات:"
 
 #: src/main/webapp/showEmail.jsp
 msgid "Status:"
@@ -782,45 +834,69 @@ msgstr "الرد"
 msgid "Re:"
 msgstr "Re:"
 
-#: src/main/webapp/importIdentities.jsp
-msgid "Please select an identities file and try again."
-msgstr "يرجى تحديد ملف الهويات والمحاولة مرة أخرى."
+#: src/main/webapp/newEmail.jsp
+msgid "New Email"
+msgstr "رسالة جديدة"
 
-#: src/main/webapp/importIdentities.jsp
-msgid "The identities have been imported."
-msgstr "تم استيراد الهويات."
+#: src/main/webapp/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "اخنر ملف لمشاركته وحاول مرة أخرى."
 
-#: src/main/webapp/importIdentities.jsp
-msgid "Identities file:"
-msgstr "ملف الهويات:"
+#: src/main/webapp/newEmail.jsp
+msgid "Send"
+msgstr "أرسل"
 
-#: src/main/webapp/importIdentities.jsp
-msgid "Password:"
-msgstr "كلمة السر:"
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this recipient"
+msgstr "قم بإزالة هذا المستلم"
 
-#: src/main/webapp/importIdentities.jsp
-msgid "(leave blank if identities not encrypted)"
-msgstr "(اتركه فارغًا إذا لم يتم تشفير الهويات)"
+#: src/main/webapp/newEmail.jsp
+msgid "Add this recipient to the address book"
+msgstr "أضف هذا المستلم إلى دفتر العناوين"
 
-#: src/main/webapp/importIdentities.jsp
-msgid "Overwrite all existing identities:"
-msgstr "الكتابة فوق جميع الهويات الموجودة:"
+#: src/main/webapp/newEmail.jsp
+msgid "Select recipients from address book"
+msgstr "حدد المستلمين من دفتر العناوين"
 
-#: src/main/webapp/importIdentities.jsp
-msgid "Duplicates: replace existing identity:"
-msgstr "التكرارات: استبدال الهوية الحالية:"
+#: src/main/webapp/newEmail.jsp
+msgid "Add another recipient field"
+msgstr "أضف مجال مستلم آخر"
 
-#: src/main/webapp/importIdentities.jsp
-msgid "Import"
-msgstr "استورد"
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "حذف هذا المرفق"
 
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "Password Cleared"
-msgstr "مسح كلمة السر"
+#: src/main/webapp/newEmail.jsp
+msgid "Add another attachment"
+msgstr "أضف مرفق آخر"
 
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr "تم مسح كلمة السر من الذاكرة."
+#: src/main/webapp/newEmail.jsp
+msgid "Attach"
+msgstr "مرفق"
+
+#: src/main/webapp/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "ينصح يأن لا يتجاوز حجم المرفقات 500 Ko."
+
+#: src/main/webapp/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} كتب:"
+
+#: src/main/webapp/password.jsp
+msgid "Password Required"
+msgstr "كلمة السر ضرورية"
+
+#: src/main/webapp/password.jsp
+msgid "Wrong password. Try again."
+msgstr "كلمة السر خاطئة، حاول من جديد."
+
+#: src/main/webapp/password.jsp
+msgid "Password required"
+msgstr "كلمة السر ضرورية"
+
+#: src/main/webapp/password.jsp
+msgid "OK"
+msgstr "موافق"
 
 #: src/main/webapp/settings.jsp
 msgid "Settings have been saved."
@@ -898,6 +974,82 @@ msgstr "البريد الإلكتروني للمتلقي"
 msgid "Change Password"
 msgstr "غير كلمة السر"
 
+#: src/main/webapp/setPassword.jsp
+msgid "Set Password"
+msgstr "حدد كلمة السر"
+
+#: src/main/webapp/setPassword.jsp
+msgid "The password has been changed."
+msgstr "تم تغيير كلمة السر."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait"
+msgstr "يرجى الإنتظار"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr "الرجاء الانتظار بينما يتم تغيير كلمة المرور..."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set a new Password"
+msgstr "ضع كلمة سر جديدة:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "إن لم تقم يتحديد كلمة سر، اترك حقل كلمة السر القديمة فارغا."
+
+#: src/main/webapp/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+"يرجى ملاحظة أنه في حالة تعيين كلمة مرور، لا يمكن التحقق من رسائل البريد "
+"الإلكتروني تلقائيًا ولكن فقط عند النقر فوق الزر \"التحقق من البريد\"."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Old password:"
+msgstr "كلمة سر القديمة:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "New password:"
+msgstr "كلمة سر جديدة:"
+
+#: src/main/webapp/network.jsp
+msgid "Network"
+msgstr "شبكة"
+
+#: src/main/webapp/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr "المعلومات حول الشبكة غير متوفرة لأن I2P-Bote غير متصل بعد."
+
+#: src/main/webapp/network.jsp
+msgid "Local destination:"
+msgstr "مستقبل محلي:"
+
+#: src/main/webapp/connectError.jsp
+msgid "Error Details"
+msgstr "تفاصيل الخطأ"
+
+#: src/main/webapp/connectError.jsp
+msgid "Oh dear! I2P-Bote couldn't connect to the network."
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "This is the error that happened:"
+msgstr "هذا هو الخطأ الذي حدث:"
+
+#: src/main/webapp/connectError.jsp
+msgid ""
+"You can fix most problems by clicking the 'Retry Connecting' button in the "
+"menu bar."
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "If that doesn't help, try restarting your I2P router."
+msgstr ""
+
 #: src/main/webapp/folders.jsp
 msgid "Folders"
 msgstr "مجلدات"
@@ -914,138 +1066,123 @@ msgstr "أرسل"
 msgid "Trash"
 msgstr "سلة القمامة"
 
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Identity"
-msgstr "الهوية الكاملة:"
+#: src/main/webapp/statusFrame.jsp
+msgid "Not Started"
+msgstr "لم ينطلق"
 
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Email Identity for {0}:"
-msgstr "هوية البريد لـ {0}:"
+#: src/main/webapp/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr "إنتظر 3 دقائق ..."
 
-#: src/main/webapp/showFullIdentity.jsp
+#: src/main/webapp/statusFrame.jsp
+msgid "Connecting..."
+msgstr "جاري الإتصال ..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connected"
+msgstr "متصل"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr "إعادة الاتصال"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connect Now"
+msgstr "إتصل الآن"
+
+#: src/main/webapp/identities.jsp
+msgid "Email Identities"
+msgstr "هويات البريد"
+
+#: src/main/webapp/identities.jsp
+msgid "No email identities are defined."
+msgstr "لم تحدد اية هوية للبريد."
+
+#: src/main/webapp/identities.jsp
+msgid "Def."
+msgstr "تعريف"
+
+#: src/main/webapp/identities.jsp
+msgid "Public Name"
+msgstr "اسم"
+
+#: src/main/webapp/identities.jsp
+msgid "Description"
+msgstr "وصف"
+
+#: src/main/webapp/identities.jsp
+msgid "Check mail for this identity"
+msgstr "تحقق من البريد لهذه الهوية"
+
+#: src/main/webapp/identities.jsp
+msgid "New Identity"
+msgstr "هوية جديدة"
+
+#: src/main/webapp/identities.jsp
+msgid "Import Identities"
+msgstr "استيراد الهويات"
+
+#: src/main/webapp/sendEmail.jsp
+msgid "Go to inbox"
+msgstr "انتقل إلى البريد الوارد"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Please select an identities file and try again."
+msgstr "يرجى تحديد ملف الهويات والمحاولة مرة أخرى."
+
+#: src/main/webapp/importIdentities.jsp
+msgid "The identities have been imported."
+msgstr "تم استيراد الهويات."
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Identities file:"
+msgstr "ملف الهويات:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "(leave blank if identities not encrypted)"
+msgstr "(اتركه فارغًا إذا لم يتم تشفير الهويات)"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Overwrite all existing identities:"
+msgstr "الكتابة فوق جميع الهويات الموجودة:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Duplicates: replace existing identity:"
+msgstr "التكرارات: استبدال الهوية الحالية:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Import"
+msgstr "استورد"
+
+#: src/main/webapp/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr "عنوان دليل البحث"
+
+#: src/main/webapp/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr "تم استيراد الاسم إلى دفتر العناوين."
+
+#: src/main/webapp/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr "الاسم & quot؛ {0} & quot؛ لم يتم العثور عليه في الدليل."
+
+#: src/main/webapp/importContact.jsp
+msgid "Import Contact"
+msgstr "استيراد الاتصال"
+
+#: src/main/webapp/importContact.jsp
 msgid ""
-"Do not show the above information to anyone! It contains your private keys."
-msgstr "لا تظهر المعلومات التالية لأحد! انها تحتوي على مفتاحك السري."
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+"تم العثور على سجل مطابق في دليل العناوين. لاحظ أن دليل العنوان ليس آمنًا ضد "
+"التلاعب ، لذلك لا تنقر على & quot؛ استيراد & quot؛ إلا إذا كنت تثق في أنها "
+"وجهة البريد الإلكتروني الصحيحة."
 
-#: src/main/webapp/editIdentity.jsp
-msgid "More..."
-msgstr "المزيد..."
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Less..."
-msgstr "أقل..."
-
-#: src/main/webapp/editIdentity.jsp
-msgid "New Email Identity"
-msgstr "هوية جديدة للبريد"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Create"
-msgstr "انشئ"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Edit Email Identity"
-msgstr "حرر هوية البريد"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr "تسمح لك هوية البريد الإلكتروني باستلام البريد الإلكتروني من مستخدمي I2P-Bote الآخرين."
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Public Name:"
-msgstr "اسم:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "(required field, shown to recipients)"
-msgstr "(حقل ضروري، ظاهر للمستقبل)"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Description:"
-msgstr "وصف:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "(optional, kept private)"
-msgstr "(غير ضروري، خاص)"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "(published to the address directory)"
-msgstr "(تم نشره في دليل العناوين)"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Encryption:"
-msgstr "نوع التشفير:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "(If unsure, leave the default)"
-msgstr "(ان لم تكن متأكدا، دعه كما هو)"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Vanity Destination:"
-msgstr "الوجهة:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "(2 chars takes seconds, 3 takes minutes, etc.)"
-msgstr "(حرفان - 2 - يأخذان ثواني ، و 3 يأخذون دقائقا ، إلخ.)"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Fingerprint:"
-msgstr "البصمة :"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Default Identity:"
-msgstr "الهوية العادية:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Include in global check:"
-msgstr "تضمينه في التحقق العام:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Private keys:"
-msgstr "المفاتيح الخاصة:"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "(Never reveal to anyone!)"
-msgstr "(ﻻ تظهر لأحد!)"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Show"
-msgstr "أظهر"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Cannot publish until connected."
-msgstr "لا يمكن النشر حتى يتم الاتصال."
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Publish"
-msgstr "نشر"
-
-#: src/main/webapp/editIdentity.jsp
-msgid "Delete this identity"
-msgstr "حذف هذه الهوية"
-
-#: src/main/webapp/connectError.jsp
-msgid "Error Details"
-msgstr "تفاصيل الخطأ"
-
-#: src/main/webapp/exportIdentities.jsp
-msgid "(leave blank to not encrypt identities)"
-msgstr "(اتركه فارغا لعدم تشفير الهويات)"
-
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export"
-msgstr "تصدير"
-
-#: src/main/webapp/password.jsp
-msgid "Password Required"
-msgstr "كلمة السر ضرورية"
-
-#: src/main/webapp/password.jsp
-msgid "Wrong password. Try again."
-msgstr "كلمة السر خاطئة، حاول من جديد."
-
-#: src/main/webapp/password.jsp
-msgid "Password required"
-msgstr "كلمة السر ضرورية"
+#: src/main/webapp/importContact.jsp
+msgid "Email Destination: "
+msgstr "البريد الإلكتروني للمتلقي :"
 
 #: src/main/webapp/about.jsp
 msgid "About I2P-Bote"
@@ -1093,7 +1230,8 @@ msgstr "المساهمون:"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr "المفهوم الفني، الترجمة، ضمان الجودة، سهولة الاستخدام، الملاحظات التقنية"
+msgstr ""
+"المفهوم الفني، الترجمة، ضمان الجودة، سهولة الاستخدام، الملاحظات التقنية"
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
@@ -1175,118 +1313,22 @@ msgstr "تحسين سهولة الاستخدام"
 msgid "Bug hunting"
 msgstr "صيد اﻷخطاء"
 
-#: src/main/webapp/debug.jsp
-msgid "Debug"
-msgstr "التصحيح"
-
-#: src/main/webapp/debug.jsp
-msgid "Debug Page"
-msgstr "صفحة التصحيح"
-
-#: src/main/webapp/debug.jsp
-msgid "Test encrypted files"
-msgstr "اختبار الملفات المشفرة"
-
-#: src/main/webapp/debug.jsp
-msgid "No file encryption problems found."
-msgstr "لم يتم العثور على مشاكل في تشفير الملفات."
-
-#: src/main/webapp/debug.jsp
-msgid "Undecryptable files:"
-msgstr "الملفات الغير قابلة للبرمجة:"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Add Email Destination to Directory"
-msgstr "أضف وجهة البريد الإلكتروني إلى الدليل"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "The name exists already. Please choose a different Public Name."
-msgstr "الاسم موجود بالفعل. يرجى اختيار اسم عام مختلف."
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Publish to the Address Directory"
-msgstr "النشر إلى دليل العناوين"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Picture to upload:"
-msgstr "صورة للتحميل:"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 7.5 kBytes max)"
-msgstr "(اختياري ، 7.5 كيلوبايت كحد أقصى)"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Text to include:"
-msgstr "النص المراد تضمينه:"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 2000 chars max)"
-msgstr "(اختياري ، 2000 حرف كحد أقصى)"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "The identity has been added to the address directory."
-msgstr "تمت إضافة الهوية إلى دليل العناوين."
-
-#: src/main/webapp/importContact.jsp
-msgid "Address Directory Lookup"
-msgstr "عنوان دليل البحث"
-
-#: src/main/webapp/importContact.jsp
-msgid "The name has been imported to the address book."
-msgstr "تم استيراد الاسم إلى دفتر العناوين."
-
-#: src/main/webapp/importContact.jsp
-msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr "الاسم & quot؛ {0} & quot؛ لم يتم العثور عليه في الدليل."
-
-#: src/main/webapp/importContact.jsp
-msgid "Import Contact"
-msgstr "استيراد الاتصال"
-
-#: src/main/webapp/importContact.jsp
-msgid ""
-"A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click "
-"&quot;import&quot; unless you trust that it is the right email destination."
-msgstr "تم العثور على سجل مطابق في دليل العناوين. لاحظ أن دليل العنوان ليس آمنًا ضد التلاعب ، لذلك لا تنقر على & quot؛ استيراد & quot؛ إلا إذا كنت تثق في أنها وجهة البريد الإلكتروني الصحيحة."
-
-#: src/main/webapp/importContact.jsp
-msgid "Email Destination: "
-msgstr "البريد الإلكتروني للمتلقي :"
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "املئ حقل الإسم."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "انتظر من فضلك..."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The Email Identity is being generated. This may take a while."
-msgstr "يتم إنشاء هوية البريد الإلكتروني. قد يستغرق هذا بعض الوقت."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid ""
-"This encryption type does not support destinations that start with {0}. "
-"Valid initial characters are {1}."
-msgstr "لا يدعم نوع التشفير هذا الوجهات التي تبدأ بـ {0}. الأحرف الأولية الصالحة هي {1}."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "تم تسجيل هذه الهوية."
-
 #: src/main/webapp/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
 msgstr "خطأ: فشل في حذف الرسالة."
 
-#: src/main/webapp/WEB-INF/tags/printDate.tag
-msgid "Unknown"
-msgstr "غير معروف"
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Identity"
+msgstr "الهوية الكاملة:"
 
-#: src/main/webapp/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "أضف الى دفتر العناوين"
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Email Identity for {0}:"
+msgstr "هوية البريد لـ {0}:"
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid ""
+"Do not show the above information to anyone! It contains your private keys."
+msgstr "لا تظهر المعلومات التالية لأحد! انها تحتوي على مفتاحك السري."
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1299,6 +1341,14 @@ msgstr "{0} مجموع الايميلات, {1} جديد/جديدة"
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
 msgstr "{0} غير كاملة"
+
+#: src/main/webapp/WEB-INF/tags/printDate.tag
+msgid "Unknown"
+msgstr "غير معروف"
+
+#: src/main/webapp/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "أضف الى دفتر العناوين"
 
 #~ msgid "Material"
 #~ msgstr "Material"

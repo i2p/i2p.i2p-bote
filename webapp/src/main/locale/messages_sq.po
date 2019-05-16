@@ -8,22 +8,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2018-11-14 19:47+0000\n"
-"Last-Translator: Klevis Lika <likaklevis@gmail.com>\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
+"Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Albanian (http://www.transifex.com/otf/I2P/language/sq/)\n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sq\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:101
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:115
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:121
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:135
 msgid "Password required or invalid password provided"
 msgstr "Fjalëkalim i domosdoshëm ose u dha fjalëkalim i pavlefshëm"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:319
+#: src/main/java/i2p/bote/imap/MapperFactory.java:408
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "Fshirja e kutive postare hëpërhë nuk mbulohet."
 
@@ -201,119 +201,97 @@ msgstr ""
 msgid "(None)"
 msgstr "(Asnjë)"
 
-#: src/main/webapp/header.jsp
-msgid "- I2P-Bote"
-msgstr "- I2P-Bote"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export Identities"
+msgstr "Eksportoni Identitete"
 
-#: src/main/webapp/header.jsp
-msgid "Password is cached. Click to clear the password cache."
+#: src/main/webapp/exportIdentities.jsp
+msgid "Password:"
+msgstr "Fjalëkalim:"
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "(leave blank to not encrypt identities)"
+msgstr "(lëreni të zbrazët që të mos fshehtëzohen identitetet)"
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "Confirm:"
+msgstr "Ripohojeni:"
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export"
+msgstr "Eksportoje"
+
+#: src/main/webapp/folder.jsp
+msgid "From"
+msgstr "Nga "
+
+#: src/main/webapp/folder.jsp
+msgid "Know"
 msgstr ""
 
-#: src/main/webapp/header.jsp
-msgid "I2P-Bote"
-msgstr "I2P-Bote"
+#: src/main/webapp/folder.jsp
+msgid "To"
+msgstr "Për"
 
-#: src/main/webapp/header.jsp
-msgid "Secure Distributed Email"
-msgstr "Email i Sigurt i Shpërndarë"
+#: src/main/webapp/folder.jsp
+msgid "Subject"
+msgstr "Subjekt"
 
-#: src/main/webapp/header.jsp
-msgid "Addresses"
-msgstr "Adresa"
+#: src/main/webapp/folder.jsp
+msgid "Sent Time"
+msgstr "Kohë Dërgimi"
 
-#: src/main/webapp/header.jsp
-msgid "Identities"
-msgstr "Identitete"
+#: src/main/webapp/folder.jsp
+msgid "Delivered"
+msgstr "U dërgua"
 
-#: src/main/webapp/header.jsp
-msgid "Address Book"
-msgstr "Libër Adresash"
+#: src/main/webapp/folder.jsp
+msgid "Anonymous"
+msgstr "Anonim"
 
-#: src/main/webapp/header.jsp
-msgid "Configuration"
-msgstr "Formësim"
+#: src/main/webapp/folder.jsp
+msgid "(No subject)"
+msgstr "(Pa subjekt)"
 
-#: src/main/webapp/header.jsp
-msgid "Settings"
-msgstr "Rregullime"
+#: src/main/webapp/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr "Nënshkrim është i pavlefshëm ose mungon"
 
-#: src/main/webapp/header.jsp
-msgid "Network Status"
-msgstr "Gjendje Rrjeti"
+#: src/main/webapp/folder.jsp
+msgid "Delete"
+msgstr "Fshije"
 
-#: src/main/webapp/header.jsp
-msgid "Help"
-msgstr "Ndihmë"
+#: src/main/webapp/folder.jsp
+msgid "Delete this email"
+msgstr "Fshije këtë email"
 
-#: src/main/webapp/header.jsp
+#: src/main/webapp/userGuide.jsp
 msgid "User Guide"
 msgstr "Udhërrëfyes Përdoruesi"
 
-#: src/main/webapp/header.jsp
-msgid "FAQ"
-msgstr "FAQ"
-
-#: src/main/webapp/header.jsp
-msgid "About"
-msgstr "Rreth"
-
-#: src/main/webapp/header.jsp
-msgid ""
-"For I2P-Bote to function properly, you must download the JCE Unlimited "
-"Strength Jurisdiction Policy files and move them into this folder:"
-msgstr "Që I2P-Bote të funksionojë si duhet, duhet të shkarkoni kartelat JCE Unlimited Strength Jurisdiction Policy dhe t’i sillni në këtë dosje:"
-
-#: src/main/webapp/header.jsp
-msgid "Guide"
-msgstr "Udhërrëfyes"
-
-#: src/main/webapp/identities.jsp
-msgid "Email Identities"
-msgstr "Identitete Email"
-
-#: src/main/webapp/identities.jsp
-msgid "No email identities are defined."
-msgstr "S’ka identitete email të përcaktuara."
-
-#: src/main/webapp/identities.jsp
-msgid "Def."
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "Public Name"
-msgstr "Emër Publik"
-
-#: src/main/webapp/identities.jsp
-msgid "Description"
-msgstr "Përshkrim"
-
-#: src/main/webapp/identities.jsp
-msgid "Email Destination"
-msgstr "Vendmbërritje Email-i"
-
-#: src/main/webapp/identities.jsp
+#: src/main/webapp/buttonFrame.jsp
 msgid "Checking for mail..."
 msgstr "Po kontrollohet për postë…"
 
-#: src/main/webapp/identities.jsp
+#: src/main/webapp/buttonFrame.jsp
 msgid "Check Mail"
 msgstr "Kontrollo Për Postë"
 
-#: src/main/webapp/identities.jsp
-msgid "Check mail for this identity"
-msgstr "Kontrollo për postë për këtë identitet"
+#: src/main/webapp/buttonFrame.jsp
+msgid "Compose"
+msgstr "Hartoni"
 
-#: src/main/webapp/identities.jsp
-msgid "New Identity"
-msgstr "Identitet i Ri"
+#: src/main/webapp/buttonFrame.jsp
+msgid "Last checked:"
+msgstr "Kontrolluar së fundi më:"
 
-#: src/main/webapp/identities.jsp
-msgid "Import Identities"
-msgstr "Importoni Identitete"
+#: src/main/webapp/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr "Kontakti u fshi nga libri i adresave."
 
-#: src/main/webapp/identities.jsp
-msgid "Export Identities"
-msgstr "Eksportoni Identitete"
+#: src/main/webapp/deleteContact.jsp
+msgid "Error"
+msgstr "Gabim"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
@@ -372,6 +350,10 @@ msgid "Cancel"
 msgstr "Anuloje"
 
 #: src/main/webapp/addressBook.jsp
+msgid "Address Book"
+msgstr "Libër Adresash"
+
+#: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
 msgstr "Libër Privat Adresash"
 
@@ -392,8 +374,8 @@ msgid "Text"
 msgstr "Tekst"
 
 #: src/main/webapp/addressBook.jsp
-msgid "Delete"
-msgstr "Fshije"
+msgid "Email Destination"
+msgstr "Vendmbërritje Email-i"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -415,59 +397,76 @@ msgstr "Importoje prej drejtorisë së adresave publike"
 msgid "Lookup"
 msgstr "Kërkim"
 
-#: src/main/webapp/network.jsp
-msgid "Network"
-msgstr "Rrjet"
+#: src/main/webapp/saveIdentities.jsp
+msgid "Error:"
+msgstr "Gabim:"
 
-#: src/main/webapp/network.jsp
+#: src/main/webapp/csrfError.jsp
+msgid "Security Violation"
+msgstr "Dhunim Sigurie"
+
+#: src/main/webapp/csrfError.jsp
+msgid "CSRF Security Violation"
+msgstr "Cenim Sigurie CSRF"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "Ju lutemi, plotësoni fushën Emër Publik."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "Ju lutemi, prisni…"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The Email Identity is being generated. This may take a while."
+msgstr "Identiteti Email po prodhohet. Kjo mund të zgjasë ca."
+
+#: src/main/webapp/submitIdentity.jsp
 msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "S’ka të dhëna për rrjetin, ngaqë I2P-Bote s’ka filluar të lidhet me rrjetin ende."
-
-#: src/main/webapp/network.jsp
-msgid "Local destination:"
-msgstr "Vendmbërritje vendore:"
-
-#: src/main/webapp/folder.jsp
-msgid "From"
-msgstr "Nga "
-
-#: src/main/webapp/folder.jsp
-msgid "Know"
+"This encryption type does not support destinations that start with {0}. "
+"Valid initial characters are {1}."
 msgstr ""
 
-#: src/main/webapp/folder.jsp
-msgid "To"
-msgstr "Për"
+#: src/main/webapp/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "Identiteti email u ruajt."
 
-#: src/main/webapp/folder.jsp
-msgid "Subject"
-msgstr "Subjekt"
+#: src/main/webapp/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr "Shtoni Vendmbërritje Email-i te Drejtoria"
 
-#: src/main/webapp/folder.jsp
-msgid "Sent Time"
-msgstr "Kohë Dërgimi"
+#: src/main/webapp/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr ""
+"Ka tashmë një emër të tillë. Ju lutemi, zgjidhni një tjetër Emër Publik."
 
-#: src/main/webapp/folder.jsp
-msgid "Delivered"
-msgstr "U dërgua"
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr "Botoje te Drejtori Adresash"
 
-#: src/main/webapp/folder.jsp
-msgid "Anonymous"
-msgstr "Anonim"
+#: src/main/webapp/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr "Foto për ngarkim:"
 
-#: src/main/webapp/folder.jsp
-msgid "(No subject)"
-msgstr "(Pa subjekt)"
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr "(opsionale, maksimumi 7.5 Kb)"
 
-#: src/main/webapp/folder.jsp
-msgid "Signature is invalid or missing"
-msgstr "Nënshkrim është i pavlefshëm ose mungon"
+#: src/main/webapp/publishDestination.jsp
+msgid "Text to include:"
+msgstr "Tekst për t’u përfshirë:"
 
-#: src/main/webapp/folder.jsp
-msgid "Delete this email"
-msgstr "Fshije këtë email"
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr "(opsionale, maksimumi 2000 shenja)"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish"
+msgstr ""
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr "Identiteti u shtua te drejtoria e adresave."
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Identity"
@@ -481,451 +480,29 @@ msgstr "S’ka Identitet Email-i të Përcaktuar"
 msgid "Create a New Email Identity"
 msgstr "Krijoni një Identitet Email të Ri"
 
-#: src/main/webapp/buttonFrame.jsp
-msgid "Compose"
-msgstr "Hartoni"
-
-#: src/main/webapp/buttonFrame.jsp
-msgid "Last checked:"
-msgstr "Kontrolluar së fundi më:"
-
-#: src/main/webapp/csrfError.jsp
-msgid "Security Violation"
-msgstr "Dhunim Sigurie"
-
-#: src/main/webapp/csrfError.jsp
-msgid "CSRF Security Violation"
-msgstr "Cenim Sigurie CSRF"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In order to receive email from other people, you need to create an email "
-"identity first."
-msgstr "Që të mund të merrni email nga persona të tjerë, lypset të krijoni së pari një identitet email-i."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"Every email identity is associated with an email destination. Anybody can "
-"send email to the email destination, but only the identity holder can read "
-"it."
-msgstr "Çdo identitet email është i përshoqëruar me një vendmbërritje email. Kushdo mund të dërgojë email te një vendmbërritje email-esh, por vetëm i zoti i identitetit mund ta lexojë."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In a sense, email identities are the equivalent to traditional email "
-"accounts - except that there is no provider that can read all your email "
-"because I2P-Bote stores all emails encrypted on the network."
-msgstr "Në njëfarë kuptimi, identitetet email janë e barasvlershmja e llogarive tradicionale email - vetëm se nuk ka më furnizues email-esh që mund të lexojë krejt email-et tuaja, ngaqë I2P-Bote i depoziton të fshehtëzuar tërë email-et në rrjet."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities; never "
-"give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote i shfshehtëzon vetvetiu email-et dërguar për ju, duke përdorur identitetin email që krijuat. Identitetet email depozitohen në një kartelë të quajtur identities; mos ia jepni kurrë këtë kartelë kujt, ndryshe ata do të jenë në gjendje të lexojnë krejt email-et tuaj."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid "Do give out the email destination so others can contact you."
-msgstr "Jepuani vendmbërritjen email, që kështu të tjerët të mund të lidhen me ju."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is easy to create multiple identities for different purposes, or "
-"different contacts."
-msgstr "Është e lehtë të krijohen identitete të shumta për qëllime të ndryshme, ose për kontakte të ndryshme."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"When you create a new email identity, you can choose the type of encryption "
-"that will be used by the email identity. While all encryption algorithms "
-"offered by I2P-Bote provide a high level of privacy, the length of an email "
-"destination depends on the encryption used. The choice of encryption also "
-"determines what signing algorithm is used."
-msgstr "Kur krijoni një identitet të ri email-esh, mund të zgjidhni llojin e fshehtëzimit që do të përdoret nga ky identitet email-esh. Ndërkohë që krejt algoritmet e fshehtëzimeve të ofruar nga I2P-Bote furnizojnë një shkallë të lartë privatësie, gjatësia e një vendmbërritje email-esh varet nga fshehtëzimi i përdorur. Nga zgjedhja e fshehtëzimit varet edhe cili algoritëm nënshkrimesh përdoret."
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is generally recommended to choose 256-bit elliptic curve encryption "
-"because it produces the shortest email destinations (86 characters) while "
-"still being highly secure."
-msgstr "Përgjithësisht rekomandohet zgjedhja e fshehtëzimit me kurbë eliptike 256-bitëshe, ngaqë ky prodhon vendmbërritjet email më të shkurtra (86 shenja) duke qenë prapë shumë i sigurt."
-
-#: src/main/webapp/sendEmail.jsp
-msgid "New Email"
-msgstr "Email i Ri"
-
-#: src/main/webapp/sendEmail.jsp
-msgid "Go to inbox"
-msgstr "Shkoni te të marrët"
-
-#: src/main/webapp/outbox.jsp
-msgid "Outbox"
-msgstr "Të dërguar"
-
-#: src/main/webapp/outbox.jsp
-msgid "Create Time"
-msgstr "Kohë Krijimi"
-
-#: src/main/webapp/outbox.jsp
-msgid "Status"
-msgstr "Gjendje"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Not Started"
-msgstr ""
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
-msgstr "Po pritet 3 Minuta…"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connecting..."
-msgstr "Po lidhet…"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connected"
-msgstr "I lidhur"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Error"
-msgstr "Gabim"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Retry Connecting"
-msgstr "Riprovo të Lidhesh"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connect Now"
-msgstr "Lidhu Tani"
-
 #: src/main/webapp/deleteIdentity.jsp
 msgid "The email identity has been deleted."
 msgstr "Identiteti email u fshi."
 
-#: src/main/webapp/deleteIdentity.jsp
-msgid "Error:"
-msgstr "Gabim:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr "Ju lutemi, përzgjidhni një kartelë për bashkëngjitje dhe riprovoni."
-
-#: src/main/webapp/newEmail.jsp
-msgid "Send"
-msgstr "Dërgoje"
-
-#: src/main/webapp/newEmail.jsp
-msgid "From:"
-msgstr "Nga:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "To:"
-msgstr "Për:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "CC:"
-msgstr "CC:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "BCC:"
-msgstr "BCC:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Reply To:"
-msgstr "Përgjigju Te:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this recipient"
-msgstr "Hiqe këtë marrës"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add this recipient to the address book"
-msgstr "Shtoje këtë marrës te libri i adresave"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Select recipients from address book"
-msgstr "Përzgjidhni marrës prej libri adresash"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another recipient field"
-msgstr "Shtoni një tjetër fushë marrësi"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Subject:"
-msgstr "Subjekt:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attachments:"
-msgstr "Bashkëngjitje:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "Hiqe këtë bashkëngjitje"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another attachment"
-msgstr "Shtoni një tjetër bashkengjitje"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attach"
-msgstr "Bashkëngjit"
-
-#: src/main/webapp/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "Rekomandohet që bashkëngjitjet të mbahen nën 500Kb."
-
-#: src/main/webapp/newEmail.jsp
-msgid "Message:"
-msgstr "Mesazh:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} shkroi:"
-
-#: src/main/webapp/faq.jsp
-msgid "Frequently Asked Questions"
-msgstr "Pyetje të Bëra Shpesh"
-
-#: src/main/webapp/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
-msgstr "Kontakti u fshi nga libri i adresave."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set Password"
-msgstr "Caktoni Fjalëkalim"
-
-#: src/main/webapp/setPassword.jsp
-msgid "The password has been changed."
-msgstr "Fjalëkalimi u ndryshua."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait"
-msgstr "Ju lutemi, prisni"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait while the password is being changed..."
-msgstr "Ju lutemi, pritni, teksa ndryshohet fjalëkalimi…"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set a new Password"
-msgstr "Caktoni Fjalëkalim të ri"
-
-#: src/main/webapp/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "Nëse nuk keni caktuar një fjalëkalim, lëreni të zbrazët fjalëkalimin e vjetër."
-
-#: src/main/webapp/setPassword.jsp
-msgid ""
-"Please note that if a password is set, emails cannot be checked "
-"automatically but only when the Check Mail button is clicked."
-msgstr "Ju lutemi, kini parasysh se nëse caktohet një fjalëkalim, për email-e nuk mund të kontrollohet automatikisht, por vetëm kur klikohet mbi butonin Kontrollo Për Postë."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Old password:"
-msgstr "Fjalëkalimi i vjetër:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "New password:"
-msgstr "Fjalëkalim i ri:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Confirm:"
-msgstr "Ripohojeni:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "OK"
-msgstr "OK"
-
-#: src/main/webapp/showEmail.jsp
-msgid ""
-"The email could not be found in this folder. It was probably moved to the "
-"Sent folder."
-msgstr "Email-i s’u gjet dot në këtë dosje. Ka gjasa të jetë shpënë te dosja Të dërguar."
-
-#: src/main/webapp/showEmail.jsp
-msgid "The email could not be found in this folder."
-msgstr "Email-i s’u gjet dot në këtë dosje."
-
-#: src/main/webapp/showEmail.jsp
-msgid "Signature:"
-msgstr "Nënshkrim:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Valid"
-msgstr "E vlefshme"
-
-#: src/main/webapp/showEmail.jsp
-msgid "N/A (sender is anonymous)"
-msgstr "N/A (dërguesi është anonim)"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Invalid or missing"
-msgstr "E pavlefshme ose mungon"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Sent:"
-msgstr "Të dërguar:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Received:"
-msgstr "Të marrë:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Status:"
-msgstr "Gjendje:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Reply"
-msgstr "Përgjigjiu"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Re:"
-msgstr "Re:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Please select an identities file and try again."
-msgstr "Ju lutemi, përzgjidhni një kartelë identitetesh dhe riprovoni."
-
-#: src/main/webapp/importIdentities.jsp
-msgid "The identities have been imported."
-msgstr "Identitetet u importuan."
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Identities file:"
-msgstr "Kartela identitetesh:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Password:"
-msgstr "Fjalëkalim:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "(leave blank if identities not encrypted)"
-msgstr "(lëreni të zbrazët nëse identitetet janë të pafshehtëzuara)"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Overwrite all existing identities:"
-msgstr "Mbishkruaj krejt identitetet ekzistuese:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Duplicates: replace existing identity:"
-msgstr "Përsëdytje: zëvendëso identitet ekzistues:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Import"
-msgstr "Importoje"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "Password Cleared"
-msgstr "Fjalëkalimet u Fshinë"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr "Fjalëkalim i hoq prej fshehtine."
-
-#: src/main/webapp/settings.jsp
-msgid "Settings have been saved."
-msgstr "Rregullimet u ruajtën."
-
-#: src/main/webapp/settings.jsp
-msgid "General"
-msgstr "Të përgjithshme"
-
-#: src/main/webapp/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "Kontrollo për email çdo {0} minuta"
-
-#: src/main/webapp/settings.jsp
-msgid "Check delivery status of sent emails"
-msgstr "Vëzhgo statusin shpërndarës të e-posteve të dërguara"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "Aktivizo IMAP-in në portën {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr "Aktivizo SMTP-n në portën {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Temë:"
-
-#: src/main/webapp/settings.jsp
-msgid "Privacy"
-msgstr "Privatësi"
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "Përdor anglishten për tekst shtuar email-it që po dërgohet ('Re:', 'wrote:', etj.)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Përfshi kohë dërgimi te email-et që dërgohen"
-
-#: src/main/webapp/settings.jsp
-msgid "Routing"
-msgstr "Routimi"
-
-#: src/main/webapp/settings.jsp
-msgid "Use relays when sending mail:"
-msgstr "Përdor rele kur dërgohet postë:"
-
-#: src/main/webapp/settings.jsp
-msgid "None"
-msgstr "Asnjë"
-
-#: src/main/webapp/settings.jsp
-msgid "Delay per relay hop: Between"
+#: src/main/webapp/debug.jsp
+msgid "Debug"
+msgstr "Diagnostikoje"
+
+#: src/main/webapp/debug.jsp
+msgid "Debug Page"
+msgstr "Faqe Diagnostikimesh"
+
+#: src/main/webapp/debug.jsp
+msgid "Test encrypted files"
 msgstr ""
 
-#: src/main/webapp/settings.jsp
-msgid "and"
-msgstr "dhe"
+#: src/main/webapp/debug.jsp
+msgid "No file encryption problems found."
+msgstr "S'u gjetën probleme fshehtëzimi kartelash."
 
-#: src/main/webapp/settings.jsp
-msgid "minutes"
-msgstr "minuta"
-
-#: src/main/webapp/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Change Password"
-msgstr "Ndryshoni Fjalëkalimin"
-
-#: src/main/webapp/folders.jsp
-msgid "Folders"
-msgstr "Dosje"
-
-#: src/main/webapp/folders.jsp
-msgid "Inbox"
-msgstr "Të marrë"
-
-#: src/main/webapp/folders.jsp
-msgid "Sent"
-msgstr "U dërgua"
-
-#: src/main/webapp/folders.jsp
-msgid "Trash"
-msgstr "Shpjere Në Hedhurina"
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Identity"
-msgstr "Identitet i Plotë"
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Email Identity for {0}:"
-msgstr "Identitet i Plotë për {0}:"
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid ""
-"Do not show the above information to anyone! It contains your private keys."
-msgstr "Mos ia tregoni kujt të dhënat e mësipërme! Përmbajnë kyçet tuaj privatë."
+#: src/main/webapp/debug.jsp
+msgid "Undecryptable files:"
+msgstr "Kartela të pashfshehtëzueshme:"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -949,7 +526,9 @@ msgstr "Përpunoni Identitet Email-i"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr "Një Identitet Email-i ju lejon të merrni email prej përdoruesish të tjerë të I2P-Bote-it."
+msgstr ""
+"Një Identitet Email-i ju lejon të merrni email prej përdoruesish të tjerë të "
+"I2P-Bote-it."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Public Name:"
@@ -1016,24 +595,298 @@ msgid "Cannot publish until connected."
 msgstr "S’mund të botohet pa qenë i lidhur."
 
 #: src/main/webapp/editIdentity.jsp
-msgid "Publish"
-msgstr ""
-
-#: src/main/webapp/editIdentity.jsp
 msgid "Delete this identity"
 msgstr "Fshije këtë identitet"
 
-#: src/main/webapp/connectError.jsp
-msgid "Error Details"
-msgstr "Hollësi Gabimi"
+#: src/main/webapp/faq.jsp
+msgid "FAQ"
+msgstr "FAQ"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "(leave blank to not encrypt identities)"
-msgstr "(lëreni të zbrazët që të mos fshehtëzohen identitetet)"
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr "Pyetje të Bëra Shpesh"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export"
-msgstr "Eksportoje"
+#: src/main/webapp/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr ""
+
+#: src/main/webapp/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Secure Distributed Email"
+msgstr "Email i Sigurt i Shpërndarë"
+
+#: src/main/webapp/header.jsp
+msgid "Addresses"
+msgstr "Adresa"
+
+#: src/main/webapp/header.jsp
+msgid "Identities"
+msgstr "Identitete"
+
+#: src/main/webapp/header.jsp
+msgid "Configuration"
+msgstr "Formësim"
+
+#: src/main/webapp/header.jsp
+msgid "Settings"
+msgstr "Rregullime"
+
+#: src/main/webapp/header.jsp
+msgid "Network Status"
+msgstr "Gjendje Rrjeti"
+
+#: src/main/webapp/header.jsp
+msgid "Help"
+msgstr "Ndihmë"
+
+#: src/main/webapp/header.jsp
+msgid "About"
+msgstr "Rreth"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+"Që I2P-Bote të funksionojë si duhet, duhet të shkarkoni kartelat JCE "
+"Unlimited Strength Jurisdiction Policy dhe t’i sillni në këtë dosje:"
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr "Udhërrëfyes"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "Fjalëkalimet u Fshinë"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "Fjalëkalim i hoq prej fshehtine."
+
+#: src/main/webapp/outbox.jsp
+msgid "Outbox"
+msgstr "Të dërguar"
+
+#: src/main/webapp/outbox.jsp
+msgid "Create Time"
+msgstr "Kohë Krijimi"
+
+#: src/main/webapp/outbox.jsp
+msgid "Status"
+msgstr "Gjendje"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr ""
+"Që të mund të merrni email nga persona të tjerë, lypset të krijoni së pari "
+"një identitet email-i."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr ""
+"Çdo identitet email është i përshoqëruar me një vendmbërritje email. Kushdo "
+"mund të dërgojë email te një vendmbërritje email-esh, por vetëm i zoti i "
+"identitetit mund ta lexojë."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+"Në njëfarë kuptimi, identitetet email janë e barasvlershmja e llogarive "
+"tradicionale email - vetëm se nuk ka më furnizues email-esh që mund të "
+"lexojë krejt email-et tuaja, ngaqë I2P-Bote i depoziton të fshehtëzuar tërë "
+"email-et në rrjet."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
+msgstr ""
+"I2P-Bote i shfshehtëzon vetvetiu email-et dërguar për ju, duke përdorur "
+"identitetin email që krijuat. Identitetet email depozitohen në një kartelë "
+"të quajtur identities; mos ia jepni kurrë këtë kartelë kujt, ndryshe ata do "
+"të jenë në gjendje të lexojnë krejt email-et tuaj."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr ""
+"Jepuani vendmbërritjen email, që kështu të tjerët të mund të lidhen me ju."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr ""
+"Është e lehtë të krijohen identitete të shumta për qëllime të ndryshme, ose "
+"për kontakte të ndryshme."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
+msgstr ""
+"Kur krijoni një identitet të ri email-esh, mund të zgjidhni llojin e "
+"fshehtëzimit që do të përdoret nga ky identitet email-esh. Ndërkohë që krejt "
+"algoritmet e fshehtëzimeve të ofruar nga I2P-Bote furnizojnë një shkallë të "
+"lartë privatësie, gjatësia e një vendmbërritje email-esh varet nga "
+"fshehtëzimi i përdorur. Nga zgjedhja e fshehtëzimit varet edhe cili "
+"algoritëm nënshkrimesh përdoret."
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
+msgstr ""
+"Përgjithësisht rekomandohet zgjedhja e fshehtëzimit me kurbë eliptike 256-"
+"bitëshe, ngaqë ky prodhon vendmbërritjet email më të shkurtra (86 shenja) "
+"duke qenë prapë shumë i sigurt."
+
+#: src/main/webapp/showEmail.jsp
+msgid ""
+"The email could not be found in this folder. It was probably moved to the "
+"Sent folder."
+msgstr ""
+"Email-i s’u gjet dot në këtë dosje. Ka gjasa të jetë shpënë te dosja Të "
+"dërguar."
+
+#: src/main/webapp/showEmail.jsp
+msgid "The email could not be found in this folder."
+msgstr "Email-i s’u gjet dot në këtë dosje."
+
+#: src/main/webapp/showEmail.jsp
+msgid "From:"
+msgstr "Nga:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Signature:"
+msgstr "Nënshkrim:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Valid"
+msgstr "E vlefshme"
+
+#: src/main/webapp/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr "N/A (dërguesi është anonim)"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "E pavlefshme ose mungon"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply To:"
+msgstr "Përgjigju Te:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "To:"
+msgstr "Për:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "CC:"
+msgstr "CC:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "BCC:"
+msgstr "BCC:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Sent:"
+msgstr "Të dërguar:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Received:"
+msgstr "Të marrë:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Subject:"
+msgstr "Subjekt:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Message:"
+msgstr "Mesazh:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Attachments:"
+msgstr "Bashkëngjitje:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Status:"
+msgstr "Gjendje:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply"
+msgstr "Përgjigjiu"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Re:"
+msgstr "Re:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "New Email"
+msgstr "Email i Ri"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "Ju lutemi, përzgjidhni një kartelë për bashkëngjitje dhe riprovoni."
+
+#: src/main/webapp/newEmail.jsp
+msgid "Send"
+msgstr "Dërgoje"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this recipient"
+msgstr "Hiqe këtë marrës"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add this recipient to the address book"
+msgstr "Shtoje këtë marrës te libri i adresave"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Select recipients from address book"
+msgstr "Përzgjidhni marrës prej libri adresash"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another recipient field"
+msgstr "Shtoni një tjetër fushë marrësi"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "Hiqe këtë bashkëngjitje"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another attachment"
+msgstr "Shtoni një tjetër bashkengjitje"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attach"
+msgstr "Bashkëngjit"
+
+#: src/main/webapp/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "Rekomandohet që bashkëngjitjet të mbahen nën 500Kb."
+
+#: src/main/webapp/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} shkroi:"
 
 #: src/main/webapp/password.jsp
 msgid "Password Required"
@@ -1046,6 +899,304 @@ msgstr "Fjalëkalim i gabuar. Riprovoni."
 #: src/main/webapp/password.jsp
 msgid "Password required"
 msgstr "Lypset fjalëkalim"
+
+#: src/main/webapp/password.jsp
+msgid "OK"
+msgstr "OK"
+
+#: src/main/webapp/settings.jsp
+msgid "Settings have been saved."
+msgstr "Rregullimet u ruajtën."
+
+#: src/main/webapp/settings.jsp
+msgid "General"
+msgstr "Të përgjithshme"
+
+#: src/main/webapp/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "Kontrollo për email çdo {0} minuta"
+
+#: src/main/webapp/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr "Vëzhgo statusin shpërndarës të e-posteve të dërguara"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Aktivizo IMAP-in në portën {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr "Aktivizo SMTP-n në portën {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Temë:"
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr "Privatësi"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+"Përdor anglishten për tekst shtuar email-it që po dërgohet ('Re:', 'wrote:', "
+"etj.)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Përfshi kohë dërgimi te email-et që dërgohen"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr "Routimi"
+
+#: src/main/webapp/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "Përdor rele kur dërgohet postë:"
+
+#: src/main/webapp/settings.jsp
+msgid "None"
+msgstr "Asnjë"
+
+#: src/main/webapp/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "and"
+msgstr "dhe"
+
+#: src/main/webapp/settings.jsp
+msgid "minutes"
+msgstr "minuta"
+
+#: src/main/webapp/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Change Password"
+msgstr "Ndryshoni Fjalëkalimin"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set Password"
+msgstr "Caktoni Fjalëkalim"
+
+#: src/main/webapp/setPassword.jsp
+msgid "The password has been changed."
+msgstr "Fjalëkalimi u ndryshua."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait"
+msgstr "Ju lutemi, prisni"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr "Ju lutemi, pritni, teksa ndryshohet fjalëkalimi…"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Caktoni Fjalëkalim të ri"
+
+#: src/main/webapp/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr ""
+"Nëse nuk keni caktuar një fjalëkalim, lëreni të zbrazët fjalëkalimin e "
+"vjetër."
+
+#: src/main/webapp/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+"Ju lutemi, kini parasysh se nëse caktohet një fjalëkalim, për email-e nuk "
+"mund të kontrollohet automatikisht, por vetëm kur klikohet mbi butonin "
+"Kontrollo Për Postë."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Old password:"
+msgstr "Fjalëkalimi i vjetër:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "New password:"
+msgstr "Fjalëkalim i ri:"
+
+#: src/main/webapp/network.jsp
+msgid "Network"
+msgstr "Rrjet"
+
+#: src/main/webapp/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr ""
+"S’ka të dhëna për rrjetin, ngaqë I2P-Bote s’ka filluar të lidhet me rrjetin "
+"ende."
+
+#: src/main/webapp/network.jsp
+msgid "Local destination:"
+msgstr "Vendmbërritje vendore:"
+
+#: src/main/webapp/connectError.jsp
+msgid "Error Details"
+msgstr "Hollësi Gabimi"
+
+#: src/main/webapp/connectError.jsp
+msgid "Oh dear! I2P-Bote couldn't connect to the network."
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "This is the error that happened:"
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid ""
+"You can fix most problems by clicking the 'Retry Connecting' button in the "
+"menu bar."
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "If that doesn't help, try restarting your I2P router."
+msgstr ""
+
+#: src/main/webapp/folders.jsp
+msgid "Folders"
+msgstr "Dosje"
+
+#: src/main/webapp/folders.jsp
+msgid "Inbox"
+msgstr "Të marrë"
+
+#: src/main/webapp/folders.jsp
+msgid "Sent"
+msgstr "U dërgua"
+
+#: src/main/webapp/folders.jsp
+msgid "Trash"
+msgstr "Shpjere Në Hedhurina"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Not Started"
+msgstr ""
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr "Po pritet 3 Minuta…"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connecting..."
+msgstr "Po lidhet…"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connected"
+msgstr "I lidhur"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr "Riprovo të Lidhesh"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connect Now"
+msgstr "Lidhu Tani"
+
+#: src/main/webapp/identities.jsp
+msgid "Email Identities"
+msgstr "Identitete Email"
+
+#: src/main/webapp/identities.jsp
+msgid "No email identities are defined."
+msgstr "S’ka identitete email të përcaktuara."
+
+#: src/main/webapp/identities.jsp
+msgid "Def."
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "Public Name"
+msgstr "Emër Publik"
+
+#: src/main/webapp/identities.jsp
+msgid "Description"
+msgstr "Përshkrim"
+
+#: src/main/webapp/identities.jsp
+msgid "Check mail for this identity"
+msgstr "Kontrollo për postë për këtë identitet"
+
+#: src/main/webapp/identities.jsp
+msgid "New Identity"
+msgstr "Identitet i Ri"
+
+#: src/main/webapp/identities.jsp
+msgid "Import Identities"
+msgstr "Importoni Identitete"
+
+#: src/main/webapp/sendEmail.jsp
+msgid "Go to inbox"
+msgstr "Shkoni te të marrët"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Please select an identities file and try again."
+msgstr "Ju lutemi, përzgjidhni një kartelë identitetesh dhe riprovoni."
+
+#: src/main/webapp/importIdentities.jsp
+msgid "The identities have been imported."
+msgstr "Identitetet u importuan."
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Identities file:"
+msgstr "Kartela identitetesh:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "(leave blank if identities not encrypted)"
+msgstr "(lëreni të zbrazët nëse identitetet janë të pafshehtëzuara)"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Overwrite all existing identities:"
+msgstr "Mbishkruaj krejt identitetet ekzistuese:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Duplicates: replace existing identity:"
+msgstr "Përsëdytje: zëvendëso identitet ekzistues:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Import"
+msgstr "Importoje"
+
+#: src/main/webapp/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr "Kërkim te Libër Adresash"
+
+#: src/main/webapp/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr "Emri u importua te libri i adresave."
+
+#: src/main/webapp/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr "Emri &quot;{0}&quot; s’u gjet te drejtoria."
+
+#: src/main/webapp/importContact.jsp
+msgid "Import Contact"
+msgstr "Importoni Kontaktin"
+
+#: src/main/webapp/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+"Te drejtoria e adresave u gjet një zë me përputhje. Mbani parasysh që "
+"drejtoria e adresave s’është e sigurt kundër manipulimeve, ndaj mos klikoni "
+"mbi &quot;importoje&quot; po qe se nuk i zini besë se është vendmbërritja e "
+"duhur email."
+
+#: src/main/webapp/importContact.jsp
+msgid "Email Destination: "
+msgstr "Vendmbërritje Email-i:"
 
 #: src/main/webapp/about.jsp
 msgid "About I2P-Bote"
@@ -1175,118 +1326,23 @@ msgstr "Përmirësim përdorshmërie"
 msgid "Bug hunting"
 msgstr "Gjueti të metash"
 
-#: src/main/webapp/debug.jsp
-msgid "Debug"
-msgstr "Diagnostikoje"
-
-#: src/main/webapp/debug.jsp
-msgid "Debug Page"
-msgstr "Faqe Diagnostikimesh"
-
-#: src/main/webapp/debug.jsp
-msgid "Test encrypted files"
-msgstr ""
-
-#: src/main/webapp/debug.jsp
-msgid "No file encryption problems found."
-msgstr "S'u gjetën probleme fshehtëzimi kartelash."
-
-#: src/main/webapp/debug.jsp
-msgid "Undecryptable files:"
-msgstr "Kartela të pashfshehtëzueshme:"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Add Email Destination to Directory"
-msgstr "Shtoni Vendmbërritje Email-i te Drejtoria"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "The name exists already. Please choose a different Public Name."
-msgstr "Ka tashmë një emër të tillë. Ju lutemi, zgjidhni një tjetër Emër Publik."
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Publish to the Address Directory"
-msgstr "Botoje te Drejtori Adresash"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Picture to upload:"
-msgstr "Foto për ngarkim:"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 7.5 kBytes max)"
-msgstr "(opsionale, maksimumi 7.5 Kb)"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Text to include:"
-msgstr "Tekst për t’u përfshirë:"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 2000 chars max)"
-msgstr "(opsionale, maksimumi 2000 shenja)"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "The identity has been added to the address directory."
-msgstr "Identiteti u shtua te drejtoria e adresave."
-
-#: src/main/webapp/importContact.jsp
-msgid "Address Directory Lookup"
-msgstr "Kërkim te Libër Adresash"
-
-#: src/main/webapp/importContact.jsp
-msgid "The name has been imported to the address book."
-msgstr "Emri u importua te libri i adresave."
-
-#: src/main/webapp/importContact.jsp
-msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr "Emri &quot;{0}&quot; s’u gjet te drejtoria."
-
-#: src/main/webapp/importContact.jsp
-msgid "Import Contact"
-msgstr "Importoni Kontaktin"
-
-#: src/main/webapp/importContact.jsp
-msgid ""
-"A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click "
-"&quot;import&quot; unless you trust that it is the right email destination."
-msgstr "Te drejtoria e adresave u gjet një zë me përputhje. Mbani parasysh që drejtoria e adresave s’është e sigurt kundër manipulimeve, ndaj mos klikoni mbi &quot;importoje&quot; po qe se nuk i zini besë se është vendmbërritja e duhur email."
-
-#: src/main/webapp/importContact.jsp
-msgid "Email Destination: "
-msgstr "Vendmbërritje Email-i:"
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "Ju lutemi, plotësoni fushën Emër Publik."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "Ju lutemi, prisni…"
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The Email Identity is being generated. This may take a while."
-msgstr "Identiteti Email po prodhohet. Kjo mund të zgjasë ca."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid ""
-"This encryption type does not support destinations that start with {0}. "
-"Valid initial characters are {1}."
-msgstr ""
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "Identiteti email u ruajt."
-
 #: src/main/webapp/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
 msgstr "Gabim: S’u fshi dot email."
 
-#: src/main/webapp/WEB-INF/tags/printDate.tag
-msgid "Unknown"
-msgstr "E panjohur"
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Identity"
+msgstr "Identitet i Plotë"
 
-#: src/main/webapp/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "Shtoje te Libër Adresash"
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Email Identity for {0}:"
+msgstr "Identitet i Plotë për {0}:"
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid ""
+"Do not show the above information to anyone! It contains your private keys."
+msgstr ""
+"Mos ia tregoni kujt të dhënat e mësipërme! Përmbajnë kyçet tuaj privatë."
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1299,6 +1355,14 @@ msgstr "{0} email-e gjithsej, {1} i ri"
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
 msgstr "{0} të paplotë"
+
+#: src/main/webapp/WEB-INF/tags/printDate.tag
+msgid "Unknown"
+msgstr "E panjohur"
+
+#: src/main/webapp/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Shtoje te Libër Adresash"
 
 #~ msgid "Material"
 #~ msgstr "Material"

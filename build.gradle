@@ -15,7 +15,7 @@ allprojects {
     }
 }
 
-project.ext.i2pVersion = '0.9.39'
+project.ext.i2pVersion = '0.9.40'
 
 String compat(String src) {
     if (src.contains('.')) {
@@ -35,7 +35,7 @@ String javaExecutable(String targetJavaHome, String execName) {
 }
 
 configure([project(':core'), project(':webapp')]) {
-    project.version = '0.4.7'
+    project.version = '0.4.8'
 
     project.afterEvaluate {
         jar {

@@ -7,7 +7,7 @@
   <string name="i_know_what_to_do">Je sais quoi faire</string>
   <string name="intro_1_1">Le courriel traditionnel n’est pas sécurisé. Il n’a pas été conçu pour protéger les gens contre la surveillance par filtrage.</string>
   <string name="intro_1_2">Même si vous chiffrez le contenu de vos courriels, les métadonnées des courriels peuvent être surveillées afin de révéler de grandes quantités d’informations sur vous et les personnes avec qui vous communiquez.</string>
-  <string name="intro_2_1">Bote est une nouvelle sorte de courriel qui offre une sécurité et une protection des renseignements personnels entières et de bout en bout. L’application fonctionne sur le réseau d’anonymat d’I2P, lequel masque votre activité.</string>
+  <string name="intro_2_1">Bote est une nouvelle sorte de courriel qui offre une sécurité et une protection des données personnelles entières et de bout en bout. L’application fonctionne sur le réseau d’anonymat d’I2P, lequel masque votre activité.</string>
   <string name="intro_2_2">Quand vous envoyez un courriel avec Bote, tout est chiffré, même les métadonnées du courriel. Seul le destinataire peut télécharger et lire le courriel.</string>
   <string name="intro_3_1">Avec le courriel traditionnel, vous devez faire confiance à un serveur central. Et s’il est bloqué, vous ne pouvez pas envoyer ni recevoir de courriels.</string>
   <string name="intro_3_2">Bote utilise un réseau pair à pair distribué, semblable à BitTorrent. Les courriels chiffrés sont fragmentés et stockés avec beaucoup d’autres utilisateurs de Bote.</string>

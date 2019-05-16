@@ -1,5 +1,6 @@
 # Translators:
 # Translators:
+# asteryx <asteryx82@gmail.com>, 2018
 # gringoire <shmt@anapnea.net>, 2011
 # LinuxChata, 2014
 # LinuxChata, 2014
@@ -12,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
-"PO-Revision-Date: 2016-11-24 02:51+0000\n"
+"POT-Creation-Date: 2019-05-16 12:19+0100\n"
+"PO-Revision-Date: 2019-05-16 11:18+0000\n"
 "Last-Translator: str4d <str4d@i2pmail.org>\n"
 "Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/otf/I2P/"
 "language/uk_UA/)\n"
@@ -21,21 +22,23 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:101
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:115
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:121
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:135
 msgid "Password required or invalid password provided"
-msgstr ""
+msgstr "Необхідний або неправильний пароль"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:319
+#: src/main/java/i2p/bote/imap/MapperFactory.java:408
 msgid "Deletion of mailboxes is not currently supported."
-msgstr ""
+msgstr "Видалення поштових скриньок наразі не підтримується."
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:250
 msgid "Not set."
-msgstr ""
+msgstr "Не встановлено."
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:313
 msgid "Queued"
@@ -48,7 +51,7 @@ msgstr "Надсилається... "
 #: src/main/java/i2p/bote/web/JSPHelper.java:317
 #, java-format
 msgid "Sent to {0} out of {1} recipients"
-msgstr ""
+msgstr "Надіслано {0} з {1} одержувачів"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:320
 msgid "Email sent"
@@ -56,7 +59,7 @@ msgstr "Лист відправлено"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:322
 msgid "Gateway disabled"
-msgstr ""
+msgstr "Шлюз вимкнено"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:324
 #: src/main/java/i2p/bote/web/SendEmailTag.java:110
@@ -67,26 +70,26 @@ msgstr ""
 #: src/main/java/i2p/bote/web/JSPHelper.java:327
 #, java-format
 msgid "Invalid recipient address: {0}"
-msgstr ""
+msgstr "Недійсна адреса одержувача: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:329
 #, java-format
 msgid "Error creating email packets: {0}"
-msgstr ""
+msgstr "Помилка створення пакунків електронної пошти: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:331
 #, java-format
 msgid "Error while sending email: {0}"
-msgstr ""
+msgstr "Помилка при відправці повідомлення: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:333
 #, java-format
 msgid "Error saving email metadata: {0}"
-msgstr ""
+msgstr "Помилка збереження метаданих електронної пошти: {0}"
 
 #: src/main/java/i2p/bote/web/JSPHelper.java:354
 msgid "New email received"
-msgstr ""
+msgstr "Новий лист"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:90
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:196
@@ -107,7 +110,7 @@ msgstr "Пір"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:119
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:41
 msgid "I2P Destination"
-msgstr ""
+msgstr "Місце призначення I2P"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:120
 msgid "Reachability %"
@@ -117,7 +120,7 @@ msgstr "Доступність %"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:227
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:232
 msgid "Untested"
-msgstr ""
+msgstr "Неперевірене"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:140
 msgid "Banned Peers:"
@@ -125,7 +128,7 @@ msgstr "Забанені піри:"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:145
 msgid "Destination Hash"
-msgstr ""
+msgstr "Адреса призначення хешу"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:146
 msgid "Ban Reason"
@@ -134,22 +137,22 @@ msgstr "Причина бану"
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:184
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:189
 msgid "Reachable"
-msgstr ""
+msgstr "Доступність"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:186
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:190
 msgid "Unreachable"
-msgstr ""
+msgstr "Недоступність"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:223
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:230
 msgid "Good"
-msgstr ""
+msgstr "Добре"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:225
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:231
 msgid "Unreliable"
-msgstr ""
+msgstr "Ненадійний"
 
 #: src/main/java/i2p/bote/web/PeerInfoTag.java:250
 msgid "Wrong protocol version:"
@@ -157,11 +160,11 @@ msgstr "Неправильна версія протоколу:"
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:76
 msgid "Error: Please add at least one recipient."
-msgstr ""
+msgstr "Помилка: додайте принаймні одного одержувача."
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:104
 msgid "The email has been queued for sending."
-msgstr ""
+msgstr "Лист був поставлений ​​в чергу для відправки."
 
 #: src/main/java/i2p/bote/web/SendEmailTag.java:110
 #: src/main/java/i2p/bote/web/SendEmailTag.java:114
@@ -173,7 +176,7 @@ msgstr "Помилка при відправці повідомлення: {0}"
 #: src/main/java/i2p/bote/web/SendEmailTag.java:114
 msgid ""
 "Address doesn't contain an Email Destination or an external address: {0}"
-msgstr ""
+msgstr "Адреса не містить адреси електронної пошти або зовнішньої адреси: {0}"
 
 #: src/main/java/i2p/bote/web/WebappPeerStatsRenderer.java:43
 msgid "BktPfx"
@@ -207,127 +210,105 @@ msgstr "(S)"
 msgid "(None)"
 msgstr "(-)"
 
-#: src/main/webapp/header.jsp
-msgid "- I2P-Bote"
-msgstr "- I2P-Bote"
-
-#: src/main/webapp/header.jsp
-msgid "Password is cached. Click to clear the password cache."
-msgstr ""
-
-#: src/main/webapp/header.jsp
-msgid "I2P-Bote"
-msgstr "I2P-Bote"
-
-#: src/main/webapp/header.jsp
-msgid "Secure Distributed Email"
-msgstr "Безпечна децентралізована електронна пошта"
-
-#: src/main/webapp/header.jsp
-msgid "Addresses"
-msgstr "Адреси"
-
-#: src/main/webapp/header.jsp
-msgid "Identities"
-msgstr ""
-
-#: src/main/webapp/header.jsp
-msgid "Address Book"
-msgstr "Адресна книга"
-
-#: src/main/webapp/header.jsp
-msgid "Configuration"
-msgstr "Налаштування"
-
-#: src/main/webapp/header.jsp
-msgid "Settings"
-msgstr "Налаштування"
-
-#: src/main/webapp/header.jsp
-msgid "Network Status"
-msgstr "Статус мережі"
-
-#: src/main/webapp/header.jsp
-msgid "Help"
-msgstr "Допомога"
-
-#: src/main/webapp/header.jsp
-msgid "User Guide"
-msgstr ""
-
-#: src/main/webapp/header.jsp
-msgid "FAQ"
-msgstr "FAQ"
-
-#: src/main/webapp/header.jsp
-msgid "About"
-msgstr "Про"
-
-#: src/main/webapp/header.jsp
-msgid ""
-"For I2P-Bote to function properly, you must download the JCE Unlimited "
-"Strength Jurisdiction Policy files and move them into this folder:"
-msgstr ""
-
-#: src/main/webapp/header.jsp
-msgid "Guide"
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "Email Identities"
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "No email identities are defined."
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "Def."
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "Public Name"
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "Description"
-msgstr "Опис"
-
-#: src/main/webapp/identities.jsp
-msgid "Email Destination"
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "Checking for mail..."
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "Check Mail"
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "Check mail for this identity"
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "New Identity"
-msgstr ""
-
-#: src/main/webapp/identities.jsp
-msgid "Import Identities"
-msgstr ""
-
-#: src/main/webapp/identities.jsp
+#: src/main/webapp/exportIdentities.jsp
 msgid "Export Identities"
 msgstr ""
 
+#: src/main/webapp/exportIdentities.jsp
+msgid "Password:"
+msgstr "Пароль:"
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "(leave blank to not encrypt identities)"
+msgstr ""
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "Confirm:"
+msgstr "Підтвердити:"
+
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export"
+msgstr "Експортувати"
+
+#: src/main/webapp/folder.jsp
+msgid "From"
+msgstr "Від"
+
+#: src/main/webapp/folder.jsp
+msgid "Know"
+msgstr ""
+
+#: src/main/webapp/folder.jsp
+msgid "To"
+msgstr "Кому"
+
+#: src/main/webapp/folder.jsp
+msgid "Subject"
+msgstr "Тема"
+
+#: src/main/webapp/folder.jsp
+msgid "Sent Time"
+msgstr "Час відправки"
+
+#: src/main/webapp/folder.jsp
+msgid "Delivered"
+msgstr "Доставлено"
+
+#: src/main/webapp/folder.jsp
+msgid "Anonymous"
+msgstr "Анонім"
+
+#: src/main/webapp/folder.jsp
+msgid "(No subject)"
+msgstr "(немає теми)"
+
+#: src/main/webapp/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr ""
+
+#: src/main/webapp/folder.jsp
+msgid "Delete"
+msgstr "Видалити"
+
+#: src/main/webapp/folder.jsp
+msgid "Delete this email"
+msgstr ""
+
+#: src/main/webapp/userGuide.jsp
+msgid "User Guide"
+msgstr "Керівництво користувача"
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Checking for mail..."
+msgstr "Перевірка пошти..."
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Check Mail"
+msgstr "Перевірити пошту"
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Compose"
+msgstr "Створити"
+
+#: src/main/webapp/buttonFrame.jsp
+msgid "Last checked:"
+msgstr ""
+
+#: src/main/webapp/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr ""
+
+#: src/main/webapp/deleteContact.jsp
+msgid "Error"
+msgstr "Помилка"
+
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
-msgstr ""
+msgstr "Форма повинна бути подана за допомогою POST."
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Destination field."
-msgstr ""
+msgstr "Будь ласка, заповніть поле призначення."
 
 #: src/main/webapp/editContact.jsp
 msgid "Please fill in the Name field."
@@ -335,7 +316,7 @@ msgstr "Будь ласка, заповніть поле Ім’я."
 
 #: src/main/webapp/editContact.jsp
 msgid "The contact has been saved."
-msgstr ""
+msgstr "Контакт збережено."
 
 #: src/main/webapp/editContact.jsp
 msgid "New Contact"
@@ -378,8 +359,12 @@ msgid "Cancel"
 msgstr "Відмінити"
 
 #: src/main/webapp/addressBook.jsp
+msgid "Address Book"
+msgstr "Адресна книга"
+
+#: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
-msgstr ""
+msgstr "Приватна адресна книга"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Select One or More Entries"
@@ -395,11 +380,11 @@ msgstr "Ім’я"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Text"
-msgstr ""
+msgstr "Тескт"
 
 #: src/main/webapp/addressBook.jsp
-msgid "Delete"
-msgstr "Видалити"
+msgid "Email Destination"
+msgstr "Адреса призначення листа"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -421,58 +406,74 @@ msgstr ""
 msgid "Lookup"
 msgstr ""
 
-#: src/main/webapp/network.jsp
-msgid "Network"
-msgstr "Мережа"
+#: src/main/webapp/saveIdentities.jsp
+msgid "Error:"
+msgstr "Помилка:"
 
-#: src/main/webapp/network.jsp
+#: src/main/webapp/csrfError.jsp
+msgid "Security Violation"
+msgstr ""
+
+#: src/main/webapp/csrfError.jsp
+msgid "CSRF Security Violation"
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "Зачекайте, будь ласка..."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The Email Identity is being generated. This may take a while."
+msgstr ""
+
+#: src/main/webapp/submitIdentity.jsp
 msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
+"This encryption type does not support destinations that start with {0}. "
+"Valid initial characters are {1}."
 msgstr ""
 
-#: src/main/webapp/network.jsp
-msgid "Local destination:"
+#: src/main/webapp/submitIdentity.jsp
+msgid "The email identity has been saved."
 msgstr ""
 
-#: src/main/webapp/folder.jsp
-msgid "From"
-msgstr "Від"
-
-#: src/main/webapp/folder.jsp
-msgid "Know"
+#: src/main/webapp/publishDestination.jsp
+msgid "Add Email Destination to Directory"
 msgstr ""
 
-#: src/main/webapp/folder.jsp
-msgid "To"
-msgstr "Кому"
-
-#: src/main/webapp/folder.jsp
-msgid "Subject"
-msgstr "Тема"
-
-#: src/main/webapp/folder.jsp
-msgid "Sent Time"
-msgstr "Час відправки"
-
-#: src/main/webapp/folder.jsp
-msgid "Delivered"
-msgstr "Доставлено"
-
-#: src/main/webapp/folder.jsp
-msgid "Anonymous"
-msgstr "Анонім"
-
-#: src/main/webapp/folder.jsp
-msgid "(No subject)"
-msgstr "(немає теми)"
-
-#: src/main/webapp/folder.jsp
-msgid "Signature is invalid or missing"
+#: src/main/webapp/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
 msgstr ""
 
-#: src/main/webapp/folder.jsp
-msgid "Delete this email"
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr ""
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr "Картинка для завантаження:"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr "(вибірково, максимум 7.5 Кбайт)"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Text to include:"
+msgstr ""
+
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr "(вибірково, максимум 2000 символів)"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish"
+msgstr "Опублікувати"
+
+#: src/main/webapp/publishDestination.jsp
+msgid "The identity has been added to the address directory."
 msgstr ""
 
 #: src/main/webapp/noIdentities.jsp
@@ -487,450 +488,28 @@ msgstr ""
 msgid "Create a New Email Identity"
 msgstr ""
 
-#: src/main/webapp/buttonFrame.jsp
-msgid "Compose"
-msgstr "Створити"
-
-#: src/main/webapp/buttonFrame.jsp
-msgid "Last checked:"
-msgstr ""
-
-#: src/main/webapp/csrfError.jsp
-msgid "Security Violation"
-msgstr ""
-
-#: src/main/webapp/csrfError.jsp
-msgid "CSRF Security Violation"
-msgstr ""
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In order to receive email from other people, you need to create an email "
-"identity first."
-msgstr ""
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"Every email identity is associated with an email destination. Anybody can "
-"send email to the email destination, but only the identity holder can read "
-"it."
-msgstr ""
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In a sense, email identities are the equivalent to traditional email "
-"accounts - except that there is no provider that can read all your email "
-"because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
-"give this file to anyone or they will be able to read all your emails."
-msgstr ""
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid "Do give out the email destination so others can contact you."
-msgstr ""
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is easy to create multiple identities for different purposes, or "
-"different contacts."
-msgstr ""
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"When you create a new email identity, you can choose the type of encryption "
-"that will be used by the email identity. While all encryption algorithms "
-"offered by I2P-Bote provide a high level of privacy, the length of an email "
-"destination depends on the encryption used. The choice of encryption also "
-"determines what signing algorithm is used."
-msgstr ""
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is generally recommended to choose 256-bit elliptic curve encryption "
-"because it produces the shortest email destinations (86 characters) while "
-"still being highly secure."
-msgstr ""
-
-#: src/main/webapp/sendEmail.jsp
-msgid "New Email"
-msgstr ""
-
-#: src/main/webapp/sendEmail.jsp
-msgid "Go to inbox"
-msgstr ""
-
-#: src/main/webapp/outbox.jsp
-msgid "Outbox"
-msgstr "Вихідні"
-
-#: src/main/webapp/outbox.jsp
-msgid "Create Time"
-msgstr "Час створення"
-
-#: src/main/webapp/outbox.jsp
-msgid "Status"
-msgstr "Статус"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Not Started"
-msgstr "Не запущено"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
-msgstr ""
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connecting..."
-msgstr "З’єднання..."
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connected"
-msgstr "З’єднано"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Error"
-msgstr "Помилка"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Retry Connecting"
-msgstr "Повторити з’єднання"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connect Now"
-msgstr "З’єднатись зараз"
-
 #: src/main/webapp/deleteIdentity.jsp
 msgid "The email identity has been deleted."
 msgstr ""
 
-#: src/main/webapp/deleteIdentity.jsp
-msgid "Error:"
-msgstr "Помилка:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Please select a file to attach and try again."
+#: src/main/webapp/debug.jsp
+msgid "Debug"
 msgstr ""
 
-#: src/main/webapp/newEmail.jsp
-msgid "Send"
-msgstr "Надіслати"
-
-#: src/main/webapp/newEmail.jsp
-msgid "From:"
-msgstr "Від:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "To:"
-msgstr "Кому:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "CC:"
+#: src/main/webapp/debug.jsp
+msgid "Debug Page"
 msgstr ""
 
-#: src/main/webapp/newEmail.jsp
-msgid "BCC:"
+#: src/main/webapp/debug.jsp
+msgid "Test encrypted files"
+msgstr "Перевірити зашифровані файли"
+
+#: src/main/webapp/debug.jsp
+msgid "No file encryption problems found."
 msgstr ""
 
-#: src/main/webapp/newEmail.jsp
-msgid "Reply To:"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this recipient"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add this recipient to the address book"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Select recipients from address book"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another recipient field"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Subject:"
-msgstr "Тема:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attachments:"
-msgstr "Прикріпити файли:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this attachment"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another attachment"
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attach"
-msgstr "Прикріпити"
-
-#: src/main/webapp/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr ""
-
-#: src/main/webapp/newEmail.jsp
-msgid "Message:"
-msgstr "Повідомлення:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "{0} wrote:"
-msgstr ""
-
-#: src/main/webapp/faq.jsp
-msgid "Frequently Asked Questions"
-msgstr ""
-
-#: src/main/webapp/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
-msgstr ""
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set Password"
-msgstr "Встановити пароль"
-
-#: src/main/webapp/setPassword.jsp
-msgid "The password has been changed."
-msgstr ""
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait"
-msgstr "Зачекайте, будь ласка"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait while the password is being changed..."
-msgstr ""
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set a new Password"
-msgstr "Змінити пароль"
-
-#: src/main/webapp/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr ""
-
-#: src/main/webapp/setPassword.jsp
-msgid ""
-"Please note that if a password is set, emails cannot be checked "
-"automatically but only when the Check Mail button is clicked."
-msgstr ""
-
-#: src/main/webapp/setPassword.jsp
-msgid "Old password:"
-msgstr "Старий пароль:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "New password:"
-msgstr "Новий пароль:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Confirm:"
-msgstr "Підтвердити:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "OK"
-msgstr "OK"
-
-#: src/main/webapp/showEmail.jsp
-msgid ""
-"The email could not be found in this folder. It was probably moved to the "
-"Sent folder."
-msgstr ""
-
-#: src/main/webapp/showEmail.jsp
-msgid "The email could not be found in this folder."
-msgstr ""
-
-#: src/main/webapp/showEmail.jsp
-msgid "Signature:"
-msgstr "Підпис:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Valid"
-msgstr ""
-
-#: src/main/webapp/showEmail.jsp
-msgid "N/A (sender is anonymous)"
-msgstr ""
-
-#: src/main/webapp/showEmail.jsp
-msgid "Invalid or missing"
-msgstr ""
-
-#: src/main/webapp/showEmail.jsp
-msgid "Sent:"
-msgstr ""
-
-#: src/main/webapp/showEmail.jsp
-msgid "Received:"
-msgstr ""
-
-#: src/main/webapp/showEmail.jsp
-msgid "Status:"
-msgstr "Статус:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Reply"
-msgstr "Відповісти"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Re:"
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Please select an identities file and try again."
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "The identities have been imported."
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Identities file:"
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Password:"
-msgstr "Пароль:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "(leave blank if identities not encrypted)"
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Overwrite all existing identities:"
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Duplicates: replace existing identity:"
-msgstr ""
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Import"
-msgstr "Іспортувати"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "Password Cleared"
-msgstr ""
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Settings have been saved."
-msgstr "Налаштування збережено."
-
-#: src/main/webapp/settings.jsp
-msgid "General"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "Перевіряти поштову скриньку кожні {0} хвилин"
-
-#: src/main/webapp/settings.jsp
-msgid "Check delivery status of sent emails"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "Увімкнути IMAP ні порті {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "Тема:"
-
-#: src/main/webapp/settings.jsp
-msgid "Privacy"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "Вказувати час відправки у вихідних повідомленнях"
-
-#: src/main/webapp/settings.jsp
-msgid "Routing"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Use relays when sending mail:"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "None"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Delay per relay hop: Between"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "and"
-msgstr "і"
-
-#: src/main/webapp/settings.jsp
-msgid "minutes"
-msgstr "хвилин"
-
-#: src/main/webapp/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr ""
-
-#: src/main/webapp/settings.jsp
-msgid "Change Password"
-msgstr "Змінити пароль"
-
-#: src/main/webapp/folders.jsp
-msgid "Folders"
-msgstr "Теки"
-
-#: src/main/webapp/folders.jsp
-msgid "Inbox"
-msgstr "Вхідні"
-
-#: src/main/webapp/folders.jsp
-msgid "Sent"
-msgstr "Надіслано"
-
-#: src/main/webapp/folders.jsp
-msgid "Trash"
-msgstr "Смітник"
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Identity"
-msgstr ""
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Email Identity for {0}:"
-msgstr ""
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid ""
-"Do not show the above information to anyone! It contains your private keys."
+#: src/main/webapp/debug.jsp
+msgid "Undecryptable files:"
 msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
@@ -1022,23 +601,271 @@ msgid "Cannot publish until connected."
 msgstr ""
 
 #: src/main/webapp/editIdentity.jsp
-msgid "Publish"
-msgstr "Опублікувати"
-
-#: src/main/webapp/editIdentity.jsp
 msgid "Delete this identity"
 msgstr ""
 
-#: src/main/webapp/connectError.jsp
-msgid "Error Details"
-msgstr "Подробиці помилки"
+#: src/main/webapp/faq.jsp
+msgid "FAQ"
+msgstr "FAQ"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "(leave blank to not encrypt identities)"
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr "Засто задавані питання"
+
+#: src/main/webapp/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr "Пароль кешовано. Натисніть, щоб очистити кеш пароля."
+
+#: src/main/webapp/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Secure Distributed Email"
+msgstr "Безпечна децентралізована електронна пошта"
+
+#: src/main/webapp/header.jsp
+msgid "Addresses"
+msgstr "Адреси"
+
+#: src/main/webapp/header.jsp
+msgid "Identities"
 msgstr ""
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export"
+#: src/main/webapp/header.jsp
+msgid "Configuration"
+msgstr "Налаштування"
+
+#: src/main/webapp/header.jsp
+msgid "Settings"
+msgstr "Налаштування"
+
+#: src/main/webapp/header.jsp
+msgid "Network Status"
+msgstr "Статус мережі"
+
+#: src/main/webapp/header.jsp
+msgid "Help"
+msgstr "Допомога"
+
+#: src/main/webapp/header.jsp
+msgid "About"
+msgstr "Про"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+"Щоб функція I2P-Bote функціонувала належним чином, ви повинні завантажити "
+"файли політики JCE Unlimited Strength Jurisdiction Policy і перемістити їх у "
+"цю папку:"
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr "Керівництво"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr ""
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr ""
+
+#: src/main/webapp/outbox.jsp
+msgid "Outbox"
+msgstr "Вихідні"
+
+#: src/main/webapp/outbox.jsp
+msgid "Create Time"
+msgstr "Час створення"
+
+#: src/main/webapp/outbox.jsp
+msgid "Status"
+msgstr "Статус"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
+msgstr ""
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid ""
+"The email could not be found in this folder. It was probably moved to the "
+"Sent folder."
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "The email could not be found in this folder."
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "From:"
+msgstr "Від:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Signature:"
+msgstr "Підпис:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Valid"
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "Invalid or missing"
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply To:"
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "To:"
+msgstr "Кому:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "CC:"
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "BCC:"
+msgstr ""
+
+#: src/main/webapp/showEmail.jsp
+msgid "Sent:"
+msgstr "Відправлено:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Received:"
+msgstr "Отримано:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Subject:"
+msgstr "Тема:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Message:"
+msgstr "Повідомлення:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Attachments:"
+msgstr "Прикріпити файли:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Status:"
+msgstr "Статус:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply"
+msgstr "Відповісти"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Re:"
+msgstr "Re:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "New Email"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Send"
+msgstr "Надіслати"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this recipient"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add this recipient to the address book"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Select recipients from address book"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another recipient field"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this attachment"
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another attachment"
+msgstr "Прикріпити інші файли"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attach"
+msgstr "Прикріпити"
+
+#: src/main/webapp/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr ""
+
+#: src/main/webapp/newEmail.jsp
+msgid "{0} wrote:"
 msgstr ""
 
 #: src/main/webapp/password.jsp
@@ -1051,6 +878,291 @@ msgstr ""
 
 #: src/main/webapp/password.jsp
 msgid "Password required"
+msgstr ""
+
+#: src/main/webapp/password.jsp
+msgid "OK"
+msgstr "OK"
+
+#: src/main/webapp/settings.jsp
+msgid "Settings have been saved."
+msgstr "Налаштування збережено."
+
+#: src/main/webapp/settings.jsp
+msgid "General"
+msgstr "Головне"
+
+#: src/main/webapp/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "Перевіряти поштову скриньку кожні {0} хвилин"
+
+#: src/main/webapp/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "Увімкнути IMAP ні порті {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "Тема:"
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "Вказувати час відправки у вихідних повідомленнях"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "None"
+msgstr "Немає"
+
+#: src/main/webapp/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "and"
+msgstr "і"
+
+#: src/main/webapp/settings.jsp
+msgid "minutes"
+msgstr "хвилин"
+
+#: src/main/webapp/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr ""
+
+#: src/main/webapp/settings.jsp
+msgid "Change Password"
+msgstr "Змінити пароль"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set Password"
+msgstr "Встановити пароль"
+
+#: src/main/webapp/setPassword.jsp
+msgid "The password has been changed."
+msgstr ""
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait"
+msgstr "Зачекайте, будь ласка"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr ""
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set a new Password"
+msgstr "Змінити пароль"
+
+#: src/main/webapp/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr ""
+
+#: src/main/webapp/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+
+#: src/main/webapp/setPassword.jsp
+msgid "Old password:"
+msgstr "Старий пароль:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "New password:"
+msgstr "Новий пароль:"
+
+#: src/main/webapp/network.jsp
+msgid "Network"
+msgstr "Мережа"
+
+#: src/main/webapp/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr ""
+
+#: src/main/webapp/network.jsp
+msgid "Local destination:"
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "Error Details"
+msgstr "Подробиці помилки"
+
+#: src/main/webapp/connectError.jsp
+msgid "Oh dear! I2P-Bote couldn't connect to the network."
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "This is the error that happened:"
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid ""
+"You can fix most problems by clicking the 'Retry Connecting' button in the "
+"menu bar."
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "If that doesn't help, try restarting your I2P router."
+msgstr ""
+
+#: src/main/webapp/folders.jsp
+msgid "Folders"
+msgstr "Теки"
+
+#: src/main/webapp/folders.jsp
+msgid "Inbox"
+msgstr "Вхідні"
+
+#: src/main/webapp/folders.jsp
+msgid "Sent"
+msgstr "Надіслано"
+
+#: src/main/webapp/folders.jsp
+msgid "Trash"
+msgstr "Смітник"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Not Started"
+msgstr "Не запущено"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr ""
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connecting..."
+msgstr "З’єднання..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connected"
+msgstr "З’єднано"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr "Повторити з’єднання"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connect Now"
+msgstr "З’єднатись зараз"
+
+#: src/main/webapp/identities.jsp
+msgid "Email Identities"
+msgstr "Ідентифікатори електронної пошти"
+
+#: src/main/webapp/identities.jsp
+msgid "No email identities are defined."
+msgstr "Ідентифікатори електронної пошти не визначені."
+
+#: src/main/webapp/identities.jsp
+msgid "Def."
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "Public Name"
+msgstr "Публічне ім'я"
+
+#: src/main/webapp/identities.jsp
+msgid "Description"
+msgstr "Опис"
+
+#: src/main/webapp/identities.jsp
+msgid "Check mail for this identity"
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "New Identity"
+msgstr ""
+
+#: src/main/webapp/identities.jsp
+msgid "Import Identities"
+msgstr ""
+
+#: src/main/webapp/sendEmail.jsp
+msgid "Go to inbox"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Please select an identities file and try again."
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "The identities have been imported."
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Identities file:"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "(leave blank if identities not encrypted)"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Overwrite all existing identities:"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Duplicates: replace existing identity:"
+msgstr ""
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Import"
+msgstr "Іспортувати"
+
+#: src/main/webapp/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr ""
+
+#: src/main/webapp/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr ""
+
+#: src/main/webapp/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr ""
+
+#: src/main/webapp/importContact.jsp
+msgid "Import Contact"
+msgstr "Імпортувати контакт"
+
+#: src/main/webapp/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+
+#: src/main/webapp/importContact.jsp
+msgid "Email Destination: "
 msgstr ""
 
 #: src/main/webapp/about.jsp
@@ -1181,118 +1293,22 @@ msgstr ""
 msgid "Bug hunting"
 msgstr ""
 
-#: src/main/webapp/debug.jsp
-msgid "Debug"
-msgstr ""
-
-#: src/main/webapp/debug.jsp
-msgid "Debug Page"
-msgstr ""
-
-#: src/main/webapp/debug.jsp
-msgid "Test encrypted files"
-msgstr "Перевірити зашифровані файли"
-
-#: src/main/webapp/debug.jsp
-msgid "No file encryption problems found."
-msgstr ""
-
-#: src/main/webapp/debug.jsp
-msgid "Undecryptable files:"
-msgstr ""
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Add Email Destination to Directory"
-msgstr ""
-
-#: src/main/webapp/publishDestination.jsp
-msgid "The name exists already. Please choose a different Public Name."
-msgstr ""
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Publish to the Address Directory"
-msgstr ""
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Picture to upload:"
-msgstr "Картинка для завантаження:"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 7.5 kBytes max)"
-msgstr "(вибірково, максимум 7.5 Кбайт)"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Text to include:"
-msgstr ""
-
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 2000 chars max)"
-msgstr "(вибірково, максимум 2000 символів)"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "The identity has been added to the address directory."
-msgstr ""
-
-#: src/main/webapp/importContact.jsp
-msgid "Address Directory Lookup"
-msgstr ""
-
-#: src/main/webapp/importContact.jsp
-msgid "The name has been imported to the address book."
-msgstr ""
-
-#: src/main/webapp/importContact.jsp
-msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr ""
-
-#: src/main/webapp/importContact.jsp
-msgid "Import Contact"
-msgstr "Імпортувати контакт"
-
-#: src/main/webapp/importContact.jsp
-msgid ""
-"A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-
-#: src/main/webapp/importContact.jsp
-msgid "Email Destination: "
-msgstr ""
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr ""
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "Зачекайте, будь ласка..."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The Email Identity is being generated. This may take a while."
-msgstr ""
-
-#: src/main/webapp/submitIdentity.jsp
-msgid ""
-"This encryption type does not support destinations that start with {0}. "
-"Valid initial characters are {1}."
-msgstr ""
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr ""
-
 #: src/main/webapp/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
 msgstr ""
 
-#: src/main/webapp/WEB-INF/tags/printDate.tag
-msgid "Unknown"
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Identity"
 msgstr ""
 
-#: src/main/webapp/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "Додати до адресної книги"
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Email Identity for {0}:"
+msgstr ""
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid ""
+"Do not show the above information to anyone! It contains your private keys."
+msgstr ""
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1306,26 +1322,64 @@ msgstr ""
 msgid "{0} incomplete"
 msgstr ""
 
+#: src/main/webapp/WEB-INF/tags/printDate.tag
+msgid "Unknown"
+msgstr "Невідомо"
+
+#: src/main/webapp/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "Додати до адресної книги"
+
+#~ msgid "Material"
+#~ msgstr "Material"
+
+#~ msgid "Light Blue"
+#~ msgstr "Light Blue"
+
+#~ msgid "Vanilla"
+#~ msgstr "Vanilla"
+
+#~ msgid "No identity matches the sender/from field: "
+#~ msgstr "No identity matches the sender/from field: "
+
+#~ msgid "Checking password"
+#~ msgstr "Checking password"
+
 #~ msgid "The old password is not correct."
-#~ msgstr "Старий пароль не правильний."
+#~ msgstr "The old password is not correct."
 
 #~ msgid "The new password and the confirmation password do not match."
-#~ msgstr "Новий пароль та підтвердження не співпадають."
+#~ msgstr "The new password and the confirmation password do not match."
+
+#~ msgid "Re-encrypting identities"
+#~ msgstr "Re-encrypting identities"
+
+#~ msgid "Re-encrypting addressbook"
+#~ msgstr "Re-encrypting addressbook"
+
+#~ msgid "Re-encrypting folder"
+#~ msgstr "Re-encrypting folder"
+
+#~ msgid "Updating password file"
+#~ msgstr "Updating password file"
 
 #~ msgid "256-bit Elliptic Curve Encryption"
-#~ msgstr "256-бітне шифрування еліптичними кривими"
+#~ msgstr "256-bit Elliptic Curve Encryption"
 
 #~ msgid "521-bit Elliptic Curve Encryption"
-#~ msgstr "521-бітне шифрування еліптичними кривими"
+#~ msgstr "521-bit Elliptic Curve Encryption"
 
 #~ msgid "2048-bit ElGamal Encryption"
-#~ msgstr "2048-бітне шифрування Ель-Гамаля"
+#~ msgstr "2048-bit ElGamal Encryption"
 
 #~ msgid "NTRU-1087 Encryption"
-#~ msgstr "Шифрування NTRU-1087"
+#~ msgstr "NTRU-1087 Encryption"
 
 #~ msgid "Invalid address: {0}"
-#~ msgstr "Невірна електронна адреса: {0}"
+#~ msgstr "Invalid address: {0}"
+
+#~ msgid "Invalid ID number for CryptoImplementation: "
+#~ msgstr "Invalid ID number for CryptoImplementation: "
 
 #~ msgid "Addr. Book..."
 #~ msgstr "Addr. Book..."

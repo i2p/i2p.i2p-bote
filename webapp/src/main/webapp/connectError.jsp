@@ -29,7 +29,11 @@
 <jsp:include page="header.jsp"/>
 
     <h1><ib:message key="Error"/></h1>
+    <p><ib:message key="Oh dear! I2P-Bote couldn't connect to the network."/></p>
+    <p><ib:message key="This is the error that happened:"/></p>
     <jsp:useBean id="jspHelperBean" class="i2p.bote.web.JSPHelper"/>
     <ib:printException exception="${jspHelperBean.connectError}"/>
+    <p><ib:message key="You can fix most problems by clicking the 'Retry Connecting' button in the menu bar."/></p>
+    <p><ib:message key="If that doesn't help, try restarting your I2P router."/></p>
 
 <jsp:include page="footer.jsp"/>
