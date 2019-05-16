@@ -8,22 +8,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 20:17+1300\n"
+"POT-Creation-Date: 2019-05-16 12:16+0100\n"
 "PO-Revision-Date: 2018-10-04 00:46+0000\n"
 "Last-Translator: erinm\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/zh_CN/)\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/otf/I2P/language/"
+"zh_CN/)\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:101
-#: src/main/java/i2p/bote/imap/BoteMailbox.java:115
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:121
+#: src/main/java/i2p/bote/imap/BoteMailbox.java:135
 msgid "Password required or invalid password provided"
 msgstr "需要密码或密码输入错误"
 
-#: src/main/java/i2p/bote/imap/MapperFactory.java:319
+#: src/main/java/i2p/bote/imap/MapperFactory.java:408
 msgid "Deletion of mailboxes is not currently supported."
 msgstr "尚不支持删除邮箱。"
 
@@ -201,119 +202,97 @@ msgstr "(S)"
 msgid "(None)"
 msgstr "(无)"
 
-#: src/main/webapp/header.jsp
-msgid "- I2P-Bote"
-msgstr "- I2P-Bote"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export Identities"
+msgstr "导出身份"
 
-#: src/main/webapp/header.jsp
-msgid "Password is cached. Click to clear the password cache."
-msgstr "密码已缓存，点击清除缓存的密码。"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Password:"
+msgstr "密码:"
 
-#: src/main/webapp/header.jsp
-msgid "I2P-Bote"
-msgstr "I2P-Bote"
+#: src/main/webapp/exportIdentities.jsp
+msgid "(leave blank to not encrypt identities)"
+msgstr "(留空，如果身份不加密)"
 
-#: src/main/webapp/header.jsp
-msgid "Secure Distributed Email"
-msgstr "分布式安全邮件"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Confirm:"
+msgstr "确认:"
 
-#: src/main/webapp/header.jsp
-msgid "Addresses"
-msgstr "地址"
+#: src/main/webapp/exportIdentities.jsp
+msgid "Export"
+msgstr "导出"
 
-#: src/main/webapp/header.jsp
-msgid "Identities"
-msgstr "身份"
+#: src/main/webapp/folder.jsp
+msgid "From"
+msgstr "寄件人"
 
-#: src/main/webapp/header.jsp
-msgid "Address Book"
-msgstr "地址簿"
+#: src/main/webapp/folder.jsp
+msgid "Know"
+msgstr "已知"
 
-#: src/main/webapp/header.jsp
-msgid "Configuration"
-msgstr "配置"
+#: src/main/webapp/folder.jsp
+msgid "To"
+msgstr "收件人"
 
-#: src/main/webapp/header.jsp
-msgid "Settings"
-msgstr "设置"
+#: src/main/webapp/folder.jsp
+msgid "Subject"
+msgstr "主题"
 
-#: src/main/webapp/header.jsp
-msgid "Network Status"
-msgstr "网络状态"
+#: src/main/webapp/folder.jsp
+msgid "Sent Time"
+msgstr "发送时间"
 
-#: src/main/webapp/header.jsp
-msgid "Help"
-msgstr "帮助"
+#: src/main/webapp/folder.jsp
+msgid "Delivered"
+msgstr "已投递"
 
-#: src/main/webapp/header.jsp
+#: src/main/webapp/folder.jsp
+msgid "Anonymous"
+msgstr "匿名"
+
+#: src/main/webapp/folder.jsp
+msgid "(No subject)"
+msgstr "(无主题)"
+
+#: src/main/webapp/folder.jsp
+msgid "Signature is invalid or missing"
+msgstr "签名无效或缺失"
+
+#: src/main/webapp/folder.jsp
+msgid "Delete"
+msgstr "删除"
+
+#: src/main/webapp/folder.jsp
+msgid "Delete this email"
+msgstr "删除此邮件"
+
+#: src/main/webapp/userGuide.jsp
 msgid "User Guide"
 msgstr "用户指南"
 
-#: src/main/webapp/header.jsp
-msgid "FAQ"
-msgstr "常见问题解答"
-
-#: src/main/webapp/header.jsp
-msgid "About"
-msgstr "关于"
-
-#: src/main/webapp/header.jsp
-msgid ""
-"For I2P-Bote to function properly, you must download the JCE Unlimited "
-"Strength Jurisdiction Policy files and move them into this folder:"
-msgstr "为了 I2P-Bote JCE 正常运行，您必须下载 JCE 无限强度司法政策文件，并将其移动到下列文件夹："
-
-#: src/main/webapp/header.jsp
-msgid "Guide"
-msgstr "向导"
-
-#: src/main/webapp/identities.jsp
-msgid "Email Identities"
-msgstr "邮箱身份"
-
-#: src/main/webapp/identities.jsp
-msgid "No email identities are defined."
-msgstr "没有邮箱身份。"
-
-#: src/main/webapp/identities.jsp
-msgid "Def."
-msgstr "默认"
-
-#: src/main/webapp/identities.jsp
-msgid "Public Name"
-msgstr "公开身份名称"
-
-#: src/main/webapp/identities.jsp
-msgid "Description"
-msgstr "描述"
-
-#: src/main/webapp/identities.jsp
-msgid "Email Destination"
-msgstr "邮箱地址"
-
-#: src/main/webapp/identities.jsp
+#: src/main/webapp/buttonFrame.jsp
 msgid "Checking for mail..."
 msgstr "正在检查邮件..."
 
-#: src/main/webapp/identities.jsp
+#: src/main/webapp/buttonFrame.jsp
 msgid "Check Mail"
 msgstr "检查邮件"
 
-#: src/main/webapp/identities.jsp
-msgid "Check mail for this identity"
-msgstr "检查此身份的邮件"
+#: src/main/webapp/buttonFrame.jsp
+msgid "Compose"
+msgstr "写信"
 
-#: src/main/webapp/identities.jsp
-msgid "New Identity"
-msgstr "新身份"
+#: src/main/webapp/buttonFrame.jsp
+msgid "Last checked:"
+msgstr "上次查收："
 
-#: src/main/webapp/identities.jsp
-msgid "Import Identities"
-msgstr "导入身份"
+#: src/main/webapp/deleteContact.jsp
+msgid "The contact has been deleted from the address book."
+msgstr "联系人已经从地址簿中删除。"
 
-#: src/main/webapp/identities.jsp
-msgid "Export Identities"
-msgstr "导出身份"
+#: src/main/webapp/deleteContact.jsp
+msgid "Error"
+msgstr "错误"
 
 #: src/main/webapp/editContact.jsp
 msgid "Form must be submitted using POST."
@@ -372,6 +351,10 @@ msgid "Cancel"
 msgstr "取消"
 
 #: src/main/webapp/addressBook.jsp
+msgid "Address Book"
+msgstr "地址簿"
+
+#: src/main/webapp/addressBook.jsp
 msgid "Private Address Book"
 msgstr "私有地址簿"
 
@@ -392,8 +375,8 @@ msgid "Text"
 msgstr "文本"
 
 #: src/main/webapp/addressBook.jsp
-msgid "Delete"
-msgstr "删除"
+msgid "Email Destination"
+msgstr "邮箱地址"
 
 #: src/main/webapp/addressBook.jsp
 msgid "Delete this contact"
@@ -415,59 +398,75 @@ msgstr "从公共地址列表中导入"
 msgid "Lookup"
 msgstr "查找"
 
-#: src/main/webapp/network.jsp
-msgid "Network"
-msgstr "网络"
+#: src/main/webapp/saveIdentities.jsp
+msgid "Error:"
+msgstr "错误:"
 
-#: src/main/webapp/network.jsp
+#: src/main/webapp/csrfError.jsp
+msgid "Security Violation"
+msgstr "安全违规"
+
+#: src/main/webapp/csrfError.jsp
+msgid "CSRF Security Violation"
+msgstr "跨站请求伪造（CSRF）安全违规"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please fill in the Public Name field."
+msgstr "请输入公开身份名称"
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "Please wait..."
+msgstr "请等待..."
+
+#: src/main/webapp/submitIdentity.jsp
+msgid "The Email Identity is being generated. This may take a while."
+msgstr "正在生成邮箱的身份标识。这可能需要几分钟。"
+
+#: src/main/webapp/submitIdentity.jsp
 msgid ""
-"Network information is not available because I2P-Bote hasn't started "
-"connecting to the network yet."
-msgstr "由于I2P-Bot尚未连接网络，网络信息目前不可用。"
+"This encryption type does not support destinations that start with {0}. "
+"Valid initial characters are {1}."
+msgstr "此加密类型不支持以 {0} 开头的目标。有效的初始字符为 {1}。"
 
-#: src/main/webapp/network.jsp
-msgid "Local destination:"
-msgstr "我的地址:"
+#: src/main/webapp/submitIdentity.jsp
+msgid "The email identity has been saved."
+msgstr "邮箱身份已保存。"
 
-#: src/main/webapp/folder.jsp
-msgid "From"
-msgstr "寄件人"
+#: src/main/webapp/publishDestination.jsp
+msgid "Add Email Destination to Directory"
+msgstr "添加邮件目标至公共目录"
 
-#: src/main/webapp/folder.jsp
-msgid "Know"
-msgstr "已知"
+#: src/main/webapp/publishDestination.jsp
+msgid "The name exists already. Please choose a different Public Name."
+msgstr "名称已经存在请选择一个不同的公开化名。"
 
-#: src/main/webapp/folder.jsp
-msgid "To"
-msgstr "收件人"
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish to the Address Directory"
+msgstr "发布至公共地址列表"
 
-#: src/main/webapp/folder.jsp
-msgid "Subject"
-msgstr "主题"
+#: src/main/webapp/publishDestination.jsp
+msgid "Picture to upload:"
+msgstr "要上传的图片："
 
-#: src/main/webapp/folder.jsp
-msgid "Sent Time"
-msgstr "发送时间"
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 7.5 kBytes max)"
+msgstr "(可选，最大 7.5 KB)"
 
-#: src/main/webapp/folder.jsp
-msgid "Delivered"
-msgstr "已投递"
+#: src/main/webapp/publishDestination.jsp
+msgid "Text to include:"
+msgstr "包括文本:"
 
-#: src/main/webapp/folder.jsp
-msgid "Anonymous"
-msgstr "匿名"
+#: src/main/webapp/publishDestination.jsp
+msgid "(optional, 2000 chars max)"
+msgstr "(可选，最多2000字符)"
 
-#: src/main/webapp/folder.jsp
-msgid "(No subject)"
-msgstr "(无主题)"
+#: src/main/webapp/publishDestination.jsp
+msgid "Publish"
+msgstr "发布"
 
-#: src/main/webapp/folder.jsp
-msgid "Signature is invalid or missing"
-msgstr "签名无效或缺失"
-
-#: src/main/webapp/folder.jsp
-msgid "Delete this email"
-msgstr "删除此邮件"
+#: src/main/webapp/publishDestination.jsp
+msgid "The identity has been added to the address directory."
+msgstr "身份已成功加入至公共地址列表。"
 
 #: src/main/webapp/noIdentities.jsp
 msgid "No Identity"
@@ -481,451 +480,29 @@ msgstr "您还没有生成任何邮箱身份"
 msgid "Create a New Email Identity"
 msgstr "创建新邮箱身份"
 
-#: src/main/webapp/buttonFrame.jsp
-msgid "Compose"
-msgstr "写信"
-
-#: src/main/webapp/buttonFrame.jsp
-msgid "Last checked:"
-msgstr "上次查收："
-
-#: src/main/webapp/csrfError.jsp
-msgid "Security Violation"
-msgstr "安全违规"
-
-#: src/main/webapp/csrfError.jsp
-msgid "CSRF Security Violation"
-msgstr "跨站请求伪造（CSRF）安全违规"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In order to receive email from other people, you need to create an email "
-"identity first."
-msgstr "为了能收到邮件，您必须先创建自己的邮箱身份。"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"Every email identity is associated with an email destination. Anybody can "
-"send email to the email destination, but only the identity holder can read "
-"it."
-msgstr "每个邮箱身份都与一个邮箱地址相关联。人人都可以向已知的邮箱地址发信，但只有身份密钥的持有者能够阅读这些邮件。"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"In a sense, email identities are the equivalent to traditional email "
-"accounts - except that there is no provider that can read all your email "
-"because I2P-Bote stores all emails encrypted on the network."
-msgstr "某种程度上，邮箱身份等同于普通意义上的邮箱账户 - 唯一的不同是您不需要邮件服务提供商，邮件提供商可以看到您的所有邮件，而I2P-Bote将您的邮件加密存放在网络中。"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity"
-" you created. Email identities are stored in a file named identities; never "
-"give this file to anyone or they will be able to read all your emails."
-msgstr "I2P-Bote 使用您创建的邮箱身份自动解密发送给您的邮件。邮箱身份存放于名为 identities 的文件中，不要将此文件给任何人，否则他们将可以读取您的所有邮件。"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid "Do give out the email destination so others can contact you."
-msgstr "请知会他人您的邮件地址，以便他人联系您。"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is easy to create multiple identities for different purposes, or "
-"different contacts."
-msgstr "您可以出于不同的目的或跟不同的联系人联系时，创建多个不同的身份。"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"When you create a new email identity, you can choose the type of encryption "
-"that will be used by the email identity. While all encryption algorithms "
-"offered by I2P-Bote provide a high level of privacy, the length of an email "
-"destination depends on the encryption used. The choice of encryption also "
-"determines what signing algorithm is used."
-msgstr "创建新邮箱身份时，您可以选择身份所使用的加密类型。I2P-Bote提供的所有加密算法都可以提供高标准的隐私保护，加密算法也决定了所使用的签名算法。"
-
-#: src/main/webapp/identitiesHelp.jsp
-msgid ""
-"It is generally recommended to choose 256-bit elliptic curve encryption "
-"because it produces the shortest email destinations (86 characters) while "
-"still being highly secure."
-msgstr "通常推荐选择256-bit的Elliptic Curve加密算法，因为它能在高加密强度下提供最短的邮箱目标(86字符)。"
-
-#: src/main/webapp/sendEmail.jsp
-msgid "New Email"
-msgstr "新邮件"
-
-#: src/main/webapp/sendEmail.jsp
-msgid "Go to inbox"
-msgstr "转到收件箱"
-
-#: src/main/webapp/outbox.jsp
-msgid "Outbox"
-msgstr "发件箱"
-
-#: src/main/webapp/outbox.jsp
-msgid "Create Time"
-msgstr "创建时间:"
-
-#: src/main/webapp/outbox.jsp
-msgid "Status"
-msgstr "状态"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Not Started"
-msgstr "未启动"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Waiting 3 Minutes..."
-msgstr "等待3分钟 ..."
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connecting..."
-msgstr "正在连接..."
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connected"
-msgstr "已连接"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Error"
-msgstr "错误"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Retry Connecting"
-msgstr "正在重试连接"
-
-#: src/main/webapp/statusFrame.jsp
-msgid "Connect Now"
-msgstr "立刻连接"
-
 #: src/main/webapp/deleteIdentity.jsp
 msgid "The email identity has been deleted."
 msgstr "邮箱身份已删除。"
 
-#: src/main/webapp/deleteIdentity.jsp
-msgid "Error:"
-msgstr "错误:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Please select a file to attach and try again."
-msgstr "请选择要附加的文件并重试。"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Send"
-msgstr "发送"
-
-#: src/main/webapp/newEmail.jsp
-msgid "From:"
-msgstr "寄件人:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "To:"
-msgstr "收件人:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "CC:"
-msgstr "抄送:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "BCC:"
-msgstr "密送:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Reply To:"
-msgstr "回复:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this recipient"
-msgstr "移除此收件人"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add this recipient to the address book"
-msgstr "添加此收件人到地址簿。"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Select recipients from address book"
-msgstr "从地址簿选择收件人"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another recipient field"
-msgstr "再添加一个收件人字段"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Subject:"
-msgstr "主题:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attachments:"
-msgstr "附件:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Remove this attachment"
-msgstr "移除附件"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Add another attachment"
-msgstr "添加其他附件"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Attach"
-msgstr "附件"
-
-#: src/main/webapp/newEmail.jsp
-msgid "It is recommended to keep attachments below 500 kBytes."
-msgstr "附件体积建议保持在小于 500 KB。"
-
-#: src/main/webapp/newEmail.jsp
-msgid "Message:"
-msgstr "消息:"
-
-#: src/main/webapp/newEmail.jsp
-msgid "{0} wrote:"
-msgstr "{0} 写到:"
-
-#: src/main/webapp/faq.jsp
-msgid "Frequently Asked Questions"
-msgstr "常见问题"
-
-#: src/main/webapp/deleteContact.jsp
-msgid "The contact has been deleted from the address book."
-msgstr "联系人已经从地址簿中删除。"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set Password"
-msgstr "设置密码"
-
-#: src/main/webapp/setPassword.jsp
-msgid "The password has been changed."
-msgstr "密码已更新。"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait"
-msgstr "请等待"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Please wait while the password is being changed..."
-msgstr "请等待正在修改密码..."
-
-#: src/main/webapp/setPassword.jsp
-msgid "Set a new Password"
-msgstr "设置新密码"
-
-#: src/main/webapp/setPassword.jsp
-msgid "If you have not set a password, leave the old password blank."
-msgstr "如果您以前没有设置过密码，请将旧密码留空。"
-
-#: src/main/webapp/setPassword.jsp
-msgid ""
-"Please note that if a password is set, emails cannot be checked "
-"automatically but only when the Check Mail button is clicked."
-msgstr "请注意设置密码后，程序将无法自动查收邮件，只能点击 \"查收邮件\" 按钮手动查收。"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Old password:"
-msgstr "旧密码:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "New password:"
-msgstr "新密码:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "Confirm:"
-msgstr "确认:"
-
-#: src/main/webapp/setPassword.jsp
-msgid "OK"
-msgstr "确认"
-
-#: src/main/webapp/showEmail.jsp
-msgid ""
-"The email could not be found in this folder. It was probably moved to the "
-"Sent folder."
-msgstr "此文件夹中未找到电子邮件。它可能移动到了“已发送”文件夹。"
-
-#: src/main/webapp/showEmail.jsp
-msgid "The email could not be found in this folder."
-msgstr "此文件夹中未找到电子邮件。"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Signature:"
-msgstr "签名:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Valid"
-msgstr "有效"
-
-#: src/main/webapp/showEmail.jsp
-msgid "N/A (sender is anonymous)"
-msgstr "N/A(匿名寄件人)"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Invalid or missing"
-msgstr "无效或丢失"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Sent:"
-msgstr "已发送:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Received:"
-msgstr "已接收:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Status:"
-msgstr "状态:"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Reply"
-msgstr "回复"
-
-#: src/main/webapp/showEmail.jsp
-msgid "Re:"
-msgstr "回复:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Please select an identities file and try again."
-msgstr "请选择一个身份文件并重试。"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "The identities have been imported."
-msgstr "此身份已被导入。"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Identities file:"
-msgstr "身份文件:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Password:"
-msgstr "密码:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "(leave blank if identities not encrypted)"
-msgstr "(留空，如果身份未加密)"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Overwrite all existing identities:"
-msgstr "覆盖所有已存在身份:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Duplicates: replace existing identity:"
-msgstr "重复: 替换已有身份:"
-
-#: src/main/webapp/importIdentities.jsp
-msgid "Import"
-msgstr "导入"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "Password Cleared"
-msgstr "密码已清除"
-
-#: src/main/webapp/clearPasswordCache.jsp
-msgid "The password has been cleared from the cache."
-msgstr "密码已从缓存中清除。"
-
-#: src/main/webapp/settings.jsp
-msgid "Settings have been saved."
-msgstr "设置已保存。"
-
-#: src/main/webapp/settings.jsp
-msgid "General"
-msgstr "常规"
-
-#: src/main/webapp/settings.jsp
-msgid "Check for mail every {0} minutes"
-msgstr "每 {0} 分钟查收一次邮件"
-
-#: src/main/webapp/settings.jsp
-msgid "Check delivery status of sent emails"
-msgstr "检查已发出邮件的寄送情况"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable IMAP on port {0}"
-msgstr "启用IMAP端口{0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Enable SMTP on port {0}"
-msgstr "启用 SMTP 于端口 {0}"
-
-#: src/main/webapp/settings.jsp
-msgid "Theme:"
-msgstr "主题："
-
-#: src/main/webapp/settings.jsp
-msgid "Privacy"
-msgstr "隐私"
-
-#: src/main/webapp/settings.jsp
-msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr "自动格式使用英语 ('Re:', 'wrote:' 等)"
-
-#: src/main/webapp/settings.jsp
-msgid "Include send time in outgoing emails"
-msgstr "为发送的邮件添加发送时间戳"
-
-#: src/main/webapp/settings.jsp
-msgid "Routing"
-msgstr "路由"
-
-#: src/main/webapp/settings.jsp
-msgid "Use relays when sending mail:"
-msgstr "发送邮件时使用中继:"
-
-#: src/main/webapp/settings.jsp
-msgid "None"
-msgstr "无"
-
-#: src/main/webapp/settings.jsp
-msgid "Delay per relay hop: Between"
-msgstr "中继节点间的延迟:"
-
-#: src/main/webapp/settings.jsp
-msgid "and"
-msgstr "到"
-
-#: src/main/webapp/settings.jsp
-msgid "minutes"
-msgstr "分钟之间"
-
-#: src/main/webapp/settings.jsp
-msgid "Use a gateway when sending to non-I2P email addresses"
-msgstr "使用邮件网关收发非I2P内部的公网邮件"
-
-#: src/main/webapp/settings.jsp
-msgid "Email Destination of the gateway:"
-msgstr "收发公网邮件的网关地址:"
-
-#: src/main/webapp/settings.jsp
-msgid "Change Password"
-msgstr "修改密码"
-
-#: src/main/webapp/folders.jsp
-msgid "Folders"
-msgstr "邮件夹"
-
-#: src/main/webapp/folders.jsp
-msgid "Inbox"
-msgstr "收件箱"
-
-#: src/main/webapp/folders.jsp
-msgid "Sent"
-msgstr "已发送"
-
-#: src/main/webapp/folders.jsp
-msgid "Trash"
-msgstr "垃圾桶"
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Identity"
-msgstr "完整标识"
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid "Full Email Identity for {0}:"
-msgstr "{0}邮箱的完整标识为："
-
-#: src/main/webapp/showFullIdentity.jsp
-msgid ""
-"Do not show the above information to anyone! It contains your private keys."
-msgstr "不要将上述信息透露给任何人！它包含有你的私钥。"
+#: src/main/webapp/debug.jsp
+msgid "Debug"
+msgstr "调试"
+
+#: src/main/webapp/debug.jsp
+msgid "Debug Page"
+msgstr "调试页面"
+
+#: src/main/webapp/debug.jsp
+msgid "Test encrypted files"
+msgstr "测试加密的文件"
+
+#: src/main/webapp/debug.jsp
+msgid "No file encryption problems found."
+msgstr "文件加密没有问题。"
+
+#: src/main/webapp/debug.jsp
+msgid "Undecryptable files:"
+msgstr "无法解密的文件："
 
 #: src/main/webapp/editIdentity.jsp
 msgid "More..."
@@ -1016,24 +593,282 @@ msgid "Cannot publish until connected."
 msgstr "未连接成功前，无法发布。"
 
 #: src/main/webapp/editIdentity.jsp
-msgid "Publish"
-msgstr "发布"
-
-#: src/main/webapp/editIdentity.jsp
 msgid "Delete this identity"
 msgstr "删除此身份"
 
-#: src/main/webapp/connectError.jsp
-msgid "Error Details"
-msgstr "错误详情"
+#: src/main/webapp/faq.jsp
+msgid "FAQ"
+msgstr "常见问题解答"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "(leave blank to not encrypt identities)"
-msgstr "(留空，如果身份不加密)"
+#: src/main/webapp/faq.jsp
+msgid "Frequently Asked Questions"
+msgstr "常见问题"
 
-#: src/main/webapp/exportIdentities.jsp
-msgid "Export"
-msgstr "导出"
+#: src/main/webapp/header.jsp
+msgid "- I2P-Bote"
+msgstr "- I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Password is cached. Click to clear the password cache."
+msgstr "密码已缓存，点击清除缓存的密码。"
+
+#: src/main/webapp/header.jsp
+msgid "I2P-Bote"
+msgstr "I2P-Bote"
+
+#: src/main/webapp/header.jsp
+msgid "Secure Distributed Email"
+msgstr "分布式安全邮件"
+
+#: src/main/webapp/header.jsp
+msgid "Addresses"
+msgstr "地址"
+
+#: src/main/webapp/header.jsp
+msgid "Identities"
+msgstr "身份"
+
+#: src/main/webapp/header.jsp
+msgid "Configuration"
+msgstr "配置"
+
+#: src/main/webapp/header.jsp
+msgid "Settings"
+msgstr "设置"
+
+#: src/main/webapp/header.jsp
+msgid "Network Status"
+msgstr "网络状态"
+
+#: src/main/webapp/header.jsp
+msgid "Help"
+msgstr "帮助"
+
+#: src/main/webapp/header.jsp
+msgid "About"
+msgstr "关于"
+
+#: src/main/webapp/header.jsp
+msgid ""
+"For I2P-Bote to function properly, you must download the JCE Unlimited "
+"Strength Jurisdiction Policy files and move them into this folder:"
+msgstr ""
+"为了 I2P-Bote JCE 正常运行，您必须下载 JCE 无限强度司法政策文件，并将其移动到"
+"下列文件夹："
+
+#: src/main/webapp/header.jsp
+msgid "Guide"
+msgstr "向导"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "Password Cleared"
+msgstr "密码已清除"
+
+#: src/main/webapp/clearPasswordCache.jsp
+msgid "The password has been cleared from the cache."
+msgstr "密码已从缓存中清除。"
+
+#: src/main/webapp/outbox.jsp
+msgid "Outbox"
+msgstr "发件箱"
+
+#: src/main/webapp/outbox.jsp
+msgid "Create Time"
+msgstr "创建时间:"
+
+#: src/main/webapp/outbox.jsp
+msgid "Status"
+msgstr "状态"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In order to receive email from other people, you need to create an email "
+"identity first."
+msgstr "为了能收到邮件，您必须先创建自己的邮箱身份。"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"Every email identity is associated with an email destination. Anybody can "
+"send email to the email destination, but only the identity holder can read "
+"it."
+msgstr ""
+"每个邮箱身份都与一个邮箱地址相关联。人人都可以向已知的邮箱地址发信，但只有身"
+"份密钥的持有者能够阅读这些邮件。"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"In a sense, email identities are the equivalent to traditional email "
+"accounts - except that there is no provider that can read all your email "
+"because I2P-Bote stores all emails encrypted on the network."
+msgstr ""
+"某种程度上，邮箱身份等同于普通意义上的邮箱账户 - 唯一的不同是您不需要邮件服务"
+"提供商，邮件提供商可以看到您的所有邮件，而I2P-Bote将您的邮件加密存放在网络"
+"中。"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"I2P-Bote automatically decrypts emails sent to you, using the email identity "
+"you created. Email identities are stored in a file named identities; never "
+"give this file to anyone or they will be able to read all your emails."
+msgstr ""
+"I2P-Bote 使用您创建的邮箱身份自动解密发送给您的邮件。邮箱身份存放于名为 "
+"identities 的文件中，不要将此文件给任何人，否则他们将可以读取您的所有邮件。"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid "Do give out the email destination so others can contact you."
+msgstr "请知会他人您的邮件地址，以便他人联系您。"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is easy to create multiple identities for different purposes, or "
+"different contacts."
+msgstr "您可以出于不同的目的或跟不同的联系人联系时，创建多个不同的身份。"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"When you create a new email identity, you can choose the type of encryption "
+"that will be used by the email identity. While all encryption algorithms "
+"offered by I2P-Bote provide a high level of privacy, the length of an email "
+"destination depends on the encryption used. The choice of encryption also "
+"determines what signing algorithm is used."
+msgstr ""
+"创建新邮箱身份时，您可以选择身份所使用的加密类型。I2P-Bote提供的所有加密算法"
+"都可以提供高标准的隐私保护，加密算法也决定了所使用的签名算法。"
+
+#: src/main/webapp/identitiesHelp.jsp
+msgid ""
+"It is generally recommended to choose 256-bit elliptic curve encryption "
+"because it produces the shortest email destinations (86 characters) while "
+"still being highly secure."
+msgstr ""
+"通常推荐选择256-bit的Elliptic Curve加密算法，因为它能在高加密强度下提供最短的"
+"邮箱目标(86字符)。"
+
+#: src/main/webapp/showEmail.jsp
+msgid ""
+"The email could not be found in this folder. It was probably moved to the "
+"Sent folder."
+msgstr "此文件夹中未找到电子邮件。它可能移动到了“已发送”文件夹。"
+
+#: src/main/webapp/showEmail.jsp
+msgid "The email could not be found in this folder."
+msgstr "此文件夹中未找到电子邮件。"
+
+#: src/main/webapp/showEmail.jsp
+msgid "From:"
+msgstr "寄件人:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Signature:"
+msgstr "签名:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Valid"
+msgstr "有效"
+
+#: src/main/webapp/showEmail.jsp
+msgid "N/A (sender is anonymous)"
+msgstr "N/A(匿名寄件人)"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Invalid or missing"
+msgstr "无效或丢失"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply To:"
+msgstr "回复:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "To:"
+msgstr "收件人:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "CC:"
+msgstr "抄送:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "BCC:"
+msgstr "密送:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Sent:"
+msgstr "已发送:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Received:"
+msgstr "已接收:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Subject:"
+msgstr "主题:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Message:"
+msgstr "消息:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Attachments:"
+msgstr "附件:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Status:"
+msgstr "状态:"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Reply"
+msgstr "回复"
+
+#: src/main/webapp/showEmail.jsp
+msgid "Re:"
+msgstr "回复:"
+
+#: src/main/webapp/newEmail.jsp
+msgid "New Email"
+msgstr "新邮件"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Please select a file to attach and try again."
+msgstr "请选择要附加的文件并重试。"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Send"
+msgstr "发送"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this recipient"
+msgstr "移除此收件人"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add this recipient to the address book"
+msgstr "添加此收件人到地址簿。"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Select recipients from address book"
+msgstr "从地址簿选择收件人"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another recipient field"
+msgstr "再添加一个收件人字段"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Remove this attachment"
+msgstr "移除附件"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Add another attachment"
+msgstr "添加其他附件"
+
+#: src/main/webapp/newEmail.jsp
+msgid "Attach"
+msgstr "附件"
+
+#: src/main/webapp/newEmail.jsp
+msgid "It is recommended to keep attachments below 500 kBytes."
+msgstr "附件体积建议保持在小于 500 KB。"
+
+#: src/main/webapp/newEmail.jsp
+msgid "{0} wrote:"
+msgstr "{0} 写到:"
 
 #: src/main/webapp/password.jsp
 msgid "Password Required"
@@ -1046,6 +881,295 @@ msgstr "密码错误请重新输入。"
 #: src/main/webapp/password.jsp
 msgid "Password required"
 msgstr "请输入密码"
+
+#: src/main/webapp/password.jsp
+msgid "OK"
+msgstr "确认"
+
+#: src/main/webapp/settings.jsp
+msgid "Settings have been saved."
+msgstr "设置已保存。"
+
+#: src/main/webapp/settings.jsp
+msgid "General"
+msgstr "常规"
+
+#: src/main/webapp/settings.jsp
+msgid "Check for mail every {0} minutes"
+msgstr "每 {0} 分钟查收一次邮件"
+
+#: src/main/webapp/settings.jsp
+msgid "Check delivery status of sent emails"
+msgstr "检查已发出邮件的寄送情况"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable IMAP on port {0}"
+msgstr "启用IMAP端口{0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Enable SMTP on port {0}"
+msgstr "启用 SMTP 于端口 {0}"
+
+#: src/main/webapp/settings.jsp
+msgid "Theme:"
+msgstr "主题："
+
+#: src/main/webapp/settings.jsp
+msgid "Privacy"
+msgstr "隐私"
+
+#: src/main/webapp/settings.jsp
+msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
+msgstr "自动格式使用英语 ('Re:', 'wrote:' 等)"
+
+#: src/main/webapp/settings.jsp
+msgid "Include send time in outgoing emails"
+msgstr "为发送的邮件添加发送时间戳"
+
+#: src/main/webapp/settings.jsp
+msgid "Routing"
+msgstr "路由"
+
+#: src/main/webapp/settings.jsp
+msgid "Use relays when sending mail:"
+msgstr "发送邮件时使用中继:"
+
+#: src/main/webapp/settings.jsp
+msgid "None"
+msgstr "无"
+
+#: src/main/webapp/settings.jsp
+msgid "Delay per relay hop: Between"
+msgstr "中继节点间的延迟:"
+
+#: src/main/webapp/settings.jsp
+msgid "and"
+msgstr "到"
+
+#: src/main/webapp/settings.jsp
+msgid "minutes"
+msgstr "分钟之间"
+
+#: src/main/webapp/settings.jsp
+msgid "Use a gateway when sending to non-I2P email addresses"
+msgstr "使用邮件网关收发非I2P内部的公网邮件"
+
+#: src/main/webapp/settings.jsp
+msgid "Email Destination of the gateway:"
+msgstr "收发公网邮件的网关地址:"
+
+#: src/main/webapp/settings.jsp
+msgid "Change Password"
+msgstr "修改密码"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set Password"
+msgstr "设置密码"
+
+#: src/main/webapp/setPassword.jsp
+msgid "The password has been changed."
+msgstr "密码已更新。"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait"
+msgstr "请等待"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Please wait while the password is being changed..."
+msgstr "请等待正在修改密码..."
+
+#: src/main/webapp/setPassword.jsp
+msgid "Set a new Password"
+msgstr "设置新密码"
+
+#: src/main/webapp/setPassword.jsp
+msgid "If you have not set a password, leave the old password blank."
+msgstr "如果您以前没有设置过密码，请将旧密码留空。"
+
+#: src/main/webapp/setPassword.jsp
+msgid ""
+"Please note that if a password is set, emails cannot be checked "
+"automatically but only when the Check Mail button is clicked."
+msgstr ""
+"请注意设置密码后，程序将无法自动查收邮件，只能点击 \"查收邮件\" 按钮手动查"
+"收。"
+
+#: src/main/webapp/setPassword.jsp
+msgid "Old password:"
+msgstr "旧密码:"
+
+#: src/main/webapp/setPassword.jsp
+msgid "New password:"
+msgstr "新密码:"
+
+#: src/main/webapp/network.jsp
+msgid "Network"
+msgstr "网络"
+
+#: src/main/webapp/network.jsp
+msgid ""
+"Network information is not available because I2P-Bote hasn't started "
+"connecting to the network yet."
+msgstr "由于I2P-Bot尚未连接网络，网络信息目前不可用。"
+
+#: src/main/webapp/network.jsp
+msgid "Local destination:"
+msgstr "我的地址:"
+
+#: src/main/webapp/connectError.jsp
+msgid "Error Details"
+msgstr "错误详情"
+
+#: src/main/webapp/connectError.jsp
+msgid "Oh dear! I2P-Bote couldn't connect to the network."
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "This is the error that happened:"
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid ""
+"You can fix most problems by clicking the 'Retry Connecting' button in the "
+"menu bar."
+msgstr ""
+
+#: src/main/webapp/connectError.jsp
+msgid "If that doesn't help, try restarting your I2P router."
+msgstr ""
+
+#: src/main/webapp/folders.jsp
+msgid "Folders"
+msgstr "邮件夹"
+
+#: src/main/webapp/folders.jsp
+msgid "Inbox"
+msgstr "收件箱"
+
+#: src/main/webapp/folders.jsp
+msgid "Sent"
+msgstr "已发送"
+
+#: src/main/webapp/folders.jsp
+msgid "Trash"
+msgstr "垃圾桶"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Not Started"
+msgstr "未启动"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Waiting 3 Minutes..."
+msgstr "等待3分钟 ..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connecting..."
+msgstr "正在连接..."
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connected"
+msgstr "已连接"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Retry Connecting"
+msgstr "正在重试连接"
+
+#: src/main/webapp/statusFrame.jsp
+msgid "Connect Now"
+msgstr "立刻连接"
+
+#: src/main/webapp/identities.jsp
+msgid "Email Identities"
+msgstr "邮箱身份"
+
+#: src/main/webapp/identities.jsp
+msgid "No email identities are defined."
+msgstr "没有邮箱身份。"
+
+#: src/main/webapp/identities.jsp
+msgid "Def."
+msgstr "默认"
+
+#: src/main/webapp/identities.jsp
+msgid "Public Name"
+msgstr "公开身份名称"
+
+#: src/main/webapp/identities.jsp
+msgid "Description"
+msgstr "描述"
+
+#: src/main/webapp/identities.jsp
+msgid "Check mail for this identity"
+msgstr "检查此身份的邮件"
+
+#: src/main/webapp/identities.jsp
+msgid "New Identity"
+msgstr "新身份"
+
+#: src/main/webapp/identities.jsp
+msgid "Import Identities"
+msgstr "导入身份"
+
+#: src/main/webapp/sendEmail.jsp
+msgid "Go to inbox"
+msgstr "转到收件箱"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Please select an identities file and try again."
+msgstr "请选择一个身份文件并重试。"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "The identities have been imported."
+msgstr "此身份已被导入。"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Identities file:"
+msgstr "身份文件:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "(leave blank if identities not encrypted)"
+msgstr "(留空，如果身份未加密)"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Overwrite all existing identities:"
+msgstr "覆盖所有已存在身份:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Duplicates: replace existing identity:"
+msgstr "重复: 替换已有身份:"
+
+#: src/main/webapp/importIdentities.jsp
+msgid "Import"
+msgstr "导入"
+
+#: src/main/webapp/importContact.jsp
+msgid "Address Directory Lookup"
+msgstr "公共地址列表查询"
+
+#: src/main/webapp/importContact.jsp
+msgid "The name has been imported to the address book."
+msgstr "名称已导入至地址簿。"
+
+#: src/main/webapp/importContact.jsp
+msgid "The name &quot;{0}&quot; was not found in the directory."
+msgstr "列表中未找到名称 &quot;{0}&quot; 。"
+
+#: src/main/webapp/importContact.jsp
+msgid "Import Contact"
+msgstr "导入联系人"
+
+#: src/main/webapp/importContact.jsp
+msgid ""
+"A matching record was found in the address directory. Note that the address "
+"directory is not secure against manipulation, so do not click &quot;"
+"import&quot; unless you trust that it is the right email destination."
+msgstr ""
+"公共地址列表中发现匹配记录。请注意公共地址列表并不安全，可能被篡改，除非您确"
+"认这是您要找的Email地址，否则请勿点击&quot;导入&quot;。"
+
+#: src/main/webapp/importContact.jsp
+msgid "Email Destination: "
+msgstr "Email 地址"
 
 #: src/main/webapp/about.jsp
 msgid "About I2P-Bote"
@@ -1175,118 +1299,22 @@ msgstr "可用性改善"
 msgid "Bug hunting"
 msgstr "漏洞检索"
 
-#: src/main/webapp/debug.jsp
-msgid "Debug"
-msgstr "调试"
-
-#: src/main/webapp/debug.jsp
-msgid "Debug Page"
-msgstr "调试页面"
-
-#: src/main/webapp/debug.jsp
-msgid "Test encrypted files"
-msgstr "测试加密的文件"
-
-#: src/main/webapp/debug.jsp
-msgid "No file encryption problems found."
-msgstr "文件加密没有问题。"
-
-#: src/main/webapp/debug.jsp
-msgid "Undecryptable files:"
-msgstr "无法解密的文件："
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Add Email Destination to Directory"
-msgstr "添加邮件目标至公共目录"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "The name exists already. Please choose a different Public Name."
-msgstr "名称已经存在请选择一个不同的公开化名。"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Publish to the Address Directory"
-msgstr "发布至公共地址列表"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Picture to upload:"
-msgstr "要上传的图片："
-
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 7.5 kBytes max)"
-msgstr "(可选，最大 7.5 KB)"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "Text to include:"
-msgstr "包括文本:"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "(optional, 2000 chars max)"
-msgstr "(可选，最多2000字符)"
-
-#: src/main/webapp/publishDestination.jsp
-msgid "The identity has been added to the address directory."
-msgstr "身份已成功加入至公共地址列表。"
-
-#: src/main/webapp/importContact.jsp
-msgid "Address Directory Lookup"
-msgstr "公共地址列表查询"
-
-#: src/main/webapp/importContact.jsp
-msgid "The name has been imported to the address book."
-msgstr "名称已导入至地址簿。"
-
-#: src/main/webapp/importContact.jsp
-msgid "The name &quot;{0}&quot; was not found in the directory."
-msgstr "列表中未找到名称 &quot;{0}&quot; 。"
-
-#: src/main/webapp/importContact.jsp
-msgid "Import Contact"
-msgstr "导入联系人"
-
-#: src/main/webapp/importContact.jsp
-msgid ""
-"A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click "
-"&quot;import&quot; unless you trust that it is the right email destination."
-msgstr "公共地址列表中发现匹配记录。请注意公共地址列表并不安全，可能被篡改，除非您确认这是您要找的Email地址，否则请勿点击&quot;导入&quot;。"
-
-#: src/main/webapp/importContact.jsp
-msgid "Email Destination: "
-msgstr "Email 地址"
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please fill in the Public Name field."
-msgstr "请输入公开身份名称"
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "Please wait..."
-msgstr "请等待..."
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The Email Identity is being generated. This may take a while."
-msgstr "正在生成邮箱的身份标识。这可能需要几分钟。"
-
-#: src/main/webapp/submitIdentity.jsp
-msgid ""
-"This encryption type does not support destinations that start with {0}. "
-"Valid initial characters are {1}."
-msgstr "此加密类型不支持以 {0} 开头的目标。有效的初始字符为 {1}。"
-
-#: src/main/webapp/submitIdentity.jsp
-msgid "The email identity has been saved."
-msgstr "邮箱身份已保存。"
-
 #: src/main/webapp/deleteEmail.jsp
 msgid "Error: Couldn't delete email."
 msgstr "错误: 邮件删除失败。"
 
-#: src/main/webapp/WEB-INF/tags/printDate.tag
-msgid "Unknown"
-msgstr "未知"
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Identity"
+msgstr "完整标识"
 
-#: src/main/webapp/WEB-INF/tags/address.tag
-msgid "Add to Address Book"
-msgstr "添加至地址簿"
+#: src/main/webapp/showFullIdentity.jsp
+msgid "Full Email Identity for {0}:"
+msgstr "{0}邮箱的完整标识为："
+
+#: src/main/webapp/showFullIdentity.jsp
+msgid ""
+"Do not show the above information to anyone! It contains your private keys."
+msgstr "不要将上述信息透露给任何人！它包含有你的私钥。"
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"
@@ -1299,6 +1327,14 @@ msgstr "共 {0} 封邮件，{1} 封新邮件"
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} incomplete"
 msgstr "{0} 封未完成"
+
+#: src/main/webapp/WEB-INF/tags/printDate.tag
+msgid "Unknown"
+msgstr "未知"
+
+#: src/main/webapp/WEB-INF/tags/address.tag
+msgid "Add to Address Book"
+msgstr "添加至地址簿"
 
 #~ msgid "Material"
 #~ msgstr "Material"
