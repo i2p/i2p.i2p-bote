@@ -47,6 +47,33 @@ Gradle will pull dependencies over the clearnet by default. To use Tor, create a
     systemProp.socksProxyPort=9150
     ```
 
+### Signing key and configuration
+
+As part of the build step there will be a package signing step through which the ZIP archive gets converted to a SU3 package. For this you'll need to setup the signing keys.
+
+Private key generation:
+
+   ```
+   keytool -genkeypair -dname "cn=yourname@mail.i2p, ou=I2P, o=Anonymous, c=EU" -keyalg rsa -keysize 4096 -alias yourname@mail.i2p -keypass password -keystore ~/keystore.ks -storepass changeit -validity 180
+   ```
+
+ * the only important values to keep as show are keyalg, keysize, storepass (because 'changeit' is the default somewhere in net.i2p.crypto.SU3File class. Class used for the zip to su3 conversion).
+ * CN value and the alias should be the same email address
+
+Public keys export:
+
+   ```
+   keytool -list -rfc -keystore ~/keystore.ks -alias yourname@mail.i2p -storepass changeit > ~/yourname_at_mail.i2p.crt
+   ```
+The filename at the end is important if you also want to deploy the plugin you have built on your own router. The file should be your email address with @ replaced with \_at\_ and you'll need to copy it to the ~/.i2p/certificates/plugin folder (which you'll also need to create as it doesn't exist by default)
+
+Updates for `webapp/build.gradle` (under i2p -> plugin section):
+
+ * change author and signer values to your alias, yourname@mail.i2p was used in the examples
+ * new entry for privKeyStore "/absolute/path/to/keystore.ks"
+ * new entry for pubKeyStore "/absolute/path/to/yourname\_at\_mail.i2p.crt"
+
+
 ### Building the I2P plugin
 
 ```
