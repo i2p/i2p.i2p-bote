@@ -284,18 +284,18 @@ can be reached with I2P-Bote. For those who do not want high delays: All these
 settings are user-adjustable, so each user decides on how much anonymity he
 wants.</p>
 
-<p>I2P-Bote nodes store encrypted e-mails into a Kademlia DHT. Therefore, an
-e-mail can be sent through a number of other nodes (relays) for increased
-security, or directly to a set of storage nodes for faster delivery. The same
-applies to retrieving email.</p>
+<p>Knoten von I2P-Bote speichern verschlüsselte E-Mails in einem Kademlia-DHT.
+Daher kann eine E-Mail durch mehrere andere Knoten (Relays) geschickt werden,
+um die Sicherheit zu erhöhen, oder direkt an die Speicherknoten für eine schnelle
+Zustellung. Das gleiche trifft für das Empfangen von E-Mails zu.</p>
 
-<p>(When using mail routes, timestamps are automatically disabled.) [Retrieving
-via relays not yet implemented]</p>
+<p>(Wenn man Mail-Routen nutzt, sind Zeitstempel automatisch deaktiviert.) [Abholung
+über Relays ist noch nicht implementiert]</p>
 
-<p>All nodes are created equal: There are no 'supernodes' or designated
-relay/storage nodes. Everybody acts as a potential relay and storage node. The
-maximum amount of disk space used for relayed/stored email packets can be
-configured by the user.</p>
+<p>Alle Knoten sind gleichberechtigt: Es gibt keine Masterknoten oder dedizierte
+Knoten für Weiterleitungen oder Speicherung. Jeder Knoten agiert als potentieller
+Relay- oder Speicherknoten. Die maximale Größe des dafür zur Verfügung stehenden
+Plattenspeichers kann vom Nutzer konfiguriert werden.</p>
 
 <p>Bevor eine E-Mail zu einem Relais geschickt wird, wird sie in Pakete
 unterteilt und mit dem öffentlichen Schlüssel des Empfängers verschlüsselt.
@@ -310,9 +310,9 @@ Empfänger herunterladen kann.</p>
 <p>Wenn einem Knoten der Speicherplatz für E-Mails ausgegangen ist, und es
 keine alten Pakete gibt, die er gelöschen kann, verweigert er Speicheranfragen.</p>
 
-<p>Furthermore, I2P-Bote sanitizes the mail headers and does not allow any
-unneeded information to be transmitted, thus allowing the use of e-mail clients
-without prior checks of what this client sends in the mail headers.</p>
+<p>Weiterhin bereinigt I2P-Bote den Mail-Header und erlaubt keine Übermittlung
+von unnötigen Informationen. Dadurch können E-Mail-Clients benutzt werden
+ohne zuvor zu prüfen was diese in die Header schreiben.</p>
 
 <p>Die komplette Verschlüsselung, Pfadwahl und das Profiling wird lokal ausgeführt, sodass
 dabei keine vertrauenswürdige Partei beteiligt ist.</p>
@@ -331,9 +331,9 @@ are located.</p>
 
 <h3>Was I2P-Bote <em>versteckt</em>:</h3>
 
-<p>I2P-Bote hides both, the identity and location of sender and receiver, as
-well as those of intermediary nodes (relays and storing nodes), the content of
-your mails, their size, the number of mails you send.</p>
+<p>I2P-Bote verbirgt sowohl Identität und Ort des Absenders und des Empfängers,
+als auch Identität und Ort der dazwischenliegenden Relay- und Speicherknoten,
+den Inhalt der Mails, ihre Größe, und die Anzahl der verschickten Mails.</p>
 
 <p>Only the recipient can know the sender's bote mail destination, and if he
 choses not to send his destination, not even the recipient will know it.</p>
@@ -348,36 +348,36 @@ choses not to send his destination, not even the recipient will know it.</p>
 <li><p>den Zeitpunkt zu dem man eine Mail schickt</p></li>
 <li><p>den Zeitpunkt zu dem man eine Mail empfängt</p></li>
 <li>
-<p>the upper limit of number of mails an unknown user receives</p>
+<p>die obere Grenze der Anzahl von E-Mails, die ein unbekannter Nutzer erhält</p>
 <ul>
 <li><p>an abstract user, no concrete one, just concluding its existence from
 the existence of the mail identity as he could always have more than one e-mail
 identity</p></li>
 </ul>
 </li>
-<li><p>the lower limit, as an identity also sends out test and dummy messages</p></li>
+<li><p>die untere Grenze, da eine Identität auch Test- und Schein-Nachrichten verschickt</p></li>
 </ul>
 <h3>Was I2P-Bote <em>teilweise verbirgt</em>:</h3>
 
-<p>The I2P-Bote address of the recipient will only be known to sender and
-recipient(s).</p>
+<p>Die I2P-Bote-Adresse des Empfängers wird nur dem Absender und dem
+Empfänger / den Empfängern bekannt sein.</p>
 
-<p>In case of multiple recipients, each one will see all other recipients that
-the mail was addressed to via 'To:' or 'CC:'</p>
+<p>Wenn es mehrere Empfänger gibt, wird jeder alle anderen Empfänger
+sehen können, an die die E-Mail via "To:" oder "CC:" adressiert war.</p>
 
-<p>All entries that were under 'BCC:' will only be visible to the sender and
-this very recipient.</p>
+<p>Alle Einträge in "BCC:" werden nur von dem Absender und dem jeweiligen
+Empfänger gesehen werden.</p>
 
-<p>The sent time will, if at all, only be visible to sender and
-recipient.</p>
+<p>Die Uhrzeit des Versands wird, wenn überhaupt, nur für den Absender
+und den Empfänger sichtbar sein.</p>
 
 <h3>Was I2P-Bote <em>optional verbergen kann</em>:</h3>
 <ul>
-<li><p>If mail routes are used, the time a bote mail is sent</p></li>
-<li><p>If mail routes are used, the time a bote mail is fetched. [not yet
-implemented]</p></li>
-<li><p>If the sender suppresses timestamps only the sender himself will know when
-he sent a mail.</p></li>
+<li><p>Wenn Mail-Routen genutzt werden, die Uhrzeit zu der eine Bote-Mail verschickt wird</p></li>
+<li><p>Wenn Mail-Routen genutzt werden, die Uhrzeit der Abholung einer Bote-Mail. [noch nicht
+implementiert}</p></li>
+<li><p>Wenn der Absender Zeitstempel unterdrückt, kann nur der Absender selbst
+wissen wann er eine Mail geschickt hat.</p></li>
 </ul>
 <h3>Was I2P-Bote <em>nicht verstecken kann</em>:</h3>
 <p>I2P-Bote cannot hide the frequency a given identity checks for new mails nor
@@ -386,7 +386,7 @@ the number of mails a given identity receives.</p>
 <h2 id="Technical-Details">6. Technische Details</h2>
 <p>Siehe techdoc.txt</p>
 
-<h2 id="Terminology">7. Terminology/Glossary of Terms</h2>
+<h2 id="Terminology">7. Terminologie/Glossar</h2>
 
 <h3>I2P-Bote (Router-/Knoten-)Kennung:</h3>
 <p>This is the id an I2P-Bote router is known as. It is used for contacting
@@ -407,8 +407,8 @@ e-mail destination is the actual address for sending e-mails, for storing them
 into and for fetching them from the DHT. At the same time it used for the
 end-to-end encryption of e-mails, header information and attachments.</p>
 
-<p>An I2P-Bote e-mail destination is a Base64 string containing a public
-encryption key and a signature verification key. Example:</p>
+<p>Eine Zieladresse in I2P-Bote besteht aus einer Base64-Zeichenkette, die
+einen öffentlichen Schlüssel und einen Signaturprüfschlüssel enthält. Beispiel:</p>
 <pre>uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
     In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
     FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da
@@ -437,7 +437,7 @@ information about the sender.</p>
 <p>However it will only be displayed for the recipient in case he does not have
 a name for this destination in his local address book.</p>
 
-<p>So technically speaking, an e-mail identity consists of four things:</p>
+<p>Also technisch gesehen besteht eine E-Mail-Identität aus vier Dingen:</p>
 <ul>
 <li><p>ein E-Mail-Ziel (z.B. zwei öffentliche Schlüssel)</p></li>
 <li><p>zwei private Schlüssel für das E-Mail-Ziel</p></li>
@@ -458,7 +458,7 @@ implemented]</p>
 hops and / or long delay times, don't be surprised if your mail does not reach
 its destination too soon. It will, of course, take longer - up to several days!</p>
 
-<h2 id="Credits">8. Credits</h2>
+<h2 id="Credits">8. Credits/Danksagungen</h2>
 <p>Siehe die Seite <a href="about.jsp">Über</a>.</p>
 
 <h2>GENIESSEN SIE DAS BOTE-GEFÜHL!!</h2>

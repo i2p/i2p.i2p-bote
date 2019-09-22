@@ -1,0 +1,573 @@
+<div>
+<h1>Ghidul utilizatorului</h1>
+
+<nav><p><a href="#Introduction">1. Introducere</a></p>
+<p><a href="#How-To">2. Cum se utilizează I2P-Bote</a></p>
+<p><a href="#Starting">2.1. Pornirea I2P-Bote</a></p>
+<p><a href="#Creating-Identities">2.2. Crearea unei identități</a></p>
+<p><a href="#Sending-Receiving">2.3. Trimiterea și primirea e-mailurilor</a></p>
+<p><a href="#Address-Book">2.4. Carnet de adrese locale</a></p>
+<p><a href="#Settings">2.5. Setări (și ce înseamnă)</a></p>
+<p><a href="#Gateway">2.6. E-mailuri către și de pe Internet</a></p>
+<p><a href="#Considerations">3. Considerații despre anonimat</a></p>
+<p><a href="#Troubleshooting">4. Depanare</a></p>
+<p><a href="#Technical-Concept">5. Concept tehnic</a></p>
+<p><a href="#Technical-Details">6. Detalii tehnice</a></p>
+<p><a href="#Terminology">7. Terminologie / Glosar de termeni</a></p>
+<p><a href="#Credits">8. Credite</a></p>
+</nav><h2 id="Introduction">1. Introducere</h2>
+
+<p>I2P-Bote este o aplicație de e-mail sigură ușor de utilizat, extrem de anonimă
+I2P. Este un sistem fără server, complet descentralizat, care stabilește / formează o
+rețea peer-to-peer construită pe baza anonimizării de ultimă generație cu latență scăzută
+retea I2P; adăugându-i-se un transport opțional de tip latență ridicată precum mixminion și
+evitând astfel deficiențele rețelelor cu latență scăzută.</p>
+
+<p>Prin urmare, I2P-Bote folosește pe deplin anonimatul furnizat de I2P, plus acesta
+generează propriul său anonimat prin adăugarea unui alt strat de anonimizare (suprapunere)
+reţea).</p>
+
+<p>Acest concept de anonimat stratificat este ceea ce face I2P-Bote atât de flexibil: voi
+îl poate configura să fie extrem de anonim și lent, sau mai puțin anonim
+dar mai rapid / mai eficient. În orice caz, I2P-Bote oferă întotdeauna un foarte bun
+anonimat atât pentru expeditor, cât și pentru receptor, precum și criptare end-to-end.
+Cu excepția cazului în care trimiteți e-mailuri sau le primiți de pe internet-ul obișnuit, TOATE
+e-mailuri - corpul de e-mail, atașamentele și antetul, cu excepția adresei destinatarului
+(subiectul, data, ora, adresa expeditorului, ...) sunt automat și transparent
+capăt la capăt criptat. Adresa destinatarului este vizibilă doar pentru e-mail</p>
+
+<p>I2P-Bote oferă opțiunea de a face comunicațiile dvs. și mai anonime,
+activând totuși rutele de poștă de mare latență - cu cost de performanță.
+Utilizatorii care doresc ca e-mailurile lor anonime să ajungă cât mai repede posibil, vor
+dori să dezactivați rutele de poștă și să utilizați trimiterea „directă” prin I2P. Este
+garantat că nu vei fi niciodată mai puțin anonim decât anonimatul oferit de
+conexiuni standard I2P.</p>
+
+<p>Pentru a obține o utilizare ridicată, am permis utilizarea acestuia
+clienți de mail standard, cum ar fi Thunderbird, Evolution sau Kmail, fără  
+să vă faceți griji despre informațiile suplimentare pe care le trimit aceste aplicații în anteturile lor.
+În plus, există o interfață web care vă permite să trimiteți și să citiți e-mailuri sau
+gestionați-vă setările și identitățile.</p>
+
+<h2 id="How-To">2. Cum se utilizează I2P-Bote</h2>
+
+<h3 id="Starting">2.1. Pornirea I2P-Bote</h3>
+<p>După pornirea I2P-Bote (implicit este setat să înceapă automat când
+routerul dvs. I2P pornește) ce durează ceva mai mult de trei minute
+totul pentru a fi în funcțiune.</p>
+
+<p>Așa că atrageti atentie „starea rețelei” din stânga. Ar trebui să fie
+'Conectat'.</p>
+
+<p>Dacă doriți să utilizați I2P-Bote pentru dvs., trebuie mai întâi să creați o
+identitate.</p>
+
+<h3 id="Creating-Identities">2.2. Crearea unei identități</h3>
+<p>Faceți clic pe „Identități” din stânga, apoi apăsați butonul „Identitate nouă”.</p>
+
+<p>Introduceți cel puțin un „nume public” și atingeți „Creați”. Este tot ce trebuie
+creați o identitate.</p>
+
+<p>Numele public este numele pe care îl vedeți pentru această identitate (util în cazul dvs.
+sa aveti identități diferite pentru diferite seturi de utilizatori cu care comunicați sau
+scopuri diferite) și va fi trimis ca „numele expeditorului” către e-mail
+destinatar. Nu este nevoie ca numele public să fie unic.</p>
+
+<p>(Cum puteți alege orice nume aici - oricine s-ar putea numi HungryHobo
+acolo - nu este potrivit să fie folosit de destinatar pentru a spune dacă două e-mailuri
+vin de la același expeditor. Acesta este motivul pentru care numele salvat în agenda de adrese locale
+(poate exista un singur nume pe cheie de destinație), dacă există,
+și veți vedea o marcă verde în coloana „Cunoașteți”, precizând că este
+nume cunoscut local. Dacă nu există nicio intrare pentru o destinație în local
+agenda de adrese, numele specificat de expeditor va fi afișat cu un prefixat
+{UNK} in clientii mail).</p>
+
+<p>De asemenea, puteți completa celelalte câmpuri, dacă doriți:</p>
+
+<p>Descriere - acest câmp este păstrat local. Este doar pentru confortul dvs.:
+Dacă doriți să adăugați informații suplimentare despre dvs. despre asta
+identitate, o puteți introduce aici.</p>
+
+<p>Adresa de e-mail - acest câmp nu este încă utilizat.</p>
+
+<p>Alegeți unul dintre algoritmii de criptare dați. În caz de îndoială, rămâneți la
+implicite.</p>
+
+<p>Puteți face clic pe numele uneia dintre identitățile dvs. și copiați tasta lungă
+afișat la „Destinație e-mail”. Aceasta este adresa dvs. de e-mail I2P-Bote. Dacă
+doriți ca cineva să vă poată trimite un e-mail, trebuie să i se dea aceasta 
+cheie lungă.</p>
+
+<p>Acum puteți trimite și primi mailuri I2P-Bote.</p>
+
+<p>Dar ar trebui să aruncați o privire și asupra setărilor dvs. I2P-Bote și să vedeți dacă acestea 
+se potrivesc nevoilor tale.</p>
+
+<p>(De asemenea, puteți crea diverse identități și puteți atribui setări diferite
+fiecare dintre ei.)</p>
+
+<h3 id="Sending-Receiving">2.3. Trimiterea și primirea e-mailurilor</h3>
+<p>Trebuie să aveți cheia de destinație de e-mail I2P-Bote a utilizatorului căruia 
+doriți să trimiteți un e-mail.</p>
+
+<p>Pentru a trimite un mesaj, faceți clic pe „Nou”, alegeți identitatea proprie a expeditorului
+sau „Anonim” sub „De la” și introduceți cheia de destinație de e-mail a destinatarului
+sau alternativ o adresă din linia „Către:”.</p>
+
+<p>(Alternativ, puteți apăsa butonul „Adr. Carte” chiar sub acesta
+linie, pentru a alege dintre destinațiile de e-mail stocate local în agenda dvs. de adrese:
+Marcați utilizatorul (utilizatorii) către care doriți să vi se trimită e-mailul și atingeți Butonul „Adăugați
+ destinatari.)</p>
+
+<p>Puteți adăuga mai mulți destinatari și puteți schimba „To:” în „CC:” sau „BCC:”.</p>
+
+<p>Butonul „+” adaugă linii de destinatar suplimentare.</p>
+
+<p>Acum scrieți-vă e-mailul și apăsați pe „Trimiteți” pentru trimitere sau pe „Salvați” în ordine
+pentru a-l stoca ca schiță în folderul „drafts” sau în orice folder definit de utilizator.
+[nu este inca implementat]</p>
+
+<p>Apăsând „Trimiteți” veți introduce e-mailul în folderul Outbox și puteți
+continuați folosind I2P-Bote, de ex. scriind un alt e-mail sau pur și simplu faceți alte lucruri.
+I2P-Bote trimite acum e-mailul tău. Odată ce este trimis, este automat
+eliminat din Outbox și stocat în folderul Trimis. Aceasta înseamnă că e-mailul dvs. este
+în întregime în drum spre destinația sa (cu excepția cazului în care ați stabilit un timp de întârziere, care
+este dezactivat implicit).</p>
+
+<p>În I2P-Bote e-mailurile sunt semnate automat (cu excepția cazului în care se trimit fără expeditor
+identitate).</p>
+
+<p>De asemenea, puteți trimite mesaje de e-mail fără a specifica <em>niciun</em> expeditor
+identitate / destinație / adresă, trebuie doar să selectați „Anonim” în derularea în jos
+meniul „Din:”.</p>
+
+<p>În setările implicite, I2P-Bote va verifica automat dacă există mesaje noi și
+tot ce trebuie să faceți pentru a vedea dacă primiți e-mailuri este să vă uitați în Inbox
+(linkul „Inbox” din stânga).</p>
+
+<p>Puteți forța o verificare manuală făcând clic pe butonul „Verificare poștă”. Acesta este un
+verificare globală, care încearcă să aducă noi mesaje pentru toate identitățile dvs.,
+cu excepția celor pe care i-ați exclus din verificarea globală. [nu inca
+puse în aplicare]</p>
+
+<p>Numărul de e-mailuri necitite este afișat în paranteză de lângă folder
+nume în bara laterală.</p>
+
+<p>Faceți clic pe „Inbox” pentru a afișa o listă de e-mailuri recepționate. Vei vedea
+două coloane cu căpușe x sau verzi. Acestea vă arată dacă un e-mail conține o 
+semnătura valid și este astfel autentic (Sig) și dacă cheia de e-mail a expeditorului
+ este cunoscută local, adică în agenda dvs. de adrese . De aici, două căpușe verzi
+lângă o intrare prin poștă înseamnă că știți deja acea identitate de e-mail și asta
+e-mailul este semnat de identitatea respectivă.</p>
+
+<p>Dacă aveți un anumit nume în agenda de adrese și primiți un mail de la o
+identitate cu acest nume, totuși Știu <em>nu</em> afișează o căpușă verde,
+atunci este o <em>altă</em> destinație care a trimis și a semnat acest mail; el
+pur și simplu a ales același nume pe care l-ați ales pentru unul dintre persoanele de contact.</p>
+
+<p>Există o marcă verde pentru „Sig”, cind e-mailul este semnat corect
+de către expeditor și îl puteți adăuga în agenda dvs. cu un alt nume,
+care acum va fi afișat ca expeditor.</p>
+
+<p>Desigur, un e-mail fără destinația expeditorului („Anonim” este afișat ca
+expeditor) va avea două x-uri.</p>
+
+<p>Dacă faceți clic pe unul dintre e-mailurile afișate în căsuța de e-mail, se va deschide mesajul.</p>
+
+<p>Același lucru este valabil pentru toate celelalte dosare.</p>
+
+<p>(Datorită naturii distribuite a I2P-Bote, trimiterea, precum și verificarea
+iar preluarea e-mailurilor durează câteva minute. Cu rutele de poștă activate
+respectiv mai mult. Dar nu trebuie să mențineți browserul deschis pentru asta, pur și simplu
+lăsați I2P-Bote să funcționeze ca proces de fundal - acest lucru vă avantajează și dvs.
+anonimat.)</p>
+
+<h3 id="Address-Book">2.4. Carnet de adrese locale</h3>
+<p>Dacă aveți cheia de e-mail I2P-Bote de la cineva pe care doriți să-l scrieți mai 
+frecvent, este util să stocați cheia locală în agenda dvs. de adrese (link)
+din stânga), specificați un nume ales de dvs. pentru acest contact și lipiți
+destinația lui de e-mail în linia corespunzătoare, apoi salvați.</p>
+
+<p>În mod normal, ar trebui să salvați destinațiile în agenda dvs. de adrese, astfel încât data viitoare
+primiți un e-mail de la același expeditor, se va arăta de la același,
+expeditor cunoscut local („Loc” este bifat) și un e-mail trimis de altcineva care
+doar foloseste același nume de utilizator va fi marcat ca NU este cunoscut local (un x in
+coloana „Cunoaștere” sau {UNK} web-UI înaintea adresei expeditorului din IMAP), deci știți
+este unul nou / diferit.</p>
+
+<h3 id="Settings">2.5. Setări (și ce înseamnă)</h3>
+<p>În setări, puteți alege limba interfeței I2P-Bote
+(în prezent engleză sau germană) și decide dacă chiar și cu un non-englez
+limbă setând tot ce va fi adăugat automat la un e-mail când
+răspunsul va rămâne totuși în engleză, astfel încât destinatarul să nu știe
+I2P-Bote-ul dvs. este setat într-un limbaj diferit. În caz contrar, destinatarul ar putea
+ghici despre naționalitatea ta, ceea ce îți va reduce anonimatul.</p>
+
+<p>Tot aici puteți ajusta intervalul pentru <em>verificarea automată</em> a
+e-mailuri și decideți dacă trimiteți sau nu un <em>timbru de timp</em> cu dvs.
+e-mailuri, indicând data și ora la care a fost trimis e-mailul. Timbrele de timp sunt
+întotdeauna în UTC.</p>
+
+<p>(Când se utilizează rutele de e-mail, marcajele de timp sunt automat dezactivate.) [Nu
+este încă implementat]</p>
+
+<p>verificarea automată a e-mailurilor:</p>
+
+<p>Pentru mai mult confort, există „Verificați corespondența la fiecare XX minute”
+opțiune.</p>
+
+<p>Aici puteți specifica cât de des ar trebui să încerce aplicația dvs. I2P-Bote să culegeți e-mailuri necitite
+ pentru identitățile dvs. Acest lucru poate fi stabilit pe bază de identitate [încă nu este
+pus în aplicare]</p>
+
+<p>Dacă specificați o compensare aleatoare, atunci nu se va verifica _exact_ la fiecare XX
+minute, ci mai degrabă fiecare (XX + -offset * XX) minute, adică după o alegere aleatorie
+timpul între (1-offset) XX minute și (1 + decalare) XX minute. [nu este inca
+pus în aplicare]</p>
+
+<p>De asemenea, puteți dezactiva în totalitate verificarea automată pentru o 
+identitate anume.</p>
+
+<p>(Dacă nu sunteți sigur de aceste setări, valorile implicite ar trebui să fie bune)</p>
+
+<p><em>Rutele de poștă</em> sunt lanțuri de noduri I2P-Bote care acționează ca relee / routere pentru
+alți colegi și se supun întârzierilor per-hop, asigurând astfel 
+transport cu latența ridicată pentru anonimat crescut.</p>
+
+<p>Puteți specifica numărul de noduri (denumite aici hamei) care ar trebui să fie
+înlănțuit pentru a forma o cale de e-mail. Apoi fiecare dintre pachetele de e-mail trimise de către
+identitatea care are rute de poștă activate va trece printr-o rută de e-mail cu n / hops
+înainte de a fi depozitat. Puteți seta o întârziere pentru fiecare salt în parte, ca fără hop
+ar trebui să știe ora la care va aștepta un pachet la următorul salt, realizând sincronizarea
+imprevizibil. [Încetarea întârzierilor individuale și per-identitate a întârzierilor inca nu este implementata] </p>
+
+<p>Ca întârziere, puteți specifica un interval de timp (de exemplu, 60-600 de minute) - apoi 
+timpul de așteptare aleatoriu între cele două valori va fi ales pentru pachet la acel moment
+hop - sau o oră fixă, atunci pachetul va fi redirecționat la momentul fix, de ex.
+ amiaza UTC, indiferent de sosirea ei [ora fixă ​​nu a fost încă implementată]</p>
+
+<p>(Când se utilizează rutele de e-mail, timpurile sunt dezactivate automat.) [Încă nu
+puse în aplicare]</p>
+
+<p>În <em>Mixarea anonimatului</em> (numărul minim al pachetelor de relee
+ care vor fi trimise) puteți specifica un prag. Ca nodul dvs. poate doar
+acționează în mod fiabil ca un amestec dacă există suficiente pachete străine de amestecat și de amestecat
+pachete proprii cu, va acumula mesaje al căror timp de întârziere a expirat până
+a atinge  această limită inferioară. Numai atunci când este depășit, nodul dvs. începe să le trimită
+ în ordine aleatorie. [Nu este inca implementat]</p>
+
+<p><em>exclude identitatea de la verificarea globală</em> [Nu este încă implementat]</p>
+
+<p>Dacă activați această opțiune pentru una dintre identitățile dvs., aceasta nu va 
+fi afectatф de verificarea manuală globală a e-mailurilor și nici de orice verificare  global
+automat prin poștă.</p>
+
+<h3 id="Gateway">2.6. E-mailuri către și de pe Internet</h3>
+<p>[INCA NU ESTE IMPLEMENTAT]</p>
+
+<p>Pentru a putea trimite e-mailuri pe internet și pentru a primi
+e-mailuri de pe internet cu aplicația dvs. I2P-Bote, trebuie mai întâi
+înregistrați-vă cu o poartă de poștă corespunzătoare. În prezent există doar unul:
+postman.</p>
+
+<ol>
+<li><p>În primul rând, mergeți la
+<a href="http://hq.postman.i2p/?page_id=16">http://hq.postman.i2p/?PAGE_ID=16</a>
+și înregistrați un cont. Dacă aveți deja un cont sau dacă ați
+ creat unul așa cum este descris, continuați cu numărul 2.</p></li>
+
+<li><p>Pentru un cont existent, puteți adăuga destinația dvs. de e-mail I2P-Bote, deci
+ e-mailurile venite de pe internet sunt transmise aplicației dvs. I2P-Bote. Pentru a face
+deci mergeți la
+<a href="http://hq.postman.i2p/?page_id=74">http://hq.postman.i2p/PAGE_ID=74</a>
+și furnizați informațiile solicitate.</p></li>
+</ol>
+<p>Acum, toate e-mailurile trimise la adresa respectivă
+(nume@i2pmail.org de pe internetul extern
+sau nume@mail.i2p pentru e-mailuri de la un alt poștaș
+abonați) vor fi transmise prin intermediul rețelei I2P-Bote către I2P-Bote
+app.</p>
+
+<p>(N.B. Când folosiți numele@mail.i2p sau
+adrese nume@i2pmail.org în loc de
+adresele lungi, e-mailurile nu mai sunt criptate de la capăt la capăt. Prin urmare, este
+recomandat să schimbați cheile de destinație mail I2P-Bote pentru comunicare
+în cadrul rețelei. Postman a oferit servicii de înaltă calitate în I2P destul de mult
+o vreme deja, dar fiți conștienți că este un punct centralizat care ar putea merge
+offline într-o zi sau, mai rău, să fie preluat de un malefic care va manipula
+mail-uri. În ceea ce privește comunicarea prin e-mail intern în rețea, I2P-Bote se asigură că
+dacă utilizați tastele de adresă, nimeni nu poate altera mesajele pe care le trimiteți sau le trimiteți
+sau primiti.)</p>
+
+<p>Dacă doriți nu numai să primiți e-mailuri de pe internet, dar și activați
+trimiterea de e-mailuri de la I2P-Bote pe internet, trebuie să furnizați I2P-Bote
+client cu cheia de destinație de poștă a gateway-ului, pentru ca I2P-Bote să știe
+unde să trimiteți acele mesaje.</p>
+
+<p>Puteți face acest lucru în „Setări”. Acest gateway va permite utilizatorilor I2P-Bote
+să comunice cu utilizatorii standard de e-mail de pe internet, precum și cu
+utilizatorii serviciului clasic i2pmail al poștașului (@mail.i2p).</p>
+
+<p>Pentru a combate abuzurile, va exista o limitare a numărului de e-mailuri
+ce puteți trimite pe internet; la fel ca în cazul unui serviciu  poștal normal
+utilizatori: În cazul în care un utilizator I2P-Bote depășește cota cu e-mailuri de ieșire,
+Adresele de e-mail suplimentare vor fi trimise înapoi ca sări.</p>
+
+<h2 id="Considerations">3. Considerații despre anonimat</h2>
+<p>Nu trimiteți informații de identificare despre dvs. (nume, adresă, geografic
+locația, fusul orar, vârsta, site-urile web pe care tocmai le-ați vizitat sau pe care le-ați blogat, utilizator
+nume, numere ip, id router I2P, ID I2P-Bote, număr de securitate socială, credit
+numărul cardului,…, copii ale pașaportului, permisului de conducere, închirierii casei
+contract, fotografii (nude sau cu haine), documente care conțin dvs.
+nume de utilizator în setările autorului și multe altele)!</p>
+
+<p>Daca este posibil,</p>
+<ul>
+<li><p>lăsați I2P-Bote rulând 24/7,</p></li>
+<li><p>utilizați e-mailuri cu întârzieri randomizate per-hop și / sau trimitere fixă ​​per-hop
+ [încă nu este <em>complet</em> implementat]</p></li>
+<li><p>utilizați un interval de verificare lung,</p></li>
+<li><p>utilizați o întârziere locală lungă pentru pachete proprii,</p></li>
+<li><p>utilizați o randomizare mare a intervalului de verificare. [nu este inca implementat]</p></li>
+</ul>
+<p>Puteți suprima trimiterea datei și orei în antetul e-mailurilor.</p>
+
+<p>Când răspundeți la un e-mail, se adaugă anumiți markeri pentru a arăta destinatarului
+că acesta este un răspuns, cum ar fi „Re: [subiect al e-mailului la care răspundeți]” sau
+„[nume de utilizator] a scris: '. Acestea sunt diferite pentru limbile din care puteți alege
+setările dvs. de limbă Cu toate acestea, dacă nu doriți ca destinatarul să știe 
+limba setată, puteți suprima traducerea acestor markeri, astfel încât
+acestea vor fi în engleză, indiferent care este setarea dvs. de limbă. Pentru a face
+deci, marcați „Utilizați limba engleză pentru text adăugat la e-mailul care iese („ Re: ”,„ wrote: „,
+etc)“</p>
+
+<p>Fiți atenți la conținutul pe care îl trimiteți! Nu includeți informații personale sau
+informații pe care numai tu le poți deține. Nu scrie 'acum mă culc, este
+târziu atunci când includ timbre de timp.</p>
+
+<p>Limba în care îți scrii e-mailurile, stilul și formulările
+poate fi de asemenea interes pentru un atacator.</p>
+
+<p>I2P-Bote oferă, de asemenea, posibilitatea de a utiliza diferite identități de e-mail.
+Să presupunem că unul dintre dvs. afla informații despre identitatea dvs., deoarece ați uitat să ștergeți
+identificarea informațiilor într-un document secret pe care l-ați trimis. Acum, dacă 
+destinatarul e-mailului urma să colaboreze cu alții cu care ești în contact, el
+le-ar putea spune identitatea lumii reale aparținând adresei lui Bote pe care o cunoaște
+de la tine. În consecință, dacă comunicați cu ceilalți folosind același Bote
+adresa, ei vor ști cine ești. Nu este așa, dacă ai folosit o altă adresă
+pentru trimiterea de e-mailuri către ei.</p>
+
+<h2 id="Troubleshooting">4. Depanare </h2>
+<h3 id="Unlimited-Strength-Crypto">4.1. Notificare despre fișierele politicii de jurisdicție a forței nelimitate JCE</h3>
+<p>Dacă aveți o notificare în partea de jos a ecranului despre JCE Unlimited
+Fișierele de politică de jurisdicție de forță, înseamnă că  instalarea dvs. Java
+este restricționata de la utilizarea criptografiei puternice de care necesită I2P-Bote.</p>
+
+<p>Puteți activa criptografia puternică urmând pașii de mai jos:</p>
+<ol>
+<li><p>Descărcați fișierele JCE Unlimited Strength Jurisdiction Policy de pe site-ul web Oracle. Este posibil să fie nevoie să utilizați browserul obișnuit.</p></li>
+<li><p>Decuplați fișierul zip descărcat.</p></li>
+<li><p>Mutați fișierele <code>local_policy.jar</code> și <code>US_export_policy.jar</code> în folderul afișat în notificarea de pe ecranul dvs. Suprascrieți orice fișiere existente cu aceleași nume.</p></li>
+<li><p>Restart I2P.</p></li>
+</ol>
+<p>Unele țări au restricții asupra punctelor tari permise ale criptografiei
+software-ul. Dacă nu sunteți sigur cu privire la restricțiile din țara dvs., consultați
+cu un avocat.</p>
+
+<h2 id="Technical-Concept">5. Concept tehnic</h2>
+<p>I2P-Bote este un cod end-to-end criptat, intern de rețea, complet descentralizat
+(adică fără server) sistem de e-mail. Suporta diferite identități și nu
+expune anteturile de e-mail. În prezent, este încă software alfa. Poate fi
+accesat prin intermediul consolei web și are suport IMAP și SMTP, astfel încât e-mailurile pot
+să fie citite și scrise de clienții de email obișnuiți. Este planificat să garanteze
+un anonimat suplimentar prin furnizarea unei opțiuni de transport cu latență ridicată. Toate
+Bote-mailurile sunt automat criptate de la capăt la capăt, astfel încât nu este nevoie să 
+configurați o criptare de e-mail suplimentară (deși puteți face asta), iar mesajele de vot vor fi
+autentificate automat. Deoarece este descentralizat, nu există un server de e-mail
+care ar putea lega diferite identități de e-mail ca comunicând între ei
+(<em>profilare</em>): Nici nodurile care afișează mailurile nu vor cunoaște expeditorul
+și, în afară de expeditor și receptor, este doar sfârșitul poștei de înaltă latență
+tunel și nodurile de stocare vor ști cine este adresa (identitate anonimă)
+destinate. Expeditorul original poate să fi fost deconectat cu mult înaintea poștei
+devine disponibil pe partea cealaltă. Acest lucru adaugă gradul de anonimat pe care
+se poate ajunge cu I2P-Bote. Pentru cei care nu doresc întârzieri mari: Toate acestea
+setările pot fi ajustate de utilizator, astfel încât fiecare utilizator decide cu privire la cât de anonimat
+vrea.</p>
+
+<p>Nodurile I2P-Bote stochează e-mailuri criptate într-un DHT Kademlia. Prin urmare, 
+e-mailul poate fi trimis printr-o serie de alte noduri (relee) pentru a crește
+securitate sau direct la un set de noduri de stocare pentru livrare mai rapidă. La fel
+se aplică la preluarea e-mailului.</p>
+
+<p>(Când utilizați rutele de poștă, timpe-urile sunt dezactivate automat.) [Recuperare
+prin relee încă neimplementat]</p>
+
+<p>Toate nodurile sunt create egale: Nu există „supernode” sau desemnate
+noduri releu / stocare. Toată lumea acționează ca un potențial releu și nod de stocare.
+cantitatea maximă de spațiu pe disc utilizat pentru pachetele de e-mailuri transmise / stocate poate fi
+configurat de utilizator.</p>
+
+<p>Înainte de a fi trimis un e-mail către un releu, acesta este împărțit în pachete și
+criptat cu cheia publică a destinatarului. Aceste pachete sunt depozitate redundant
+într-un tabel de hash distribuit (DHT).</p>
+
+<p>Se păstrează cel puțin 100 de zile, timp în care destinatarul le poate descărca</p>
+
+<p>Pachetele cu releu expiră și după 100 de zile sau mai mult.</p>
+
+<p>Dacă un nod rămâne fără spațiu de stocare a e-mailului și nu există pachete vechi care
+poate fi șters, nodul refuză solicitările de stocare.</p>
+
+<p>Mai mult, I2P-Bote igienizează anteturile poștale și nu permite 
+informațiile inutile sa fie transmise, permițând astfel utilizarea clienților de e-mail
+fără verificări prealabile a ceea ce trimite acest client în anteturile poștale.</p>
+
+<p>Toată criptarea, alegerea căilor și profilarea se face local, astfel încât
+nu este implicată nicio parte de încredere.</p>
+
+<p>Nici măcar pentru bootstrapping I2P-Bote nu depinde un nod central, așa cum îl folosește
+Seedless.</p>
+
+<p>Folosirea corespunzătoare a I2P-Bote înseamnă că trebuie să ții cont de considerente
+date mai sus și arătând ceva de bun simț, nimeni nu va putea afla cine
+sau unde te afli. Și dacă ești deja observat și pe internet
+conexiunea a sniffed, observatorul nu va putea afla ce trimiteți sau
+primiți sau către cine trimiteți sau primiți de la sau de unde contactele dvs.
+sunt localizate.</p>
+
+<p>Haideți să prezentăm un pic mai detaliat:</p>
+
+<h3>Ce <em>ascunde</em> I2P-Bote:</h3>
+
+<p>I2P-Bote ascunde ambele, identitatea și locația expeditorului și a receptorului, ca.
+precum și cele ale nodurilor intermediare (relee și noduri de stocare), conținutul
+e-mailurile dvs., dimensiunea lor, numărul de mesaje trimise.</p>
+
+<p>Numai destinatarul poate cunoaște destinația de e-mail a expeditorului și dacă acesta
+alege să nu-și trimită destinația, nici măcar destinatarul nu o va ști.</p>
+
+<p>Chiar dacă trimiteți timbre orare, fusul dvs. orar nu va fi dezvăluit.</p>
+
+<p>Mai mult, I2P-Bote ascunde:</p>
+<ul>
+<li><p>faptul că rulați I2P-Bote</p></li>
+<li><p>faptul că trimiteți un mail</p></li>
+<li><p>faptul că primiți un mail</p></li>
+<li><p>ora la care trimiteți un mail</p></li>
+<li><p>momentul în care primiți un mail</p></li>
+<li>
+<p>limita superioară a numărului de mesaje primite de un utilizator necunoscut</p>
+<ul>
+<li><p>un utilizator abstract, fără unul concret, doar încheind existența sa din
+existența identității poștale, întrucât ar putea avea întotdeauna mai mult de un e-mail
+identitate</p></li>
+</ul>
+</li>
+<li><p>limita inferioară, deoarece o identitate trimite, de asemenea, mesaje de testare și manechin</p></li>
+</ul>
+<h3>Ce <em>ascunde parțial</em> I2P-Bote:</h3>
+
+<p>Adresa I2P-Bote a destinatarului va fi cunoscută numai expeditorului și
+recipient (e).</p>
+
+<p>În cazul mai multor destinatari, fiecare va vedea toți ceilalți destinatari care
+e-mailul a fost adresat prin „To:” sau „CC:”</p>
+
+<p>Toate intrările care au fost sub „BCC:” vor fi vizibile numai pentru expeditor și
+chiar acest primitor.</p>
+
+<p>Ora trimisă va fi vizibilă numai expeditorului și
+destinatarului.</p>
+
+<h3>Ceea ce I2P-Bote poate <em>ascunde opțional</em>:</h3>
+<ul>
+<li><p>Dacă se utilizează rutele de e-mail, este trimisă o trimitere prin e-mail</p></li>
+<li><p>Dacă se utilizează rutele de poștă, ora primirii unui e-mail este preluată. [nu inca
+puse în aplicare]</p></li>
+<li><p>Dacă expeditorul suprimă marcajele de timp, numai expeditorul va ști când
+a trimis un mail.</p></li>
+</ul>
+<h3>Ceea ce I2P-Bote <em>nu poate ascunde</em>:</h3>
+<p>I2P-Bote nu poate ascunde frecvența verificărilor de identitate date pentru noile mailuri și nici
+numărul de e-mailuri pe care le primește o identitate dată.</p>
+
+<h2 id="Technical-Details">6. Detalii tehnice</h2>
+<p>Vezi techdoc.txt</p>
+
+<h2 id="Terminology">7. Terminologie / Glosar de termeni</h2>
+
+<h3>ID-Bote I2P (router / nod):</h3>
+<p>Acesta este id-ul la care este cunoscut un router I2P-Bote. Este utilizat pentru contactarea
+acestui router, pentru stocarea, retransmiterea și preluarea e-mailurilor, dar utilizat și în
+criptare hop-to-hop și pentru simpla contactare a acestuia prin I2P, așa cum se află la
+aceeași destinație a tunelului I2P-Bote pentru destinația tunelului I2P. Este afișat pentru a reprezenta
+un nod I2P-Bote în statistici.</p>
+
+<p>Deci, id-ul routerului corespunde destinației I2P (adresa unui 
+Nod I2P-Bote din rețeaua I2P - nu este necesar să îl știi decât dacă 
+având probleme la conectarea la alte noduri I2P-Bote).</p>
+
+<h3>Destinație de e-mail I2P-Bote:</h3>
+<p>Destinația de e-mail I2P-Bote (cheie) este un identificator prin care cineva poate
+fi accesat prin I2P-Bote, așa cum spune numele: o destinație de e-mail. Astfel ea
+este pentru I2P-Bote ce este o adresă de e-mail pentru sistemul de e-mail standard:
+destinația de e-mail este adresa reală pentru trimiterea e-mailurilor, pentru stocarea acestora
+ și pentru preluarea acestora din DHT. În același timp, a folosit pentru
+criptarea end-to-end a e-mailurilor, informațiilor despre antet și atașamentelor.</p>
+
+<p>O destinație de e-mail I2P-Bote este un șir Base64 care conține o cheie de criptare 
+public  și cheie de verificare a semnăturii. Exemplu:</p>
+<pre>uQtdwFHqbWHGyxZN8wChjWbCcgWrKuoBRNoziEpE8XDt8koHdJiskYXeUyq7JmpG
+    In8WKXY5LNue~62IXeZ-ppUYDdqi5V~9BZrcbpvgb5tjuu3ZRtHq9Vn6T9hOO1fa
+    FYZbK-FqHRiKm~lewFjSmfbBf1e6Fb~FLwQqUBTMtKYrRdO1d3xVIm2XXK83k1Da
+    -nufGASLaHJfsEkwMMDngg8uqRQmoj0THJb6vRfXzRw4qR5a0nj6dodeBfl2NgL9
+    HfOLInwrD67haJqjFJ8r~vVyOxRDJYFE8~f9b7k3N0YeyUK4RJSoiPXtTBLQ2RFQ
+    gOaKg4CuKHE0KCigBRU-Fhhc4weUzyU-g~rbTc2SWPlfvZ6n0voSvhvkZI9V52X3
+    SptDXk3fAEcwnC7lZzza6RNHurSMDMyOTmppAVz6BD8PB4o4RuWq7MQcnF9znElp
+    HX3Q10QdV3omVZJDNPxo-Wf~CpEd88C9ga4pS~QGIHSWtMPLFazeGeSHCnPzIRYD</pre>
+
+<p>ID-ul routerului / nodului I2P-Bote și destinațiile de e-mail I2P-Bote arată similar, dar
+sunt complet independenți unul de celălalt.</p>
+
+<h3>Adresa de email:</h3>
+<p>Adresele de e-mail din I2P-Bote sunt scurtături pentru destinațiile de e-mail.</p>
+
+<p>Adresa de e-mail &lt;--&gt; mapările de destinație de e-mail sunt stocate în două
+locuri: agenda de adrese locală și directorul de adrese distribuite [
+ultima nu a fost încă implementată].</p>
+
+<h3>Identitate e-mail I2P-Bote:</h3>
+<p>Identitatea de e-mail I2P-Bote este un set de chei de destinație de e-mail I2P-Bote,
+cheile private corespunzătoare și un nume care i-a fost dat de utilizator. Acest nume
+va fi trimis cu cheia de destinație dacă nu suprimați trimiterea
+informatii despre expeditor.</p>
+
+<p>Cu toate acestea, acesta va fi afișat doar pentru destinatar în cazul în care acesta nu are
+un nume pentru această destinație în agenda sa de adrese.</p>
+
+<p>Deci, tehnic vorbind, o identitate de e-mail constă din patru lucruri:</p>
+<ul>
+<li><p>o destinație de e-mail (adică două chei publice)</p></li>
+<li><p>două chei private pentru destinația de e-mail</p></li>
+<li><p>un nume public care poate fi afișat altor persoane din e-mailuri</p></li>
+<li><p>o descriere care nu este arătată nimănui, ci tu (vă ajută să vă amintiți
+care identitate e-mail este utilizata în acest scop).</p></li>
+</ul>
+<p>O identitate de e-mail nu este necesară pentru trimiterea de e-mailuri (deși numai atunci
+„Anonim” poate fi selectat pentru câmpul „expeditor”).</p>
+
+<h3>Rute de poștă:</h3>
+<p>Rutele de poștă reprezintă un transport suplimentar de mare latență pentru I2P-Bote. Pentru asta,
+este construit un lanț de noduri I2P-Bote, care acționează ca relee / routere pentru pachete și
+ascultând întârzierile individuale per-hop. [încă nu există setări individuale pentru întârzieri
+puse în aplicare]</p>
+
+<p><strong>AI GRIJĂ</strong> Dacă alegeți această opțiune - mai ales cu mulți
+hamei și / sau timp de întârziere îndelungat, nu fiți surprinși dacă e-mailul dvs. nu ajunge
+destinația sa prea curând. Desigur, va dura mai mult - până la câteva zile!</p>
+
+<h2 id="Credits">8. Credite</h2>
+<p>Vezi <a href="about.jsp">pagina Despre</a>.</p>
+
+<h2>Bucurați-vă de folosirea I2P-Bote !!</h2>
+</div>

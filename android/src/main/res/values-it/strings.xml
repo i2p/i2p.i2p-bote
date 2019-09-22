@@ -129,6 +129,7 @@
   <string name="auto">Auto</string>
   <string name="manual">Manuale</string>
   <string name="pref_title_router">Router</string>
+  <string name="internal">Interno</string>
   <string name="pref_dialog_title_router">Router da utilizzare</string>
   <string name="pref_title_i2cp_host">Host I2CP</string>
   <string name="pref_title_i2cp_port">Porta I2CP</string>
@@ -147,6 +148,7 @@
   <string name="default_identity">Identità predefinita</string>
   <string name="save_identity">Salva identità</string>
   <string name="identity_saved">Identità salvata</string>
+  <string name="passwords_do_not_match">Le password non corrispondono</string>
   <string name="help">Aiuto</string>
   <string name="start">Avvia</string>
   <string name="changelog">Changelog</string>
