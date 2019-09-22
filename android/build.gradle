@@ -98,7 +98,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
 }
 
-project.ext.i2pbase = '../release-android/i2p.i2p'
+project.ext.i2pbase = '../i2p.i2p'
 def Properties props = new Properties()
 def propFile = new File(project(':android').projectDir, 'local.properties')
 
