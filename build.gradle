@@ -15,7 +15,7 @@ allprojects {
     }
 }
 
-project.ext.i2pVersion = '0.9.40'
+project.ext.i2pVersion = '0.9.42'
 
 String compat(String src) {
     if (src.contains('.')) {
@@ -64,7 +64,7 @@ configure([project(':core'), project(':webapp')]) {
             })
         } else {
             if (JavaVersion.current().java8Compatible && !JavaVersion.current().java9Compatible) {
-                throw new GradleException("Set java7BootClasspath property or JAVA7_HOME environment variable to enable cross-compilation, or run Gradle with JDK 9+")
+                //throw new GradleException("Set java7BootClasspath property or JAVA7_HOME environment variable to enable cross-compilation, or run Gradle with JDK 9+")
             }
             project.afterEvaluate {
                 tasks.withType(JavaCompile) {

@@ -14,22 +14,20 @@
 # walking <walking@i2pmail.org>, 2011
 # yume, 2015
 # yume, 2015
+# Василий Суматохин <basilbasilbasil@gmail.com>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: I2P\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 12:19+0100\n"
-"PO-Revision-Date: 2019-05-16 11:18+0000\n"
-"Last-Translator: yume\n"
-"Language-Team: Russian (Russia) (http://www.transifex.com/otf/I2P/language/"
-"ru_RU/)\n"
-"Language: ru_RU\n"
+"POT-Creation-Date: 2019-05-16 12:16+0100\n"
+"PO-Revision-Date: 2019-09-09 17:12+0000\n"
+"Last-Translator: Василий Суматохин <basilbasilbasil@gmail.com>\n"
+"Language-Team: Russian (Russia) (http://www.transifex.com/otf/I2P/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:121
 #: src/main/java/i2p/bote/imap/BoteMailbox.java:135
@@ -438,9 +436,7 @@ msgstr "Формируется почтовый идентификатор. Эт
 msgid ""
 "This encryption type does not support destinations that start with {0}. "
 "Valid initial characters are {1}."
-msgstr ""
-"Этот тип шифрования не поддерживает назначения, начинающиеся на {0}. "
-"Поддерживаемые начальные символы {1}."
+msgstr "Этот тип шифрования не поддерживает назначения, начинающиеся на {0}. Поддерживаемые начальные символы {1}."
 
 #: src/main/webapp/submitIdentity.jsp
 msgid "The email identity has been saved."
@@ -540,9 +536,7 @@ msgstr "Править набор"
 
 #: src/main/webapp/editIdentity.jsp
 msgid "An Email Identity lets you receive email from other I2P-Bote users."
-msgstr ""
-"Почтовый идентификатор дает возможность получать почту от других "
-"пользователей I2P-Bote."
+msgstr "Почтовый идентификатор дает возможность получать почту от других пользователей I2P-Bote."
 
 #: src/main/webapp/editIdentity.jsp
 msgid "Public Name:"
@@ -668,10 +662,7 @@ msgstr "О I2P-Bote"
 msgid ""
 "For I2P-Bote to function properly, you must download the JCE Unlimited "
 "Strength Jurisdiction Policy files and move them into this folder:"
-msgstr ""
-"Для того, чтобы I2P-Bote функционировал должным образом, Вы должны скачать "
-"файлы Java-расширения JCE Unlimited Strength Jurisdiction Policy и "
-"переместить их в эту папку:"
+msgstr "Для того, чтобы I2P-Bote функционировал должным образом, Вы должны скачать файлы Java-расширения JCE Unlimited Strength Jurisdiction Policy и переместить их в эту папку:"
 
 #: src/main/webapp/header.jsp
 msgid "Guide"
@@ -701,39 +692,28 @@ msgstr "Статус"
 msgid ""
 "In order to receive email from other people, you need to create an email "
 "identity first."
-msgstr ""
-"Чтобы получать письма отдругих людей, необходимо сначала создать набор "
-"ключей."
+msgstr "Чтобы получать письма отдругих людей, необходимо сначала создать набор ключей."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "Every email identity is associated with an email destination. Anybody can "
 "send email to the email destination, but only the identity holder can read "
 "it."
-msgstr ""
-"Каждый набор ключей связан с Bote-адресом. Любой может отправить письмо на "
-"Bote-адрес, но только владелец ключей может их читать."
+msgstr "Каждый набор ключей связан с Bote-адресом. Любой может отправить письмо на Bote-адрес, но только владелец ключей может их читать."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "In a sense, email identities are the equivalent to traditional email "
 "accounts - except that there is no provider that can read all your email "
 "because I2P-Bote stores all emails encrypted on the network."
-msgstr ""
-"По-сути, набор ключей аналогичен традиционным аккаунтам электронной почты, "
-"но без провайдера, который может читать всю вашу корреспонденцию — I2P-Bote "
-"хранит все письма зашифрованными в сети."
+msgstr "По-сути, набор ключей аналогичен традиционным аккаунтам электронной почты, но без провайдера, который может читать всю вашу корреспонденцию — I2P-Bote хранит все письма зашифрованными в сети."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
-"I2P-Bote automatically decrypts emails sent to you, using the email identity "
-"you created. Email identities are stored in a file named identities; never "
+"I2P-Bote automatically decrypts emails sent to you, using the email identity"
+" you created. Email identities are stored in a file named identities; never "
 "give this file to anyone or they will be able to read all your emails."
-msgstr ""
-"I2P-Bote автоматически расшифровывает отправленные вам письма при помощи "
-"созданного вами набора ключей. Наборы ключей хранятся в файле identities."
-"txt, никогда не давайте этот файл другим, чтобы они не могли прочесть вашу "
-"почту."
+msgstr "I2P-Bote автоматически расшифровывает отправленные вам письма при помощи созданного вами набора ключей. Наборы ключей хранятся в файле identities.txt, никогда не давайте этот файл другим, чтобы они не могли прочесть вашу почту."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid "Do give out the email destination so others can contact you."
@@ -743,9 +723,7 @@ msgstr "Дайте другим ваш Bote-адрес и они смогут с
 msgid ""
 "It is easy to create multiple identities for different purposes, or "
 "different contacts."
-msgstr ""
-"Легко создать несколько наборов ключей для разных целей, для разных "
-"контактов."
+msgstr "Легко создать несколько наборов ключей для разных целей, для разных контактов."
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
@@ -754,29 +732,20 @@ msgid ""
 "offered by I2P-Bote provide a high level of privacy, the length of an email "
 "destination depends on the encryption used. The choice of encryption also "
 "determines what signing algorithm is used."
-msgstr ""
-"Когда вы создаёте новый набор ключей, вы можете выбрать используемый им тип "
-"шифрования. Хотя все алгоритмы шифрования I2P-Bote дают высокий уровень "
-"защищёности, длина Bote-адреса зависит от типа шифрования. Большее кол-во "
-"бит — длинее Bote-адрес"
+msgstr "Когда вы создаёте новый набор ключей, вы можете выбрать используемый им тип шифрования. Хотя все алгоритмы шифрования I2P-Bote дают высокий уровень защищёности, длина Bote-адреса зависит от типа шифрования. Большее кол-во бит — длинее Bote-адрес"
 
 #: src/main/webapp/identitiesHelp.jsp
 msgid ""
 "It is generally recommended to choose 256-bit elliptic curve encryption "
 "because it produces the shortest email destinations (86 characters) while "
 "still being highly secure."
-msgstr ""
-"Рекомендуется выбирать 256-битный вариант на эллиптических кривых, так как "
-"этот вариант дает самый короткий адрес назначения (86 символов), при этом "
-"оставаясь очень безопасным."
+msgstr "Рекомендуется выбирать 256-битный вариант на эллиптических кривых, так как этот вариант дает самый короткий адрес назначения (86 символов), при этом оставаясь очень безопасным."
 
 #: src/main/webapp/showEmail.jsp
 msgid ""
 "The email could not be found in this folder. It was probably moved to the "
 "Sent folder."
-msgstr ""
-"Письмо не найдено в этой папке. Вероятно, оно перемещено в папку "
-"Отправленные."
+msgstr "Письмо не найдено в этой папке. Вероятно, оно перемещено в папку Отправленные."
 
 #: src/main/webapp/showEmail.jsp
 msgid "The email could not be found in this folder."
@@ -948,9 +917,7 @@ msgstr "Приватность"
 
 #: src/main/webapp/settings.jsp
 msgid "Use English for text added to outgoing email ('Re:', 'wrote:', etc.)"
-msgstr ""
-"Английский язык для текста, добавляемого к исходящие почте («Re:», «wrote:» "
-"и т.д)"
+msgstr "Английский язык для текста, добавляемого к исходящие почте («Re:», «wrote:» и т.д)"
 
 #: src/main/webapp/settings.jsp
 msgid "Include send time in outgoing emails"
@@ -1020,9 +987,7 @@ msgstr "Если вы не задавали пароль, оставьте по�
 msgid ""
 "Please note that if a password is set, emails cannot be checked "
 "automatically but only when the Check Mail button is clicked."
-msgstr ""
-"Заметьте, что если задан пароль, письма не могут быть проверены "
-"автоматически, а только после нажатия кнопки Проверить Почту."
+msgstr "Заметьте, что если задан пароль, письма не могут быть проверены автоматически, а только после нажатия кнопки Проверить Почту."
 
 #: src/main/webapp/setPassword.jsp
 msgid "Old password:"
@@ -1040,9 +1005,7 @@ msgstr "Сеть"
 msgid ""
 "Network information is not available because I2P-Bote hasn't started "
 "connecting to the network yet."
-msgstr ""
-"Сетевая информация недоступна, поскольку I2P-Bote ещё не начал подключение к "
-"сети."
+msgstr "Сетевая информация недоступна, поскольку I2P-Bote ещё не начал подключение к сети."
 
 #: src/main/webapp/network.jsp
 msgid "Local destination:"
@@ -1054,7 +1017,7 @@ msgstr "Подробности ошибки"
 
 #: src/main/webapp/connectError.jsp
 msgid "Oh dear! I2P-Bote couldn't connect to the network."
-msgstr ""
+msgstr "О, Боже! I2P-Bote не может подключиться к сети."
 
 #: src/main/webapp/connectError.jsp
 msgid "This is the error that happened:"
@@ -1064,11 +1027,11 @@ msgstr "Произошла ошибка:"
 msgid ""
 "You can fix most problems by clicking the 'Retry Connecting' button in the "
 "menu bar."
-msgstr ""
+msgstr "Вы можете решить большинство проблем, нажав кнопку «Повторить попытку подключения» в строке меню."
 
 #: src/main/webapp/connectError.jsp
 msgid "If that doesn't help, try restarting your I2P router."
-msgstr ""
+msgstr "Если это не поможет, попробуйте перезагрузить маршрутизатор I2P."
 
 #: src/main/webapp/folders.jsp
 msgid "Folders"
@@ -1193,11 +1156,9 @@ msgstr "Добавить контакты"
 #: src/main/webapp/importContact.jsp
 msgid ""
 "A matching record was found in the address directory. Note that the address "
-"directory is not secure against manipulation, so do not click &quot;"
-"import&quot; unless you trust that it is the right email destination."
-msgstr ""
-"Запись найдена в справочнике. Обратите внимание, что адресная книга доступна "
-"для манипуляций снаружи, так что не добавляйте, если вы точно не уверены."
+"directory is not secure against manipulation, so do not click "
+"&quot;import&quot; unless you trust that it is the right email destination."
+msgstr "Запись найдена в справочнике. Обратите внимание, что адресная книга доступна для манипуляций снаружи, так что не добавляйте, если вы точно не уверены."
 
 #: src/main/webapp/importContact.jsp
 msgid "Email Destination: "
@@ -1229,9 +1190,7 @@ msgstr "Кликните чтобы отправить письмо"
 
 #: src/main/webapp/about.jsp
 msgid "Maintenance, user experience, extended features, Android app"
-msgstr ""
-"Обслуживание, пользовательский опыт, расширенные возможности, приложение для "
-"Android"
+msgstr "Обслуживание, пользовательский опыт, расширенные возможности, приложение для Android"
 
 #: src/main/webapp/about.jsp
 msgid "Past developers:"
@@ -1251,9 +1210,7 @@ msgstr "Участники проекта:"
 
 #: src/main/webapp/about.jsp
 msgid "Technical concept, translation, QA, usability, technical feedback"
-msgstr ""
-"Техническая концепция, перевод, контроль качества, юзабилити, технические "
-"консультации."
+msgstr "Техническая концепция, перевод, контроль качества, юзабилити, технические консультации."
 
 #: src/main/webapp/about.jsp
 msgid "Pluginization, technical feedback"
@@ -1350,9 +1307,7 @@ msgstr "Полный почтовый идентификатор для {0}:"
 #: src/main/webapp/showFullIdentity.jsp
 msgid ""
 "Do not show the above information to anyone! It contains your private keys."
-msgstr ""
-"Не показывайте никому эту информацию, поскольку в её состав входят ваши "
-"личные ключи."
+msgstr "Не показывайте никому эту информацию, поскольку в её состав входят ваши личные ключи."
 
 #: src/main/webapp/WEB-INF/tags/folderLink.tag
 msgid "{0} emails total"

@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        versionCode 15
-        versionName '0.6.1'
+        versionCode 17
+        versionName '0.6.3'
         minSdkVersion 14
         targetSdkVersion 26
         multiDexEnabled true
@@ -98,7 +98,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
 }
 
-project.ext.i2pbase = '../i2p.i2p'
+project.ext.i2pbase = '../release-android/i2p.i2p'
 def Properties props = new Properties()
 def propFile = new File(project(':android').projectDir, 'local.properties')
 

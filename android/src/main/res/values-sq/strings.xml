@@ -189,6 +189,7 @@
   <string name="no_identities_found">Asnjë identitet nuk u gjet.</string>
   <string name="no_identities_found_maybe_encrypted">Asnjë identitet nuk u gjet. A është fili i inkriptuar?</string>
   <string name="identities_imported">Identitete u importuan</string>
+  <string name="copied_to_clipboard">U kopjua në tabelën-mbledhëse</string>
   <string name="help">Ndihmë</string>
   <string name="start">Nisje</string>
   <string name="changelog">Regjistri i ndryshimeve</string>
