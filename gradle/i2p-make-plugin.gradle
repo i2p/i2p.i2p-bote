@@ -187,7 +187,9 @@ class I2PPlugin implements Plugin<Project> {
 
         project.task('thinWar', type: War, dependsOn: project.classes) {
             destinationDir = project.file("$project.buildDir/thinWar")
-            classpath = project.war.classpath.minus(project.configurations.runtime)
+            classpath = project.thinWar.classpath.filter { lib -> !(
+                lib.name.endsWith('.jar')
+            )}
         }
 
         project.task('packWebapp', type: Pack200Task) {
