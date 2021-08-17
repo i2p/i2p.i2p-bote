@@ -11,6 +11,7 @@ jdk:
   - openjdk8
 
 matrix:
+  fast_finish: true
   include:
     - jdk: openjdk7
       sudo: required
